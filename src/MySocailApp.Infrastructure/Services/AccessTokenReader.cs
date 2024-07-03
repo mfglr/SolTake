@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.Services;
 using MySocailApp.Application.Exceptions;
+using MySocailApp.Application.Services;
 using System.Security.Claims;
 
 namespace MySocailApp.Infrastructure.Services

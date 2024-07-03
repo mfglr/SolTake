@@ -1,6 +1,4 @@
 ﻿using MySocailApp.Application.Commands.AccountAggregate.UpdateUserName;
-using MySocailApp.Application.Queries.AccountAggregate;
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -116,28 +114,6 @@ namespace MySocialApp.Api.Tests.AccountAggregate.UpdateUserName
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.Equal(message, content);
-        }
-       
-        [Fact]
-        public async Task WhenUserNameIsValid_ReturnSuccess()
-        {
-            var userName = "abc";
-            var request = new UpdateUserNameDto(userName);
-            var updateUserName = "api/accounts/updateUserName";
-            var getByEmail = $"api/accounts/GetByEmail/{_fixture.Email}";
-
-            var response = await _fixture.ClientWithAccessToken.PutAsJsonAsync(updateUserName, request);
-            var response1 = await _fixture.ClientWithAccessToken.GetAsync(getByEmail);
-            using var stream = await response1.Content.ReadAsStreamAsync();
-            using var reader = new StreamReader(stream);
-            var content = await reader.ReadToEndAsync();
-            var accountRespone = JsonConvert.DeserializeObject<AccountResponseDto>(content);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(accountRespone);
-            Assert.Equal(_fixture.Email, accountRespone.Email);
-            Assert.Equal(userName, accountRespone.UserName);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }

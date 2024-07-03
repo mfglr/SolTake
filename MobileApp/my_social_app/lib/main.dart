@@ -1,49 +1,82 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/Exceptions/backend_exception.dart';
-import 'package:my_social_app/initiliaze.dart';
-import 'package:my_social_app/views/home_view.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/providers/account_provider.dart';
+import 'package:my_social_app/providers/profile_provider.dart';
+import 'package:my_social_app/providers/user_image_provider.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/login_view.dart';
 import 'package:my_social_app/views/register_view.dart';
+import 'package:my_social_app/views/root/profile/profile_followeds_page.dart';
+import 'package:my_social_app/views/root/profile/profile_followers_page.dart';
 import 'package:my_social_app/views/root_view.dart';
-import 'package:my_social_app/views/toast_message_view.dart';
 import 'package:my_social_app/views/verify_email_view.dart';
+import 'package:provider/provider.dart';
+
+
+Future loadEnvironmentVariables() async {
+  const bool isProduction = bool.fromEnvironment('dart.vm.product');
+  await dotenv.load(fileName: isProduction ? ".env.prod" : ".env.dev");
+}
 
 Future<void> main() async {
-  await initApplication();
+  await loadEnvironmentVariables();
 
   PlatformDispatcher.instance.onError = (error, stack) {
-    if(error is BackendException){
-      ToastMessage.displayError(error.message);
-    }
-    else{
-      ToastMessage.displayError(error.toString());
-    }
+    ToastCreator.displayError(error.toString());
     return true;
   };
 
-  runApp(const App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
+  
+  final AccountProvider _stateManager = AccountProvider();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider<UserImageProvider>(create: (_) => UserImageProvider())
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: FutureBuilder(
+          future: _stateManager.init(),
+          builder: (context, snapshot) {
+            switch(snapshot.connectionState){
+              case(ConnectionState.done):
+                if(_stateManager.state == null) {
+                  return const LoginView();
+                }
+                if(!(_stateManager.state!.emailConfirmed)){
+                  return const VerifyEmailView();
+                }
+                return const RootView();
+              default:
+                return const LoadingView();
+            }
+          }
+        ),
+        routes: {
+          loginRoute: (context) => const LoginView(),
+          registerRoute: (context) => const RegisterView(),
+          verifyEmailRoute: (context) => const VerifyEmailView(),
+          rootRoute: (context) => const RootView(),
+          profileFollowersRoute: (context) => const ProfileFollowersPage(),
+          profileFollowedsRoute: (context) => const ProfileFollowedsPage()
+        },
       ),
-      home: const RootView(),
-      routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
-        '/verify-email/': (context) => const VerifyEmailView(),
-        '/home/': (context) => const HomeView()
-      },
     );
   }
 }

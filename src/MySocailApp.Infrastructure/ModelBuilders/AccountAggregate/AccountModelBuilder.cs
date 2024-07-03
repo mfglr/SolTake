@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AccountAggregate
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
-            builder.OwnsOne(x => x.EmailVerificationToken);
+            builder.OwnsOne(x => x.EmailConfirmationToken);
         }
     }
 }

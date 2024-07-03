@@ -8,14 +8,14 @@ using System.Net;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmail
 {
-    public class UpdateEmailHandler(UserManager<Account> userManager, ITokenService tokenService, IMapper mapper, IAccountAccessor accountAccessor) : IRequestHandler<UpdateEmailDto, LoginResponseDto>
+    public class UpdateEmailHandler(UserManager<Account> userManager, ITokenService tokenService, IMapper mapper, IAccountAccessor accountAccessor) : IRequestHandler<UpdateEmailDto, AccountDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly UserManager<Account> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<LoginResponseDto> Handle(UpdateEmailDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> Handle(UpdateEmailDto request, CancellationToken cancellationToken)
         {
             var account = _accountAccessor.Account;
             account.UpdateEmail(request.Email);
@@ -25,7 +25,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmail
                 throw new ClientSideException(result.Errors.Select(x => x.Description).ToList(), (int)HttpStatusCode.BadRequest);
 
             var token = await _tokenService.CreateTokenAsync(account);
-            return _mapper.Map<Account, LoginResponseDto>(
+            return _mapper.Map<Account, AccountDto>(
                 account,
                 opt => opt.AfterMap((src, dest) => dest.Token = token)
             );

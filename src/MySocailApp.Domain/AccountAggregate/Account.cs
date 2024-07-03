@@ -22,7 +22,7 @@ namespace MySocailApp.Domain.AccountAggregate
             UserName = AccountAggregate.Email.GenerateUserName(email);
             CreatedAt = DateTime.UtcNow;
             IsRemoved = false;
-            EmailVerificationToken = EmailConfirmationToken.GenerateToken();
+            EmailConfirmationToken = EmailConfirmationToken.GenerateToken();
 
             AddDomainEvent(new AccountCreatedDominEvent(this));
         }
@@ -40,20 +40,20 @@ namespace MySocailApp.Domain.AccountAggregate
         }
 
         //Email verfication Token
-        public EmailConfirmationToken EmailVerificationToken { get; private set; }
+        public EmailConfirmationToken EmailConfirmationToken { get; private set; }
         public void UpdateEmailConfirmationToken()
         {
             if(EmailConfirmed)
                 throw new EmailWasAlreadyConfirmedException();
 
-            EmailVerificationToken = EmailConfirmationToken.GenerateToken();
+            EmailConfirmationToken = EmailConfirmationToken.GenerateToken();
             AddDomainEvent(new EmailConfirmationtokenUpdatedDomainEvent(this));
         }
         public void ConfirmEmailByToken(string token)
         {
-            if (!EmailVerificationToken.IsValid(token))
+            if (!EmailConfirmationToken.IsValid(token))
             {
-                EmailVerificationToken.IncreaseNumberOfFailedAttemps();
+                EmailConfirmationToken.IncreaseNumberOfFailedAttemps();
                 throw new InvalidEmailConfirmationTokenException();
             }
             EmailConfirmed = true;

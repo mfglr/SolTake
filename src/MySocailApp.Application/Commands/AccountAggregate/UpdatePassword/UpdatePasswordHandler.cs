@@ -8,14 +8,14 @@ using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdatePassword
 {
-    public class UpdatePasswordHandler(UserManager<Account> userManager, ITokenService tokenService,IAccountAccessor accountAccessor, IMapper mapper) : IRequestHandler<UpdatePasswordDto, LoginResponseDto>
+    public class UpdatePasswordHandler(UserManager<Account> userManager, ITokenService tokenService,IAccountAccessor accountAccessor, IMapper mapper) : IRequestHandler<UpdatePasswordDto, AccountDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly UserManager<Account> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<LoginResponseDto> Handle(UpdatePasswordDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> Handle(UpdatePasswordDto request, CancellationToken cancellationToken)
         {
             var account = _accountAccessor.Account;
             if (!await _userManager.CheckPasswordAsync(account, request.CurrentPassword))
@@ -26,7 +26,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.UpdatePassword
                 throw new ServerSideException(result.Errors.Select(x => x.Description).ToList());
 
             var token = await _tokenService.CreateTokenAsync(account);
-            return _mapper.Map<Account, LoginResponseDto>(
+            return _mapper.Map<Account, AccountDto>(
                 account,
                 opt => opt.AfterMap((src, dest) => dest.Token = token)
             );

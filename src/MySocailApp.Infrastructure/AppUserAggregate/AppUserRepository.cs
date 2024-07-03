@@ -20,9 +20,9 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             _context.AppUsers.Remove(user);
         }
 
-        public async Task<AppUser?> GetByIdAsync(string id, CancellationToken cancellationToken)
+        public async Task<AppUser> GetByIdAsync(string id, CancellationToken cancellationToken)
         {
-            return await _context.AppUsers.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _context.AppUsers.FirstAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<AppUser?> GetWithAllAsync(string id, string userId, CancellationToken cancellationToken)

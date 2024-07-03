@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/initiliaze.dart';
-import 'package:my_social_app/services/injection_container.dart';
-import 'package:my_social_app/services/login_service.dart';
-import 'package:my_social_app/services/storage/storage.dart';
+import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/providers/account_provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -15,8 +13,7 @@ class _LoginViewState extends State<LoginView> {
   late final TextEditingController _emailOrUserName;
   late final TextEditingController _password;
   late final TextEditingController _passwordConfirmation;
-  late final LoginService _service = getIt<LoginService>();
-  late final Storage _storage = getIt<Storage>();
+  final AccountProvider _stateManager = AccountProvider();
 
   @override
   void initState() {
@@ -73,15 +70,13 @@ class _LoginViewState extends State<LoginView> {
             
             OutlinedButton(
               onPressed: () async {
-                account = await _service.login(_emailOrUserName.text, _password.text);
-                await _storage.setLoginResponse(account!);
-                
+                final state = await _stateManager.loginByPassword(_emailOrUserName.text, _password.text);
                 if (!context.mounted) return;
-                if(account!.emailConfirmed){
-                  Navigator.of(context).pushNamedAndRemoveUntil('/home/', (route) => false);
+                if(state!.emailConfirmed){
+                  Navigator.of(context).pushNamedAndRemoveUntil(rootRoute, (route) => false);
                 }
                 else{
-                  Navigator.of(context).pushNamedAndRemoveUntil('/verify-email/', (route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false);
                 }
               },
               child: Row(
@@ -103,9 +98,7 @@ class _LoginViewState extends State<LoginView> {
                   const Text("Don't you have an account? Register."),
                   OutlinedButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/register/', (route) => false 
-                      );
+                      Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

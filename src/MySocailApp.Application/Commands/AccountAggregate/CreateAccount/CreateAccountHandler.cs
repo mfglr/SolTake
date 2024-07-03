@@ -9,7 +9,7 @@ using System.Net;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
 {
-    public class CreateAccountHandler(ITokenService tokenService, ITransactionCreator transactionCreator, UserManager<Account> userManager, IAppUserRepository userRepository, IMapper mapper) : IRequestHandler<CreateAccountDto, LoginResponseDto>
+    public class CreateAccountHandler(ITokenService tokenService, ITransactionCreator transactionCreator, UserManager<Account> userManager, IAppUserRepository userRepository, IMapper mapper) : IRequestHandler<CreateAccountDto, AccountDto>
     {
         private readonly ITransactionCreator _transactionCreator = transactionCreator;
         private readonly UserManager<Account> _userManager = userManager;
@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
         private readonly IAppUserRepository _userRepository = userRepository;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<LoginResponseDto> Handle(CreateAccountDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> Handle(CreateAccountDto request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid().ToString();
             var account = new Account(id);
@@ -37,7 +37,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
             await transaction.CommitAsync(cancellationToken);
 
             var token = await _tokenService.CreateTokenAsync(account);
-            return _mapper.Map<Account, LoginResponseDto>(
+            return _mapper.Map<Account, AccountDto>(
                 account,
                 opt => opt.AfterMap((src, dest) => dest.Token = token)
             );

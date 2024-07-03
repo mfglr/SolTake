@@ -9,14 +9,14 @@ using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
 {
-    public class LoginByPasswordHandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserRepository userRepository, IMapper mapper) : IRequestHandler<LoginByPasswordDto, LoginResponseDto>
+    public class LoginByPasswordHandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserRepository userRepository, IMapper mapper) : IRequestHandler<LoginByPasswordDto, AccountDto>
     {
         private readonly UserManager<Account> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
         private readonly IAppUserRepository _userRepository = userRepository;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<LoginResponseDto> Handle(LoginByPasswordDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> Handle(LoginByPasswordDto request, CancellationToken cancellationToken)
         {
             Account account;
             if (Email.IsValid(request.EmailOrUserName))
@@ -43,7 +43,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
                 throw new ServerSideException(result.Errors.Select(x => x.Description).ToList());
 
             var token = await _tokenService.CreateTokenAsync(account);
-            return _mapper.Map<Account, LoginResponseDto>(
+            return _mapper.Map<Account, AccountDto>(
                 account,
                 opt => opt.AfterMap((src, dest) => dest.Token = token)
             );

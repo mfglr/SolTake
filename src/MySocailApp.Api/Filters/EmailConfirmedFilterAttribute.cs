@@ -11,7 +11,7 @@ namespace MySocailApp.Api.Filters
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (_accountAccessor.Account.EmailConfirmed)
+            if (!_accountAccessor.Account.EmailConfirmed)
                 throw new EmailIsNotConfirmedException();
             await next();
         }

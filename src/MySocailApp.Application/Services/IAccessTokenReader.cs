@@ -2,7 +2,7 @@
 {
     public interface IAccessTokenReader
     {
-        string GetAccountId();
+        string? GetAccountId();
         string GetRequiredAccountId();
         string GetRequiredUserName();
         string GetRequiredEmail();

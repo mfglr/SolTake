@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmail
 {
-    public record UpdateEmailDto(string Email) : IRequest<LoginResponseDto>;
+    public record UpdateEmailDto(string Email) : IRequest<AccountDto>;
 }

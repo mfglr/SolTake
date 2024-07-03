@@ -12,7 +12,7 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountCreatedDomainEvent
         {
             var account = notification.Account;
             await _emailService.SendEmailConfirmationByTokenMail(
-                account.EmailVerificationToken, notification.Account.UserName!,notification.Account.Email!,cancellationToken
+                account.EmailConfirmationToken, notification.Account.UserName!,notification.Account.Email!,cancellationToken
             );
         }
     }

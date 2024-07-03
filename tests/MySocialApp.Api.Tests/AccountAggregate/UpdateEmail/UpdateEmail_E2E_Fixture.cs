@@ -34,7 +34,7 @@ namespace MySocialApp.Api.Tests.AccountAggregate.UpdateEmail
             using var stream = response.Content.ReadAsStream();
             using var reader = new StreamReader(stream);
             var content = reader.ReadToEnd();
-            var loginResponse = JsonConvert.DeserializeObject<LoginResponseDto>(content)!;
+            var loginResponse = JsonConvert.DeserializeObject<AccountDto>(content)!;
             ClientWithAccessToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginResponse.Token.AccessToken);
         }
 

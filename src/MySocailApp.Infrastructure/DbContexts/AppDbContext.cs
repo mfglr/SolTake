@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AccountAggregate;
-using MySocailApp.Domain.AppNotificationAggregate;
-using MySocailApp.Domain.AppNotificationClientAggregate;
 using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.PostAggregate;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
@@ -13,9 +12,8 @@ namespace MySocailApp.Infrastructure.DbContexts
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<Account,IdentityRole,string>(options)
     {
         public DbSet<AppUser> AppUsers { get; private set; }
-        public DbSet<AppNotification> AppNotifications { get; private set; }
-        public DbSet<AppNotificationClient> AppNotificationClients { get; private set; }
-
+        public DbSet<Post> Posts { get; private set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

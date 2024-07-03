@@ -232,60 +232,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AppNotificationAggregate.AppNotification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatetAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ViewedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AppNotifications");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AppNotificationClientAggregate.AppNotificationClient", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("ConnectedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ConnectionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AppNotificationClients");
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -322,6 +268,32 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.AppUserImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BlobName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RemovedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("AppUserImage");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Block", b =>
@@ -396,6 +368,22 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("FollowRequest");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.PostAggregate.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -449,7 +437,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Account", b =>
                 {
-                    b.OwnsOne("MySocailApp.Domain.AccountAggregate.EmailVerificationToken", "EmailVerificationToken", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.AccountAggregate.EmailConfirmationToken", "EmailConfirmationToken", b1 =>
                         {
                             b1.Property<string>("AccountId")
                                 .HasColumnType("nvarchar(450)");
@@ -472,8 +460,40 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("AccountId");
                         });
 
-                    b.Navigation("EmailVerificationToken")
+                    b.Navigation("EmailConfirmationToken")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.AppUser", b =>
+                {
+                    b.OwnsOne("MySocailApp.Domain.AppUserAggregate.UserImage", "Image", b1 =>
+                        {
+                            b1.Property<string>("AppUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<string>("BlobName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("AppUserId");
+
+                            b1.ToTable("AppUsers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AppUserId");
+                        });
+
+                    b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.AppUserImage", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.AppUserAggregate.AppUser", null)
+                        .WithMany("Images")
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Block", b =>
@@ -533,6 +553,13 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Requester");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.PostAggregate.Post", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.AppUserAggregate.AppUser", null)
+                        .WithMany("Posts")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.AppUser", b =>
                 {
                     b.Navigation("Blockeds");
@@ -542,6 +569,10 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Followeds");
 
                     b.Navigation("Followers");
+
+                    b.Navigation("Images");
+
+                    b.Navigation("Posts");
 
                     b.Navigation("Requesteds");
 

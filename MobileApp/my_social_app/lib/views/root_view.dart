@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/initiliaze.dart';
-import 'package:my_social_app/services/injection_container.dart';
-import 'package:my_social_app/services/storage/storage.dart';
-import 'package:my_social_app/views/home_view.dart';
-import 'package:my_social_app/views/login_view.dart';
-import 'package:my_social_app/views/verify_email_view.dart';
+import 'package:my_social_app/providers/profile_provider.dart';
+import 'package:my_social_app/views/root/home_view.dart';
+import 'package:my_social_app/views/loading_view.dart';
+import 'package:my_social_app/views/root/profile/profile_page.dart';
+import 'package:provider/provider.dart';
 
 class RootView extends StatefulWidget {
   const RootView({super.key});
@@ -14,28 +13,52 @@ class RootView extends StatefulWidget {
 }
 
 class _RootViewState extends State<RootView> {
-  late final Storage storage;
-
+  int currentPageIndex = 0;
   @override
   void initState() {
-    storage = getIt<Storage>();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (index) => {
+          setState(() {
+            currentPageIndex = index;
+          })
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const [
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
 
-    return FutureBuilder(
-      future: login(),
-      builder: (context, snapshot) {
-        if(account == null) {
-          return const LoginView();
-        }
-        if(!(account!.emailConfirmed)){
-          return const VerifyEmailView();
-        }
-        return const HomeView();
-      }
+          NavigationDestination(
+            selectedIcon: Icon(Icons.supervised_user_circle),
+            icon: Icon(Icons.supervised_user_circle_outlined),
+            label: 'Profile',
+          ),
+
+        ],
+      ),
+      body: FutureBuilder(
+        future: context.read<ProfileProvider>().init(),
+        builder: (context, snapshot) {
+          switch(snapshot.connectionState){
+            case(ConnectionState.done):
+              return [
+                const HomeView(),
+                const ProfilePage()
+              ][currentPageIndex];
+            default:
+              return const LoadingView();
+          }
+        },
+      ) 
     );
   }
 }

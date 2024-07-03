@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/initiliaze.dart';
-import 'package:my_social_app/services/account_service.dart';
-import 'package:my_social_app/services/injection_container.dart';
-import 'package:my_social_app/services/storage/storage.dart';
+import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/providers/account_provider.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -16,8 +14,7 @@ class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
   late final TextEditingController _passwordConfirmation;
-  late final AccountService _service = getIt<AccountService>();
-  late final Storage _storage = getIt<Storage>();
+  final AccountProvider _stataManager = AccountProvider();
 
   @override
   void initState() {
@@ -86,13 +83,10 @@ class _RegisterViewState extends State<RegisterView> {
             ),
         
             OutlinedButton(
-              
               onPressed: () async {
-                account = await _service.signUp(_email.text,_password.text,_passwordConfirmation.text);
-                await _storage.setLoginResponse(account!);
-
+                await _stataManager.create(_email.text,_password.text,_passwordConfirmation.text);
                 if (!context.mounted) return;
-                Navigator.of(context).pushNamedAndRemoveUntil('/verify-email/', (route) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false);
               },
 
               child: Row(
@@ -115,7 +109,7 @@ class _RegisterViewState extends State<RegisterView> {
                   const Text("Do you have an account? Login."),
                   OutlinedButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil('/login/', (route) => false);
+                      Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

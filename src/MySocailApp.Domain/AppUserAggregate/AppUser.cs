@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.PostAggregate;
 
 namespace MySocailApp.Domain.AppUserAggregate
 {
@@ -10,6 +11,23 @@ namespace MySocailApp.Domain.AppUserAggregate
         public string UserName { get; private set; } = userName;
         public DateTime? UpdatedAt { get; private set; }
         public DateTime CreatedAt { get; private set; }
+
+        public UserImage? Image { get; private set; }
+        private readonly List<AppUserImage> _images = [];
+        public IReadOnlyCollection<AppUserImage> Images => _images;
+        internal void updateImage(UserImage image)
+        {
+            if(Image != null)
+                _images.Add(Image.ToAppUserImage());
+            Image = image;
+        }
+        public void removeImage()
+        {
+            if (Image == null)
+                throw new UserImageIsNotAvailableException();
+            _images.Add(Image.ToAppUserImage());
+            Image = null;
+        }
 
         public void Create()
         {
@@ -21,7 +39,6 @@ namespace MySocailApp.Domain.AppUserAggregate
             UserName = username;
             UpdatedAt = DateTime.UtcNow;
         }
-
 
         internal void DeleteEntities()
         {
@@ -57,6 +74,7 @@ namespace MySocailApp.Domain.AppUserAggregate
             UpdatedAt = DateTime.UtcNow;
         }
 
+        //profile visibility
         public ProfileVisibility ProfileVisibility { get; private set; }
         public void MakeProfilePrivate()
         {
@@ -80,6 +98,7 @@ namespace MySocailApp.Domain.AppUserAggregate
             _requesters.Clear();
         }
 
+        //following
         private readonly List<Follow> _followers = [];
         private readonly List<Follow> _followeds = [];
         private readonly List<FollowRequest> _requesters = [];
@@ -139,6 +158,7 @@ namespace MySocailApp.Domain.AppUserAggregate
             _followers.Add(Follow.Create(requesterId, Id));
         }
 
+        //Block
         private readonly List<Block> _blockers = [];
         private readonly List<Block> _blockeds = [];
         public IReadOnlyList<Block> Blockers => _blockers;
@@ -182,6 +202,9 @@ namespace MySocailApp.Domain.AppUserAggregate
 
             _blockers.RemoveAt(index);
         }
+
+        //readonly Posts
+        public IReadOnlyCollection<Post> Posts { get; }
 
         //IRemovable
         public bool IsRemoved { get; private set; }
@@ -227,5 +250,7 @@ namespace MySocailApp.Domain.AppUserAggregate
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
+
+
     }
 }

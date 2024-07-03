@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Commands.AccountAggregate;
-using MySocailApp.Application.Queries.AccountAggregate;
 using MySocailApp.Domain.AccountAggregate;
 
 namespace MySocailApp.Application.Mappers
@@ -9,8 +8,7 @@ namespace MySocailApp.Application.Mappers
     {
         public AccountMappers()
         {
-            CreateMap<Account, AccountResponseDto>();
-            CreateMap<Account, LoginResponseDto>();
+            CreateMap<Account, AccountDto>();
         }
     }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/initiliaze.dart';
-import 'package:my_social_app/services/account_service.dart';
-import 'package:my_social_app/services/injection_container.dart';
-import 'package:my_social_app/services/storage/storage.dart';
+import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/providers/account_provider.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -12,8 +10,7 @@ class VerifyEmailView extends StatefulWidget {
 
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   late final TextEditingController _token;
-  final AccountService _accountService = getIt<AccountService>();
-  final Storage _storage = getIt<Storage>();
+  final AccountProvider _stateManager = AccountProvider();
 
   @override
   void initState() {
@@ -61,20 +58,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 48),
               child: OutlinedButton(
                 onPressed: () async {
-                  final token = _token.text;
-                  try{
-                    await _accountService.confirmEmailByToken(token);
-                    account!.confirmEmail();
-                    _storage.setLoginResponse(account!);
-                    
-                    if (!context.mounted) return;
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/home/', (route) => false 
-                    );
-                  }
-                  catch(e){
-                    print(e);
-                  }
+                  await _stateManager.confirmEmailByToken(_token.text);
+                  
+                  if (!context.mounted) return;
+                  Navigator.of(context).pushNamedAndRemoveUntil(rootRoute, (route) => false);
                 }, 
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -95,29 +82,64 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             ),
 
             Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 48),
               child: OutlinedButton(
                 onPressed: () async {
-                  final AccountService accountService = getIt<AccountService>();
-                  try{
-                    await accountService.sendEmailConfirmationByTokenMail();
-                  }
-                  catch(e){
-                    print(e);
-                  }
+                  await _stateManager.sendEmailConfirmationByTokenMail();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                      child: const Text("Send Email")
+                      child: const Text("Resend Email")
                     ),
                     const Icon(Icons.email)
                   ],
                 )
               ),
-            )
+            ),
+
+            Column(
+              children: [
+                const Text("Do you have an account? Login."),
+                OutlinedButton(
+                  onPressed: () async {
+                    await _stateManager.logOut();
+                    if(!context.mounted) return;
+                    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                        child: const Text("LOGIN")
+                      ),
+                      const Icon(Icons.login)
+                    ]
+                  )
+                ),
+                const Text("Go back to register page."),
+                OutlinedButton(
+                  onPressed: () async {
+                    await _stateManager.logOut();
+                    if(!context.mounted) return;
+                    Navigator.of(context).pushNamedAndRemoveUntil( registerRoute, (route) => false );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [ 
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                        child: const Text("REGISTER")
+                      ),
+                      const Icon(Icons.create)
+                    ]
+                  )
+                ),
+              ],
+            ),
           ],
         ),
       ),

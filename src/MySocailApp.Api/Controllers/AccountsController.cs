@@ -9,14 +9,13 @@ using MySocailApp.Application.Commands.AccountAggregate.ConfirmEmailByToken;
 using MySocailApp.Application.Commands.AccountAggregate.CreateAccount;
 using MySocailApp.Application.Commands.AccountAggregate.DeactiveAccount;
 using MySocailApp.Application.Commands.AccountAggregate.DeleteAccount;
+using MySocailApp.Application.Commands.AccountAggregate.LoginByPassword;
+using MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken;
 using MySocailApp.Application.Commands.AccountAggregate.SendEmailConfirmationMail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmationToken;
 using MySocailApp.Application.Commands.AccountAggregate.UpdatePassword;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateUserName;
-using MySocailApp.Application.Queries.AccountAggregate;
-using MySocailApp.Application.Queries.AccountAggregate.GetAccountByEmail;
-using MySocailApp.Application.Queries.AccountAggregate.GetAccountById;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -27,7 +26,19 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<LoginResponseDto> Create(CreateAccountDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> LoginByPassword(LoginByPasswordDto request, CancellationToken cancellationToken)
+        {
+            return await _mediator.Send(request, cancellationToken);
+        }
+
+        [HttpPost]
+        public async Task<AccountDto> LoginByRefreshToken(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
+        {
+            return await _mediator.Send(request, cancellationToken);
+        }
+
+        [HttpPost]
+        public async Task<AccountDto> Create(CreateAccountDto request, CancellationToken cancellationToken)
         {
             return await _mediator.Send(request, cancellationToken);
         }
@@ -36,7 +47,7 @@ namespace MySocailApp.Api.Controllers
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<LoginResponseDto> UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
         {
             return await _mediator.Send(request, cancellationToken);
         }
@@ -44,7 +55,7 @@ namespace MySocailApp.Api.Controllers
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        public async Task<LoginResponseDto> UpdateEmail(UpdateEmailDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> UpdateEmail(UpdateEmailDto request, CancellationToken cancellationToken)
         {
             return await _mediator.Send(request, cancellationToken);
         }
@@ -52,7 +63,7 @@ namespace MySocailApp.Api.Controllers
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        public async Task<LoginResponseDto> UpdatePassword(UpdatePasswordDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> UpdatePassword(UpdatePasswordDto request, CancellationToken cancellationToken)
         {
             return await _mediator.Send(request, cancellationToken);
         }
@@ -102,20 +113,6 @@ namespace MySocailApp.Api.Controllers
         public async Task Delete(CancellationToken cancellationToken)
         {
             await _mediator.Send(new DeleteAccountDto(), cancellationToken);
-        }
-
-        [HttpGet("{id}")]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<AccountResponseDto> GetById(string id,CancellationToken cancellationToken)
-        {
-            return await _mediator.Send(new GetAccountByIdDto(id), cancellationToken);
-        }
-
-        [HttpGet("{email}")]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<AccountResponseDto> GetByEmail(string email, CancellationToken cancellationToken)
-        {
-            return await _mediator.Send(new GetAccountByEmailDto(email), cancellationToken);
         }
     }
 }

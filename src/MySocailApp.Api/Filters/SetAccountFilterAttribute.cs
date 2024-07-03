@@ -15,7 +15,10 @@ namespace MySocailApp.Api.Filters
         public async override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
-            _accountAccessor.Account = await _userManager.FindByIdAsync(accountId) ?? throw new AccountWasNotFoundException();
+            _accountAccessor.Account = 
+                await _userManager.FindByIdAsync(accountId) ?? 
+                throw new AccountWasNotFoundException();
+
             if(_accountAccessor.Account.IsRemoved)
                 throw new AccountDeactivatedException();
 

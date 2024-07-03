@@ -11,7 +11,7 @@ namespace MySocailApp.Application.DomainEventConsumers.EmailConfirmationTokenUpd
         public async Task Handle(EmailConfirmationtokenUpdatedDomainEvent notification, CancellationToken cancellationToken)
         {
             await _emailService.SendEmailConfirmationByTokenMail(
-                notification.Account.EmailVerificationToken, 
+                notification.Account.EmailConfirmationToken, 
                 notification.Account.UserName!, 
                 notification.Account.Email!, 
                 cancellationToken

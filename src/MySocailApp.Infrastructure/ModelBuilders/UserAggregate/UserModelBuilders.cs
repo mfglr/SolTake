@@ -8,6 +8,9 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+
+            builder.OwnsOne(x => x.Image);
+
             builder
                 .HasMany(x => x.Followers)
                 .WithOne(x => x.Followed)

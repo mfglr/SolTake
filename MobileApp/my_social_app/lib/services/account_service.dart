@@ -1,32 +1,48 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:my_social_app/models/login_response.dart';
-import 'package:my_social_app/services/http_service.dart';
+import 'package:my_social_app/constants/account_endpoints.dart';
+import 'package:my_social_app/constants/controllers.dart';
+import 'package:my_social_app/models/account.dart';
+import 'package:my_social_app/services/http/http_service.dart';
 
-class AccountService extends HttpService {
-  static const String _controller = "accounts";
-  static const String _signUp = "create";
-  static const String _updateEmailConfirmationToken = "UpdateEmailConfirmationToken";
-  static const String _confirmEmailByToken = "ConfirmEmailByToken";
+class AccountService {
+  final HttpService _httpService;
 
-  Future<LoginResponse> signUp(String email, String password, String passwordConfirmation) async {
-    final requestBody =  jsonEncode(<String, String>{
-      'email': email,
-      'password': password,
-      "passwordConfirm": passwordConfirmation
-    });
-    return LoginResponse.fromJson( await super.post("$_controller/$_signUp",requestBody: requestBody) );
+  const AccountService._(this._httpService);
+  static final AccountService _singleton = AccountService._(HttpService());
+  factory AccountService() => _singleton;
+
+  Future<Account> create(String email, String password, String passwordConfirmation) async {
+    final body = jsonEncode(<String, String>{'email':email,'password':password,"passwordConfirm":passwordConfirmation});
+    return Account.fromJson(await _httpService.post("$accountController/$createEndPoint",body: body));
   }
 
   Future sendEmailConfirmationByTokenMail() async {
-    return await super.put("$_controller/$_updateEmailConfirmationToken");
+    return await _httpService.put("$accountController/$updateEmailConfirmationTokenEndPoint");
   }
 
   Future confirmEmailByToken(String token) async {
-    final requestBody = jsonEncode(<String,String>{
-      'token': token
-    });
-    await super.put("$_controller/$_confirmEmailByToken",requestBody: requestBody);
+    final requestBody = jsonEncode(<String,String>{'token': token});
+    await _httpService.put("$accountController/$confirmEmailByTokenEntPoint",body: requestBody);
   }
 
+  Future<Account> loginByPassword(String emailOrUserName, String password) async {
+    final requestBody = jsonEncode(<String, String>{'emailOrUserName':emailOrUserName,'password':password});
+    return Account.fromJson(await _httpService.post("$accountController/$loginByPasswordEndPoint",body: requestBody));
+  }
+
+  Future<Account> loginByReshtoken(String id,String token) async{
+    final requestBody = jsonEncode(<String,String>{ 'id': id,'token': token});
+    return Account.fromJson(await _httpService.post("$accountController/$loginByRefreshTokenEndPoint",body: requestBody));
+  }
+
+  Future<void> updateEmail(String email) async {
+    final body = jsonEncode(<String,String>{'email': email});
+    await _httpService.post("$accountController/$updateEmailEndPoint", body: body);
+  }
+
+  Future<void> updateUserName(String userName) async {
+    final body = jsonEncode(<String,String>{'userName': userName});
+    await _httpService.post("$accountController/$updateUserNameEndPoint", body: body);
+  }
 }

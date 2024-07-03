@@ -3,12 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.Services;
-using MySocailApp.Domain.AccountAggregate;
-using MySocailApp.Domain.AppNotificationAggregate;
-using MySocailApp.Domain.AppNotificationClientAggregate;
 using MySocailApp.Domain.AppUserAggregate;
-using MySocailApp.Infrastructure.AppNotificationAggregate;
-using MySocailApp.Infrastructure.AppNotificationClientAggregate;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Services;
@@ -20,23 +15,22 @@ namespace MySocailApp.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            var connectionString = configuration.GetConnectionString("SqlServer");
             return services
-                .AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString))
+                .AddServices()
+                .AddDbContext()
+                .AddAppUserAggregate();
+        }
+
+        private static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            return services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddScoped<IAccountAccessor, AccountAccessor>()
                 .AddScoped<ITokenService, TokenService>()
-                .AddScoped<ITransactionCreator, TransactionCreator>()
-                .AddScoped<IUnitOfWork, UnitOfWork>()
-                .AddEmailService()
-                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>()
-                .AddScoped<IAppUserRepository, AppUserRepository>()
-                .AddScoped<IAppNotificationRepository, AppNotificationRepository>()
-                .AddScoped<IAppNotificationClientRepository, AppNotificationClientRepository>();
+                .AddEmailService();
         }
-
 
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
@@ -59,6 +53,28 @@ namespace MySocailApp.Infrastructure
                 )
                 .AddScoped<MailMessageFactory>()
                 .AddScoped<IEmailService, EmailService>();
+        }
+
+        private static IServiceCollection AddDbContext(this IServiceCollection services)
+        {
+            var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+            var connectionString = configuration.GetConnectionString("SqlServer");
+            return services
+               .AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString))
+               .AddScoped<ITransactionCreator, TransactionCreator>()
+               .AddScoped<IUnitOfWork, UnitOfWork>()
+               .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
+        }
+
+        private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IAppUserRepository, AppUserRepository>()
+                .AddScoped<IAppUserReadRepository, AppUserReadRepository>()
+                .AddScoped<IUserImageBlobNameGenerator, UserImageBlobNameGenerator>()
+                .AddScoped<IUserImageBlobService, UserImageBlobService>()
+                .AddScoped<UserImageUpdater>()
+                .AddScoped<UserImageReader>();
         }
     }
 }

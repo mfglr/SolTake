@@ -15,7 +15,7 @@ builder.Services
     .AddIdentity()
     .AddHttpContextAccessor()
     .AddApplicationServices()
-    .AddInfrastructureServices(builder.Configuration);
+    .AddInfrastructureServices();
     
 
 var app = builder.Build();

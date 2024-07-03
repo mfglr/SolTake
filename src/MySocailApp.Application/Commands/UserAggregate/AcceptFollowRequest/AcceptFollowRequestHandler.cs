@@ -18,9 +18,6 @@ namespace MySocailApp.Application.Commands.UserAggregate.AcceptFollowRequest
                 await _userRepository.GetWithRequesterByIdAsync(userId, request.RequesterId, cancellationToken) ?? 
                 throw new UserIsNotFoundException();
             user.AcceptFollowRequest(request.RequesterId);
-
-            //var notification = AppNotification.CreateUserFollowedNotification(request.RequesterId,userId);
-
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

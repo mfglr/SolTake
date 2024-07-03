@@ -4,7 +4,7 @@
     {
         Task CreateAsync(AppUser user, CancellationToken cancellationToken);
         void Delete(AppUser user);
-        Task<AppUser?> GetByIdAsync(string id, CancellationToken cancellationToken);
+        Task<AppUser> GetByIdAsync(string id, CancellationToken cancellationToken);
         Task<AppUser?> GetWithAllAsync(string id, string userId, CancellationToken cancellationToken);
         Task<AppUser?> GetWithAllAsync(string id, CancellationToken cancellationToken);
         Task<AppUser?> GetWithBlocker(string id, string userId, CancellationToken cancellationToken);
@@ -14,6 +14,5 @@
         Task<AppUser?> GetWithRequestersById(string id, CancellationToken cancellationToken);
 
         Task<AppUser?> GetByIdWithFollowersAndFolloweds(string id, CancellationToken cancellationToken);
-
     }
 }

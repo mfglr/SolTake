@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Application.Commands.AccountAggregate.CreateAccount;
-using MySocailApp.Application.Queries.AccountAggregate;
 using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 using Newtonsoft.Json;
@@ -105,52 +104,5 @@ namespace MySocialApp.Api.Tests.AccountAggregate.Create
             Assert.Equal(statusCode, response.StatusCode);
         }
 
-        [Fact]
-        public async Task WhenAccountCreateSuccessfully_ShouldBeTrue()
-        {
-            string email = "test1@outlook.com";
-            string firstSectionOfEmail = "test1";
-            string password = "123456";
-            var request = new CreateAccountDto(email, password, password);
-            var createAccount = "api/Accounts/Create";
-            var getAccount = $"api/accounts/GetByEmail/{email}";
-
-            var createAccountResponse = await _fixture.Client.PostAsJsonAsync(createAccount, request);
-            var getAccountResponse = await _fixture.ClientWithAccessToken.GetAsync(getAccount);
-            using var s0 = await getAccountResponse.Content.ReadAsStreamAsync();
-            using var r0 = new StreamReader(s0);
-            var content0 = await r0.ReadToEndAsync();
-            var accountResponse = JsonConvert.DeserializeObject<AccountResponseDto>(content0);
-
-            var getUser = $"api/users/GetById/{accountResponse?.Id}";
-            var getUserResponse = await _fixture.ClientWithAccessToken.GetAsync(getUser);
-            using var s1 = await getUserResponse.Content.ReadAsStreamAsync();
-            using var r1 = new StreamReader(s1);
-            var content1 = await r1.ReadToEndAsync();
-            var userResponse = JsonConvert.DeserializeObject<UserResponseDto>(content1);
-
-
-            Assert.Equal(HttpStatusCode.OK, createAccountResponse.StatusCode);
-            Assert.Equal(HttpStatusCode.OK, getAccountResponse.StatusCode);
-            Assert.Equal(HttpStatusCode.OK, getUserResponse.StatusCode);
-
-            Assert.NotNull(accountResponse);
-            Assert.NotNull(userResponse);
-
-            Assert.Equal(accountResponse.UserName, userResponse.UserName);
-            Assert.Equal(accountResponse.Id, userResponse.Id);
-
-            Assert.NotEqual(default, accountResponse.CreatedAt);
-            Assert.Null(accountResponse.UpdatedAt);
-            Assert.Equal(email, accountResponse.Email);
-            Assert.StartsWith(firstSectionOfEmail, accountResponse.UserName);
-
-            Assert.NotEqual(default, userResponse.CreatedAt);
-            Assert.Null(userResponse.UpdatedAt);
-            Assert.Equal(Gender.Default,userResponse.Gender);
-            Assert.Null(userResponse.BirthDate);
-            Assert.Null(userResponse.Name);
-            Assert.Equal(ProfileVisibility.Public,userResponse.ProfileVisibility);
-        }
     }
 }

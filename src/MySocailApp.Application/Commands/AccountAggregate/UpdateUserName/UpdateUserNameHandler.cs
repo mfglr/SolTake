@@ -9,7 +9,7 @@ using System.Net;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
 {
-    public class UpdateUserNamehandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserRepository userRepository, IMapper mapper, IAccountAccessor accountAccessor) : IRequestHandler<UpdateUserNameDto, LoginResponseDto>
+    public class UpdateUserNamehandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserRepository userRepository, IMapper mapper, IAccountAccessor accountAccessor) : IRequestHandler<UpdateUserNameDto, AccountDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly UserManager<Account> _userManager = userManager;
@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
         private readonly ITokenService _tokenService = tokenService;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<LoginResponseDto> Handle(UpdateUserNameDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> Handle(UpdateUserNameDto request, CancellationToken cancellationToken)
         {
             var account = _accountAccessor.Account;
             account.UpdateUserName(request.UserName);
@@ -29,7 +29,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
                 throw new ClientSideException(result.Errors.Select(x => x.Description).ToList(), (int)HttpStatusCode.BadRequest);
 
             var token = await _tokenService.CreateTokenAsync(account);
-            return _mapper.Map<Account, LoginResponseDto>(
+            return _mapper.Map<Account, AccountDto>(
                 account,
                 opt => opt.AfterMap((src, dest) => dest.Token = token)
             );

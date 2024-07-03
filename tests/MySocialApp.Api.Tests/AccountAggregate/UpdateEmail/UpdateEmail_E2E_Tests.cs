@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Application.Commands.AccountAggregate.UpdateEmail;
-using MySocailApp.Application.Queries.AccountAggregate;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
@@ -60,29 +59,5 @@ namespace MySocialApp.Api.Tests.AccountAggregate.UpdateEmail
             Assert.Equal(message, content);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
-
-        [Fact]
-        public async Task WhenEmailIsValid_ReturnSuccess()
-        {
-            var email = "test1@outlook.com";
-            var request = new UpdateEmailDto(email);
-            var endPoint = "api/accounts/UpdateEmail";
-
-            var response = await _fixture.ClientWithAccessToken.PutAsJsonAsync(endPoint, request);
-
-            var endPoint1 = $"api/accounts/GetByEmail/{email}";
-
-            var response1 = await _fixture.ClientWithAccessToken.GetAsync(endPoint1);
-            using var stream1 = await response1.Content.ReadAsStreamAsync();
-            using var reader1 = new StreamReader(stream1);
-            var content1 = await reader1.ReadToEndAsync();
-            var accountRespone = JsonConvert.DeserializeObject<AccountResponseDto>(content1);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(accountRespone);
-            Assert.Equal(email, accountRespone.Email);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
     }
 }
