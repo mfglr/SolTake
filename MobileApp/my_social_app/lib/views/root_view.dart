@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/providers/profile_provider.dart';
-import 'package:my_social_app/views/root/home_view.dart';
+import 'package:my_social_app/providers/user_provider.dart';
+import 'package:my_social_app/views/pages/home_page.dart';
 import 'package:my_social_app/views/loading_view.dart';
-import 'package:my_social_app/views/root/profile/profile_page.dart';
+import 'package:my_social_app/views/pages/profile_page.dart';
 import 'package:provider/provider.dart';
 
 class RootView extends StatefulWidget {
@@ -21,7 +21,6 @@ class _RootViewState extends State<RootView> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (index) => {
@@ -46,12 +45,12 @@ class _RootViewState extends State<RootView> {
         ],
       ),
       body: FutureBuilder(
-        future: context.read<ProfileProvider>().init(),
+        future: context.read<UserProvider>().loadCurrentUser(),
         builder: (context, snapshot) {
           switch(snapshot.connectionState){
             case(ConnectionState.done):
               return [
-                const HomeView(),
+                const HomePage(),
                 const ProfilePage()
               ][currentPageIndex];
             default:

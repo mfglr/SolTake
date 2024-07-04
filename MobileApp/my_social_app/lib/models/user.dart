@@ -51,6 +51,7 @@ class User{
     isFollower,
     isFollowed
   );
+
 }
 
 class Gender{

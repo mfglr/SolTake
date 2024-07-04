@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/providers/account_provider.dart';
-import 'package:my_social_app/providers/profile_provider.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
-import 'package:my_social_app/views/shared/User/user_image_widget.dart';
-import 'package:provider/provider.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<HomePage> createState() => _HomeViewState();
 }
 
 enum MenuAction{
   logout
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomePage> {
   final AccountProvider _stateManager = AccountProvider();
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((ProfileProvider p) => p.user);
     return Scaffold(
       appBar: AppBar(
         title: const Text("My App"),
@@ -57,7 +53,6 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      body: UserImageWidget(state: state, diameter: 75)
     );
   }
 }

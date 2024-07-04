@@ -13,7 +13,7 @@ class UserImageProvider extends ChangeNotifier{
   Future<void> loadImage(String id) async {
     if(_images[id] == null){
       final image = await _userService.getImageById(id);
-      _images.addEntries({id: image}.entries);
+      _images.addEntries([MapEntry(id, image)]);
       notifyListeners();
     }
   }

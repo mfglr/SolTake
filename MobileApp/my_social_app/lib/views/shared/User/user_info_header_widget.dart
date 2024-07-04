@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/models/states/user_state.dart';
-import 'package:my_social_app/providers/profile_provider.dart';
-import 'package:my_social_app/views/shared/User/user_image_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 
 class UserInfoHeaderWidget extends StatelessWidget {
   final UserState state;
@@ -54,9 +52,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
                 
               TextButton(
                 onPressed: () async {
-                  await context.read<ProfileProvider>().loadFollowers();
-                  if(!context.mounted) return;
-                  await Navigator.of(context).pushNamed(profileFollowersRoute);
+                  await Navigator.of(context).pushNamed(userFollowersRoute,arguments: state.id);
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -77,9 +73,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
           
               TextButton(
                 onPressed: () async {
-                  await context.read<ProfileProvider>().loadFolloweds();
-                  if(!context.mounted) return;
-                  await Navigator.of(context).pushNamed(profileFollowedsRoute);
+                  await Navigator.of(context).pushNamed(userFollowedsRoute,arguments: state.id);
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -101,7 +95,6 @@ class UserInfoHeaderWidget extends StatelessWidget {
             ],
           ),
         ),
-    
       ],
     );
   }

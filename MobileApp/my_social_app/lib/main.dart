@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/providers/account_provider.dart';
-import 'package:my_social_app/providers/profile_provider.dart';
 import 'package:my_social_app/providers/user_image_provider.dart';
+import 'package:my_social_app/providers/user_provider.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/login_view.dart';
+import 'package:my_social_app/views/pages/profile_page.dart';
+import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/register_view.dart';
-import 'package:my_social_app/views/root/profile/profile_followeds_page.dart';
-import 'package:my_social_app/views/root/profile/profile_followers_page.dart';
+import 'package:my_social_app/views/pages/user/user_followeds_page.dart';
+import 'package:my_social_app/views/pages/user/user_followers_page.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/verify_email_view.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +44,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
         ChangeNotifierProvider<UserImageProvider>(create: (_) => UserImageProvider())
       ],
       child: MaterialApp(
@@ -73,8 +75,10 @@ class App extends StatelessWidget {
           registerRoute: (context) => const RegisterView(),
           verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),
-          profileFollowersRoute: (context) => const ProfileFollowersPage(),
-          profileFollowedsRoute: (context) => const ProfileFollowedsPage()
+          profilePageRoute: (context) => const ProfilePage(),
+          userFollowersRoute: (context) => const UserFollowersPage(),
+          userFollowedsRoute: (context) => const UserFollowedsPage(),
+          userPageroute: (context) => const UserPage()
         },
       ),
     );

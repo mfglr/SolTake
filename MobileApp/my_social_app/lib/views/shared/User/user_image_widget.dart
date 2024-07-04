@@ -13,7 +13,6 @@ class UserImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<UserImageProvider>().loadImage(state.id);
     final image = context.select((UserImageProvider u) => u.getImageById(state.id));
-    
 
     return Container(
       width: diameter,

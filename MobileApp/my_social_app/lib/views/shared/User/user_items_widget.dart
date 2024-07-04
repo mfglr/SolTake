@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/models/states/user_state.dart';
-import 'package:my_social_app/views/shared/User/user_item_widget.dart';
+import 'package:my_social_app/views/shared/user/user_item_widget.dart';
 
 class UserItemsWidget extends StatelessWidget {
   final List<UserState> state;

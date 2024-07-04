@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/models/states/user_state.dart';
 import 'package:my_social_app/views/shared/Buttons/follow_button_widget.dart';
-import 'package:my_social_app/views/shared/User/user_info_header_widget.dart';
+import 'package:my_social_app/views/shared/user/user_info_header_widget.dart';
 
 class UserInfoCardWidget extends StatelessWidget {
   final UserState state;

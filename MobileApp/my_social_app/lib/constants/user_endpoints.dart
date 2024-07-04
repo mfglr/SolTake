@@ -3,4 +3,7 @@ const getUserByIdEndPoint = "GetById";
 const getUserImageEndPoint = "GetImage";
 const gerUserImageByIdEndPoint = "GetImageById";
 const getFollowersEndPoint = "GetFollowers";
+const getFollowersByIdEndPoint = "GetFollowersById";
 const getFollowedsEndPoint = "GetFolloweds";
+const getFollowedsByIdEndPoint = "GetFollowedsById";
+const makeFollowRequestEndPoint = "MakeFollowRequest";

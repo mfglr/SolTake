@@ -1,8 +1,7 @@
+import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
-import 'package:my_social_app/models/states/user_state.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/services/http/http_service.dart';
 
@@ -12,6 +11,12 @@ class UserService{
   UserService._(this._httpService);
   static final UserService _singleton = UserService._(HttpService());
   factory UserService() => _singleton;
+
+  Future<void> makeFollowRequest(String requestedId) async {
+    final body = jsonEncode(<String, String>{'requestedId': requestedId});
+    String url = "$userController/$makeFollowRequestEndPoint";
+    await _httpService.post(url, body: body);
+  }
 
   Future<User> get() async {
     String url = "$userController/$getUserEndPoint";
@@ -33,19 +38,32 @@ class UserService{
     return await _httpService.readBytes(url);
   }
 
-  Future<List<UserState>> getFollowers({String? lastId}) async{
+  Future<List<User>> getFollowers({String? lastId}) async{
     String url = "$userController/$getFollowersEndPoint";
     return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
-      (item) => UserState.fromJson(item)
+      (item) => User.fromJson(item)
     ).toList();
   }
 
-   Future<List<UserState>> getFolloweds({String? lastId}) async{
+  Future<List<User>> getFollowersById(String id, {String? lastId}) async {
+    String url = "$userController/$getFollowersByIdEndPoint/$id";
+    return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
+      (item) => User.fromJson(item)
+    ).toList();
+  }
+
+  Future<List<User>> getFolloweds({String? lastId}) async{
     String url = "$userController/$getFollowedsEndPoint";
     return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
-      (item) => UserState.fromJson(item)
+      (item) => User.fromJson(item)
     ).toList();
   }
 
+  Future<List<User>> getFollowedsById(String id, {String? lastId}) async {
+    String url = "$userController/$getFollowedsByIdEndPoint/$id";
+    return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
+      (item) => User.fromJson(item)
+    ).toList();
+  }
 
 }
