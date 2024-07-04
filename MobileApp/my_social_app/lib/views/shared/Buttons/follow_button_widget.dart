@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class FollowButtonWidget extends StatelessWidget {
   final bool isFollowed;
@@ -7,7 +9,9 @@ class FollowButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: (){},
+      onPressed: (){
+        context.read<UserProvider>();
+      },
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

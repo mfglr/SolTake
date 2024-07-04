@@ -135,8 +135,18 @@ namespace MySocailApp.Domain.AppUserAggregate
                 AddDomainEvent(new FollowCreatedEvent(requesterId, Id));
             }
         }
+        public void CancelFollowRequest(string requestedId)
+        {
+            var index = _requesteds.FindIndex(x => x.RequestedId == requestedId);
+            if (index == -1)
+                throw new FollowRequestIsNotFoundException();
+            _requesteds.RemoveAt(index);
+        }
         public void Unfollow(string followerId)
         {
+            if (_blockeds.Any(x => x.BlockedId == followerId))
+                throw new UserIsNotFoundException();
+
             var index = _followers.FindIndex(x => x.FollowerId == followerId);
             if (index == -1)
                 throw new UserIsNotFollowedException();
@@ -156,6 +166,14 @@ namespace MySocailApp.Domain.AppUserAggregate
                 throw new FollowRequestIsNotFoundException();
             _requesters.RemoveAt(index);
             _followers.Add(Follow.Create(requesterId, Id));
+            AddDomainEvent(new FollowCreatedEvent(requesterId, Id));
+        }
+        public void RejectFollowRequest(string requesterId)
+        {
+            var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
+            if (index == -1)
+                throw new FollowRequestIsNotFoundException();
+            _requesters.RemoveAt(index);
         }
 
         //Block
@@ -250,7 +268,5 @@ namespace MySocailApp.Domain.AppUserAggregate
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-
-
     }
 }

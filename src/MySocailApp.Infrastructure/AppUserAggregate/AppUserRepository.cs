@@ -79,8 +79,6 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
         {
             return await _context.AppUsers
                 .Include(x => x.Requesters.Where(x => x.RequesterId == requesterId))
-                .Include(x => x.Blockeds.Where(x => x.BlockedId == requesterId))
-                .Include(x => x.Blockers.Where(x => x.BlockerId == requesterId))
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 

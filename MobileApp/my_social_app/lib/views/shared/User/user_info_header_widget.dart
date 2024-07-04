@@ -21,7 +21,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
               UserImageWidget(state: state, diameter: 100),
               Text(
                 style: const TextStyle( fontWeight: FontWeight.bold ),
-                state.formatUserName()
+                state.formatName(10)
               ),
             ]
           ),

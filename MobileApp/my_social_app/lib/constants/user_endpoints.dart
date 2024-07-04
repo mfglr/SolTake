@@ -7,3 +7,4 @@ const getFollowersByIdEndPoint = "GetFollowersById";
 const getFollowedsEndPoint = "GetFolloweds";
 const getFollowedsByIdEndPoint = "GetFollowedsById";
 const makeFollowRequestEndPoint = "MakeFollowRequest";
+const unfollowEndPoint = "Unfollow";

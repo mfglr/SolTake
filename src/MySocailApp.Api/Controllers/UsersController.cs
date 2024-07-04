@@ -8,6 +8,7 @@ using MySocailApp.Application.Commands.UserAggregate.Block;
 using MySocailApp.Application.Commands.UserAggregate.MakeFollowRequest;
 using MySocailApp.Application.Commands.UserAggregate.MakeProfilePrivate;
 using MySocailApp.Application.Commands.UserAggregate.MakeProfilePublic;
+using MySocailApp.Application.Commands.UserAggregate.RejectFollowRequest;
 using MySocailApp.Application.Commands.UserAggregate.RemoveFollower;
 using MySocailApp.Application.Commands.UserAggregate.RemoveUserImage;
 using MySocailApp.Application.Commands.UserAggregate.Unblock;
@@ -35,6 +36,8 @@ namespace MySocailApp.Api.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
+
+        //following start
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
@@ -46,15 +49,44 @@ namespace MySocailApp.Api.Controllers
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken) => 
-            await _mediator.Send(new UpdateUserImageDto(file),cancellationToken);
+        public async Task Unfollow(UnfollowDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPost]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
+        public async Task RemoveFollower(RemoveFollowerDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPost]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
+        public async Task AcceptFollowRequest(AcceptFollowRequestDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPost]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
+        public async Task RejectFollowRequest(RejectFollowRequestDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+        //following end
+
+        [HttpPost]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
+        public async Task UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
+             => await _mediator.Send(new UpdateUserImageDto(file),cancellationToken);
 
         [HttpDelete]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task RemoveImage(CancellationToken cancellationToken) =>
-            await _mediator.Send(new RemoveUserImageDto(), cancellationToken);
+        public async Task RemoveImage(CancellationToken cancellationToken)
+             => await _mediator.Send(new RemoveUserImageDto(), cancellationToken);
 
 
         //Queries
@@ -143,24 +175,6 @@ namespace MySocailApp.Api.Controllers
 
         [HttpPut]
         public async Task UpdateBirthDate(UpdateBirthDateDto request,CancellationToken cancellationToken)
-        {
-            await _mediator.Send(request, cancellationToken);
-        }
-
-        [HttpPut]
-        public async Task Unfollow(UnfollowDto request,CancellationToken cancellationToken)
-        {
-            await _mediator.Send(request, cancellationToken);
-        }
-
-        [HttpPut]
-        public async Task RemoveFollower(RemoveFollowerDto request,CancellationToken cancellationToken)
-        {
-            await _mediator.Send(request, cancellationToken);
-        }
-
-        [HttpPut]
-        public async Task AcceptFollowRequest(AcceptFollowRequestDto request,CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
         }

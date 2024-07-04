@@ -19,7 +19,7 @@ class UserPage extends StatelessWidget {
         if(user != null){
           return Scaffold(
             appBar: AppBar(
-              title: Text(user.formatUserName()),
+              title: Text(user.formatUserName(10)),
             ),
             body: Container(
               padding: const EdgeInsets.all(5),

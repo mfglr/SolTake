@@ -18,6 +18,12 @@ class UserService{
     await _httpService.post(url, body: body);
   }
 
+  Future<void> unfollow(String followedId) async {
+    final body = jsonEncode(<String, String>{'followedId': followedId});
+    String url = "$userController/$unfollowEndPoint";
+    await _httpService.post(url, body: body);
+  }
+
   Future<User> get() async {
     String url = "$userController/$getUserEndPoint";
     return User.fromJson(await _httpService.get(url));

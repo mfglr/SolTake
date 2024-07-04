@@ -15,6 +15,7 @@ class UserProvider extends ChangeNotifier{
 
   final Map<String,UserState> _users = {};
   UserState? getUser(String id) => _users[id];
+  
   UserState? getCurrentUser(){
     final accountId = AccountProvider().state?.id;
     if(accountId == null) return null;
@@ -24,15 +25,19 @@ class UserProvider extends ChangeNotifier{
     UnmodifiableListView(_users.values.where((user) => _users[id]!.followers.any((f) => f.followerId == user.id)));
   UnmodifiableListView<UserState> getFollowedsById(String id) =>
     UnmodifiableListView(_users.values.where((user) => _users[id]!.followeds.any((f) => f.followedId == user.id)));
-  
-  Future<void> loadCurrentUser() async {
-    final accountId = AccountProvider().state!.id;
-    if(_users[accountId] == null){
-      final user = (await _userService.getById(accountId)).toUserState();
-      _users.addEntries([MapEntry(accountId, user)]);
-      notifyListeners();
-    }
+
+  Future<void> follow(String followedId) async {
+    await _userService.makeFollowRequest(followedId);
+    final user = _users[followedId]!;
+    user.follow(AccountProvider().state!.id);
+    notifyListeners();
   }
+  Future<void> unfollow(String followedId) async {
+    final user = _users[followedId]!;
+    user.unfollow(AccountProvider().state!.id);
+    notifyListeners();
+  }
+
   Future<void> loadUserById(String id) async {
     if(_users[id] == null){
       final user = (await _userService.getById(id)).toUserState();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/providers/account_provider.dart';
 import 'package:my_social_app/providers/user_provider.dart';
 import 'package:my_social_app/views/pages/home_page.dart';
 import 'package:my_social_app/views/loading_view.dart';
@@ -37,15 +38,15 @@ class _RootViewState extends State<RootView> {
           ),
 
           NavigationDestination(
-            selectedIcon: Icon(Icons.supervised_user_circle),
-            icon: Icon(Icons.supervised_user_circle_outlined),
+            selectedIcon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline),
             label: 'Profile',
           ),
 
         ],
       ),
       body: FutureBuilder(
-        future: context.read<UserProvider>().loadCurrentUser(),
+        future: context.read<UserProvider>().loadUserById(AccountProvider().state!.id),
         builder: (context, snapshot) {
           switch(snapshot.connectionState){
             case(ConnectionState.done):

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/providers/user_provider.dart';
-import 'package:my_social_app/views/shared/user/user_info_header_widget.dart';
+import 'package:my_social_app/views/shared/user/user_info_card_widget.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -18,29 +18,11 @@ class _ProfilePageState extends State<ProfilePage> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text(state.formatUserName()),
+        title: Text(state.formatUserName(10)),
       ),
       body: Container(
         padding: const EdgeInsets.fromLTRB(5,0,5,5),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            UserInfoHeaderWidget(state: state),
-            OutlinedButton(
-              onPressed: (){},
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 4),
-                    child: const Text("Edit your profile")
-                  ),
-                  const Icon(Icons.edit)
-                ],
-              )
-            )
-          ],
-        )
+        child: UserInfoCardWidget(state: state)
       )
     );
   }

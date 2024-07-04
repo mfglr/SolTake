@@ -21,7 +21,7 @@ class UserItemWidget extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 5),
-                child: UserImageWidget(state: state, diameter: 75)
+                child: UserImageWidget(state: state, diameter: 60)
               ),
               Builder(
                 builder: (context){
@@ -31,18 +31,18 @@ class UserItemWidget extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          state.formatUserName(),
+                          state.formatUserName(10),
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          state.formatName()!,
+                          state.formatName(15),
                           style: const TextStyle(fontSize: 12),
                         )
                       ],
                     );
                   }
                   return Text(
-                    state.formatUserName(),
+                    state.formatUserName(10),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   );
                 },
