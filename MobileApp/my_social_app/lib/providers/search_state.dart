@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:my_social_app/constants/records_per_page.dart';
+import 'package:my_social_app/providers/user_state.dart';
 
 class SearchState{
   String _key = "";
@@ -21,23 +22,22 @@ class SearchState{
     return state;
   }
 
-  SearchState init(String key, List<String> ids){
-    final state = clone();
-    state._key = key;
-    state._ids.clear();
-    state._ids.addAll(ids);
-    state._isLastUsers = ids.length < recordsPerPage;
-    state._lastId = ids.isNotEmpty ? ids[ids.length - 1] : state._lastId;
-    return state;
+  void init(String key, List<UserState> users){
+    _key = key;
+    _ids.clear();
+    _isLastUsers = ids.length < recordsPerPage;
+    _lastId = users.isNotEmpty ? users[users.length - 1].id : _lastId;
   }
 
-  SearchState next(List<String> ids){
-    final state = clone();
-    state._ids.addAll(ids);
-    state._isLastUsers = ids.length < recordsPerPage;
-    state._lastId = ids.isNotEmpty ? ids[ids.length - 1] : state._lastId;
-    return state;
+  void next(List<String> ids){
+    _ids.addAll(ids);
+    _isLastUsers = ids.length < recordsPerPage;
+    _lastId = ids.isNotEmpty ? ids[ids.length - 1] : _lastId;
   }
 
-  SearchState clear() => SearchState();
+  void clear(){
+    _ids.clear();
+    _isLastUsers = false;
+    _lastId = null;
+  }
 }

@@ -66,7 +66,7 @@ class UserState{
     this._isRequested
   );
 
-  UserState _clone(){
+  UserState clone(){
     UserState s = UserState(
       id,
       createdAt,
@@ -139,85 +139,65 @@ class UserState{
   UnmodifiableListView<String> get requesters => UnmodifiableListView(_requesters);
   UnmodifiableListView<String> get requesteds => UnmodifiableListView(_requesteds);
   
-  UserState loadFollowers(List<String> followers){
-    final clone = _clone();
-    clone._lastFollower = followers.isNotEmpty ? followers[followers.length - 1] : clone._lastFollower;
-    clone._isLastFollowers = followers.length < recordsPerPage;
-    clone._followers.addAll(followers);
-    return clone;
+  void loadFollowers(List<UserState> followers){
+    _lastFollower = followers.isNotEmpty ? followers[followers.length - 1].id : _lastFollower;
+    _isLastFollowers = followers.length < recordsPerPage;
+    _followers.addAll(followers.map((follower) => follower.id));
   }
-  UserState loadFolloweds(List<String> followeds){
-    final clone = _clone();
-    clone._lastFollowed = followeds.isNotEmpty ? followeds[followeds.length - 1] : clone._lastFollowed;
-    clone._isLastFolloweds = followeds.length < recordsPerPage;
-    clone._followeds.addAll(followeds);
-    return clone;
+  void loadFolloweds(List<UserState> followeds){
+    _lastFollowed = followeds.isNotEmpty ? followeds[followeds.length - 1].id : _lastFollowed;
+    _isLastFolloweds = followeds.length < recordsPerPage;
+    _followeds.addAll(followeds.map((followed) => followed.id));
   }
-  UserState loadRequesters(List<String> users){
-    final clone = _clone();
-    clone._lastRequester = users.isNotEmpty ? users[users.length - 1] : clone._lastRequester;
-    clone._isLastRequesters = users.length < recordsPerPage;
-    clone._requesters.addAll(users);
-    return clone;
+  void loadRequesters(List<UserState> requesters){
+    _lastRequester = requesters.isNotEmpty ? requesters[requesters.length - 1].id : _lastRequester;
+    _isLastRequesters = requesters.length < recordsPerPage;
+    _requesters.addAll(requesters.map((requester) => requester.id));
   }
-  UserState loadRequesteds(List<String> users){
-    final clone = _clone();
-    clone._lastRequested = users.isNotEmpty ? users[users.length - 1] : clone._lastRequested;
-    clone._isLastRequesteds = users.length < recordsPerPage;
-    clone._requesteds.addAll(users);
-    return clone;
+  void loadRequesteds(List<UserState> requested){
+    _lastRequested = requested.isNotEmpty ? requested[requested.length - 1].id : _lastRequested;
+    _isLastRequesteds = requested.length < recordsPerPage;
+    _requesteds.addAll(requested.map((requested) => requested.id));
   }
 
-  UserState addRequester(String requesterId){
-    final clone = _clone();
-    if(clone.profileVisibility == ProfileVisibility.private){
-      clone._requesters.add(requesterId);
+  void addRequester(UserState requester){
+    if(profileVisibility == ProfileVisibility.private){
+      _requesters.add(requester.id);
     }
     else{
-      clone._isFollowed = true;
-      clone._numberOfFollowers = clone._numberOfFollowers + 1;
-      clone._followers.add(requesterId);
+      _isFollowed = true;
+      _numberOfFollowers = _numberOfFollowers + 1;
+      _followers.add(requester.id);
     }
-    return clone;
   }
-  UserState addRequested(String requestedId){
-    final clone = _clone();
-    if(clone.profileVisibility == ProfileVisibility.private){
-      clone._requesteds.add(requestedId);
+  void addRequested(UserState requested){
+    if(profileVisibility == ProfileVisibility.private){
+      _requesteds.add(requested.id);
     }
     else{
-      clone._numberOfFolloweds = clone._numberOfFolloweds + 1;
-      clone._followeds.add(requestedId);
+      _numberOfFolloweds = _numberOfFolloweds + 1;
+      _followeds.add(requested.id);
     }
-    return clone;
   }
-  UserState removeRequester(String requesterId){
-    final clone = _clone();
-    clone._isFollowed = false;
-    clone._isRequested = false;
-    clone._numberOfFollowers = clone.numberOfFollowers - 1;
-    clone._requesters.removeWhere((id) => id == requesterId);
-    clone._followers.removeWhere((id) => id == requesterId);
-    return clone;
+  void removeRequester(UserState requester){
+    _isFollowed = false;
+    _isRequested = false;
+    _numberOfFollowers = numberOfFollowers - 1;
+    _requesters.removeWhere((id) => id == requester.id);
+    _followers.removeWhere((id) => id == requester.id);
   }
-  UserState removeRequested(String requestedId){
-    final clone = _clone();
-    clone._numberOfFolloweds = clone._numberOfFolloweds - 1;
-    clone._followeds.removeWhere((id) => id == requestedId);
-    clone._requesteds.removeWhere((id) => id == requestedId);
-    return clone;
+  void removeRequested(UserState requested){
+    _numberOfFolloweds = _numberOfFolloweds - 1;
+    _followeds.removeWhere((id) => id == requested.id);
+    _requesteds.removeWhere((id) => id == requested.id);
   }
-  UserState removeFollower(String requesterId){
-    final clone = _clone();
-    clone._numberOfFollowers = clone.numberOfFollowers - 1;
-    clone._followers.removeWhere((id) => id == requesterId);
-    return clone;
+  void removeFollower(UserState follower){
+    _numberOfFollowers = numberOfFollowers - 1;
+    _followers.removeWhere((id) => id == follower.id);
   }
-  UserState removeFollowed(String  requestedId){
-    final clone = _clone();
-    clone._isFollower = false;
-    clone._numberOfFolloweds = clone.numberOfFolloweds - 1;
-    clone._followeds.removeWhere((id) => id == requestedId);
-    return clone;
+  void removeFollowed(UserState followed){
+    _isFollower = false;
+    _numberOfFolloweds = numberOfFolloweds - 1;
+    _followeds.removeWhere((id) => id == followed.id);
   }
 }

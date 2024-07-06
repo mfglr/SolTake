@@ -15,39 +15,19 @@ class AppState{
   UnmodifiableListView<UserState> getRequesteds() => UnmodifiableListView(_users[AccountProvider().state!.id]!.requesteds.map((id) => _users[id]!));
   UnmodifiableListView<UserState> get usersSearched => UnmodifiableListView(_searchState.ids.map((id) => _users[id]!));
 
-  AppState _clone(){
+  AppState clone(){
     final AppState state = AppState();
     state._searchState = _searchState.clone();
     state._users.addEntries(_users.entries);
     return state;
   }
-
-  AppState updateSearchUserState(SearchState state){
-    final AppState clone = _clone();
-    clone._searchState = state;
-    return clone;
-  }
-
-  AppState addUsers(List<UserState> users){
-    final AppState clone = _clone();
+  
+  void addUsers(List<UserState> users){
     final uniqUsers = users.where((user) => _users[user.id] == null);
-    clone._users.addEntries(uniqUsers.map((user) => MapEntry(user.id, user)));
-    return clone;
+    _users.addEntries(uniqUsers.map((user) => MapEntry(user.id, user)));
   }
 
-  AppState addUser(UserState user){
-    AppState clone = _clone();
-    clone._users.addEntries([MapEntry(user.id, user)]);
-    return clone;
+  void addUser(UserState user){
+    _users.addEntries([MapEntry(user.id, user)]);
   }
-
-  AppState removeUser(String id){
-    if(_users[id] != null){
-      AppState clone = _clone();
-      clone._users.remove(id);
-      return clone;
-    }
-    return this;
-  }
-
 }
