@@ -15,6 +15,7 @@ class AppProvider extends ChangeNotifier{
 
   AppState _state = AppState();
 
+  String get key => _state.key;
   UserState? getUser(String id) => _state.getUser(id);
   UnmodifiableListView<UserState> getFollowers(String id) => _state.getFollowers(id);
   UnmodifiableListView<UserState> getFolloweds(String id) => _state.getFolloweds(id);
@@ -26,7 +27,7 @@ class AppProvider extends ChangeNotifier{
     final user = _state.getUser(id);
     if(user == null){
       final state = (await _userService.getById(id)).toUserState();
-      _state = _state.addUser(state);
+      _state = _state.loadUser(state);
       notifyListeners();
     }
   }
@@ -34,8 +35,7 @@ class AppProvider extends ChangeNotifier{
     final user = _state.getUser(id)!;
     if(!user.isLastFollowers){
       final followers = (await _userService.getFollowersById(id)).map((user) => user.toUserState());
-      _state = _state.addUsers(followers.toList());
-      _state = _state.addUser(user.loadFollowers(followers.map((user) => user.id).toList()));
+      _state = _state.loadFollowers(id,followers.toList());
       notifyListeners();
     }
   }
@@ -46,8 +46,7 @@ class AppProvider extends ChangeNotifier{
     final user = _state.getUser(id)!;
     if(!user.isLastFolloweds){
       final followeds = (await _userService.getFollowedsById(id)).map((user) => user.toUserState());
-      _state = _state.addUsers(followeds.toList());
-      _state = _state.addUser(user.loadFolloweds(followeds.map((user) => user.id).toList()));
+      _state = _state.loadFolloweds(id,followeds.toList());
       notifyListeners();
     }
   }
@@ -58,8 +57,7 @@ class AppProvider extends ChangeNotifier{
     final currentUser = _state.getUser(AccountProvider().state!.id)!;
     if(!currentUser.isLastRequesters){
       final requesters = (await _userService.getRequesters()).map((user) => user.toUserState());
-      _state = _state.addUsers(requesters.toList());
-      _state = _state.addUser(currentUser.loadRequesters(requesters.map((user) => user.id).toList()));
+      _state = _state.loadRequesters(requesters.toList());
       notifyListeners();
     }
   }
@@ -67,47 +65,34 @@ class AppProvider extends ChangeNotifier{
     final currentUser = _state.getUser(AccountProvider().state!.id)!;
     if(!currentUser.isLastRequesteds){
       final requesteds = (await _userService.getRequesteds()).map((user) => user.toUserState());
-      _state = _state.addUsers(requesteds.toList());
-      _state = _state.addUser(currentUser.loadRequesteds(requesteds.map((user) => user.id).toList()));
+      _state = _state.loadRequesteds(requesteds.toList());
       notifyListeners();
     }
   }
   Future<void> makeFollowRequest(String requestedId) async {
     await _userService.makeFollowRequest(requestedId);
-    final accountId = AccountProvider().state!.id;
-    final currentUser = _state.getUser(accountId)!;
-    final user = _state.getUser(requestedId)!;
-    _state = _state.addUser(currentUser.addRequested(requestedId));
-    _state = _state.addUser(user.addRequester(accountId));
+    _state = _state.makeFollowRequest(requestedId);
     notifyListeners();
   }
   Future<void> cancelFollowRequest(String requestedId) async {
     await _userService.cancelFollowRequest(requestedId);
-    final accountId = AccountProvider().state!.id;
-    final currentUser = _state.getUser(accountId)!;
-    final user = _state.getUser(requestedId)!;
-    _state = _state.addUser(currentUser.removeRequested(requestedId));
-    _state = _state.addUser(user.removeRequester(accountId));
+    _state = _state.cancelFollowRequest(requestedId);
     notifyListeners();
   }
   Future<void> removeFollower(String followerId) async {
     await _userService.removeFollower(followerId);
-    final accountId = AccountProvider().state!.id;
-    final currentUser = _state.getUser(accountId)!;
-    final user = _state.getUser(followerId)!;
-    _state = _state.addUser(currentUser.removeFollower(followerId));
-    _state = _state.addUser(user.removeFollowed(accountId));
+    _state = _state.removeFollower(followerId);
     notifyListeners();
   }
 
   Future<void> initSearch(String key) async {
     final users = (await _userService.search(key)).map((user) => user.toUserState());
-    _state = _state.addUsers(users.toList());
-    _state = _state.updateSearchUserState(_state.searchState.init(key, users.map((state) => state.id).toList()));
+    _state = _state.initSearch(key, users.toList());
     notifyListeners();
   }
+
   void clearSearch(){
-    _state = _state.updateSearchUserState(_state.searchState.clear());
+    _state = _state.clearSearch();
     notifyListeners();
   }  
 }

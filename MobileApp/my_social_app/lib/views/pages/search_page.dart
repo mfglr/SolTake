@@ -13,22 +13,66 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+
+  late final TextEditingController searchTextController;
+
+  @override
+  void initState() {
+    searchTextController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchTextController.clear();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          onChanged: (value) async{
-            if(value == ""){
-              context.read<AppProvider>().clearSearch();
-              return;
+        title: Selector<AppProvider,String>(
+          selector: (_,appProvider) => appProvider.key,
+          builder: (context, value, child){
+            if(value != ""){
+              return TextField(
+                controller: searchTextController,
+                onChanged: (value) async{
+                  if(value == ""){
+                    context.read<AppProvider>().clearSearch();
+                    return;
+                  }
+                  await context.read<AppProvider>().initSearch(value);
+                },
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  suffixIcon: IconButton(
+                    onPressed: (){
+                      context.read<AppProvider>().clearSearch();
+                      searchTextController.clear();
+                    },
+                    icon: const Icon(Icons.clear),
+                  ),
+                  border: const OutlineInputBorder()
+                ),
+              );
             }
-            await context.read<AppProvider>().initSearch(value);
+            return TextField(
+              controller: searchTextController,
+              onChanged: (value) async{
+                if(value == ""){
+                  context.read<AppProvider>().clearSearch();
+                  return;
+                }
+                await context.read<AppProvider>().initSearch(value);
+              },
+              decoration: const InputDecoration(
+                hintText: "Search",
+                border: OutlineInputBorder()
+              ),
+            );
           },
-          decoration: const InputDecoration(
-            hintText: "Search",
-            border: OutlineInputBorder()
-          ),
         ),
       ),
       body: Container(
