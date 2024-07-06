@@ -9,12 +9,12 @@ using System.Net;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
 {
-    public class CreateAccountHandler(ITokenService tokenService, ITransactionCreator transactionCreator, UserManager<Account> userManager, IAppUserRepository userRepository, IMapper mapper) : IRequestHandler<CreateAccountDto, AccountDto>
+    public class CreateAccountHandler(ITokenService tokenService, ITransactionCreator transactionCreator, UserManager<Account> userManager, IAppUserWriteRepository userRepository, IMapper mapper) : IRequestHandler<CreateAccountDto, AccountDto>
     {
         private readonly ITransactionCreator _transactionCreator = transactionCreator;
         private readonly UserManager<Account> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly IMapper _mapper = mapper;
 
         public async Task<AccountDto> Handle(CreateAccountDto request, CancellationToken cancellationToken)

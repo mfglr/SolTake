@@ -14,7 +14,9 @@ namespace MySocailApp.Application.Mappers
                 .ForMember(dest => dest.NumberOfFollowers, opt => opt.MapFrom(src => src.Followers.Count))
                 .ForMember(dest => dest.NumberOfFolloweds, opt => opt.MapFrom(src => src.Followeds.Count))
                 .ForMember(dest => dest.IsFollower, opt => opt.MapFrom(src => src.Followeds.Any(x => x.FollowedId == accessTokenReader.GetAccountId())))
-                .ForMember(dest => dest.IsFollowed, opt => opt.MapFrom(src => src.Followers.Any(x => x.FollowerId == accessTokenReader.GetAccountId())));
+                .ForMember(dest => dest.IsFollowed, opt => opt.MapFrom(src => src.Followers.Any(x => x.FollowerId == accessTokenReader.GetAccountId())))
+                .ForMember(dest => dest.IsRequester, opt => opt.MapFrom(src => src.Requesters.Any(x => x.RequesterId == accessTokenReader.GetAccountId())))
+                .ForMember(dest => dest.IsRequested, opt => opt.MapFrom(src => src.Requesteds.Any(x => x.RequestedId == accessTokenReader.GetAccountId())));
         }
 
         public UserMappers() { }

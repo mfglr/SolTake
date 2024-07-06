@@ -135,21 +135,17 @@ namespace MySocailApp.Domain.AppUserAggregate
                 AddDomainEvent(new FollowCreatedEvent(requesterId, Id));
             }
         }
-        public void CancelFollowRequest(string requestedId)
+        public void CancelFollowRequest(string requesterId)
         {
-            var index = _requesteds.FindIndex(x => x.RequestedId == requestedId);
+            var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
+            if (index != -1)
+            {
+                _requesters.RemoveAt(index);
+                return;
+            }
+            index = _followers.FindIndex(x => x.FollowerId == requesterId);
             if (index == -1)
-                throw new FollowRequestIsNotFoundException();
-            _requesteds.RemoveAt(index);
-        }
-        public void Unfollow(string followerId)
-        {
-            if (_blockeds.Any(x => x.BlockedId == followerId))
-                throw new UserIsNotFoundException();
-
-            var index = _followers.FindIndex(x => x.FollowerId == followerId);
-            if (index == -1)
-                throw new UserIsNotFollowedException();
+                throw new NoFollowRequestOrFollowException();
             _followers.RemoveAt(index);
         }
         public void RemoveFollower(string followerId)

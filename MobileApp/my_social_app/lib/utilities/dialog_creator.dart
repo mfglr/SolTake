@@ -26,4 +26,36 @@ class DialogCreator{
       }
     ).then((value) => value ?? false);
   }
+
+
+  static Future<bool> showRemoveFollowerDialog(BuildContext context){
+    return showDialog<bool>(context: 
+      context, 
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Remove follower'),
+          content: const Text("Are you sure you want to remove the follower?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text("Cancel")
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop(true);
+              }, 
+              child: const Text(
+                "Remove",
+                style: TextStyle(color: Colors.red),
+              )
+            )
+          ],
+        );
+      }
+    ).then((value) => value ?? false);
+  }
+
+
 }

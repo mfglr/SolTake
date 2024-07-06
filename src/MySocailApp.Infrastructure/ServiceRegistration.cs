@@ -69,7 +69,7 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
         {
             return services
-                .AddScoped<IAppUserRepository, AppUserRepository>()
+                .AddScoped<IAppUserWriteRepository, AppUserWriteRepository>()
                 .AddScoped<IAppUserReadRepository, AppUserReadRepository>()
                 .AddScoped<IUserImageBlobNameGenerator, UserImageBlobNameGenerator>()
                 .AddScoped<IUserImageBlobService, UserImageBlobService>()

@@ -25,7 +25,9 @@ namespace MySocailApp.Domain.AppUserAggregate
             return r;
         }
 
+
         //IRemovable
+        //A follow should only be removed when the user deactivates its account.
         public bool IsRemoved { get; private set; }
         public DateTime? RemovedAt { get; private set; }
         public void Remove()

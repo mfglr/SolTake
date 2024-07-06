@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/providers/user_provider.dart';
+import 'package:my_social_app/providers/account_provider.dart';
+import 'package:my_social_app/providers/app_provider.dart';
 import 'package:my_social_app/views/shared/user/user_info_card_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((UserProvider u) => u.getCurrentUser()!);
+    final state = context.select((AppProvider u) => u.getUser(AccountProvider().state!.id)!);
     
     return Scaffold(
       appBar: AppBar(

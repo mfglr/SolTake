@@ -5,9 +5,9 @@ using MySocailApp.Domain.AppUserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.MakeFollowRequest
 {
-    public class MakeFollowRequestHandler(IAppUserRepository userRepository,IAccessTokenReader accessTokenReader,IUnitOfWork unitOfWork) : IRequestHandler<MakeFollowRequestDto>
+    public class MakeFollowRequestHandler(IAppUserWriteRepository userRepository,IAccessTokenReader accessTokenReader,IUnitOfWork unitOfWork) : IRequestHandler<MakeFollowRequestDto>
     {
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.MakeFollowRequest
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
             var user =
-                await _userRepository.GetWithFollowerAndRequesterByIdAsync(request.RequestedId,userId,cancellationToken) ??
+                await _userRepository.GetWithFollowerRequesterBlockedBlockerByIdAsync(request.RequestedId,userId,cancellationToken) ??
                 throw new UserIsNotFoundException();
             user.MakeFollowRequest(userId);
             await _unitOfWork.CommitAsync(cancellationToken);

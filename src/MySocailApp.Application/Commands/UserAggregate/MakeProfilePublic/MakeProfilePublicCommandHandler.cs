@@ -5,9 +5,9 @@ using MySocailApp.Domain.AppUserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.MakeProfilePublic
 {
-    public class MakeProfilePublicCommandHandler(IAppUserRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<MakeProfilePublicDto>
+    public class MakeProfilePublicCommandHandler(IAppUserWriteRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<MakeProfilePublicDto>
     {
-        private readonly IAppUserRepository _repository = repository;
+        private readonly IAppUserWriteRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.MakeProfilePublic
             var userId = _accessTokenReader.GetRequiredAccountId();
 
             var user = 
-                await _repository.GetWithRequestersById(userId, cancellationToken) ?? 
+                await _repository.GetWithRequestersByIdAsync(userId, cancellationToken) ?? 
                 throw new UserIsNotFoundException();
             user.MakeProfilePublic();
 

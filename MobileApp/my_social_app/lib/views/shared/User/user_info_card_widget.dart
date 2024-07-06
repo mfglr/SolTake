@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/states/user_state.dart';
 import 'package:my_social_app/providers/account_provider.dart';
+import 'package:my_social_app/providers/user_state.dart';
 import 'package:my_social_app/views/shared/Buttons/follow_button_widget.dart';
 import 'package:my_social_app/views/shared/buttons/profile_edit_button.dart';
 import 'package:my_social_app/views/shared/user/user_info_header_widget.dart';
@@ -25,7 +25,7 @@ class UserInfoCardWidget extends StatelessWidget {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.all(3),
-                        child: FollowButtonWidget(isFollowed: state.isFollowed,)
+                        child: FollowButtonWidget(state: state,)
                       ),
                     ),
                     Expanded(

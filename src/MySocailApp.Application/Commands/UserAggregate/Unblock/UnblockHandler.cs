@@ -5,9 +5,9 @@ using MySocailApp.Domain.AppUserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.Unblock
 {
-    public class UnblockHandler(IAppUserRepository userRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<UnblockDto>
+    public class UnblockHandler(IAppUserWriteRepository userRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<UnblockDto>
     {
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 

@@ -17,8 +17,8 @@ namespace MySocailApp.Infrastructure.Services
         public string? GetAccountId()
         {
             var context = _contextAccessor.HttpContext;
-            ThrowExceptionIfContextIsNull(context);
-            return context!.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if(context == null) return null;
+            return context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
         public string GetRequiredAccountId()

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/models/states/user_state.dart';
+import 'package:my_social_app/providers/user_state.dart';
 part "user.g.dart";
 
 @JsonSerializable()
@@ -17,6 +17,8 @@ class User{
   final int numberOfFolloweds;
   final bool isFollower;
   final bool isFollowed;
+  final bool isRequester;
+  final bool isRequested;
 
   const User(
     this.id,
@@ -32,6 +34,8 @@ class User{
     this.numberOfFolloweds,
     this.isFollower,
     this.isFollowed,
+    this.isRequester,
+    this.isRequested
   );
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -49,9 +53,10 @@ class User{
     numberOfFollowers,
     numberOfFolloweds,
     isFollower,
-    isFollowed
+    isFollowed,
+    isRequester,
+    isRequested
   );
-
 }
 
 class Gender{

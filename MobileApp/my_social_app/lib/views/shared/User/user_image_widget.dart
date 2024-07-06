@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/states/user_state.dart';
 import 'package:my_social_app/providers/user_image_provider.dart';
+import 'package:my_social_app/providers/user_state.dart';
 import 'package:provider/provider.dart';
 
 class UserImageWidget extends StatelessWidget {

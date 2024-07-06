@@ -9,11 +9,11 @@ using System.Net;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
 {
-    public class UpdateUserNamehandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserRepository userRepository, IMapper mapper, IAccountAccessor accountAccessor) : IRequestHandler<UpdateUserNameDto, AccountDto>
+    public class UpdateUserNamehandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserWriteRepository userRepository, IMapper mapper, IAccountAccessor accountAccessor) : IRequestHandler<UpdateUserNameDto, AccountDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly ITokenService _tokenService = tokenService;
         private readonly IMapper _mapper = mapper;
 

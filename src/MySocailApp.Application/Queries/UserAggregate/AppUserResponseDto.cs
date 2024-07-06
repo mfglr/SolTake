@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public string UserName { get; private set; }
         public string Name { get; private set; }
         public bool HasImage { get; private set; }
-        public  DateTime? BirthDate { get; private set; }
+        public DateTime? BirthDate { get; private set; }
         public Gender Gender { get; private set; }
         public ProfileVisibility ProfileVisibility { get; private set; }
         public int NumberOfPosts { get; private set; }
@@ -18,10 +18,12 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public int NumberOfFolloweds { get; private set; }
         public bool IsFollower { get; private set; }
         public bool IsFollowed { get; private set; }
+        public bool IsRequester { get; private set; }
+        public bool IsRequested { get; private set; }
 
         private AppUserResponseDto() { }
 
-        public AppUserResponseDto(string id, DateTime createdAt, DateTime? updatedAt, string userName, string name, bool hasImage, DateTime? birthDate, Gender gender, ProfileVisibility profileVisibility, int numberOfPosts, int numberOfFollowers, int numberOfFolloweds, bool isFollower, bool isFollowed)
+        public AppUserResponseDto(string id, DateTime createdAt, DateTime? updatedAt, string userName, string name, bool hasImage, DateTime? birthDate, Gender gender, ProfileVisibility profileVisibility, int numberOfPosts, int numberOfFollowers, int numberOfFolloweds, bool isFollower, bool isFollowed,bool isRequester,bool isRequested)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -37,6 +39,8 @@ namespace MySocailApp.Application.Queries.UserAggregate
             NumberOfFolloweds = numberOfFolloweds;
             IsFollower = isFollower;
             IsFollowed = isFollowed;
+            IsRequester = isRequester;
+            IsRequested = isRequested;
         }
     }
 }

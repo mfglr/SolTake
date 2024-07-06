@@ -5,9 +5,9 @@ using MySocailApp.Domain.AppUserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.Block
 {
-    public class BlockHandler(IAppUserRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<BlockDto>
+    public class BlockHandler(IAppUserWriteRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<BlockDto>
     {
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 

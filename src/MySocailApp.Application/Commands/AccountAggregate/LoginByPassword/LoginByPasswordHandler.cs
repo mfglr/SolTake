@@ -9,11 +9,11 @@ using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
 {
-    public class LoginByPasswordHandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserRepository userRepository, IMapper mapper) : IRequestHandler<LoginByPasswordDto, AccountDto>
+    public class LoginByPasswordHandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserWriteRepository userRepository, IMapper mapper) : IRequestHandler<LoginByPasswordDto, AccountDto>
     {
         private readonly UserManager<Account> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly IMapper _mapper = mapper;
 
         public async Task<AccountDto> Handle(LoginByPasswordDto request, CancellationToken cancellationToken)

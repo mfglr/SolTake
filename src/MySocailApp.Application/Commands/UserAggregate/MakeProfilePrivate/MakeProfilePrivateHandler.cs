@@ -5,9 +5,9 @@ using MySocailApp.Domain.AppUserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.MakeProfilePrivate
 {
-    public class MakeProfilePrivateHandler(IAppUserRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<MakeProfilePrivateDto>
+    public class MakeProfilePrivateHandler(IAppUserWriteRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<MakeProfilePrivateDto>
     {
-        private readonly IAppUserRepository _repository = repository;
+        private readonly IAppUserWriteRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 

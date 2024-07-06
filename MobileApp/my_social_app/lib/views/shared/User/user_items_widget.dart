@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/states/user_state.dart';
+import 'package:my_social_app/providers/user_state.dart';
 import 'package:my_social_app/views/shared/user/user_item_widget.dart';
 
 class UserItemsWidget extends StatelessWidget {
   final List<UserState> state;
-  
-  const UserItemsWidget({super.key,required this.state});
+  final bool removeFollowerButton;
+  const UserItemsWidget({super.key,required this.state,this.removeFollowerButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class UserItemsWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
-          child: UserItemWidget(state: state[index])
+          child: UserItemWidget(state: state[index],removeFollowerButton: removeFollowerButton,)
         );
       }
     );

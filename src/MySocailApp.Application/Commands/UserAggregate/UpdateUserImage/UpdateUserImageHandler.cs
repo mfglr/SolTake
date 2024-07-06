@@ -4,9 +4,9 @@ using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateUserImage
 {
-    public class UpdateUserImageHandler(IAppUserRepository appUserRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, UserImageUpdater userImageEditor) : IRequestHandler<UpdateUserImageDto>
+    public class UpdateUserImageHandler(IAppUserWriteRepository appUserRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, UserImageUpdater userImageEditor) : IRequestHandler<UpdateUserImageDto>
     {
-        private readonly IAppUserRepository _appUserRepository = appUserRepository;
+        private readonly IAppUserWriteRepository _appUserRepository = appUserRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly UserImageUpdater _userImageEditor = userImageEditor;

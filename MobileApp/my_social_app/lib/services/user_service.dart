@@ -15,13 +15,19 @@ class UserService{
   Future<void> makeFollowRequest(String requestedId) async {
     final body = jsonEncode(<String, String>{'requestedId': requestedId});
     String url = "$userController/$makeFollowRequestEndPoint";
-    await _httpService.post(url, body: body);
+    await _httpService.put(url, body: body);
   }
 
-  Future<void> unfollow(String followedId) async {
-    final body = jsonEncode(<String, String>{'followedId': followedId});
-    String url = "$userController/$unfollowEndPoint";
-    await _httpService.post(url, body: body);
+  Future<void> cancelFollowRequest(String requesterId) async {
+    final body = jsonEncode(<String, String>{'requesterId': requesterId});
+    String url = "$userController/$cancelFollowRequestEndPoint";
+    await _httpService.put(url, body: body);
+  }
+
+  Future<void> removeFollower(String followerId) async {
+    final body = jsonEncode(<String,String>{'followerId': followerId});
+    String url = "$userController/$removeFollowerEndPoint";
+    await _httpService.put(url, body: body);
   }
 
   Future<User> get() async {
@@ -67,6 +73,27 @@ class UserService{
 
   Future<List<User>> getFollowedsById(String id, {String? lastId}) async {
     String url = "$userController/$getFollowedsByIdEndPoint/$id";
+    return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
+      (item) => User.fromJson(item)
+    ).toList();
+  }
+
+  Future<List<User>> getRequesters({String? lastId}) async {
+    String url = "$userController/$getRequestersEndPoint";
+    return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
+      (item) => User.fromJson(item)
+    ).toList();
+  }
+
+  Future<List<User>> getRequesteds({String? lastId}) async {
+    String url = "$userController/$getRequestedsEndPoint";
+    return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
+      (item) => User.fromJson(item)
+    ).toList();
+  }
+
+  Future<List<User>> search(String key, {String? lastId}) async {
+    String url = "$userController/$searchUserEndPoint/$key";
     return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
       (item) => User.fromJson(item)
     ).toList();

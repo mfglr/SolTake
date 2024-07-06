@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/models/states/user_state.dart';
+import 'package:my_social_app/providers/user_state.dart';
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 
 class UserInfoHeaderWidget extends StatelessWidget {

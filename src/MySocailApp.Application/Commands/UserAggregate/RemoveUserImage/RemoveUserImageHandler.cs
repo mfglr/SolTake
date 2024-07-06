@@ -4,9 +4,9 @@ using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
 {
-    public class RemoveUserImageHandler(IAppUserRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<RemoveUserImageDto>
+    public class RemoveUserImageHandler(IAppUserWriteRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<RemoveUserImageDto>
     {
-        private readonly IAppUserRepository _repository = repository;
+        private readonly IAppUserWriteRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 

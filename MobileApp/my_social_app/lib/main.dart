@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/providers/account_provider.dart';
+import 'package:my_social_app/providers/app_provider.dart';
 import 'package:my_social_app/providers/user_image_provider.dart';
-import 'package:my_social_app/providers/user_provider.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/login_view.dart';
@@ -44,7 +44,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<AppProvider>(create: (_) => AppProvider()),
         ChangeNotifierProvider<UserImageProvider>(create: (_) => UserImageProvider())
       ],
       child: MaterialApp(
@@ -78,7 +78,7 @@ class App extends StatelessWidget {
           profilePageRoute: (context) => const ProfilePage(),
           userFollowersRoute: (context) => const UserFollowersPage(),
           userFollowedsRoute: (context) => const UserFollowedsPage(),
-          userPageroute: (context) => const UserPage()
+          userPageRoute: (context) => const UserPage()
         },
       ),
     );

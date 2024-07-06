@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetFolloweds
         public async Task<List<AppUserResponseDto>> Handle(GetFollowedsDto request, CancellationToken cancellationToken)
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
-            var users = await _repository.GetFollowedsById(accountId, cancellationToken, request.LastId ?? "");
+            var users = await _repository.GetFollowedsByIdAsync(accountId, cancellationToken, request.LastId ?? "");
             return _mapper.Map<List<AppUserResponseDto>>(users);
         }
     }

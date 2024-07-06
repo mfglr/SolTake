@@ -5,7 +5,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Exceptions
 {
     public class UserIsNotFoundException : AppException
     {
-        private readonly static string _message = "The user is not found!";
+        private readonly static string _message = "The user was not found! The user have may deleted its account!";
         public UserIsNotFoundException() : base(_message, (int)HttpStatusCode.NotFound) { }
     }
 }

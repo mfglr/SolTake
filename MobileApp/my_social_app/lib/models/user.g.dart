@@ -24,6 +24,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       (json['numberOfFolloweds'] as num).toInt(),
       bool.parse(json['isFollower'].toString(),caseSensitive: false),
       bool.parse(json['isFollowed'].toString(),caseSensitive: false),
+      bool.parse(json['isRequester'].toString(),caseSensitive: false),
+      bool.parse(json['isRequested'].toString(),caseSensitive: false),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -40,4 +42,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'numberOfFolloweds': instance.numberOfFolloweds,
       'isFollower': instance.isFollower,
       'isFollowed': instance.isFollowed,
+      'isRequester': instance.isRequester,
+      'isRequested': instance.isRequested,
     };

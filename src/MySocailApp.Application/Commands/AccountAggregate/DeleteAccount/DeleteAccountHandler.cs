@@ -7,11 +7,11 @@ using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.DeleteAccount
 {
-    public class DeleteAccountHandler(UserManager<Account> userManager, IAppUserRepository userRepository, IAccountAccessor accountAccessor) : IRequestHandler<DeleteAccountDto>
+    public class DeleteAccountHandler(UserManager<Account> userManager, IAppUserWriteRepository userRepository, IAccountAccessor accountAccessor) : IRequestHandler<DeleteAccountDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userRepository = userRepository;
 
         public async Task Handle(DeleteAccountDto request, CancellationToken cancellationToken)
         {
