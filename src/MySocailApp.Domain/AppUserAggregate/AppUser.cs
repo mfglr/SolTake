@@ -5,9 +5,9 @@ using MySocailApp.Domain.PostAggregate;
 
 namespace MySocailApp.Domain.AppUserAggregate
 {
-    public class AppUser(string id, string userName) : IAggregateRoot, IRemovable, IDomainEventsContainer
+    public class AppUser(int id, string userName) : IAggregateRoot, IRemovable, IDomainEventsContainer
     {
-        public string Id { get; private set; } = id;
+        public int Id { get; private set; } = id;
         public string UserName { get; private set; } = userName;
         public DateTime? UpdatedAt { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -15,13 +15,13 @@ namespace MySocailApp.Domain.AppUserAggregate
         public UserImage? Image { get; private set; }
         private readonly List<AppUserImage> _images = [];
         public IReadOnlyCollection<AppUserImage> Images => _images;
-        internal void updateImage(UserImage image)
+        internal void UpdateImage(UserImage image)
         {
             if(Image != null)
                 _images.Add(Image.ToAppUserImage());
             Image = image;
         }
-        public void removeImage()
+        public void RemoveImage()
         {
             if (Image == null)
                 throw new UserImageIsNotAvailableException();
@@ -29,7 +29,7 @@ namespace MySocailApp.Domain.AppUserAggregate
             Image = null;
         }
 
-        public void Create()
+        internal void Create()
         {
             ProfileVisibility = ProfileVisibility.Public;
             CreatedAt = DateTime.UtcNow;
@@ -107,7 +107,7 @@ namespace MySocailApp.Domain.AppUserAggregate
         public IReadOnlyList<Follow> Followeds => _followeds;
         public IReadOnlyList<FollowRequest> Requesters => _requesters;
         public IReadOnlyList<FollowRequest> Requesteds => _requesteds;
-        public void MakeFollowRequest(string requesterId)
+        public void MakeFollowRequest(int requesterId)
         {
             if (requesterId == Id)
                 throw new UnableToFollowYourselfException();
@@ -135,7 +135,7 @@ namespace MySocailApp.Domain.AppUserAggregate
                 AddDomainEvent(new FollowCreatedEvent(requesterId, Id));
             }
         }
-        public void CancelFollowRequest(string requesterId)
+        public void CancelFollowRequest(int requesterId)
         {
             var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
             if (index != -1)
@@ -148,14 +148,14 @@ namespace MySocailApp.Domain.AppUserAggregate
                 throw new NoFollowRequestOrFollowException();
             _followers.RemoveAt(index);
         }
-        public void RemoveFollower(string followerId)
+        public void RemoveFollower(int followerId)
         {
             var index = _followers.FindIndex(x => x.FollowerId == followerId);
             if (index == -1)
                 throw new UserIsNotFollowerException();
             _followers.RemoveAt(index);
         }
-        public void AcceptFollowRequest(string requesterId)
+        public void AcceptFollowRequest(int requesterId)
         {
             var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
             if (index == -1)
@@ -164,7 +164,7 @@ namespace MySocailApp.Domain.AppUserAggregate
             _followers.Add(Follow.Create(requesterId, Id));
             AddDomainEvent(new FollowCreatedEvent(requesterId, Id));
         }
-        public void RejectFollowRequest(string requesterId)
+        public void RejectFollowRequest(int requesterId)
         {
             var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
             if (index == -1)
@@ -177,7 +177,7 @@ namespace MySocailApp.Domain.AppUserAggregate
         private readonly List<Block> _blockeds = [];
         public IReadOnlyList<Block> Blockers => _blockers;
         public IReadOnlyCollection<Block> Blockeds => _blockeds;
-        public void Block(string userId)
+        public void Block(int userId)
         {
             if (Id == userId)
                 throw new UnableToBlockYourself();
@@ -208,7 +208,7 @@ namespace MySocailApp.Domain.AppUserAggregate
 
             _blockers.Add(AppUserAggregate.Block.Create(userId, Id));
         }
-        public void Unblock(string userId)
+        public void Unblock(int userId)
         {
             var index = _blockers.FindIndex(x => x.BlockerId == userId);
             if (index < 0)
@@ -217,8 +217,8 @@ namespace MySocailApp.Domain.AppUserAggregate
             _blockers.RemoveAt(index);
         }
 
-        //readonly Posts
-        public IReadOnlyCollection<Post> Posts { get; }
+        //readonly Questions
+        public IReadOnlyCollection<Question> Questions { get; }
 
         //IRemovable
         public bool IsRemoved { get; private set; }

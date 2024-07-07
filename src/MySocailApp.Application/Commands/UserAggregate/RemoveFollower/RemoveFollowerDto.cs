@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveFollower
 {
-    public record RemoveFollowerDto(string FollowerId) : IRequest;
+    public record RemoveFollowerDto(int FollowerId) : IRequest;
 }

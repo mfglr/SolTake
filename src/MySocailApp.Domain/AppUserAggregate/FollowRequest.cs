@@ -4,19 +4,19 @@ namespace MySocailApp.Domain.AppUserAggregate
 {
     public class FollowRequest : IRemovable
     {
-        public string RequesterId { get; private set; }
+        public int RequesterId { get; private set; }
         public AppUser Requester { get; } = null!;
-        public string RequestedId { get; private set; }
+        public int RequestedId { get; private set; }
         public AppUser Requested { get; } = null!;
         public DateTime CreatedAt { get; private set; }
 
-        private FollowRequest(string requesterId, string requestedId)
+        private FollowRequest(int requesterId, int requestedId)
         {
             RequesterId = requesterId;
             RequestedId = requestedId;
         }
 
-        public static FollowRequest Create(string requesterId, string requestedId)
+        public static FollowRequest Create(int requesterId, int requestedId)
         {
             var request = new FollowRequest(requesterId, requestedId)
             {

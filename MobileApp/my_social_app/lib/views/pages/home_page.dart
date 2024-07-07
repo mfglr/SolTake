@@ -53,6 +53,13 @@ class _HomeViewState extends State<HomePage> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.of(context).pushNamed(takePictureRoute);
+        },
+        shape: const CircleBorder(),
+        child: const Icon(Icons.question_mark),
+      ),
     );
   }
 }

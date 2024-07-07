@@ -5,15 +5,17 @@ using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.PostAggregate;
+using MySocailApp.Domain.TopicAggregate;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<Account,IdentityRole,string>(options)
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<Account,IdentityRole<int>,int>(options)
     {
         public DbSet<AppUser> AppUsers { get; private set; }
-        public DbSet<Post> Posts { get; private set; }
-        
+        public DbSet<Question> Questions { get; private set; }
+        public DbSet<Topic> Topics { get; private set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

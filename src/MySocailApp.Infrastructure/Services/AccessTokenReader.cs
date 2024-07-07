@@ -14,20 +14,22 @@ namespace MySocailApp.Infrastructure.Services
             if (context == null) throw new NotAuthorizedException();
         }
 
-        public string? GetAccountId()
+        public int? GetAccountId()
         {
             var context = _contextAccessor.HttpContext;
             if(context == null) return null;
-            return context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var value = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            return value != null ? int.Parse(value) : null;
         }
 
-        public string GetRequiredAccountId()
+        public int GetRequiredAccountId()
         {
             var context = _contextAccessor.HttpContext;
             ThrowExceptionIfContextIsNull(context);
-            return 
+            var value = 
                 context!.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ?? 
                 throw new NotAuthorizedException();
+            return int.Parse(value);
         }
 
         public string GetRequiredUserName()

@@ -146,7 +146,7 @@ namespace MySocailApp.Api.Controllers
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<AppUserResponseDto> GetById(string id,CancellationToken cancellationToken)
+        public async Task<AppUserResponseDto> GetById(int id,CancellationToken cancellationToken)
             => await _mediator.Send(new GetUserByIdDto(id),cancellationToken);
 
         [HttpGet]
@@ -160,56 +160,56 @@ namespace MySocailApp.Api.Controllers
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<FileContentResult> GetImageById(string userId, CancellationToken cancellationToken)
+        public async Task<FileContentResult> GetImageById(int userId, CancellationToken cancellationToken)
             => File(await _mediator.Send(new GetUserImageById(userId), cancellationToken), "application/octet-stream");
 
         [HttpGet]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<List<AppUserResponseDto>> GetFollowers([FromQuery(Name = "lastId")] string? lastId, CancellationToken cancellationToken)
+        public async Task<List<AppUserResponseDto>> GetFollowers([FromQuery(Name = "lastId")] int? lastId, CancellationToken cancellationToken)
             => await _mediator.Send(new GetFollowersDto(lastId), cancellationToken);
 
         [HttpGet("{id}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<List<AppUserResponseDto>> GetFollowersById(string id,[FromQuery(Name = "lastId")] string? lastId, CancellationToken cancellationToken)
+        public async Task<List<AppUserResponseDto>> GetFollowersById(int id,[FromQuery(Name = "lastId")] int? lastId, CancellationToken cancellationToken)
             => await _mediator.Send(new GetFollowersByIdDto(id,lastId), cancellationToken);
 
         [HttpGet]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<List<AppUserResponseDto>> GetFolloweds([FromQuery(Name = "lastId")] string? lastId, CancellationToken cancellationToken)
+        public async Task<List<AppUserResponseDto>> GetFolloweds([FromQuery(Name = "lastId")] int? lastId, CancellationToken cancellationToken)
             => await _mediator.Send(new GetFollowedsDto(lastId), cancellationToken);
 
         [HttpGet("{id}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<List<AppUserResponseDto>> GetFollowedsById(string id,[FromQuery(Name = "lastId")] string? lastId, CancellationToken cancellationToken)
+        public async Task<List<AppUserResponseDto>> GetFollowedsById(int id,[FromQuery(Name = "lastId")] int? lastId, CancellationToken cancellationToken)
             => await _mediator.Send(new GetFollowedsByIdDto(id,lastId), cancellationToken);
 
         [HttpGet]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<List<AppUserResponseDto>> GetRequesters([FromQuery(Name = "lastId")] string? lastId, CancellationToken cancellationToken)
+        public async Task<List<AppUserResponseDto>> GetRequesters([FromQuery(Name = "lastId")] int? lastId, CancellationToken cancellationToken)
             => await _mediator.Send(new GetRequesterDto(lastId), cancellationToken);
 
         [HttpGet]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<List<AppUserResponseDto>> GetRequesteds([FromQuery(Name = "lastId")] string? lastId, CancellationToken cancellationToken)
+        public async Task<List<AppUserResponseDto>> GetRequesteds([FromQuery(Name = "lastId")] int? lastId, CancellationToken cancellationToken)
             => await _mediator.Send(new GetRequestedsDto(lastId), cancellationToken);
         
         [HttpGet("{key}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<List<AppUserResponseDto>> Search(string key, [FromQuery(Name = "lastId")] string? lastId, CancellationToken cancellationToken)
+        public async Task<List<AppUserResponseDto>> Search(string key, [FromQuery(Name = "lastId")] int? lastId, CancellationToken cancellationToken)
             => await _mediator.Send(new SearchUserDto(key,lastId), cancellationToken);
 
        

@@ -10,9 +10,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
         private readonly AppDbContext _context = context;
 
         public async Task CreateAsync(AppUser user, CancellationToken cancellationToken)
-        {
-            await _context.AppUsers.AddAsync(user, cancellationToken);
-        }
+            => await _context.AppUsers.AddAsync(user, cancellationToken);
 
         public void Delete(AppUser user)
         {
@@ -20,12 +18,12 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             _context.AppUsers.Remove(user);
         }
 
-        public async Task<AppUser> GetByIdAsync(string id, CancellationToken cancellationToken)
+        public async Task<AppUser> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             return await _context.AppUsers.FirstAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<AppUser?> GetWithAllAsync(string id, string userId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithAllAsync(int id, int userId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Followers.Where(x => x.FollowerId == userId))
@@ -37,7 +35,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<AppUser?> GetWithAllAsync(string id, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithAllAsync(int id, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Followers)
@@ -49,14 +47,14 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<AppUser?> GetWithBlocker(string id, string userId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithBlocker(int id, int userId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Blockers.Where(x => x.BlockerId == userId))
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<AppUser?> GetWithFollowerByIdAsync(string id, string followerId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithFollowerByIdAsync(int id, int followerId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Followers.Where(x => x.FollowerId == followerId))
@@ -65,7 +63,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<AppUser?> GetWithFollowerRequesterBlockedBlockerByIdAsync(string id, string userId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithFollowerRequesterBlockedBlockerByIdAsync(int id, int userId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Followers.Where(x => x.FollowerId == userId))
@@ -75,14 +73,14 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
         }
         
-        public async Task<AppUser?> GetWithFollowerRequesterByIdAsync(string id, string userId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithFollowerRequesterByIdAsync(int id, int userId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Followers.Where(x => x.FollowerId == userId && !x.IsRemoved))
                 .Include(x => x.Requesters.Where(x => x.RequesterId == userId && !x.IsRemoved))
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
         }
-        public async Task<AppUser?> GetWithFollowedRequestedByIdAsync(string id, string userId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithFollowedRequestedByIdAsync(int id, int userId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Followeds.Where(x => x.FollowedId == userId && !x.IsRemoved))
@@ -91,21 +89,21 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
         }
 
 
-        public async Task<AppUser?> GetWithRequestedByIdAsync(string id, string requestedId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithRequestedByIdAsync(int id, int requestedId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Requesteds.Where(x => x.RequesterId == requestedId))
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<AppUser?> GetWithRequesterByIdAsync(string id, string requesterId, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithRequesterByIdAsync(int id, int requesterId, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Requesters.Where(x => x.RequesterId == requesterId))
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
         }
 
-        public async Task<AppUser?> GetWithRequestersByIdAsync(string id, CancellationToken cancellationToken)
+        public async Task<AppUser?> GetWithRequestersByIdAsync(int id, CancellationToken cancellationToken)
         {
             return await _context.AppUsers
                 .Include(x => x.Requesters)

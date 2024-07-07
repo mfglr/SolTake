@@ -21,7 +21,7 @@ namespace MySocailApp.Infrastructure.Services
             var claims = new List<Claim>()
             {
                 new (JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                new (ClaimTypes.NameIdentifier, account.Id),
+                new (ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new (ClaimTypes.Name,account.UserName!),
                 new (ClaimTypes.Email,account.Email!),
                 new (JwtRegisteredClaimNames.Aud, _tokenConfiguration.Audience)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
@@ -16,7 +17,7 @@ namespace MySocailApp.Api.Filters
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
             _accountAccessor.Account = 
-                await _userManager.FindByIdAsync(accountId) ?? 
+                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId) ?? 
                 throw new AccountWasNotFoundException();
 
             if(_accountAccessor.Account.IsRemoved)

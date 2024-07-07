@@ -1,6 +1,5 @@
 ﻿using MySocailApp.Application.Configurations;
 using System.Net.Mail;
-using System.Reflection;
 
 namespace MySocailApp.Infrastructure.Services.Email
 {
@@ -11,7 +10,7 @@ namespace MySocailApp.Infrastructure.Services.Email
         private readonly IApplicationSettings _applicationSettings = applicationSettings;
 
         public async Task<MailMessage> CreateEmailConfirmationMailMessageAsync(
-            string token, string id, string userName, string email, CancellationToken cancellationToken = default)
+            string token, int id, string userName, string email, CancellationToken cancellationToken = default)
         {
 
             using var bodyFile = File.OpenRead("MailMessages/EmailConfirmation.html");
@@ -21,7 +20,7 @@ namespace MySocailApp.Infrastructure.Services.Email
             body = body.Replace("{applicationUrl}",_applicationSettings.ApplicationUrl);
             body = body.Replace("{userName}",userName);
             body = body.Replace("{token}",token);
-            body = body.Replace("{id}",id);
+            body = body.Replace("{id}",id.ToString());
 
             var message = new MailMessage()
             {

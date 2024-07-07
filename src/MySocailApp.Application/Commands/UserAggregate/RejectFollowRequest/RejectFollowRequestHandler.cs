@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.RejectFollowRequest
         {
             var accoutId = _accessTokenReader.GetRequiredAccountId();
             var user = await _repository.GetWithRequesterByIdAsync(accoutId, request.RequesterId, cancellationToken);
-            user.RejectFollowRequest(request.RequesterId);
+            user!.RejectFollowRequest(request.RequesterId);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

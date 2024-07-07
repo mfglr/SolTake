@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetFolloweds
 {
-    public record GetFollowedsDto(string? LastId) : IRequest<List<AppUserResponseDto>>;
+    public record GetFollowedsDto(int? LastId) : IRequest<List<AppUserResponseDto>>;
 }

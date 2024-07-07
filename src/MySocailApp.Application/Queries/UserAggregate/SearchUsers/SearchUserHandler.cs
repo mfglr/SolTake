@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.SearchUsers
 
         public async Task<List<AppUserResponseDto>> Handle(SearchUserDto request, CancellationToken cancellationToken)
         {
-            var users = await _repository.SearchUser(request.Key, cancellationToken, request.LastId ?? "");
+            var users = await _repository.SearchUser(request.Key, request.LastId, cancellationToken);
             return _mapper.Map<List<AppUserResponseDto>>(users);
         }
     }

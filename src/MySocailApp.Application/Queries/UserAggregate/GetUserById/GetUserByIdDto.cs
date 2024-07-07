@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetUserById
 {
-    public record GetUserByIdDto(string Id) : IRequest<AppUserResponseDto>;
+    public record GetUserByIdDto(int Id) : IRequest<AppUserResponseDto>;
 }

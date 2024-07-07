@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.UserAggregate.MakeFollowRequest
 {
-    public record MakeFollowRequestDto(string RequestedId) : IRequest;
+    public record MakeFollowRequestDto(int RequestedId) : IRequest;
 }

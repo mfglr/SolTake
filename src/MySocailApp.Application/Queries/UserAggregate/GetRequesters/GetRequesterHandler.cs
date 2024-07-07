@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetRequesters
         public async Task<List<AppUserResponseDto>> Handle(GetRequesterDto request, CancellationToken cancellationToken)
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
-            var users = await _repository.GetRequestersByIdAsync(accountId, cancellationToken, request.LastId ?? "");
+            var users = await _repository.GetRequestersByIdAsync(accountId, request.LastId, cancellationToken);
             return _mapper.Map<List<AppUserResponseDto>>(users);
         }
     }

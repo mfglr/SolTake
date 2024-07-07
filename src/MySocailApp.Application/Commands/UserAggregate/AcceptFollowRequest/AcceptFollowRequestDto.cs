@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.UserAggregate.AcceptFollowRequest
 {
-    public record AcceptFollowRequestDto(string RequesterId) : IRequest;
+    public record AcceptFollowRequestDto(int RequesterId) : IRequest;
 }

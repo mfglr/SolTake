@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.TopicAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.TokenProviders;
 using System.IdentityModel.Tokens.Jwt;
@@ -78,7 +79,7 @@ namespace MySocailApp.Api
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
             services
-                .AddIdentity<Account, IdentityRole>(
+                .AddIdentity<Account, IdentityRole<int>>(
                     opt =>
                     {
                         opt.Password.RequireNonAlphanumeric = false;
@@ -105,17 +106,25 @@ namespace MySocailApp.Api
             using var scope = app.Services.CreateScope();
             using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             context.Database.Migrate();
+
             if(!context.Roles.Any(x => x.Name == "user"))
             {
                 context.Roles.Add(new()
                 {
-                    Id = "0f3b3773-15e5-459b-9745-6416c6dff0bf",
                     Name = "user",
                     NormalizedName = "USER"
                 });
-                context.SaveChanges();
             }
-                
+
+            if (!context.Topics.Any())
+            {
+                var topic0 = new Topic("Sözcükte Anlam");
+                topic0.Create();
+                var topic1 = new Topic("Paragrafta Anlam");
+                topic1.Create();
+                context.Topics.AddRange([topic0,topic1]);
+            }
+            context.SaveChanges();
         }
     }
 }

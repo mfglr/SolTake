@@ -3,9 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.Services;
+using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.DbContexts;
+using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.Services;
 using MySocailApp.Infrastructure.Services.Email;
 using System.Net;
@@ -20,7 +24,9 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddServices()
                 .AddDbContext()
-                .AddAppUserAggregate();
+                .AddAccountAggregate()
+                .AddAppUserAggregate()
+                .AddQuestionAggregate();
         }
 
         private static IServiceCollection AddServices(this IServiceCollection services)
@@ -61,9 +67,16 @@ namespace MySocailApp.Infrastructure
             var connectionString = configuration.GetConnectionString("SqlServer");
             return services
                .AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString))
-               .AddScoped<ITransactionCreator, TransactionCreator>()
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
+        }
+
+        private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ITransactionCreator, TransactionCreator>()
+                .AddScoped<IAppUserRepository, AppUserRepository>()
+                .AddScoped<AccountCreator>();
         }
 
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
@@ -75,6 +88,19 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IUserImageBlobService, UserImageBlobService>()
                 .AddScoped<UserImageUpdater>()
                 .AddScoped<UserImageReader>();
+        }
+
+        private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ITopicRepository, TopicRepository>()
+                .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
+                .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
+                .AddScoped<IQuestionImageBlobNameGenerator, QuestionImageBlobNameGenerator>()
+                .AddScoped<IQuestionImageBlobService, QuestionImageBlobService>()
+                .AddScoped<ISubjectValidator,SubjectValidator>()
+                .AddScoped<QuestionCreator>()
+                .AddScoped<QuestionImageReader>();
         }
     }
 }

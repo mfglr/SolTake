@@ -4,19 +4,19 @@ namespace MySocailApp.Domain.AppUserAggregate
 {
     public class Follow : IRemovable
     {
-        public string FollowerId { get; private set; }
+        public int FollowerId { get; private set; }
         public AppUser Follower { get; } = null!;
-        public string FollowedId { get; private set; }
+        public int FollowedId { get; private set; }
         public AppUser Followed { get; } = null!;
         public DateTime CreatedAt { get; private set; }
 
-        private Follow(string followerId, string followedId)
+        private Follow(int followerId, int followedId)
         {
             FollowerId = followerId;
             FollowedId = followedId;
         }
 
-        public static Follow Create(string followerId, string followedId)
+        public static Follow Create(int followerId, int followedId)
         {
             var r = new Follow(followerId, followedId)
             {

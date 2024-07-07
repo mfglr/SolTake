@@ -1,15 +1,9 @@
 ﻿namespace MySocailApp.Domain.AppUserAggregate
 {
-    public class UserImage
+    public class UserImage(string blobName, DateTime createdAt)
     {
-        public string BlobName { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-
-        public UserImage(string blobName, DateTime createdAt)
-        {
-            BlobName = blobName;
-            CreatedAt = createdAt;
-        }
+        public string BlobName { get; private set; } = blobName;
+        public DateTime CreatedAt { get; private set; } = createdAt;
 
         public AppUserImage ToAppUserImage()
         {

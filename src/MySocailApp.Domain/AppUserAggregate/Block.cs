@@ -4,19 +4,19 @@ namespace MySocailApp.Domain.AppUserAggregate
 {
     public class Block : IRemovable
     {
-        public string BlockerId { get; private set; }
+        public int BlockerId { get; private set; }
         public AppUser Blocker { get; } = null!;
-        public string BlockedId { get; private set; }
+        public int BlockedId { get; private set; }
         public AppUser Blocked { get; } = null!;
         public DateTime CreatedAt { get; private set; }
 
-        private Block(string blockerId, string blockedId)
+        private Block(int blockerId, int blockedId)
         {
             BlockerId = blockerId;
             BlockedId = blockedId;
         }
 
-        public static Block Create(string blockerId, string blockedId)
+        public static Block Create(int blockerId, int blockedId)
         {
             var block = new Block(blockerId, blockedId)
             {

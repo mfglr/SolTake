@@ -4,20 +4,14 @@ using System.Net.Mail;
 
 namespace MySocailApp.Infrastructure.Services.Email
 {
-    public class EmailService : IEmailService
+    public class EmailService(MailMessageFactory messageFactory, SmtpClient smtpClient) : IEmailService
     {
 
-        private readonly MailMessageFactory _messageFactory;
-        private readonly SmtpClient _smtpClient;
-
-        public EmailService(MailMessageFactory messageFactory, SmtpClient smtpClient)
-        {
-            _messageFactory = messageFactory;
-            _smtpClient = smtpClient;
-        }
+        private readonly MailMessageFactory _messageFactory = messageFactory;
+        private readonly SmtpClient _smtpClient = smtpClient;
 
         public async Task SendEmailConfirmationMail(
-            string token,string id,string userName,string email,CancellationToken cancellationToken = default
+            string token,int id,string userName,string email,CancellationToken cancellationToken = default
         )
         {
             var mailMessagge = await _messageFactory.CreateEmailConfirmationMailMessageAsync(

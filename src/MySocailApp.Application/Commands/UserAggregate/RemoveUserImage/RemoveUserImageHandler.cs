@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
         {
             var id = _accessTokenReader.GetRequiredAccountId();
             var user = await _repository.GetByIdAsync(id, cancellationToken);
-            user.removeImage();
+            user.RemoveImage();
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

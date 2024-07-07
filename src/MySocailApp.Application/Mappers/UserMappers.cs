@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Mappers
         public UserMappers(IAccessTokenReader accessTokenReader)
         {
             CreateMap<AppUser, AppUserResponseDto>()
-                .ForMember(dest => dest.NumberOfPosts, opt => opt.MapFrom(src => src.Posts.Count))
+                .ForMember(dest => dest.NumberOfQuestions, opt => opt.MapFrom(src => src.Questions.Count))
                 .ForMember(dest => dest.NumberOfFollowers, opt => opt.MapFrom(src => src.Followers.Count))
                 .ForMember(dest => dest.NumberOfFolloweds, opt => opt.MapFrom(src => src.Followeds.Count))
                 .ForMember(dest => dest.IsFollower, opt => opt.MapFrom(src => src.Followeds.Any(x => x.FollowedId == accessTokenReader.GetAccountId())))

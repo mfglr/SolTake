@@ -9,6 +9,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
 
+            builder.Property(e => e.Id).ValueGeneratedNever();
+
             builder.OwnsOne(x => x.Image);
 
             builder
@@ -46,6 +48,11 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
                 .WithOne(x => x.Blocker)
                 .HasForeignKey(x => x.BlockerId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.Questions)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId);
         }
     }
 }

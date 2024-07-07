@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.UserAggregate.Block
 {
-    public record BlockDto(string BlockedId) : IRequest;
+    public record BlockDto(int BlockedId) : IRequest;
 }

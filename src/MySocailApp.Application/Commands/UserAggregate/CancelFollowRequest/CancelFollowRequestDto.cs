@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.UserAggregate.CancelFollowRequest
 {
-    public record CancelFollowRequestDto(string RequesterId) : IRequest;
+    public record CancelFollowRequestDto(int RequesterId) : IRequest;
 }

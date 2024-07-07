@@ -15,7 +15,7 @@ namespace MySocailApp.Domain.AppUserAggregate
 
             string blobName = _userImageBlobNameGenerator.Generate();
             var userImage = new UserImage(blobName, DateTime.UtcNow);
-            user.updateImage(userImage);
+            user.UpdateImage(userImage);
 
             await _userImageBlobService.UploadAsync(blobName, stream, cancellationToken);
         }

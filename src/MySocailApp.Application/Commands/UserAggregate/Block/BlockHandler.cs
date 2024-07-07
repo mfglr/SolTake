@@ -13,7 +13,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.Block
 
         public async Task Handle(BlockDto request, CancellationToken cancellationToken)
         {
-            string userId = _accessTokenReader.GetRequiredAccountId();
+            int userId = _accessTokenReader.GetRequiredAccountId();
 
             var userToBlock = 
                 await _userRepository.GetWithAllAsync(request.BlockedId,userId,cancellationToken) ??

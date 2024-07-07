@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetFollowersById
 {
-    public record GetFollowersByIdDto(string id,string? LastId) : IRequest<List<AppUserResponseDto>>;
+    public record GetFollowersByIdDto(int Id, int? LastId) : IRequest<List<AppUserResponseDto>>;
 }

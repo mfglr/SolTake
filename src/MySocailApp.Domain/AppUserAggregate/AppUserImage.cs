@@ -2,7 +2,7 @@
 {
     public class AppUserImage
     {
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
         public DateTime RemovedAt { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public string BlobName { get; private set; }

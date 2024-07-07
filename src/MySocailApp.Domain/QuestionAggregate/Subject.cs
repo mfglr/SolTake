@@ -1,0 +1,31 @@
+﻿namespace MySocailApp.Domain.QuestionAggregate
+{
+    public enum Subject
+    {
+        Almanca,
+        Biyoloji,
+        Cografya,
+        Cografya1,
+        Cografya2,
+        Din,
+        Edebiyat,
+        Felsefe,
+        Psikoloji,
+        Sosyoloji,
+        Mantik,
+        FenBilimleri,
+        Fizik,
+        Geometri,
+        Kimya,
+        Matematik,
+        Tarih,
+        Tarih1,
+        Tarih2,
+        Turkce,
+        Ingilizce,
+        YabanciDil,
+        Inkilap,
+        Vatandaslik,
+        GuncelBilgi
+    }
+}

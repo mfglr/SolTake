@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken
 {
-    public record LoginByRefreshTokenDto(string Id,string Token) : IRequest<AccountDto>;
+    public record LoginByRefreshTokenDto(int Id,string Token) : IRequest<AccountDto>;
 }

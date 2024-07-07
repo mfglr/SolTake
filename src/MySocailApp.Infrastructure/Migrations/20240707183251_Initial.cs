@@ -15,7 +15,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "AppUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -37,7 +37,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -51,7 +52,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EmailConfirmationToken_Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -80,14 +82,29 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Topics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Topics", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AppUserImage",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BlobName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    AppUserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,8 +120,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "Block",
                 columns: table => new
                 {
-                    BlockerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BlockedId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BlockerId = table.Column<int>(type: "int", nullable: false),
+                    BlockedId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -128,8 +145,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "Follow",
                 columns: table => new
                 {
-                    FollowerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FollowedId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FollowerId = table.Column<int>(type: "int", nullable: false),
+                    FollowedId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -153,8 +170,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "FollowRequest",
                 columns: table => new
                 {
-                    RequesterId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RequestedId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RequesterId = table.Column<int>(type: "int", nullable: false),
+                    RequestedId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -175,20 +192,27 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
+                name: "Questions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updatedat = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Exam = table.Column<int>(type: "int", nullable: false),
+                    Subject = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_AppUsers_AppUserId",
+                        name: "FK_Questions_AppUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AppUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,7 +221,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -218,7 +242,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -240,7 +264,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,8 +281,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -281,7 +305,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -293,6 +317,51 @@ namespace MySocailApp.Infrastructure.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionImage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BlobName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    QuestionId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionImage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuestionImage_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionTopic",
+                columns: table => new
+                {
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    TopicId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionTopic", x => new { x.QuestionId, x.TopicId });
+                    table.ForeignKey(
+                        name: "FK_QuestionTopic_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionTopic_Topics_TopicId",
+                        column: x => x.TopicId,
+                        principalTable: "Topics",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -357,9 +426,19 @@ namespace MySocailApp.Infrastructure.Migrations
                 column: "RequestedId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_AppUserId",
-                table: "Posts",
+                name: "IX_QuestionImage_QuestionId",
+                table: "QuestionImage",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_AppUserId",
+                table: "Questions",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionTopic_TopicId",
+                table: "QuestionTopic",
+                column: "TopicId");
         }
 
         /// <inheritdoc />
@@ -393,13 +472,22 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "FollowRequest");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "QuestionImage");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTopic");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Questions");
+
+            migrationBuilder.DropTable(
+                name: "Topics");
 
             migrationBuilder.DropTable(
                 name: "AppUsers");

@@ -5,18 +5,14 @@ using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Domain.AccountAggregate
 {
-    public class Account : IdentityUser<string>, IAggregateRoot, IRemovable, IDomainEventsContainer
+    public class Account : IdentityUser<int>, IAggregateRoot, IRemovable, IDomainEventsContainer
     {
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
 
-        public Account(string id)
-        {
-            ArgumentNullException.ThrowIfNull(id);
-            Id = id;
-        }
+        public Account(){}
 
-        public void Create(string email)
+        internal void Create(string email)
         {
             Email = email;
             UserName = AccountAggregate.Email.GenerateUserName(email);

@@ -6,3 +6,4 @@ const userFollowersRoute = "/user-followers/";
 const userFollowedsRoute = "/user-followeds/";
 const userPageRoute = "/user-page/";
 const profilePageRoute = "/profile-page/";
+const takePictureRoute = "/take-picture/";
