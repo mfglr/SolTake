@@ -1,35 +1,21 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.Services;
-using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AccountAggregate;
-using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdatePassword
 {
-    public class UpdatePasswordHandler(UserManager<Account> userManager, ITokenService tokenService,IAccountAccessor accountAccessor, IMapper mapper) : IRequestHandler<UpdatePasswordDto, AccountDto>
+    public class UpdatePasswordHandler(IAccountAccessor accountAccessor, IMapper mapper, AccountManager accountManager) : IRequestHandler<UpdatePasswordDto, AccountDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
-        private readonly UserManager<Account> _userManager = userManager;
-        private readonly ITokenService _tokenService = tokenService;
         private readonly IMapper _mapper = mapper;
+        private readonly AccountManager _accountManager = accountManager;
 
         public async Task<AccountDto> Handle(UpdatePasswordDto request, CancellationToken cancellationToken)
         {
             var account = _accountAccessor.Account;
-            if (!await _userManager.CheckPasswordAsync(account, request.CurrentPassword))
-                throw new IncorrectPasswordException();
-            
-            var result = await _userManager.ChangePasswordAsync(account, request.CurrentPassword, request.NewPassword);
-            if (!result.Succeeded)
-                throw new ServerSideException(result.Errors.Select(x => x.Description).ToList());
-
-            var token = await _tokenService.CreateTokenAsync(account);
-            return _mapper.Map<Account, AccountDto>(
-                account,
-                opt => opt.AfterMap((src, dest) => dest.Token = token)
-            );
+            await _accountManager.UpdatePasswordAsync(account,request.CurrentPassword,request.NewPassword);
+            return _mapper.Map<AccountDto>(account);
         }
     }
 }

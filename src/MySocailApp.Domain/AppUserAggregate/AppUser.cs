@@ -1,14 +1,14 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.PostAggregate;
 
 namespace MySocailApp.Domain.AppUserAggregate
 {
-    public class AppUser(int id, string userName) : IAggregateRoot, IRemovable, IDomainEventsContainer
+    public class AppUser(int id) : IAggregateRoot, IRemovable, IDomainEventsContainer
     {
         public int Id { get; private set; } = id;
-        public string UserName { get; private set; } = userName;
         public DateTime? UpdatedAt { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
@@ -33,11 +33,6 @@ namespace MySocailApp.Domain.AppUserAggregate
         {
             ProfileVisibility = ProfileVisibility.Public;
             CreatedAt = DateTime.UtcNow;
-        }
-        public void UpdateUserName(string username)
-        {
-            UserName = username;
-            UpdatedAt = DateTime.UtcNow;
         }
 
         internal void DeleteEntities()
@@ -217,7 +212,8 @@ namespace MySocailApp.Domain.AppUserAggregate
             _blockers.RemoveAt(index);
         }
 
-        //readonly Questions
+        //readonly navigator properties
+        public Account Account { get; }
         public IReadOnlyCollection<Question> Questions { get; }
 
         //IRemovable

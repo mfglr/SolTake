@@ -8,7 +8,9 @@ namespace MySocailApp.Application.Mappers
     {
         public AccountMappers()
         {
-            CreateMap<Account, AccountDto>();
+            CreateMap<Account, AccountDto>()
+                .ForMember(dest => dest.AccessToken, x => x.MapFrom(src => src.Token.AccessToken))
+                .ForMember(dest => dest.RefreshToken, x => x.MapFrom(src => src.Token.RefreshToken));
         }
     }
 }

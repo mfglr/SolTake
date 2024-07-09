@@ -1,20 +1,16 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using MySocailApp.Application.Services;
-using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
-using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
 {
-    public class LoginByPasswordHandler(UserManager<Account> userManager, ITokenService tokenService, IAppUserWriteRepository userRepository, IMapper mapper) : IRequestHandler<LoginByPasswordDto, AccountDto>
+    public class LoginByPasswordHandler(UserManager<Account> userManager, IMapper mapper, LoginManager loginManager) : IRequestHandler<LoginByPasswordDto, AccountDto>
     {
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly ITokenService _tokenService = tokenService;
-        private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly IMapper _mapper = mapper;
+        private readonly LoginManager _loginManager = loginManager;
 
         public async Task<AccountDto> Handle(LoginByPasswordDto request, CancellationToken cancellationToken)
         {
@@ -28,25 +24,8 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
                     await _userManager.FindByNameAsync(request.EmailOrUserName) ??
                     throw new LoginFailedException();
 
-            if (!await _userManager.CheckPasswordAsync(account, request.Password))
-                throw new LoginFailedException();
-
-            if (account.IsRemoved)
-            {
-                account.Restore();
-                var user = (await _userRepository.GetWithAllAsync(account.Id, cancellationToken))!;
-                user.Restore();
-            }
-
-            var result = await _userManager.UpdateSecurityStampAsync(account);
-            if(!result.Succeeded)
-                throw new ServerSideException(result.Errors.Select(x => x.Description).ToList());
-
-            var token = await _tokenService.CreateTokenAsync(account);
-            return _mapper.Map<Account, AccountDto>(
-                account,
-                opt => opt.AfterMap((src, dest) => dest.Token = token)
-            );
+            await _loginManager.LoginByPassword(account, request.Password, cancellationToken);
+            return _mapper.Map<AccountDto>(account);
         }
     }
 }

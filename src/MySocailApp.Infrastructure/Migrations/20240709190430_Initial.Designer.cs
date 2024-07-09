@@ -12,7 +12,7 @@ using MySocailApp.Infrastructure.DbContexts;
 namespace MySocailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240707183251_Initial")]
+    [Migration("20240709190430_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -266,10 +266,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -554,6 +550,12 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.AppUser", b =>
                 {
+                    b.HasOne("MySocailApp.Domain.AccountAggregate.Account", "Account")
+                        .WithOne("AppUser")
+                        .HasForeignKey("MySocailApp.Domain.AppUserAggregate.AppUser", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("MySocailApp.Domain.AppUserAggregate.UserImage", "Image", b1 =>
                         {
                             b1.Property<int>("AppUserId")
@@ -573,6 +575,8 @@ namespace MySocailApp.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("AppUserId");
                         });
+
+                    b.Navigation("Account");
 
                     b.Navigation("Image");
                 });
@@ -676,6 +680,12 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Question");
 
                     b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Account", b =>
+                {
+                    b.Navigation("AppUser")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.AppUser", b =>

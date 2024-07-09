@@ -2,6 +2,8 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AppUserAggregate;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySocailApp.Domain.AccountAggregate
 {
@@ -22,14 +24,12 @@ namespace MySocailApp.Domain.AccountAggregate
 
             AddDomainEvent(new AccountCreatedDominEvent(this));
         }
-
-        public void UpdateUserName(string username)
+        internal void UpdateUserName(string username)
         {
             UserName = username;
             UpdatedAt = DateTime.UtcNow;
         }
-
-        public void UpdateEmail(string email)
+        internal void UpdateEmail(string email)
         {
             Email = email;
             UpdatedAt = DateTime.UtcNow;
@@ -54,6 +54,12 @@ namespace MySocailApp.Domain.AccountAggregate
             }
             EmailConfirmed = true;
         }
+
+        public AppUser AppUser { get; }
+
+        //Token
+        [NotMapped]
+        public Token Token { get; set; }
 
         //IRemovable
         public bool IsRemoved { get; private set; }

@@ -28,20 +28,16 @@ namespace MySocailApp.Infrastructure
                 .AddAppUserAggregate()
                 .AddQuestionAggregate();
         }
-
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
             return services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddScoped<IAccountAccessor, AccountAccessor>()
-                .AddScoped<ITokenService, TokenService>()
                 .AddEmailService();
         }
-
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
             var emailServiceSettings = services.BuildServiceProvider().GetRequiredService<IEmailServiceSettings>()!;
-
             return services
                 .AddScoped(
                     sp =>
@@ -60,7 +56,6 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<MailMessageFactory>()
                 .AddScoped<IEmailService, EmailService>();
         }
-
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {
             var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
@@ -70,15 +65,15 @@ namespace MySocailApp.Infrastructure
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
-
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
         {
             return services
+                .AddScoped<ITokenService, TokenService>()
                 .AddScoped<ITransactionCreator, TransactionCreator>()
                 .AddScoped<IAppUserRepository, AppUserRepository>()
-                .AddScoped<AccountCreator>();
+                .AddScoped<AccountManager>()
+                .AddScoped<LoginManager>();
         }
-
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
         {
             return services
@@ -89,7 +84,6 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<UserImageUpdater>()
                 .AddScoped<UserImageReader>();
         }
-
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
         {
             return services

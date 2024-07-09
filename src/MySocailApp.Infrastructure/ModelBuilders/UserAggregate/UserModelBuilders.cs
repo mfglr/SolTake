@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate

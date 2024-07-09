@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Application.Configurations;
-using MySocailApp.Application.Services;
 using MySocailApp.Domain.AccountAggregate;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace MySocailApp.Infrastructure.Services
+namespace MySocailApp.Infrastructure.AccountAggregate
 {
     public class TokenService(ITokenProviderOptions tokenConfiguration, SigningCredentials signingCredentials, JwtSecurityTokenHandler jwtSecurityTokenHandler, UserManager<Account> userManager) : ITokenService
     {
@@ -33,15 +32,10 @@ namespace MySocailApp.Infrastructure.Services
             return claims;
         }
 
-        public async Task<Token> CreateTokenAsync(Account account)
+        public async Task UpdateTokenAsync(Account account)
         {
-            var expirationDateOfRefreshToken = DateTime.Now.AddMinutes(_tokenConfiguration.RefreshTokenExpiration);
             var expirationDateOfAccessToken = DateTime.Now.AddMinutes(_tokenConfiguration.AccessTokenExpiration);
-
-            string refreshToken = await _userManager.GenerateUserTokenAsync(account, TokenProviders.REFRESH_TOKEN_PROVIDER, _purpose);
-
             var roles = (await _userManager.GetRolesAsync(account)).ToList();
-
             JwtSecurityToken jwtSecurityToken = new(
                 issuer: _tokenConfiguration.Issuer,
                 expires: expirationDateOfAccessToken,
@@ -50,14 +44,15 @@ namespace MySocailApp.Infrastructure.Services
                 signingCredentials: _signingCredentials
             );
 
+            string refreshToken = await _userManager.GenerateUserTokenAsync(account, TokenProviders.REFRESH_TOKEN_PROVIDER, _purpose);
             var accessToken = _jwtSecurityTokenHandler.WriteToken(jwtSecurityToken);
-            return new(accessToken, expirationDateOfAccessToken, refreshToken, expirationDateOfRefreshToken);
+            account.Token = new(accessToken, refreshToken);
         }
 
         public async Task<bool> VerifyRefreshToken(Account account, string refreshToken)
         {
             return await _userManager.VerifyUserTokenAsync(
-                account,TokenProviders.REFRESH_TOKEN_PROVIDER,_purpose,refreshToken
+                account, TokenProviders.REFRESH_TOKEN_PROVIDER, _purpose, refreshToken
             );
         }
     }

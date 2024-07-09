@@ -15,6 +15,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds)
@@ -40,6 +41,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds)
@@ -49,7 +51,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                     user =>
                         (
                             user.Name != null && user.Name.ToLower().Contains(keyLower) ||
-                            user.UserName!.ToLower().Contains(keyLower)
+                            user.Account.UserName!.ToLower().Contains(keyLower)
                         ) &&
                         !user.IsRemoved &&
                         !user.Blockeds.Any(x => x.BlockedId == accountId) &&
@@ -65,6 +67,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds)
@@ -88,6 +91,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds)
@@ -104,6 +108,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds)
@@ -126,6 +131,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
+                .Include(x => x.Account)
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds)
