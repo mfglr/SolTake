@@ -28,11 +28,12 @@ class AccountService {
 
   Future<Account> loginByPassword(String emailOrUserName, String password) async {
     final requestBody = jsonEncode(<String, String>{'emailOrUserName':emailOrUserName,'password':password});
-    return Account.fromJson(await _httpService.post("$accountController/$loginByPasswordEndPoint",body: requestBody));
+    final response = await _httpService.post("$accountController/$loginByPasswordEndPoint",body: requestBody);
+    return Account.fromJson(response);
   }
 
-  Future<Account> loginByReshtoken(String id,String token) async{
-    final requestBody = jsonEncode(<String,String>{ 'id': id,'token': token});
+  Future<Account> loginByReshtoken(int id,String token) async{
+    final requestBody = jsonEncode(<String,String>{ 'id': id.toString(),'token': token});
     return Account.fromJson(await _httpService.post("$accountController/$loginByRefreshTokenEndPoint",body: requestBody));
   }
 

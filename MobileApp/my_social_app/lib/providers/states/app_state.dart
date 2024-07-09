@@ -1,21 +1,21 @@
 import 'dart:collection';
+import 'package:my_social_app/providers/states/account_state.dart';
 import 'package:my_social_app/providers/account_provider.dart';
-import 'package:my_social_app/providers/search_state.dart';
-import 'package:my_social_app/providers/user_state.dart';
+import 'package:my_social_app/providers/states/search_state.dart';
+import 'package:my_social_app/providers/states/user_state.dart';
 
 class AppState{
   
-  final Map<String,UserState> _users = {};
-  UserState? getUser(String id) => _users[id];
-  UnmodifiableListView<UserState> getFollowers(String id) => UnmodifiableListView(_users[id]!.followers.map((id) => _users[id]!));
-  UnmodifiableListView<UserState> getFolloweds(String id) => UnmodifiableListView(_users[id]!.followeds.map((id) => _users[id]!));
+  final Map<int,UserState> _users = {};
+  UserState? getUser(int id) => _users[id];
+  UnmodifiableListView<UserState> getFollowers(int id) => UnmodifiableListView(_users[id]!.followers.map((id) => _users[id]!));
+  UnmodifiableListView<UserState> getFolloweds(int id) => UnmodifiableListView(_users[id]!.followeds.map((id) => _users[id]!));
   UnmodifiableListView<UserState> getRequesters() => UnmodifiableListView(_users[AccountProvider().state!.id]!.requesters.map((id) => _users[id]!));
   UnmodifiableListView<UserState> getRequesteds() => UnmodifiableListView(_users[AccountProvider().state!.id]!.requesteds.map((id) => _users[id]!));
-  UnmodifiableListView<UserState> get usersSearched => UnmodifiableListView(_searchState.ids.map((id) => _users[id]!));
-
+  
   SearchState _searchState = SearchState();
-  SearchState get searchState => _searchState;
   String get key => _searchState.key;
+  UnmodifiableListView<UserState> get usersSearched => UnmodifiableListView(_searchState.ids.map((id) => _users[id]!));
 
   AppState _clone(){
     final AppState state = AppState();
@@ -24,19 +24,27 @@ class AppState{
     return state;
   }
 
+  AccountState? _accountState;
+  AccountState? get accountState => _accountState;
+  AppState updateAccountState(AccountState state){
+    final AppState clone = _clone();
+    clone._accountState = state;
+    return clone;
+  }
+
   AppState loadUser(UserState user){
     final AppState clone = _clone();
     clone._users.addEntries([MapEntry(user.id, user)]);
     return clone;
   }
-  AppState loadFollowers(String id, List<UserState> users){
+  AppState loadFollowers(int id, List<UserState> users){
     final AppState clone = _clone();
     final uniqUsers = users.where((user) => _users[user.id] == null);
     clone._users.addEntries(uniqUsers.map((user) => MapEntry(user.id, user)));
     clone._users[id] = _users[id]!.loadFollowers(users.map((user) => user.id).toList());
     return clone;
   }
-  AppState loadFolloweds(String id, List<UserState> users){
+  AppState loadFolloweds(int id, List<UserState> users){
     final AppState clone = _clone();
     final uniqUsers = users.where((user) => _users[user.id] == null);
     clone._users.addEntries(uniqUsers.map((user) => MapEntry(user.id, user)));
@@ -59,7 +67,7 @@ class AppState{
     clone._users[accountId] = _users[accountId]!.loadRequesteds(users.map((user) => user.id).toList());
     return clone;
   }
-  AppState makeFollowRequest(String requestedId){
+  AppState makeFollowRequest(int requestedId){
     final AppState clone = _clone();
     final accountId = AccountProvider().state!.id;
     final requester = _users[accountId]!;//current user
@@ -68,7 +76,7 @@ class AppState{
     clone._users[requestedId] = requested.addRequester(accountId);
     return clone;
   }
-  AppState cancelFollowRequest(String requestedId){
+  AppState cancelFollowRequest(int requestedId){
     final AppState clone = _clone();
     final accountId = AccountProvider().state!.id;
     final requester = _users[accountId]!;//current user
@@ -77,7 +85,7 @@ class AppState{
     clone._users[requestedId] = requested.removeRequester(accountId);
     return clone;
   }
-  AppState removeFollower(String followerId){
+  AppState removeFollower(int followerId){
     final AppState clone = _clone();
     final accountId = AccountProvider().state!.id;
     final followed = _users[accountId]!;//current user
@@ -86,18 +94,16 @@ class AppState{
     clone._users[followerId] = follower.removeFollowed(accountId);
     return clone;
   }
-
+  
   AppState initSearch(String key,List<UserState> users){
     final AppState clone = _clone();
     clone._users.addEntries(users.map((user) => MapEntry(user.id, user)));
     clone._searchState = _searchState.init(key, users.map((state) => state.id).toList());
     return clone;
   }
-
   AppState clearSearch(){
     final AppState clone = _clone();
     clone._searchState = _searchState.clear();
     return clone;
   }
-
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/providers/app_provider.dart';
-import 'package:my_social_app/providers/user_state.dart';
+import 'package:my_social_app/providers/states/user_state.dart';
 import 'package:provider/provider.dart';
 
 class RemoveFollowerButtonWidget extends StatelessWidget {
@@ -13,11 +13,6 @@ class RemoveFollowerButtonWidget extends StatelessWidget {
     return OutlinedButton(
       onPressed: () async {
         await context.read<AppProvider>().removeFollower(state.id);
-        // bool remove = await DialogCreator.showRemoveFollowerDialog(context);
-        // if(remove){
-        //   if(!context.mounted) return;
-          
-        // }
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

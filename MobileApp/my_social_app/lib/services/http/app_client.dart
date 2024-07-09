@@ -54,8 +54,8 @@ class AppClient extends http.BaseClient {
     return response;
   }
 
-  Future<Account> _login(String id, String token) async{
-    final body = jsonEncode(<String,String>{ 'id': id,'token': token});
+  Future<Account> _login(int id, String token) async{
+    final body = jsonEncode(<String,String>{ 'id': id.toString(),'token': token});
     final response = await _client.post(
       Uri.parse("$_apiUrl/$accountController/$loginByRefreshTokenEndPoint"),
       body: body,

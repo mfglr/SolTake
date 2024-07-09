@@ -5,8 +5,8 @@ import 'package:my_social_app/models/user.dart';
 
 @JsonSerializable()
 class UserState{
-  final String _id;
-  String get id => _id;
+  final int _id;
+  int get id => _id;
   final DateTime _createdAt;
   DateTime get createdAt => _createdAt;
   final DateTime? _updatedDAt;
@@ -110,57 +110,57 @@ class UserState{
     return name!.length <= size ? name! : "${name!.substring(0,size)}...";
   }
 
-  String? _lastFollower;
-  String? get lastFollower => _lastFollower;
+  int? _lastFollower;
+  int? get lastFollower => _lastFollower;
   bool _isLastFollowers = false;
   bool get isLastFollowers => _isLastFollowers;
-  final List<String> _followers = [];
+  final List<int> _followers = [];
 
-  String? _lastFollowed;
-  String? get lastFollowed => _lastFollowed;
+  int? _lastFollowed;
+  int? get lastFollowed => _lastFollowed;
   bool _isLastFolloweds = false;
   bool get isLastFolloweds => _isLastFolloweds;
-  final List<String> _followeds = [];
+  final List<int> _followeds = [];
 
-  String? _lastRequester;
-  String? get lastRequester => _lastRequester;
+  int? _lastRequester;
+  int? get lastRequester => _lastRequester;
   bool _isLastRequesters = false;
   bool get isLastRequesters => _isLastRequesters;
-  final List<String> _requesters = [];
+  final List<int> _requesters = [];
 
-  String? _lastRequested;
-  String? get lastRequested => _lastRequested;
+  int? _lastRequested;
+  int? get lastRequested => _lastRequested;
   bool _isLastRequesteds = false;
   bool get isLastRequesteds => _isLastRequesteds;
-  final List<String> _requesteds = [];
+  final List<int> _requesteds = [];
 
-  UnmodifiableListView<String> get followers => UnmodifiableListView(_followers);
-  UnmodifiableListView<String> get followeds => UnmodifiableListView(_followeds);
-  UnmodifiableListView<String> get requesters => UnmodifiableListView(_requesters);
-  UnmodifiableListView<String> get requesteds => UnmodifiableListView(_requesteds);
+  UnmodifiableListView<int> get followers => UnmodifiableListView(_followers);
+  UnmodifiableListView<int> get followeds => UnmodifiableListView(_followeds);
+  UnmodifiableListView<int> get requesters => UnmodifiableListView(_requesters);
+  UnmodifiableListView<int> get requesteds => UnmodifiableListView(_requesteds);
   
-  UserState loadFollowers(List<String> followers){
+  UserState loadFollowers(List<int> followers){
     final clone = _clone();
     clone._lastFollower = followers.isNotEmpty ? followers[followers.length - 1] : clone._lastFollower;
     clone._isLastFollowers = followers.length < recordsPerPage;
     clone._followers.addAll(followers);
     return clone;
   }
-  UserState loadFolloweds(List<String> followeds){
+  UserState loadFolloweds(List<int> followeds){
     final clone = _clone();
     clone._lastFollowed = followeds.isNotEmpty ? followeds[followeds.length - 1] : clone._lastFollowed;
     clone._isLastFolloweds = followeds.length < recordsPerPage;
     clone._followeds.addAll(followeds);
     return clone;
   }
-  UserState loadRequesters(List<String> users){
+  UserState loadRequesters(List<int> users){
     final clone = _clone();
     clone._lastRequester = users.isNotEmpty ? users[users.length - 1] : clone._lastRequester;
     clone._isLastRequesters = users.length < recordsPerPage;
     clone._requesters.addAll(users);
     return clone;
   }
-  UserState loadRequesteds(List<String> users){
+  UserState loadRequesteds(List<int> users){
     final clone = _clone();
     clone._lastRequested = users.isNotEmpty ? users[users.length - 1] : clone._lastRequested;
     clone._isLastRequesteds = users.length < recordsPerPage;
@@ -168,7 +168,7 @@ class UserState{
     return clone;
   }
 
-  UserState addRequester(String requesterId){
+  UserState addRequester(int requesterId){
     final clone = _clone();
     if(clone.profileVisibility == ProfileVisibility.private){
       clone._requesters.add(requesterId);
@@ -180,7 +180,7 @@ class UserState{
     }
     return clone;
   }
-  UserState addRequested(String requestedId){
+  UserState addRequested(int requestedId){
     final clone = _clone();
     if(clone.profileVisibility == ProfileVisibility.private){
       clone._requesteds.add(requestedId);
@@ -191,7 +191,7 @@ class UserState{
     }
     return clone;
   }
-  UserState removeRequester(String requesterId){
+  UserState removeRequester(int requesterId){
     final clone = _clone();
     clone._isFollowed = false;
     clone._isRequested = false;
@@ -200,20 +200,20 @@ class UserState{
     clone._followers.removeWhere((id) => id == requesterId);
     return clone;
   }
-  UserState removeRequested(String requestedId){
+  UserState removeRequested(int requestedId){
     final clone = _clone();
     clone._numberOfFolloweds = clone._numberOfFolloweds - 1;
     clone._followeds.removeWhere((id) => id == requestedId);
     clone._requesteds.removeWhere((id) => id == requestedId);
     return clone;
   }
-  UserState removeFollower(String requesterId){
+  UserState removeFollower(int requesterId){
     final clone = _clone();
     clone._numberOfFollowers = clone.numberOfFollowers - 1;
     clone._followers.removeWhere((id) => id == requesterId);
     return clone;
   }
-  UserState removeFollowed(String  requestedId){
+  UserState removeFollowed(int requestedId){
     final clone = _clone();
     clone._isFollower = false;
     clone._numberOfFolloweds = clone.numberOfFolloweds - 1;

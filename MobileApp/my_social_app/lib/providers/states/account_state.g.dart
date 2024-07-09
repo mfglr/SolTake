@@ -7,7 +7,7 @@ part of 'account_state.dart';
 // **************************************************************************
 
 AccountState _$AccountStateFromJson(Map<String, dynamic> json) => AccountState(
-      json['id'] as String,
+      (json['id'] as num).toInt(),
       DateTime.parse(json['createdAt'] as String),
       json['updatedAt'] == null
           ? null

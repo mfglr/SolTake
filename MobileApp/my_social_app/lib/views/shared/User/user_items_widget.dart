@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/providers/user_state.dart';
+import 'package:my_social_app/providers/states/user_state.dart';
 import 'package:my_social_app/views/shared/user/user_item_widget.dart';
 
 class UserItemsWidget extends StatelessWidget {

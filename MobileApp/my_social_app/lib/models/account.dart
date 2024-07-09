@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/models/states/account_state.dart';
+import 'package:my_social_app/providers/states/account_state.dart';
 import 'package:my_social_app/models/token.dart';
 part 'account.g.dart';
 
 @JsonSerializable()
 class Account{
-  final String id;
+  final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;

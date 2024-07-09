@@ -8,9 +8,9 @@ class UserImageProvider extends ChangeNotifier{
   static final UserImageProvider _singleton = UserImageProvider._(UserService());
   factory UserImageProvider() => _singleton;
 
-  final Map<String,Uint8List> _images = {};
+  final Map<int,Uint8List> _images = {};
 
-  Future<void> loadImage(String id) async {
+  Future<void> loadImage(int id) async {
     if(_images[id] == null){
       final image = await _userService.getImageById(id);
       _images.addEntries([MapEntry(id, image)]);
@@ -18,5 +18,5 @@ class UserImageProvider extends ChangeNotifier{
     }
   }
 
-  Uint8List? getImageById(String id) => _images[id];
+  Uint8List? getImageById(int id) => _images[id];
 }

@@ -16,7 +16,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final state = context.select((AppProvider u) => u.getUser(AccountProvider().state!.id)!);
-    
     return Scaffold(
       appBar: AppBar(
         title: Text(state.formatUserName(10)),

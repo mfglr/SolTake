@@ -3,14 +3,14 @@ import 'package:my_social_app/constants/records_per_page.dart';
 
 class SearchState{
   String _key = "";
-  String? _lastId;
+  int? _lastId;
   bool _isLastUsers = false;
-  final List<String> _ids = [];
+  final List<int> _ids = [];
 
   String get key => _key;
-  String? get lastId => _lastId;
+  int? get lastId => _lastId;
   bool get isLastUsers => _isLastUsers;
-  UnmodifiableListView<String> get ids => UnmodifiableListView(_ids);
+  UnmodifiableListView<int> get ids => UnmodifiableListView(_ids);
   
   SearchState clone(){
     final state = SearchState();
@@ -21,7 +21,7 @@ class SearchState{
     return state;
   }
 
-  SearchState init(String key, List<String> ids){
+  SearchState init(String key, List<int> ids){
     final state = clone();
     state._key = key;
     state._ids.clear();
@@ -31,7 +31,7 @@ class SearchState{
     return state;
   }
 
-  SearchState next(List<String> ids){
+  SearchState next(List<int> ids){
     final state = clone();
     state._ids.addAll(ids);
     state._isLastUsers = ids.length < recordsPerPage;

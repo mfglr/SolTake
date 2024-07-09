@@ -7,7 +7,7 @@ part of 'account.dart';
 // **************************************************************************
 
 Account _$AccountFromJson(Map<String, dynamic> json) => Account(
-      json['id'] as String,
+      (json['id'] as num).toInt(),
       DateTime.parse(json['createdAt'] as String),
       json['updatedAt'] == null
           ? null

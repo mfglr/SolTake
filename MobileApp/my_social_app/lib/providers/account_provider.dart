@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:my_social_app/models/states/account_state.dart';
+import 'package:my_social_app/providers/states/account_state.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/providers/access_token_provider.dart';
 import 'package:my_social_app/storages/account_secure_storage.dart';

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:my_social_app/constants/storage_keys.dart';
-import 'package:my_social_app/models/states/account_state.dart';
+import 'package:my_social_app/providers/states/account_state.dart';
 import 'package:my_social_app/storages/base_account_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
