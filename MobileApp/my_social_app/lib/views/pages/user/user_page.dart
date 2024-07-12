@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/providers/app_provider.dart';
-import 'package:my_social_app/providers/states/user_state.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/shared/user/user_info_card_widget.dart';
-import 'package:provider/provider.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
@@ -12,19 +14,19 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final userId = ModalRoute.of(context)!.settings.arguments as int;
-    context.read<AppProvider>().loadUser(userId);
-
-    return Selector<AppProvider, UserState?>(
-      selector: (_, userProvider) => userProvider.getUser(userId),
-      builder: (_, data, __){
-        if(data != null){
+    store.dispatch(LoadUserAction(userId: userId));
+    
+    return StoreConnector<AppState, UserState?>(
+      converter: (store) => store.state.userEntityState.users[userId],
+      builder: (context, userState){
+        if(userState != null){
           return Scaffold(
             appBar: AppBar(
-              title: Text(data.formatUserName(10)),
+              title: Text(userState.formatUserName(10)),
             ),
             body: Container(
               padding: const EdgeInsets.all(5),
-              child: UserInfoCardWidget(state: data)
+              child: UserInfoCardWidget(state: userState)
             )
           );
         }

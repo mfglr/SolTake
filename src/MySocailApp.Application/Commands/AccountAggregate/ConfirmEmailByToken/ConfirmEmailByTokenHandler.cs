@@ -1,27 +1,20 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using MediatR;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.AccountAggregate;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.ConfirmEmailByToken
 {
-    public class ConfirmEmailByTokenHandler(IAccountAccessor accountAccessor, UserManager<Account> userManager) : IRequestHandler<ConfirmEmailByTokenDto>
+    public class ConfirmEmailByTokenHandler(IAccountAccessor accountAccessor, AccountManager accountManager, IMapper mapper) : IRequestHandler<ConfirmEmailByTokenDto,AccountDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
-        private readonly UserManager<Account> _userManager = userManager;
+        private readonly AccountManager _accountManager = accountManager;
+        private readonly IMapper _mapper = mapper;
 
-        public async Task Handle(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)
+        public async Task<AccountDto> Handle(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)
         {
-            try
-            {
-                _accountAccessor.Account.ConfirmEmailByToken(request.Token);
-            }
-            catch (Exception)
-            {
-                await _userManager.UpdateAsync(_accountAccessor.Account);
-                throw;
-            }
-            await _userManager.UpdateAsync(_accountAccessor.Account);
+            await _accountManager.ConfirmEmailByToken(_accountAccessor.Account, request.Token);
+            return _mapper.Map<AccountDto>(_accountAccessor.Account);
         }
     }
 }

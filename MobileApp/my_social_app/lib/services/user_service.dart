@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/models/user.dart';
-import 'package:my_social_app/services/http/http_service.dart';
+import 'package:my_social_app/services/http_service.dart';
 
 class UserService{
   final HttpService _httpService;
@@ -57,7 +57,7 @@ class UserService{
     ).toList();
   }
 
-  Future<List<User>> getFollowersById(int id, {String? lastId}) async {
+  Future<List<User>> getFollowersById(int id, {int? lastId}) async {
     String url = "$userController/$getFollowersByIdEndPoint/$id";
     return (await _httpService.getList(lastId != null ? "$url?lastId=$lastId" : url)).map(
       (item) => User.fromJson(item)

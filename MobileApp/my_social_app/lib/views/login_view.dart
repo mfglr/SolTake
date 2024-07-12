@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/providers/account_provider.dart';
+import 'package:my_social_app/state/account_state/actions.dart';
+import 'package:my_social_app/state/actions.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/store.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -13,7 +15,6 @@ class _LoginViewState extends State<LoginView> {
   late final TextEditingController _emailOrUserName;
   late final TextEditingController _password;
   late final TextEditingController _passwordConfirmation;
-  final AccountProvider _stateManager = AccountProvider();
 
   @override
   void initState() {
@@ -69,15 +70,8 @@ class _LoginViewState extends State<LoginView> {
             ),
             
             OutlinedButton(
-              onPressed: () async {
-                final state = await _stateManager.loginByPassword(_emailOrUserName.text, _password.text);
-                if (!context.mounted) return;
-                if(state!.emailConfirmed){
-                  Navigator.of(context).pushNamedAndRemoveUntil(rootRoute, (route) => false);
-                }
-                else{
-                  Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false);
-                }
+              onPressed: (){
+                store.dispatch(LoginByPasswordAction(emailOrPassword: _emailOrUserName.text, password: _password.text));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +92,7 @@ class _LoginViewState extends State<LoginView> {
                   const Text("Don't you have an account? Register."),
                   OutlinedButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false);
+                      store.dispatch(const ChangeActiveLoginPageAction(payload: ActiveLoginPage.registerPage));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

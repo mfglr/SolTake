@@ -6,7 +6,8 @@
         public DateTime ExpirationAt { get; private set; }
         public int NumberOfFailedAttemps { get; private set; }
 
-        internal void IncreaseNumberOfFailedAttemps() => NumberOfFailedAttemps++;
+        internal EmailConfirmationToken IncreaseNumberOfFailedAttemps()
+            => new(Token, ExpirationAt) { NumberOfFailedAttemps = NumberOfFailedAttemps + 1 };
 
         private EmailConfirmationToken(string token, DateTime expirationAt)
         {

@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.UpdateGender
             RuleFor(x => x.Gender)
                 .Must(
                     x =>
-                        x == (int)Gender.Default ||
+                        x == (int)Gender.NoGender ||
                         x == (int)Gender.Male ||
                         x == (int)Gender.Female
                 )

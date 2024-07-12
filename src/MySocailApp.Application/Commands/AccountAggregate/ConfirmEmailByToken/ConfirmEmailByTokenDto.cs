@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.AccountAggregate.ConfirmEmailByToken
 {
-    public record ConfirmEmailByTokenDto(string Token) : IRequest; 
+    public record ConfirmEmailByTokenDto(string Token) : IRequest<AccountDto>; 
 }

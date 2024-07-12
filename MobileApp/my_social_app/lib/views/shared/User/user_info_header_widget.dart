@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/providers/states/user_state.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 
 class UserInfoHeaderWidget extends StatelessWidget {
@@ -37,13 +37,13 @@ class UserInfoHeaderWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      state.numberOfPosts.toString(),
+                      state.numberOfQuestions.toString(),
                       style: const TextStyle(
                         fontSize: 20
                       ),
                     ),
                     const Text(
-                      "Posts",
+                      "Questions",
                       style: TextStyle(fontSize: 12),
                     )
                   ],

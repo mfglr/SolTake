@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/providers/account_provider.dart';
+import 'package:my_social_app/services/account_service.dart';
+import 'package:my_social_app/state/account_state/actions.dart';
+import 'package:my_social_app/state/actions.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/store.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -10,7 +13,7 @@ class VerifyEmailView extends StatefulWidget {
 
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   late final TextEditingController _token;
-  final AccountProvider _stateManager = AccountProvider();
+  final AccountService _service = AccountService();
 
   @override
   void initState() {
@@ -57,11 +60,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 48),
               child: OutlinedButton(
-                onPressed: () async {
-                  await _stateManager.confirmEmailByToken(_token.text);
-                  
-                  if (!context.mounted) return;
-                  Navigator.of(context).pushNamedAndRemoveUntil(rootRoute, (route) => false);
+                onPressed: () {
+                  store.dispatch(ConfirmEmailByTokenAction(token: _token.text));
                 }, 
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +85,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 48),
               child: OutlinedButton(
                 onPressed: () async {
-                  await _stateManager.sendEmailConfirmationByTokenMail();
+                  await _service.sendEmailConfirmationByTokenMail();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -104,10 +104,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               children: [
                 const Text("Do you have an account? Login."),
                 OutlinedButton(
-                  onPressed: () async {
-                    await _stateManager.logOut();
-                    if(!context.mounted) return;
-                    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                  onPressed: () {
+                    store.dispatch(const LogOutAction());
+                    store.dispatch(const ChangeActiveLoginPageAction(payload: ActiveLoginPage.loginPage));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -122,10 +121,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 ),
                 const Text("Go back to register page."),
                 OutlinedButton(
-                  onPressed: () async {
-                    await _stateManager.logOut();
-                    if(!context.mounted) return;
-                    Navigator.of(context).pushNamedAndRemoveUntil( registerRoute, (route) => false );
+                  onPressed: () {
+                    store.dispatch(const LogOutAction());
+                    store.dispatch(const ChangeActiveLoginPageAction(payload: ActiveLoginPage.registerPage));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/providers/account_provider.dart';
-import 'package:my_social_app/providers/app_provider.dart';
 import 'package:my_social_app/views/pages/home_page.dart';
-import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/pages/profile_page.dart';
 import 'package:my_social_app/views/pages/search_page.dart';
-import 'package:provider/provider.dart';
 
 class RootView extends StatefulWidget {
   const RootView({super.key});
@@ -52,21 +48,11 @@ class _RootViewState extends State<RootView> {
 
         ],
       ),
-      body: FutureBuilder(
-        future: context.read<AppProvider>().loadUser(AccountProvider().state!.id),
-        builder: (context, snapshot) {
-          switch(snapshot.connectionState){
-            case(ConnectionState.done):
-              return [
-                const HomePage(),
-                const SearchPage(),
-                const ProfilePage()
-              ][currentPageIndex];
-            default:
-              return const LoadingView();
-          }
-        },
-      ) 
+      body: [
+        const HomePage(),
+        const SearchPage(),
+        const ProfilePage()
+      ][currentPageIndex]
     );
   }
 }

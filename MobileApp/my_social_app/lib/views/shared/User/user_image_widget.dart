@@ -1,7 +1,10 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/providers/states/user_state.dart';
-import 'package:my_social_app/providers/user_image_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
 class UserImageWidget extends StatelessWidget {
 
@@ -11,8 +14,7 @@ class UserImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<UserImageProvider>().loadImage(state.id);
-    final image = context.select((UserImageProvider u) => u.getImageById(state.id));
+    store.dispatch(LoadUserImageAction(userId: state.id));
 
     return Container(
       width: diameter,
@@ -21,12 +23,13 @@ class UserImageWidget extends StatelessWidget {
       decoration: const BoxDecoration(
         shape: BoxShape.circle
       ),
-      child: Builder(
-        builder: (context) {
+      child: StoreConnector<AppState,Uint8List?>(
+        converter: (store) => store.state.userEntityState.users[state.id]!.image,
+        builder: (context,image) {
           if(image != null) return Image.memory(image);
           return const CircularProgressIndicator();
         }
-      ),
+      )
     );
   }
 }

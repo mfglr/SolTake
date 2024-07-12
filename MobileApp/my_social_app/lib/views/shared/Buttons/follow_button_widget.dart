@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/providers/app_provider.dart';
-import 'package:my_social_app/providers/states/user_state.dart';
-import 'package:provider/provider.dart';
+import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
 class FollowButtonWidget extends StatelessWidget {
   final UserState state;
@@ -11,7 +11,7 @@ class FollowButtonWidget extends StatelessWidget {
       "Cancel request" : 
       state.isFollowed ? 
         "Unfollow" :
-        "Follow"; 
+        "Follow";
   }
 
   IconData _getIcon(UserState state){
@@ -22,12 +22,12 @@ class FollowButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () async {
+      onPressed: () {
         if(state.isRequested || state.isFollowed){
-          await context.read<AppProvider>().cancelFollowRequest(state.id);
+          store.dispatch(CancelFollowRequestAction(userId: state.id));
         }
         else{
-          await context.read<AppProvider>().makeFollowRequest(state.id);
+          store.dispatch(MakeFollowRequestAction(userId: state.id));
         }
       },
       child: Row(

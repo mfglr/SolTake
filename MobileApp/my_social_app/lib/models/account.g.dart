@@ -15,15 +15,17 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       json['userName'] as String,
       json['email'] as String,
       bool.parse(json['emailConfirmed'].toString(),caseSensitive: false),
-      Token.fromJson(json['token'] as Map<String, dynamic>),
+      json['accessToken'] as String,
+      json['refreshToken'] as String,
     );
 
 Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
-      'userName': instance.userName,
       'email': instance.email,
+      'userName': instance.userName,
       'emailConfirmed': instance.emailConfirmed,
-      'token': instance.token,
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
     };

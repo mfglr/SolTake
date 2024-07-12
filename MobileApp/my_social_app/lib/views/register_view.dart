@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/providers/account_provider.dart';
+import 'package:my_social_app/state/account_state/actions.dart';
+import 'package:my_social_app/state/actions.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/store.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -14,7 +16,6 @@ class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
   late final TextEditingController _passwordConfirmation;
-  final AccountProvider _stataManager = AccountProvider();
 
   @override
   void initState() {
@@ -83,10 +84,10 @@ class _RegisterViewState extends State<RegisterView> {
             ),
         
             OutlinedButton(
-              onPressed: () async {
-                await _stataManager.create(_email.text,_password.text,_passwordConfirmation.text);
-                if (!context.mounted) return;
-                Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false);
+              onPressed: () {
+                store.dispatch(CreateAccountAction(
+                  email: _email.text,password:_password.text,passwordConfirmation:_passwordConfirmation.text
+                ));
               },
 
               child: Row(
@@ -109,7 +110,7 @@ class _RegisterViewState extends State<RegisterView> {
                   const Text("Do you have an account? Login."),
                   OutlinedButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                      store.dispatch(const ChangeActiveLoginPageAction(payload: ActiveLoginPage.loginPage));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

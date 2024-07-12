@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmationToken
 {
-    public record UpdateEmailConfirmationTokenDto() : IRequest;
+    public record UpdateEmailConfirmationTokenDto() : IRequest<AccountDto>;
 }

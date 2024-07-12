@@ -45,14 +45,12 @@ namespace MySocailApp.Domain.AccountAggregate
             EmailConfirmationToken = EmailConfirmationToken.GenerateToken();
             AddDomainEvent(new EmailConfirmationtokenUpdatedDomainEvent(this));
         }
-        public void ConfirmEmailByToken(string token)
+        internal void ConfirmEmailByToken(string token)
         {
             if (!EmailConfirmationToken.IsValid(token))
-            {
-                EmailConfirmationToken.IncreaseNumberOfFailedAttemps();
-                throw new InvalidEmailConfirmationTokenException();
-            }
-            EmailConfirmed = true;
+                EmailConfirmationToken = EmailConfirmationToken.IncreaseNumberOfFailedAttemps();
+            else
+                EmailConfirmed = true;
         }
 
         public AppUser AppUser { get; }

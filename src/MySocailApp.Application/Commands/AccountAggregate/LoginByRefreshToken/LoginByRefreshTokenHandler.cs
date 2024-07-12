@@ -7,10 +7,10 @@ using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken
 {
-    public class LoginByRefreshTokenHandler(UserManager<Account> userManager,IMapper mapper, LoginManager loginManager) : IRequestHandler<LoginByRefreshTokenDto, AccountDto>
+    public class LoginByRefreshTokenHandler(UserManager<Account> userManager,IMapper mapper, AccountManager accountManager) : IRequestHandler<LoginByRefreshTokenDto, AccountDto>
     {
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly LoginManager _loginManger = loginManager;
+        private readonly AccountManager _accountManager = accountManager;
         private readonly IMapper _mapper = mapper;
 
         public async Task<AccountDto> Handle(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
@@ -18,9 +18,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken
             var account =
                 await _userManager.Users.FirstAsync(x => x.Id == request.Id && !x.IsRemoved, cancellationToken) ??
                 throw new AccountWasNotFoundException();
-
-            await _loginManger.LoginByRefreshToken(account, request.Token);
-
+            await _accountManager.LoginByRefreshToken(account, request.Token);
             return _mapper.Map<AccountDto>(account);
         }
     }

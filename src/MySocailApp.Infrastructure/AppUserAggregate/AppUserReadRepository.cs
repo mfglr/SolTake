@@ -25,7 +25,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                     user =>
                         user.Followeds.Any(follow => follow.FollowedId == id) &&
                         !user.IsRemoved &&
-                        user.Id > lastId
+                        (lastId == null || user.Id > lastId)
                 )
                 .OrderByDescending(x => x.Id)
                 .Take(20)
@@ -55,7 +55,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                         ) &&
                         !user.IsRemoved &&
                         !user.Blockeds.Any(x => x.BlockedId == accountId) &&
-                        user.Id > lastId
+                        (lastId == null || user.Id > lastId)
                 )
                 .OrderByDescending(x => x.Id)
                 .Take(20)
@@ -77,7 +77,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                     user =>
                         user.Followers.Any(follow => follow.FollowerId == id) &&
                         !user.IsRemoved &&
-                        user.Id > lastId
+                        (lastId == null || user.Id > lastId)
                 )
                 .OrderByDescending(x => x.Id)
                 .Take(20)
@@ -118,7 +118,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                     user =>
                         user.Requesteds.Any(request => request.RequestedId == id) &&
                         !user.IsRemoved &&
-                        user.Id > lastId
+                        (lastId == null || user.Id > lastId)
                 )
                 .OrderByDescending(x => x.Id)
                 .Take(20)
@@ -141,7 +141,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                     user =>
                         user.Requesters.Any(request => request.RequesterId == id) &&
                         !user.IsRemoved &&
-                        user.Id > lastId
+                        (lastId == null || user.Id > lastId)
                 )
                 .OrderByDescending(x => x.Id)
                 .Take(20)
