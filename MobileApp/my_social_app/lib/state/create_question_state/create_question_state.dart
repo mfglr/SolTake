@@ -20,7 +20,7 @@ enum Subject{
   psikoloji,
   sosyoloji,
   mantik,
-  fenbilimleri,
+  fenBilimleri,
   fizik,
   geometri,
   kimya,
@@ -30,11 +30,58 @@ enum Subject{
   tarih2,
   turkce,
   ingilizce,
-  yabancidil,
+  yabanciDil,
   inkilap,
   vatandaslik,
-  guncelbilgi,
+  guncelBilgi,
 }
+
+Map<Exam,List<Subject>> subjectsOfExam = {
+  Exam.tyt: [
+    Subject.turkce,
+    Subject.tarih,
+    Subject.cografya,
+    Subject.felsefe,
+    Subject.din,
+    Subject.matematik,
+    Subject.fizik,
+    Subject.kimya,
+    Subject.biyoloji
+  ],
+  Exam.ayt: [
+    Subject.edebiyat,
+    Subject.tarih,
+    Subject.tarih1,
+    Subject.tarih2,
+    Subject.cografya,
+    Subject.cografya1,
+    Subject.cografya2,
+    Subject.felsefe,
+    Subject.psikoloji,
+    Subject.sosyoloji,
+    Subject.mantik,
+    Subject.din,
+    Subject.matematik,
+    Subject.geometri,
+    Subject.fizik,
+    Subject.kimya,
+    Subject.biyoloji
+  ],
+  Exam.lgs: [
+    Subject.turkce,
+    Subject.inkilap,
+    Subject.din,
+    Subject.ingilizce,
+    Subject.yabanciDil,
+    Subject.matematik,
+    Subject.fenBilimleri
+  ],
+  Exam.dgs: [
+    Subject.matematik,
+    Subject.geometri,
+    Subject.turkce
+  ]
+};
 
 @immutable
 class CreateQuestionState{

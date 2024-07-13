@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Domain.PostAggregate;
 using MySocailApp.Domain.QuestionAggregate;
 
 namespace MySocailApp.Application.Mappers
@@ -11,8 +10,10 @@ namespace MySocailApp.Application.Mappers
         {
             CreateMap<QuestionImage, QuestionImageResponseDto>();
             CreateMap<Question, QuestionResponseDto>()
-                .ForMember(dest => dest.Topics, x => x.MapFrom(src => src.QuestionTopics.Select(topic => new TopicResponseDto(topic.Topic.Id, topic.Topic.Name)).ToList()))
-                .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.AppUser.Account.UserName));
+                .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.AppUser.Account.UserName))
+                .ForMember(dest => dest.ExamName, x => x.MapFrom(src => src.Exam.ShortName))
+                .ForMember(dest => dest.SubjectName, x => x.MapFrom(src => src.Subject.Name))
+                .ForMember(dest => dest.Topics, x => x.MapFrom(src => src.Topics.Select(topic => new TopicResponseDto(topic.Topic.Id, topic.Topic.Name)).ToList()));
         }
     }
 }

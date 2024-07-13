@@ -369,7 +369,34 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("FollowRequest");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.PostAggregate.Question", b =>
+            modelBuilder.Entity("MySocailApp.Domain.ExamAggregate.Exam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exams");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -386,10 +413,10 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Exam")
+                    b.Property<int>("ExamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Subject")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("Updatedat")
@@ -398,6 +425,10 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Questions");
                 });
@@ -445,6 +476,34 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionTopic");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.ToTable("Subjects");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.TopicAggregate.Topic", b =>
                 {
                     b.Property<int>("Id")
@@ -456,17 +515,16 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Exam")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Subject")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Topics");
                 });
@@ -648,7 +706,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Requester");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.PostAggregate.Question", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Question", b =>
                 {
                     b.HasOne("MySocailApp.Domain.AppUserAggregate.AppUser", "AppUser")
                         .WithMany("Questions")
@@ -656,20 +714,36 @@ namespace MySocailApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MySocailApp.Domain.ExamAggregate.Exam", "Exam")
+                        .WithMany("Quesitons")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MySocailApp.Domain.SubjectAggregate.Subject", "Subject")
+                        .WithMany("Quesitons")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("AppUser");
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.QuestionImage", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.PostAggregate.Question", null)
+                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Question", null)
                         .WithMany("Images")
                         .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.QuestionTopic", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.PostAggregate.Question", "Question")
-                        .WithMany("QuestionTopics")
+                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Question", "Question")
+                        .WithMany("Topics")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -683,6 +757,28 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Question");
 
                     b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Subject", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.ExamAggregate.Exam", "Exam")
+                        .WithMany("Subjects")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.TopicAggregate.Topic", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.SubjectAggregate.Subject", "Subject")
+                        .WithMany("Topics")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Account", b =>
@@ -710,11 +806,25 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Requesters");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.PostAggregate.Question", b =>
+            modelBuilder.Entity("MySocailApp.Domain.ExamAggregate.Exam", b =>
+                {
+                    b.Navigation("Quesitons");
+
+                    b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Question", b =>
                 {
                     b.Navigation("Images");
 
-                    b.Navigation("QuestionTopics");
+                    b.Navigation("Topics");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Subject", b =>
+                {
+                    b.Navigation("Quesitons");
+
+                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.TopicAggregate.Topic", b =>

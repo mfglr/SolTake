@@ -1,5 +1,4 @@
-﻿using MySocailApp.Domain.PostAggregate;
-using MySocailApp.Domain.TopicAggregate;
+﻿using MySocailApp.Domain.TopicAggregate;
 
 namespace MySocailApp.Domain.QuestionAggregate
 {
@@ -10,7 +9,7 @@ namespace MySocailApp.Domain.QuestionAggregate
         public int TopicId { get; private set; }
         public Topic Topic { get; }
         public Question Question { get; }
-        
+
 
         private QuestionTopic(int questionId, int topicId)
         {
@@ -19,6 +18,6 @@ namespace MySocailApp.Domain.QuestionAggregate
         }
 
         public static QuestionTopic Create(int questionId, int topicId)
-            => new(questionId, topicId){ CreatedAt = DateTime.UtcNow };
+            => new(questionId, topicId) { CreatedAt = DateTime.UtcNow };
     }
 }

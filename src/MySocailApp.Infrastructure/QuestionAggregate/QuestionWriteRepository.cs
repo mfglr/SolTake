@@ -1,5 +1,4 @@
-﻿using MySocailApp.Domain.PostAggregate;
-using MySocailApp.Domain.QuestionAggregate;
+﻿using MySocailApp.Domain.QuestionAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QuestionAggregate

@@ -1,19 +1,17 @@
-﻿using MySocailApp.Domain.PostAggregate;
-using MySocailApp.Domain.QuestionAggregate.Exceptions;
-using MySocailApp.Domain.QuestionAggregate.Excpetions;
+﻿using MySocailApp.Domain.QuestionAggregate.Excpetions;
 
 namespace MySocailApp.Domain.QuestionAggregate
 {
-    public class QuestionManager(IQuestionImageBlobService blobService, ISubjectValidator validator, ITopicRepository repository)
+    public class QuestionManager(IQuestionImageBlobService blobService,IExamRepository examRepository,ISubjectRepository subjectRepository)
     {
         private readonly IQuestionImageBlobService _blobService = blobService;
-        private readonly ISubjectValidator _validator = validator;
-        private readonly ITopicRepository _repository = repository;
+        private readonly IExamRepository _examRepository = examRepository;
+        private readonly ISubjectRepository _subjectRepository = subjectRepository;
 
-        private async Task SetQuestionImages(Question question, IEnumerable<Stream> images,CancellationToken cancellationToken)
+        private async Task SetQuestionImages(Question question, IEnumerable<Stream> images, CancellationToken cancellationToken)
         {
             if (!images.Any())
-                throw new NoQuestionImageException();
+                throw new QuestionImageIsRequiredException();
             if (images.Count() > 5)
                 throw new TooManyQuestionImagesException();
             if (images.Any(image => image.Length == 0))
@@ -23,28 +21,32 @@ namespace MySocailApp.Domain.QuestionAggregate
             question.AddImages(blobNames);
         }
 
-        public async Task SetTopics(Question question, IEnumerable<int> topicIds, CancellationToken cancellationToken)
+        public async Task UpdateTopics(Question question, IEnumerable<int> topicIds, CancellationToken cancellationToken)
         {
-            if (!topicIds.Any()) return;
+            if (topicIds.Count() > 3)
+                throw new TooManyTopicsException();
 
-            var topics = await _repository.GetTopicsAsync(topicIds, cancellationToken);
-            if (topicIds.Count() != topics.Count)
-                throw new TopicIsNotFoundException();
-
-            foreach (var topic in topics)
-                if ((int)topic.Exam != (int)question.Exam || (int)topic.Subject != (int)question.Subject)
-                    throw new InvalidTopicException();
+            var subject = await _subjectRepository.GetAsync(question.SubjectId, topicIds, cancellationToken);
+            if (subject.Topics.Count != topicIds.Count())
+                throw new TopicIsNotIncludedInSubjectException();
 
             question.AddNewTopics(topicIds);
         }
 
-        public async Task CreateAsync(Question question, int userId, string? content, QuestionExam exam, QuestionSubject subject, IEnumerable<int> topicIds, IEnumerable<Stream> streams, CancellationToken cancellationToken)
+        public async Task CreateAsync(Question question, int userId, string? content, int examId, int subjectId, IEnumerable<int> topicIds, IEnumerable<Stream> streams, CancellationToken cancellationToken)
         {
-            if (!_validator.IsValid(exam, subject))
+            var exam =
+                await _examRepository.GetAsync(examId, subjectId, topicIds, cancellationToken) ??
+                throw new ExamIsNotFoundException();
+
+            if (exam.Subjects.Count == 0)
                 throw new SubjectIsNotIncludedInExamException();
 
-            question.Create(userId, content, exam, subject);
-            await SetTopics(question, topicIds, cancellationToken);
+            if (exam.Subjects.First().Topics.Count != topicIds.Count())
+                throw new TopicIsNotIncludedInSubjectException();
+
+            question.Create(userId, content, examId, subjectId);
+            question.AddNewTopics(topicIds);
             await SetQuestionImages(question, streams, cancellationToken);
         }
 

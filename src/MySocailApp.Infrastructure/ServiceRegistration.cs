@@ -86,12 +86,12 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
         {
             return services
-                .AddScoped<ITopicRepository, TopicRepository>()
+                .AddScoped<IExamRepository, ExamRepository>()
+                .AddScoped<ISubjectRepository, SubjectRepository>()
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
                 .AddScoped<IQuestionImageBlobNameGenerator, QuestionImageBlobNameGenerator>()
                 .AddScoped<IQuestionImageBlobService, QuestionImageBlobService>()
-                .AddScoped<ISubjectValidator, SubjectValidator>()
                 .AddScoped<QuestionManager>();
         }
     }

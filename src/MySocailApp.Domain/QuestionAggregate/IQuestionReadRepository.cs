@@ -1,6 +1,4 @@
-﻿using MySocailApp.Domain.PostAggregate;
-
-namespace MySocailApp.Domain.QuestionAggregate
+﻿namespace MySocailApp.Domain.QuestionAggregate
 {
     public interface IQuestionReadRepository
     {

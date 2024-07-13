@@ -1,22 +1,23 @@
 ﻿using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.SubjectAggregate;
 
 namespace MySocailApp.Domain.TopicAggregate
 {
     public class Topic()
     {
         public int Id { get; private set; }
+        public int SubjectId { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public string Name { get; private set; }
-        public TopicExam Exam { get; private set; }
-        public TopicSubject Subject { get; private set; }
-        
-        public void Create(string name,TopicExam exam,TopicSubject subject)
+
+        public void Create(int subjectId,string name)
         {
+            SubjectId = subjectId;
             Name = name;
-            Exam = exam;
-            Subject = subject;
             CreatedAt = DateTime.UtcNow;
         }
+
         public IReadOnlyCollection<QuestionTopic> Questions { get; }
+        public Subject Subject { get; }
     }
 }

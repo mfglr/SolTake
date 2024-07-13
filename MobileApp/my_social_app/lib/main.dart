@@ -30,13 +30,14 @@ Future loadEnvironmentVariables() async {
   await dotenv.load(fileName: isProduction ? ".env.prod" : ".env.dev");
 }
 
-List<CameraDescription>? cameras;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
   store.dispatch(const InitAppAction());
+  
   PlatformDispatcher.instance.onError = (error, stack) {
     if(error is BackendException){
       ToastCreator.displayError(error.message);

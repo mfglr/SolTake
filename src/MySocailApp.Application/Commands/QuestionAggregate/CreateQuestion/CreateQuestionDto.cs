@@ -4,5 +4,5 @@ using MySocailApp.Domain.QuestionAggregate;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
-    public record CreateQuestionDto(string? Content,QuestionExam Exam,QuestionSubject Subject,IEnumerable<int> TopicIds,IFormFileCollection Images) : IRequest<CreateQuestionResponseDto>;
+    public record CreateQuestionDto(string? Content,int ExamId,int SubjectId,IEnumerable<int> TopicIds,IFormFileCollection Images) : IRequest<CreateQuestionResponseDto>;
 }

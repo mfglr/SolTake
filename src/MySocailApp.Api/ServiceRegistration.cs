@@ -5,6 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.ExamAggregate;
+using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.SubjectAggregate;
 using MySocailApp.Domain.TopicAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.TokenProviders;
@@ -114,18 +117,28 @@ namespace MySocailApp.Api
                     Name = "user",
                     NormalizedName = "USER"
                 });
+                context.SaveChanges();
+
             }
 
-            if (!context.Topics.Any())
+            if (!context.Exams.Any())
             {
-                var topic0 = new Topic();
-                topic0.Create("Sözcükte Anlam",TopicExam.TYT,TopicSubject.Turkce);
-                var topic1 = new Topic();
-                topic1.Create("Paragrafta Anlam",TopicExam.TYT,TopicSubject.Turkce);
-                context.Topics.AddRange([topic0,topic1]);
+                var exam = new Exam();
+                exam.Create("TYT", "Temel Yeterlilik Testi");
+                context.Exams.Add(exam);
+                context.SaveChanges();
+
+                var subject = new Subject();
+                subject.Create(exam.Id, "TYT-Türkçe");
+                context.Subjects.Add(subject);
+                context.SaveChanges();
+
+                var topic = new Topic();
+                topic.Create(subject.Id,"Sözcükte Anlam");
+                context.Topics.Add(topic);
+                context.SaveChanges();
             }
 
-            context.SaveChanges();
         }
     }
 }

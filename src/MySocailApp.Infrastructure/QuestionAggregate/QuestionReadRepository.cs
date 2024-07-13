@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.PostAggregate;
 using MySocailApp.Domain.QuestionAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 
@@ -14,8 +13,10 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
             return await _context
                 .Questions
                 .AsNoTracking()
+                .Include(x => x.Exam)
+                .Include(x => x.Subject)
                 .Include(x => x.Images)
-                .Include(x => x.QuestionTopics)
+                .Include(x => x.Topics)
                 .ThenInclude(x => x.Topic)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
@@ -27,11 +28,12 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
             return await _context
                 .Questions
                 .AsNoTracking()
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
+                .Include(x => x.Exam)
+                .Include(x => x.Subject)
                 .Include(x => x.Images)
-                .Include(x => x.QuestionTopics)
+                .Include(x => x.Topics)
                 .ThenInclude(x => x.Topic)
+                .Include(x => x.AppUser)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
                 .Where(x => x.AppUserId == userId && (lastId == null || x.Id > lastId))
@@ -45,14 +47,15 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
             return await _context
                 .Questions
                 .AsNoTracking()
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
+                .Include(x => x.Exam)
+                .Include(x => x.Subject)
                 .Include(x => x.Images)
-                .Include(x => x.QuestionTopics)
+                .Include(x => x.Topics)
                 .ThenInclude(x => x.Topic)
                 .Include(x => x.AppUser)
+                .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Where(x => x.QuestionTopics.Any(x => x.TopicId == topicId) && (lastId == null || x.Id > lastId))
+                .Where(x => x.Topics.Any(x => x.TopicId == topicId) && (lastId == null || x.Id > lastId))
                 .OrderBy(x => x.Id)
                 .Take(20)
                 .ToListAsync(cancellationToken);

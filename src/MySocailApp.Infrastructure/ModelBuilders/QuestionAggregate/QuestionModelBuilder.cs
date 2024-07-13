@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.PostAggregate;
+using MySocailApp.Domain.QuestionAggregate;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
 {
@@ -9,7 +9,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
         public void Configure(EntityTypeBuilder<Question> builder)
         {
             builder
-                .HasMany(x => x.QuestionTopics)
+                .HasMany(x => x.Topics)
                 .WithOne(x => x.Question)
                 .HasForeignKey(x => x.QuestionId);
         }

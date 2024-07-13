@@ -9,7 +9,6 @@ using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
-using MySocailApp.Domain.QuestionAggregate;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -23,8 +22,8 @@ namespace MySocailApp.Api.Controllers
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(SetAccountFilterAttribute))]
         [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
-        public async Task<CreateQuestionResponseDto> Create([FromForm]string? content, [FromForm]int exam, [FromForm]int subject, [FromForm]List<int> topicIds,[FromForm]IFormFileCollection images,CancellationToken cancellationToken)
-            => await _mediator.Send(new CreateQuestionDto(content, (QuestionExam)exam, (QuestionSubject)subject, topicIds,images),cancellationToken);
+        public async Task<CreateQuestionResponseDto> Create([FromForm]string? content, [FromForm]int examId, [FromForm]int subjectId, [FromForm]List<int> topicIds,[FromForm]IFormFileCollection images,CancellationToken cancellationToken)
+            => await _mediator.Send(new CreateQuestionDto(content,examId,subjectId,topicIds,images),cancellationToken);
 
         [HttpGet("{questionId}/{blobName}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
