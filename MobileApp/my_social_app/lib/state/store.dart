@@ -1,5 +1,7 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
+import 'package:my_social_app/state/exams_state/exams_state.dart';
+import 'package:my_social_app/state/exams_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/reducer.dart';
@@ -18,7 +20,8 @@ final store = Store(
     isInitialized: false,
     userEntityState: UserEntityState(users: {}),
     searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
-    createQuestionState: CreateQuestionState(images: [],exam: null, subject: null, topicIds: [], content: null),
+    createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
+    examsState: ExamsState(exams: [], isLoaded: false)
   ),
   middleware: [
     initAppMiddleware,
@@ -36,6 +39,8 @@ final store = Store(
     cancelFollowRequestMiddleware,
 
     searchMiddleware,
-    nextPageSearchingMiddleware
+    nextPageSearchingMiddleware,
+
+    loadExamsMiddleware
   ]
 );

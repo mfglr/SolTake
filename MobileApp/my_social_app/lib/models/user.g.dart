@@ -9,9 +9,9 @@ part of 'user.dart';
 User _$UserFromJson(Map<String, dynamic> json) => User(
       (json['id'] as num).toInt(),
       DateTime.parse(json['createdAt'] as String),
-      json['updatedDAt'] == null
+      json['updatedAt'] == null
           ? null
-          : DateTime.parse(json['updatedDAt'] as String),
+          : DateTime.parse(json['updatedAt'] as String),
       json['userName'] as String,
       json['name'] as String?,
       (json['gender'] as num).toInt(),
@@ -31,13 +31,13 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
-      'updatedDAt': instance.updatedAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
       'userName': instance.userName,
       'name': instance.name,
       'birthDate': instance.birthDate?.toIso8601String(),
       'gender': instance.gender,
       'profileVisibility': instance.profileVisibility,
-      'numberOfPosts': instance.numberOfQuestions,
+      'numberOfQuestions': instance.numberOfQuestions,
       'numberOfFollowers': instance.numberOfFollowers,
       'numberOfFolloweds': instance.numberOfFolloweds,
       'isFollower': instance.isFollower,

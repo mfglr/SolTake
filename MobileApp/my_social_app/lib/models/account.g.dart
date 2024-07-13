@@ -14,7 +14,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
           : DateTime.parse(json['updatedAt'] as String),
       json['userName'] as String,
       json['email'] as String,
-      bool.parse(json['emailConfirmed'].toString(),caseSensitive: false),
+      json['emailConfirmed'] as bool,
       json['accessToken'] as String,
       json['refreshToken'] as String,
     );

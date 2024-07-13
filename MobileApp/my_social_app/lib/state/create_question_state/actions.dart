@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
-import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 
 @immutable
 class AddImageAction extends redux.Action{
@@ -23,14 +22,14 @@ class UpdateContentAction extends redux.Action{
 
 @immutable
 class UpdateExamAction extends redux.Action{
-  final Exam exam;
-  const UpdateExamAction({required this.exam});
+  final int examId;
+  const UpdateExamAction({required this.examId});
 }
 
 @immutable
 class UpdateSubjectAction extends redux.Action{
-  final Subject subject;
-  const UpdateSubjectAction({required this.subject});
+  final int subjectId;
+  const UpdateSubjectAction({required this.subjectId});
 }
 
 @immutable

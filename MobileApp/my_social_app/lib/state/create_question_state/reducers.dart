@@ -13,10 +13,10 @@ CreateQuestionState updateContentReducer(CreateQuestionState oldState, redux.Act
   => action is UpdateContentAction ? oldState.updateContent(action.content) : oldState;
 
 CreateQuestionState updateExamReducer(CreateQuestionState oldState, redux.Action action)
-  => action is UpdateExamAction ? oldState.updateExam(action.exam) : oldState;
+  => action is UpdateExamAction ? oldState.updateExam(action.examId) : oldState;
 
 CreateQuestionState updateSubjectReducer(CreateQuestionState oldState,redux.Action action)
-  => action is UpdateSubjectAction ? oldState.updateSubject(action.subject) : oldState;
+  => action is UpdateSubjectAction ? oldState.updateSubject(action.subjectId) : oldState;
 
 CreateQuestionState addTopicIdReducer(CreateQuestionState oldState,redux.Action action)
   => action is AddTopicIdAction ? oldState.addTopicId(action.topicId) : oldState;
