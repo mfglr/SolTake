@@ -14,21 +14,18 @@ namespace MySocailApp.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [ServiceFilter(typeof(SetAccountFilterAttribute))]
+    [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
     public class QuestionsController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
         public async Task<CreateQuestionResponseDto> Create([FromForm]string? content, [FromForm]int examId, [FromForm]int subjectId, [FromForm]List<int> topicIds,[FromForm]IFormFileCollection images,CancellationToken cancellationToken)
             => await _mediator.Send(new CreateQuestionDto(content,examId,subjectId,topicIds,images),cancellationToken);
 
         [HttpGet("{questionId}/{blobName}")]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
         public async Task<FileResult> GetImage(int questionId, string blobName, CancellationToken cancellationToken)
            => 
             File(
@@ -37,23 +34,14 @@ namespace MySocailApp.Api.Controllers
             );
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
         public async Task<QuestionResponseDto> GetById(int id, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionByIdDto(id), cancellationToken);
 
         [HttpGet("{userId}")]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
         public async Task<List<QuestionResponseDto>> GetByUserId(int userId, [FromQuery]int? lastId, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsByUserIdDto(userId, lastId), cancellationToken);
 
         [HttpGet("{topicId}")]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
         public async Task<List<QuestionResponseDto>> GetByTopicId(int topicId,[FromQuery] int? lastId, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsByTopicIdDto(topicId,lastId), cancellationToken);
     }

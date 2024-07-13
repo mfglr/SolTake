@@ -5,10 +5,12 @@ using MySocailApp.Application.Configurations;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.DbContexts;
+using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.Services;
 using MySocailApp.Infrastructure.Services.Email;
@@ -26,7 +28,8 @@ namespace MySocailApp.Infrastructure
                 .AddDbContext()
                 .AddAccountAggregate()
                 .AddAppUserAggregate()
-                .AddQuestionAggregate();
+                .AddQuestionAggregate()
+                .AddExamAggregate();
         }
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
@@ -93,6 +96,11 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IQuestionImageBlobNameGenerator, QuestionImageBlobNameGenerator>()
                 .AddScoped<IQuestionImageBlobService, QuestionImageBlobService>()
                 .AddScoped<QuestionManager>();
+        }
+        private static IServiceCollection AddExamAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IExamReadRepository, ExamReadRepository>();
         }
     }
 }
