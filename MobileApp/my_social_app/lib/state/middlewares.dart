@@ -23,6 +23,11 @@ void initAppMiddleware(Store<AppState> store,action,NextDispatcher next){
               accountStorage.set(newAccountState);
               store.dispatch(UpdateAccountStateAction(payload: newAccountState));
               store.dispatch(const ApplicationSuccessfullyInitAction());
+            })
+            .catchError((error){
+              store.dispatch(const UpdateAccountStateAction(payload: null));
+              store.dispatch(const ApplicationSuccessfullyInitAction());
+              throw error;
             });
         }
         else{

@@ -3,18 +3,17 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/services/access_token_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_social_app/services/account_storage.dart';
 
 class HttpService{
   static final _apiUrl = dotenv.env['API_URL'];
   
   final AccessTokenProvider _accessTokenProvider;
-  final AccountStorage _accountStorage;
 
-  const HttpService._(this._accessTokenProvider,this._accountStorage);
-  static final HttpService _singleton = HttpService._(AccessTokenProvider(),AccountStorage());
+  const HttpService._(this._accessTokenProvider);
+  static final HttpService _singleton = HttpService._(AccessTokenProvider());
   factory HttpService() => _singleton;
 
   Uri _generateUri(String url) => Uri.parse("$_apiUrl/$url");
@@ -28,11 +27,8 @@ class HttpService{
   Future<void> _handleExceptions(Response response) async {
     if(response.statusCode >= 400){
       switch(response.statusCode){
-        case(419):
-          await _accountStorage.remove();
-          throw response.body;
         default:
-          throw response.body;
+          throw BackendException(message: response.body, statusCode: response.statusCode);
       }
     }
   }

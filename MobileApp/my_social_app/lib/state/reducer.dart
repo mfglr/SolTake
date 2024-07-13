@@ -1,5 +1,6 @@
 import 'package:my_social_app/state/account_state/reducers.dart';
 import 'package:my_social_app/state/actions.dart';
+import 'package:my_social_app/state/create_question_state/reducers.dart';
 import 'package:my_social_app/state/search_state/reducers.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/reducers.dart';
@@ -15,6 +16,7 @@ AppState reducer(AppState oldState,action) => AppState(
   activeLoginPage: changeActiveLoginPageReducer(oldState.activeLoginPage,action),
   isInitialized: appSuccessfullyInitReducer(oldState.isInitialized,action),
   userEntityState: userEntityStateReducers(oldState.userEntityState, action),
-  searchState: searchStateReducers(oldState.searchState,action)
+  searchState: searchStateReducers(oldState.searchState,action),
+  createQuestionState: createQuestionReducers(oldState.createQuestionState,action),
 );
 

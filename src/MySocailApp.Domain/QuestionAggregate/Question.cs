@@ -13,33 +13,30 @@ namespace MySocailApp.Domain.PostAggregate
         public AppUser AppUser { get; }
 
         public string? Content { get; private set; }
-        public Exam Exam { get; private set; }
-        public Subject Subject { get; private set; }
+        public QuestionExam Exam { get; private set; }
+        public QuestionSubject Subject { get; private set; }
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
         public bool HasBlobName(string blobName) => _images.Any(x => x.BlobName == blobName);
+        internal void AddImages(IEnumerable<string> blobNames) => _images.AddRange(blobNames.Select(QuestionImage.Create));
 
-        internal void Create(int appUserId,string? content,Exam exam,Subject subject,IEnumerable<int>? topicIds,IEnumerable<QuestionImage> images)
+        private readonly List<QuestionTopic> _questionTopics = [];
+        public IReadOnlyCollection<QuestionTopic> QuestionTopics => _questionTopics;
+        internal void AddNewTopics(IEnumerable<int> topicsId)
+        {
+            _questionTopics.Clear();
+            _questionTopics.AddRange(topicsId.Select(topicId => QuestionTopic.Create(Id, topicId)));
+        }
+
+        internal void Create(int appUserId, string? content, QuestionExam exam, QuestionSubject subject)
         {
             ArgumentNullException.ThrowIfNull(appUserId);
-
             AppUserId = appUserId;
             Content = content;
             Exam = exam;
             Subject = subject;
             CreatedAt = DateTime.UtcNow;
-
-            foreach (var image in images)
-                _images.Add(image);
-            
-            if (topicIds != null)
-                foreach (var topicId in topicIds)
-                    _questionTopics.Add(QuestionTopic.Create(Id, topicId));
         }
-
-        private readonly List<QuestionTopic> _questionTopics = [];
-        public IReadOnlyCollection<QuestionTopic> QuestionTopics => _questionTopics;
-        public void AddTopic(int topicId) => _questionTopics.Add(QuestionTopic.Create(Id, topicId));
     }
 }

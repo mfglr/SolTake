@@ -2,6 +2,6 @@
 {
     public interface ISubjectValidator
     {
-        bool IsValid(Exam exam,Subject subject);
+        bool IsValid(QuestionExam exam,QuestionSubject subject);
     }
 }

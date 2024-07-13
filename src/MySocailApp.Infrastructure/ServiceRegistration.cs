@@ -91,9 +91,8 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
                 .AddScoped<IQuestionImageBlobNameGenerator, QuestionImageBlobNameGenerator>()
                 .AddScoped<IQuestionImageBlobService, QuestionImageBlobService>()
-                .AddScoped<ISubjectValidator,SubjectValidator>()
-                .AddScoped<QuestionCreator>()
-                .AddScoped<QuestionImageReader>();
+                .AddScoped<ISubjectValidator, SubjectValidator>()
+                .AddScoped<QuestionManager>();
         }
     }
 }

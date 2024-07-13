@@ -1,6 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/pages/create_question/display_question.dart';
+import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/state/create_question_state/actions.dart';
+import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 
 class TakePicturePage extends StatefulWidget {
   final CameraDescription camera;
@@ -31,6 +34,9 @@ class _TakePicturePageState extends State<TakePicturePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: const AppBackButtonWidget(),
+      ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context,snapshot){
@@ -50,14 +56,15 @@ class _TakePicturePageState extends State<TakePicturePage> {
           onPressed: () async {
             await _initializeControllerFuture;
             final image = await _controller.takePicture();
+            store.dispatch(AddImageAction(image: image));
             if (!context.mounted) return;
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayQuestion(
-                  imagePath: image.path,
-                ),
-              ),
-            );
+            if(store.state.createQuestionState.images.length == 1){
+              Navigator.of(context).pop();
+              await Navigator.of(context).pushNamed(displayImagesRoute);
+            }
+            else{
+              Navigator.of(context).pop();
+            }
           },
         ),
       ),

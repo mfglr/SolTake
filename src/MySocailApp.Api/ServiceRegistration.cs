@@ -118,12 +118,13 @@ namespace MySocailApp.Api
 
             if (!context.Topics.Any())
             {
-                var topic0 = new Topic("Sözcükte Anlam");
-                topic0.Create();
-                var topic1 = new Topic("Paragrafta Anlam");
-                topic1.Create();
+                var topic0 = new Topic();
+                topic0.Create("Sözcükte Anlam",TopicExam.TYT,TopicSubject.Turkce);
+                var topic1 = new Topic();
+                topic1.Create("Paragrafta Anlam",TopicExam.TYT,TopicSubject.Turkce);
                 context.Topics.AddRange([topic0,topic1]);
             }
+
             context.SaveChanges();
         }
     }

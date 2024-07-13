@@ -1,6 +1,6 @@
 ﻿namespace MySocailApp.Domain.QuestionAggregate
 {
-    public enum Subject
+    public enum QuestionSubject
     {
         Almanca,
         Biyoloji,

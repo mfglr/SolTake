@@ -4,54 +4,54 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 {
     public class SubjectValidator : ISubjectValidator
     {
-        public static readonly Subject[][] _subjects =
+        public static readonly QuestionSubject[][] _subjects =
         [
             [//Tyt
-                Subject.Turkce,
-                Subject.Tarih,
-                Subject.Cografya,
-                Subject.Felsefe,
-                Subject.Din,
-                Subject.Matematik,
-                Subject.Fizik,
-                Subject.Kimya,
-                Subject.Biyoloji
+                QuestionSubject.Turkce,
+                QuestionSubject.Tarih,
+                QuestionSubject.Cografya,
+                QuestionSubject.Felsefe,
+                QuestionSubject.Din,
+                QuestionSubject.Matematik,
+                QuestionSubject.Fizik,
+                QuestionSubject.Kimya,
+                QuestionSubject.Biyoloji
             ],
             [//Ayt
-                Subject.Edebiyat,
-                Subject.Tarih,
-                Subject.Tarih1,
-                Subject.Tarih2,
-                Subject.Cografya,
-                Subject.Cografya1,
-                Subject.Cografya2,
-                Subject.Felsefe,
-                Subject.Psikoloji,
-                Subject.Sosyoloji,
-                Subject.Mantik,
-                Subject.Din,
-                Subject.Matematik,
-                Subject.Geometri,
-                Subject.Fizik,
-                Subject.Kimya,
-                Subject.Biyoloji
+                QuestionSubject.Edebiyat,
+                QuestionSubject.Tarih,
+                QuestionSubject.Tarih1,
+                QuestionSubject.Tarih2,
+                QuestionSubject.Cografya,
+                QuestionSubject.Cografya1,
+                QuestionSubject.Cografya2,
+                QuestionSubject.Felsefe,
+                QuestionSubject.Psikoloji,
+                QuestionSubject.Sosyoloji,
+                QuestionSubject.Mantik,
+                QuestionSubject.Din,
+                QuestionSubject.Matematik,
+                QuestionSubject.Geometri,
+                QuestionSubject.Fizik,
+                QuestionSubject.Kimya,
+                QuestionSubject.Biyoloji
             ],
             [//Lgs
-                Subject.Turkce,
-                Subject.Inkilap,
-                Subject.Din,
-                Subject.Ingilizce,
-                Subject.YabanciDil,
-                Subject.Matematik,
-                Subject.FenBilimleri
+                QuestionSubject.Turkce,
+                QuestionSubject.Inkilap,
+                QuestionSubject.Din,
+                QuestionSubject.Ingilizce,
+                QuestionSubject.YabanciDil,
+                QuestionSubject.Matematik,
+                QuestionSubject.FenBilimleri
             ],
             [//Dgs
-                Subject.Matematik,
-                Subject.Geometri,
-                Subject.Turkce
+                QuestionSubject.Matematik,
+                QuestionSubject.Geometri,
+                QuestionSubject.Turkce
             ]
         ];
 
-        public bool IsValid(Exam exam, Subject subject) => _subjects[(int)exam].Contains(subject);
+        public bool IsValid(QuestionExam exam, QuestionSubject subject) => _subjects[(int)exam].Contains(subject);
     }
 }

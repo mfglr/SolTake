@@ -12,7 +12,7 @@ using MySocailApp.Infrastructure.DbContexts;
 namespace MySocailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240709190430_Initial")]
+    [Migration("20240712105707_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -459,9 +459,15 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Exam")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Subject")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

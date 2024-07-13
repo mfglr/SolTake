@@ -1,6 +1,6 @@
 ﻿namespace MySocailApp.Domain.QuestionAggregate
 {
-    public enum Exam
+    public enum QuestionExam
     {
         TYT,//Temel Yeterlilik Testi
         AYT,//Alan Yeterlilik Testi

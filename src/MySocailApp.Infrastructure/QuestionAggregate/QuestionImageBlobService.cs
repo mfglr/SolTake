@@ -7,7 +7,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 
         private static readonly string _rootPath = "Images";
         private static readonly string _containerName = "QuestionImages";
-        private string GetPath(string blobName) => $"{_rootPath}/{_containerName}/{blobName}";
+        private static string GetPath(string blobName) => $"{_rootPath}/{_containerName}/{blobName}";
         
         private readonly IQuestionImageBlobNameGenerator _generator = generator;
 

@@ -5,9 +5,9 @@ using MySocailApp.Domain.QuestionAggregate;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
-    public class CreateQuestionHandler(QuestionCreator questionCreator, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IQuestionWriteRepository repository) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
+    public class CreateQuestionHandler(QuestionManager manager, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IQuestionWriteRepository repository) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
     {
-        private readonly QuestionCreator _questionCreator = questionCreator;
+        private readonly QuestionManager _manager = manager;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IQuestionWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
             var streams = request.Images.Select(x => x.OpenReadStream());
 
             var question = new Question();
-            await _questionCreator.CreateAsync(question, accountId, request.Content, request.Exam, request.Subject, request.TopicIds, streams, cancellationToken);
+            await _manager.CreateAsync(question, accountId, request.Content, request.Exam, request.Subject, request.TopicIds, streams, cancellationToken);
             await _repository.CreateAsync(question, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

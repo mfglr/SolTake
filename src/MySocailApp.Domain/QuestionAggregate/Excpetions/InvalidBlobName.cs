@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.AppUserAggregate.Exceptions
+namespace MySocailApp.Domain.QuestionAggregate.Excpetions
 {
     public class InvalidBlobName(string blobName) : ClientSideException($"{_message}'{blobName}'", (int)HttpStatusCode.NotFound)
     {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -12,6 +13,9 @@ import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/login_view.dart';
+import 'package:my_social_app/views/pages/create_question/display_images_page.dart';
+import 'package:my_social_app/views/pages/create_question/select_exam_page.dart';
+import 'package:my_social_app/views/pages/create_question/select_subject_page.dart';
 import 'package:my_social_app/views/pages/create_question/take_picture_page.dart';
 import 'package:my_social_app/views/pages/profile_page.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
@@ -32,13 +36,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
-  
+  store.dispatch(const InitAppAction());
   PlatformDispatcher.instance.onError = (error, stack) {
-    ToastCreator.displayError(error.toString());
+    if(error is BackendException){
+      ToastCreator.displayError(error.message);
+    }
+    else{
+      ToastCreator.displayError(error.toString());
+    }
     return true;
   };
 
-  store.dispatch(const InitAppAction());
   
   runApp(
     StoreProvider(
@@ -82,7 +90,10 @@ Future<void> main() async {
           userFollowersRoute: (context) => const UserFollowersPage(),
           userFollowedsRoute: (context) => const UserFollowedsPage(),
           userPageRoute: (context) => const UserPage(),
-          takePictureRoute: (context) => TakePicturePage(camera: cameras.first)
+          takePictureRoute: (context) => TakePicturePage(camera: cameras.first),
+          displayImagesRoute: (context) => const DisplayImagesPage(),
+          selectExamRoute: (context) => const SelectExamPage(),
+          selectSubjectRoute: (context) => const SelectSubjectPage()
         },
       ),
     )

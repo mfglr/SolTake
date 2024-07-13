@@ -5,9 +5,9 @@ using MySocailApp.Domain.QuestionAggregate.Excpetions;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
 {
-    public class GetQuestionImageHandler(QuestionImageReader reader, IQuestionReadRepository repository) : IRequestHandler<GetQuestionImageDto, byte[]>
+    public class GetQuestionImageHandler(QuestionManager manager, IQuestionReadRepository repository) : IRequestHandler<GetQuestionImageDto, byte[]>
     {
-        private readonly QuestionImageReader _reader = reader;
+        private readonly QuestionManager _manager = manager;
         private readonly IQuestionReadRepository _repository = repository;
 
         public async Task<byte[]> Handle(GetQuestionImageDto request, CancellationToken cancellationToken)
@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
                 await _repository.GetByIdAsync(request.QuestionId, cancellationToken) ?? 
                 throw new QuestionIsNotFoundException();
 
-            return await _reader.Read(question, request.BlobName).ToByteArrayAsync();
+            return await _manager.ReadQuestionImage(question, request.BlobName).ToByteArrayAsync();
         }
     }
 }

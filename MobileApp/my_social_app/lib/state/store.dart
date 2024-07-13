@@ -1,4 +1,5 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
+import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/reducer.dart';
@@ -16,7 +17,8 @@ final store = Store(
     activeLoginPage: ActiveLoginPage.loginPage,
     isInitialized: false,
     userEntityState: UserEntityState(users: {}),
-    searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null))
+    searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
+    createQuestionState: CreateQuestionState(images: [],exam: null, subject: null, topicIds: [], content: null),
   ),
   middleware: [
     initAppMiddleware,
