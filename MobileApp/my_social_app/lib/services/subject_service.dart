@@ -11,7 +11,7 @@ class SubjectService{
   factory SubjectService() => _singleton;
 
   Future<List<Subject>> getByExamId(int examId) async {
-    final list = await _appClient.get("$subjectController/$getSubjectsByExamIdEndPoint/$examId");
+    final list = (await _appClient.get("$subjectController/$getSubjectsByExamIdEndPoint/$examId")) as List;
     return list.map((e) => Subject.fromJson(e)).toList();
   }
 }

@@ -11,8 +11,7 @@ class ExamService{
   factory ExamService() => _singleton;
 
   Future<List<Exam>> getAll() async {
-    final list = await _appClient.get("$examController/$getAllExams");
+    final list = (await _appClient.get("$examController/$getAllExams")) as List;
     return list.map((e) => Exam.fromJson(e)).toList();
   }
-
 }

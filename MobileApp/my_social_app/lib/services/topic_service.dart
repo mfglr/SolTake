@@ -11,7 +11,7 @@ class TopicService{
   factory TopicService() => _singleton;
 
   Future<List<Topic>> getBySubjectId(int subjectId) async {
-    final list = await _appClient.get("$topicController/$getTopicsBySubjectIdEndPoint/$subjectId");
+    final list = (await _appClient.get("$topicController/$getTopicsBySubjectIdEndPoint/$subjectId")) as List;
     return list.map((e) => Topic.fromJson(e)).toList();
   }
 
