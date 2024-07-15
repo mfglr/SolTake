@@ -2,14 +2,27 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/state/create_question_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/views/pages/create_question/widgets/carousel_slider_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/carousel_slider_widget.dart';
 
-class DisplayImagesPage extends StatelessWidget {
+class DisplayImagesPage extends StatefulWidget {
 
   const DisplayImagesPage({super.key});
+
+  @override
+  State<DisplayImagesPage> createState() => _DisplayImagesPageState();
+}
+
+class _DisplayImagesPageState extends State<DisplayImagesPage> {
+
+  @override
+  void dispose() {
+    store.dispatch(const ClearCreateStateAction());
+    super.dispose();
+  }
 
   @override 
   Widget build(BuildContext context) {
@@ -21,6 +34,9 @@ class DisplayImagesPage extends StatelessWidget {
             onPressed: () async {
               if(store.state.createQuestionState.images.isEmpty){
                 throw "You must upload at least an image!";
+              }
+              if(store.state.createQuestionState.images.length > 5){
+                throw "You can upload up to 5 images per question";
               }
               await Navigator.of(context).pushNamed(selectExamRoute);
             },
@@ -41,11 +57,9 @@ class DisplayImagesPage extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.of(context).pushNamed(takePictureRoute);
-        },
+        onPressed: () => Navigator.of(context).pushNamed(takePictureRoute),
         shape: const CircleBorder(),
-        child: const Icon(Icons.camera),
+        child: const Icon(Icons.photo_camera),
       ),
     );
   }

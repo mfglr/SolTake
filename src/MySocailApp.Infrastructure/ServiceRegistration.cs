@@ -7,6 +7,8 @@ using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.SubjectAggregate;
+using MySocailApp.Domain.TopicAggregate;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.DbContexts;
@@ -14,6 +16,8 @@ using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.Services;
 using MySocailApp.Infrastructure.Services.Email;
+using MySocailApp.Infrastructure.SubjectAggregate;
+using MySocailApp.Infrastructure.TopicAggregate;
 using System.Net;
 using System.Net.Mail;
 
@@ -29,7 +33,9 @@ namespace MySocailApp.Infrastructure
                 .AddAccountAggregate()
                 .AddAppUserAggregate()
                 .AddQuestionAggregate()
-                .AddExamAggregate();
+                .AddExamAggregate()
+                .AddSubjectAggregate()
+                .AddTopicAggregate();
         }
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
@@ -101,6 +107,16 @@ namespace MySocailApp.Infrastructure
         {
             return services
                 .AddScoped<IExamReadRepository, ExamReadRepository>();
+        }
+        private static IServiceCollection AddSubjectAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ISubjectReadRepository, SubjectReadRepository>();
+        }
+        private static IServiceCollection AddTopicAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ITopicReadRepository, TopicReadRepository>();
         }
     }
 }

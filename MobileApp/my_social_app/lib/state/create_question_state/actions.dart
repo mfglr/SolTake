@@ -15,12 +15,6 @@ class RemoveImageAction extends redux.Action{
 }
 
 @immutable
-class UpdateContentAction extends redux.Action{
-  final String content;
-  const UpdateContentAction({required this.content});
-}
-
-@immutable
 class UpdateExamAction extends redux.Action{
   final int examId;
   const UpdateExamAction({required this.examId});
@@ -33,13 +27,18 @@ class UpdateSubjectAction extends redux.Action{
 }
 
 @immutable
-class AddTopicIdAction extends redux.Action{
-  final int topicId;
-  const AddTopicIdAction({required this.topicId});
+class UpdateTopicIdsAction extends redux.Action{
+  final List<int> topicIds;
+  const UpdateTopicIdsAction({required this.topicIds});
 }
 
 @immutable
-class RemoveTopicIdAction extends redux.Action{
-  final int topicId;
-  const RemoveTopicIdAction({required this.topicId});
+class UpdateContentAction extends redux.Action{
+  final String content;
+  const UpdateContentAction({required this.content});
+}
+
+@immutable
+class ClearCreateStateAction extends redux.Action{
+  const ClearCreateStateAction();
 }

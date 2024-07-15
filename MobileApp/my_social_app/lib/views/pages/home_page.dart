@@ -61,12 +61,7 @@ class _HomeViewState extends State<HomePage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
-              if(store.state.createQuestionState.images.isNotEmpty){
-                Navigator.of(context).pushNamed(displayImagesRoute);
-              }
-              else{
-                Navigator.of(context).pushNamed(takePictureRoute);
-              }
+              Navigator.of(context).pushNamed(takePictureRoute);
             },
             shape: const CircleBorder(),
             child: const Icon(Icons.question_mark),

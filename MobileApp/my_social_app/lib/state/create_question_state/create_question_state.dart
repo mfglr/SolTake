@@ -25,17 +25,33 @@ class CreateQuestionState{
         topicIds: topicIds,
         content: content
       );
-  CreateQuestionState changeActiveIndex(int activeIndex)
+  CreateQuestionState removeImage(XFile image)
     => CreateQuestionState(
-        images: images,
+        images: images.where((e) => e != image).toList(),
         examId: examId,
         subjectId: subjectId,
         topicIds: topicIds,
         content: content
       );
-  CreateQuestionState removeImage(XFile image)
+  CreateQuestionState updateExam(int examId)
     => CreateQuestionState(
-        images: images.where((e) => e != image).toList(),
+        images: images,
+        examId: examId,
+        subjectId: null,
+        topicIds: const [],
+        content: content
+      );
+  CreateQuestionState updateSubject(int subjectId)
+    => CreateQuestionState(
+        images: images,
+        examId: examId,
+        subjectId: subjectId,
+        topicIds: const [],
+        content: content
+      );
+  CreateQuestionState updateTopicIds(List<int> topicIds)
+    => CreateQuestionState(
+        images: images,
         examId: examId,
         subjectId: subjectId,
         topicIds: topicIds,
@@ -49,36 +65,12 @@ class CreateQuestionState{
         topicIds: topicIds,
         content: content
       );
-  CreateQuestionState updateExam(int examId)
-    => CreateQuestionState(
-        images: images,
-        examId: examId,
-        subjectId: subjectId,
-        topicIds: topicIds,
-        content: content
-      );
-  CreateQuestionState updateSubject(int subjectId)
-    => CreateQuestionState(
-        images: images,
-        examId: examId,
-        subjectId: subjectId,
-        topicIds: topicIds,
-        content: content
-      );
-  CreateQuestionState addTopicId(int topicId)
-    => CreateQuestionState(
-        images: images,
-        examId: examId,
-        subjectId: subjectId,
-        topicIds: topicIds.followedBy([topicId]).toList(),
-        content: content
-      );
-  CreateQuestionState removeTopicId(int topicId)
-    => CreateQuestionState(
-        images: images,
-        examId: examId,
-        subjectId: subjectId,
-        topicIds: topicIds.where((e) => e != topicId).toList(),
-        content: content
-      );
+  CreateQuestionState clear()
+    => const CreateQuestionState(
+      images: [],
+      examId: null,
+      subjectId: null,
+      topicIds: [],
+      content: null
+    );
 }

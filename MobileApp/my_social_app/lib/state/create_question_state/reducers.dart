@@ -18,11 +18,11 @@ CreateQuestionState updateExamReducer(CreateQuestionState oldState, redux.Action
 CreateQuestionState updateSubjectReducer(CreateQuestionState oldState,redux.Action action)
   => action is UpdateSubjectAction ? oldState.updateSubject(action.subjectId) : oldState;
 
-CreateQuestionState addTopicIdReducer(CreateQuestionState oldState,redux.Action action)
-  => action is AddTopicIdAction ? oldState.addTopicId(action.topicId) : oldState;
+CreateQuestionState updateTopicIdsReducer(CreateQuestionState oldState,redux.Action action)
+  => action is UpdateTopicIdsAction ? oldState.updateTopicIds(action.topicIds) : oldState;
 
-CreateQuestionState removeTopicIdReducer(CreateQuestionState oldState,redux.Action action)
-  => action is RemoveTopicIdAction ? oldState.removeTopicId(action.topicId) : oldState;
+CreateQuestionState clearCreateQuestionStateReducer(CreateQuestionState oldState,redux.Action action)
+  => action is ClearCreateStateAction ? oldState.clear() : oldState;
 
 Reducer<CreateQuestionState> createQuestionReducers = combineReducers<CreateQuestionState>([
   TypedReducer<CreateQuestionState,AddImageAction>(addImageReducer).call,
@@ -30,8 +30,8 @@ Reducer<CreateQuestionState> createQuestionReducers = combineReducers<CreateQues
   TypedReducer<CreateQuestionState,UpdateContentAction>(updateContentReducer).call,
   TypedReducer<CreateQuestionState,UpdateExamAction>(updateExamReducer).call,
   TypedReducer<CreateQuestionState,UpdateSubjectAction>(updateSubjectReducer).call,
-  TypedReducer<CreateQuestionState,AddTopicIdAction>(addTopicIdReducer).call,
-  TypedReducer<CreateQuestionState,RemoveTopicIdAction>(removeTopicIdReducer).call,
+  TypedReducer<CreateQuestionState,UpdateTopicIdsAction>(updateTopicIdsReducer).call,
+  TypedReducer<CreateQuestionState,ClearCreateStateAction>(clearCreateQuestionStateReducer).call,
 ]);
 
 

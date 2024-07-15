@@ -15,8 +15,8 @@ class HttpService{
   const HttpService._(this._accessTokenProvider);
   static final HttpService _singleton = HttpService._(AccessTokenProvider());
   factory HttpService() => _singleton;
-
-  Uri _generateUri(String url) => Uri.parse("$_apiUrl/$url");
+  
+  Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
   Map<String,String> _setAuthenticationToken(){
     final Map<String,String> headers = {};
     if(_accessTokenProvider.accessToken != null){
@@ -26,21 +26,18 @@ class HttpService{
   }
   Future<void> _handleExceptions(Response response) async {
     if(response.statusCode >= 400){
-      switch(response.statusCode){
-        default:
-          throw BackendException(message: response.body, statusCode: response.statusCode);
-      }
+      throw BackendException(message: response.body, statusCode: response.statusCode);
     }
   }
 
   Future<Map<String,dynamic>> get(String url) async {
-    Response response = await http.get(_generateUri(url),headers: _setAuthenticationToken());
+    Response response = await http.get(generateUri(url),headers: _setAuthenticationToken());
     await _handleExceptions(response);
     return jsonDecode(response.body) as Map<String,dynamic>;
   }
 
   Future<List> getList(String url) async {
-    Response response = await http.get(_generateUri(url),headers: _setAuthenticationToken());
+    Response response = await http.get(generateUri(url),headers: _setAuthenticationToken());
     await _handleExceptions(response);
     return jsonDecode(response.body);
   }
@@ -48,7 +45,7 @@ class HttpService{
   Future<Map<String,dynamic>> post(String url,{Object? body}) async {
     final headers = _setAuthenticationToken();
     headers.addAll({'Content-Type': 'application/json; charset=UTF-8'});
-    final response = await http.post(_generateUri(url),body: body,headers: headers);
+    final response = await http.post(generateUri(url),body: body,headers: headers);
     await _handleExceptions(response);
     return jsonDecode(response.body) as Map<String,dynamic>;
   }
@@ -56,11 +53,21 @@ class HttpService{
   Future<void> put(String url,{Object? body}) async {
     final headers = _setAuthenticationToken();
     headers.addAll({'Content-Type': 'application/json; charset=UTF-8'});
-    final response = await http.put(_generateUri(url),body: body,headers: headers);
+    final response = await http.put(generateUri(url),body: body,headers: headers);
     await _handleExceptions(response);
   }
   
+  Future<Map<String,dynamic>> postFormData(MultipartRequest request) async {
+    request.headers.addAll(_setAuthenticationToken());
+    final response = await request.send();
+    final data = utf8.decode(await response.stream.toBytes());
+    if(response.statusCode >= 400){
+      throw BackendException(message: data, statusCode: response.statusCode);
+    }
+    return jsonDecode(data) as Map<String,dynamic>;
+  }
+
   Future<Uint8List> readBytes(String url) async {
-    return await http.readBytes(_generateUri(url),headers: _setAuthenticationToken());
+    return await http.readBytes(generateUri(url),headers: _setAuthenticationToken());
   }
 }

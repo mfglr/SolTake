@@ -16,6 +16,7 @@ import 'package:my_social_app/views/login_view.dart';
 import 'package:my_social_app/views/pages/create_question/display_images_page.dart';
 import 'package:my_social_app/views/pages/create_question/select_exam_page.dart';
 import 'package:my_social_app/views/pages/create_question/select_subject_page.dart';
+import 'package:my_social_app/views/pages/create_question/select_topic_page.dart';
 import 'package:my_social_app/views/pages/create_question/take_picture_page.dart';
 import 'package:my_social_app/views/pages/profile_page.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
@@ -29,7 +30,6 @@ Future loadEnvironmentVariables() async {
   const bool isProduction = bool.fromEnvironment('dart.vm.product');
   await dotenv.load(fileName: isProduction ? ".env.prod" : ".env.dev");
 }
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,7 +94,8 @@ Future<void> main() async {
           takePictureRoute: (context) => TakePicturePage(camera: cameras.first),
           displayImagesRoute: (context) => const DisplayImagesPage(),
           selectExamRoute: (context) => const SelectExamPage(),
-          selectSubjectRoute: (context) => const SelectSubjectPage()
+          selectSubjectRoute: (context) => const SelectSubjectPage(),
+          selectTopicRoute: (context) => const SelectTopicPage(),
         },
       ),
     )

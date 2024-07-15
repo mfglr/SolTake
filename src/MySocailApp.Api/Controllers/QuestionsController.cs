@@ -22,9 +22,11 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<CreateQuestionResponseDto> Create([FromForm]string? content, [FromForm]int examId, [FromForm]int subjectId, [FromForm]List<int> topicIds,[FromForm]IFormFileCollection images,CancellationToken cancellationToken)
-            => await _mediator.Send(new CreateQuestionDto(content,examId,subjectId,topicIds,images),cancellationToken);
-
+        public async Task<CreateQuestionResponseDto> Create([FromForm] string content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] string topicIds, [FromForm]IFormFileCollection images, CancellationToken cancellationToken)
+        {
+            var a = Request.Form;
+            return await _mediator.Send(new CreateQuestionDto(content, examId, subjectId, topicIds, images), cancellationToken);
+        }
         [HttpGet("{questionId}/{blobName}")]
         public async Task<FileResult> GetImage(int questionId, string blobName, CancellationToken cancellationToken)
            => 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/exams_state/actions.dart';
-import 'package:my_social_app/state/exams_state/exams_state.dart';
+import 'package:my_social_app/state/exam_entity_state/actions.dart';
+import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/views/loading_view.dart';
@@ -14,15 +14,14 @@ class SelectExamPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final height = MediaQuery.sizeOf(context).width / 2;
     store.dispatch(const LoadExamsAction());
 
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
       ),
-      body: StoreConnector<AppState,ExamsState>(
-        converter: (store) => store.state.examsState,
+      body: StoreConnector<AppState,ExamEntityState>(
+        converter: (store) => store.state.examEntityState,
         builder:(context,state){
           if(state.isLoaded){
             return GridView.count(

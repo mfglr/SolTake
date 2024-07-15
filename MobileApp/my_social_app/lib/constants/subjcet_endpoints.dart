@@ -1,0 +1,1 @@
+const getSubjectsByExamIdEndPoint = "GetByExamId";

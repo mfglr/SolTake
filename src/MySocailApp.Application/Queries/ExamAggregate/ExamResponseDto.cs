@@ -3,8 +3,6 @@
     public class ExamResponseDto
     {
         public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set; }
         public string ShortName { get; private set; }
         public string FullName { get; private set; }
         private ExamResponseDto() { }

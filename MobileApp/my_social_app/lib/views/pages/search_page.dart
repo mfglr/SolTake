@@ -14,12 +14,13 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-
+  final String initialKey = store.state.searchState.key;
   late final TextEditingController searchTextController;
 
   @override
   void initState() {
     searchTextController = TextEditingController();
+    searchTextController.text = initialKey;
     super.initState();
   }
 
@@ -35,45 +36,27 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         title: StoreConnector<AppState,String>(
           converter: (store) => store.state.searchState.key,
-          builder: (context, key){
-            if(key != ""){
-              return TextField(
-                controller: searchTextController,
-                onChanged: (key) async{
-                  if(key == ""){
-                    store.dispatch(const ClearSearchingAction());
-                    return;
-                  }
-                  store.dispatch(SearchAction(key: searchTextController.text));
-                },
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  suffixIcon: IconButton(
-                    onPressed: (){
-                      store.dispatch(const ClearSearchingAction());
-                      searchTextController.clear();
-                    },
-                    icon: const Icon(Icons.clear),
-                  ),
-                  border: const OutlineInputBorder()
-                ),
-              );
-            }
-            return TextField(
-              controller: searchTextController,
-              onChanged: (value) async{
-                if(value == ""){
+          builder: (context, key) => TextField(
+            controller: searchTextController,
+            onChanged: (key) async{
+              if(key == ""){
+                store.dispatch(const ClearSearchingAction());
+                return;
+              }
+              store.dispatch(SearchAction(key: searchTextController.text));
+            },
+            decoration: InputDecoration(
+              hintText: "Search",
+              suffixIcon: key != "" ? IconButton(
+                onPressed: (){
                   store.dispatch(const ClearSearchingAction());
-                  return;
-                }
-                store.dispatch(SearchAction(key: searchTextController.text));
-              },
-              decoration: const InputDecoration(
-                hintText: "Search",
-                border: OutlineInputBorder()
-              ),
-            );
-          },
+                  searchTextController.clear();
+                },
+                icon: const Icon(Icons.clear),
+              ) : null,
+              border: const OutlineInputBorder()
+            ),
+          )
         ),
       ),
       body: Container(

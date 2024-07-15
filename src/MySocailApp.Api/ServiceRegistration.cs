@@ -109,36 +109,6 @@ namespace MySocailApp.Api
             using var scope = app.Services.CreateScope();
             using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             context.Database.Migrate();
-
-            if(!context.Roles.Any(x => x.Name == "user"))
-            {
-                context.Roles.Add(new()
-                {
-                    Name = "user",
-                    NormalizedName = "USER"
-                });
-                context.SaveChanges();
-
-            }
-
-            if (!context.Exams.Any())
-            {
-                var exam = new Exam();
-                exam.Create("TYT", "Temel Yeterlilik Testi");
-                context.Exams.Add(exam);
-                context.SaveChanges();
-
-                var subject = new Subject();
-                subject.Create(exam.Id, "TYT-Türkçe");
-                context.Subjects.Add(subject);
-                context.SaveChanges();
-
-                var topic = new Topic();
-                topic.Create(subject.Id,"Sözcükte Anlam");
-                context.Topics.Add(topic);
-                context.SaveChanges();
-            }
-
         }
     }
 }

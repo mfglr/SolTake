@@ -21,7 +21,13 @@ class CarouselSliderWidget extends StatelessWidget {
                 right: 0,
                 child: IconButton(
                   onPressed: (){
-                    store.dispatch(RemoveImageAction(image: image));
+                    if(images.length == 1){
+                      store.dispatch(const ClearCreateStateAction());
+                      Navigator.of(context).pop();
+                    }
+                    else{
+                      store.dispatch(RemoveImageAction(image: image));
+                    }
                   },
                   icon: const Icon(Icons.close,color: Colors.white,size: 32,),
                 ),

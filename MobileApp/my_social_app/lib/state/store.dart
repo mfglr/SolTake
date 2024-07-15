@@ -1,19 +1,23 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
-import 'package:my_social_app/state/exams_state/exams_state.dart';
-import 'package:my_social_app/state/exams_state/middlewares.dart';
+import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
+import 'package:my_social_app/state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/reducer.dart';
 import 'package:my_social_app/state/search_state/middlewares.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/subject_entity_state/middlewares.dart';
+import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
+import 'package:my_social_app/state/topic_entity_state/middlewares.dart';
+import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
 import 'package:my_social_app/state/user_entity_state/middlewares.dart';
 import 'package:my_social_app/state/user_entity_state/user_entity_state.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
-  reducer,
+  appReducer,
   initialState: const AppState(
     accountState: null,
     activeLoginPage: ActiveLoginPage.loginPage,
@@ -21,7 +25,9 @@ final store = Store(
     userEntityState: UserEntityState(users: {}),
     searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
-    examsState: ExamsState(exams: [], isLoaded: false)
+    examEntityState: ExamEntityState(exams: [], isLoaded: false),
+    subjectEntityState: SubjectEntityState(status: {}, subjects: []),
+    topicEntityState: TopicEntityState(status: {}, topics: [])
   ),
   middleware: [
     initAppMiddleware,
@@ -41,6 +47,10 @@ final store = Store(
     searchMiddleware,
     nextPageSearchingMiddleware,
 
-    loadExamsMiddleware
+    loadExamsMiddleware,
+
+    loadSubjectsMiddelware,
+    
+    loadTopicsMiddelware
   ]
 );

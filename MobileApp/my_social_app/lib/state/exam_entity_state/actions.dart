@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
-import 'package:my_social_app/state/exams_state/exams_state.dart';
+import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 
 @immutable
 class LoadExamsAction extends redux.Action{

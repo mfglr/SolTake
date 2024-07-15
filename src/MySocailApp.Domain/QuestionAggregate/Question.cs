@@ -12,7 +12,7 @@ namespace MySocailApp.Domain.QuestionAggregate
         public int ExamId { get; private set; }
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
-        public string? Content { get; private set; }
+        public string Content { get; private set; }
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
@@ -27,7 +27,7 @@ namespace MySocailApp.Domain.QuestionAggregate
             _topics.AddRange(topicIds.Select(topicId => QuestionTopic.Create(Id, topicId)));
         }
 
-        internal void Create(int appUserId, string? content, int examId, int subjectId)
+        internal void Create(int appUserId, string content, int examId, int subjectId)
         {
             AppUserId = appUserId;
             Content = content;

@@ -30,7 +30,6 @@ class ExamItemWidget extends StatelessWidget {
               ],
             )
           ),
-          
         ],
       ),
     );

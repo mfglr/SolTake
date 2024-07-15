@@ -11,3 +11,4 @@ const takePictureRoute = "/take-picture/";
 const displayImagesRoute = "/display-images/";
 const selectExamRoute = "/select-exam/";
 const selectSubjectRoute = "/select-subject/";
+const selectTopicRoute = "/select-topic/";
