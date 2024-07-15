@@ -7,7 +7,7 @@
         public DateTime? UpdatedAt { get; private set; }
         public int AppUserId { get; private set; }
         public string UserName { get; private set; }
-        public string? Content { get; private set; }
+        public string Content { get; private set; }
         public int ExamId { get; private set; }
         public string ExamName { get; private set; }
         public int SubjectId { get; private set; }

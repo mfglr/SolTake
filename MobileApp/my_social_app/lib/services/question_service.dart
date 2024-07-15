@@ -1,25 +1,33 @@
+import 'dart:convert';
+import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
-import 'package:my_social_app/services/http_service.dart';
-import 'package:my_social_app/state/create_question_state/create_question_state.dart';
+import 'package:my_social_app/models/question.dart';
+import 'package:my_social_app/services/app_client.dart';
 
 class QuestionService{
-  final HttpService _httpService;
+  final AppClient _appClient;
 
-  const QuestionService._(this._httpService);
-  static final QuestionService _singleton = QuestionService._(HttpService());
+  const QuestionService._(this._appClient);
+  static final QuestionService _singleton = QuestionService._(AppClient());
   factory QuestionService() => _singleton;
 
-  Future createQuestion(CreateQuestionState state) async {
-    final request =  MultipartRequest("POST", _httpService.generateUri("$questionController/$createQuestioinEndpoint"));
-    for(final image in state.images){
+  Future<Question> createQuestion(List<XFile> images,int examId,int subjectId,List<int> topicIds,String content) async {
+    MultipartRequest request = MultipartRequest(
+      "POST",
+      _appClient.generateUri("$questionController/$createQuestioinEndpoint")
+    );
+    for(final image in images){
       request.files.add(await MultipartFile.fromPath("images",image.path));
     }
-    request.fields["topicIds"] = state.topicIds.join(',');
-    request.fields["examId"] = state.examId.toString();
-    request.fields["subjectId"] = state.subjectId.toString();
-    request.fields["content"] = state.content ?? "";
-    await _httpService.postFormData(request);
+    request.fields["topicIds"] = topicIds.join(',');
+    request.fields["examId"] = examId.toString();
+    request.fields["subjectId"] = subjectId.toString();
+    request.fields["content"] = content;
+    
+    final response = await _appClient.send(request);
+    final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
+    return Question.fromJson(json);
   }
 }

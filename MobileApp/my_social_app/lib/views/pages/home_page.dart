@@ -19,7 +19,6 @@ enum MenuAction{
 }
 
 class _HomeViewState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,AccountState?>(

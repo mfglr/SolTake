@@ -85,7 +85,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 48),
               child: OutlinedButton(
                 onPressed: () async {
-                  await _service.sendEmailConfirmationByTokenMail();
+                  await _service.updateEmailConfirmationToken();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

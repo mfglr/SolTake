@@ -1,17 +1,20 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.QuestionAggregate;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
-    public class CreateQuestionHandler(QuestionManager manager, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IQuestionWriteRepository repository) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
+    public class CreateQuestionHandler(QuestionManager manager, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IQuestionWriteRepository repository,IMapper mapper) : IRequestHandler<CreateQuestionDto, QuestionResponseDto>
     {
         private readonly QuestionManager _manager = manager;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IQuestionWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IMapper _mapper = mapper;
 
-        public async Task<CreateQuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
+        public async Task<QuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
             var streams = request.Images.Select(x => x.OpenReadStream());
@@ -21,7 +24,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
             await _repository.CreateAsync(question, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return new(question.Id);
+            return _mapper.Map<QuestionResponseDto>(question);
         }
     }
 }

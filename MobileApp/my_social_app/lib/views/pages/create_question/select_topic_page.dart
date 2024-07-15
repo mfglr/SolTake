@@ -1,7 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/create_question_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
@@ -69,8 +68,6 @@ class SelectTopicPage extends StatelessWidget {
         padding: const  EdgeInsets.all(15),
         child: OutlinedButton(
           onPressed: () async {
-            final state = store.state.createQuestionState;
-            await QuestionService().createQuestion(state);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

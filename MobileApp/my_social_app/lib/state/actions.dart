@@ -6,6 +6,11 @@ abstract class Action{
   const Action();
 }
 
+class ChangeAccessTokenAction extends Action{
+  final String? accessToken;
+  const ChangeAccessTokenAction({required this.accessToken});
+}
+
 @immutable
 class ChangeActiveLoginPageAction extends Action{
   final ActiveLoginPage payload;

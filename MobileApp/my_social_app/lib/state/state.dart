@@ -15,6 +15,7 @@ enum ActiveLoginPage{
 
 @immutable
 class AppState{
+  final String? accessToken;
   final AccountState? accountState;
   final ActiveLoginPage activeLoginPage;
   final bool isInitialized;
@@ -26,6 +27,7 @@ class AppState{
   final TopicEntityState topicEntityState;
 
   const AppState({
+    required this.accessToken,
     required this.accountState,
     required this.activeLoginPage,
     required this.isInitialized,

@@ -19,6 +19,7 @@ import 'package:redux/redux.dart';
 final store = Store(
   appReducer,
   initialState: const AppState(
+    accessToken: null,
     accountState: null,
     activeLoginPage: ActiveLoginPage.loginPage,
     isInitialized: false,

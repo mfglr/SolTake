@@ -11,10 +11,14 @@ import 'package:my_social_app/state/user_entity_state/reducers.dart';
 ActiveLoginPage changeActiveLoginPageReducer(ActiveLoginPage oldState,Action action)
   => action is ChangeActiveLoginPageAction ? action.payload : oldState;
 
+String? changeAccessTokenReducer(String? oldState,Action action)
+  => action is ChangeAccessTokenAction ? action.accessToken : oldState;
+
 bool appSuccessfullyInitReducer(bool oldState,Action action)
   => action is ApplicationSuccessfullyInitAction ? true : oldState;
 
 AppState appReducer(AppState oldState,action) => AppState(
+  accessToken: changeAccessTokenReducer(oldState.accessToken,action),
   accountState: updateAccountStateReducer(oldState.accountState,action),
   activeLoginPage: changeActiveLoginPageReducer(oldState.activeLoginPage,action),
   isInitialized: appSuccessfullyInitReducer(oldState.isInitialized,action),
