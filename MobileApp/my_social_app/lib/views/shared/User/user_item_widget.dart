@@ -32,7 +32,7 @@ class UserItemWidget extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 5),
-                    child: UserImageWidget(state: state, diameter: 60)
+                    child: UserImageWidget(userId: state.id, diameter: 60)
                   ),
                   Builder(
                     builder: (context){

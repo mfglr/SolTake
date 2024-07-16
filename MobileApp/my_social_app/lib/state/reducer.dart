@@ -2,6 +2,7 @@ import 'package:my_social_app/state/account_state/reducers.dart';
 import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/create_question_state/reducers.dart';
 import 'package:my_social_app/state/exam_entity_state/reducers.dart';
+import 'package:my_social_app/state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/search_state/reducers.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/reducers.dart';
@@ -27,6 +28,7 @@ AppState appReducer(AppState oldState,action) => AppState(
   createQuestionState: createQuestionReducers(oldState.createQuestionState,action),
   examEntityState: loadExamsReducer(oldState.examEntityState,action),
   subjectEntityState: loadSubjectsReducer(oldState.subjectEntityState, action),
-  topicEntityState: loadTopicsReducer(oldState.topicEntityState, action)
+  topicEntityState: loadTopicsReducer(oldState.topicEntityState, action),
+  questionEntityState: questionsReducer(oldState.questionEntityState,action)
 );
 

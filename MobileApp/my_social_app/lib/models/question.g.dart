@@ -20,25 +20,27 @@ Map<String, dynamic> _$QuestionTopicToJson(QuestionTopic instance) =>
 
 QuestionImage _$QuestionImageFromJson(Map<String, dynamic> json) =>
     QuestionImage(
-      id: (json['id'] as num).toInt(),
+      height: (json['height'] as num).toInt(),
+      width: (json['width'] as num).toInt(),
       blobName: json['blobName'] as String,
     );
 
 Map<String, dynamic> _$QuestionImageToJson(QuestionImage instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'height': instance.height,
+      'width': instance.width,
       'blobName': instance.blobName,
     };
 
 Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       id: (json['id'] as num).toInt(),
-      createAt: DateTime.parse(json['createAt'] as String),
+      createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
       appUserId: (json['appUserId'] as num).toInt(),
       userName: json['userName'] as String,
-      content: json['content'] as String,
+      content: json['content'] as String?,
       examId: (json['examId'] as num).toInt(),
       examName: json['examName'] as String,
       subjectId: (json['subjectId'] as num).toInt(),
@@ -53,7 +55,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'id': instance.id,
-      'createAt': instance.createAt.toIso8601String(),
+      'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'appUserId': instance.appUserId,
       'userName': instance.userName,

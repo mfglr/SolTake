@@ -56,6 +56,13 @@ class FollowedsSuccessfullyLoadedAction extends redux.Action{
 }
 
 @immutable
+class LoadUserQuestionsAction extends redux.Action{
+  final int userId;
+  final List<int> payload;
+  const LoadUserQuestionsAction({required this.userId,required this.payload});
+}
+
+@immutable
 class LoadUserImageAction extends redux.Action{
   final int userId;
   const LoadUserImageAction({required this.userId});
@@ -90,4 +97,11 @@ class FollowRequestSuccessfullyCancelledAction extends redux.Action{
   final int currentUserId;
   final int userId;
   const FollowRequestSuccessfullyCancelledAction({required this.currentUserId,required this.userId});
+}
+
+@immutable
+class AddQuestionAction extends redux.Action{
+  final int currentUserId;
+  final int questionId;
+  const AddQuestionAction({required this.currentUserId,required this.questionId});
 }

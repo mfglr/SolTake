@@ -19,7 +19,7 @@ class CreateQuestionState{
 
   CreateQuestionState addImage(XFile image)
     => CreateQuestionState(
-        images: images.followedBy([image]).toList(),
+        images: [...images, image],
         examId: examId,
         subjectId: subjectId,
         topicIds: topicIds,

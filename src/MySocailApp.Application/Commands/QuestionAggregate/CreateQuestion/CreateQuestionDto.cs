@@ -6,16 +6,16 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
     public record CreateQuestionDto : IRequest<QuestionResponseDto>
     {
-        public CreateQuestionDto(string content,int examId,int subjectId,string topicIds, IFormFileCollection images)
+        public CreateQuestionDto(string? content,int examId,int subjectId,string? topicIds,IFormFileCollection images)
         {
             Content = content;
             ExamId = examId;
             SubjectId = subjectId;
-            TopicIds = topicIds.Split(",").Select(x => int.Parse(x)).ToList();
             Images = images;
+            TopicIds = topicIds != null ? topicIds.Split(",").Select(x => int.Parse(x)).ToList() : [];
         }
 
-        public string? Content {  get; private set; }
+        public string? Content { get; private set; }
         public int ExamId { get; private set; }
         public int SubjectId { get; private set; }
         public IEnumerable<int> TopicIds { get; private set; }

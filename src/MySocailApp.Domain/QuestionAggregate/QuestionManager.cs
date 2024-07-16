@@ -2,11 +2,12 @@
 
 namespace MySocailApp.Domain.QuestionAggregate
 {
-    public class QuestionManager(IQuestionImageBlobService blobService,IExamRepository examRepository,ISubjectRepository subjectRepository)
+    public class QuestionManager(IQuestionImageBlobService blobService, IExamRepository examRepository, ISubjectRepository subjectRepository, IDimentionService dimentionService)
     {
         private readonly IQuestionImageBlobService _blobService = blobService;
         private readonly IExamRepository _examRepository = examRepository;
         private readonly ISubjectRepository _subjectRepository = subjectRepository;
+        private readonly IDimentionService _dimentionService = dimentionService;
 
         private async Task SetQuestionImages(Question question, IEnumerable<Stream> images, CancellationToken cancellationToken)
         {
@@ -18,7 +19,9 @@ namespace MySocailApp.Domain.QuestionAggregate
                 throw new EmptyQuestionImageException();
 
             var blobNames = await _blobService.UpdloadAsync(images, cancellationToken);
-            question.AddImages(blobNames);
+            var streams = images.ToList();
+            for(var i = 0; i < streams.Count;i++)
+                question.AddImage(blobNames[i], _dimentionService.GetDimension(streams[i]));
         }
 
         public async Task UpdateTopics(Question question, IEnumerable<int> topicIds, CancellationToken cancellationToken)

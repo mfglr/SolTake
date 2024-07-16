@@ -18,7 +18,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              UserImageWidget(state: state, diameter: 100),
+              UserImageWidget(userId: state.id, diameter: 100),
               Text(
                 style: const TextStyle( fontWeight: FontWeight.bold ),
                 state.formatName(10)

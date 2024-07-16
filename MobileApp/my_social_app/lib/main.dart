@@ -18,7 +18,6 @@ import 'package:my_social_app/views/pages/create_question/select_exam_page.dart'
 import 'package:my_social_app/views/pages/create_question/select_subject_page.dart';
 import 'package:my_social_app/views/pages/create_question/select_topic_page.dart';
 import 'package:my_social_app/views/pages/create_question/take_picture_page.dart';
-import 'package:my_social_app/views/pages/profile_page.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/register_view.dart';
 import 'package:my_social_app/views/pages/user/user_followeds_page.dart';
@@ -32,12 +31,10 @@ Future loadEnvironmentVariables() async {
 }
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   
+  WidgetsFlutterBinding.ensureInitialized();
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
-  store.dispatch(const InitAppAction());
-  
   PlatformDispatcher.instance.onError = (error, stack) {
     if(error is BackendException){
       ToastCreator.displayError(error.message);
@@ -47,7 +44,6 @@ Future<void> main() async {
     }
     return true;
   };
-
   
   runApp(
     StoreProvider(
@@ -59,9 +55,10 @@ Future<void> main() async {
           useMaterial3: true,
         ),
         home: StoreConnector<AppState,bool>(
+          onInit: (store) => store.dispatch(const InitAppAction()),
           converter: (store) => store.state.isInitialized,
-          builder: (context, vm){
-            if(vm){
+          builder: (context, isInitialized){
+            if(isInitialized){
               return StoreConnector<AppState,AccountState?>(
                 converter: (store) => store.state.accountState,
                 builder: (context,accountState){
@@ -87,7 +84,6 @@ Future<void> main() async {
           registerRoute: (context) => const RegisterView(),
           verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),
-          profilePageRoute: (context) => const ProfilePage(),
           userFollowersRoute: (context) => const UserFollowersPage(),
           userFollowedsRoute: (context) => const UserFollowedsPage(),
           userPageRoute: (context) => const UserPage(),

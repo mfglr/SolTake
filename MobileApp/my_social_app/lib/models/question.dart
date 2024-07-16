@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/question_entity_state/question_image_state.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/question_entity_state/question_topic_state.dart';
 part 'question.g.dart';
 
 @immutable
@@ -11,28 +15,34 @@ class QuestionTopic{
 
   factory QuestionTopic.fromJson(Map<String, dynamic> json) => _$QuestionTopicFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionTopicToJson(this);
+  
+  QuestionTopicState toQuestionTopicState() => QuestionTopicState(id: id, name: name);
 }
 
 @immutable
 @JsonSerializable()
 class QuestionImage{
-  final int id;
+  final int height;
+  final int width;
   final String blobName;
-  const QuestionImage({required this.id, required this.blobName});
+  const QuestionImage({required this.height,required this.width,required this.blobName});
 
   factory QuestionImage.fromJson(Map<String, dynamic> json) => _$QuestionImageFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionImageToJson(this);
+
+  QuestionImageState toQuestionImageState()
+    => QuestionImageState(height: height,width: width,blobName: blobName, state: ImageState.notStarted,image: null,file: null);
 }
 
 @immutable
 @JsonSerializable()
 class Question{
   final int id;
-  final DateTime createAt;
+  final DateTime createdAt;
   final DateTime? updatedAt;
   final int appUserId;
   final String userName;
-  final String content;
+  final String? content;
   final int examId;
   final String examName;
   final int subjectId;
@@ -42,7 +52,7 @@ class Question{
 
   const Question({
     required this.id,
-    required this.createAt,
+    required this.createdAt,
     required this.updatedAt,
     required this.appUserId,
     required this.userName,
@@ -57,4 +67,19 @@ class Question{
 
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionToJson(this);
+
+  QuestionState toQuestionState() => QuestionState(
+    id: id,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+    appUserId: appUserId,
+    userName: userName,
+    content: content,
+    examId: examId,
+    examName: examName,
+    subjectId: subjectId,
+    subjectName: subjectName,
+    topics: topics.map((e) => e.toQuestionTopicState()).toList(),
+    images: images.map((e) => e.toQuestionImageState()).toList()
+  );
 }

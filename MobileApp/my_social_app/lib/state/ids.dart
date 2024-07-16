@@ -26,7 +26,7 @@ class Ids{
   );
 
   Ids add(int id) => Ids(
-    ids: ids.followedBy([id]).toList(), 
+    ids: [id, ...ids],
     isLast: isLast, 
     lastId: lastId
   );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
+import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
@@ -25,6 +27,7 @@ class AppState{
   final ExamEntityState examEntityState;
   final SubjectEntityState subjectEntityState;
   final TopicEntityState topicEntityState;
+  final QuestionEntityState questionEntityState;
 
   const AppState({
     required this.accessToken,
@@ -36,7 +39,8 @@ class AppState{
     required this.createQuestionState,
     required this.examEntityState,
     required this.subjectEntityState,
-    required this.topicEntityState
+    required this.topicEntityState,
+    required this.questionEntityState
   });
 
   UserState? get currentUser => userEntityState.users[accountState!.id];
@@ -52,4 +56,12 @@ class AppState{
     => subjectEntityState.getSubjects(createQuestionState.examId);
 
   List<TopicState> get topics => topicEntityState.getTopics(createQuestionState.subjectId).toList();
+
+  List<QuestionState> getUserQuestions(int userId){
+    final ids = userEntityState.users[userId]!.questions.ids;
+    return ids.map((e) => questionEntityState.questions[e]!).toList(); 
+  }
+
+  List<QuestionState> get questionsOfCurrentUser
+    => accountState != null ? getUserQuestions(accountState!.id) : []; 
 }

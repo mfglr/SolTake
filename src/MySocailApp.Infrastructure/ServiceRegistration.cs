@@ -101,6 +101,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
                 .AddScoped<IQuestionImageBlobNameGenerator, QuestionImageBlobNameGenerator>()
                 .AddScoped<IQuestionImageBlobService, QuestionImageBlobService>()
+                .AddSingleton<IDimentionService,DimentionService>()
                 .AddScoped<QuestionManager>();
         }
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)

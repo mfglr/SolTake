@@ -4,6 +4,8 @@ import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
+import 'package:my_social_app/state/question_entity_state/middlewares.dart';
+import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/reducer.dart';
 import 'package:my_social_app/state/search_state/middlewares.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
@@ -28,7 +30,8 @@ final store = Store(
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     examEntityState: ExamEntityState(exams: [], isLoaded: false),
     subjectEntityState: SubjectEntityState(status: {}, subjects: []),
-    topicEntityState: TopicEntityState(status: {}, topics: [])
+    topicEntityState: TopicEntityState(status: {}, topics: []),
+    questionEntityState: QuestionEntityState(questions: {})
   ),
   middleware: [
     initAppMiddleware,
@@ -52,6 +55,10 @@ final store = Store(
 
     loadSubjectsMiddelware,
     
-    loadTopicsMiddelware
+    loadTopicsMiddelware,
+
+    createQuestionMiddleware,
+    loadQuestionsByUserIdMiddleware,
+    loadQuestionImageMiddleware
   ]
 );

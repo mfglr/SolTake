@@ -1,7 +1,9 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/create_question_state/actions.dart';
+import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
@@ -14,7 +16,6 @@ class SelectTopicPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    store.dispatch(const LoadTopicsAction());
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
@@ -26,6 +27,7 @@ class SelectTopicPage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 25),
               child: StoreConnector<AppState,List<TopicState>>(
+                onInit: (store) => store.dispatch(const LoadTopicsAction()),
                 converter: (store) => store.state.topics,
                 builder:(context,topics) => DropdownSearch<String>.multiSelection(
                   items: topics.map((e) => e.name).toList(),
@@ -67,7 +69,10 @@ class SelectTopicPage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const  EdgeInsets.all(15),
         child: OutlinedButton(
-          onPressed: () async {
+          onPressed: (){
+            store.dispatch(const CreateQuestionAction());
+            Navigator.of(context).popUntil((route) => route.settings.name == displayImagesRoute);
+            Navigator.of(context).pop();
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -27,6 +27,7 @@ class UserState{
   final Ids followeds;
   final Ids requesters;
   final Ids requesteds;
+  final Ids questions;
   final Uint8List? image;
   final ImageState imageState;
 
@@ -60,7 +61,8 @@ class UserState{
     required this.followers,
     required this.followeds,
     required this.requesters,
-    required this.requesteds
+    required this.requesteds,
+    required this.questions,
   });
 
   UserState _optional({
@@ -82,7 +84,8 @@ class UserState{
     Ids? newFollowers,
     Ids? newFolloweds,
     Ids? newRequesters,
-    Ids? newRequesteds
+    Ids? newRequesteds,
+    Ids? newQuestions
   }) => UserState._constructor(
     id: id,
     createdAt: createdAt,
@@ -104,7 +107,8 @@ class UserState{
     followers: newFollowers ?? followers,
     followeds: newFolloweds ?? followeds,
     requesters: newRequesters ?? requesters,
-    requesteds: newRequesteds ?? requesteds
+    requesteds: newRequesteds ?? requesteds,
+    questions: newQuestions ?? questions
   );
 
   factory UserState.init(User user) => UserState._constructor(
@@ -129,13 +133,15 @@ class UserState{
     followeds: const Ids(ids: [],isLast: false,lastId: null),
     requesters: const Ids(ids: [],isLast: false,lastId: null),
     requesteds: const Ids(ids: [],isLast: false,lastId: null),
+    questions: const Ids(ids: [],isLast: false, lastId: null)
   );
 
   UserState loadFollowers(List<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
   UserState loadFolloweds(List<int> newFolloweds) => _optional(newFolloweds: followeds.nextPage(newFolloweds));
   UserState loadRequesters(List<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
   UserState loadRequesteds(List<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
-
+  UserState loadQuestions(List<int> newQuestions) => _optional(newQuestions: questions.nextPage(newQuestions));
+  
   //make follow request start
   UserState addRequester(int currentUserId){
     if(profileVisibility == ProfileVisibility.private){
@@ -202,4 +208,9 @@ class UserState{
     newImage: newImage,newImageState: ImageState.done
   );
   
+  //Questions
+  UserState addQuestion(int id) => _optional(
+    newNumberOfQuestions: numberOfQuestions + 1,
+    newQuestions: questions.add(id)
+  );
 }

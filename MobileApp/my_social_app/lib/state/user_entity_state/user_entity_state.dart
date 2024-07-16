@@ -44,6 +44,13 @@ class UserEntityState{
     return UserEntityState(users: clone);
   }
 
+  UserEntityState loadQuestions(int userId, List<int> questions){
+    final Map<int,UserState> clone = {};
+    clone.addAll(users);
+    clone[userId] = clone[userId]!.loadQuestions(questions);
+    return UserEntityState(users: clone);
+  }
+
   UserEntityState startLoadingUserImage(int userId){
     final Map<int,UserState> clone = {};
     clone.addAll(users);
@@ -70,6 +77,15 @@ class UserEntityState{
     clone.addAll(users);
     clone[userId] = clone[userId]!.removeRequester(currentId);
     clone[currentId] = clone[currentId]!.removeRequested(clone[userId]!.profileVisibility, userId);
+    return UserEntityState(users: clone);
+  }
+
+
+  //Questions
+  UserEntityState addQuestion(int currentUserId,int questionId){
+    final Map<int,UserState> clone = {};
+    clone.addAll(users);
+    clone[currentUserId] = clone[currentUserId]!.addQuestion(questionId);
     return UserEntityState(users: clone);
   }
 }

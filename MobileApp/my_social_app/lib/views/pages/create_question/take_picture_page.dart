@@ -59,8 +59,7 @@ class _TakePicturePageState extends State<TakePicturePage> {
             store.dispatch(AddImageAction(image: image));
             if (!context.mounted) return;
             if(store.state.createQuestionState.images.length == 1){
-              Navigator.of(context).pop();
-              await Navigator.of(context).pushNamed(displayImagesRoute);
+              Navigator.of(context).popAndPushNamed(displayImagesRoute);
             }
             else{
               Navigator.of(context).pop();

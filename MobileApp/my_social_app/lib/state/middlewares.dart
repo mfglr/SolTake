@@ -9,29 +9,27 @@ void initAppMiddleware(Store<AppState> store,action,NextDispatcher next){
   final accountService = AccountService();
   final accountStorage = AccountStorage();
   if(action is InitAppAction){
-    accountStorage
-      .get()
-      .then((oldAccuntState){
-        if(oldAccuntState != null){
-          accountService
-            .loginByReshtoken(oldAccuntState.id, oldAccuntState.refreshToken)
-            .then((account) {
-              final newAccountState = account.toAccountState();
-              accountStorage.set(newAccountState);
-              store.dispatch(ChangeAccessTokenAction(accessToken: account.accessToken));
-              store.dispatch(UpdateAccountStateAction(payload: newAccountState));
-              store.dispatch(const ApplicationSuccessfullyInitAction());
-            })
-            .catchError((error){
-              store.dispatch(const UpdateAccountStateAction(payload: null));
-              store.dispatch(const ApplicationSuccessfullyInitAction());
-              throw error;
-            });
-        }
-        else{
-          store.dispatch(const ApplicationSuccessfullyInitAction());
-        }
-      });
+    accountStorage.get().then((oldAccuntState){
+      if(oldAccuntState != null){
+        accountService
+          .loginByReshtoken(oldAccuntState.id, oldAccuntState.refreshToken)
+          .then((account) {
+            final newAccountState = account.toAccountState();
+            accountStorage.set(newAccountState);
+            store.dispatch(ChangeAccessTokenAction(accessToken: account.accessToken));
+            store.dispatch(UpdateAccountStateAction(payload: newAccountState));
+            store.dispatch(const ApplicationSuccessfullyInitAction());
+          })
+          .catchError((error){
+            store.dispatch(const UpdateAccountStateAction(payload: null));
+            store.dispatch(const ApplicationSuccessfullyInitAction());
+            throw error;
+          });
+      }
+      else{
+        store.dispatch(const ApplicationSuccessfullyInitAction());
+      }
+    });
   }
   next(action);
 }

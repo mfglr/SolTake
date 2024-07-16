@@ -8,7 +8,10 @@ namespace MySocailApp.Application.Mappers
     {
         public QuestionMappers()
         {
-            CreateMap<QuestionImage, QuestionImageResponseDto>();
+            CreateMap<QuestionImage, QuestionImageResponseDto>()
+                .ForMember(dest => dest.Height,x => x.MapFrom(src => src.Dimention.Height))
+                .ForMember(dest => dest.Width,x => x.MapFrom(src => src.Dimention.Width));
+
             CreateMap<Question, QuestionResponseDto>()
                 .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.AppUser.Account.UserName))
                 .ForMember(dest => dest.ExamName, x => x.MapFrom(src => src.Exam.ShortName))

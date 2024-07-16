@@ -9,8 +9,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
         private readonly AppDbContext _context = context;
 
         public async Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
-        {
-            return await _context
+            => await _context
                 .Questions
                 .AsNoTracking()
                 .Include(x => x.Exam)
@@ -21,11 +20,9 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        }
 
         public async Task<List<Question>> GetByUserIdAsync(int userId, int? lastId, CancellationToken cancellationToken)
-        {
-            return await _context
+            => await _context
                 .Questions
                 .AsNoTracking()
                 .Include(x => x.Exam)
@@ -36,15 +33,13 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Include(x => x.AppUser)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Where(x => x.AppUserId == userId && (lastId == null || x.Id > lastId))
-                .OrderBy(x => x.Id)
+                .Where(x => x.AppUserId == userId && (lastId == null || x.Id < lastId))
+                .OrderByDescending(x => x.Id)
                 .Take(20)
                 .ToListAsync(cancellationToken);
-        }
 
         public async Task<List<Question>> GetByTopicIdAsync(int topicId, int? lastId, CancellationToken cancellationToken)
-        {
-            return await _context
+            => await _context
                 .Questions
                 .AsNoTracking()
                 .Include(x => x.Exam)
@@ -55,10 +50,9 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Include(x => x.AppUser)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Where(x => x.Topics.Any(x => x.TopicId == topicId) && (lastId == null || x.Id > lastId))
-                .OrderBy(x => x.Id)
+                .Where(x => x.Topics.Any(x => x.TopicId == topicId) && (lastId == null || x.Id < lastId))
+                .OrderByDescending(x => x.Id)
                 .Take(20)
                 .ToListAsync(cancellationToken);
-        }
     }
 }
