@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion;
+using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
+using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
@@ -24,7 +26,15 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<QuestionResponseDto> Create([FromForm]string? content, [FromForm]int examId, [FromForm]int subjectId, [FromForm]string? topicIds, [FromForm]IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateQuestionDto(content, examId, subjectId, topicIds, images), cancellationToken);
-        
+
+        [HttpPut]
+        public async Task Like(LikeQuestionDto request,CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPut]
+        public async Task Dislike(DislikeQuestionDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
         [HttpGet("{questionId}/{blobName}")]
         public async Task<FileResult> GetImage(int questionId, string blobName, CancellationToken cancellationToken)
            => File(

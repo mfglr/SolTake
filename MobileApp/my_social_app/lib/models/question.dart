@@ -49,6 +49,8 @@ class Question{
   final String subjectName;
   final List<QuestionTopic> topics;
   final List<QuestionImage> images;
+  final bool isLiked;
+  final int numberOfLikes;
 
   const Question({
     required this.id,
@@ -62,7 +64,9 @@ class Question{
     required this.subjectId,
     required this.subjectName,
     required this.topics,
-    required this.images
+    required this.images,
+    required this.isLiked,
+    required this.numberOfLikes
   });
 
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
@@ -80,6 +84,8 @@ class Question{
     subjectId: subjectId,
     subjectName: subjectName,
     topics: topics.map((e) => e.toQuestionTopicState()).toList(),
-    images: images.map((e) => e.toQuestionImageState()).toList()
+    images: images.map((e) => e.toQuestionImageState()).toList(),
+    isLiked: isLiked,
+    numberOfLikes: numberOfLikes
   );
 }

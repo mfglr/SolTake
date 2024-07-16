@@ -215,6 +215,7 @@ namespace MySocailApp.Domain.AppUserAggregate
         //readonly navigator properties
         public Account Account { get; }
         public IReadOnlyCollection<Question> Questions { get; }
+        public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } 
 
         //IRemovable
         public bool IsRemoved { get; private set; }

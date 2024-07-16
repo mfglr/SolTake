@@ -18,8 +18,11 @@ namespace MySocailApp.Application
                 .AddAutoMapper(cfg =>
                 {
                     var sp = services.BuildServiceProvider();
-                    var acessTokenReader = sp.GetRequiredService<IAccessTokenReader>();
-                    cfg.AddProfile(new UserMappers(acessTokenReader));
+                    var reader = sp.GetRequiredService<IAccessTokenReader>();
+
+                    cfg.AddProfile(new UserMappers(reader));
+                    cfg.AddProfile(new QuestionMappers(reader));
+
                 })
                 .AddAutoMapper(assembly)
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))

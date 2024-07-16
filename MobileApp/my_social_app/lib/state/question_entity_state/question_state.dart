@@ -17,6 +17,8 @@ class QuestionState{
   final String subjectName;
   final List<QuestionTopicState> topics;
   final List<QuestionImageState> images;
+  final bool isLiked;
+  final int numberOfLikes;
 
   const QuestionState({
     required this.id,
@@ -30,7 +32,9 @@ class QuestionState{
     required this.subjectId,
     required this.subjectName,
     required this.topics,
-    required this.images
+    required this.images,
+    required this.isLiked,
+    required this.numberOfLikes
   });
 
   String formatUserName(int count)
@@ -72,7 +76,9 @@ class QuestionState{
       subjectId: subjectId,
       subjectName: subjectName,
       topics: topics,
-      images: _startLoadingImage(index)
+      images: _startLoadingImage(index),
+      isLiked: isLiked,
+      numberOfLikes: numberOfLikes
     );
 
   QuestionState loadImage(int index,Uint8List image)
@@ -88,6 +94,45 @@ class QuestionState{
       subjectId: subjectId,
       subjectName: subjectName,
       topics: topics,
-      images: _loadImage(index,image)
+      images: _loadImage(index,image),
+      isLiked: isLiked,
+      numberOfLikes: numberOfLikes
     );
+
+  QuestionState like()
+    => QuestionState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      appUserId: appUserId,
+      userName: userName,
+      content: content,
+      examId: examId,
+      examName: examName,
+      subjectId: subjectId,
+      subjectName: subjectName,
+      topics: topics,
+      images: images,
+      isLiked: true,
+      numberOfLikes: numberOfLikes + 1
+    );
+
+  QuestionState dislike()
+    => QuestionState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      appUserId: appUserId,
+      userName: userName,
+      content: content,
+      examId: examId,
+      examName: examName,
+      subjectId: subjectId,
+      subjectName: subjectName,
+      topics: topics,
+      images: images,
+      isLiked: false,
+      numberOfLikes: numberOfLikes - 1
+    );
+  
 }

@@ -63,3 +63,19 @@ void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher nex
   }
   next(action);
 }
+
+void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is LikeQuestionAction){
+    if(store.state.questionEntityState.questions[action.questionId]!.isLiked){
+      QuestionService()
+        .dislike(action.questionId)
+        .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId)));
+    }
+    else{
+      QuestionService()
+        .like(action.questionId)
+        .then((_) => store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId)));
+    }
+  }
+  next(action);
+}

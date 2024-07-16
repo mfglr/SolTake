@@ -51,6 +51,8 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       images: (json['images'] as List<dynamic>)
           .map((e) => QuestionImage.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isLiked: json['isLiked'] as bool,
+      numberOfLikes: (json['numberOfLikes'] as num).toInt(),
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -66,4 +68,6 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'subjectName': instance.subjectName,
       'topics': instance.topics,
       'images': instance.images,
+      'isLiked': instance.isLiked,
+      'numberOfLikes': instance.numberOfLikes,
     };

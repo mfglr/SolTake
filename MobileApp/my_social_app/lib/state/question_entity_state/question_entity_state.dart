@@ -35,4 +35,18 @@ class QuestionEntityState{
     clone[questionId] = clone[questionId]!.loadImage(index,image);
     return QuestionEntityState(questions: clone);
   }
+
+  QuestionEntityState like(int questionId){
+    final Map<int,QuestionState> clone = {};
+    clone.addAll(questions);
+    clone[questionId] = clone[questionId]!.like();
+    return QuestionEntityState(questions: clone);
+  }
+
+  QuestionEntityState dislike(int questionId){
+    final Map<int,QuestionState> clone = {};
+    clone.addAll(questions);
+    clone[questionId] = clone[questionId]!.dislike();
+    return QuestionEntityState(questions: clone);
+  }
 }

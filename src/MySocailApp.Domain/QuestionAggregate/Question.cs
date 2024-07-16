@@ -36,6 +36,22 @@ namespace MySocailApp.Domain.QuestionAggregate
             CreatedAt = DateTime.UtcNow;
         }
 
+        private readonly List<QuestionUserLike> _likes = [];
+        public IReadOnlyList<QuestionUserLike> Likes => _likes;
+        public void Like(int userId)
+        {
+            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            if (index != -1)
+                _likes.RemoveAt(index);
+            _likes.Add(QuestionUserLike.Create(Id, userId));
+        }
+        public void Dislike(int userId) {
+            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            if(index != -1)
+                _likes.RemoveAt(index);
+        }
+
+
         public Exam Exam { get; }
         public Subject Subject { get; }
         public AppUser AppUser { get; }

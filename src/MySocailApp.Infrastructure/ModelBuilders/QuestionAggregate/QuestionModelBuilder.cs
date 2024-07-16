@@ -12,6 +12,11 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
                 .HasMany(x => x.Topics)
                 .WithOne(x => x.Question)
                 .HasForeignKey(x => x.QuestionId);
+
+            builder
+                .HasMany(x => x.Likes)
+                .WithOne(x => x.Question)
+                .HasForeignKey(x => x.QuestionId);
         }
     }
 }

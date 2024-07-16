@@ -12,8 +12,11 @@
         public string ExamName { get; private set; }
         public int SubjectId { get; private set; }
         public string SubjectName { get; private set; }
+        public bool IsLiked { get; private set; }
+        public int NumberOfLikes { get; private set; }
         public List<QuestionTopicResponseDto> Topics { get; private set; }
         public List<QuestionImageResponseDto> Images { get; private set; }
+
         private QuestionResponseDto() { }
     }
 }

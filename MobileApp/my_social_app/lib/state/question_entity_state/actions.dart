@@ -37,8 +37,26 @@ class LoadQuestionImageAction extends redux.Action{
 
 @immutable
 class LoadQuestionImageSuccessAction extends redux.Action{
-  final questionId;
+  final int questionId;
   final int index;
   final Uint8List image;
   const LoadQuestionImageSuccessAction({required this.questionId, required this.index,required this.image});
+}
+
+@immutable
+class LikeQuestionAction extends redux.Action{
+  final int questionId;
+  const LikeQuestionAction({required this.questionId});
+}
+
+@immutable
+class DislikeQuestionSuccessAction extends redux.Action{
+  final int questionId;
+  const DislikeQuestionSuccessAction({required this.questionId});
+}
+
+@immutable
+class LikeQuestionSuccessAction extends redux.Action{
+  final int questionId;
+  const LikeQuestionSuccessAction({required this.questionId});
 }

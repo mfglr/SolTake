@@ -59,6 +59,7 @@ final store = Store(
 
     createQuestionMiddleware,
     loadQuestionsByUserIdMiddleware,
-    loadQuestionImageMiddleware
+    loadQuestionImageMiddleware,
+    likeQuestionMiddleware
   ]
 );

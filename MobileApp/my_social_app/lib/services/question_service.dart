@@ -40,4 +40,22 @@ class QuestionService{
   Future<Uint8List> getQuestionImage(int questionId,String blobName) async {
     return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$blobName");
   }
+
+  Future<void> like(int questionId) async{
+    await _appClient.put(
+      "$questionController/$likeQuestionEndpoint",
+      body: {
+        "QuestionId": questionId
+      }
+    );
+  }
+
+  Future<void> dislike(int questionId) async{
+    await _appClient.put(
+      "$questionController/$dislikeQuestionEndpoint",
+      body: {
+        "QuestionId": questionId
+      }
+    );
+  }
 }

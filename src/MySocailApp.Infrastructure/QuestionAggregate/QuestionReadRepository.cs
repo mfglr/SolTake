@@ -19,6 +19,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .ThenInclude(x => x.Topic)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
+                .Include(x => x.Likes)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<List<Question>> GetByUserIdAsync(int userId, int? lastId, CancellationToken cancellationToken)
@@ -33,6 +34,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Include(x => x.AppUser)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
+                .Include(x => x.Likes)
                 .Where(x => x.AppUserId == userId && (lastId == null || x.Id < lastId))
                 .OrderByDescending(x => x.Id)
                 .Take(20)
@@ -50,6 +52,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Include(x => x.AppUser)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
+                .Include(x => x.Likes)
                 .Where(x => x.Topics.Any(x => x.TopicId == topicId) && (lastId == null || x.Id < lastId))
                 .OrderByDescending(x => x.Id)
                 .Take(20)

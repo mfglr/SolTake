@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/views/shared/question/question_images_slider.dart';
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -52,11 +54,18 @@ class QuestionItemWidget extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: (){},
-                    icon: const Icon(Icons.favorite_outline)
+                    onPressed: (){
+                      store.dispatch(LikeQuestionAction(questionId: question.id));
+                    },
+                    icon: Builder(
+                      builder: (context) {
+                        if(question.isLiked) return const Icon(Icons.favorite,color: Colors.red);
+                        return const Icon(Icons.favorite_outline);
+                      }
+                    )
                   ),
-                  const Text("123"),
-                  
+                  Text(question.numberOfLikes.toString()),
+
                   IconButton(
                     onPressed: (){},
                     icon: const Icon(Icons.mode_comment_outlined)
