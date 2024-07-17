@@ -6,7 +6,9 @@ import 'package:my_social_app/state/question_entity_state/question_entity_state.
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
+import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
+import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
@@ -45,15 +47,13 @@ class AppState{
 
   UserState? get currentUser => userEntityState.users[accountState!.id];
   List<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.users[e]!).toList();
-
-  String? get nameOfSelectedSubject
-    => subjectEntityState.subjects.where((x) => x.id == createQuestionState.subjectId).firstOrNull?.name; 
+  
   bool get areSubjectsLoaded 
     => createQuestionState.examId != null ? subjectEntityState.isLoaded(createQuestionState.examId) : false;
   List<String> get nameOfSubjects
-    => subjectEntityState.getSubjects(createQuestionState.examId).map((x) => x.name).toList();
+    => subjectEntityState.getSubjectsByExamId(createQuestionState.examId).map((x) => x.name).toList();
   List<SubjectState> get subjects
-    => subjectEntityState.getSubjects(createQuestionState.examId);
+    => subjectEntityState.getSubjectsByExamId(createQuestionState.examId);
 
   List<TopicState> get topics => topicEntityState.getTopics(createQuestionState.subjectId).toList();
 
@@ -62,6 +62,9 @@ class AppState{
     return ids.map((e) => questionEntityState.questions[e]!).toList(); 
   }
 
-  List<QuestionState> get questionsOfCurrentUser
-    => accountState != null ? getUserQuestions(accountState!.id) : []; 
+  Iterable<QuestionState> get questionsOfCurrentUser
+    => accountState != null ? getUserQuestions(accountState!.id) : [];
+  Iterable<TopicState> getTopicsOfQuestions(int questionId)
+    => questionEntityState.questions[questionId]!.topics.map((e) => topicEntityState.topics[e]!);
+  
 }

@@ -11,23 +11,31 @@ class QuestionImagesSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      items: question.images.map(
-        (imageState) => Builder(
-          builder: (context){
-            if(imageState.image != null) return Image.memory(imageState.image!);
-            return const LoadingWidget();
-          }
-        )
-      ).toList(),
-      options: CarouselOptions(
-        autoPlay: false,
-        viewportFraction: 1,
-        height: (MediaQuery.of(context).size.width * question.bigImage.height.toDouble()) / question.bigImage.width.toDouble(),
-        enableInfiniteScroll: false,
-        onPageChanged: (index, reason){
-          store.dispatch(LoadQuestionImageAction(questionId: question.id, index: index));
-        },
+    store.dispatch(LoadQuestionImageAction(questionId: question.id, index: 0));
+    return GestureDetector(
+      onDoubleTap: (){
+        if(!question.isLiked){
+          store.dispatch(LikeQuestionAction(questionId: question.id));
+        }
+      },
+      child: CarouselSlider(
+        items: question.images.map(
+          (imageState) => Builder(
+            builder: (context){
+              if(imageState.image != null) return Image.memory(imageState.image!);
+              return const LoadingWidget();
+            }
+          )
+        ).toList(),
+        options: CarouselOptions(
+          autoPlay: false,
+          viewportFraction: 1,
+          height: (MediaQuery.of(context).size.width * question.bigImage.height.toDouble()) / question.bigImage.width.toDouble(),
+          enableInfiniteScroll: false,
+          onPageChanged: (index, reason){
+            store.dispatch(LoadQuestionImageAction(questionId: question.id, index: index));
+          },
+        ),
       ),
     );
   }

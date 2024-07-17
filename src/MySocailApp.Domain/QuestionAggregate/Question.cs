@@ -51,7 +51,6 @@ namespace MySocailApp.Domain.QuestionAggregate
                 _likes.RemoveAt(index);
         }
 
-
         public Exam Exam { get; }
         public Subject Subject { get; }
         public AppUser AppUser { get; }

@@ -413,14 +413,14 @@ namespace MySocailApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(3367),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 806, DateTimeKind.Utc).AddTicks(9972),
                             FullName = "Temel Yeterlilik Testi",
                             ShortName = "TYT"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(3369),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 806, DateTimeKind.Utc).AddTicks(9975),
                             FullName = "Alan Yeterlilik Testi",
                             ShortName = "AYT"
                         });
@@ -555,161 +555,161 @@ namespace MySocailApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4431),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1681),
                             ExamId = 1,
                             Name = "TYT - Türkçe"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4433),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1684),
                             ExamId = 1,
                             Name = "TYT - Tarih"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4434),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1684),
                             ExamId = 1,
                             Name = "TYT - Coğrafya"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4435),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1685),
                             ExamId = 1,
                             Name = "TYT - Felsefe"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4435),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1685),
                             ExamId = 1,
                             Name = "TYT - Din Kültürü ve Ahlâk Bilgisi"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4435),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1686),
                             ExamId = 1,
                             Name = "TYT - Matematik"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4436),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1686),
                             ExamId = 1,
                             Name = "TYT - Geometri"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4436),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1687),
                             ExamId = 1,
                             Name = "TYT - Fizik"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4437),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1687),
                             ExamId = 1,
                             Name = "TYT - Kimya"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4437),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1688),
                             ExamId = 1,
                             Name = "TYT - Biyoloji"
                         },
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4438),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1688),
                             ExamId = 2,
                             Name = "AYT - Matematik"
                         },
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4438),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1689),
                             ExamId = 2,
                             Name = "AYT - Geometri"
                         },
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4439),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1689),
                             ExamId = 2,
                             Name = "AYT - Fizik"
                         },
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4439),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1690),
                             ExamId = 2,
                             Name = "AYT - Kimya"
                         },
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4440),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1690),
                             ExamId = 2,
                             Name = "AYT - Biyoloji "
                         },
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4440),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1691),
                             ExamId = 2,
                             Name = "AYT - Coğrafya "
                         },
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4441),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1691),
                             ExamId = 2,
                             Name = "AYT - Tarih "
                         },
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4441),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1692),
                             ExamId = 2,
                             Name = "AYT - Türk Dili ve Edebiyatı"
                         },
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4442),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1692),
                             ExamId = 2,
                             Name = "AYT - Din Kültürü ve Ahlâk Bilgisi"
                         },
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4442),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1693),
                             ExamId = 2,
                             Name = "AYT - Felsefe"
                         },
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4443),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1693),
                             ExamId = 2,
                             Name = "AYT - Psikoloji"
                         },
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4443),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1694),
                             ExamId = 2,
                             Name = "AYT - Sosyoloji"
                         },
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4444),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1694),
                             ExamId = 2,
                             Name = "AYT - Mantık"
                         });
@@ -746,224 +746,224 @@ namespace MySocailApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4545),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1813),
                             Name = "Sözcükte Anlam",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4548),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1815),
                             Name = "Söz Yorumu",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4548),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1816),
                             Name = "Deyim ve Atasözü",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4549),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1816),
                             Name = "Cümlede Anlam",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4570),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1817),
                             Name = "Paragraf",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4571),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1817),
                             Name = "Paragrafta Anlatım Teknikleri",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4571),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1818),
                             Name = "Paragrafta Düşünceyi Geliştirme Yolları",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4572),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1818),
                             Name = "Paragrafta Yapı",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4572),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1819),
                             Name = "Paragrafta Konu-Ana Düşünce",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4573),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1819),
                             Name = "Paragrafta Yardımcı Düşünce",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4573),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1820),
                             Name = "Ses Bilgisi",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4574),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1820),
                             Name = "Yazım Kuralları",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4574),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1821),
                             Name = "Noktalama İşaretleri",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4575),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1821),
                             Name = "Sözcükte Yapı/Ekler",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4575),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1822),
                             Name = "Sözcük Türleri",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4576),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1822),
                             Name = "İsimler",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4576),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1823),
                             Name = "Zamirler",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4577),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1823),
                             Name = "Sıfatlar",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4577),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1824),
                             Name = "Zarflar",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4578),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1824),
                             Name = "Edat",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4578),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1825),
                             Name = "Bağlaç",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4578),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1825),
                             Name = "Ünlem",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4579),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1826),
                             Name = "Edat - Bağlaç - Ünlem",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4579),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1826),
                             Name = "Fiiller",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4580),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1827),
                             Name = "Fiilde Anlam (Kip-Kişi-Yapı)",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4580),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1827),
                             Name = "Ek Fiil",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 27,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4581),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1828),
                             Name = "Fiilimsi",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 28,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4581),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1828),
                             Name = "Fiilde Çatı",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 29,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4581),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1829),
                             Name = "Sözcük Grupları",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 30,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4582),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1829),
                             Name = "Cümlenin Ögeleri",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 31,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4582),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1830),
                             Name = "Cümle Türleri",
                             SubjectId = 1
                         },
                         new
                         {
                             Id = 32,
-                            CreatedAt = new DateTime(2024, 7, 16, 16, 29, 33, 778, DateTimeKind.Utc).AddTicks(4583),
+                            CreatedAt = new DateTime(2024, 7, 17, 12, 49, 19, 807, DateTimeKind.Utc).AddTicks(1830),
                             Name = "Anlatım Bozukluğu",
                             SubjectId = 1
                         });

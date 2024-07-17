@@ -10,6 +10,8 @@ using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
+using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
+using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
 
 namespace MySocailApp.Api.Controllers
@@ -51,7 +53,15 @@ namespace MySocailApp.Api.Controllers
            => await _mediator.Send(new GetQuestionsByUserIdDto(userId, lastId), cancellationToken);
 
         [HttpGet("{topicId}")]
-        public async Task<List<QuestionResponseDto>> GetByTopicId(int topicId,[FromQuery] int? lastId, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetByTopicId(int topicId,[FromQuery]int? lastId, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsByTopicIdDto(topicId,lastId), cancellationToken);
+        
+        [HttpGet("{subjectId}")]
+        public async Task<List<QuestionResponseDto>> GetBySubjectId(int subjectId, [FromQuery]int? lastId, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetQuestionsBySubjectIdDto(subjectId, lastId), cancellationToken);
+
+        [HttpGet("{examId}")]
+        public async Task<List<QuestionResponseDto>> GetByExamId(int examId, [FromQuery] int? lastId, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetQuestionsByExamIdDto(examId, lastId), cancellationToken);
     }
 }

@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 
-@immutable
-class ExamState{
-  final int id;
-  final String shortName;
-  final String fullName;
-
-  const ExamState({
-    required this.id,
-    required this.shortName,
-    required this.fullName,
-  });
-}
 
 @immutable
 class ExamEntityState{
-  final List<ExamState> exams;
+  final Map<int,ExamState> exams;
   final bool isLoaded;
   const ExamEntityState({required this.exams, required this.isLoaded});
 
-  ExamEntityState loadExams(List<ExamState> exams)
-    => ExamEntityState(exams: this.exams.followedBy(exams).toList(), isLoaded: true);
+  Map<int,ExamState> _loadExams(Iterable<ExamState> exams){
+    final Map<int,ExamState> clone = {};
+    final uniqExams = exams.where((e) => this.exams[e.id] == null);
+    clone.addAll(this.exams);
+    clone.addEntries(uniqExams.map((e)=> MapEntry(e.id, e)));
+    return clone;
+  }
+  Map<int,ExamState> _nextPageOfQuestions(int examId, Iterable<int> questionIds){
+    final Map<int,ExamState> clone = {};
+    clone.addAll(exams);
+    clone[examId] = clone[examId]!.nextPageOfQuestions(questionIds);
+    return clone;
+  }
+
+  ExamEntityState loadExams(Iterable<ExamState> exams)
+    => ExamEntityState(exams: _loadExams(exams), isLoaded: true);
+
+  ExamEntityState nextPageOfQuestions(int examId, Iterable<int> questionIds)
+    => ExamEntityState(exams: _nextPageOfQuestions(examId,questionIds), isLoaded: isLoaded);
+
+
+  List<ExamState> get examValues => exams.values.toList();
 }
 

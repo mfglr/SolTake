@@ -28,9 +28,9 @@ final store = Store(
     userEntityState: UserEntityState(users: {}),
     searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
-    examEntityState: ExamEntityState(exams: [], isLoaded: false),
-    subjectEntityState: SubjectEntityState(status: {}, subjects: []),
-    topicEntityState: TopicEntityState(status: {}, topics: []),
+    examEntityState: ExamEntityState(exams: {}, isLoaded: false),
+    subjectEntityState: SubjectEntityState(status: {}, subjects: {}),
+    topicEntityState: TopicEntityState(status: {}, topics: {}),
     questionEntityState: QuestionEntityState(questions: {})
   ),
   middleware: [
@@ -47,6 +47,7 @@ final store = Store(
     loadUserImageMiddleware,
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
+    loadQuestionsByUserIdMiddleware,
 
     searchMiddleware,
     nextPageSearchingMiddleware,
@@ -55,11 +56,12 @@ final store = Store(
 
     loadSubjectsMiddelware,
     
-    loadTopicsMiddelware,
+    loadTopicsBySubjectIdMiddelware,
+    nextPageOfTopicQuestionsMiddleware,
 
     createQuestionMiddleware,
-    loadQuestionsByUserIdMiddleware,
     loadQuestionImageMiddleware,
-    likeQuestionMiddleware
+    likeQuestionMiddleware,
+    dislikeQuestionMiddleware
   ]
 );

@@ -1,21 +1,18 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/question_entity_state/question_image_state.dart';
-import 'package:my_social_app/state/question_entity_state/question_topic_state.dart';
 
 @immutable
 class QuestionState{
-   final int id;
+  final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int appUserId;
   final String userName;
   final String? content;
   final int examId;
-  final String examName;
   final int subjectId;
-  final String subjectName;
-  final List<QuestionTopicState> topics;
+  final List<int> topics;
   final List<QuestionImageState> images;
   final bool isLiked;
   final int numberOfLikes;
@@ -28,9 +25,7 @@ class QuestionState{
     required this.userName,
     required this.content,
     required this.examId,
-    required this.examName,
     required this.subjectId,
-    required this.subjectName,
     required this.topics,
     required this.images,
     required this.isLiked,
@@ -40,6 +35,14 @@ class QuestionState{
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
   
+  String formatContent()
+    => 
+    content != null ? 
+      content!.length <= 25 ? 
+        content! : 
+        "${content!.substring(0,22)}..." :
+      "Help Me!";
+
   QuestionImageState get bigImage {
     var max = images[0];
     for(final image in images){
@@ -72,9 +75,7 @@ class QuestionState{
       userName: userName,
       content: content,
       examId: examId,
-      examName: examName,
       subjectId: subjectId,
-      subjectName: subjectName,
       topics: topics,
       images: _startLoadingImage(index),
       isLiked: isLiked,
@@ -90,9 +91,7 @@ class QuestionState{
       userName: userName,
       content: content,
       examId: examId,
-      examName: examName,
       subjectId: subjectId,
-      subjectName: subjectName,
       topics: topics,
       images: _loadImage(index,image),
       isLiked: isLiked,
@@ -108,9 +107,7 @@ class QuestionState{
       userName: userName,
       content: content,
       examId: examId,
-      examName: examName,
       subjectId: subjectId,
-      subjectName: subjectName,
       topics: topics,
       images: images,
       isLiked: true,
@@ -126,9 +123,7 @@ class QuestionState{
       userName: userName,
       content: content,
       examId: examId,
-      examName: examName,
       subjectId: subjectId,
-      subjectName: subjectName,
       topics: topics,
       images: images,
       isLiked: false,

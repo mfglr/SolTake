@@ -15,17 +15,9 @@ class CreateQuestionSucessAction extends redux.Action{
 }
 
 @immutable
-class LoadQuestionsByUserIdAction extends redux.Action{
-  final int userId;
-  const LoadQuestionsByUserIdAction({required this.userId});
-}
-
-@immutable
-class LoadQuestionsByUserIdSuccessAction extends redux.Action{
-  final List<QuestionState> payload;
-  const LoadQuestionsByUserIdSuccessAction({
-    required this.payload,
-  });
+class LoadQuestionsSuccessAction extends redux.Action{
+  final Iterable<QuestionState> questions;
+  const LoadQuestionsSuccessAction({required this.questions});
 }
 
 @immutable
@@ -48,15 +40,20 @@ class LikeQuestionAction extends redux.Action{
   final int questionId;
   const LikeQuestionAction({required this.questionId});
 }
+@immutable
+class LikeQuestionSuccessAction extends redux.Action{
+  final int questionId;
+  const LikeQuestionSuccessAction({required this.questionId});
+}
 
+@immutable
+class DislikeQuestionAction extends redux.Action{
+  final int questionId;
+  const DislikeQuestionAction({required this.questionId});
+}
 @immutable
 class DislikeQuestionSuccessAction extends redux.Action{
   final int questionId;
   const DislikeQuestionSuccessAction({required this.questionId});
 }
 
-@immutable
-class LikeQuestionSuccessAction extends redux.Action{
-  final int questionId;
-  const LikeQuestionSuccessAction({required this.questionId});
-}

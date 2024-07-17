@@ -18,6 +18,10 @@ import 'package:my_social_app/views/pages/create_question/select_exam_page.dart'
 import 'package:my_social_app/views/pages/create_question/select_subject_page.dart';
 import 'package:my_social_app/views/pages/create_question/select_topic_page.dart';
 import 'package:my_social_app/views/pages/create_question/take_picture_page.dart';
+import 'package:my_social_app/views/pages/question/display_exams_questions_page.dart';
+import 'package:my_social_app/views/pages/question/display_subject_questions_page.dart';
+import 'package:my_social_app/views/pages/question/display_topic_questions_page.dart';
+import 'package:my_social_app/views/pages/question/display_user_questions_page.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/register_view.dart';
 import 'package:my_social_app/views/pages/user/user_followeds_page.dart';
@@ -35,6 +39,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
+
   PlatformDispatcher.instance.onError = (error, stack) {
     if(error is BackendException){
       ToastCreator.displayError(error.message);
@@ -92,6 +97,11 @@ Future<void> main() async {
           selectExamRoute: (context) => const SelectExamPage(),
           selectSubjectRoute: (context) => const SelectSubjectPage(),
           selectTopicRoute: (context) => const SelectTopicPage(),
+
+          displaySubjectQuestionsRoute: (context) => const DisplaySubjectQuestionsPage(),
+          displayTopicQuestionsRoute: (context) => const DisplayTopicQuestionsPage(),
+          displayExamQuestionsRoute: (context) => const DisplayExamsQuestionsPage(),
+          displayUserQuestionsRoute: (context) => const DisplayUserQuestionsPage()
         },
       ),
     )

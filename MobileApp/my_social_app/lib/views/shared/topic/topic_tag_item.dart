@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
+
+class TopicTagItem extends StatelessWidget {
+  final TopicState topic;
+  const TopicTagItem({super.key,required this.topic});
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () => Navigator.of(context).pushNamed(displayTopicQuestionsRoute,arguments: topic),
+      child:  Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            topic.name,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w900
+            ),
+          )          
+        ],
+      ),
+    );
+  }
+}

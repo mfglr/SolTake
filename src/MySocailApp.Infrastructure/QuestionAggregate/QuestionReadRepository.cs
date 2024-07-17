@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Domain.QuestionAggregate;
 using MySocailApp.Infrastructure.DbContexts;
+using MySocailApp.Infrastructure.Extetions;
 
 namespace MySocailApp.Infrastructure.QuestionAggregate
 {
@@ -8,33 +9,19 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
     {
         private readonly AppDbContext _context = context;
 
+        
         public async Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
-                .Include(x => x.Exam)
-                .Include(x => x.Subject)
-                .Include(x => x.Images)
-                .Include(x => x.Topics)
-                .ThenInclude(x => x.Topic)
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Likes)
+                .IncludeForQuestion()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<List<Question>> GetByUserIdAsync(int userId, int? lastId, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
-                .Include(x => x.Exam)
-                .Include(x => x.Subject)
-                .Include(x => x.Images)
-                .Include(x => x.Topics)
-                .ThenInclude(x => x.Topic)
-                .Include(x => x.AppUser)
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Likes)
+                .IncludeForQuestion()
                 .Where(x => x.AppUserId == userId && (lastId == null || x.Id < lastId))
                 .OrderByDescending(x => x.Id)
                 .Take(20)
@@ -44,18 +31,30 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
             => await _context
                 .Questions
                 .AsNoTracking()
-                .Include(x => x.Exam)
-                .Include(x => x.Subject)
-                .Include(x => x.Images)
-                .Include(x => x.Topics)
-                .ThenInclude(x => x.Topic)
-                .Include(x => x.AppUser)
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Likes)
+                .IncludeForQuestion()
                 .Where(x => x.Topics.Any(x => x.TopicId == topicId) && (lastId == null || x.Id < lastId))
                 .OrderByDescending(x => x.Id)
                 .Take(20)
                 .ToListAsync(cancellationToken);
+
+        public async Task<List<Question>> GetBySubjectIdAsync(int subjectId, int? lastId, CancellationToken cancellationToken)
+            => await _context
+                .Questions
+                .AsNoTracking()
+                .IncludeForQuestion()
+                .Where(x => x.SubjectId == subjectId && (lastId == null || x.Id < lastId))
+                .OrderByDescending(x => x.Id)
+                .Take(20)
+                .ToListAsync(cancellationToken);
+
+        public async Task<List<Question>> GetByExamIdAsync(int examId, int? lastId, CancellationToken cancellationToken)
+           => await _context
+               .Questions
+               .AsNoTracking()
+               .IncludeForQuestion()
+               .Where(x => x.ExamId == examId && (lastId == null || x.Id < lastId))
+               .OrderByDescending(x => x.Id)
+               .Take(20)
+               .ToListAsync(cancellationToken);
     }
 }

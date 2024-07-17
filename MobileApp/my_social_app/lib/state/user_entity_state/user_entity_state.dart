@@ -44,7 +44,7 @@ class UserEntityState{
     return UserEntityState(users: clone);
   }
 
-  UserEntityState loadQuestions(int userId, List<int> questions){
+  UserEntityState loadQuestions(int userId, Iterable<int> questions){
     final Map<int,UserState> clone = {};
     clone.addAll(users);
     clone[userId] = clone[userId]!.loadQuestions(questions);

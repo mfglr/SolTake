@@ -10,9 +10,6 @@ namespace MySocailApp.Application.Queries.ExamAggregate.GetAll
         private readonly IExamReadRepository _repository = repository;
 
         public async Task<List<ExamResponseDto>> Handle(GetAllExamsDto request, CancellationToken cancellationToken)
-        {
-            var exams = await _repository.GetAllAsync(cancellationToken);
-            return _mapper.Map<List<ExamResponseDto>>(exams);
-        }
+            => _mapper.Map<List<ExamResponseDto>>(await _repository.GetAllAsync(cancellationToken));
     }
 }

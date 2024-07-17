@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
+import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 part 'subject.g.dart';
 
 @immutable
@@ -15,5 +16,11 @@ class Subject{
   factory Subject.fromJson(Map<String, dynamic> json) => _$SubjectFromJson(json);
   Map<String, dynamic> toJson() => _$SubjectToJson(this);
 
-  SubjectState toSubjectState() => SubjectState(id: id, examId: examId, name: name);
+  SubjectState toSubjectState()
+    => SubjectState(
+        id: id,
+        examId: examId,
+        name: name,
+        questions: const Ids(ids: [],isLast: false,lastId: null) 
+      );
 }

@@ -7,7 +7,7 @@ import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
-import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
+import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 
@@ -27,7 +27,7 @@ class SelectTopicPage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 25),
               child: StoreConnector<AppState,List<TopicState>>(
-                onInit: (store) => store.dispatch(const LoadTopicsAction()),
+                onInit: (store) => store.dispatch(const LoadTopicsBySubjectIdAction()),
                 converter: (store) => store.state.topics,
                 builder:(context,topics) => DropdownSearch<String>.multiSelection(
                   items: topics.map((e) => e.name).toList(),

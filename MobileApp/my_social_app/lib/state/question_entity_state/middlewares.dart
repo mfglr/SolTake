@@ -20,30 +20,6 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void loadQuestionsByUserIdMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadQuestionsByUserIdAction){
-    final user = store.state.userEntityState.users[action.userId]!;
-    if(!user.questions.isLast){
-      QuestionService()
-        .getByUserId(action.userId,lasId: user.questions.lastId)
-        .then((questions){
-          store.dispatch(
-            LoadQuestionsByUserIdSuccessAction(
-              payload: questions.map((e) => e.toQuestionState()).toList()
-            )
-          );
-          store.dispatch(
-            LoadUserQuestionsAction(
-              userId: action.userId,
-              payload: questions.map((e) => e.id).toList()
-            )
-          );
-        });
-    }
-  }
-  next(action);
-}
-
 void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadQuestionImageAction){
     final questionImage = store.state.questionEntityState.questions[action.questionId]!.images[action.index];
@@ -66,16 +42,17 @@ void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher nex
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){
-    if(store.state.questionEntityState.questions[action.questionId]!.isLiked){
-      QuestionService()
-        .dislike(action.questionId)
-        .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId)));
-    }
-    else{
       QuestionService()
         .like(action.questionId)
         .then((_) => store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId)));
-    }
+  }
+  next(action);
+}
+void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is DislikeQuestionAction){
+    QuestionService()
+      .dislike(action.questionId)
+      .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId)));
   }
   next(action);
 }

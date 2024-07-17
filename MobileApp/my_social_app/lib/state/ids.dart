@@ -5,7 +5,7 @@ import 'package:my_social_app/constants/records_per_page.dart';
 class Ids{
   final bool isLast;
   final int? lastId;
-  final List<int> ids;
+  final Iterable<int> ids;
 
   const Ids({
     required this.ids,
@@ -13,16 +13,16 @@ class Ids{
     required this.lastId
   });
 
-  Ids init(List<int> idsAdded) => Ids(
+  Ids init(Iterable<int> idsAdded) => Ids(
     ids: idsAdded,
     isLast: idsAdded.length < recordsPerPage,
-    lastId: idsAdded.isNotEmpty ? idsAdded[idsAdded.length - 1] : lastId
+    lastId: idsAdded.isNotEmpty ? idsAdded.last : lastId
   );
 
-  Ids nextPage(List<int> idsAdded) => Ids(
+  Ids nextPage(Iterable<int> idsAdded) => Ids(
     ids: ids.followedBy(idsAdded).toList(),
     isLast: idsAdded.length < recordsPerPage,
-    lastId: idsAdded.isNotEmpty ? idsAdded[idsAdded.length - 1] : lastId
+    lastId: idsAdded.isNotEmpty ? idsAdded.last : lastId
   );
 
   Ids add(int id) => Ids(

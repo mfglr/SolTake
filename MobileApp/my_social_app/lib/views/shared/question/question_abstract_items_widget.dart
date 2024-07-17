@@ -12,7 +12,7 @@ class QuestionAbstractItemsWidget extends StatelessWidget {
       crossAxisCount: 3,
       children: List.generate(
         questions.length,
-        (index) => QuestionAbstractItemWidget(state: questions[index])
+        (index) => QuestionAbstractItemWidget(question: questions[index])
       ),
     );
   }

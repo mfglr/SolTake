@@ -10,9 +10,9 @@ class LoadUserAction extends redux.Action{
   const LoadUserAction({required this.userId});
 }
 @immutable
-class UserSuccessfullyLoadedAction extends redux.Action{
-  final UserState payload;
-  const UserSuccessfullyLoadedAction({required this.payload});
+class LoadUserSuccessAction extends redux.Action{
+  final UserState user;
+  const LoadUserSuccessAction({required this.user});
 }
 
 @immutable
@@ -55,12 +55,6 @@ class FollowedsSuccessfullyLoadedAction extends redux.Action{
   const FollowedsSuccessfullyLoadedAction({required this.userId, required this.payload});
 }
 
-@immutable
-class LoadUserQuestionsAction extends redux.Action{
-  final int userId;
-  final List<int> payload;
-  const LoadUserQuestionsAction({required this.userId,required this.payload});
-}
 
 @immutable
 class LoadUserImageAction extends redux.Action{
@@ -104,4 +98,17 @@ class AddQuestionAction extends redux.Action{
   final int currentUserId;
   final int questionId;
   const AddQuestionAction({required this.currentUserId,required this.questionId});
+}
+
+
+@immutable
+class NextPageOfUserQuestionsAction extends redux.Action{
+  final int userId;
+  const NextPageOfUserQuestionsAction({required this.userId});
+}
+@immutable
+class NextPageOfUserQuestionsSuccessAction extends redux.Action{
+  final int userId;
+  final Iterable<int> payload;
+  const NextPageOfUserQuestionsSuccessAction({required this.userId,required this.payload});
 }

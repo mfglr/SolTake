@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
@@ -22,7 +21,7 @@ class UserPage extends StatelessWidget {
     return StoreConnector<AppState, UserState?>(
       onInit: (store) {
         store.dispatch(LoadUserAction(userId: id));
-        store.dispatch(LoadQuestionsByUserIdAction(userId: id));
+        store.dispatch(NextPageOfUserQuestionsAction(userId: id));
       },
       converter: (store) => store.state.userEntityState.users[id],
       builder: (context, userState){

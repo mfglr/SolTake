@@ -26,9 +26,9 @@ AppState appReducer(AppState oldState,action) => AppState(
   userEntityState: userEntityStateReducers(oldState.userEntityState, action),
   searchState: searchStateReducers(oldState.searchState,action),
   createQuestionState: createQuestionReducers(oldState.createQuestionState,action),
-  examEntityState: loadExamsReducer(oldState.examEntityState,action),
-  subjectEntityState: loadSubjectsReducer(oldState.subjectEntityState, action),
-  topicEntityState: loadTopicsReducer(oldState.topicEntityState, action),
+  examEntityState: examEntityStateReducers(oldState.examEntityState,action),
+  subjectEntityState: subjectEntityStateReducers(oldState.subjectEntityState, action),
+  topicEntityState: topicEntityStateReducers(oldState.topicEntityState, action),
   questionEntityState: questionsReducer(oldState.questionEntityState,action)
 );
 

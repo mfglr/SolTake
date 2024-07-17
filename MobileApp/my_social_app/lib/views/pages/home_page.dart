@@ -3,12 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/account_state/actions.dart';
-import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
-import 'package:my_social_app/views/shared/question/question_items_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -66,12 +64,6 @@ class _HomeViewState extends State<HomePage> {
             },
             shape: const CircleBorder(),
             child: const Icon(Icons.question_mark),
-          ),
-          body: StoreConnector<AppState,List<QuestionState>>(
-            converter: (store) => store.state.questionsOfCurrentUser,
-            builder: (context,questions) => QuestionItemsWidget(
-              questions: questions,
-            ),
           ),
         );
       } 

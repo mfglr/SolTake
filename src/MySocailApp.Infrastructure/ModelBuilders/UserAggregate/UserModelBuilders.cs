@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
@@ -13,7 +12,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
             builder.Property(e => e.Id).ValueGeneratedNever();
 
             builder.OwnsOne(x => x.Image);
-
+            
             builder
                 .HasMany(x => x.Followers)
                 .WithOne(x => x.Followed)

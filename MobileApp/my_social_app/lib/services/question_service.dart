@@ -32,15 +32,6 @@ class QuestionService{
     return Question.fromJson(json);
   }
 
-  Future<List<Question>> getByUserId(int userId,{int? lasId}) async{
-    final list = (await _appClient.get("$questionController/$getQuestionsByUserIdEndpoint/$userId")) as List;
-    return list.map((e) => Question.fromJson(e)).toList();
-  }
-
-  Future<Uint8List> getQuestionImage(int questionId,String blobName) async {
-    return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$blobName");
-  }
-
   Future<void> like(int questionId) async{
     await _appClient.put(
       "$questionController/$likeQuestionEndpoint",
@@ -49,7 +40,6 @@ class QuestionService{
       }
     );
   }
-
   Future<void> dislike(int questionId) async{
     await _appClient.put(
       "$questionController/$dislikeQuestionEndpoint",
@@ -57,5 +47,27 @@ class QuestionService{
         "QuestionId": questionId
       }
     );
+  }
+
+
+  Future<Uint8List> getQuestionImage(int questionId,String blobName) async {
+    return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$blobName");
+  }
+
+  Future<List<Question>> getByUserId(int userId,{int? lasId}) async {
+    final list = (await _appClient.get("$questionController/$getQuestionsByUserIdEndpoint/$userId")) as List;
+    return list.map((e) => Question.fromJson(e)).toList();
+  }
+  Future<List<Question>> getByTopicId(int topicId,{int? lastId}) async {
+    final list = (await _appClient.get("$questionController/$getQuestionsByTopicIdEndpoint/$topicId")) as List;
+    return list.map((e) => Question.fromJson(e)).toList();
+  }
+  Future<List<Question>> getBySubjectId(int subjectId,{int? lastId}) async {
+    final list = (await _appClient.get("$questionController/$getQuestionsBySubjectIdEndpoint/$subjectId")) as List;
+    return list.map((e) => Question.fromJson(e)).toList();
+  }
+  Future<List<Question>> getByExamId(int examId,{int? lastId}) async {
+    final list = (await _appClient.get("$questionController/$getQuestionsByExamIdEndpoint/$examId")) as List;
+    return list.map((e) => Question.fromJson(e)).toList();
   }
 }

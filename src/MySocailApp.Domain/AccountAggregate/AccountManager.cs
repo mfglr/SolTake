@@ -30,13 +30,13 @@ namespace MySocailApp.Domain.AccountAggregate
 
             //add role to account
             await _userManager.AddToRoleAsync(account, Roles.USER);
-            
+
             await transaction.CommitAsync(cancellationToken);
-            
+
             //update token
             await _tokenService.UpdateTokenAsync(account);
         }
-        public async Task UpdateEmailAsync(Account account,string email)
+        public async Task UpdateEmailAsync(Account account, string email)
         {
             //update email of account
             account.UpdateEmail(email);
@@ -47,7 +47,7 @@ namespace MySocailApp.Domain.AccountAggregate
             //update token
             await _tokenService.UpdateTokenAsync(account);
         }
-        public async Task UpdateUserNameAsync(Account account,string userName)
+        public async Task UpdateUserNameAsync(Account account, string userName)
         {
             //update user name of account
             account.UpdateUserName(userName);
@@ -57,7 +57,7 @@ namespace MySocailApp.Domain.AccountAggregate
             //update token
             await _tokenService.UpdateTokenAsync(account);
         }
-        public async Task UpdatePasswordAsync(Account account,string currentPasword,string newPassword)
+        public async Task UpdatePasswordAsync(Account account, string currentPasword, string newPassword)
         {
             //chenck password
             if (!await _userManager.CheckPasswordAsync(account, currentPasword))

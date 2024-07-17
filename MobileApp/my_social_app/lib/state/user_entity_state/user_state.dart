@@ -140,7 +140,7 @@ class UserState{
   UserState loadFolloweds(List<int> newFolloweds) => _optional(newFolloweds: followeds.nextPage(newFolloweds));
   UserState loadRequesters(List<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
   UserState loadRequesteds(List<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
-  UserState loadQuestions(List<int> newQuestions) => _optional(newQuestions: questions.nextPage(newQuestions));
+  UserState loadQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.nextPage(newQuestions));
   
   //make follow request start
   UserState addRequester(int currentUserId){

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
+import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
 part 'topic.g.dart';
 
 @immutable
@@ -15,5 +16,11 @@ class Topic{
   factory Topic.fromJson(Map<String, dynamic> json) => _$TopicFromJson(json);
   Map<String, dynamic> toJson() => _$TopicToJson(this);
 
-  TopicState toTopicState() => TopicState(id: id, subjectId: subjectId, name: name);
+  TopicState toTopicState()
+    => TopicState(
+      id: id,
+      subjectId: subjectId,
+      name: name,
+      questions: const Ids(ids: [],isLast: false,lastId: null)
+    );
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/state/subject_entity_state/actions.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/pages/create_question/widgets/subject_item_widget.dart';
@@ -12,14 +11,12 @@ class SelectSubjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    store.dispatch(const LoadSubjectsAction());
-
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
       ),
       body:StoreConnector<AppState,AppState>(
+        onInit: (store) => store.dispatch(const LoadSubjectsByExamIdAction()),
         converter: (store) => store.state,
         builder:(context,state){
           final subjects = state.subjects;

@@ -1,6 +1,11 @@
+import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
+import 'package:my_social_app/state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/subject_entity_state/actions.dart';
+import 'package:my_social_app/state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:redux/redux.dart';
@@ -10,7 +15,7 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
     if(store.state.userEntityState.users[action.userId] == null){
       UserService()
         .getById(action.userId)
-        .then((user) => store.dispatch(UserSuccessfullyLoadedAction(payload: UserState.init(user))));
+        .then((user) => store.dispatch(LoadUserSuccessAction(user: UserState.init(user))));
     }
   }
   next(action);
@@ -111,6 +116,51 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
     UserService()
       .cancelFollowRequest(action.userId)
       .then((_) => store.dispatch(FollowRequestSuccessfullyCancelledAction(currentUserId: currentUserId, userId: action.userId)));
+  }
+  next(action);
+}
+
+void loadQuestionsByUserIdMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageOfUserQuestionsAction){
+    final user = store.state.userEntityState.users[action.userId]!;
+    if(!user.questions.isLast){
+      QuestionService()
+        .getByUserId(action.userId,lasId: user.questions.lastId)
+        .then((questions){
+          store.dispatch(
+            LoadQuestionsSuccessAction(
+              questions: questions.map((e) => e.toQuestionState())
+            )
+          );
+
+          store.dispatch(
+            NextPageOfUserQuestionsSuccessAction(
+              userId: action.userId,
+              payload: questions.map((e) => e.id)
+            )
+          );
+
+          store.dispatch(
+            LoadExamSuccessAction(
+              exams: questions.map((e) => e.exam.toExamState()) 
+            )
+          );
+
+          store.dispatch(
+            LoadSubjectsSuccessAction(
+              subjects: questions.map((e) => e.subject.toSubjectState())
+            )
+          );
+
+          for(final q in questions){
+            store.dispatch(
+              LoadTopicsSuccessAction(
+                topics: q.topics.map((e) => e.toTopicState())
+              )
+            );
+          }
+        });
+    }
   }
   next(action);
 }

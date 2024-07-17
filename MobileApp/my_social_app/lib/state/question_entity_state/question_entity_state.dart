@@ -7,7 +7,7 @@ class QuestionEntityState{
   final Map<int,QuestionState> questions;
   const QuestionEntityState({required this.questions});
   
-  QuestionEntityState loadQuestions(List<QuestionState> questions){
+  QuestionEntityState loadQuestions(Iterable<QuestionState> questions){
     final Map<int,QuestionState> clone = {};
     final uniqQuestions = questions.where((question) => this.questions[question.id] == null);
     clone.addAll(this.questions);
@@ -42,11 +42,20 @@ class QuestionEntityState{
     clone[questionId] = clone[questionId]!.like();
     return QuestionEntityState(questions: clone);
   }
-
   QuestionEntityState dislike(int questionId){
     final Map<int,QuestionState> clone = {};
     clone.addAll(questions);
     clone[questionId] = clone[questionId]!.dislike();
     return QuestionEntityState(questions: clone);
   }
+
+
+  Iterable<QuestionState> getByTopicId(int topicId)
+    => questions.values.where((question) => question.topics.any((id) => id == topicId));
+  
+  Iterable<QuestionState> getBySubjectId(int subjectId)
+    => questions.values.where((question) => question.subjectId == subjectId);
+  
+  Iterable<QuestionState> getByUserId(int userId)
+    => questions.values.where((question) => question.appUserId == userId);
 }
