@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySocailApp.Domain.AppUserAggregate;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
+namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 {
     public class UserModelBuilder : IEntityTypeConfiguration<AppUser>
     {
@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
             builder.Property(e => e.Id).ValueGeneratedNever();
 
             builder.OwnsOne(x => x.Image);
-            
+
             builder
                 .HasMany(x => x.Followers)
                 .WithOne(x => x.Followed)
@@ -56,6 +56,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
 
             builder
                 .HasMany(x => x.QuestionsLiked)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.Solutions)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);

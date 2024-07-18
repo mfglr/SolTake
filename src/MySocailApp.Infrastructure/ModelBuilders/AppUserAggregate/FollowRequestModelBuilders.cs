@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySocailApp.Domain.AppUserAggregate;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
+namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 {
     public class FollowRequestModelBuilders : IEntityTypeConfiguration<FollowRequest>
     {
         public void Configure(EntityTypeBuilder<FollowRequest> builder)
         {
-            builder.HasKey(x => new {x.RequesterId,x.RequestedId});
+            builder.HasKey(x => new { x.RequesterId, x.RequestedId });
         }
     }
 }

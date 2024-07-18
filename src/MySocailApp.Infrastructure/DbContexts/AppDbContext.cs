@@ -6,6 +6,7 @@ using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate;
 using MySocailApp.Domain.TopicAggregate;
 using System.Reflection;
@@ -18,6 +19,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Question> Questions { get; private set; }
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }
+        public DbSet<Solution> Solutions { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

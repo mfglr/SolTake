@@ -9,7 +9,9 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
     {
         private readonly AppDbContext _context = context;
 
-        
+        public async Task<Question?> GetAsync(int questionId, CancellationToken cancellationToken)
+            => await _context.Questions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
+
         public async Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
             => await _context
                 .Questions

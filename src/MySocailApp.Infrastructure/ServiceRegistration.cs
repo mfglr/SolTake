@@ -3,10 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.Services;
+using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.SolutionAggregate.DomainServices;
+using MySocailApp.Domain.SolutionAggregate.Repositories;
 using MySocailApp.Domain.SubjectAggregate;
 using MySocailApp.Domain.TopicAggregate;
 using MySocailApp.Infrastructure.AccountAggregate;
@@ -15,7 +18,9 @@ using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.Services;
+using MySocailApp.Infrastructure.Services.BlobService;
 using MySocailApp.Infrastructure.Services.Email;
+using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
 using System.Net;
@@ -33,6 +38,7 @@ namespace MySocailApp.Infrastructure
                 .AddAccountAggregate()
                 .AddAppUserAggregate()
                 .AddQuestionAggregate()
+                .AddSolutionAggregate()
                 .AddExamAggregate()
                 .AddSubjectAggregate()
                 .AddTopicAggregate();
@@ -42,7 +48,8 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddScoped<IAccountAccessor, AccountAccessor>()
-                .AddEmailService();
+                .AddEmailService()
+                .AddBlobService();
         }
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
@@ -64,6 +71,13 @@ namespace MySocailApp.Infrastructure
                 )
                 .AddScoped<MailMessageFactory>()
                 .AddScoped<IEmailService, EmailService>();
+        }
+        private static IServiceCollection AddBlobService(this IServiceCollection services)
+        {
+            return services
+                .AddSingleton<IBlobNameGenerator,BlobNameGenerator>()
+                .AddSingleton<IDimentionCalculator, DimentionCalculator>()
+                .AddScoped<IBlobService,BlobService>();
         }
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {
@@ -99,10 +113,16 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISubjectRepository, SubjectRepository>()
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
-                .AddScoped<IQuestionImageBlobNameGenerator, QuestionImageBlobNameGenerator>()
+                .AddScoped<IQuestionImageBlobNameGenerator, IQuestionBlobNameGenerator>()
                 .AddScoped<IQuestionImageBlobService, QuestionImageBlobService>()
-                .AddSingleton<IDimentionService,DimentionService>()
+                .AddSingleton<IQuestionImageDimentionCalculator,QuestionImageDimentionCalculator>()
                 .AddScoped<QuestionManager>();
+        }
+        private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
+                .AddScoped<SolutionCreatorDomainService>();
         }
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
         {

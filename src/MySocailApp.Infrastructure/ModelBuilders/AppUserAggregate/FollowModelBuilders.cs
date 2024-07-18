@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySocailApp.Domain.AppUserAggregate;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
+namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 {
     public class FollowModelBuilders : IEntityTypeConfiguration<Follow>
     {

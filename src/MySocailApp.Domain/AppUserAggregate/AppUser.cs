@@ -3,6 +3,7 @@ using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.AppUserAggregate
 {
@@ -216,6 +217,7 @@ namespace MySocailApp.Domain.AppUserAggregate
         public Account Account { get; }
         public IReadOnlyCollection<Question> Questions { get; }
         public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } 
+        public IReadOnlyCollection<Solution> Solutions { get; }
 
         //IRemovable
         public bool IsRemoved { get; private set; }

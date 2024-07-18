@@ -1,5 +1,6 @@
 ﻿using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
+using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate;
 
 namespace MySocailApp.Domain.QuestionAggregate
@@ -17,7 +18,7 @@ namespace MySocailApp.Domain.QuestionAggregate
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
         public bool HasBlobName(string blobName) => _images.Any(x => x.BlobName == blobName);
-        internal void AddImage(string blobName,Dimention dimention) => _images.Add(QuestionImage.Create(blobName, dimention));
+        internal void AddImage(string blobName,QuestionImageDimention dimention) => _images.Add(QuestionImage.Create(blobName, dimention));
 
         private readonly List<QuestionTopic> _topics = [];
         public IReadOnlyCollection<QuestionTopic> Topics => _topics;
@@ -54,5 +55,6 @@ namespace MySocailApp.Domain.QuestionAggregate
         public Exam Exam { get; }
         public Subject Subject { get; }
         public AppUser AppUser { get; }
+        public IReadOnlyList<Solution> Solutions { get; }
     }
 }

@@ -1,5 +1,6 @@
-﻿using MySocailApp.Core.Exceptions;
-using MySocailApp.Application.Extentions;
+﻿using MySocailApp.Application.Extentions;
+using MySocailApp.Application.Services.BlobService;
+using MySocailApp.Core.Exceptions;
 
 
 namespace MySocailApp.Api.Middlewares
@@ -8,7 +9,7 @@ namespace MySocailApp.Api.Middlewares
     {
         private readonly RequestDelegate _next = next;
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context,IBlobService blobService)
         {
             try
             {
@@ -17,10 +18,12 @@ namespace MySocailApp.Api.Middlewares
             catch (AppException ex)
             {
                 await context.WriteAppExceptionAsync(ex);
+                blobService.Rollback();
             }
             catch (Exception ex)
             {
                 await context.WriteExceptionAsync(new ServerSideException(ex.InnerException?.Message ?? ex.Message));
+                blobService.Rollback();
             }
         }
     }
