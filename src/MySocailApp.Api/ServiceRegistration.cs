@@ -34,8 +34,8 @@ namespace MySocailApp.Api
         public static IServiceCollection AddFilters(this IServiceCollection services)
         {
             return services
-                .AddScoped<SetAccountFilterAttribute>()
-                .AddScoped<EmailConfirmedFilterAttribute>();
+                .AddScoped<CheckAccountFilterAttribute>()
+                .AddScoped<CheckEmailConfirmationFilterAttribute>();
         }
 
         public static IServiceCollection AddJWT(this IServiceCollection services)

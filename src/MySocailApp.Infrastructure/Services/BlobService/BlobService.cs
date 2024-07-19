@@ -15,19 +15,21 @@ namespace MySocailApp.Infrastructure.Services.BlobService
         public async Task<Image> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
             string blobName = _generator.Generate();
-            var stream = file.OpenReadStream();
+            using var stream = file.OpenReadStream();
             Dimention dimention = _dimentionCalculator.Calculate(stream);
+            stream.Position = 0;
 
             var path = GetPath(containerName, blobName);
             using var fileStream = File.Create(path);
             await stream.CopyToAsync(fileStream, cancellationToken);
-          
+
             var image = new Image(containerName,blobName, dimention);
             _images.Add(image);
             return image;
         }
-        
-        public Stream Read(string containerName, string blobName) => File.OpenRead(GetPath(containerName, blobName));
+
+        public Stream Read(string containerName, string blobName)
+            => File.OpenRead(GetPath(containerName, blobName));
 
         public async Task<List<Image>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
         {

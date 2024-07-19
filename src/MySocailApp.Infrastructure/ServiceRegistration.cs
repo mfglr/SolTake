@@ -7,7 +7,8 @@ using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
-using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.QuestionAggregate.DomainServices;
+using MySocailApp.Domain.QuestionAggregate.Repositories;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Repositories;
 using MySocailApp.Domain.SubjectAggregate;
@@ -47,7 +48,6 @@ namespace MySocailApp.Infrastructure
         {
             return services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
-                .AddScoped<IAccountAccessor, AccountAccessor>()
                 .AddEmailService()
                 .AddBlobService();
         }
@@ -109,20 +109,21 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
         {
             return services
-                .AddScoped<IExamRepository, ExamRepository>()
-                .AddScoped<ISubjectRepository, SubjectRepository>()
+                .AddScoped<IExamRepositoryQA, ExamRepositoryQA>()
+                .AddScoped<ISubjectRepositoryQA, SubjectRepositoryQA>()
+                .AddScoped<ITopicRepositoryQA,TopicRepositoryQA>()
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
-                .AddScoped<IQuestionImageBlobNameGenerator, IQuestionBlobNameGenerator>()
-                .AddScoped<IQuestionImageBlobService, QuestionImageBlobService>()
-                .AddSingleton<IQuestionImageDimentionCalculator,QuestionImageDimentionCalculator>()
-                .AddScoped<QuestionManager>();
+                .AddScoped<QuestionCreatorDomainService>();
         }
         private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
         {
             return services
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
-                .AddScoped<SolutionCreatorDomainService>();
+                .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
+                .AddScoped<IQuestionRepositorySA, QuestionRepositorySA>()
+                .AddScoped<SolutionCreatorDomainService>()
+                .AddScoped<SolutionApproverDomainService>();
         }
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
         {

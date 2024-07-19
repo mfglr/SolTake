@@ -11,8 +11,8 @@ namespace MySocailApp.Api.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(SetAccountFilterAttribute))]
-    [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
+    [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+    [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
     public class ExamsController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;

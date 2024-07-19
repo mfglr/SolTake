@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Domain.ExamAggregate;
-using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.TopicAggregate;
 
 namespace MySocailApp.Domain.SubjectAggregate

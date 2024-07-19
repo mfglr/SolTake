@@ -2,7 +2,7 @@
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
-using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.AppUserAggregate

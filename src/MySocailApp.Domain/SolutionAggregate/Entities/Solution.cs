@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Domain.AppUserAggregate;
-using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
@@ -29,40 +29,44 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         }
 
         public SolutionState State { get; private set; }
-        public void ApproveSolution()
+        internal void Approve()
         {
+            if (State == SolutionState.Approved)
+                return;
+
             State = SolutionState.Approved;
-            UpdatedAt = DateTime.UtcNow;
-        }
-        public void RejectSolution()
-        {
-            State = SolutionState.Rejected;
             UpdatedAt = DateTime.UtcNow;
         }
 
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
-        public void MakeUpvote(int appUserId)
+        public void MakeUpvote(int voterId)
         {
-            var index = _votes.FindIndex(x => x.AppUserId == appUserId);
+            if (AppUserId == voterId)
+                throw new UnableToVoteForYourSolutions();
+
+            var index = _votes.FindIndex(x => x.AppUserId == voterId);
             if (index != -1)
             {
                 if (_votes[index].Type == SolutionVoteType.Upvote)
                     return;
-                _votes.RemoveAt(index);//Remove rejected vote
+                _votes.RemoveAt(index);//Remove downvote
             }
-            _votes.Add(SolutionUserVote.GenerateUpvote(Id, appUserId));
+            _votes.Add(SolutionUserVote.GenerateUpvote(Id, voterId));
         }
-        public void MakeDownvote(int appUserId)
+        public void MakeDownvote(int voterId)
         {
-            var index = _votes.FindIndex(x => x.AppUserId == appUserId);
+            if (AppUserId == voterId)
+                throw new UnableToVoteForYourSolutions();
+
+            var index = _votes.FindIndex(x => x.AppUserId == voterId);
             if (index != -1)
             {
                 if (_votes[index].Type == SolutionVoteType.Downvote)
                     return;
-                _votes.RemoveAt(index);//Remove approved vote
+                _votes.RemoveAt(index);//Remove upvote
             }
-            _votes.Add(SolutionUserVote.GenerateDownvote(Id, appUserId));
+            _votes.Add(SolutionUserVote.GenerateDownvote(Id, voterId));
         }
 
         //Readonluy navigator properties

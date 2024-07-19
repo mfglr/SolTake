@@ -3,7 +3,6 @@
     public enum SolutionState
     {
         Approved,
-        Pending,
-        Rejected
+        Pending
     }
 }

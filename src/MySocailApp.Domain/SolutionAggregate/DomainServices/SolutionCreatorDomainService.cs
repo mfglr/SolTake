@@ -1,18 +1,24 @@
-﻿using MySocailApp.Domain.AccountAggregate;
-using MySocailApp.Domain.QuestionAggregate;
+﻿using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
+using MySocailApp.Domain.SolutionAggregate.Repositories;
 
 namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 {
-    public class SolutionCreatorDomainService
+    public class SolutionCreatorDomainService(IQuestionRepositorySA questionRepository)
     {
-        public void Create(Account account, Question question, Solution solution, string? content, IEnumerable<SolutionImage> images)
+        private readonly IQuestionRepositorySA _questionRepository = questionRepository;
+
+        public async Task CreateAsync(Solution solution,int userId,int questionId,string? content,IEnumerable<SolutionImage> images,CancellationToken cancellationToken)
         {
-            if (question.AppUserId == account.Id)
+            var question = 
+                await _questionRepository.GetByIdAsync(questionId, cancellationToken) ??
+                throw new QuestionIsNotFoundException();
+
+            if (question.AppUserId == userId)
                 throw new UnableToSolveYourQuestionException();
 
-            solution.Create(question.Id, account.Id, content, images);
+            solution.Create(question.Id, userId, content, images);
         }
     }
 }

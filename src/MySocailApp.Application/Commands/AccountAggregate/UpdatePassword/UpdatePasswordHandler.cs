@@ -1,20 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.AccountAggregate;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdatePassword
 {
-    public class UpdatePasswordHandler(IAccountAccessor accountAccessor, IMapper mapper, AccountManager accountManager) : IRequestHandler<UpdatePasswordDto, AccountDto>
+    public class UpdatePasswordHandler(IAccessTokenReader tokenReader, IMapper mapper, AccountManager accountManager, UserManager<Account> userManager) : IRequestHandler<UpdatePasswordDto, AccountDto>
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IAccessTokenReader _tokenReader = tokenReader;
         private readonly IMapper _mapper = mapper;
+        private readonly UserManager<Account> _userManager = userManager;
         private readonly AccountManager _accountManager = accountManager;
 
         public async Task<AccountDto> Handle(UpdatePasswordDto request, CancellationToken cancellationToken)
         {
-            var account = _accountAccessor.Account;
-            await _accountManager.UpdatePasswordAsync(account,request.CurrentPassword,request.NewPassword);
+            var accountId = _tokenReader.GetRequiredAccountId();
+            var account = (await _userManager.FindByIdAsync(accountId.ToString()))!;
+            await _accountManager.UpdatePasswordAsync(account, request.CurrentPassword, request.NewPassword);
             return _mapper.Map<AccountDto>(account);
         }
     }

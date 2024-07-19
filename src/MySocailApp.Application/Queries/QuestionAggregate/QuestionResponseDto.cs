@@ -13,6 +13,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate
         public string Content { get; private set; }
         public bool IsLiked { get; private set; }
         public int NumberOfLikes { get; private set; }
+        public bool IsOwner { get; private set; }
         public ExamResponseDto Exam { get; private set; }
         public SubjectResponseDto Subject { get; private set; }
         public List<QuestionTopicResponseDto> Topics { get; private set; }

@@ -40,38 +40,38 @@ namespace MySocailApp.Api.Controllers
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task LogOut(CancellationToken cancellationToken)
             => await _mediator.Send(new LogOutDto(), cancellationToken);
 
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
-        [ServiceFilter(typeof(EmailConfirmedFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         public async Task<AccountDto> UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task<AccountDto> UpdateEmail(UpdateEmailDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task<AccountDto> UpdatePassword(UpdatePasswordDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task Deactive(CancellationToken cancellationToken)
             => await _mediator.Send(new DeactiveAccountDto(), cancellationToken);
 
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task<AccountDto> UpdateEmailConfirmationToken(CancellationToken cancellationToken)
             => await _mediator.Send(new UpdateEmailConfirmationTokenDto(), cancellationToken);
 
@@ -81,19 +81,19 @@ namespace MySocailApp.Api.Controllers
 
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task<AccountDto> ConfirmEmailByToken(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpGet]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task SendEmailConfirmationMail(CancellationToken cancellationToken)
             => await _mediator.Send(new SendEmailConfirmationMailDto(), cancellationToken);
 
         [HttpDelete]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(SetAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task Delete(CancellationToken cancellationToken)
             => await _mediator.Send(new DeleteAccountDto(), cancellationToken);
     }
