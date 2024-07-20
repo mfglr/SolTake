@@ -82,10 +82,13 @@ class UserEntityState{
 
 
   //Questions
-  UserEntityState addQuestion(int currentUserId,int questionId){
+  UserEntityState addQuestion(int userId,int questionId){
+    final userState = users[userId];
+    if(userState == null || userState.questions.ids.any((x) => x == questionId)) return this;
+
     final Map<int,UserState> clone = {};
     clone.addAll(users);
-    clone[currentUserId] = clone[currentUserId]!.addQuestion(questionId);
+    clone[userId] = userState.addQuestion(questionId);
     return UserEntityState(users: clone);
   }
 }

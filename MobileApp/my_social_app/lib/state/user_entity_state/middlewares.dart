@@ -3,6 +3,7 @@ import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
@@ -128,8 +129,14 @@ void loadQuestionsByUserIdMiddleware(Store<AppState> store,action,NextDispatcher
         .getByUserId(action.userId,lasId: user.questions.lastId)
         .then((questions){
           store.dispatch(
-            LoadQuestionsSuccessAction(
+            AddQuestionsAction(
               questions: questions.map((e) => e.toQuestionState())
+            )
+          );
+
+          store.dispatch(
+            AddQuestionImagesListAction(
+              list: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))
             )
           );
 
@@ -141,13 +148,13 @@ void loadQuestionsByUserIdMiddleware(Store<AppState> store,action,NextDispatcher
           );
 
           store.dispatch(
-            LoadExamSuccessAction(
+            AddExamsAction(
               exams: questions.map((e) => e.exam.toExamState()) 
             )
           );
 
           store.dispatch(
-            LoadSubjectsSuccessAction(
+            AddSubjectsAction(
               subjects: questions.map((e) => e.subject.toSubjectState())
             )
           );

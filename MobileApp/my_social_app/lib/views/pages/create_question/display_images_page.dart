@@ -51,7 +51,7 @@ class _DisplayImagesPageState extends State<DisplayImagesPage> {
           ),
         ],
       ),
-      body: StoreConnector<AppState,List<XFile>>(
+      body: StoreConnector<AppState,Iterable<XFile>>(
         converter: (store) => store.state.createQuestionState.images,
         builder: (context,images) => CarouselSliderWidget(images: images),
       ),

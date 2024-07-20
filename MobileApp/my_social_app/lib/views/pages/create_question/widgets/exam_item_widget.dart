@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/create_question_state/actions.dart';
+import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/store.dart';
 
 class ExamItemWidget extends StatelessWidget {
-  final String shortName;
-  final String fullName;
-  final int examId;
-  const ExamItemWidget({super.key,required this.shortName,required this.fullName,required this.examId});
+  final ExamState exam;
+  const ExamItemWidget({super.key,required this.exam});
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +16,16 @@ class ExamItemWidget extends StatelessWidget {
         children: [
           TextButton(
             onPressed: (){
-              store.dispatch(UpdateExamAction(examId: examId));
+              store.dispatch(UpdateExamAction(examId: exam.id));
               Navigator.of(context).pushNamed(selectSubjectRoute);
             },
             child: Column(
               children: [
                 Text(
-                  shortName,
+                  exam.shortName,
                   style: const TextStyle(fontSize: 32),
                 ),
-                Text(fullName)
+                Text(exam.fullName)
               ],
             )
           ),

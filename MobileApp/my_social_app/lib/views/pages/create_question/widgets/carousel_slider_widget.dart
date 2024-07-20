@@ -6,7 +6,7 @@ import 'package:my_social_app/state/create_question_state/actions.dart';
 import 'package:my_social_app/state/store.dart';
 
 class CarouselSliderWidget extends StatelessWidget {
-  final List<XFile> images;
+  final Iterable<XFile> images;
   const CarouselSliderWidget({super.key,required this.images});
 
   @override

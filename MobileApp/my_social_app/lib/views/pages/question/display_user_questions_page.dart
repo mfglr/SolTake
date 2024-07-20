@@ -25,9 +25,7 @@ class DisplayUserQuestionsPage extends StatelessWidget {
       body: StoreConnector<AppState,Iterable<QuestionState>>(
         onInit: (store) => store.dispatch(NextPageOfUserQuestionsAction(userId: user.id)),
         converter: (store) => store.state.questionEntityState.getByUserId(user.id),
-        builder: (context,questions) => QuestionItemsWidget(
-          questions: questions.toList(),
-        ),
+        builder: (context,questions) => QuestionItemsWidget(questions: questions),
       ),
     );
   }

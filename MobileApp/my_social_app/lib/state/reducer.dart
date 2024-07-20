@@ -3,6 +3,7 @@ import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/create_question_state/reducers.dart';
 import 'package:my_social_app/state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/question_entity_state/reducers.dart';
+import 'package:my_social_app/state/question_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/search_state/reducers.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/reducers.dart';
@@ -29,6 +30,7 @@ AppState appReducer(AppState oldState,action) => AppState(
   examEntityState: examEntityStateReducers(oldState.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(oldState.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(oldState.topicEntityState, action),
-  questionEntityState: questionsReducer(oldState.questionEntityState,action)
+  questionEntityState: questionsReducer(oldState.questionEntityState,action),
+  questionImageEntityState: questionImageEntityReducers(oldState.questionImageEntityState,action)
 );
 

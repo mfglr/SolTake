@@ -8,13 +8,17 @@ part of 'question_image.dart';
 
 QuestionImage _$QuestionImageFromJson(Map<String, dynamic> json) =>
     QuestionImage(
-      height: (json['height'] as num).toInt(),
-      width: (json['width'] as num).toInt(),
+      id: (json['id'] as num).toInt(),
+      questionId: (json['questionId'] as num).toInt(),
+      height: (json['height'] as num).toDouble(),
+      width: (json['width'] as num).toDouble(),
       blobName: json['blobName'] as String,
     );
 
 Map<String, dynamic> _$QuestionImageToJson(QuestionImage instance) =>
     <String, dynamic>{
+      'id': instance.id,
+      'questionId': instance.questionId,
       'height': instance.height,
       'width': instance.width,
       'blobName': instance.blobName,

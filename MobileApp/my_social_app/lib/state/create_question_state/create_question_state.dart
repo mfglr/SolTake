@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 @immutable
 class CreateQuestionState{
-  final List<XFile> images;
+  final Iterable<XFile> images;
   final int? examId;
   final int? subjectId;
-  final List<int> topicIds;
+  final Iterable<int> topicIds;
   final String? content;
 
   const CreateQuestionState({

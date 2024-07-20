@@ -20,9 +20,15 @@ class Ids{
   );
 
   Ids nextPage(Iterable<int> idsAdded) => Ids(
-    ids: ids.followedBy(idsAdded).toList(),
+    ids: ids.followedBy(idsAdded),
     isLast: idsAdded.length < recordsPerPage,
     lastId: idsAdded.isNotEmpty ? idsAdded.last : lastId
+  );
+
+  Ids lastPage(Iterable<int> idsAddded) => Ids(
+    ids: ids.followedBy(idsAddded),
+    isLast: true,
+    lastId: lastId
   );
 
   Ids add(int id) => Ids(

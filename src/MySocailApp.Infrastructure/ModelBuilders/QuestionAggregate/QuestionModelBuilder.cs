@@ -9,6 +9,11 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
         public void Configure(EntityTypeBuilder<Question> builder)
         {
             builder
+                .HasMany(x => x.Images)
+                .WithOne(x => x.Question)
+                .HasForeignKey(x => x.QuestionId);
+
+            builder
                 .HasMany(x => x.Topics)
                 .WithOne(x => x.Question)
                 .HasForeignKey(x => x.QuestionId);

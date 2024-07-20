@@ -1,28 +1,9 @@
 import 'package:my_social_app/services/question_service.dart';
-import 'package:my_social_app/services/subject_service.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
 import 'package:redux/redux.dart';
-
-void loadSubjectsMiddelware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadSubjectsByExamIdAction){
-    final examId = store.state.createQuestionState.examId!;
-    if(!store.state.subjectEntityState.isLoaded(examId)){
-      SubjectService()
-        .getByExamId(examId)
-        .then(
-          (subjects) => store.dispatch(
-            LoadSubjectsByExamIdSuccessAction(
-              examId: examId,
-              payload: subjects.map((e) => e.toSubjectState()))
-          )
-        );
-    }
-  }
-  next(action);
-}
 
 void loadQuestionsBySubjectId(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageOfSubjectQuestionsAction){
@@ -32,7 +13,7 @@ void loadQuestionsBySubjectId(Store<AppState> store,action,NextDispatcher next){
         .getBySubjectId(action.subjectId,lastId: subject.questions.lastId)
         .then((questions){
           store.dispatch(
-            LoadQuestionsSuccessAction(
+            AddQuestionsAction(
               questions: questions.map((e) => e.toQuestionState())
             )
           );

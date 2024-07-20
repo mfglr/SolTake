@@ -1,5 +1,6 @@
 import 'package:my_social_app/services/exam_service.dart';
 import 'package:my_social_app/services/question_service.dart';
+import 'package:my_social_app/services/subject_service.dart';
 import 'package:my_social_app/state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -7,15 +8,15 @@ import 'package:my_social_app/state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
-void loadExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadExamsAction){
+void loadAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadAllExamsAction){
     if(!store.state.examEntityState.isLoaded){
       ExamService()
         .getAll()
         .then(
           (exams) => store.dispatch(
-            LoadExamSuccessAction(
-              exams: exams.map((e) => e.toExamState()).toList()
+            LoadAllExamsSuccessAction(
+              exams: exams.map((e) => e.toExamState())
             )
           )
         );
@@ -32,7 +33,7 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
         .getByExamId(action.examId,lastId: examState.questions.lastId)
         .then((questions){
           store.dispatch(
-            LoadQuestionsSuccessAction(
+            AddQuestionsAction(
               questions: questions.map((e) => e.toQuestionState())
             )
           );
@@ -45,13 +46,13 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
           );
 
           store.dispatch(
-            LoadExamSuccessAction(
+            AddExamsAction(
               exams: questions.map((e) => e.exam.toExamState()) 
             )
           );
 
           store.dispatch(
-            LoadSubjectsSuccessAction(
+            AddSubjectsAction(
               subjects: questions.map((e) => e.subject.toSubjectState())
             )
           );
@@ -64,4 +65,31 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
         });
     }
   }
+  next(action);
+}
+
+void loadSubjectsOfSelectedExamReducer(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadSubjectsOfSelectedExamAction){
+    final examId = store.state.createQuestionState.examId!;
+    final examState = store.state.examEntityState.exams[examId]!;
+    if(!examState.subjects.isLast){
+      SubjectService()
+        .getByExamId(examId)
+        .then((subjects){
+          store.dispatch(
+            AddSubjectsAction(
+              subjects: subjects.map((e) => e.toSubjectState())
+            )
+          );
+
+          store.dispatch(
+            LoadSubjectsOfSelectedExamSuccessAction(
+              examId: examId,
+              ids: subjects.map((e) => e.id)
+            )
+          );
+        });
+    }
+  }
+  next(action);
 }

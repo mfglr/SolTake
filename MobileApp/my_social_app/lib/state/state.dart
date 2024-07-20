@@ -4,6 +4,7 @@ import 'package:my_social_app/state/create_question_state/create_question_state.
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/question_image_entity_state/question_image_entity_state.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
@@ -30,6 +31,7 @@ class AppState{
   final SubjectEntityState subjectEntityState;
   final TopicEntityState topicEntityState;
   final QuestionEntityState questionEntityState;
+  final QuestionImageEntityState questionImageEntityState;
 
   const AppState({
     required this.accessToken,
@@ -42,7 +44,8 @@ class AppState{
     required this.examEntityState,
     required this.subjectEntityState,
     required this.topicEntityState,
-    required this.questionEntityState
+    required this.questionEntityState,
+    required this.questionImageEntityState
   });
 
   UserState? get currentUser => userEntityState.users[accountState!.id];
@@ -58,8 +61,21 @@ class AppState{
   List<TopicState> get topics => topicEntityState.getTopics(createQuestionState.subjectId).toList();
 
   List<QuestionState> getUserQuestions(int userId){
-    final ids = userEntityState.users[userId]!.questions.ids;
+    final userState = userEntityState.users[userId];
+    if(userState == null) return [];
+
+    final ids = userState.questions.ids;
     return ids.map((e) => questionEntityState.questions[e]!).toList(); 
+  }
+
+  Iterable<SubjectState?> getSubjectsOfSelectedExam(){
+    final examId = createQuestionState.examId;
+    if(examId == null)return [];
+
+    final examState = examEntityState.exams[examId];
+    if(examState == null) return [];
+
+    return examState.subjects.ids.map((e) => subjectEntityState.subjects[e]);
   }
 
   Iterable<QuestionState> get questionsOfCurrentUser

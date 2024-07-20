@@ -95,7 +95,7 @@ class QuestionItemWidget extends StatelessWidget {
                 ...List.generate(
                   question.topics.length,
                   (index) => StoreConnector<AppState,TopicState?>(
-                    converter: (store) => store.state.topicEntityState.topics[question.topics[index]],
+                    converter: (store) => store.state.topicEntityState.topics[question.topics.elementAt(index)],
                     builder: (context,topic) => topic != null ? TopicTagItem(topic: topic) : const Text(""),
                   )
                 ),

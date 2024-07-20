@@ -7,8 +7,6 @@ import 'package:my_social_app/models/topic.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
-
-
 @immutable
 @JsonSerializable()
 class Question{
@@ -52,8 +50,8 @@ class Question{
     content: content,
     examId: exam.id,
     subjectId: subject.id,
-    topics: topics.map((e) => e.id).toList(),
-    images: images.map((e) => e.toQuestionImageState()).toList(),
+    topics: topics.map((e) => e.id),
+    images: images.map((e) => e.id),
     isLiked: isLiked,
     numberOfLikes: numberOfLikes
   );

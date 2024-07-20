@@ -8,7 +8,6 @@ import 'package:my_social_app/views/pages/create_question/widgets/exam_item_widg
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 
 class SelectExamPage extends StatelessWidget {
-  
   const SelectExamPage({super.key});
 
   @override
@@ -18,18 +17,17 @@ class SelectExamPage extends StatelessWidget {
         leading: const AppBackButtonWidget(),
       ),
       body: StoreConnector<AppState,ExamEntityState>(
-        onInit: (store) => store.dispatch(const LoadExamsAction()),
+        onInit: (store) => store.dispatch(const LoadAllExamsAction()),
         converter: (store) => store.state.examEntityState,
         builder:(context,state){
           if(state.isLoaded){
             return GridView.count(
               crossAxisCount: 2,
               children: List<Widget>.generate(
-                state.examValues.length,(index) => ExamItemWidget(
-                  shortName: state.examValues[index].shortName,
-                  fullName: state.examValues[index].fullName,
-                  examId: state.examValues[index].id,
-                ) 
+                state.examValues.length,
+                (index) => ExamItemWidget(
+                  exam: state.examValues.elementAt(index)
+                )
               )
             );
           }

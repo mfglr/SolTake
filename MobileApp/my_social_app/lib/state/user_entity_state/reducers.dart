@@ -7,7 +7,7 @@ UserEntityState loadUserReducer(UserEntityState oldState,Action action)
   => action is LoadUserSuccessAction ? oldState.loadUser(action.user) : oldState;
 
 UserEntityState loadUsersReducer(UserEntityState oldState,Action action)
-  => action is UsersSuccessfullyLoadedAction ? oldState.loadUsers(action.payload) : oldState;
+  => action is LoadUsersSuccessAction ? oldState.loadUsers(action.payload) : oldState;
 
 UserEntityState loadFollowersReducer(UserEntityState oldState,Action action)
   => action is FollowersSuccessfullyLoadedAction ? oldState.loadFollowers(action.userId,action.payload) : oldState;
@@ -32,11 +32,11 @@ UserEntityState cancelFollowRequestReducer(UserEntityState oldState, Action acti
 
 //Questions
 UserEntityState addQuestionReducer(UserEntityState oldState, Action action)
-  => action is AddQuestionAction ? oldState.addQuestion(action.currentUserId, action.questionId) : oldState;
+  => action is AddUserQuestionAction ? oldState.addQuestion(action.userId, action.questionId) : oldState;
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   TypedReducer<UserEntityState,LoadUserSuccessAction>(loadUserReducer).call,
-  TypedReducer<UserEntityState,UsersSuccessfullyLoadedAction>(loadUsersReducer).call,
+  TypedReducer<UserEntityState,LoadUsersSuccessAction>(loadUsersReducer).call,
   TypedReducer<UserEntityState,FollowersSuccessfullyLoadedAction>(loadFollowersReducer).call,
   TypedReducer<UserEntityState,FollowedsSuccessfullyLoadedAction>(loadFollowedsReducer).call,
   TypedReducer<UserEntityState,NextPageOfUserQuestionsSuccessAction>(loadQuestionsReducers).call,
@@ -44,5 +44,5 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,UserImageSuccessfullyloadedAction>(loadUserImageReducer).call,
   TypedReducer<UserEntityState,FollowRequestSuccessfullyIsMadeAction>(makeFollowRequestReducer).call,
   TypedReducer<UserEntityState,FollowRequestSuccessfullyCancelledAction>(cancelFollowRequestReducer).call,
-  TypedReducer<UserEntityState,AddQuestionAction>(addQuestionReducer).call,
+  TypedReducer<UserEntityState,AddUserQuestionAction>(addQuestionReducer).call,
 ]);

@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 
@@ -7,34 +6,22 @@ class QuestionEntityState{
   final Map<int,QuestionState> questions;
   const QuestionEntityState({required this.questions});
   
-  QuestionEntityState loadQuestions(Iterable<QuestionState> questions){
+  QuestionEntityState addQuestion(QuestionState value){
+    if(questions[value.id] != null) return this;
+
     final Map<int,QuestionState> clone = {};
-    final uniqQuestions = questions.where((question) => this.questions[question.id] == null);
-    clone.addAll(this.questions);
-    clone.addEntries(uniqQuestions.map((e) => MapEntry(e.id, e)));
+    clone.addEntries([MapEntry(value.id, value)]);
+    clone.addAll(questions);
+    return QuestionEntityState(questions: clone);
+  }
+  QuestionEntityState addQuestions(Iterable<QuestionState> values){
+    final Map<int,QuestionState> clone = {};
+    final notAvailables = values.where((question) => questions[question.id] == null);
+    clone.addAll(questions);
+    clone.addEntries(notAvailables.map((e) => MapEntry(e.id, e)));
     return QuestionEntityState(questions: clone);
   }
 
-  QuestionEntityState addQuestion(QuestionState question){
-    final Map<int,QuestionState> clone = {};
-    clone.addAll(questions);
-    clone.addEntries([MapEntry(question.id, question)]);
-    return QuestionEntityState(questions: clone);
-  }
-
-  QuestionEntityState startLoadingImage(int questionId,int index){
-    final Map<int,QuestionState> clone = {};
-    clone.addAll(questions);
-    clone[questionId] = clone[questionId]!.startLoadingImage(index);
-    return QuestionEntityState(questions: clone);
-  }
-
-  QuestionEntityState loadImage(int questionId,int index,Uint8List image){
-    final Map<int,QuestionState> clone = {};
-    clone.addAll(questions);
-    clone[questionId] = clone[questionId]!.loadImage(index,image);
-    return QuestionEntityState(questions: clone);
-  }
 
   QuestionEntityState like(int questionId){
     final Map<int,QuestionState> clone = {};
@@ -49,13 +36,10 @@ class QuestionEntityState{
     return QuestionEntityState(questions: clone);
   }
 
-
-  Iterable<QuestionState> getByTopicId(int topicId)
-    => questions.values.where((question) => question.topics.any((id) => id == topicId));
-  
-  Iterable<QuestionState> getBySubjectId(int subjectId)
-    => questions.values.where((question) => question.subjectId == subjectId);
-  
   Iterable<QuestionState> getByUserId(int userId)
     => questions.values.where((question) => question.appUserId == userId);
+  Iterable<QuestionState> getByTopicId(int topicId)
+    => questions.values.where((question) => question.topics.any((id) => id == topicId));
+  Iterable<QuestionState> getBySubjectId(int subjectId)
+    => questions.values.where((question) => question.subjectId == subjectId);
 }

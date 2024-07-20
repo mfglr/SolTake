@@ -3,21 +3,15 @@ import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 
 @immutable
-class LoadExamsAction extends redux.Action{
-  const LoadExamsAction();
+class LoadAllExamsAction extends redux.Action{
+  const LoadAllExamsAction();
 }
-
 @immutable
-class LoadExamSuccessAction extends redux.Action{
+class LoadAllExamsSuccessAction extends redux.Action{
   final Iterable<ExamState> exams;
-  const LoadExamSuccessAction({ required this.exams });
+  const LoadAllExamsSuccessAction({required this.exams});
 }
 
-@immutable
-class AddExamSuccessAction extends redux.Action{
-  final ExamState exam;
-  const AddExamSuccessAction({ required this.exam });
-}
 
 @immutable
 class NextPageOfExamQuestionsAction extends redux.Action{
@@ -29,4 +23,28 @@ class NextPageOfExamQuestionsSuccessAction extends redux.Action{
   final int examId;
   final Iterable<int> questionIds;
   const NextPageOfExamQuestionsSuccessAction({required this.examId, required this.questionIds});
+}
+
+
+
+@immutable
+class AddExamsAction extends redux.Action{
+  final Iterable<ExamState> exams;
+  const AddExamsAction({ required this.exams });
+}
+
+
+
+@immutable
+class LoadSubjectsOfSelectedExamAction extends redux.Action{
+  const LoadSubjectsOfSelectedExamAction();
+}
+@immutable
+class LoadSubjectsOfSelectedExamSuccessAction extends redux.Action{
+  final int examId;
+  final Iterable<int> ids;
+  const LoadSubjectsOfSelectedExamSuccessAction({
+    required this.examId,
+    required this.ids
+  });
 }

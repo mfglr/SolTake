@@ -10,8 +10,8 @@ void searchMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .search(action.key)
       .then((users){
-        store.dispatch(UsersSuccessfullyLoadedAction(payload: users.map((e) => UserState.init(e)).toList()));
-        store.dispatch(SuccessfullySearchedAction(key: action.key, payload: users.map((e) => e.id).toList()));
+        store.dispatch(LoadUsersSuccessAction(payload: users.map((e) => UserState.init(e)).toList()));
+        store.dispatch(SearchSuccessAction(key: action.key, payload: users.map((e) => e.id).toList()));
       });
   }
   next(action);
@@ -24,8 +24,8 @@ void nextPageSearchingMiddleware(Store<AppState> store,action,NextDispatcher nex
     UserService()
       .search(key,lastId: lastId)
       .then((users){
-        store.dispatch(UsersSuccessfullyLoadedAction(payload: users.map((e) => UserState.init(e)).toList()));
-        store.dispatch(NextPageSearchingSuccessAction(payload: users.map((e) => e.id).toList()));
+        store.dispatch(LoadUsersSuccessAction(payload: users.map((e) => UserState.init(e)).toList()));
+        store.dispatch(NextPageOfSearchingSuccessAction(payload: users.map((e) => e.id).toList()));
       });
   }
   next(action);

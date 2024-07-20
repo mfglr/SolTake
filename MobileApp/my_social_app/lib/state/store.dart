@@ -1,16 +1,18 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
+import 'package:my_social_app/state/create_question_state/middleware.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
+import 'package:my_social_app/state/question_image_entity_state/middlewares.dart';
+import 'package:my_social_app/state/question_image_entity_state/question_image_entity_state.dart';
 import 'package:my_social_app/state/reducer.dart';
 import 'package:my_social_app/state/search_state/middlewares.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
@@ -31,15 +33,19 @@ final store = Store(
     examEntityState: ExamEntityState(exams: {}, isLoaded: false),
     subjectEntityState: SubjectEntityState(status: {}, subjects: {}),
     topicEntityState: TopicEntityState(status: {}, topics: {}),
-    questionEntityState: QuestionEntityState(questions: {})
+    questionEntityState: QuestionEntityState(questions: {}),
+    questionImageEntityState: QuestionImageEntityState(images: {})
   ),
   middleware: [
+    //account start
     initAppMiddleware,
     confirmEmailMiddleware,
     loginByPasword,
     createAccountMiddleware,
     logOutMiddleware,
+    //account end
 
+    //user start
     loadUserMiddleware,
     loadFollowersIfNoUsersMiddleware,
     loadFollowersMiddleware,
@@ -48,20 +54,31 @@ final store = Store(
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
     loadQuestionsByUserIdMiddleware,
+    //user end
 
+    //search start
     searchMiddleware,
     nextPageSearchingMiddleware,
-
-    loadExamsMiddleware,
-
-    loadSubjectsMiddelware,
+    //search end
     
+    //Exam Start
+    loadAllExamsMiddleware,
+    loadSubjectsOfSelectedExamReducer,
+    //Exam end
+
+    //Topic start
     loadTopicsBySubjectIdMiddelware,
     nextPageOfTopicQuestionsMiddleware,
+    //Topic end
 
+    // Question start
     createQuestionMiddleware,
-    loadQuestionImageMiddleware,
     likeQuestionMiddleware,
-    dislikeQuestionMiddleware
+    dislikeQuestionMiddleware,
+    // Question end
+    
+    // Question image start
+    loadQuestionImageMiddleware,
+    // Question image end
   ]
 );

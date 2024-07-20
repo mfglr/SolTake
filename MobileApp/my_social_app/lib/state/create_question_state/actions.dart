@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 
 @immutable
+class CreateQuestionAction extends redux.Action{
+  const CreateQuestionAction();
+}
+
+@immutable
 class AddImageAction extends redux.Action{
   final XFile image;
   const AddImageAction({required this.image});

@@ -16,9 +16,9 @@ class LoadUserSuccessAction extends redux.Action{
 }
 
 @immutable
-class UsersSuccessfullyLoadedAction extends redux.Action{
+class LoadUsersSuccessAction extends redux.Action{
   final List<UserState> payload;
-  const UsersSuccessfullyLoadedAction({required this.payload});
+  const LoadUsersSuccessAction({required this.payload});
 }
 
 @immutable
@@ -93,13 +93,6 @@ class FollowRequestSuccessfullyCancelledAction extends redux.Action{
   const FollowRequestSuccessfullyCancelledAction({required this.currentUserId,required this.userId});
 }
 
-@immutable
-class AddQuestionAction extends redux.Action{
-  final int currentUserId;
-  final int questionId;
-  const AddQuestionAction({required this.currentUserId,required this.questionId});
-}
-
 
 @immutable
 class NextPageOfUserQuestionsAction extends redux.Action{
@@ -111,4 +104,13 @@ class NextPageOfUserQuestionsSuccessAction extends redux.Action{
   final int userId;
   final Iterable<int> payload;
   const NextPageOfUserQuestionsSuccessAction({required this.userId,required this.payload});
+}
+
+
+
+@immutable
+class AddUserQuestionAction extends redux.Action{
+  final int userId;
+  final int questionId;
+  const AddUserQuestionAction({required this.userId,required this.questionId});
 }

@@ -3,21 +3,9 @@ import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 
 @immutable
-class LoadSubjectsByExamIdAction extends redux.Action{
-  const LoadSubjectsByExamIdAction();
-}
-
-@immutable
-class LoadSubjectsByExamIdSuccessAction extends redux.Action{
-  final int examId;
-  final Iterable<SubjectState> payload;
-  const LoadSubjectsByExamIdSuccessAction({required this.examId,required this.payload});
-}
-
-@immutable
-class LoadSubjectsSuccessAction extends redux.Action{
+class AddSubjectsAction extends redux.Action{
   final Iterable<SubjectState> subjects;
-  const LoadSubjectsSuccessAction({required this.subjects});
+  const AddSubjectsAction({required this.subjects});
 }
 
 @immutable

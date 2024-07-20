@@ -25,6 +25,7 @@ class Exam{
         id: id,
         shortName: shortName,
         fullName: fullName,
+        subjects: const Ids(ids: [], isLast: false, lastId : null),
         questions: const Ids(ids: [], isLast: false, lastId: null)
       );
 }

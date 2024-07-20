@@ -33,7 +33,7 @@ void nextPageOfTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatc
         .then(
           (questions){
             store.dispatch(
-              LoadQuestionsSuccessAction(
+              AddQuestionsAction(
                 questions: questions.map((e) => e.toQuestionState()).toList()
               )
             );

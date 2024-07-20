@@ -18,9 +18,9 @@ class SubjectEntityState{
   }
   Map<int,SubjectState> _addSubjects(Iterable<SubjectState> subjects){
     final Map<int,SubjectState> clone = {};
-    final uniqSubjects = subjects.where((e) => this.subjects[e.id] == null);
+    final notAvaiables = subjects.where((e) => this.subjects[e.id] == null);
     clone.addAll(this.subjects);
-    clone.addEntries(uniqSubjects.map((e) => MapEntry(e.id, e)));
+    clone.addEntries(notAvaiables.map((e) => MapEntry(e.id, e)));
     return clone;
   }
   Map<int,SubjectState> _addSubject(SubjectState subject){
