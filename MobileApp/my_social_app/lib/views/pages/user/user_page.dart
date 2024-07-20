@@ -23,7 +23,7 @@ class UserPage extends StatelessWidget {
         store.dispatch(LoadUserAction(userId: id));
         store.dispatch(NextPageOfUserQuestionsAction(userId: id));
       },
-      converter: (store) => store.state.userEntityState.users[id],
+      converter: (store) => store.state.userEntityState.entities[id],
       builder: (context, userState){
         if(userState != null){
           return Scaffold(
@@ -37,9 +37,9 @@ class UserPage extends StatelessWidget {
                   child: UserInfoCardWidget(state: userState)
                 ),
                 Expanded(
-                  child: StoreConnector<AppState,List<QuestionState>>(
+                  child: StoreConnector<AppState,Iterable<QuestionState>>(
                     converter: (store) => store.state.getUserQuestions(id),
-                    builder: (context,value) => QuestionAbstractItemsWidget(questions: value),
+                    builder: (context,value )=> QuestionAbstractItemsWidget(questions: value)
                   ),
                 )
               ],

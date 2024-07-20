@@ -13,7 +13,7 @@ import 'package:redux/redux.dart';
 
 void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadUserAction){
-    if(store.state.userEntityState.users[action.userId] == null){
+    if(store.state.userEntityState.entities[action.userId] == null){
       UserService()
         .getById(action.userId)
         .then((user) => store.dispatch(LoadUserSuccessAction(user: UserState.init(user))));
@@ -24,13 +24,13 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowersIfNoUsersAction){
-    final user = store.state.userEntityState.users[action.userId]!;
+    final user = store.state.userEntityState.entities[action.userId]!;
     if(!user.followers.isLast && user.followers.ids.isEmpty){
       final lastId = user.followers.lastId;
       UserService()
         .getFollowersById(action.userId,lastId: lastId)
         .then((users) => store.dispatch(
-          FollowersSuccessfullyLoadedAction(
+          LoadFollowersSuccessAction(
             userId: action.userId,
             payload:users.map((user) => UserState.init(user)).toList()
           )
@@ -41,12 +41,12 @@ void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 }
 void loadFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowersAction){
-    if(!store.state.userEntityState.users[action.userId]!.followers.isLast){
-      final lastId = store.state.userEntityState.users[action.userId]!.followers.lastId;
+    if(!store.state.userEntityState.entities[action.userId]!.followers.isLast){
+      final lastId = store.state.userEntityState.entities[action.userId]!.followers.lastId;
       UserService()
         .getFollowersById(action.userId,lastId: lastId)
         .then((users) => store.dispatch(
-          FollowersSuccessfullyLoadedAction(
+          LoadFollowersSuccessAction(
             userId: action.userId,
             payload:users.map((user) => UserState.init(user)).toList()
           )
@@ -58,13 +58,13 @@ void loadFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowedsIfNoUsersAction){
-    final user = store.state.userEntityState.users[action.userId]!;
+    final user = store.state.userEntityState.entities[action.userId]!;
     if(!user.followeds.isLast && user.followeds.ids.isEmpty){
       final lastId = user.followeds.lastId;
       UserService()
         .getFollowedsById(action.userId,lastId: lastId)
         .then((users) => store.dispatch(
-          FollowedsSuccessfullyLoadedAction(
+          LoadFollowedsSuccessAction(
             userId: action.userId,
             payload:users.map((user) => UserState.init(user)).toList()
           )
@@ -75,16 +75,19 @@ void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 }
 void loadFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowersAction){
-    if(!store.state.userEntityState.users[action.userId]!.followeds.isLast){
-      final lastId = store.state.userEntityState.users[action.userId]!.followers.lastId;
+    if(!store.state.userEntityState.entities[action.userId]!.followeds.isLast){
+      final lastId = store.state.userEntityState.entities[action.userId]!.followers.lastId;
       UserService()
         .getFollowedsById(action.userId,lastId: lastId)
-        .then((users) => store.dispatch(
-          FollowedsSuccessfullyLoadedAction(
-            userId: action.userId,
-            payload:users.map((user) => UserState.init(user)).toList()
-          )
-        ));
+        .then((users){
+          store.dispatch(
+            LoadFollowedsSuccessAction(
+              userId: action.userId,
+              payload:users.map((user) => UserState.init(user)).toList()
+            )
+          );
+        }
+      );
     }
   }
   next(action);
@@ -92,10 +95,10 @@ void loadFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void loadUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadUserImageAction){
-    if(store.state.userEntityState.users[action.userId]!.imageState == ImageState.notStarted){
+    if(store.state.userEntityState.entities[action.userId]!.imageState == ImageState.notStarted){
       UserService()
         .getImageById(action.userId)
-        .then((image) => store.dispatch(UserImageSuccessfullyloadedAction(userId: action.userId, paylaod: image)));
+        .then((image) => store.dispatch(LoadUserImageSuccessAction(userId: action.userId, paylaod: image)));
     }
   }
   next(action);
@@ -106,7 +109,7 @@ void makeFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher nex
     final currentUserId = store.state.accountState!.id;
     UserService()
       .makeFollowRequest(action.userId)
-      .then((_) => store.dispatch(FollowRequestSuccessfullyIsMadeAction(currentUserId: currentUserId, userId: action.userId)));
+      .then((_) => store.dispatch(MakeFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
   }
   next(action);
 }
@@ -116,17 +119,17 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
     final currentUserId = store.state.accountState!.id;
     UserService()
       .cancelFollowRequest(action.userId)
-      .then((_) => store.dispatch(FollowRequestSuccessfullyCancelledAction(currentUserId: currentUserId, userId: action.userId)));
+      .then((_) => store.dispatch(CancelFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
   }
   next(action);
 }
 
-void loadQuestionsByUserIdMiddleware(Store<AppState> store,action,NextDispatcher next){
+void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageOfUserQuestionsAction){
-    final user = store.state.userEntityState.users[action.userId]!;
+    final user = store.state.userEntityState.entities[action.userId]!;
     if(!user.questions.isLast){
       QuestionService()
-        .getByUserId(action.userId,lasId: user.questions.lastId)
+        .getByUserId(action.userId,lastId: user.questions.lastId)
         .then((questions){
           store.dispatch(
             AddQuestionsAction(
@@ -159,13 +162,11 @@ void loadQuestionsByUserIdMiddleware(Store<AppState> store,action,NextDispatcher
             )
           );
 
-          for(final q in questions){
-            store.dispatch(
-              LoadTopicsSuccessAction(
-                topics: q.topics.map((e) => e.toTopicState())
-              )
-            );
-          }
+          store.dispatch(
+            AddTopicsListAction(
+              lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))
+            )
+          );
         });
     }
   }

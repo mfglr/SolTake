@@ -9,6 +9,18 @@ class AddSubjectsAction extends redux.Action{
 }
 
 @immutable
+class LoadTopicsOfSelectedSubjectAction extends redux.Action{
+  const LoadTopicsOfSelectedSubjectAction();
+}
+@immutable
+class LoadTopicsOfSelectedSubjectSuccessAction extends redux.Action{
+  final int subjectId;
+  final Iterable<int> topicIds;
+  const LoadTopicsOfSelectedSubjectSuccessAction({required this.subjectId, required this.topicIds});
+}
+
+
+@immutable
 class NextPageOfSubjectQuestionsAction extends redux.Action{
   final int subjectId;
   const NextPageOfSubjectQuestionsAction({required this.subjectId});

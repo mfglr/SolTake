@@ -49,45 +49,56 @@ class UserService{
     return await _appClient.getBytes(url);
   }
 
-  Future<List<User>> getFollowers({int? lastId}) async{
+  Future<Iterable<User>> getFollowers({int? lastId}) async{
     String url = "$userController/$getFollowersEndPoint";
     final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List; 
-    return list.map((item) => User.fromJson(item)).toList();
+    return list.map((item) => User.fromJson(item));
   }
 
-  Future<List<User>> getFollowersById(int id, {int? lastId}) async {
-    String url = "$userController/$getFollowersByIdEndPoint/$id";
-    final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List;
-    return list.map((item) => User.fromJson(item)).toList();
+  Future<Iterable<User>> getFollowersById(int id, {int? lastId}) async {
+    String endPoint = "$userController/$getFollowersByIdEndPoint/$id";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    final list = (await _appClient.get(url)) as List;
+    return list.map((item) => User.fromJson(item));
   }
 
-  Future<List<User>> getFolloweds({int? lastId}) async{
-    String url = "$userController/$getFollowedsEndPoint";
-    final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List;
-    return list.map((item) => User.fromJson(item)).toList();
+  Future<Iterable<User>> getFolloweds({int? lastId}) async{
+    String endPoint = "$userController/$getFollowedsEndPoint";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((item) => User.fromJson(item));
   }
 
-  Future<List<User>> getFollowedsById(int id, {int? lastId}) async {
-    String url = "$userController/$getFollowedsByIdEndPoint/$id";
-    final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List;
-    return list.map((item) => User.fromJson(item)).toList();
+  Future<Iterable<User>> getFollowedsById(int id, {int? lastId}) async {
+    String endPoint = "$userController/$getFollowedsByIdEndPoint/$id";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    
+    final list = (await _appClient.get(url)) as List;
+    return list.map((item) => User.fromJson(item));
   }
 
-  Future<List<User>> getRequesters({int? lastId}) async {
-    String url = "$userController/$getRequestersEndPoint";
-    final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List;
-    return list.map((item) => User.fromJson(item)).toList();
+  Future<Iterable<User>> getRequesters({int? lastId}) async {
+    String endPoint = "$userController/$getRequestersEndPoint";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    
+    final list = (await _appClient.get(url)) as List;
+    return list.map((item) => User.fromJson(item));
   }
 
-  Future<List<User>> getRequesteds({int? lastId}) async {
-    String url = "$userController/$getRequestedsEndPoint";
-    final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List;
-    return list.map((item) => User.fromJson(item)).toList();
+  Future<Iterable<User>> getRequesteds({int? lastId}) async {
+    String endPoint = "$userController/$getRequestedsEndPoint";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((item) => User.fromJson(item));
   }
 
-  Future<List<User>> search(String key, {int? lastId}) async {
-    String url = "$userController/$searchUserEndPoint/$key";
-    final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List;
-    return list.map((item) => User.fromJson(item)).toList();
+  Future<Iterable<User>> search(String key, {int? lastId}) async {
+    String endPoint = "$userController/$searchUserEndPoint/$key";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((item) => User.fromJson(item));
   }
 }

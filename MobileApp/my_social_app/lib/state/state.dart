@@ -48,39 +48,18 @@ class AppState{
     required this.questionImageEntityState
   });
 
-  UserState? get currentUser => userEntityState.users[accountState!.id];
-  List<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.users[e]!).toList();
-  
-  bool get areSubjectsLoaded 
-    => createQuestionState.examId != null ? subjectEntityState.isLoaded(createQuestionState.examId) : false;
-  List<String> get nameOfSubjects
-    => subjectEntityState.getSubjectsByExamId(createQuestionState.examId).map((x) => x.name).toList();
-  List<SubjectState> get subjects
-    => subjectEntityState.getSubjectsByExamId(createQuestionState.examId);
+  UserState? get currentUser => userEntityState.entities[accountState!.id];
+  Iterable<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.entities[e]!);
+  Iterable<QuestionState> getUserQuestions(int userId)
+    => userEntityState.entities[userId]!.questions.ids.map((e) => questionEntityState.entities[e]!); 
 
-  List<TopicState> get topics => topicEntityState.getTopics(createQuestionState.subjectId).toList();
-
-  List<QuestionState> getUserQuestions(int userId){
-    final userState = userEntityState.users[userId];
-    if(userState == null) return [];
-
-    final ids = userState.questions.ids;
-    return ids.map((e) => questionEntityState.questions[e]!).toList(); 
-  }
-
-  Iterable<SubjectState?> getSubjectsOfSelectedExam(){
-    final examId = createQuestionState.examId;
-    if(examId == null)return [];
-
-    final examState = examEntityState.exams[examId];
-    if(examState == null) return [];
-
-    return examState.subjects.ids.map((e) => subjectEntityState.subjects[e]);
-  }
-
-  Iterable<QuestionState> get questionsOfCurrentUser
-    => accountState != null ? getUserQuestions(accountState!.id) : [];
   Iterable<TopicState> getTopicsOfQuestions(int questionId)
-    => questionEntityState.questions[questionId]!.topics.map((e) => topicEntityState.topics[e]!);
+    => questionEntityState.entities[questionId]!.topics.map((e) => topicEntityState.entities[e]!);
+
   
+  Iterable<SubjectState> get subjectsOfSelectedExam
+    => examEntityState.entities[createQuestionState.examId!]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
+  
+  Iterable<TopicState> get topicsOfSelecetedSubject
+    => topicEntityState.getSubjectTopics(createQuestionState.subjectId);
 }

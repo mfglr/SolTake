@@ -11,17 +11,16 @@ class UserFollowedsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context)!.settings.arguments as int;
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Followings"),
       ),
-      body: StoreConnector<AppState,List<UserState>>(
+      body: StoreConnector<AppState,Iterable<UserState>>(
         onInit: (store) => store.dispatch(LoadFollowedsIfNoUsersAction(userId: userId)),
         converter: (store) => store.state.userEntityState.getFolloweds(userId),
         builder: (context,users) => Container(
           margin: const EdgeInsets.all(5),
-          child: UserItemsWidget(state : users)
+          child: UserItemsWidget(users : users)
         )
       )
     );

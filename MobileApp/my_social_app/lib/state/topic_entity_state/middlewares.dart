@@ -1,32 +1,12 @@
 import 'package:my_social_app/services/question_service.dart';
-import 'package:my_social_app/services/topic_service.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
-void loadTopicsBySubjectIdMiddelware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadTopicsBySubjectIdAction){
-    final subjectId = store.state.createQuestionState.subjectId!;
-    if(!store.state.topicEntityState.isLoaded(subjectId)){
-      TopicService()
-        .getBySubjectId(subjectId)
-        .then(
-          (topics) => store.dispatch(
-            LoadTopicsBySubjectIdSuccessAction(
-              subjectId: subjectId,
-              topics: topics.map((e) => e.toTopicState()).toList()
-            )
-          )
-        );
-    }
-  }
-  next(action);
-}
-
 void nextPageOfTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageOfTopicQuestionsAction){
-    final topicState = store.state.topicEntityState.topics[action.topicId]!;
+    final topicState = store.state.topicEntityState.entities[action.topicId]!;
     if(!topicState.questions.isLast){
       QuestionService()
         .getByTopicId(action.topicId)
@@ -43,9 +23,12 @@ void nextPageOfTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatc
                 questionIds: questions.map((x) => x.id).toList()
               )
             );
-            for(final q in questions){
-              store.dispatch(LoadTopicsSuccessAction(topics: q.topics.map((e) => e.toTopicState())));
-            }
+            
+            store.dispatch(
+              AddTopicsListAction(
+                lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))
+              )
+            );
           }
         );
     }

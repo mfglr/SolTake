@@ -13,6 +13,7 @@ import 'package:my_social_app/state/reducer.dart';
 import 'package:my_social_app/state/search_state/middlewares.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
@@ -27,14 +28,14 @@ final store = Store(
     accountState: null,
     activeLoginPage: ActiveLoginPage.loginPage,
     isInitialized: false,
-    userEntityState: UserEntityState(users: {}),
+    userEntityState: UserEntityState(entities: {}),
     searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
-    examEntityState: ExamEntityState(exams: {}, isLoaded: false),
-    subjectEntityState: SubjectEntityState(status: {}, subjects: {}),
-    topicEntityState: TopicEntityState(status: {}, topics: {}),
-    questionEntityState: QuestionEntityState(questions: {}),
-    questionImageEntityState: QuestionImageEntityState(images: {})
+    examEntityState: ExamEntityState(entities: {}, isLoaded: false),
+    subjectEntityState: SubjectEntityState(entities: {}),
+    topicEntityState: TopicEntityState(entities: {}),
+    questionEntityState: QuestionEntityState(entities: {}),
+    questionImageEntityState: QuestionImageEntityState(entities: {})
   ),
   middleware: [
     //account start
@@ -48,12 +49,13 @@ final store = Store(
     //user start
     loadUserMiddleware,
     loadFollowersIfNoUsersMiddleware,
+    loadFollowedsIfNoUsersMiddleware,
     loadFollowersMiddleware,
     loadFollowedsMiddleware,
     loadUserImageMiddleware,
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
-    loadQuestionsByUserIdMiddleware,
+    nextPageOfUserQuestionsMiddleware,
     //user end
 
     //search start
@@ -66,8 +68,11 @@ final store = Store(
     loadSubjectsOfSelectedExamReducer,
     //Exam end
 
+    //subject start
+    loadSubjectTopicsMiddleware,
+    //end
+
     //Topic start
-    loadTopicsBySubjectIdMiddelware,
     nextPageOfTopicQuestionsMiddleware,
     //Topic end
 

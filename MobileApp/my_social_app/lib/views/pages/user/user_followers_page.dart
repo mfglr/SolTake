@@ -16,14 +16,14 @@ class UserFollowersPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Followers"),
       ),
-      body: StoreConnector<AppState,List<UserState>>(
+      body: StoreConnector<AppState,Iterable<UserState>>(
         onInit: (store){
           store.dispatch(LoadFollowersIfNoUsersAction(userId: userId));
         },
         converter: (store) => store.state.userEntityState.getFollowers(userId),
         builder: (context,users) => Container(
           margin: const EdgeInsets.all(5),
-          child: UserItemsWidget(state : users)
+          child: UserItemsWidget(users : users)
         )
       )
     );

@@ -18,14 +18,14 @@ class QuestionAbstractItemWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: StoreConnector<AppState,UserState>(
-        converter: (store) => store.state.userEntityState.users[question.appUserId]!,
+        converter: (store) => store.state.userEntityState.entities[question.appUserId]!,
         builder: (context,user) => GestureDetector(
           onTap: (){
             Navigator.of(context).pushNamed(displayUserQuestionsRoute,arguments: user);
           },
           child: StoreConnector<AppState,QuestionImageState?>(
             onInit: (store) => store.dispatch(LoadQuestionImageAction(id: question.images.first)),
-            converter: (store) => store.state.questionImageEntityState.images[question.images.first],
+            converter: (store) => store.state.questionImageEntityState.entities[question.images.first],
             builder: (context,imageState) => Builder(
               builder: (context){
                 if(imageState == null) return const LoadingWidget();

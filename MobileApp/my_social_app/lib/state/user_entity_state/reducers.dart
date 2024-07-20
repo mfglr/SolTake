@@ -4,45 +4,35 @@ import 'package:my_social_app/state/user_entity_state/user_entity_state.dart';
 import 'package:redux/redux.dart';
 
 UserEntityState loadUserReducer(UserEntityState oldState,Action action)
-  => action is LoadUserSuccessAction ? oldState.loadUser(action.user) : oldState;
-
+  => action is LoadUserSuccessAction ? oldState.addUser(action.user) : oldState;
 UserEntityState loadUsersReducer(UserEntityState oldState,Action action)
-  => action is LoadUsersSuccessAction ? oldState.loadUsers(action.payload) : oldState;
-
+  => action is LoadUsersSuccessAction ? oldState.addUsers(action.payload) : oldState;
 UserEntityState loadFollowersReducer(UserEntityState oldState,Action action)
-  => action is FollowersSuccessfullyLoadedAction ? oldState.loadFollowers(action.userId,action.payload) : oldState;
-
-UserEntityState loadFollowedsReducer(UserEntityState oldState,Action action)
-  => action is FollowedsSuccessfullyLoadedAction ? oldState.loadFolloweds(action.userId,action.payload) : oldState;
-
-UserEntityState loadQuestionsReducers(UserEntityState oldState,Action action)
-  => action is NextPageOfUserQuestionsSuccessAction ? oldState.loadQuestions(action.userId,action.payload) : oldState;
-
+  => action is LoadFollowersSuccessAction ? oldState.addFollowers(action.userId,action.payload) : oldState;
+UserEntityState loadFollowedsSuccessReducer(UserEntityState oldState,Action action)
+  => action is LoadFollowedsSuccessAction ? oldState.addFolloweds(action.userId,action.payload) : oldState;
+UserEntityState nextPageOfUserQuestionsSuccessReducer(UserEntityState oldState,Action action)
+  => action is NextPageOfUserQuestionsSuccessAction ? oldState.addQuestions(action.userId,action.payload) : oldState;
 UserEntityState startloadingUserImageReducer(UserEntityState oldState,Action action)
   => action is LoadUserImageAction ? oldState.startLoadingUserImage(action.userId) : oldState;
-
 UserEntityState loadUserImageReducer(UserEntityState oldState,Action action)
-  => action is UserImageSuccessfullyloadedAction ? oldState.loadUserImage(action.userId, action.paylaod) : oldState;
-
+  => action is LoadUserImageSuccessAction ? oldState.loadUserImage(action.userId, action.paylaod) : oldState;
 UserEntityState makeFollowRequestReducer(UserEntityState oldState, Action action)
-  => action is FollowRequestSuccessfullyIsMadeAction ? oldState.makeFollowRequest(action.currentUserId, action.userId) : oldState;
-
+  => action is MakeFollowRequestSuccessAction ? oldState.makeFollowRequest(action.currentUserId, action.userId) : oldState;
 UserEntityState cancelFollowRequestReducer(UserEntityState oldState, Action action)
-  => action is FollowRequestSuccessfullyCancelledAction ? oldState.cancelFollowRequest(action.currentUserId, action.userId) : oldState;
-
-//Questions
+  => action is CancelFollowRequestSuccessAction ? oldState.cancelFollowRequest(action.currentUserId, action.userId) : oldState;
 UserEntityState addQuestionReducer(UserEntityState oldState, Action action)
   => action is AddUserQuestionAction ? oldState.addQuestion(action.userId, action.questionId) : oldState;
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   TypedReducer<UserEntityState,LoadUserSuccessAction>(loadUserReducer).call,
   TypedReducer<UserEntityState,LoadUsersSuccessAction>(loadUsersReducer).call,
-  TypedReducer<UserEntityState,FollowersSuccessfullyLoadedAction>(loadFollowersReducer).call,
-  TypedReducer<UserEntityState,FollowedsSuccessfullyLoadedAction>(loadFollowedsReducer).call,
-  TypedReducer<UserEntityState,NextPageOfUserQuestionsSuccessAction>(loadQuestionsReducers).call,
+  TypedReducer<UserEntityState,LoadFollowersSuccessAction>(loadFollowersReducer).call,
+  TypedReducer<UserEntityState,LoadFollowedsSuccessAction>(loadFollowedsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextPageOfUserQuestionsSuccessAction>(nextPageOfUserQuestionsSuccessReducer).call,
   TypedReducer<UserEntityState,LoadUserImageAction>(startloadingUserImageReducer).call,
-  TypedReducer<UserEntityState,UserImageSuccessfullyloadedAction>(loadUserImageReducer).call,
-  TypedReducer<UserEntityState,FollowRequestSuccessfullyIsMadeAction>(makeFollowRequestReducer).call,
-  TypedReducer<UserEntityState,FollowRequestSuccessfullyCancelledAction>(cancelFollowRequestReducer).call,
+  TypedReducer<UserEntityState,LoadUserImageSuccessAction>(loadUserImageReducer).call,
+  TypedReducer<UserEntityState,MakeFollowRequestSuccessAction>(makeFollowRequestReducer).call,
+  TypedReducer<UserEntityState,CancelFollowRequestSuccessAction>(cancelFollowRequestReducer).call,
   TypedReducer<UserEntityState,AddUserQuestionAction>(addQuestionReducer).call,
 ]);

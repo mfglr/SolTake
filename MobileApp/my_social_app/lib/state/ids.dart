@@ -12,33 +12,33 @@ class Ids{
     required this.isLast,
     required this.lastId
   });
-
-  Ids init(Iterable<int> idsAdded) => Ids(
-    ids: idsAdded,
-    isLast: idsAdded.length < recordsPerPage,
-    lastId: idsAdded.isNotEmpty ? idsAdded.last : lastId
+ 
+  Ids init(Iterable<int> ids) => Ids(
+    ids: ids,
+    isLast: ids.length < recordsPerPage,
+    lastId: ids.isNotEmpty ? ids.last : lastId
   );
 
-  Ids nextPage(Iterable<int> idsAdded) => Ids(
-    ids: ids.followedBy(idsAdded),
-    isLast: idsAdded.length < recordsPerPage,
-    lastId: idsAdded.isNotEmpty ? idsAdded.last : lastId
+  Ids nextPage(Iterable<int> ids) => Ids(
+    ids: this.ids.followedBy(ids),
+    isLast: ids.length < recordsPerPage,
+    lastId: ids.isNotEmpty ? ids.last : lastId
   );
 
-  Ids lastPage(Iterable<int> idsAddded) => Ids(
-    ids: ids.followedBy(idsAddded),
+  Ids lastPage(Iterable<int> ids) => Ids(
+    ids: this.ids.followedBy(ids),
     isLast: true,
-    lastId: lastId
+    lastId: ids.isNotEmpty ? ids.last : lastId
   );
 
-  Ids add(int id) => Ids(
+  Ids create(int id) => Ids(
     ids: [id, ...ids],
     isLast: isLast, 
-    lastId: lastId
+    lastId: ids.isEmpty ? id : lastId
   );
 
   Ids remove(int id) => Ids(
-    ids: ids.where((item) => item != id).toList(),
+    ids: ids.where((item) => item != id),
     isLast: isLast,
     lastId: lastId
   );

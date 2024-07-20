@@ -54,20 +54,31 @@ class QuestionService{
     return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$blobName");
   }
 
-  Future<List<Question>> getByUserId(int userId,{int? lasId}) async {
-    final list = (await _appClient.get("$questionController/$getQuestionsByUserIdEndpoint/$userId")) as List;
-    return list.map((e) => Question.fromJson(e)).toList();
+  Future<Iterable<Question>> getByUserId(int userId,{int? lastId}) async {
+    String endPoint = "$questionController/$getQuestionsByUserIdEndpoint/$userId";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Question.fromJson(e));
   }
-  Future<List<Question>> getByTopicId(int topicId,{int? lastId}) async {
-    final list = (await _appClient.get("$questionController/$getQuestionsByTopicIdEndpoint/$topicId")) as List;
-    return list.map((e) => Question.fromJson(e)).toList();
+  Future<Iterable<Question>> getByTopicId(int topicId,{int? lastId}) async {
+    String endPoint = "$questionController/$getQuestionsByTopicIdEndpoint/$topicId";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Question.fromJson(e));
   }
-  Future<List<Question>> getBySubjectId(int subjectId,{int? lastId}) async {
-    final list = (await _appClient.get("$questionController/$getQuestionsBySubjectIdEndpoint/$subjectId")) as List;
-    return list.map((e) => Question.fromJson(e)).toList();
+  Future<Iterable<Question>> getBySubjectId(int subjectId,{int? lastId}) async {
+    String endPoint = "$questionController/$getQuestionsBySubjectIdEndpoint/$subjectId";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Question.fromJson(e));
   }
-  Future<List<Question>> getByExamId(int examId,{int? lastId}) async {
-    final list = (await _appClient.get("$questionController/$getQuestionsByExamIdEndpoint/$examId")) as List;
-    return list.map((e) => Question.fromJson(e)).toList();
+  Future<Iterable<Question>> getByExamId(int examId,{int? lastId}) async {
+    String endPoint = "$questionController/$getQuestionsByExamIdEndpoint/$examId";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Question.fromJson(e));
   }
 }

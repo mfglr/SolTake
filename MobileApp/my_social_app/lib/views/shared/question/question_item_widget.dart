@@ -84,19 +84,19 @@ class QuestionItemWidget extends StatelessWidget {
             margin: const EdgeInsets.all(8),
             child: Wrap(
               children: [
-                StoreConnector<AppState,ExamState?>(
-                  converter: (store) => store.state.examEntityState.exams[question.examId],
-                  builder: (context,exam) => exam != null ? ExamTagItem(exam: exam) : const Text("")
+                StoreConnector<AppState,ExamState>(
+                  converter: (store) => store.state.examEntityState.entities[question.examId]!,
+                  builder: (context,exam) => ExamTagItem(exam: exam)
                 ),
-                StoreConnector<AppState,SubjectState?>(
-                  converter: (store) => store.state.subjectEntityState.subjects[question.subjectId],
-                  builder: (context,subject) => subject != null ? SubjectTagItem(subject: subject,) : const Text("")
+                StoreConnector<AppState,SubjectState>(
+                  converter: (store) => store.state.subjectEntityState.entities[question.subjectId]!,
+                  builder: (context,subject) => SubjectTagItem(subject: subject,)
                 ),
                 ...List.generate(
                   question.topics.length,
-                  (index) => StoreConnector<AppState,TopicState?>(
-                    converter: (store) => store.state.topicEntityState.topics[question.topics.elementAt(index)],
-                    builder: (context,topic) => topic != null ? TopicTagItem(topic: topic) : const Text(""),
+                  (index) => StoreConnector<AppState,TopicState>(
+                    converter: (store) => store.state.topicEntityState.entities[question.topics.elementAt(index)]!,
+                    builder: (context,topic) => TopicTagItem(topic: topic),
                   )
                 ),
               ]

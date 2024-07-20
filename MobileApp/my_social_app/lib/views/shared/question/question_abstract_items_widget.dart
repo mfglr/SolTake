@@ -3,7 +3,7 @@ import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/views/shared/question/question_abstract_item_widget.dart';
 
 class QuestionAbstractItemsWidget extends StatelessWidget {
-  final List<QuestionState> questions;
+  final Iterable<QuestionState> questions;
   const QuestionAbstractItemsWidget({super.key,required this.questions});
 
   @override
@@ -12,7 +12,7 @@ class QuestionAbstractItemsWidget extends StatelessWidget {
       crossAxisCount: 3,
       children: List.generate(
         questions.length,
-        (index) => QuestionAbstractItemWidget(question: questions[index])
+        (index) => QuestionAbstractItemWidget(question: questions.elementAt(index))
       ),
     );
   }

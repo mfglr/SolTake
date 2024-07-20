@@ -26,7 +26,7 @@ class ExamState{
         questions: questions.nextPage(questionIds)
       );
 
-  ExamState loadExamSubjects(Iterable<int> ids)
+  ExamState loadSubjects(Iterable<int> ids)
     => ExamState(
         id: id,
         shortName: shortName,

@@ -27,7 +27,7 @@ void loadAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageOfExamQuestionsAction){
-    final examState = store.state.examEntityState.exams[action.examId]!;
+    final examState = store.state.examEntityState.entities[action.examId]!;
     if(!examState.questions.isLast){
       QuestionService()
         .getByExamId(action.examId,lastId: examState.questions.lastId)
@@ -57,11 +57,11 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
             )
           );
 
-          for(final q in questions){
-            store.dispatch(LoadTopicsSuccessAction(
-              topics: q.topics.map((e) => e.toTopicState()))
-            );
-          }
+          store.dispatch(
+            AddTopicsListAction(
+              lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))
+            )
+          );
         });
     }
   }
@@ -71,7 +71,7 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
 void loadSubjectsOfSelectedExamReducer(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSubjectsOfSelectedExamAction){
     final examId = store.state.createQuestionState.examId!;
-    final examState = store.state.examEntityState.exams[examId]!;
+    final examState = store.state.examEntityState.entities[examId]!;
     if(!examState.subjects.isLast){
       SubjectService()
         .getByExamId(examId)

@@ -136,31 +136,31 @@ class UserState{
     questions: const Ids(ids: [],isLast: false, lastId: null)
   );
 
-  UserState loadFollowers(List<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
-  UserState loadFolloweds(List<int> newFolloweds) => _optional(newFolloweds: followeds.nextPage(newFolloweds));
-  UserState loadRequesters(List<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
-  UserState loadRequesteds(List<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
+  UserState loadFollowers(Iterable<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
+  UserState loadFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.nextPage(newFolloweds));
+  UserState loadRequesters(Iterable<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
+  UserState loadRequesteds(Iterable<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
   UserState loadQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.nextPage(newQuestions));
   
   //make follow request start
   UserState addRequester(int currentUserId){
     if(profileVisibility == ProfileVisibility.private){
-      return _optional(newIsRequested: true,newRequesters: requesters.add(currentUserId));
+      return _optional(newIsRequested: true,newRequesters: requesters.create(currentUserId));
     }
     else{
       return _optional(
         newNumberOfFollowers: numberOfFollowers + 1,
         newIsFollowed: true,
-        newFollowers: followers.add(currentUserId)
+        newFollowers: followers.create(currentUserId)
       );
     }
   }
   UserState addRequested(ProfileVisibility userProfileVisibility, int userId){
     if(userProfileVisibility == ProfileVisibility.private){
-      return _optional(newRequesteds: requesteds.add(userId));
+      return _optional(newRequesteds: requesteds.create(userId));
     }
     else{
-      return _optional(newNumberOfFolloweds: numberOfFolloweds + 1,newFolloweds: followeds.add(userId));
+      return _optional(newNumberOfFolloweds: numberOfFolloweds + 1,newFolloweds: followeds.create(userId));
     }
   }
   //make follow request end
@@ -211,6 +211,6 @@ class UserState{
   //Questions
   UserState addQuestion(int id) => _optional(
     newNumberOfQuestions: numberOfQuestions + 1,
-    newQuestions: questions.add(id)
+    newQuestions: questions.create(id)
   );
 }

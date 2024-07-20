@@ -27,7 +27,7 @@ class TopicState{
         id: id,
         subjectId: subjectId,
         name: name,
-        questions: questions.add(questionId)
+        questions: questions.create(questionId)
       );
   TopicState removeQuestionId(int questionId)
     => TopicState(

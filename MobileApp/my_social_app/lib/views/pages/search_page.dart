@@ -61,9 +61,9 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Container(
         margin: const EdgeInsets.all(5),
-        child: StoreConnector<AppState,List<UserState>>(
+        child: StoreConnector<AppState,Iterable<UserState>>(
           converter: (store) => store.state.searchedUsers,
-          builder: (context,users) => UserItemsWidget(state: users),
+          builder: (context,users) => UserItemsWidget(users: users),
         ),
       ),
     );

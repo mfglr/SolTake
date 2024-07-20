@@ -32,10 +32,10 @@ class LoadFollowersAction extends redux.Action{
   const LoadFollowersAction({required this.userId});
 }
 @immutable
-class FollowersSuccessfullyLoadedAction extends redux.Action{
+class LoadFollowersSuccessAction extends redux.Action{
   final int userId;
   final List<UserState> payload;
-  const FollowersSuccessfullyLoadedAction({required this.userId, required this.payload});
+  const LoadFollowersSuccessAction({required this.userId, required this.payload});
 }
 
 @immutable
@@ -49,10 +49,10 @@ class LoadFollowedsAction extends redux.Action{
   const LoadFollowedsAction({required this.userId});
 }
 @immutable
-class FollowedsSuccessfullyLoadedAction extends redux.Action{
+class LoadFollowedsSuccessAction extends redux.Action{
   final int userId;
   final List<UserState> payload;
-  const FollowedsSuccessfullyLoadedAction({required this.userId, required this.payload});
+  const LoadFollowedsSuccessAction({required this.userId, required this.payload});
 }
 
 
@@ -62,10 +62,10 @@ class LoadUserImageAction extends redux.Action{
   const LoadUserImageAction({required this.userId});
 }
 @immutable
-class UserImageSuccessfullyloadedAction extends redux.Action{
+class LoadUserImageSuccessAction extends redux.Action{
   final int userId;
   final Uint8List paylaod;
-  const UserImageSuccessfullyloadedAction({required this.userId,required this.paylaod});
+  const LoadUserImageSuccessAction({required this.userId,required this.paylaod});
 }
 
 
@@ -75,10 +75,10 @@ class MakeFollowRequestAction extends redux.Action{
   const MakeFollowRequestAction({required this.userId});
 }
 @immutable
-class FollowRequestSuccessfullyIsMadeAction extends redux.Action{
+class MakeFollowRequestSuccessAction extends redux.Action{
   final int currentUserId;
   final int userId;
-  const FollowRequestSuccessfullyIsMadeAction({required this.currentUserId, required this.userId});
+  const MakeFollowRequestSuccessAction({required this.currentUserId, required this.userId});
 }
 
 @immutable
@@ -87,10 +87,10 @@ class CancelFollowRequestAction extends redux.Action{
   const CancelFollowRequestAction({required this.userId});
 }
 @immutable
-class FollowRequestSuccessfullyCancelledAction extends redux.Action{
+class CancelFollowRequestSuccessAction extends redux.Action{
   final int currentUserId;
   final int userId;
-  const FollowRequestSuccessfullyCancelledAction({required this.currentUserId,required this.userId});
+  const CancelFollowRequestSuccessAction({required this.currentUserId,required this.userId});
 }
 
 

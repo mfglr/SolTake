@@ -24,9 +24,9 @@ class SelectExamPage extends StatelessWidget {
             return GridView.count(
               crossAxisCount: 2,
               children: List<Widget>.generate(
-                state.examValues.length,
+                state.exams.length,
                 (index) => ExamItemWidget(
-                  exam: state.examValues.elementAt(index)
+                  exam: state.exams.elementAt(index)
                 )
               )
             );
