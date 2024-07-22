@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
@@ -17,7 +15,7 @@ class LoadUserSuccessAction extends redux.Action{
 
 @immutable
 class LoadUsersSuccessAction extends redux.Action{
-  final List<UserState> payload;
+  final Iterable<UserState> payload;
   const LoadUsersSuccessAction({required this.payload});
 }
 
@@ -34,7 +32,7 @@ class LoadFollowersAction extends redux.Action{
 @immutable
 class LoadFollowersSuccessAction extends redux.Action{
   final int userId;
-  final List<UserState> payload;
+  final Iterable<UserState> payload;
   const LoadFollowersSuccessAction({required this.userId, required this.payload});
 }
 
@@ -51,23 +49,9 @@ class LoadFollowedsAction extends redux.Action{
 @immutable
 class LoadFollowedsSuccessAction extends redux.Action{
   final int userId;
-  final List<UserState> payload;
+  final Iterable<UserState> payload;
   const LoadFollowedsSuccessAction({required this.userId, required this.payload});
 }
-
-
-@immutable
-class LoadUserImageAction extends redux.Action{
-  final int userId;
-  const LoadUserImageAction({required this.userId});
-}
-@immutable
-class LoadUserImageSuccessAction extends redux.Action{
-  final int userId;
-  final Uint8List paylaod;
-  const LoadUserImageSuccessAction({required this.userId,required this.paylaod});
-}
-
 
 @immutable
 class MakeFollowRequestAction extends redux.Action{

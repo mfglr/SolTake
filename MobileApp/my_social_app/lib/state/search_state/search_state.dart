@@ -7,7 +7,7 @@ class SearchState{
   final Ids users;
   const SearchState({required this.key,required this.users});
   
-  SearchState search(String key, List<int> u) => SearchState(key: key, users: users.init(u));
-  SearchState nextPage(List<int> u) => SearchState(key: key, users: users.nextPage(u));
+  SearchState search(String key, Iterable<int> u) => SearchState(key: key, users: users.init(u));
+  SearchState nextPage(Iterable<int> u) => SearchState(key: key, users: users.nextPage(u));
   SearchState clear() => const SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null));
 }

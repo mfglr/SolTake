@@ -16,8 +16,7 @@ class QuestionImageEntityState extends EntityState<QuestionImageState>{
   QuestionImageEntityState addLists(Iterable<Iterable<QuestionImageState>> lists)
     => QuestionImageEntityState(entities: addListsEnd(lists));
 
-
-  QuestionImageEntityState startLoadingImage(int id)
+  QuestionImageEntityState startLoading(int id)
     => QuestionImageEntityState(entities: updateOne(entities[id]!.startLoading()));
 
   QuestionImageEntityState loadImage(int id,Uint8List image)

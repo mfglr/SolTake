@@ -24,7 +24,7 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
       ),
       body: StoreConnector<AppState,Iterable<QuestionState>>(
         onInit: (store) => store.dispatch(NextPageOfExamQuestionsAction(examId: exam.id)),
-        converter: (store) => store.state.questionEntityState.getBySubjectId(exam.id),
+        converter: (store) => store.state.getExamQuestions(exam.id),
         builder: (context,questions) => QuestionItemsWidget(
           questions: questions.toList(),
         ),

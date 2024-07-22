@@ -19,6 +19,8 @@ import 'package:my_social_app/state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
 import 'package:my_social_app/state/user_entity_state/middlewares.dart';
 import 'package:my_social_app/state/user_entity_state/user_entity_state.dart';
+import 'package:my_social_app/state/user_image_entity_state/middlewares.dart';
+import 'package:my_social_app/state/user_image_entity_state/user_image_entity_state.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
@@ -29,6 +31,7 @@ final store = Store(
     activeLoginPage: ActiveLoginPage.loginPage,
     isInitialized: false,
     userEntityState: UserEntityState(entities: {}),
+    userImageEntityState: UserImageEntityState(entities: {}),
     searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     examEntityState: ExamEntityState(entities: {}, isLoaded: false),
@@ -52,11 +55,14 @@ final store = Store(
     loadFollowedsIfNoUsersMiddleware,
     loadFollowersMiddleware,
     loadFollowedsMiddleware,
-    loadUserImageMiddleware,
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
     nextPageOfUserQuestionsMiddleware,
     //user end
+
+    //user image start
+    loadUserImageMiddleware,
+    //user imgage end
 
     //search start
     searchMiddleware,
@@ -66,9 +72,11 @@ final store = Store(
     //Exam Start
     loadAllExamsMiddleware,
     loadSubjectsOfSelectedExamReducer,
+    nextPageOfExamQeuestionsMiddleware,
     //Exam end
 
     //subject start
+    nextPageOfSubjectQuestionsMiddleware,
     loadSubjectTopicsMiddleware,
     //end
 

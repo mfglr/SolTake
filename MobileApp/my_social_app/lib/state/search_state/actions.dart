@@ -9,7 +9,7 @@ class SearchAction extends redux.Action{
 @immutable
 class SearchSuccessAction extends redux.Action{
   final String key;
-  final List<int> payload;
+  final Iterable<int> payload;
   const SearchSuccessAction({required this.key,required this.payload});
 }
 
@@ -20,7 +20,7 @@ class NextPageSearchingAction extends redux.Action{
 
 @immutable
 class NextPageOfSearchingSuccessAction extends redux.Action{
-  final List<int> payload;
+  final Iterable<int> payload;
   const NextPageOfSearchingSuccessAction({required this.payload});
 }
 

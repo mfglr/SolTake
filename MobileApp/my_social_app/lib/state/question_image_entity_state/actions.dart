@@ -16,8 +16,8 @@ class AddQuestionImagesAction extends redux.Action{
 }
 @immutable
 class AddQuestionImagesListAction extends redux.Action{
-  final Iterable<Iterable<QuestionImageState>> list;
-  const AddQuestionImagesListAction({required this.list});
+  final Iterable<Iterable<QuestionImageState>> lists;
+  const AddQuestionImagesListAction({required this.lists});
 }
 
 @immutable

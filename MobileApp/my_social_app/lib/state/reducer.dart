@@ -9,6 +9,7 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/user_entity_state/reducers.dart';
+import 'package:my_social_app/state/user_image_entity_state/reducers.dart';
 
 ActiveLoginPage changeActiveLoginPageReducer(ActiveLoginPage oldState,Action action)
   => action is ChangeActiveLoginPageAction ? action.payload : oldState;
@@ -25,6 +26,7 @@ AppState appReducer(AppState oldState,action) => AppState(
   activeLoginPage: changeActiveLoginPageReducer(oldState.activeLoginPage,action),
   isInitialized: appSuccessfullyInitReducer(oldState.isInitialized,action),
   userEntityState: userEntityStateReducers(oldState.userEntityState, action),
+  userImageEntityState: userImageEntityStateReducers(oldState.userImageEntityState,action),
   searchState: searchStateReducers(oldState.searchState,action),
   createQuestionState: createQuestionReducers(oldState.createQuestionState,action),
   examEntityState: examEntityStateReducers(oldState.examEntityState,action),

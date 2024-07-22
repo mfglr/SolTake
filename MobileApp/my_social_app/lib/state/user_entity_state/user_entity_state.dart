@@ -22,7 +22,7 @@ class UserEntityState extends EntityState<UserState>{
           entities[userId]!.loadFollowers(users.map((e) => e.id))
         )
       );
-  UserEntityState addFolloweds(int userId, List<UserState> users)
+  UserEntityState addFolloweds(int userId, Iterable<UserState> users)
     => UserEntityState(
         entities: addManyEndAndUpdateOne(
           users,

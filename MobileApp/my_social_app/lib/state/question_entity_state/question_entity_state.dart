@@ -18,8 +18,4 @@ class QuestionEntityState extends EntityState<QuestionState>{
 
   Iterable<QuestionState> getByUserId(int userId)
     => entities.values.where((question) => question.appUserId == userId);
-  Iterable<QuestionState> getByTopicId(int topicId)
-    => entities.values.where((question) => question.topics.any((id) => id == topicId));
-  Iterable<QuestionState> getBySubjectId(int subjectId)
-    => entities.values.where((question) => question.subjectId == subjectId);
 }

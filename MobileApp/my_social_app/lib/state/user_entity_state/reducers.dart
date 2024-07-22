@@ -13,10 +13,6 @@ UserEntityState loadFollowedsSuccessReducer(UserEntityState oldState,Action acti
   => action is LoadFollowedsSuccessAction ? oldState.addFolloweds(action.userId,action.payload) : oldState;
 UserEntityState nextPageOfUserQuestionsSuccessReducer(UserEntityState oldState,Action action)
   => action is NextPageOfUserQuestionsSuccessAction ? oldState.addQuestions(action.userId,action.payload) : oldState;
-UserEntityState startloadingUserImageReducer(UserEntityState oldState,Action action)
-  => action is LoadUserImageAction ? oldState.startLoadingUserImage(action.userId) : oldState;
-UserEntityState loadUserImageReducer(UserEntityState oldState,Action action)
-  => action is LoadUserImageSuccessAction ? oldState.loadUserImage(action.userId, action.paylaod) : oldState;
 UserEntityState makeFollowRequestReducer(UserEntityState oldState, Action action)
   => action is MakeFollowRequestSuccessAction ? oldState.makeFollowRequest(action.currentUserId, action.userId) : oldState;
 UserEntityState cancelFollowRequestReducer(UserEntityState oldState, Action action)
@@ -30,8 +26,6 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,LoadFollowersSuccessAction>(loadFollowersReducer).call,
   TypedReducer<UserEntityState,LoadFollowedsSuccessAction>(loadFollowedsSuccessReducer).call,
   TypedReducer<UserEntityState,NextPageOfUserQuestionsSuccessAction>(nextPageOfUserQuestionsSuccessReducer).call,
-  TypedReducer<UserEntityState,LoadUserImageAction>(startloadingUserImageReducer).call,
-  TypedReducer<UserEntityState,LoadUserImageSuccessAction>(loadUserImageReducer).call,
   TypedReducer<UserEntityState,MakeFollowRequestSuccessAction>(makeFollowRequestReducer).call,
   TypedReducer<UserEntityState,CancelFollowRequestSuccessAction>(cancelFollowRequestReducer).call,
   TypedReducer<UserEntityState,AddUserQuestionAction>(addQuestionReducer).call,

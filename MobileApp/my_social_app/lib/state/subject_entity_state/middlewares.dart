@@ -1,12 +1,16 @@
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/topic_service.dart';
+import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
+import 'package:my_social_app/state/user_image_entity_state/actions.dart';
+import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
-void loadQuestionsBySubjectId(Store<AppState> store,action,NextDispatcher next){
+void nextPageOfSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageOfSubjectQuestionsAction){
     final subject = store.state.subjectEntityState.entities[action.subjectId]!;
     if(!subject.questions.isLast){
@@ -23,6 +27,18 @@ void loadQuestionsBySubjectId(Store<AppState> store,action,NextDispatcher next){
             NextPageOfSubjectQuestionsSuccessAction(
               subjectId: action.subjectId,
               questions: questions.map((x) => x.id)
+            )
+          );
+
+          store.dispatch(
+            AddQuestionImagesListAction(
+              lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))
+            )
+          );
+
+          store.dispatch(
+            AddUserImagesAction(
+              images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
             )
           );
 

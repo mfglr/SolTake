@@ -28,8 +28,6 @@ class UserState{
   final Ids requesters;
   final Ids requesteds;
   final Ids questions;
-  final Uint8List? image;
-  final ImageState imageState;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -56,8 +54,6 @@ class UserState{
     required this.isFollowed,
     required this.isRequester,
     required this.isRequested,
-    required this.image,
-    required this.imageState,
     required this.followers,
     required this.followeds,
     required this.requesters,
@@ -102,8 +98,6 @@ class UserState{
     isFollowed: newIsFollowed ?? isFollowed,
     isRequester: newIsRequester ?? isRequester,
     isRequested: newIsRequested ?? isRequested,
-    image: newImage ?? image,
-    imageState: newImageState ?? imageState,
     followers: newFollowers ?? followers,
     followeds: newFolloweds ?? followeds,
     requesters: newRequesters ?? requesters,
@@ -127,8 +121,6 @@ class UserState{
     isFollowed: user.isFollowed,
     isRequester: user.isRequester,
     isRequested: user.isRequested,
-    image: null,
-    imageState: ImageState.notStarted,
     followers: const Ids(ids: [],isLast: false,lastId: null),
     followeds: const Ids(ids: [],isLast: false,lastId: null),
     requesters: const Ids(ids: [],isLast: false,lastId: null),
