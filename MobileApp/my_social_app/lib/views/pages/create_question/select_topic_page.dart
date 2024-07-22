@@ -70,7 +70,7 @@ class SelectTopicPage extends StatelessWidget {
         child: OutlinedButton(
           onPressed: (){
             store.dispatch(const CreateQuestionAction());
-            Navigator.of(context).popUntil((route) => route.settings.name == displayImagesRoute);
+            Navigator.of(context).popUntil((route) => route.settings.name == displayQuestionImagesRoute);
             Navigator.of(context).pop();
           },
           child: Row(

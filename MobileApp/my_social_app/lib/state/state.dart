@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
+import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_entity_state.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
+import 'package:my_social_app/state/solution_entity_state/solution_entity_state.dart';
+import 'package:my_social_app/state/solution_image_entity_state/solution_image_entity_state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_entity_state.dart';
@@ -29,11 +32,14 @@ class AppState{
   final UserImageEntityState userImageEntityState;
   final SearchState searchState;
   final CreateQuestionState createQuestionState;
+  final CreateSolutionState createSolutionState;
   final ExamEntityState examEntityState;
   final SubjectEntityState subjectEntityState;
   final TopicEntityState topicEntityState;
   final QuestionEntityState questionEntityState;
   final QuestionImageEntityState questionImageEntityState;
+  final SolutionEntityState solutionEntityState;
+  final SolutionImageEntityState solutionImageEntityState;
 
   const AppState({
     required this.accessToken,
@@ -44,11 +50,14 @@ class AppState{
     required this.userImageEntityState,
     required this.searchState,
     required this.createQuestionState,
+    required this.createSolutionState,
     required this.examEntityState,
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.questionEntityState,
-    required this.questionImageEntityState
+    required this.questionImageEntityState,
+    required this.solutionEntityState,
+    required this.solutionImageEntityState
   });
 
   UserState? get currentUser => userEntityState.entities[accountState!.id];

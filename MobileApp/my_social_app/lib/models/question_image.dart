@@ -33,6 +33,5 @@ class QuestionImage{
         blobName: blobName,
         state: ImageState.notStarted,
         image: null,
-        file: null
       );
 }

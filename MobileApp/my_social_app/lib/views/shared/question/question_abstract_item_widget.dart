@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
@@ -29,12 +28,6 @@ class QuestionAbstractItemWidget extends StatelessWidget {
             builder: (context,imageState) => Builder(
               builder: (context){
                 if(imageState == null) return const LoadingWidget();
-                if(imageState.file != null){
-                  return Image.file(
-                    File(imageState.file!.name),
-                    fit: BoxFit.cover,
-                  );
-                }
                 if(imageState.image != null){
                   return Image.memory(
                     imageState.image!,

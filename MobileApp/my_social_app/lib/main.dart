@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/exceptions/backend_exception.dart';
+import 'package:my_social_app/global_error_handling.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/login_view.dart';
 import 'package:my_social_app/views/pages/create_question/display_images_page.dart';
 import 'package:my_social_app/views/pages/create_question/select_exam_page.dart';
 import 'package:my_social_app/views/pages/create_question/select_subject_page.dart';
 import 'package:my_social_app/views/pages/create_question/select_topic_page.dart';
-import 'package:my_social_app/views/pages/create_question/take_picture_page.dart';
+import 'package:my_social_app/views/pages/create_question/take_question_image_page.dart';
+import 'package:my_social_app/views/pages/create_solution/create_solution_page.dart';
+import 'package:my_social_app/views/pages/create_solution/take_solution_image_page.dart';
 import 'package:my_social_app/views/pages/question/display_exams_questions_page.dart';
 import 'package:my_social_app/views/pages/question/display_subject_questions_page.dart';
 import 'package:my_social_app/views/pages/question/display_topic_questions_page.dart';
@@ -34,19 +35,19 @@ Future loadEnvironmentVariables() async {
   await dotenv.load(fileName: isProduction ? ".env.prod" : ".env.dev");
 }
 
+
 Future<void> main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
 
+  FlutterError.onError = (error) {
+    handleErrors(error.exception);
+  };
+
   PlatformDispatcher.instance.onError = (error, stack) {
-    if(error is BackendException){
-      ToastCreator.displayError(error.message);
-    }
-    else{
-      ToastCreator.displayError(error.toString());
-    }
+    handleErrors(error);
     return true;
   };
   
@@ -92,8 +93,9 @@ Future<void> main() async {
           userFollowersRoute: (context) => const UserFollowersPage(),
           userFollowedsRoute: (context) => const UserFollowedsPage(),
           userPageRoute: (context) => const UserPage(),
-          takePictureRoute: (context) => TakePicturePage(camera: cameras.first),
-          displayImagesRoute: (context) => const DisplayImagesPage(),
+
+          takeQuestionImageRoute: (context) => TakeQuestionImagePage(camera: cameras.first),
+          displayQuestionImagesRoute: (context) => const DisplayImagesPage(),
           selectExamRoute: (context) => const SelectExamPage(),
           selectSubjectRoute: (context) => const SelectSubjectPage(),
           selectTopicRoute: (context) => const SelectTopicPage(),
@@ -101,7 +103,10 @@ Future<void> main() async {
           displaySubjectQuestionsRoute: (context) => const DisplaySubjectQuestionsPage(),
           displayTopicQuestionsRoute: (context) => const DisplayTopicQuestionsPage(),
           displayExamQuestionsRoute: (context) => const DisplayExamsQuestionsPage(),
-          displayUserQuestionsRoute: (context) => const DisplayUserQuestionsPage()
+          displayUserQuestionsRoute: (context) => const DisplayUserQuestionsPage(),
+          
+          createSolutionRoute: (context) => const CreateSolutionPage(),
+          takeSolutionImageRoute: (context) => TakeSolutionImagePage(camera: cameras.first)
         },
       ),
     )

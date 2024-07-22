@@ -7,9 +7,9 @@ class QuestionEntityState extends EntityState<QuestionState>{
   const QuestionEntityState({required super.entities});
   
   QuestionEntityState addQuestion(QuestionState value)
-    => QuestionEntityState(entities: addOneStart(value));
+    => QuestionEntityState(entities: prependOne(value));
   QuestionEntityState addQuestions(Iterable<QuestionState> values)
-    => QuestionEntityState(entities: addManyEnd(values));
+    => QuestionEntityState(entities: appendMany(values));
   QuestionEntityState like(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.like()));
   QuestionEntityState dislike(int questionId)

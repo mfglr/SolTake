@@ -8,10 +8,10 @@ class UserImageEntityState extends EntityState<UserImageState>{
   const UserImageEntityState({required super.entities});
 
   UserImageEntityState addValue(UserImageState value)
-    => UserImageEntityState(entities: addOneEnd(value));
+    => UserImageEntityState(entities: appendOne(value));
 
   UserImageEntityState addVaues(Iterable<UserImageState> values)
-    => UserImageEntityState(entities: addManyEnd(values));
+    => UserImageEntityState(entities: appendMany(values));
   
   UserImageEntityState startLoading(int id)
     => UserImageEntityState(entities: updateOne(entities[id]!.startLoading(id)));

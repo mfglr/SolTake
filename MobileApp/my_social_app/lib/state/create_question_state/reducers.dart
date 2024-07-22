@@ -4,7 +4,7 @@ import 'package:my_social_app/state/create_question_state/create_question_state.
 import 'package:redux/redux.dart';
 
 CreateQuestionState addImageReducer(CreateQuestionState oldState, redux.Action action)
-  => action is AddImageAction ? oldState.addImage(action.image) : oldState;
+  => action is AddQuestionImageAction ? oldState.addImage(action.image) : oldState;
 
 CreateQuestionState removeImageReducer(CreateQuestionState oldState, redux.Action action)
   => action is RemoveImageAction ? oldState.removeImage(action.image) : oldState;
@@ -22,16 +22,16 @@ CreateQuestionState updateTopicIdsReducer(CreateQuestionState oldState,redux.Act
   => action is UpdateTopicIdsAction ? oldState.updateTopicIds(action.topicIds) : oldState;
 
 CreateQuestionState clearCreateQuestionStateReducer(CreateQuestionState oldState,redux.Action action)
-  => action is ClearCreateStateAction ? oldState.clear() : oldState;
+  => action is ClearCreateQuestionStateAction ? oldState.clear() : oldState;
 
 Reducer<CreateQuestionState> createQuestionReducers = combineReducers<CreateQuestionState>([
-  TypedReducer<CreateQuestionState,AddImageAction>(addImageReducer).call,
+  TypedReducer<CreateQuestionState,AddQuestionImageAction>(addImageReducer).call,
   TypedReducer<CreateQuestionState,RemoveImageAction>(removeImageReducer).call,
   TypedReducer<CreateQuestionState,UpdateContentAction>(updateContentReducer).call,
   TypedReducer<CreateQuestionState,UpdateExamAction>(updateExamReducer).call,
   TypedReducer<CreateQuestionState,UpdateSubjectAction>(updateSubjectReducer).call,
   TypedReducer<CreateQuestionState,UpdateTopicIdsAction>(updateTopicIdsReducer).call,
-  TypedReducer<CreateQuestionState,ClearCreateStateAction>(clearCreateQuestionStateReducer).call,
+  TypedReducer<CreateQuestionState,ClearCreateQuestionStateAction>(clearCreateQuestionStateReducer).call,
 ]);
 
 

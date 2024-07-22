@@ -5,15 +5,15 @@ import 'package:my_social_app/state/create_question_state/actions.dart';
 import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 
-class TakePicturePage extends StatefulWidget {
+class TakeQuestionImagePage extends StatefulWidget {
   final CameraDescription camera;
-  const TakePicturePage({super.key, required this.camera});
+  const TakeQuestionImagePage({super.key, required this.camera});
   
   @override
-  State<TakePicturePage> createState() => _TakePicturePageState();
+  State<TakeQuestionImagePage> createState() => _TakePicturePageState();
 }
 
-class _TakePicturePageState extends State<TakePicturePage> {
+class _TakePicturePageState extends State<TakeQuestionImagePage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
@@ -56,10 +56,10 @@ class _TakePicturePageState extends State<TakePicturePage> {
           onPressed: () async {
             await _initializeControllerFuture;
             final image = await _controller.takePicture();
-            store.dispatch(AddImageAction(image: image));
+            store.dispatch(AddQuestionImageAction(image: image));
             if (!context.mounted) return;
             if(store.state.createQuestionState.images.length == 1){
-              Navigator.of(context).popAndPushNamed(displayImagesRoute);
+              Navigator.of(context).popAndPushNamed(displayQuestionImagesRoute);
             }
             else{
               Navigator.of(context).pop();

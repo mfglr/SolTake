@@ -60,7 +60,7 @@ class _HomeViewState extends State<HomePage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
-              Navigator.of(context).pushNamed(takePictureRoute);
+              Navigator.of(context).pushNamed(takeQuestionImageRoute);
             },
             shape: const CircleBorder(),
             child: const Icon(Icons.question_mark),

@@ -1,10 +1,13 @@
 import 'package:my_social_app/state/account_state/reducers.dart';
 import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/create_question_state/reducers.dart';
+import 'package:my_social_app/state/create_solution_state/reducers.dart';
 import 'package:my_social_app/state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/question_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/search_state/reducers.dart';
+import 'package:my_social_app/state/solution_entity_state/reducers.dart';
+import 'package:my_social_app/state/solution_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/topic_entity_state/reducers.dart';
@@ -29,10 +32,13 @@ AppState appReducer(AppState oldState,action) => AppState(
   userImageEntityState: userImageEntityStateReducers(oldState.userImageEntityState,action),
   searchState: searchStateReducers(oldState.searchState,action),
   createQuestionState: createQuestionReducers(oldState.createQuestionState,action),
+  createSolutionState: createrSolutionReducers(oldState.createSolutionState,action),
   examEntityState: examEntityStateReducers(oldState.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(oldState.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(oldState.topicEntityState, action),
   questionEntityState: questionsReducer(oldState.questionEntityState,action),
-  questionImageEntityState: questionImageEntityReducers(oldState.questionImageEntityState,action)
+  questionImageEntityState: questionImageEntityReducers(oldState.questionImageEntityState,action),
+  solutionEntityState: solutionEntityStateReducers(oldState.solutionEntityState,action),
+  solutionImageEntityState: solutionImagesStateReducers(oldState.solutionImageEntityState,action)
 );
 

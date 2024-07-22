@@ -1,6 +1,8 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/create_question_state/middleware.dart';
+import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
+import 'package:my_social_app/state/create_solution_state/middlewares.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
@@ -12,6 +14,8 @@ import 'package:my_social_app/state/question_image_entity_state/question_image_e
 import 'package:my_social_app/state/reducer.dart';
 import 'package:my_social_app/state/search_state/middlewares.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
+import 'package:my_social_app/state/solution_entity_state/solution_entity_state.dart';
+import 'package:my_social_app/state/solution_image_entity_state/solution_image_entity_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
@@ -34,11 +38,14 @@ final store = Store(
     userImageEntityState: UserImageEntityState(entities: {}),
     searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
+    createSolutionState: CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: ExamEntityState(entities: {}, isLoaded: false),
     subjectEntityState: SubjectEntityState(entities: {}),
     topicEntityState: TopicEntityState(entities: {}),
     questionEntityState: QuestionEntityState(entities: {}),
-    questionImageEntityState: QuestionImageEntityState(entities: {})
+    questionImageEntityState: QuestionImageEntityState(entities: {}),
+    solutionEntityState: SolutionEntityState(entities: {}),
+    solutionImageEntityState: SolutionImageEntityState(entities: {})
   ),
   middleware: [
     //account start
@@ -93,5 +100,9 @@ final store = Store(
     // Question image start
     loadQuestionImageMiddleware,
     // Question image end
+
+    //solution start
+      createSolutionMiddleware,
+    //solution end
   ]
 );

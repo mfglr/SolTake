@@ -10,7 +10,7 @@ class SubjectEntityState extends EntityState<SubjectState>{
     => SubjectEntityState(entities: updateOne(entities[subjectId]!.loadTopics(topicIds)));
 
   SubjectEntityState addSubjects(Iterable<SubjectState> subjects)
-    => SubjectEntityState(entities: addManyEnd(subjects));
+    => SubjectEntityState(entities: appendMany(subjects));
 
   SubjectEntityState nextPageOfQuestions(int subjectId, Iterable<int> quesionIds)
     => SubjectEntityState(entities: updateOne(entities[subjectId]!.nextPageOfQuestions(quesionIds)));

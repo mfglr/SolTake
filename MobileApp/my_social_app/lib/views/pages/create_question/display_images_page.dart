@@ -20,7 +20,7 @@ class _DisplayImagesPageState extends State<DisplayImagesPage> {
 
   @override
   void dispose() {
-    store.dispatch(const ClearCreateStateAction());
+    store.dispatch(const ClearCreateQuestionStateAction());
     super.dispose();
   }
 
@@ -57,7 +57,7 @@ class _DisplayImagesPageState extends State<DisplayImagesPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed(takePictureRoute),
+        onPressed: () => Navigator.of(context).pushNamed(takeQuestionImageRoute),
         shape: const CircleBorder(),
         child: const Icon(Icons.photo_camera),
       ),

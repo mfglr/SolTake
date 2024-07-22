@@ -11,20 +11,20 @@ class UserEntityState extends EntityState<UserState>{
   Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.ids.map((e) => entities[e]!);
 
   UserEntityState addUser(UserState value)
-    => UserEntityState(entities: addOneEnd(value));
+    => UserEntityState(entities: appendOne(value));
   UserEntityState addUsers(Iterable<UserState> values)
-    => UserEntityState(entities: addManyEnd(values));
+    => UserEntityState(entities: appendMany(values));
   
   UserEntityState addFollowers(int userId, Iterable<UserState> users)
     => UserEntityState(
-        entities: addManyEndAndUpdateOne(
+        entities: appendManyAndUpdateOne(
           users,
           entities[userId]!.loadFollowers(users.map((e) => e.id))
         )
       );
   UserEntityState addFolloweds(int userId, Iterable<UserState> users)
     => UserEntityState(
-        entities: addManyEndAndUpdateOne(
+        entities: appendManyAndUpdateOne(
           users,
           entities[userId]!.loadFolloweds(users.map((e) => e.id))
         )

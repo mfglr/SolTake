@@ -7,9 +7,9 @@ class TopicEntityState extends EntityState<TopicState>{
   const TopicEntityState({required super.entities});
  
   TopicEntityState addTopics(Iterable<TopicState> topics)
-    => TopicEntityState(entities: addManyEnd(topics));
+    => TopicEntityState(entities: appendMany(topics));
   TopicEntityState addLists(Iterable<Iterable<TopicState>> lists)
-    => TopicEntityState(entities: addListsEnd(lists));
+    => TopicEntityState(entities: appendLists(lists));
   TopicEntityState loadQuestions(int topicId,Iterable<int> questionIds)
     => TopicEntityState(entities: updateOne(entities[topicId]!.loadQuestionIds(questionIds)));
   

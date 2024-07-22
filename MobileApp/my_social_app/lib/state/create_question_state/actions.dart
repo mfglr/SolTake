@@ -8,9 +8,9 @@ class CreateQuestionAction extends redux.Action{
 }
 
 @immutable
-class AddImageAction extends redux.Action{
+class AddQuestionImageAction extends redux.Action{
   final XFile image;
-  const AddImageAction({required this.image});
+  const AddQuestionImageAction({required this.image});
 }
 
 @immutable
@@ -44,6 +44,6 @@ class UpdateContentAction extends redux.Action{
 }
 
 @immutable
-class ClearCreateStateAction extends redux.Action{
-  const ClearCreateStateAction();
+class ClearCreateQuestionStateAction extends redux.Action{
+  const ClearCreateQuestionStateAction();
 }

@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/image_state.dart';
 
@@ -12,7 +11,6 @@ class QuestionImageState{
   final String? blobName;
   final ImageState state;
   final Uint8List? image;
-  final XFile? file;
 
   const QuestionImageState({
     required this.id,
@@ -22,7 +20,6 @@ class QuestionImageState{
     required this.blobName,
     required this.state,
     required this.image,
-    required this.file,
   });
 
 
@@ -35,7 +32,6 @@ class QuestionImageState{
         blobName: blobName,
         state: ImageState.started,
         image: image,
-        file: file
       );
   QuestionImageState load(Uint8List image)
     => QuestionImageState(
@@ -46,6 +42,5 @@ class QuestionImageState{
         blobName: blobName,
         state: ImageState.done,
         image: image,
-        file: file
       );
 }

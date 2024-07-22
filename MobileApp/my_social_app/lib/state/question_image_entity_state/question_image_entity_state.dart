@@ -8,13 +8,13 @@ class QuestionImageEntityState extends EntityState<QuestionImageState>{
   const QuestionImageEntityState({required super.entities});
 
   QuestionImageEntityState addValue(QuestionImageState value)
-    => QuestionImageEntityState(entities: addOneEnd(value));
+    => QuestionImageEntityState(entities: appendOne(value));
 
   QuestionImageEntityState addValues(Iterable<QuestionImageState> values)
-    => QuestionImageEntityState(entities: addManyEnd(values));
+    => QuestionImageEntityState(entities: appendMany(values));
 
   QuestionImageEntityState addLists(Iterable<Iterable<QuestionImageState>> lists)
-    => QuestionImageEntityState(entities: addListsEnd(lists));
+    => QuestionImageEntityState(entities: appendLists(lists));
 
   QuestionImageEntityState startLoading(int id)
     => QuestionImageEntityState(entities: updateOne(entities[id]!.startLoading()));

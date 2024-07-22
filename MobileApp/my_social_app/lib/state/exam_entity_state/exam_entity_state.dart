@@ -14,10 +14,10 @@ class ExamEntityState extends EntityState<ExamState>{
     => updateOne(entities[examId]!.loadSubjects(ids));
 
   ExamEntityState addAllExams(Iterable<ExamState> exams)
-    => ExamEntityState(entities: addManyEnd(exams), isLoaded: true);
+    => ExamEntityState(entities: appendMany(exams), isLoaded: true);
 
   ExamEntityState addExams(Iterable<ExamState> exams)
-    => ExamEntityState(entities: addManyEnd(exams), isLoaded: isLoaded);
+    => ExamEntityState(entities: appendMany(exams), isLoaded: isLoaded);
 
   ExamEntityState nextPageOfQuestions(int examId, Iterable<int> questionIds)
     => ExamEntityState(entities: _nextPageOfQuestions(examId,questionIds), isLoaded: isLoaded);

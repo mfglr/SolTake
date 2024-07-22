@@ -14,6 +14,7 @@ class QuestionState{
   final Iterable<int> images;
   final bool isLiked;
   final int numberOfLikes;
+  final bool isOwner;
 
   const QuestionState({
     required this.id,
@@ -27,7 +28,8 @@ class QuestionState{
     required this.topics,
     required this.images,
     required this.isLiked,
-    required this.numberOfLikes
+    required this.numberOfLikes,
+    required this.isOwner
   });
 
   String formatUserName(int count)
@@ -54,7 +56,8 @@ class QuestionState{
       topics: topics,
       images: images,
       isLiked: true,
-      numberOfLikes: numberOfLikes + 1
+      numberOfLikes: numberOfLikes + 1,
+      isOwner: isOwner
     );
 
   QuestionState dislike()
@@ -70,7 +73,8 @@ class QuestionState{
       topics: topics,
       images: images,
       isLiked: false,
-      numberOfLikes: numberOfLikes - 1
+      numberOfLikes: numberOfLikes - 1,
+      isOwner: isOwner
     );
   
 }
