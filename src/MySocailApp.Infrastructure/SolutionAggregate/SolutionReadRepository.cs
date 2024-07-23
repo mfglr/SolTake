@@ -15,6 +15,9 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .AsNoTracking()
                 .Include(x => x.Images)
                 .Include(x => x.Votes)
+                .Include(x => x.AppUser)
+                .ThenInclude(x => x.Account)
+                .Include(x => x.Question)
                 .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
 
         public async Task<List<Solution>> GetByQuestionIdAsync(int questionId,int? lastId,CancellationToken cancellationToken)
@@ -23,6 +26,9 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .AsNoTracking()
                 .Include(x => x.Images)
                 .Include(x => x.Votes)
+                .Include(x => x.AppUser)
+                .ThenInclude(x => x.Account)
+                .Include(x => x.Question)
                 .Where(x => x.QuestionId == questionId && (lastId == null || x.Id < lastId))
                 .OrderByDescending(x => x.Id)
                 .Take(20)

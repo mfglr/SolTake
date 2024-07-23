@@ -16,7 +16,9 @@ class Solution{
   final String userName;
   final String content;
   final int state;
+  final bool isUpvoted;
   final int numberOfUpvotes;
+  final bool isDownvoted;
   final int numberOfDownvotes;
   final bool isOwner;
   final Iterable<SolutionImage> images;
@@ -30,7 +32,9 @@ class Solution{
     required this.userName,
     required this.content,
     required this.state,
+    required this.isUpvoted,
     required this.numberOfUpvotes,
+    required this.isDownvoted,
     required this.numberOfDownvotes,
     required this.isOwner,
     required this.images
@@ -49,9 +53,11 @@ class Solution{
       userName: userName,
       content: content,
       state: state,
+      isUpvoted: isUpvoted,
       numberOfUpvotes: numberOfUpvotes,
+      isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,
       isOwner: isOwner,
-      solutionImages: images.map((e) => e.id)
+      images: images.map((e) => e.id)
     );
 }

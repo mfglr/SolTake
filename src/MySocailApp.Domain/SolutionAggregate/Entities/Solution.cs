@@ -29,7 +29,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         }
 
         public SolutionState State { get; private set; }
-        internal void Approve()
+        internal void MarkAsApproved()
         {
             if (State == SolutionState.Approved)
                 return;
@@ -37,7 +37,15 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             State = SolutionState.Approved;
             UpdatedAt = DateTime.UtcNow;
         }
+        internal void MarkAsPending()
+        {
+            if(State == SolutionState.Pending)
+                return;
+            State = SolutionState.Pending;
+            UpdatedAt = DateTime.UtcNow;
+        }
 
+        
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
         public void MakeUpvote(int voterId)
@@ -68,7 +76,21 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             }
             _votes.Add(SolutionUserVote.GenerateDownvote(Id, voterId));
         }
-
+        public void RemoveUpvote(int voterId)
+        {
+            int index = _votes.FindIndex(x => x.AppUserId == voterId);
+            if (index == -1 || _votes[index].Type == SolutionVoteType.Downvote)
+                throw new VoteIsNotFoundException();
+            _votes.RemoveAt(index);
+        }
+        public void RemoveDownvote(int voterId)
+        {
+            int index = _votes.FindIndex(x => x.AppUserId == voterId);
+            if(index == -1 || _votes[index].Type == SolutionVoteType.Upvote)
+                throw new VoteIsNotFoundException();
+            _votes.RemoveAt(index);
+        }
+        
         //Readonluy navigator properties
         public Question Question { get; }
         public AppUser AppUser { get; }

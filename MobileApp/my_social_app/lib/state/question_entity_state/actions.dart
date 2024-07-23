@@ -35,3 +35,22 @@ class DislikeQuestionSuccessAction extends redux.Action{
   const DislikeQuestionSuccessAction({required this.questionId});
 }
 
+
+@immutable
+class AddQuestionSolutionAction extends redux.Action{
+  final int solutionId;
+  final int questionId;
+  const AddQuestionSolutionAction({required this.solutionId, required this.questionId});
+}
+
+@immutable
+class NextPageQuestionSolutionsAction extends redux.Action{
+  final int questionId;
+  const NextPageQuestionSolutionsAction({required this.questionId});
+}
+@immutable
+class NextPageQuestionSolutionsSuccessAction extends redux.Action{
+  final int questionId;
+  final Iterable<int> solutionIds;
+  const NextPageQuestionSolutionsSuccessAction({required this.questionId, required this.solutionIds});
+}

@@ -9,15 +9,11 @@ UserImageEntityState addUserImageReducer(UserImageEntityState prev,Action action
 UserImageEntityState addUserImagesReducer(UserImageEntityState prev,Action action)
   => action is AddUserImagesAction ? prev.addVaues(action.images) : prev;
 
-UserImageEntityState loadUserImageReducer(UserImageEntityState prev,Action action)
-  => action is LoadUserImageAction ? prev.startLoading(action.userId) : prev;
-
 UserImageEntityState loadUserImageSuccessReducer(UserImageEntityState prev,Action action)
   => action is LoadUserImageSuccessAction ? prev.load(action.userId, action.image) : prev;
 
 Reducer<UserImageEntityState> userImageEntityStateReducers = combineReducers<UserImageEntityState>([
   TypedReducer<UserImageEntityState,AddUserImageAction>(addUserImageReducer).call,
   TypedReducer<UserImageEntityState,AddUserImagesAction>(addUserImagesReducer).call,
-  TypedReducer<UserImageEntityState,LoadUserImageAction>(loadUserImageReducer).call,
   TypedReducer<UserImageEntityState,LoadUserImageSuccessAction>(loadUserImageSuccessReducer).call,
 ]);

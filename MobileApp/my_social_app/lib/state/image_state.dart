@@ -1,6 +1,5 @@
 
 enum ImageState{
-  notStarted,
-  done,
-  started,
+  notLoaded,
+  loaded
 }

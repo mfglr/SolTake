@@ -36,8 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\QuestionImages\" />
     <Folder Include="Images\SolutionImages\" />
+    <Folder Include="Images\QuestionImages\" />
     <Folder Include="Images\ProfileImages\" />
   </ItemGroup>
 

@@ -8,12 +8,14 @@ part 'solution_image.g.dart';
 @JsonSerializable()
 class SolutionImage{
   final int id;
+  final int solutionId;
   final String blobName;
   final double height;
   final double width;
 
   const SolutionImage({
     required this.id,
+    required this.solutionId,
     required this.blobName,
     required this.height,
     required this.width
@@ -22,13 +24,14 @@ class SolutionImage{
   factory SolutionImage.fromJson(Map<String, dynamic> json) => _$SolutionImageFromJson(json);
   Map<String, dynamic> toJson() => _$SolutionImageToJson(this);
 
-  SolutionImageState toSolotionImageState()
+  SolutionImageState toSolutionImageState()
    => SolutionImageState(
       id: id,
+      solutionId: solutionId,
       blobName: blobName,
       height: height,
       width: width,
-      state: ImageState.notStarted,
+      state: ImageState.notLoaded,
       image: null,
     );
 }

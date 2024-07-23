@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote
             int voterId = _tokenReader.GetRequiredAccountId();
             
             var solution =
-                await _solutionWriteRepository.GetByIdAsync(request.SolutionId, cancellationToken) ??
+                await _solutionWriteRepository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionIsNotFoundException();
             solution.MakeUpvote(voterId);
             

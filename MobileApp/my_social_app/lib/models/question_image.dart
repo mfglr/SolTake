@@ -31,7 +31,7 @@ class QuestionImage{
         height: height,
         width: width,
         blobName: blobName,
-        state: ImageState.notStarted,
+        state: ImageState.notLoaded,
         image: null,
       );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/ids.dart';
 
 @immutable
 class QuestionState{
@@ -16,6 +17,9 @@ class QuestionState{
   final int numberOfLikes;
   final bool isOwner;
 
+  final int numberOfSolutions;
+  final Ids solutions;
+
   const QuestionState({
     required this.id,
     required this.createdAt,
@@ -29,7 +33,9 @@ class QuestionState{
     required this.images,
     required this.isLiked,
     required this.numberOfLikes,
-    required this.isOwner
+    required this.isOwner,
+    required this.numberOfSolutions,
+    required this.solutions,
   });
 
   String formatUserName(int count)
@@ -57,7 +63,9 @@ class QuestionState{
       images: images,
       isLiked: true,
       numberOfLikes: numberOfLikes + 1,
-      isOwner: isOwner
+      isOwner: isOwner,
+      numberOfSolutions: numberOfSolutions,
+      solutions: solutions
     );
 
   QuestionState dislike()
@@ -74,7 +82,47 @@ class QuestionState{
       images: images,
       isLiked: false,
       numberOfLikes: numberOfLikes - 1,
-      isOwner: isOwner
+      isOwner: isOwner,
+      numberOfSolutions: numberOfSolutions,
+      solutions: solutions
     );
+
+  QuestionState addSolution(int solutionId)
+    => QuestionState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      appUserId: appUserId,
+      userName: userName,
+      content: content,
+      examId: examId,
+      subjectId: subjectId,
+      topics: topics,
+      images: images,
+      isLiked: false,
+      numberOfLikes: numberOfLikes,
+      isOwner: isOwner,
+      numberOfSolutions: numberOfSolutions + 1,
+      solutions: solutions.create(solutionId)
+    );
+  
+  QuestionState nextPageQuestionSolutions(Iterable<int> solutionIds)
+    => QuestionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        examId: examId,
+        subjectId: subjectId,
+        topics: topics,
+        images: images,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        isOwner: isOwner,
+        numberOfSolutions: numberOfSolutions,
+        solutions: solutions.nextPage(solutionIds)
+      );
   
 }

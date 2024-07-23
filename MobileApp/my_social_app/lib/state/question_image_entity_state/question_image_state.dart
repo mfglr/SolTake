@@ -21,18 +21,7 @@ class QuestionImageState{
     required this.state,
     required this.image,
   });
-
-
-  QuestionImageState startLoading()
-    => QuestionImageState(
-        id:id,
-        questionId: questionId,
-        height: height,
-        width: width,
-        blobName: blobName,
-        state: ImageState.started,
-        image: image,
-      );
+  
   QuestionImageState load(Uint8List image)
     => QuestionImageState(
         id: id,
@@ -40,7 +29,7 @@ class QuestionImageState{
         height: height, 
         width: width,
         blobName: blobName,
-        state: ImageState.done,
+        state: ImageState.loaded,
         image: image,
       );
 }

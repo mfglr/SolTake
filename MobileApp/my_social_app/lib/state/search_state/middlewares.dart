@@ -21,7 +21,7 @@ void searchMiddleware(Store<AppState> store,action,NextDispatcher next){
 
         store.dispatch(
           AddUserImagesAction(
-            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notStarted))
+            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notLoaded))
           )
         );
 
@@ -51,7 +51,7 @@ void nextPageSearchingMiddleware(Store<AppState> store,action,NextDispatcher nex
         
         store.dispatch(
           AddUserImagesAction(
-            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notStarted))
+            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notLoaded))
           )
         );
 

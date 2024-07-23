@@ -12,9 +12,6 @@ QuestionImageEntityState addQuestionImagesReducer(QuestionImageEntityState prev,
 QuestionImageEntityState addQuestionImagesListReducer(QuestionImageEntityState prev,Action action)
   => action is AddQuestionImagesListAction ? prev.addLists(action.lists) : prev;
 
-QuestionImageEntityState loadQuestionImageReducer(QuestionImageEntityState prev,Action action)
-  => action is LoadQuestionImageAction ? prev.startLoading(action.id) : prev;
-
 QuestionImageEntityState loadQuestionImageSuccessReducer(QuestionImageEntityState prev,Action action)
   => action is LoadQuestionImageSuccessAction ? prev.loadImage(action.id, action.image) : prev;
 
@@ -22,6 +19,5 @@ Reducer<QuestionImageEntityState> questionImageEntityReducers = combineReducers<
   TypedReducer<QuestionImageEntityState,AddQuestionImageAction>(addQuestionImageReducer).call,
   TypedReducer<QuestionImageEntityState,AddQuestionImagesAction>(addQuestionImagesReducer).call,
   TypedReducer<QuestionImageEntityState,AddQuestionImagesListAction>(addQuestionImagesListReducer).call,
-  TypedReducer<QuestionImageEntityState,LoadQuestionImageAction>(loadQuestionImageReducer).call,
   TypedReducer<QuestionImageEntityState,LoadQuestionImageSuccessAction>(loadQuestionImageSuccessReducer).call,
 ]);

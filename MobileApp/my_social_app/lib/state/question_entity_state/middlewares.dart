@@ -1,6 +1,12 @@
 import 'package:my_social_app/services/question_service.dart';
+import 'package:my_social_app/services/solution_service.dart';
+import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/solution_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_image_entity_state/actions.dart';
+import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
@@ -16,6 +22,41 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
     QuestionService()
       .dislike(action.questionId)
       .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId)));
+  }
+  next(action);
+}
+
+void nextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is NextPageQuestionSolutionsAction){
+    final lastId = store.state.questionEntityState.entities[action.questionId]!.solutions.lastId;
+    SolutionService()
+      .getByQuestionId(action.questionId,lastId: lastId)
+      .then((solutions){
+        store.dispatch(
+          AddSolutionsAction(
+            solutions: solutions.map((e) => e.toSolutionState())
+          )
+        );
+
+        store.dispatch(
+          AddSolutionImagesListsAction(
+            lists: solutions.map((e) => e.images.map((e) => e.toSolutionImageState()))
+          )
+        );
+
+        store.dispatch(
+          NextPageQuestionSolutionsSuccessAction(
+            questionId: action.questionId, 
+            solutionIds: solutions.map((e) => e.id)
+          )
+        );
+
+        store.dispatch(
+          AddUserImagesAction(
+            images: solutions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notLoaded))
+          )
+        );
+      });
   }
   next(action);
 }

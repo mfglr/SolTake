@@ -34,8 +34,6 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState addQuestions(int userId, Iterable<int> questions)
     => UserEntityState(entities: updateOne(entities[userId]!.loadQuestions(questions)));
 
-  UserEntityState startLoadingUserImage(int userId)
-    => UserEntityState(entities: updateOne(entities[userId]!.startLoadingUserImage()));
   UserEntityState loadUserImage(int userId, Uint8List image)
     => UserEntityState(entities: updateOne(entities[userId]!.loadUserImage(image)));
 

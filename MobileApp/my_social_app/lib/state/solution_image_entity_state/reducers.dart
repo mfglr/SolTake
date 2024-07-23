@@ -8,7 +8,11 @@ SolutionImageEntityState addSolutionImagesReducer(SolutionImageEntityState prev,
 SolutionImageEntityState addSolutionImagesListsReducer(SolutionImageEntityState prev,AddSolutionImagesListsAction action)
   => SolutionImageEntityState(entities: prev.appendLists(action.lists));
 
+SolutionImageEntityState loadSolutionImageSuccessReducer(SolutionImageEntityState prev,LoadSolutionImageSuccessAction action)
+  => prev.load(action.id, action.image);
+
 Reducer<SolutionImageEntityState> solutionImagesStateReducers = combineReducers<SolutionImageEntityState>([
   TypedReducer<SolutionImageEntityState,AddSolutionImagesAction>(addSolutionImagesReducer).call,
-  TypedReducer<SolutionImageEntityState,AddSolutionImagesListsAction>(addSolutionImagesListsReducer).call
+  TypedReducer<SolutionImageEntityState,AddSolutionImagesListsAction>(addSolutionImagesListsReducer).call,
+  TypedReducer<SolutionImageEntityState,LoadSolutionImageSuccessAction>(loadSolutionImageSuccessReducer).call,
 ]);

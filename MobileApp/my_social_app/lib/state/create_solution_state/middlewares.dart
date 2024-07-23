@@ -1,5 +1,6 @@
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/create_solution_state/actions.dart';
+import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/solution_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -19,8 +20,15 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         );
         
         store.dispatch(
+          AddQuestionSolutionAction(
+            questionId: state.questionId!,
+            solutionId: solution.id
+          )
+        );
+
+        store.dispatch(
           AddSolutionImagesAction(
-            images: solution.images.map((e) => e.toSolotionImageState())
+            images: solution.images.map((e) => e.toSolutionImageState())
           )
         );
 

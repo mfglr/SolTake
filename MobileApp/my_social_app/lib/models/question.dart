@@ -4,6 +4,7 @@ import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/question_image.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
+import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
@@ -22,6 +23,7 @@ class Question{
   final List<QuestionImage> images;
   final bool isLiked;
   final int numberOfLikes;
+  final int numberOfSolutions;
   final bool isOwner;
 
   const Question({
@@ -37,6 +39,7 @@ class Question{
     required this.images,
     required this.isLiked,
     required this.numberOfLikes,
+    required this.numberOfSolutions,
     required this.isOwner,
   });
 
@@ -56,6 +59,8 @@ class Question{
     images: images.map((e) => e.id),
     isLiked: isLiked,
     numberOfLikes: numberOfLikes,
-    isOwner: isOwner
+    isOwner: isOwner,
+    numberOfSolutions: numberOfSolutions,
+    solutions: const Ids(ids: [],isLast: false,lastId: null)
   );
 }

@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 void loadUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadUserImageAction){
     final userImageState = store.state.userImageEntityState.entities[action.userId]!;
-    if(userImageState.state == ImageState.notStarted){
+    if(userImageState.state == ImageState.notLoaded){
       UserService()
         .getImageById(action.userId)
         .then((image) => store.dispatch(LoadUserImageSuccessAction(userId: action.userId, image: image)));

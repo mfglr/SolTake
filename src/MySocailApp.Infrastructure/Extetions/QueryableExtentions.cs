@@ -21,7 +21,7 @@ namespace MySocailApp.Infrastructure.Extetions
                 .ThenInclude(x => x.Topic)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Include(x => x.Likes);
-
+                .Include(x => x.Likes)
+                .Include(x => x.Solutions);
     }
 }

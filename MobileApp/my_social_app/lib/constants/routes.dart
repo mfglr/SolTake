@@ -17,6 +17,7 @@ const displayTopicQuestionsRoute = "/display-topic-questions/";
 const displayExamQuestionsRoute = "/display-exam-questions/";
 const displayUserQuestionsRoute = "/display-user-questions/";
 
+const displayQuestionSolutionsRoute = "/display-question-solutions/";
 const createSolutionRoute = "/create-solution/";
 const takeSolutionImageRoute = "/take-solution-image/";
 

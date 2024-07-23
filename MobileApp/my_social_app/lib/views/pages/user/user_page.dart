@@ -19,10 +19,7 @@ class UserPage extends StatelessWidget {
     final id = userId ?? (ModalRoute.of(context)!.settings.arguments as int);
     
     return StoreConnector<AppState, UserState?>(
-      onInit: (store) {
-        store.dispatch(LoadUserAction(userId: id));
-        store.dispatch(NextPageOfUserQuestionsAction(userId: id));
-      },
+      onInit: (store) => store.dispatch(LoadUserAction(userId: id)),
       converter: (store) => store.state.userEntityState.entities[id],
       builder: (context, userState){
         if(userState != null){
@@ -38,8 +35,9 @@ class UserPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: StoreConnector<AppState,Iterable<QuestionState>>(
+                    onInit: (store) => store.dispatch(NextPageOfUserQuestionsAction(userId: id)),
                     converter: (store) => store.state.getUserQuestions(id),
-                    builder: (context,value )=> QuestionAbstractItemsWidget(questions: value)
+                    builder: (context,value ) => QuestionAbstractItemsWidget(questions: value)
                   ),
                 )
               ],

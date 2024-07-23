@@ -14,7 +14,12 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]!.like()));
   QuestionEntityState dislike(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.dislike()));
+    
+  QuestionEntityState addQuestionSolution(int questionId,int solutionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.addSolution(solutionId)));
 
+  QuestionEntityState nextPageQuestionSolutions(int questionId,Iterable<int> solutionIds)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.nextPageQuestionSolutions(solutionIds)));
 
   Iterable<QuestionState> getByUserId(int userId)
     => entities.values.where((question) => question.appUserId == userId);

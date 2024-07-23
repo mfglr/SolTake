@@ -14,7 +14,9 @@ import 'package:my_social_app/state/question_image_entity_state/question_image_e
 import 'package:my_social_app/state/reducer.dart';
 import 'package:my_social_app/state/search_state/middlewares.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
+import 'package:my_social_app/state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_entity_state.dart';
+import 'package:my_social_app/state/solution_image_entity_state/middlewares.dart';
 import 'package:my_social_app/state/solution_image_entity_state/solution_image_entity_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/middlewares.dart';
@@ -65,6 +67,7 @@ final store = Store(
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
     nextPageOfUserQuestionsMiddleware,
+
     //user end
 
     //user image start
@@ -95,6 +98,7 @@ final store = Store(
     createQuestionMiddleware,
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
+    nextPageQuestionSolutionsMiddleware,
     // Question end
     
     // Question image start
@@ -102,7 +106,17 @@ final store = Store(
     // Question image end
 
     //solution start
-      createSolutionMiddleware,
+    createSolutionMiddleware,
+    markSolutionAsApprovedMiddleware,
+    markSolutionAsPendingMiddleware,
+    makeUpvoteMiddleware,
+    makeDownvoteMiddleware,
+    removeUpvoteMiddleware,
+    removeDownvoteMiddleware,
     //solution end
+
+    //Solution image start
+    loadSolutionImageMiddleware,
+    //Solution image end
   ]
 );

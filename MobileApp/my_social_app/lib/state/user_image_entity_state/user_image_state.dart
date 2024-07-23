@@ -14,17 +14,10 @@ class UserImageState{
     required this.state
   });
 
-  UserImageState startLoading(int id)
-    => UserImageState(
-        id: id,
-        image: image,
-        state: ImageState.started
-      );
-
   UserImageState load(int id,Uint8List image)
     => UserImageState(
         id: id,
         image: image,
-        state: ImageState.done
+        state: ImageState.loaded
       );
 }

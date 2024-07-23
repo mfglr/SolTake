@@ -38,7 +38,7 @@ void nextPageOfSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispa
 
           store.dispatch(
             AddUserImagesAction(
-              images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+              images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notLoaded))
             )
           );
 

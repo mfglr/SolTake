@@ -12,10 +12,7 @@ class UserImageEntityState extends EntityState<UserImageState>{
 
   UserImageEntityState addVaues(Iterable<UserImageState> values)
     => UserImageEntityState(entities: appendMany(values));
-  
-  UserImageEntityState startLoading(int id)
-    => UserImageEntityState(entities: updateOne(entities[id]!.startLoading(id)));
-  
+ 
   UserImageEntityState load(int id,Uint8List image)
     => UserImageEntityState(entities: updateOne(entities[id]!.load(id, image)));
 }

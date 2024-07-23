@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
@@ -33,4 +33,60 @@ class SolutionService{
     
     return Solution.fromJson(json);
   }
+
+  Future<Iterable<Solution>> getByQuestionId(int questionId,{int? lastId}) async {
+    String endPoint = "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Solution.fromJson(e));
+  }
+
+  Future<Uint8List> getImage(int solutionId,String blobName) async {
+    String endPoint = "$solutionController/$getSolutionImageEndPoint/$solutionId/$blobName";
+    return await _appClient.getBytes(endPoint);
+  }
+
+  Future<void> makeUpvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$makeUpvoteEndpoint",
+      body: {'solutionId': solutionId}
+    );
+  }
+
+  Future<void> makeDownvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$makeDownvoteEndpoint",
+      body: {'solutionId': solutionId}
+    );
+  }
+
+  Future<void> removeUpvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$removeUpvoteEndpoint",
+      body: { 'solutionId': solutionId }
+    );
+  }
+
+  Future<void> removeDownvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$removeDownvoteEndpoint",
+      body: { 'solutionId': solutionId }
+    );
+  }
+
+  Future<void> markAsApproved(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$markSolutionAsApprovedEndpoint",
+      body: { 'solutionId': solutionId }
+    );
+  }
+
+  Future<void> markAsPending(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$markSolutionAsPendingEndpoint",
+      body: { 'solutionId': solutionId }
+    );
+  }
+  
 }

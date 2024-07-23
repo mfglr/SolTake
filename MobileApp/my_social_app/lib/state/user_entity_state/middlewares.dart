@@ -27,7 +27,7 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
 
           store.dispatch(
             AddUserImageAction(
-              image: UserImageState(id: user.id,image: null,state: ImageState.notStarted)
+              image: UserImageState(id: user.id,image: null,state: ImageState.notLoaded)
             )
           );
         });
@@ -53,7 +53,7 @@ void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
             )
           );
         });
@@ -77,7 +77,7 @@ void loadFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
             )
           );
         });
@@ -103,7 +103,7 @@ void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
             )
           );
         });
@@ -127,7 +127,7 @@ void loadFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
             )
           );
         }
@@ -179,7 +179,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
 
           store.dispatch(
             AddUserImagesAction(
-              images: questions.map((e) => UserImageState(id: e.appUserId,image: null,state: ImageState.notStarted)) 
+              images: questions.map((e) => UserImageState(id: e.appUserId,image: null,state: ImageState.notLoaded)) 
             )
           );
 

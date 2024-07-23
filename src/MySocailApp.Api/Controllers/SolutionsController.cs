@@ -7,8 +7,12 @@ using MySocailApp.Application.Commands.SolutionAggregate.ApproveSolution;
 using MySocailApp.Application.Commands.SolutionAggregate.CreateSolution;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote;
+using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsPending;
+using MySocailApp.Application.Commands.SolutionAggregate.RemoveDownvote;
+using MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote;
 using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById;
+using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionsByQuestionId;
 
 namespace MySocailApp.Api.Controllers
@@ -27,7 +31,11 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new CreateSolutionDto(content, questionId, images),cancellationToken);
 
         [HttpPut]
-        public async Task Approve(ApproveSolutionDto request, CancellationToken cancellationToken)
+        public async Task MarkAsApproved(MarkSolutionApprovedDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPut]
+        public async Task MarkAsPending(MarkSolutionAsPendingDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPut]
@@ -37,6 +45,21 @@ namespace MySocailApp.Api.Controllers
         [HttpPut]
         public async Task MakeDownvote(MakeDownvoteDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
+
+        [HttpPut]
+        public async Task RemoveUpvote(RemoveUpvoteDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPut]
+        public async Task RemoveDownvote(RemoveDownvoteDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpGet("{solutionId}/{blobName}")]
+        public async Task<FileResult> GetImage(int solutionId,string blobName,CancellationToken cancellationToken)
+             => File(
+               await _mediator.Send(new GetSolutionImageDto(solutionId, blobName), cancellationToken),
+               "application/octet-stream"
+            );
 
         [HttpGet("{id}")]
         public async Task<SolutionResponseDto> GetById(int id, CancellationToken cancellationToken)

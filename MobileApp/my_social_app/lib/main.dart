@@ -23,6 +23,7 @@ import 'package:my_social_app/views/pages/question/display_exams_questions_page.
 import 'package:my_social_app/views/pages/question/display_subject_questions_page.dart';
 import 'package:my_social_app/views/pages/question/display_topic_questions_page.dart';
 import 'package:my_social_app/views/pages/question/display_user_questions_page.dart';
+import 'package:my_social_app/views/pages/solution/display_question_solutions_page.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/register_view.dart';
 import 'package:my_social_app/views/pages/user/user_followeds_page.dart';
@@ -105,6 +106,7 @@ Future<void> main() async {
           displayExamQuestionsRoute: (context) => const DisplayExamsQuestionsPage(),
           displayUserQuestionsRoute: (context) => const DisplayUserQuestionsPage(),
           
+          displayQuestionSolutionsRoute: (context) => const DisplayQuestionSolutionsPage(),
           createSolutionRoute: (context) => const CreateSolutionPage(),
           takeSolutionImageRoute: (context) => TakeSolutionImagePage(camera: cameras.first)
         },

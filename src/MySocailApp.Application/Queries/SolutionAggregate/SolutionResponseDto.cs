@@ -10,9 +10,12 @@
         public int AppUserId { get; private set; }
         public string? Content { get; private set; }
         public int State { get; private set; }
+        public bool IsUpvoted { get; private set; }
         public int NumberOfUpvotes { get; private set; }
+        public bool IsDownvoted { get; private set; }
         public int NumberOfDownvotes { get; private set; }
         public bool IsOwner { get; private set; }
+        public bool BelongsToQuestionOfCurrentUser { get; private set; }
         public IReadOnlyCollection<SolutionImageResponseDto> Images { get; private set; }
 
         private SolutionResponseDto() { }

@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.ApproveSolution
 {
-    public record ApproveSolutionDto(int SolutionId) : IRequest;
+    public record MarkSolutionApprovedDto(int SolutionId) : IRequest;
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/create_solution_state/actions.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/shared/exam/exam_tag_item.dart';
@@ -64,24 +62,24 @@ class QuestionItemWidget extends StatelessWidget {
                   const Text("56")
                 ],
               ),
-              Builder(
-                builder: (context) {
-                  if(!question.isOwner){
-                    return Row(
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: (){
+                      Navigator.of(context).pushNamed(displayQuestionSolutionsRoute,arguments: question);
+                    },
+                    child: Row(
                       children: [
-                        IconButton(
-                          onPressed: (){
-                            store.dispatch(ChangeQuestionIdAction(questionId: question.id));
-                            Navigator.of(context).pushNamed(createSolutionRoute);
-                          },
-                          icon: const Icon(Icons.border_color_outlined)
+                        Container(
+                          margin: const EdgeInsets.only(right: 5),
+                          child: Text(question.numberOfSolutions.toString())
                         ),
+                        const Icon(Icons.border_color_outlined),
                       ],
-                    );
-                  }
-                  return const SizedBox.shrink();
-                }
-              )
+                    )
+                  ),
+                ],
+              ),
             ],
           ),
           Row(

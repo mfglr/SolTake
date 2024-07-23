@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadQuestionImageAction){
     final imageState = store.state.questionImageEntityState.entities[action.id]!;
-    if(imageState.state == ImageState.notStarted){
+    if(imageState.state == ImageState.notLoaded){
       QuestionService()
         .getQuestionImage(imageState.questionId, imageState.blobName!)
         .then((image) => store.dispatch(LoadQuestionImageSuccessAction(id: action.id, image: image)));

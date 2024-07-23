@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote
         {
             var voterId = _tokenReader.GetRequiredAccountId();
             var solution =
-                await _writeRepository.GetByIdAsync(request.SolutionId, cancellationToken) ??
+                await _writeRepository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionIsNotFoundException();
             solution.MakeDownvote(voterId);
             await _unitOfWork.CommitAsync(cancellationToken);

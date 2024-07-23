@@ -192,12 +192,8 @@ class UserState{
     );
   }
   //remove follower end
-
-  UserState startLoadingUserImage() => _optional(
-    newImageState: ImageState.started
-  );
   UserState loadUserImage(Uint8List newImage) => _optional(
-    newImage: newImage,newImageState: ImageState.done
+    newImage: newImage,newImageState: ImageState.loaded
   );
   
   //Questions
