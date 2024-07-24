@@ -4,12 +4,9 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
     public class QuestionUserLike
     {
-        public DateTime CreatetAt { get; private set; }
+        public DateTime CreatedAt { get; private set; }
         public int QuestionId { get; private set; }
         public int AppUserId { get; private set; }
-        public Question Question { get; }
-        public AppUser AppUser { get; }
-
 
         private QuestionUserLike(int questionId, int appUserId)
         {
@@ -18,6 +15,9 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         }
 
         public static QuestionUserLike Create(int questionId, int appUserId)
-            => new(questionId, appUserId) { CreatetAt = DateTime.UtcNow };
+            => new(questionId, appUserId) { CreatedAt = DateTime.UtcNow };
+
+        public Question Question { get; }
+        public AppUser AppUser { get; }
     }
 }

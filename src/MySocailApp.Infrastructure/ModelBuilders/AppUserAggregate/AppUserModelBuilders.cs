@@ -65,6 +65,19 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.Comments)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey (x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.CommentLikes)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

@@ -10,6 +10,7 @@ using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionCommentAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Repositories;
 using MySocailApp.Domain.SubjectAggregate;
@@ -19,6 +20,7 @@ using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
+using MySocailApp.Infrastructure.QuestionCommentAggregate;
 using MySocailApp.Infrastructure.Services;
 using MySocailApp.Infrastructure.Services.BlobService;
 using MySocailApp.Infrastructure.Services.Email;
@@ -43,7 +45,8 @@ namespace MySocailApp.Infrastructure
                 .AddSolutionAggregate()
                 .AddExamAggregate()
                 .AddSubjectAggregate()
-                .AddTopicAggregate();
+                .AddTopicAggregate()
+                .AddQuestionCommentAggregate();
         }
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
@@ -139,6 +142,12 @@ namespace MySocailApp.Infrastructure
         {
             return services
                 .AddScoped<ITopicReadRepository, TopicReadRepository>();
+        }
+        private static IServiceCollection AddQuestionCommentAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IQuestionCommentReadRepository, QuestionCommentReadRepository>()
+                .AddScoped<IQuestionCommentWriteRepository, QuestionCommentWriteRepository>();
         }
     }
 }

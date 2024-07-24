@@ -14,6 +14,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate
         public bool IsLiked { get; private set; }
         public int NumberOfLikes { get; private set; }
         public int NumberOfSolutions { get; private set; }
+        public int NumberOfComments { get; private set; }
         public bool IsOwner { get; private set; }
         public ExamResponseDto Exam { get; private set; }
         public SubjectResponseDto Subject { get; private set; }
