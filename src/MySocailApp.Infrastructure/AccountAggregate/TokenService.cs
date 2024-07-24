@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Application.Configurations;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 

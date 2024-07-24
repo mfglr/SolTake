@@ -1,4 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/user_entity_state/gender.dart';
+import 'package:my_social_app/state/user_entity_state/profilevisibility.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 part "user.g.dart";
 
 @JsonSerializable()
@@ -39,4 +43,28 @@ class User{
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  UserState toUserState()
+    => UserState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        userName: userName,
+        name: name,
+        birthDate: birthDate,
+        gender: Gender.values[gender],
+        profileVisibility: ProfileVisibility.values[profileVisibility],
+        numberOfQuestions: numberOfQuestions,
+        numberOfFollowers: numberOfFollowers,
+        numberOfFolloweds: numberOfFolloweds,
+        isFollower: isFollower,
+        isFollowed: isFollowed,
+        isRequester: isRequester,
+        isRequested: isRequested,
+        followers: const Ids(ids: [], isLast: false, lastId: null),
+        followeds: const Ids(ids: [], isLast: false, lastId: null),
+        requesters: const Ids(ids: [], isLast: false, lastId: null),
+        requesteds: const Ids(ids: [], isLast: false, lastId: null),
+        questions: const Ids(ids: [], isLast: false, lastId: null)
+      );
 }

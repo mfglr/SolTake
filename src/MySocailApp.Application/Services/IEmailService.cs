@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.AccountAggregate;
+﻿using MySocailApp.Domain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Services
 {

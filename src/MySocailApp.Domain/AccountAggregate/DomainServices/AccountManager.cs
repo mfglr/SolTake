@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MySocailApp.Core.Exceptions;
+using MySocailApp.Domain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Domain.AppUserAggregate;
 using System.Net;
 
-namespace MySocailApp.Domain.AccountAggregate
+namespace MySocailApp.Domain.AccountAggregate.DomainServices
 {
     public class AccountManager(IAppUserRepository userRepository, ITransactionCreator transactionCreator, UserManager<Account> userManager, ITokenService tokenService)
     {

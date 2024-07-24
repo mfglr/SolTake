@@ -57,7 +57,7 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
 
           store.dispatch(
             AddUserImagesAction(
-              images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notLoaded))
+              images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
             )
           );
 
@@ -83,8 +83,17 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
   }
   next(action);
 }
+void nextPageOfExamQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageOfExamQuestionsIfNoQuestions){
+    final questions = store.state.examEntityState.entities[action.examId]!.questions;
+    if(!questions.isLast && questions.ids.isEmpty){
+      store.dispatch(NextPageOfExamQuestionsAction(examId: action.examId));
+    }
+  }
+  next(action);
+}
 
-void loadSubjectsOfSelectedExamReducer(Store<AppState> store,action,NextDispatcher next){
+void loadSubjectsOfSelectedExamMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSubjectsOfSelectedExamAction){
     final examId = store.state.createQuestionState.examId!;
     final examState = store.state.examEntityState.entities[examId]!;

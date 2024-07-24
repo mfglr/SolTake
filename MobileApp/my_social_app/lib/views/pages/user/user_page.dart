@@ -10,17 +10,14 @@ import 'package:my_social_app/views/shared/user/user_info_card_widget.dart';
 
 
 class UserPage extends StatelessWidget {
-  
-  final int? userId;
-  const UserPage({super.key,this.userId});
-  
+  final int userId;
+  const UserPage({super.key,required this.userId});
+
   @override
   Widget build(BuildContext context) {
-    final id = userId ?? (ModalRoute.of(context)!.settings.arguments as int);
-    
     return StoreConnector<AppState, UserState?>(
-      onInit: (store) => store.dispatch(LoadUserAction(userId: id)),
-      converter: (store) => store.state.userEntityState.entities[id],
+      onInit: (store) => store.dispatch(LoadUserAction(userId: userId)),
+      converter: (store) => store.state.userEntityState.entities[userId],
       builder: (context, userState){
         if(userState != null){
           return Scaffold(
@@ -35,8 +32,8 @@ class UserPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: StoreConnector<AppState,Iterable<QuestionState>>(
-                    onInit: (store) => store.dispatch(NextPageOfUserQuestionsAction(userId: id)),
-                    converter: (store) => store.state.getUserQuestions(id),
+                    onInit: (store) => store.dispatch(NextPageOfUserQuestionsIfNoQuestionsAction(userId: userId)),
+                    converter: (store) => store.state.getUserQuestions(userId),
                     builder: (context,value ) => QuestionAbstractItemsWidget(questions: value)
                   ),
                 )

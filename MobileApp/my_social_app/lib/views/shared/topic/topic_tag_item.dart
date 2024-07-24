@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/views/pages/question/display_topic_questions_page.dart';
 
 class TopicTagItem extends StatelessWidget {
   final TopicState topic;
@@ -9,7 +9,7 @@ class TopicTagItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () => Navigator.of(context).pushNamed(displayTopicQuestionsRoute,arguments: topic),
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayTopicQuestionsPage(topic: topic,))),
       child:  Row(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -8,12 +8,11 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/question/question_items_widget.dart';
 
 class DisplayTopicQuestionsPage extends StatelessWidget {
-  const DisplayTopicQuestionsPage({super.key});
+  final TopicState topic;
+  const DisplayTopicQuestionsPage({super.key, required this.topic});
 
   @override
   Widget build(BuildContext context) {
-    final topic = ModalRoute.of(context)!.settings.arguments as TopicState;
-    
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
@@ -23,7 +22,7 @@ class DisplayTopicQuestionsPage extends StatelessWidget {
         ),
       ),
       body: StoreConnector<AppState,Iterable<QuestionState>>(
-        onInit: (store) => store.dispatch(NextPageOfTopicQuestionsAction(topicId: topic.id)),
+        onInit: (store) => store.dispatch(NextPageOfTopicQuestionsIfNoQuestionsAction(topicId: topic.id)),
         converter: (store) => store.state.getTopicQuestions(topic.id),
         builder: (context,questions) => QuestionItemsWidget(
           questions: questions.toList(),

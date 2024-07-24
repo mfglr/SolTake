@@ -18,6 +18,6 @@ class UserImageState{
     => UserImageState(
         id: id,
         image: image,
-        state: ImageState.loaded
+        state: ImageState.done
       );
 }

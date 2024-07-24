@@ -1,11 +1,12 @@
-﻿using MySocailApp.Domain.AppUserAggregate;
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
-    public class Solution
+    public class Solution : IAggregateRoot
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -23,28 +24,9 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             QuestionId = questionId;
             AppUserId = appUserId;
             Content = content;
-            State = SolutionState.Pending;
             _images.AddRange(images);
             UpdatedAt = CreatedAt = DateTime.UtcNow;
         }
-
-        public SolutionState State { get; private set; }
-        internal void MarkAsApproved()
-        {
-            if (State == SolutionState.Approved)
-                return;
-
-            State = SolutionState.Approved;
-            UpdatedAt = DateTime.UtcNow;
-        }
-        internal void MarkAsPending()
-        {
-            if(State == SolutionState.Pending)
-                return;
-            State = SolutionState.Pending;
-            UpdatedAt = DateTime.UtcNow;
-        }
-
         
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;

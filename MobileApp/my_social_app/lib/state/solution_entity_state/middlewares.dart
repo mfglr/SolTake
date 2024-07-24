@@ -3,24 +3,6 @@ import 'package:my_social_app/state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:redux/redux.dart';
 
-void markSolutionAsApprovedMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkSolutionAsApprovedAction){
-    SolutionService()
-      .markAsApproved(action.solutionId)
-      .then((_) => store.dispatch(MarkSolutionAsApprovedSuccessAction(solutionId: action.solutionId)));
-  }
-  next(action);
-}
-
-void markSolutionAsPendingMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkSolutionAsPendingAction){
-    SolutionService()
-      .markAsPending(action.solutionId)
-      .then((_) => store.dispatch(MarkSolutionAsPendingSuccessAction(solutionId: action.solutionId)));
-  }
-  next(action);
-}
-
 void makeUpvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MakeUpvoteAction){
     SolutionService()

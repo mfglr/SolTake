@@ -3,7 +3,6 @@ import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/search_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
@@ -15,13 +14,13 @@ void searchMiddleware(Store<AppState> store,action,NextDispatcher next){
       .then((users){
         store.dispatch(
           LoadUsersSuccessAction(
-            payload: users.map((e) => UserState.init(e))
+            payload: users.map((e) => e.toUserState())
           )
         );
 
         store.dispatch(
           AddUserImagesAction(
-            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notLoaded))
+            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notStarted))
           )
         );
 
@@ -45,13 +44,13 @@ void nextPageSearchingMiddleware(Store<AppState> store,action,NextDispatcher nex
       .then((users){
         store.dispatch(
           LoadUsersSuccessAction(
-            payload: users.map((e) => UserState.init(e))
+            payload: users.map((e) => e.toUserState())
           )
         );
         
         store.dispatch(
           AddUserImagesAction(
-            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notLoaded))
+            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notStarted))
           )
         );
 

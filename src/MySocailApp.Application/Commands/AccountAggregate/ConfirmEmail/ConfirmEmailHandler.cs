@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.DomainServices;
+using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.ConfirmEmail

@@ -14,30 +14,6 @@ class AddSolutionsAction extends redux.Action{
   const AddSolutionsAction({required this.solutions});
 }
 
-
-@immutable
-class MarkSolutionAsApprovedAction extends redux.Action{
-  final int solutionId;
-  const MarkSolutionAsApprovedAction({required this.solutionId});
-}
-@immutable
-class MarkSolutionAsApprovedSuccessAction extends redux.Action{
-  final int solutionId;
-  const MarkSolutionAsApprovedSuccessAction({required this.solutionId});
-}
-
-@immutable
-class MarkSolutionAsPendingAction extends redux.Action{
-  final int solutionId;
-  const MarkSolutionAsPendingAction({required this.solutionId});
-}
-@immutable
-class MarkSolutionAsPendingSuccessAction extends redux.Action{
-  final int solutionId;
-  const MarkSolutionAsPendingSuccessAction({required this.solutionId});
-}
-
-
 //votes
 @immutable
 class MakeUpvoteAction extends redux.Action{

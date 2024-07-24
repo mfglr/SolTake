@@ -54,6 +54,13 @@ class QuestionService{
     return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$blobName");
   }
 
+  Future<Iterable<Question>> getAll({int? lastId}) async {
+    String endPoint = "$questionController/$getAllQuestionsEndpoint";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Question.fromJson(e));
+  }
   Future<Iterable<Question>> getByUserId(int userId,{int? lastId}) async {
     String endPoint = "$questionController/$getQuestionsByUserIdEndpoint/$userId";
     String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;

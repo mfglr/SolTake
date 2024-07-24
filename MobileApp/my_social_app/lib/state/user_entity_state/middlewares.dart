@@ -8,7 +8,6 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
@@ -21,13 +20,12 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
         .then((user){
           store.dispatch(
             LoadUserSuccessAction(
-              user: UserState.init(user)
+              user: user.toUserState()
             )
           );
-
           store.dispatch(
             AddUserImageAction(
-              image: UserImageState(id: user.id,image: null,state: ImageState.notLoaded)
+              image: UserImageState(id: user.id,image: null,state: ImageState.notStarted)
             )
           );
         });
@@ -47,13 +45,13 @@ void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
           store.dispatch(
             LoadFollowersSuccessAction(
               userId: action.userId,
-              payload: users.map((user) => UserState.init(user))
+              payload: users.map((user) => user.toUserState())
             )
           );
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
             )
           );
         });
@@ -71,13 +69,13 @@ void loadFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
           store.dispatch(
             LoadFollowersSuccessAction(
               userId: action.userId,
-              payload:users.map((user) => UserState.init(user)).toList()
+              payload:users.map((user) => user.toUserState())
             )
           );
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
             )
           );
         });
@@ -97,13 +95,13 @@ void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
           store.dispatch(
             LoadFollowedsSuccessAction(
               userId: action.userId,
-              payload:users.map((user) => UserState.init(user)).toList()
+              payload:users.map((user) => user.toUserState())
             )
           );
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
             )
           );
         });
@@ -121,13 +119,13 @@ void loadFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
           store.dispatch(
             LoadFollowedsSuccessAction(
               userId: action.userId,
-              payload:users.map((user) => UserState.init(user)).toList()
+              payload:users.map((user) => user.toUserState())
             )
           );
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notLoaded)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
             )
           );
         }
@@ -160,14 +158,21 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
 
 void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageOfUserQuestionsAction){
-    final user = store.state.userEntityState.entities[action.userId]!;
-    if(!user.questions.isLast){
+    final questions = store.state.userEntityState.entities[action.userId]!.questions;
+    if(!questions.isLast){
       QuestionService()
-        .getByUserId(action.userId,lastId: user.questions.lastId)
+        .getByUserId(action.userId,lastId: questions.lastId)
         .then((questions){
           store.dispatch(
             AddQuestionsAction(
               questions: questions.map((e) => e.toQuestionState())
+            )
+          );
+
+          store.dispatch(
+            NextPageOfUserQuestionsSuccessAction(
+              userId: action.userId,
+              payload: questions.map((e) => e.id)
             )
           );
 
@@ -179,14 +184,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
 
           store.dispatch(
             AddUserImagesAction(
-              images: questions.map((e) => UserImageState(id: e.appUserId,image: null,state: ImageState.notLoaded)) 
-            )
-          );
-
-          store.dispatch(
-            NextPageOfUserQuestionsSuccessAction(
-              userId: action.userId,
-              payload: questions.map((e) => e.id)
+              images: questions.map((e) => UserImageState(id: e.appUserId,image: null,state: ImageState.notStarted)) 
             )
           );
 
@@ -208,6 +206,15 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
             )
           );
         });
+    }
+  }
+  next(action);
+}
+void nextPageOfUserQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageOfUserQuestionsIfNoQuestionsAction){
+    final questions = store.state.userEntityState.entities[action.userId]!.questions;
+    if(!questions.isLast && questions.ids.isEmpty){
+      store.dispatch(NextPageOfUserQuestionsAction(userId: action.userId));
     }
   }
   next(action);

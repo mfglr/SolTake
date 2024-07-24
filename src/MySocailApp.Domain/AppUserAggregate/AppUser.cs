@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.QuestionAggregate.Entities;

@@ -5,6 +5,8 @@ import 'package:my_social_app/state/create_solution_state/create_solution_state.
 import 'package:my_social_app/state/create_solution_state/middlewares.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/exam_entity_state/middlewares.dart';
+import 'package:my_social_app/state/home_page_state/home_page_state.dart';
+import 'package:my_social_app/state/home_page_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/question_entity_state/middlewares.dart';
@@ -47,7 +49,8 @@ final store = Store(
     questionEntityState: QuestionEntityState(entities: {}),
     questionImageEntityState: QuestionImageEntityState(entities: {}),
     solutionEntityState: SolutionEntityState(entities: {}),
-    solutionImageEntityState: SolutionImageEntityState(entities: {})
+    solutionImageEntityState: SolutionImageEntityState(entities: {}),
+    homePageState: HomePageState(questions: Ids(ids: [], isLast: false, lastId: null))
   ),
   middleware: [
     //account start
@@ -67,7 +70,7 @@ final store = Store(
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
     nextPageOfUserQuestionsMiddleware,
-
+    nextPageOfUserQuestionsIfNoQuestionsMiddleware,
     //user end
 
     //user image start
@@ -81,17 +84,20 @@ final store = Store(
     
     //Exam Start
     loadAllExamsMiddleware,
-    loadSubjectsOfSelectedExamReducer,
+    loadSubjectsOfSelectedExamMiddleware,
     nextPageOfExamQeuestionsMiddleware,
+    nextPageOfExamQuestionsIfNoQuestionsMiddleware,
     //Exam end
 
     //subject start
+    nextPageOfSubjectQuestionsIfNoQuestionsMiddleware,
     nextPageOfSubjectQuestionsMiddleware,
     loadSubjectTopicsMiddleware,
     //end
 
     //Topic start
     nextPageOfTopicQuestionsMiddleware,
+    nextPageOfTopicQuestionsIfNoQuestionsMiddleware,
     //Topic end
 
     // Question start
@@ -99,6 +105,7 @@ final store = Store(
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
     nextPageQuestionSolutionsMiddleware,
+    nextPageQuestionSolutionIfNoSolutionsMiddleware,
     // Question end
     
     // Question image start
@@ -107,8 +114,6 @@ final store = Store(
 
     //solution start
     createSolutionMiddleware,
-    markSolutionAsApprovedMiddleware,
-    markSolutionAsPendingMiddleware,
     makeUpvoteMiddleware,
     makeDownvoteMiddleware,
     removeUpvoteMiddleware,
@@ -118,5 +123,8 @@ final store = Store(
     //Solution image start
     loadSolutionImageMiddleware,
     //Solution image end
+
+    nextPageOfHomeQuestionsMiddleware,
+    nextPageOfHomeQuestionsIfNoQuestionsMiddleware,
   ]
 );

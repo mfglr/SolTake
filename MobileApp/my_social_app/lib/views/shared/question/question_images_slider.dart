@@ -25,6 +25,7 @@ class QuestionImagesSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    store.dispatch(LoadQuestionImageAction(id: question.images.first));
     return GestureDetector(
       onDoubleTap: (){
         if(!question.isLiked){
@@ -32,7 +33,6 @@ class QuestionImagesSlider extends StatelessWidget {
         }
       },
       child: StoreConnector<AppState,Iterable<QuestionImageState>>(
-        onInit: (store) => store.dispatch(LoadQuestionImageAction(id: question.images.first)),
         converter: (store) => store.state.questionImageEntityState.getQuestionImages(question.id),
         builder: (context,imageStates) => CarouselSlider(
           items: imageStates.map(

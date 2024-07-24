@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.DomainServices;
+using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
 {

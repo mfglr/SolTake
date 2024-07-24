@@ -1,5 +1,3 @@
-import 'package:my_social_app/state/solution_entity_state/solution_status.dart';
-
 class SolutionState{
   final int id;
   final DateTime createdAt;
@@ -8,11 +6,11 @@ class SolutionState{
   final int appUserId;
   final String userName;
   final String content;
-  final int state;
   final bool isUpvoted;
   final int numberOfUpvotes;
   final bool isDownvoted;
   final int numberOfDownvotes;
+  final bool belongsToQuestionOfCurrentUser;
   final bool isOwner;
   final Iterable<int> images;
 
@@ -24,11 +22,11 @@ class SolutionState{
     required this.appUserId,
     required this.userName,
     required this.content,
-    required this.state,
     required this.isUpvoted,
     required this.numberOfUpvotes,
     required this.isDownvoted,
     required this.numberOfDownvotes,
+    required this.belongsToQuestionOfCurrentUser,
     required this.isOwner,
     required this.images
   });
@@ -45,11 +43,11 @@ class SolutionState{
         appUserId: appUserId,
         userName: userName,
         content: content,
-        state: SolutionStatus.approved,
         isUpvoted: isUpvoted,
         numberOfUpvotes: numberOfUpvotes,
         isDownvoted: isDownvoted,
         numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images
       );
@@ -63,11 +61,11 @@ class SolutionState{
         appUserId: appUserId,
         userName: userName,
         content: content,
-        state: SolutionStatus.pending,
         isUpvoted: isUpvoted,
         numberOfUpvotes: numberOfUpvotes,
         isDownvoted: isDownvoted,
         numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images
       );
@@ -82,11 +80,11 @@ class SolutionState{
         appUserId: appUserId,
         userName: userName,
         content: content,
-        state: state,
         isUpvoted: true,
         numberOfUpvotes: numberOfUpvotes + 1,
         isDownvoted: false,
         numberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images
       );
@@ -100,11 +98,11 @@ class SolutionState{
         appUserId: appUserId,
         userName: userName,
         content: content,
-        state: state,
         isUpvoted: false,
         numberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
         isDownvoted: true,
         numberOfDownvotes: numberOfDownvotes + 1,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images
       );
@@ -118,11 +116,11 @@ class SolutionState{
         appUserId: appUserId,
         userName: userName,
         content: content,
-        state: state,
         isUpvoted: false,
         numberOfUpvotes: numberOfUpvotes - 1,
         isDownvoted: isDownvoted,
         numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images
       );
@@ -136,11 +134,11 @@ class SolutionState{
         appUserId: appUserId,
         userName: userName,
         content: content,
-        state: state,
         isUpvoted: isUpvoted,
         numberOfUpvotes: numberOfUpvotes,
         isDownvoted: false,
         numberOfDownvotes: numberOfDownvotes - 1,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images
       );

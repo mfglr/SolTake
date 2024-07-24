@@ -31,3 +31,8 @@ class NextPageOfSubjectQuestionsSuccessAction extends redux.Action{
   final Iterable<int> questions;
   const NextPageOfSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
 }
+@immutable
+class NextPageOfSubjectQuestionsIfNoQuestionsAction extends redux.Action{
+  final int subjectId;
+  const NextPageOfSubjectQuestionsIfNoQuestionsAction({required this.subjectId});
+}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/entity_state.dart/entity_state.dart';
+import 'package:my_social_app/state/entity_state.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 
 @immutable

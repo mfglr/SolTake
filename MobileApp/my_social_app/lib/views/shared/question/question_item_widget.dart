@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/views/pages/solution/display_question_solutions_page.dart';
+import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/shared/exam/exam_tag_item.dart';
 import 'package:my_social_app/views/shared/question/question_images_slider.dart';
 import 'package:my_social_app/views/shared/question/question_like_button.dart';
@@ -28,7 +29,7 @@ class QuestionItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
-                onPressed: () => Navigator.of(context).pushNamed(userPageRoute,arguments: question.appUserId),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: question.appUserId))),
                 child: Row(
                   children: [
                     Container(
@@ -66,7 +67,7 @@ class QuestionItemWidget extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: (){
-                      Navigator.of(context).pushNamed(displayQuestionSolutionsRoute,arguments: question);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayQuestionSolutionsPage(question: question,)));
                     },
                     child: Row(
                       children: [

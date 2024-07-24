@@ -1,5 +1,6 @@
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/create_question_state/actions.dart';
+import 'package:my_social_app/state/home_page_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -18,6 +19,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
         store.dispatch(AddQuestionImagesAction(values: question.images.map((e) => e.toQuestionImageState())));
         store.dispatch(AddUserQuestionAction(userId: currentUserId, questionId: question.id));
+        store.dispatch(AddHomeQuestionAction(questionId: question.id));
         ToastCreator.displaySuccess("Question has been successfully created!");
       });
   }

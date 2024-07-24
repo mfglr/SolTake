@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MySocailApp.Domain.AccountAggregate
+namespace MySocailApp.Domain.AccountAggregate.ValueObjects
 {
     public class Email
     {

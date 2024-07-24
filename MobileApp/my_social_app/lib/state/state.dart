@@ -3,6 +3,7 @@ import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
+import 'package:my_social_app/state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_entity_state.dart';
@@ -42,6 +43,7 @@ class AppState{
   final QuestionImageEntityState questionImageEntityState;
   final SolutionEntityState solutionEntityState;
   final SolutionImageEntityState solutionImageEntityState;
+  final HomePageState homePageState;
 
   const AppState({
     required this.accessToken,
@@ -59,7 +61,8 @@ class AppState{
     required this.questionEntityState,
     required this.questionImageEntityState,
     required this.solutionEntityState,
-    required this.solutionImageEntityState
+    required this.solutionImageEntityState,
+    required this.homePageState
   });
 
   UserState? get currentUser => userEntityState.entities[accountState!.id];
@@ -74,6 +77,8 @@ class AppState{
     => subjectEntityState.entities[subjectId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
   Iterable<QuestionState> getTopicQuestions(int topicId)
     => topicEntityState.entities[topicId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+  Iterable<QuestionState> get getHomePageQuestions
+    => homePageState.questions.ids.map((e) => questionEntityState.entities[e]!);
   //Select questions end
 
 

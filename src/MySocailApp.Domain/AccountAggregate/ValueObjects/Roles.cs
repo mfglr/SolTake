@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.AccountAggregate
+﻿namespace MySocailApp.Domain.AccountAggregate.ValueObjects
 {
     public static class Roles
     {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
+import 'package:my_social_app/views/pages/question/display_exams_questions_page.dart';
 
 class ExamTagItem extends StatelessWidget {
   final ExamState exam;
@@ -9,7 +9,7 @@ class ExamTagItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () => Navigator.of(context).pushNamed(displayExamQuestionsRoute,arguments: exam),
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayExamsQuestionsPage(exam: exam))),
       child:  Row(
         mainAxisSize: MainAxisSize.min,
         children: [

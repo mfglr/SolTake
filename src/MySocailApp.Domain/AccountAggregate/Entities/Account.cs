@@ -2,22 +2,23 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Domain.AppUserAggregate;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MySocailApp.Domain.AccountAggregate
+namespace MySocailApp.Domain.AccountAggregate.Entities
 {
     public class Account : IdentityUser<int>, IAggregateRoot, IRemovable, IDomainEventsContainer
     {
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
 
-        public Account(){}
+        public Account() { }
 
         internal void Create(string email)
         {
             Email = email;
-            UserName = AccountAggregate.Email.GenerateUserName(email);
+            UserName = ValueObjects.Email.GenerateUserName(email);
             CreatedAt = DateTime.UtcNow;
             IsRemoved = false;
             EmailConfirmationToken = EmailConfirmationToken.GenerateToken();
@@ -39,7 +40,7 @@ namespace MySocailApp.Domain.AccountAggregate
         public EmailConfirmationToken EmailConfirmationToken { get; private set; }
         public void UpdateEmailConfirmationToken()
         {
-            if(EmailConfirmed)
+            if (EmailConfirmed)
                 throw new EmailWasAlreadyConfirmedException();
 
             EmailConfirmationToken = EmailConfirmationToken.GenerateToken();
@@ -72,7 +73,7 @@ namespace MySocailApp.Domain.AccountAggregate
             IsRemoved = false;
             RemovedAt = null;
         }
-        
+
         //IDomainEventsContainer;
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;

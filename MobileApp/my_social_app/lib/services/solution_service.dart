@@ -74,19 +74,4 @@ class SolutionService{
       body: { 'solutionId': solutionId }
     );
   }
-
-  Future<void> markAsApproved(int solutionId) async {
-    await _appClient.put(
-      "$solutionController/$markSolutionAsApprovedEndpoint",
-      body: { 'solutionId': solutionId }
-    );
-  }
-
-  Future<void> markAsPending(int solutionId) async {
-    await _appClient.put(
-      "$solutionController/$markSolutionAsPendingEndpoint",
-      body: { 'solutionId': solutionId }
-    );
-  }
-  
 }

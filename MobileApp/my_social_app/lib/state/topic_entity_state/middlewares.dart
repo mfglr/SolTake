@@ -24,7 +24,7 @@ void nextPageOfTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatc
 
             store.dispatch(
               AddUserImagesAction(
-                images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notLoaded))
+                images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
               )
             );
 
@@ -48,6 +48,15 @@ void nextPageOfTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatc
             );
           }
         );
+    }
+  }
+  next(action);
+}
+void nextPageOfTopicQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageOfTopicQuestionsIfNoQuestionsAction){
+    final questions = store.state.topicEntityState.entities[action.topicId]!.questions;
+    if(!questions.isLast && questions.ids.isEmpty){
+      store.dispatch(NextPageOfTopicQuestionsAction(topicId: action.topicId));
     }
   }
   next(action);

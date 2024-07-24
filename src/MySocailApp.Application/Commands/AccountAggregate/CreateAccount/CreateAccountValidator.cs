@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
 {

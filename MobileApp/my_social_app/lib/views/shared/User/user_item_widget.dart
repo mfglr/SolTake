@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/shared/Buttons/follow_button_widget.dart';
 import 'package:my_social_app/views/shared/buttons/remove_follower_button_widget.dart';
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
@@ -21,9 +21,7 @@ class UserItemWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(5),
         child: TextButton(
-          onPressed: (){
-            Navigator.of(context).pushNamed(userPageRoute,arguments: state.id);
-          },
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: state.id))),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

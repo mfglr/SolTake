@@ -31,7 +31,7 @@ class SolutionImage{
       blobName: blobName,
       height: height,
       width: width,
-      state: ImageState.notLoaded,
+      state: ImageState.notStarted,
       image: null,
     );
 }

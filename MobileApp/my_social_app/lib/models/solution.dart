@@ -15,11 +15,11 @@ class Solution{
   final int appUserId;
   final String userName;
   final String content;
-  final int state;
   final bool isUpvoted;
   final int numberOfUpvotes;
   final bool isDownvoted;
   final int numberOfDownvotes;
+  final bool belongsToQuestionOfCurrentUser;
   final bool isOwner;
   final Iterable<SolutionImage> images;
 
@@ -31,11 +31,11 @@ class Solution{
     required this.appUserId,
     required this.userName,
     required this.content,
-    required this.state,
     required this.isUpvoted,
     required this.numberOfUpvotes,
     required this.isDownvoted,
     required this.numberOfDownvotes,
+    required this.belongsToQuestionOfCurrentUser,
     required this.isOwner,
     required this.images
   });
@@ -52,11 +52,11 @@ class Solution{
       appUserId: appUserId,
       userName: userName,
       content: content,
-      state: state,
       isUpvoted: isUpvoted,
       numberOfUpvotes: numberOfUpvotes,
       isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,
+      belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
       isOwner: isOwner,
       images: images.map((e) => e.id)
     );

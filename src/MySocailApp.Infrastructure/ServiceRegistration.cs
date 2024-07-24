@@ -4,7 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.Services;
 using MySocailApp.Application.Services.BlobService;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
@@ -122,8 +123,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
                 .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
                 .AddScoped<IQuestionRepositorySA, QuestionRepositorySA>()
-                .AddScoped<SolutionCreatorDomainService>()
-                .AddScoped<SolutionApproverDomainService>();
+                .AddScoped<SolutionCreatorDomainService>();
         }
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
         {

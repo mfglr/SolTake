@@ -54,3 +54,8 @@ class NextPageQuestionSolutionsSuccessAction extends redux.Action{
   final Iterable<int> solutionIds;
   const NextPageQuestionSolutionsSuccessAction({required this.questionId, required this.solutionIds});
 }
+@immutable
+class NextPageQuestionSolutionsIfNoSolutionsAction extends redux.Action{
+  final int questionId;
+  const NextPageQuestionSolutionsIfNoSolutionsAction({required this.questionId});
+}

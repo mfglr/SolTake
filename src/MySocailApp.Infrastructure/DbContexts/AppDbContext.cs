@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;

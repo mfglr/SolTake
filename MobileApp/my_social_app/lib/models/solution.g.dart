@@ -16,11 +16,12 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
       appUserId: (json['appUserId'] as num).toInt(),
       userName: json['userName'] as String,
       content: json['content'] as String,
-      state: (json['state'] as num).toInt(),
       isUpvoted: json['isUpvoted'] as bool,
       numberOfUpvotes: (json['numberOfUpvotes'] as num).toInt(),
       isDownvoted: json['isDownvoted'] as bool,
       numberOfDownvotes: (json['numberOfDownvotes'] as num).toInt(),
+      belongsToQuestionOfCurrentUser:
+          json['belongsToQuestionOfCurrentUser'] as bool,
       isOwner: json['isOwner'] as bool,
       images: (json['images'] as List<dynamic>)
           .map((e) => SolutionImage.fromJson(e as Map<String, dynamic>)),
@@ -34,11 +35,11 @@ Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
       'appUserId': instance.appUserId,
       'userName': instance.userName,
       'content': instance.content,
-      'state': instance.state,
       'isUpvoted': instance.isUpvoted,
       'numberOfUpvotes': instance.numberOfUpvotes,
       'isDownvoted': instance.isDownvoted,
       'numberOfDownvotes': instance.numberOfDownvotes,
+      'belongsToQuestionOfCurrentUser': instance.belongsToQuestionOfCurrentUser,
       'isOwner': instance.isOwner,
       'images': instance.images.toList(),
     };

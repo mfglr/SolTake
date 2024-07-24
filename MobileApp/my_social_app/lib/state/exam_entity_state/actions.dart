@@ -24,7 +24,11 @@ class NextPageOfExamQuestionsSuccessAction extends redux.Action{
   final Iterable<int> questionIds;
   const NextPageOfExamQuestionsSuccessAction({required this.examId, required this.questionIds});
 }
-
+@immutable
+class NextPageOfExamQuestionsIfNoQuestions extends redux.Action{
+  final int examId;
+  const NextPageOfExamQuestionsIfNoQuestions({required this.examId});
+}
 
 
 @immutable

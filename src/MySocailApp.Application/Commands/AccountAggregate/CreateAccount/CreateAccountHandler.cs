@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.DomainServices;
+using MySocailApp.Domain.AccountAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
 {

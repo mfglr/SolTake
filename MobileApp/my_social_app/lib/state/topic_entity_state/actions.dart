@@ -25,3 +25,8 @@ class NextPageOfTopicQuestionsSuccessAction extends redux.Action{
   final List<int> questionIds;
   const NextPageOfTopicQuestionsSuccessAction({required this.topicId, required this.questionIds});
 }
+@immutable
+class NextPageOfTopicQuestionsIfNoQuestionsAction extends redux.Action{
+  final int topicId;
+  const NextPageOfTopicQuestionsIfNoQuestionsAction({required this.topicId});
+}

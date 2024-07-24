@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/user_entity_state/gender.dart';
@@ -38,7 +37,7 @@ class UserState{
     return userName.length <= count ? userName : "${userName.substring(0,10)}...";
   }
 
-  const UserState._constructor({
+  const UserState({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
@@ -82,7 +81,7 @@ class UserState{
     Ids? newRequesters,
     Ids? newRequesteds,
     Ids? newQuestions
-  }) => UserState._constructor(
+  }) => UserState(
     id: id,
     createdAt: createdAt,
     updatedAt: newUpdatedDate ?? updatedAt,
@@ -103,29 +102,6 @@ class UserState{
     requesters: newRequesters ?? requesters,
     requesteds: newRequesteds ?? requesteds,
     questions: newQuestions ?? questions
-  );
-
-  factory UserState.init(User user) => UserState._constructor(
-    id: user.id,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
-    userName: user.userName,
-    name: user.name,
-    birthDate: user.birthDate,
-    gender: Gender.values[user.gender],
-    profileVisibility: ProfileVisibility.values[user.profileVisibility],
-    numberOfQuestions: user.numberOfQuestions,
-    numberOfFollowers: user.numberOfFollowers,
-    numberOfFolloweds: user.numberOfFolloweds,
-    isFollower: user.isFollower,
-    isFollowed: user.isFollowed,
-    isRequester: user.isRequester,
-    isRequested: user.isRequested,
-    followers: const Ids(ids: [],isLast: false,lastId: null),
-    followeds: const Ids(ids: [],isLast: false,lastId: null),
-    requesters: const Ids(ids: [],isLast: false,lastId: null),
-    requesteds: const Ids(ids: [],isLast: false,lastId: null),
-    questions: const Ids(ids: [],isLast: false, lastId: null)
   );
 
   UserState loadFollowers(Iterable<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
@@ -193,7 +169,7 @@ class UserState{
   }
   //remove follower end
   UserState loadUserImage(Uint8List newImage) => _optional(
-    newImage: newImage,newImageState: ImageState.loaded
+    newImage: newImage,newImageState: ImageState.done
   );
   
   //Questions

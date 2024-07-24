@@ -3,31 +3,29 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/account_state/actions.dart';
+import 'package:my_social_app/state/home_page_state/actions.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-  @override
-  State<HomePage> createState() => _HomeViewState();
-}
+import 'package:my_social_app/views/shared/question/question_items_widget.dart';
 
 enum MenuAction{
   logout
 }
 
-class _HomeViewState extends State<HomePage> {
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
+    
     return StoreConnector<AppState,AccountState?>(
-      onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
       converter: (store) => store.state.accountState,
       builder: (context, accountState){ 
         return Scaffold(
           appBar: AppBar(
-            title: const Text("My App"),
+            title: const Text("E-Class"),
             actions: [
               PopupMenuButton<MenuAction>(
                 onSelected: (value) async {
@@ -64,6 +62,11 @@ class _HomeViewState extends State<HomePage> {
             },
             shape: const CircleBorder(),
             child: const Icon(Icons.question_mark),
+          ),
+          body: StoreConnector<AppState,Iterable<QuestionState>>(
+            onInit: (store) => store.dispatch(const NextPageOfHomeQuestionsAction()),
+            converter: (store) => store.state.getHomePageQuestions,
+            builder:(context,questions) => QuestionItemsWidget(questions: questions),
           ),
         );
       } 

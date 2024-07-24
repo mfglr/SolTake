@@ -27,7 +27,7 @@ class SolutionImageState{
         blobName: blobName,
         height: height,
         width: width,
-        state: ImageState.loaded,
+        state: ImageState.done,
         image: image
       );
 }

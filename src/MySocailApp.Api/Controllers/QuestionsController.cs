@@ -7,6 +7,7 @@ using MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionAggregate.GerAllQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
@@ -63,5 +64,9 @@ namespace MySocailApp.Api.Controllers
         [HttpGet("{examId}")]
         public async Task<List<QuestionResponseDto>> GetByExamId(int examId, [FromQuery] int? lastId, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsByExamIdDto(examId, lastId), cancellationToken);
+
+        [HttpGet]
+        public async Task<List<QuestionResponseDto>> GetAll([FromQuery]int? lastId, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetAllQuestionsDto(lastId),cancellationToken);
     }
 }

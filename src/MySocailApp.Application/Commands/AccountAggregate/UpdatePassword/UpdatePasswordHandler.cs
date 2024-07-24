@@ -2,7 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.Services;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.DomainServices;
+using MySocailApp.Domain.AccountAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdatePassword
 {

@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.SolutionAggregate.ApproveSolution;
 using MySocailApp.Application.Commands.SolutionAggregate.CreateSolution;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote;
-using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsPending;
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote;
 using MySocailApp.Application.Queries.SolutionAggregate;
@@ -29,14 +27,6 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<SolutionResponseDto> Create([FromForm]string? content, [FromForm]int questionId, [FromForm]IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateSolutionDto(content, questionId, images),cancellationToken);
-
-        [HttpPut]
-        public async Task MarkAsApproved(MarkSolutionApprovedDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
-
-        [HttpPut]
-        public async Task MarkAsPending(MarkSolutionAsPendingDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
 
         [HttpPut]
         public async Task MakeUpvote(MakeUpvoteDto request,CancellationToken cancellationToken)

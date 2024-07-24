@@ -11,10 +11,12 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/solution/solution_items_widget.dart';
 
 class DisplayQuestionSolutionsPage extends StatelessWidget {
-  const DisplayQuestionSolutionsPage({super.key});
+  final QuestionState question;
+
+  const DisplayQuestionSolutionsPage({super.key,required this.question});
+
   @override
   Widget build(BuildContext context) {
-    final question = ModalRoute.of(context)!.settings.arguments as QuestionState;
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),

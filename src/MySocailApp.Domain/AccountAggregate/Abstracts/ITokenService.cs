@@ -1,4 +1,6 @@
-﻿namespace MySocailApp.Domain.AccountAggregate
+﻿using MySocailApp.Domain.AccountAggregate.Entities;
+
+namespace MySocailApp.Domain.AccountAggregate.Abstracts
 {
     public interface ITokenService
     {

@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Services;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using System.Net.Mail;
 
 namespace MySocailApp.Infrastructure.Services.Email

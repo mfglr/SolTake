@@ -1,10 +1,11 @@
-﻿using MySocailApp.Domain.ExamAggregate;
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.TopicAggregate;
 
 namespace MySocailApp.Domain.SubjectAggregate
 {
-    public class Subject()
+    public class Subject() : IAggregateRoot
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Commands.AccountAggregate;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {

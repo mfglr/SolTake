@@ -1,4 +1,5 @@
-﻿using MySocailApp.Domain.AppUserAggregate;
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
@@ -7,7 +8,7 @@ using MySocailApp.Domain.SubjectAggregate;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
-    public class Question()
+    public class Question() : IAggregateRoot
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -78,5 +79,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public Subject Subject { get; }
         public AppUser AppUser { get; }
         public IReadOnlyList<Solution> Solutions { get; }
+
     }
 }

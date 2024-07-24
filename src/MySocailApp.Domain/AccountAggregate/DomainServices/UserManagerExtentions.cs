@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using MySocailApp.Core.Exceptions;
+using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 using System.Net;
 using System.Text;
 
-namespace MySocailApp.Domain.AccountAggregate
+namespace MySocailApp.Domain.AccountAggregate.DomainServices
 {
     public static class UserManagerExtentions
     {

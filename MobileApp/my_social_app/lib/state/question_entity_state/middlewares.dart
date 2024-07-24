@@ -28,9 +28,10 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
 
 void nextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is NextPageQuestionSolutionsAction){
-    final lastId = store.state.questionEntityState.entities[action.questionId]!.solutions.lastId;
-    SolutionService()
-      .getByQuestionId(action.questionId,lastId: lastId)
+    final state = store.state.questionEntityState.entities[action.questionId]!.solutions;
+    if(!state.isLast){
+      SolutionService()
+      .getByQuestionId(action.questionId,lastId: state.lastId)
       .then((solutions){
         store.dispatch(
           AddSolutionsAction(
@@ -53,10 +54,20 @@ void nextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispa
 
         store.dispatch(
           AddUserImagesAction(
-            images: solutions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notLoaded))
+            images: solutions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
           )
         );
       });
+    }
+  }
+  next(action);
+}
+void nextPageQuestionSolutionIfNoSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is NextPageQuestionSolutionsIfNoSolutionsAction){
+    final solutions = store.state.questionEntityState.entities[action.questionId]!.solutions;
+    if(!solutions.isLast && solutions.ids.isEmpty){
+      store.dispatch(NextPageQuestionSolutionsAction(questionId: action.questionId));
+    }
   }
   next(action);
 }

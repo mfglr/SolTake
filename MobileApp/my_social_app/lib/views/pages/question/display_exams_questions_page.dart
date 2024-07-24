@@ -8,12 +8,12 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/question/question_items_widget.dart';
 
 class DisplayExamsQuestionsPage extends StatelessWidget {
-  const DisplayExamsQuestionsPage({super.key});
+  final ExamState exam;
+
+  const DisplayExamsQuestionsPage({super.key,required this.exam});
 
   @override
   Widget build(BuildContext context) {
-    final exam = ModalRoute.of(context)!.settings.arguments as ExamState;
-    
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
@@ -23,7 +23,7 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
         ),
       ),
       body: StoreConnector<AppState,Iterable<QuestionState>>(
-        onInit: (store) => store.dispatch(NextPageOfExamQuestionsAction(examId: exam.id)),
+        onInit: (store) => store.dispatch(NextPageOfExamQuestionsIfNoQuestions(examId: exam.id)),
         converter: (store) => store.state.getExamQuestions(exam.id),
         builder: (context,questions) => QuestionItemsWidget(
           questions: questions.toList(),

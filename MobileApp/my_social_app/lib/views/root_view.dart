@@ -17,11 +17,6 @@ class RootView extends StatefulWidget {
 class _RootViewState extends State<RootView> {
   int currentPageIndex = 0;
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,AccountState?>(
       converter: (store) => store.state.accountState,

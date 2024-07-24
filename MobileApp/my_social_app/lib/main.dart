@@ -19,12 +19,7 @@ import 'package:my_social_app/views/pages/create_question/select_topic_page.dart
 import 'package:my_social_app/views/pages/create_question/take_question_image_page.dart';
 import 'package:my_social_app/views/pages/create_solution/create_solution_page.dart';
 import 'package:my_social_app/views/pages/create_solution/take_solution_image_page.dart';
-import 'package:my_social_app/views/pages/question/display_exams_questions_page.dart';
-import 'package:my_social_app/views/pages/question/display_subject_questions_page.dart';
-import 'package:my_social_app/views/pages/question/display_topic_questions_page.dart';
 import 'package:my_social_app/views/pages/question/display_user_questions_page.dart';
-import 'package:my_social_app/views/pages/solution/display_question_solutions_page.dart';
-import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/register_view.dart';
 import 'package:my_social_app/views/pages/user/user_followeds_page.dart';
 import 'package:my_social_app/views/pages/user/user_followers_page.dart';
@@ -93,7 +88,6 @@ Future<void> main() async {
           rootRoute: (context) => const RootView(),
           userFollowersRoute: (context) => const UserFollowersPage(),
           userFollowedsRoute: (context) => const UserFollowedsPage(),
-          userPageRoute: (context) => const UserPage(),
 
           takeQuestionImageRoute: (context) => TakeQuestionImagePage(camera: cameras.first),
           displayQuestionImagesRoute: (context) => const DisplayImagesPage(),
@@ -101,12 +95,8 @@ Future<void> main() async {
           selectSubjectRoute: (context) => const SelectSubjectPage(),
           selectTopicRoute: (context) => const SelectTopicPage(),
 
-          displaySubjectQuestionsRoute: (context) => const DisplaySubjectQuestionsPage(),
-          displayTopicQuestionsRoute: (context) => const DisplayTopicQuestionsPage(),
-          displayExamQuestionsRoute: (context) => const DisplayExamsQuestionsPage(),
           displayUserQuestionsRoute: (context) => const DisplayUserQuestionsPage(),
           
-          displayQuestionSolutionsRoute: (context) => const DisplayQuestionSolutionsPage(),
           createSolutionRoute: (context) => const CreateSolutionPage(),
           takeSolutionImageRoute: (context) => TakeSolutionImagePage(camera: cameras.first)
         },

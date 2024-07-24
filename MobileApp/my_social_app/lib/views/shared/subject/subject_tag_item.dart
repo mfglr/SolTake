@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/views/pages/question/display_subject_questions_page.dart';
 
 class SubjectTagItem extends StatelessWidget {
   final SubjectState subject;
@@ -10,7 +10,7 @@ class SubjectTagItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () => Navigator.of(context).pushNamed(displaySubjectQuestionsRoute,arguments: subject),
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplaySubjectQuestionsPage(subject: subject,))),
       child:  Row(
         mainAxisSize: MainAxisSize.min,
         children: [

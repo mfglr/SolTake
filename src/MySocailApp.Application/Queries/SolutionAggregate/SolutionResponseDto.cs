@@ -9,7 +9,6 @@
         public string UserName { get; private set; }
         public int AppUserId { get; private set; }
         public string? Content { get; private set; }
-        public int State { get; private set; }
         public bool IsUpvoted { get; private set; }
         public int NumberOfUpvotes { get; private set; }
         public bool IsDownvoted { get; private set; }

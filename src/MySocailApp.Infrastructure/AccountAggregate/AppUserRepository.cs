@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 

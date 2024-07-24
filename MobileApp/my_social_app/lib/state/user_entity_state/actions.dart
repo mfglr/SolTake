@@ -89,6 +89,11 @@ class NextPageOfUserQuestionsSuccessAction extends redux.Action{
   final Iterable<int> payload;
   const NextPageOfUserQuestionsSuccessAction({required this.userId,required this.payload});
 }
+@immutable
+class NextPageOfUserQuestionsIfNoQuestionsAction extends redux.Action{
+  final int userId;
+  const NextPageOfUserQuestionsIfNoQuestionsAction({required this.userId});
+}
 
 
 
