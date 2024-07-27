@@ -5,7 +5,8 @@ import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 class CreateCommentState{
   final QuestionState? question;
   final SolutionState? solution;
-  final CommentState? parent;
+  final CommentState? comment;
+  final bool isRoot;
   final String content;
   final String hintText;
 
@@ -13,7 +14,8 @@ class CreateCommentState{
   const CreateCommentState({
     required this.question,
     required this.solution,
-    required this.parent,
+    required this.comment,
+    required this.isRoot,
     required this.content,
     required this.hintText,
   });
@@ -22,7 +24,8 @@ class CreateCommentState{
     => CreateCommentState(
         question: question,
         solution: solution,
-        parent: parent,
+        comment: comment,
+        isRoot: isRoot,
         content: content,
         hintText: hintText,
       );
@@ -31,7 +34,8 @@ class CreateCommentState{
     => CreateCommentState(
         question: question,
         solution: null,
-        parent: null,
+        comment: null,
+        isRoot: isRoot,
         content: content,
         hintText: hintText,
       );
@@ -40,16 +44,18 @@ class CreateCommentState{
     => CreateCommentState(
         question: null,
         solution: null,
-        parent: parent,
+        comment: comment,
+        isRoot: isRoot,
         content: content,
         hintText: hintText,
       );
 
-  CreateCommentState changeParent(CommentState parent)
+  CreateCommentState changeComment(CommentState comment,bool isRoot)
     => CreateCommentState(
         question: question,
         solution: solution,
-        parent: parent,
+        comment: comment,
+        isRoot: isRoot,
         content: content,
         hintText: hintText,
       );
@@ -58,7 +64,8 @@ class CreateCommentState{
     => CreateCommentState(
         question: question,
         solution: solution,
-        parent: null,
+        comment: null,
+        isRoot: isRoot,
         content: "",
         hintText: hintText,
       );
@@ -67,7 +74,8 @@ class CreateCommentState{
     => CreateCommentState(
         question: question,
         solution: solution,
-        parent: parent,
+        comment: comment,
+        isRoot: isRoot,
         content: content,
         hintText: hintText,
       );

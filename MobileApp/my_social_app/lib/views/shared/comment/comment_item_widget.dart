@@ -62,7 +62,7 @@ class CommentItemWidget extends StatelessWidget {
           ),
           Row(
             children:[
-              QuestionCommentButtonLikeWidget(
+              CommentButtonLikeWidget(
                 comment: comment,
               ),
               Builder(
@@ -76,7 +76,7 @@ class CommentItemWidget extends StatelessWidget {
                   return const SizedBox.shrink();
                 }
               ),
-              ReplyCommentButtonWidget(comment: comment,)
+              ReplyCommentButtonWidget(comment: comment,isRoot: true,)
             ]
           ),
           Builder(

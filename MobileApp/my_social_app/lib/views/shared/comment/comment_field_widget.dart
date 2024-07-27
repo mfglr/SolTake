@@ -28,10 +28,12 @@ class _CommentFieldWidgetState extends State<CommentFieldWidget>{
 
   @override
   void didUpdateWidget(covariant CommentFieldWidget oldWidget) {
-    _commentController.text = widget.state.content;
+    if(oldWidget.state.content != widget.state.content){
+      _commentController.text = widget.state.content;
+    }
     super.didUpdateWidget(oldWidget);
   }
-  
+
   @override
   void dispose() {
     _focusNode.dispose();
@@ -45,12 +47,12 @@ class _CommentFieldWidgetState extends State<CommentFieldWidget>{
       children: [
         Builder(
           builder: (context){
-            if(widget.state.parent != null){
+            if(widget.state.comment != null){
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "You are replying to ${widget.state.parent!.formatUserName(10)}"
+                    "You are replying to ${widget.state.comment!.formatUserName(10)}"
                   ),
                   IconButton(
                     onPressed: () => store.dispatch(const CancelReplyAction()),
@@ -93,9 +95,8 @@ class _CommentFieldWidgetState extends State<CommentFieldWidget>{
               onPressed: (){
                 store.dispatch(const CreateCommentAction());
                 _focusNode.unfocus();
-                _commentController.clear();
               },
-              child: const Icon(Icons.send,)
+              child: const Icon(Icons.send)
             )
           ],
         ),

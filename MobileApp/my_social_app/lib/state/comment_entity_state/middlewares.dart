@@ -1,7 +1,10 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_image_entity_state/actions.dart';
+import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -52,6 +55,11 @@ void nextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatche
               replyIds: replies.map((e) => e.id)
             )
           );
+          store.dispatch(
+            AddUserImagesAction(
+              images: replies.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+            )
+          );
         });
     }
   }
@@ -59,7 +67,7 @@ void nextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatche
 }
 void nextPageCommentRepliesIfNoRepliesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageRepliesIfNoReplies){
-    if(store.state.commentEntityState.entities[action.commentId]!.replies.ids.isEmpty){
+    if(store.state.commentEntityState.entities[action.commentId]!.replies.ids.length < repliesPerPage){
       store.dispatch(NextPageRepliesAction(commentId: action.commentId));
     }
   }

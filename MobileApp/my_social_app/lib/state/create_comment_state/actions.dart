@@ -8,6 +8,10 @@ import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 class CreateCommentAction extends redux.Action{
   const CreateCommentAction();
 }
+@immutable
+class CreateCommentSuccessAction extends redux.Action{
+  const CreateCommentSuccessAction();
+}
 
 @immutable
 class ChangeContentAction extends redux.Action{
@@ -25,9 +29,10 @@ class ChangeSolutionAction extends redux.Action{
   const ChangeSolutionAction({required this.solution});
 }
 @immutable
-class ChangeParentAction extends redux.Action{
-  final CommentState parent;
-  const ChangeParentAction({required this.parent});
+class ChangeCommentAction extends redux.Action{
+  final CommentState comment;
+  final bool isRoot;
+  const ChangeCommentAction({required this.comment,required this.isRoot});
 }
 @immutable
 class CancelReplyAction extends redux.Action{

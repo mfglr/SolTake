@@ -93,6 +93,12 @@ void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatc
               questionCommentIds: comments.map((e) => e.id)
             )
           );
+
+          store.dispatch(
+            AddUserImagesAction(
+              images: comments.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+            )
+          );
         });
     }
   }

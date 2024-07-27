@@ -56,7 +56,7 @@ final store = Store(
     solutionImageEntityState: SolutionImageEntityState(entities: {}),
     homePageState: HomePageState(questions: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)),
     commentEntityState: CommentEntityState(entities: {}),
-    createCommentState: CreateCommentState(question: null, solution: null, parent: null, content: "", hintText: "")
+    createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: "")
   ),
   middleware: [
     //account start

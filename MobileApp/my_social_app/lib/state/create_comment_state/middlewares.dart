@@ -9,9 +9,9 @@ import 'package:redux/redux.dart';
 void createQuestionCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateCommentAction){
     final state = store.state.createCommentState;
-    final questionId = state.parent == null ? null : state.question?.id;
-    final solutionId = state.parent == null ? null : state.solution?.id;
-    final parentId = state.parent?.id;
+    final questionId = state.comment != null ? null : state.question?.id;
+    final solutionId = state.comment != null ? null : state.solution?.id;
+    final parentId = state.isRoot ? state.comment?.id : state.comment?.parentId;
 
     CommentService()
       .createComment(state.content,questionId,solutionId,parentId)
@@ -21,6 +21,7 @@ void createQuestionCommentMiddleware(Store<AppState> store,action,NextDispatcher
             questionComment: comment.toCommentState()
           )
         );
+
         if(questionId != null){
           store.dispatch(
             AddQuestionCommentAction(
@@ -39,10 +40,11 @@ void createQuestionCommentMiddleware(Store<AppState> store,action,NextDispatcher
         }
         else if(parentId != null){
           store.dispatch(AddCommentReplyAction(
-            commentId: state.parent!.id,
+            commentId: parentId,
             replyId: comment.id
           ));
         }
+        store.dispatch(const CreateCommentSuccessAction());
       });
   }
   next(action);

@@ -5,15 +5,17 @@ import 'package:my_social_app/state/store.dart';
 
 class ReplyCommentButtonWidget extends StatelessWidget {
   final CommentState comment;
-  const ReplyCommentButtonWidget({super.key,required this.comment});
+  final bool isRoot;
+  const ReplyCommentButtonWidget({super.key,required this.comment,required this.isRoot});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
         store.dispatch(
-          ChangeParentAction(
-            parent: comment
+          ChangeCommentAction(
+            comment: comment,
+            isRoot: isRoot
           )
         );
         store.dispatch(

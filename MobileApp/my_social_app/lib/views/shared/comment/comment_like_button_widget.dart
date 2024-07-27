@@ -3,9 +3,9 @@ import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/store.dart';
 
-class QuestionCommentButtonLikeWidget extends StatelessWidget {
+class CommentButtonLikeWidget extends StatelessWidget {
   final CommentState comment;
-  const QuestionCommentButtonLikeWidget({super.key,required this.comment});
+  const CommentButtonLikeWidget({super.key,required this.comment});
 
   @override
   Widget build(BuildContext context) {

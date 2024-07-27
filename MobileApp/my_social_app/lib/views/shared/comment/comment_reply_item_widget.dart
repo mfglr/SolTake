@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
 import 'package:my_social_app/views/shared/comment/comment_like_button_widget.dart';
+import 'package:my_social_app/views/shared/comment/reply_comment_button_widget.dart';
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -52,8 +53,13 @@ class CommentReplyItemWidget extends StatelessWidget {
             style: const TextStyle(fontSize: 13),
           ),
         ),
-        QuestionCommentButtonLikeWidget(
-          comment: reply,
+        Row(
+          children: [
+            CommentButtonLikeWidget(
+              comment: reply,
+            ),
+            ReplyCommentButtonWidget(comment: reply, isRoot: false)
+          ],
         ),
       ],
     );
