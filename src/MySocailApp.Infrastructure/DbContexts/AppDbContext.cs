@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionCommentAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate;
 using MySocailApp.Domain.TopicAggregate;
@@ -22,7 +22,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Subject> Subjects { get; private set; }
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
-        public DbSet<QuestionComment> QuestionComments { get; private set; }
+        public DbSet<Comment> Comments { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

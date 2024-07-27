@@ -15,10 +15,14 @@ class QuestionState{
   final Iterable<int> images;
   final bool isLiked;
   final int numberOfLikes;
+  
   final bool isOwner;
 
   final int numberOfSolutions;
   final Ids solutions;
+
+  final int numberOfComments;
+  final Ids comments;
 
   const QuestionState({
     required this.id,
@@ -35,7 +39,9 @@ class QuestionState{
     required this.numberOfLikes,
     required this.isOwner,
     required this.numberOfSolutions,
+    required this.numberOfComments,
     required this.solutions,
+    required this.comments
   });
 
   String formatUserName(int count)
@@ -65,7 +71,9 @@ class QuestionState{
       numberOfLikes: numberOfLikes + 1,
       isOwner: isOwner,
       numberOfSolutions: numberOfSolutions,
-      solutions: solutions
+      numberOfComments: numberOfComments,
+      solutions: solutions,
+      comments: comments
     );
 
   QuestionState dislike()
@@ -84,7 +92,9 @@ class QuestionState{
       numberOfLikes: numberOfLikes - 1,
       isOwner: isOwner,
       numberOfSolutions: numberOfSolutions,
-      solutions: solutions
+      numberOfComments: numberOfComments,
+      solutions: solutions,
+      comments: comments
     );
 
   QuestionState addSolution(int solutionId)
@@ -103,7 +113,9 @@ class QuestionState{
       numberOfLikes: numberOfLikes,
       isOwner: isOwner,
       numberOfSolutions: numberOfSolutions + 1,
-      solutions: solutions.create(solutionId)
+      numberOfComments: numberOfComments,
+      solutions: solutions.create(solutionId),
+      comments: comments
     );
   
   QuestionState nextPageQuestionSolutions(Iterable<int> solutionIds)
@@ -122,7 +134,51 @@ class QuestionState{
         numberOfLikes: numberOfLikes,
         isOwner: isOwner,
         numberOfSolutions: numberOfSolutions,
-        solutions: solutions.nextPage(solutionIds)
+        numberOfComments: numberOfComments,
+        solutions: solutions.nextPage(solutionIds),
+        comments: comments
       );
   
+
+  QuestionState addComment(int questionCommentId)
+    => QuestionState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      appUserId: appUserId,
+      userName: userName,
+      content: content,
+      examId: examId,
+      subjectId: subjectId,
+      topics: topics,
+      images: images,
+      isLiked: false,
+      numberOfLikes: numberOfLikes,
+      isOwner: isOwner,
+      numberOfSolutions: numberOfSolutions,
+      numberOfComments: numberOfComments + 1,
+      solutions: solutions,
+      comments: comments.create(questionCommentId)
+    );
+
+  QuestionState nextPageQuestionComments(Iterable<int> commentIds)
+    => QuestionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        examId: examId,
+        subjectId: subjectId,
+        topics: topics,
+        images: images,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        isOwner: isOwner,
+        numberOfSolutions: numberOfSolutions,
+        numberOfComments: numberOfComments,
+        solutions: solutions,
+        comments: comments.nextPage(commentIds)
+      );
 }

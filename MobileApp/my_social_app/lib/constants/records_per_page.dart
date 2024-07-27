@@ -1,1 +1,0 @@
-const int recordsPerPage = 20;

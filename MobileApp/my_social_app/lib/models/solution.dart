@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/models/solution_image.dart';
+import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 part 'solution.g.dart';
 
@@ -58,6 +59,7 @@ class Solution{
       numberOfDownvotes: numberOfDownvotes,
       belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
       isOwner: isOwner,
-      images: images.map((e) => e.id)
+      images: images.map((e) => e.id),
+      comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null)
     );
 }

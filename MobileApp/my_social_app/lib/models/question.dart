@@ -24,6 +24,7 @@ class Question{
   final bool isLiked;
   final int numberOfLikes;
   final int numberOfSolutions;
+  final int numberOfComments;
   final bool isOwner;
 
   const Question({
@@ -40,6 +41,7 @@ class Question{
     required this.isLiked,
     required this.numberOfLikes,
     required this.numberOfSolutions,
+    required this.numberOfComments,
     required this.isOwner,
   });
 
@@ -61,6 +63,8 @@ class Question{
     numberOfLikes: numberOfLikes,
     isOwner: isOwner,
     numberOfSolutions: numberOfSolutions,
-    solutions: const Ids(ids: [],isLast: false,lastId: null)
+    numberOfComments: numberOfComments,
+    solutions: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null),
+    comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null),
   );
 }

@@ -1,0 +1,1 @@
+const repliesPerPage = 10;

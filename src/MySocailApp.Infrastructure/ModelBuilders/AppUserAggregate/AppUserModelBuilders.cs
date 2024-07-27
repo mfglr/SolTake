@@ -73,7 +73,13 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
-                .HasMany(x => x.CommentLikes)
+                .HasMany(x => x.CommentsLiked)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.CommentsTagged)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);

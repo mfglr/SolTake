@@ -21,7 +21,7 @@ class Subject{
         id: id,
         examId: examId,
         name: name,
-        topics: const Ids(ids: [],isLast: false,lastId: null),
-        questions: const Ids(ids: [],isLast: false,lastId: null) 
+        topics: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null),
+        questions: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null) 
       );
 }

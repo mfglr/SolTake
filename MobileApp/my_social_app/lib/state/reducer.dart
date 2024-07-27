@@ -1,9 +1,11 @@
 import 'package:my_social_app/state/account_state/reducers.dart';
 import 'package:my_social_app/state/actions.dart';
+import 'package:my_social_app/state/create_comment_state/reducers.dart';
 import 'package:my_social_app/state/create_question_state/reducers.dart';
 import 'package:my_social_app/state/create_solution_state/reducers.dart';
 import 'package:my_social_app/state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/home_page_state/reducers.dart';
+import 'package:my_social_app/state/comment_entity_state/reducers.dart';
 import 'package:my_social_app/state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/question_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/search_state/reducers.dart';
@@ -24,23 +26,25 @@ String? changeAccessTokenReducer(String? oldState,Action action)
 bool appSuccessfullyInitReducer(bool oldState,Action action)
   => action is ApplicationSuccessfullyInitAction ? true : oldState;
 
-AppState appReducer(AppState oldState,action) => AppState(
-  accessToken: changeAccessTokenReducer(oldState.accessToken,action),
-  accountState: updateAccountStateReducer(oldState.accountState,action),
-  activeLoginPage: changeActiveLoginPageReducer(oldState.activeLoginPage,action),
-  isInitialized: appSuccessfullyInitReducer(oldState.isInitialized,action),
-  userEntityState: userEntityStateReducers(oldState.userEntityState, action),
-  userImageEntityState: userImageEntityStateReducers(oldState.userImageEntityState,action),
-  searchState: searchStateReducers(oldState.searchState,action),
-  createQuestionState: createQuestionReducers(oldState.createQuestionState,action),
-  createSolutionState: createrSolutionReducers(oldState.createSolutionState,action),
-  examEntityState: examEntityStateReducers(oldState.examEntityState,action),
-  subjectEntityState: subjectEntityStateReducers(oldState.subjectEntityState, action),
-  topicEntityState: topicEntityStateReducers(oldState.topicEntityState, action),
-  questionEntityState: questionsReducer(oldState.questionEntityState,action),
-  questionImageEntityState: questionImageEntityReducers(oldState.questionImageEntityState,action),
-  solutionEntityState: solutionEntityStateReducers(oldState.solutionEntityState,action),
-  solutionImageEntityState: solutionImagesStateReducers(oldState.solutionImageEntityState,action),
-  homePageState: homePageReducers(oldState.homePageState,action)
+AppState appReducer(AppState prev,action) => AppState(
+  accessToken: changeAccessTokenReducer(prev.accessToken,action),
+  accountState: updateAccountStateReducer(prev.accountState,action),
+  activeLoginPage: changeActiveLoginPageReducer(prev.activeLoginPage,action),
+  isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
+  userEntityState: userEntityStateReducers(prev.userEntityState, action),
+  userImageEntityState: userImageEntityStateReducers(prev.userImageEntityState,action),
+  searchState: searchStateReducers(prev.searchState,action),
+  createQuestionState: createQuestionReducers(prev.createQuestionState,action),
+  createSolutionState: createrSolutionReducers(prev.createSolutionState,action),
+  examEntityState: examEntityStateReducers(prev.examEntityState,action),
+  subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
+  topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),
+  questionEntityState: questionsReducer(prev.questionEntityState,action),
+  questionImageEntityState: questionImageEntityReducers(prev.questionImageEntityState,action),
+  solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
+  solutionImageEntityState: solutionImagesStateReducers(prev.solutionImageEntityState,action),
+  homePageState: homePageReducers(prev.homePageState,action),
+  commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
+  createCommentState: createCommentStateReducers(prev.createCommentState,action)
 );
 

@@ -61,10 +61,10 @@ class User{
         isFollowed: isFollowed,
         isRequester: isRequester,
         isRequested: isRequested,
-        followers: const Ids(ids: [], isLast: false, lastId: null),
-        followeds: const Ids(ids: [], isLast: false, lastId: null),
-        requesters: const Ids(ids: [], isLast: false, lastId: null),
-        requesteds: const Ids(ids: [], isLast: false, lastId: null),
-        questions: const Ids(ids: [], isLast: false, lastId: null)
+        followers: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
+        followeds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
+        requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
+        requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
+        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)
       );
 }

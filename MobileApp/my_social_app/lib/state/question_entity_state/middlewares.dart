@@ -1,6 +1,8 @@
+import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/solution_image_entity_state/actions.dart';
@@ -67,6 +69,44 @@ void nextPageQuestionSolutionIfNoSolutionsMiddleware(Store<AppState> store,actio
     final solutions = store.state.questionEntityState.entities[action.questionId]!.solutions;
     if(!solutions.isLast && solutions.ids.isEmpty){
       store.dispatch(NextPageQuestionSolutionsAction(questionId: action.questionId));
+    }
+  }
+  next(action);
+}
+
+void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageQuestionCommentsAction){
+    final comments = store.state.questionEntityState.entities[action.questionId]!.comments;
+    if(!comments.isLast){
+      CommentService()
+        .getByQuestionId(action.questionId, comments.lastId)
+        .then((comments){
+          store.dispatch(
+            AddCommentsAction(
+              comments: comments.map((e) => e.toCommentState())
+            )
+          );
+
+          store.dispatch(
+            NextPageQuestionCommentsSuccessAciton(
+              questionId: action.questionId,
+              questionCommentIds: comments.map((e) => e.id)
+            )
+          );
+        });
+    }
+  }
+  next(action);
+}
+void nextPageQuestionCommentIfNoQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageQuestionCommentsIfNoQuestionComments){
+    final comments = store.state.questionEntityState.entities[action.questionId]!.comments;
+    if(comments.ids.isEmpty){
+      store.dispatch(
+        NextPageQuestionCommentsAction(
+          questionId: action.questionId
+        )
+      );
     }
   }
   next(action);

@@ -31,7 +31,6 @@ Future loadEnvironmentVariables() async {
   await dotenv.load(fileName: isProduction ? ".env.prod" : ".env.dev");
 }
 
-
 Future<void> main() async {
   
   WidgetsFlutterBinding.ensureInitialized();

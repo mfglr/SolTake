@@ -12,6 +12,11 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
                 .HasMany(x => x.Images)
                 .WithOne(x => x.Solution)
                 .HasForeignKey(x => x.SolutionId);
+
+            builder
+                .HasMany(x => x.Comments)
+                .WithOne(x => x.Solution)
+                .HasForeignKey(x => x.SolutionId);
         }
     }
 }

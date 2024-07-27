@@ -7,7 +7,6 @@ class AddSolutionAction extends redux.Action{
   final SolutionState solution;
   const AddSolutionAction({required this.solution});
 }
-
 @immutable
 class AddSolutionsAction extends redux.Action{
   final Iterable<SolutionState> solutions;
@@ -25,7 +24,6 @@ class MakeUpvoteSuccessAction extends redux.Action{
   final int solutionId;
   const MakeUpvoteSuccessAction({required this.solutionId});
 }
-
 @immutable
 class MakeDownvoteAction extends redux.Action{
   final int solutionId;
@@ -36,7 +34,6 @@ class MakeDownvoteSuccessAction extends redux.Action{
   final int solutionId;
   const MakeDownvoteSuccessAction({required this.solutionId});
 }
-
 @immutable 
 class RemoveUpvoteAction extends redux.Action{
   final int solutionId;
@@ -47,7 +44,6 @@ class RemoveUpvoteSuccessAction extends redux.Action{
   final int solutionId;
   const RemoveUpvoteSuccessAction({required this.solutionId});
 }
-
 @immutable
 class RemoveDownvoteAction extends redux.Action{
   final int solutionId;
@@ -57,4 +53,11 @@ class RemoveDownvoteAction extends redux.Action{
 class RemoveDownvoteSuccessAction extends redux.Action{
   final int solutionId;
   const RemoveDownvoteSuccessAction({required this.solutionId});
+}
+
+@immutable
+class AddSolutionCommentAction extends redux.Action{
+  final int solutionId;
+  final int commentId;
+  const AddSolutionCommentAction({required this.solutionId, required this.commentId});
 }

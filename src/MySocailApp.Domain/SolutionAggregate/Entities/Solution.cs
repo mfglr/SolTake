@@ -1,5 +1,6 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
@@ -76,5 +77,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         //Readonluy navigator properties
         public Question Question { get; }
         public AppUser AppUser { get; }
+        public IReadOnlyCollection<Comment> Comments { get; } 
     }
 }

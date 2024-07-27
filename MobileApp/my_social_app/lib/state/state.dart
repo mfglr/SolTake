@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
+import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/home_page_state/home_page_state.dart';
+import 'package:my_social_app/state/comment_entity_state/comment_entity_state.dart';
+import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_entity_state.dart';
@@ -44,6 +47,8 @@ class AppState{
   final SolutionEntityState solutionEntityState;
   final SolutionImageEntityState solutionImageEntityState;
   final HomePageState homePageState;
+  final CommentEntityState commentEntityState;
+  final CreateCommentState createCommentState;
 
   const AppState({
     required this.accessToken,
@@ -62,7 +67,9 @@ class AppState{
     required this.questionImageEntityState,
     required this.solutionEntityState,
     required this.solutionImageEntityState,
-    required this.homePageState
+    required this.homePageState,
+    required this.commentEntityState,
+    required this.createCommentState
   });
 
   UserState? get currentUser => userEntityState.entities[accountState!.id];
@@ -93,7 +100,14 @@ class AppState{
 
   Iterable<SubjectState> get subjectsOfSelectedExam
     => examEntityState.entities[createQuestionState.examId!]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
-  
   Iterable<TopicState> get topicsOfSelecetedSubject
     => topicEntityState.getSubjectTopics(createQuestionState.subjectId);
+
+
+  Iterable<CommentState> getQuestionComments(int questionId)
+    => questionEntityState.entities[questionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
+
+  Iterable<CommentState> getCommentReplies(int commentId)
+    => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
+
 }

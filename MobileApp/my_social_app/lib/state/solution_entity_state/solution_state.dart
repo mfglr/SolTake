@@ -1,3 +1,5 @@
+import 'package:my_social_app/state/ids.dart';
+
 class SolutionState{
   final int id;
   final DateTime createdAt;
@@ -13,6 +15,7 @@ class SolutionState{
   final bool belongsToQuestionOfCurrentUser;
   final bool isOwner;
   final Iterable<int> images;
+  final Ids comments;
 
   const SolutionState({
     required this.id,
@@ -28,47 +31,12 @@ class SolutionState{
     required this.numberOfDownvotes,
     required this.belongsToQuestionOfCurrentUser,
     required this.isOwner,
-    required this.images
+    required this.images,
+    required this.comments
   });
 
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
-
-  SolutionState markAsApproved()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
-        isOwner: isOwner,
-        images: images
-      );
-  
-  SolutionState markAsPending()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
-        isOwner: isOwner,
-        images: images
-      );
 
 
   SolutionState makeUpvote()
@@ -86,7 +54,8 @@ class SolutionState{
         numberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
-        images: images
+        images: images,
+        comments: comments
       );
   
   SolutionState makeDownvote()
@@ -104,7 +73,8 @@ class SolutionState{
         numberOfDownvotes: numberOfDownvotes + 1,
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
-        images: images
+        images: images,
+        comments: comments
       );
 
    SolutionState removeUpvote()
@@ -122,7 +92,8 @@ class SolutionState{
         numberOfDownvotes: numberOfDownvotes,
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
-        images: images
+        images: images,
+        comments: comments
       );
 
   SolutionState removeDownvote()
@@ -140,6 +111,26 @@ class SolutionState{
         numberOfDownvotes: numberOfDownvotes - 1,
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
-        images: images
+        images: images,
+        comments: comments
+      );
+
+  SolutionState addComment(int commentId)
+    => SolutionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        questionId: questionId,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        isUpvoted: isUpvoted,
+        numberOfUpvotes: numberOfUpvotes,
+        isDownvoted: isDownvoted,
+        numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
+        isOwner: isOwner,
+        images: images,
+        comments: comments.create(commentId)
       );
 }

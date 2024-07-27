@@ -1,4 +1,6 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
+import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
+import 'package:my_social_app/state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/create_question_state/middleware.dart';
 import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
@@ -9,6 +11,8 @@ import 'package:my_social_app/state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/home_page_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
+import 'package:my_social_app/state/comment_entity_state/middlewares.dart';
+import 'package:my_social_app/state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/middlewares.dart';
@@ -40,7 +44,7 @@ final store = Store(
     isInitialized: false,
     userEntityState: UserEntityState(entities: {}),
     userImageEntityState: UserImageEntityState(entities: {}),
-    searchState: SearchState(key: "", users: Ids(ids: [], isLast: false, lastId: null)),
+    searchState: SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)),
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: ExamEntityState(entities: {}, isLoaded: false),
@@ -50,7 +54,9 @@ final store = Store(
     questionImageEntityState: QuestionImageEntityState(entities: {}),
     solutionEntityState: SolutionEntityState(entities: {}),
     solutionImageEntityState: SolutionImageEntityState(entities: {}),
-    homePageState: HomePageState(questions: Ids(ids: [], isLast: false, lastId: null))
+    homePageState: HomePageState(questions: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)),
+    commentEntityState: CommentEntityState(entities: {}),
+    createCommentState: CreateCommentState(question: null, solution: null, parent: null, content: "", hintText: "")
   ),
   middleware: [
     //account start
@@ -126,5 +132,14 @@ final store = Store(
 
     nextPageOfHomeQuestionsMiddleware,
     nextPageOfHomeQuestionsIfNoQuestionsMiddleware,
+
+    createQuestionCommentMiddleware,
+
+    nextPageQuestionCommentsMiddleware,
+    nextPageQuestionCommentIfNoQuestionCommentsMiddleware,
+    likeCommentMiddleware,
+    dislikeCommentMiddleware,
+    nextPageCommentRepliesMiddleware,
+    nextPageCommentRepliesIfNoRepliesMiddleware
   ]
 );

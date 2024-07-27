@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Core;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionCommentAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.Extetions
 {
@@ -26,11 +26,15 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Solutions)
                 .Include(x => x.Comments);
 
-        public static IQueryable<QuestionComment> IncludeForQuestionComment(this IQueryable<QuestionComment> query)
+        public static IQueryable<Comment> IncludeForQuestionComment(this IQueryable<Comment> query)
             => query
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Include(x => x.Likes);
+                .Include(x => x.Likes)
+                .Include(x => x.Children)
+                .Include(x => x.Tags)
+                .ThenInclude(x => x.AppUser)
+                .ThenInclude(x => x.Account);
 
     }
 }

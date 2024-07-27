@@ -16,6 +16,9 @@ SolutionEntityState removeUpvoteReducer(SolutionEntityState prev,RemoveUpvoteSuc
 SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveDownvoteSuccessAction action)
   => prev.removeDownvote(action.solutionId);
 
+SolutionEntityState addSolutionCommentReducer(SolutionEntityState prev,AddSolutionCommentAction action)
+  => prev.addSolutionComment(action.solutionId,action.commentId);
+
 Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<SolutionEntityState>([
   TypedReducer<SolutionEntityState,AddSolutionAction>(addSolutionReducer).call,
   TypedReducer<SolutionEntityState,AddSolutionsAction>(addSolutionsReducer).call,
@@ -24,4 +27,6 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
   TypedReducer<SolutionEntityState,MakeDownvoteSuccessAction>(makeDownvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveUpvoteSuccessAction>(removeUpvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveDownvoteSuccessAction>(removeDownVoteAction).call,
+  TypedReducer<SolutionEntityState,AddSolutionCommentAction>(addSolutionCommentReducer).call,
+
 ]);

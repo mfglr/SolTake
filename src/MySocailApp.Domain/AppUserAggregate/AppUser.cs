@@ -2,8 +2,8 @@
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionCommentAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.AppUserAggregate
@@ -214,14 +214,7 @@ namespace MySocailApp.Domain.AppUserAggregate
             _blockers.RemoveAt(index);
         }
 
-        //readonly navigator properties
-        public Account Account { get; }
-        public IReadOnlyCollection<Question> Questions { get; }
-        public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } 
-        public IReadOnlyCollection<Solution> Solutions { get; }
-        public IReadOnlyCollection<QuestionComment> Comments { get; }
-        public IReadOnlyCollection<QuestionCommentUserLike> CommentLikes { get; }
-
+        
         //IRemovable
         public bool IsRemoved { get; private set; }
         public DateTime? RemovedAt { get; private set; }
@@ -266,5 +259,16 @@ namespace MySocailApp.Domain.AppUserAggregate
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
+
+
+        //readonly navigator properties
+        public Account Account { get; }
+        public IReadOnlyCollection<Question> Questions { get; }
+        public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; }
+        public IReadOnlyCollection<Solution> Solutions { get; }
+        public IReadOnlyCollection<Comment> Comments { get; }
+        public IReadOnlyCollection<CommentUserLike> CommentsLiked { get; }
+        public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; }
+
     }
 }

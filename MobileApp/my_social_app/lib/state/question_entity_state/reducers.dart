@@ -15,10 +15,14 @@ QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, Disl
   => prev.dislike(action.questionId);
 
 QuestionEntityState addSolutionReducer(QuestionEntityState prev,AddQuestionSolutionAction action)
-  => prev.addQuestionSolution(action.questionId,action.solutionId);
-
+  => prev.addSolution(action.questionId,action.solutionId);
 QuestionEntityState nextPageQuestionSolutionsReducer(QuestionEntityState prev,NextPageQuestionSolutionsSuccessAction action)
   => prev.nextPageQuestionSolutions(action.questionId, action.solutionIds);
+
+QuestionEntityState addQuestionCommentReducer(QuestionEntityState prev,AddQuestionCommentAction action)
+  => prev.addComment(action.questionId,action.commenId);
+QuestionEntityState nextPageQuestionCommentsReducer(QuestionEntityState prev,NextPageQuestionCommentsSuccessAciton action)
+  => prev.nextPageQuestionComments(action.questionId,action.questionCommentIds);
 
 Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntityState>([
   TypedReducer<QuestionEntityState,AddQuestionAction>(addQuestionReducer).call,
@@ -27,4 +31,6 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionSolutionAction>(addSolutionReducer).call,
   TypedReducer<QuestionEntityState,NextPageQuestionSolutionsSuccessAction>(nextPageQuestionSolutionsReducer).call,
+  TypedReducer<QuestionEntityState,AddQuestionCommentAction>(addQuestionCommentReducer).call,
+  TypedReducer<QuestionEntityState,NextPageQuestionCommentsSuccessAciton>(nextPageQuestionCommentsReducer).call,
 ]);
