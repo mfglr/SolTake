@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
+import 'package:my_social_app/views/shared/comment/comment_content_widget.dart';
 import 'package:my_social_app/views/shared/comment/comment_like_button_widget.dart';
 import 'package:my_social_app/views/shared/comment/comment_reply_items_widget.dart';
 import 'package:my_social_app/views/shared/comment/display_remain_replies_button_widget.dart';
@@ -13,8 +14,16 @@ import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class CommentItemWidget extends StatelessWidget {
+  final TextEditingController contentController;
+  final FocusNode focusNode;
   final CommentState comment;
-  const CommentItemWidget({super.key,required this.comment});
+  
+  const CommentItemWidget({
+    super.key,
+    required this.contentController,
+    required this.focusNode,
+    required this.comment
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,7 @@ class CommentItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:[
               TextButton(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: comment.appUserId))),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: comment.appUserId,userName: null,))),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -35,7 +44,7 @@ class CommentItemWidget extends StatelessWidget {
                       child: UserImageWidget(userId: comment.appUserId, diameter: 35)
                     ),
                     Text(
-                      comment.formatUserName(10),
+                      comment.userName,
                       style: const TextStyle(fontSize: 11),
                     )
                   ],
@@ -55,10 +64,7 @@ class CommentItemWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15, top: 5,bottom: 5),
-            child: Text(
-              comment.content,
-              style: const TextStyle(fontSize: 13),
-            ),
+            child: CommentContentWidget(comment: comment,),
           ),
           Row(
             children:[
@@ -76,7 +82,12 @@ class CommentItemWidget extends StatelessWidget {
                   return const SizedBox.shrink();
                 }
               ),
-              ReplyCommentButtonWidget(comment: comment,isRoot: true,)
+              ReplyCommentButtonWidget(
+                contentController: contentController,
+                focusNode: focusNode,
+                comment: comment,
+                isRoot: true,
+              )
             ]
           ),
           Builder(
@@ -87,7 +98,11 @@ class CommentItemWidget extends StatelessWidget {
                   builder: (context,replies){
                     return Container(
                       margin: const EdgeInsets.only(left: 30),
-                      child: CommentReplyItemsWidget(replies: replies,)
+                      child: CommentReplyItemsWidget(
+                        contentController: contentController,
+                        focusNode: focusNode,
+                        replies: replies,
+                      )
                     );
                   }
                 );

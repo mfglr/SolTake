@@ -6,7 +6,7 @@ CommentEntityState changeVisibilityReducer(CommentEntityState prev,ChangeReplies
   => prev.changeVisibility(action.commentId, action.visibility);
 
 CommentEntityState addCommentReducer(CommentEntityState prev,AddCommentAction action)
-  => CommentEntityState(entities: prev.appendOne(action.questionComment));
+  => CommentEntityState(entities: prev.appendOne(action.comment));
 CommentEntityState addCommentsReducer(CommentEntityState prev,AddCommentsAction action)
   => CommentEntityState(entities: prev.appendMany(action.comments));
 CommentEntityState likeCommentReducer(CommentEntityState prev,LikeCommentSuccessAction action)

@@ -106,6 +106,8 @@ class AppState{
 
   Iterable<CommentState> getQuestionComments(int questionId)
     => questionEntityState.entities[questionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
+  Iterable<CommentState> getSolutionComments(int solutionId)
+    => solutionEntityState.entities[solutionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
 
   Iterable<CommentState> getCommentReplies(int commentId)
     => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);

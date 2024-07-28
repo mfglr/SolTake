@@ -10,19 +10,36 @@ import 'package:my_social_app/views/shared/user/user_info_card_widget.dart';
 
 
 class UserPage extends StatelessWidget {
-  final int userId;
-  const UserPage({super.key,required this.userId});
+  final int? userId;
+  final String? userName;
+  const UserPage({
+    super.key,
+    required this.userId,
+    required this.userName
+  });
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, UserState?>(
-      onInit: (store) => store.dispatch(LoadUserAction(userId: userId)),
-      converter: (store) => store.state.userEntityState.entities[userId],
+      onInit: (store){
+        if(userId != null){
+          store.dispatch(LoadUserAction(userId: userId!));
+        }
+        if(userName != null){
+          store.dispatch(LoadUserByUserNameAction(userName: userName!));
+        }
+      },
+      converter: (store){
+        if(userId != null){
+          return store.state.userEntityState.entities[userId];
+        }
+        return store.state.userEntityState.entities.values.where((e) => e.userName == userName).firstOrNull;
+      },
       builder: (context, userState){
         if(userState != null){
           return Scaffold(
             appBar: AppBar(
-              title: Text(userState.formatUserName(10)),
+              title: Text(userState.userName),
             ),
             body: Column(
               children: [
@@ -32,8 +49,8 @@ class UserPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: StoreConnector<AppState,Iterable<QuestionState>>(
-                    onInit: (store) => store.dispatch(NextPageOfUserQuestionsIfNoQuestionsAction(userId: userId)),
-                    converter: (store) => store.state.getUserQuestions(userId),
+                    onInit: (store) => store.dispatch(NextPageOfUserQuestionsIfNoQuestionsAction(userId: userState.id)),
+                    converter: (store) => store.state.getUserQuestions(userState.id),
                     builder: (context,value ) => QuestionAbstractItemsWidget(questions: value)
                   ),
                 )

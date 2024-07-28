@@ -26,6 +26,7 @@ using MySocailApp.Application.Queries.UserAggregate.GetRequesteds;
 using MySocailApp.Application.Queries.UserAggregate.GetRequesters;
 using MySocailApp.Application.Queries.UserAggregate.GetUser;
 using MySocailApp.Application.Queries.UserAggregate.GetUserById;
+using MySocailApp.Application.Queries.UserAggregate.GetUserByUserName;
 using MySocailApp.Application.Queries.UserAggregate.GetUserImage;
 using MySocailApp.Application.Queries.UserAggregate.GetUserImageById;
 using MySocailApp.Application.Queries.UserAggregate.SearchUsers;
@@ -105,6 +106,10 @@ namespace MySocailApp.Api.Controllers
         [HttpGet("{id}")]
         public async Task<AppUserResponseDto> GetById(int id,CancellationToken cancellationToken)
             => await _mediator.Send(new GetUserByIdDto(id),cancellationToken);
+
+        [HttpGet("{userName}")]
+        public async Task<AppUserResponseDto> GetByUserName(string userName,CancellationToken cancellationToken)
+            => await _mediator.Send(new GetUserByUserNameDto(userName),cancellationToken);
 
         [HttpGet]
         public async Task<FileContentResult> GetImage(CancellationToken cancellationToken)

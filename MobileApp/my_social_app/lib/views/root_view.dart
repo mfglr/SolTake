@@ -61,7 +61,7 @@ class _RootViewState extends State<RootView> {
                   body: [
                     const HomePage(),
                     const SearchPage(),
-                    UserPage(userId: userState.id)
+                    UserPage(userId: userState.id,userName: null,)
                   ][currentPageIndex]
                 );
               }

@@ -43,8 +43,8 @@ class CreateCommentState{
   CreateCommentState changeSolution(SolutionState solution)
     => CreateCommentState(
         question: null,
-        solution: null,
-        comment: comment,
+        solution: solution,
+        comment: null,
         isRoot: isRoot,
         content: content,
         hintText: hintText,

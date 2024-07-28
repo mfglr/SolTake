@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/comment_font_size.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/store.dart';
@@ -25,12 +26,26 @@ class CommentButtonLikeWidget extends StatelessWidget {
             margin: const EdgeInsets.only(right: 5),
             child: Builder(
               builder: (context) {
-                if(comment.isLiked) return const Icon(Icons.favorite,color: Colors.red,);
-                return const Icon(Icons.favorite_outline_sharp);
+                if(comment.isLiked){
+                  return const Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                    size: commentIconFontSize,
+                  );
+                }
+                return const Icon(
+                  Icons.favorite_outline_sharp,
+                  size: commentIconFontSize,
+                );
               }
             ),
           ),
-          Text(comment.numberOfLikes.toString())
+          Text(
+            comment.numberOfLikes.toString(),
+            style: const TextStyle(
+              fontSize: commentTextFontSize
+            ),
+          )
         ],
       )
     );

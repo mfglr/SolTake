@@ -2,6 +2,7 @@
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Repositories;
 using MySocailApp.Infrastructure.DbContexts;
+using MySocailApp.Infrastructure.Extetions;
 
 namespace MySocailApp.Infrastructure.SolutionAggregate
 {
@@ -13,22 +14,14 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
             => await _context
                 .Solutions
                 .AsNoTracking()
-                .Include(x => x.Images)
-                .Include(x => x.Votes)
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Question)
+                .IncludeForSolution()
                 .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
 
         public async Task<List<Solution>> GetByQuestionIdAsync(int questionId,int? lastId,CancellationToken cancellationToken)
             => await _context
                 .Solutions
                 .AsNoTracking()
-                .Include(x => x.Images)
-                .Include(x => x.Votes)
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Question)
+                .IncludeForSolution()
                 .Where(x => x.QuestionId == questionId && (lastId == null || x.Id < lastId))
                 .OrderByDescending(x => x.Id)
                 .Take(20)

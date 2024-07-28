@@ -40,6 +40,9 @@ class UserService{
     return User.fromJson(await _appClient.get("$userController/$getUserByIdEndPoint/$id"));
   }
 
+  Future<User> getByUserName(String userName) async
+    => User.fromJson(await _appClient.get("$userController/$getUserByUserNameEndpoint/$userName"));
+
   Future<Uint8List> getImage() async {
     return await _appClient.getBytes("$userController/$getUserImageEndPoint");
   }

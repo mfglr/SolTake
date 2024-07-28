@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/solution/downvote_button_widget.dart';
-import 'package:my_social_app/views/shared/solution/solution_comment_button.dart';
+import 'package:my_social_app/views/shared/solution/solution_comment_button_widget.dart';
 import 'package:my_social_app/views/shared/solution/upvote_button_widget.dart';
 
 class SolutionButtonsWidget extends StatelessWidget {
@@ -24,7 +24,7 @@ class SolutionButtonsWidget extends StatelessWidget {
             return const SizedBox.shrink();
           }
         ),
-        SolutionCommentButton(solution: solution)
+        SolutionCommentButtonWidget(solution: solution)
       ]
     );
   }

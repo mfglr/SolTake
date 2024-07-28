@@ -33,6 +33,29 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadUserByUserNameAction){
+    final user = store.state.userEntityState.entities.values.where((e) => e.userName == action.userName).firstOrNull;
+    if(user == null){
+      UserService()
+        .getByUserName(action.userName)
+        .then((user){
+          store.dispatch(
+            LoadUserSuccessAction(
+              user: user.toUserState()
+            )
+          );
+          store.dispatch(
+            AddUserImageAction(
+              image: UserImageState(id: user.id,image: null,state: ImageState.notStarted)
+            )
+          );
+        });
+    }
+  }
+  next(action);
+}
+
 
 void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowersIfNoUsersAction){

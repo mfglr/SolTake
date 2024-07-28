@@ -13,13 +13,13 @@ namespace MySocailApp.Infrastructure.CommentAggregate
         public async Task<Comment?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .IncludeForQuestionComment()
+                .IncludeForComment()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<List<Comment>> GetByParentIdAsync(int parentId,int? lastId,int? take,CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .IncludeForQuestionComment()
+                .IncludeForComment()
                 .Where(x => x.ParentId == parentId)
                 .ToPage(lastId,take ?? 20)
                 .ToListAsync(cancellationToken);
@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.CommentAggregate
         public async Task<List<Comment>> GetByQuestionIdAsync(int questionId, int? lastId, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .IncludeForQuestionComment()
+                .IncludeForComment()
                 .Where(x => x.QuestionId == questionId)
                 .ToPage(lastId, 20)
                 .ToListAsync(cancellationToken);
@@ -35,7 +35,7 @@ namespace MySocailApp.Infrastructure.CommentAggregate
         public async Task<List<Comment>> GetBySolutoinIdAsync(int solutionId, int? lastId, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .IncludeForQuestionComment()
+                .IncludeForComment()
                 .Where(x => x.SolutionId == solutionId)
                 .ToPage(lastId, 20)
                 .ToListAsync(cancellationToken);

@@ -15,6 +15,7 @@
         public int NumberOfDownvotes { get; private set; }
         public bool IsOwner { get; private set; }
         public bool BelongsToQuestionOfCurrentUser { get; private set; }
+        public int NumberOfComments { get; private set; }
         public IReadOnlyCollection<SolutionImageResponseDto> Images { get; private set; }
 
         private SolutionResponseDto() { }

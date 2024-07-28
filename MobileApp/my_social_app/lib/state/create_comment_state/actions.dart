@@ -43,3 +43,8 @@ class ChangeHintTextAction extends redux.Action{
   final String hintText;
   const ChangeHintTextAction({required this.hintText});
 }
+@immutable
+class PressReplyButtonAction extends redux.Action{
+  final CommentState comment;
+  const PressReplyButtonAction({required this.comment});
+}

@@ -2,6 +2,7 @@
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Infrastructure.DbContexts;
+using MySocailApp.Infrastructure.Extetions;
 
 namespace MySocailApp.Infrastructure.AppUserAggregate
 {
@@ -15,12 +16,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Questions)
-                .Include(x => x.Followers)
-                .Include(x => x.Followeds)
-                .Include(x => x.Requesters)
-                .Include(x => x.Requesteds)
+                .IncludeForUser()
                 .Where(
                     user =>
                         user.Followeds.Any(follow => follow.FollowedId == id) &&
@@ -41,12 +37,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Questions)
-                .Include(x => x.Followers)
-                .Include(x => x.Followeds)
-                .Include(x => x.Requesters)
-                .Include(x => x.Requesteds)
+                .IncludeForUser()
                 .Where(
                     user =>
                         (
@@ -67,12 +58,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Questions)
-                .Include(x => x.Followers)
-                .Include(x => x.Followeds)
-                .Include(x => x.Requesters)
-                .Include(x => x.Requesteds)
+                .IncludeForUser()
                 .Where(
                     user =>
                         user.Followers.Any(follow => follow.FollowerId == id) &&
@@ -91,12 +77,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Questions)
-                .Include(x => x.Followers)
-                .Include(x => x.Followeds)
-                .Include(x => x.Requesters)
-                .Include(x => x.Requesteds)
+                .IncludeForUser()
                 .FirstOrDefaultAsync(
                     x => x.Id == id && !x.IsRemoved && !x.Blockeds.Any(x => x.BlockedId == accountId), 
                     cancellationToken
@@ -108,12 +89,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Questions)
-                .Include(x => x.Followers)
-                .Include(x => x.Followeds)
-                .Include(x => x.Requesters)
-                .Include(x => x.Requesteds)
+                .IncludeForUser()
                 .Where(
                     user =>
                         user.Requesteds.Any(request => request.RequestedId == id) &&
@@ -131,12 +107,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             return await _context
                 .AppUsers
                 .AsNoTracking()
-                .Include(x => x.Account)
-                .Include(x => x.Questions)
-                .Include(x => x.Followers)
-                .Include(x => x.Followeds)
-                .Include(x => x.Requesters)
-                .Include(x => x.Requesteds)
+                .IncludeForUser()
                 .Where(
                     user =>
                         user.Requesters.Any(request => request.RequesterId == id) &&
@@ -147,5 +118,12 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .Take(20)
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<AppUser?> GetByUserNameAsync(string userName, CancellationToken cancellationToken)
+            => await _context
+                .AppUsers
+                .AsNoTracking()
+                .IncludeForUser()
+                .FirstOrDefaultAsync(x => x.Account.UserName == userName, cancellationToken);
     }
 }

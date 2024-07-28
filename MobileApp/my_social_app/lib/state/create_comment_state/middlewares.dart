@@ -6,7 +6,7 @@ import 'package:my_social_app/state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:redux/redux.dart';
 
-void createQuestionCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
+void createCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateCommentAction){
     final state = store.state.createCommentState;
     final questionId = state.comment != null ? null : state.question?.id;
@@ -18,7 +18,7 @@ void createQuestionCommentMiddleware(Store<AppState> store,action,NextDispatcher
       .then((comment){
         store.dispatch(
           AddCommentAction(
-            questionComment: comment.toCommentState()
+            comment: comment.toCommentState()
           )
         );
 

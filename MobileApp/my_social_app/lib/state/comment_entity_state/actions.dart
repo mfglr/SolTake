@@ -11,8 +11,8 @@ class ChangeRepliesVisibilityAction extends redux.Action{
 
 @immutable
 class AddCommentAction extends redux.Action{
-  final CommentState questionComment;
-  const AddCommentAction({required this.questionComment});
+  final CommentState comment;
+  const AddCommentAction({required this.comment});
 }
 @immutable
 class AddCommentsAction extends redux.Action{

@@ -69,6 +69,7 @@ final store = Store(
 
     //user start
     loadUserMiddleware,
+    loadUserByUserNameMiddleware,
     loadFollowersIfNoUsersMiddleware,
     loadFollowedsIfNoUsersMiddleware,
     loadFollowersMiddleware,
@@ -124,6 +125,8 @@ final store = Store(
     makeDownvoteMiddleware,
     removeUpvoteMiddleware,
     removeDownvoteMiddleware,
+    nextPageSolutionCommentsMiddleware,
+    nextPageSolutionCommentsIfNoCommentsMiddleware,
     //solution end
 
     //Solution image start
@@ -133,7 +136,7 @@ final store = Store(
     nextPageOfHomeQuestionsMiddleware,
     nextPageOfHomeQuestionsIfNoQuestionsMiddleware,
 
-    createQuestionCommentMiddleware,
+    createCommentMiddleware,
 
     nextPageQuestionCommentsMiddleware,
     nextPageQuestionCommentIfNoQuestionCommentsMiddleware,

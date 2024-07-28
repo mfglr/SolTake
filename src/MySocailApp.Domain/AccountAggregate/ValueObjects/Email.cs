@@ -16,7 +16,7 @@ namespace MySocailApp.Domain.AccountAggregate.ValueObjects
         {
             int i = 0;
             while (value[i] != '@') i++;
-            return $"{value[..i].ToLower()}_{BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0)}";
+            return $"{value[..i].ToLower()}_{BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0).ToString()[..5]}";
         }
     }
 }

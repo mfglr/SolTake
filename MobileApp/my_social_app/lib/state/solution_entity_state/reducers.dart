@@ -18,15 +18,16 @@ SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveDownvote
 
 SolutionEntityState addSolutionCommentReducer(SolutionEntityState prev,AddSolutionCommentAction action)
   => prev.addSolutionComment(action.solutionId,action.commentId);
+SolutionEntityState nextPageSolutionCommentsSuccessReducer(SolutionEntityState prev,NextPageSolutionCommentsSuccessAction action)
+  => prev.addSolutionComments(action.solutionId,action.commentsIds);
 
 Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<SolutionEntityState>([
   TypedReducer<SolutionEntityState,AddSolutionAction>(addSolutionReducer).call,
   TypedReducer<SolutionEntityState,AddSolutionsAction>(addSolutionsReducer).call,
-
   TypedReducer<SolutionEntityState,MakeUpvoteSuccessAction>(makeUpvoteReducer).call,
   TypedReducer<SolutionEntityState,MakeDownvoteSuccessAction>(makeDownvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveUpvoteSuccessAction>(removeUpvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveDownvoteSuccessAction>(removeDownVoteAction).call,
   TypedReducer<SolutionEntityState,AddSolutionCommentAction>(addSolutionCommentReducer).call,
-
+  TypedReducer<SolutionEntityState,NextPageSolutionCommentsSuccessAction>(nextPageSolutionCommentsSuccessReducer).call,
 ]);

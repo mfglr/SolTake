@@ -28,6 +28,4 @@ class AccountState{
 
   AccountState confirmEmail()
     => AccountState(id, createdAt, updatedAt, email, userName, true, refreshToken);
-
-  String get formatedUsername => userName.length <= 10 ? userName : "${userName.substring(0,10)}...";
 }

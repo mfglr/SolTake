@@ -15,6 +15,7 @@ class SolutionState{
   final bool belongsToQuestionOfCurrentUser;
   final bool isOwner;
   final Iterable<int> images;
+  final int numberOfComments;
   final Ids comments;
 
   const SolutionState({
@@ -32,6 +33,7 @@ class SolutionState{
     required this.belongsToQuestionOfCurrentUser,
     required this.isOwner,
     required this.images,
+    required this.numberOfComments,
     required this.comments
   });
 
@@ -55,6 +57,7 @@ class SolutionState{
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images,
+        numberOfComments: numberOfComments,
         comments: comments
       );
   
@@ -74,6 +77,7 @@ class SolutionState{
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images,
+        numberOfComments: numberOfComments,
         comments: comments
       );
 
@@ -93,6 +97,7 @@ class SolutionState{
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images,
+        numberOfComments: numberOfComments,
         comments: comments
       );
 
@@ -112,6 +117,7 @@ class SolutionState{
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images,
+        numberOfComments: numberOfComments,
         comments: comments
       );
 
@@ -131,6 +137,27 @@ class SolutionState{
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images,
+        numberOfComments: numberOfComments + 1,
         comments: comments.create(commentId)
+      );
+
+  SolutionState addComments(Iterable<int> commentIds)
+    => SolutionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        questionId: questionId,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        isUpvoted: isUpvoted,
+        numberOfUpvotes: numberOfUpvotes,
+        isDownvoted: isDownvoted,
+        numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
+        isOwner: isOwner,
+        images: images,
+        numberOfComments: numberOfComments,
+        comments: comments.nextPage(commentIds)
       );
 }

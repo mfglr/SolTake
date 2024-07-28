@@ -1,5 +1,6 @@
 const getUserEndPoint = "Get";
 const getUserByIdEndPoint = "GetById";
+const getUserByUserNameEndpoint = "GetByUserName";
 const getUserImageEndPoint = "GetImage";
 const gerUserImageByIdEndPoint = "GetImageById";
 const getFollowersEndPoint = "GetFollowers";

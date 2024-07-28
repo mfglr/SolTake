@@ -40,7 +40,15 @@ class CommentService{
     );
 
   Future<Iterable<Comment>> getByQuestionId(int questionId,int? lastId) async{
-    String endPoint = "$questionCommentController/$getQuestionCommentsByQuestionIdEndpoint/$questionId";
+    String endPoint = "$questionCommentController/$getCommentsByQuestionIdEndpoint/$questionId";
+    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Comment.fromJson(e));
+  }
+
+   Future<Iterable<Comment>> getBySolutionId(int solutionId,int? lastId) async{
+    String endPoint = "$questionCommentController/$getCommentsBySolutionIdEndpoint/$solutionId";
     String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
 
     final list = (await _appClient.get(url)) as List;

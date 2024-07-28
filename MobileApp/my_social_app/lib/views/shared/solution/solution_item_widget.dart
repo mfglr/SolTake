@@ -20,7 +20,7 @@ class SolutionItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: solution.appUserId))),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: solution.appUserId,userName: null,))),
                 child: Row(
                   children: [
                     Container(

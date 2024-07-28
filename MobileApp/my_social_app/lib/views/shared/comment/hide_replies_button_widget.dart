@@ -15,15 +15,9 @@ class HideRepliesButtonWidget extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 5),
-            child: const Icon(
-              Icons.visibility_off_outlined,
-              size: 20,
-            ),
+            child: const Icon( Icons.visibility_off_outlined,size: 20),
           ),
-          const Text(
-            "Hide replies",
-            style: TextStyle(fontSize: 12),
-          ),
+          const Text("Hide replies", style: TextStyle(fontSize: 12)),
         ],
       )
     );

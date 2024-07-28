@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Core;
+using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.Extetions
 {
@@ -26,7 +28,7 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Solutions)
                 .Include(x => x.Comments);
 
-        public static IQueryable<Comment> IncludeForQuestionComment(this IQueryable<Comment> query)
+        public static IQueryable<Comment> IncludeForComment(this IQueryable<Comment> query)
             => query
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
@@ -35,6 +37,24 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Tags)
                 .ThenInclude(x => x.AppUser)
                 .ThenInclude(x => x.Account);
+
+        public static IQueryable<Solution> IncludeForSolution(this IQueryable<Solution> query)
+            => query
+                .Include(x => x.Images)
+                .Include(x => x.Votes)
+                .Include(x => x.AppUser)
+                .ThenInclude(x => x.Account)
+                .Include(x => x.Question)
+                .Include(x => x.Comments);
+
+        public static IQueryable<AppUser> IncludeForUser(this IQueryable<AppUser> query)
+            => query
+                .Include(x => x.Account)
+                .Include(x => x.Questions)
+                .Include(x => x.Followers)
+                .Include(x => x.Followeds)
+                .Include(x => x.Requesters)
+                .Include(x => x.Requesteds);
 
     }
 }

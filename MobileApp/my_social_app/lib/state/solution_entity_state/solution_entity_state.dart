@@ -17,4 +17,6 @@ class SolutionEntityState extends EntityState<SolutionState>{
 
   SolutionEntityState addSolutionComment(int solutionId, int commentId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.addComment(commentId)));
+  SolutionEntityState addSolutionComments(int solutionId, Iterable<int> commentIds)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.addComments(commentIds)));
 }

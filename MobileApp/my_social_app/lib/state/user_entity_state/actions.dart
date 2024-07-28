@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
+
 @immutable
 class LoadUserAction extends redux.Action{
   final int userId;
   const LoadUserAction({required this.userId});
 }
+@immutable
+class LoadUserByUserNameAction extends redux.Action{
+  final String userName;
+  const LoadUserByUserNameAction({required this.userName});
+}
+
 @immutable
 class LoadUserSuccessAction extends redux.Action{
   final UserState user;

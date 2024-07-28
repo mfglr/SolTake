@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
+import 'package:my_social_app/views/shared/comment/comment_content_widget.dart';
 import 'package:my_social_app/views/shared/comment/comment_like_button_widget.dart';
 import 'package:my_social_app/views/shared/comment/reply_comment_button_widget.dart';
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class CommentReplyItemWidget extends StatelessWidget {
+  final TextEditingController contentController;
+  final FocusNode focusNode;
   final CommentState reply;
-  const CommentReplyItemWidget({super.key,required this.reply});
+  const CommentReplyItemWidget({
+    super.key,
+    required this.reply,
+    required this.contentController,
+    required this.focusNode
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,7 @@ class CommentReplyItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:[
             TextButton(
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: reply.appUserId))),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: reply.appUserId,userName: null,))),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -28,7 +36,7 @@ class CommentReplyItemWidget extends StatelessWidget {
                     child: UserImageWidget(userId: reply.appUserId, diameter: 35)
                   ),
                   Text(
-                    reply.formatUserName(10),
+                    reply.userName,
                     style: const TextStyle(fontSize: 11),
                   )
                 ],
@@ -48,17 +56,19 @@ class CommentReplyItemWidget extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 15, top: 5,bottom: 5),
-          child: Text(
-            reply.content,
-            style: const TextStyle(fontSize: 13),
-          ),
+          child: CommentContentWidget(comment: reply),
         ),
         Row(
           children: [
             CommentButtonLikeWidget(
               comment: reply,
             ),
-            ReplyCommentButtonWidget(comment: reply, isRoot: false)
+            ReplyCommentButtonWidget(
+              contentController: contentController,
+              focusNode: focusNode,
+              comment: reply,
+              isRoot: false
+            )
           ],
         ),
       ],

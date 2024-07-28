@@ -23,6 +23,7 @@ class Solution{
   final bool belongsToQuestionOfCurrentUser;
   final bool isOwner;
   final Iterable<SolutionImage> images;
+  final int numberOfComments;
 
   const Solution({
     required this.id,
@@ -38,7 +39,8 @@ class Solution{
     required this.numberOfDownvotes,
     required this.belongsToQuestionOfCurrentUser,
     required this.isOwner,
-    required this.images
+    required this.images,
+    required this.numberOfComments
   });
 
   factory Solution.fromJson(Map<String, dynamic> json) => _$SolutionFromJson(json);
@@ -60,6 +62,7 @@ class Solution{
       belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
       isOwner: isOwner,
       images: images.map((e) => e.id),
+      numberOfComments: numberOfComments,
       comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null)
     );
 }

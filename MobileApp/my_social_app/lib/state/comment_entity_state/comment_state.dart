@@ -38,10 +38,7 @@ class CommentState{
     required this.repliesVisibility,
     required this.numberOfDisplayReplies
   });
-
-  String formatUserName(int count)
-    => userName.length <= count ? userName : "${userName.substring(0,10)}...";
-
+  
   int get numberOfNotDisplayedReplies => numberOfReplies - numberOfDisplayReplies;
 
   CommentState like(int userId)
