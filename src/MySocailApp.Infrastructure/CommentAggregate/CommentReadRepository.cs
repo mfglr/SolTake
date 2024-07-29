@@ -10,6 +10,14 @@ namespace MySocailApp.Infrastructure.CommentAggregate
     {
         private readonly AppDbContext _context = context;
 
+        public async Task<bool> Exist(int id, CancellationToken cancellationToken)
+            => await _context.Comments.AnyAsync(x => x.Id == id, cancellationToken);
+
+        public async Task<Comment?> GetAsync(int id, CancellationToken cancellationToken)
+            => await _context.Comments
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
         public async Task<Comment?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()

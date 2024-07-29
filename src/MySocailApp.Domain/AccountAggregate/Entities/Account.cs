@@ -3,7 +3,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 using MySocailApp.Domain.AccountAggregate.ValueObjects;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySocailApp.Domain.AccountAggregate.Entities

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionBySubjectId
 {

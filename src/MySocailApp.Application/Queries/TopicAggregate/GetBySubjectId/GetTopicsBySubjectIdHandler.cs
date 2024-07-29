@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Domain.TopicAggregate;
+using MySocailApp.Domain.TopicAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.TopicAggregate.GetBySubjectId
 {

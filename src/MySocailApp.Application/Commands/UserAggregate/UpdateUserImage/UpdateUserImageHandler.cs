@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.Services;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateUserImage
 {

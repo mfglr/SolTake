@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.Services;
-using MySocailApp.Domain.AppUserAggregate;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.AppUserAggregate.Interfaces;
+using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateGender
 {

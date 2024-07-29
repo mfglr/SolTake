@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Services;
+﻿using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Infrastructure.AppUserAggregate
 {

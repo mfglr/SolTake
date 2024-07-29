@@ -2,7 +2,7 @@
 using MySocailApp.Application.Extentions;
 using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
 {
@@ -15,10 +15,10 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
         {
             var question =
                 await _repository.GetByIdAsync(request.QuestionId, cancellationToken) ??
-                throw new QuestionIsNotFoundException();
+                throw new QuestionNotFoundException();
 
             if (!question.Images.Any(x => x.BlobName == request.BlobName))
-                throw new QuestionImageIsNotFoundException();
+                throw new QuestionImageNotFoundException();
 
             var stream = _blobService.Read(ContainerName.QuestionImages, request.BlobName);
             return await stream.ToByteArrayAsync();

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote
 {
@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote
             var voterId = _tokenReader.GetRequiredAccountId();
             var solution =
                 await _writeRepository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
-                throw new SolutionIsNotFoundException();
+                throw new SolutionNotFoundException();
             solution.MakeDownvote(voterId);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

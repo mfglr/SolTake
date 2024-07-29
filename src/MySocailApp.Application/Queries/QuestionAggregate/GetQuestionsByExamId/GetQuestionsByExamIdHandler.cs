@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId
 {

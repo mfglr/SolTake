@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.ExamAggregate;
+using MySocailApp.Domain.ExamAggregate.Entitities;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SubjectAggregate;
-using MySocailApp.Domain.TopicAggregate;
+using MySocailApp.Domain.SubjectAggregate.Entities;
+using MySocailApp.Domain.TopicAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
@@ -23,6 +24,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<Comment> Comments { get; private set; }
+        public DbSet<Notification> Notifications { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,7 +40,6 @@ namespace MySocailApp.Infrastructure.DbContexts
             var builder = new DbContextOptionsBuilder<AppDbContext>();
             builder.UseSqlServer("Data Source=THENQLV;Initial Catalog=MySocialAppDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
             return new AppDbContext(builder.Options);
-
         }
     }
 }

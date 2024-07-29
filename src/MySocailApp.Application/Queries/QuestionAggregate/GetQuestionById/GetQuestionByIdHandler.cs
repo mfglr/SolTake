@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById
 {
@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById
         {
             var question = 
                 await _repository.GetByIdAsync(request.Id, cancellationToken) ?? 
-                throw new QuestionIsNotFoundException();
+                throw new QuestionNotFoundException();
             return _mapper.Map<QuestionResponseDto>(question);
         }
     }

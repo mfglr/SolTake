@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionAggregate

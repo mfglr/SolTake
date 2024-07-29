@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.Services;
 using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.DeleteAccount
 {

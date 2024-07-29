@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Domain.SubjectAggregate;
+using MySocailApp.Domain.SubjectAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.SubjectAggregate.GetByExamId
 {

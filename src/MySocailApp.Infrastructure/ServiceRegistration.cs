@@ -6,21 +6,24 @@ using MySocailApp.Application.Services;
 using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
-using MySocailApp.Domain.ExamAggregate;
+using MySocailApp.Domain.ExamAggregate.Interfaces;
+using MySocailApp.Domain.NotificationAggregate.DomainServices;
+using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
-using MySocailApp.Domain.SubjectAggregate;
-using MySocailApp.Domain.TopicAggregate;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
+using MySocailApp.Domain.SubjectAggregate.Interfaces;
+using MySocailApp.Domain.TopicAggregate.Interfaces;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
+using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.Services;
 using MySocailApp.Infrastructure.Services.BlobService;
@@ -47,7 +50,8 @@ namespace MySocailApp.Infrastructure
                 .AddExamAggregate()
                 .AddSubjectAggregate()
                 .AddTopicAggregate()
-                .AddCommentAggregate();
+                .AddCommentAggregate()
+                .AddNotificationAggregate();
         }
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
@@ -114,9 +118,6 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
         {
             return services
-                .AddScoped<IExamRepositoryQA, ExamRepositoryQA>()
-                .AddScoped<ISubjectRepositoryQA, SubjectRepositoryQA>()
-                .AddScoped<ITopicRepositoryQA,TopicRepositoryQA>()
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
                 .AddScoped<QuestionCreatorDomainService>();
@@ -126,7 +127,6 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
                 .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
-                .AddScoped<IQuestionRepositorySA, QuestionRepositorySA>()
                 .AddScoped<SolutionCreatorDomainService>();
         }
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
@@ -149,12 +149,16 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<ICommentReadRepository, CommentReadRepository>()
                 .AddScoped<ICommentWriteRepository, CommentWriteRepository>()
-                .AddScoped<IQuestionFinder, QuestionFinder>()
-                .AddScoped<ISolutionController, SolutionFinder>()
-                .AddScoped<ICommentFinder, CommentFinder>()
-                .AddScoped<IAppUserFinder,AppUserFinder>()
                 .AddScoped<CommentCreatorDomainService>()
                 .AddSingleton<IUserNameReader,UserNameReader>();
+        }
+
+        private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<INotificationWriteRepository, NotificationWriteRepository>()
+                .AddScoped<INotificationReadRepository, NotificationReadRepository>()
+                .AddScoped<NotificationCreatorDomainService>();
         }
     }
 }

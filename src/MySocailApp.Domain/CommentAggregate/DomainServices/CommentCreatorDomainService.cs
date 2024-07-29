@@ -1,17 +1,21 @@
-﻿using MySocailApp.Domain.CommentAggregate.Entities;
+﻿using MySocailApp.Domain.AppUserAggregate.Interfaces;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
+using MySocailApp.Domain.SolutionAggregate.Exceptions;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Domain.CommentAggregate.DomainServices
 {
-
-    public class CommentCreatorDomainService(IQuestionFinder questionController, ISolutionController solutionController, ICommentFinder commentController, IAppUserFinder userController, IUserNameReader userNameReader)
+    public class CommentCreatorDomainService(IQuestionReadRepository questionRepository, ISolutionReadRepository solutionRepository, ICommentReadRepository commentReadRepository, IAppUserReadRepository userController, IUserNameReader userNameReader)
     {
-        private readonly IQuestionFinder _questionController = questionController;
-        private readonly ISolutionController _solutionController = solutionController;
-        private readonly ICommentFinder _commentController = commentController;
-        private readonly IAppUserFinder _userController = userController;
+        private readonly IQuestionReadRepository _questionRepository = questionRepository;
+        private readonly ISolutionReadRepository _solutionRepository = solutionRepository;
+        private readonly ICommentReadRepository _commentReadRepository = commentReadRepository;
+        private readonly IAppUserReadRepository _userController = userController;
         private readonly IUserNameReader _userNameReader = userNameReader;
 
         public async Task CreateAsync(Comment comment, int userId, Content content, int? questionId, int? solutionId, int? parentId, CancellationToken cancellationToken)
@@ -23,8 +27,8 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
             if (parentId != null)
             {
                 var parent =
-                    await _commentController.GetAsync((int)parentId, cancellationToken) ??
-                    throw new CommentToReplyIsNotFoundException();
+                    await _commentReadRepository.GetAsync((int)parentId, cancellationToken) ??
+                    throw new CommentNotFoundException();
 
                 if (parent.ParentId != null)
                     throw new CommentIsNotRootException();
@@ -33,14 +37,14 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
             }
             else if (questionId != null)
             {
-                if (!await _questionController.Exist((int)questionId, cancellationToken))
-                    throw new QuestionIsNotFoundException();
+                if (!await _questionRepository.Exist((int)questionId, cancellationToken))
+                    throw new QuestionNotFoundException();
                 comment.CreateQuestionComment(userId, content, idsOfUsersTagged, (int)questionId);
             }
             else if (solutionId != null)
             {
-                if (!await _solutionController.Exist((int)solutionId, cancellationToken))
-                    throw new SolutionIsNotFoundException();
+                if (!await _solutionRepository.Exist((int)solutionId, cancellationToken))
+                    throw new SolutionNotFoundException();
                 comment.CreateSolutionComment(userId, content, idsOfUsersTagged, (int)solutionId);
             }
             else

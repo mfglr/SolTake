@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.AppUserAggregate;
+﻿using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities

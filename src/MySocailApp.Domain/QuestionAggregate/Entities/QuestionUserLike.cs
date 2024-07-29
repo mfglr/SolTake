@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.AppUserAggregate;
+﻿using MySocailApp.Domain.AppUserAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {

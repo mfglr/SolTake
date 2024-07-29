@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
@@ -9,11 +9,11 @@ namespace MySocailApp.Infrastructure.Extetions
 {
     public static class QueryableExtentions
     {
-        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, int? lastId, int take) where T : IAggregateRoot
+        public static IQueryable<T> ToPage<T>(this IQueryable<T> query,int? lastId,int? take) where T : IAggregateRoot
             => query
                 .Where(x => lastId == null || x.Id < lastId)
                 .OrderByDescending(x => x.Id)
-                .Take(take);
+                .Take(take ?? 20);
 
         public static IQueryable<Question> IncludeForQuestion(this IQueryable<Question> query)
             => query
@@ -54,7 +54,8 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds)
                 .Include(x => x.Requesters)
-                .Include(x => x.Requesteds);
+                .Include(x => x.Requesteds)
+                .Include(x => x.Noitifications);
 
     }
 }

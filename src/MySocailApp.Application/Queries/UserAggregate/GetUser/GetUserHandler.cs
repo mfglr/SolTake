@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.Services;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetUser
 {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionsByQuestionId
 {

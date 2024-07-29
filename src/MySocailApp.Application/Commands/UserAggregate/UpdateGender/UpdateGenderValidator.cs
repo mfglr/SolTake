@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateGender
 {

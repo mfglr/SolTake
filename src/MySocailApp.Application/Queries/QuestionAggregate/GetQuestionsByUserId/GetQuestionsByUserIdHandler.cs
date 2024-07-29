@@ -2,7 +2,7 @@
 using MediatR;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestions
 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById
 {
@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById
         {
             var solution =
                 await _repository.GetByIdAsync(request.SolutionId, cancellationToken) ??
-                throw new SolutionIsNotFoundException();
+                throw new SolutionNotFoundException();
             return _mapper.Map<SolutionResponseDto>(solution);
         }
     }

@@ -1,11 +1,11 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.ExamAggregate;
+using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SubjectAggregate;
+using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
@@ -36,12 +36,10 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         internal void Create(int appUserId, string? content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
         {
-            if (!images.Any())
-                throw new QuestionImageIsRequiredException();
-
             if (topics.Count() > 3)
                 throw new TooManyTopicsException();
-            
+            if (!images.Any())
+                throw new QuestionImageIsRequiredException();
             if (images.Count() > 5)
                 throw new TooManyQuestionImagesException();
 

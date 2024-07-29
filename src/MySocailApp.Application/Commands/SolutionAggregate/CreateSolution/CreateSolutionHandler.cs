@@ -5,7 +5,7 @@ using MySocailApp.Application.Services;
 using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
 {

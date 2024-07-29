@@ -1,5 +1,4 @@
-﻿using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Domain.AppUserAggregate;
+﻿using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.UserAggregate
 {
@@ -20,6 +19,8 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public bool IsFollowed { get; private set; }
         public bool IsRequester { get; private set; }
         public bool IsRequested { get; private set; }
+        public int NumberOfUnviewedNotifications { get; private set; }
+
         private AppUserResponseDto() { }
     }
 }

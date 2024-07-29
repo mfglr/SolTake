@@ -5,7 +5,7 @@ using MySocailApp.Application.Services;
 using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {

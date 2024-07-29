@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.Extentions;
 using MySocailApp.Application.Services;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetUserImage
 {

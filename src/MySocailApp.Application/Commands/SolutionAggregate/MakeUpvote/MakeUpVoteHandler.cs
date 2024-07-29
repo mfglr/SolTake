@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote
 {
@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote
             
             var solution =
                 await _solutionWriteRepository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
-                throw new SolutionIsNotFoundException();
+                throw new SolutionNotFoundException();
             solution.MakeUpvote(voterId);
             
             await _unitOfWork.CommitAsync(cancellationToken);

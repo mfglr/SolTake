@@ -2,7 +2,7 @@
 using MySocailApp.Application.Extentions;
 using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage
 {
@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage
         {
             var solution =
                 await _repository.GetByIdAsync(request.SolutionId, cancellationToken) ??
-                throw new SolutionIsNotFoundException();
+                throw new SolutionNotFoundException();
 
             if (!solution.Images.Any(x => x.BlobName == request.BlobName))
                 throw new SolutionImageIsNotFoundException();

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 {
@@ -84,6 +84,10 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder
+                .HasMany(x => x.Noitifications)
+                .WithOne(x => x.Owner)
+                .HasForeignKey(x => x.OwnerId);
         }
     }
 }

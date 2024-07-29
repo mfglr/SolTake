@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.Repositories;
+using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion
 {
@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion
             var userId = _tokenReader.GetRequiredAccountId();
             var question = 
                 await _repository.GetWithLikeByIdAsync(request.QuestionId, userId, cancellationToken) ??
-                throw new QuestionIsNotFoundException();
+                throw new QuestionNotFoundException();
             question.Like(userId);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

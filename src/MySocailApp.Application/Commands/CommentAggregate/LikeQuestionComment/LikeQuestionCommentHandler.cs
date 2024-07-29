@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.QuestionCommentAggregate.LikeQuestion
             var userId = _accessTokenReader.GetRequiredAccountId();
             var comment =
                 await _repository.GetWithLikeByIdAsync(request.Id, userId, cancellationToken) ??
-                throw new CommentIsNotFoundException();
+                throw new CommentNotFoundException();
             comment.Like(userId);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.Services;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Repositories;
+using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote
 {
@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote
             var userId = _accessTokenReader.GetRequiredAccountId();
             var solution =
                 await _repository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
-                throw new SolutionIsNotFoundException();
+                throw new SolutionNotFoundException();
             solution.RemoveUpvote(userId);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

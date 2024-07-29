@@ -5,6 +5,7 @@ using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Domain.AppUserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Entities;
 using System.Net;
 
 namespace MySocailApp.Domain.AccountAggregate.DomainServices
