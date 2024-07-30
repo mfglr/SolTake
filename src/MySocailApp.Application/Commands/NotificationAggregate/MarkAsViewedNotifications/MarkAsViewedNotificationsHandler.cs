@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Commands.NotificationAggregate.MarkAsViewedNot
 
         public async Task Handle(MarkAsViewedNotificationsDto request, CancellationToken cancellationToken)
         {
-            var notifications = await _repository.GetByIds(request.NotificationIds, cancellationToken);
+            var notifications = await _repository.GetByIds(request.Ids, cancellationToken);
             foreach (var notification in notifications)
                 notification.MarkAsViewed();
             await _unitOfWork.CommitAsync(cancellationToken);

@@ -7,6 +7,32 @@ import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
+void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadCommentAction){
+    if(store.state.commentEntityState.entities[action.commentId] == null){
+      CommentService()
+        .getById(action.commentId)
+        .then((comment){
+          store.dispatch(
+            AddCommentAction(
+              comment: comment.toCommentState()
+            )
+          );
+          store.dispatch(
+            AddUserImageAction(
+              image: UserImageState(
+                id: comment.appUserId,
+                image: null,
+                state: ImageState.notStarted
+              )
+            )
+          );
+        });
+    }
+  }
+  next(action);
+}
+
 void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LikeCommentAction){
     final int userId = store.state.accountState!.id;

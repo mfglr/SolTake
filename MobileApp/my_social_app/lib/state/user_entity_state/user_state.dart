@@ -80,7 +80,7 @@ class UserState{
     Ids? newFolloweds,
     Ids? newRequesters,
     Ids? newRequesteds,
-    Ids? newQuestions
+    Ids? newQuestions,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -101,7 +101,7 @@ class UserState{
     followeds: newFolloweds ?? followeds,
     requesters: newRequesters ?? requesters,
     requesteds: newRequesteds ?? requesteds,
-    questions: newQuestions ?? questions
+    questions: newQuestions ?? questions,
   );
 
   UserState loadFollowers(Iterable<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));

@@ -10,7 +10,6 @@ using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
-using MySocailApp.Domain.NotificationAggregate.DomainServices;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
@@ -157,8 +156,7 @@ namespace MySocailApp.Infrastructure
         {
             return services
                 .AddScoped<INotificationWriteRepository, NotificationWriteRepository>()
-                .AddScoped<INotificationReadRepository, NotificationReadRepository>()
-                .AddScoped<NotificationCreatorDomainService>();
+                .AddScoped<INotificationReadRepository, NotificationReadRepository>();
         }
     }
 }

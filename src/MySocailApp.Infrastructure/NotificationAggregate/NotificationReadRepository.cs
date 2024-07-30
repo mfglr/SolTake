@@ -21,6 +21,7 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
             => await _context.Notifications
                 .AsNoTracking()
                 .Where(x => x.OwnerId == ownerId && !x.IsViewed)
+                .OrderByDescending(x => x.Id)
                 .ToListAsync(cancellationToken);
     }
 }

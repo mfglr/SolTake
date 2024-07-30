@@ -13,6 +13,8 @@ import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_entity_state.dart';
+import 'package:my_social_app/state/notification_entity_state.dart/middlewares.dart';
+import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/middlewares.dart';
@@ -56,7 +58,8 @@ final store = Store(
     solutionImageEntityState: SolutionImageEntityState(entities: {}),
     homePageState: HomePageState(questions: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)),
     commentEntityState: CommentEntityState(entities: {}),
-    createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: "")
+    createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
+    notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null)
   ),
   middleware: [
     //account start
@@ -108,6 +111,7 @@ final store = Store(
     //Topic end
 
     // Question start
+    loadQuestionMiddleware,
     createQuestionMiddleware,
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
@@ -117,6 +121,8 @@ final store = Store(
     
     // Question image start
     loadQuestionImageMiddleware,
+    nextPageOfHomeQuestionsMiddleware,
+    nextPageOfHomeQuestionsIfNoQuestionsMiddleware,
     // Question image end
 
     //solution start
@@ -133,16 +139,22 @@ final store = Store(
     loadSolutionImageMiddleware,
     //Solution image end
 
-    nextPageOfHomeQuestionsMiddleware,
-    nextPageOfHomeQuestionsIfNoQuestionsMiddleware,
+    
 
+    //comments start
     createCommentMiddleware,
-
     nextPageQuestionCommentsMiddleware,
     nextPageQuestionCommentIfNoQuestionCommentsMiddleware,
     likeCommentMiddleware,
     dislikeCommentMiddleware,
     nextPageCommentRepliesMiddleware,
-    nextPageCommentRepliesIfNoRepliesMiddleware
+    nextPageCommentRepliesIfNoRepliesMiddleware,
+    loadCommentMiddleware,
+
+    //notifications
+    markNotificationsAsViewedMiddleware,
+    loadUnviewedNotificationMiddleware,
+    nextPageNotificationsMiddleware,
+    nextPageNotificationsIfNoNoficationsMiddleware
   ]
 );

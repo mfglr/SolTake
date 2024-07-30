@@ -39,6 +39,9 @@ class CommentState{
     required this.numberOfDisplayReplies
   });
   
+  String get formatContent
+    => content.length > 100 ? "${content.substring(0,100)}..." : content;
+
   int get numberOfNotDisplayedReplies => numberOfReplies - numberOfDisplayReplies;
 
   CommentState like(int userId)

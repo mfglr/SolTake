@@ -2,6 +2,7 @@
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
+using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.Entities;
@@ -9,7 +10,7 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
-    public class Question() : IAggregateRoot
+    public class Question() : IAggregateRoot, IDomainEventsContainer
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -60,18 +61,22 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         private readonly List<QuestionUserLike> _likes = [];
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
-        public void Like(int userId)
+        public void Like(int likerId)
         {
-            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            var index = _likes.FindIndex(x => x.AppUserId == likerId);
             if (index != -1)
-                _likes.RemoveAt(index);
-            _likes.Add(QuestionUserLike.Create(Id, userId));
+                throw new QuestionWasAlreadyLikedException();
+            _likes.Add(QuestionUserLike.Create(Id, likerId));
+            
+            if(likerId != AppUserId)
+                AddDomainEvent(new QuestionLikedDomainEvent(this, likerId));
         }
         public void Dislike(int userId)
         {
             var index = _likes.FindIndex(x => x.AppUserId == userId);
-            if (index != -1)
-                _likes.RemoveAt(index);
+            if (index == -1)
+                throw new NoQuestionLikeException();
+            _likes.RemoveAt(index);
         }
 
         public Exam Exam { get; }
@@ -79,6 +84,12 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public AppUser AppUser { get; }
         public IReadOnlyList<Solution> Solutions { get; }
         public IReadOnlyCollection<Comment> Comments { get; }
+
+
+        //IDomainEventsContainer
+        private readonly List<IDomainEvent> _events = [];
+        public IReadOnlyList<IDomainEvent> Events => _events;
+        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
 
     }
 }

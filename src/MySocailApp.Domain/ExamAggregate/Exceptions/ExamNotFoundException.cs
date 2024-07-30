@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.QuestionAggregate.Excpetions
+namespace MySocailApp.Domain.ExamAggregate.Exceptions
 {
     public class ExamNotFoundException : ClientSideException
     {

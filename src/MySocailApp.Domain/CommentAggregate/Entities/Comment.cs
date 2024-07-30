@@ -1,5 +1,6 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
 using MySocailApp.Domain.QuestionAggregate.Entities;
@@ -7,7 +8,7 @@ using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.Entities
 {
-    public class Comment : IAggregateRoot
+    public class Comment : IAggregateRoot, IDomainEventsContainer
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -26,6 +27,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             AppUserId = appUserId;
             Content = content;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
+            AddDomainEvent(new CommentCreatedDomainEvent(this));
         }
         internal void CreateQuestionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int questionId)
         {
@@ -52,11 +54,14 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 
         private readonly List<CommentUserLike> _likes = [];
         public IReadOnlyCollection<CommentUserLike> Likes => _likes;
-        public void Like(int userId)
+        public void Like(int likerId)
         {
-            if (_likes.Any(x => x.AppUserId == userId))
+            if (_likes.Any(x => x.AppUserId == likerId))
                 throw new CommentIsAlreadyLikedException();
-            _likes.Add(CommentUserLike.Create(Id, userId));
+            _likes.Add(CommentUserLike.Create(Id, likerId));
+
+            if (likerId != AppUserId)
+                AddDomainEvent(new CommentLikedDomainEvent(this, likerId));
         }
         public void Dislike(int userId)
         {
@@ -68,6 +73,12 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 
         public readonly List<CommentUserTag> _tags = [];
         public IReadOnlyCollection<CommentUserTag> Tags => _tags;
+
+
+        //IDomainEventsContainer
+        private readonly List<IDomainEvent> _events = [];
+        public IReadOnlyList<IDomainEvent> Events => _events;
+        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
 
         //readonly navigators
         public Question? Question { get; }

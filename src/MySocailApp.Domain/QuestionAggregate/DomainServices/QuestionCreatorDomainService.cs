@@ -1,6 +1,8 @@
-﻿using MySocailApp.Domain.ExamAggregate.Interfaces;
+﻿using MySocailApp.Domain.ExamAggregate.Exceptions;
+using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.SubjectAggregate.Exceptions;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
 

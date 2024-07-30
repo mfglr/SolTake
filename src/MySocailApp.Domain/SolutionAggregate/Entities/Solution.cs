@@ -2,12 +2,13 @@
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
-    public class Solution : IAggregateRoot
+    public class Solution : IAggregateRoot, IDomainEventsContainer
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -27,6 +28,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             Content = content;
             _images.AddRange(images);
             UpdatedAt = CreatedAt = DateTime.UtcNow;
+
+            AddDomainEvent(new SolutionCreatedDomainEvent(this));
         }
         
         private readonly List<SolutionUserVote> _votes = [];
@@ -77,6 +80,11 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         //Readonluy navigator properties
         public Question Question { get; }
         public AppUser AppUser { get; }
-        public IReadOnlyCollection<Comment> Comments { get; } 
+        public IReadOnlyCollection<Comment> Comments { get; }
+
+        //IDomainEventsContainer
+        private readonly List<IDomainEvent> _events = [];
+        public IReadOnlyList<IDomainEvent> Events => _events;
+        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
     }
 }

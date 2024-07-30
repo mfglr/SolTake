@@ -4,12 +4,46 @@ import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/question_image_entity_state/actions.dart';
+import 'package:my_social_app/state/question_image_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/solution_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
+
+
+void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is LoadQuestionAction){
+    if(store.state.questionEntityState.entities[action.questionId] == null){
+      QuestionService()
+        .getById(action.questionId)
+        .then((question){
+          store.dispatch(AddQuestionAction(value: question.toQuestionState()));
+          store.dispatch(
+            AddQuestionImagesAction(
+              values: question.images.map((e) => QuestionImageState(
+                id: e.id,
+                questionId: e.questionId,
+                height: e.height,
+                width: e.width,
+                blobName: e.blobName,
+                state: ImageState.notStarted,
+                image: null
+              )
+            ))
+          );
+          store.dispatch(
+            AddUserImageAction(
+              image: UserImageState(id: question.appUserId,image: null,state: ImageState.notStarted)
+            )
+          );
+        });
+    }
+  }
+  next(action);
+}
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){

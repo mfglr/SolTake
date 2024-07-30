@@ -18,6 +18,7 @@ class User{
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;
+  final int numberOfUnviewedNotifications;
   final bool isFollower;
   final bool isFollowed;
   final bool isRequester;
@@ -35,6 +36,7 @@ class User{
     this.numberOfQuestions,
     this.numberOfFollowers,
     this.numberOfFolloweds,
+    this.numberOfUnviewedNotifications,
     this.isFollower,
     this.isFollowed,
     this.isRequester,
@@ -65,6 +67,6 @@ class User{
         followeds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
         requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
         requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
-        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)
+        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
       );
 }

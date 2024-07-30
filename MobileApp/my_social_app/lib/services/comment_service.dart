@@ -13,7 +13,7 @@ class CommentService{
   Future<Comment> createComment(String content,int? questionId,int? solutionId,int? parentId) async
     => Comment.fromJson(
         await _appClient.post(
-          "$questionCommentController/$createCommentEndpoint",
+          "$commentController/$createCommentEndpoint",
           body: {
             'content': content,
             'questionId': questionId,
@@ -25,7 +25,7 @@ class CommentService{
 
   Future<void> like(int questionCommentId) async
     => await _appClient.put(
-      "$questionCommentController/$likeQuestionComment",
+      "$commentController/$likeQuestionComment",
       body: {
         'id' : questionCommentId
       }
@@ -33,14 +33,21 @@ class CommentService{
 
   Future<void> dislike(int questionCommentId) async
     => await _appClient.put(
-      "$questionCommentController/$dislikeQuestionComment",
+      "$commentController/$dislikeQuestionComment",
       body: {
         'id' : questionCommentId
       }
     );
 
+  Future<Comment> getById(int id) async
+    => Comment.fromJson(
+      await _appClient.get(
+        "$commentController/$getByIdEndpoint/$id"
+      )
+    );
+
   Future<Iterable<Comment>> getByQuestionId(int questionId,int? lastId) async{
-    String endPoint = "$questionCommentController/$getCommentsByQuestionIdEndpoint/$questionId";
+    String endPoint = "$commentController/$getCommentsByQuestionIdEndpoint/$questionId";
     String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
 
     final list = (await _appClient.get(url)) as List;
@@ -48,7 +55,7 @@ class CommentService{
   }
 
    Future<Iterable<Comment>> getBySolutionId(int solutionId,int? lastId) async{
-    String endPoint = "$questionCommentController/$getCommentsBySolutionIdEndpoint/$solutionId";
+    String endPoint = "$commentController/$getCommentsBySolutionIdEndpoint/$solutionId";
     String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
 
     final list = (await _appClient.get(url)) as List;
@@ -56,7 +63,7 @@ class CommentService{
   }
 
   Future<Iterable<Comment>> getByParentId(int parentId,int? lastId, int? take) async{
-    String url = "$questionCommentController/$getCommentsByParentIdEndpoint/$parentId";
+    String url = "$commentController/$getCommentsByParentIdEndpoint/$parentId";
     final list = (await _appClient.get(_appClient.generatePaginationUrl(url, lastId, take))) as List;
     return list.map((e) => Comment.fromJson(e));
   }

@@ -3,6 +3,12 @@ import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 
 @immutable
+class LoadCommentAction extends redux.Action{
+  final int commentId;
+  const LoadCommentAction({required this.commentId});
+}
+
+@immutable
 class ChangeRepliesVisibilityAction extends redux.Action{
   final int commentId;
   final bool visibility;

@@ -5,4 +5,5 @@ const subjectController = "subjects";
 const topicController = "topics";
 const questionController = "questions";
 const solutionController = "solutions";
-const questionCommentController = "comments";
+const commentController = "comments";
+const notificationController = "notifications";

@@ -86,6 +86,12 @@ class CancelFollowRequestSuccessAction extends redux.Action{
 
 
 @immutable
+class AddUserQuestionAction extends redux.Action{
+  final int userId;
+  final int questionId;
+  const AddUserQuestionAction({required this.userId,required this.questionId});
+}
+@immutable
 class NextPageOfUserQuestionsAction extends redux.Action{
   final int userId;
   const NextPageOfUserQuestionsAction({required this.userId});
@@ -100,13 +106,4 @@ class NextPageOfUserQuestionsSuccessAction extends redux.Action{
 class NextPageOfUserQuestionsIfNoQuestionsAction extends redux.Action{
   final int userId;
   const NextPageOfUserQuestionsIfNoQuestionsAction({required this.userId});
-}
-
-
-
-@immutable
-class AddUserQuestionAction extends redux.Action{
-  final int userId;
-  final int questionId;
-  const AddUserQuestionAction({required this.userId,required this.questionId});
 }

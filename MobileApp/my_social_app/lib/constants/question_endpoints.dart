@@ -1,5 +1,6 @@
 const createQuestioinEndpoint = "Create";
 const getAllQuestionsEndpoint = "GetAll";
+const getQuestionByIdEndpoint = "GetById";
 const getQuestionsByUserIdEndpoint = "GetByUserId";
 const getQuestionsByTopicIdEndpoint = "GetByTopicId";
 const getQuestionsBySubjectIdEndpoint = "GetBySubjectId";

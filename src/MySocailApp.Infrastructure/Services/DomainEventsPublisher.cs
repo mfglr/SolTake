@@ -16,7 +16,8 @@ namespace MySocailApp.Infrastructure.Services
                 .ChangeTracker
                 .Entries<IDomainEventsContainer>()
                 .Where(x => x.Entity.Events.Any())
-                .Select(x => x.Entity);
+                .Select(x => x.Entity)
+                .ToList();
 
             foreach (var continer in containers)
                 foreach (var @event in continer.Events)
