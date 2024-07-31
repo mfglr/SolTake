@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Extentions;
-using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 

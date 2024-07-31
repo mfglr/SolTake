@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.Services;
+using MySocailApp.Application.ApplicationServices;
 
 namespace MySocailApp.Application.PipelineBehaviours
 {

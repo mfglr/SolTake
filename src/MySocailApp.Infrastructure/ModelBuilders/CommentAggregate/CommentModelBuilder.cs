@@ -12,8 +12,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
 
             builder
                 .HasMany(x => x.Likes)
-                .WithOne(x => x.QuestionComment)
-                .HasForeignKey(x => x.QuestionCommentId);
+                .WithOne(x => x.Comment)
+                .HasForeignKey(x => x.CommentId);
 
             builder
                 .HasMany(x => x.Children)

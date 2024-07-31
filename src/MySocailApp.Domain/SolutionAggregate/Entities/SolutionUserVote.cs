@@ -23,7 +23,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             => new(solutionId, appUserId) { Type = SolutionVoteType.Downvote, CreatedAt = DateTime.UtcNow };
 
         //readonly navigator properties
-        public Solution Solution { get; }
-        public AppUser AppUser { get; }
+        public Solution Solution { get; } = null!;
+        public AppUser AppUser { get; } = null!;
     }
 }

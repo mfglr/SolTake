@@ -14,7 +14,7 @@ class UserItemsWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
-          child: UserItemWidget(state: users.elementAt(index),removeFollowerButton: removeFollowerButton,)
+          child: UserItemWidget(user: users.elementAt(index),removeFollowerButton: removeFollowerButton,)
         );
       }
     );

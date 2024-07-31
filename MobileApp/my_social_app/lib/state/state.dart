@@ -7,6 +7,7 @@ import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
@@ -51,6 +52,7 @@ class AppState{
   final CommentEntityState commentEntityState;
   final CreateCommentState createCommentState;
   final NotificationEntityState notificationEntityState;
+  final MessageEntityState messageEntityState;
 
   const AppState({
     required this.accessToken,
@@ -72,7 +74,8 @@ class AppState{
     required this.homePageState,
     required this.commentEntityState,
     required this.createCommentState,
-    required this.notificationEntityState
+    required this.notificationEntityState,
+    required this.messageEntityState
   });
 
   UserState? get currentUser => userEntityState.entities[accountState!.id];

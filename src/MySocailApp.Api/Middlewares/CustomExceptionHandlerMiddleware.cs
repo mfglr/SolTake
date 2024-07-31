@@ -1,5 +1,5 @@
-﻿using MySocailApp.Application.Extentions;
-using MySocailApp.Application.Services.BlobService;
+﻿using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.Extentions;
 using MySocailApp.Core.Exceptions;
 
 

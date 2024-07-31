@@ -4,7 +4,7 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.TopicAggregate.Entities
 {
-    public class Topic() : IAggregateRoot
+    public class Topic() : IPaginableAggregateRoot
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }

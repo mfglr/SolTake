@@ -6,9 +6,12 @@ import 'package:my_social_app/state/state.dart';
 import 'package:redux/redux.dart';
 
 void initAppMiddleware(Store<AppState> store,action,NextDispatcher next){
-  final accountService = AccountService();
-  final accountStorage = AccountStorage();
+  
   if(action is InitAppAction){
+
+    final accountService = AccountService();
+    final accountStorage = AccountStorage();
+
     accountStorage.get().then((oldAccuntState){
       if(oldAccuntState != null){
         accountService

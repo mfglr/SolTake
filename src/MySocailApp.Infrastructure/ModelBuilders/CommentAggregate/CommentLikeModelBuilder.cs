@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
     {
         public void Configure(EntityTypeBuilder<CommentUserLike> builder)
         {
-            builder.HasKey(x => new { x.QuestionCommentId, x.AppUserId });
+            builder.HasKey(x => new { x.CommentId, x.AppUserId });
         }
     }
 }

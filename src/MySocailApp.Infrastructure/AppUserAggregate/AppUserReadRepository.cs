@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Services;
+using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;

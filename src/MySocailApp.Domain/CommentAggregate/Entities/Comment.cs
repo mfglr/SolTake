@@ -8,7 +8,7 @@ using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.Entities
 {
-    public class Comment : IAggregateRoot, IDomainEventsContainer
+    public class Comment : IPaginableAggregateRoot, IDomainEventsContainer
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -79,6 +79,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
+        public void ClearEvents() => _events.Clear();
 
         //readonly navigators
         public Question? Question { get; }

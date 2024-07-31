@@ -6,12 +6,12 @@ import 'package:my_social_app/views/shared/buttons/remove_follower_button_widget
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 
 class UserItemWidget extends StatelessWidget {
-  final UserState state;
+  final UserState user;
   final bool removeFollowerButton;
 
   const UserItemWidget({
     super.key,
-    required this.state,
+    required this.user,
     this.removeFollowerButton = false,
   });
 
@@ -21,7 +21,7 @@ class UserItemWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(5),
         child: TextButton(
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: state.id,userName: null,))),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: user.id,userName: null,))),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,28 +30,28 @@ class UserItemWidget extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 5),
-                    child: UserImageWidget(userId: state.id, diameter: 60)
+                    child: UserImageWidget(userId: user.id, diameter: 60)
                   ),
                   Builder(
                     builder: (context){
-                      if(state.name != null){
+                      if(user.name != null){
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              state.formatUserName(10),
+                              user.formatUserName(10),
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              state.formatName(15),
+                              user.formatName(15),
                               style: const TextStyle(fontSize: 12),
                             )
                           ],
                         );
                       }
                       return Text(
-                        state.formatUserName(10),
+                        user.formatUserName(10),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       );
                     },
@@ -60,8 +60,8 @@ class UserItemWidget extends StatelessWidget {
               ),
               Builder(
                 builder: (context){
-                  if(removeFollowerButton && state.isFollower) return RemoveFollowerButtonWidget(state: state);
-                  if(state.isFollowed) return FollowButtonWidget(state: state);
+                  if(removeFollowerButton && user.isFollower) return RemoveFollowerButtonWidget(user: user);
+                  if(user.isFollowed) return FollowButtonWidget(user: user,);
                   return const Text("");
                 }
               )

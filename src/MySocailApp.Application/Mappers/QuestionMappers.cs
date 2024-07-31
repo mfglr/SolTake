@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Application.Services;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers

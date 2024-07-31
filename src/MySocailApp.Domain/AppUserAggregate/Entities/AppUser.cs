@@ -4,13 +4,14 @@ using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.ConversationContext.UserConnectionAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.AppUserAggregate.Entities
 {
-    public class AppUser(int id) : IAggregateRoot, IRemovable, IDomainEventsContainer
+    public class AppUser(int id) : IPaginableAggregateRoot, IRemovable, IDomainEventsContainer
     {
         public int Id { get; private set; } = id;
         public DateTime? UpdatedAt { get; private set; }
@@ -261,10 +262,11 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-
+        public void ClearEvents() => _events.Clear();
 
         //readonly navigator properties
-        public Account Account { get; }
+        public Account Account { get; } = null!;
+        public UserConnection UserConnection { get; } = null!;
         public IReadOnlyCollection<Question> Questions { get; }
         public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; }
         public IReadOnlyCollection<Solution> Solutions { get; }

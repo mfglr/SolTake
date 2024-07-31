@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.ConversationContext.UserConnectionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 {
@@ -12,6 +13,11 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
             builder.Property(e => e.Id).ValueGeneratedNever();
 
             builder.OwnsOne(x => x.Image);
+
+            builder
+                .HasOne(x => x.UserConnection)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey<UserConnection>(x => x.Id);
 
             builder
                 .HasMany(x => x.Followers)

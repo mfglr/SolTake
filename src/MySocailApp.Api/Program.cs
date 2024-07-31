@@ -1,6 +1,7 @@
 using MySocailApp.Api;
 using MySocailApp.Api.Middlewares;
 using MySocailApp.Application;
+using MySocailApp.Application.Hubs;
 using MySocailApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,4 +28,5 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<MessageHub>("/message");
 app.Run();

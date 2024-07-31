@@ -7,8 +7,8 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-        public string UserName { get; private set; }
-        public string Name { get; private set; }
+        public string UserName { get; private set; } = null!;
+        public string? Name { get; private set; }
         public DateTime? BirthDate { get; private set; }
         public Gender Gender { get; private set; }
         public ProfileVisibility ProfileVisibility { get; private set; }

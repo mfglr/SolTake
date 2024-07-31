@@ -3,8 +3,8 @@ import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
 class RemoveFollowerButtonWidget extends StatelessWidget {
   
-  final UserState state;
-  const RemoveFollowerButtonWidget({super.key,required this.state});
+  final UserState user;
+  const RemoveFollowerButtonWidget({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {

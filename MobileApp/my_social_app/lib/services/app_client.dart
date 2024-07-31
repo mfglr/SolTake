@@ -10,7 +10,7 @@ import 'package:my_social_app/state/account_state/actions.dart';
 import 'package:my_social_app/state/store.dart';
 
 class AppClient{
-  static final _apiUrl = dotenv.env['API_URL'];
+  static final _apiUrl = "${dotenv.env['API_URL']}/api";
 
   const AppClient._();
   static const AppClient _singleton = AppClient._();

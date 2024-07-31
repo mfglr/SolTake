@@ -1,7 +1,4 @@
 ﻿namespace MySocailApp.Core
 {
-    public interface IAggregateRoot
-    {
-        int Id { get; }
-    }
+    public interface IAggregateRoot{}
 }

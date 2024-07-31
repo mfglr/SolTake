@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,7 @@ using MySocailApp.Domain.TopicAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.TokenProviders;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Text;
 
 namespace MySocailApp.Api
@@ -54,16 +56,15 @@ namespace MySocailApp.Api
                 })
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
                 {
-
                     opt.Events = new JwtBearerEvents
                     {
-                       OnMessageReceived = context =>
-                       {
-                           var accessToken = context.Request.Query["access_token"];
-                           if (!string.IsNullOrEmpty(accessToken))
-                               context.Token = accessToken;
-                           return Task.CompletedTask;
-                       }
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            if (context.Request.Path.StartsWithSegments("/message"))
+                                context.Token = accessToken;
+                            return Task.CompletedTask;
+                        }
                     };
 
                     opt.TokenValidationParameters = new()

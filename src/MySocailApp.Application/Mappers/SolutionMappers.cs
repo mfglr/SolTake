@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Queries.SolutionAggregate;
-using MySocailApp.Application.Services;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 

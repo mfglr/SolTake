@@ -4,5 +4,6 @@
     {
         IReadOnlyList<IDomainEvent> Events { get; }
         void AddDomainEvent(IDomainEvent domainEvent);
+        void ClearEvents();
     }
 }

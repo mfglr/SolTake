@@ -10,7 +10,7 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
-    public class Question() : IAggregateRoot, IDomainEventsContainer
+    public class Question() : IPaginableAggregateRoot, IDomainEventsContainer
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -90,6 +90,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-
+        public void ClearEvents() => _events.Clear();
     }
 }

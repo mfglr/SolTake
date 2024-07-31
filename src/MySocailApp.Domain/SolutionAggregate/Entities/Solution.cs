@@ -8,7 +8,7 @@ using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
-    public class Solution : IAggregateRoot, IDomainEventsContainer
+    public class Solution : IPaginableAggregateRoot, IDomainEventsContainer
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -76,15 +76,16 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                 throw new VoteIsNotFoundException();
             _votes.RemoveAt(index);
         }
-        
+
         //Readonluy navigator properties
-        public Question Question { get; }
-        public AppUser AppUser { get; }
-        public IReadOnlyCollection<Comment> Comments { get; }
+        public Question Question { get; } = null!;
+        public AppUser AppUser { get; } = null!;
+        public IReadOnlyCollection<Comment> Comments { get; } = null!;
 
         //IDomainEventsContainer
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
+        public void ClearEvents() => _events.Clear();
     }
 }

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Mappers;
 using MySocailApp.Application.PipelineBehaviours;
-using MySocailApp.Application.Services;
 using System.Reflection;
 
 namespace MySocailApp.Application
@@ -24,6 +24,7 @@ namespace MySocailApp.Application
                     cfg.AddProfile(new QuestionMappers(reader));
                     cfg.AddProfile(new SolutionMappers(reader));
                     cfg.AddProfile(new CommentMappers(reader));
+                    cfg.AddProfile(new MessageMappers(reader));
                 })
                 .AddAutoMapper(assembly)
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))

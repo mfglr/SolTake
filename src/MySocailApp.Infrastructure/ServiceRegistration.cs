@@ -1,14 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Configurations;
-using MySocailApp.Application.Services;
-using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
+using MySocailApp.Domain.ConversationContext.ConversationAggregate.Interfaces;
+using MySocailApp.Domain.ConversationContext.MessageAggregate.DomainServices;
+using MySocailApp.Domain.ConversationContext.MessageAggregate.Interfaces;
+using MySocailApp.Domain.ConversationContext.UserConnectionAggregate.Interfaces;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
@@ -18,15 +22,18 @@ using MySocailApp.Domain.SolutionAggregate.Interfaces;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
 using MySocailApp.Infrastructure.AccountAggregate;
+using MySocailApp.Infrastructure.ApplicationServices;
+using MySocailApp.Infrastructure.ApplicationServices.BlobService;
+using MySocailApp.Infrastructure.ApplicationServices.Email;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
+using MySocailApp.Infrastructure.ConversationContext.ConversationAggregate;
+using MySocailApp.Infrastructure.ConversationContext.MessageAggregate;
+using MySocailApp.Infrastructure.ConversationContext.UserConnectionAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
-using MySocailApp.Infrastructure.Services;
-using MySocailApp.Infrastructure.Services.BlobService;
-using MySocailApp.Infrastructure.Services.Email;
 using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
@@ -50,7 +57,8 @@ namespace MySocailApp.Infrastructure
                 .AddSubjectAggregate()
                 .AddTopicAggregate()
                 .AddCommentAggregate()
-                .AddNotificationAggregate();
+                .AddNotificationAggregate()
+                .AddConversationContext();
         }
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
@@ -157,6 +165,17 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<INotificationWriteRepository, NotificationWriteRepository>()
                 .AddScoped<INotificationReadRepository, NotificationReadRepository>();
+        }
+
+        private static IServiceCollection AddConversationContext(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IConversationWriteRepository, ConversationWriteRepository>()
+                .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
+                .AddScoped<IMessageReadRepository, MessageReadRepository>()
+                .AddScoped<IUserConnectionWriteRepository, UserConnectionWriteRepository>()
+                .AddScoped<IUserConnectionReadRepository, UserConnectionReadRepository>()
+                .AddScoped<MessageCreatorDomainService>();
         }
     }
 }

@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.ConversationContext.ConversationAggregate.Entities;
+using MySocailApp.Domain.ConversationContext.MessageAggregate.Entities;
+using MySocailApp.Domain.ConversationContext.UserConnectionAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
@@ -25,6 +28,9 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<Comment> Comments { get; private set; }
         public DbSet<Notification> Notifications { get; private set; }
+        public DbSet<Conversation> Conversations { get; private set; }
+        public DbSet<Message> Messages { get; private set; }
+        public DbSet<UserConnection> UserConnections { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

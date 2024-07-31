@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Queries.SolutionAggregate;
-using MySocailApp.Application.Services;
-using MySocailApp.Application.Services.BlobService;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;

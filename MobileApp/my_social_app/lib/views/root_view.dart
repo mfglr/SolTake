@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/connect_message_hub.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
@@ -18,9 +19,16 @@ class RootView extends StatefulWidget {
 
 class _RootViewState extends State<RootView> {
   int currentPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,AccountState?>(
+      onInit: (store) => connectMessageHub(store),
       converter: (store) => store.state.accountState,
       builder: (context,accountState){
         if(accountState != null){

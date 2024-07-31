@@ -10,6 +10,7 @@ import 'package:my_social_app/state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/home_page_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_entity_state.dart';
@@ -59,7 +60,8 @@ final store = Store(
     homePageState: HomePageState(questions: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)),
     commentEntityState: CommentEntityState(entities: {}),
     createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
-    notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null)
+    notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
+    messageEntityState: MessageEntityState(entities: {})
   ),
   middleware: [
     //account start
@@ -151,10 +153,12 @@ final store = Store(
     nextPageCommentRepliesIfNoRepliesMiddleware,
     loadCommentMiddleware,
 
-    //notifications
+    //notifications start
     markNotificationsAsViewedMiddleware,
     loadUnviewedNotificationMiddleware,
     nextPageNotificationsMiddleware,
-    nextPageNotificationsIfNoNoficationsMiddleware
+    nextPageNotificationsIfNoNoficationsMiddleware,
+    //notifications end
+
   ]
 );

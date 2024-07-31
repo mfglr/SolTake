@@ -4,13 +4,13 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 {
     public class CommentUserLike
     {
-        public int QuestionCommentId { get; private set; }
+        public int CommentId { get; private set; }
         public int AppUserId { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
-        private CommentUserLike(int questionCommentId, int appUserId)
+        private CommentUserLike(int commentId, int appUserId)
         {
-            QuestionCommentId = questionCommentId;
+            CommentId = commentId;
             AppUserId = appUserId;
         }
 
@@ -18,8 +18,8 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             => new(questionCommentId, appUserId) { CreatedAt = DateTime.UtcNow };
 
         // read only navigator property
-        public Comment QuestionComment { get; }
-        public AppUser AppUser { get; }
+        public Comment Comment { get; } = null!;
+        public AppUser AppUser { get; } = null!;
 
     }
 }

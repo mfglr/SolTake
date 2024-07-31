@@ -4,7 +4,7 @@ using MySocailApp.Domain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
 {
-    public class Notification : IAggregateRoot
+    public class Notification : IPaginableAggregateRoot
     {
         public int Id { get; private set; }
         public int OwnerId { get; private set; }

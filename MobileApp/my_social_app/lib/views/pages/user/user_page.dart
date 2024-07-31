@@ -35,22 +35,22 @@ class UserPage extends StatelessWidget {
         }
         return store.state.userEntityState.entities.values.where((e) => e.userName == userName).firstOrNull;
       },
-      builder: (context, userState){
-        if(userState != null){
+      builder: (context, user){
+        if(user != null){
           return Scaffold(
             appBar: AppBar(
-              title: Text(userState.userName),
+              title: Text(user.userName),
             ),
             body: Column(
               children: [
                 Container(
                   padding: const EdgeInsets.all(5),
-                  child: UserInfoCardWidget(state: userState)
+                  child: UserInfoCardWidget(user: user)
                 ),
                 Expanded(
                   child: StoreConnector<AppState,Iterable<QuestionState>>(
-                    onInit: (store) => store.dispatch(NextPageOfUserQuestionsIfNoQuestionsAction(userId: userState.id)),
-                    converter: (store) => store.state.getUserQuestions(userState.id),
+                    onInit: (store) => store.dispatch(NextPageOfUserQuestionsIfNoQuestionsAction(userId: user.id)),
+                    converter: (store) => store.state.getUserQuestions(user.id),
                     builder: (context,value ) => QuestionAbstractItemsWidget(questions: value)
                   ),
                 )

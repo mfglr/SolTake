@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Queries.CommentAggregate;
-using MySocailApp.Application.Services;
 using MySocailApp.Domain.CommentAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
