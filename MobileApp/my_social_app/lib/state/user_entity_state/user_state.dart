@@ -113,22 +113,22 @@ class UserState{
   //make follow request start
   UserState addRequester(int currentUserId){
     if(profileVisibility == ProfileVisibility.private){
-      return _optional(newIsRequested: true,newRequesters: requesters.create(currentUserId));
+      return _optional(newIsRequested: true,newRequesters: requesters.prependOne(currentUserId));
     }
     else{
       return _optional(
         newNumberOfFollowers: numberOfFollowers + 1,
         newIsFollowed: true,
-        newFollowers: followers.create(currentUserId)
+        newFollowers: followers.prependOne(currentUserId)
       );
     }
   }
   UserState addRequested(ProfileVisibility userProfileVisibility, int userId){
     if(userProfileVisibility == ProfileVisibility.private){
-      return _optional(newRequesteds: requesteds.create(userId));
+      return _optional(newRequesteds: requesteds.prependOne(userId));
     }
     else{
-      return _optional(newNumberOfFolloweds: numberOfFolloweds + 1,newFolloweds: followeds.create(userId));
+      return _optional(newNumberOfFolloweds: numberOfFolloweds + 1,newFolloweds: followeds.prependOne(userId));
     }
   }
   //make follow request end
@@ -175,6 +175,6 @@ class UserState{
   //Questions
   UserState addQuestion(int id) => _optional(
     newNumberOfQuestions: numberOfQuestions + 1,
-    newQuestions: questions.create(id)
+    newQuestions: questions.prependOne(id)
   );
 }

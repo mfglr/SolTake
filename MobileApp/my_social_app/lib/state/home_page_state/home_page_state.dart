@@ -11,6 +11,6 @@ class HomePageState{
   
   HomePageState addQuestion(int questionId)
     => HomePageState(
-        questions: questions.create(questionId)
+        questions: questions.prependOne(questionId)
       );
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.ConversationContext.UserConnectionAggregate.Entities;
+using MySocailApp.Domain.UserConnectionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 {
@@ -94,6 +94,18 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasMany(x => x.Noitifications)
                 .WithOne(x => x.Owner)
                 .HasForeignKey(x => x.OwnerId);
+
+            builder
+                .HasMany(x => x.Conversations)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId);
+
+            builder
+                .HasMany(x => x.Messages)
+                .WithOne(x => x.Owner)
+                .HasForeignKey(x => x.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

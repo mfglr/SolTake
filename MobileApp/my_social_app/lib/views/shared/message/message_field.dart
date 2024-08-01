@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
 class MessageField extends StatelessWidget {
-  final UserState user;
-  const MessageField({super.key,required this.user});
+  final String userName;
+  const MessageField({super.key,required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class MessageField extends StatelessWidget {
             minLines: 1,
             maxLines: 2,
             decoration: InputDecoration(
-              hintText: "Say hello to ${user.userName}"
+              hintText: "Say hello to $userName"
             ),
           ),
         ),

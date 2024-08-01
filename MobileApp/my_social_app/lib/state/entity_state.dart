@@ -14,6 +14,12 @@ class EntityState<T extends dynamic> {
     entities.addAll(this.entities);
     return entities;
   }
+  Map<int,T> prependOneAndRemovePrev(T value){
+    final Map<int,T> entities = {};
+    entities.addEntries([MapEntry(value.id, value)]);
+    entities.addEntries(this.entities.values.where((e) => e.id != value.id).map((e) => MapEntry(e.id, e)));
+    return entities;
+  }
   Map<int,T> appendOne(T value){
     if(this.entities[value.id] != null){
       return this.entities;

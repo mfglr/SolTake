@@ -7,6 +7,7 @@ import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/pages/home_page.dart';
+import 'package:my_social_app/views/pages/message/message_home_page.dart';
 import 'package:my_social_app/views/pages/search_page.dart';
 import 'package:my_social_app/views/pages/user/user_page.dart';
 
@@ -57,18 +58,24 @@ class _RootViewState extends State<RootView> {
                         icon: Icon(Icons.search_outlined),
                         label: '',
                       ),
-                
+
+                      NavigationDestination(
+                        selectedIcon: Icon(Icons.message),
+                        icon: Icon(Icons.message_outlined), 
+                        label: ''
+                      ),
+
                       NavigationDestination(
                         selectedIcon: Icon(Icons.person),
                         icon: Icon(Icons.person_outline),
                         label: '',
                       ),
-                
                     ],
                   ),
                   body: [
                     const HomePage(),
                     const SearchPage(),
+                    const MessageHomePage(),
                     UserPage(userId: userState.id,userName: null,)
                   ][currentPageIndex]
                 );

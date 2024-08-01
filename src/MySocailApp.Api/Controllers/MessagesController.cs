@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Queries.ConversationContenxt.GetMessagesByConversationId;
-using MySocailApp.Application.Queries.ConversationContenxt.GetUnviewedMessages;
-using MySocailApp.Application.Queries.ConversationContenxt.MessageAggregate;
+using MySocailApp.Application.Queries.MessageAggregate;
+using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByConversationId;
+using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessagesByConversationId;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -18,13 +18,13 @@ namespace MySocailApp.Api.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
-        [HttpGet("{contactId}")]
-        public async Task<List<MessageResponseDto>> GetByContactId(int contactId, [FromQuery]int? lastId, [FromQuery]int? take,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetMessagesByContactIdDto(contactId,lastId,take),cancellationToken);
+        [HttpGet("{conversationId}")]
+        public async Task<List<MessageResponseDto>> GetMessagesByConversationId(int conversationId, [FromQuery]int? lastId, [FromQuery]int? take,CancellationToken cancellationToken)
+            => await _mediator.Send(new GetMessagesByConversationIdDto(conversationId, lastId,take),cancellationToken);
 
-        [HttpGet]
-        public async Task<List<MessageResponseDto>> GetUnviewedMessages(CancellationToken cancellationToken)
-            => await _mediator.Send(new GetUnviewedMessagesDto(),cancellationToken);
+        [HttpGet("{conversationId}")]
+        public async Task<List<MessageResponseDto>> GetUnviewedMessagesByConversationId(int conversationId, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetUnviewedMessagesByConversationIdDto(conversationId),cancellationToken);
 
     }
 }

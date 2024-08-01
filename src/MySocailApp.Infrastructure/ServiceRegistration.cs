@@ -9,34 +9,35 @@ using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
-using MySocailApp.Domain.ConversationContext.ConversationAggregate.Interfaces;
-using MySocailApp.Domain.ConversationContext.MessageAggregate.DomainServices;
-using MySocailApp.Domain.ConversationContext.MessageAggregate.Interfaces;
-using MySocailApp.Domain.ConversationContext.UserConnectionAggregate.Interfaces;
+using MySocailApp.Domain.ConversationAggregate.Interfaces;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
+using MySocailApp.Domain.MessageAggregate.DomainServices;
+using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
+using MySocailApp.Domain.Shared;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
+using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.ApplicationServices;
 using MySocailApp.Infrastructure.ApplicationServices.BlobService;
 using MySocailApp.Infrastructure.ApplicationServices.Email;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
-using MySocailApp.Infrastructure.ConversationContext.ConversationAggregate;
-using MySocailApp.Infrastructure.ConversationContext.MessageAggregate;
-using MySocailApp.Infrastructure.ConversationContext.UserConnectionAggregate;
+using MySocailApp.Infrastructure.ConversationAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
+using MySocailApp.Infrastructure.MessageAggregate;
 using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
+using MySocailApp.Infrastructure.UserConnectionAggregate;
 using System.Net;
 using System.Net.Mail;
 
@@ -58,7 +59,9 @@ namespace MySocailApp.Infrastructure
                 .AddTopicAggregate()
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
-                .AddConversationContext();
+                .AddConversationAggregate()
+                .AddMessageAggregate()
+                .AddUserConnectionAggregate();
         }
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
@@ -167,15 +170,26 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<INotificationReadRepository, NotificationReadRepository>();
         }
 
-        private static IServiceCollection AddConversationContext(this IServiceCollection services)
+        private static IServiceCollection AddConversationAggregate(this IServiceCollection services)
         {
             return services
                 .AddScoped<IConversationWriteRepository, ConversationWriteRepository>()
+                .AddScoped<IConversationReadRepository, ConversationReadRepository>();
+        }
+        private static IServiceCollection AddMessageAggregate(this IServiceCollection services)
+        {
+            return services
                 .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
                 .AddScoped<IMessageReadRepository, MessageReadRepository>()
-                .AddScoped<IUserConnectionWriteRepository, UserConnectionWriteRepository>()
-                .AddScoped<IUserConnectionReadRepository, UserConnectionReadRepository>()
+                .AddScoped<MessageStateUpdaterDomainService>()
                 .AddScoped<MessageCreatorDomainService>();
+        }
+
+        private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IUserConnectionWriteRepository, UserConnectionWriteRepository>()
+                .AddScoped<IUserConnectionReadRepository, UserConnectionReadRepository>();
         }
     }
 }

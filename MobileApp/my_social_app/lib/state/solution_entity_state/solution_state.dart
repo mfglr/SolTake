@@ -138,7 +138,7 @@ class SolutionState{
         isOwner: isOwner,
         images: images,
         numberOfComments: numberOfComments + 1,
-        comments: comments.create(commentId)
+        comments: comments.prependOne(commentId)
       );
 
   SolutionState addComments(Iterable<int> commentIds)

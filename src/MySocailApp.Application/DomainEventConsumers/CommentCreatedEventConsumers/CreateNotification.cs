@@ -1,5 +1,4 @@
-﻿using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Core;
+﻿using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
@@ -7,6 +6,7 @@ using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
+using MySocailApp.Domain.Shared;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 

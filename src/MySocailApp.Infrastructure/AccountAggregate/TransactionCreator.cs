@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using MySocailApp.Domain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.Shared;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.AccountAggregate

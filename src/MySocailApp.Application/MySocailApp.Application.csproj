@@ -20,8 +20,4 @@
     <ProjectReference Include="..\MySocailApp.Domain\MySocailApp.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\ConversationContenxt\ConversationAggregate\GetConversations\" />
-  </ItemGroup>
-
 </Project>

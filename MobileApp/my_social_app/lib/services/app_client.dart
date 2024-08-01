@@ -89,10 +89,11 @@ class AppClient{
     await _sendJsonContent(request);
   }
 
-  String generatePaginationUrl(String url, int? lastId,int? take){
+  String generatePaginationUrl(String url, dynamic lastId,int? take){
     if(lastId == null && take == null){ return url; }
     else if(lastId == null && take != null){ return "$url?take=$take"; }
     else if(lastId != null && take == null){ return "$url?lastId=$lastId"; }
     else { return "$url?lastId=$lastId&take=$take"; }
   }
+  
 }

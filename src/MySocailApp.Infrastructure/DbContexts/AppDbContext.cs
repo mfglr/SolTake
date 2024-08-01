@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.ConversationContext.ConversationAggregate.Entities;
-using MySocailApp.Domain.ConversationContext.MessageAggregate.Entities;
-using MySocailApp.Domain.ConversationContext.UserConnectionAggregate.Entities;
+using MySocailApp.Domain.ConversationAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
+using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
 using MySocailApp.Domain.TopicAggregate.Entities;
+using MySocailApp.Domain.UserConnectionAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts

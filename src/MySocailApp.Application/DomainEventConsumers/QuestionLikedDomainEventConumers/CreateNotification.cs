@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Core;
+﻿using MySocailApp.Core;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventConumers
 {

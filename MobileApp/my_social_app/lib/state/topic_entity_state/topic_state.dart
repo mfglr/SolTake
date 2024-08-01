@@ -27,7 +27,7 @@ class TopicState{
         id: id,
         subjectId: subjectId,
         name: name,
-        questions: questions.create(questionId)
+        questions: questions.prependOne(questionId)
       );
   TopicState removeQuestionId(int questionId)
     => TopicState(

@@ -9,7 +9,7 @@ class MessageButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(user: user))),
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(userId: user.id,))),
       child: Center(
         child: Row(
           mainAxisSize: MainAxisSize.min,

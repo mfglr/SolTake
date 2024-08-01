@@ -1,4 +1,8 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
+import 'package:my_social_app/state/conversation_entity_state/conversation_entity_state.dart';
+import 'package:my_social_app/state/conversation_entity_state/middlewares.dart';
+import 'package:my_social_app/state/conversation_message_entity_state/conversation_message_entity_state.dart';
+import 'package:my_social_app/state/conversation_message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
@@ -61,7 +65,9 @@ final store = Store(
     commentEntityState: CommentEntityState(entities: {}),
     createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
     notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
-    messageEntityState: MessageEntityState(entities: {})
+    messageEntityState: MessageEntityState(entities: {}),
+    conversationEntityState: ConversationEntityState(entities: {},isLast: false,lastDate: null,isSynchronized: false),
+    conversationMessageEntityState: ConversationMessageEntityState(entities: {})
   ),
   middleware: [
     //account start
@@ -141,8 +147,6 @@ final store = Store(
     loadSolutionImageMiddleware,
     //Solution image end
 
-    
-
     //comments start
     createCommentMiddleware,
     nextPageQuestionCommentsMiddleware,
@@ -160,5 +164,11 @@ final store = Store(
     nextPageNotificationsIfNoNoficationsMiddleware,
     //notifications end
 
+    //conversations start
+    nextPageConversationsMiddleware,
+    nextPageConversationsIfNoConversationsMiddleware,
+    nextPageConversationMessagesMiddleware,
+    nextPageConversationMessagesIfNoMessagesMiddleware,
+    //conversations end
   ]
 );

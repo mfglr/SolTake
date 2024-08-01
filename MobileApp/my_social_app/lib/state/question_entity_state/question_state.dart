@@ -114,7 +114,7 @@ class QuestionState{
       isOwner: isOwner,
       numberOfSolutions: numberOfSolutions + 1,
       numberOfComments: numberOfComments,
-      solutions: solutions.create(solutionId),
+      solutions: solutions.prependOne(solutionId),
       comments: comments
     );
   
@@ -158,7 +158,7 @@ class QuestionState{
       numberOfSolutions: numberOfSolutions,
       numberOfComments: numberOfComments + 1,
       solutions: solutions,
-      comments: comments.create(questionCommentId)
+      comments: comments.prependOne(questionCommentId)
     );
 
   QuestionState nextPageQuestionComments(Iterable<int> commentIds)

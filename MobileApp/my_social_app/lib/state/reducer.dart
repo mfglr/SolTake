@@ -1,5 +1,7 @@
 import 'package:my_social_app/state/account_state/reducers.dart';
 import 'package:my_social_app/state/actions.dart';
+import 'package:my_social_app/state/conversation_entity_state/reducer.dart';
+import 'package:my_social_app/state/conversation_message_entity_state/reducers.dart';
 import 'package:my_social_app/state/create_comment_state/reducers.dart';
 import 'package:my_social_app/state/create_question_state/reducers.dart';
 import 'package:my_social_app/state/create_solution_state/reducers.dart';
@@ -49,6 +51,8 @@ AppState appReducer(AppState prev,action) => AppState(
   commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
   createCommentState: createCommentStateReducers(prev.createCommentState,action),
   notificationEntityState: notificationEntityStateReducers(prev.notificationEntityState,action),
-  messageEntityState: messageEntityStateReducers(prev.messageEntityState,action)
+  messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
+  conversationEntityState: conversationEntityStateReducers(prev.conversationEntityState,action),
+  conversationMessageEntityState: conversationMessageEntityReducer(prev.conversationMessageEntityState,action)
 );
 
