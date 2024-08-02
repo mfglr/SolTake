@@ -63,6 +63,6 @@ class Solution{
       isOwner: isOwner,
       images: images.map((e) => e.id),
       numberOfComments: numberOfComments,
-      comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null)
+      comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastValue: null)
     );
 }

@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestions
         public async Task<List<QuestionResponseDto>> Handle(GetQuestionsByUserIdDto request, CancellationToken cancellationToken)
         {
             var questions = 
-                await _repository.GetByUserIdAsync(request.UserId, request.LastId, cancellationToken) ?? 
+                await _repository.GetByUserIdAsync(request.UserId, request.LastValue, cancellationToken) ?? 
                 throw new UserIsNotFoundException();
             return _mapper.Map<List<QuestionResponseDto>>(questions);
         }

@@ -64,7 +64,7 @@ class Question{
     isOwner: isOwner,
     numberOfSolutions: numberOfSolutions,
     numberOfComments: numberOfComments,
-    solutions: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null),
-    comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null),
+    solutions: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastValue: null),
+    comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastValue: null),
   );
 }

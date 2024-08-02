@@ -22,11 +22,9 @@ namespace MySocailApp.Api.Controllers
         [HttpGet]
         public async Task<List<ConversationResponseDto>> GetConversationsThatHaveUnviewedMessages(CancellationToken cancellationToken)
             => await _meditaor.Send(new GetConversationsThatHaveUnviewedMessagesDto(), cancellationToken);
-
         [HttpGet]
-        public async Task<List<ConversationResponseDto>> GetConversations([FromQuery]DateTime? lastDate,[FromQuery]int? take,[FromQuery]int? takeMessage, CancellationToken cancellationToken)
-            => await _meditaor.Send(new GetConversationsDto(lastDate,take,takeMessage), cancellationToken);
-
+        public async Task<List<ConversationResponseDto>> GetConversations([FromQuery]DateTime? lastValue, [FromQuery]int? take,[FromQuery]int? takeMessage, CancellationToken cancellationToken)
+            => await _meditaor.Send(new GetConversationsDto(lastValue, take,takeMessage), cancellationToken);
         [HttpGet("{receiverId}")]
         public async Task<ConversationResponseDto?> GetConversationByReceiverId(int receiverId,[FromQuery]int? takeMessage,CancellationToken cancellationToken)
             => await _meditaor.Send(new GetConversationByReceiverIdDto(receiverId,takeMessage), cancellationToken);

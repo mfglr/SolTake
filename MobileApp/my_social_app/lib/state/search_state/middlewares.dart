@@ -38,9 +38,9 @@ void searchMiddleware(Store<AppState> store,action,NextDispatcher next){
 void nextPageSearchingMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageSearchingAction){
     final key = store.state.searchState.key;
-    final lastId = store.state.searchState.users.lastId;
+    final lastId = store.state.searchState.users.lastValue;
     UserService()
-      .search(key,lastId: lastId)
+      .search(key,lastValue: lastId)
       .then((users){
         store.dispatch(
           LoadUsersSuccessAction(

@@ -25,7 +25,7 @@ class CommentService{
 
   Future<void> like(int questionCommentId) async
     => await _appClient.put(
-      "$commentController/$likeQuestionComment",
+      "$commentController/$likeQuestionCommentEndpoint",
       body: {
         'id' : questionCommentId
       }
@@ -33,7 +33,7 @@ class CommentService{
 
   Future<void> dislike(int questionCommentId) async
     => await _appClient.put(
-      "$commentController/$dislikeQuestionComment",
+      "$commentController/$dislikeQuestionCommentEndpoint",
       body: {
         'id' : questionCommentId
       }
@@ -42,29 +42,29 @@ class CommentService{
   Future<Comment> getById(int id) async
     => Comment.fromJson(
       await _appClient.get(
-        "$commentController/$getByIdEndpoint/$id"
+        "$commentController/$getCommentByIdEndpoint/$id"
       )
     );
 
-  Future<Iterable<Comment>> getByQuestionId(int questionId,int? lastId) async{
+  Future<Iterable<Comment>> getByQuestionId(int questionId,int? lastValue) async{
     String endPoint = "$commentController/$getCommentsByQuestionIdEndpoint/$questionId";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
 
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Comment.fromJson(e));
   }
 
-   Future<Iterable<Comment>> getBySolutionId(int solutionId,int? lastId) async{
+   Future<Iterable<Comment>> getBySolutionId(int solutionId,int? lastValue) async{
     String endPoint = "$commentController/$getCommentsBySolutionIdEndpoint/$solutionId";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
 
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Comment.fromJson(e));
   }
 
-  Future<Iterable<Comment>> getByParentId(int parentId,int? lastId, int? take) async{
+  Future<Iterable<Comment>> getByParentId(int parentId,int? lastValue, int? take) async{
     String url = "$commentController/$getCommentsByParentIdEndpoint/$parentId";
-    final list = (await _appClient.get(_appClient.generatePaginationUrl(url, lastId, take))) as List;
+    final list = (await _appClient.get(_appClient.generatePaginationUrl(url, lastValue, take))) as List;
     return list.map((e) => Comment.fromJson(e));
   }
 

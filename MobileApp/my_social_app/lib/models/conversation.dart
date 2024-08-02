@@ -10,12 +10,11 @@ part 'conversation.g.dart';
 @JsonSerializable()
 class Conversation{
   final int id;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final int userId;
   final String userName;
   final String? name;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final DateTime lastMessageCreatedAt;
   final Iterable<Message> messages;
 
   const Conversation({
@@ -25,7 +24,6 @@ class Conversation{
     required this.name,
     required this.createdAt,
     required this.updatedAt,
-    required this.lastMessageCreatedAt,
     required this.messages
   });
 
@@ -40,12 +38,28 @@ class Conversation{
       userName: userName,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      lastMessageCreatedAt: lastMessageCreatedAt,
       messages: Ids(
         ids: messages.map((e) => e.id),
         isLast: messages.length < messagesPerPage,
-        lastId: messages.isNotEmpty ? messages.last.id : null,
+        lastValue: messages.isNotEmpty ? messages.last.id : null,
         recordsPerPage: messagesPerPage
       )
     );
+
+    ConversationState toConversationStateWithoutPagination()
+      => ConversationState(
+        id: id,
+        userId: userId,
+        name: name,
+        userName: userName,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        messages: Ids(
+          ids: messages.map((e) => e.id),
+          isLast: false,
+          lastValue: messages.isNotEmpty ? messages.last.id : null,
+          recordsPerPage: messagesPerPage
+        )
+      );
+     
 }

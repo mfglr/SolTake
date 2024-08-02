@@ -34,7 +34,7 @@ void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatc
     final examState = store.state.examEntityState.entities[action.examId]!;
     if(!examState.questions.isLast){
       QuestionService()
-        .getByExamId(action.examId,lastId: examState.questions.lastId)
+        .getByExamId(action.examId,lastValue: examState.questions.lastValue)
         .then((questions){
           store.dispatch(
             AddQuestionsAction(

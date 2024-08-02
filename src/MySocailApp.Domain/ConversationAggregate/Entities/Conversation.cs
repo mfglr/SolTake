@@ -8,7 +8,6 @@ namespace MySocailApp.Domain.ConversationAggregate.Entities
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
-        public DateTime LastMessageCreatedAt { get; private set; }
 
         private readonly List<ConversationUser> _users = [];
         public IReadOnlyCollection<ConversationUser> Users => _users;
@@ -19,8 +18,6 @@ namespace MySocailApp.Domain.ConversationAggregate.Entities
             _users.Add(ConversationUser.Create(userId2));
             UpdatedAt = CreatedAt = DateTime.UtcNow;
         }
-
-        internal void UpdateLastMessageCreateAt() => LastMessageCreatedAt = DateTime.UtcNow;
 
         //readonly navigator properties
         public IReadOnlyCollection<Message> Messages { get; } = null!;

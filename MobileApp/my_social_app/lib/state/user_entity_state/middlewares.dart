@@ -61,9 +61,9 @@ void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
   if(action is LoadFollowersIfNoUsersAction){
     final user = store.state.userEntityState.entities[action.userId]!;
     if(!user.followers.isLast && user.followers.ids.isEmpty){
-      final lastId = user.followers.lastId;
+      final lastValue = user.followers.lastValue;
       UserService()
-        .getFollowersById(action.userId,lastId: lastId)
+        .getFollowersById(action.userId,lastValue: lastValue)
         .then((users){
           store.dispatch(
             LoadFollowersSuccessAction(
@@ -85,9 +85,9 @@ void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 void loadFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowersAction){
     if(!store.state.userEntityState.entities[action.userId]!.followers.isLast){
-      final lastId = store.state.userEntityState.entities[action.userId]!.followers.lastId;
+      final lastValue = store.state.userEntityState.entities[action.userId]!.followers.lastValue;
       UserService()
-        .getFollowersById(action.userId,lastId: lastId)
+        .getFollowersById(action.userId,lastValue: lastValue)
         .then((users){
           store.dispatch(
             LoadFollowersSuccessAction(
@@ -111,9 +111,9 @@ void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
   if(action is LoadFollowedsIfNoUsersAction){
     final user = store.state.userEntityState.entities[action.userId]!;
     if(!user.followeds.isLast && user.followeds.ids.isEmpty){
-      final lastId = user.followeds.lastId;
+      final lastValue = user.followeds.lastValue;
       UserService()
-        .getFollowedsById(action.userId,lastId: lastId)
+        .getFollowedsById(action.userId,lastValue: lastValue)
         .then((users){
           store.dispatch(
             LoadFollowedsSuccessAction(
@@ -135,9 +135,9 @@ void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 void loadFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowersAction){
     if(!store.state.userEntityState.entities[action.userId]!.followeds.isLast){
-      final lastId = store.state.userEntityState.entities[action.userId]!.followers.lastId;
+      final lastValue = store.state.userEntityState.entities[action.userId]!.followers.lastValue;
       UserService()
-        .getFollowedsById(action.userId,lastId: lastId)
+        .getFollowedsById(action.userId,lastValue: lastValue)
         .then((users){
           store.dispatch(
             LoadFollowedsSuccessAction(
@@ -184,7 +184,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
     final questions = store.state.userEntityState.entities[action.userId]!.questions;
     if(!questions.isLast){
       QuestionService()
-        .getByUserId(action.userId,lastId: questions.lastId)
+        .getByUserId(action.userId,lastValue: questions.lastValue)
         .then((questions){
           store.dispatch(
             AddQuestionsAction(

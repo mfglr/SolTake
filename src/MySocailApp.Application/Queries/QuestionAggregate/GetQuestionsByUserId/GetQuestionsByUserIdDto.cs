@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.Get
 {
-    public record GetQuestionsByUserIdDto(int UserId, int? LastId) : IRequest<List<QuestionResponseDto>>;
+    public record GetQuestionsByUserIdDto(int UserId, int? LastValue) : IRequest<List<QuestionResponseDto>>;
 }

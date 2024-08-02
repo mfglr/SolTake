@@ -2,7 +2,7 @@
 using MediatR;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 
-namespace MySocailApp.Application.Queries.CommentAggregate.GetByQuestionId
+namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId
 {
     public class GetCommentsByQuestionIdHandler(IMapper mapper, ICommentReadRepository repository) : IRequestHandler<GetCommentsByQuestionIdDto, List<CommentResponseDto>>
     {
@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Queries.CommentAggregate.GetByQuestionId
 
         public async Task<List<CommentResponseDto>> Handle(GetCommentsByQuestionIdDto request, CancellationToken cancellationToken)
         {
-            var comments = await _repository.GetByQuestionIdAsync(request.QuestionId,request.LastId,cancellationToken);
+            var comments = await _repository.GetByQuestionIdAsync(request.QuestionId, request.LastValue, cancellationToken);
             return _mapper.Map<List<CommentResponseDto>>(comments);
         }
     }

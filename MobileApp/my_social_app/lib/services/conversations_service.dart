@@ -10,9 +10,22 @@ class ConversationsService{
   static final ConversationsService _singleton = ConversationsService._(AppClient());
   factory ConversationsService() => _singleton;
 
-  Future<Iterable<Conversation>> getConversations(DateTime? lastDate,int? take) async {
-    final url = _appClient.generatePaginationUrl("$conversationController/$getConversationsEndpoint", lastDate, take);
+  Future<Iterable<Conversation>> getConversations(DateTime? lastValue,int? take,int? takeMessage) async {
+    final url = _appClient.generatePaginationUrl("$conversationController/$getConversationsEndpoint", lastValue, take);
+    final list = (await _appClient.get("$url&takeMessage=$takeMessage")) as List;
+    return list.map((item) => Conversation.fromJson(item));
+  }
+
+  Future<Iterable<Conversation>> getConversationsThatHaveUnviewedMessages() async {
+    const url = "$conversationController/$getConversationsThatHaveUnviewedMessagesEndpoint";
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => Conversation.fromJson(item));
+  }
+
+  Future<Conversation?> getConversationByReceiverId(int receiverId,int? takeMessage) async {
+    final url = "$conversationController/$getConversationByReceiverIdEndpoint&takeMessage=$takeMessage";
+    final json = await _appClient.get(url);
+    if(json == null) return null;
+    return Conversation.fromJson(json);
   }
 }

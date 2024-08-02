@@ -19,8 +19,8 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpGet("{conversationId}")]
-        public async Task<List<MessageResponseDto>> GetMessagesByConversationId(int conversationId, [FromQuery]int? lastId, [FromQuery]int? take,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetMessagesByConversationIdDto(conversationId, lastId,take),cancellationToken);
+        public async Task<List<MessageResponseDto>> GetMessagesByConversationId(int conversationId, [FromQuery]int? lastValue, [FromQuery]int? take,CancellationToken cancellationToken)
+            => await _mediator.Send(new GetMessagesByConversationIdDto(conversationId, lastValue, take),cancellationToken);
 
         [HttpGet("{conversationId}")]
         public async Task<List<MessageResponseDto>> GetUnviewedMessagesByConversationId(int conversationId, CancellationToken cancellationToken)

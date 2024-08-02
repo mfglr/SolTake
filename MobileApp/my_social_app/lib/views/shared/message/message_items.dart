@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/shared/message/message_item.dart';
 
 class MessageItems extends StatelessWidget {
@@ -16,14 +18,17 @@ class MessageItems extends StatelessWidget {
           child: Builder(
             builder: (context){
               final message = messages.elementAt(index);
-              return Row(
-                mainAxisAlignment: message.isOwner ? MainAxisAlignment.end : MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 9 / 10,
-                    child: MessageItem(message: message,),
-                  )
-                ],
+              return StoreConnector<AppState,int>(
+                converter: (store) => store.state.accountState!.id,
+                builder: (store,accountId) => Row(
+                  mainAxisAlignment: accountId == message.ownerId ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 7.5 / 10,
+                      child: MessageItem(message: message,),
+                    )
+                  ],
+                ),
               );
             },
           ),

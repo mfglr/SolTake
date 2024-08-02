@@ -18,7 +18,7 @@ namespace MySocailApp.Infrastructure.ConversationAggregate
         public async Task<Conversation?> GetByUserIdsAsync(IEnumerable<int> ids, CancellationToken cancellationToken)
             => await _context.Conversations
                 .FirstOrDefaultAsync(
-                    conversation => ids.All(userId => conversation.Users.Any(x => x.AppUserId == userId)),
+                    conversation => conversation.Users.All(user => ids.Any(id => id == user.AppUserId)),
                     cancellationToken
                 );
     }

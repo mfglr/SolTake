@@ -10,7 +10,6 @@ class Message{
   final int id;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final bool isOwner;
   final bool isEdited;
   final int conversationId;
   final int ownerId;
@@ -22,7 +21,6 @@ class Message{
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.isOwner,
     required this.isEdited,
     required this.conversationId,
     required this.ownerId,
@@ -39,10 +37,9 @@ class Message{
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        isOwner: isOwner,
+        ownerId: ownerId,
         isEdited: isEdited,
         conversationId: conversationId,
-        ownerId: ownerId,
         content: content,
         state: state,
         images: images.map((e) => e.id)

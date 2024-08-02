@@ -1,7 +1,8 @@
-const createCommentEndpoint = "create";
-const getByIdEndpoint = "GetById";
-const getCommentsByQuestionIdEndpoint = "getByQuestionId";
-const getCommentsBySolutionIdEndpoint = "getBySolutionId";
-const getCommentsByParentIdEndpoint = "getByParentId";
-const likeQuestionComment = "Like";
-const dislikeQuestionComment = "Dislike";
+const createCommentEndpoint = "CreateComment";
+const likeQuestionCommentEndpoint = "LikeComment";
+const dislikeQuestionCommentEndpoint = "DislikeComment";
+
+const getCommentByIdEndpoint = "GetCommentById";
+const getCommentsByQuestionIdEndpoint = "GetCommentsByQuestionId";
+const getCommentsBySolutionIdEndpoint = "GetCommentsBySolutionId";
+const getCommentsByParentIdEndpoint = "GetCommentsByParentId";

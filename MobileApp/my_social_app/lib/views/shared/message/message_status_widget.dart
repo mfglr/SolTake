@@ -10,15 +10,19 @@ class MessageStatusWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context){
+        IconData icon;
+        MaterialColor? color;
         if(message.state == MessageStatus.created){
-          return const Icon(Icons.done);
+          icon = Icons.done;
         }
         else if(message.state == MessageStatus.received){
-          return const Icon(Icons.done_all);
+          icon = Icons.done_all;
         }
         else{
-          return const Icon(Icons.done_all,color: Colors.blue,);
+          icon = Icons.done_all;
+          color = Colors.blue; 
         }
+        return Icon(icon,color: color,size: 14,);
       }
     );
   }

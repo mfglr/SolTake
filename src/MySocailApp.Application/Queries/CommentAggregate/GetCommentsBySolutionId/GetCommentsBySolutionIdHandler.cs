@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsBySolution
 
         public async Task<List<CommentResponseDto>> Handle(GetCommentsBySolutionIdDto request, CancellationToken cancellationToken)
         {
-            var comments = await _repository.GetBySolutoinIdAsync(request.SolutionId, request.LastId, cancellationToken);
+            var comments = await _repository.GetBySolutoinIdAsync(request.SolutionId, request.LastValue, cancellationToken);
             return _mapper.Map<List<CommentResponseDto>>(comments);
         }
     }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.Queries.ConversationAggregate;
 using MySocailApp.Domain.ConversationAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.ConversationAggregate.GetConversations
@@ -15,7 +14,7 @@ namespace MySocailApp.Application.Queries.ConversationAggregate.GetConversations
         public async Task<List<ConversationResponseDto>> Handle(GetConversationsDto request, CancellationToken cancellationToken)
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
-            var conversations = await _repository.GetConversationsAsync(accountId, request.LastDate, request.Take, request.TakeMessage, cancellationToken);
+            var conversations = await _repository.GetConversationsAsync(accountId, request.LastValue, request.Take, request.TakeMessage, cancellationToken);
             return _mapper.Map<List<ConversationResponseDto>>(conversations);
         }
     }

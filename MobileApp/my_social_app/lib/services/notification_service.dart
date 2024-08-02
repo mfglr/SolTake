@@ -22,9 +22,9 @@ class NotificationService{
     return list.map((item) => Notification.fromJson(item));
   }
 
-  Future<Iterable<Notification>> getNotifications({int? lastId,int? take}) async {
+  Future<Iterable<Notification>> getNotifications({int? lastValue,int? take}) async {
     String endpoint = "$notificationController/$getNotificationsEndpoint";
-    String url = _appClient.generatePaginationUrl(endpoint, lastId, take);
+    String url = _appClient.generatePaginationUrl(endpoint, lastValue, take);
     final list = (await _appClient.get(url)) as List; 
     return list.map((item) => Notification.fromJson(item));
   }

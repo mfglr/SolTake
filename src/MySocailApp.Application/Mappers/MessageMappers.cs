@@ -7,18 +7,11 @@ namespace MySocailApp.Application.Mappers
 {
     public class MessageMappers : Profile
     {
-        public MessageMappers(IAccessTokenReader tokenReader)
+        public MessageMappers()
         {
             CreateMap<Message, MessageResponseDto>()
-                .ForMember(dest => dest.State, x => x.MapFrom(src => src.State()))
-                .ForMember(dest => dest.IsOwner, x => x.MapFrom(src => src.OwnerId == tokenReader.GetAccountId()))
-                .ForMember(
-                    dest => dest.ReceiverId,
-                    x => x.MapFrom(src => src.Conversation.Users.First(x => x.AppUserId != tokenReader.GetRequiredAccountId()).AppUserId)
-                );
-
+                .ForMember(dest => dest.State, x => x.MapFrom(src => src.State()));
             CreateMap<MessageImage, MessageImageResponseDto>();
         }
-        public MessageMappers() { }
     }
 }

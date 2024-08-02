@@ -21,6 +21,6 @@ class Topic{
       id: id,
       subjectId: subjectId,
       name: name,
-      questions: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastId: null)
+      questions: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastValue: null)
     );
 }

@@ -7,18 +7,24 @@ import 'package:my_social_app/state/state.dart';
 import 'package:redux/redux.dart';
 
 void connectMessageHub(Store<AppState> store){
+  
   final hub = MessageHub();
-        
+  
   hub.hubConnection.start();
   
   hub.hubConnection.on(
     receiveMessage, 
     (list){
       final message = Message.fromJson((list!.first as dynamic));
-      store.dispatch(AddMessageAction(message: message.toMessageState()));
       store.dispatch(
-        AddConversateMessageAction(
-          conversationId: message.conversationId, messageId: message.id, date: message.createdAt
+        AddMessageAction(
+          message: message.toMessageState()
+        )
+      );
+      store.dispatch(
+        AddConversationMessageAction(
+          conversationId: message.conversationId,
+          messageId: message.id
         )
       );
     }

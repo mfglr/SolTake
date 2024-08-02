@@ -26,7 +26,6 @@ namespace MySocailApp.Domain.MessageAggregate.DomainServices
                 await _conversationRepository.CreateAsync(conversation, cancellationToken);
                 await _unitOfWork.CommitAsync(cancellationToken);
             }
-            conversation.UpdateLastMessageCreateAt();
             
             //Create the message;
             message.Create(conversation.Id, receiverId);

@@ -12,7 +12,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionBySubject
 
         public async Task<List<QuestionResponseDto>> Handle(GetQuestionsBySubjectIdDto request, CancellationToken cancellationToken)
         {
-            var questions = await _repository.GetBySubjectIdAsync(request.SubjectId, request.LastId, cancellationToken);
+            var questions = await _repository.GetBySubjectIdAsync(request.SubjectId, request.LastValue, cancellationToken);
             return _mapper.Map<List<QuestionResponseDto>>(questions);
         }
     }

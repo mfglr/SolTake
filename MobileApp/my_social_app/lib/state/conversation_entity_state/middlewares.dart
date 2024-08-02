@@ -1,5 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/conversations_service.dart';
+import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/state/conversation_entity_state/action.dart';
 import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/message_entity_state/actions.dart';
@@ -8,44 +9,61 @@ import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
-void nextPageConversationsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageConversationsAction){
-    final state = store.state.conversationEntityState;
-    if(!state.isLast){
+void loadConversationByReceiverIdMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadConversationByReceiverIdAction){
+    if(store.state.conversationEntityState.selectByUserId(action.receiverId) == null){
       ConversationsService()
-        .getConversations(state.lastDate, conversationsPerPage)
+        .getConversationByReceiverId(action.receiverId,messagesPerPage)
         .then(
-          (conversations){
-            store.dispatch(
-              NextPageConversationsSuccessAction(
-                conversations: conversations.map((e) => e.toConversationState())
-              )
-            );
-            store.dispatch(
-              AddMessagesListsAction(
-                lists: conversations.map((e) => e.messages.map((e) => e.toMessageState()))
-              )
-            );
-            store.dispatch(
-              AddUserImagesAction(
-                images: conversations.map((e) => UserImageState(
-                  id: e.userId,
-                  image: null, 
-                  state: ImageState.notStarted
-                ))
-              )
-            );
+          (conversation){
+            if(conversation != null){
+              store.dispatch(
+                AddConversationAction(
+                  conversation: conversation.toConversationState()
+                )
+              );
+              store.dispatch(
+                AddUserImageAction(
+                  image: UserImageState(id: conversation.userId,image: null,state: ImageState.notStarted)
+                )
+              );
+            }
           }
         );
     }
   }
   next(action);
 }
-void nextPageConversationsIfNoConversationsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageConversationsIfNoConversationsAction){
-    if(store.state.conversationEntityState.entities.length < conversationsPerPage){
-      store.dispatch(const NextPageConversationsAction());
+void nextPageConversationMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageConversationMessagesAction){
+    final messages = store.state.conversationEntityState.entities[action.conversationId]!.messages;
+    if(!messages.isLast){
+      MessageService()
+        .getMessagesByConversationId(action.conversationId, messages.lastValue, messagesPerPage)
+        .then((messages){
+          store.dispatch(
+            AddMessagesAction(
+              messages: messages.map((e) => e.toMessageState())
+            )
+          );
+          store.dispatch(
+            NextPageConversationMessagesSuccessAction(
+              conversationId: action.conversationId,
+              ids: messages.map((e) => e.id)
+            )
+          );
+        });
     }
   }
   next(action);
 }
+void nextPageConversationMessagesIfNoMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageConversationMessagesIfNoMessagesAction){
+    if(store.state.conversationEntityState.entities[action.conversationId]!.messages.ids.length < messagesPerPage){
+      store.dispatch(NextPageConversationMessagesAction(conversationId: action.conversationId));
+    }
+  }
+  next(action);
+}
+
+

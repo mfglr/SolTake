@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class Ids{
   final int recordsPerPage;
   final bool isLast;
-  final int? lastId;
+  final dynamic lastValue;
   final Iterable<int> ids;
 
   const Ids({
     required this.recordsPerPage,
     required this.ids,
     required this.isLast,
-    required this.lastId
+    required this.lastValue
   });
  
   Ids init(Iterable<int> ids)
@@ -19,7 +19,7 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: ids,
       isLast: ids.length < recordsPerPage,
-      lastId: ids.isNotEmpty ? ids.last : lastId
+      lastValue: ids.isNotEmpty ? ids.last : lastValue
     );
 
   Ids appendMany(Iterable<int> ids)
@@ -27,7 +27,7 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: [...this.ids,...ids],
       isLast: isLast,
-      lastId: lastId
+      lastValue: lastValue
     );
 
   Ids prependMany(Iterable<int> ids)
@@ -35,7 +35,7 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: [...ids,...this.ids],
       isLast: isLast,
-      lastId: lastId
+      lastValue: lastValue
     );
 
   Ids nextPage(Iterable<int> ids)
@@ -43,7 +43,7 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: [...this.ids,...ids],
       isLast: ids.length < recordsPerPage,
-      lastId: ids.isNotEmpty ? ids.last : lastId
+      lastValue: ids.isNotEmpty ? ids.last : lastValue
     );
 
   Ids lastPage(Iterable<int> ids)
@@ -51,7 +51,7 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: [...this.ids,...ids],
       isLast: true,
-      lastId: ids.isNotEmpty ? ids.last : lastId
+      lastValue: ids.isNotEmpty ? ids.last : lastValue
     );
 
   Ids prependOne(int id)
@@ -59,15 +59,23 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: [id, ...ids],
       isLast: isLast, 
-      lastId: ids.isEmpty ? id : lastId
+      lastValue: ids.isEmpty ? id : lastValue
     );
+
+  Ids prependOneAndRemovePrev(int id)
+    => Ids(
+        recordsPerPage: recordsPerPage,
+        ids: [id,...ids.where((e) => e != id)],
+        isLast: isLast,
+        lastValue: lastValue
+      );
 
   Ids appendOne(int id)
     => Ids(
       recordsPerPage: recordsPerPage,
       ids: [...ids,id],
       isLast: isLast,
-      lastId: lastId
+      lastValue: lastValue
     );
 
   Ids remove(int id)
@@ -75,6 +83,6 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: ids.where((item) => item != id),
       isLast: isLast,
-      lastId: lastId
+      lastValue: lastValue
     );
 }

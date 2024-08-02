@@ -67,7 +67,7 @@ void nextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispa
     final state = store.state.questionEntityState.entities[action.questionId]!.solutions;
     if(!state.isLast){
       SolutionService()
-      .getByQuestionId(action.questionId,lastId: state.lastId)
+      .getByQuestionId(action.questionId,lastValue: state.lastValue)
       .then((solutions){
         store.dispatch(
           AddSolutionsAction(
@@ -113,7 +113,7 @@ void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatc
     final comments = store.state.questionEntityState.entities[action.questionId]!.comments;
     if(!comments.isLast){
       CommentService()
-        .getByQuestionId(action.questionId, comments.lastId)
+        .getByQuestionId(action.questionId, comments.lastValue)
         .then((comments){
           store.dispatch(
             AddCommentsAction(

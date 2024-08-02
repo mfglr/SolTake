@@ -1,8 +1,6 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
 import 'package:my_social_app/state/conversation_entity_state/conversation_entity_state.dart';
 import 'package:my_social_app/state/conversation_entity_state/middlewares.dart';
-import 'package:my_social_app/state/conversation_message_entity_state/conversation_message_entity_state.dart';
-import 'package:my_social_app/state/conversation_message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
@@ -15,6 +13,8 @@ import 'package:my_social_app/state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/home_page_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/message_entity_state/message_entity_state.dart';
+import 'package:my_social_app/state/message_home_page_state/message_home_page_state.dart';
+import 'package:my_social_app/state/message_home_page_state/middlewares.dart';
 import 'package:my_social_app/state/middlewares.dart';
 import 'package:my_social_app/state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_entity_state.dart';
@@ -51,7 +51,7 @@ final store = Store(
     isInitialized: false,
     userEntityState: UserEntityState(entities: {}),
     userImageEntityState: UserImageEntityState(entities: {}),
-    searchState: SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)),
+    searchState: SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)),
     createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: ExamEntityState(entities: {}, isLoaded: false),
@@ -61,13 +61,13 @@ final store = Store(
     questionImageEntityState: QuestionImageEntityState(entities: {}),
     solutionEntityState: SolutionEntityState(entities: {}),
     solutionImageEntityState: SolutionImageEntityState(entities: {}),
-    homePageState: HomePageState(questions: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)),
+    homePageState: HomePageState(questions: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)),
     commentEntityState: CommentEntityState(entities: {}),
     createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
     notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
     messageEntityState: MessageEntityState(entities: {}),
-    conversationEntityState: ConversationEntityState(entities: {},isLast: false,lastDate: null,isSynchronized: false),
-    conversationMessageEntityState: ConversationMessageEntityState(entities: {})
+    conversationEntityState: ConversationEntityState(entities: {},isLast: false,lastDate: null),
+    messageHomePageState: MessageHomePageState(ids: [], isLast: false, lastValue: null, isSynchronized: false)
   ),
   middleware: [
     //account start
@@ -165,10 +165,13 @@ final store = Store(
     //notifications end
 
     //conversations start
+    loadConversationByReceiverIdMiddleware,
     nextPageConversationsMiddleware,
     nextPageConversationsIfNoConversationsMiddleware,
     nextPageConversationMessagesMiddleware,
     nextPageConversationMessagesIfNoMessagesMiddleware,
     //conversations end
+
+    synchronizeHomePageMiddleware,
   ]
 );

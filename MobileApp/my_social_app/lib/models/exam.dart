@@ -25,7 +25,7 @@ class Exam{
         id: id,
         shortName: shortName,
         fullName: fullName,
-        subjects: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId : null),
-        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null)
+        subjects: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue : null),
+        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)
       );
 }

@@ -49,7 +49,7 @@ void nextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatc
     final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
     if(!comments.isLast){
       CommentService()
-        .getBySolutionId(action.solutionId,comments.lastId)
+        .getBySolutionId(action.solutionId,comments.lastValue)
         .then((comments){
           store.dispatch(
             AddCommentsAction(

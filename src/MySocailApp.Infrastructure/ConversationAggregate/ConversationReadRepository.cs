@@ -19,25 +19,28 @@ namespace MySocailApp.Infrastructure.ConversationAggregate
                 .Include(x => x.Users)
                 .ThenInclude(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Where(x => x.Users.Any(x => x.AppUserId == userId) && (lastDate == null || x.LastMessageCreatedAt < lastDate))
-                .OrderByDescending(x => x.LastMessageCreatedAt)
+                .Where(
+                    x => 
+                        x.Users.Any(x => x.AppUserId == userId) && 
+                        (lastDate == null || x.Messages.OrderByDescending(x => x.Id).Last().CreatedAt < lastDate)
+                )
+                .OrderByDescending(x => x.Messages.OrderByDescending(x => x.Id).Last().CreatedAt)
                 .Take(take ?? 20)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<Conversation>> GetConversationsThatHaveUnviewedMessages(int userId, CancellationToken cancellationToken)
             => await _context.Conversations
                 .AsNoTracking()
-                .Include(x => x.Messages.Where(x => !x.Viewers.Any(x => x.AppUserId == userId)))
+                .Include(x => x.Messages.Where(x => !x.Viewers.Any(x => x.AppUserId == userId)).OrderByDescending(x => x.Id))
                 .Include(x => x.Users)
                 .ThenInclude(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Include(x => x.Messages.Any(x => !x.Viewers.Any(x => x.AppUserId == userId)))
                 .Where(
                     x =>
                         x.Users.Any(x => x.AppUserId == userId) &&
                         x.Messages.Any(x => !x.Viewers.Any(x => x.AppUserId == userId))
                 )
-                .OrderByDescending(x => x.LastMessageCreatedAt)
+                .OrderByDescending(x => x.Messages.OrderByDescending(x => x.Id).Last().CreatedAt)
                 .ToListAsync(cancellationToken);
 
         public async Task<Conversation?> GetByUserIdsAsync(IEnumerable<int> ids, int? takeMessage, CancellationToken cancellationToken)
@@ -48,7 +51,7 @@ namespace MySocailApp.Infrastructure.ConversationAggregate
                 .ThenInclude(x => x.AppUser)
                 .ThenInclude(x => x.Account)
                 .FirstOrDefaultAsync(
-                    conversation => ids.All(userId => conversation.Users.Any(x => x.AppUserId == userId)),
+                    conversation => conversation.Users.All(user => ids.Any(id => id == user.AppUserId)),
                     cancellationToken
                 );
     }

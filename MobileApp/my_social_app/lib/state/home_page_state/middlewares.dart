@@ -16,7 +16,7 @@ void nextPageOfHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatch
     final questions = store.state.homePageState.questions;
     if(!questions.isLast){
       QuestionService()
-        .getAll(lastId: questions.lastId)
+        .getAll(lastValue: questions.lastValue)
         .then((questions){
           store.dispatch(
             AddQuestionsAction(

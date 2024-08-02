@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.NotificationAggregate.GetNotifications
         public async Task<List<NotificationResponseDto>> Handle(GetNotificationsDto request, CancellationToken cancellationToken)
         {
             var ownerId = _tokenReader.GetRequiredAccountId();
-            var notifications = await _repository.GetNotificationsByOwnerId(ownerId, request.LastId, request.Take, cancellationToken);
+            var notifications = await _repository.GetNotificationsByOwnerId(ownerId, request.LastValue, request.Take, cancellationToken);
             return _mapper.Map<List<NotificationResponseDto>>(notifications);
         }
     }

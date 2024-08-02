@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/conversation_entity_state/conversation_state.dart';
 import 'package:my_social_app/state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/views/pages/message/conversation_page.dart';
 import 'package:my_social_app/views/shared/user/user_image_widget.dart';
 
 class ConversationItem extends StatelessWidget {
@@ -13,7 +14,7 @@ class ConversationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: TextButton(
-        onPressed: (){},
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(userId: conversation.userId))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

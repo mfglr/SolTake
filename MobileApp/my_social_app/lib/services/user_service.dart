@@ -52,54 +52,54 @@ class UserService{
     return await _appClient.getBytes(url);
   }
 
-  Future<Iterable<User>> getFollowers({int? lastId}) async{
+  Future<Iterable<User>> getFollowers({int? lastValue}) async{
     String url = "$userController/$getFollowersEndPoint";
-    final list = (await _appClient.get(lastId != null ? "$url?lastId=$lastId" : url)) as List; 
+    final list = (await _appClient.get(lastValue != null ? "$url?lastId=$lastValue" : url)) as List; 
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getFollowersById(int id, {int? lastId}) async {
+  Future<Iterable<User>> getFollowersById(int id, {int? lastValue}) async {
     String endPoint = "$userController/$getFollowersByIdEndPoint/$id";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getFolloweds({int? lastId}) async{
+  Future<Iterable<User>> getFolloweds({int? lastValue}) async{
     String endPoint = "$userController/$getFollowedsEndPoint";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
 
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getFollowedsById(int id, {int? lastId}) async {
+  Future<Iterable<User>> getFollowedsById(int id, {int? lastValue}) async {
     String endPoint = "$userController/$getFollowedsByIdEndPoint/$id";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
     
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getRequesters({int? lastId}) async {
+  Future<Iterable<User>> getRequesters({int? lastValue}) async {
     String endPoint = "$userController/$getRequestersEndPoint";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
     
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getRequesteds({int? lastId}) async {
+  Future<Iterable<User>> getRequesteds({int? lastValue}) async {
     String endPoint = "$userController/$getRequestedsEndPoint";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
 
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> search(String key, {int? lastId}) async {
+  Future<Iterable<User>> search(String key, {int? lastValue}) async {
     String endPoint = "$userController/$searchUserEndPoint/$key";
-    String url = lastId != null ? "$endPoint?lastId=$lastId" : endPoint;
+    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
 
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));

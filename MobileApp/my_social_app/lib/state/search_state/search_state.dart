@@ -9,5 +9,5 @@ class SearchState{
   
   SearchState search(String key, Iterable<int> u) => SearchState(key: key, users: users.init(u));
   SearchState nextPage(Iterable<int> u) => SearchState(key: key, users: users.nextPage(u));
-  SearchState clear() => const SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null));
+  SearchState clear() => const SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null));
 }

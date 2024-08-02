@@ -63,10 +63,10 @@ class User{
         isFollowed: isFollowed,
         isRequester: isRequester,
         isRequested: isRequested,
-        followers: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
-        followeds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
-        requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
-        requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
-        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastId: null),
+        followers: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
+        followeds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
+        requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
+        requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
+        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
       );
 }

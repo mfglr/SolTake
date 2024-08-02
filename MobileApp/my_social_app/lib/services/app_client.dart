@@ -67,7 +67,9 @@ class AppClient{
   Future<dynamic> get(String url) async {
     final Request request = Request("GET", generateUri(url));
     final response = await send(request);
-    return jsonDecode(utf8.decode(await response.stream.toBytes()));
+    var decode = utf8.decode(await response.stream.toBytes());
+    if(decode == '') return null;
+    return jsonDecode(decode);
   }
 
   Future<Uint8List> getBytes(String url) async {
@@ -89,11 +91,11 @@ class AppClient{
     await _sendJsonContent(request);
   }
 
-  String generatePaginationUrl(String url, dynamic lastId,int? take){
-    if(lastId == null && take == null){ return url; }
-    else if(lastId == null && take != null){ return "$url?take=$take"; }
-    else if(lastId != null && take == null){ return "$url?lastId=$lastId"; }
-    else { return "$url?lastId=$lastId&take=$take"; }
+  String generatePaginationUrl(String url,dynamic lastValue,int? take){
+    if(lastValue == null && take == null){ return url; }
+    else if(lastValue == null && take != null){ return "$url?take=$take"; }
+    else if(lastValue != null && take == null){ return "$url?lastValue=$lastValue"; }
+    else { return "$url?lastValue=$lastValue&take=$take"; }
   }
   
 }

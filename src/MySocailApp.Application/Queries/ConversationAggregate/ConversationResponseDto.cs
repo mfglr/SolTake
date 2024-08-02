@@ -10,7 +10,6 @@ namespace MySocailApp.Application.Queries.ConversationAggregate
         public string? Name { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
-        public DateTime LastMessageCreatedAt { get; private set; }
         public List<MessageResponseDto> Messages { get; private set; }
 
         private ConversationResponseDto() { }

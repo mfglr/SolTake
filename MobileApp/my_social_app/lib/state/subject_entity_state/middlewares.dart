@@ -15,7 +15,7 @@ void nextPageOfSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispa
     final subject = store.state.subjectEntityState.entities[action.subjectId]!;
     if(!subject.questions.isLast){
       QuestionService()
-        .getBySubjectId(action.subjectId,lastId: subject.questions.lastId)
+        .getBySubjectId(action.subjectId,lastValue: subject.questions.lastValue)
         .then((questions){
           store.dispatch(
             AddQuestionsAction(

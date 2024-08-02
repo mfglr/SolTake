@@ -68,7 +68,7 @@ void nextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatche
     final replies = store.state.commentEntityState.entities[action.commentId]!.replies;
     if(!replies.isLast){
       CommentService()
-        .getByParentId(action.commentId,replies.lastId, repliesPerPage)
+        .getByParentId(action.commentId,replies.lastValue, repliesPerPage)
         .then((replies){
           store.dispatch(
             AddCommentsAction(

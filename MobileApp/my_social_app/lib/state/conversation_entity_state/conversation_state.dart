@@ -2,12 +2,11 @@ import 'package:my_social_app/state/ids.dart';
 
 class ConversationState{
   final int id;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final int userId;
   final String userName;
   final String? name;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final DateTime lastMessageCreatedAt;
   final Ids messages;
 
   const ConversationState({
@@ -17,11 +16,10 @@ class ConversationState{
     required this.name,
     required this.createdAt,
     required this.updatedAt,
-    required this.lastMessageCreatedAt,
     required this.messages
   });
 
-  ConversationState reveiveMessage(int id, DateTime date)
+  ConversationState reveiveMessage(int messageId)
     => ConversationState(
         id: id,
         userId: userId,
@@ -29,8 +27,7 @@ class ConversationState{
         userName: userName,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        lastMessageCreatedAt: date,
-        messages: messages.prependOne(id)
+        messages: messages.prependOne(messageId)
       );
 
   ConversationState appendMessages(Iterable<int> ids)
@@ -41,7 +38,6 @@ class ConversationState{
         userName: userName,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        lastMessageCreatedAt: lastMessageCreatedAt,
         messages: messages.appendMany(ids)
       );
   
@@ -53,7 +49,6 @@ class ConversationState{
         userName: userName,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        lastMessageCreatedAt: lastMessageCreatedAt,
         messages: messages.nextPage(ids)
       );
 }

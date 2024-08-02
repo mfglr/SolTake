@@ -12,7 +12,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessagesByConversa
 
         public async Task<List<MessageResponseDto>> Handle(GetMessagesByConversationIdDto request, CancellationToken cancellationToken)
         {
-            var messages = await _messageRepository.GetByConversationId(request.ConversationId, request.LasId, request.Take, cancellationToken);
+            var messages = await _messageRepository.GetByConversationId(request.ConversationId, request.LastValue, request.Take, cancellationToken);
             return _mapper.Map<List<MessageResponseDto>>(messages);
         }
     }

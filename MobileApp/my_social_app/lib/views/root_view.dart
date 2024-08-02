@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/connect_message_hub.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
+import 'package:my_social_app/state/message_home_page_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
@@ -38,46 +39,55 @@ class _RootViewState extends State<RootView> {
             converter: (store) => store.state.userEntityState.entities[accountState.id],
             builder: (context,userState){
               if(userState != null){
-                return Scaffold(
-                  bottomNavigationBar: NavigationBar(
-                    onDestinationSelected: (index) => {
-                      setState(() {
-                        currentPageIndex = index;
-                      })
-                    },
-                    selectedIndex: currentPageIndex,
-                    destinations: const [
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.home),
-                        icon: Icon(Icons.home_outlined),
-                        label: '',
-                      ),
+                return StoreConnector<AppState,bool>(
+                  onInit: (store) => store.dispatch(const SynchronizeHomePageAction()),
+                  converter: (store) => store.state.messageHomePageState.isSynchronized,
+                  builder:(context,isSynchronized){
+                    if(isSynchronized){
+                      return Scaffold(
+                        bottomNavigationBar: NavigationBar(
+                          onDestinationSelected: (index) => {
+                            setState(() {
+                              currentPageIndex = index;
+                            })
+                          },
+                          selectedIndex: currentPageIndex,
+                          destinations: const [
+                            NavigationDestination(
+                              selectedIcon: Icon(Icons.home),
+                              icon: Icon(Icons.home_outlined),
+                              label: '',
+                            ),
+                            
+                            NavigationDestination(
+                              selectedIcon: Icon(Icons.search),
+                              icon: Icon(Icons.search_outlined),
+                              label: '',
+                            ),
                       
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.search),
-                        icon: Icon(Icons.search_outlined),
-                        label: '',
-                      ),
-
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.message),
-                        icon: Icon(Icons.message_outlined), 
-                        label: ''
-                      ),
-
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.person),
-                        icon: Icon(Icons.person_outline),
-                        label: '',
-                      ),
-                    ],
-                  ),
-                  body: [
-                    const HomePage(),
-                    const SearchPage(),
-                    const MessageHomePage(),
-                    UserPage(userId: userState.id,userName: null,)
-                  ][currentPageIndex]
+                            NavigationDestination(
+                              selectedIcon: Icon(Icons.message),
+                              icon: Icon(Icons.message_outlined), 
+                              label: ''
+                            ),
+                      
+                            NavigationDestination(
+                              selectedIcon: Icon(Icons.person),
+                              icon: Icon(Icons.person_outline),
+                              label: '',
+                            ),
+                          ],
+                        ),
+                        body: [
+                          const HomePage(),
+                          const SearchPage(),
+                          const MessageHomePage(),
+                          UserPage(userId: userState.id,userName: null,)
+                        ][currentPageIndex]
+                      );
+                    }
+                    return const LoadingView();
+                  }
                 );
               }
               return const LoadingView();

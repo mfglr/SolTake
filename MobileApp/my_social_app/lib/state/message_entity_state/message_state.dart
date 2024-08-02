@@ -2,7 +2,6 @@ class MessageState{
   final int id;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final bool isOwner;
   final bool isEdited;
   final int conversationId;
   final int ownerId;
@@ -14,7 +13,6 @@ class MessageState{
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.isOwner,
     required this.isEdited,
     required this.conversationId,
     required this.ownerId,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/conversation_entity_state/conversation_entity_state.dart';
 import 'package:my_social_app/state/conversation_entity_state/conversation_state.dart';
-import 'package:my_social_app/state/conversation_message_entity_state/conversation_message_entity_state.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
@@ -13,6 +12,7 @@ import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/message_home_page_state/message_home_page_state.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
@@ -59,7 +59,7 @@ class AppState{
   final NotificationEntityState notificationEntityState;
   final MessageEntityState messageEntityState;
   final ConversationEntityState conversationEntityState;
-  final ConversationMessageEntityState conversationMessageEntityState;
+  final MessageHomePageState messageHomePageState;
 
   const AppState({
     required this.accessToken,
@@ -84,7 +84,7 @@ class AppState{
     required this.notificationEntityState,
     required this.messageEntityState,
     required this.conversationEntityState,
-    required this.conversationMessageEntityState
+    required this.messageHomePageState
   });
 
   UserState? get currentUser => userEntityState.entities[accountState!.id];
@@ -127,14 +127,19 @@ class AppState{
   Iterable<CommentState> getCommentReplies(int commentId)
     => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
 
+  //Select conversations
+  Iterable<ConversationState> get selectMessgeHomePageConversations =>
+    messageHomePageState.ids.map((e) => conversationEntityState.entities[e]!);
+  //Select conversations
+
   //select messages
-  Iterable<ConversationState> get conversations => conversationEntityState.entities.values;
-  Iterable<MessageState>? getConversationMessages(int? conversationId)
-    => conversationEntityState.entities[conversationId]?.messages.ids.map((e) => messageEntityState.entities[e]!);
+  Iterable<MessageState> getConversationMessages(int conversationId)
+    => conversationEntityState.entities[conversationId]!.messages.ids.map((e) => messageEntityState.entities[e]!).toList().reversed;
   MessageState? getConversationLastMessage(int conversationId)
     => messageEntityState.entities[conversationEntityState.entities[conversationId]!.messages.ids.firstOrNull];
   int getNumberOfUnviewedMessagesOfConversation(int conversationId)
     => messageEntityState.entities.values.where(
         (x) => x.conversationId == conversationId && x.state != MessageStatus.viewed && x.ownerId != accountState!.id
       ).length;
+  //select messages
 }

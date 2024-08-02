@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId
 
         public async Task<List<QuestionResponseDto>> Handle(GetQuestionsByExamIdDto request, CancellationToken cancellationToken)
         {
-            var questions = await _repository.GetByExamIdAsync(request.ExamId,request.LastId,cancellationToken);
+            var questions = await _repository.GetByExamIdAsync(request.ExamId,request.LastValue, cancellationToken);
             return _mapper.Map<List<QuestionResponseDto>>(questions);
         }
     }
