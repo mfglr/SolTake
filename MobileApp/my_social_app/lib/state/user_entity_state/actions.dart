@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
@@ -109,12 +110,6 @@ class NextPageOfUserQuestionsIfNoQuestionsAction extends redux.Action{
 }
 
 @immutable
-class AddUserMessageAction extends redux.Action{
-  final int userId;
-  final int messageId;
-  const AddUserMessageAction({required this.userId, required this.messageId});
-}
-@immutable
 class NextPageUserMessagesAction extends redux.Action{
   final int userId;
   const NextPageUserMessagesAction({required this.userId});
@@ -122,8 +117,8 @@ class NextPageUserMessagesAction extends redux.Action{
 @immutable
 class NextPageUserMessagesSuccessAction extends redux.Action{
   final int userId;
-  final Iterable<int> messageIds;
-  const NextPageUserMessagesSuccessAction({required this.userId, required this.messageIds});
+  final Iterable<Message> messages;
+  const NextPageUserMessagesSuccessAction({required this.userId, required this.messages});
 }
 @immutable
 class NextPageUserMessagesIfNoMessagesAction extends redux.Action{

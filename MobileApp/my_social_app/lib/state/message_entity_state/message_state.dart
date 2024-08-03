@@ -1,3 +1,5 @@
+import 'package:my_social_app/state/message_entity_state/message_stataus.dart';
+
 class MessageState{
   final int id;
   final DateTime createdAt;
@@ -20,4 +22,30 @@ class MessageState{
     required this.state,
     required this.images
   });
+
+  MessageState addReceiver()
+    => MessageState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        isEdited: isEdited,
+        senderId: senderId,
+        receiverId: receiverId,
+        content: content,
+        state: state != MessageStatus.viewed ? MessageStatus.received : state,
+        images: images
+      );
+      
+  MessageState addViewer()
+    => MessageState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        isEdited: isEdited,
+        senderId: senderId,
+        receiverId: receiverId,
+        content: content,
+        state: MessageStatus.viewed,
+        images: images
+      );
 }

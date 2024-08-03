@@ -1,29 +1,24 @@
-import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/models/user.dart';
 
 class MessageHomePageState{
-  final Ids users;
+  final bool isLastConversations;
   final bool isSynchronized;
   
   const MessageHomePageState({
-    required this.users,
+    required this.isLastConversations,
     required this.isSynchronized
   });
 
-  MessageHomePageState addNewMessageSenders(Iterable<int> userIds)
+  MessageHomePageState addNewMessageSenders()
     => MessageHomePageState(
-        users: users.prependMany(userIds),
+        isLastConversations: isLastConversations,
         isSynchronized: true
       );
 
-  MessageHomePageState nextPage(Iterable<int> userIds)
+  MessageHomePageState nextPage(Iterable<User> users)
     => MessageHomePageState(
-        users: users.nextPage(userIds),
-        isSynchronized: isSynchronized
-      );
-  
-  MessageHomePageState prependOneAndRemovePrev(int userId)
-    => MessageHomePageState(
-        users: users.prependOneAndRemovePrev(userId),
+        isLastConversations: users.length < conversationsPerPage,
         isSynchronized: isSynchronized
       );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/create_message_state/actions.dart';
+import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
@@ -18,6 +19,7 @@ class ConversationItem extends StatelessWidget {
         onPressed: (){
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(user: user)));
           store.dispatch(ChangeReceiverIdAction(receiverId: user.id));
+          store.dispatch(AddViewerToMessagesReceivedAction(userId: user.id));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +34,7 @@ class ConversationItem extends StatelessWidget {
               nameFontWeight: FontWeight.normal
             ),
             StoreConnector<AppState,int>(
-              converter: (store) => store.state.getNumberOfUnviewedMessagesOfConversation(user.id),
+              converter: (store) => store.state.messageEntityState.getNumberOfUnviewedMessagesOfUser(user.id),
               builder: (context,count){
                 if(count > 0){
                   return Text(count.toString());

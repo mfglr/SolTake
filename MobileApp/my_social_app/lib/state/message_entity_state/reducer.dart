@@ -9,8 +9,16 @@ MessageEntityState addMessagesReducer(MessageEntityState prev,AddMessagesAction 
 MessageEntityState addMessagesListsReducer(MessageEntityState prev,AddMessagesListsAction action)
   => prev.addLists(action.lists);
 
+MessageEntityState addReceiverToMessagesSuccessReducer(MessageEntityState prev,AddReceiverToMessagesSuccessAction action)
+  => prev.addReceiverToMessages(action.messageIds, action.receiverId);
+
+MessageEntityState addViewerToMessagesSuccessReducer(MessageEntityState prev,AddViewerToMessagesSuccessAction action)
+  => prev.addViewerToMessages(action.messageIds, action.viewerId);
+
 Reducer<MessageEntityState> messageEntityStateReducers = combineReducers<MessageEntityState>([
   TypedReducer<MessageEntityState,AddMessageAction>(addMessageReducer).call,
   TypedReducer<MessageEntityState,AddMessagesAction>(addMessagesReducer).call,
   TypedReducer<MessageEntityState,AddMessagesListsAction>(addMessagesListsReducer).call,
+  TypedReducer<MessageEntityState,AddReceiverToMessagesSuccessAction>(addReceiverToMessagesSuccessReducer).call,
+  TypedReducer<MessageEntityState,AddViewerToMessagesSuccessAction>(addViewerToMessagesSuccessReducer).call,
 ]);

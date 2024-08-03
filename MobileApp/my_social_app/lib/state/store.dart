@@ -2,6 +2,7 @@ import 'package:my_social_app/state/account_state/middlewares.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/create_message_state/create_message_state.dart';
+import 'package:my_social_app/state/create_message_state/middlewares.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/create_question_state/middleware.dart';
 import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
@@ -12,6 +13,7 @@ import 'package:my_social_app/state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/home_page_state/middlewares.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/message_entity_state/message_entity_state.dart';
+import 'package:my_social_app/state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/message_home_page_state/message_home_page_state.dart';
 import 'package:my_social_app/state/message_home_page_state/middlewares.dart';
 import 'package:my_social_app/state/middlewares.dart';
@@ -65,7 +67,7 @@ final store = Store(
     createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
     notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
     messageEntityState: MessageEntityState(entities: {}),
-    messageHomePageState: MessageHomePageState(users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null), isSynchronized: false),
+    messageHomePageState: MessageHomePageState(isLastConversations: false, isSynchronized: false),
     createMessageState: CreateMessageState(content: null, images: [], receiverId: null)
   ),
   middleware: [
@@ -170,6 +172,13 @@ final store = Store(
     nextPageConversationsIfNoConversationsMiddleware,
     //conversations end
 
+    //message
+    addReceiverToMessagesReceivedMiddleware,
+    addViewerToMessagesReceivedMiddleware,
+    createMessageWithImagesMiddleware,
+    createMessageMiddleware,
+    
     getNewMessageSendersMiddleware,
+
   ]
 );

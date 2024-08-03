@@ -13,6 +13,8 @@ class Ids{
     required this.isLast,
     required this.lastValue
   });
+
+  bool get isEmpty => lastValue == null;
  
   Ids init(Iterable<int> ids)
     => Ids(
@@ -59,7 +61,7 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: [id, ...ids],
       isLast: isLast, 
-      lastValue: ids.isEmpty ? id : lastValue
+      lastValue: lastValue ?? id
     );
 
   Ids prependOneAndRemovePrev(int id)

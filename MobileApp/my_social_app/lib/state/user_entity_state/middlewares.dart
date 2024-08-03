@@ -246,15 +246,15 @@ void nextPageOfUserQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action
 
 void nextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageUserMessagesAction){
-    final messages = store.state.userEntityState.entities[action.userId]!.messages;
-    if(!messages.isLast){
+    if(!store.state.userEntityState.entities[action.userId]!.isLastMessages){
+      final lastValue = store.state.messageEntityState.selectLastMessageId(action.userId);
       MessageService()
-        .getMessagesByUserId(action.userId, messages.lastValue, messagesPerPage)
+        .getMessagesByUserId(action.userId, lastValue, messagesPerPage)
         .then((messages){
           store.dispatch(
             NextPageUserMessagesSuccessAction(
               userId: action.userId,
-              messageIds: messages.map((e) => e.id)
+              messages: messages
             )
           );
           store.dispatch(
@@ -269,8 +269,8 @@ void nextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher 
 }
 void nextPageUserMessageIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageUserMessagesIfNoMessagesAction){
-    final messages = store.state.userEntityState.entities[action.userId]!.messages;
-    if(messages.ids.length < messagesPerPage){
+    final count = store.state.messageEntityState.selectNumberUserMessages(action.userId);
+    if(count < messagesPerPage){
       store.dispatch(NextPageUserMessagesAction(userId: action.userId));
     }
   }

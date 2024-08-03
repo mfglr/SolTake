@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 
 @immutable
+class CreateMessageWithImagesAction extends redux.Action{
+  const CreateMessageWithImagesAction();
+}
+@immutable
 class CreateMessageAction extends redux.Action{
   const CreateMessageAction();
 }

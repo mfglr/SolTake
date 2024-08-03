@@ -29,6 +29,7 @@ namespace MySocailApp.Application.Hubs
 
         public async Task AddReceiverToMessage(AddReceiverToMessageDto request)
             => await _mediator.Send(request);
+
         public async Task AddReceiverToMessages(AddReceiverToMessagesDto request)
             => await _mediator.Send(request);
 

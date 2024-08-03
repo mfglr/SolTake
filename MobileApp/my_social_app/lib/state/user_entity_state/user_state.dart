@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/user_entity_state/gender.dart';
@@ -27,7 +28,7 @@ class UserState{
   final Ids requesters;
   final Ids requesteds;
   final Ids questions;
-  final Ids messages;
+  final bool isLastMessages;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -59,7 +60,7 @@ class UserState{
     required this.requesters,
     required this.requesteds,
     required this.questions,
-    required this.messages
+    required this.isLastMessages
   });
 
   UserState _optional({
@@ -83,7 +84,7 @@ class UserState{
     Ids? newRequesters,
     Ids? newRequesteds,
     Ids? newQuestions,
-    Ids? newMessages,
+    bool? newIsLastMessages,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -105,7 +106,7 @@ class UserState{
     requesters: newRequesters ?? requesters,
     requesteds: newRequesteds ?? requesteds,
     questions: newQuestions ?? questions,
-    messages: newMessages ?? messages
+    isLastMessages: newIsLastMessages ?? isLastMessages
   );
 
   UserState nexPageFollowers(Iterable<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
@@ -182,8 +183,7 @@ class UserState{
     newQuestions: questions.prependOne(id)
   );
 
-  //messages
-  UserState addMessage(int id) => _optional(
-    newMessages: messages.prependOne(id)
-  );
+  UserState nextPageMessages(numberOfMessages)
+    => _optional( newIsLastMessages: numberOfMessages < messagesPerPage );
+  
 }

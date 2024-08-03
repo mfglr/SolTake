@@ -10,11 +10,10 @@ class MessageField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          onPressed: (){
-          },
+        TextButton(
+          onPressed: (){},
           style: const ButtonStyle(shape: WidgetStatePropertyAll(CircleBorder())),
-          icon: const Icon(Icons.camera_alt)
+          child: const Icon(Icons.camera_alt)
         ),
         Expanded(
           child: TextField(
@@ -26,9 +25,9 @@ class MessageField extends StatelessWidget {
             onChanged: (value) => store.dispatch(ChangeMessageContentAction(content: value)),
           ),
         ),
-        IconButton(
-          onPressed: () => store.dispatch(),
-          icon: const Icon(Icons.send)
+        TextButton(
+          onPressed: () => store.dispatch(const CreateMessageAction()),
+          child: const Icon(Icons.send)
         )
       ],
     );

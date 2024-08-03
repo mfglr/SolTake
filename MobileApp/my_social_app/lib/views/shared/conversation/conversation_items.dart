@@ -11,10 +11,7 @@ class ConversationItems extends StatelessWidget {
     return Column(
       children: List.generate(
         users.length,
-        (index) => Container(
-          margin: const EdgeInsets.only(bottom: 15),
-          child: ConversationItem(user: users.elementAt(index)),
-        )
+        (index) => ConversationItem(user: users.elementAt(index))
       )
     );
   }

@@ -45,7 +45,7 @@ class ConversationPage extends StatelessWidget {
         children: [
           StoreConnector<AppState,Iterable<MessageState>>(
             onInit: (store) => store.dispatch(NextPageUserMessagesIfNoMessagesAction(userId: user.id)),
-            converter: (store) => store.state.selectUserMessages(user.id),
+            converter: (store) => store.state.messageEntityState.selectUserMessages(user.id),
             builder: (context,messages) => Expanded(
               child: SingleChildScrollView(
                 child: MessageItems(messages: messages)

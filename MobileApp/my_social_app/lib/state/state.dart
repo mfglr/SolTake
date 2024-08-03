@@ -28,6 +28,7 @@ import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_entity_state.dart';
+import "package:collection/collection.dart";
 
 enum ActiveLoginPage{
   loginPage,
@@ -86,9 +87,45 @@ class AppState{
     required this.createMessageState,
   });
 
+  //select conversations
+  Iterable<UserState> selectConversations(){
+    final accountId = accountState!.id;
+    getUserId(MessageState x) => x.senderId == accountId ? x.receiverId : x.senderId;
+
+    return groupBy(messageEntityState.entities.values,getUserId)
+      .values
+      .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last)
+      .sorted((x,y) => y.id.compareTo(x.id))
+      .map(getUserId)
+      .map((e) => userEntityState.entities[e]!);
+  }
+  int? selectLastConversationId(){
+    final accountId = accountState!.id;
+    getUserId(MessageState x) => x.senderId == accountId ? x.receiverId : x.senderId;
+
+    final list = groupBy(messageEntityState.entities.values,getUserId)
+      .values
+      .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last.id)
+      .sorted((x,y) => y.compareTo(x));
+    return list.isNotEmpty ? list.last : null;
+  }
+  int selectNumberOfConversation(){
+    final accountId = accountState!.id;
+    getUserId(MessageState x) => x.senderId == accountId ? x.receiverId : x.senderId;
+
+    return groupBy(messageEntityState.entities.values,getUserId).length;
+  }
+  //select conversations
+
+  //select messages
+  Iterable<int> get selectIdsOfCreatedMessagesExceptCurrentUser
+    => messageEntityState.entities.values
+        .where((e) => e.state == MessageStatus.created && e.senderId != accountState!.id)
+        .map((e) => e.id);
+  //select messages
+
   UserState? get currentUser => userEntityState.entities[accountState!.id];
   Iterable<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.entities[e]!);
-  
   //Select Questions
   Iterable<QuestionState> getUserQuestions(int userId)
     => userEntityState.entities[userId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
@@ -123,17 +160,4 @@ class AppState{
     => solutionEntityState.entities[solutionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> getCommentReplies(int commentId)
     => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
-
-  //select messages
-  Iterable<MessageState> selectUserMessages(int userId)
-    => userEntityState.entities[userId]!.messages.ids.map((e) => messageEntityState.entities[e]!);
-  int getNumberOfUnviewedMessagesOfConversation(int userId)
-    => messageEntityState.entities.values.where(
-        (x) => x.senderId == userId && x.receiverId == accountState!.id && x.state != MessageStatus.viewed
-      ).length;
-  //select messages
-
-  //select users
-  Iterable<UserState> get selectConversations => messageHomePageState.users.ids.map((e) => userEntityState.entities[e]!);
-  //select users
 }

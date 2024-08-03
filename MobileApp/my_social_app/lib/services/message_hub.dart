@@ -16,12 +16,25 @@ class MessageHub{
   static final MessageHub _singleton = MessageHub._();
   factory MessageHub() => _singleton;
   
-  Future<Message> createMessage(int receiverId,String? content){
-    return _hubConnection
-      .invoke(
-        createMessageWebSocket, 
-        args: [(receiverId: receiverId,content: content)]
-      )
-      .then((response) => Message.fromJson(response as dynamic));
-  }
+  Future<Message> createMessage(int receiverId,String content)
+    => _hubConnection
+        .invoke(
+          createMessageWebSocket, 
+          args: [{'receiverId': receiverId,'content': content}]
+        )
+        .then((response) => Message.fromJson(response as dynamic));
+
+  Future<void> addReceiverToMessages(Iterable<int> ids)
+    => _hubConnection
+        .invoke(
+          addReceiverToMessagesWebSocket,
+          args: [{'ids': ids.toList()}]
+        );
+
+  Future<void> addViewerToMessages(Iterable<int> ids)
+    => _hubConnection
+        .invoke(
+          addViewerToMessagesWebSocket,
+          args: [{'ids': ids.toList()}]
+        );
 }

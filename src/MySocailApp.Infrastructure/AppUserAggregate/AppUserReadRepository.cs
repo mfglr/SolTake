@@ -124,12 +124,38 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
+                .Include(x => x.Messages.OrderByDescending(x => x.Id).Take(1))
+                .Include(x => x.MessagesReceived.OrderByDescending(x => x.Id).Take(1))
                 .Where(
-                    x => 
+                    x =>
                         x.Messages.Any(x => x.ReceiverId == userId) ||
                         x.MessagesReceived.Any(x => x.SenderId == userId)
                 )
-                .ToPage(lastId,take)
+                .Select(
+                    x => new
+                    {
+                        User = x,
+                        LastMessageReceived = x.Messages.Where(x => x.ReceiverId == userId).OrderBy(x => x.Id).LastOrDefault(),
+                        LastMessageSent = x.MessagesReceived.Where(x => x.SenderId == userId).OrderBy(x => x.Id).LastOrDefault()
+                    }
+                )
+                .Select(
+                    x => new {
+                        x.User,
+                        LastMessageId =
+                            x.LastMessageReceived == null ?
+                                x.LastMessageSent!.Id :
+                                x.LastMessageSent == null ?
+                                    x.LastMessageReceived!.Id :
+                                    x.LastMessageReceived!.Id > x.LastMessageSent!.Id ?
+                                        x.LastMessageReceived!.Id :
+                                        x.LastMessageSent!.Id
+                    }
+                )
+                .Where(x => lastId == null || x.LastMessageId < lastId)
+                .OrderByDescending(x => x.LastMessageId)
+                .Take(take ?? 20)
+                .Select(x => x.User)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<AppUser>> GetNewMessagesSendersAsync(int receiverId,CancellationToken cancellationToken)

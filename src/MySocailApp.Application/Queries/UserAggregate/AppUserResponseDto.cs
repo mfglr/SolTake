@@ -22,6 +22,7 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public bool IsRequested { get; private set; }
         public int NumberOfUnviewedNotifications { get; private set; }
         public IReadOnlyCollection<MessageResponseDto> Messages { get; private set; }
+        public IReadOnlyCollection<MessageResponseDto> MessagesReceived { get; private set; }
 
         private AppUserResponseDto() { }
     }

@@ -74,11 +74,6 @@ class User{
         requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
-        messages: Ids(
-          recordsPerPage: 20,
-          ids: messages.map((e) => e.id),
-          isLast: false,
-          lastValue:  messages.isNotEmpty ? messages.last.id : null
-        )
+        isLastMessages: false,
       );
 }
