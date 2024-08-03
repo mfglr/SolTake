@@ -35,7 +35,7 @@ class Ids{
       recordsPerPage: recordsPerPage,
       ids: [...ids,...this.ids],
       isLast: isLast,
-      lastValue: lastValue
+      lastValue: this.ids.isEmpty && ids.isNotEmpty ? ids.last : lastValue
     );
 
   Ids nextPage(Iterable<int> ids)

@@ -1,7 +1,6 @@
 import 'package:my_social_app/constants/message_functions.dart';
 import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/services/message_hub.dart';
-import 'package:my_social_app/state/conversation_entity_state/action.dart';
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:redux/redux.dart';
@@ -19,12 +18,6 @@ void connectMessageHub(Store<AppState> store){
       store.dispatch(
         AddMessageAction(
           message: message.toMessageState()
-        )
-      );
-      store.dispatch(
-        AddConversationMessageAction(
-          conversationId: message.conversationId,
-          messageId: message.id
         )
       );
     }

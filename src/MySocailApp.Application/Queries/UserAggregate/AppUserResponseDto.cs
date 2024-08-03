@@ -1,4 +1,5 @@
-﻿using MySocailApp.Domain.AppUserAggregate.ValueObjects;
+﻿using MySocailApp.Application.Queries.MessageAggregate;
+using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.UserAggregate
 {
@@ -20,6 +21,7 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public bool IsRequester { get; private set; }
         public bool IsRequested { get; private set; }
         public int NumberOfUnviewedNotifications { get; private set; }
+        public IReadOnlyCollection<MessageResponseDto> Messages { get; private set; }
 
         private AppUserResponseDto() { }
     }

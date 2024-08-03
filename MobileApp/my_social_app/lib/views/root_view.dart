@@ -40,7 +40,7 @@ class _RootViewState extends State<RootView> {
             builder: (context,userState){
               if(userState != null){
                 return StoreConnector<AppState,bool>(
-                  onInit: (store) => store.dispatch(const SynchronizeHomePageAction()),
+                  onInit: (store) => store.dispatch(const GetNewMessageSendersAction()),
                   converter: (store) => store.state.messageHomePageState.isSynchronized,
                   builder:(context,isSynchronized){
                     if(isSynchronized){

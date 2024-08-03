@@ -1,54 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/conversation_entity_state/conversation_state.dart';
-import 'package:my_social_app/state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/create_message_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/pages/message/conversation_page.dart';
-import 'package:my_social_app/views/shared/user/user_image_widget.dart';
+import 'package:my_social_app/views/shared/user/user_image_with_names_widget.dart';
 
 class ConversationItem extends StatelessWidget {
-  final ConversationState conversation;
-  const ConversationItem({super.key,required this.conversation});
+  final UserState user;
+  const ConversationItem({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: TextButton(
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(userId: conversation.userId))),
+        onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(user: user)));
+          store.dispatch(ChangeReceiverIdAction(receiverId: user.id));
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 5),
-                  child: UserImageWidget(userId: conversation.userId, diameter: 50)
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      conversation.userName,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    StoreConnector<AppState,MessageState?>(
-                      converter: (store) => store.state.getConversationLastMessage(conversation.id),
-                      builder: (context,message){
-                        if(message != null){
-                          return Text(
-                            message.content ?? "",
-                            style: const TextStyle(fontSize: 12),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      }, 
-                    )
-                  ],
-                )
-              ],
+            UserImageWithNamesWidget(
+              user: user,
+              diameter: 50,
+              marginRight: 5,
+              userNameFontSize: 14,
+              nameFontSize: 12,
+              userNameFontWeight: FontWeight.bold,
+              nameFontWeight: FontWeight.normal
             ),
             StoreConnector<AppState,int>(
-              converter: (store) => store.state.getNumberOfUnviewedMessagesOfConversation(conversation.id),
+              converter: (store) => store.state.getNumberOfUnviewedMessagesOfConversation(user.id),
               builder: (context,count){
                 if(count > 0){
                   return Text(count.toString());

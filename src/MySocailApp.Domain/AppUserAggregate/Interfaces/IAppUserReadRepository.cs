@@ -12,5 +12,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Interfaces
         Task<List<AppUser>> GetFollowedsByIdAsync(int id, int? lastId, CancellationToken cancellationToken);
         Task<List<AppUser>> GetRequestersByIdAsync(int id, int? lastId, CancellationToken cancellationToken);
         Task<List<AppUser>> GetRequestedsByIdAsync(int id, int? lastId, CancellationToken cancellationToken);
+        Task<List<AppUser>> GetConversationsAsync(int userId,int? lastId, int? take, CancellationToken cancellationToken);
+        Task<List<AppUser>> GetNewMessagesSendersAsync(int receiverId, CancellationToken cancellationToken);
     }
 }

@@ -3,8 +3,8 @@ class MessageState{
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isEdited;
-  final int conversationId;
-  final int ownerId;
+  final int senderId;
+  final int receiverId;
   final String? content;
   final int state;
   final Iterable<int> images;
@@ -14,8 +14,8 @@ class MessageState{
     required this.createdAt,
     required this.updatedAt,
     required this.isEdited,
-    required this.conversationId,
-    required this.ownerId,
+    required this.senderId,
+    required this.receiverId,
     required this.content,
     required this.state,
     required this.images

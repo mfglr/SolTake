@@ -119,5 +119,26 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .AsNoTracking()
                 .Where(x => userNames.Contains(x.Account.UserName))
                 .ToListAsync(cancellationToken);
+
+        public async Task<List<AppUser>> GetConversationsAsync(int userId,int? lastId,int? take,CancellationToken cancellationToken)
+            => await _context.AppUsers
+                .AsNoTracking()
+                .IncludeForUser()
+                .Where(
+                    x => 
+                        x.Messages.Any(x => x.ReceiverId == userId) ||
+                        x.MessagesReceived.Any(x => x.SenderId == userId)
+                )
+                .ToPage(lastId,take)
+                .ToListAsync(cancellationToken);
+
+        public async Task<List<AppUser>> GetNewMessagesSendersAsync(int receiverId,CancellationToken cancellationToken)
+            => await _context.AppUsers
+                .AsNoTracking()
+                .IncludeForUser()
+                .Include(x => x.Messages.Where(x => x.ReceiverId == receiverId && x.Viewers.Count == 0))
+                .ThenInclude(x => x.Receivers)
+                .Where(x => x.Messages.Any(x => x.ReceiverId == receiverId && x.Viewers.Count == 0))
+                .ToListAsync(cancellationToken);
     }
 }

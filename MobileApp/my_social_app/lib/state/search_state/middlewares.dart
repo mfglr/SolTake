@@ -13,8 +13,8 @@ void searchMiddleware(Store<AppState> store,action,NextDispatcher next){
       .search(action.key)
       .then((users){
         store.dispatch(
-          LoadUsersSuccessAction(
-            payload: users.map((e) => e.toUserState())
+          AddUsersAction(
+            users: users.map((e) => e.toUserState())
           )
         );
 
@@ -43,8 +43,8 @@ void nextPageSearchingMiddleware(Store<AppState> store,action,NextDispatcher nex
       .search(key,lastValue: lastId)
       .then((users){
         store.dispatch(
-          LoadUsersSuccessAction(
-            payload: users.map((e) => e.toUserState())
+          AddUsersAction(
+            users: users.map((e) => e.toUserState())
           )
         );
         

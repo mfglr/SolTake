@@ -18,13 +18,14 @@ namespace MySocailApp.Application.Hubs
     {
         private readonly IMediator _mediator = mediator;
 
-        public async Task<MessageResponseDto> CreateMessage(CreateMessageDto request)
-            => await _mediator.Send(request);
-
         public override async Task OnConnectedAsync()
             => await _mediator.Send(new ConnectMessageHubDto(Context.ConnectionId));
         public override async Task OnDisconnectedAsync(Exception? exception)
             => await _mediator.Send(new DisconnectMessageHubDto());
+
+        public async Task<MessageResponseDto> CreateMessage(CreateMessageDto request)
+            => await _mediator.Send(request);
+
 
         public async Task AddReceiverToMessage(AddReceiverToMessageDto request)
             => await _mediator.Send(request);

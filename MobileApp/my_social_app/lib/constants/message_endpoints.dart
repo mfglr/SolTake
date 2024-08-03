@@ -1,1 +1,3 @@
-const getMessagesByConversationIdEndpoint = "GetMessagesByConversationId";
+const getMessagesByUserIdEndpoint = "GetMessagesByUserId";
+const getConversationsEndpoint = "GetConversations";
+const getNewMessagesSendersEndpoint = "GetNewMessageSenders";

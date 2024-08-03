@@ -7,26 +7,29 @@ part of 'user.dart';
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-      (json['id'] as num).toInt(),
-      DateTime.parse(json['createdAt'] as String),
-      json['updatedAt'] == null
+      id: (json['id'] as num).toInt(),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      json['userName'] as String,
-      json['name'] as String?,
-      (json['gender'] as num).toInt(),
-      json['birthDate'] == null
+      userName: json['userName'] as String,
+      name: json['name'] as String?,
+      birthDate: json['birthDate'] == null
           ? null
           : DateTime.parse(json['birthDate'] as String),
-      (json['profileVisibility'] as num).toInt(),
-      (json['numberOfQuestions'] as num).toInt(),
-      (json['numberOfFollowers'] as num).toInt(),
-      (json['numberOfFolloweds'] as num).toInt(),
-      (json['numberOfUnviewedNotifications'] as num).toInt(),
-      json['isFollower'] as bool,
-      json['isFollowed'] as bool,
-      json['isRequester'] as bool,
-      json['isRequested'] as bool,
+      gender: (json['gender'] as num).toInt(),
+      profileVisibility: (json['profileVisibility'] as num).toInt(),
+      numberOfQuestions: (json['numberOfQuestions'] as num).toInt(),
+      numberOfFollowers: (json['numberOfFollowers'] as num).toInt(),
+      numberOfFolloweds: (json['numberOfFolloweds'] as num).toInt(),
+      numberOfUnviewedNotifications:
+          (json['numberOfUnviewedNotifications'] as num).toInt(),
+      isFollower: json['isFollower'] as bool,
+      isFollowed: json['isFollowed'] as bool,
+      isRequester: json['isRequester'] as bool,
+      isRequested: json['isRequested'] as bool,
+      messages: (json['messages'] as List<dynamic>)
+          .map((e) => Message.fromJson(e as Map<String, dynamic>)),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -46,4 +49,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'isFollowed': instance.isFollowed,
       'isRequester': instance.isRequester,
       'isRequested': instance.isRequested,
+      'messages': instance.messages.toList(),
     };

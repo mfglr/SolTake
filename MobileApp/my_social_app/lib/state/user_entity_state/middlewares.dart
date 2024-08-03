@@ -1,7 +1,10 @@
+import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -55,7 +58,6 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
   }
   next(action);
 }
-
 
 void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadFollowersIfNoUsersAction){
@@ -168,7 +170,6 @@ void makeFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher nex
   }
   next(action);
 }
-
 void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CancelFollowRequestAction){
     final currentUserId = store.state.accountState!.id;
@@ -238,6 +239,39 @@ void nextPageOfUserQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action
     final questions = store.state.userEntityState.entities[action.userId]!.questions;
     if(!questions.isLast && questions.ids.isEmpty){
       store.dispatch(NextPageOfUserQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+
+void nextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageUserMessagesAction){
+    final messages = store.state.userEntityState.entities[action.userId]!.messages;
+    if(!messages.isLast){
+      MessageService()
+        .getMessagesByUserId(action.userId, messages.lastValue, messagesPerPage)
+        .then((messages){
+          store.dispatch(
+            NextPageUserMessagesSuccessAction(
+              userId: action.userId,
+              messageIds: messages.map((e) => e.id)
+            )
+          );
+          store.dispatch(
+            AddMessagesAction(
+              messages: messages.map((e) => e.toMessageState())
+            )
+          );
+        });
+    }
+  }
+  next(action);
+}
+void nextPageUserMessageIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextPageUserMessagesIfNoMessagesAction){
+    final messages = store.state.userEntityState.entities[action.userId]!.messages;
+    if(messages.ids.length < messagesPerPage){
+      store.dispatch(NextPageUserMessagesAction(userId: action.userId));
     }
   }
   next(action);

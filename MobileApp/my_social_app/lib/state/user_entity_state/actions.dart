@@ -21,9 +21,9 @@ class LoadUserSuccessAction extends redux.Action{
 }
 
 @immutable
-class LoadUsersSuccessAction extends redux.Action{
-  final Iterable<UserState> payload;
-  const LoadUsersSuccessAction({required this.payload});
+class AddUsersAction extends redux.Action{
+  final Iterable<UserState> users;
+  const AddUsersAction({required this.users});
 }
 
 @immutable
@@ -106,4 +106,27 @@ class NextPageOfUserQuestionsSuccessAction extends redux.Action{
 class NextPageOfUserQuestionsIfNoQuestionsAction extends redux.Action{
   final int userId;
   const NextPageOfUserQuestionsIfNoQuestionsAction({required this.userId});
+}
+
+@immutable
+class AddUserMessageAction extends redux.Action{
+  final int userId;
+  final int messageId;
+  const AddUserMessageAction({required this.userId, required this.messageId});
+}
+@immutable
+class NextPageUserMessagesAction extends redux.Action{
+  final int userId;
+  const NextPageUserMessagesAction({required this.userId});
+}
+@immutable
+class NextPageUserMessagesSuccessAction extends redux.Action{
+  final int userId;
+  final Iterable<int> messageIds;
+  const NextPageUserMessagesSuccessAction({required this.userId, required this.messageIds});
+}
+@immutable
+class NextPageUserMessagesIfNoMessagesAction extends redux.Action{
+  final int userId;
+  const NextPageUserMessagesIfNoMessagesAction({required this.userId});
 }

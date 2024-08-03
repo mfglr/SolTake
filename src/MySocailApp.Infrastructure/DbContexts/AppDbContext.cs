@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.ConversationAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
@@ -28,7 +27,6 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<Comment> Comments { get; private set; }
         public DbSet<Notification> Notifications { get; private set; }
-        public DbSet<Conversation> Conversations { get; private set; }
         public DbSet<Message> Messages { get; private set; }
         public DbSet<UserConnection> UserConnections { get; private set; }
 

@@ -1,8 +1,7 @@
 import 'package:my_social_app/state/account_state/middlewares.dart';
-import 'package:my_social_app/state/conversation_entity_state/conversation_entity_state.dart';
-import 'package:my_social_app/state/conversation_entity_state/middlewares.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/create_comment_state/middlewares.dart';
+import 'package:my_social_app/state/create_message_state/create_message_state.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/create_question_state/middleware.dart';
 import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
@@ -66,8 +65,8 @@ final store = Store(
     createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
     notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
     messageEntityState: MessageEntityState(entities: {}),
-    conversationEntityState: ConversationEntityState(entities: {},isLast: false,lastDate: null),
-    messageHomePageState: MessageHomePageState(ids: [], isLast: false, lastValue: null, isSynchronized: false)
+    messageHomePageState: MessageHomePageState(users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null), isSynchronized: false),
+    createMessageState: CreateMessageState(content: null, images: [], receiverId: null)
   ),
   middleware: [
     //account start
@@ -89,6 +88,8 @@ final store = Store(
     cancelFollowRequestMiddleware,
     nextPageOfUserQuestionsMiddleware,
     nextPageOfUserQuestionsIfNoQuestionsMiddleware,
+    nextPageUserMessagesMiddleware,
+    nextPageUserMessageIfNoUsersMiddleware,
     //user end
 
     //user image start
@@ -165,13 +166,10 @@ final store = Store(
     //notifications end
 
     //conversations start
-    loadConversationByReceiverIdMiddleware,
     nextPageConversationsMiddleware,
     nextPageConversationsIfNoConversationsMiddleware,
-    nextPageConversationMessagesMiddleware,
-    nextPageConversationMessagesIfNoMessagesMiddleware,
     //conversations end
 
-    synchronizeHomePageMiddleware,
+    getNewMessageSendersMiddleware,
   ]
 );

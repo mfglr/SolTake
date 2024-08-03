@@ -27,6 +27,7 @@ class UserState{
   final Ids requesters;
   final Ids requesteds;
   final Ids questions;
+  final Ids messages;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -58,6 +59,7 @@ class UserState{
     required this.requesters,
     required this.requesteds,
     required this.questions,
+    required this.messages
   });
 
   UserState _optional({
@@ -81,6 +83,7 @@ class UserState{
     Ids? newRequesters,
     Ids? newRequesteds,
     Ids? newQuestions,
+    Ids? newMessages,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -102,9 +105,10 @@ class UserState{
     requesters: newRequesters ?? requesters,
     requesteds: newRequesteds ?? requesteds,
     questions: newQuestions ?? questions,
+    messages: newMessages ?? messages
   );
 
-  UserState loadFollowers(Iterable<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
+  UserState nexPageFollowers(Iterable<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
   UserState loadFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.nextPage(newFolloweds));
   UserState loadRequesters(Iterable<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
   UserState loadRequesteds(Iterable<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
@@ -176,5 +180,10 @@ class UserState{
   UserState addQuestion(int id) => _optional(
     newNumberOfQuestions: numberOfQuestions + 1,
     newQuestions: questions.prependOne(id)
+  );
+
+  //messages
+  UserState addMessage(int id) => _optional(
+    newMessages: messages.prependOne(id)
   );
 }

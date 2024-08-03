@@ -10,23 +10,17 @@ namespace MySocailApp.Infrastructure.MessageAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<List<Message>> GetByConversationId(int conversationId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Message>> GetMessagesByUserId(int userId1,int userId2,int? lastId,int? take,CancellationToken cancellationToken)
             => await _context.Messages
                 .AsNoTracking()
-                .Include(x => x.Conversation)
                 .Include(x => x.Receivers)
                 .Include(x => x.Viewers)
-                .Where(x => x.ConversationId == conversationId)
-                .ToPage(lastId, take)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<Message>> GetUnviewedMessagesByConversationId(int conversationId, CancellationToken cancellationToken)
-            => await _context.Messages
-                .AsNoTracking()
-                .Include(x => x.Conversation)
-                .Include(x => x.Receivers)
-                .Include(x => x.Viewers)
-                .Where(x => x.ConversationId == conversationId && x.Viewers.Count == 0)
+                .Where(
+                    x => 
+                        (x.ReceiverId == userId1 && x.SenderId == userId2) || 
+                        (x.SenderId == userId1 && x.ReceiverId == userId2)
+                )
+                .ToPage(lastId,take)
                 .ToListAsync(cancellationToken);
     }
 }

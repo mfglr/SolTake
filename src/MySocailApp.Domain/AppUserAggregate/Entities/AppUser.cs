@@ -4,7 +4,6 @@ using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.ConversationAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
@@ -277,6 +276,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; }
         public IReadOnlyCollection<Notification> Noitifications { get; }
         public IReadOnlyCollection<Message> Messages { get; }
-        public IReadOnlyCollection<ConversationUser> Conversations { get; }
+        public IReadOnlyCollection<Message> MessagesReceived { get; }
     }
 }

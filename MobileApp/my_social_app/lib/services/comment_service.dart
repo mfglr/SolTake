@@ -68,6 +68,4 @@ class CommentService{
     return list.map((e) => Comment.fromJson(e));
   }
 
-
-
 }

@@ -19,7 +19,7 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(
         entities: appendManyAndUpdateOne(
           users,
-          entities[userId]!.loadFollowers(users.map((e) => e.id))
+          entities[userId]!.nexPageFollowers(users.map((e) => e.id))
         )
       );
   UserEntityState addFolloweds(int userId, Iterable<UserState> users)
@@ -47,4 +47,7 @@ class UserEntityState extends EntityState<UserState>{
       entities[userId]!.removeRequester(currentId),
       entities[currentId]!.removeRequested(entities[userId]!.profileVisibility, userId)
     ]));
+
+  UserEntityState addUserMessage(int userId,int messageId)
+    => UserEntityState(entities: updateOne(entities[userId]!.addMessage(messageId)));
 }

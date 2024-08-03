@@ -96,14 +96,14 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasForeignKey(x => x.OwnerId);
 
             builder
-                .HasMany(x => x.Conversations)
-                .WithOne(x => x.AppUser)
-                .HasForeignKey(x => x.AppUserId);
+                .HasMany(x => x.Messages)
+                .WithOne(x => x.Sender)
+                .HasForeignKey(x => x.SenderId);
 
             builder
-                .HasMany(x => x.Messages)
-                .WithOne(x => x.Owner)
-                .HasForeignKey(x => x.OwnerId)
+                .HasMany(x => x.MessagesReceived)
+                .WithOne(x => x.Receiver)
+                .HasForeignKey(x => x.ReceiverId)
                 .OnDelete(DeleteBehavior.NoAction);
 
         }

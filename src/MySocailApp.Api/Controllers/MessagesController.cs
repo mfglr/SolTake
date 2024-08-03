@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
+using MySocailApp.Application.Commands.MessageAggregate.CreateMessage;
 using MySocailApp.Application.Queries.MessageAggregate;
-using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByConversationId;
-using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessagesByConversationId;
+using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
+using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId;
+using MySocailApp.Application.Queries.MessageAggregate.GetNewMessageSenders;
+using MySocailApp.Application.Queries.UserAggregate;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -18,13 +21,20 @@ namespace MySocailApp.Api.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
-        [HttpGet("{conversationId}")]
-        public async Task<List<MessageResponseDto>> GetMessagesByConversationId(int conversationId, [FromQuery]int? lastValue, [FromQuery]int? take,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetMessagesByConversationIdDto(conversationId, lastValue, take),cancellationToken);
+        [HttpPost]
+        public async Task<MessageResponseDto> CreateMessage([FromForm]int receiverId,[FromForm]string? content,[FromForm] IFormFileCollection images)
+            => await _mediator.Send(new CreateMessageDto(receiverId, content, images));
 
-        [HttpGet("{conversationId}")]
-        public async Task<List<MessageResponseDto>> GetUnviewedMessagesByConversationId(int conversationId, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetUnviewedMessagesByConversationIdDto(conversationId),cancellationToken);
+        [HttpGet("{userId}")]
+        public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId,[FromQuery]int? lastValue,[FromQuery]int? take,CancellationToken cancellationToken)
+            => await _mediator.Send(new GetMessagesByUserIdDto(userId,lastValue,take),cancellationToken);
 
+        [HttpGet]
+        public async Task<List<AppUserResponseDto>> GetConversations([FromQuery]int? lastValue, [FromQuery]int? take,CancellationToken cancellationToken)
+            => await _mediator.Send(new GetConversationsDto(lastValue, take),cancellationToken);
+
+        [HttpGet]
+        public async Task<List<AppUserResponseDto>> GetNewMessageSenders(CancellationToken cancellationToken)
+            => await _mediator.Send(new GetNewMessageSendersDto(), cancellationToken);
     }
 }

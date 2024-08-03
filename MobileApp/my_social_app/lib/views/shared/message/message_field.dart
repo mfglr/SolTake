@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/create_message_state/actions.dart';
+import 'package:my_social_app/state/store.dart';
 
 class MessageField extends StatelessWidget {
   final String userName;
@@ -9,7 +11,8 @@ class MessageField extends StatelessWidget {
     return Row(
       children: [
         IconButton(
-          onPressed: (){},
+          onPressed: (){
+          },
           style: const ButtonStyle(shape: WidgetStatePropertyAll(CircleBorder())),
           icon: const Icon(Icons.camera_alt)
         ),
@@ -20,10 +23,11 @@ class MessageField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "Say hello to $userName"
             ),
+            onChanged: (value) => store.dispatch(ChangeMessageContentAction(content: value)),
           ),
         ),
         IconButton(
-          onPressed: (){},
+          onPressed: () => store.dispatch(),
           icon: const Icon(Icons.send)
         )
       ],

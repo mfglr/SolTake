@@ -11,8 +11,8 @@ class Message{
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isEdited;
-  final int conversationId;
-  final int ownerId;
+  final int receiverId;
+  final int senderId;
   final String? content; 
   final int state; 
   final Iterable<MessageImage> images;
@@ -22,8 +22,8 @@ class Message{
     required this.createdAt,
     required this.updatedAt,
     required this.isEdited,
-    required this.conversationId,
-    required this.ownerId,
+    required this.receiverId,
+    required this.senderId,
     required this.content,
     required this.state,
     required this.images
@@ -37,9 +37,9 @@ class Message{
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        ownerId: ownerId,
+        senderId: senderId,
         isEdited: isEdited,
-        conversationId: conversationId,
+        receiverId: receiverId,
         content: content,
         state: state,
         images: images.map((e) => e.id)

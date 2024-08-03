@@ -24,7 +24,6 @@ namespace MySocailApp.Application
                     cfg.AddProfile(new QuestionMappers(reader));
                     cfg.AddProfile(new SolutionMappers(reader));
                     cfg.AddProfile(new CommentMappers(reader));
-                    cfg.AddProfile(new ConversationMappers(reader));
                 })
                 .AddAutoMapper(assembly)
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))

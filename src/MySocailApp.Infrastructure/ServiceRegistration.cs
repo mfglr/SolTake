@@ -9,9 +9,7 @@ using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
-using MySocailApp.Domain.ConversationAggregate.Interfaces;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
-using MySocailApp.Domain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
@@ -28,7 +26,6 @@ using MySocailApp.Infrastructure.ApplicationServices.BlobService;
 using MySocailApp.Infrastructure.ApplicationServices.Email;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
-using MySocailApp.Infrastructure.ConversationAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.MessageAggregate;
@@ -59,7 +56,6 @@ namespace MySocailApp.Infrastructure
                 .AddTopicAggregate()
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
-                .AddConversationAggregate()
                 .AddMessageAggregate()
                 .AddUserConnectionAggregate();
         }
@@ -162,29 +158,18 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<CommentCreatorDomainService>()
                 .AddSingleton<IUserNameReader,UserNameReader>();
         }
-
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
         {
             return services
                 .AddScoped<INotificationWriteRepository, NotificationWriteRepository>()
                 .AddScoped<INotificationReadRepository, NotificationReadRepository>();
         }
-
-        private static IServiceCollection AddConversationAggregate(this IServiceCollection services)
-        {
-            return services
-                .AddScoped<IConversationWriteRepository, ConversationWriteRepository>()
-                .AddScoped<IConversationReadRepository, ConversationReadRepository>();
-        }
         private static IServiceCollection AddMessageAggregate(this IServiceCollection services)
         {
             return services
                 .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
-                .AddScoped<IMessageReadRepository, MessageReadRepository>()
-                .AddScoped<MessageStateUpdaterDomainService>()
-                .AddScoped<MessageCreatorDomainService>();
+                .AddScoped<IMessageReadRepository, MessageReadRepository>();
         }
-
         private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
         {
             return services

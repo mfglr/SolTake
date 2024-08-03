@@ -21,7 +21,7 @@ class MessageItems extends StatelessWidget {
               return StoreConnector<AppState,int>(
                 converter: (store) => store.state.accountState!.id,
                 builder: (store,accountId) => Row(
-                  mainAxisAlignment: accountId == message.ownerId ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  mainAxisAlignment: accountId == message.senderId ? MainAxisAlignment.end : MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 7.5 / 10,

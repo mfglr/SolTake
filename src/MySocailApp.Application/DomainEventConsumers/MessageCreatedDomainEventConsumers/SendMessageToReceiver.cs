@@ -16,7 +16,7 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageCreatedDomainEvent
 
         public async Task Handle(MessageCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var connection = await _repository.GetById(notification.ReceiverId, cancellationToken);
+            var connection = await _repository.GetById(notification.Message.ReceiverId, cancellationToken);
             if (connection != null && connection.IsConnected)
             {
                 var message = _mapper.Map<MessageResponseDto>(notification.Message);
