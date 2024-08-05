@@ -1,40 +1,49 @@
 import 'package:my_social_app/constants/message_functions.dart';
 import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/services/message_hub.dart';
+import 'package:my_social_app/state/image_state.dart';
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/message_home_page_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_image_entity_state/actions.dart';
+import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 void connectMessageHub(Store<AppState> store){
   
   final hub = MessageHub();
   
-  hub.hubConnection.start()?.then((_){
-    store.dispatch(const GetNewMessageSendersAction());
-  });
+  hub.hubConnection
+    .start()
+    ?.then((_){
+      store.dispatch(const GetCommingMessagesAction());
+    });
   
   hub.hubConnection.on(
-    receiveMessage, 
+    receiveMessage1,
     (list){
       final message = Message.fromJson((list!.first as dynamic));
       store.dispatch(AddMessageAction(message: message.toMessageState()));
+      store.dispatch(AddUserImageAction(image: UserImageState(id: message.senderId,image: null,state: ImageState.notStarted)));
+      store.dispatch(MarkComingMessageAsReceivedAction(messageId: message.id));
     }
   );
 
   hub.hubConnection.on(
-    messageReceiptedNotification,
+    messageReceivedNotification,
     (list){
-      // final messageId = (list!.first as int);
-      // print(messageId);
+      final message = Message.fromJson((list!.first as dynamic));
+      store.dispatch(MarkOutgoingMessageAsReceivedAction(message: message.toMessageState()));
+      store.dispatch(AddUserImageAction(image: UserImageState(id: message.senderId,image: null,state: ImageState.notStarted)));
     },
   );
 
-    hub.hubConnection.on(
+  hub.hubConnection.on(
     messageViewedNotification,
     (list){
-      // final message = list!.first;
-      // print(message as int);
+      final message = Message.fromJson((list!.first as dynamic));
+      store.dispatch(MarkOutgoingMessageAsViewedAction(message: message.toMessageState()));
+      store.dispatch(AddUserImageAction(image: UserImageState(id: message.senderId,image: null,state: ImageState.notStarted)));
     }
   );
 }

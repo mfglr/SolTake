@@ -22,7 +22,10 @@ void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
     final state = store.state.createMessageState;
     MessageHub()
       .createMessage(state.receiverId!, state.content!)
-      .then((message) =>  store.dispatch(AddMessageAction(message: message.toMessageState())));
+      .then((message){
+        print("debug");
+        store.dispatch(AddMessageAction(message: message.toMessageState()));
+      });
   }
   next(action);
 }

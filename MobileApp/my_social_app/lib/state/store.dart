@@ -173,12 +173,15 @@ final store = Store(
     //conversations end
 
     //message
-    addReceiverToMessagesReceivedMiddleware,
-    addViewerToMessagesReceivedMiddleware,
+    markComingMessageAsReceivedMiddleware,
+    markComingMessageAsViewedMiddleware,
+    markComingMessagesAsReceivedMiddleware,
+    markComingMessagesAsViewedMiddleware,
+    
     createMessageWithImagesMiddleware,
     createMessageMiddleware,
     
-    getNewMessageSendersMiddleware,
+    getComingMessagesMiddleware,
 
   ]
 );

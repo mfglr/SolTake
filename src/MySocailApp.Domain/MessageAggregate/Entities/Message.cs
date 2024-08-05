@@ -40,23 +40,23 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         private readonly List<MessageUserView> _viewers = [];
         public IReadOnlyCollection<MessageUserView> Viewers => _viewers;
         public IReadOnlyCollection<MessageUserReceive> Receivers => _receivers;
-        public void AddReceiver(int receiverId)
+        public void MarkAsReceived(int receiverId)
         {
             if (receiverId != ReceiverId)
                 throw new PermissionDeniedToChangeStateOfMessageException();
             if (_receivers.Any(x => x.AppUserId == receiverId))
                 throw new MessageAlreadyMarktedAsReceivedException();
             _receivers.Add(MessageUserReceive.Create(receiverId));
-            AddDomainEvent(new AddedReceiverDomainEvent(this));
+            AddDomainEvent(new MessageMarkedAsReceivedDomainEvent(this));
         }
-        public void AddViewer(int viewerId)
+        public void MarkAsViewed(int viewerId)
         {
             if (viewerId != ReceiverId)
                 throw new PermissionDeniedToChangeStateOfMessageException();
             if (_viewers.Any(x => x.AppUserId == viewerId))
                 throw new MessageAlreadyMarkedAsViewedException();
             _viewers.Add(MessageUserView.Create(viewerId));
-            AddDomainEvent(new AddViewerDomainEvent(this));
+            AddDomainEvent(new MessageMarkedAsViewedDomainEvent(this));
         }
         public int State => _viewers.Any() ? 2 : _receivers.Any() ? 1 : 0;
 

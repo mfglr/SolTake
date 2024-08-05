@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/user_entity_state/gender.dart';
 import 'package:my_social_app/state/user_entity_state/profilevisibility.dart';
@@ -26,7 +25,6 @@ class User{
   final bool isFollowed;
   final bool isRequester;
   final bool isRequested;
-  final Iterable<Message> messages;
 
   const User({
     required this.id,
@@ -45,7 +43,6 @@ class User{
     required this.isFollowed,
     required this.isRequester,
     required this.isRequested,
-    required this.messages
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

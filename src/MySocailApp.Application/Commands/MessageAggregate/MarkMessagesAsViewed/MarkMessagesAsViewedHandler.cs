@@ -3,21 +3,21 @@ using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.Shared;
 
-namespace MySocailApp.Application.Commands.MessageAggregate.AddReceiverToMessages
+namespace MySocailApp.Application.Commands.MessageAggregate.MarkMessagesAsViewed
 {
-    public class AddReceiverToMessagesHandler(IMessageWriteRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<AddReceiverToMessagesDto>
+    public class MarkMessagesAsViewedHandler(IMessageWriteRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<MarkMessagesAsViewedDto>
     {
         private readonly IMessageWriteRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task Handle(AddReceiverToMessagesDto request, CancellationToken cancellationToken)
+        public async Task Handle(MarkMessagesAsViewedDto request, CancellationToken cancellationToken)
         {
-            var receiverId = _accessTokenReader.GetRequiredAccountId();
+            var viewerId = _accessTokenReader.GetRequiredAccountId();
             var messages = await _repository.GetByIds(request.Ids, cancellationToken);
 
-            foreach(var message in messages)
-                message.AddReceiver(receiverId);
+            foreach (var message in messages)
+                message.MarkAsViewed(viewerId);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }

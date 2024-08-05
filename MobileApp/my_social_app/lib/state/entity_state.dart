@@ -5,6 +5,7 @@ class EntityState<T extends dynamic> {
   final Map<int,T> entities;
   const EntityState({required this.entities});
 
+
   Map<int,T> prependOne(T value){
     if(this.entities[value.id] != null){
       return this.entities;

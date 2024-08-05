@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/message_endpoints.dart';
 import 'package:my_social_app/constants/message_functions.dart';
 import 'package:my_social_app/models/message.dart';
-import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/services/app_client.dart';
 
 class MessageService{
@@ -42,19 +40,19 @@ class MessageService{
     return list.map((item) => Message.fromJson(item));
   }
 
-  Future<Iterable<User>> getConversations(int? lastValue,int? take) async {
+  Future<Iterable<Message>> getConversations(int? lastValue,int? take) async {
     final url = _appClient.generatePaginationUrl(
       "$messageController/$getConversationsEndpoint",
       lastValue,
       take
     );
     final list = (await _appClient.get(url)) as List;
-    return list.map((item) => User.fromJson(item));
+    return list.map((item) => Message.fromJson(item));
   }
 
-  Future<Iterable<User>> getNewMessagesSenders() async {
-    const url = "$messageController/$getNewMessagesSendersEndpoint";
+  Future<Iterable<Message>> getNewCommingMessages() async {
+    const url = "$messageController/$getNewCommingMessagesEndpoint";
     final list = (await _appClient.get(url)) as List;
-    return list.map((item) => User.fromJson(item));
+    return list.map((item) => Message.fromJson(item));
   }
 }

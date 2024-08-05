@@ -2,6 +2,7 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
@@ -56,6 +57,15 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Requesters)
                 .Include(x => x.Requesteds)
                 .Include(x => x.Noitifications);
+
+        public static IQueryable<Message> IncludeForMessage(this IQueryable<Message> query)
+            => query
+                .Include(x => x.Viewers)
+                .Include(x => x.Receivers)
+                .Include(x => x.Sender)
+                .ThenInclude(x => x.Account)
+                .Include(x => x.Receiver)
+                .ThenInclude(x => x.Account);
 
     }
 }

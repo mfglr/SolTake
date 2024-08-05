@@ -5,6 +5,7 @@ import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/icon_with_badge.dart';
 import 'package:my_social_app/views/loading_view.dart';
 import 'package:my_social_app/views/pages/home_page.dart';
 import 'package:my_social_app/views/pages/message/message_home_page.dart';
@@ -46,26 +47,35 @@ class _RootViewState extends State<RootView> {
                       })
                     },
                     selectedIndex: currentPageIndex,
-                    destinations: const [
-                      NavigationDestination(
+                    destinations: [
+                      const NavigationDestination(
                         selectedIcon: Icon(Icons.home),
                         icon: Icon(Icons.home_outlined),
                         label: '',
                       ),
                       
-                      NavigationDestination(
+                      const NavigationDestination(
                         selectedIcon: Icon(Icons.search),
                         icon: Icon(Icons.search_outlined),
                         label: '',
                       ),
                 
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.message),
-                        icon: Icon(Icons.message_outlined), 
-                        label: ''
+                      StoreConnector<AppState,int>(
+                        converter: (store) => store.state.selectNumberOfComingMessages,
+                        builder: (context,count) => NavigationDestination(
+                          selectedIcon: IconWithBadge(
+                            badgeCount: count,
+                            icon: Icons.message,
+                          ),
+                          icon: IconWithBadge(
+                            badgeCount: count,
+                            icon: Icons.message_outlined,
+                          ),
+                          label: ''
+                        ),
                       ),
                 
-                      NavigationDestination(
+                      const NavigationDestination(
                         selectedIcon: Icon(Icons.person),
                         icon: Icon(Icons.person_outline),
                         label: '',

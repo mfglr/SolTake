@@ -3,5 +3,5 @@ using MySocailApp.Domain.MessageAggregate.Entities;
 
 namespace MySocailApp.Domain.MessageAggregate.DomainEvents
 {
-    public record AddViewerDomainEvent(Message Message) : IDomainEvent;
+    public record MessageMarkedAsViewedDomainEvent(Message Message) : IDomainEvent;
 }

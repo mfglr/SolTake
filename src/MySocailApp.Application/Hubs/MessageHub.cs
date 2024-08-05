@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.Commands.MessageAggregate.AddReceiverToMessage;
-using MySocailApp.Application.Commands.MessageAggregate.AddReceiverToMessages;
 using MySocailApp.Application.Commands.MessageAggregate.AddViewerToMessage;
-using MySocailApp.Application.Commands.MessageAggregate.AddViewerToMessages;
 using MySocailApp.Application.Commands.MessageAggregate.CreateMessage;
+using MySocailApp.Application.Commands.MessageAggregate.MarkMessagesAsReceived;
+using MySocailApp.Application.Commands.MessageAggregate.MarkMessagesAsViewed;
 using MySocailApp.Application.Commands.UserConectionAggregate.ConnectMessageHub;
 using MySocailApp.Application.Commands.UserConectionAggregate.DisconnectMessageHub;
 using MySocailApp.Application.Queries.MessageAggregate;
@@ -29,13 +29,12 @@ namespace MySocailApp.Application.Hubs
 
         public async Task AddReceiverToMessage(AddReceiverToMessageDto request)
             => await _mediator.Send(request);
-
-        public async Task AddReceiverToMessages(AddReceiverToMessagesDto request)
-            => await _mediator.Send(request);
-
         public async Task AddViewerToMessage(AddViewerToMessageDto request)
             => await _mediator.Send(request);
-        public async Task AddViewerToMessages(AddViewerToMessagesDto request)
+
+        public async Task MarkMessagesAsReceived(MarkMessagesAsReceivedDto request)
+            => await _mediator.Send(request);
+        public async Task MarkMessagesAsViewed(MarkMessagesAsViewedDto request)
             => await _mediator.Send(request);
 
         //public async Task<IAppResponseDto> GetNewMessages(GetNewMessagesDto request)

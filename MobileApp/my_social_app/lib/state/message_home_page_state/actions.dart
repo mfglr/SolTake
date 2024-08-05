@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/user.dart';
+import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 
 @immutable
-class GetNewMessageSendersAction extends redux.Action{
-  const GetNewMessageSendersAction();
+class GetCommingMessagesAction extends redux.Action{
+  const GetCommingMessagesAction();
 }
 @immutable
-class GetNewMessageSendersSuccessAction extends redux.Action{
-  const GetNewMessageSendersSuccessAction();
+class GetComingMessagesSuccessAction extends redux.Action{
+  const GetComingMessagesSuccessAction();
 }
 
 @immutable
@@ -17,8 +17,8 @@ class NextPageConversationsAction extends redux.Action{
 }
 @immutable
 class NextPageConversationsSuccessAction extends redux.Action{
-  final Iterable<User> users;  
-  const NextPageConversationsSuccessAction({required this.users});
+  final Iterable<Message> messages;  
+  const NextPageConversationsSuccessAction({required this.messages});
 }
 @immutable
 class NextPageConversationsIfNoConversationsAction extends redux.Action{

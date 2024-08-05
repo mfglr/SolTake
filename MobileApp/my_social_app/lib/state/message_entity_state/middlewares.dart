@@ -3,36 +3,43 @@ import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:redux/redux.dart';
 
-void addReceiverToMessagesReceivedMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is AddReceiverToMessagesReceivedAction){
-    final messageIds = store.state.selectIdsOfCreatedMessagesExceptCurrentUser;
+
+
+void markComingMessageAsReceivedMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkComingMessageAsReceivedAction){
+    final messageIds = [action.messageId];
     MessageHub()
-      .addReceiverToMessages(messageIds)
-      .then(
-        (_) => store.dispatch(
-          AddReceiverToMessagesSuccessAction(
-            messageIds: messageIds,
-            receiverId: store.state.accountState!.id
-          )
-        )
-      );
+      .markMessagesAsReceived(messageIds)
+      .then((_) =>store.dispatch(MarkComingMessagesAsReceivedSuccessAction(messageIds: messageIds)));
   }
   next(action);
 }
-
-void addViewerToMessagesReceivedMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is AddViewerToMessagesReceivedAction){
+void markComingMessageAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkComingMessageAsViewedAction){
+    final messageIds = [action.messageId];
+    MessageHub()
+      .markMessagesAsViewed(messageIds)
+      .then((_) => store.dispatch(MarkComingMessagesAsViewedSuccessAction(messageIds: messageIds)));
+  }
+  next(action);
+}
+void markComingMessagesAsReceivedMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkComingMessagesAsReceivedAction){
+    final messageIds = store.state.selectIdsOfNewComingMessages;
+    if(messageIds.isNotEmpty){
+      MessageHub()
+        .markMessagesAsReceived(messageIds)
+        .then((_) => store.dispatch(MarkComingMessagesAsReceivedSuccessAction(messageIds: messageIds)));
+    }
+  }
+  next(action);
+}
+void markComingMessagesAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkComingMessagesAsViewedAction){
     final messageIds = store.state.messageEntityState.selectIdsOfUnviewedMessagesOfUser(action.userId);
     MessageHub()
-      .addViewerToMessages(messageIds)
-      .then(
-        (_) => store.dispatch(
-          AddViewerToMessagesSuccessAction(
-            messageIds: messageIds,
-            viewerId: store.state.accountState!.id
-          )
-        )
-      );
+      .markMessagesAsViewed(messageIds)
+      .then((_) => store.dispatch(MarkComingMessagesAsViewedSuccessAction(messageIds: messageIds)));
   }
   next(action);
 }

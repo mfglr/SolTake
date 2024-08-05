@@ -22,7 +22,7 @@ class MessageStatusWidget extends StatelessWidget {
           icon = Icons.done_all;
           color = Colors.blue; 
         }
-        return Icon(icon,color: color,size: 14,);
+        return Icon(icon,color: color,size: 14);
       }
     );
   }

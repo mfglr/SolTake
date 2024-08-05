@@ -28,8 +28,6 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       isFollowed: json['isFollowed'] as bool,
       isRequester: json['isRequester'] as bool,
       isRequested: json['isRequested'] as bool,
-      messages: (json['messages'] as List<dynamic>)
-          .map((e) => Message.fromJson(e as Map<String, dynamic>)),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -49,5 +47,4 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'isFollowed': instance.isFollowed,
       'isRequester': instance.isRequester,
       'isRequested': instance.isRequested,
-      'messages': instance.messages.toList(),
     };

@@ -4,6 +4,7 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extetions;
+using System.Linq;
 
 namespace MySocailApp.Infrastructure.AppUserAggregate
 {
@@ -118,53 +119,6 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             => await _context.AppUsers
                 .AsNoTracking()
                 .Where(x => userNames.Contains(x.Account.UserName))
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<AppUser>> GetConversationsAsync(int userId,int? lastId,int? take,CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Include(x => x.Messages.OrderByDescending(x => x.Id).Take(1))
-                .Include(x => x.MessagesReceived.OrderByDescending(x => x.Id).Take(1))
-                .Where(
-                    x =>
-                        x.Messages.Any(x => x.ReceiverId == userId) ||
-                        x.MessagesReceived.Any(x => x.SenderId == userId)
-                )
-                .Select(
-                    x => new
-                    {
-                        User = x,
-                        LastMessageReceived = x.Messages.Where(x => x.ReceiverId == userId).OrderBy(x => x.Id).LastOrDefault(),
-                        LastMessageSent = x.MessagesReceived.Where(x => x.SenderId == userId).OrderBy(x => x.Id).LastOrDefault()
-                    }
-                )
-                .Select(
-                    x => new {
-                        x.User,
-                        LastMessageId =
-                            x.LastMessageReceived == null ?
-                                x.LastMessageSent!.Id :
-                                x.LastMessageSent == null ?
-                                    x.LastMessageReceived!.Id :
-                                    x.LastMessageReceived!.Id > x.LastMessageSent!.Id ?
-                                        x.LastMessageReceived!.Id :
-                                        x.LastMessageSent!.Id
-                    }
-                )
-                .Where(x => lastId == null || x.LastMessageId < lastId)
-                .OrderByDescending(x => x.LastMessageId)
-                .Take(take ?? 20)
-                .Select(x => x.User)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<AppUser>> GetNewMessagesSendersAsync(int receiverId,CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Include(x => x.Messages.Where(x => x.ReceiverId == receiverId && x.Viewers.Count == 0))
-                .ThenInclude(x => x.Receivers)
-                .Where(x => x.Messages.Any(x => x.ReceiverId == receiverId && x.Viewers.Count == 0))
                 .ToListAsync(cancellationToken);
     }
 }

@@ -19,7 +19,7 @@ namespace MySocailApp.Application.Commands.MessageAggregate.AddReceiverToMessage
                 await _messageRepository.GetById(request.MessageId, cancellationToken) ??
                 throw new MessageNotFoundException();
 
-            message.AddReceiver(receiverId);
+            message.MarkAsReceived(receiverId);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }

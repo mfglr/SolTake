@@ -9,9 +9,10 @@ using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
 {
-    public class CreateMessageHandler(IMessageWriteRepository messageRepository, IAccessTokenReader tokenReader, IMapper mapper, IBlobService blobService, IUnitOfWork unitOfWork) : IRequestHandler<CreateMessageDto, MessageResponseDto>
+    public class CreateMessageHandler(IMessageWriteRepository messageRepository, IAccessTokenReader tokenReader, IMapper mapper, IBlobService blobService, IUnitOfWork unitOfWork, IMessageReadRepository messageReadRepository) : IRequestHandler<CreateMessageDto, MessageResponseDto>
     {
         private readonly IMessageWriteRepository _messageRepository = messageRepository;
+        private readonly IMessageReadRepository _messageReadRepository = messageReadRepository;
         private readonly IAccessTokenReader _tokenReader = tokenReader;
         private readonly IMapper _mapper = mapper;
         private readonly IBlobService _blobService = blobService;
@@ -30,10 +31,11 @@ namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
             var message = new Message(senderId, request.ReceiverId, request.Content, messageImages);
             message.Create();
             await _messageRepository.CreateAsync(message, cancellationToken);
-
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return _mapper.Map<MessageResponseDto>(message);
+            return _mapper.Map<MessageResponseDto>(
+                await _messageReadRepository.GetMessageByIdAsync(message.Id,cancellationToken)
+            );
         }
     }
 }

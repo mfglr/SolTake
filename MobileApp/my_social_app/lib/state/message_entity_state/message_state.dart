@@ -7,6 +7,8 @@ class MessageState{
   final bool isEdited;
   final int senderId;
   final int receiverId;
+  final String senderUserName;
+  final String receiverUserName;
   final String? content;
   final int state;
   final Iterable<int> images;
@@ -16,6 +18,8 @@ class MessageState{
     required this.createdAt,
     required this.updatedAt,
     required this.isEdited,
+    required this.senderUserName,
+    required this.receiverUserName,
     required this.senderId,
     required this.receiverId,
     required this.content,
@@ -23,12 +27,14 @@ class MessageState{
     required this.images
   });
 
-  MessageState addReceiver()
+  MessageState markAsReceived()
     => MessageState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         isEdited: isEdited,
+        senderUserName: senderUserName,
+        receiverUserName: receiverUserName,
         senderId: senderId,
         receiverId: receiverId,
         content: content,
@@ -36,12 +42,14 @@ class MessageState{
         images: images
       );
       
-  MessageState addViewer()
+  MessageState markAsViewed()
     => MessageState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         isEdited: isEdited,
+        senderUserName: senderUserName,
+        receiverUserName: receiverUserName,
         senderId: senderId,
         receiverId: receiverId,
         content: content,

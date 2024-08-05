@@ -88,22 +88,9 @@ class AppState{
   });
 
   //select conversations
-  Iterable<UserState> selectConversations(){
-    final accountId = accountState!.id;
-    getUserId(MessageState x) => x.senderId == accountId ? x.receiverId : x.senderId;
-
-    return groupBy(messageEntityState.entities.values,getUserId)
-      .values
-      .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last)
-      .sorted((x,y) => y.id.compareTo(x.id))
-      .map(getUserId)
-      .map((e) => userEntityState.entities[e]!);
-  }
   int? selectLastConversationId(){
     final accountId = accountState!.id;
-    getUserId(MessageState x) => x.senderId == accountId ? x.receiverId : x.senderId;
-
-    final list = groupBy(messageEntityState.entities.values,getUserId)
+    final list = groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId)
       .values
       .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last.id)
       .sorted((x,y) => y.compareTo(x));
@@ -111,17 +98,20 @@ class AppState{
   }
   int selectNumberOfConversation(){
     final accountId = accountState!.id;
-    getUserId(MessageState x) => x.senderId == accountId ? x.receiverId : x.senderId;
-
-    return groupBy(messageEntityState.entities.values,getUserId).length;
+    return groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId).length;
   }
+  Iterable<MessageState> get selectConversations => messageEntityState.selectConversations(accountState!.id);
   //select conversations
 
   //select messages
-  Iterable<int> get selectIdsOfCreatedMessagesExceptCurrentUser
+  Iterable<int> get selectIdsOfNewComingMessages
     => messageEntityState.entities.values
         .where((e) => e.state == MessageStatus.created && e.senderId != accountState!.id)
         .map((e) => e.id);
+  int get selectNumberOfComingMessages
+    => messageEntityState.entities.values
+        .where((e) => e.state != MessageStatus.viewed && e.senderId != accountState!.id)
+        .length;
   //select messages
 
   UserState? get currentUser => userEntityState.entities[accountState!.id];

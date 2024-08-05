@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.MessageAggregate.AddViewerToMessage
             var message =
                 await _repository.GetById(request.MessageId, cancellationToken) ??
                 throw new MessageNotFoundException();
-            message.AddViewer(viewerId);
+            message.MarkAsViewed(viewerId);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }

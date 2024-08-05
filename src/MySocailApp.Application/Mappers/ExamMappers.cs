@@ -9,7 +9,6 @@ namespace MySocailApp.Application.Mappers
         public ExamMappers()
         {
             CreateMap<Exam, ExamResponseDto>();
-            
         }
     }
 }

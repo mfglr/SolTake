@@ -1,5 +1,5 @@
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/models/user.dart';
+import 'package:my_social_app/models/message.dart';
 
 class MessageHomePageState{
   final bool isLastConversations;
@@ -10,15 +10,15 @@ class MessageHomePageState{
     required this.isSynchronized
   });
 
-  MessageHomePageState addNewMessageSenders()
+  MessageHomePageState synchronize()
     => MessageHomePageState(
         isLastConversations: isLastConversations,
         isSynchronized: true
       );
 
-  MessageHomePageState nextPage(Iterable<User> users)
+  MessageHomePageState nextPage(Iterable<Message> messages)
     => MessageHomePageState(
-        isLastConversations: users.length < conversationsPerPage,
+        isLastConversations: messages.length < conversationsPerPage,
         isSynchronized: isSynchronized
       );
 }

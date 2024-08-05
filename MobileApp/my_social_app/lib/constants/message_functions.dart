@@ -1,8 +1,10 @@
 const createMessageEndpoint = "CreateMessage";
-const messageReceiptedNotification = "messageReceiptedNotification";
-const messageViewedNotification = "messageViewedNotification";
 
-const receiveMessage = "receiveMessage";
+const receiveMessage1 = "receiveMessage1";
+const receiveMessage2 = "receiveMessage2";
 const createMessageWebSocket = "CreateMessage";
-const addReceiverToMessagesWebSocket = "AddReceiverToMessages";
-const addViewerToMessagesWebSocket = "AddViewerToMessages";
+const markMessagesAsReceivedWebSocket = "MarkMessagesAsReceived";
+const markMessagesAsViewedWebSocket = "MarkMessagesAsViewed";
+
+const messageReceivedNotification = "messageReceivedNotification";
+const messageViewedNotification = "messageViewedNotification";

@@ -13,8 +13,10 @@ class Message{
   final bool isEdited;
   final int receiverId;
   final int senderId;
+  final String senderUserName;
+  final String receiverUserName;
   final String? content; 
-  final int state; 
+  final int state;
   final Iterable<MessageImage> images;
 
   const Message({
@@ -22,11 +24,13 @@ class Message{
     required this.createdAt,
     required this.updatedAt,
     required this.isEdited,
+    required this.senderUserName,
+    required this.receiverUserName,
     required this.receiverId,
     required this.senderId,
     required this.content,
     required this.state,
-    required this.images
+    required this.images,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
@@ -39,6 +43,8 @@ class Message{
         updatedAt: updatedAt,
         senderId: senderId,
         isEdited: isEdited,
+        senderUserName: senderUserName,
+        receiverUserName: receiverUserName,
         receiverId: receiverId,
         content: content,
         state: state,

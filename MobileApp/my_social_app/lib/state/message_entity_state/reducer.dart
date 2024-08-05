@@ -9,16 +9,25 @@ MessageEntityState addMessagesReducer(MessageEntityState prev,AddMessagesAction 
 MessageEntityState addMessagesListsReducer(MessageEntityState prev,AddMessagesListsAction action)
   => prev.addLists(action.lists);
 
-MessageEntityState addReceiverToMessagesSuccessReducer(MessageEntityState prev,AddReceiverToMessagesSuccessAction action)
-  => prev.addReceiverToMessages(action.messageIds, action.receiverId);
+MessageEntityState markComingMessagesAsReceivedSuccessAction(MessageEntityState prev,MarkComingMessagesAsReceivedSuccessAction action)
+  => prev.markComingMessagesAsReceived(action.messageIds);
+MessageEntityState markComingMessagesAsViewedSuccessAction(MessageEntityState prev,MarkComingMessagesAsViewedSuccessAction action)
+  => prev.markComingMessagesAsViewed(action.messageIds);
 
-MessageEntityState addViewerToMessagesSuccessReducer(MessageEntityState prev,AddViewerToMessagesSuccessAction action)
-  => prev.addViewerToMessages(action.messageIds, action.viewerId);
+MessageEntityState markOutgoingMessageAsReceivedReducer(MessageEntityState prev,MarkOutgoingMessageAsReceivedAction action)
+  => prev.markOutgoingMessageAsReceived(action.message);
+MessageEntityState markOutgoingMessageAsViewedReducer(MessageEntityState prev,MarkOutgoingMessageAsViewedAction action)
+  => prev.markOutgoingMessageAsViewed(action.message);
+
 
 Reducer<MessageEntityState> messageEntityStateReducers = combineReducers<MessageEntityState>([
   TypedReducer<MessageEntityState,AddMessageAction>(addMessageReducer).call,
   TypedReducer<MessageEntityState,AddMessagesAction>(addMessagesReducer).call,
   TypedReducer<MessageEntityState,AddMessagesListsAction>(addMessagesListsReducer).call,
-  TypedReducer<MessageEntityState,AddReceiverToMessagesSuccessAction>(addReceiverToMessagesSuccessReducer).call,
-  TypedReducer<MessageEntityState,AddViewerToMessagesSuccessAction>(addViewerToMessagesSuccessReducer).call,
+  
+  TypedReducer<MessageEntityState,MarkComingMessagesAsReceivedSuccessAction>(markComingMessagesAsReceivedSuccessAction).call,
+  TypedReducer<MessageEntityState,MarkComingMessagesAsViewedSuccessAction>(markComingMessagesAsViewedSuccessAction).call,
+  
+  TypedReducer<MessageEntityState,MarkOutgoingMessageAsReceivedAction>(markOutgoingMessageAsReceivedReducer).call,
+  TypedReducer<MessageEntityState,MarkOutgoingMessageAsViewedAction>(markOutgoingMessageAsViewedReducer).call,
 ]);

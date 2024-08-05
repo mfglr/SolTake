@@ -13,32 +13,47 @@ class MessageEntityState extends EntityState<MessageState>{
   MessageEntityState addLists(Iterable<Iterable<MessageState>> lists)
     => MessageEntityState(entities: appendLists(lists));
 
-  MessageEntityState addReceiverToMessages(Iterable<int> messageIds, int receiverId)
-    => MessageEntityState(entities: updateMany(messageIds.map((e) => entities[e]!.addReceiver())));
-  MessageEntityState addViewerToMessages(Iterable<int> messageIds, int receiverId)
-    => MessageEntityState(entities: updateMany(messageIds.map((e) => entities[e]!.addViewer())));
+  MessageEntityState markComingMessagesAsReceived(Iterable<int> messageIds)
+    => MessageEntityState(entities: updateMany(messageIds.map((e) => entities[e]!.markAsReceived())));
+  MessageEntityState markComingMessagesAsViewed(Iterable<int> messageIds)
+    => MessageEntityState(entities: updateMany(messageIds.map((e) => entities[e]!.markAsViewed())));
 
+  MessageEntityState markOutgoingMessageAsReceived(MessageState message){
+    if(entities[message.id] == null || entities[message.id]!.state ==  MessageStatus.created){
+      return MessageEntityState(entities: updateOne(message));
+    }
+    return this;
+  }
+  MessageEntityState markOutgoingMessageAsViewed(MessageState message)
+    => MessageEntityState(entities: updateOne(message));
+  
 
-  int selectLastMessageId(int userId)
-    => entities.values
+  int? selectLastMessageId(int userId){
+    final messages = entities.values
       .where((e) => e.receiverId == userId || e.senderId == userId)
-      .sorted((x,y) => x.id.compareTo(y.id)).last.id;
+      .sorted((x,y) => x.id.compareTo(y.id));
+    return messages.isNotEmpty ? messages.last.id : null;
+  }
   int selectNumberUserMessages(int userId)
     => entities.values
         .where((e) => e.receiverId == userId || e.senderId == userId)
         .length;
-  
+        
   Iterable<MessageState> selectUserMessages(int userId)
     => entities.values
       .where((e) => e.receiverId == userId || e.senderId == userId)
       .sorted((x,y) => x.id.compareTo(y.id));
   
-  int getNumberOfUnviewedMessagesOfUser(int userId)
-    => entities.values.where((x) => x.senderId == userId && x.state != MessageStatus.viewed).length;
-
+  Iterable<MessageState> selectUnviewedMessagesOfUser(int userId)
+    => entities.values.where((e) => e.senderId == userId && e.state != MessageStatus.viewed);
+  int selectNumberOfUnviewedMessagesOfUser(int userId)
+    => selectUnviewedMessagesOfUser(userId).length;
   Iterable<int> selectIdsOfUnviewedMessagesOfUser(int userId)
-    => entities.values
-        .where((e) => e.senderId == userId && e.state != MessageStatus.viewed)
-        .map((e) => e.id);
-
+    => selectUnviewedMessagesOfUser(userId).map((e) => e.id);
+  Iterable<MessageState> selectConversations(int accountId){
+    return groupBy(entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId)
+      .values
+      .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last)
+      .sorted((x,y) => y.id.compareTo(x.id));
+  }
 }

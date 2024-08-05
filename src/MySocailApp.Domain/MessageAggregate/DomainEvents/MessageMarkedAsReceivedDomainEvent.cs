@@ -3,5 +3,5 @@ using MySocailApp.Domain.MessageAggregate.Entities;
 
 namespace MySocailApp.Domain.MessageAggregate.DomainEvents
 {
-    public record AddedReceiverDomainEvent(Message Message) : IDomainEvent;
+    public record MessageMarkedAsReceivedDomainEvent(Message Message) : IDomainEvent;
 }

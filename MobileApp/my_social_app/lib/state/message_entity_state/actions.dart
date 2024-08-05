@@ -19,25 +19,44 @@ class AddMessagesListsAction extends redux.Action{
 }
 
 @immutable
-class AddReceiverToMessagesReceivedAction extends redux.Action{
-  const AddReceiverToMessagesReceivedAction();
+class MarkComingMessageAsReceivedAction extends redux.Action{
+  final int messageId;
+  const MarkComingMessageAsReceivedAction({required this.messageId});
 }
 @immutable
-class AddReceiverToMessagesSuccessAction extends redux.Action{
+class MarkComingMessagesAsReceivedAction extends redux.Action{
+  const MarkComingMessagesAsReceivedAction();
+}
+@immutable
+class MarkComingMessagesAsReceivedSuccessAction extends redux.Action{
   final Iterable<int> messageIds;
-  final int receiverId;
-  const AddReceiverToMessagesSuccessAction({required this.messageIds,required this.receiverId});
+  const MarkComingMessagesAsReceivedSuccessAction({required this.messageIds});
 }
 
-
 @immutable
-class AddViewerToMessagesReceivedAction extends redux.Action{
+class MarkComingMessageAsViewedAction extends redux.Action{
+  final int messageId;
+  const MarkComingMessageAsViewedAction({required this.messageId});
+}
+@immutable
+class MarkComingMessagesAsViewedAction extends redux.Action{
   final int userId;
-  const AddViewerToMessagesReceivedAction({required this.userId});
+  const MarkComingMessagesAsViewedAction({required this.userId});
 }
 @immutable
-class AddViewerToMessagesSuccessAction extends redux.Action{
+class MarkComingMessagesAsViewedSuccessAction extends redux.Action{
   final Iterable<int> messageIds;
-  final int viewerId;
-  const AddViewerToMessagesSuccessAction({required this.messageIds, required this.viewerId});
+  const MarkComingMessagesAsViewedSuccessAction({required this.messageIds});
 }
+
+@immutable
+class MarkOutgoingMessageAsReceivedAction extends redux.Action{
+  final MessageState message;
+  const MarkOutgoingMessageAsReceivedAction({required this.message});
+}
+@immutable
+class MarkOutgoingMessageAsViewedAction extends redux.Action{
+  final MessageState message;
+  const MarkOutgoingMessageAsViewedAction({required this.message});
+}
+

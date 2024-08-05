@@ -7,8 +7,7 @@ using MySocailApp.Application.Commands.MessageAggregate.CreateMessage;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId;
-using MySocailApp.Application.Queries.MessageAggregate.GetNewMessageSenders;
-using MySocailApp.Application.Queries.UserAggregate;
+using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessageByReceiverId;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -30,11 +29,11 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new GetMessagesByUserIdDto(userId,lastValue,take),cancellationToken);
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetConversations([FromQuery]int? lastValue, [FromQuery]int? take,CancellationToken cancellationToken)
+        public async Task<List<MessageResponseDto>> GetConversations([FromQuery]int? lastValue, [FromQuery]int? take,CancellationToken cancellationToken)
             => await _mediator.Send(new GetConversationsDto(lastValue, take),cancellationToken);
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetNewMessageSenders(CancellationToken cancellationToken)
-            => await _mediator.Send(new GetNewMessageSendersDto(), cancellationToken);
+        public async Task<List<MessageResponseDto>> GetUnviewedMessagesByReceiverId(CancellationToken cancellationToken)
+            => await _mediator.Send(new GetUnviewedMessagesByReceiverIdDto(), cancellationToken);
     }
 }

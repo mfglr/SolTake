@@ -24,17 +24,17 @@ class MessageHub{
         )
         .then((response) => Message.fromJson(response as dynamic));
 
-  Future<void> addReceiverToMessages(Iterable<int> ids)
+  Future<void> markMessagesAsReceived(Iterable<int> ids)
     => _hubConnection
         .invoke(
-          addReceiverToMessagesWebSocket,
+          markMessagesAsReceivedWebSocket,
           args: [{'ids': ids.toList()}]
         );
 
-  Future<void> addViewerToMessages(Iterable<int> ids)
+  Future<void> markMessagesAsViewed(Iterable<int> ids)
     => _hubConnection
         .invoke(
-          addViewerToMessagesWebSocket,
+          markMessagesAsViewedWebSocket,
           args: [{'ids': ids.toList()}]
         );
 }
