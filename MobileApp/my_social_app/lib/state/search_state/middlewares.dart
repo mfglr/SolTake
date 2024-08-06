@@ -1,5 +1,5 @@
 import 'package:my_social_app/services/user_service.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/search_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
@@ -20,7 +20,7 @@ void searchMiddleware(Store<AppState> store,action,NextDispatcher next){
 
         store.dispatch(
           AddUserImagesAction(
-            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notStarted))
+            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageStatus.notStarted))
           )
         );
 
@@ -50,7 +50,7 @@ void nextPageSearchingMiddleware(Store<AppState> store,action,NextDispatcher nex
         
         store.dispatch(
           AddUserImagesAction(
-            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageState.notStarted))
+            images: users.map((e) => UserImageState(id: e.id, image: null, state: ImageStatus.notStarted))
           )
         );
 

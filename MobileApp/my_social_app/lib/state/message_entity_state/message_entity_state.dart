@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:collection/collection.dart';
 import 'package:my_social_app/state/entity_state.dart';
 import 'package:my_social_app/state/message_entity_state/message_stataus.dart';
@@ -27,6 +29,11 @@ class MessageEntityState extends EntityState<MessageState>{
   MessageEntityState markOutgoingMessageAsViewed(MessageState message)
     => MessageEntityState(entities: updateOne(message));
   
+  MessageEntityState startloadingMessageImage(int messageId,int messageImageId)
+    => MessageEntityState(entities: updateOne(entities[messageId]!.startLoadingMessageImage(messageImageId)));
+  MessageEntityState loadMessageImage(int messageId,int messageImageId,Uint8List image)
+    => MessageEntityState(entities: updateOne(entities[messageId]!.loadMessageImage(messageImageId, image)));
+
 
   int? selectLastMessageId(int userId){
     final messages = entities.values
@@ -42,7 +49,7 @@ class MessageEntityState extends EntityState<MessageState>{
   Iterable<MessageState> selectUserMessages(int userId)
     => entities.values
       .where((e) => e.receiverId == userId || e.senderId == userId)
-      .sorted((x,y) => x.id.compareTo(y.id));
+      .sorted((x,y) => y.id.compareTo(x.id));
   
   Iterable<MessageState> selectUnviewedMessagesOfUser(int userId)
     => entities.values.where((e) => e.senderId == userId && e.state != MessageStatus.viewed);

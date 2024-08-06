@@ -1,7 +1,7 @@
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
@@ -64,7 +64,7 @@ void nextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatc
           );
           store.dispatch(
             AddUserImagesAction(
-              images: comments.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+              images: comments.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
             )
           );
         });

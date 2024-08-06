@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/ids.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/user_entity_state/gender.dart';
 import 'package:my_social_app/state/user_entity_state/profilevisibility.dart';
 
@@ -78,7 +78,7 @@ class UserState{
     bool? newIsRequester,
     bool? newIsRequested,
     Uint8List? newImage,
-    ImageState? newImageState,
+    ImageStatus? newImageState,
     Ids? newFollowers,
     Ids? newFolloweds,
     Ids? newRequesters,
@@ -174,7 +174,7 @@ class UserState{
   }
   //remove follower end
   UserState loadUserImage(Uint8List newImage) => _optional(
-    newImage: newImage,newImageState: ImageState.done
+    newImage: newImage,newImageState: ImageStatus.done
   );
   
   //Questions

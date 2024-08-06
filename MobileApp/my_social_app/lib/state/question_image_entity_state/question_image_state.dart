@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 
 @immutable
 class QuestionImageState{
@@ -9,7 +9,7 @@ class QuestionImageState{
   final double height;
   final double width;
   final String? blobName;
-  final ImageState state;
+  final ImageStatus state;
   final Uint8List? image;
 
   const QuestionImageState({
@@ -29,7 +29,7 @@ class QuestionImageState{
         height: height, 
         width: width,
         blobName: blobName,
-        state: ImageState.done,
+        state: ImageStatus.done,
         image: image,
       );
 }

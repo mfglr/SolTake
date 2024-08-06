@@ -13,6 +13,13 @@ class CreateMessageState{
     required this.receiverId
   });
 
+  CreateMessageState clearContentAndImages()
+    => CreateMessageState(
+        content: null,
+        images: const [],
+        receiverId: receiverId
+      );
+
   CreateMessageState changeContent(String content)
     => CreateMessageState(
         content: content,
@@ -27,6 +34,13 @@ class CreateMessageState{
         receiverId: receiverId
       );
   
+  CreateMessageState addImages(Iterable<XFile> images)
+    => CreateMessageState(
+        content: content,
+        images: this.images.followedBy(images),
+        receiverId: receiverId
+      );
+
   CreateMessageState addImage(XFile image)
     => CreateMessageState(
         content: content,
@@ -37,7 +51,7 @@ class CreateMessageState{
   CreateMessageState removeImage(XFile image)
     => CreateMessageState(
         content: content,
-        images: images.where((e) => e == image),
+        images: images.where((e) => e != image),
         receiverId: receiverId
       );
 }

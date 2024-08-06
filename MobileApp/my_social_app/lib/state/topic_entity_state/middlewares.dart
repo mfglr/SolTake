@@ -1,5 +1,5 @@
 import 'package:my_social_app/services/question_service.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -24,7 +24,7 @@ void nextPageOfTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatc
 
             store.dispatch(
               AddUserImagesAction(
-                images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+                images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
               )
             );
 

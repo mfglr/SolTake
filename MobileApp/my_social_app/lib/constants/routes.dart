@@ -16,3 +16,6 @@ const displayUserQuestionsRoute = "/display-user-questions/";
 const createSolutionRoute = "/create-solution/";
 const takeSolutionImageRoute = "/take-solution-image/";
 
+const takeMessageImageRoute = "/take-message-image/";
+const displayMessageImagesRoute = "/display-message-images/";
+

@@ -10,8 +10,8 @@ MessageImage _$MessageImageFromJson(Map<String, dynamic> json) => MessageImage(
       id: (json['id'] as num).toInt(),
       messageId: (json['messageId'] as num).toInt(),
       blobName: json['blobName'] as String,
-      height: (json['height'] as num).toInt(),
-      width: (json['width'] as num).toInt(),
+      height: (json['height'] as num).toDouble(),
+      width: (json['width'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$MessageImageToJson(MessageImage instance) =>

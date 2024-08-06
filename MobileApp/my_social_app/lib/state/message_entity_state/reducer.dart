@@ -19,6 +19,10 @@ MessageEntityState markOutgoingMessageAsReceivedReducer(MessageEntityState prev,
 MessageEntityState markOutgoingMessageAsViewedReducer(MessageEntityState prev,MarkOutgoingMessageAsViewedAction action)
   => prev.markOutgoingMessageAsViewed(action.message);
 
+MessageEntityState startLoadingMessageImage(MessageEntityState prev,LoadMessageImageAction action)
+  => prev.startloadingMessageImage(action.messageId, action.messageImageId);
+MessageEntityState loadMessageImage(MessageEntityState prev,LoadMessageImageSuccessAction action)
+  => prev.loadMessageImage(action.messageId,action.messageImageId,action.image);
 
 Reducer<MessageEntityState> messageEntityStateReducers = combineReducers<MessageEntityState>([
   TypedReducer<MessageEntityState,AddMessageAction>(addMessageReducer).call,
@@ -30,4 +34,7 @@ Reducer<MessageEntityState> messageEntityStateReducers = combineReducers<Message
   
   TypedReducer<MessageEntityState,MarkOutgoingMessageAsReceivedAction>(markOutgoingMessageAsReceivedReducer).call,
   TypedReducer<MessageEntityState,MarkOutgoingMessageAsViewedAction>(markOutgoingMessageAsViewedReducer).call,
+
+  TypedReducer<MessageEntityState,LoadMessageImageAction>(startLoadingMessageImage).call,
+  TypedReducer<MessageEntityState,LoadMessageImageSuccessAction>(loadMessageImage).call,
 ]);

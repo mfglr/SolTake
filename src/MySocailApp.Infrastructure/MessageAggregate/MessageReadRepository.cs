@@ -48,6 +48,10 @@ namespace MySocailApp.Infrastructure.MessageAggregate
                 .Where(x => x.ReceiverId == receiverId && x.Viewers.Count == 0)
                 .ToListAsync(cancellationToken);
 
-        
+        public async Task<Message?> GetMessageWithImagesAsync(int id, CancellationToken cancellationToken)
+            => await _context.Messages
+                .AsNoTracking()
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

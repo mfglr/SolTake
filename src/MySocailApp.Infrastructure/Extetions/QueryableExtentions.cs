@@ -60,6 +60,7 @@ namespace MySocailApp.Infrastructure.Extetions
 
         public static IQueryable<Message> IncludeForMessage(this IQueryable<Message> query)
             => query
+                .Include(x => x.Images)
                 .Include(x => x.Viewers)
                 .Include(x => x.Receivers)
                 .Include(x => x.Sender)

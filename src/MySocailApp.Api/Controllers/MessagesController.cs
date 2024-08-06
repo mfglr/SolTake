@@ -6,6 +6,7 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.MessageAggregate.CreateMessage;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
+using MySocailApp.Application.Queries.MessageAggregate.GetMessageImage;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId;
 using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessageByReceiverId;
 
@@ -35,5 +36,12 @@ namespace MySocailApp.Api.Controllers
         [HttpGet]
         public async Task<List<MessageResponseDto>> GetUnviewedMessagesByReceiverId(CancellationToken cancellationToken)
             => await _mediator.Send(new GetUnviewedMessagesByReceiverIdDto(), cancellationToken);
+
+        [HttpGet("{messageId}/{messageImageId}")]
+        public async Task<FileResult> GetMessageImage(int messageId, int messageImageId, CancellationToken cancellationToken)
+            => File(
+                await _mediator.Send(new GetMessageImageDto(messageId, messageImageId), cancellationToken),
+                "application/octet-stream"
+            );
     }
 }

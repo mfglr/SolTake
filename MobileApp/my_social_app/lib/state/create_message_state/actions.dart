@@ -2,6 +2,12 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 
+
+@immutable
+class ClearMessageContentAndImagesAction extends redux.Action{
+  const ClearMessageContentAndImagesAction();
+}
+
 @immutable
 class CreateMessageWithImagesAction extends redux.Action{
   const CreateMessageWithImagesAction();
@@ -21,6 +27,12 @@ class ChangeMessageContentAction extends redux.Action{
 class ChangeReceiverIdAction extends redux.Action{
   final int receiverId;
   const ChangeReceiverIdAction({required this.receiverId});
+}
+
+@immutable
+class AddMessageImagesAction extends redux.Action{
+  final Iterable<XFile> images;
+  const AddMessageImagesAction({required this.images});
 }
 
 @immutable

@@ -1,7 +1,7 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
@@ -23,7 +23,7 @@ void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
               image: UserImageState(
                 id: comment.appUserId,
                 image: null,
-                state: ImageState.notStarted
+                state: ImageStatus.notStarted
               )
             )
           );
@@ -83,7 +83,7 @@ void nextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatche
           );
           store.dispatch(
             AddUserImagesAction(
-              images: replies.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+              images: replies.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
             )
           );
         });

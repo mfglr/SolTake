@@ -9,10 +9,8 @@ void createMessageWithImagesMiddleware(Store<AppState> store,action,NextDispatch
   if(action is CreateMessageWithImagesAction){
     final state = store.state.createMessageState;
     MessageService()
-      .createMessage(state.receiverId!, state.content!, state.images)
-      .then((message){
-        store.dispatch(AddMessageAction(message: message.toMessageState()));
-      });
+      .createMessage(state.receiverId!, state.content, state.images)
+      .then((message) => store.dispatch(AddMessageAction(message: message.toMessageState())));
   }
   next(action);
 }
@@ -22,10 +20,7 @@ void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
     final state = store.state.createMessageState;
     MessageHub()
       .createMessage(state.receiverId!, state.content!)
-      .then((message){
-        print("debug");
-        store.dispatch(AddMessageAction(message: message.toMessageState()));
-      });
+      .then((message) => store.dispatch(AddMessageAction(message: message.toMessageState())));
   }
   next(action);
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
@@ -55,4 +56,10 @@ class MessageService{
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => Message.fromJson(item));
   }
+
+  Future<Uint8List> getMessageImage(int messageId,int messageImageId)
+    => _appClient.getBytes(
+      "$messageController/$getMessageImageEndpoint/$messageId/$messageImageId"
+    );
+  
 }

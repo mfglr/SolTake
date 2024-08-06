@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 
 @immutable
 class UserImageState{
   final int id;
   final Uint8List? image;
-  final ImageState state;
+  final ImageStatus state;
 
   const UserImageState({
     required this.id,
@@ -18,6 +18,6 @@ class UserImageState{
     => UserImageState(
         id: id,
         image: image,
-        state: ImageState.done
+        state: ImageStatus.done
       );
 }

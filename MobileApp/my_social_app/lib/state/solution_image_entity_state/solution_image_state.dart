@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 
 class SolutionImageState{
   final int id;
@@ -7,7 +7,7 @@ class SolutionImageState{
   final String blobName;
   final double height;
   final double width;
-  final ImageState state;
+  final ImageStatus state;
   final Uint8List? image;
 
   const SolutionImageState({
@@ -27,7 +27,7 @@ class SolutionImageState{
         blobName: blobName,
         height: height,
         width: width,
-        state: ImageState.done,
+        state: ImageStatus.done,
         image: image
       );
 }

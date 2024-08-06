@@ -3,7 +3,7 @@ import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
@@ -28,7 +28,7 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
           );
           store.dispatch(
             AddUserImageAction(
-              image: UserImageState(id: user.id,image: null,state: ImageState.notStarted)
+              image: UserImageState(id: user.id,image: null,state: ImageStatus.notStarted)
             )
           );
         });
@@ -50,7 +50,7 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
           );
           store.dispatch(
             AddUserImageAction(
-              image: UserImageState(id: user.id,image: null,state: ImageState.notStarted)
+              image: UserImageState(id: user.id,image: null,state: ImageStatus.notStarted)
             )
           );
         });
@@ -76,7 +76,7 @@ void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
             )
           );
         });
@@ -100,7 +100,7 @@ void loadFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
             )
           );
         });
@@ -126,7 +126,7 @@ void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatche
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
             )
           );
         });
@@ -150,7 +150,7 @@ void loadFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
 
           store.dispatch(
             AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageState.notStarted)) 
+              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
             )
           );
         }
@@ -208,7 +208,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
 
           store.dispatch(
             AddUserImagesAction(
-              images: questions.map((e) => UserImageState(id: e.appUserId,image: null,state: ImageState.notStarted)) 
+              images: questions.map((e) => UserImageState(id: e.appUserId,image: null,state: ImageStatus.notStarted)) 
             )
           );
 

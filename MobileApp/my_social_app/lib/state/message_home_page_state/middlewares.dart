@@ -1,6 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/message_service.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/message_home_page_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -22,7 +22,7 @@ void getComingMessagesMiddleware(Store<AppState> store,action,NextDispatcher nex
               images: messages.map((e) => UserImageState(
                 id: e.senderId == accountId ? e.receiverId : e.senderId,
                 image: null,
-                state: ImageState.notStarted
+                state: ImageStatus.notStarted
               ))
             )
           );
@@ -51,7 +51,7 @@ void nextPageConversationsMiddleware(Store<AppState> store,action,NextDispatcher
                 images: messages.map((e) => UserImageState(
                   id: e.senderId == accountId ? e.receiverId : e.senderId,
                   image: null,
-                  state: ImageState.notStarted
+                  state: ImageStatus.notStarted
                 ))
               )
             );

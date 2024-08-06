@@ -177,6 +177,7 @@ final store = Store(
     markComingMessageAsViewedMiddleware,
     markComingMessagesAsReceivedMiddleware,
     markComingMessagesAsViewedMiddleware,
+    loadMessageImageMiddleware,
     
     createMessageWithImagesMiddleware,
     createMessageMiddleware,

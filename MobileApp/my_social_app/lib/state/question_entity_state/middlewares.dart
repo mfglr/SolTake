@@ -1,7 +1,7 @@
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
@@ -29,14 +29,14 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
                 height: e.height,
                 width: e.width,
                 blobName: e.blobName,
-                state: ImageState.notStarted,
+                state: ImageStatus.notStarted,
                 image: null
               )
             ))
           );
           store.dispatch(
             AddUserImageAction(
-              image: UserImageState(id: question.appUserId,image: null,state: ImageState.notStarted)
+              image: UserImageState(id: question.appUserId,image: null,state: ImageStatus.notStarted)
             )
           );
         });
@@ -90,7 +90,7 @@ void nextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispa
 
         store.dispatch(
           AddUserImagesAction(
-            images: solutions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+            images: solutions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
           )
         );
       });
@@ -130,7 +130,7 @@ void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatc
 
           store.dispatch(
             AddUserImagesAction(
-              images: comments.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageState.notStarted))
+              images: comments.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
             )
           );
         });

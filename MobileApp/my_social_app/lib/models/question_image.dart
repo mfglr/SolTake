@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_state.dart';
 part 'question_image.g.dart';
 
@@ -31,7 +31,7 @@ class QuestionImage{
         height: height,
         width: width,
         blobName: blobName,
-        state: ImageState.notStarted,
+        state: ImageStatus.notStarted,
         image: null,
       );
 }
