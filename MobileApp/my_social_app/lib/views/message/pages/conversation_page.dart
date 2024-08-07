@@ -24,15 +24,12 @@ class ConversationPage extends StatefulWidget {
   State<ConversationPage> createState() => _ConversationPageState();
 }
 
-class _ConversationPageState extends State<ConversationPage> {
+class _ConversationPageState extends State<ConversationPage>{
   final ScrollController _scrollController = ScrollController();
-  final GlobalKey _messageItemsKey = GlobalKey();
   final double _spaceBottom = 10;
   int _numberOfNewMessages = 0;
 
-  @override
-  void initState() {
-    
+  void _markUserMessagesAsViewed(){
     MessageHub()
       .hubConnection
       .on(
@@ -42,32 +39,30 @@ class _ConversationPageState extends State<ConversationPage> {
           if(message.senderId == widget.userId){
             store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
           }
-
-          _messageItemsKey.currentContext?.visitChildElements(
-            (e) => e.widget.key
-          );
-
-
-          if(_scrollController.position.pixels < ){
-            _scrollController.animateTo(
-              0,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.linear
-            );
-            _numberOfNewMessages = 0;
-          }
-          else{
-            setState(() {
-              _numberOfNewMessages++;
-            });
-          }
         }
       );
+  }
+
+  void _getNextMessages(){
+    if(_scrollController.hasClients){
+      final position = _scrollController.position;
+      if(position.pixels == position.maxScrollExtent){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        store.dispatch(NextPageUserMessagesAction(userId: widget.userId));
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    _scrollController.addListener(_getNextMessages);
+    _markUserMessagesAsViewed();
     super.initState();
   }
 
   @override
   void dispose() {
+    _scrollController.removeListener(_getNextMessages);
     _scrollController.dispose();
     MessageHub().hubConnection.off(receiveMessage2);
     super.dispose();
@@ -113,12 +108,13 @@ class _ConversationPageState extends State<ConversationPage> {
                       child: StoreConnector<AppState,Iterable<MessageState>>(
                         onInit: (store) => store.dispatch(NextPageUserMessagesIfNoMessagesAction(userId: widget.userId)),
                         converter: (store) => store.state.messageEntityState.selectUserMessages(widget.userId),
-                        builder: (context,messages) => MessageItems(
-                          key: _messageItemsKey,
-                          messages: messages,
-                          scrollController: _scrollController,
-                          spaceBottom: _spaceBottom,
-                        )
+                        builder: (context,messages){
+                          return MessageItems(
+                            messages: messages,
+                            scrollController: _scrollController,
+                            spaceBottom: _spaceBottom,
+                          );
+                        }
                       ),
                     ),
                     Padding(

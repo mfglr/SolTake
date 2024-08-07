@@ -38,7 +38,7 @@ class MessageEntityState extends EntityState<MessageState>{
   int? selectLastMessageId(int userId){
     final messages = entities.values
       .where((e) => e.receiverId == userId || e.senderId == userId)
-      .sorted((x,y) => x.id.compareTo(y.id));
+      .sorted((x,y) => y.id.compareTo(x.id));
     return messages.isNotEmpty ? messages.last.id : null;
   }
   int selectNumberUserMessages(int userId)

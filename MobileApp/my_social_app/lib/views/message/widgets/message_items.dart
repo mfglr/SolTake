@@ -3,6 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/message/widgets/message_item.dart';
+import 'package:rxdart/rxdart.dart';
+
+final heights = BehaviorSubject<Iterable<double?>>();
 
 class MessageItems extends StatefulWidget {
   final Iterable<MessageState> messages;
@@ -13,14 +16,20 @@ class MessageItems extends StatefulWidget {
     super.key,
     required this.messages,
     required this.scrollController,
-    required this.spaceBottom
+    required this.spaceBottom,
   });
 
   @override
   State<MessageItems> createState() => _MessageItemsState();
 }
 
-class _MessageItemsState extends State<MessageItems> {
+class _MessageItemsState extends State<MessageItems>{
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,int>(
@@ -40,7 +49,6 @@ class _MessageItemsState extends State<MessageItems> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 3 / 4,
                     child: MessageItem(
-                      key: ValueKey<String>("messageItem$index"),
                       message: message,
                     ),
                   )
