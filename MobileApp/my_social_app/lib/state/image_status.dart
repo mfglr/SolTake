@@ -2,5 +2,6 @@
 enum ImageStatus{
   notStarted,
   started,
-  done
+  done,
+  notFound
 }

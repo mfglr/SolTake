@@ -8,9 +8,4 @@ class HomePageState{
     => HomePageState(
         questions: questions.nextPage(questionIds)
       );
-  
-  HomePageState addQuestion(int questionId)
-    => HomePageState(
-        questions: questions.prependOne(questionId)
-      );
 }

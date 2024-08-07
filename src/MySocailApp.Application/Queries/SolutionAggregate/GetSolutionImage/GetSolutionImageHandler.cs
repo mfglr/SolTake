@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage
         public async Task<byte[]> Handle(GetSolutionImageDto request, CancellationToken cancellationToken)
         {
             var solution =
-                await _repository.GetByIdAsync(request.SolutionId, cancellationToken) ??
+                await _repository.GetSolutionWithImagesByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionNotFoundException();
 
             if (!solution.Images.Any(x => x.BlobName == request.BlobName))

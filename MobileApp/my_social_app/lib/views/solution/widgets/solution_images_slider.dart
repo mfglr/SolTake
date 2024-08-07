@@ -24,10 +24,8 @@ class SolutionImagesSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    store.dispatch(LoadSolutionImageAction(id: solution.images.first));
-
     return StoreConnector<AppState,Iterable<SolutionImageState>>(
+      onInit: (store) => store.dispatch(LoadSolutionImageAction(id: solution.images.first)),
       converter: (store) => store.state.getSolutionImages(solution.id),
       builder: (context,imageStates) => CarouselSlider(
         items: imageStates.map(

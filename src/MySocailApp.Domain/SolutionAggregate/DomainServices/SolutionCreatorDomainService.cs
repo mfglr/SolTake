@@ -2,6 +2,7 @@
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 {
@@ -11,6 +12,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 
         public async Task CreateAsync(Solution solution,int userId,int questionId,string? content,IEnumerable<SolutionImage> images,CancellationToken cancellationToken)
         {
+            var solutionContent = content != null ? new SolutionContent(content) : null; 
             var question = 
                 await _questionRepository.GetAsync(questionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
@@ -18,7 +20,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
             if (question.AppUserId == userId)
                 throw new UnableToSolveYourQuestionException();
 
-            solution.Create(questionId, userId, content, images);
+            solution.Create(questionId, userId, solutionContent, images);
         }
     }
 }

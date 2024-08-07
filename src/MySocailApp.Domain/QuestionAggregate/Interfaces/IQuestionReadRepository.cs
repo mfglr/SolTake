@@ -5,6 +5,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Interfaces
     public interface IQuestionReadRepository
     {
         Task<bool> Exist(int questionId, CancellationToken cancellationToken);
+        Task<Question?> GetQuestionWithImagesById(int id, CancellationToken cancellationToken);
         Task<Question?> GetAsync(int questionId, CancellationToken cancellationToken);
         Task<List<Question>> GetAllAsync(int? lastId, CancellationToken cancellationToken);
         Task<Question?> GetByIdAsync(int id, CancellationToken cancellationToken);

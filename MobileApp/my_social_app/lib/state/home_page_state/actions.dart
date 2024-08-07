@@ -14,9 +14,3 @@ class NextPageOfHomeQuestionsSuccessAction extends redux.Action{
 class NextPageOfHomeQuestionsIfNoQuestionsAction extends redux.Action{
   const NextPageOfHomeQuestionsIfNoQuestionsAction();
 }
-
-@immutable
-class AddHomeQuestionAction extends redux.Action{
-  final int questionId;
-  const AddHomeQuestionAction({required this.questionId});
-}

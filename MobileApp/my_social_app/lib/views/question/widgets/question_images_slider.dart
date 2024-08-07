@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
@@ -8,6 +9,8 @@ import 'package:my_social_app/state/question_image_entity_state/question_image_s
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/views/loading_widget.dart';
+import 'package:my_social_app/views/not_found_widget.dart';
+import 'package:redux/redux.dart';
 
 class QuestionImagesSlider extends StatelessWidget {
   final QuestionState question;
@@ -23,9 +26,15 @@ class QuestionImagesSlider extends StatelessWidget {
     return (MediaQuery.of(context).size.width * max.height) / max.width;
   }
 
+  void _loadQuestionImage(Store<AppState> store,int index){
+    final image = store.state.questionImageEntityState.entities[question.images.elementAt(index)]!;
+    if(image.state == ImageStatus.notStarted){
+      store.dispatch(LoadQuestionImageAction(id: image.id));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    store.dispatch(LoadQuestionImageAction(id: question.images.first));
     return GestureDetector(
       onDoubleTap: (){
         if(!question.isLiked){
@@ -33,13 +42,22 @@ class QuestionImagesSlider extends StatelessWidget {
         }
       },
       child: StoreConnector<AppState,Iterable<QuestionImageState>>(
-        converter: (store) => store.state.questionImageEntityState.getQuestionImages(question.id),
+        onInit: (store) => _loadQuestionImage(store,0),
+        converter: (store) => store.state.questionImageEntityState.selectQuestionImages(question.id),
         builder: (context,imageStates) => CarouselSlider(
           items: imageStates.map(
             (imageState) => Builder(
               builder: (context){
-                if(imageState.image != null) return Image.memory(imageState.image!);
-                return const LoadingWidget();
+                switch(imageState.state){
+                  case ImageStatus.done:
+                    return Image.memory(imageState.image!);
+                  case ImageStatus.started:
+                    return const LoadingWidget();
+                  case ImageStatus.notStarted:
+                    return const LoadingWidget();
+                  case ImageStatus.notFound:
+                    return const NotFoundWidget();
+                }
               }
             )
           ).toList(),
@@ -49,7 +67,8 @@ class QuestionImagesSlider extends StatelessWidget {
             height: getMaxHeightSize(context, imageStates),
             enableInfiniteScroll: false,
             onPageChanged: (index, reason){
-              store.dispatch(LoadQuestionImageAction(id: question.images.elementAt(index)));
+              final store = StoreProvider.of<AppState>(context,listen: false);
+              _loadQuestionImage(store,index);
             },
           ),
         ),

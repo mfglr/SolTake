@@ -15,14 +15,17 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public DateTime? UpdatedAt { get; private set; }
         public int QuestionId { get; private set; }
         public int AppUserId { get; private set; }
-        public string? Content { get; private set; }
+        public SolutionContent? Content { get; private set; }
         private readonly List<SolutionImage> _images = [];
         public IReadOnlyCollection<SolutionImage> Images => _images;
 
-        internal void Create(int questionId, int appUserId, string? content, IEnumerable<SolutionImage> images)
+        internal void Create(int questionId, int appUserId, SolutionContent? content, IEnumerable<SolutionImage> images)
         {
+            if(content == null && !images.Any())
+                throw new SolutionContentOrImagesRequiredException();
             if (images.Count() > 10)
                 throw new TooManySolutionImageException();
+
             QuestionId = questionId;
             AppUserId = appUserId;
             Content = content;

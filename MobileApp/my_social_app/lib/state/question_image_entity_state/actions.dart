@@ -31,3 +31,13 @@ class LoadQuestionImageSuccessAction extends redux.Action{
   final Uint8List image;
   const LoadQuestionImageSuccessAction({required this.id,required this.image});
 }
+@immutable
+class QuestionImageNotFoundAction extends redux.Action{
+  final int questionImageId;
+  const QuestionImageNotFoundAction({required this.questionImageId});
+}
+@immutable
+class QuestionImageCouldNotLoadAction extends redux.Action{
+  final int questionId;
+  const QuestionImageCouldNotLoadAction({required this.questionId});
+}

@@ -50,7 +50,7 @@ class UserPage extends StatelessWidget {
                 Expanded(
                   child: StoreConnector<AppState,Iterable<QuestionState>>(
                     onInit: (store) => store.dispatch(NextPageOfUserQuestionsIfNoQuestionsAction(userId: user.id)),
-                    converter: (store) => store.state.getUserQuestions(user.id),
+                    converter: (store) => store.state.questionEntityState.selectQuestionsByUserId(user.id),
                     builder: (context,value ) => QuestionAbstractItemsWidget(questions: value)
                   ),
                 )

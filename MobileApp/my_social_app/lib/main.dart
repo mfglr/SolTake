@@ -21,7 +21,6 @@ import 'package:my_social_app/views/create_solution/pages/create_solution_page.d
 import 'package:my_social_app/views/create_solution/pages/take_solution_image_page.dart';
 import 'package:my_social_app/views/message/pages/display_message_images.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
-import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/account/register_view.dart';
 import 'package:my_social_app/views/user/pages/user_followeds_page.dart';
 import 'package:my_social_app/views/user/pages/user_followers_page.dart';
@@ -95,8 +94,6 @@ Future<void> main() async {
           selectExamRoute: (context) => const SelectExamPage(),
           selectSubjectRoute: (context) => const SelectSubjectPage(),
           selectTopicRoute: (context) => const SelectTopicPage(),
-
-          displayUserQuestionsRoute: (context) => const DisplayUserQuestionsPage(),
           
           createSolutionRoute: (context) => const CreateSolutionPage(),
           takeSolutionImageRoute: (context) => TakeSolutionImagePage(camera: cameras.first),

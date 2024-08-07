@@ -52,8 +52,27 @@ class SolutionItemWidget extends StatelessWidget {
               )
             ],
           ),
-          SolutionImagesSlider(solution: solution,),
+          Builder(
+            builder: (context) {
+              if(solution.images.isNotEmpty){
+                return SolutionImagesSlider(solution: solution,);
+              }
+              return const SizedBox.shrink();
+            }
+          ),
+          Builder(
+            builder: (context) {
+              if(solution.content != null){
+                return Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Text(solution.content!),
+                );
+              }
+              return const SizedBox.shrink();
+            }
+          ),
           SolutionButtonsWidget(solution: solution,),
+         
         ],
       ),
     );

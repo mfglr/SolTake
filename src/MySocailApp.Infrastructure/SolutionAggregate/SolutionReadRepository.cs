@@ -16,6 +16,12 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
         public async Task<Solution?> GetAsync(int id, CancellationToken cancellationToken)
             => await _context.Solutions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
+        public async Task<Solution?> GetSolutionWithImagesByIdAsync(int id,CancellationToken cancellationToken)
+            => await _context.Solutions
+                .AsNoTracking()
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
         public async Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => await _context
                 .Solutions

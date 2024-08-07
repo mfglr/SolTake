@@ -36,7 +36,7 @@ class AppClient{
     final response = await request.send();
     
     final data = utf8.decode(await response.stream.toBytes());
-    if(response.statusCode >= 400) throw BackendException( message: data );
+    if(response.statusCode >= 400) throw BackendException(message: data,statusCode: response.statusCode);
     return Account.fromJson(jsonDecode(data));
   }
 
@@ -50,10 +50,10 @@ class AppClient{
           store.dispatch(UpdateAccountStateAction(payload: newAccountState));
           response = await request.send();
           if(response.statusCode >= 400){
-            throw BackendException(message: utf8.decode(await response.stream.toBytes()));
+            throw BackendException(message: utf8.decode(await response.stream.toBytes()),statusCode: response.statusCode);
           }
         default:
-          throw BackendException(message: utf8.decode(await response.stream.toBytes()));
+          throw BackendException(message: utf8.decode(await response.stream.toBytes()),statusCode: response.statusCode);
       }
     }
     return response;

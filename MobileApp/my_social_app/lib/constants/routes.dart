@@ -11,7 +11,6 @@ const selectExamRoute = "/select-exam/";
 const selectSubjectRoute = "/select-subject/";
 const selectTopicRoute = "/select-topic/";
 
-const displayUserQuestionsRoute = "/display-user-questions/";
 
 const createSolutionRoute = "/create-solution/";
 const takeSolutionImageRoute = "/take-solution-image/";

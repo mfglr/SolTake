@@ -4,16 +4,6 @@ import 'package:flutter/material.dart';
 class EntityState<T extends dynamic> {
   final Map<int,T> entities;
   const EntityState({required this.entities});
-
-  Map<int,T> prependOne(T value){
-    if(this.entities[value.id] != null){
-      return this.entities;
-    }
-    final Map<int,T> entities = {};
-    entities.addEntries([MapEntry(value.id, value)]);
-    entities.addAll(this.entities);
-    return entities;
-  }
  
   Map<int,T> appendOne(T value){
     if(this.entities[value.id] != null){

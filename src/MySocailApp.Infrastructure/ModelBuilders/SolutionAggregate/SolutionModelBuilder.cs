@@ -8,6 +8,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
     {
         public void Configure(EntityTypeBuilder<Solution> builder)
         {
+            builder.OwnsOne(x => x.Content);
+
             builder
                 .HasMany(x => x.Images)
                 .WithOne(x => x.Solution)

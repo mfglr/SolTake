@@ -3,5 +3,6 @@ import 'package:my_social_app/exceptions/app_exception.dart';
 
 @immutable
 class BackendException extends AppException{
-  const BackendException({required super.message});
+  final int statusCode;
+  const BackendException({required super.message,required this.statusCode});
 }

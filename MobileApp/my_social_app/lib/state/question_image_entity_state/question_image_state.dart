@@ -22,6 +22,17 @@ class QuestionImageState{
     required this.image,
   });
   
+  QuestionImageState startLoding()
+    => QuestionImageState(
+        id: id,
+        questionId: questionId,
+        height: height, 
+        width: width,
+        blobName: blobName,
+        state: ImageStatus.started,
+        image: image,
+      );
+
   QuestionImageState load(Uint8List image)
     => QuestionImageState(
         id: id,
@@ -31,5 +42,16 @@ class QuestionImageState{
         blobName: blobName,
         state: ImageStatus.done,
         image: image,
+      );
+
+  QuestionImageState notFound()
+    => QuestionImageState(
+        id: id,
+        questionId: questionId,
+        height: height,
+        width: width,
+        blobName: blobName,
+        state: ImageStatus.notFound,
+        image: image
       );
 }

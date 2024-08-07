@@ -5,10 +5,6 @@ import 'package:redux/redux.dart';
 HomePageState nextPageOfQuestionsReducer(HomePageState prev,NextPageOfHomeQuestionsSuccessAction action)
   => prev.nextPageOfQuestions(action.questionIds);
 
-HomePageState addHomeQuestionReducer(HomePageState prev,AddHomeQuestionAction action)
-  => prev.addQuestion(action.questionId);
-
 Reducer<HomePageState> homePageReducers = combineReducers<HomePageState>([
   TypedReducer<HomePageState,NextPageOfHomeQuestionsSuccessAction>(nextPageOfQuestionsReducer).call,
-  TypedReducer<HomePageState,AddHomeQuestionAction>(addHomeQuestionReducer).call,
 ]);

@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
         public async Task<byte[]> Handle(GetQuestionImageDto request, CancellationToken cancellationToken)
         {
             var question =
-                await _repository.GetByIdAsync(request.QuestionId, cancellationToken) ??
+                await _repository.GetQuestionWithImagesById(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
             if (!question.Images.Any(x => x.BlobName == request.BlobName))

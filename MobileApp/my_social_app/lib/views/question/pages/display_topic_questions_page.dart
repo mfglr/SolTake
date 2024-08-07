@@ -23,7 +23,7 @@ class DisplayTopicQuestionsPage extends StatelessWidget {
       ),
       body: StoreConnector<AppState,Iterable<QuestionState>>(
         onInit: (store) => store.dispatch(NextPageOfTopicQuestionsIfNoQuestionsAction(topicId: topic.id)),
-        converter: (store) => store.state.getTopicQuestions(topic.id),
+        converter: (store) => store.state.questionEntityState.selectQuestionsByTopicId(topic.id),
         builder: (context,questions) => QuestionItemsWidget(
           questions: questions.toList(),
         ),

@@ -9,16 +9,18 @@ class QuestionImageEntityState extends EntityState<QuestionImageState>{
 
   QuestionImageEntityState addValue(QuestionImageState value)
     => QuestionImageEntityState(entities: appendOne(value));
-
   QuestionImageEntityState addValues(Iterable<QuestionImageState> values)
     => QuestionImageEntityState(entities: appendMany(values));
-
   QuestionImageEntityState addLists(Iterable<Iterable<QuestionImageState>> lists)
     => QuestionImageEntityState(entities: appendLists(lists));
- 
+  
+  QuestionImageEntityState startLoadingImage(int id)
+    => QuestionImageEntityState(entities: updateOne(entities[id]!.startLoding()));
   QuestionImageEntityState loadImage(int id,Uint8List image)
     => QuestionImageEntityState(entities: updateOne(entities[id]!.load(image)));
+  QuestionImageEntityState notFoundImage(int id)
+    => QuestionImageEntityState(entities: updateOne(entities[id]!.notFound()));
 
-  Iterable<QuestionImageState> getQuestionImages(int questionId)
+  Iterable<QuestionImageState> selectQuestionImages(int questionId)
     => entities.values.where((x) => x.questionId == questionId);
 }

@@ -15,7 +15,7 @@ class Solution{
   final int questionId;
   final int appUserId;
   final String userName;
-  final String content;
+  final String? content;
   final bool isUpvoted;
   final int numberOfUpvotes;
   final bool isDownvoted;

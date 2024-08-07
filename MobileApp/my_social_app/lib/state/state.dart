@@ -14,11 +14,9 @@ import 'package:my_social_app/state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/message_home_page_state/message_home_page_state.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
-import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_entity_state.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_entity_state.dart';
-import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/solution_image_entity_state/solution_image_entity_state.dart';
 import 'package:my_social_app/state/solution_image_entity_state/solution_image_state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_entity_state.dart';
@@ -116,24 +114,6 @@ class AppState{
 
   UserState? get currentUser => userEntityState.entities[accountState!.id];
   Iterable<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.entities[e]!);
-  //Select Questions
-  Iterable<QuestionState> getUserQuestions(int userId)
-    => userEntityState.entities[userId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
-  Iterable<QuestionState> getExamQuestions(int examId)
-    => examEntityState.entities[examId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
-  Iterable<QuestionState> getSubjectQuestions(int subjectId)
-    => subjectEntityState.entities[subjectId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
-  Iterable<QuestionState> getTopicQuestions(int topicId)
-    => topicEntityState.entities[topicId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
-  Iterable<QuestionState> get getHomePageQuestions
-    => homePageState.questions.ids.map((e) => questionEntityState.entities[e]!);
-  //Select questions end
-
-
-  //Select solutions
-  Iterable<SolutionState> getQuestionSolutions(int questionId)
-    => questionEntityState.entities[questionId]!.solutions.ids.map((e) => solutionEntityState.entities[e]!);
-  //Select solutions end
 
   //Select solutionImages
   Iterable<SolutionImageState> getSolutionImages(int solutionId)

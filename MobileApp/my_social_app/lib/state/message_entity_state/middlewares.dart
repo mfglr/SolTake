@@ -37,9 +37,11 @@ void markComingMessagesAsReceivedMiddleware(Store<AppState> store,action,NextDis
 void markComingMessagesAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MarkComingMessagesAsViewedAction){
     final messageIds = store.state.messageEntityState.selectIdsOfUnviewedMessagesOfUser(action.userId);
-    MessageHub()
+    if(messageIds.isNotEmpty){
+      MessageHub()
       .markMessagesAsViewed(messageIds)
       .then((_) => store.dispatch(MarkComingMessagesAsViewedSuccessAction(messageIds: messageIds)));
+    }    
   }
   next(action);
 }

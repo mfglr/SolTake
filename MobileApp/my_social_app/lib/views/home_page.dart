@@ -17,8 +17,39 @@ enum MenuAction{
   logout
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+  late final void Function() _nextPageQuestions;
+
+  @override
+  void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    _nextPageQuestions = (){
+      if(_scrollController.hasClients){
+        final position = _scrollController.position;
+        if(position.pixels == position.maxScrollExtent){
+          print("test");
+          // store.dispatch(const NextPageOfHomeQuestionsAction());
+        }
+      }
+    };
+    _scrollController.addListener(_nextPageQuestions);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_nextPageQuestions);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +59,7 @@ class HomePage extends StatelessWidget {
       converter: (store) => store.state.notificationEntityState,
       builder: (context,state) => Scaffold(
         appBar: AppBar(
-          title: const Text("E-Class"),
+          title: const Text("E-CLASS"),
           actions: [
             IconButton(
               onPressed: (){
@@ -78,8 +109,11 @@ class HomePage extends StatelessWidget {
         ),
         body: StoreConnector<AppState,Iterable<QuestionState>>(
           onInit: (store) => store.dispatch(const NextPageOfHomeQuestionsAction()),
-          converter: (store) => store.state.getHomePageQuestions,
-          builder:(context,questions) => QuestionItemsWidget(questions: questions),
+          converter: (store) => store.state.questionEntityState.selectQuestions,
+          builder:(context,questions) => SingleChildScrollView(
+            controller: _scrollController,
+            child: QuestionItemsWidget(questions: questions)
+          ),
         ),
       ),
     );

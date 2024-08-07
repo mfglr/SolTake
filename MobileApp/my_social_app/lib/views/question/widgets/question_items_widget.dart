@@ -8,16 +8,14 @@ class QuestionItemsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: List.generate(
-          questions.length,
-          (index) => Container(
-            margin: const EdgeInsets.only(bottom: 16),
-            child: QuestionItemWidget(question: questions.elementAt(index))
-          ),
-        )
-      ),
+    return Column(
+      children: List.generate(
+        questions.length,
+        (index) => Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          child: QuestionItemWidget(question: questions.elementAt(index))
+        ),
+      )
     );
   }
 }
