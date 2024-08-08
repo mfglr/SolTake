@@ -1,3 +1,4 @@
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
@@ -34,11 +35,7 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
               )
             ))
           );
-          store.dispatch(
-            AddUserImageAction(
-              image: UserImageState(id: question.appUserId,image: null,state: ImageStatus.notStarted)
-            )
-          );
+          store.dispatch(AddUserImageAction(image: UserImageState.init(question.appUserId)));
         });
     }
   }
@@ -69,30 +66,10 @@ void nextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispa
       SolutionService()
       .getByQuestionId(action.questionId,lastValue: state.lastValue)
       .then((solutions){
-        store.dispatch(
-          AddSolutionsAction(
-            solutions: solutions.map((e) => e.toSolutionState())
-          )
-        );
-
-        store.dispatch(
-          AddSolutionImagesListsAction(
-            lists: solutions.map((e) => e.images.map((e) => e.toSolutionImageState()))
-          )
-        );
-
-        store.dispatch(
-          NextPageQuestionSolutionsSuccessAction(
-            questionId: action.questionId, 
-            solutionIds: solutions.map((e) => e.id)
-          )
-        );
-
-        store.dispatch(
-          AddUserImagesAction(
-            images: solutions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
-          )
-        );
+        store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
+        store.dispatch(AddSolutionImagesListsAction(lists: solutions.map((e) => e.images.map((e) => e.toSolutionImageState()))));
+        store.dispatch(NextPageQuestionSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
+        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
       });
     }
   }
@@ -108,46 +85,25 @@ void nextPageQuestionSolutionIfNoSolutionsMiddleware(Store<AppState> store,actio
   next(action);
 }
 
-void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageQuestionCommentsAction){
+void getNextPageQuestionCommentsIfNoPageCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionCommentsIfNoPageAction){
     final comments = store.state.questionEntityState.entities[action.questionId]!.comments;
-    if(!comments.isLast){
-      CommentService()
-        .getByQuestionId(action.questionId, comments.lastValue)
-        .then((comments){
-          store.dispatch(
-            AddCommentsAction(
-              comments: comments.map((e) => e.toCommentState())
-            )
-          );
-
-          store.dispatch(
-            NextPageQuestionCommentsSuccessAciton(
-              questionId: action.questionId,
-              questionCommentIds: comments.map((e) => e.id)
-            )
-          );
-
-          store.dispatch(
-            AddUserImagesAction(
-              images: comments.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
-            )
-          );
-        });
+    if(!comments.hasAtLeastOnePage && !comments.isLast && !comments.loading){
+      store.dispatch(GetNextPageQuestionCommentsAction(questionId: action.questionId));
     }
   }
   next(action);
 }
-void nextPageQuestionCommentIfNoQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageQuestionCommentsIfNoQuestionComments){
-    final comments = store.state.questionEntityState.entities[action.questionId]!.comments;
-    if(comments.ids.isEmpty){
-      store.dispatch(
-        NextPageQuestionCommentsAction(
-          questionId: action.questionId
-        )
-      );
-    }
+void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionCommentsAction){
+    final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
+    CommentService()
+      .getCommentsByQuestionId(action.questionId, pagination.lastValue, commentsPerPage)
+      .then((comments){
+        store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
+        store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddNextPageQuestionCommentsAction(questionId: action.questionId,commentIds: comments.map((e) => e.id)));
+      });
   }
   next(action);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/views/comment/widgets/comment_modal_widget.dart';
+import 'package:my_social_app/views/comment/modals/display_solution_comments_modal.dart';
 
 class SolutionCommentButtonWidget extends StatelessWidget {
   final SolutionState solution;
@@ -12,7 +12,7 @@ class SolutionCommentButtonWidget extends StatelessWidget {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => const CommentModalWidget(),
+      builder: (context) => DisplaySolutionCommentsModal(solutionId: solution.id),
       isDismissible: true
     );
   }
@@ -22,16 +22,8 @@ class SolutionCommentButtonWidget extends StatelessWidget {
     return TextButton(
       onPressed: (){
         showCommentModal(context);
-        store.dispatch(
-          ChangeSolutionAction(
-            solution: solution
-          )
-        );
-        store.dispatch(
-          ChangeHintTextAction(
-            hintText: "Comment on ${solution.userName}' s solution..."
-          )
-        );
+        store.dispatch(ChangeSolutionAction(solution: solution));
+        store.dispatch(ChangeHintTextAction(hintText: "Comment on ${solution.userName}' s solution..."));
       },
       child: Row(
         children: [

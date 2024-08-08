@@ -30,10 +30,14 @@ class UserEntityState extends EntityState<UserState>{
           entities[userId]!.loadFolloweds(users.map((e) => e.id))
         )
       );
+
+  
+  UserEntityState getNextPageQuestions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]!.getNextPageQuestions()));
+  UserEntityState addNextPageQuestions(int userId, Iterable<int> questions)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNextPageQuestions(questions)));
   UserEntityState addQuestion(int userId,int questionId)
     => UserEntityState(entities: updateOne(entities[userId]!.addQuestion(questionId)));
-  UserEntityState addQuestions(int userId, Iterable<int> questions)
-    => UserEntityState(entities: updateOne(entities[userId]!.loadQuestions(questions)));
 
   UserEntityState loadUserImage(int userId, Uint8List image)
     => UserEntityState(entities: updateOne(entities[userId]!.loadUserImage(image)));

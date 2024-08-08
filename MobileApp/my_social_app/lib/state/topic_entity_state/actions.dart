@@ -15,18 +15,23 @@ class AddTopicsListAction extends redux.Action{
 }
 
 @immutable
-class NextPageOfTopicQuestionsAction extends redux.Action{
+class GetNextPageTopicQuestionsAction extends redux.Action{
   final int topicId;
-  const NextPageOfTopicQuestionsAction({required this.topicId});
+  const GetNextPageTopicQuestionsAction({required this.topicId});
 }
 @immutable
-class NextPageOfTopicQuestionsSuccessAction extends redux.Action{
+class GetNextPageTopicQuestionsIfReadyAction extends redux.Action{
+  final int topicId;
+  const GetNextPageTopicQuestionsIfReadyAction({required this.topicId});
+}
+@immutable
+class AddNextPageTopicQuestionsAction extends redux.Action{
   final int topicId;
   final List<int> questionIds;
-  const NextPageOfTopicQuestionsSuccessAction({required this.topicId, required this.questionIds});
+  const AddNextPageTopicQuestionsAction({required this.topicId, required this.questionIds});
 }
 @immutable
-class NextPageOfTopicQuestionsIfNoQuestionsAction extends redux.Action{
+class GetNextPageTopicQuestionsIfNoPageAction extends redux.Action{
   final int topicId;
-  const NextPageOfTopicQuestionsIfNoQuestionsAction({required this.topicId});
+  const GetNextPageTopicQuestionsIfNoPageAction({required this.topicId});
 }

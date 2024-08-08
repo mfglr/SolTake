@@ -19,7 +19,7 @@ namespace MySocailApp.Domain.TopicAggregate.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
-        public IReadOnlyCollection<QuestionTopic> Questions { get; }
-        public Subject Subject { get; }
+        public IReadOnlyCollection<QuestionTopic> Questions { get; } = null!;
+        public Subject Subject { get; } = null!;
     }
 }

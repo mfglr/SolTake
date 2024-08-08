@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/solution_image.dart';
-import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 part 'solution.g.dart';
 
@@ -63,6 +64,6 @@ class Solution{
       isOwner: isOwner,
       images: images.map((e) => e.id),
       numberOfComments: numberOfComments,
-      comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastValue: null)
+      comments: Pagination.init(solutionsPerPage)
     );
 }

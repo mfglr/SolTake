@@ -1,4 +1,4 @@
-import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 
 class SolutionState{
   final int id;
@@ -16,7 +16,7 @@ class SolutionState{
   final bool isOwner;
   final Iterable<int> images;
   final int numberOfComments;
-  final Ids comments;
+  final Pagination comments;
 
   const SolutionState({
     required this.id,
@@ -40,7 +40,6 @@ class SolutionState{
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
 
-
   SolutionState makeUpvote()
     => SolutionState(
         id: id,
@@ -60,7 +59,6 @@ class SolutionState{
         numberOfComments: numberOfComments,
         comments: comments
       );
-  
   SolutionState makeDownvote()
     => SolutionState(
         id: id,
@@ -80,8 +78,7 @@ class SolutionState{
         numberOfComments: numberOfComments,
         comments: comments
       );
-
-   SolutionState removeUpvote()
+  SolutionState removeUpvote()
     => SolutionState(
         id: id,
         createdAt: createdAt,
@@ -100,7 +97,6 @@ class SolutionState{
         numberOfComments: numberOfComments,
         comments: comments
       );
-
   SolutionState removeDownvote()
     => SolutionState(
         id: id,
@@ -121,6 +117,44 @@ class SolutionState{
         comments: comments
       );
 
+  SolutionState getNextPageComments()
+    => SolutionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        questionId: questionId,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        isUpvoted: isUpvoted,
+        numberOfUpvotes: numberOfUpvotes,
+        isDownvoted: isDownvoted,
+        numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
+        isOwner: isOwner,
+        images: images,
+        numberOfComments: numberOfComments,
+        comments: comments.getNextPage()
+      );
+  SolutionState addNextPageComments(Iterable<int> commentIds)
+    => SolutionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        questionId: questionId,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        isUpvoted: isUpvoted,
+        numberOfUpvotes: numberOfUpvotes,
+        isDownvoted: isDownvoted,
+        numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
+        isOwner: isOwner,
+        images: images,
+        numberOfComments: numberOfComments,
+        comments: comments.addNextPage(commentIds)
+      );
   SolutionState addComment(int commentId)
     => SolutionState(
         id: id,
@@ -139,25 +173,5 @@ class SolutionState{
         images: images,
         numberOfComments: numberOfComments + 1,
         comments: comments.prependOne(commentId)
-      );
-
-  SolutionState addComments(Iterable<int> commentIds)
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
-        isOwner: isOwner,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments.nextPage(commentIds)
       );
 }

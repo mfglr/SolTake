@@ -1,4 +1,4 @@
-import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 
 class CommentState{
   final int id;
@@ -14,8 +14,8 @@ class CommentState{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
-  final Ids likes;
-  final Ids replies;
+  final Pagination likes;
+  final Pagination replies;
   final bool repliesVisibility;
   final int numberOfDisplayReplies;
 
@@ -38,12 +38,50 @@ class CommentState{
     required this.repliesVisibility,
     required this.numberOfDisplayReplies
   });
-  
-  String get formatContent
-    => content.length > 100 ? "${content.substring(0,100)}..." : content;
 
+  String get formatContent => content.length > 100 ? "${content.substring(0,100)}..." : content;
   int get numberOfNotDisplayedReplies => numberOfReplies - numberOfDisplayReplies;
 
+  CommentState getNextPageLikes()
+    => CommentState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        userName: userName,
+        appUserId: appUserId,
+        isEdited: isEdited,
+        content: content,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        numberOfReplies: numberOfReplies,
+        questionId: questionId,
+        solutionId: solutionId,
+        parentId: parentId,
+        likes: likes.getNextPage(),
+        replies: replies,
+        repliesVisibility: repliesVisibility,
+        numberOfDisplayReplies: numberOfDisplayReplies
+      );
+  CommentState addNextPageLikes(Iterable<int> nextIds)
+    => CommentState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        userName: userName,
+        appUserId: appUserId,
+        isEdited: isEdited,
+        content: content,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        numberOfReplies: numberOfReplies,
+        questionId: questionId,
+        solutionId: solutionId,
+        parentId: parentId,
+        likes: likes.addNextPage(nextIds),
+        replies: replies,
+        repliesVisibility: repliesVisibility,
+        numberOfDisplayReplies: numberOfDisplayReplies
+      );
   CommentState like(int userId)
     => CommentState(
         id: id,
@@ -64,7 +102,6 @@ class CommentState{
         repliesVisibility: repliesVisibility,
         numberOfDisplayReplies: numberOfDisplayReplies
       );
-      
   CommentState dislike(int userId)
     => CommentState(
         id: id,
@@ -76,7 +113,7 @@ class CommentState{
         isEdited: isEdited,
         content: content,
         numberOfLikes: numberOfLikes - 1,
-        likes: likes.remove(id),
+        likes: likes.removeOne(id),
         isLiked: false,
         replies: replies,
         numberOfReplies: numberOfReplies,
@@ -107,7 +144,7 @@ class CommentState{
         numberOfDisplayReplies: numberOfDisplayReplies + 1
       );
   
-  CommentState nextPageReplies(Iterable<int> replyIds)
+  CommentState nextPageReplies()
     => CommentState(
         id: id,
         createdAt: createdAt,
@@ -120,13 +157,35 @@ class CommentState{
         numberOfLikes: numberOfLikes,
         likes: likes,
         isLiked: isLiked,
-        replies: replies.nextPage(replyIds),
+        replies: replies.getNextPage(),
+        numberOfReplies: numberOfReplies,
+        parentId: parentId,
+        solutionId: solutionId,
+        repliesVisibility: repliesVisibility,
+        numberOfDisplayReplies: numberOfDisplayReplies
+      );
+  
+  CommentState addNextPageReplies(Iterable<int> replyIds)
+    => CommentState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        questionId: questionId,
+        isEdited: isEdited,
+        content: content,
+        numberOfLikes: numberOfLikes,
+        likes: likes,
+        isLiked: isLiked,
+        replies: replies.addNextPage(replyIds),
         numberOfReplies: numberOfReplies,
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
         numberOfDisplayReplies: repliesVisibility ? numberOfDisplayReplies + replyIds.length : numberOfDisplayReplies
       );
+    
 
   CommentState changeVisibility(bool visibility)
     => CommentState(

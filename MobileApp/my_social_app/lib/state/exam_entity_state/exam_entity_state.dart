@@ -7,8 +7,16 @@ class ExamEntityState extends EntityState<ExamState>{
   final bool isLoaded;
   const ExamEntityState({required super.entities,required this.isLoaded});
 
-  Map<int,ExamState> _nextPageOfQuestions(int examId, Iterable<int> questionIds)
-    => updateOne(entities[examId]!.nextPageOfQuestions(questionIds));
+  ExamEntityState getNextPageQuestions(int examId)
+    => ExamEntityState(
+      entities: updateOne(entities[examId]!.getNextPageQuestions()),
+      isLoaded: isLoaded
+    );
+  ExamEntityState addNextPageQuestions(int examId, Iterable<int> questionIds)
+    => ExamEntityState(
+        entities: updateOne(entities[examId]!.addNextPageQuestions(questionIds)),
+        isLoaded: isLoaded
+      );
 
   Map<int,ExamState> _loadSubjects(int examId, Iterable<int> ids)
     => updateOne(entities[examId]!.loadSubjects(ids));
@@ -18,10 +26,6 @@ class ExamEntityState extends EntityState<ExamState>{
 
   ExamEntityState addExams(Iterable<ExamState> exams)
     => ExamEntityState(entities: appendMany(exams), isLoaded: isLoaded);
-
-  ExamEntityState nextPageOfQuestions(int examId, Iterable<int> questionIds)
-    => ExamEntityState(entities: _nextPageOfQuestions(examId,questionIds), isLoaded: isLoaded);
-
   ExamEntityState loadExamSubjects(int examId,Iterable<int> ids)
     => ExamEntityState(entities: _loadSubjects(examId,ids),isLoaded: isLoaded);
 

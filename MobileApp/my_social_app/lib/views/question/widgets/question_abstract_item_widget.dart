@@ -20,7 +20,7 @@ class QuestionAbstractItemWidget extends StatelessWidget {
         converter: (store) => store.state.userEntityState.entities[question.appUserId]!,
         builder: (context,user) => GestureDetector(
           onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(user: user)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id)));
           },
           child: StoreConnector<AppState,QuestionImageState?>(
             onInit: (store) => store.dispatch(LoadQuestionImageAction(id: question.images.first)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 
 @immutable
 class QuestionState{
@@ -15,14 +16,11 @@ class QuestionState{
   final Iterable<int> images;
   final bool isLiked;
   final int numberOfLikes;
-  
   final bool isOwner;
-
   final int numberOfSolutions;
   final Ids solutions;
-
   final int numberOfComments;
-  final Ids comments;
+  final Pagination comments;
 
   const QuestionState({
     required this.id,
@@ -75,7 +73,6 @@ class QuestionState{
       solutions: solutions,
       comments: comments
     );
-
   QuestionState dislike()
     => QuestionState(
       id: id,
@@ -139,7 +136,6 @@ class QuestionState{
         comments: comments
       );
   
-
   QuestionState addComment(int questionCommentId)
     => QuestionState(
       id: id,
@@ -161,7 +157,7 @@ class QuestionState{
       comments: comments.prependOne(questionCommentId)
     );
 
-  QuestionState nextPageQuestionComments(Iterable<int> commentIds)
+  QuestionState getNextPageComments()
     => QuestionState(
         id: id,
         createdAt: createdAt,
@@ -179,6 +175,26 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments.nextPage(commentIds)
+        comments: comments.getNextPage()
+      );
+  QuestionState addNextPageComments(Iterable<int> commentIds)
+    => QuestionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        examId: examId,
+        subjectId: subjectId,
+        topics: topics,
+        images: images,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        isOwner: isOwner,
+        numberOfSolutions: numberOfSolutions,
+        numberOfComments: numberOfComments,
+        solutions: solutions,
+        comments: comments.addNextPage(commentIds)
       );
 }

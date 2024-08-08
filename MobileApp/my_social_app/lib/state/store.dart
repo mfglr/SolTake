@@ -1,3 +1,4 @@
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/account_state/middlewares.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/create_comment_state/middlewares.dart';
@@ -21,6 +22,7 @@ import 'package:my_social_app/state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
+import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/middlewares.dart';
@@ -45,32 +47,46 @@ import 'package:redux/redux.dart';
 
 final store = Store(
   appReducer,
-  initialState: const AppState(
+  initialState: AppState(
     accessToken: null,
     accountState: null,
     activeLoginPage: ActiveLoginPage.loginPage,
     isInitialized: false,
-    userEntityState: UserEntityState(entities: {}),
-    userImageEntityState: UserImageEntityState(entities: {}),
-    searchState: SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)),
-    createQuestionState: CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
-    createSolutionState: CreateSolutionState(questionId: null, content: "", images: []),
-    examEntityState: ExamEntityState(entities: {}, isLoaded: false),
-    subjectEntityState: SubjectEntityState(entities: {}),
-    topicEntityState: TopicEntityState(entities: {}),
-    questionEntityState: QuestionEntityState(entities: {}),
-    questionImageEntityState: QuestionImageEntityState(entities: {}),
-    solutionEntityState: SolutionEntityState(entities: {}),
-    solutionImageEntityState: SolutionImageEntityState(entities: {}),
-    homePageState: HomePageState(questions: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)),
-    commentEntityState: CommentEntityState(entities: {}),
-    createCommentState: CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
-    notificationEntityState: NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
-    messageEntityState: MessageEntityState(entities: {}),
-    messageHomePageState: MessageHomePageState(isLastConversations: false, isSynchronized: false),
-    createMessageState: CreateMessageState(content: null, images: [], receiverId: null)
+    userEntityState: const UserEntityState(entities: {}),
+    userImageEntityState: const UserImageEntityState(entities: {}),
+    searchState: const SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)),
+    createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
+    createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
+    examEntityState: const ExamEntityState(entities: {}, isLoaded: false),
+    subjectEntityState: const SubjectEntityState(entities: {}),
+    topicEntityState: const TopicEntityState(entities: {}),
+    questionEntityState: const QuestionEntityState(entities: {}),
+    questionImageEntityState: const QuestionImageEntityState(entities: {}),
+    solutionEntityState: const SolutionEntityState(entities: {}),
+    solutionImageEntityState: const SolutionImageEntityState(entities: {}),
+    homePageState: HomePageState(questions: Pagination.init(questionsPerPage)),
+    commentEntityState: const CommentEntityState(entities: {}),
+    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
+    notificationEntityState: const NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
+    messageEntityState: const MessageEntityState(entities: {}),
+    messageHomePageState: const MessageHomePageState(isLastConversations: false, isSynchronized: false),
+    createMessageState: const CreateMessageState(content: null, images: [], receiverId: null)
   ),
   middleware: [
+
+    //Comment entity state middleware
+    getNextPageCommentLikesIfNoPageMiddleware,
+    getNextPageCommentLikesMiddleware,
+    likeCommentMiddleware,
+    dislikeCommentMiddleware,
+    getNextPageCommentRepliesMiddleware,
+    getNextPageCommentRepliesIfNoPageMiddleware,
+
+    //Home page state
+    getNextPageHomeQuestionsMiddleware,
+    getNextPageHomeQuestionsIfNoPageMiddleware,
+    getNextPageHomeQuestionsIfReadyMiddleware,
+    
     //account start
     initAppMiddleware,
     confirmEmailMiddleware,
@@ -90,6 +106,7 @@ final store = Store(
     cancelFollowRequestMiddleware,
     nextPageOfUserQuestionsMiddleware,
     nextPageOfUserQuestionsIfNoQuestionsMiddleware,
+    getNextPageUserQuestionsIfReadyMiddleware,
     nextPageUserMessagesMiddleware,
     nextPageUserMessageIfNoUsersMiddleware,
     //user end
@@ -103,22 +120,23 @@ final store = Store(
     nextPageSearchingMiddleware,
     //search end
     
-    //Exam Start
+    //Exam entity state
     loadAllExamsMiddleware,
     loadSubjectsOfSelectedExamMiddleware,
-    nextPageOfExamQeuestionsMiddleware,
-    nextPageOfExamQuestionsIfNoQuestionsMiddleware,
-    //Exam end
+    getNextPageExamQeuestionsMiddleware,
+    getNextPageOfExamQuestionsIfNoPageMiddleware,
+    getNextPageExamQuestionsIfReadyMiddleware,
 
-    //subject start
-    nextPageOfSubjectQuestionsIfNoQuestionsMiddleware,
-    nextPageOfSubjectQuestionsMiddleware,
+    //subject entity state
+    getNextPageSubjectQuestionsIfNoPageMiddleware,
+    getNextPageSubjectQuestionsIfReadyMiddleware,
+    getNextPageSubjectQuestionsMiddleware,
     loadSubjectTopicsMiddleware,
-    //end
 
     //Topic start
-    nextPageOfTopicQuestionsMiddleware,
-    nextPageOfTopicQuestionsIfNoQuestionsMiddleware,
+    getNextPageTopicQuestionsMiddleware,
+    getNextPageTopicQuestionsIfNoPageMiddleware,
+    getNextPageTopicQuestionsIfReadyMiddeware,
     //Topic end
 
     // Question start
@@ -132,8 +150,6 @@ final store = Store(
     
     // Question image start
     loadQuestionImageMiddleware,
-    nextPageOfHomeQuestionsMiddleware,
-    nextPageOfHomeQuestionsIfNoQuestionsMiddleware,
     // Question image end
 
     //solution start
@@ -142,8 +158,8 @@ final store = Store(
     makeDownvoteMiddleware,
     removeUpvoteMiddleware,
     removeDownvoteMiddleware,
-    nextPageSolutionCommentsMiddleware,
-    nextPageSolutionCommentsIfNoCommentsMiddleware,
+    getNextPageSolutionCommentsMiddleware,
+    getNextPageSolutionCommentsIfNoPageMiddleware,
     //solution end
 
     //Solution image start
@@ -153,11 +169,7 @@ final store = Store(
     //comments start
     createCommentMiddleware,
     nextPageQuestionCommentsMiddleware,
-    nextPageQuestionCommentIfNoQuestionCommentsMiddleware,
-    likeCommentMiddleware,
-    dislikeCommentMiddleware,
-    nextPageCommentRepliesMiddleware,
-    nextPageCommentRepliesIfNoRepliesMiddleware,
+    getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
     loadCommentMiddleware,
 
     //notifications start

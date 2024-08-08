@@ -18,8 +18,8 @@ namespace MySocailApp.Application.Queries.QuestionAggregate
         public bool IsOwner { get; private set; }
         public ExamResponseDto Exam { get; private set; } = null!;
         public SubjectResponseDto Subject { get; private set; } = null!;
-        public List<QuestionTopicResponseDto> Topics { get; private set; }
-        public List<QuestionImageResponseDto> Images { get; private set; }
+        public List<QuestionTopicResponseDto> Topics { get; private set; } = null!;
+        public List<QuestionImageResponseDto> Images { get; private set; } = null!;
 
         private QuestionResponseDto() { }
     }

@@ -12,7 +12,7 @@ class DisplayRepliesButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
-        store.dispatch(NextPageRepliesIfNoReplies(commentId: comment.id));
+        store.dispatch(GetNextPageCommentRepliesIfNoPageAction(commentId: comment.id));
         store.dispatch(ChangeRepliesVisibilityAction(commentId: comment.id, visibility: true));
       },
       child: Row(

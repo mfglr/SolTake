@@ -1,38 +1,36 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
-void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadCommentAction){
-    if(store.state.commentEntityState.entities[action.commentId] == null){
+void getNextPageCommentLikesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageCommentLikesIfNoPageAction){
+    final likes = store.state.commentEntityState.entities[action.commentId]!.likes;
+    if(!likes.hasAtLeastOnePage){
+      store.dispatch(GetNextPageCommentLikesAction(commentId: action.commentId));
+    }
+  }
+  next(action);
+}
+void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageCommentLikesAction){
+    final likes = store.state.commentEntityState.entities[action.commentId]!.likes;
+    if(likes.isLast){
       CommentService()
-        .getById(action.commentId)
-        .then((comment){
-          store.dispatch(
-            AddCommentAction(
-              comment: comment.toCommentState()
-            )
-          );
-          store.dispatch(
-            AddUserImageAction(
-              image: UserImageState(
-                id: comment.appUserId,
-                image: null,
-                state: ImageStatus.notStarted
-              )
-            )
-          );
+        .getCommentLikes(action.commentId, likes.lastValue,usersPerPage)
+        .then((users){
+          store.dispatch(AddNextPageCommentLikesAction(commentId: action.commentId, userIds: users.map((e) => e.id)));
+          store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
+          store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));         
         });
     }
   }
   next(action);
 }
-
 void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LikeCommentAction){
     final int userId = store.state.accountState!.id;
@@ -63,38 +61,40 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void nextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageRepliesAction){
+void getNextPageCommentRepliesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageCommentRepliesIfNoPageAction){
+    final replies = store.state.commentEntityState.entities[action.commentId]!.replies;
+    if(!replies.hasAtLeastOnePage && !replies.isLast){
+      store.dispatch(GetNextPageCommentRepliesAction(commentId: action.commentId));
+    }
+  }
+  next(action);
+}
+void getNextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageCommentRepliesAction){
     final replies = store.state.commentEntityState.entities[action.commentId]!.replies;
     if(!replies.isLast){
       CommentService()
         .getByParentId(action.commentId,replies.lastValue, repliesPerPage)
         .then((replies){
-          store.dispatch(
-            AddCommentsAction(
-              comments: replies.map((e) => e.toCommentState())
-            )
-          );
-          store.dispatch(
-            NextPageRepliesSuccessAction(
-              commentId: action.commentId,
-              replyIds: replies.map((e) => e.id)
-            )
-          );
-          store.dispatch(
-            AddUserImagesAction(
-              images: replies.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
-            )
-          );
+          store.dispatch(AddNextPageCommentRepliesAction(commentId: action.commentId,replyIds: replies.map((e) => e.id)));
+          store.dispatch(AddCommentsAction(comments: replies.map((e) => e.toCommentState())));
+          store.dispatch(AddUserImagesAction(images: replies.map((e) => UserImageState.init(e.appUserId))));
         });
     }
   }
   next(action);
 }
-void nextPageCommentRepliesIfNoRepliesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageRepliesIfNoReplies){
-    if(store.state.commentEntityState.entities[action.commentId]!.replies.ids.length < repliesPerPage){
-      store.dispatch(NextPageRepliesAction(commentId: action.commentId));
+
+void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadCommentAction){
+    if(store.state.commentEntityState.entities[action.commentId] == null){
+      CommentService()
+        .getById(action.commentId)
+        .then((comment){
+          store.dispatch(AddCommentAction(comment: comment.toCommentState()));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
+        });
     }
   }
   next(action);

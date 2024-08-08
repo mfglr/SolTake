@@ -5,10 +5,10 @@
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
-        public string UserName { get; private set; }
+        public string UserName { get; private set; } = null!;
         public int AppUserId { get; private set; }
         public bool IsEdited { get; private set; }
-        public string Content { get; private set; }
+        public string Content { get; private set; } = null!;
         public bool IsLiked { get; private set; }
         public int NumberOfLikes { get; private set; }
         public int NumberOfReplies { get; private set; }

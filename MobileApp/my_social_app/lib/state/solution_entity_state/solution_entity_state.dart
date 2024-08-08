@@ -18,8 +18,10 @@ class SolutionEntityState extends EntityState<SolutionState>{
 
   SolutionEntityState addSolutionComment(int solutionId, int commentId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.addComment(commentId)));
-  SolutionEntityState addSolutionComments(int solutionId, Iterable<int> commentIds)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]!.addComments(commentIds)));
+  SolutionEntityState getNextPageComments(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.getNextPageComments()));
+  SolutionEntityState addNextPageComments(int solutionId, Iterable<int> commentIds)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.addNextPageComments(commentIds)));
 
   Iterable<SolutionState> selectSolutionsByQuestionId(int questionId)
     => entities.values.where((e) => e.questionId == questionId).sorted((x,y) => y.id.compareTo(x.id));

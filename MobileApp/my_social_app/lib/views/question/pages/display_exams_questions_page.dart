@@ -8,25 +8,32 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 
 class DisplayExamsQuestionsPage extends StatelessWidget {
-  final ExamState exam;
-
-  const DisplayExamsQuestionsPage({super.key,required this.exam});
+  final int examId;
+  const DisplayExamsQuestionsPage({super.key,required this.examId});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: Text(
-          "Exam: ${exam.shortName}",
-          style: const TextStyle(fontSize: 16),
+    return StoreConnector<AppState,ExamState>(
+      converter: (store) => store.state.examEntityState.entities[examId]!,
+      builder: (context,exam) => Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: Text(
+            "Exam: ${exam.shortName}",
+            style: const TextStyle(fontSize: 16),
+          ),
         ),
-      ),
-      body: StoreConnector<AppState,Iterable<QuestionState>>(
-        onInit: (store) => store.dispatch(NextPageOfExamQuestionsIfNoQuestions(examId: exam.id)),
-        converter: (store) => store.state.questionEntityState.selectQuestionsByExamId(exam.id),
-        builder: (context,questions) => QuestionItemsWidget(
-          questions: questions.toList(),
+        body: StoreConnector<AppState,Iterable<QuestionState>>(
+          onInit: (store) => store.dispatch(GetNextPageExamQuestionsIfNoPageAction(examId: examId)),
+          converter: (store) => store.state.selectExamQuestions(examId),
+          builder: (context,questions) => QuestionItemsWidget(
+            questions: questions.toList(),
+            pagination: exam.questions,
+            onScrollBottom: (){
+              final store = StoreProvider.of<AppState>(context,listen: false);
+              store.dispatch(GetNextPageExamQuestionsIfReadyAction(examId: examId));
+            },
+          ),
         ),
       ),
     );

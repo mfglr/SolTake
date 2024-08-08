@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/user_entity_state/gender.dart';
 import 'package:my_social_app/state/user_entity_state/profilevisibility.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
@@ -70,7 +72,7 @@ class User{
         followeds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
-        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
+        questions: Pagination.init(questionsPerPage),
         isLastMessages: false,
       );
 }

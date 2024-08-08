@@ -46,27 +46,27 @@ namespace MySocailApp.Api.Controllers
             );
 
         [HttpGet("{id}")]
-        public async Task<QuestionResponseDto> GetById(int id, CancellationToken cancellationToken)
+        public async Task<QuestionResponseDto> GetQuestionById(int id, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionByIdDto(id), cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<QuestionResponseDto>> GetByUserId(int userId, [FromQuery]int? lastValue, CancellationToken cancellationToken)
-           => await _mediator.Send(new GetQuestionsByUserIdDto(userId, lastValue), cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetQuestionsByUserId(int userId, [FromQuery]int? lastValue, [FromQuery]int? take, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetQuestionsByUserIdDto(userId, lastValue, take), cancellationToken);
 
         [HttpGet("{topicId}")]
-        public async Task<List<QuestionResponseDto>> GetByTopicId(int topicId,[FromQuery]int? lastValue, CancellationToken cancellationToken)
-           => await _mediator.Send(new GetQuestionsByTopicIdDto(topicId, lastValue), cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetQuestionsByTopicId(int topicId,[FromQuery]int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetQuestionsByTopicIdDto(topicId, lastValue, take), cancellationToken);
         
         [HttpGet("{subjectId}")]
-        public async Task<List<QuestionResponseDto>> GetBySubjectId(int subjectId, [FromQuery]int? lastValue, CancellationToken cancellationToken)
-           => await _mediator.Send(new GetQuestionsBySubjectIdDto(subjectId, lastValue), cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetQuestionsBySubjectId(int subjectId, [FromQuery]int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetQuestionsBySubjectIdDto(subjectId, lastValue, take), cancellationToken);
 
         [HttpGet("{examId}")]
-        public async Task<List<QuestionResponseDto>> GetByExamId(int examId, [FromQuery] int? lastValue, CancellationToken cancellationToken)
-           => await _mediator.Send(new GetQuestionsByExamIdDto(examId, lastValue), cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetQuestionsByExamId(int examId, [FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetQuestionsByExamIdDto(examId, lastValue, take), cancellationToken);
 
         [HttpGet]
-        public async Task<List<QuestionResponseDto>> GetAll([FromQuery]int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetAllQuestionsDto(lastValue),cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetAllQuestions([FromQuery]int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetAllQuestionsDto(lastValue, take),cancellationToken);
     }
 }

@@ -268,14 +268,14 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         //readonly navigator properties
         public Account Account { get; } = null!;
         public UserConnection UserConnection { get; } = null!;
-        public IReadOnlyCollection<Question> Questions { get; }
-        public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; }
-        public IReadOnlyCollection<Solution> Solutions { get; }
-        public IReadOnlyCollection<Comment> Comments { get; }
-        public IReadOnlyCollection<CommentUserLike> CommentsLiked { get; }
-        public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; }
-        public IReadOnlyCollection<Notification> Noitifications { get; }
-        public IReadOnlyCollection<Message> Messages { get; }
-        public IReadOnlyCollection<Message> MessagesReceived { get; }
+        public IReadOnlyCollection<Question> Questions { get; } = null!;
+        public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } = null!;
+        public IReadOnlyCollection<Solution> Solutions { get; } = null!;
+        public IReadOnlyCollection<Comment> Comments { get; } = null!;
+        public IReadOnlyCollection<CommentUserLike> CommentsLiked { get; } = null!;
+        public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; } = null!;
+        public IReadOnlyCollection<Notification> Noitifications { get; } = null!;
+        public IReadOnlyCollection<Message> Messages { get; } = null!;
+        public IReadOnlyCollection<Message> MessagesReceived { get; } = null!;
     }
 }

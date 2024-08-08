@@ -5,6 +5,7 @@ import 'package:my_social_app/state/account_state/actions.dart';
 import 'package:my_social_app/state/home_page_state/actions.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
+import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
@@ -34,9 +35,9 @@ class _HomePageState extends State<HomePage> {
     _nextPageQuestions = (){
       if(_scrollController.hasClients){
         final position = _scrollController.position;
-        if(position.pixels == position.maxScrollExtent){
-          print("test");
-          // store.dispatch(const NextPageOfHomeQuestionsAction());
+        final pagination = store.state.homePageState.questions;
+        if(position.pixels == position.maxScrollExtent && !pagination.isLast && !pagination.loading){
+          store.dispatch(const GetNextPageHomeQuestionsAction());
         }
       }
     };
@@ -108,11 +109,18 @@ class _HomePageState extends State<HomePage> {
           child: const Icon(Icons.question_mark),
         ),
         body: StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => store.dispatch(const NextPageOfHomeQuestionsAction()),
-          converter: (store) => store.state.questionEntityState.selectQuestions,
-          builder:(context,questions) => SingleChildScrollView(
-            controller: _scrollController,
-            child: QuestionItemsWidget(questions: questions)
+          onInit: (store) => store.dispatch(const GetNextPageHomeQuestionsIfNoPageAction()),
+          converter: (store) => store.state.selectHomePageQuestions,
+          builder:(context,questions) => StoreConnector<AppState,Pagination>(
+            converter: (store) => store.state.homePageState.questions,
+            builder: (context,pagination) => QuestionItemsWidget(
+              questions: questions,
+              pagination: pagination,
+              onScrollBottom: (){
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                store.dispatch(const GetNextPageHomeQuestionsIfReadyAction());
+              },
+            ),
           ),
         ),
       ),

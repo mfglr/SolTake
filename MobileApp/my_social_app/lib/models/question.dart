@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/question_image.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
 import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
@@ -65,6 +67,6 @@ class Question{
     numberOfSolutions: numberOfSolutions,
     numberOfComments: numberOfComments,
     solutions: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastValue: null),
-    comments: const Ids(recordsPerPage: 20, ids: [],isLast: false,lastValue: null),
+    comments: Pagination.init(commentsPerPage),
   );
 }

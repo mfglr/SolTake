@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/comment_font_size.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/store.dart';
@@ -15,9 +16,9 @@ class HideRepliesButtonWidget extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 5),
-            child: const Icon( Icons.visibility_off_outlined,size: 20),
+            child: const Icon( Icons.visibility_off_outlined,size: commentIconFontSize),
           ),
-          const Text("Hide replies", style: TextStyle(fontSize: 12)),
+          const Text("Hide replies", style: TextStyle(fontSize: commentTextFontSize)),
         ],
       )
     );

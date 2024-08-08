@@ -6,18 +6,21 @@ import 'package:my_social_app/state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/views/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class CommentFieldWidget extends StatelessWidget {
   final CreateCommentState state;
   final TextEditingController contentController;
   final FocusNode focusNode;
+  final ScrollController scrollController;
 
   const CommentFieldWidget({
     super.key,
+    required this.state,
     required this.contentController,
     required this.focusNode,
-    required this.state,
+    required this.scrollController
   });
 
   @override
@@ -33,16 +36,16 @@ class CommentFieldWidget extends StatelessWidget {
                   Text("You are replying to ${state.comment!.userName}"),
                   IconButton(
                     onPressed: (){
+                      contentController.text = "";
                       store.dispatch(const CancelReplyAction());
                       store.dispatch(const ChangeContentAction(content: ""));
-                      contentController.text = "";
                     },
                     icon: const Icon(Icons.clear)
                   )
                 ],
               );
             }
-            return const SizedBox.shrink();
+            return const SpaceSavingWidget();
           },
         ),
         Row(
@@ -53,7 +56,7 @@ class CommentFieldWidget extends StatelessWidget {
                 converter: (store) => store.state.accountState,
                 builder:(context,accountState) => UserImageWidget(
                   userId: accountState!.id,
-                  diameter: 36
+                  diameter: 40
                 )
               ),
             ),
@@ -65,24 +68,23 @@ class CommentFieldWidget extends StatelessWidget {
                   hintText: state.hintText,
                   hintStyle: const TextStyle(fontSize: commentTextFontSize)
                 ),
-                onChanged: (value) => store.dispatch(
-                  ChangeContentAction(
-                    content: value
-                  )
-                ),
+                onChanged: (value) => store.dispatch(ChangeContentAction(content: value)),
               ),
             ),
-            TextButton(
+            FilledButton(
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(13)
               ),
               onPressed: (){
                 store.dispatch(const CreateCommentAction());
                 contentController.text = "";
                 focusNode.unfocus();
+                if(state.comment == null){
+                  scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                }
               },
-              child: const Icon(Icons.send)
+              child: const Icon(Icons.send_outlined)
             )
           ],
         ),

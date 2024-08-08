@@ -180,69 +180,44 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
   next(action);
 }
 
+void nextPageOfUserQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserQuestionsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.questions;
+    if(!pagination.isLast && pagination.ids.isEmpty){
+      store.dispatch(GetNextPageUserQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserQuestionsIfReadyAction){
+   final pagination = store.state.userEntityState.entities[action.userId]!.questions;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
 void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageOfUserQuestionsAction){
+  if(action is GetNextPageUserQuestionsAction){
     final questions = store.state.userEntityState.entities[action.userId]!.questions;
     if(!questions.isLast){
       QuestionService()
         .getByUserId(action.userId,lastValue: questions.lastValue)
         .then((questions){
-          store.dispatch(
-            AddQuestionsAction(
-              questions: questions.map((e) => e.toQuestionState())
-            )
-          );
-
-          store.dispatch(
-            NextPageOfUserQuestionsSuccessAction(
-              userId: action.userId,
-              payload: questions.map((e) => e.id)
-            )
-          );
-
-          store.dispatch(
-            AddQuestionImagesListAction(
-              lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))
-            )
-          );
-
-          store.dispatch(
-            AddUserImagesAction(
-              images: questions.map((e) => UserImageState(id: e.appUserId,image: null,state: ImageStatus.notStarted)) 
-            )
-          );
-
-          store.dispatch(
-            AddExamsAction(
-              exams: questions.map((e) => e.exam.toExamState()) 
-            )
-          );
-
-          store.dispatch(
-            AddSubjectsAction(
-              subjects: questions.map((e) => e.subject.toSubjectState())
-            )
-          );
-
-          store.dispatch(
-            AddTopicsListAction(
-              lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))
-            )
-          );
+          store.dispatch(AddNextPageUserQuestionsAction(userId: action.userId,userIds: questions.map((e) => e.id)));
+          store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+          store.dispatch(AddQuestionImagesListAction(lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))));
+          store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+          store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+          store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+          store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
         });
     }
   }
   next(action);
 }
-void nextPageOfUserQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageOfUserQuestionsIfNoQuestionsAction){
-    final questions = store.state.userEntityState.entities[action.userId]!.questions;
-    if(!questions.isLast && questions.ids.isEmpty){
-      store.dispatch(NextPageOfUserQuestionsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
+
 
 void nextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageUserMessagesAction){

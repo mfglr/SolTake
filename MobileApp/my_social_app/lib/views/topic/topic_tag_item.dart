@@ -9,7 +9,7 @@ class TopicTagItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayTopicQuestionsPage(topic: topic,))),
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayTopicQuestionsPage(topicId: topic.id,))),
       child:  Row(
         mainAxisSize: MainAxisSize.min,
         children: [

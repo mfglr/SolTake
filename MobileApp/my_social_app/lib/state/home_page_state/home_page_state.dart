@@ -1,11 +1,16 @@
-import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 
 class HomePageState{
-  final Ids questions;
+  final Pagination questions;
   const HomePageState({required this.questions});
 
-  HomePageState nextPageOfQuestions(Iterable<int> questionIds)
+  HomePageState getNextPageQuestions()
     => HomePageState(
-        questions: questions.nextPage(questionIds)
+        questions: questions.getNextPage()
       );
+
+  HomePageState addNextPageQuestions(Iterable<int> questionIds)
+    => HomePageState(
+      questions: questions.addNextPage(questionIds)
+    );
 }

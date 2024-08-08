@@ -13,7 +13,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById
         public async Task<QuestionResponseDto> Handle(GetQuestionByIdDto request, CancellationToken cancellationToken)
         {
             var question = 
-                await _repository.GetByIdAsync(request.Id, cancellationToken) ?? 
+                await _repository.GetQuestionByIdAsync(request.Id, cancellationToken) ?? 
                 throw new QuestionNotFoundException();
             return _mapper.Map<QuestionResponseDto>(question);
         }

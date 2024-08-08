@@ -8,24 +8,32 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 
 class DisplayTopicQuestionsPage extends StatelessWidget {
-  final TopicState topic;
-  const DisplayTopicQuestionsPage({super.key, required this.topic});
+  final int topicId;
+  const DisplayTopicQuestionsPage({super.key, required this.topicId});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: Text(
-          "Topic: ${topic.name}",
-          style: const TextStyle(fontSize: 16),
+    return StoreConnector<AppState,TopicState>(
+      converter: (store) => store.state.topicEntityState.entities[topicId]!,
+      builder: (context,topic) =>  Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: Text(
+            "Topic: ${topic.name}",
+            style: const TextStyle(fontSize: 16),
+          ),
         ),
-      ),
-      body: StoreConnector<AppState,Iterable<QuestionState>>(
-        onInit: (store) => store.dispatch(NextPageOfTopicQuestionsIfNoQuestionsAction(topicId: topic.id)),
-        converter: (store) => store.state.questionEntityState.selectQuestionsByTopicId(topic.id),
-        builder: (context,questions) => QuestionItemsWidget(
-          questions: questions.toList(),
+        body: StoreConnector<AppState,Iterable<QuestionState>>(
+          onInit: (store) => store.dispatch(GetNextPageTopicQuestionsIfNoPageAction(topicId: topicId)),
+          converter: (store) => store.state.selectTopicQuestions(topicId),
+          builder: (context,questions) => QuestionItemsWidget(
+            questions: questions.toList(),
+            pagination: topic.questions,
+            onScrollBottom: (){
+              final store = StoreProvider.of<AppState>(context,listen: false);
+              store.dispatch(GetNextPageTopicQuestionsIfReadyAction(topicId: topicId));
+            },
+          ),
         ),
       ),
     );

@@ -65,25 +65,26 @@ class NextPageQuestionSolutionsIfNoSolutionsAction extends redux.Action{
   const NextPageQuestionSolutionsIfNoSolutionsAction({required this.questionId});
 }
 
+
+@immutable
+class GetNextPageQuestionCommentsIfNoPageAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionCommentsIfNoPageAction({required this.questionId});
+}
+@immutable
+class GetNextPageQuestionCommentsAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionCommentsAction({required this.questionId});
+}
+@immutable
+class AddNextPageQuestionCommentsAction extends redux.Action{
+  final int questionId;
+  final Iterable<int> commentIds;
+  const AddNextPageQuestionCommentsAction({required this.questionId,required this.commentIds});
+}
 @immutable
 class AddQuestionCommentAction extends redux.Action{
   final int commenId;
   final int questionId;
   const AddQuestionCommentAction({required this.commenId, required this.questionId});
-}
-@immutable
-class NextPageQuestionCommentsAction extends redux.Action{
-  final int questionId;
-  const NextPageQuestionCommentsAction({required this.questionId});
-}
-@immutable
-class NextPageQuestionCommentsSuccessAciton extends redux.Action{
-  final int questionId;
-  final Iterable<int> questionCommentIds;
-  const NextPageQuestionCommentsSuccessAciton({required this.questionId,required this.questionCommentIds});
-}
-@immutable
-class NextPageQuestionCommentsIfNoQuestionComments extends redux.Action{
-  final int questionId;
-  const NextPageQuestionCommentsIfNoQuestionComments({required this.questionId});
 }

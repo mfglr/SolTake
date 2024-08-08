@@ -7,9 +7,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public int QuestionId { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public int TopicId { get; private set; }
-        public Topic Topic { get; }
-        public Question Question { get; }
-
 
         private QuestionTopic(int questionId, int topicId)
         {
@@ -19,5 +16,8 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         public static QuestionTopic Create(int questionId, int topicId)
             => new(questionId, topicId) { CreatedAt = DateTime.UtcNow };
+
+        public Topic Topic { get; } = null!;
+        public Question Question { get; } = null!;
     }
 }

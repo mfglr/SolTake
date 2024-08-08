@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/views/comment/widgets/comment_modal_widget.dart';
+import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 
 class QuestionCommentButtonWidget extends StatelessWidget {
   final QuestionState question;
@@ -15,7 +15,7 @@ class QuestionCommentButtonWidget extends StatelessWidget {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => const CommentModalWidget(),
+      builder: (context) => DisplayQuestionCommentsModal(questionId: question.id),
       isDismissible: true
     );
   }
@@ -25,16 +25,8 @@ class QuestionCommentButtonWidget extends StatelessWidget {
     return TextButton(
       onPressed: (){
         showCommentModal(context);
-        store.dispatch(
-          ChangeQuestionAction(
-            question: question
-          )
-        );
-        store.dispatch(
-          ChangeHintTextAction(
-            hintText: "Comment on ${question.formatUserName(10)}' s question..."
-          )
-        );
+        store.dispatch(ChangeQuestionAction(question: question));
+        store.dispatch(ChangeHintTextAction(hintText: "Comment on ${question.formatUserName(10)}' s question..."));
       },
       child: Row(
         children: [

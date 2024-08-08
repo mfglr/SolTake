@@ -12,22 +12,26 @@ class LoadAllExamsSuccessAction extends redux.Action{
   const LoadAllExamsSuccessAction({required this.exams});
 }
 
-
 @immutable
-class NextPageOfExamQuestionsAction extends redux.Action{
+class GetNextPageExamQuestionsIfNoPageAction extends redux.Action{
   final int examId;
-  const NextPageOfExamQuestionsAction({required this.examId});
+  const GetNextPageExamQuestionsIfNoPageAction({required this.examId});
 }
 @immutable
-class NextPageOfExamQuestionsSuccessAction extends redux.Action{
+class GetNextPageExamQuestionsIfReadyAction extends redux.Action{
+  final int examId;
+  const GetNextPageExamQuestionsIfReadyAction({required this.examId});
+}
+@immutable
+class GetNextPageExamQuestionsAction extends redux.Action{
+  final int examId;
+  const GetNextPageExamQuestionsAction({required this.examId});
+}
+@immutable
+class AddNextPageExamQuestionsAction extends redux.Action{
   final int examId;
   final Iterable<int> questionIds;
-  const NextPageOfExamQuestionsSuccessAction({required this.examId, required this.questionIds});
-}
-@immutable
-class NextPageOfExamQuestionsIfNoQuestions extends redux.Action{
-  final int examId;
-  const NextPageOfExamQuestionsIfNoQuestions({required this.examId});
+  const AddNextPageExamQuestionsAction({required this.examId, required this.questionIds});
 }
 
 

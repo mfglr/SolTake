@@ -16,10 +16,13 @@ SolutionEntityState removeUpvoteReducer(SolutionEntityState prev,RemoveUpvoteSuc
 SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveDownvoteSuccessAction action)
   => prev.removeDownvote(action.solutionId);
 
-SolutionEntityState addSolutionCommentReducer(SolutionEntityState prev,AddSolutionCommentAction action)
+
+SolutionEntityState getNextPageCommentsReducer(SolutionEntityState prev,GetNextPageSolutionCommentsAction action)
+  => prev.getNextPageComments(action.solutionId);
+SolutionEntityState addNextPageCommentsReducer(SolutionEntityState prev,AddNextPageSolutionCommentsAction action)
+  => prev.addNextPageComments(action.solutionId,action.commentsIds);
+SolutionEntityState addCommentReducer(SolutionEntityState prev,AddSolutionCommentAction action)
   => prev.addSolutionComment(action.solutionId,action.commentId);
-SolutionEntityState nextPageSolutionCommentsSuccessReducer(SolutionEntityState prev,NextPageSolutionCommentsSuccessAction action)
-  => prev.addSolutionComments(action.solutionId,action.commentsIds);
 
 Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<SolutionEntityState>([
   TypedReducer<SolutionEntityState,AddSolutionAction>(addSolutionReducer).call,
@@ -28,6 +31,9 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
   TypedReducer<SolutionEntityState,MakeDownvoteSuccessAction>(makeDownvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveUpvoteSuccessAction>(removeUpvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveDownvoteSuccessAction>(removeDownVoteAction).call,
-  TypedReducer<SolutionEntityState,AddSolutionCommentAction>(addSolutionCommentReducer).call,
-  TypedReducer<SolutionEntityState,NextPageSolutionCommentsSuccessAction>(nextPageSolutionCommentsSuccessReducer).call,
+
+  TypedReducer<SolutionEntityState,GetNextPageSolutionCommentsAction>(getNextPageCommentsReducer).call,
+  TypedReducer<SolutionEntityState,AddNextPageSolutionCommentsAction>(addNextPageCommentsReducer).call,
+  TypedReducer<SolutionEntityState,AddSolutionCommentAction>(addCommentReducer).call,
+  
 ]);

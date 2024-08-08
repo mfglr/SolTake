@@ -14,6 +14,7 @@ import 'package:my_social_app/state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/message_home_page_state/message_home_page_state.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_entity_state.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_entity_state.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:my_social_app/state/solution_entity_state/solution_entity_state.dart';
@@ -123,11 +124,20 @@ class AppState{
   Iterable<TopicState> get topicsOfSelecetedSubject
     => topicEntityState.getSubjectTopics(createQuestionState.subjectId);
 
-
+  //Select questions
+  Iterable<QuestionState> get selectHomePageQuestions
+    => homePageState.questions.ids.map((e) => questionEntityState.entities[e]!);
+  Iterable<QuestionState> selectExamQuestions(int examId)
+    => examEntityState.entities[examId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+  Iterable<QuestionState> selectSubjectQuestions(int subjectId)
+    => subjectEntityState.entities[subjectId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+  Iterable<QuestionState> selectTopicQuestions(int topicId)
+    => topicEntityState.entities[topicId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+  //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)
     => questionEntityState.entities[questionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> getSolutionComments(int solutionId)
     => solutionEntityState.entities[solutionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
-  Iterable<CommentState> getCommentReplies(int commentId)
+  Iterable<CommentState> selectCommentReplies(int commentId)
     => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
 }

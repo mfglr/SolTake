@@ -63,18 +63,18 @@ class AddSolutionCommentAction extends redux.Action{
 }
 
 @immutable
-class NextPageSolutionCommentsAction extends redux.Action{
+class GetNextPageSolutionCommentsAction extends redux.Action{
   final int solutionId;
-  const NextPageSolutionCommentsAction({required this.solutionId});
+  const GetNextPageSolutionCommentsAction({required this.solutionId});
 }
 @immutable
-class NextPageSolutionCommentsSuccessAction extends redux.Action{
+class AddNextPageSolutionCommentsAction extends redux.Action{
   final int solutionId;
   final Iterable<int> commentsIds;
-  const NextPageSolutionCommentsSuccessAction({required this.solutionId, required this.commentsIds});
+  const AddNextPageSolutionCommentsAction({required this.solutionId, required this.commentsIds});
 }
 @immutable
-class NextPageSolutionCommentsIfNoCommentsAction extends redux.Action{
+class GetNextPageSolutionCommentsIfNoPageAction extends redux.Action{
   final int solutionId;
-  const NextPageSolutionCommentsIfNoCommentsAction({required this.solutionId});
+  const GetNextPageSolutionCommentsIfNoPageAction({required this.solutionId});
 }

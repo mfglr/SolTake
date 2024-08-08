@@ -3,6 +3,23 @@ import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 
 @immutable
+class GetNextPageCommentLikesIfNoPageAction extends redux.Action{
+  final int commentId;
+  const GetNextPageCommentLikesIfNoPageAction({required this.commentId});
+}
+@immutable
+class GetNextPageCommentLikesAction extends redux.Action{
+  final int commentId;
+  const GetNextPageCommentLikesAction({required this.commentId});
+}
+@immutable
+class AddNextPageCommentLikesAction extends redux.Action{
+  final int commentId;
+  final Iterable<int> userIds;
+  const AddNextPageCommentLikesAction({required this.commentId, required this.userIds});
+}
+
+@immutable
 class LoadCommentAction extends redux.Action{
   final int commentId;
   const LoadCommentAction({required this.commentId});
@@ -49,26 +66,26 @@ class DislikeCommentSuccessAction extends redux.Action{
   const DislikeCommentSuccessAction({required this.questionCommentId,required this.userId});
 }
 
+
+@immutable
+class GetNextPageCommentRepliesIfNoPageAction extends redux.Action{
+  final int commentId;
+  const GetNextPageCommentRepliesIfNoPageAction({required this.commentId});
+}
+@immutable
+class GetNextPageCommentRepliesAction extends redux.Action{
+  final int commentId;
+  const GetNextPageCommentRepliesAction({required this.commentId});
+}
+@immutable
+class AddNextPageCommentRepliesAction extends redux.Action{
+  final int commentId;
+  final Iterable<int> replyIds;
+  const AddNextPageCommentRepliesAction({required this.commentId, required this.replyIds});
+}
 @immutable
 class AddCommentReplyAction extends redux.Action{
   final int commentId;
   final int replyId;
   const AddCommentReplyAction({required this.replyId, required this.commentId});
-}
-
-@immutable
-class NextPageRepliesAction extends redux.Action{
-  final int commentId;
-  const NextPageRepliesAction({required this.commentId});
-}
-@immutable
-class NextPageRepliesSuccessAction extends redux.Action{
-  final int commentId;
-  final Iterable<int> replyIds;
-  const NextPageRepliesSuccessAction({required this.commentId, required this.replyIds});
-}
-@immutable
-class NextPageRepliesIfNoReplies extends redux.Action{
-  final int commentId;
-  const NextPageRepliesIfNoReplies({required this.commentId});
 }

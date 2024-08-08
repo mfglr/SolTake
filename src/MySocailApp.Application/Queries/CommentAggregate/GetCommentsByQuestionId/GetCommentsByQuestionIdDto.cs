@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId
 {
-    public record GetCommentsByQuestionIdDto(int QuestionId, int? LastValue) : IRequest<List<CommentResponseDto>>;
+    public record GetCommentsByQuestionIdDto(int QuestionId, int? LastValue, int? Take) : IRequest<List<CommentResponseDto>>;
 }

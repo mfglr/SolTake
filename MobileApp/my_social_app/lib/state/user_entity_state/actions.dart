@@ -93,21 +93,27 @@ class AddUserQuestionAction extends redux.Action{
   const AddUserQuestionAction({required this.userId,required this.questionId});
 }
 @immutable
-class NextPageOfUserQuestionsAction extends redux.Action{
+class GetNextPageUserQuestionsIfNoPageAction extends redux.Action{
   final int userId;
-  const NextPageOfUserQuestionsAction({required this.userId});
+  const GetNextPageUserQuestionsIfNoPageAction({required this.userId});
 }
 @immutable
-class NextPageOfUserQuestionsSuccessAction extends redux.Action{
+class GetNextPageUserQuestionsIfReadyAction extends redux.Action{
   final int userId;
-  final Iterable<int> payload;
-  const NextPageOfUserQuestionsSuccessAction({required this.userId,required this.payload});
+  const GetNextPageUserQuestionsIfReadyAction({required this.userId});
 }
 @immutable
-class NextPageOfUserQuestionsIfNoQuestionsAction extends redux.Action{
+class GetNextPageUserQuestionsAction extends redux.Action{
   final int userId;
-  const NextPageOfUserQuestionsIfNoQuestionsAction({required this.userId});
+  const GetNextPageUserQuestionsAction({required this.userId});
 }
+@immutable
+class AddNextPageUserQuestionsAction extends redux.Action{
+  final int userId;
+  final Iterable<int> userIds;
+  const AddNextPageUserQuestionsAction({required this.userId,required this.userIds});
+}
+
 
 @immutable
 class NextPageUserMessagesAction extends redux.Action{

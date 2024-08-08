@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 
 @immutable
-class NextPageOfHomeQuestionsAction extends redux.Action{
-  const NextPageOfHomeQuestionsAction();
+class GetNextPageHomeQuestionsIfNoPageAction extends redux.Action{
+  const GetNextPageHomeQuestionsIfNoPageAction();
 }
 @immutable
-class NextPageOfHomeQuestionsSuccessAction extends redux.Action{
+class GetNextPageHomeQuestionsIfReadyAction extends redux.Action{
+  const GetNextPageHomeQuestionsIfReadyAction();
+}
+@immutable
+class GetNextPageHomeQuestionsAction extends redux.Action{
+  const GetNextPageHomeQuestionsAction();
+}
+@immutable
+class AddNextPageHomeQuestionsAction extends redux.Action{
   final Iterable<int> questionIds;
-  const NextPageOfHomeQuestionsSuccessAction({required this.questionIds});
+  const AddNextPageHomeQuestionsAction({required this.questionIds});
 }
-@immutable
-class NextPageOfHomeQuestionsIfNoQuestionsAction extends redux.Action{
-  const NextPageOfHomeQuestionsIfNoQuestionsAction();
-}
+

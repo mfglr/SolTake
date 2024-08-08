@@ -37,7 +37,7 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         }
 
         //Email verfication Token
-        public EmailConfirmationToken EmailConfirmationToken { get; private set; }
+        public EmailConfirmationToken EmailConfirmationToken { get; private set; } = null!;
         public void UpdateEmailConfirmationToken()
         {
             if (EmailConfirmed)
@@ -54,11 +54,11 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
                 EmailConfirmed = true;
         }
 
-        public AppUser AppUser { get; }
+        public AppUser AppUser { get; } = null!;
 
         //Token
         [NotMapped]
-        public Token Token { get; set; }
+        public Token Token { get; set; } = null!;
 
         //IRemovable
         public bool IsRemoved { get; private set; }

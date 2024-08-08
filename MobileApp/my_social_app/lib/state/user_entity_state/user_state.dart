@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/image_status.dart';
+import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/user_entity_state/gender.dart';
 import 'package:my_social_app/state/user_entity_state/profilevisibility.dart';
 
@@ -27,7 +28,7 @@ class UserState{
   final Ids followeds;
   final Ids requesters;
   final Ids requesteds;
-  final Ids questions;
+  final Pagination questions;
   final bool isLastMessages;
 
   String formatName(int count){
@@ -83,7 +84,7 @@ class UserState{
     Ids? newFolloweds,
     Ids? newRequesters,
     Ids? newRequesteds,
-    Ids? newQuestions,
+    Pagination? newQuestions,
     bool? newIsLastMessages,
   }) => UserState(
     id: id,
@@ -113,7 +114,9 @@ class UserState{
   UserState loadFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.nextPage(newFolloweds));
   UserState loadRequesters(Iterable<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
   UserState loadRequesteds(Iterable<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
-  UserState loadQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.nextPage(newQuestions));
+  
+  UserState getNextPageQuestions() => _optional(newQuestions: questions.getNextPage());
+  UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.addNextPage(newQuestions));
   
   //make follow request start
   UserState addRequester(int currentUserId){

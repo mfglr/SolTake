@@ -2,7 +2,6 @@ import 'package:my_social_app/services/exam_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/subject_service.dart';
 import 'package:my_social_app/state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
@@ -11,6 +10,42 @@ import 'package:my_social_app/state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
+
+void getNextPageOfExamQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageExamQuestionsIfNoPageAction){
+    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    if(!pagination.isLast && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageExamQuestionsAction(examId: action.examId));
+    }
+  }
+  next(action);
+}
+void getNextPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageExamQuestionsIfReadyAction){
+    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageExamQuestionsAction(examId: action.examId));
+    }
+  }
+  next(action);
+}
+void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageExamQuestionsAction){
+    final examState = store.state.examEntityState.entities[action.examId]!;
+    QuestionService()
+      .getByExamId(action.examId,lastValue: examState.questions.lastValue)
+      .then((questions){
+        store.dispatch(AddNextPageExamQuestionsAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+        store.dispatch(AddQuestionImagesListAction(lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
 
 void loadAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadAllExamsAction){
@@ -24,70 +59,6 @@ void loadAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
             )
           )
         );
-    }
-  }
-  next(action);
-}
-
-void nextPageOfExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageOfExamQuestionsAction){
-    final examState = store.state.examEntityState.entities[action.examId]!;
-    if(!examState.questions.isLast){
-      QuestionService()
-        .getByExamId(action.examId,lastValue: examState.questions.lastValue)
-        .then((questions){
-          store.dispatch(
-            AddQuestionsAction(
-              questions: questions.map((e) => e.toQuestionState())
-            )
-          );
-
-          store.dispatch(
-            NextPageOfExamQuestionsSuccessAction(
-              examId: action.examId,
-              questionIds: questions.map((x) => x.id)
-            )
-          );
-          
-          store.dispatch(
-            AddQuestionImagesListAction(
-              lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))
-            )
-          );
-
-          store.dispatch(
-            AddUserImagesAction(
-              images: questions.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
-            )
-          );
-
-          store.dispatch(
-            AddExamsAction(
-              exams: questions.map((e) => e.exam.toExamState()) 
-            )
-          );
-
-          store.dispatch(
-            AddSubjectsAction(
-              subjects: questions.map((e) => e.subject.toSubjectState())
-            )
-          );
-
-          store.dispatch(
-            AddTopicsListAction(
-              lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))
-            )
-          );
-        });
-    }
-  }
-  next(action);
-}
-void nextPageOfExamQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageOfExamQuestionsIfNoQuestions){
-    final questions = store.state.examEntityState.entities[action.examId]!.questions;
-    if(!questions.isLast && questions.ids.isEmpty){
-      store.dispatch(NextPageOfExamQuestionsAction(examId: action.examId));
     }
   }
   next(action);

@@ -79,11 +79,11 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _likes.RemoveAt(index);
         }
 
-        public Exam Exam { get; }
-        public Subject Subject { get; }
-        public AppUser AppUser { get; }
-        public IReadOnlyList<Solution> Solutions { get; }
-        public IReadOnlyCollection<Comment> Comments { get; }
+        public Exam Exam { get; } = null!;
+        public Subject Subject { get; } = null!;
+        public AppUser AppUser { get; } = null!;
+        public IReadOnlyList<Solution> Solutions { get; } = null!;
+        public IReadOnlyCollection<Comment> Comments { get; } = null!;
 
 
         //IDomainEventsContainer

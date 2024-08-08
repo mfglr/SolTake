@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 part 'exam.g.dart';
 
 @immutable
@@ -26,6 +28,6 @@ class Exam{
         shortName: shortName,
         fullName: fullName,
         subjects: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue : null),
-        questions: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)
+        questions: Pagination.init(questionsPerPage)
       );
 }

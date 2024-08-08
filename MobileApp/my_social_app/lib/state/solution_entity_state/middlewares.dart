@@ -1,7 +1,7 @@
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
@@ -16,7 +16,6 @@ void makeUpvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-
 void makeDownvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MakeDownvoteAction){
     SolutionService()
@@ -25,7 +24,6 @@ void makeDownvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-
 void removeUpvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is RemoveUpvoteAction){
     SolutionService()
@@ -34,7 +32,6 @@ void removeUpvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
   }
   next(action);
 }
-
 void removeDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is RemoveDownvoteAction){
     SolutionService()
@@ -44,43 +41,26 @@ void removeDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next)
   next(action);
 }
 
-void nextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageSolutionCommentsAction){
+void getNextPageSolutionCommentsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionCommentsIfNoPageAction){
+    final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
+    if(!comments.hasAtLeastOnePage && !comments.isLast){
+      store.dispatch(GetNextPageSolutionCommentsAction(solutionId: action.solutionId));
+    }
+  }
+  next(action);
+}
+void getNextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionCommentsAction){
     final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
     if(!comments.isLast){
       CommentService()
         .getBySolutionId(action.solutionId,comments.lastValue)
         .then((comments){
-          store.dispatch(
-            AddCommentsAction(
-              comments: comments.map((e) => e.toCommentState())
-            )
-          );
-          store.dispatch(
-            NextPageSolutionCommentsSuccessAction(
-              solutionId: action.solutionId,
-              commentsIds: comments.map((e) => e.id) 
-            )
-          );
-          store.dispatch(
-            AddUserImagesAction(
-              images: comments.map((e) => UserImageState(id: e.appUserId, image: null, state: ImageStatus.notStarted))
-            )
-          );
+          store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
+          store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(commentsPerPage))));
+          store.dispatch(AddNextPageSolutionCommentsAction(solutionId: action.solutionId,commentsIds: comments.map((e) => e.id)));
         });
-    }
-  }
-  next(action);
-}
-void nextPageSolutionCommentsIfNoCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageSolutionCommentsIfNoCommentsAction){
-    final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
-    if(comments.ids.length < 20){
-      store.dispatch(
-        NextPageSolutionCommentsAction(
-          solutionId: action.solutionId
-        )
-      );
     }
   }
   next(action);

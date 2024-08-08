@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
 
 @immutable
 class TopicState{
   final int id;
   final int subjectId;
   final String name;
-  final Ids questions;
+  final Pagination questions;
 
   const TopicState({
     required this.id,
@@ -15,12 +15,20 @@ class TopicState{
     required this.questions
   });
 
-  TopicState loadQuestionIds(Iterable<int> quesionIds)
+  TopicState getNextPageQuestions()
     => TopicState(
         id: id,
         subjectId: subjectId,
         name: name,
-        questions: questions.nextPage(quesionIds),
+        questions: questions.getNextPage(),
+      );
+
+  TopicState addNextPageQuestions(Iterable<int> quesionIds)
+    => TopicState(
+        id: id,
+        subjectId: subjectId,
+        name: name,
+        questions: questions.addNextPage(quesionIds),
       );
   TopicState addQuestionId(int questionId)
     => TopicState(
@@ -34,6 +42,6 @@ class TopicState{
         id: id,
         subjectId: subjectId,
         name: name,
-        questions: questions.remove(questionId)
+        questions: questions.removeOne(questionId)
       );
 }

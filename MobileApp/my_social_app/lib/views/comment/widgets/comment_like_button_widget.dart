@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/comment_font_size.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/state.dart';
 
-class CommentButtonLikeWidget extends StatelessWidget {
+class CommentLikeButtonWidget extends StatelessWidget {
   final CommentState comment;
-  const CommentButtonLikeWidget({super.key,required this.comment});
+  const CommentLikeButtonWidget({super.key,required this.comment});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
         if(comment.isLiked){
           store.dispatch(DislikeCommentAction(questionCommentId: comment.id));
         }
@@ -43,7 +45,7 @@ class CommentButtonLikeWidget extends StatelessWidget {
           Text(
             comment.numberOfLikes.toString(),
             style: const TextStyle(
-              fontSize: commentTextFontSize
+              fontSize: commentContentFontSize
             ),
           )
         ],

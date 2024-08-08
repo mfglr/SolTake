@@ -23,21 +23,11 @@ class QuestionEntityState extends EntityState<QuestionState>{
 
   QuestionEntityState addComment(int questionId,int questionCommentId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addComment(questionCommentId)));
-  QuestionEntityState nextPageQuestionComments(int questionId,Iterable<int> commentIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.nextPageQuestionComments(commentIds)));
+  QuestionEntityState getNextPageComments(int questionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.getNextPageComments()));
+  QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageComments(commentIds)));
 
-  int? selectLastValue(){
-    final questions = selectQuestions;
-    return questions.isNotEmpty ? questions.last.id : null;
-  }
-  Iterable<QuestionState> get selectQuestions
-    => entities.values.sorted((x,y) => y.id.compareTo(x.id));
   Iterable<QuestionState> selectQuestionsByUserId(int userId)
     => entities.values.where((question) => question.appUserId == userId).sorted((x,y) => y.id.compareTo(x.id));
-  Iterable<QuestionState> selectQuestionsByExamId(int examId)
-    => entities.values.where((question) => question.examId == examId).sorted((x,y) => y.id.compareTo(x.id));
-  Iterable<QuestionState> selectQuestionsBySubjectId(int subjectId)
-    => entities.values.where((question) => question.subjectId == subjectId).sorted((x,y) => y.id.compareTo(x.id));
-  Iterable<QuestionState> selectQuestionsByTopicId(int topicId)
-    => entities.values.where((question) => question.topics.any((id) => topicId == id)).sorted((x,y) => y.id.compareTo(x.id));
 }

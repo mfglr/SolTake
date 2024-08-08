@@ -5,7 +5,7 @@
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public int SolutionId { get; private set; }
-        public string BlobName { get; private set; }
+        public string BlobName { get; private set; } = null!;
         public float Height { get; private set; }
         public float Width { get; private set; }
 
@@ -21,6 +21,6 @@
                 CreatedAt = DateTime.UtcNow
             };
 
-        public Solution Solution { get; }
+        public Solution Solution { get; } = null!;
     }
 }

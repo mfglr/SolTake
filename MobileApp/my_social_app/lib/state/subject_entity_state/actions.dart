@@ -19,20 +19,24 @@ class LoadTopicsOfSelectedSubjectSuccessAction extends redux.Action{
   const LoadTopicsOfSelectedSubjectSuccessAction({required this.subjectId, required this.topicIds});
 }
 
-
 @immutable
-class NextPageOfSubjectQuestionsAction extends redux.Action{
+class GetNextPageSubjectQuestionsIfNoPageAction extends redux.Action{
   final int subjectId;
-  const NextPageOfSubjectQuestionsAction({required this.subjectId});
+  const GetNextPageSubjectQuestionsIfNoPageAction({required this.subjectId});
 }
 @immutable
-class NextPageOfSubjectQuestionsSuccessAction extends redux.Action{
+class GetNextPageSubjectQuestionsIfReadyAction extends redux.Action{
+  final int subjectId;
+  const GetNextPageSubjectQuestionsIfReadyAction({required this.subjectId});
+}
+@immutable
+class GetNextPageSubjectQuestionsAction extends redux.Action{
+  final int subjectId;
+  const GetNextPageSubjectQuestionsAction({required this.subjectId});
+}
+@immutable
+class AddNextPageSubjectQuestionsAction extends redux.Action{
   final int subjectId;
   final Iterable<int> questions;
-  const NextPageOfSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
-}
-@immutable
-class NextPageOfSubjectQuestionsIfNoQuestionsAction extends redux.Action{
-  final int subjectId;
-  const NextPageOfSubjectQuestionsIfNoQuestionsAction({required this.subjectId});
+  const AddNextPageSubjectQuestionsAction({required this.subjectId, required this.questions});
 }

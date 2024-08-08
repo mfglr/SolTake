@@ -6,12 +6,16 @@ import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
 class TopicEntityState extends EntityState<TopicState>{
   const TopicEntityState({required super.entities});
  
+  TopicEntityState getNextPageQuestions(int topicId)
+    => TopicEntityState(entities: updateOne(entities[topicId]!.getNextPageQuestions()));
+  TopicEntityState addNextPageQuestions(int topicId,Iterable<int> questionIds)
+    => TopicEntityState(entities: updateOne(entities[topicId]!.addNextPageQuestions(questionIds)));
+
   TopicEntityState addTopics(Iterable<TopicState> topics)
     => TopicEntityState(entities: appendMany(topics));
   TopicEntityState addLists(Iterable<Iterable<TopicState>> lists)
     => TopicEntityState(entities: appendLists(lists));
-  TopicEntityState loadQuestions(int topicId,Iterable<int> questionIds)
-    => TopicEntityState(entities: updateOne(entities[topicId]!.loadQuestionIds(questionIds)));
+
   
   Iterable<TopicState> getSubjectTopics(int? subjectId)
     => entities.values.where((e) => e.subjectId == subjectId);
