@@ -29,6 +29,7 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
           builder: (context,questions) => QuestionItemsWidget(
             questions: questions.toList(),
             pagination: exam.questions,
+            questionIndex: 0,
             onScrollBottom: (){
               final store = StoreProvider.of<AppState>(context,listen: false);
               store.dispatch(GetNextPageExamQuestionsIfReadyAction(examId: examId));

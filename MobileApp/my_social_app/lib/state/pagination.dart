@@ -28,7 +28,9 @@ class Pagination{
   bool get hasAtLeastOnePage => ids.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loading;
 
-  Pagination getNextPage()
+  
+
+  Pagination startLoading()
     => Pagination(
         isLast: isLast,
         loading: true,
@@ -55,6 +57,13 @@ class Pagination{
         loading: loading,
         ids: ids.where((e) => e != id),
         recordsPerPage: recordsPerPage,
+      );
+  Pagination addfirstPage(Iterable<int> newIds)
+    => Pagination(
+        isLast: newIds.length < recordsPerPage,
+        loading: false,
+        ids: newIds,
+        recordsPerPage: recordsPerPage
       );
   
   // Iterable<int> _getUniqIds(Iterable<int> newIds) => newIds.where((x) => !ids.any((id) => id == x));

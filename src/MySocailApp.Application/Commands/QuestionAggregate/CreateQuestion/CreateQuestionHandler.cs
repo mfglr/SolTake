@@ -32,9 +32,10 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return _mapper.Map<QuestionResponseDto>(
+            var response = _mapper.Map<QuestionResponseDto>(
                 await _readRepository.GetQuestionByIdAsync(question.Id, cancellationToken)
             );
+            return response;
         }
     }
 }

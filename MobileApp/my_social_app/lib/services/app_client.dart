@@ -78,7 +78,7 @@ class AppClient{
     return await response.stream.toBytes();
   }
 
-  Future<Map<String,dynamic>> post(String url, { Map<String,Object?>? body }) async {
+  Future<dynamic> post(String url, { Map<String,Object?>? body }) async {
     final Request request = Request("POST", generateUri(url));
     request.body = jsonEncode(body);
     final response = await _sendJsonContent(request);

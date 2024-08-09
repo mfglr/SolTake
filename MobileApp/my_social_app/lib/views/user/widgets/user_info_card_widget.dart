@@ -19,7 +19,7 @@ class UserInfoCardWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          UserInfoHeaderWidget(state: user),
+          UserInfoHeaderWidget(user: user),
           StoreConnector<AppState,AccountState?>(
             converter: (store) => store.state.accountState,
             builder: (context,accountState) {

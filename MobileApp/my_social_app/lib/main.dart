@@ -23,7 +23,6 @@ import 'package:my_social_app/views/message/pages/display_message_images.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/account/register_view.dart';
 import 'package:my_social_app/views/user/pages/user_followeds_page.dart';
-import 'package:my_social_app/views/user/pages/user_followers_page.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/verify_email_view.dart';
 
@@ -86,7 +85,6 @@ Future<void> main() async {
           registerRoute: (context) => const RegisterView(),
           verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),
-          userFollowersRoute: (context) => const UserFollowersPage(),
           userFollowedsRoute: (context) => const UserFollowedsPage(),
 
           takeQuestionImageRoute: (context) => TakeQuestionImagePage(camera: cameras.first),

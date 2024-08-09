@@ -20,7 +20,4 @@ class QuestionImageEntityState extends EntityState<QuestionImageState>{
     => QuestionImageEntityState(entities: updateOne(entities[id]!.load(image)));
   QuestionImageEntityState notFoundImage(int id)
     => QuestionImageEntityState(entities: updateOne(entities[id]!.notFound()));
-
-  Iterable<QuestionImageState> selectQuestionImages(int questionId)
-    => entities.values.where((x) => x.questionId == questionId);
 }

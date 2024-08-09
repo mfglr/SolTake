@@ -27,10 +27,7 @@ class QuestionImagesSlider extends StatelessWidget {
   }
 
   void _loadQuestionImage(Store<AppState> store,int index){
-    final image = store.state.questionImageEntityState.entities[question.images.elementAt(index)]!;
-    if(image.state == ImageStatus.notStarted){
-      store.dispatch(LoadQuestionImageAction(id: image.id));
-    }
+    store.dispatch(LoadQuestionImageAction(id: question.images.elementAt(index)));
   }
 
   @override
@@ -43,7 +40,7 @@ class QuestionImagesSlider extends StatelessWidget {
       },
       child: StoreConnector<AppState,Iterable<QuestionImageState>>(
         onInit: (store) => _loadQuestionImage(store,0),
-        converter: (store) => store.state.questionImageEntityState.selectQuestionImages(question.id),
+        converter: (store) => store.state.selectQuestionImages(question.id),
         builder: (context,imageStates) => CarouselSlider(
           items: imageStates.map(
             (imageState) => Builder(

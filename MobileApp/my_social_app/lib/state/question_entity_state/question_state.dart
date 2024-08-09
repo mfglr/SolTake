@@ -175,7 +175,7 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments.getNextPage()
+        comments: comments.startLoading()
       );
   QuestionState addNextPageComments(Iterable<int> commentIds)
     => QuestionState(

@@ -63,8 +63,17 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void getNextPageCommentRepliesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentRepliesIfNoPageAction){
-    final replies = store.state.commentEntityState.entities[action.commentId]!.replies;
-    if(!replies.hasAtLeastOnePage && !replies.isLast){
+    final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
+    if(!pagination.isLast && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageCommentRepliesAction(commentId: action.commentId));
+    }
+  }
+  next(action);
+}
+void getNextPageCommentRepliesIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageCommentRepliesIfReadyAction){
+    final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
+    if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageCommentRepliesAction(commentId: action.commentId));
     }
   }
@@ -72,16 +81,14 @@ void getNextPageCommentRepliesIfNoPageMiddleware(Store<AppState> store,action,Ne
 }
 void getNextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentRepliesAction){
-    final replies = store.state.commentEntityState.entities[action.commentId]!.replies;
-    if(!replies.isLast){
-      CommentService()
-        .getByParentId(action.commentId,replies.lastValue, repliesPerPage)
-        .then((replies){
-          store.dispatch(AddNextPageCommentRepliesAction(commentId: action.commentId,replyIds: replies.map((e) => e.id)));
-          store.dispatch(AddCommentsAction(comments: replies.map((e) => e.toCommentState())));
-          store.dispatch(AddUserImagesAction(images: replies.map((e) => UserImageState.init(e.appUserId))));
-        });
-    }
+    final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
+    CommentService()
+      .getByParentId(action.commentId, pagination.lastValue, commentsPerPage)
+      .then((replies){
+        store.dispatch(AddNextPageCommentRepliesAction(commentId: action.commentId,replyIds: replies.map((e) => e.id)));
+        store.dispatch(AddCommentsAction(comments: replies.map((e) => e.toCommentState())));
+        store.dispatch(AddUserImagesAction(images: replies.map((e) => UserImageState.init(e.appUserId))));
+      });
   }
   next(action);
 }

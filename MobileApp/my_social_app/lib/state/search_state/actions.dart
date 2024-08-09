@@ -2,26 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 
 @immutable
-class SearchAction extends redux.Action{
-  final String key;
-  const SearchAction({required this.key});
+class GetFirstPageSearchingUsersIfNoPageAction extends redux.Action{
+  const GetFirstPageSearchingUsersIfNoPageAction();
 }
 @immutable
-class SearchSuccessAction extends redux.Action{
+class GetFirstPageSearchingUsersAction extends redux.Action{
   final String key;
-  final Iterable<int> payload;
-  const SearchSuccessAction({required this.key,required this.payload});
+  const GetFirstPageSearchingUsersAction({required this.key});
+}
+@immutable
+class AddFirstPageSearchingUsersAction extends redux.Action{
+  final String key;
+  final Iterable<int> userIds;
+  const AddFirstPageSearchingUsersAction({required this.key,required this.userIds});
 }
 
 @immutable
-class NextPageSearchingAction extends redux.Action{
-  const NextPageSearchingAction();
+class GetNextPageSearchingUsersIfReadyAction extends redux.Action{
+  const GetNextPageSearchingUsersIfReadyAction();
 }
-
 @immutable
-class NextPageOfSearchingSuccessAction extends redux.Action{
-  final Iterable<int> payload;
-  const NextPageOfSearchingSuccessAction({required this.payload});
+class GetNextPageSearchingUsersAction extends redux.Action{
+  const GetNextPageSearchingUsersAction();
+}
+@immutable
+class AddNextPageSearchingUsersAction extends redux.Action{
+  final Iterable<int> userIds;
+  const AddNextPageSearchingUsersAction({required this.userIds});
 }
 
 @immutable

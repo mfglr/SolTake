@@ -21,7 +21,7 @@ class UserItemWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(5),
         child: TextButton(
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: user.id,userName: null,))),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: user.id))),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

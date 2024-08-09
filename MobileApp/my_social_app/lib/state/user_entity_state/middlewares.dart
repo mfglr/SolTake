@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
@@ -59,131 +60,75 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
   next(action);
 }
 
-void loadFollowersIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadFollowersIfNoUsersAction){
-    final user = store.state.userEntityState.entities[action.userId]!;
-    if(!user.followers.isLast && user.followers.ids.isEmpty){
-      final lastValue = user.followers.lastValue;
-      UserService()
-        .getFollowersById(action.userId,lastValue: lastValue)
-        .then((users){
-          store.dispatch(
-            LoadFollowersSuccessAction(
-              userId: action.userId,
-              payload: users.map((user) => user.toUserState())
-            )
-          );
-
-          store.dispatch(
-            AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
-            )
-          );
-        });
+void getNextPageUserFollowersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserFollowersIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserFollowersAction(userId: action.userId));
     }
   }
   next(action);
 }
-void loadFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadFollowersAction){
-    if(!store.state.userEntityState.entities[action.userId]!.followers.isLast){
-      final lastValue = store.state.userEntityState.entities[action.userId]!.followers.lastValue;
-      UserService()
-        .getFollowersById(action.userId,lastValue: lastValue)
-        .then((users){
-          store.dispatch(
-            LoadFollowersSuccessAction(
-              userId: action.userId,
-              payload:users.map((user) => user.toUserState())
-            )
-          );
-
-          store.dispatch(
-            AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
-            )
-          );
-        });
+void getNextPageUserFollowersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserFollowersIfReadyAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserFollowersAction(userId: action.userId));
     }
   }
   next(action);
 }
-
-void loadFollowedsIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadFollowedsIfNoUsersAction){
-    final user = store.state.userEntityState.entities[action.userId]!;
-    if(!user.followeds.isLast && user.followeds.ids.isEmpty){
-      final lastValue = user.followeds.lastValue;
-      UserService()
-        .getFollowedsById(action.userId,lastValue: lastValue)
-        .then((users){
-          store.dispatch(
-            LoadFollowedsSuccessAction(
-              userId: action.userId,
-              payload:users.map((user) => user.toUserState())
-            )
-          );
-
-          store.dispatch(
-            AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
-            )
-          );
-        });
-    }
-  }
-  next(action);
-}
-void loadFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadFollowersAction){
-    if(!store.state.userEntityState.entities[action.userId]!.followeds.isLast){
-      final lastValue = store.state.userEntityState.entities[action.userId]!.followers.lastValue;
-      UserService()
-        .getFollowedsById(action.userId,lastValue: lastValue)
-        .then((users){
-          store.dispatch(
-            LoadFollowedsSuccessAction(
-              userId: action.userId,
-              payload:users.map((user) => user.toUserState())
-            )
-          );
-
-          store.dispatch(
-            AddUserImagesAction(
-              images: users.map((e) => UserImageState(id: e.id,image: null,state: ImageStatus.notStarted)) 
-            )
-          );
-        }
-      );
-    }
-  }
-  next(action);
-}
-
-
-void makeFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MakeFollowRequestAction){
-    final currentUserId = store.state.accountState!.id;
+void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserFollowersAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
     UserService()
-      .makeFollowRequest(action.userId)
-      .then((_) => store.dispatch(MakeFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
-  }
-  next(action);
-}
-void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is CancelFollowRequestAction){
-    final currentUserId = store.state.accountState!.id;
-    UserService()
-      .cancelFollowRequest(action.userId)
-      .then((_) => store.dispatch(CancelFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
+      .getFollowersById(action.userId,pagination.lastValue,usersPerPage)
+      .then((users){
+        store.dispatch(AddNextPageUserFollowersAction(userId: action.userId, userIds: users.map((e) => e.id)));
+        store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
+        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      });
   }
   next(action);
 }
 
-void nextPageOfUserQuestionsIfNoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+void getNextPageUserFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserFollowedsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserFollowedsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserFollowedsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserFollowedsIfReadyAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserFollowedsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserFollowedsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
+    UserService()
+      .getFollowedsById(action.userId,pagination.lastValue,usersPerPage)
+      .then((users){
+        store.dispatch(AddNextPageUserFollowedsAction(userId: action.userId,userIds:users.map((user) => user.id)));
+        store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
+        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      }
+    );
+  }
+  next(action);
+}
+
+void getNextPageUserQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserQuestionsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.questions;
-    if(!pagination.isLast && pagination.ids.isEmpty){
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserQuestionsAction(userId: action.userId));
     }
   }
@@ -203,7 +148,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
     final questions = store.state.userEntityState.entities[action.userId]!.questions;
     if(!questions.isLast){
       QuestionService()
-        .getByUserId(action.userId,lastValue: questions.lastValue)
+        .getByUserId(action.userId,questions.lastValue,questionsPerPage)
         .then((questions){
           store.dispatch(AddNextPageUserQuestionsAction(userId: action.userId,userIds: questions.map((e) => e.id)));
           store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
@@ -218,6 +163,24 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
   next(action);
 }
 
+void makeFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MakeFollowRequestAction){
+    final currentUserId = store.state.accountState!.id;
+    UserService()
+      .makeFollowRequest(action.userId)
+      .then((_) => store.dispatch(MakeFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
+  }
+  next(action);
+}
+void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CancelFollowRequestAction){
+    final currentUserId = store.state.accountState!.id;
+    UserService()
+      .cancelFollowRequest(action.userId)
+      .then((_) => store.dispatch(CancelFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
+  }
+  next(action);
+}
 
 void nextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextPageUserMessagesAction){

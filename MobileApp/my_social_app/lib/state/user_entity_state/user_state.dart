@@ -24,8 +24,8 @@ class UserState{
   final bool isFollowed;
   final bool isRequester;
   final bool isRequested;
-  final Ids followers;
-  final Ids followeds;
+  final Pagination followers;
+  final Pagination followeds;
   final Ids requesters;
   final Ids requesteds;
   final Pagination questions;
@@ -80,8 +80,8 @@ class UserState{
     bool? newIsRequested,
     Uint8List? newImage,
     ImageStatus? newImageState,
-    Ids? newFollowers,
-    Ids? newFolloweds,
+    Pagination? newFollowers,
+    Pagination? newFolloweds,
     Ids? newRequesters,
     Ids? newRequesteds,
     Pagination? newQuestions,
@@ -110,12 +110,17 @@ class UserState{
     isLastMessages: newIsLastMessages ?? isLastMessages
   );
 
-  UserState nexPageFollowers(Iterable<int> newFollowers) => _optional(newFollowers: followers.nextPage(newFollowers));
-  UserState loadFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.nextPage(newFolloweds));
+  
   UserState loadRequesters(Iterable<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
   UserState loadRequesteds(Iterable<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
   
-  UserState getNextPageQuestions() => _optional(newQuestions: questions.getNextPage());
+  UserState getNextPageFollowers() => _optional(newFollowers: followers.startLoading());
+  UserState addNextPageFollowers(Iterable<int> newFollowers)=> _optional(newFollowers: followers.addNextPage(newFollowers));
+
+  UserState getNextPageFolloweds() => _optional(newFolloweds: followeds.startLoading());
+  UserState addNextPageFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.addNextPage(newFolloweds));
+
+  UserState getNextPageQuestions() => _optional(newQuestions: questions.startLoading());
   UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.addNextPage(newQuestions));
   
   //make follow request start
@@ -150,7 +155,7 @@ class UserState{
       return _optional(
         newNumberOfFollowers: numberOfFollowers - 1,
         newIsFollowed: false,
-        newFollowers: followers.remove(currentUserId)
+        newFollowers: followers.removeOne(currentUserId)
       );
     }
   }
@@ -159,32 +164,34 @@ class UserState{
       return _optional(newRequesteds: requesteds.remove(userId));
     }
     else{
-      return _optional(newNumberOfFolloweds: numberOfFolloweds - 1,newFolloweds: followeds.remove(userId));
+      return _optional(newNumberOfFolloweds: numberOfFolloweds - 1,newFolloweds: followeds.removeOne(userId));
     }
   }
   //cancel follow request end
 
   //remove follower start
   UserState removeFollower(int userId){
-    return _optional(newNumberOfFollowers: numberOfFollowers - 1,newFollowers: followers.remove(userId));
+    return _optional(newNumberOfFollowers: numberOfFollowers - 1,newFollowers: followers.removeOne(userId));
   }
   UserState removeFollowed(int currentUserId){
     return _optional(
       newNumberOfFolloweds: numberOfFolloweds - 1,
       newIsFollowed: false,
-      newFolloweds: followeds.remove(currentUserId)
+      newFolloweds: followeds.removeOne(currentUserId)
     );
   }
   //remove follower end
-  UserState loadUserImage(Uint8List newImage) => _optional(
-    newImage: newImage,newImageState: ImageStatus.done
-  );
+  UserState loadUserImage(Uint8List newImage)
+  => _optional(
+      newImage: newImage,newImageState: ImageStatus.done
+    );
   
   //Questions
-  UserState addQuestion(int id) => _optional(
-    newNumberOfQuestions: numberOfQuestions + 1,
-    newQuestions: questions.prependOne(id)
-  );
+  UserState addQuestion(int id)
+    => _optional(
+        newNumberOfQuestions: numberOfQuestions + 1,
+        newQuestions: questions.prependOne(id)
+      );
 
   UserState nextPageMessages(numberOfMessages)
     => _optional( newIsLastMessages: numberOfMessages < messagesPerPage );

@@ -8,14 +8,14 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
 
-
 class UserPage extends StatelessWidget {
   final int? userId;
   final String? userName;
+
   const UserPage({
     super.key,
-    required this.userId,
-    required this.userName
+    this.userId,
+    this.userName
   });
 
   @override
@@ -50,8 +50,14 @@ class UserPage extends StatelessWidget {
                 Expanded(
                   child: StoreConnector<AppState,Iterable<QuestionState>>(
                     onInit: (store) => store.dispatch(GetNextPageUserQuestionsIfNoPageAction(userId: user.id)),
-                    converter: (store) => store.state.questionEntityState.selectQuestionsByUserId(user.id),
-                    builder: (context,value ) => QuestionAbstractItemsWidget(questions: value)
+                    converter: (store) => store.state.selectUserQuestions(user.id),
+                    builder: (context, questions) => QuestionAbstractItemsWidget(
+                      questions: questions,
+                      onScrollBottom: (){
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        store.dispatch(GetNextPageUserQuestionsIfReadyAction(userId: user.id));
+                      },
+                    )
                   ),
                 )
               ],

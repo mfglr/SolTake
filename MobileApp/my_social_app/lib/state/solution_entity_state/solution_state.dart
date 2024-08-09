@@ -134,7 +134,7 @@ class SolutionState{
         isOwner: isOwner,
         images: images,
         numberOfComments: numberOfComments,
-        comments: comments.getNextPage()
+        comments: comments.startLoading()
       );
   SolutionState addNextPageComments(Iterable<int> commentIds)
     => SolutionState(

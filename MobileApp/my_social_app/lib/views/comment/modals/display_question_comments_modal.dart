@@ -31,9 +31,8 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
     _nextPageComments = (){
       if(_scrollController.hasClients){
         final position = _scrollController.position;
-        final pagination = store.state.questionEntityState.entities[widget.questionId]!.comments;
-        if(position.pixels == position.maxScrollExtent && !pagination.isLast && !pagination.loading){
-          store.dispatch(GetNextPageQuestionCommentsAction(questionId: widget.questionId));
+        if(position.pixels == position.maxScrollExtent){
+          store.dispatch(GetNextPageQuestionCommentsIfReadyAction(questionId: widget.questionId));
         }
       }
     };

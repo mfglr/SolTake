@@ -72,6 +72,11 @@ class GetNextPageQuestionCommentsIfNoPageAction extends redux.Action{
   const GetNextPageQuestionCommentsIfNoPageAction({required this.questionId});
 }
 @immutable
+class GetNextPageQuestionCommentsIfReadyAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionCommentsIfReadyAction({required this.questionId});
+}
+@immutable
 class GetNextPageQuestionCommentsAction extends redux.Action{
   final int questionId;
   const GetNextPageQuestionCommentsAction({required this.questionId});

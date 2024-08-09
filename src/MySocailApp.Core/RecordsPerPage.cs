@@ -4,5 +4,6 @@
     {
         public readonly static int CommentsPerPage = 12;
         public readonly static int QuestionsPerPage = 15;
+        public readonly static int UsersPerPage = 8;
     }
 }

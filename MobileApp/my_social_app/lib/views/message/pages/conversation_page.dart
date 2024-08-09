@@ -81,10 +81,7 @@ class _ConversationPageState extends State<ConversationPage>{
                 onPressed: (){
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UserPage(
-                        userId: widget.userId,
-                        userName: null
-                      )
+                      builder: (context) => UserPage(userId: widget.userId)
                     )
                   );
                 },

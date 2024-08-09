@@ -22,16 +22,18 @@ class QuestionImageState{
     required this.image,
   });
   
-  QuestionImageState startLoding()
-    => QuestionImageState(
-        id: id,
-        questionId: questionId,
-        height: height, 
-        width: width,
-        blobName: blobName,
-        state: ImageStatus.started,
-        image: image,
-      );
+  QuestionImageState startLoding(){
+    if(state != ImageStatus.notStarted) return this;
+    return QuestionImageState(
+      id: id,
+      questionId: questionId,
+      height: height, 
+      width: width,
+      blobName: blobName,
+      state: ImageStatus.started,
+      image: image,
+    );
+  }
 
   QuestionImageState load(Uint8List image)
     => QuestionImageState(

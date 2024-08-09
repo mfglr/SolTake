@@ -120,31 +120,31 @@ namespace MySocailApp.Api.Controllers
             => File(await _mediator.Send(new GetUserImageById(userId), cancellationToken), "application/octet-stream");
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetFollowers([FromQuery] int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowersDto(lastValue), cancellationToken);
+        public async Task<List<AppUserResponseDto>> GetFollowers([FromQuery]int? lastValue, [FromQuery]int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetFollowersDto(lastValue,take), cancellationToken);
 
         [HttpGet("{id}")]
-        public async Task<List<AppUserResponseDto>> GetFollowersById(int id,[FromQuery] int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowersByIdDto(id, lastValue), cancellationToken);
+        public async Task<List<AppUserResponseDto>> GetFollowersById(int id,[FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetFollowersByIdDto(id, lastValue, take), cancellationToken);
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetFolloweds([FromQuery] int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowedsDto(lastValue), cancellationToken);
+        public async Task<List<AppUserResponseDto>> GetFolloweds([FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetFollowedsDto(lastValue,take), cancellationToken);
 
         [HttpGet("{id}")]
-        public async Task<List<AppUserResponseDto>> GetFollowedsById(int id,[FromQuery] int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowedsByIdDto(id, lastValue), cancellationToken);
+        public async Task<List<AppUserResponseDto>> GetFollowedsById(int id,[FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetFollowedsByIdDto(id, lastValue, take), cancellationToken);
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetRequesters([FromQuery] int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetRequesterDto(lastValue), cancellationToken);
+        public async Task<List<AppUserResponseDto>> GetRequesters([FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetRequesterDto(lastValue, take), cancellationToken);
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetRequesteds([FromQuery] int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetRequestedsDto(lastValue), cancellationToken);
+        public async Task<List<AppUserResponseDto>> GetRequesteds([FromQuery]int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetRequestedsDto(lastValue, take), cancellationToken);
         
-        [HttpGet("{key}")]
-        public async Task<List<AppUserResponseDto>> Search(string key, [FromQuery] int? lastValue, CancellationToken cancellationToken)
-            => await _mediator.Send(new SearchUserDto(key, lastValue), cancellationToken);
+        [HttpPost]
+        public async Task<List<AppUserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
     }
 }

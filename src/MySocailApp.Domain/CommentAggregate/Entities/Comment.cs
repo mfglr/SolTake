@@ -74,7 +74,6 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public readonly List<CommentUserTag> _tags = [];
         public IReadOnlyCollection<CommentUserTag> Tags => _tags;
 
-
         //IDomainEventsContainer
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
@@ -82,11 +81,10 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public void ClearEvents() => _events.Clear();
 
         //readonly navigators
+        public AppUser AppUser { get; } = null!;
         public Question? Question { get; }
         public Solution? Solution { get; }
         public Comment? Parent { get; }
-        public IReadOnlyCollection<Comment> Children { get; }
-        public Comment? Replied { get; }
-        public AppUser AppUser { get; } = null!;
+        public IReadOnlyCollection<Comment> Children { get; } = null!;
     }
 }

@@ -73,6 +73,11 @@ class GetNextPageCommentRepliesIfNoPageAction extends redux.Action{
   const GetNextPageCommentRepliesIfNoPageAction({required this.commentId});
 }
 @immutable
+class GetNextPageCommentRepliesIfReadyAction extends redux.Action{
+  final int commentId;
+  const GetNextPageCommentRepliesIfReadyAction({required this.commentId});
+}
+@immutable
 class GetNextPageCommentRepliesAction extends redux.Action{
   final int commentId;
   const GetNextPageCommentRepliesAction({required this.commentId});

@@ -63,10 +63,9 @@ class QuestionService{
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getByUserId(int userId,{int? lastValue}) async {
+  Future<Iterable<Question>> getByUserId(int userId,int? lastValue,int? take) async {
     String endPoint = "$questionController/$getQuestionsByUserIdEndpoint/$userId";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-
+    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }

@@ -10,7 +10,8 @@ import 'package:my_social_app/views/question/pages/display_user_questions_page.d
 
 class QuestionAbstractItemWidget extends StatelessWidget {
   final QuestionState question;
-  const QuestionAbstractItemWidget({super.key,required this.question});
+  final int questionIndex;
+  const QuestionAbstractItemWidget({super.key,required this.question,required this.questionIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +21,16 @@ class QuestionAbstractItemWidget extends StatelessWidget {
         converter: (store) => store.state.userEntityState.entities[question.appUserId]!,
         builder: (context,user) => GestureDetector(
           onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id)));
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id,questionIndex: questionIndex,))
+            );
           },
-          child: StoreConnector<AppState,QuestionImageState?>(
+          child: StoreConnector<AppState,QuestionImageState>(
             onInit: (store) => store.dispatch(LoadQuestionImageAction(id: question.images.first)),
-            converter: (store) => store.state.questionImageEntityState.entities[question.images.first],
+            converter: (store) => store.state.questionImageEntityState.entities[question.images.first]!,
             builder: (context,imageState) => Builder(
               builder: (context){
-                if(imageState == null || imageState.image == null) return const LoadingWidget();
+                if(imageState.image == null) return const LoadingWidget();
                 return Image.memory(
                   imageState.image!,
                   fit: BoxFit.cover,

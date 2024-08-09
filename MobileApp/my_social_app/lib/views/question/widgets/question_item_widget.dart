@@ -55,7 +55,7 @@ class QuestionItemWidget extends StatelessWidget {
               )
             ],
           ),
-          QuestionImagesSlider(question: question,),
+          QuestionImagesSlider(question: question),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

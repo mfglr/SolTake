@@ -7,11 +7,13 @@ import 'package:my_social_app/views/space_saving_widget.dart';
 
 class QuestionItemsWidget extends StatefulWidget {
   final Pagination pagination;
+  final int questionIndex;
   final Iterable<QuestionState> questions;
   final Function onScrollBottom;
   
   const QuestionItemsWidget({
     super.key,
+    required this.questionIndex,
     required this.questions,
     required this.pagination,
     required this.onScrollBottom
@@ -24,6 +26,7 @@ class QuestionItemsWidget extends StatefulWidget {
 class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
   final ScrollController _scrollController = ScrollController();
   late final void Function() _onScrollBottom;
+  final GlobalKey _key = GlobalKey();
 
   @override
   void initState() {
@@ -33,9 +36,16 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
       }
     };
     _scrollController.addListener(_onScrollBottom);
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(_key.currentContext != null){
+        Scrollable.ensureVisible(_key.currentContext!);
+      }
+    });
+
     super.initState();
   }
-
+ 
   @override
   void dispose() {
     _scrollController.removeListener(_onScrollBottom);
@@ -52,6 +62,7 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
           ...List.generate(
             widget.questions.length,
             (index) => Container(
+              key: index == widget.questionIndex ? _key : null,
               margin: const EdgeInsets.only(bottom: 16),
               child: QuestionItemWidget(question: widget.questions.elementAt(index))
             ),

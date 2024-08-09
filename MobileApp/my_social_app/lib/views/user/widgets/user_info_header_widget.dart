@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
+import 'package:my_social_app/views/user/pages/user_followers_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class UserInfoHeaderWidget extends StatelessWidget {
-  final UserState state;
-  const UserInfoHeaderWidget({super.key,required this.state});
+  final UserState user;
+  const UserInfoHeaderWidget({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +20,10 @@ class UserInfoHeaderWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              UserImageWidget(userId: state.id, diameter: 100),
+              UserImageWidget(userId: user.id, diameter: 100),
               Text(
                 style: const TextStyle( fontWeight: FontWeight.bold ),
-                state.formatName(10)
+                user.formatName(10)
               ),
             ]
           ),
@@ -32,12 +34,14 @@ class UserInfoHeaderWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
-                onPressed: (){},
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id, questionIndex: 0))
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      state.numberOfQuestions.toString(),
+                      user.numberOfQuestions.toString(),
                       style: const TextStyle(
                         fontSize: 20
                       ),
@@ -52,13 +56,13 @@ class UserInfoHeaderWidget extends StatelessWidget {
                 
               TextButton(
                 onPressed: () async {
-                  await Navigator.of(context).pushNamed(userFollowersRoute,arguments: state.id);
+                  await Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowersPage(userId: user.id)));
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      state.numberOfFollowers.toString(),
+                      user.numberOfFollowers.toString(),
                       style: const TextStyle(
                         fontSize: 20
                       ),
@@ -73,13 +77,13 @@ class UserInfoHeaderWidget extends StatelessWidget {
           
               TextButton(
                 onPressed: () async {
-                  await Navigator.of(context).pushNamed(userFollowedsRoute,arguments: state.id);
+                  await Navigator.of(context).pushNamed(userFollowedsRoute,arguments: user.id);
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      state.numberOfFolloweds.toString(),
+                      user.numberOfFolloweds.toString(),
                       style: const TextStyle(
                         fontSize: 20
                       ),
@@ -91,7 +95,6 @@ class UserInfoHeaderWidget extends StatelessWidget {
                   ],
                 ),
               )
-              
             ],
           ),
         ),

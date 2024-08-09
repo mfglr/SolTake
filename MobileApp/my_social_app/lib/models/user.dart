@@ -68,11 +68,11 @@ class User{
         isFollowed: isFollowed,
         isRequester: isRequester,
         isRequested: isRequested,
-        followers: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
-        followeds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
+        questions: Pagination.init(questionsPerPage),
+        followers: Pagination.init(usersPerPage),
+        followeds: Pagination.init(usersPerPage),
         requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
-        questions: Pagination.init(questionsPerPage),
         isLastMessages: false,
       );
 }

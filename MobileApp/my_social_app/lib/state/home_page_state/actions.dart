@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
 
 @immutable
+class AddHomePageQuestionAction extends redux.Action{
+  final int questionId;
+  const AddHomePageQuestionAction({required this.questionId});
+}
+
+@immutable
 class GetNextPageHomeQuestionsIfNoPageAction extends redux.Action{
   const GetNextPageHomeQuestionsIfNoPageAction();
 }

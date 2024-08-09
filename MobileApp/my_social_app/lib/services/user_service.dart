@@ -52,56 +52,37 @@ class UserService{
     return await _appClient.getBytes(url);
   }
 
-  Future<Iterable<User>> getFollowers({int? lastValue}) async{
-    String url = "$userController/$getFollowersEndPoint";
-    final list = (await _appClient.get(lastValue != null ? "$url?lastId=$lastValue" : url)) as List; 
-    return list.map((item) => User.fromJson(item));
-  }
-
-  Future<Iterable<User>> getFollowersById(int id, {int? lastValue}) async {
+  Future<Iterable<User>> getFollowersById(int id, int? lastValue, int? take) async {
     String endPoint = "$userController/$getFollowersByIdEndPoint/$id";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
+    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
-
-  Future<Iterable<User>> getFolloweds({int? lastValue}) async{
-    String endPoint = "$userController/$getFollowedsEndPoint";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-
-    final list = (await _appClient.get(url)) as List;
-    return list.map((item) => User.fromJson(item));
-  }
-
-  Future<Iterable<User>> getFollowedsById(int id, {int? lastValue}) async {
+ 
+  Future<Iterable<User>> getFollowedsById(int id, int? lastValue, int? take) async {
     String endPoint = "$userController/$getFollowedsByIdEndPoint/$id";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-    
+    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getRequesters({int? lastValue}) async {
+  Future<Iterable<User>> getRequesters(int? lastValue, int? take) async {
     String endPoint = "$userController/$getRequestersEndPoint";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-    
+    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getRequesteds({int? lastValue}) async {
+  Future<Iterable<User>> getRequesteds(int? lastValue, int? take) async {
     String endPoint = "$userController/$getRequestedsEndPoint";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-
+    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> search(String key, {int? lastValue}) async {
-    String endPoint = "$userController/$searchUserEndPoint/$key";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-
-    final list = (await _appClient.get(url)) as List;
+  Future<Iterable<User>> search(String key, int? lastValue, int? take) async {
+    String url = "$userController/$searchUserEndPoint";
+    final list = (await _appClient.post(url,body: {'key':key,'lastValue':lastValue,'take':take})) as List;
     return list.map((item) => User.fromJson(item));
   }
 }

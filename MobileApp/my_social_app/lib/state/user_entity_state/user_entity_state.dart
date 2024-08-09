@@ -8,29 +8,20 @@ import 'package:my_social_app/state/user_entity_state/user_state.dart';
 class UserEntityState extends EntityState<UserState>{
   const UserEntityState({required super.entities});
 
-  Iterable<UserState> getFollowers(int userId) => entities[userId]!.followers.ids.map((e) => entities[e]!);
-  Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.ids.map((e) => entities[e]!);
-
   UserEntityState addUser(UserState value)
     => UserEntityState(entities: appendOne(value));
   UserEntityState addUsers(Iterable<UserState> values)
     => UserEntityState(entities: appendMany(values));
   
-  UserEntityState addFollowers(int userId, Iterable<UserState> users)
-    => UserEntityState(
-        entities: appendManyAndUpdateOne(
-          users,
-          entities[userId]!.nexPageFollowers(users.map((e) => e.id))
-        )
-      );
-  UserEntityState addFolloweds(int userId, Iterable<UserState> users)
-    => UserEntityState(
-        entities: appendManyAndUpdateOne(
-          users,
-          entities[userId]!.loadFolloweds(users.map((e) => e.id))
-        )
-      );
+  UserEntityState getNextPageFollowers(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]!.getNextPageFollowers()));
+  UserEntityState addNextPageFollowers(int userId, Iterable<int> userIds)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNextPageFollowers(userIds)));
 
+  UserEntityState getNextPageFolloweds(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]!.getNextPageFolloweds()));
+  UserEntityState addNextPageFolloweds(int userId, Iterable<int> userIds)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNextPageFolloweds(userIds)));
   
   UserEntityState getNextPageQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageQuestions()));
@@ -55,4 +46,7 @@ class UserEntityState extends EntityState<UserState>{
 
   UserEntityState nextPageUserMessages(int userId,Iterable<Message> messages)
     => UserEntityState(entities: updateOne(entities[userId]!.nextPageMessages(messages.length)));
+
+  Iterable<UserState> getFollowers(int userId) => entities[userId]!.followers.ids.map((e) => entities[e]!);
+  Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.ids.map((e) => entities[e]!);
 }

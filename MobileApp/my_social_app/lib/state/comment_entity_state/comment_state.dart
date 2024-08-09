@@ -57,7 +57,7 @@ class CommentState{
         questionId: questionId,
         solutionId: solutionId,
         parentId: parentId,
-        likes: likes.getNextPage(),
+        likes: likes.startLoading(),
         replies: replies,
         repliesVisibility: repliesVisibility,
         numberOfDisplayReplies: numberOfDisplayReplies
@@ -157,7 +157,7 @@ class CommentState{
         numberOfLikes: numberOfLikes,
         likes: likes,
         isLiked: isLiked,
-        replies: replies.getNextPage(),
+        replies: replies.startLoading(),
         numberOfReplies: numberOfReplies,
         parentId: parentId,
         solutionId: solutionId,

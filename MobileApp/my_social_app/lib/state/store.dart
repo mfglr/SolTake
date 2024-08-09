@@ -12,7 +12,6 @@ import 'package:my_social_app/state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/home_page_state/middlewares.dart';
-import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/message_home_page_state/message_home_page_state.dart';
@@ -54,7 +53,7 @@ final store = Store(
     isInitialized: false,
     userEntityState: const UserEntityState(entities: {}),
     userImageEntityState: const UserImageEntityState(entities: {}),
-    searchState: const SearchState(key: "", users: Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null)),
+    searchState: SearchState(key: "", users: Pagination.init(usersPerPage)),
     createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: const ExamEntityState(entities: {}, isLoaded: false),
@@ -81,6 +80,7 @@ final store = Store(
     dislikeCommentMiddleware,
     getNextPageCommentRepliesMiddleware,
     getNextPageCommentRepliesIfNoPageMiddleware,
+    getNextPageCommentRepliesIfReadyMiddleware,
 
     //Home page state
     getNextPageHomeQuestionsMiddleware,
@@ -95,29 +95,39 @@ final store = Store(
     logOutMiddleware,
     //account end
 
-    //user start
+    //user entity state
     loadUserMiddleware,
     loadUserByUserNameMiddleware,
-    loadFollowersIfNoUsersMiddleware,
-    loadFollowedsIfNoUsersMiddleware,
-    loadFollowersMiddleware,
-    loadFollowedsMiddleware,
+
+    
+    
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
-    nextPageOfUserQuestionsMiddleware,
-    nextPageOfUserQuestionsIfNoQuestionsMiddleware,
-    getNextPageUserQuestionsIfReadyMiddleware,
     nextPageUserMessagesMiddleware,
     nextPageUserMessageIfNoUsersMiddleware,
+
+    getNextPageUserFollowedsIfNoPageMiddleware,
+    getNextPageUserFollowedsIfReadyMiddleware,
+    getNextPageUserFollowedsMiddleware,
+
+    getNextPageUserFollowersIfNoPageMiddleware,
+    getNextPageUserFollowersIfReadyMiddleware,
+    getNextPageUserFollowersMiddleware,
+
+    getNextPageUserQuestionsIfNoPageMiddleware,
+    getNextPageUserQuestionsIfReadyMiddleware,
+    nextPageOfUserQuestionsMiddleware,
     //user end
 
     //user image start
     loadUserImageMiddleware,
     //user imgage end
 
-    //search start
-    searchMiddleware,
-    nextPageSearchingMiddleware,
+    //search state
+    getFirstPageSearchingUsersIfNoPageMiddleware,
+    getFirstPageSearchingUsersMiddleware,
+    getNextPageSearchingUsersIfReadyMiddleware,
+    getNextPageSearchingUsersMiddleware,
     //search end
     
     //Exam entity state
@@ -166,10 +176,11 @@ final store = Store(
     loadSolutionImageMiddleware,
     //Solution image end
 
-    //comments start
+    //comments entity state
     createCommentMiddleware,
     nextPageQuestionCommentsMiddleware,
     getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
+    getNextPageQuestionCommentIfReadyMiddleware,
     loadCommentMiddleware,
 
     //notifications start

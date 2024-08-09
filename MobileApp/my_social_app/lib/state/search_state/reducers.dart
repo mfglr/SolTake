@@ -1,19 +1,21 @@
-import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/search_state/actions.dart';
 import 'package:my_social_app/state/search_state/search_state.dart';
 import 'package:redux/redux.dart';
 
-SearchState searchReducer(SearchState oldState,Action action)
-  => action is SearchSuccessAction ? oldState.search(action.key, action.payload) : oldState;
+SearchState getFirstPageUserReducer(SearchState prev, GetFirstPageSearchingUsersAction action)
+  => prev.getFirstPageUsers(action.key);
+SearchState addFirstPageUserReducer(SearchState prev,AddFirstPageSearchingUsersAction action)
+  => prev.addFirstPageUsers(action.key, action.userIds);
 
-SearchState nextPageSearchingReducer(SearchState oldState,Action action)
-  => action is NextPageOfSearchingSuccessAction ? oldState.nextPage(action.payload) : oldState;
+SearchState addNextPageUsersReducer(SearchState prev,AddNextPageSearchingUsersAction action)
+  => prev.addNextPageUsers(action.userIds);
 
-SearchState clearSearchingReducer(SearchState oldState,Action action)
-  => action is ClearSearchingAction ? oldState.clear() : oldState;
+SearchState clearSearchingReducer(SearchState prev,ClearSearchingAction action)
+  => prev.clear();
 
 Reducer<SearchState> searchStateReducers = combineReducers<SearchState>([
-  TypedReducer<SearchState,SearchSuccessAction>(searchReducer).call,
-  TypedReducer<SearchState,NextPageOfSearchingSuccessAction>(nextPageSearchingReducer).call,
+  TypedReducer<SearchState,GetFirstPageSearchingUsersAction>(getFirstPageUserReducer).call,
+  TypedReducer<SearchState,AddFirstPageSearchingUsersAction>(addFirstPageUserReducer).call,
+  TypedReducer<SearchState,AddNextPageSearchingUsersAction>(addNextPageUsersReducer).call,
   TypedReducer<SearchState,ClearSearchingAction>(clearSearchingReducer).call,
 ]);

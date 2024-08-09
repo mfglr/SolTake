@@ -24,7 +24,7 @@ class SubjectState{
         examId: examId,
         name: name,
         topics: topics,
-        questions: questions.getNextPage()
+        questions: questions.startLoading()
       );
   SubjectState addNextPageQuestions(Iterable<int> ids)
     => SubjectState(

@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetRequesters
 {
-    public record GetRequesterDto(int? LastValue) : IRequest<List<AppUserResponseDto>>;
+    public record GetRequesterDto(int? LastValue, int? Take) : IRequest<List<AppUserResponseDto>>;
 }

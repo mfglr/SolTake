@@ -11,18 +11,28 @@ class UserFollowedsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context)!.settings.arguments as int;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Followings"),
-      ),
-      body: StoreConnector<AppState,Iterable<UserState>>(
-        onInit: (store) => store.dispatch(LoadFollowedsIfNoUsersAction(userId: userId)),
-        converter: (store) => store.state.userEntityState.getFolloweds(userId),
-        builder: (context,users) => Container(
-          margin: const EdgeInsets.all(5),
-          child: UserItemsWidget(users : users)
+    return StoreConnector<AppState,UserState>(
+      converter: (store) => store.state.userEntityState.entities[userId]!,
+      builder: (context,user) => Scaffold(
+        appBar: AppBar(
+          title: Text("${user.userName}' s Followings"),
+        ),
+        body: StoreConnector<AppState,Iterable<UserState>>(
+          onInit: (store) => store.dispatch(GetNextPageUserFollowedsIfNoPageAction(userId: userId)),
+          converter: (store) => store.state.userEntityState.getFolloweds(userId),
+          builder: (context,users) => Container(
+            margin: const EdgeInsets.all(5),
+            child: UserItemsWidget(
+              users : users,
+              pagination: user.followeds,
+              onScrollBotton: (){
+                final store = StoreProvider.of<AppState>(context, listen: false);
+                store.dispatch(GetNextPageUserFollowedsIfReadyAction(userId: userId));
+              },
+            )
+          )
         )
-      )
+      ),
     );
   }
 }

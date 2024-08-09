@@ -29,6 +29,7 @@ class DisplaySubjectQuestionsPage extends StatelessWidget {
           builder: (context,questions) => QuestionItemsWidget(
             questions: questions.toList(),
             pagination: subject.questions,
+            questionIndex: 0,
             onScrollBottom: (){
               final store = StoreProvider.of<AppState>(context,listen: false);
               store.dispatch(GetNextPageSubjectQuestionsIfReadyAction(subjectId: subjectId));

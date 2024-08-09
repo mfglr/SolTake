@@ -24,7 +24,7 @@ class ExamState{
         shortName: shortName,
         fullName: fullName,
         subjects: subjects,
-        questions: questions.getNextPage()
+        questions: questions.startLoading()
       );
   ExamState addNextPageQuestions(Iterable<int> questionIds)
     => ExamState(

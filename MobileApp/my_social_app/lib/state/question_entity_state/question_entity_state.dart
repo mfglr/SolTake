@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
@@ -27,7 +26,4 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]!.getNextPageComments()));
   QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageComments(commentIds)));
-
-  Iterable<QuestionState> selectQuestionsByUserId(int userId)
-    => entities.values.where((question) => question.appUserId == userId).sorted((x,y) => y.id.compareTo(x.id));
 }
