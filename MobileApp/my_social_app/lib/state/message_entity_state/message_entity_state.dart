@@ -41,15 +41,12 @@ class MessageEntityState extends EntityState<MessageState>{
       .sorted((x,y) => y.id.compareTo(x.id));
     return messages.isNotEmpty ? messages.last.id : null;
   }
-  int selectNumberUserMessages(int userId)
-    => entities.values
-        .where((e) => e.receiverId == userId || e.senderId == userId)
-        .length;
-        
+
   Iterable<MessageState> selectUserMessages(int userId)
     => entities.values
       .where((e) => e.receiverId == userId || e.senderId == userId)
-      .sorted((x,y) => y.id.compareTo(x.id));
+      .sorted((x,y) => y.id.compareTo(x.id))
+      .reversed;
   
   Iterable<MessageState> selectUnviewedMessagesOfUser(int userId)
     => entities.values.where((e) => e.senderId == userId && e.state != MessageStatus.viewed);

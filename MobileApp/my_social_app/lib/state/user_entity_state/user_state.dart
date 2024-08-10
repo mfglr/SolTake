@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/pagination.dart';
@@ -29,7 +28,7 @@ class UserState{
   final Ids requesters;
   final Ids requesteds;
   final Pagination questions;
-  final bool isLastMessages;
+  final Pagination messages;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -61,7 +60,7 @@ class UserState{
     required this.requesters,
     required this.requesteds,
     required this.questions,
-    required this.isLastMessages
+    required this.messages
   });
 
   UserState _optional({
@@ -85,7 +84,7 @@ class UserState{
     Ids? newRequesters,
     Ids? newRequesteds,
     Pagination? newQuestions,
-    bool? newIsLastMessages,
+    Pagination? newMessages,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -107,7 +106,7 @@ class UserState{
     requesters: newRequesters ?? requesters,
     requesteds: newRequesteds ?? requesteds,
     questions: newQuestions ?? questions,
-    isLastMessages: newIsLastMessages ?? isLastMessages
+    messages: newMessages ?? messages
   );
 
   
@@ -120,6 +119,7 @@ class UserState{
   UserState getNextPageFolloweds() => _optional(newFolloweds: followeds.startLoading());
   UserState addNextPageFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.addNextPage(newFolloweds));
 
+  UserState addQuestion(int id) => _optional(newNumberOfQuestions: numberOfQuestions + 1,newQuestions: questions.prependOne(id));
   UserState getNextPageQuestions() => _optional(newQuestions: questions.startLoading());
   UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.addNextPage(newQuestions));
   
@@ -181,19 +181,9 @@ class UserState{
     );
   }
   //remove follower end
-  UserState loadUserImage(Uint8List newImage)
-  => _optional(
-      newImage: newImage,newImageState: ImageStatus.done
-    );
+  UserState loadUserImage(Uint8List newImage) => _optional(newImage: newImage,newImageState: ImageStatus.done);
   
-  //Questions
-  UserState addQuestion(int id)
-    => _optional(
-        newNumberOfQuestions: numberOfQuestions + 1,
-        newQuestions: questions.prependOne(id)
-      );
-
-  UserState nextPageMessages(numberOfMessages)
-    => _optional( newIsLastMessages: numberOfMessages < messagesPerPage );
+  UserState nextPageMessages() => _optional(newMessages: messages.startLoading());
+  UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.addNextPage(messageIds));
   
 }

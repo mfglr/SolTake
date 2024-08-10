@@ -103,8 +103,10 @@ final store = Store(
     
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
-    nextPageUserMessagesMiddleware,
-    nextPageUserMessageIfNoUsersMiddleware,
+
+    getNextPageUserMessageIfNoPageMiddleware,
+    getNextPageUserMessageIfReadyMiddleware,
+    getNextPageUserMessagesMiddleware,
 
     getNextPageUserFollowedsIfNoPageMiddleware,
     getNextPageUserFollowedsIfReadyMiddleware,

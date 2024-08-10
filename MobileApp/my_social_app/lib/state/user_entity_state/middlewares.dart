@@ -182,35 +182,33 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
   next(action);
 }
 
-void nextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageUserMessagesAction){
-    if(!store.state.userEntityState.entities[action.userId]!.isLastMessages){
-      final lastValue = store.state.messageEntityState.selectLastMessageId(action.userId);
-      MessageService()
-        .getMessagesByUserId(action.userId, lastValue, messagesPerPage)
-        .then((messages){
-          store.dispatch(
-            NextPageUserMessagesSuccessAction(
-              userId: action.userId,
-              messages: messages
-            )
-          );
-          store.dispatch(
-            AddMessagesAction(
-              messages: messages.map((e) => e.toMessageState())
-            )
-          );
-        });
+void getNextPageUserMessageIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserMessagesIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
     }
   }
   next(action);
 }
-void nextPageUserMessageIfNoUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageUserMessagesIfNoMessagesAction){
-    final count = store.state.messageEntityState.selectNumberUserMessages(action.userId);
-    if(count < messagesPerPage){
-      store.dispatch(NextPageUserMessagesAction(userId: action.userId));
+void getNextPageUserMessageIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserMessagesIfReadyAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
     }
+  }
+  next(action);
+}
+void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserMessagesAction){
+    final lastValue = store.state.userEntityState.entities[action.userId]!.messages.lastValue;
+    MessageService()
+      .getMessagesByUserId(action.userId, lastValue, messagesPerPage)
+      .then((messages){
+        store.dispatch(AddNextPageUserMessagesAction(userId: action.userId,messageIds: messages.map((e) => e.id)));
+        store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
+      });
   }
   next(action);
 }

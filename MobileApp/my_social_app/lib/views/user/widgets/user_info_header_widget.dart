@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
+import 'package:my_social_app/views/user/pages/user_followeds_page.dart';
 import 'package:my_social_app/views/user/pages/user_followers_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
@@ -76,8 +76,8 @@ class UserInfoHeaderWidget extends StatelessWidget {
               ),
           
               TextButton(
-                onPressed: () async {
-                  await Navigator.of(context).pushNamed(userFollowedsRoute,arguments: user.id);
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowedsPage(userId: user.id)));
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

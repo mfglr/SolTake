@@ -73,6 +73,6 @@ class User{
         followeds: Pagination.init(usersPerPage),
         requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
-        isLastMessages: false,
+        messages: Pagination.init(messagesPerPage),
       );
 }

@@ -2,7 +2,6 @@ const loginRoute = "/login/";
 const registerRoute = "/register/";
 const verifyEmailRoute = "/verify-email/";
 const rootRoute = "/root/";
-const userFollowedsRoute = "/user-followeds/";
 
 const takeQuestionImageRoute = "/take-picture/";
 const displayQuestionImagesRoute = "/display-question-images/";

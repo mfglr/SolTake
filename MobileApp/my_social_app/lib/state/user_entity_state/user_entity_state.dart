@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/state/entity_state.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 
@@ -44,8 +43,10 @@ class UserEntityState extends EntityState<UserState>{
       entities[currentId]!.removeRequested(entities[userId]!.profileVisibility, userId)
     ]));
 
-  UserEntityState nextPageUserMessages(int userId,Iterable<Message> messages)
-    => UserEntityState(entities: updateOne(entities[userId]!.nextPageMessages(messages.length)));
+  UserEntityState getNextPageMessages(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]!.nextPageMessages()));
+  UserEntityState addNextPageMessages(int userId,Iterable<int> messageIds)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNextPageMessages(messageIds)));
 
   Iterable<UserState> getFollowers(int userId) => entities[userId]!.followers.ids.map((e) => entities[e]!);
   Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.ids.map((e) => entities[e]!);

@@ -6,7 +6,6 @@ import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
@@ -26,7 +25,7 @@ class ConversationPage extends StatefulWidget {
 
 class _ConversationPageState extends State<ConversationPage>{
   final ScrollController _scrollController = ScrollController();
-  final double _spaceBottom = 10;
+  final GlobalKey _lastMessageKey = GlobalKey();
   int _numberOfNewMessages = 0;
 
   void _markUserMessagesAsViewed(){
@@ -35,6 +34,7 @@ class _ConversationPageState extends State<ConversationPage>{
       .on(
         receiveMessage2,
         (list){
+          final store = StoreProvider.of<AppState>(context,listen: false);
           final message = Message.fromJson((list!.first as dynamic));
           if(message.senderId == widget.userId){
             store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
@@ -44,12 +44,9 @@ class _ConversationPageState extends State<ConversationPage>{
   }
 
   void _getNextMessages(){
-    if(_scrollController.hasClients){
-      final position = _scrollController.position;
-      if(position.pixels == position.maxScrollExtent){
-        final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(NextPageUserMessagesAction(userId: widget.userId));
-      }
+    if(_scrollController.hasClients && _scrollController.position.pixels == 0){
+      final store = StoreProvider.of<AppState>(context,listen: false);
+      store.dispatch(GetNextPageUserMessagesIfReadyAction(userId: widget.userId));
     }
   }
 
@@ -103,13 +100,15 @@ class _ConversationPageState extends State<ConversationPage>{
                   children: [
                     Expanded(
                       child: StoreConnector<AppState,Iterable<MessageState>>(
-                        onInit: (store) => store.dispatch(NextPageUserMessagesIfNoMessagesAction(userId: widget.userId)),
+                        onInit: (store) => store.dispatch(GetNextPageUserMessagesIfNoPageAction(userId: widget.userId)),
                         converter: (store) => store.state.messageEntityState.selectUserMessages(widget.userId),
                         builder: (context,messages){
                           return MessageItems(
                             messages: messages,
+                            pagination: user.messages,
+                            spaceBottom: 10,
                             scrollController: _scrollController,
-                            spaceBottom: _spaceBottom,
+                            lastMessageKey: _lastMessageKey,
                           );
                         }
                       ),
@@ -135,9 +134,7 @@ class _ConversationPageState extends State<ConversationPage>{
                             )
                           ),
                           onPressed: (){
-                            setState(() {
-                              _numberOfNewMessages = 0;
-                            });
+                            setState(() {_numberOfNewMessages = 0;});
                             _scrollController.animateTo(
                               0,
                               duration: const Duration(milliseconds: 500),

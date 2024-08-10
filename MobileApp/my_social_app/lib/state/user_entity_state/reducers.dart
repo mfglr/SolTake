@@ -17,6 +17,10 @@ UserEntityState getNextPageFollowedsReducer(UserEntityState prev,GetNextPageUser
 UserEntityState addNextPageFollowedsReducer(UserEntityState prev,AddNextPageUserFollowedsAction action)
   => prev.addNextPageFolloweds(action.userId,action.userIds);
 
+UserEntityState getNextPageMessagesReducer(UserEntityState prev,GetNextPageUserMessagesAction action)
+  => prev.getNextPageMessages(action.userId);
+UserEntityState addNextPageUserMessagesReducer(UserEntityState prev,AddNextPageUserMessagesAction action)
+  => prev.addNextPageMessages(action.userId, action.messageIds);
 
 UserEntityState loadUserReducer(UserEntityState prev,LoadUserSuccessAction action)
   => prev.addUser(action.user);
@@ -25,18 +29,14 @@ UserEntityState addUsersReducer(UserEntityState prev,AddUsersAction action)
 
 
 
-
 UserEntityState makeFollowRequestReducer(UserEntityState prev, MakeFollowRequestSuccessAction action)
   => prev.makeFollowRequest(action.currentUserId, action.userId);
-
 UserEntityState cancelFollowRequestReducer(UserEntityState prev, CancelFollowRequestSuccessAction action)
   => prev.cancelFollowRequest(action.currentUserId, action.userId);
-
 UserEntityState addQuestionReducer(UserEntityState prev, AddUserQuestionAction action)
   => prev.addQuestion(action.userId, action.questionId);
 
-UserEntityState nextPageUserMessagesReducer(UserEntityState prev,NextPageUserMessagesSuccessAction action)
-  => prev.nextPageUserMessages(action.userId, action.messages);
+
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   TypedReducer<UserEntityState,GetNextPageUserQuestionsAction>(getNextPageQuestionsReducer).call,
@@ -48,10 +48,13 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,GetNextPageUserFollowedsAction>(getNextPageFollowedsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserFollowedsAction>(addNextPageFollowedsReducer).call,
 
+  TypedReducer<UserEntityState,GetNextPageUserMessagesAction>(getNextPageMessagesReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserMessagesAction>(addNextPageUserMessagesReducer).call,
+
+
   TypedReducer<UserEntityState,LoadUserSuccessAction>(loadUserReducer).call,
   TypedReducer<UserEntityState,AddUsersAction>(addUsersReducer).call,
   TypedReducer<UserEntityState,MakeFollowRequestSuccessAction>(makeFollowRequestReducer).call,
   TypedReducer<UserEntityState,CancelFollowRequestSuccessAction>(cancelFollowRequestReducer).call,
   TypedReducer<UserEntityState,AddUserQuestionAction>(addQuestionReducer).call,
-  TypedReducer<UserEntityState,NextPageUserMessagesSuccessAction>(nextPageUserMessagesReducer).call,
 ]);
