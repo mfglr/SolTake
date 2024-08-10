@@ -43,6 +43,8 @@ class UserEntityState extends EntityState<UserState>{
       entities[currentId]!.removeRequested(entities[userId]!.profileVisibility, userId)
     ]));
 
+  UserEntityState addMessage(int userId,int messageId)
+    => UserEntityState(entities: updateOne(entities[userId]!.addMessage(messageId)));
   UserEntityState getNextPageMessages(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.nextPageMessages()));
   UserEntityState addNextPageMessages(int userId,Iterable<int> messageIds)

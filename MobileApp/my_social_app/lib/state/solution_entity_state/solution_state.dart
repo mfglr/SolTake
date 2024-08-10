@@ -153,7 +153,7 @@ class SolutionState{
         isOwner: isOwner,
         images: images,
         numberOfComments: numberOfComments,
-        comments: comments.addNextPage(commentIds)
+        comments: comments.appendNextPage(commentIds)
       );
   SolutionState addComment(int commentId)
     => SolutionState(

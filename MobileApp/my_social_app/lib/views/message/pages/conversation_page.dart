@@ -9,6 +9,7 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_field.dart';
@@ -25,7 +26,6 @@ class ConversationPage extends StatefulWidget {
 
 class _ConversationPageState extends State<ConversationPage>{
   final ScrollController _scrollController = ScrollController();
-  final GlobalKey _lastMessageKey = GlobalKey();
   int _numberOfNewMessages = 0;
 
   void _markUserMessagesAsViewed(){
@@ -38,9 +38,18 @@ class _ConversationPageState extends State<ConversationPage>{
           final message = Message.fromJson((list!.first as dynamic));
           if(message.senderId == widget.userId){
             store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
+            setState(() {
+              _numberOfNewMessages++;
+            });
           }
         }
       );
+  }
+
+  void _clearNumerOfNewMessages(){
+    if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+      _numberOfNewMessages = 0;
+    }
   }
 
   void _getNextMessages(){
@@ -53,6 +62,7 @@ class _ConversationPageState extends State<ConversationPage>{
   @override
   void initState() {
     _scrollController.addListener(_getNextMessages);
+    _scrollController.addListener(_clearNumerOfNewMessages);
     _markUserMessagesAsViewed();
     super.initState();
   }
@@ -60,6 +70,7 @@ class _ConversationPageState extends State<ConversationPage>{
   @override
   void dispose() {
     _scrollController.removeListener(_getNextMessages);
+    _scrollController.removeListener(_clearNumerOfNewMessages);
     _scrollController.dispose();
     MessageHub().hubConnection.off(receiveMessage2);
     super.dispose();
@@ -76,11 +87,7 @@ class _ConversationPageState extends State<ConversationPage>{
             appBar: AppBar(
               title: TextButton(
                 onPressed: (){
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => UserPage(userId: widget.userId)
-                    )
-                  );
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.userId)));
                 },
                 child: UserImageWithNamesWidget(
                   user: user,
@@ -101,14 +108,14 @@ class _ConversationPageState extends State<ConversationPage>{
                     Expanded(
                       child: StoreConnector<AppState,Iterable<MessageState>>(
                         onInit: (store) => store.dispatch(GetNextPageUserMessagesIfNoPageAction(userId: widget.userId)),
-                        converter: (store) => store.state.messageEntityState.selectUserMessages(widget.userId),
+                        converter: (store) => store.state.selectUserMessages(widget.userId),
                         builder: (context,messages){
                           return MessageItems(
+                            keys: messages.map((_) => GlobalKey()),
                             messages: messages,
                             pagination: user.messages,
                             spaceBottom: 10,
                             scrollController: _scrollController,
-                            lastMessageKey: _lastMessageKey,
                           );
                         }
                       ),
@@ -134,9 +141,9 @@ class _ConversationPageState extends State<ConversationPage>{
                             )
                           ),
                           onPressed: (){
-                            setState(() {_numberOfNewMessages = 0;});
+                            setState(() { _numberOfNewMessages = 0; });
                             _scrollController.animateTo(
-                              0,
+                              _scrollController.position.maxScrollExtent,
                               duration: const Duration(milliseconds: 500),
                               curve: Curves.linear
                             );
@@ -152,7 +159,7 @@ class _ConversationPageState extends State<ConversationPage>{
                         )
                       );
                     }
-                    return const SizedBox.shrink();
+                    return const SpaceSavingWidget();
                   }
                 )
               ],

@@ -28,7 +28,7 @@ class TopicState{
         id: id,
         subjectId: subjectId,
         name: name,
-        questions: questions.addNextPage(quesionIds),
+        questions: questions.appendNextPage(quesionIds),
       );
   TopicState addQuestionId(int questionId)
     => TopicState(

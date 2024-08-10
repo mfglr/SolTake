@@ -143,3 +143,9 @@ class AddNextPageUserMessagesAction extends redux.Action{
   final Iterable<int> messageIds;
   const AddNextPageUserMessagesAction({required this.userId, required this.messageIds});
 }
+@immutable
+class AddUserMessageAction extends redux.Action{
+  final int userId;
+  final int messageId;
+  const AddUserMessageAction({required this.userId, required this.messageId});
+}

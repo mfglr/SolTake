@@ -34,20 +34,6 @@ class MessageEntityState extends EntityState<MessageState>{
   MessageEntityState loadMessageImage(int messageId,int messageImageId,Uint8List image)
     => MessageEntityState(entities: updateOne(entities[messageId]!.loadMessageImage(messageImageId, image)));
 
-
-  int? selectLastMessageId(int userId){
-    final messages = entities.values
-      .where((e) => e.receiverId == userId || e.senderId == userId)
-      .sorted((x,y) => y.id.compareTo(x.id));
-    return messages.isNotEmpty ? messages.last.id : null;
-  }
-
-  Iterable<MessageState> selectUserMessages(int userId)
-    => entities.values
-      .where((e) => e.receiverId == userId || e.senderId == userId)
-      .sorted((x,y) => y.id.compareTo(x.id))
-      .reversed;
-  
   Iterable<MessageState> selectUnviewedMessagesOfUser(int userId)
     => entities.values.where((e) => e.senderId == userId && e.state != MessageStatus.viewed);
   int selectNumberOfUnviewedMessagesOfUser(int userId)

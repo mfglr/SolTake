@@ -87,7 +87,7 @@ class AppState{
     required this.createMessageState,
   });
 
-  //select conversations
+  //select messages
   int? selectLastConversationId(){
     final accountId = accountState!.id;
     final list = groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId)
@@ -100,10 +100,10 @@ class AppState{
     final accountId = accountState!.id;
     return groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId).length;
   }
-  Iterable<MessageState> get selectConversations => messageEntityState.selectConversations(accountState!.id);
-  //select conversations
-
-  //select messages
+  Iterable<MessageState> get selectConversations
+    => messageEntityState.selectConversations(accountState!.id);
+  Iterable<MessageState> selectUserMessages(int userId)
+    => userEntityState.entities[userId]!.messages.ids.map((e) => messageEntityState.entities[e]!);
   Iterable<int> get selectIdsOfNewComingMessages
     => messageEntityState.entities.values
         .where((e) => e.state == MessageStatus.created && e.senderId != accountState!.id)

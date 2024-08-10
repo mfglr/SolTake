@@ -1,8 +1,9 @@
 import 'dart:typed_data';
-
+import 'package:flutter/material.dart';
 import 'package:my_social_app/state/message_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/message_entity_state/message_stataus.dart';
 
+@immutable
 class MessageState{
   final int id;
   final DateTime createdAt;
@@ -27,7 +28,7 @@ class MessageState{
     required this.receiverId,
     required this.content,
     required this.state,
-    required this.images
+    required this.images,
   });
 
   MessageState markAsReceived()
@@ -42,9 +43,8 @@ class MessageState{
         receiverId: receiverId,
         content: content,
         state: state != MessageStatus.viewed ? MessageStatus.received : state,
-        images: images
+        images: images,
       );
-      
   MessageState markAsViewed()
     => MessageState(
         id: id,
@@ -57,9 +57,8 @@ class MessageState{
         receiverId: receiverId,
         content: content,
         state: MessageStatus.viewed,
-        images: images
+        images: images,
       );
-
   MessageState startLoadingMessageImage(int messageImageId)
     => MessageState(
         id: id,
@@ -75,7 +74,7 @@ class MessageState{
         images: images.map((e){
           if(e.id == messageImageId) return e.startLoading();
           return e;
-        })
+        }),
       );
   MessageState loadMessageImage(int messageImageId,Uint8List image)
     => MessageState(
@@ -92,6 +91,6 @@ class MessageState{
         images: images.map((e){
           if(e.id == messageImageId) return e.load(image);
           return e;
-        })
+        }),
       );
 }

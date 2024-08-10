@@ -13,7 +13,7 @@ class SearchState{
   SearchState addFirstPageUsers(String key, Iterable<int> userIds)
     => SearchState(key: key, users: users.addfirstPage(userIds));
   SearchState addNextPageUsers(Iterable<int> userIds)
-    => SearchState(key: key, users: users.addNextPage(userIds));
+    => SearchState(key: key, users: users.appendNextPage(userIds));
   SearchState clear()
     => SearchState(key: "", users: Pagination.init(usersPerPage));
 }

@@ -32,7 +32,7 @@ class SubjectState{
         examId: examId,
         name: name,
         topics: topics,
-        questions: questions.addNextPage(ids)
+        questions: questions.appendNextPage(ids)
       );
 
   SubjectState loadTopics(Iterable<int> ids)

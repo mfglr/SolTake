@@ -108,7 +108,7 @@ class _MessageFieldState extends State<MessageField> {
             if(widget.type == MessageFieldType.forConversation){
               store.dispatch(const CreateMessageAction());
               widget.scrollController!.animateTo(
-                0,
+                widget.scrollController!.position.maxScrollExtent,
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.linear
               );

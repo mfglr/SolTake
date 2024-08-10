@@ -48,6 +48,6 @@ class Message{
         receiverId: receiverId,
         content: content,
         state: state,
-        images: images.map((e) => e.toMessageImageState())
+        images: images.map((e) => e.toMessageImageState()),
       );
 }

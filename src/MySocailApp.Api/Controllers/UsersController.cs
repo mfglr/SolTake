@@ -18,16 +18,12 @@ using MySocailApp.Application.Commands.UserAggregate.UpdateGender;
 using MySocailApp.Application.Commands.UserAggregate.UpdateName;
 using MySocailApp.Application.Commands.UserAggregate.UpdateUserImage;
 using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Application.Queries.UserAggregate.GetFolloweds;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowedsById;
-using MySocailApp.Application.Queries.UserAggregate.GetFollowers;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowersById;
 using MySocailApp.Application.Queries.UserAggregate.GetRequesteds;
 using MySocailApp.Application.Queries.UserAggregate.GetRequesters;
-using MySocailApp.Application.Queries.UserAggregate.GetUser;
 using MySocailApp.Application.Queries.UserAggregate.GetUserById;
 using MySocailApp.Application.Queries.UserAggregate.GetUserByUserName;
-using MySocailApp.Application.Queries.UserAggregate.GetUserImage;
 using MySocailApp.Application.Queries.UserAggregate.GetUserImageById;
 using MySocailApp.Application.Queries.UserAggregate.SearchUsers;
 
@@ -99,9 +95,6 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(request, cancellationToken);
 
         //Queries
-        [HttpGet]
-        public async Task<AppUserResponseDto> Get(CancellationToken cancellationToken)
-            => await _mediator.Send(new GetUserDto(),cancellationToken);
 
         [HttpGet("{id}")]
         public async Task<AppUserResponseDto> GetById(int id,CancellationToken cancellationToken)
@@ -111,25 +104,13 @@ namespace MySocailApp.Api.Controllers
         public async Task<AppUserResponseDto> GetByUserName(string userName,CancellationToken cancellationToken)
             => await _mediator.Send(new GetUserByUserNameDto(userName),cancellationToken);
 
-        [HttpGet]
-        public async Task<FileContentResult> GetImage(CancellationToken cancellationToken)
-            => File(await _mediator.Send(new GetUserImageDto(), cancellationToken), "application/octet-stream");
-
         [HttpGet("{userId}")]
         public async Task<FileContentResult> GetImageById(int userId, CancellationToken cancellationToken)
             => File(await _mediator.Send(new GetUserImageById(userId), cancellationToken), "application/octet-stream");
 
-        [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetFollowers([FromQuery]int? lastValue, [FromQuery]int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowersDto(lastValue,take), cancellationToken);
-
         [HttpGet("{id}")]
         public async Task<List<AppUserResponseDto>> GetFollowersById(int id,[FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
             => await _mediator.Send(new GetFollowersByIdDto(id, lastValue, take), cancellationToken);
-
-        [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetFolloweds([FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowedsDto(lastValue,take), cancellationToken);
 
         [HttpGet("{id}")]
         public async Task<List<AppUserResponseDto>> GetFollowedsById(int id,[FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)

@@ -195,6 +195,6 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments.addNextPage(commentIds)
+        comments: comments.appendNextPage(commentIds)
       );
 }

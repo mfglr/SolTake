@@ -24,11 +24,9 @@ class Pagination{
       );
 
   int? get lastValue => ids.lastOrNull;
-
+  int? get firstValue => ids.firstOrNull;
   bool get hasAtLeastOnePage => ids.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loading;
-
-  
 
   Pagination startLoading()
     => Pagination(
@@ -37,18 +35,32 @@ class Pagination{
         ids: ids,
         recordsPerPage: recordsPerPage,
       );
-  Pagination addNextPage(Iterable<int> nextIds)
+  Pagination appendNextPage(Iterable<int> nextIds)
     => Pagination(
         isLast: nextIds.length < recordsPerPage,
         loading: false,
         ids: [...ids, ...nextIds],
         recordsPerPage: recordsPerPage,
       );
+  Pagination prependNextPage(Iterable<int> nextIds)
+    => Pagination(
+        isLast: nextIds.length < recordsPerPage,
+        loading: false,
+        ids: [...nextIds.toList().reversed, ...ids],
+        recordsPerPage: recordsPerPage
+      );
   Pagination prependOne(int newId)
     => Pagination(
         isLast: isLast,
         loading: loading,
         ids: [newId, ...ids],
+        recordsPerPage: recordsPerPage,
+      );
+  Pagination appendOne(int newId)
+    => Pagination(
+        isLast: isLast,
+        loading: loading,
+        ids: [...ids, newId],
         recordsPerPage: recordsPerPage,
       );
   Pagination removeOne(int id)
@@ -65,22 +77,4 @@ class Pagination{
         ids: newIds,
         recordsPerPage: recordsPerPage
       );
-  
-  // Iterable<int> _getUniqIds(Iterable<int> newIds) => newIds.where((x) => !ids.any((id) => id == x));
-  // Pagination appendOne(int newId)
-  //   => Pagination(
-  //       isLast: isLast,
-  //       lastValue: ids.isEmpty ? newId : lastValue,
-  //       loading: loading,
-  //       recordsPerPage: recordsPerPage,
-  //       ids: [...ids, newId]
-  //     );
-  // Pagination appendMany(Iterable<int> newIds)
-  //   => Pagination(
-  //       isLast: isLast,
-  //       lastValue: ids.isNotEmpty ? newIds.last : lastValue,
-  //       loading: loading,
-  //       recordsPerPage: recordsPerPage,
-  //       ids: [...ids, ...newIds]
-  //     );
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Core;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
@@ -26,7 +27,7 @@ namespace MySocailApp.Infrastructure.MessageAggregate
                         (x.ReceiverId == userId1 && x.SenderId == userId2) || 
                         (x.SenderId == userId1 && x.ReceiverId == userId2)
                 )
-                .ToPage(lastId,take)
+                .ToPage(lastId,take ?? RecordsPerPage.MessagesPerPage)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<Message>> GetConversationsAsync(int userId, int? lastId, int? take, CancellationToken cancellationToken)

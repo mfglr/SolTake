@@ -32,7 +32,7 @@ class ExamState{
         shortName: shortName,
         fullName: fullName,
         subjects: subjects,
-        questions: questions.addNextPage(questionIds)
+        questions: questions.appendNextPage(questionIds)
       );
 
   ExamState loadSubjects(Iterable<int> ids)

@@ -202,9 +202,9 @@ void getNextPageUserMessageIfReadyMiddleware(Store<AppState> store,action,NextDi
 }
 void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserMessagesAction){
-    final lastValue = store.state.userEntityState.entities[action.userId]!.messages.lastValue;
+    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
     MessageService()
-      .getMessagesByUserId(action.userId, lastValue, messagesPerPage)
+      .getMessagesByUserId(action.userId, pagination.firstValue, messagesPerPage)
       .then((messages){
         store.dispatch(AddNextPageUserMessagesAction(userId: action.userId,messageIds: messages.map((e) => e.id)));
         store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));

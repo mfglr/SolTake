@@ -6,5 +6,5 @@ class HomePageState{
 
   HomePageState prependQuestion(int questionId) => HomePageState(questions: questions.prependOne(questionId));
   HomePageState getNextPageQuestions() => HomePageState(questions: questions.startLoading());
-  HomePageState addNextPageQuestions(Iterable<int> questionIds) => HomePageState(questions: questions.addNextPage(questionIds));
+  HomePageState addNextPageQuestions(Iterable<int> questionIds) => HomePageState(questions: questions.appendNextPage(questionIds));
 }

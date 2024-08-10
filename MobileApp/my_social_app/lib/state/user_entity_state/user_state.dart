@@ -114,14 +114,14 @@ class UserState{
   UserState loadRequesteds(Iterable<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
   
   UserState getNextPageFollowers() => _optional(newFollowers: followers.startLoading());
-  UserState addNextPageFollowers(Iterable<int> newFollowers)=> _optional(newFollowers: followers.addNextPage(newFollowers));
+  UserState addNextPageFollowers(Iterable<int> newFollowers)=> _optional(newFollowers: followers.appendNextPage(newFollowers));
 
   UserState getNextPageFolloweds() => _optional(newFolloweds: followeds.startLoading());
-  UserState addNextPageFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.addNextPage(newFolloweds));
+  UserState addNextPageFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.appendNextPage(newFolloweds));
 
   UserState addQuestion(int id) => _optional(newNumberOfQuestions: numberOfQuestions + 1,newQuestions: questions.prependOne(id));
   UserState getNextPageQuestions() => _optional(newQuestions: questions.startLoading());
-  UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.addNextPage(newQuestions));
+  UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.appendNextPage(newQuestions));
   
   //make follow request start
   UserState addRequester(int currentUserId){
@@ -183,7 +183,7 @@ class UserState{
   //remove follower end
   UserState loadUserImage(Uint8List newImage) => _optional(newImage: newImage,newImageState: ImageStatus.done);
   
+  UserState addMessage(int messageId) => _optional(newMessages: messages.appendOne(messageId));
   UserState nextPageMessages() => _optional(newMessages: messages.startLoading());
-  UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.addNextPage(messageIds));
-  
+  UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.prependNextPage(messageIds));
 }
