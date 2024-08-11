@@ -47,7 +47,7 @@ class SelectTopicPage extends StatelessWidget {
                     ),
                   ),
                   onChanged: (value){
-                    final topicIds = topics.where((x) => value.any((name) => name == x.name)).map((x) => x.id).toList();
+                    final topicIds = topics.where((x) => value.any((name) => name == x.name)).map((x) => x.id);
                     store.dispatch(UpdateTopicIdsAction(topicIds: topicIds));
                   },
                 ),
@@ -69,18 +69,16 @@ class SelectTopicPage extends StatelessWidget {
         padding: const  EdgeInsets.all(15),
         child: OutlinedButton(
           onPressed: (){
-            store.dispatch(const CreateQuestionAction());
-            Navigator.of(context).popUntil((route) => route.settings.name == displayQuestionImagesRoute);
-            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed(displayQuestionImagesRoute);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 4),
-                child: const Text("Create Question"),
+                child: const Text("Add Images"),
               ),
-              const Icon(Icons.create)
+              const Icon(Icons.photo)
             ],
           ),
         ),

@@ -10,13 +10,11 @@ import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/views/create_question/pages/select_exam_page.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/account/login_view.dart';
-import 'package:my_social_app/views/create_question/pages/display_images_page.dart';
-import 'package:my_social_app/views/create_question/pages/select_exam_page.dart';
-import 'package:my_social_app/views/create_question/pages/select_subject_page.dart';
+import 'package:my_social_app/views/create_question/pages/display_question_images_page.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
-import 'package:my_social_app/views/create_question/pages/take_question_image_page.dart';
 import 'package:my_social_app/views/create_solution/pages/create_solution_page.dart';
 import 'package:my_social_app/views/create_solution/pages/take_solution_image_page.dart';
 import 'package:my_social_app/views/message/pages/display_message_images.dart';
@@ -24,6 +22,7 @@ import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/account/register_view.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/verify_email_view.dart';
+import 'package:my_social_app/views/take_image_page.dart';
 
 Future loadEnvironmentVariables() async {
   const bool isProduction = bool.fromEnvironment('dart.vm.product');
@@ -85,17 +84,17 @@ Future<void> main() async {
           verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),
 
-          takeQuestionImageRoute: (context) => TakeQuestionImagePage(camera: cameras.first),
-          displayQuestionImagesRoute: (context) => const DisplayImagesPage(),
-          selectExamRoute: (context) => const SelectExamPage(),
-          selectSubjectRoute: (context) => const SelectSubjectPage(),
+          displayQuestionImagesRoute: (context) => const DisplayQuestionImagesPage(),
           selectTopicRoute: (context) => const SelectTopicPage(),
+          selectExamRoute: (context) => const SelectExamPage(),
           
           createSolutionRoute: (context) => const CreateSolutionPage(),
           takeSolutionImageRoute: (context) => TakeSolutionImagePage(camera: cameras.first),
 
           takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
-          displayMessageImagesRoute: (context) => const DisplayMessageImages()
+          displayMessageImagesRoute: (context) => const DisplayMessageImages(),
+
+          takeImageRoute: (context) => TakeImagePage(camera: cameras.first)
         },
       ),
     )

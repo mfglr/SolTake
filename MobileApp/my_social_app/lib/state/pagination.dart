@@ -77,4 +77,11 @@ class Pagination{
         ids: newIds,
         recordsPerPage: recordsPerPage
       );
+  Pagination appendLastPage(Iterable<int> newIds)
+    => Pagination(
+        isLast: true,
+        loading: false,
+        ids: [...ids, ...newIds],
+        recordsPerPage: recordsPerPage
+      );
 }

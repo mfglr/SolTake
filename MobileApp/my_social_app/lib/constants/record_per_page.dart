@@ -5,3 +5,4 @@ const commentsPerPage = 12;
 const usersPerPage = 8;
 const solutionsPerPage = 20;
 const questionsPerPage = 15;
+const subjectsPerPage = 150;

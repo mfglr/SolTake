@@ -6,7 +6,7 @@ import 'package:my_social_app/state/solution_image_entity_state/actions.dart';
 import 'package:my_social_app/state/solution_image_entity_state/solution_image_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/views/loading_widget.dart';
+import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class SolutionImagesSlider extends StatelessWidget {
   final SolutionState solution;

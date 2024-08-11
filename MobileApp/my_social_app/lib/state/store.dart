@@ -56,7 +56,7 @@ final store = Store(
     searchState: SearchState(key: "", users: Pagination.init(usersPerPage)),
     createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
-    examEntityState: const ExamEntityState(entities: {}, isLoaded: false),
+    examEntityState: const ExamEntityState(entities: {}, isLast: false,isLoading: false),
     subjectEntityState: const SubjectEntityState(entities: {}),
     topicEntityState: const TopicEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
@@ -133,7 +133,7 @@ final store = Store(
     //search end
     
     //Exam entity state
-    loadAllExamsMiddleware,
+    getAllExamsMiddleware,
     loadSubjectsOfSelectedExamMiddleware,
     getNextPageExamQeuestionsMiddleware,
     getNextPageOfExamQuestionsIfNoPageMiddleware,

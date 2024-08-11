@@ -14,17 +14,16 @@ class SelectSubjectPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
+        title: const Text("Select a Subject"),
       ),
       body:StoreConnector<AppState,Iterable<SubjectState>>(
-        onInit: (store) => store.dispatch(const LoadSubjectsOfSelectedExamAction()),
+        onInit: (store) => store.dispatch(const GetSubjectsOfSelectedExamAction()),
         converter: (store) => store.state.subjectsOfSelectedExam,
         builder:(context,subjects){
           return GridView.count(
             crossAxisCount: 2,
             children: List<Widget>.generate(
-              subjects.length,(index) => SubjectItemWidget(
-                subject: subjects.elementAt(index)
-              )
+              subjects.length,(index) => SubjectItemWidget(subject: subjects.elementAt(index))
             )
           );
         }

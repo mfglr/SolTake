@@ -8,15 +8,19 @@ class CreateQuestionAction extends redux.Action{
 }
 
 @immutable
-class AddQuestionImageAction extends redux.Action{
+class CreateQuestionImageAction extends redux.Action{
   final XFile image;
-  const AddQuestionImageAction({required this.image});
+  const CreateQuestionImageAction({required this.image});
 }
-
 @immutable
-class RemoveImageAction extends redux.Action{
+class CreateQuestionImagesAction extends redux.Action{
+  final Iterable<XFile> images;
+  const CreateQuestionImagesAction({required this.images});
+}
+@immutable
+class RemoveQuestionImageAction extends redux.Action{
   final XFile image;
-  const RemoveImageAction({required this.image});
+  const RemoveQuestionImageAction({required this.image});
 }
 
 @immutable
@@ -33,7 +37,7 @@ class UpdateSubjectAction extends redux.Action{
 
 @immutable
 class UpdateTopicIdsAction extends redux.Action{
-  final List<int> topicIds;
+  final Iterable<int> topicIds;
   const UpdateTopicIdsAction({required this.topicIds});
 }
 

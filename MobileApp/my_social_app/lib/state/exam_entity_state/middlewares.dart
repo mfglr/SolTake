@@ -47,43 +47,27 @@ void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispat
   next(action);
 }
 
-void loadAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadAllExamsAction){
-    if(!store.state.examEntityState.isLoaded){
+void getAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetAllExamsAction){
+    if(!store.state.examEntityState.isLoading && !store.state.examEntityState.isLast){
       ExamService()
         .getAll()
-        .then(
-          (exams) => store.dispatch(
-            LoadAllExamsSuccessAction(
-              exams: exams.map((e) => e.toExamState())
-            )
-          )
-        );
+        .then((exams) => store.dispatch(AddAllExamsAction(exams: exams.map((e) => e.toExamState()))));
     }
   }
   next(action);
 }
 
 void loadSubjectsOfSelectedExamMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadSubjectsOfSelectedExamAction){
+  if(action is GetSubjectsOfSelectedExamAction){
     final examId = store.state.createQuestionState.examId!;
     final examState = store.state.examEntityState.entities[examId]!;
     if(!examState.subjects.isLast){
       SubjectService()
         .getByExamId(examId)
         .then((subjects){
-          store.dispatch(
-            AddSubjectsAction(
-              subjects: subjects.map((e) => e.toSubjectState())
-            )
-          );
-
-          store.dispatch(
-            LoadSubjectsOfSelectedExamSuccessAction(
-              examId: examId,
-              ids: subjects.map((e) => e.id)
-            )
-          );
+          store.dispatch(AddSubjectsAction(subjects: subjects.map((e) => e.toSubjectState())));
+          store.dispatch(GetSubjectsOfSelectedExamSuccessAction(examId: examId,ids: subjects.map((e) => e.id)));
         });
     }
   }

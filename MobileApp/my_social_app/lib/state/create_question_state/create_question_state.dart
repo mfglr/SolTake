@@ -25,6 +25,14 @@ class CreateQuestionState{
         topicIds: topicIds,
         content: content
       );
+  CreateQuestionState addImages(Iterable<XFile> images)
+    => CreateQuestionState(
+        images: [...this.images, ...images],
+        examId: examId,
+        subjectId: subjectId,
+        topicIds: topicIds,
+        content: content
+      );
   CreateQuestionState removeImage(XFile image)
     => CreateQuestionState(
         images: images.where((e) => e != image).toList(),
@@ -49,7 +57,7 @@ class CreateQuestionState{
         topicIds: const [],
         content: content
       );
-  CreateQuestionState updateTopicIds(List<int> topicIds)
+  CreateQuestionState updateTopicIds(Iterable<int> topicIds)
     => CreateQuestionState(
         images: images,
         examId: examId,

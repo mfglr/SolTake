@@ -1,32 +1,28 @@
-import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/create_question_state/actions.dart';
 import 'package:my_social_app/state/create_question_state/create_question_state.dart';
 import 'package:redux/redux.dart';
 
-CreateQuestionState addImageReducer(CreateQuestionState oldState, redux.Action action)
-  => action is AddQuestionImageAction ? oldState.addImage(action.image) : oldState;
-
-CreateQuestionState removeImageReducer(CreateQuestionState oldState, redux.Action action)
-  => action is RemoveImageAction ? oldState.removeImage(action.image) : oldState;
-
-CreateQuestionState updateContentReducer(CreateQuestionState oldState, redux.Action action)
-  => action is UpdateContentAction ? oldState.updateContent(action.content) : oldState;
-
-CreateQuestionState updateExamReducer(CreateQuestionState oldState, redux.Action action)
-  => action is UpdateExamAction ? oldState.updateExam(action.examId) : oldState;
-
-CreateQuestionState updateSubjectReducer(CreateQuestionState oldState,redux.Action action)
-  => action is UpdateSubjectAction ? oldState.updateSubject(action.subjectId) : oldState;
-
-CreateQuestionState updateTopicIdsReducer(CreateQuestionState oldState,redux.Action action)
-  => action is UpdateTopicIdsAction ? oldState.updateTopicIds(action.topicIds) : oldState;
-
-CreateQuestionState clearCreateQuestionStateReducer(CreateQuestionState oldState,redux.Action action)
-  => action is ClearCreateQuestionStateAction ? oldState.clear() : oldState;
+CreateQuestionState addImageReducer(CreateQuestionState prev, CreateQuestionImageAction action)
+  => prev.addImage(action.image);
+CreateQuestionState addImagesReducer(CreateQuestionState prev, CreateQuestionImagesAction action)
+  => prev.addImages(action.images);
+CreateQuestionState removeImageReducer(CreateQuestionState prev, RemoveQuestionImageAction action)
+  => prev.removeImage(action.image);
+CreateQuestionState updateContentReducer(CreateQuestionState prev, UpdateContentAction action)
+  => prev.updateContent(action.content);
+CreateQuestionState updateExamReducer(CreateQuestionState prev, UpdateExamAction action)
+  => prev.updateExam(action.examId);
+CreateQuestionState updateSubjectReducer(CreateQuestionState prev,UpdateSubjectAction action)
+  => prev.updateSubject(action.subjectId);
+CreateQuestionState updateTopicIdsReducer(CreateQuestionState prev,UpdateTopicIdsAction action)
+  => prev.updateTopicIds(action.topicIds);
+CreateQuestionState clearCreateQuestionStateReducer(CreateQuestionState prev,ClearCreateQuestionStateAction action)
+  => prev.clear();
 
 Reducer<CreateQuestionState> createQuestionReducers = combineReducers<CreateQuestionState>([
-  TypedReducer<CreateQuestionState,AddQuestionImageAction>(addImageReducer).call,
-  TypedReducer<CreateQuestionState,RemoveImageAction>(removeImageReducer).call,
+  TypedReducer<CreateQuestionState,CreateQuestionImageAction>(addImageReducer).call,
+  TypedReducer<CreateQuestionState,CreateQuestionImagesAction>(addImagesReducer).call,
+  TypedReducer<CreateQuestionState,RemoveQuestionImageAction>(removeImageReducer).call,
   TypedReducer<CreateQuestionState,UpdateContentAction>(updateContentReducer).call,
   TypedReducer<CreateQuestionState,UpdateExamAction>(updateExamReducer).call,
   TypedReducer<CreateQuestionState,UpdateSubjectAction>(updateSubjectReducer).call,

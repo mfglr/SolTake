@@ -4,30 +4,53 @@ import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 
 @immutable
 class ExamEntityState extends EntityState<ExamState>{
-  final bool isLoaded;
-  const ExamEntityState({required super.entities,required this.isLoaded});
+  final bool isLoading;
+  final bool isLast;
+  const ExamEntityState({
+    required super.entities,
+    required this.isLoading,
+    required this.isLast
+  });
 
   ExamEntityState getNextPageQuestions(int examId)
     => ExamEntityState(
       entities: updateOne(entities[examId]!.getNextPageQuestions()),
-      isLoaded: isLoaded
+      isLoading: isLoading,
+      isLast: isLast
     );
   ExamEntityState addNextPageQuestions(int examId, Iterable<int> questionIds)
     => ExamEntityState(
         entities: updateOne(entities[examId]!.addNextPageQuestions(questionIds)),
-        isLoaded: isLoaded
+        isLoading: isLoading,
+        isLast: isLast
       );
 
-  Map<int,ExamState> _loadSubjects(int examId, Iterable<int> ids)
-    => updateOne(entities[examId]!.loadSubjects(ids));
-
+  ExamEntityState getAllExams()
+    => ExamEntityState(
+        entities: entities,
+        isLoading: true,
+        isLast: isLast
+      );
   ExamEntityState addAllExams(Iterable<ExamState> exams)
-    => ExamEntityState(entities: appendMany(exams), isLoaded: true);
+    => ExamEntityState(
+        entities: appendMany(exams),
+        isLoading: false,
+        isLast: true,
+      );
 
   ExamEntityState addExams(Iterable<ExamState> exams)
-    => ExamEntityState(entities: appendMany(exams), isLoaded: isLoaded);
+    => ExamEntityState(
+        entities: appendMany(exams),
+        isLoading: isLoading,
+        isLast: isLast,
+      );
+
   ExamEntityState loadExamSubjects(int examId,Iterable<int> ids)
-    => ExamEntityState(entities: _loadSubjects(examId,ids),isLoaded: isLoaded);
+    => ExamEntityState(
+        entities: updateOne(entities[examId]!.addNextPageSubjects(ids)),
+        isLoading: isLoading,
+        isLast: isLast,
+      );
 
   Iterable<ExamState> get exams => entities.values;
 }

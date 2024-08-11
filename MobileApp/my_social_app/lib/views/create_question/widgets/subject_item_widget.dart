@@ -19,11 +19,14 @@ class SubjectItemWidget extends StatelessWidget {
               store.dispatch(UpdateSubjectAction(subjectId: subject.id));
               Navigator.of(context).pushNamed(selectTopicRoute);
             },
+            style: ButtonStyle(
+              shape: WidgetStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))))
+            ),
             child: Text(
               textAlign: TextAlign.center,
               subject.name,
               style: const TextStyle(fontSize: 16),
-            )
+            ),
           ),
         ],
       ),

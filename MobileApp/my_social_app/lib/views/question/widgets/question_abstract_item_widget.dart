@@ -5,7 +5,7 @@ import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/loading_widget.dart';
+import 'package:my_social_app/views/shared/loading_widget.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 
 class QuestionAbstractItemWidget extends StatelessWidget {

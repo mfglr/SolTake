@@ -120,7 +120,7 @@ class AppState{
   //Select solutionImages
   Iterable<SolutionImageState> getSolutionImages(int solutionId)
     => solutionEntityState.entities[solutionId]!.images.map((e) => solutionImageEntityState.entities[e]!);
-  Iterable<SubjectState> get subjectsOfSelectedExam
+  Iterable<SubjectState> get subjectsOfSelectedExam 
     => examEntityState.entities[createQuestionState.examId!]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
   Iterable<TopicState> get topicsOfSelecetedSubject
     => topicEntityState.getSubjectTopics(createQuestionState.subjectId);

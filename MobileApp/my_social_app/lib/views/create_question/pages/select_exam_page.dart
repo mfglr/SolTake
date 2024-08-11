@@ -15,23 +15,22 @@ class SelectExamPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
+        title: const Text("Select an Exam"),
       ),
       body: StoreConnector<AppState,ExamEntityState>(
-        onInit: (store) => store.dispatch(const LoadAllExamsAction()),
+        onInit: (store) => store.dispatch(const GetAllExamsAction()),
         converter: (store) => store.state.examEntityState,
         builder:(context,state){
-          if(state.isLoaded){
-            return GridView.count(
-              crossAxisCount: 2,
-              children: List<Widget>.generate(
-                state.exams.length,
-                (index) => ExamItemWidget(
-                  exam: state.exams.elementAt(index)
-                )
+          if(state.isLoading) return const LoadingView();
+          return GridView.count(
+            crossAxisCount: 2,
+            children: List<Widget>.generate(
+              state.exams.length,
+              (index) => ExamItemWidget(
+                exam: state.exams.elementAt(index)
               )
-            );
-          }
-          return const LoadingView();
+            )
+          );
         }
       ),
     );

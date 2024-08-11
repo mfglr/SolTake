@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_reply_item_widget.dart';
-import 'package:my_social_app/views/loading_circle_widget.dart';
-import 'package:my_social_app/views/space_saving_widget.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class CommentReplyItemsWidget extends StatelessWidget {
   final TextEditingController contentController;

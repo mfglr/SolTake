@@ -6,7 +6,7 @@ import 'package:my_social_app/state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/views/space_saving_widget.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class CommentFieldWidget extends StatelessWidget {

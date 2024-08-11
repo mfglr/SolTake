@@ -8,8 +8,8 @@ import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/views/loading_widget.dart';
-import 'package:my_social_app/views/not_found_widget.dart';
+import 'package:my_social_app/views/shared/loading_widget.dart';
+import 'package:my_social_app/views/shared/not_found_widget.dart';
 import 'package:redux/redux.dart';
 
 class QuestionImagesSlider extends StatelessWidget {
@@ -47,7 +47,11 @@ class QuestionImagesSlider extends StatelessWidget {
               builder: (context){
                 switch(imageState.state){
                   case ImageStatus.done:
-                    return Image.memory(imageState.image!);
+                    return Image.memory(
+                      imageState.image!,
+                      // width: MediaQuery.of(context).size.width,
+                      // fit: BoxFit.cover,
+                    );
                   case ImageStatus.started:
                     return const LoadingWidget();
                   case ImageStatus.notStarted:

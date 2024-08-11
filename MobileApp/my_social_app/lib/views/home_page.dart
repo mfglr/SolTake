@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/account_state/actions.dart';
+import 'package:my_social_app/state/create_question_state/actions.dart';
 import 'package:my_social_app/state/home_page_state/actions.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/notification_entity_state.dart/notification_entity_state.dart';
@@ -103,7 +104,9 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
-            Navigator.of(context).pushNamed(takeQuestionImageRoute);
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            store.dispatch(const ClearCreateQuestionStateAction());
+            Navigator.of(context).pushNamed(selectExamRoute);
           },
           shape: const CircleBorder(),
           child: const Icon(Icons.question_mark),

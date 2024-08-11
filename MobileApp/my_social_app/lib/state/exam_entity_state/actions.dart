@@ -3,13 +3,13 @@ import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 
 @immutable
-class LoadAllExamsAction extends redux.Action{
-  const LoadAllExamsAction();
+class GetAllExamsAction extends redux.Action{
+  const GetAllExamsAction();
 }
 @immutable
-class LoadAllExamsSuccessAction extends redux.Action{
+class AddAllExamsAction extends redux.Action{
   final Iterable<ExamState> exams;
-  const LoadAllExamsSuccessAction({required this.exams});
+  const AddAllExamsAction({required this.exams});
 }
 
 @immutable
@@ -44,14 +44,14 @@ class AddExamsAction extends redux.Action{
 
 
 @immutable
-class LoadSubjectsOfSelectedExamAction extends redux.Action{
-  const LoadSubjectsOfSelectedExamAction();
+class GetSubjectsOfSelectedExamAction extends redux.Action{
+  const GetSubjectsOfSelectedExamAction();
 }
 @immutable
-class LoadSubjectsOfSelectedExamSuccessAction extends redux.Action{
+class GetSubjectsOfSelectedExamSuccessAction extends redux.Action{
   final int examId;
   final Iterable<int> ids;
-  const LoadSubjectsOfSelectedExamSuccessAction({
+  const GetSubjectsOfSelectedExamSuccessAction({
     required this.examId,
     required this.ids
   });
