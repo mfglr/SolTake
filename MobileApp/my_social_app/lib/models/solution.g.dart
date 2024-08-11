@@ -15,7 +15,7 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
       questionId: (json['questionId'] as num).toInt(),
       appUserId: (json['appUserId'] as num).toInt(),
       userName: json['userName'] as String,
-      content: json['content'] as String,
+      content: json['content'] as String?,
       isUpvoted: json['isUpvoted'] as bool,
       numberOfUpvotes: (json['numberOfUpvotes'] as num).toInt(),
       isDownvoted: json['isDownvoted'] as bool,

@@ -20,9 +20,9 @@ class ChangeSolutionContentAction extends redux.Action{
 }
 
 @immutable
-class AddSolutionImageAction extends redux.Action{
+class CreateSolutionImageAction extends redux.Action{
   final XFile image;
-  const AddSolutionImageAction({required this.image});
+  const CreateSolutionImageAction({required this.image});
 }
 
 @immutable

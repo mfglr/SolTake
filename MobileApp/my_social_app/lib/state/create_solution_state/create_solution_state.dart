@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 @immutable
 class CreateSolutionState{
   final int? questionId;
-  final String content;
+  final String? content;
   final Iterable<XFile> images;
 
   const CreateSolutionState({
@@ -16,8 +16,8 @@ class CreateSolutionState{
   CreateSolutionState changeQuestionId(int questionId)
     => CreateSolutionState(
         questionId: questionId,
-        content: content,
-        images: images
+        content: null,
+        images: const []
       );
   
   CreateSolutionState changeContent(String content)
@@ -31,7 +31,7 @@ class CreateSolutionState{
     => CreateSolutionState(
         questionId: questionId,
         content: content,
-        images: images.followedBy([image])
+        images: [...images,image]
       );
   
   CreateSolutionState removeImage(XFile image)

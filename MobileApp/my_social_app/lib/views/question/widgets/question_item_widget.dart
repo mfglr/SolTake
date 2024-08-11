@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/create_solution_state/actions.dart';
 import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
@@ -70,6 +71,8 @@ class QuestionItemWidget extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: (){
+                      final store = StoreProvider.of<AppState>(context,listen: false);
+                      store.dispatch(ChangeQuestionIdAction(questionId: question.id));
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayQuestionSolutionsPage(question: question,)));
                     },
                     child: Row(
