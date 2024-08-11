@@ -11,6 +11,7 @@ import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page.dart';
 import 'package:my_social_app/views/search_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class RootView extends StatefulWidget {
   const RootView({super.key});
@@ -75,9 +76,15 @@ class _RootViewState extends State<RootView> {
                         ),
                       ),
                 
-                      const NavigationDestination(
-                        selectedIcon: Icon(Icons.person),
-                        icon: Icon(Icons.person_outline),
+                      NavigationDestination(
+                        selectedIcon: UserImageWidget(
+                          userId: accountState.id,
+                          diameter: 30
+                        ),
+                        icon: UserImageWidget(
+                          userId: accountState.id,
+                          diameter: 30
+                        ),
                         label: '',
                       ),
                     ],
