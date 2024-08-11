@@ -53,6 +53,7 @@ class UserPage extends StatelessWidget {
                     converter: (store) => store.state.selectUserQuestions(user.id),
                     builder: (context, questions) => QuestionAbstractItemsWidget(
                       questions: questions,
+                      pagination: user.questions,
                       onScrollBottom: (){
                         final store = StoreProvider.of<AppState>(context,listen: false);
                         store.dispatch(GetNextPageUserQuestionsIfReadyAction(userId: user.id));

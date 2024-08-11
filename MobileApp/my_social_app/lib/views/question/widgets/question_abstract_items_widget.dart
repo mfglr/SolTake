@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class QuestionAbstractItemsWidget extends StatefulWidget {
   final Iterable<QuestionState> questions;
+  final Pagination pagination;
   final Function onScrollBottom;
   const QuestionAbstractItemsWidget({
     super.key,
     required this.questions,
+    required this.pagination,
     required this.onScrollBottom
   });
 
@@ -39,13 +44,29 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      controller: _scrollController,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
-      itemCount: widget.questions.length,
-      itemBuilder: (context,index) => QuestionAbstractItemWidget(question: widget.questions.elementAt(index),questionIndex: index)
+    return Column(
+      children: [
+        Expanded(
+          child: GridView.builder(
+            controller: _scrollController,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: widget.questions.length,
+            itemBuilder: (context,index) => QuestionAbstractItemWidget(
+              question: widget.questions.elementAt(index),
+              questionIndex: index
+            )
+          ),
+        ),
+        Builder(
+          builder: (context){
+            if(widget.pagination.loading) return const LoadingCircleWidget(strokeWidth: 3);
+            return const SpaceSavingWidget();
+
+          }
+        )
+      ],
     );
   }
 }
