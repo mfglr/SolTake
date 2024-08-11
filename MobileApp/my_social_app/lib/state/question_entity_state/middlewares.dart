@@ -95,7 +95,7 @@ void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDi
 void getNextPageQuestionCommentsIfNoPageCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionCommentsIfNoPageAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
-    if(!pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionCommentsAction(questionId: action.questionId));
     }
   }

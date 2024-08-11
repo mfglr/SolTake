@@ -4,6 +4,7 @@ import 'package:my_social_app/state/notification_entity_state.dart/notification_
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -25,6 +26,7 @@ class QuestionLikedNotificationItem extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
@@ -39,8 +41,27 @@ class QuestionLikedNotificationItem extends StatelessWidget {
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: OutlinedButton(
+                          onPressed: () => 
+                            Navigator
+                              .of(context)
+                              .push(MaterialPageRoute(builder: (context) => DisplayQuestionPage(questionId: notification.questionId!))),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(right: 5),
+                                child: const Text("Go to question"),
+                              ),
+                              const Icon(Icons.arrow_forward)
+                            ],
+                          )
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top:15,left: 5),
                         child: Text(

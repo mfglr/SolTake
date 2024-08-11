@@ -72,7 +72,9 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
               child: SingleChildScrollView(
                 controller: _scrollController,
                 child: StoreConnector<AppState,Iterable<CommentState>>(
-                  onInit:(store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
+                  onInit:(store){
+                    store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId));
+                  },
                   converter: (store) => store.state.getQuestionComments(widget.questionId),
                   builder: (context,comments) => StoreConnector<AppState,QuestionState>(
                     converter: (store) => store.state.questionEntityState.entities[widget.questionId]!,
