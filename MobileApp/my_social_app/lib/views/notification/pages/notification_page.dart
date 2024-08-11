@@ -14,6 +14,13 @@ class NotificationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
+        title: const Text(
+          "Notifications",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          ),
+        ),
       ),
       body: StoreConnector<AppState,Iterable<NotificationState>>(
         onInit: (store) => store.dispatch(const NextPageNotificationsIfNoNotificationsActions()),

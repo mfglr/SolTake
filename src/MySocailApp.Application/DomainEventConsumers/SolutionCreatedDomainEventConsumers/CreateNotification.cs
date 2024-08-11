@@ -19,10 +19,8 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCreatedDomainEven
             var question = await _questionRepository.GetAsync(solution.QuestionId, cancellationToken);
             if(question != null)
             {
-                await _notificationRepsitory.CreateAsync(
-                    Notification.SolutionCreatedNotification(question.AppUserId, solution.Id, solution.AppUserId),
-                    cancellationToken
-                );
+                var solutionCreatedNotification = Notification.SolutionCreatedNotification(question.AppUserId, question.Id, solution.Id, solution.AppUserId);
+                await _notificationRepsitory.CreateAsync(solutionCreatedNotification,cancellationToken);
                 await _unitOfWork.CommitAsync(cancellationToken);
             }
         }

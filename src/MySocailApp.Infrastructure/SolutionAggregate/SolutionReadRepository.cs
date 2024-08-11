@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
@@ -23,20 +24,17 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context
-                .Solutions
+            => await _context.Solutions
                 .AsNoTracking()
                 .IncludeForSolution()
                 .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
 
-        public async Task<List<Solution>> GetByQuestionIdAsync(int questionId,int? lastId,CancellationToken cancellationToken)
-            => await _context
-                .Solutions
+        public async Task<List<Solution>> GetByQuestionIdAsync(int questionId,int? lastId,int? take,CancellationToken cancellationToken)
+            => await _context.Solutions
                 .AsNoTracking()
                 .IncludeForSolution()
-                .Where(x => x.QuestionId == questionId && (lastId == null || x.Id < lastId))
-                .OrderByDescending(x => x.Id)
-                .Take(20)
+                .Where(x => x.QuestionId == questionId)
+                .ToPage(lastId, take ?? RecordsPerPage.SolutionsPerPage)
                 .ToListAsync(cancellationToken);
     }
 }

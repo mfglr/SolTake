@@ -7,6 +7,7 @@ class NotificationState{
   final int? commentId;
   final int? questionId;
   final int? userId;
+  final int? solutionId;
 
   const NotificationState({
     required this.id,
@@ -16,7 +17,8 @@ class NotificationState{
     required this.type,
     required this.commentId,
     required this.questionId,
-    required this.userId
+    required this.userId,
+    required this.solutionId,
   });
 
   NotificationState markAsViewed()
@@ -29,5 +31,6 @@ class NotificationState{
         commentId: commentId,
         questionId: questionId,
         userId: userId,
+        solutionId: solutionId
       );
 }

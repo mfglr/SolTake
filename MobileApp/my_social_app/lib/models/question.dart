@@ -65,7 +65,7 @@ class Question{
     isOwner: isOwner,
     numberOfSolutions: numberOfSolutions,
     numberOfComments: numberOfComments,
-    solutions: Pagination.init(questionsPerPage),
+    solutions: Pagination.init(solutionsPerPage),
     comments: Pagination.init(commentsPerPage),
   );
 }

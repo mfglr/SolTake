@@ -11,6 +11,8 @@ namespace MySocailApp.Application.Queries.NotificationAggregate
         public NotificationType Type { get; protected set; }
         public int? CommentId { get; private set; }
         public int? UserId { get; private set; }
+        public int? QuestionId { get; private set; }
+        public int? SolutionId { get; private set; }
         private NotificationResponseDto() { }
     }
 }

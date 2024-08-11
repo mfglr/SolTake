@@ -4,6 +4,7 @@ import 'package:my_social_app/state/notification_entity_state.dart/notification_
 import 'package:my_social_app/views/notification/widgets/comment_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_liked_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/solution_created_notification_item.dart';
 
 class NotificationItems extends StatelessWidget {
   final Iterable<NotificationState> notifications;
@@ -28,6 +29,8 @@ class NotificationItems extends StatelessWidget {
                     return QuestionLikedNotificationItem(notification: notification);
                   case NotificationType.commentLikedNotification :
                     return CommentLikedNotificationItem(notification: notification);
+                  case NotificationType.solutionCreatedNotification:
+                    return SolutionCreatedNotificationItem(notification: notification);
                 }
                 return Container();
               }

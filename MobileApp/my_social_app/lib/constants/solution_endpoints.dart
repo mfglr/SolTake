@@ -1,5 +1,6 @@
 const createSolutionEndpoint = "Create";
 const getSolutionsByQuestionIdEndpoint = "GetByQuestionId";
+const getSolutionByIdEndpoint = "GetById";
 const getSolutionImageEndPoint = "getImage";
 const makeUpvoteEndpoint = "MakeUpvote";
 const makeDownvoteEndpoint = "MakeDownvote";

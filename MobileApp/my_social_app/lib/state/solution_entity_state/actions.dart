@@ -3,6 +3,12 @@ import 'package:my_social_app/state/actions.dart' as redux;
 import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
 
 @immutable
+class LoadSolutionAction extends redux.Action{
+  final int solutionId;
+  const LoadSolutionAction({required this.solutionId});
+}
+
+@immutable
 class AddSolutionAction extends redux.Action{
   final SolutionState solution;
   const AddSolutionAction({required this.solution});

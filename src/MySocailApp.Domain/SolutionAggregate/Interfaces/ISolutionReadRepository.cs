@@ -8,6 +8,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Interfaces
         Task<bool> Exist(int id, CancellationToken cancellationToken);
         Task<Solution?> GetAsync(int id, CancellationToken cancellationToken);
         Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken);
-        Task<List<Solution>> GetByQuestionIdAsync(int questionId, int? lastId, CancellationToken cancellationToken);
+        Task<List<Solution>> GetByQuestionIdAsync(int questionId, int? lastId, int? take, CancellationToken cancellationToken);
     }
 }

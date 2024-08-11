@@ -48,10 +48,11 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 UserId = likerId
             };
 
-        public static Notification SolutionCreatedNotification(int ownerId, int solutionId, int userId)
+        public static Notification SolutionCreatedNotification(int ownerId,int questionId,int solutionId, int userId)
             => new(NotificationType.SolutionCreatedNotification)
             {
                 OwnerId = ownerId,
+                QuestionId = questionId,
                 SolutionId = solutionId,
                 UserId = userId
             };

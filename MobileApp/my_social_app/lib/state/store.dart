@@ -163,7 +163,8 @@ final store = Store(
     loadQuestionImageMiddleware,
     // Question image end
 
-    //solution start
+    //solution entity state
+    loadSolutionMiddleware,
     createSolutionMiddleware,
     makeUpvoteMiddleware,
     makeDownvoteMiddleware,

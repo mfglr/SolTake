@@ -34,9 +34,14 @@ class SolutionService{
     return Solution.fromJson(json);
   }
 
-  Future<Iterable<Solution>> getByQuestionId(int questionId,{int? lastValue}) async {
+  Future<Solution> getSolutionById(int solutionId)
+    => _appClient
+        .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
+        .then((response) => Solution.fromJson(response)); 
+
+  Future<Iterable<Solution>> getByQuestionId(int questionId,int? lastValue,int? take) async {
     String endPoint = "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
+    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
 
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Solution.fromJson(e));

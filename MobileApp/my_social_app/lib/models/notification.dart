@@ -14,6 +14,7 @@ class Notification{
   final int? commentId;
   final int? questionId;
   final int? userId;
+  final int? solutionId;
 
   const Notification({
     required this.id,
@@ -23,7 +24,8 @@ class Notification{
     required this.type,
     required this.commentId,
     required this.questionId,
-    required this.userId
+    required this.userId,
+    required this.solutionId,
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);
@@ -39,5 +41,6 @@ class Notification{
         commentId: commentId,
         questionId: questionId,
         userId: userId,
+        solutionId: solutionId
       );
 }

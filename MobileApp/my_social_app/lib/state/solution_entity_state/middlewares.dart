@@ -3,6 +3,7 @@ import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/solution_image_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
@@ -41,10 +42,25 @@ void removeDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next)
   next(action);
 }
 
+void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadSolutionAction){
+    if(store.state.solutionEntityState.entities[action.solutionId] == null){
+      SolutionService()
+        .getSolutionById(action.solutionId)
+        .then((solution){
+          store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
+          store.dispatch(AddSolutionImagesAction(images: solution.images.map((e) => e.toSolutionImageState())));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
+        });
+    }
+  }
+  next(action);
+}
+
 void getNextPageSolutionCommentsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSolutionCommentsIfNoPageAction){
     final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
-    if(!comments.hasAtLeastOnePage && !comments.isLast){
+    if(comments.isReadyForNextPage && !comments.hasAtLeastOnePage){
       store.dispatch(GetNextPageSolutionCommentsAction(solutionId: action.solutionId));
     }
   }

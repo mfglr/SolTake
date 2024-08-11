@@ -71,7 +71,7 @@ void getNextPageQuestionSolutionIfNoPageMiddleware(Store<AppState> store,action,
 void getNextPageQuestionSolutionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionSolutionsIfReadyAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
-    if(!pagination.isReadyForNextPage){
+    if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageQuestionSolutionsAction(questionId: action.questionId));
     }
   }
@@ -81,11 +81,11 @@ void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDi
   if(action is GetNextPageQuestionSolutionsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
     SolutionService()
-      .getByQuestionId(action.questionId,lastValue: pagination.lastValue)
+      .getByQuestionId(action.questionId,pagination.lastValue,solutionsPerPage)
       .then((solutions){
+        store.dispatch(AddNextPageQuestionSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
         store.dispatch(AddSolutionImagesListsAction(lists: solutions.map((e) => e.images.map((e) => e.toSolutionImageState()))));
-        store.dispatch(AddNextPageQuestionSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
       });
   }
@@ -95,7 +95,7 @@ void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDi
 void getNextPageQuestionCommentsIfNoPageCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionCommentsIfNoPageAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
-    if(!pagination.isLast && !pagination.hasAtLeastOnePage){
+    if(!pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionCommentsAction(questionId: action.questionId));
     }
   }
