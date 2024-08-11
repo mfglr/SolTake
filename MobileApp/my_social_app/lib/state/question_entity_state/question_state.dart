@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/ids.dart';
 import 'package:my_social_app/state/pagination.dart';
 
 @immutable
@@ -18,8 +17,8 @@ class QuestionState{
   final int numberOfLikes;
   final bool isOwner;
   final int numberOfSolutions;
-  final Ids solutions;
   final int numberOfComments;
+  final Pagination solutions;
   final Pagination comments;
 
   const QuestionState({
@@ -114,8 +113,7 @@ class QuestionState{
       solutions: solutions.prependOne(solutionId),
       comments: comments
     );
-  
-  QuestionState nextPageQuestionSolutions(Iterable<int> solutionIds)
+  QuestionState getNextPageSolutions()
     => QuestionState(
         id: id,
         createdAt: createdAt,
@@ -132,7 +130,27 @@ class QuestionState{
         isOwner: isOwner,
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
-        solutions: solutions.nextPage(solutionIds),
+        solutions: solutions.startLoading(),
+        comments: comments
+      );
+  QuestionState addNextPageSolutions(Iterable<int> solutionIds)
+    => QuestionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        examId: examId,
+        subjectId: subjectId,
+        topics: topics,
+        images: images,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        isOwner: isOwner,
+        numberOfSolutions: numberOfSolutions,
+        numberOfComments: numberOfComments,
+        solutions: solutions.appendNextPage(solutionIds),
         comments: comments
       );
   
@@ -156,7 +174,6 @@ class QuestionState{
       solutions: solutions,
       comments: comments.prependOne(questionCommentId)
     );
-
   QuestionState getNextPageComments()
     => QuestionState(
         id: id,

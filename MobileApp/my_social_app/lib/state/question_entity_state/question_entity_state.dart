@@ -17,8 +17,10 @@ class QuestionEntityState extends EntityState<QuestionState>{
     
   QuestionEntityState addSolution(int questionId,int solutionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addSolution(solutionId)));
-  QuestionEntityState nextPageQuestionSolutions(int questionId,Iterable<int> solutionIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.nextPageQuestionSolutions(solutionIds)));
+  QuestionEntityState getNextPageSolutions(int questionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.getNextPageSolutions()));
+  QuestionEntityState addNextPageSolutions(int questionId,Iterable<int> solutionIds)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageSolutions(solutionIds)));
 
   QuestionEntityState addComment(int questionId,int questionCommentId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addComment(questionCommentId)));

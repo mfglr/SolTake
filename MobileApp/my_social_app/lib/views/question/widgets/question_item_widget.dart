@@ -73,7 +73,9 @@ class QuestionItemWidget extends StatelessWidget {
                     onPressed: (){
                       final store = StoreProvider.of<AppState>(context,listen: false);
                       store.dispatch(ChangeQuestionIdAction(questionId: question.id));
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayQuestionSolutionsPage(question: question,)));
+                      Navigator
+                        .of(context)
+                        .push(MaterialPageRoute(builder: (context) => DisplayQuestionSolutionsPage(questionId: question.id)));
                     },
                     child: Row(
                       children: [

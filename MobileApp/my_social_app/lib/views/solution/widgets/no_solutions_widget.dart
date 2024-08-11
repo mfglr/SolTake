@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
 
 class NoSolutionsWidget extends StatelessWidget {
-  final bool isOwner;
-  const NoSolutionsWidget({super.key,required this.isOwner});
+  final QuestionState question;
+  const NoSolutionsWidget({super.key,required this.question});
 
   @override
   Widget build(BuildContext context) {
-    if(isOwner){
+    if(question.isOwner){
       return const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -99,8 +99,6 @@ final store = Store(
     loadUserMiddleware,
     loadUserByUserNameMiddleware,
 
-    
-    
     makeFollowRequestMiddleware,
     cancelFollowRequestMiddleware,
 
@@ -151,14 +149,15 @@ final store = Store(
     getNextPageTopicQuestionsIfReadyMiddeware,
     //Topic end
 
-    // Question start
+    // Questions entity state
     loadQuestionMiddleware,
     createQuestionMiddleware,
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
-    nextPageQuestionSolutionsMiddleware,
-    nextPageQuestionSolutionIfNoSolutionsMiddleware,
-    // Question end
+    
+    getNextPageQuestionSolutionIfNoPageMiddleware,
+    getNextPageQuestionSolutionsIfReadyMiddleware,
+    getNextPageQuestionSolutionsMiddleware,
     
     // Question image start
     loadQuestionImageMiddleware,

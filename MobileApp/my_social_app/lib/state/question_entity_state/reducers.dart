@@ -14,10 +14,12 @@ QuestionEntityState likeQuestionSuccessReducer(QuestionEntityState prev, LikeQue
 QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, DislikeQuestionSuccessAction action)
   => prev.dislike(action.questionId);
 
+QuestionEntityState getNextPageSolutionsReducer(QuestionEntityState prev,GetNextPageQuestionSolutionsAction action)
+  => prev.getNextPageSolutions(action.questionId);
+QuestionEntityState addNextPageSolutionsReducer(QuestionEntityState prev,AddNextPageQuestionSolutionsAction action)
+  => prev.addNextPageSolutions(action.questionId, action.solutionIds);
 QuestionEntityState addSolutionReducer(QuestionEntityState prev,AddQuestionSolutionAction action)
   => prev.addSolution(action.questionId,action.solutionId);
-QuestionEntityState nextPageQuestionSolutionsReducer(QuestionEntityState prev,NextPageQuestionSolutionsSuccessAction action)
-  => prev.nextPageQuestionSolutions(action.questionId, action.solutionIds);
 
 QuestionEntityState getNextPageCommentsReducer(QuestionEntityState prev,GetNextPageQuestionCommentsAction action)
   => prev.getNextPageComments(action.questionId);
@@ -31,8 +33,10 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,AddQuestionsAction>(addQuestionsReducer).call,
   TypedReducer<QuestionEntityState,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
   TypedReducer<QuestionEntityState,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
+  
+  TypedReducer<QuestionEntityState,GetNextPageQuestionSolutionsAction>(getNextPageSolutionsReducer).call,
+  TypedReducer<QuestionEntityState,AddNextPageQuestionSolutionsAction>(addNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionSolutionAction>(addSolutionReducer).call,
-  TypedReducer<QuestionEntityState,NextPageQuestionSolutionsSuccessAction>(nextPageQuestionSolutionsReducer).call,
 
   TypedReducer<QuestionEntityState,GetNextPageQuestionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionCommentsAction>(addNextPageCommentsReducer).call,

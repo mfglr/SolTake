@@ -42,29 +42,34 @@ class DislikeQuestionSuccessAction extends redux.Action{
 }
 
 
+
+@immutable
+class GetNextPageQuestionSolutionsIfNoPageAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionSolutionsIfNoPageAction({required this.questionId});
+}
+@immutable
+class GetNextPageQuestionSolutionsIfReadyAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionSolutionsIfReadyAction({required this.questionId});
+}
+@immutable
+class GetNextPageQuestionSolutionsAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionSolutionsAction({required this.questionId});
+}
+@immutable
+class AddNextPageQuestionSolutionsAction extends redux.Action{
+  final int questionId;
+  final Iterable<int> solutionIds;
+  const AddNextPageQuestionSolutionsAction({required this.questionId, required this.solutionIds});
+}
 @immutable
 class AddQuestionSolutionAction extends redux.Action{
   final int solutionId;
   final int questionId;
   const AddQuestionSolutionAction({required this.solutionId, required this.questionId});
 }
-@immutable
-class NextPageQuestionSolutionsAction extends redux.Action{
-  final int questionId;
-  const NextPageQuestionSolutionsAction({required this.questionId});
-}
-@immutable
-class NextPageQuestionSolutionsSuccessAction extends redux.Action{
-  final int questionId;
-  final Iterable<int> solutionIds;
-  const NextPageQuestionSolutionsSuccessAction({required this.questionId, required this.solutionIds});
-}
-@immutable
-class NextPageQuestionSolutionsIfNoSolutionsAction extends redux.Action{
-  final int questionId;
-  const NextPageQuestionSolutionsIfNoSolutionsAction({required this.questionId});
-}
-
 
 @immutable
 class GetNextPageQuestionCommentsIfNoPageAction extends redux.Action{
