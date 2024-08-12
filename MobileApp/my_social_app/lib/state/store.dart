@@ -121,6 +121,8 @@ final store = Store(
 
     //user image start
     loadUserImageMiddleware,
+    updateCurrentUserImageMiddleware,
+    removeCurrentUserImageMiddleware,
     //user imgage end
 
     //search state

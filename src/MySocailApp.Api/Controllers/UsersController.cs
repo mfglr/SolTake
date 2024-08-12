@@ -62,9 +62,9 @@ namespace MySocailApp.Api.Controllers
         public async Task UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
              => await _mediator.Send(new UpdateUserImageDto(file),cancellationToken);
 
-        [HttpDelete]
-        public async Task RemoveImage(CancellationToken cancellationToken)
-             => await _mediator.Send(new RemoveUserImageDto(), cancellationToken);
+        [HttpGet]
+        public async Task<FileContentResult> RemoveImage(CancellationToken cancellationToken)
+             => File(await _mediator.Send(new RemoveUserImageDto(), cancellationToken), "application/octet-stream");
 
         [HttpPut]
         public async Task MakeProfilePrivate(CancellationToken cancellationToken)

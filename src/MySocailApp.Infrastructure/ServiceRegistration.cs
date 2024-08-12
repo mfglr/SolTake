@@ -115,11 +115,7 @@ namespace MySocailApp.Infrastructure
         {
             return services
                 .AddScoped<IAppUserWriteRepository, AppUserWriteRepository>()
-                .AddScoped<IAppUserReadRepository, AppUserReadRepository>()
-                .AddScoped<IUserImageBlobNameGenerator, UserImageBlobNameGenerator>()
-                .AddScoped<IUserImageBlobService, UserImageBlobService>()
-                .AddScoped<UserImageUpdater>()
-                .AddScoped<UserImageReader>();
+                .AddScoped<IAppUserReadRepository, AppUserReadRepository>();
         }
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
         {

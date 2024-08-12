@@ -122,7 +122,6 @@ class QuestionItemWidget extends StatelessWidget {
               ]
             ),
           ),
-
         ],
       ),
     );

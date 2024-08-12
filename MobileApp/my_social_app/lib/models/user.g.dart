@@ -8,6 +8,7 @@ part of 'user.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       id: (json['id'] as num).toInt(),
+      hasImage: json['hasImage'] as bool,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: json['updatedAt'] == null
           ? null
@@ -36,6 +37,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'userName': instance.userName,
       'name': instance.name,
+      'hasImage': instance.hasImage,
       'birthDate': instance.birthDate?.toIso8601String(),
       'gender': instance.gender,
       'profileVisibility': instance.profileVisibility,

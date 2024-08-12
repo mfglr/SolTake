@@ -24,12 +24,10 @@ UserEntityState getNextPageMessagesReducer(UserEntityState prev,GetNextPageUserM
 UserEntityState addNextPageUserMessagesReducer(UserEntityState prev,AddNextPageUserMessagesAction action)
   => prev.addNextPageMessages(action.userId, action.messageIds);
 
-UserEntityState loadUserReducer(UserEntityState prev,LoadUserSuccessAction action)
+UserEntityState loadUserReducer(UserEntityState prev,AddUserAction action)
   => prev.addUser(action.user);
 UserEntityState addUsersReducer(UserEntityState prev,AddUsersAction action)
   => prev.addUsers(action.users);
-
-
 
 UserEntityState makeFollowRequestReducer(UserEntityState prev, MakeFollowRequestSuccessAction action)
   => prev.makeFollowRequest(action.currentUserId, action.userId);
@@ -38,7 +36,8 @@ UserEntityState cancelFollowRequestReducer(UserEntityState prev, CancelFollowReq
 UserEntityState addQuestionReducer(UserEntityState prev, AddUserQuestionAction action)
   => prev.addQuestion(action.userId, action.questionId);
 
-
+UserEntityState changeProfileImageStatusReducer(UserEntityState prev,ChangeProfileImageStatusAction action)
+  => prev.changeProfileImageStatus(action.userId,action.value);
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   TypedReducer<UserEntityState,GetNextPageUserQuestionsAction>(getNextPageQuestionsReducer).call,
@@ -54,9 +53,11 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,GetNextPageUserMessagesAction>(getNextPageMessagesReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserMessagesAction>(addNextPageUserMessagesReducer).call,
 
-  TypedReducer<UserEntityState,LoadUserSuccessAction>(loadUserReducer).call,
+  TypedReducer<UserEntityState,AddUserAction>(loadUserReducer).call,
   TypedReducer<UserEntityState,AddUsersAction>(addUsersReducer).call,
   TypedReducer<UserEntityState,MakeFollowRequestSuccessAction>(makeFollowRequestReducer).call,
   TypedReducer<UserEntityState,CancelFollowRequestSuccessAction>(cancelFollowRequestReducer).call,
   TypedReducer<UserEntityState,AddUserQuestionAction>(addQuestionReducer).call,
+
+  TypedReducer<UserEntityState,ChangeProfileImageStatusAction>(changeProfileImageStatusReducer).call,
 ]);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/views/edit_profile/pages/edit_profile_page.dart';
 
 class ProfileEditButton extends StatelessWidget {
   const ProfileEditButton({super.key});
@@ -6,7 +7,7 @@ class ProfileEditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: (){},
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EditProfilePage())),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

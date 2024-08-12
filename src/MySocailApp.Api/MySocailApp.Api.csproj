@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\DefaultProfileImages\no_profile_image.png">
+    <None Update="Images\ProfileImages\no_profile_image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="MailMessages\EmailConfirmationByToken.html">
@@ -39,7 +39,6 @@
     <Folder Include="Images\MessageImages\" />
     <Folder Include="Images\SolutionImages\" />
     <Folder Include="Images\QuestionImages\" />
-    <Folder Include="Images\ProfileImages\" />
   </ItemGroup>
 
 </Project>

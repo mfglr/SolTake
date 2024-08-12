@@ -16,6 +16,7 @@ class User{
   final DateTime? updatedAt;
   final String userName;
   final String? name;
+  final bool hasImage;
   final DateTime? birthDate;
   final int gender;
   final int profileVisibility;
@@ -30,6 +31,7 @@ class User{
 
   const User({
     required this.id,
+    required this.hasImage,
     required this.createdAt,
     required this.updatedAt,
     required this.userName,
@@ -58,6 +60,7 @@ class User{
         updatedAt: updatedAt,
         userName: userName,
         name: name,
+        hasImage: hasImage,
         birthDate: birthDate,
         gender: Gender.values[gender],
         profileVisibility: ProfileVisibility.values[profileVisibility],

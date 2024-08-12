@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
 {
-    public class RemoveUserImageDto : IRequest;
+    public class RemoveUserImageDto : IRequest<byte[]>;
 }

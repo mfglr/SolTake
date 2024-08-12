@@ -18,25 +18,29 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public DateTime? UpdatedAt { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
-        public UserImage? Image { get; private set; }
+        public bool HasImage { get; private set; }
+        public ProfileImage? Image { get; private set; }
         private readonly List<AppUserImage> _images = [];
         public IReadOnlyCollection<AppUserImage> Images => _images;
-        internal void UpdateImage(UserImage image)
+        public void UpdateImage(ProfileImage image)
         {
             if (Image != null)
                 _images.Add(Image.ToAppUserImage());
+            HasImage = true;
             Image = image;
         }
         public void RemoveImage()
         {
             if (Image == null)
                 throw new UserImageIsNotAvailableException();
+            HasImage = false;
             _images.Add(Image.ToAppUserImage());
             Image = null;
         }
 
         internal void Create()
         {
+            HasImage = false;
             ProfileVisibility = ProfileVisibility.Public;
             CreatedAt = DateTime.UtcNow;
         }

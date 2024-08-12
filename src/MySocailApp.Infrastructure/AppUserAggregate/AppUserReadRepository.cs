@@ -13,6 +13,9 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
         private readonly AppDbContext _context = context;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
+        public async Task<AppUser?> GetAsync(int id, CancellationToken cancellationToken)
+            => await _context.AppUsers.FindAsync([id], cancellationToken);
+
         public async Task<List<AppUser>> GetFollowersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
             => await _context
                 .AppUsers

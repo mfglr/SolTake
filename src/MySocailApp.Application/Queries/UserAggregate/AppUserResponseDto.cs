@@ -12,6 +12,7 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public DateTime? BirthDate { get; private set; }
         public Gender Gender { get; private set; }
         public ProfileVisibility ProfileVisibility { get; private set; }
+        public bool HasImage { get; private set; }
         public int NumberOfQuestions { get; private set; }
         public int NumberOfFollowers { get; private set; }
         public int NumberOfFolloweds { get; private set; }

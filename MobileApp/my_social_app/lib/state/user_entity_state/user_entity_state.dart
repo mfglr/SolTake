@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
@@ -29,9 +28,6 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState addQuestion(int userId,int questionId)
     => UserEntityState(entities: updateOne(entities[userId]!.addQuestion(questionId)));
 
-  UserEntityState loadUserImage(int userId, Uint8List image)
-    => UserEntityState(entities: updateOne(entities[userId]!.loadUserImage(image)));
-
   UserEntityState makeFollowRequest(int currentUserId, int userId)
     => UserEntityState(entities: updateMany([
         entities[userId]!.addRequester(currentUserId),
@@ -49,6 +45,9 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(entities: updateOne(entities[userId]!.nextPageMessages()));
   UserEntityState addNextPageMessages(int userId,Iterable<int> messageIds)
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageMessages(messageIds)));
+
+  UserEntityState changeProfileImageStatus(int userId,bool value)
+    => UserEntityState(entities: updateOne(entities[userId]!.changeProfileImageStatus(value)));
 
   Iterable<UserState> getFollowers(int userId) => entities[userId]!.followers.ids.map((e) => entities[e]!);
   Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.ids.map((e) => entities[e]!);

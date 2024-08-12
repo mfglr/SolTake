@@ -4,6 +4,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Interfaces
 {
     public interface IAppUserReadRepository
     {
+        Task<AppUser?> GetAsync(int id, CancellationToken cancellationToken);
         Task<AppUser?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<AppUser?> GetByUserNameAsync(string userName, CancellationToken cancellationToken);
         Task<List<AppUser>> GetByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken);

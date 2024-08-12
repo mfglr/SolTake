@@ -1,7 +1,5 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/ids.dart';
-import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/pagination.dart';
 import 'package:my_social_app/state/user_entity_state/gender.dart';
 import 'package:my_social_app/state/user_entity_state/profilevisibility.dart';
@@ -14,6 +12,7 @@ class UserState{
   final String userName;
   final String? name;
   final DateTime? birthDate;
+  final bool hasImage;
   final Gender gender;
   final ProfileVisibility profileVisibility;
   final int numberOfQuestions;
@@ -25,10 +24,10 @@ class UserState{
   final bool isRequested;
   final Pagination followers;
   final Pagination followeds;
-  final Ids requesters;
-  final Ids requesteds;
   final Pagination questions;
   final Pagination messages;
+  final Ids requesters;
+  final Ids requesteds;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -44,6 +43,7 @@ class UserState{
     required this.createdAt,
     required this.updatedAt,
     required this.userName,
+    required this.hasImage,
     required this.name,
     required this.birthDate,
     required this.gender,
@@ -68,6 +68,7 @@ class UserState{
     String? newUserName,
     String? newName,
     DateTime? newBirthDate,
+    bool? newHasImage,
     Gender? newGender,
     ProfileVisibility? newProfileVisibility,
     int? newNumberOfQuestions,
@@ -77,8 +78,6 @@ class UserState{
     bool? newIsFollowed,
     bool? newIsRequester,
     bool? newIsRequested,
-    Uint8List? newImage,
-    ImageStatus? newImageState,
     Pagination? newFollowers,
     Pagination? newFolloweds,
     Ids? newRequesters,
@@ -92,6 +91,7 @@ class UserState{
     userName: newUserName ?? userName,
     name: newName ?? name,
     birthDate: newBirthDate ?? birthDate,
+    hasImage: newHasImage ?? hasImage,
     gender: newGender ?? gender,
     profileVisibility: newProfileVisibility ??  profileVisibility,
     numberOfQuestions: newNumberOfQuestions ?? numberOfQuestions,
@@ -109,7 +109,6 @@ class UserState{
     messages: newMessages ?? messages
   );
 
-  
   UserState loadRequesters(Iterable<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
   UserState loadRequesteds(Iterable<int> newRequesteds) => _optional(newRequesteds: requesteds.nextPage(newRequesteds));
   
@@ -181,9 +180,10 @@ class UserState{
     );
   }
   //remove follower end
-  UserState loadUserImage(Uint8List newImage) => _optional(newImage: newImage,newImageState: ImageStatus.done);
   
   UserState addMessage(int messageId) => _optional(newMessages: messages.appendOne(messageId));
   UserState nextPageMessages() => _optional(newMessages: messages.startLoading());
   UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.prependNextPage(messageIds));
+
+  UserState changeProfileImageStatus(bool value) => _optional(newHasImage: value);
 }

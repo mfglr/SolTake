@@ -4,7 +4,6 @@ import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
@@ -22,16 +21,8 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
       UserService()
         .getById(action.userId)
         .then((user){
-          store.dispatch(
-            LoadUserSuccessAction(
-              user: user.toUserState()
-            )
-          );
-          store.dispatch(
-            AddUserImageAction(
-              image: UserImageState(id: user.id,image: null,state: ImageStatus.notStarted)
-            )
-          );
+          store.dispatch(AddUserAction(user: user.toUserState()));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(user.id)));
         });
     }
   }
@@ -44,16 +35,8 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
       UserService()
         .getByUserName(action.userName)
         .then((user){
-          store.dispatch(
-            LoadUserSuccessAction(
-              user: user.toUserState()
-            )
-          );
-          store.dispatch(
-            AddUserImageAction(
-              image: UserImageState(id: user.id,image: null,state: ImageStatus.notStarted)
-            )
-          );
+          store.dispatch(AddUserAction(user: user.toUserState()));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(user.id)));
         });
     }
   }
@@ -125,6 +108,37 @@ void getNextPageUserFollowedsMiddleware(Store<AppState> store,action,NextDispatc
   next(action);
 }
 
+void getNextPageUserMessageIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserMessagesIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserMessageIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserMessagesIfReadyAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserMessagesAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    MessageService()
+      .getMessagesByUserId(action.userId, pagination.firstValue, messagesPerPage)
+      .then((messages){
+        store.dispatch(AddNextPageUserMessagesAction(userId: action.userId,messageIds: messages.map((e) => e.id)));
+        store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
+      });
+  }
+  next(action);
+}
+
 void getNextPageUserQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserQuestionsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.questions;
@@ -182,33 +196,4 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
   next(action);
 }
 
-void getNextPageUserMessageIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserMessagesIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserMessageIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserMessagesIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserMessagesAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
-    MessageService()
-      .getMessagesByUserId(action.userId, pagination.firstValue, messagesPerPage)
-      .then((messages){
-        store.dispatch(AddNextPageUserMessagesAction(userId: action.userId,messageIds: messages.map((e) => e.id)));
-        store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
-      });
-  }
-  next(action);
-}
+

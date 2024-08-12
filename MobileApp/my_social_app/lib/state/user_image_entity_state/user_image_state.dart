@@ -16,7 +16,7 @@ class UserImageState{
 
   factory UserImageState.init(int userId) => UserImageState(id: userId, image: null, state: ImageStatus.notStarted);
 
-  UserImageState load(int id,Uint8List image)
+  UserImageState load(Uint8List image)
     => UserImageState(
         id: id,
         image: image,

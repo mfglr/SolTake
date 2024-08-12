@@ -14,12 +14,10 @@ class LoadUserByUserNameAction extends redux.Action{
   const LoadUserByUserNameAction({required this.userName});
 }
 @immutable
-class LoadUserSuccessAction extends redux.Action{
+class AddUserAction extends redux.Action{
   final UserState user;
-  const LoadUserSuccessAction({required this.user});
+  const AddUserAction({required this.user});
 }
-
-
 @immutable
 class AddUsersAction extends redux.Action{
   final Iterable<UserState> users;
@@ -148,4 +146,11 @@ class AddUserMessageAction extends redux.Action{
   final int userId;
   final int messageId;
   const AddUserMessageAction({required this.userId, required this.messageId});
+}
+
+@immutable
+class ChangeProfileImageStatusAction extends redux.Action{
+  final int userId;
+  final bool value;
+  const ChangeProfileImageStatusAction({required this.userId, required this.value});
 }

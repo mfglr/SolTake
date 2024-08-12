@@ -35,28 +35,31 @@ class _TakeImagePageState extends State<TakeImagePage> {
         builder: (context,snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
             return Center(
-              child: CameraPreview(
-                _controller,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Icon(
-                              Icons.arrow_back,
-                              size: 35,
-                              color: Colors.white,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: CameraPreview(
+                  _controller,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Icon(
+                                Icons.arrow_back,
+                                size: 35,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

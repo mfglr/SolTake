@@ -1,7 +1,20 @@
 import 'dart:typed_data';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/actions.dart' as redux;
+
+
+@immutable
+class UpdateCurrentUserImageAction extends redux.Action{
+  final XFile file;
+  const UpdateCurrentUserImageAction({required this.file});
+}
+
+@immutable
+class RemoveCurrentUserImageAction extends redux.Action{
+  const RemoveCurrentUserImageAction();
+}
 
 @immutable
 class AddUserImageAction extends redux.Action{
