@@ -188,4 +188,5 @@ class UserState{
   UserState changeProfileImageStatus(bool value) => _optional(newHasImage: value);
 
   UserState updateUserName(String userName) => _optional(newUserName: userName);
+  UserState updateName(String name) => _optional(newName: name == "" ? null : name );
 }

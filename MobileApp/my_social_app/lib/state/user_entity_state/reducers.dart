@@ -38,9 +38,10 @@ UserEntityState addQuestionReducer(UserEntityState prev, AddUserQuestionAction a
 
 UserEntityState changeProfileImageStatusReducer(UserEntityState prev,ChangeProfileImageStatusAction action)
   => prev.changeProfileImageStatus(action.userId,action.value);
-
 UserEntityState updateUserNameReducer(UserEntityState prev,UpdateUserNameSuccessAction action)
   => prev.updateUserName(action.userId, action.userName);
+UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction action)
+  => prev.updateName(action.userId, action.name);
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   TypedReducer<UserEntityState,GetNextPageUserQuestionsAction>(getNextPageQuestionsReducer).call,
@@ -64,5 +65,5 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
 
   TypedReducer<UserEntityState,ChangeProfileImageStatusAction>(changeProfileImageStatusReducer).call,
   TypedReducer<UserEntityState,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
-
+  TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
 ]);

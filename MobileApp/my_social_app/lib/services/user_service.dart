@@ -20,6 +20,9 @@ class UserService{
     await _appClient.send(request);
   }
 
+  Future<void> updateName(String name)
+    => _appClient.put("$userController/$updateNameEndpoint",body: {'name' : name});
+
   Future<Uint8List> removeImage()
    => _appClient.getBytes("$userController/$removeUserImageEndpoint");
 

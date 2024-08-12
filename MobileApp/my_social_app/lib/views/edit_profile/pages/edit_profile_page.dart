@@ -3,7 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photo_modal.dart';
+import 'package:my_social_app/views/edit_profile/pages/edit_name_page.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_user_name_page.dart';
+import 'package:my_social_app/views/edit_profile/widgets/edit_user_field_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
@@ -117,52 +119,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      const Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "User Name",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ],
-                          ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 15),
+                        child: EditUserFieldWidget(
+                          label: "User Name",
+                          value: user.formatUserName(),
+                          onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (contex) => EditUserNamePage(user: user)));
+                          }
                         ),
                       ),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                user.formatUserName(),
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                              OutlinedButton(
-                                onPressed: () => 
-                                  Navigator
-                                    .of(context)
-                                    .push(MaterialPageRoute(builder: (context) => EditUserNamePage(user: user))),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 5),
-                                      child: const Text("Edit")
-                                    ),
-                                    const Icon(Icons.edit_document,size: 18),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 15),
+                        child: EditUserFieldWidget(
+                          label: "Name",
+                          value: user.name ?? "",
+                          onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditNamePage(user:user)));
+                          },
                         ),
-                      ),
+                      )
                     ],
                   ),
                 )

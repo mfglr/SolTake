@@ -205,7 +205,19 @@ void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
       .updateUserName(action.userName)
       .then((_){
         store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));
-        ToastCreator.displaySuccess("User name has been successfully updated.");
+        ToastCreator.displaySuccess("Your user name has been successfully updated.");
+      });
+  }
+  next(action);
+}
+void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateNameAction){
+    final accountId = store.state.accountState!.id;
+    UserService()
+      .updateName(action.name)
+      .then((_){
+        store.dispatch(UpdateNameSuccessAction(userId: accountId, name: action.name));
+        ToastCreator.displaySuccess("Yout name has been successfully updated.");
       });
   }
   next(action);

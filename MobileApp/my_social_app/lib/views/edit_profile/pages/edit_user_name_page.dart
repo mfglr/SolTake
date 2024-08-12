@@ -19,13 +19,12 @@ class EditUserNamePage extends StatefulWidget {
 
 class _EditUserNamePageState extends State<EditUserNamePage> {
   final TextEditingController _controller = TextEditingController();
-  late String _oldUserName;
   bool isExist = true;
   bool loading = false;
 
   void Function()? _generateApprover(){
     return !isExist && 
-    _controller.text != _oldUserName && 
+    _controller.text != widget.user.userName && 
     _controller.text.isNotEmpty ? 
       (){
         final store = StoreProvider.of<AppState>(context,listen: false);
@@ -38,7 +37,6 @@ class _EditUserNamePageState extends State<EditUserNamePage> {
   @override
   void initState() {
     _controller.text = widget.user.userName;
-    _oldUserName = widget.user.userName;
     super.initState();
   }
 
@@ -74,31 +72,27 @@ class _EditUserNamePageState extends State<EditUserNamePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder()
-              ),
-              onChanged: (value) => setState(() {
-                if(value.isNotEmpty && !validUserNameChracters.contains(value[value.length - 1])){
-                  ToastCreator.displayError("Invalid character!!!",length: Toast.LENGTH_SHORT);
-                  _controller.text = value.substring(0,value.length - 1);
-                  return;
-                }
-                if(value == "") return;
-                loading = true;
-                AccountService()
-                  .isUserNameExist(value)
-                  .then((value) => setState(() {
-                    isExist = value;
-                    loading = false;
-                  }));
-              }),
-            )
-          ],
+        child: TextField(
+          controller: _controller,
+          enableSuggestions: false,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder()
+          ),
+          onChanged: (value) => setState(() {
+            if(value.isNotEmpty && !validUserNameChracters.contains(value[value.length - 1])){
+              ToastCreator.displayError("Invalid character!!!",length: Toast.LENGTH_SHORT);
+              _controller.text = value.substring(0,value.length - 1);
+              return;
+            }
+            if(value == "") return;
+            loading = true;
+            AccountService()
+              .isUserNameExist(value)
+              .then((response) => setState(() {
+                isExist = response;
+                loading = false;
+              }));
+          }),
         ),
       ),
     );

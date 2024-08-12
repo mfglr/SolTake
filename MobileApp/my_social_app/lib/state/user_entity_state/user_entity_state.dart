@@ -52,6 +52,9 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState updateUserName(int userId,String userName)
     => UserEntityState(entities: updateOne(entities[userId]!.updateUserName(userName)));
 
+  UserEntityState updateName(int userId,String name)
+    => UserEntityState(entities: updateOne(entities[userId]!.updateName(name)));
+
   Iterable<UserState> getFollowers(int userId) => entities[userId]!.followers.ids.map((e) => entities[e]!);
   Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.ids.map((e) => entities[e]!);
 }

@@ -18,6 +18,13 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public DateTime? UpdatedAt { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
+        internal void Create()
+        {
+            HasImage = false;
+            ProfileVisibility = ProfileVisibility.Public;
+            CreatedAt = DateTime.UtcNow;
+        }
+
         public bool HasImage { get; private set; }
         public ProfileImage? Image { get; private set; }
         private readonly List<AppUserImage> _images = [];
@@ -38,13 +45,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             Image = null;
         }
 
-        internal void Create()
-        {
-            HasImage = false;
-            ProfileVisibility = ProfileVisibility.Public;
-            CreatedAt = DateTime.UtcNow;
-        }
-
         internal void DeleteEntities()
         {
             _blockeds.Clear();
@@ -58,7 +58,10 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public string? Name { get; private set; }
         public void UpdateName(string name)
         {
-            Name = name;
+            if (name == "")
+                Name = null;
+            else
+                Name = name;
             UpdatedAt = DateTime.UtcNow;
         }
 

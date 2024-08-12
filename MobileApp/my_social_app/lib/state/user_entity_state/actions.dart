@@ -166,3 +166,16 @@ class UpdateUserNameSuccessAction extends redux.Action{
   final String userName;
   const UpdateUserNameSuccessAction({required this.userId,required this.userName});
 }
+
+@immutable
+class UpdateNameAction extends redux.Action{
+  final String name;
+  const UpdateNameAction({required this.name});
+}
+
+@immutable
+class UpdateNameSuccessAction extends redux.Action{
+  final int userId;
+  final String name;
+  const UpdateNameSuccessAction({required this.userId, required this.name});
+}

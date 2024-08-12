@@ -119,6 +119,7 @@ final store = Store(
     nextPageOfUserQuestionsMiddleware,
 
     updateUserNameMiddleware,
+    updateNameMiddleware,
     //user end
 
     //user image start

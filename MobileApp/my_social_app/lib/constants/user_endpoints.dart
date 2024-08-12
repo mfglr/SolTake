@@ -12,4 +12,5 @@ const removeFollowerEndPoint = "RemoveFollower";
 const unfollowEndPoint = "Unfollow";
 const updateUserImageEndpoint = "UpdateImage";
 const removeUserImageEndpoint = "RemoveImage";
+const updateNameEndpoint = "UpdateName";
 
