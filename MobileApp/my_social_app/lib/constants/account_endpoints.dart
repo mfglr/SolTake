@@ -6,3 +6,4 @@ const String loginByRefreshTokenEndPoint = "loginByRefreshToken";
 const String updateEmailEndPoint = "UpdateEmail";
 const String updateUserNameEndPoint = "UpdateUserName";
 const String logOutEndPoint = "LogOut";
+const String isUserNameExistEndPoint = "IsUserNameExist";

@@ -31,11 +31,11 @@ class UserState{
 
   String formatName(int count){
     final r = (name ?? userName);
-    return r.length <= count ? r : "${r.substring(0,10)}...";
+    return r.length <= count ? r : "${r.substring(0,count)}...";
   }
 
-  String formatUserName(int count){
-    return userName.length <= count ? userName : "${userName.substring(0,10)}...";
+  String formatUserName({int count = 12}){
+    return userName.length <= count ? userName : "${userName.substring(0,count)}...";
   }
 
   const UserState({
@@ -186,4 +186,6 @@ class UserState{
   UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.prependNextPage(messageIds));
 
   UserState changeProfileImageStatus(bool value) => _optional(newHasImage: value);
+
+  UserState updateUserName(String userName) => _optional(newUserName: userName);
 }

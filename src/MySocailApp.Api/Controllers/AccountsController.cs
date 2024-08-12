@@ -17,6 +17,7 @@ using MySocailApp.Application.Commands.AccountAggregate.UpdateEmail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmationToken;
 using MySocailApp.Application.Commands.AccountAggregate.UpdatePassword;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateUserName;
+using MySocailApp.Application.Queries.UserAggregate.IsUserNameExist;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -96,5 +97,11 @@ namespace MySocailApp.Api.Controllers
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task Delete(CancellationToken cancellationToken)
             => await _mediator.Send(new DeleteAccountDto(), cancellationToken);
+
+        [HttpGet("{userName}")]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        public async Task<bool> IsUserNameExist(string userName, CancellationToken cancellationToken)
+            => await _mediator.Send(new IsUserNameExistDto(userName), cancellationToken);
     }
 }

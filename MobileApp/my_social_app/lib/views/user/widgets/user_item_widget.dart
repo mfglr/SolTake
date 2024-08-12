@@ -40,7 +40,7 @@ class UserItemWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              user.formatUserName(10),
+                              user.formatUserName(),
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
@@ -51,7 +51,7 @@ class UserItemWidget extends StatelessWidget {
                         );
                       }
                       return Text(
-                        user.formatUserName(10),
+                        user.formatUserName(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       );
                     },

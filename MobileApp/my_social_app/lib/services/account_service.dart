@@ -73,18 +73,19 @@ class AccountService {
     );
   }
 
-  Future<Account> updateUserName(String userName) async {
-    return Account.fromJson(
-      await _appClient.post(
-        "$accountController/$updateUserNameEndPoint",
-        body: {
-          'userName': userName
-        }
-      )
-    );
-  }
+  Future<Account> updateUserName(String userName)
+    => _appClient
+          .post(
+            "$accountController/$updateUserNameEndPoint",
+            body: { 'userName': userName}
+          )
+          .then((account) => Account.fromJson(account));
 
-  Future<void> logOut() async {
-    await _appClient.put("$accountController/$logOutEndPoint");
-  }
+  Future<void> logOut()
+    => _appClient.put("$accountController/$logOutEndPoint");
+
+  Future<bool> isUserNameExist(String userName)
+    => _appClient
+        .get("$accountController/$isUserNameExistEndPoint/$userName")
+        .then((response) => response as bool);
 }

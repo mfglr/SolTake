@@ -154,3 +154,15 @@ class ChangeProfileImageStatusAction extends redux.Action{
   final bool value;
   const ChangeProfileImageStatusAction({required this.userId, required this.value});
 }
+
+@immutable
+class UpdateUserNameAction extends redux.Action{
+  final String userName;
+  const UpdateUserNameAction({required this.userName});
+}
+@immutable
+class UpdateUserNameSuccessAction extends redux.Action{
+  final int userId;
+  final String userName;
+  const UpdateUserNameSuccessAction({required this.userId,required this.userName});
+}

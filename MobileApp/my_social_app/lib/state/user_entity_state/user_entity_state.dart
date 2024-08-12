@@ -49,6 +49,9 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState changeProfileImageStatus(int userId,bool value)
     => UserEntityState(entities: updateOne(entities[userId]!.changeProfileImageStatus(value)));
 
+  UserEntityState updateUserName(int userId,String userName)
+    => UserEntityState(entities: updateOne(entities[userId]!.updateUserName(userName)));
+
   Iterable<UserState> getFollowers(int userId) => entities[userId]!.followers.ids.map((e) => entities[e]!);
   Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.ids.map((e) => entities[e]!);
 }

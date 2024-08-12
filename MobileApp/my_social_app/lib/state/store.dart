@@ -117,6 +117,8 @@ final store = Store(
     getNextPageUserQuestionsIfNoPageMiddleware,
     getNextPageUserQuestionsIfReadyMiddleware,
     nextPageOfUserQuestionsMiddleware,
+
+    updateUserNameMiddleware,
     //user end
 
     //user image start

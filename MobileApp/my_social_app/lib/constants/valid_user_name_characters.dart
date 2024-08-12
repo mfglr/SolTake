@@ -1,0 +1,1 @@
+const validUserNameChracters = "0123456789abcdefghijklmnopqrstuvwxyz_.";

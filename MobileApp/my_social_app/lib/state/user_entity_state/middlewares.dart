@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
@@ -13,6 +14,7 @@ import 'package:my_social_app/state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/user_image_entity_state/user_image_state.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
 void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -196,4 +198,16 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
   next(action);
 }
 
+void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateUserNameAction){
+    final accountId = store.state.accountState!.id;
+    AccountService()
+      .updateUserName(action.userName)
+      .then((_){
+        store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));
+        ToastCreator.displaySuccess("User name has been successfully updated.");
+      });
+  }
+  next(action);
+}
 

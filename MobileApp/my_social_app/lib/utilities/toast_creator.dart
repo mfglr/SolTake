@@ -14,10 +14,10 @@ class ToastCreator{
     );
   }
 
-  static void displayError(String message){
+  static void displayError(String message,{Toast? length}){
     Fluttertoast.showToast(
       msg: message,
-      toastLength: Toast.LENGTH_LONG,
+      toastLength: length ?? Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.red,

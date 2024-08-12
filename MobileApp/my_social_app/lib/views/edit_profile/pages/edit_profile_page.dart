@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/account_state/account_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photo_modal.dart';
+import 'package:my_social_app/views/edit_profile/pages/edit_user_name_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
+  
   const EditProfilePage({super.key});
 
-  void showUpdateProfilePhotoModal(BuildContext context){
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+
+  @override
+  void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    final user = store.state.currentUser!;
+    _userNameController.text = user.userName;
+    _nameController.text = user.name ?? "";
+    super.initState();
+  }
+
+  void _showUpdateProfilePhotoModal(BuildContext context){
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -23,47 +40,70 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,AccountState>(
-      converter: (store) => store.state.accountState!,
-      builder: (context,account) => StoreConnector<AppState,UserState?>(
-        onInit: (store) => store.dispatch(LoadUserAction(userId: account.id)),
-        converter: (store) => store.state.userEntityState.entities[account.id],
-        builder:(contex,user){
-          if(user == null) return const LoadingView();
-          return Scaffold(
-            appBar: AppBar(
-              leading: const AppBackButtonWidget(),
-              title: const Text(
-                "Edit your profile",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold
-                ),
+    return StoreConnector<AppState,UserState>(
+      converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id]!,
+      builder:(contex,user){
+        return Scaffold(
+          appBar: AppBar(
+            leading: const AppBackButtonWidget(),
+            title: const Text(
+              "Edit your profile",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold
               ),
             ),
-            body: Column(
+          ),
+          body: SingleChildScrollView(
+            child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(6.0),
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              UserImageWidget(
-                                userId: user.id,
-                                diameter: 100,
-                              ),
-                              IconButton(
-                                onPressed: () => showUpdateProfilePhotoModal(contex),
-                                padding: const EdgeInsets.all(30),
-                                icon: const Icon(
-                                  Icons.photo_camera,
-                                  color: Colors.grey,
+                          Container(
+                            margin: const EdgeInsets.only(right: 5),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                UserImageWidget(
+                                  userId: user.id,
+                                  diameter: 100,
                                 ),
+                                IconButton(
+                                  onPressed: () => _showUpdateProfilePhotoModal(contex),
+                                  padding: const EdgeInsets.all(30),
+                                  icon: const Icon(
+                                    Icons.photo_camera,
+                                    color: Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user.formatUserName(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Builder(
+                                builder: (context) {
+                                  if(user.name == null) return const SpaceSavingWidget();
+                                  return Text(
+                                    user.name!,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  );
+                                }
                               )
                             ],
                           )
@@ -71,12 +111,66 @@ class EditProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      const Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "User Name",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                user.formatUserName(),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              OutlinedButton(
+                                onPressed: () => 
+                                  Navigator
+                                    .of(context)
+                                    .push(MaterialPageRoute(builder: (context) => EditUserNamePage(user: user))),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(right: 5),
+                                      child: const Text("Edit")
+                                    ),
+                                    const Icon(Icons.edit_document,size: 18),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
-          );
-        }
-      )
+          ),
+        );
+      }
     );
   }
 }
