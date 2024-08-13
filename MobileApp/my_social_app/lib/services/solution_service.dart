@@ -14,7 +14,6 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-
   Future<Solution> createAsync(String? content,int questionId, Iterable<XFile>? images) async {
     MultipartRequest request = MultipartRequest(
       "POST",
@@ -33,12 +32,35 @@ class SolutionService{
     
     return Solution.fromJson(json);
   }
+  Future<void> makeUpvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$makeUpvoteEndpoint",
+      body: {'solutionId': solutionId}
+    );
+  }
+  Future<void> makeDownvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$makeDownvoteEndpoint",
+      body: {'solutionId': solutionId}
+    );
+  }
+  Future<void> removeUpvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$removeUpvoteEndpoint",
+      body: { 'solutionId': solutionId }
+    );
+  }
+  Future<void> removeDownvote(int solutionId) async {
+    await _appClient.put(
+      "$solutionController/$removeDownvoteEndpoint",
+      body: { 'solutionId': solutionId }
+    );
+  }
 
   Future<Solution> getSolutionById(int solutionId)
     => _appClient
         .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
         .then((response) => Solution.fromJson(response)); 
-
   Future<Iterable<Solution>> getByQuestionId(int questionId,int? lastValue,int? take) async {
     String endPoint = "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId";
     String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
@@ -46,37 +68,8 @@ class SolutionService{
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Solution.fromJson(e));
   }
-
   Future<Uint8List> getImage(int solutionId,String blobName) async {
     String endPoint = "$solutionController/$getSolutionImageEndPoint/$solutionId/$blobName";
     return await _appClient.getBytes(endPoint);
-  }
-
-  Future<void> makeUpvote(int solutionId) async {
-    await _appClient.put(
-      "$solutionController/$makeUpvoteEndpoint",
-      body: {'solutionId': solutionId}
-    );
-  }
-
-  Future<void> makeDownvote(int solutionId) async {
-    await _appClient.put(
-      "$solutionController/$makeDownvoteEndpoint",
-      body: {'solutionId': solutionId}
-    );
-  }
-
-  Future<void> removeUpvote(int solutionId) async {
-    await _appClient.put(
-      "$solutionController/$removeUpvoteEndpoint",
-      body: { 'solutionId': solutionId }
-    );
-  }
-
-  Future<void> removeDownvote(int solutionId) async {
-    await _appClient.put(
-      "$solutionController/$removeDownvoteEndpoint",
-      body: { 'solutionId': solutionId }
-    );
   }
 }

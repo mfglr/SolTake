@@ -1,3 +1,4 @@
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/home_page_state/actions.dart';
@@ -32,7 +33,7 @@ void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageHomeQuestionsAction){
     final questions = store.state.homePageState.questions;
     QuestionService()
-      .getAll(lastValue: questions.lastValue)
+      .getAll(questions.lastValue,questionsPerPage)
       .then((questions){
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddNextPageHomeQuestionsAction(questionIds: questions.map((e) => e.id)));

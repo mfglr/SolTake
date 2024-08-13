@@ -4,7 +4,6 @@ import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
 
 class QuestionAbstractItemWidget extends StatelessWidget {
@@ -21,19 +20,16 @@ class QuestionAbstractItemWidget extends StatelessWidget {
     return Padding(
       key: ValueKey(question.id),
       padding: const EdgeInsets.all(1.0),
-      child: StoreConnector<AppState,UserState>(
-        converter: (store) => store.state.userEntityState.entities[question.appUserId]!,
-        builder: (context,user) => GestureDetector(
-          onTap: onTap != null ? (){ onTap!(question.id); } : null,
-          child: StoreConnector<AppState,QuestionImageState>(
-            onInit: (store) => store.dispatch(LoadQuestionImageAction(id: question.images.first)),
-            converter: (store) => store.state.questionImageEntityState.entities[question.images.first]!,
-            builder: (context,imageState) => DisplayImageWidget(
-              image: imageState.image,
-              status: imageState.state,
-              boxFit: BoxFit.cover,
-            )
-          ),
+      child: GestureDetector(
+        onTap: onTap != null ? (){ onTap!(question.id); } : null,
+        child: StoreConnector<AppState,QuestionImageState>(
+          onInit: (store) => store.dispatch(LoadQuestionImageAction(id: question.images.first)),
+          converter: (store) => store.state.questionImageEntityState.entities[question.images.first]!,
+          builder: (context,imageState) => DisplayImageWidget(
+            image: imageState.image,
+            status: imageState.state,
+            boxFit: BoxFit.cover,
+          )
         ),
       ),
     );

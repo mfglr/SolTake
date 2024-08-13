@@ -20,7 +20,10 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
           leading: const AppBackButtonWidget(),
           title: Text(
             "Exam: ${exam.shortName}",
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold
+            ),
           ),
         ),
         body: StoreConnector<AppState,Iterable<QuestionState>>(

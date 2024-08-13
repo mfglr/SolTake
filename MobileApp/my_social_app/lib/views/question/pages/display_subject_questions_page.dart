@@ -20,7 +20,10 @@ class DisplaySubjectQuestionsPage extends StatelessWidget {
           leading: const AppBackButtonWidget(),
           title: Text(
             "Subject: ${subject.name}",
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold
+            ),
           ),
         ),
         body: StoreConnector<AppState,Iterable<QuestionState>>(

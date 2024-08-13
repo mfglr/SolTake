@@ -51,15 +51,13 @@ class QuestionService{
 
   Future<Question> getById(int questionId) async
     => Question.fromJson(await _appClient.get("$questionController/$getQuestionByIdEndpoint/$questionId"));
-
   Future<Uint8List> getQuestionImage(int questionId,String blobName) async {
     return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$blobName");
   }
 
-  Future<Iterable<Question>> getAll({int? lastValue}) async {
+  Future<Iterable<Question>> getAll(int? lastValue,int? take) async {
     String endPoint = "$questionController/$getAllQuestionsEndpoint";
     String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
@@ -72,24 +70,21 @@ class QuestionService{
   Future<Iterable<Question>> getByTopicId(int topicId,int? lastValue,int? take) async {
     String endPoint = "$questionController/$getQuestionsByTopicIdEndpoint/$topicId";
     String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
-
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getBySubjectId(int subjectId,{int? lastValue}) async {
-    String endPoint = "$questionController/$getQuestionsBySubjectIdEndpoint/$subjectId";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
-
+  Future<Iterable<Question>> getBySubjectId(int subjectId,int? lastValue,int? take) async {
+    final endpoint = "$questionController/$getQuestionsBySubjectIdEndpoint/$subjectId";
+    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getByExamId(int examId,{int? lastValue}) async {
-    String endPoint = "$questionController/$getQuestionsByExamIdEndpoint/$examId";
-    String url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
+  Future<Iterable<Question>> getByExamId(int examId,int? lastValue,int? take) async {
+    String endpoint = "$questionController/$getQuestionsByExamIdEndpoint/$examId";
+    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-
   Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,int? lastValue,int? take) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {
