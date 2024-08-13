@@ -33,6 +33,7 @@ class QuestionImagesSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: ValueKey(question.id),
       onDoubleTap: (){
         if(!question.isLiked){
           store.dispatch(LikeQuestionAction(questionId: question.id));
@@ -43,15 +44,11 @@ class QuestionImagesSlider extends StatelessWidget {
         converter: (store) => store.state.selectQuestionImages(question.id),
         builder: (context,imageStates) => CarouselSlider(
           items: imageStates.map(
-            (imageState) => Builder(
+            (imageState) => Builder(              
               builder: (context){
                 switch(imageState.state){
                   case ImageStatus.done:
-                    return Image.memory(
-                      imageState.image!,
-                      // width: MediaQuery.of(context).size.width,
-                      // fit: BoxFit.cover,
-                    );
+                    return Image.memory(imageState.image!);
                   case ImageStatus.started:
                     return const LoadingWidget();
                   case ImageStatus.notStarted:
