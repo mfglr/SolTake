@@ -110,8 +110,8 @@ class GetNextPageUserQuestionsAction extends redux.Action{
 @immutable
 class AddNextPageUserQuestionsAction extends redux.Action{
   final int userId;
-  final Iterable<int> userIds;
-  const AddNextPageUserQuestionsAction({required this.userId,required this.userIds});
+  final Iterable<int> questionIds;
+  const AddNextPageUserQuestionsAction({required this.userId,required this.questionIds});
 }
 @immutable
 class AddUserQuestionAction extends redux.Action{

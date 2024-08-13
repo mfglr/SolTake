@@ -14,6 +14,7 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
+using MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -68,5 +69,9 @@ namespace MySocailApp.Api.Controllers
         [HttpGet]
         public async Task<List<QuestionResponseDto>> GetAllQuestions([FromQuery]int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
             => await _mediator.Send(new GetAllQuestionsDto(lastValue, take),cancellationToken);
+
+        [HttpPost]
+        public async Task<List<QuestionResponseDto>> SearchQuestions(SearchQuestionsDto request,CancellationToken cancellationToken)
+            => await _mediator.Send(request,cancellationToken);
     }
 }

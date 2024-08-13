@@ -118,7 +118,6 @@ class _HomePageState extends State<HomePage> {
             converter: (store) => store.state.homePageState.questions,
             builder: (context,pagination) => QuestionItemsWidget(
               questions: questions,
-              questionIndex: 0,
               pagination: pagination,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);

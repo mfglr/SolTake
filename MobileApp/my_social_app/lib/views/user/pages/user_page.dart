@@ -4,6 +4,7 @@ import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
@@ -54,6 +55,16 @@ class UserPage extends StatelessWidget {
                     builder: (context, questions) => QuestionAbstractItemsWidget(
                       questions: questions,
                       pagination: user.questions,
+                      onTap: (questionId){
+                        Navigator
+                          .of(context)
+                          .push(
+                            MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(
+                              userId: user.id,
+                              firstDisplayedQuestionId: questionId
+                            ))
+                          );
+                      },
                       onScrollBottom: (){
                         final store = StoreProvider.of<AppState>(context,listen: false);
                         store.dispatch(GetNextPageUserQuestionsIfReadyAction(userId: user.id));

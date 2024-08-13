@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 UserEntityState getNextPageQuestionsReducer(UserEntityState prev,GetNextPageUserQuestionsAction action)
   => prev.getNextPageQuestions(action.userId);
 UserEntityState addNextPageQuestionsReducer(UserEntityState prev,AddNextPageUserQuestionsAction action)
-  => prev.addNextPageQuestions(action.userId,action.userIds);
+  => prev.addNextPageQuestions(action.userId,action.questionIds);
 
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
   => prev.getNextPageFollowers(action.userId);

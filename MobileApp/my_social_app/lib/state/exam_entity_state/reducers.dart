@@ -14,7 +14,7 @@ ExamEntityState addAllExamsReducer(ExamEntityState prev,AddAllExamsAction action
 
 ExamEntityState addExamsReducer(ExamEntityState prev,AddExamsAction action)
   => prev.addExams(action.exams);
-ExamEntityState loadSubjectsOfSelectedExamSuccessReducer(ExamEntityState prev,GetSubjectsOfSelectedExamSuccessAction action)
+ExamEntityState loadSubjectsOfSelectedExamSuccessReducer(ExamEntityState prev,GetExamSubjectsSuccessAction action)
   =>prev.loadExamSubjects(action.examId, action.ids);
 
 Reducer<ExamEntityState> examEntityStateReducers = combineReducers<ExamEntityState>([
@@ -24,5 +24,5 @@ Reducer<ExamEntityState> examEntityStateReducers = combineReducers<ExamEntitySta
   TypedReducer<ExamEntityState,AddExamsAction>(addExamsReducer).call,
   TypedReducer<ExamEntityState,AddAllExamsAction>(addAllExamsReducer).call,
   
-  TypedReducer<ExamEntityState,GetSubjectsOfSelectedExamSuccessAction>(loadSubjectsOfSelectedExamSuccessReducer).call,
+  TypedReducer<ExamEntityState,GetExamSubjectsSuccessAction>(loadSubjectsOfSelectedExamSuccessReducer).call,
 ]);

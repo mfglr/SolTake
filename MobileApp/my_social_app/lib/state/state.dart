@@ -120,10 +120,8 @@ class AppState{
   //Select solutionImages
   Iterable<SolutionImageState> getSolutionImages(int solutionId)
     => solutionEntityState.entities[solutionId]!.images.map((e) => solutionImageEntityState.entities[e]!);
-  Iterable<SubjectState> get subjectsOfSelectedExam 
-    => examEntityState.entities[createQuestionState.examId!]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
-  Iterable<TopicState> get topicsOfSelecetedSubject
-    => topicEntityState.getSubjectTopics(createQuestionState.subjectId);
+  
+ 
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions
@@ -136,6 +134,8 @@ class AppState{
     => topicEntityState.entities[topicId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
   Iterable<QuestionState> selectUserQuestions(int userId)
     => userEntityState.entities[userId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+  Iterable<QuestionState> get selectSearchQuestions
+    => searchState.questions.ids.map((e) => questionEntityState.entities[e]!);
 
   //select quesitonImages
   Iterable<QuestionImageState> selectQuestionImages(int questionId)
@@ -148,4 +148,16 @@ class AppState{
     => solutionEntityState.entities[solutionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> selectCommentReplies(int commentId)
     => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
+
+  //Select Subjects
+  Iterable<SubjectState> get subjectsOfSelectedExam 
+    => examEntityState.entities[createQuestionState.examId!]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
+  Iterable<SubjectState> selectExamSubjects(int examId)
+    => examEntityState.entities[examId]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
+
+  // select topics
+  Iterable<TopicState> get topicsOfSelecetedSubject
+    => topicEntityState.getSubjectTopics(createQuestionState.subjectId);
+  Iterable<TopicState> selectSubjectTopics(int subjectId)
+    => subjectEntityState.entities[subjectId]!.topics.ids.map((e) => topicEntityState.entities[e]!);
 }

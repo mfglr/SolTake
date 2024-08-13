@@ -1,15 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/image_status.dart';
 import 'package:my_social_app/state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/question_image_entity_state/actions.dart';
 import 'package:my_social_app/state/question_image_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/views/shared/loading_widget.dart';
-import 'package:my_social_app/views/shared/not_found_widget.dart';
+import 'package:my_social_app/views/shared/display_image_widget.dart';
 import 'package:redux/redux.dart';
 
 class QuestionImagesSlider extends StatelessWidget {
@@ -44,21 +42,10 @@ class QuestionImagesSlider extends StatelessWidget {
         converter: (store) => store.state.selectQuestionImages(question.id),
         builder: (context,imageStates) => CarouselSlider(
           items: imageStates.map(
-            (imageState) => Builder(              
-              builder: (context){
-                switch(imageState.state){
-                  case ImageStatus.done:
-                    return Image.memory(imageState.image!);
-                  case ImageStatus.started:
-                    return const LoadingWidget();
-                  case ImageStatus.notStarted:
-                    return const LoadingWidget();
-                  case ImageStatus.notFound:
-                    return const NotFoundWidget();
-                }
-              }
-            )
-          ).toList(),
+            (imageState) => DisplayImageWidget(
+              image: imageState.image, 
+              status: imageState.state,
+            )).toList(),
           options: CarouselOptions(
             autoPlay: false,
             viewportFraction: 1,

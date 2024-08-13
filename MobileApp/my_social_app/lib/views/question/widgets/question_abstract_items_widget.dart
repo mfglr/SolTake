@@ -9,11 +9,14 @@ class QuestionAbstractItemsWidget extends StatefulWidget {
   final Iterable<QuestionState> questions;
   final Pagination pagination;
   final Function onScrollBottom;
+  final void Function(int questionId)? onTap;
+
   const QuestionAbstractItemsWidget({
     super.key,
     required this.questions,
     required this.pagination,
-    required this.onScrollBottom
+    required this.onScrollBottom,
+    this.onTap
   });
 
   @override
@@ -23,6 +26,7 @@ class QuestionAbstractItemsWidget extends StatefulWidget {
 class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidget> {
   final ScrollController _scrollController = ScrollController();
   late final void Function() _onScrollBottom;
+  
 
   @override
   void initState() {
@@ -55,7 +59,7 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
             itemCount: widget.questions.length,
             itemBuilder: (context,index) => QuestionAbstractItemWidget(
               question: widget.questions.elementAt(index),
-              questionIndex: index
+              onTap: widget.onTap,
             )
           ),
         ),
@@ -63,7 +67,6 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
           builder: (context){
             if(widget.pagination.loading) return const LoadingCircleWidget(strokeWidth: 3);
             return const SpaceSavingWidget();
-
           }
         )
       ],

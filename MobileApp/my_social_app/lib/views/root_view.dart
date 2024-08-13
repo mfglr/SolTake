@@ -9,7 +9,7 @@ import 'package:my_social_app/views/shared/icon_with_badge.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page.dart';
-import 'package:my_social_app/views/search_page.dart';
+import 'package:my_social_app/views/search/pages/search_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 

@@ -166,7 +166,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
       QuestionService()
         .getByUserId(action.userId,questions.lastValue,questionsPerPage)
         .then((questions){
-          store.dispatch(AddNextPageUserQuestionsAction(userId: action.userId,userIds: questions.map((e) => e.id)));
+          store.dispatch(AddNextPageUserQuestionsAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
           store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
           store.dispatch(AddQuestionImagesListAction(lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))));
           store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));

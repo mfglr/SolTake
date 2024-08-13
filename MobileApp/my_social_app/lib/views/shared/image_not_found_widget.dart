@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NotFoundWidget extends StatelessWidget {
-  const NotFoundWidget({super.key});
+class ImageNotFoundWidget extends StatelessWidget {
+  const ImageNotFoundWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

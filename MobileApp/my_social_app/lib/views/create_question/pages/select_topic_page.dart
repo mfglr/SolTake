@@ -26,7 +26,7 @@ class SelectTopicPage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 25),
               child: StoreConnector<AppState,Iterable<TopicState>>(
-                onInit: (store) => store.dispatch(const LoadTopicsOfSelectedSubjectAction()),
+                onInit: (store) => store.dispatch(const GetTopicsOfSelectedSubjectAction()),
                 converter: (store) => store.state.topicsOfSelecetedSubject,
                 builder:(context,topics) => DropdownSearch<String>.multiSelection(
                   items: topics.map((e) => e.name).toList(),

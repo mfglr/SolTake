@@ -45,8 +45,8 @@ void getNextPageSubjectQuestionsMiddleware(Store<AppState> store,action,NextDisp
   next(action);
 }
 
-void loadSubjectTopicsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadTopicsOfSelectedSubjectAction){
+void getTopicsOfSelectSubjectMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetTopicsOfSelectedSubjectAction){
     final subjectId = store.state.createQuestionState.subjectId!;
     final subjectState = store.state.subjectEntityState.entities[subjectId]!;
     if(!subjectState.topics.isLast){
@@ -54,7 +54,21 @@ void loadSubjectTopicsMiddleware(Store<AppState> store,action,NextDispatcher nex
         .getBySubjectId(subjectId)
         .then((topics){
           store.dispatch(AddTopicsAction(topics: topics.map((e) => e.toTopicState())));
-          store.dispatch(LoadTopicsOfSelectedSubjectSuccessAction(subjectId: subjectId,topicIds: topics.map((e) => e.id)));
+          store.dispatch(GetSubjectTopicsSuccessAction(subjectId: subjectId,topicIds: topics.map((e) => e.id)));
+        });
+    }
+  }
+  next(action);
+}
+void getSubjectTopicsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetSubjectTopicsAction){
+    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.topics;
+    if(!pagination.isLast){
+      TopicService()
+        .getBySubjectId(action.subjectId)
+        .then((topics){
+          store.dispatch(AddTopicsAction(topics: topics.map((e) => e.toTopicState())));
+          store.dispatch(GetSubjectTopicsSuccessAction(subjectId: action.subjectId,topicIds: topics.map((e) => e.id)));
         });
     }
   }

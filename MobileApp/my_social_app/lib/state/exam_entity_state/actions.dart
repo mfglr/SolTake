@@ -11,6 +11,11 @@ class AddAllExamsAction extends redux.Action{
   final Iterable<ExamState> exams;
   const AddAllExamsAction({required this.exams});
 }
+@immutable
+class AddExamsAction extends redux.Action{
+  final Iterable<ExamState> exams;
+  const AddExamsAction({ required this.exams });
+}
 
 @immutable
 class GetNextPageExamQuestionsIfNoPageAction extends redux.Action{
@@ -34,24 +39,20 @@ class AddNextPageExamQuestionsAction extends redux.Action{
   const AddNextPageExamQuestionsAction({required this.examId, required this.questionIds});
 }
 
-
 @immutable
-class AddExamsAction extends redux.Action{
-  final Iterable<ExamState> exams;
-  const AddExamsAction({ required this.exams });
+class GetExamSubjectsAction extends redux.Action{
+  final int examId;
+  const GetExamSubjectsAction({required this.examId});
 }
-
-
-
 @immutable
 class GetSubjectsOfSelectedExamAction extends redux.Action{
   const GetSubjectsOfSelectedExamAction();
 }
 @immutable
-class GetSubjectsOfSelectedExamSuccessAction extends redux.Action{
+class GetExamSubjectsSuccessAction extends redux.Action{
   final int examId;
   final Iterable<int> ids;
-  const GetSubjectsOfSelectedExamSuccessAction({
+  const GetExamSubjectsSuccessAction({
     required this.examId,
     required this.ids
   });

@@ -41,7 +41,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id, questionIndex: 0))
+                  MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id))
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

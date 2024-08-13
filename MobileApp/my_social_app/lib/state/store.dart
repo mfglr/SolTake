@@ -53,7 +53,7 @@ final store = Store(
     isInitialized: false,
     userEntityState: const UserEntityState(entities: {}),
     userImageEntityState: const UserImageEntityState(entities: {}),
-    searchState: SearchState(key: "", users: Pagination.init(usersPerPage)),
+    searchState: SearchState(key: "",examId: null,subjectId: null,topicId: null,activePage: 0, questions: Pagination.init(questionsPerPage), users: Pagination.init(usersPerPage)),
     createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: const ExamEntityState(entities: {}, isLast: false,isLoading: false),
@@ -133,11 +133,16 @@ final store = Store(
     getFirstPageSearchingUsersMiddleware,
     getNextPageSearchingUsersIfReadyMiddleware,
     getNextPageSearchingUsersMiddleware,
+    getFirstPageSearchingQuestionsIfNoPageMiddleware,
+    getFirstPageSearchingQuestionsMiddleware,
+    getNextPageSearchingQuestionsIfReadyMiddleare,
+    getNextPageSearchingQuestionsMiddleware,
     //search end
     
     //Exam entity state
     getAllExamsMiddleware,
-    loadSubjectsOfSelectedExamMiddleware,
+    getSubjectsOfSelectedExamMiddleware,
+    getExamSubjectsMiddleware,
     getNextPageExamQeuestionsMiddleware,
     getNextPageOfExamQuestionsIfNoPageMiddleware,
     getNextPageExamQuestionsIfReadyMiddleware,
@@ -146,7 +151,8 @@ final store = Store(
     getNextPageSubjectQuestionsIfNoPageMiddleware,
     getNextPageSubjectQuestionsIfReadyMiddleware,
     getNextPageSubjectQuestionsMiddleware,
-    loadSubjectTopicsMiddleware,
+    getTopicsOfSelectSubjectMiddleware,
+    getSubjectTopicsMiddleware,
 
     //Topic start
     getNextPageTopicQuestionsMiddleware,

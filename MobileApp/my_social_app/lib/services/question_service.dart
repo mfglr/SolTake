@@ -89,4 +89,18 @@ class QuestionService{
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
+
+  Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,int? lastValue,int? take) async {
+    String endpoint = "$questionController/$searchQuestionsEndpoint";
+    final body = {
+      'key': key == "" ? null : key,
+      'examId': examId,
+      'subjectId': subjectId,
+      'topicId': topicId,
+      'lastValue': lastValue,
+      'take': take
+    };
+    final list = (await _appClient.post(endpoint,body: body)) as List;
+    return list.map((e) => Question.fromJson(e));
+  }
 }

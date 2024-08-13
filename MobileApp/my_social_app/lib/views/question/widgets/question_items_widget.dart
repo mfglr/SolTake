@@ -7,16 +7,17 @@ import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class QuestionItemsWidget extends StatefulWidget {
   final Pagination pagination;
-  final int questionIndex;
   final Iterable<QuestionState> questions;
   final Function onScrollBottom;
+  final int? firstDisplayedQuestionId;
+
   
   const QuestionItemsWidget({
     super.key,
-    required this.questionIndex,
     required this.questions,
     required this.pagination,
-    required this.onScrollBottom
+    required this.onScrollBottom,
+    this.firstDisplayedQuestionId,
   });
 
   @override
@@ -62,7 +63,7 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
           ...List.generate(
             widget.questions.length,
             (index) => Container(
-              key: index == widget.questionIndex ? _key : null,
+              key: widget.questions.elementAt(index).id == widget.firstDisplayedQuestionId ? _key : null,
               margin: const EdgeInsets.only(bottom: 16),
               child: QuestionItemWidget(question: widget.questions.elementAt(index))
             ),

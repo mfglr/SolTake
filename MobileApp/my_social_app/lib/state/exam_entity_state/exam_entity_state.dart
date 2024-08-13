@@ -37,7 +37,6 @@ class ExamEntityState extends EntityState<ExamState>{
         isLoading: false,
         isLast: true,
       );
-
   ExamEntityState addExams(Iterable<ExamState> exams)
     => ExamEntityState(
         entities: appendMany(exams),
