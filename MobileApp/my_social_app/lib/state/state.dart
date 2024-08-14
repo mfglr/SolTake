@@ -114,14 +114,15 @@ class AppState{
         .length;
   //select messages
 
+  //select users
   UserState? get currentUser => userEntityState.entities[accountState!.id];
   Iterable<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.entities[e]!);
+  Iterable<UserState> selectNotFolloweds(int userId)
+    => userEntityState.entities[userId]!.notFolloweds.ids.map((e) => userEntityState.entities[e]!);
 
   //Select solutionImages
   Iterable<SolutionImageState> getSolutionImages(int solutionId)
     => solutionEntityState.entities[solutionId]!.images.map((e) => solutionImageEntityState.entities[e]!);
-  
- 
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions

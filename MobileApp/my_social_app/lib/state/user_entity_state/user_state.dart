@@ -24,6 +24,7 @@ class UserState{
   final bool isRequested;
   final Pagination followers;
   final Pagination followeds;
+  final Pagination notFolloweds;
   final Pagination questions;
   final Pagination messages;
   final Ids requesters;
@@ -34,7 +35,7 @@ class UserState{
     return r.length <= count ? r : "${r.substring(0,count)}...";
   }
 
-  String formatUserName({int count = 12}){
+  String formatUserName({int count = 15}){
     return userName.length <= count ? userName : "${userName.substring(0,count)}...";
   }
 
@@ -60,7 +61,8 @@ class UserState{
     required this.requesters,
     required this.requesteds,
     required this.questions,
-    required this.messages
+    required this.messages,
+    required this.notFolloweds
   });
 
   UserState _optional({
@@ -84,6 +86,7 @@ class UserState{
     Ids? newRequesteds,
     Pagination? newQuestions,
     Pagination? newMessages,
+    Pagination? newNotFolloweds
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -106,7 +109,8 @@ class UserState{
     requesters: newRequesters ?? requesters,
     requesteds: newRequesteds ?? requesteds,
     questions: newQuestions ?? questions,
-    messages: newMessages ?? messages
+    messages: newMessages ?? messages,
+    notFolloweds: newNotFolloweds ?? notFolloweds
   );
 
   UserState loadRequesters(Iterable<int> newRequesters) => _optional(newRequesters: requesters.nextPage(newRequesters));
@@ -122,6 +126,12 @@ class UserState{
   UserState getNextPageQuestions() => _optional(newQuestions: questions.startLoading());
   UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.appendNextPage(newQuestions));
   
+  //not followeds
+  UserState getNextPageNotFolloweds() => _optional(newNotFolloweds: notFolloweds.startLoading());
+  UserState addNextPageNotFolloweds(Iterable<int> userIds) => _optional(newNotFolloweds: notFolloweds.appendNextPage(userIds));
+  UserState removeNotFollowed(int notFollowedId) => _optional(newNotFolloweds: notFolloweds.removeOne(notFollowedId));
+  UserState addNotFollowed(int notFollowedId) => _optional(newNotFolloweds: notFolloweds.prependOne(notFollowedId));
+
   //make follow request start
   UserState addRequester(int currentUserId){
     if(profileVisibility == ProfileVisibility.private){

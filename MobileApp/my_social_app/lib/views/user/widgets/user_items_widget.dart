@@ -10,13 +10,13 @@ class UserItemsWidget extends StatefulWidget {
   final Pagination pagination;
   final bool removeFollowerButton;
   final Function onScrollBotton;
-  
+
   const UserItemsWidget({
     super.key,
     required this.users,
     required this.pagination,
     this.removeFollowerButton = false,
-    required this.onScrollBotton
+    required this.onScrollBotton,
   });
 
   @override

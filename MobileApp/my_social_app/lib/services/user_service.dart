@@ -14,8 +14,8 @@ class UserService{
   factory UserService() => _singleton;
 
   Future<void> updateImage(XFile file) async {
-    String url = "$userController/$updateUserImageEndpoint";
-    MultipartRequest request = MultipartRequest("Post", _appClient.generateUri(url));
+    const url = "$userController/$updateUserImageEndpoint";
+    final request = MultipartRequest("Post", _appClient.generateUri(url));
     request.files.add(await MultipartFile.fromPath("file",file.path));
     await _appClient.send(request);
   }
@@ -58,39 +58,44 @@ class UserService{
     => _appClient.getBytes("$userController/$gerUserImageByIdEndPoint/$id");
 
   Future<Iterable<User>> getFollowersById(int id, int? lastValue, int? take) async {
-    String endPoint = "$userController/$getFollowersByIdEndPoint/$id";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
+    final endPoint = "$userController/$getFollowersByIdEndPoint/$id";
+    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
  
   Future<Iterable<User>> getFollowedsById(int id, int? lastValue, int? take) async {
-    String endPoint = "$userController/$getFollowedsByIdEndPoint/$id";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
+    final endPoint = "$userController/$getFollowedsByIdEndPoint/$id";
+    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
+    final list = (await _appClient.get(url)) as List;
+    return list.map((item) => User.fromJson(item));
+  }
+
+  Future<Iterable<User>> getNotFolloweds(int id,int? lastValue, int? take) async {
+    final endpoint = "$userController/$getNotFollowedsEndpoint/$id";
+    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
   Future<Iterable<User>> getRequesters(int? lastValue, int? take) async {
-    String endPoint = "$userController/$getRequestersEndPoint";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
+    const endPoint = "$userController/$getRequestersEndPoint";
+    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
   Future<Iterable<User>> getRequesteds(int? lastValue, int? take) async {
-    String endPoint = "$userController/$getRequestedsEndPoint";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
+    const endPoint = "$userController/$getRequestedsEndPoint";
+    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
   Future<Iterable<User>> search(String key, int? lastValue, int? take) async {
-    String url = "$userController/$searchUserEndPoint";
+    const url = "$userController/$searchUserEndPoint";
     final list = (await _appClient.post(url,body: {'key':key,'lastValue':lastValue,'take':take})) as List;
     return list.map((item) => User.fromJson(item));
   }
-
-  
 
 }

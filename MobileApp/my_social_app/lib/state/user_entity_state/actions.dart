@@ -46,6 +46,42 @@ class AddNextPageUserFollowersAction extends redux.Action{
   const AddNextPageUserFollowersAction({required this.userId, required this.userIds});
 }
 
+
+@immutable
+class GetNextPageUserNotFollowedsIfNoPageAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserNotFollowedsIfNoPageAction({required this.userId});
+}
+@immutable
+class GetNextPageUserNotFollowedsIfReadyAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserNotFollowedsIfReadyAction({required this.userId});
+}
+@immutable
+class GetNextPageUserNotFollowedsAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserNotFollowedsAction({required this.userId});
+}
+@immutable
+class AddNextPageUserNotFollowedsAction extends redux.Action{
+  final int userId;
+  final Iterable<int> userIds;
+  const AddNextPageUserNotFollowedsAction({required this.userId, required this.userIds});
+}
+@immutable
+class RemoveUserNotFollowedAction extends redux.Action{
+  final int userId;
+  final int notFollowedId;
+  const RemoveUserNotFollowedAction({required this.userId, required this.notFollowedId});
+}
+@immutable
+class AddUserNotFollowedAction extends redux.Action{
+  final int userId;
+  final int notFollowedId;
+  const AddUserNotFollowedAction({required this.userId, required this.notFollowedId});
+}
+
+
 @immutable
 class GetNextPageUserFollowedsIfNoPageAction extends redux.Action{
   final int userId;
@@ -172,7 +208,6 @@ class UpdateNameAction extends redux.Action{
   final String name;
   const UpdateNameAction({required this.name});
 }
-
 @immutable
 class UpdateNameSuccessAction extends redux.Action{
   final int userId;

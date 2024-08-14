@@ -17,6 +17,16 @@ UserEntityState getNextPageFollowedsReducer(UserEntityState prev,GetNextPageUser
 UserEntityState addNextPageFollowedsReducer(UserEntityState prev,AddNextPageUserFollowedsAction action)
   => prev.addNextPageFolloweds(action.userId,action.userIds);
 
+// not followeds
+UserEntityState getNextPageNotFollowedsReducer(UserEntityState prev,GetNextPageUserNotFollowedsAction action)
+  => prev.getNextPageNotFolloweds(action.userId);
+UserEntityState addNextPageNotFollowedsReducer(UserEntityState prev,AddNextPageUserNotFollowedsAction action)
+  => prev.addNextPageNotFolloweds(action.userId, action.userIds);
+UserEntityState removeNotFollowedReducer(UserEntityState prev,RemoveUserNotFollowedAction action)
+  => prev.removeNotFollowed(action.userId,action.notFollowedId);
+UserEntityState addNotFollowedReducer(UserEntityState prev,AddUserNotFollowedAction action)
+  => prev.addNotFollowed(action.userId,action.notFollowedId);
+
 UserEntityState addMessageReducer(UserEntityState prev,AddUserMessageAction action)
   => prev.addMessage(action.userId, action.messageId);
 UserEntityState getNextPageMessagesReducer(UserEntityState prev,GetNextPageUserMessagesAction action)
@@ -52,6 +62,12 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
 
   TypedReducer<UserEntityState,GetNextPageUserFollowedsAction>(getNextPageFollowedsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserFollowedsAction>(addNextPageFollowedsReducer).call,
+
+  //not followeds
+  TypedReducer<UserEntityState,GetNextPageUserNotFollowedsAction>(getNextPageNotFollowedsReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserNotFollowedsAction>(addNextPageNotFollowedsReducer).call,
+  TypedReducer<UserEntityState,RemoveUserNotFollowedAction>(removeNotFollowedReducer).call,
+  TypedReducer<UserEntityState,AddUserNotFollowedAction>(addNotFollowedReducer).call,
 
   TypedReducer<UserEntityState,AddUserMessageAction>(addMessageReducer).call,
   TypedReducer<UserEntityState,GetNextPageUserMessagesAction>(getNextPageMessagesReducer).call,

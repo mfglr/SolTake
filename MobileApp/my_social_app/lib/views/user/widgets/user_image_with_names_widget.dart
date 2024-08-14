@@ -14,12 +14,12 @@ class UserImageWithNamesWidget extends StatelessWidget {
   const UserImageWithNamesWidget({
     super.key,
     required this.user,
-    required this.diameter,
-    required this.marginRight,
-    required this.userNameFontSize,
-    required this.nameFontSize,
-    required this.userNameFontWeight,
-    required this.nameFontWeight
+    this.diameter = 60,
+    this.marginRight = 5,
+    this.userNameFontSize = 14,
+    this.nameFontSize = 12,
+    this.userNameFontWeight = FontWeight.bold,
+    this.nameFontWeight = FontWeight.normal
   });
 
   @override
@@ -35,7 +35,7 @@ class UserImageWithNamesWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              user.userName,
+              user.formatUserName(),
               style: TextStyle(
                 fontSize: userNameFontSize,
                 fontWeight: userNameFontWeight
@@ -45,7 +45,7 @@ class UserImageWithNamesWidget extends StatelessWidget {
               builder: (context){
                 if(user.name == null) return const SizedBox.shrink();
                 return Text(
-                  user.name!,
+                  user.formatName(15),
                   style: TextStyle(
                     fontSize: nameFontSize,
                     fontWeight: nameFontWeight

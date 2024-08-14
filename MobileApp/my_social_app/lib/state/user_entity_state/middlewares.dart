@@ -77,6 +77,39 @@ void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatc
   next(action);
 }
 
+void getNextPageUserNotFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserNotFollowedsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.notFolloweds;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserNotFollowedsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserNotFollowedsIfReadyMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is GetNextPageUserNotFollowedsIfReadyAction){
+    final accountId = store.state.accountState!.id;
+    final pagination = store.state.userEntityState.entities[accountId]!.notFolloweds;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserNotFollowedsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserNotFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserNotFollowedsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.notFolloweds;
+    UserService()
+      .getNotFolloweds(action.userId, pagination.lastValue, usersPerPage)
+      .then((users){
+        store.dispatch(AddNextPageUserNotFollowedsAction(userId: action.userId, userIds: users.map((e) => e.id)));
+        store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
+        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      });
+  }
+  next(action);
+}
+
 void getNextPageUserFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowedsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
@@ -184,7 +217,10 @@ void makeFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher nex
     final currentUserId = store.state.accountState!.id;
     UserService()
       .makeFollowRequest(action.userId)
-      .then((_) => store.dispatch(MakeFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
+      .then((_){
+        store.dispatch(MakeFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId));
+        store.dispatch(RemoveUserNotFollowedAction(userId: currentUserId,notFollowedId: action.userId));
+      });
   }
   next(action);
 }
@@ -193,7 +229,10 @@ void cancelFollowRequestMiddleware(Store<AppState> store,action,NextDispatcher n
     final currentUserId = store.state.accountState!.id;
     UserService()
       .cancelFollowRequest(action.userId)
-      .then((_) => store.dispatch(CancelFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId)));
+      .then((_){
+        store.dispatch(CancelFollowRequestSuccessAction(currentUserId: currentUserId, userId: action.userId));
+        store.dispatch(AddUserNotFollowedAction(userId: currentUserId,notFollowedId: action.userId));
+      });
   }
   next(action);
 }

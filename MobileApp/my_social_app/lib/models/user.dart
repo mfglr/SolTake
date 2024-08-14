@@ -74,6 +74,7 @@ class User{
         questions: Pagination.init(questionsPerPage),
         followers: Pagination.init(usersPerPage),
         followeds: Pagination.init(usersPerPage),
+        notFolloweds: Pagination.init(usersPerPage),
         requesters: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         requesteds: const Ids(recordsPerPage: 20, ids: [], isLast: false, lastValue: null),
         messages: Pagination.init(messagesPerPage),

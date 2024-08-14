@@ -20,6 +20,7 @@ using MySocailApp.Application.Commands.UserAggregate.UpdateUserImage;
 using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowedsById;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowersById;
+using MySocailApp.Application.Queries.UserAggregate.GetNotFolloweds;
 using MySocailApp.Application.Queries.UserAggregate.GetRequesteds;
 using MySocailApp.Application.Queries.UserAggregate.GetRequesters;
 using MySocailApp.Application.Queries.UserAggregate.GetUserById;
@@ -115,6 +116,10 @@ namespace MySocailApp.Api.Controllers
         [HttpGet("{id}")]
         public async Task<List<AppUserResponseDto>> GetFollowedsById(int id,[FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
             => await _mediator.Send(new GetFollowedsByIdDto(id, lastValue, take), cancellationToken);
+
+        [HttpGet("{id}")]
+        public async Task<List<AppUserResponseDto>> GetNotFolloweds(int id,[FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetNotFollowedsDto(id, lastValue, take), cancellationToken);
 
         [HttpGet]
         public async Task<List<AppUserResponseDto>> GetRequesters([FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)

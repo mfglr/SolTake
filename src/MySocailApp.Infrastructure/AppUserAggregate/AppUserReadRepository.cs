@@ -58,6 +58,14 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .Where(user => user.Followers.Any(follow => follow.FollowerId == id))
                 .ToPage(lastId, take ?? RecordsPerPage.UsersPerPage)
                 .ToListAsync(cancellationToken);
+        
+        public async Task<List<AppUser>> GetNotFollowedsByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
+            => await _context.AppUsers
+                .AsNoTracking()
+                .IncludeForUser()
+                .Where(x => x.Id != id && !x.Followers.Any(x => x.FollowerId == id))
+                .ToPage(lastId, take ?? RecordsPerPage.UsersPerPage)
+                .ToListAsync(cancellationToken);
 
         public async Task<List<AppUser>> GetRequestersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
             => await _context

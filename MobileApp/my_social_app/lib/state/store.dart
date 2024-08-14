@@ -110,6 +110,10 @@ final store = Store(
     getNextPageUserFollowedsIfReadyMiddleware,
     getNextPageUserFollowedsMiddleware,
 
+    getNextPageUserNotFollowedsIfNoPageMiddleware,
+    getNextPageUserNotFollowedsIfReadyMiddleware,
+    getNextPageUserNotFollowersMiddleware,
+
     getNextPageUserFollowersIfNoPageMiddleware,
     getNextPageUserFollowersIfReadyMiddleware,
     getNextPageUserFollowersMiddleware,

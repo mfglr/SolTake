@@ -20,7 +20,17 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageFolloweds()));
   UserEntityState addNextPageFolloweds(int userId, Iterable<int> userIds)
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageFolloweds(userIds)));
-  
+
+  //not followeds
+  UserEntityState getNextPageNotFolloweds(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]!.getNextPageNotFolloweds()));
+  UserEntityState addNextPageNotFolloweds(int userId,Iterable<int> userIds)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNextPageNotFolloweds(userIds)));
+  UserEntityState removeNotFollowed(int userId,int notFollowedId)
+    => UserEntityState(entities: updateOne(entities[userId]!.removeNotFollowed(notFollowedId)));
+  UserEntityState addNotFollowed(int userId,int notFollowedId)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNotFollowed(notFollowedId)));
+
   UserEntityState getNextPageQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageQuestions()));
   UserEntityState addNextPageQuestions(int userId, Iterable<int> questions)
