@@ -3,16 +3,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.UserAggregate.AcceptFollowRequest;
+using MySocailApp.Application.Commands.UserAggregate.AddUserSearched;
 using MySocailApp.Application.Commands.UserAggregate.Block;
-using MySocailApp.Application.Commands.UserAggregate.CancelFollowRequest;
-using MySocailApp.Application.Commands.UserAggregate.MakeFollowRequest;
-using MySocailApp.Application.Commands.UserAggregate.MakeProfilePrivate;
-using MySocailApp.Application.Commands.UserAggregate.MakeProfilePublic;
-using MySocailApp.Application.Commands.UserAggregate.RejectFollowRequest;
+using MySocailApp.Application.Commands.UserAggregate.Follow;
 using MySocailApp.Application.Commands.UserAggregate.RemoveFollower;
 using MySocailApp.Application.Commands.UserAggregate.RemoveUserImage;
+using MySocailApp.Application.Commands.UserAggregate.RemoveUserSearched;
 using MySocailApp.Application.Commands.UserAggregate.Unblock;
+using MySocailApp.Application.Commands.UserAggregate.Unfollow;
 using MySocailApp.Application.Commands.UserAggregate.UpdateBirthDate;
 using MySocailApp.Application.Commands.UserAggregate.UpdateGender;
 using MySocailApp.Application.Commands.UserAggregate.UpdateName;
@@ -21,8 +19,7 @@ using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowedsById;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowersById;
 using MySocailApp.Application.Queries.UserAggregate.GetNotFolloweds;
-using MySocailApp.Application.Queries.UserAggregate.GetRequesteds;
-using MySocailApp.Application.Queries.UserAggregate.GetRequesters;
+using MySocailApp.Application.Queries.UserAggregate.GetSearchedUsers;
 using MySocailApp.Application.Queries.UserAggregate.GetUserById;
 using MySocailApp.Application.Queries.UserAggregate.GetUserByUserName;
 using MySocailApp.Application.Queries.UserAggregate.GetUserImageById;
@@ -40,23 +37,13 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpPut]
-        public async Task MakeFollowRequest(MakeFollowRequestDto request, CancellationToken cancellationToken)
+        public async Task Follow(FollowDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-
         [HttpPut]
-        public async Task CancelFollowRequest(CancelFollowRequestDto request, CancellationToken cancellationToken)
+        public async Task Unfollow(UnfollowDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-
         [HttpPut]
         public async Task RemoveFollower(RemoveFollowerDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
-
-        [HttpPut]
-        public async Task AcceptFollowRequest(AcceptFollowRequestDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
-
-        [HttpPut]
-        public async Task RejectFollowRequest(RejectFollowRequestDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
@@ -66,14 +53,6 @@ namespace MySocailApp.Api.Controllers
         [HttpGet]
         public async Task<FileContentResult> RemoveImage(CancellationToken cancellationToken)
              => File(await _mediator.Send(new RemoveUserImageDto(), cancellationToken), "application/octet-stream");
-
-        [HttpPut]
-        public async Task MakeProfilePrivate(CancellationToken cancellationToken)
-            => await _mediator.Send(new MakeProfilePrivateDto(), cancellationToken);
-
-        [HttpPut]
-        public async Task MakeProfilePublic(CancellationToken cancellationToken)
-            => await _mediator.Send(new MakeProfilePublicDto(), cancellationToken);
 
         [HttpPut]
         public async Task UpdateName(UpdateNameDto request, CancellationToken cancellationToken)
@@ -95,8 +74,15 @@ namespace MySocailApp.Api.Controllers
         public async Task Unblock(UnblockDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
-        //Queries
+        [HttpPut]
+        public async Task AddSearched(AddUserSearchedDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
 
+        [HttpPut]
+        public async Task RemoveSearched(RemoveUserSearchedDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        //Queries
         [HttpGet("{id}")]
         public async Task<AppUserResponseDto> GetById(int id,CancellationToken cancellationToken)
             => await _mediator.Send(new GetUserByIdDto(id),cancellationToken);
@@ -120,17 +106,13 @@ namespace MySocailApp.Api.Controllers
         [HttpGet("{id}")]
         public async Task<List<AppUserResponseDto>> GetNotFolloweds(int id,[FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
             => await _mediator.Send(new GetNotFollowedsDto(id, lastValue, take), cancellationToken);
-
-        [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetRequesters([FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetRequesterDto(lastValue, take), cancellationToken);
-
-        [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetRequesteds([FromQuery]int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetRequestedsDto(lastValue, take), cancellationToken);
         
         [HttpPost]
         public async Task<List<AppUserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
+
+        [HttpGet]
+        public async Task<List<AppUserResponseDto>> GetSearcheds([FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetSearchedUsersDto(lastValue, take), cancellationToken);
     }
 }

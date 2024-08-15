@@ -8,15 +8,17 @@ import 'package:my_social_app/views/user/widgets/user_item_widget.dart';
 class UserItemsWidget extends StatefulWidget {
   final Iterable<UserState> users;
   final Pagination pagination;
-  final bool removeFollowerButton;
   final Function onScrollBotton;
+  final Widget Function(UserState user)? rigthButtonBuilder;
+  final void Function(UserState)? onPressed;
 
   const UserItemsWidget({
     super.key,
     required this.users,
     required this.pagination,
-    this.removeFollowerButton = false,
     required this.onScrollBotton,
+    this.rigthButtonBuilder,
+    this.onPressed
   });
 
   @override
@@ -57,7 +59,8 @@ class _UserItemsWidgetState extends State<UserItemsWidget> {
                 margin: const EdgeInsets.only(bottom: 8),
                 child: UserItemWidget(
                   user: widget.users.elementAt(index),
-                  removeFollowerButton: widget.removeFollowerButton
+                  rigthButtonBuilder: widget.rigthButtonBuilder,
+                  onPressed: widget.onPressed,
                 )
               )
           ),

@@ -6,6 +6,7 @@ import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_question_solutions_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/exam/exam_tag_item.dart';
@@ -93,9 +94,14 @@ class QuestionItemWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              TextButton(
-                onPressed: (){},
-                child: Text(question.formatContent())
+              Builder(
+                builder: (context) {
+                  if(question.content == null) return const SpaceSavingWidget();
+                  return TextButton(
+                    onPressed: (){},
+                    child: Text(question.content!)
+                  );
+                }
               )
             ],
           ),

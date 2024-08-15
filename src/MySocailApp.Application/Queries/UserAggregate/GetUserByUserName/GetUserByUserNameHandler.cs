@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetUserByUserName
         {
             var user =
                 await _repository.GetByUserNameAsync(request.UserName, cancellationToken) ??
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
             return _mapper.Map<AppUserResponseDto>(user);
         }
     }

@@ -30,19 +30,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.Follower)
                 .HasForeignKey(x => x.FollowerId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.Requesters)
-                .WithOne(x => x.Requested)
-                .HasForeignKey(x => x.RequestedId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.Requesteds)
-                .WithOne(x => x.Requester)
-                .HasForeignKey(x => x.RequesterId)
-                .OnDelete(DeleteBehavior.NoAction);
-
+            
             builder
                 .HasMany(x => x.Blockers)
                 .WithOne(x => x.Blocked)
@@ -104,6 +92,17 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasMany(x => x.MessagesReceived)
                 .WithOne(x => x.Receiver)
                 .HasForeignKey(x => x.ReceiverId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.Searcheds)
+                .WithOne(x => x.Searcher)
+                .HasForeignKey(x => x.SearcherId);
+
+            builder
+                .HasMany(x => x.Searchers)
+                .WithOne(x => x.Searched)
+                .HasForeignKey(x => x.SearchedId)
                 .OnDelete(DeleteBehavior.NoAction);
 
         }

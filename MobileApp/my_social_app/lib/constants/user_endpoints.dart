@@ -7,11 +7,13 @@ const getNotFollowedsEndpoint = "GetNotFolloweds";
 const getRequestersEndPoint = "GetRequesters";
 const getRequestedsEndPoint = "GetRequesteds";
 const searchUserEndPoint = "Search";
-const makeFollowRequestEndPoint = "MakeFollowRequest";
-const cancelFollowRequestEndPoint = "CancelFollowRequest";
-const removeFollowerEndPoint = "RemoveFollower";
+const getSearchedsEndpoint = "GetSearcheds";
+
+const followEndPoint = "follow";
 const unfollowEndPoint = "Unfollow";
+const removeFollowerEndPoint = "RemoveFollower";
 const updateUserImageEndpoint = "UpdateImage";
 const removeUserImageEndpoint = "RemoveImage";
 const updateNameEndpoint = "UpdateName";
-
+const addUserSearchedEndpoint = "AddSearched";
+const removeUserSearchedEndpoint = "RemoveSearched";

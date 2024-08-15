@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.Unblock
             var userId = _accessTokenReader.GetRequiredAccountId();
             var user = 
                 await _userRepository.GetWithBlocker(request.UserId, userId,cancellationToken) ?? 
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
 
             user.Unblock(userId);
             await _unitOfWork.CommitAsync(cancellationToken);

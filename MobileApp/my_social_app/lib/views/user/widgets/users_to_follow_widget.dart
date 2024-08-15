@@ -4,6 +4,7 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
+import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 
 class UsersToFollowWidget extends StatelessWidget {
@@ -34,6 +35,7 @@ class UsersToFollowWidget extends StatelessWidget {
             UserItemsWidget(
               users: users,
               pagination: user.notFolloweds,
+              rigthButtonBuilder: (user) => FollowButtonWidget(user: user),
               onScrollBotton: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 store.dispatch(GetNextPageUserNotFollowedsIfReadyAction(userId: user.id));

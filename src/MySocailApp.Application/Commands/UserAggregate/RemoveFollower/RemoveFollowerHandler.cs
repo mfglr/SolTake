@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.RemoveFollower
             var userId = _accessTokenReader.GetRequiredAccountId();
             var user = 
                 await _userRepository.GetWithFollowerByIdAsync(userId,request.FollowerId,cancellationToken) ??
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
             user.RemoveFollower(request.FollowerId);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

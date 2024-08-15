@@ -29,6 +29,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Notification> Notifications { get; private set; }
         public DbSet<Message> Messages { get; private set; }
         public DbSet<UserConnection> UserConnections { get; private set; }
+        public DbSet<UserSearch> UserSearchs { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

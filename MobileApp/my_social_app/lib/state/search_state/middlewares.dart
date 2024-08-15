@@ -54,10 +54,58 @@ void getNextPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispat
     UserService()
       .search(key, lastId, usersPerPage)
       .then((users){
+        store.dispatch(AddNextPageSearchingUsersAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
         store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
-        store.dispatch(AddNextPageSearchingUsersAction(userIds: users.map((e) => e.id)));
       });
+  }
+  next(action);
+}
+
+void getNextPageSearchedUsersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSearchedUsersIfNoPageAction){
+    final pagination = store.state.searchState.searchedUsers;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(const GetNextPageSearchedUsersAction());
+    }
+  }
+  next(action);
+}
+void getNextPageSearchedUsersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSearchedUsersIfNoPageAction){
+    final pagination = store.state.searchState.searchedUsers;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(const GetNextPageSearchedUsersAction());
+    }
+  }
+  next(action);
+}
+void getNextPageSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSearchedUsersAction){
+    final pagination = store.state.searchState.searchedUsers;
+    UserService()
+      .getSearcheds(pagination.lastValue,usersPerPage)
+      .then((users){
+        store.dispatch(AddNextPageSearchedUsersAction(userIds: users.map((e) => e.id)));
+        store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
+        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      });
+  }
+  next(action);
+}
+void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is AddSearchedUserAction){
+    UserService()
+      .addSearched(action.userId)
+      .then((_) => store.dispatch(AddSearchedUserSuccessAction(userId: action.userId)));
+  }
+  next(action);
+}
+void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveSearchedUserAction){
+    UserService()
+      .removeSearched(action.userId)
+      .then((_) => store.dispatch(RemoveSearcedUserSuccessAction(userId: action.userId)));
   }
   next(action);
 }
@@ -90,6 +138,7 @@ void getFirstPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextD
 }
 void getNextPageSearchingQuestionsIfReadyMiddleare(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSearchingQuestionsIfReadyAction){
+
     final pagination = store.state.searchState.questions;
     if(pagination.isReadyForNextPage){
       store.dispatch(const GetNextPageSearchingQuestionsAction());

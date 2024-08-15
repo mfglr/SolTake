@@ -53,10 +53,7 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Account)
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
-                .Include(x => x.Followeds)
-                .Include(x => x.Requesters)
-                .Include(x => x.Requesteds)
-                .Include(x => x.Noitifications);
+                .Include(x => x.Followeds);
 
         public static IQueryable<Message> IncludeForMessage(this IQueryable<Message> query)
             => query

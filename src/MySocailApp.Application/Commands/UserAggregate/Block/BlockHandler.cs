@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.Block
 
             var userToBlock = 
                 await _userRepository.GetWithAllAsync(request.BlockedId,userId,cancellationToken) ??
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
             userToBlock.Block(userId);
 
             await _unitOfWork.CommitAsync(cancellationToken);

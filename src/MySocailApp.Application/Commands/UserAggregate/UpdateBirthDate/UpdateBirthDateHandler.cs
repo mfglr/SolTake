@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.UpdateBirthDate
             var userId = _accessTokenReader.GetRequiredAccountId();
             var user =
                 await _userRepository.GetByIdAsync(userId, cancellationToken) ??
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
             user.UpdateBirthDate(request.BirthDate);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

@@ -63,6 +63,13 @@ class Pagination{
         ids: [...ids, newId],
         recordsPerPage: recordsPerPage,
       );
+  Pagination prependOneAndRemovePrev(int newId)
+    => Pagination(
+        isLast: isLast,
+        loading: loading,
+        ids: [newId, ...ids.where((e) => e != newId)],
+        recordsPerPage: recordsPerPage,
+      );
   Pagination removeOne(int id)
     => Pagination(
         isLast: isLast,

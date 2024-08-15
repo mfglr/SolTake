@@ -5,14 +5,15 @@ using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.Shared;
 using System.Net;
 
 namespace MySocailApp.Domain.AccountAggregate.DomainServices
 {
-    public class AccountManager(IAppUserRepository userRepository, ITransactionCreator transactionCreator, UserManager<Account> userManager, ITokenService tokenService)
+    public class AccountManager(IAppUserWriteRepository userWriteRepository, ITransactionCreator transactionCreator, UserManager<Account> userManager, ITokenService tokenService)
     {
-        private readonly IAppUserRepository _userRepository = userRepository;
+        private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly ITransactionCreator _transactionCreator = transactionCreator;
         private readonly UserManager<Account> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
@@ -30,7 +31,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             //create user
             var user = new AppUser(account.Id);
             user.Create();
-            await _userRepository.CreateAsync(user, cancellationToken);
+            await _userWriteRepository.CreateAsync(user, cancellationToken);
 
             //add role to account
             await _userManager.AddToRoleAsync(account, Roles.USER);
@@ -91,7 +92,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             if (account.IsRemoved)
             {
                 account.Restore();
-                var user = await _userRepository.GetWithAllAsync(account.Id, cancellationToken);
+                var user = await _userWriteRepository.GetWithAllAsync(account.Id, cancellationToken);
                 user.Restore();
             }
 

@@ -53,7 +53,7 @@ final store = Store(
     isInitialized: false,
     userEntityState: const UserEntityState(entities: {}),
     userImageEntityState: const UserImageEntityState(entities: {}),
-    searchState: SearchState(key: "",examId: null,subjectId: null,topicId: null,activePage: 0, questions: Pagination.init(questionsPerPage), users: Pagination.init(usersPerPage)),
+    searchState: SearchState(activePage: 0,key: "",questionKey: "",userKey:"",examId: null,subjectId: null,topicId: null,questions: Pagination.init(questionsPerPage), users: Pagination.init(usersPerPage),searchedUsers: Pagination.init(usersPerPage)),
     createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: const ExamEntityState(entities: {}, isLast: false,isLoading: false),
@@ -99,8 +99,9 @@ final store = Store(
     loadUserMiddleware,
     loadUserByUserNameMiddleware,
 
-    makeFollowRequestMiddleware,
-    cancelFollowRequestMiddleware,
+    followMiddleware,
+    unfollowMiddleware,
+    deleteFollowerMiddleware,
 
     getNextPageUserMessageIfNoPageMiddleware,
     getNextPageUserMessageIfReadyMiddleware,
@@ -137,10 +138,18 @@ final store = Store(
     getFirstPageSearchingUsersMiddleware,
     getNextPageSearchingUsersIfReadyMiddleware,
     getNextPageSearchingUsersMiddleware,
+
+    getNextPageSearchedUsersIfNoPageMiddleware,
+    getNextPageSearchedUsersIfReadyMiddleware,
+    getNextPageSearchedUsersMiddleware,
+    addSearchedUserMiddleware,
+    removeSearchedUserMiddleware,
+    
     getFirstPageSearchingQuestionsIfNoPageMiddleware,
     getFirstPageSearchingQuestionsMiddleware,
     getNextPageSearchingQuestionsIfReadyMiddleare,
     getNextPageSearchingQuestionsMiddleware,
+
     //search end
     
     //Exam entity state

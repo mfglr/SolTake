@@ -29,6 +29,44 @@ class AddNextPageSearchingUsersAction extends redux.Action{
 }
 
 @immutable
+class GetNextPageSearchedUsersIfNoPageAction extends redux.Action{
+  const GetNextPageSearchedUsersIfNoPageAction();
+}
+@immutable
+class GetNextPageSearchedUsersIfReadyAction extends redux.Action{
+  const GetNextPageSearchedUsersIfReadyAction();
+}
+@immutable
+class GetNextPageSearchedUsersAction extends redux.Action{
+  const GetNextPageSearchedUsersAction();
+}
+@immutable
+class AddNextPageSearchedUsersAction extends redux.Action{
+  final Iterable<int> userIds;
+  const AddNextPageSearchedUsersAction({required this.userIds});
+}
+@immutable
+class AddSearchedUserAction extends redux.Action{
+  final int userId;
+  const AddSearchedUserAction({required this.userId});
+}
+@immutable
+class AddSearchedUserSuccessAction extends redux.Action{
+  final int userId;
+  const AddSearchedUserSuccessAction({required this.userId});
+}
+@immutable
+class RemoveSearchedUserAction extends redux.Action{
+  final int userId;
+  const RemoveSearchedUserAction({required this.userId});
+}
+@immutable
+class RemoveSearcedUserSuccessAction extends redux.Action{
+  final int userId;
+  const RemoveSearcedUserSuccessAction({required this.userId});
+}
+
+@immutable
 class GetFirstPageSearhingQuestionsIfNoPageAction extends redux.Action{
   const GetFirstPageSearhingQuestionsIfNoPageAction();
 }
@@ -56,6 +94,11 @@ class AddNextPageSearchingQuestionsAction extends redux.Action{
 }
 
 @immutable
+class ChangeActivePageAction extends redux.Action{
+  final int page;
+  const ChangeActivePageAction({required this.page});
+}
+@immutable
 class ChangeSearchKeyAction extends redux.Action{
   final String key;
   const ChangeSearchKeyAction({required this.key});
@@ -75,8 +118,7 @@ class ChangeSearchTopicIdAction extends redux.Action{
   final int topicId;
   const ChangeSearchTopicIdAction({required this.topicId});
 }
-
 @immutable
-class ClearSearchingAction extends redux.Action{
-  const ClearSearchingAction();
+class ClearKeyAction extends redux.Action{
+  const ClearKeyAction();
 }

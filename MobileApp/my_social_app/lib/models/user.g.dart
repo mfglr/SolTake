@@ -19,16 +19,11 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           ? null
           : DateTime.parse(json['birthDate'] as String),
       gender: (json['gender'] as num).toInt(),
-      profileVisibility: (json['profileVisibility'] as num).toInt(),
       numberOfQuestions: (json['numberOfQuestions'] as num).toInt(),
       numberOfFollowers: (json['numberOfFollowers'] as num).toInt(),
       numberOfFolloweds: (json['numberOfFolloweds'] as num).toInt(),
-      numberOfUnviewedNotifications:
-          (json['numberOfUnviewedNotifications'] as num).toInt(),
       isFollower: json['isFollower'] as bool,
       isFollowed: json['isFollowed'] as bool,
-      isRequester: json['isRequester'] as bool,
-      isRequested: json['isRequested'] as bool,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -40,13 +35,9 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'hasImage': instance.hasImage,
       'birthDate': instance.birthDate?.toIso8601String(),
       'gender': instance.gender,
-      'profileVisibility': instance.profileVisibility,
       'numberOfQuestions': instance.numberOfQuestions,
       'numberOfFollowers': instance.numberOfFollowers,
       'numberOfFolloweds': instance.numberOfFolloweds,
-      'numberOfUnviewedNotifications': instance.numberOfUnviewedNotifications,
       'isFollower': instance.isFollower,
       'isFollowed': instance.isFollowed,
-      'isRequester': instance.isRequester,
-      'isRequested': instance.isRequested,
     };

@@ -26,22 +26,37 @@ class UserService{
   Future<Uint8List> removeImage()
    => _appClient.getBytes("$userController/$removeUserImageEndpoint");
 
-  Future<void> makeFollowRequest(int requestedId)
+  Future<void> follow(int followedId)
     => _appClient.put(
-      "$userController/$makeFollowRequestEndPoint",
-      body: {'requestedId': requestedId}
+      "$userController/$followEndPoint",
+      body: {'followedId': followedId}
     );
-
-  Future<void> cancelFollowRequest(int requesterId)
+  Future<void> unfollow(int followedId)
     => _appClient.put(
-      "$userController/$cancelFollowRequestEndPoint",
-      body: {'requesterId': requesterId}
+      "$userController/$unfollowEndPoint",
+      body: {'followedId': followedId}
     );
-
   Future<void> removeFollower(int followerId)
     => _appClient.put(
       "$userController/$removeFollowerEndPoint",
       body: {'followerId': followerId.toString()}
+    );
+
+    
+  Future<void> addSearched(int searchedId)
+     => _appClient.put(
+      "$userController/$addUserSearchedEndpoint",
+      body: {
+        'searchedId': searchedId
+      }
+    );
+  
+  Future<void> removeSearched(int searchedId)
+    => _appClient.put(
+      "$userController/$removeUserSearchedEndpoint",
+      body: {
+        'searchedId': searchedId
+      }
     );
 
   Future<User> getById(int id)
@@ -95,6 +110,13 @@ class UserService{
   Future<Iterable<User>> search(String key, int? lastValue, int? take) async {
     const url = "$userController/$searchUserEndPoint";
     final list = (await _appClient.post(url,body: {'key':key,'lastValue':lastValue,'take':take})) as List;
+    return list.map((item) => User.fromJson(item));
+  }
+
+  Future<Iterable<User>> getSearcheds(int? lastValue,int? take) async {
+    const endpoint = "$userController/$getSearchedsEndpoint";
+    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take);
+    final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 

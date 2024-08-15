@@ -43,14 +43,6 @@ class QuestionState{
 
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
-  
-  String formatContent()
-    => 
-    content != null ? 
-      content!.length <= 25 ? 
-        content! : 
-        "${content!.substring(0,22)}..." :
-      "Help Me!";
 
   QuestionState like()
     => QuestionState(

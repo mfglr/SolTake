@@ -21,7 +21,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         internal void Create()
         {
             HasImage = false;
-            ProfileVisibility = ProfileVisibility.Public;
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -51,8 +50,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             _blockers.Clear();
             _followeds.Clear();
             _followers.Clear();
-            _requesters.Clear();
-            _requesteds.Clear();
         }
 
         public string? Name { get; private set; }
@@ -82,78 +79,30 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        //profile visibility
-        public ProfileVisibility ProfileVisibility { get; private set; }
-        public void MakeProfilePrivate()
-        {
-            if (ProfileVisibility == ProfileVisibility.Private)
-                throw new ProfileIsAlreadyPrivateException();
-
-            UpdatedAt = DateTime.UtcNow;
-            ProfileVisibility = ProfileVisibility.Private;
-        }
-        public void MakeProfilePublic()
-        {
-            if (ProfileVisibility == ProfileVisibility.Public)
-                throw new ProfileIsAlreadyPublicException();
-
-            UpdatedAt = DateTime.UtcNow;
-            ProfileVisibility = ProfileVisibility.Public;
-
-            //Accept all follow requests
-            foreach (var followRequest in _requesters)
-                _followers.Add(Follow.Create(followRequest.RequesterId, Id));
-            _requesters.Clear();
-        }
-
         //following
         private readonly List<Follow> _followers = [];
         private readonly List<Follow> _followeds = [];
-        private readonly List<FollowRequest> _requesters = [];
-        private readonly List<FollowRequest> _requesteds = [];
         public IReadOnlyList<Follow> Followers => _followers;
         public IReadOnlyList<Follow> Followeds => _followeds;
-        public IReadOnlyList<FollowRequest> Requesters => _requesters;
-        public IReadOnlyList<FollowRequest> Requesteds => _requesteds;
-        public void MakeFollowRequest(int requesterId)
+        public void Follow(int followerId)
         {
-            if (requesterId == Id)
+            if (followerId == Id)
                 throw new UnableToFollowYourselfException();
-
-            if (_blockeds.Any(x => x.BlockedId == requesterId))
-                throw new UserIsNotFoundException();
-
-            if (_blockers.Any(x => x.BlockerId == requesterId))
+            if (_blockeds.Any(x => x.BlockedId == followerId))
+                throw new UserNotFoundException();
+            if (_blockers.Any(x => x.BlockerId == followerId))
                 throw new UserIsBlockedException();
-
-            if (_followers.Any(x => x.FollowerId == requesterId))
+            if (_followers.Any(x => x.FollowerId == followerId))
                 throw new UserIsAlreadyFollowedException();
 
-            if (_requesters.Any(x => x.RequesterId == requesterId))
-                throw new FollowRequestAlreadyExistException();
-
-            if (ProfileVisibility == ProfileVisibility.Private)
-            {
-                _requesters.Add(FollowRequest.Create(requesterId, Id));
-                AddDomainEvent(new FollowRequestCreatedEvent(requesterId, Id));
-            }
-            else
-            {
-                _followers.Add(Follow.Create(requesterId, Id));
-                AddDomainEvent(new FollowCreatedEvent(requesterId, Id));
-            }
+            _followers.Add(Entities.Follow.Create(followerId, Id));
+            AddDomainEvent(new FollowCreatedEvent(followerId, Id));
         }
-        public void CancelFollowRequest(int requesterId)
+        public void Unfollow(int followerId)
         {
-            var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
-            if (index != -1)
-            {
-                _requesters.RemoveAt(index);
-                return;
-            }
-            index = _followers.FindIndex(x => x.FollowerId == requesterId);
+            var index = _followers.FindIndex(x => x.FollowerId == followerId);
             if (index == -1)
-                throw new NoFollowRequestOrFollowException();
+                throw new NoFollowException();
             _followers.RemoveAt(index);
         }
         public void RemoveFollower(int followerId)
@@ -163,21 +112,23 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
                 throw new UserIsNotFollowerException();
             _followers.RemoveAt(index);
         }
-        public void AcceptFollowRequest(int requesterId)
+        
+
+        private readonly List<UserSearch> _searcheds = [];
+        public IReadOnlyList<UserSearch> Searcheds => _searcheds;
+        public IReadOnlyCollection<UserSearch> Searchers { get; }
+        public void AddSearched(int searchedId)
         {
-            var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
-            if (index == -1)
-                throw new FollowRequestIsNotFoundException();
-            _requesters.RemoveAt(index);
-            _followers.Add(Follow.Create(requesterId, Id));
-            AddDomainEvent(new FollowCreatedEvent(requesterId, Id));
+            var index = _searcheds.FindIndex(x => x.SearchedId == searchedId);
+            if (index != -1)
+                _searcheds.RemoveAt(index);
+            _searcheds.Add(UserSearch.Create(searchedId));
         }
-        public void RejectFollowRequest(int requesterId)
+        public void RemoveSearched(int searchedId)
         {
-            var index = _requesters.FindIndex(x => x.RequesterId == requesterId);
-            if (index == -1)
-                throw new FollowRequestIsNotFoundException();
-            _requesters.RemoveAt(index);
+            var index = _searcheds.FindIndex(x => x.SearchedId == searchedId);
+            if (index == -1) return;
+            _searcheds.RemoveAt(index);
         }
 
         //Block
@@ -191,7 +142,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
                 throw new UnableToBlockYourself();
 
             if (_blockeds.Any(x => x.BlockedId == userId))
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
 
             if (_blockers.Any(x => x.BlockerId == userId))
                 throw new UserIsAlreadyBlockedException();
@@ -205,14 +156,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             index = _followeds.FindIndex(x => x.FollowedId == userId);
             if (index >= 0)
                 _blockeds.RemoveAt(index);
-
-            index = _requesters.FindIndex(x => x.RequesterId == userId);
-            if (index >= 0)
-                _requesters.RemoveAt(index);
-
-            index = _requesteds.FindIndex(x => x.RequestedId == userId);
-            if (index >= 0)
-                _requesteds.RemoveAt(index);
 
             _blockers.Add(Entities.Block.Create(userId, Id));
         }
@@ -242,10 +185,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
                 item.Remove();
             foreach (var item in _followeds)
                 item.Remove();
-            foreach (var item in _requesters)
-                item.Remove();
-            foreach (var item in _requesteds)
-                item.Remove();
         }
         public void Restore()
         {
@@ -259,10 +198,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             foreach (var item in _followers)
                 item.Restore();
             foreach (var item in _followeds)
-                item.Restore();
-            foreach (var item in _requesters)
-                item.Restore();
-            foreach (var item in _requesteds)
                 item.Restore();
         }
 

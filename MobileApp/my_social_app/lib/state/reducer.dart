@@ -27,8 +27,9 @@ ActiveLoginPage changeActiveLoginPageReducer(ActiveLoginPage oldState,Action act
 String? changeAccessTokenReducer(String? oldState,Action action)
   => action is ChangeAccessTokenAction ? action.accessToken : oldState;
 
-bool appSuccessfullyInitReducer(bool oldState,Action action)
-  => action is ApplicationSuccessfullyInitAction ? true : oldState;
+bool appSuccessfullyInitReducer(bool oldState,Action action){
+  return action is ApplicationSuccessfullyInitAction ? true : oldState;
+}
 
 AppState appReducer(AppState prev,action) => AppState(
   accessToken: changeAccessTokenReducer(prev.accessToken,action),

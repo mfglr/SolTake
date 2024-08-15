@@ -108,7 +108,6 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<ITransactionCreator, TransactionCreator>()
-                .AddScoped<IAppUserRepository, AppUserRepository>()
                 .AddScoped<AccountManager>();
         }
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)

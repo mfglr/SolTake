@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.UpdateGender
             var userId = _accessTokenReader.GetRequiredAccountId();
             var user =
                 await _userRepository.GetByIdAsync(userId, cancellationToken) ??
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
             user.UpdateGender((Gender)request.Gender);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

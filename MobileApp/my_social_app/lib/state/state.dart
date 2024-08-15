@@ -119,6 +119,8 @@ class AppState{
   Iterable<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.entities[e]!);
   Iterable<UserState> selectNotFolloweds(int userId)
     => userEntityState.entities[userId]!.notFolloweds.ids.map((e) => userEntityState.entities[e]!);
+  Iterable<UserState> get selectSearchedUsers
+    => searchState.searchedUsers.ids.map((e) => userEntityState.entities[e]!);
 
   //Select solutionImages
   Iterable<SolutionImageState> getSolutionImages(int solutionId)

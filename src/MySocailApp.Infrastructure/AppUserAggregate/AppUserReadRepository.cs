@@ -17,8 +17,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             => await _context.AppUsers.FindAsync([id], cancellationToken);
 
         public async Task<List<AppUser>> GetFollowersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
-            => await _context
-                .AppUsers
+            => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .Where(user => user.Followeds.Any(follow => follow.FollowedId == id))
@@ -31,8 +30,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             var accountId = _accessTokenReader.GetAccountId();
             var keyLower = key.ToLower();
             
-            return await _context
-                .AppUsers
+            return await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .Where(
@@ -51,8 +49,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
         }
 
         public async Task<List<AppUser>> GetFollowedsByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
-            => await _context
-                .AppUsers
+            => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .Where(user => user.Followers.Any(follow => follow.FollowerId == id))
@@ -67,39 +64,8 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .ToPage(lastId, take ?? RecordsPerPage.UsersPerPage)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<AppUser>> GetRequestersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
-            => await _context
-                .AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Where(
-                    user =>
-                        user.Requesteds.Any(request => request.RequestedId == id) &&
-                        !user.IsRemoved &&
-                        (lastId == null || user.Id > lastId)
-                )
-                .OrderByDescending(x => x.Id)
-                .Take(take ?? RecordsPerPage.UsersPerPage)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<AppUser>> GetRequestedsByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
-            => await _context
-                .AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Where(
-                    user =>
-                        user.Requesters.Any(request => request.RequesterId == id) &&
-                        !user.IsRemoved &&
-                        (lastId == null || user.Id > lastId)
-                )
-                .OrderByDescending(x => x.Id)
-                .Take(take ?? RecordsPerPage.UsersPerPage)
-                .ToListAsync(cancellationToken);
-
         public async Task<AppUser?> GetByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context
-                .AppUsers
+            => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .FirstOrDefaultAsync(
@@ -108,8 +74,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 );
 
         public async Task<AppUser?> GetByUserNameAsync(string userName, CancellationToken cancellationToken)
-            => await _context
-                .AppUsers
+            => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .FirstOrDefaultAsync(x => x.Account.UserName == userName, cancellationToken);
@@ -118,6 +83,23 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             => await _context.AppUsers
                 .AsNoTracking()
                 .Where(x => userNames.Contains(x.Account.UserName))
+                .ToListAsync(cancellationToken);
+
+        public async Task<List<AppUser>> GetSearchedUsersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
+            => await _context.UserSearchs
+                .AsNoTracking()
+                .Where(x => x.SearcherId == id && (lastId == null || x.Id < lastId))
+                .OrderByDescending(x => x.Id)
+                .Take(take ?? RecordsPerPage.UsersPerPage)
+                .Include(x => x.Searched)
+                .ThenInclude(x => x.Account)
+                .Include(x => x.Searched)
+                .ThenInclude(x => x.Questions)
+                .Include(x => x.Searched)
+                .ThenInclude(x => x.Followers)
+                .Include(x => x.Searched)
+                .ThenInclude(x => x.Followeds)
+                .Select(x => x.Searched)
                 .ToListAsync(cancellationToken);
     }
 }

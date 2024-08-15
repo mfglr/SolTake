@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.UpdateName
             var userId = _accessTokenReader.GetRequiredAccountId();
             var user =
                 await _userRepository.GetByIdAsync(userId, cancellationToken) ??
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
             user.UpdateName(request.Name);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

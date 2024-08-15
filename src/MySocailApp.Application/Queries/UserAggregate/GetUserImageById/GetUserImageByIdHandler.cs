@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetUserImageById
         {
             var user =
                 await _repository.GetAsync(request.UserId, cancellationToken) ??
-                throw new UserIsNotFoundException();
+                throw new UserNotFoundException();
 
             if(user.Image != null)
                 return await _blobService.Read(ContainerName.UserImages, user.Image.BlobName).ToByteArrayAsync();

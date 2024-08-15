@@ -11,15 +11,25 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState addUsers(Iterable<UserState> values)
     => UserEntityState(entities: appendMany(values));
   
+  //followers
   UserEntityState getNextPageFollowers(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageFollowers()));
   UserEntityState addNextPageFollowers(int userId, Iterable<int> userIds)
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageFollowers(userIds)));
+  UserEntityState addFollower(int userId, int followerId)
+    => UserEntityState(entities: updateOne(entities[userId]!.addFollower(followerId)));
+  UserEntityState removeFollower(int userId, int followerId)
+    => UserEntityState(entities: updateOne(entities[userId]!.removeFollower(followerId)));
 
+  //foloweds
   UserEntityState getNextPageFolloweds(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageFolloweds()));
   UserEntityState addNextPageFolloweds(int userId, Iterable<int> userIds)
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageFolloweds(userIds)));
+  UserEntityState addFollowed(int userId,int followedId)
+    => UserEntityState(entities: updateOne(entities[userId]!.addFollowed(followedId)));
+  UserEntityState removeFollowed(int userId,int followedId)
+    => UserEntityState(entities: updateOne(entities[userId]!.removeFollowed(followedId)));
 
   //not followeds
   UserEntityState getNextPageNotFolloweds(int userId)
@@ -37,17 +47,7 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageQuestions(questions)));
   UserEntityState addQuestion(int userId,int questionId)
     => UserEntityState(entities: updateOne(entities[userId]!.addQuestion(questionId)));
-
-  UserEntityState makeFollowRequest(int currentUserId, int userId)
-    => UserEntityState(entities: updateMany([
-        entities[userId]!.addRequester(currentUserId),
-        entities[currentUserId]!.addRequested(entities[userId]!.profileVisibility,userId)
-    ]));
-  UserEntityState cancelFollowRequest(int currentId, int userId)
-    => UserEntityState(entities: updateMany([
-      entities[userId]!.removeRequester(currentId),
-      entities[currentId]!.removeRequested(entities[userId]!.profileVisibility, userId)
-    ]));
+  
 
   UserEntityState addMessage(int userId,int messageId)
     => UserEntityState(entities: updateOne(entities[userId]!.addMessage(messageId)));
