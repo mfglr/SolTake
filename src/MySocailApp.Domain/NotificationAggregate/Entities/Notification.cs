@@ -7,14 +7,15 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
     public class Notification : IPaginableAggregateRoot
     {
         public int Id { get; private set; }
-        public int OwnerId { get; private set; }
         public DateTime CreatedAt { get; private set; }
+        public int OwnerId { get; private set; }
+        public int UserId { get; private set; }
         public bool IsViewed { get; private set; }
         public NotificationType Type { get; private set; }
+        
         public int? CommentId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
-        public int? UserId { get; private set; }
         
         public void MarkAsViewed() => IsViewed = true;
         
@@ -58,5 +59,6 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
             };
 
         public AppUser Owner { get; } = null!;
+        public AppUser User { get; } = null!;
     }
 }

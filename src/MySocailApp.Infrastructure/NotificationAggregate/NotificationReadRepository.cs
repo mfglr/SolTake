@@ -13,6 +13,8 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public async Task<List<Notification>> GetNotificationsByOwnerId(int ownerId, int? lastId, int? take, CancellationToken cancellationToken)
             => await _context.Notifications
                 .AsNoTracking()
+                .Include(x => x.User)
+                .ThenInclude(x => x.Account)
                 .Where(x => x.OwnerId == ownerId)
                 .ToPage(lastId,take)
                 .ToListAsync(cancellationToken);
@@ -20,6 +22,8 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public async Task<List<Notification>> GetUnviewedNotificationsByOwnerId(int ownerId, CancellationToken cancellationToken)
             => await _context.Notifications
                 .AsNoTracking()
+                .Include(x => x.User)
+                .ThenInclude(x => x.Account)
                 .Where(x => x.OwnerId == ownerId && !x.IsViewed)
                 .OrderByDescending(x => x.Id)
                 .ToListAsync(cancellationToken);

@@ -4,9 +4,9 @@ import 'package:my_social_app/state/notification_entity_state.dart/notification_
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/notification/widgets/notification_header_widget.dart';
 import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class QuestionLikedNotificationItem extends StatelessWidget {
@@ -24,21 +24,12 @@ class QuestionLikedNotificationItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        child: UserImageWidget(
-                          userId: user.id,
-                          diameter: 45
-                        ),
-                      ),
-                      Expanded(
-                        child: Text("${user.userName} like your question."),
-                      ),
-                    ],
+                  NotificationHeaderWidget(
+                    user: user,
+                    notification: notification,
+                    message: "like your question."
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

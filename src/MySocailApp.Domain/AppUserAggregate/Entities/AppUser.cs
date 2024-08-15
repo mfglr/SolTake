@@ -217,6 +217,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public IReadOnlyCollection<CommentUserLike> CommentsLiked { get; } = null!;
         public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; } = null!;
         public IReadOnlyCollection<Notification> Noitifications { get; } = null!;
+        public IReadOnlyCollection<Notification> NotificationsOutgoing { get; } = null!;
         public IReadOnlyCollection<Message> Messages { get; } = null!;
         public IReadOnlyCollection<Message> MessagesReceived { get; } = null!;
     }

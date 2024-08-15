@@ -47,23 +47,23 @@ class _SearchPageState extends State<SearchPage> {
     _searchTextController.text = store.state.searchState.key;
 
     _questionKeyConsumer = store.onChange
-        .map((state) => state.searchState.questionKey)
-        .debounceTime(const Duration(milliseconds: 300))
-        .distinct()
-        .listen((key) => store.dispatch(const GetFirstPageSearchingQuestionsAction()));
+      .map((state) => state.searchState.questionKey)
+      .debounceTime(const Duration(milliseconds: 300))
+      .distinct()
+      .listen((key) => store.dispatch(const GetFirstPageSearchingQuestionsAction()));
     
     _userKeyConsumer = store.onChange
-        .map((state) => state.searchState.userKey)
-        .debounceTime(const Duration(milliseconds: 300))
-        .distinct()
-        .listen((key){
-          if(key == ""){
-            store.dispatch(const GetNextPageSearchedUsersIfNoPageAction());
-          }
-          else{
-            store.dispatch(const GetFirstPageSearchingUsersAction());
-          }
-        });
+      .map((state) => state.searchState.userKey)
+      .debounceTime(const Duration(milliseconds: 300))
+      .distinct()
+      .listen((key){
+        if(key == ""){
+          store.dispatch(const GetNextPageSearchedUsersIfNoPageAction());
+        }
+        else{
+          store.dispatch(const GetFirstPageSearchingUsersAction());
+        }
+      });
     
     super.initState();
   }

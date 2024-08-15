@@ -84,6 +84,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasForeignKey(x => x.OwnerId);
 
             builder
+                .HasMany(x => x.NotificationsOutgoing)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
                 .HasMany(x => x.Messages)
                 .WithOne(x => x.Sender)
                 .HasForeignKey(x => x.SenderId);
