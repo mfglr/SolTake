@@ -83,9 +83,11 @@ final store = Store(
     getNextPageCommentRepliesIfReadyMiddleware,
 
     //Home page state
-    getNextPageHomeQuestionsMiddleware,
     getNextPageHomeQuestionsIfNoPageMiddleware,
     getNextPageHomeQuestionsIfReadyMiddleware,
+    getNextPageHomeQuestionsMiddleware,
+    getPrevPageHomeQuestionsMiddleware,
+    getPrevPageHomePageQuestionsIfReadyMiddleware,
     
     //account start
     initAppMiddleware,

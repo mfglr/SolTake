@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class Pagination{
   final bool isLast;
   final bool loading;
+  final bool loadingPrev;
   final int recordsPerPage;
   final Iterable<int> ids;
 
   const Pagination({
     required this.isLast,
     required this.loading,
+    required this.loadingPrev,
     required this.ids,
     required this.recordsPerPage,
 
@@ -19,6 +21,7 @@ class Pagination{
     => Pagination(
         isLast: false,
         loading: false,
+        loadingPrev: false,
         ids: const [],
         recordsPerPage: recordsPerPage,
       );
@@ -27,11 +30,21 @@ class Pagination{
   int? get firstValue => ids.firstOrNull;
   bool get hasAtLeastOnePage => ids.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loading;
+  bool get isReadyForPrevPage => !loadingPrev;
 
   Pagination startLoading()
     => Pagination(
         isLast: isLast,
         loading: true,
+        loadingPrev: loadingPrev,
+        ids: ids,
+        recordsPerPage: recordsPerPage,
+      );
+  Pagination startLoadingPrev()
+    => Pagination(
+        isLast: isLast,
+        loading: loading,
+        loadingPrev: true,
         ids: ids,
         recordsPerPage: recordsPerPage,
       );
@@ -39,13 +52,15 @@ class Pagination{
     => Pagination(
         isLast: nextIds.length < recordsPerPage,
         loading: false,
+        loadingPrev: loadingPrev,
         ids: [...ids, ...nextIds],
         recordsPerPage: recordsPerPage,
       );
-  Pagination prependNextPage(Iterable<int> nextIds)
+  Pagination addPrevPage(Iterable<int> nextIds)
     => Pagination(
-        isLast: nextIds.length < recordsPerPage,
-        loading: false,
+        isLast: isLast,
+        loading: loading,
+        loadingPrev: false,
         ids: [...nextIds.toList().reversed, ...ids],
         recordsPerPage: recordsPerPage
       );
@@ -53,6 +68,7 @@ class Pagination{
     => Pagination(
         isLast: isLast,
         loading: loading,
+        loadingPrev: loadingPrev,
         ids: [newId, ...ids],
         recordsPerPage: recordsPerPage,
       );
@@ -60,6 +76,7 @@ class Pagination{
     => Pagination(
         isLast: isLast,
         loading: loading,
+        loadingPrev: loadingPrev,
         ids: [...ids, newId],
         recordsPerPage: recordsPerPage,
       );
@@ -67,6 +84,7 @@ class Pagination{
     => Pagination(
         isLast: isLast,
         loading: loading,
+        loadingPrev: loadingPrev,
         ids: [newId, ...ids.where((e) => e != newId)],
         recordsPerPage: recordsPerPage,
       );
@@ -74,6 +92,7 @@ class Pagination{
     => Pagination(
         isLast: isLast,
         loading: loading,
+        loadingPrev: loadingPrev,
         ids: ids.where((e) => e != id),
         recordsPerPage: recordsPerPage,
       );
@@ -81,6 +100,7 @@ class Pagination{
     => Pagination(
         isLast: newIds.length < recordsPerPage,
         loading: false,
+        loadingPrev: loadingPrev,
         ids: newIds,
         recordsPerPage: recordsPerPage
       );
@@ -88,6 +108,7 @@ class Pagination{
     => Pagination(
         isLast: true,
         loading: false,
+        loadingPrev: loadingPrev,
         ids: [...ids, ...newIds],
         recordsPerPage: recordsPerPage
       );

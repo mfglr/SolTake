@@ -31,12 +31,38 @@ void getNextPageHomeQuestionsIfReadyMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageHomeQuestionsAction){
-    final questions = store.state.homePageState.questions;
+    final pagination = store.state.homePageState.questions;
     QuestionService()
-      .getAll(questions.lastValue,questionsPerPage)
+      .getHomePageQuestions(pagination.lastValue,questionsPerPage,true)
       .then((questions){
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddNextPageHomeQuestionsAction(questionIds: questions.map((e) => e.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+        store.dispatch(AddQuestionImagesListAction(lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
+void getPrevPageHomePageQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetPrevPageHomePageQuestionsIfReadyAction){
+    final pagination = store.state.homePageState.questions;
+    if(pagination.isReadyForPrevPage){
+      store.dispatch(const GetPrevPageHomeQuestionsAction());
+    }
+  }
+  next(action);
+}
+void getPrevPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetPrevPageHomeQuestionsAction){
+    final pagination = store.state.homePageState.questions;
+    QuestionService()
+      .getHomePageQuestions(pagination.firstValue,questionsPerPage,false)
+      .then((questions){
+        store.dispatch(AddPrevPageHomeQuestionsAction(questionIds: questions.map((e) => e.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddQuestionImagesListAction(lists: questions.map((e) => e.images.map((e) => e.toQuestionImageState()))));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));

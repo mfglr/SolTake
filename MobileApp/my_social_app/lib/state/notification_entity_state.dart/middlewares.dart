@@ -37,10 +37,7 @@ void nextPageNotificationsMiddleware(Store<AppState> store,action,NextDispatcher
   if(action is NextPageNotificationsAction){
     if(!store.state.notificationEntityState.isLast){
       NotificationService()
-        .getNotifications(
-          lastValue: store.state.notificationEntityState.lastId,
-          take: notificationsPerPage
-        )
+        .getNotifications(store.state.notificationEntityState.lastId,notificationsPerPage,true)
         .then(
           (notifications) => store.dispatch(
             NextPageNotificationsSuccessAction(

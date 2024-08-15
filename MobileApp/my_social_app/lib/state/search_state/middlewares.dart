@@ -29,7 +29,7 @@ void getFirstPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispa
   if(action is GetFirstPageSearchingUsersAction){
     final key = store.state.searchState.key;
     UserService()
-      .search(key, null, usersPerPage)
+      .search(key, null, usersPerPage,true)
       .then((users){
         store.dispatch(AddFirstPageSearchingUsersAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
@@ -52,7 +52,7 @@ void getNextPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispat
     final key = store.state.searchState.key;
     final lastId = store.state.searchState.users.lastValue;
     UserService()
-      .search(key, lastId, usersPerPage)
+      .search(key, lastId, usersPerPage,true)
       .then((users){
         store.dispatch(AddNextPageSearchingUsersAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
@@ -84,7 +84,7 @@ void getNextPageSearchedUsersMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageSearchedUsersAction){
     final pagination = store.state.searchState.searchedUsers;
     UserService()
-      .getSearcheds(pagination.lastValue,usersPerPage)
+      .getSearcheds(pagination.lastValue,usersPerPage,true)
       .then((users){
         store.dispatch(AddNextPageSearchedUsersAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
@@ -123,7 +123,7 @@ void getFirstPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextD
   if(action is GetFirstPageSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, null, questionsPerPage)
+      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, null, questionsPerPage,true)
       .then((questions){
         store.dispatch(AddFirstPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
@@ -150,7 +150,7 @@ void getNextPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextDi
   if(action is GetNextPageSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, state.questions.lastValue, questionsPerPage)
+      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, state.questions.lastValue, questionsPerPage,true)
       .then((questions){
         store.dispatch(AddNextPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

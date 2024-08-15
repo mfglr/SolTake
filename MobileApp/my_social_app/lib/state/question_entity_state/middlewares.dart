@@ -81,7 +81,7 @@ void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDi
   if(action is GetNextPageQuestionSolutionsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
     SolutionService()
-      .getByQuestionId(action.questionId,pagination.lastValue,solutionsPerPage)
+      .getByQuestionId(action.questionId,pagination.lastValue,solutionsPerPage,true)
       .then((solutions){
         store.dispatch(AddNextPageQuestionSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
@@ -114,7 +114,7 @@ void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageQuestionCommentsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
     CommentService()
-      .getCommentsByQuestionId(action.questionId, pagination.lastValue, commentsPerPage)
+      .getCommentsByQuestionId(action.questionId, pagination.lastValue, commentsPerPage,true)
       .then((comments){
         store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
         store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(e.appUserId))));

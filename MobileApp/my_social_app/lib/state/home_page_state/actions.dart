@@ -24,4 +24,16 @@ class AddNextPageHomeQuestionsAction extends redux.Action{
   final Iterable<int> questionIds;
   const AddNextPageHomeQuestionsAction({required this.questionIds});
 }
-
+@immutable
+class GetPrevPageHomePageQuestionsIfReadyAction extends redux.Action{
+  const GetPrevPageHomePageQuestionsIfReadyAction();
+}
+@immutable
+class GetPrevPageHomeQuestionsAction extends redux.Action{
+  const GetPrevPageHomeQuestionsAction();
+}
+@immutable
+class AddPrevPageHomeQuestionsAction extends redux.Action{
+  final Iterable<int> questionIds;
+  const AddPrevPageHomeQuestionsAction({required this.questionIds});
+}

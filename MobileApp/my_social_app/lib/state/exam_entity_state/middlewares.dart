@@ -34,7 +34,7 @@ void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispat
   if(action is GetNextPageExamQuestionsAction){
     final examState = store.state.examEntityState.entities[action.examId]!;
     QuestionService()
-      .getByExamId(action.examId,examState.questions.lastValue,questionsPerPage)
+      .getByExamId(action.examId,examState.questions.lastValue,questionsPerPage,true)
       .then((questions){
         store.dispatch(AddNextPageExamQuestionsAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

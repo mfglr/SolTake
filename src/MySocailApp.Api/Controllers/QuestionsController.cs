@@ -7,8 +7,8 @@ using MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Application.Queries.QuestionAggregate.GerAllQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
+using MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
@@ -67,8 +67,8 @@ namespace MySocailApp.Api.Controllers
            => await _mediator.Send(new GetQuestionsByExamIdDto(examId, lastValue, take), cancellationToken);
 
         [HttpGet]
-        public async Task<List<QuestionResponseDto>> GetAllQuestions([FromQuery]int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetAllQuestionsDto(lastValue, take),cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetHomePageQuestions([FromQuery]int? lastValue, [FromQuery] int? take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetHomePageQuestionsDto(lastValue, take,isDescending),cancellationToken);
 
         [HttpPost]
         public async Task<List<QuestionResponseDto>> SearchQuestions(SearchQuestionsDto request,CancellationToken cancellationToken)

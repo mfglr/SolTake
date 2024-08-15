@@ -47,29 +47,29 @@ class CommentService{
       )
     );
 
-  Future<Iterable<Comment>> getCommentsByQuestionId(int questionId,int? lastValue, int? take) async{
+  Future<Iterable<Comment>> getCommentsByQuestionId(int questionId,int? lastValue, int? take,bool isDescending) async{
     final endPoint = "$commentController/$getCommentsByQuestionIdEndpoint/$questionId";
-    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take);
+    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Comment.fromJson(e));
   }
 
-   Future<Iterable<Comment>> getBySolutionId(int solutionId,int? lastValue) async{
+   Future<Iterable<Comment>> getBySolutionId(int solutionId,int? lastValue,int? take,bool isDescending) async{
     final endPoint = "$commentController/$getCommentsBySolutionIdEndpoint/$solutionId";
-    final url = lastValue != null ? "$endPoint?lastValue=$lastValue" : endPoint;
+    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Comment.fromJson(e));
   }
 
-  Future<Iterable<Comment>> getByParentId(int parentId,int? lastValue, int? take) async{
+  Future<Iterable<Comment>> getByParentId(int parentId,int? lastValue, int? take,bool isDescending) async{
     final url = "$commentController/$getCommentsByParentIdEndpoint/$parentId";
-    final list = (await _appClient.get(_appClient.generatePaginationUrl(url, lastValue, take))) as List;
+    final list = (await _appClient.get(_appClient.generatePaginationUrl(url,lastValue,take,isDescending))) as List;
     return list.map((e) => Comment.fromJson(e));
   }
 
-  Future<Iterable<User>> getCommentLikes(int commentId,int? lastValue,int? take) async{
+  Future<Iterable<User>> getCommentLikes(int commentId,int? lastValue,int? take,bool isDescending) async{
     final url = "$commentController/$getCommentLikesEndpoint/$commentId";
-    final list = (await _appClient.get(_appClient.generatePaginationUrl(url, lastValue, take))) as List;
+    final list = (await _appClient.get(_appClient.generatePaginationUrl(url, lastValue, take, isDescending))) as List;
     return list.map((e) => User.fromJson(e));
   }
 }

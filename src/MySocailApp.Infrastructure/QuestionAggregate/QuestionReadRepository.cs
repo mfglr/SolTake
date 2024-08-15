@@ -70,12 +70,13 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                .ToPage(lastId, take ?? RecordsPerPage.QuestionsPerPage)
                .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetAllQuestionsAsync(int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetHomePageQuestionsAsync(int userId, int? offset, int? take, bool isDescending, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
-                .ToPage(lastId, take ?? RecordsPerPage.QuestionsPerPage)
+                .Where(x => x.AppUserId != userId)
+                .ToPage(offset, take ?? RecordsPerPage.QuestionsPerPage,isDescending)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId,int? lastId,int? take, CancellationToken cancellationToken)

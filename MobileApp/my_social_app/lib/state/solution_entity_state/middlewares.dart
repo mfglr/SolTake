@@ -71,7 +71,7 @@ void getNextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDisp
     final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
     if(!comments.isLast){
       CommentService()
-        .getBySolutionId(action.solutionId,comments.lastValue)
+        .getBySolutionId(action.solutionId,comments.lastValue,commentsPerPage,true)
         .then((comments){
           store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
           store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(commentsPerPage))));

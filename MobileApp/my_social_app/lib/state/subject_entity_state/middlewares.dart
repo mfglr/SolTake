@@ -33,7 +33,7 @@ void getNextPageSubjectQuestionsMiddleware(Store<AppState> store,action,NextDisp
     final subject = store.state.subjectEntityState.entities[action.subjectId]!;
     if(!subject.questions.isLast){
       QuestionService()
-        .getBySubjectId(action.subjectId,subject.questions.lastValue,questionsPerPage)
+        .getBySubjectId(action.subjectId,subject.questions.lastValue,questionsPerPage,true)
         .then((questions){
           store.dispatch(AddNextPageSubjectQuestionsAction(subjectId: action.subjectId,questions: questions.map((x) => x.id)));
           store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

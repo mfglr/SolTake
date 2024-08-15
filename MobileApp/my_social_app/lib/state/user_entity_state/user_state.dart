@@ -120,7 +120,7 @@ class UserState{
   
   //messages
   UserState nextPageMessages() => _optional(newMessages: messages.startLoading());
-  UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.prependNextPage(messageIds));
+  UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.addPrevPage(messageIds));
   UserState addMessage(int messageId) => _optional(newMessages: messages.appendOne(messageId));
 
   UserState changeProfileImageStatus(bool value) => _optional(newHasImage: value);

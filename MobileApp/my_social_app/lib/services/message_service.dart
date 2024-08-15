@@ -31,22 +31,16 @@ class MessageService{
     return Message.fromJson(json);
   }
 
-  Future<Iterable<Message>> getMessagesByUserId(int userId,int? lastValue,int? take) async {
-    final url = _appClient.generatePaginationUrl(
-      "$messageController/$getMessagesByUserIdEndpoint/$userId",
-      lastValue,
-      take
-    );
+  Future<Iterable<Message>> getMessagesByUserId(int userId,int? lastValue,int? take,bool isDescending) async {
+    final endpoint = "$messageController/$getMessagesByUserIdEndpoint/$userId";
+    final url = _appClient.generatePaginationUrl(endpoint,lastValue,take,isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => Message.fromJson(item));
   }
 
-  Future<Iterable<Message>> getConversations(int? lastValue,int? take) async {
-    final url = _appClient.generatePaginationUrl(
-      "$messageController/$getConversationsEndpoint",
-      lastValue,
-      take
-    );
+  Future<Iterable<Message>> getConversations(int? lastValue,int? take,bool isDescending) async {
+    const endpoint = "$messageController/$getConversationsEndpoint";
+    final url = _appClient.generatePaginationUrl(endpoint,lastValue,take,isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => Message.fromJson(item));
   }

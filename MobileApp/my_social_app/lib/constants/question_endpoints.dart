@@ -2,7 +2,7 @@ const createQuestioinEndpoint = "Create";
 const likeQuestionEndpoint = "like";
 const dislikeQuestionEndpoint = "dislike";
 
-const getAllQuestionsEndpoint = "GetAllQuestions";
+const getHomePageQuestionsEndpoint = "GetHomePageQuestions";
 const getQuestionByIdEndpoint = "GetQuestionById";
 const getQuestionsByUserIdEndpoint = "GetQuestionsByUserId";
 const getQuestionsByTopicIdEndpoint = "GetQuestionsByTopicId";

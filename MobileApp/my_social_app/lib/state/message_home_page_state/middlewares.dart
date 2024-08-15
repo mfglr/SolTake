@@ -41,7 +41,7 @@ void nextPageConversationsMiddleware(Store<AppState> store,action,NextDispatcher
       final lastValue = store.state.selectLastConversationId();
       final accountId = store.state.accountState!.id;
       MessageService()
-        .getConversations(lastValue, conversationsPerPage)
+        .getConversations(lastValue, conversationsPerPage,true)
         .then(
           (messages){
             store.dispatch(NextPageConversationsSuccessAction(messages: messages));

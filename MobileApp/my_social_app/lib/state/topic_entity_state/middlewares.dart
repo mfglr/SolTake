@@ -30,7 +30,7 @@ void getNextPageTopicQuestionsMiddleware(Store<AppState> store,action,NextDispat
   if(action is GetNextPageTopicQuestionsAction){
     final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
     QuestionService()
-      .getByTopicId(action.topicId, pagination.lastValue, questionsPerPage)
+      .getByTopicId(action.topicId, pagination.lastValue, questionsPerPage,true)
       .then(
         (questions){
           store.dispatch(AddNextPageTopicQuestionsAction(topicId: action.topicId,questionIds: questions.map((x) => x.id).toList()));
