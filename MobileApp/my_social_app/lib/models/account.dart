@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 part 'account.g.dart';
 
 @JsonSerializable()

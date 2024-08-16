@@ -39,10 +39,10 @@ namespace MySocailApp.Api.Controllers
         public async Task Dislike(DislikeQuestionDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
-        [HttpGet("{questionId}/{blobName}")]
-        public async Task<FileResult> GetImage(int questionId, string blobName, CancellationToken cancellationToken)
+        [HttpGet("{questionId}/{questionImageId}")]
+        public async Task<FileResult> GetImage(int questionId, int questionImageId, CancellationToken cancellationToken)
            => File(
-               await _mediator.Send(new GetQuestionImageDto(questionId, blobName), cancellationToken),
+               await _mediator.Send(new GetQuestionImageDto(questionId, questionImageId), cancellationToken),
                "application/octet-stream"
             );
 

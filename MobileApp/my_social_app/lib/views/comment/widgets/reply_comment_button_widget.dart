@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/create_comment_state/actions.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 
 class ReplyCommentButtonWidget extends StatelessWidget {
   

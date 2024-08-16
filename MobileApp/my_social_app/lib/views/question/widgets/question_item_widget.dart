@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/create_solution_state/actions.dart';
-import 'package:my_social_app/state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
-import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
+import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_question_solutions_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';

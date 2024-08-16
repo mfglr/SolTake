@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/create_message_state/actions.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 
 class TakeMessageImagePage extends StatefulWidget {
   final CameraDescription camera;

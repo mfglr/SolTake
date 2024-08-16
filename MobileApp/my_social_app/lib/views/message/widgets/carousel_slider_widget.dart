@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/create_message_state/actions.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 
 class CarouselSliderWidget extends StatelessWidget {
   final Iterable<XFile> images;

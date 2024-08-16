@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/create_comment_state/actions.dart';
-import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/comment/modals/display_solution_comments_modal.dart';
 
 class SolutionCommentButtonWidget extends StatelessWidget {

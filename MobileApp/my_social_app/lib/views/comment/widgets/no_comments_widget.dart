@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
-import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 
 class NoCommentsWidget extends StatelessWidget {
   const NoCommentsWidget({super.key});

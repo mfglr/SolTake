@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/notification_entity_state.dart/notification_state.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 

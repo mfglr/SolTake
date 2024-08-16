@@ -51,8 +51,8 @@ class QuestionService{
 
   Future<Question> getById(int questionId) async
     => Question.fromJson(await _appClient.get("$questionController/$getQuestionByIdEndpoint/$questionId"));
-  Future<Uint8List> getQuestionImage(int questionId,String blobName) async {
-    return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$blobName");
+  Future<Uint8List> getQuestionImage(int questionId,int questionImageId) async {
+    return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$questionImageId");
   }
 
   Future<Iterable<Question>> getHomePageQuestions(int? lastValue,int? take,bool isDescending) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photo_modal.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_name_page.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_user_name_page.dart';

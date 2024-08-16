@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/account_state/actions.dart';
-import 'package:my_social_app/state/actions.dart';
-import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/app_state/account_state/actions.dart';
+import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});

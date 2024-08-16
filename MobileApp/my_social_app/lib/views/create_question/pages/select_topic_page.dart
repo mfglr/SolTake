@@ -2,11 +2,11 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/create_question_state/actions.dart';
-import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/store.dart';
-import 'package:my_social_app/state/subject_entity_state/actions.dart';
-import 'package:my_social_app/state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/create_question_state/actions.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 

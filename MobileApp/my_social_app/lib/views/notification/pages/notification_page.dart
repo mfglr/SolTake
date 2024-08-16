@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/notification_entity_state.dart/actions.dart';
-import 'package:my_social_app/state/notification_entity_state.dart/notification_state.dart';
-import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
+import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/notification/widgets/notification_items.dart';
 

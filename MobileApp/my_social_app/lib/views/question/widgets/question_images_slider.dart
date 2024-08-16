@@ -1,20 +1,24 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/question_image_entity_state/actions.dart';
-import 'package:my_social_app/state/question_image_entity_state/question_image_state.dart';
-import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
-import 'package:redux/redux.dart';
 
-class QuestionImagesSlider extends StatelessWidget {
+class QuestionImagesSlider extends StatefulWidget {
   final QuestionState question;
   const QuestionImagesSlider({super.key,required this.question});
 
-  double getMaxHeightSize(BuildContext context,Iterable<QuestionImageState> images){
+  @override
+  State<QuestionImagesSlider> createState() => _QuestionImagesSliderState();
+}
+
+class _QuestionImagesSliderState extends State<QuestionImagesSlider> {
+  
+  double _getMaxHeightSize(BuildContext context,Iterable<QuestionImageState> images){
     var max = images.first;
     for(final image in images){
       if(image.height > max.height){
@@ -24,24 +28,24 @@ class QuestionImagesSlider extends StatelessWidget {
     return (MediaQuery.of(context).size.width * max.height) / max.width;
   }
 
-  void _loadQuestionImage(Store<AppState> store,int index){
-    store.dispatch(LoadQuestionImageAction(id: question.images.elementAt(index)));
+  @override
+  void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(LoadQuestionImageAction(questionId: widget.question.id,index: 0));
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      key: ValueKey(question.id),
+      key: ValueKey(widget.question.id),
       onDoubleTap: (){
-        if(!question.isLiked){
-          store.dispatch(LikeQuestionAction(questionId: question.id));
+        if(!widget.question.isLiked){
+          store.dispatch(LikeQuestionAction(questionId: widget.question.id));
         }
       },
-      child: StoreConnector<AppState,Iterable<QuestionImageState>>(
-        onInit: (store) => _loadQuestionImage(store,0),
-        converter: (store) => store.state.selectQuestionImages(question.id),
-        builder: (context,imageStates) => CarouselSlider(
-          items: imageStates.map(
+      child: CarouselSlider(
+          items: widget.question.images.map(
             (imageState) => DisplayImageWidget(
               image: imageState.image, 
               status: imageState.state,
@@ -49,15 +53,14 @@ class QuestionImagesSlider extends StatelessWidget {
           options: CarouselOptions(
             autoPlay: false,
             viewportFraction: 1,
-            height: getMaxHeightSize(context, imageStates),
+            height: _getMaxHeightSize(context, widget.question.images),
             enableInfiniteScroll: false,
             onPageChanged: (index, reason){
               final store = StoreProvider.of<AppState>(context,listen: false);
-              _loadQuestionImage(store,index);
+              store.dispatch(LoadQuestionImageAction(questionId: widget.question.id,index: index));
             },
           ),
         ),
-      ),
     );
   }
 }

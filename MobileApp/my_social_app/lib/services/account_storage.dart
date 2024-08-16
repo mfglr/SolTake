@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:my_social_app/constants/storage_keys.dart';
-import 'package:my_social_app/state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 
 class AccountStorage {
   final storage = const FlutterSecureStorage();

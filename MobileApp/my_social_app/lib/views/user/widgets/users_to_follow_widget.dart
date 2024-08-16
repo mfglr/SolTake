@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';

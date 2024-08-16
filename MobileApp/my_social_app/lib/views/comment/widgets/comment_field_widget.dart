@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/comment_font_size.dart';
-import 'package:my_social_app/state/account_state/account_state.dart';
-import 'package:my_social_app/state/create_comment_state/actions.dart';
-import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
-import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/state/store.dart';
+import 'package:my_social_app/state/app_state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
+import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 

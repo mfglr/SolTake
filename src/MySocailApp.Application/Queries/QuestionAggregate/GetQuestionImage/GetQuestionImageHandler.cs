@@ -17,10 +17,11 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
                 await _repository.GetQuestionWithImagesById(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (!question.Images.Any(x => x.BlobName == request.BlobName))
+            var image = 
+                question.Images.FirstOrDefault(x => x.Id == request.QuestionImageId) ??
                 throw new QuestionImageNotFoundException();
 
-            var stream = _blobService.Read(ContainerName.QuestionImages, request.BlobName);
+            var stream = _blobService.Read(ContainerName.QuestionImages, image.BlobName);
             return await stream.ToByteArrayAsync();
         }
     }

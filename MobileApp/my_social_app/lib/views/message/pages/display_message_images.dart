@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/widgets/carousel_slider_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_field.dart';
 

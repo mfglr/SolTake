@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/user/pages/display_user_image_page.dart';
 import 'package:my_social_app/views/user/pages/user_followeds_page.dart';
