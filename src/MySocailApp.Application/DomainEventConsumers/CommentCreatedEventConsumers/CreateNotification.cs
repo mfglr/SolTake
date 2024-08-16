@@ -44,7 +44,7 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentCreatedEventConsum
                 return;
 
             await _notificationRepository.CreateAsync(
-                Notification.CreateCommentCreatedNotification(ownerId, comment.Id),
+                Notification.CreateCommentCreatedNotification(ownerId, comment.Id, comment.AppUserId),
                 cancellationToken
             );
 

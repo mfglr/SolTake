@@ -8,7 +8,8 @@ namespace MySocailApp.Application.Mappers
     {
         public NotificationMappers()
         {
-            CreateMap<Notification, NotificationResponseDto>();
+            CreateMap<Notification, NotificationResponseDto>()
+                .ForMember(dest => dest.UserName,x => x.MapFrom(src => src.User.Account.UserName));
         }
 
     }
