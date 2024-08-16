@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
@@ -22,6 +24,11 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.getNextPageComments()));
   SolutionEntityState addNextPageComments(int solutionId, Iterable<int> commentIds)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.addNextPageComments(commentIds)));
+
+  SolutionEntityState startLoadingImage(int solutionId,int index)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.startLoadingImage(index)));
+  SolutionEntityState loadImage(int solutionId,int index,Uint8List image)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.loadImage(index, image)));
 
   Iterable<SolutionState> selectSolutionsByQuestionId(int questionId)
     => entities.values.where((e) => e.questionId == questionId).sorted((x,y) => y.id.compareTo(x.id));

@@ -2,8 +2,8 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
@@ -49,7 +49,6 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         .getSolutionById(action.solutionId)
         .then((solution){
           store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-          store.dispatch(AddSolutionImagesAction(images: solution.images.map((e) => e.toSolutionImageState())));
           store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
         });
     }
@@ -77,6 +76,20 @@ void getNextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDisp
           store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(commentsPerPage))));
           store.dispatch(AddNextPageSolutionCommentsAction(solutionId: action.solutionId,commentsIds: comments.map((e) => e.id)));
         });
+    }
+  }
+  next(action);
+}
+
+void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadSolutionImageAction){
+    final image = store.state.solutionEntityState.entities[action.solutionId]!.images.elementAt(action.index);
+    if(image.state == ImageStatus.notStarted){
+      SolutionService()
+        .getImage(action.solutionId,image.id)
+        .then((image) => store.dispatch(
+          LoadSolutionImageSuccessAction(solutionId: action.solutionId,index: action.index,image: image)
+        ));
     }
   }
   next(action);

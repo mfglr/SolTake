@@ -29,8 +29,6 @@ import 'package:my_social_app/state/app_state/search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
-import 'package:my_social_app/state/app_state/solution_image_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/solution_image_entity_state/solution_image_entity_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
@@ -59,7 +57,6 @@ final store = Store(
     topicEntityState: const TopicEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
     solutionEntityState: const SolutionEntityState(entities: {}),
-    solutionImageEntityState: const SolutionImageEntityState(entities: {}),
     homePageState: HomePageState(questions: Pagination.init(questionsPerPage)),
     commentEntityState: const CommentEntityState(entities: {}),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
@@ -195,11 +192,8 @@ final store = Store(
     removeDownvoteMiddleware,
     getNextPageSolutionCommentsMiddleware,
     getNextPageSolutionCommentsIfNoPageMiddleware,
-    //solution end
-
-    //Solution image start
     loadSolutionImageMiddleware,
-    //Solution image end
+    //solution end
 
     //comments entity state
     createCommentMiddleware,

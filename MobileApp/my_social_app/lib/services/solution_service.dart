@@ -68,8 +68,8 @@ class SolutionService{
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Solution.fromJson(e));
   }
-  Future<Uint8List> getImage(int solutionId,String blobName) async {
-    String endPoint = "$solutionController/$getSolutionImageEndPoint/$solutionId/$blobName";
+  Future<Uint8List> getImage(int solutionId,int solutionImageId) async {
+    String endPoint = "$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId";
     return await _appClient.getBytes(endPoint);
   }
 }

@@ -62,7 +62,7 @@ class Solution{
       numberOfDownvotes: numberOfDownvotes,
       belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
       isOwner: isOwner,
-      images: images.map((e) => e.id),
+      images: images.map((e) => e.toSolutionImageState()),
       numberOfComments: numberOfComments,
       comments: Pagination.init(solutionsPerPage)
     );

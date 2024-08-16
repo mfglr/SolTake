@@ -42,9 +42,9 @@ class CreateSolutionState{
       );
 
   CreateSolutionState clear()
-    => const CreateSolutionState(
+    => CreateSolutionState(
         content: "",
-        images: [],
-        questionId: null,
+        images: const [],
+        questionId: questionId,
       );
 }

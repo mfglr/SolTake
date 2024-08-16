@@ -44,10 +44,10 @@ namespace MySocailApp.Api.Controllers
         public async Task RemoveDownvote(RemoveDownvoteDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
-        [HttpGet("{solutionId}/{blobName}")]
-        public async Task<FileResult> GetImage(int solutionId,string blobName,CancellationToken cancellationToken)
+        [HttpGet("{solutionId}/{solutionImageId}")]
+        public async Task<FileResult> GetImage(int solutionId,int solutionImageId, CancellationToken cancellationToken)
              => File(
-               await _mediator.Send(new GetSolutionImageDto(solutionId, blobName), cancellationToken),
+               await _mediator.Send(new GetSolutionImageDto(solutionId, solutionImageId), cancellationToken),
                "application/octet-stream"
             );
 

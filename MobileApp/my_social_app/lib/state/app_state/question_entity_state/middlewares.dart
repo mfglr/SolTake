@@ -6,7 +6,6 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
@@ -70,7 +69,6 @@ void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDi
       .then((solutions){
         store.dispatch(AddNextPageQuestionSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-        store.dispatch(AddSolutionImagesListsAction(lists: solutions.map((e) => e.images.map((e) => e.toSolutionImageState()))));
         store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
       });
   }

@@ -14,7 +14,6 @@ class Pagination{
     required this.loadingPrev,
     required this.ids,
     required this.recordsPerPage,
-
   });
 
   factory Pagination.init(recordsPerPage)

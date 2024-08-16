@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -83,4 +84,18 @@ class AddNextPageSolutionCommentsAction extends redux.Action{
 class GetNextPageSolutionCommentsIfNoPageAction extends redux.Action{
   final int solutionId;
   const GetNextPageSolutionCommentsIfNoPageAction({required this.solutionId});
+}
+
+@immutable
+class LoadSolutionImageAction extends redux.Action{
+  final int solutionId;
+  final int index;
+  const LoadSolutionImageAction({required this.solutionId, required this.index});
+}
+@immutable
+class LoadSolutionImageSuccessAction extends redux.Action{
+  final int solutionId;
+  final int index;
+  final Uint8List image;
+  const LoadSolutionImageSuccessAction({required this.solutionId, required this.index, required this.image});
 }

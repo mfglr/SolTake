@@ -16,11 +16,12 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage
             var solution =
                 await _repository.GetSolutionWithImagesByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionNotFoundException();
-
-            if (!solution.Images.Any(x => x.BlobName == request.BlobName))
+            
+            var image = 
+                solution.Images.FirstOrDefault(x => x.Id == request.SolutionImageId) ??
                 throw new SolutionImageIsNotFoundException();
 
-            using var stream  = _blobService.Read(ContainerName.SolutionImages,request.BlobName);
+            using var stream  = _blobService.Read(ContainerName.SolutionImages, image.BlobName);
             return await stream.ToByteArrayAsync();
         }
     }

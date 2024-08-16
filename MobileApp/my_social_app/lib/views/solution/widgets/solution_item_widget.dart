@@ -13,6 +13,7 @@ class SolutionItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      key: ValueKey(solution.id),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,7 +73,6 @@ class SolutionItemWidget extends StatelessWidget {
             }
           ),
           SolutionButtonsWidget(solution: solution,),
-         
         ],
       ),
     );

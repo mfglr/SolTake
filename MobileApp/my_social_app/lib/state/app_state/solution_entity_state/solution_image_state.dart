@@ -20,6 +20,17 @@ class SolutionImageState{
     required this.image,
   });
 
+  SolutionImageState startLoading()
+    => SolutionImageState(
+        id: id,
+        solutionId: solutionId,
+        blobName: blobName,
+        height: height,
+        width: width,
+        state: ImageStatus.started,
+        image: image
+      );
+
   SolutionImageState load(Uint8List image)
     => SolutionImageState(
         id: id,

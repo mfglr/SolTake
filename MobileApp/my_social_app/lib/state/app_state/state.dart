@@ -17,8 +17,6 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_ent
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
-import 'package:my_social_app/state/app_state/solution_image_entity_state/solution_image_entity_state.dart';
-import 'package:my_social_app/state/app_state/solution_image_entity_state/solution_image_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
@@ -49,7 +47,6 @@ class AppState{
   final TopicEntityState topicEntityState;
   final QuestionEntityState questionEntityState;
   final SolutionEntityState solutionEntityState;
-  final SolutionImageEntityState solutionImageEntityState;
   final HomePageState homePageState;
   final CommentEntityState commentEntityState;
   final CreateCommentState createCommentState;
@@ -73,7 +70,6 @@ class AppState{
     required this.topicEntityState,
     required this.questionEntityState,
     required this.solutionEntityState,
-    required this.solutionImageEntityState,
     required this.homePageState,
     required this.commentEntityState,
     required this.createCommentState,
@@ -117,10 +113,6 @@ class AppState{
     => userEntityState.entities[userId]!.notFolloweds.ids.map((e) => userEntityState.entities[e]!);
   Iterable<UserState> get selectSearchedUsers
     => searchState.searchedUsers.ids.map((e) => userEntityState.entities[e]!);
-
-  //Select solutionImages
-  Iterable<SolutionImageState> getSolutionImages(int solutionId)
-    => solutionEntityState.entities[solutionId]!.images.map((e) => solutionImageEntityState.entities[e]!);
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions

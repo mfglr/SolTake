@@ -29,7 +29,9 @@ class DisplaySolutionPage extends StatelessWidget {
               ),
             ),
           ),
-          body: SolutionItemWidget(solution: solution),
+          body: SingleChildScrollView(
+            child: SolutionItemWidget(solution: solution)
+          ),
         );
       },
     );

@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_image_state.dart';
 
 class SolutionState{
   final int id;
@@ -14,7 +17,7 @@ class SolutionState{
   final int numberOfDownvotes;
   final bool belongsToQuestionOfCurrentUser;
   final bool isOwner;
-  final Iterable<int> images;
+  final Iterable<SolutionImageState> images;
   final int numberOfComments;
   final Pagination comments;
 
@@ -173,5 +176,44 @@ class SolutionState{
         images: images,
         numberOfComments: numberOfComments + 1,
         comments: comments.prependOne(commentId)
+      );
+
+  SolutionState startLoadingImage(int index)
+    => SolutionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        questionId: questionId,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        isUpvoted: isUpvoted,
+        numberOfUpvotes: numberOfUpvotes,
+        isDownvoted: isDownvoted,
+        numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
+        isOwner: isOwner,
+        images: [...images.take(index),images.elementAt(index).startLoading(),...images.skip(index + 1)],
+        numberOfComments: numberOfComments,
+        comments: comments
+      );
+  SolutionState loadImage(int index,Uint8List image)
+    => SolutionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        questionId: questionId,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        isUpvoted: isUpvoted,
+        numberOfUpvotes: numberOfUpvotes,
+        isDownvoted: isDownvoted,
+        numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
+        isOwner: isOwner,
+        images: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)],
+        numberOfComments: numberOfComments,
+        comments: comments
       );
 }
