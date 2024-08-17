@@ -3,6 +3,11 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 
 @immutable
+class AddSubjectAction extends redux.Action{
+  final SubjectState subject;
+  const AddSubjectAction({required this.subject});
+}
+@immutable
 class AddSubjectsAction extends redux.Action{
   final Iterable<SubjectState> subjects;
   const AddSubjectsAction({required this.subjects});

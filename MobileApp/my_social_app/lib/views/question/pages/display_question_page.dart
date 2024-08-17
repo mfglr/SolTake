@@ -3,27 +3,56 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 import 'package:my_social_app/views/question/widgets/question_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/shared/loading_widget.dart';
 
-class DisplayQuestionPage extends StatelessWidget {
+class DisplayQuestionPage extends StatefulWidget {
   final int questionId;
+  final bool isOpenCommentModal;
 
-  const DisplayQuestionPage({super.key,required this.questionId});
+  const DisplayQuestionPage({
+    super.key,
+    required this.questionId,
+    required this.isOpenCommentModal
+  });
 
+  @override
+  State<DisplayQuestionPage> createState() => _DisplayQuestionPageState();
+}
+
+class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
+  
+  @override
+  void initState() {
+    if(widget.isOpenCommentModal){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator
+          .of(context)
+          .push(
+            ModalBottomSheetRoute(
+              builder: (context) => DisplayQuestionCommentsModal(questionId: widget.questionId), 
+              isScrollControlled: true
+            )
+          );
+      });
+    }
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
-      onInit: (store) => store.dispatch(LoadQuestionAction(questionId: questionId)),
-      converter: (store) => store.state.questionEntityState.entities[questionId],
+      onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
+      converter: (store) => store.state.questionEntityState.entities[widget.questionId],
       builder: (context,question) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
         ),
         body: Builder(
           builder: (context) {
-            if(question == null) return const LoadingView();
+            if(question == null) return const LoadingWidget();
             return SingleChildScrollView(
               child: QuestionItemWidget(question: question)
             );

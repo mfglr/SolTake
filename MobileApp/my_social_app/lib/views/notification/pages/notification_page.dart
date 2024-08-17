@@ -25,10 +25,8 @@ class NotificationPage extends StatelessWidget {
       body: StoreConnector<AppState,Iterable<NotificationState>>(
         onInit: (store) => store.dispatch(const NextPageNotificationsIfNoNotificationsActions()),
         converter: (store) => store.state.notificationEntityState.notifications,
-        builder: (context,notifications) => SingleChildScrollView(
-          child: NotificationItems(
-            notifications: notifications
-          ),
+        builder: (context,notifications) => NotificationItems(
+          notifications: notifications
         )
       ),
     );

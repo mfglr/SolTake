@@ -5,6 +5,7 @@
         CommentCreatedNotification,
         QuestionLikedNotification,
         CommentLikedNotification,
-        SolutionCreatedNotification
+        SolutionCreatedNotification,
+        UserTaggedCommentNotification
     }
 }

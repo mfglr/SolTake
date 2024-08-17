@@ -3,10 +3,13 @@ import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
@@ -20,6 +23,9 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
         .then((question){
           store.dispatch(AddQuestionAction(value: question.toQuestionState()));
           store.dispatch(AddUserImageAction(image: UserImageState.init(question.appUserId)));
+          store.dispatch(AddExamAction(exam: question.exam.toExamState()));
+          store.dispatch(AddSubjectAction(subject: question.subject.toSubjectState()));
+          store.dispatch(AddTopicsAction(topics: question.topics.map((e) => e.toTopicState())));
         });
     }
   }

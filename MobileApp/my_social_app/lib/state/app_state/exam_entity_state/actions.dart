@@ -12,6 +12,11 @@ class AddAllExamsAction extends redux.Action{
   const AddAllExamsAction({required this.exams});
 }
 @immutable
+class AddExamAction extends redux.Action{
+  final ExamState exam;
+  const AddExamAction({required this.exam});
+}
+@immutable
 class AddExamsAction extends redux.Action{
   final Iterable<ExamState> exams;
   const AddExamsAction({ required this.exams });

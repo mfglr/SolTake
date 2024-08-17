@@ -33,11 +33,15 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         {
             Create(appUserId,content,idsOfUsersTagged);
             QuestionId = questionId;
+            foreach (var id in idsOfUsersTagged)
+                AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
         internal void CreateSolutionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int solutionId)
         {
             Create(appUserId, content, idsOfUsersTagged);
             SolutionId = solutionId;
+            foreach (var id in idsOfUsersTagged)
+                AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
         internal void CreateReply(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int parentId)
         {

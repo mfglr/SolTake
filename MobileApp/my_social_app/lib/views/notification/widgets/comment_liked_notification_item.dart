@@ -3,12 +3,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/app_state/notification_entity_state.dart/parent_type.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/shared/loading_widget.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:my_social_app/views/notification/widgets/notification_item.dart';
+import 'package:my_social_app/views/question/pages/display_question_page.dart';
+import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
 
 class CommentLikedNotificationItem extends StatelessWidget {
   final NotificationState notification;
@@ -19,57 +19,57 @@ class CommentLikedNotificationItem extends StatelessWidget {
     return StoreConnector<AppState,CommentState?>(
       onInit: (store) => store.dispatch(LoadCommentAction(commentId: notification.commentId!)),
       converter: (store) => store.state.commentEntityState.entities[notification.commentId!],
-      builder: (context,comment) => StoreConnector<AppState,UserState?>(
-        onInit: (store) => store.dispatch(LoadUserAction(userId: notification.userId!)),
-        converter: (store) => store.state.userEntityState.entities[notification.userId!],
-        builder: (context,user){
-          if(user != null && comment != null){
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 5),
-                          child: UserImageWidget(
-                            userId: user.id,
-                            diameter: 45
-                          ),
-                        ),
-                        Expanded(
-                          child: Text("${user.userName} like your comment."),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        comment.formatContent,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top:15,left: 5),
-                          child: Text(
-                            timeago.format(notification.createdAt,locale: 'en_short')
-                          ),
-                        ),
-                      ],
+      builder: (context,comment){
+        if(comment == null) return const LoadingView();
+        return NotificationItem(
+          notification: notification,
+          content: "Your comment has been liked.",
+          icon: const Icon(
+            Icons.favorite,
+            color: Colors.red,
+          ),
+          onPressed: (){
+            if(comment.questionId != null){
+              Navigator
+                .of(context)
+                .push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayQuestionPage(
+                      questionId: comment.questionId!,
+                      isOpenCommentModal: false,
                     )
-                  ],
-                ),
-              ),
-            );
+                  )
+                );
+              return;
+            }
+            else if(comment.solutionId != null){
+              Navigator
+                .of(context)
+                .push(MaterialPageRoute(builder: (context) => DisplaySolutionPage(solutionId: comment.solutionId!)));
+              return;
+            }
+            else{
+              if(notification.parentType == ParentType.question){
+                Navigator
+                  .of(context)
+                  .push( MaterialPageRoute(
+                    builder: (context) => DisplayQuestionPage(
+                      questionId: comment.questionId!,
+                      isOpenCommentModal: true,
+                    )
+                  ));
+                return;
+              }
+              else{
+                Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (context) => DisplaySolutionPage(solutionId: comment.solutionId!)));
+                return;
+              }
+            }
           }
-          return const LoadingWidget();
-        },
-      ),
+        );
+      }
     );
   }
 }
