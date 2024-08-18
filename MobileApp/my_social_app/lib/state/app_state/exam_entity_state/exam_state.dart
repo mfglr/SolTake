@@ -23,7 +23,7 @@ class ExamState{
         shortName: shortName,
         fullName: fullName,
         subjects: subjects,
-        questions: questions.startLoading()
+        questions: questions.startLoadingNext()
       );
   ExamState addNextPageQuestions(Iterable<int> questionIds)
     => ExamState(
@@ -35,12 +35,12 @@ class ExamState{
       );
 
   ExamState getNextPageSubjects(){
-    if(subjects.isLast || subjects.loading) return this;
+    if(subjects.isLast || subjects.loadingNext) return this;
     return ExamState(
       id: id,
       shortName: shortName,
       fullName: fullName,
-      subjects: subjects.startLoading(),
+      subjects: subjects.startLoadingNext(),
       questions: questions
     );
   }

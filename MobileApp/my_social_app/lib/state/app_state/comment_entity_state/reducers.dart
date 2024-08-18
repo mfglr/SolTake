@@ -17,11 +17,15 @@ CommentEntityState addNextPageCommentRepliesReducer(CommentEntityState prev,AddN
   => prev.addNextPageReplies(action.commentId,action.replyIds);
 CommentEntityState addReplyReducer(CommentEntityState prev,AddCommentReplyAction action)
   => prev.addReply(action.commentId, action.replyId);
+CommentEntityState removeReplyReducer(CommentEntityState prev,RemoveCommentReplyAction action)
+  => prev.removeReply(action.commentId,action.replyId);
 
 CommentEntityState changeVisibilityReducer(CommentEntityState prev,ChangeRepliesVisibilityAction action)
   => prev.changeVisibility(action.commentId, action.visibility);
 CommentEntityState addCommentReducer(CommentEntityState prev,AddCommentAction action)
   => CommentEntityState(entities: prev.appendOne(action.comment));
+CommentEntityState removeCommentReducer(CommentEntityState prev,RemoveCommentAction action)
+  => CommentEntityState(entities: prev.removeOne(action.commentId));
 CommentEntityState addCommentsReducer(CommentEntityState prev,AddCommentsAction action)
   => CommentEntityState(entities: prev.appendMany(action.comments));
 
@@ -34,8 +38,10 @@ Reducer<CommentEntityState> questionCommentEntityStateReducers = combineReducers
   TypedReducer<CommentEntityState,GetNextPageCommentRepliesAction>(getNextPageCommentRepliesReducer).call,
   TypedReducer<CommentEntityState,AddNextPageCommentRepliesAction>(addNextPageCommentRepliesReducer).call,
   TypedReducer<CommentEntityState,AddCommentReplyAction>(addReplyReducer).call,
+  TypedReducer<CommentEntityState,RemoveCommentReplyAction>(removeReplyReducer).call,
 
   TypedReducer<CommentEntityState,ChangeRepliesVisibilityAction>(changeVisibilityReducer).call,
   TypedReducer<CommentEntityState,AddCommentAction>(addCommentReducer).call,
+  TypedReducer<CommentEntityState,RemoveCommentAction>(removeCommentReducer).call,
   TypedReducer<CommentEntityState,AddCommentsAction>(addCommentsReducer).call,
 ]);

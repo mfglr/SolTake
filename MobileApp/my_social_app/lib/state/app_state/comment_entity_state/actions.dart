@@ -38,6 +38,11 @@ class AddCommentAction extends redux.Action{
   const AddCommentAction({required this.comment});
 }
 @immutable
+class RemoveCommentAction extends redux.Action{
+  final int commentId;
+  const RemoveCommentAction({required this.commentId});
+}
+@immutable
 class AddCommentsAction extends redux.Action{
   final Iterable<CommentState> comments;
   const AddCommentsAction({required this.comments});
@@ -92,4 +97,10 @@ class AddCommentReplyAction extends redux.Action{
   final int commentId;
   final int replyId;
   const AddCommentReplyAction({required this.replyId, required this.commentId});
+}
+@immutable
+class RemoveCommentReplyAction extends redux.Action{
+  final int commentId;
+  final int replyId;
+  const RemoveCommentReplyAction({required this.commentId, required this.replyId});
 }

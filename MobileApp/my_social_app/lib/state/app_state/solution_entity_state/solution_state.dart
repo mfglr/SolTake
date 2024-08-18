@@ -137,7 +137,7 @@ class SolutionState{
         isOwner: isOwner,
         images: images,
         numberOfComments: numberOfComments,
-        comments: comments.startLoading()
+        comments: comments.startLoadingNext()
       );
   SolutionState addNextPageComments(Iterable<int> commentIds)
     => SolutionState(
@@ -176,6 +176,25 @@ class SolutionState{
         images: images,
         numberOfComments: numberOfComments + 1,
         comments: comments.prependOne(commentId)
+      );
+  SolutionState removeComment(int commentId)
+    => SolutionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        questionId: questionId,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        isUpvoted: isUpvoted,
+        numberOfUpvotes: numberOfUpvotes,
+        isDownvoted: isDownvoted,
+        numberOfDownvotes: numberOfDownvotes,
+        belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
+        isOwner: isOwner,
+        images: images,
+        numberOfComments: numberOfComments,
+        comments: comments.removeOne(commentId)
       );
 
   SolutionState startLoadingImage(int index)

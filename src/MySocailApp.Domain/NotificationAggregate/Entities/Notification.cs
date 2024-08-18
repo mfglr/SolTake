@@ -1,6 +1,5 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
@@ -92,8 +91,6 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public AppUser Owner { get; } = null!;
         public AppUser User { get; } = null!;
-        public Comment? Comment { get; }
     }
 }

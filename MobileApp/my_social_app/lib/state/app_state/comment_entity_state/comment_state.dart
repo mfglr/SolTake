@@ -57,7 +57,7 @@ class CommentState{
         questionId: questionId,
         solutionId: solutionId,
         parentId: parentId,
-        likes: likes.startLoading(),
+        likes: likes.startLoadingNext(),
         replies: replies,
         repliesVisibility: repliesVisibility,
         numberOfDisplayReplies: numberOfDisplayReplies
@@ -143,6 +143,26 @@ class CommentState{
         repliesVisibility: true,
         numberOfDisplayReplies: numberOfDisplayReplies + 1
       );
+  CommentState removeReply(int replyId)
+    => CommentState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        questionId: questionId,
+        isEdited: isEdited,
+        content: content,
+        numberOfLikes: numberOfLikes,
+        likes: likes,
+        isLiked: isLiked,
+        replies: replies.removeOne(replyId),
+        numberOfReplies: numberOfReplies - 1,
+        parentId: parentId,
+        solutionId: solutionId,
+        repliesVisibility: true,
+        numberOfDisplayReplies: numberOfDisplayReplies - 1
+      );
   
   CommentState nextPageReplies()
     => CommentState(
@@ -157,14 +177,13 @@ class CommentState{
         numberOfLikes: numberOfLikes,
         likes: likes,
         isLiked: isLiked,
-        replies: replies.startLoading(),
+        replies: replies.startLoadingNext(),
         numberOfReplies: numberOfReplies,
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
         numberOfDisplayReplies: numberOfDisplayReplies
       );
-  
   CommentState addNextPageReplies(Iterable<int> replyIds)
     => CommentState(
         id: id,

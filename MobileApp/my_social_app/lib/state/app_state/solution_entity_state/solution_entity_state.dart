@@ -18,12 +18,15 @@ class SolutionEntityState extends EntityState<SolutionState>{
   SolutionEntityState removeDownvote(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.removeDownvote()));
 
-  SolutionEntityState addSolutionComment(int solutionId, int commentId)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]!.addComment(commentId)));
+  
   SolutionEntityState getNextPageComments(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.getNextPageComments()));
   SolutionEntityState addNextPageComments(int solutionId, Iterable<int> commentIds)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.addNextPageComments(commentIds)));
+  SolutionEntityState addComment(int solutionId, int commentId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.addComment(commentId)));
+  SolutionEntityState removeComment(int solutionId,int commentId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.removeComment(commentId)));
 
   SolutionEntityState startLoadingImage(int solutionId,int index)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.startLoadingImage(index)));

@@ -2,6 +2,7 @@
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
@@ -79,17 +80,17 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _likes.RemoveAt(index);
         }
 
-        public Exam Exam { get; } = null!;
-        public Subject Subject { get; } = null!;
-        public AppUser AppUser { get; } = null!;
-        public IReadOnlyList<Solution> Solutions { get; } = null!;
-        public IReadOnlyCollection<Comment> Comments { get; } = null!;
-
-
         //IDomainEventsContainer
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
         public void ClearEvents() => _events.Clear();
+
+        // Readonly navigator properties
+        public Exam Exam { get; } = null!;
+        public Subject Subject { get; } = null!;
+        public AppUser AppUser { get; } = null!;
+        public IReadOnlyList<Solution> Solutions { get; } = null!;
+        public IReadOnlyCollection<Comment> Comments { get; } = null!;
     }
 }

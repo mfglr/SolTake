@@ -20,7 +20,7 @@ class TopicState{
         id: id,
         subjectId: subjectId,
         name: name,
-        questions: questions.startLoading(),
+        questions: questions.startLoadingNext(),
       );
 
   TopicState addNextPageQuestions(Iterable<int> quesionIds)

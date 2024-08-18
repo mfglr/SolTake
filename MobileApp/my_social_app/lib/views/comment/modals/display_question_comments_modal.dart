@@ -64,6 +64,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                   scrollController: _scrollController,
                   contentController: _contentController,
                   focusNode: _focusNode,
+                  focusId: widget.displayedCommentId,
                   noItems: const NoCommentsWidget(),
                   pagination: question.comments,
                   comments: comments,
@@ -103,7 +104,12 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
         store.dispatch(ChangeQuestionAction(question: question));
         if(widget.displayedCommentId != null){
           return StoreConnector<AppState,CommentState?>(
-            onInit: (store) => store.dispatch(GetQuestionCommentAction(commentId: widget.displayedCommentId!)),
+            onInit: (store) => store.dispatch(
+              GetOutlierQuestionCommentAction(
+                questionId: question.id,
+                commentId: widget.displayedCommentId!
+              )
+            ),
             converter: (store) => store.state.commentEntityState.entities[widget.displayedCommentId],
             builder: (context,comment){
               if(comment == null) return const LoadingWidget();

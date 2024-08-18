@@ -24,6 +24,8 @@ class CommentService{
         )
       );
 
+  Future<void> removeComment(int commentId) => _appClient.delete("");
+
   Future<void> like(int questionCommentId) async
     => await _appClient.put(
       "$commentController/$likeQuestionCommentEndpoint",

@@ -68,7 +68,12 @@ class AddSolutionCommentAction extends redux.Action{
   final int commentId;
   const AddSolutionCommentAction({required this.solutionId, required this.commentId});
 }
-
+@immutable
+class RemoveSolutionCommentAction extends redux.Action{
+  final int solutionId;
+  final int commentId;
+  const RemoveSolutionCommentAction({required this.solutionId, required this.commentId});
+}
 @immutable
 class GetNextPageSolutionCommentsAction extends redux.Action{
   final int solutionId;

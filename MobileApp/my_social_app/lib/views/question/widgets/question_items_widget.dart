@@ -70,7 +70,7 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
           ),
           Builder(
             builder: (context){
-              if(widget.pagination.loading){
+              if(widget.pagination.loadingNext){
                 return const LoadingCircleWidget(strokeWidth: 3);
               }
               return const SpaceSavingWidget();

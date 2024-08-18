@@ -34,7 +34,7 @@ class CommentReplyItemsWidget extends StatelessWidget {
         ),
         Builder(
           builder: (context){
-            if(parent.replies.loading) return const LoadingCircleWidget(strokeWidth: 2);
+            if(parent.replies.loadingNext) return const LoadingCircleWidget(strokeWidth: 2);
             return const SpaceSavingWidget();
           }
         )

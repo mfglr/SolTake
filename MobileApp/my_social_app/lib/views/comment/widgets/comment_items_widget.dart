@@ -13,6 +13,7 @@ class CommentItemsWidget extends StatefulWidget {
   final Widget noItems;
   final void Function() onScrollBottom;
   final Pagination pagination;
+  final int? focusId;
 
   const CommentItemsWidget({
     super.key,
@@ -23,6 +24,7 @@ class CommentItemsWidget extends StatefulWidget {
     required this.pagination,
     required this.noItems,
     required this.onScrollBottom,
+    this.focusId,
   });
 
   @override
@@ -30,6 +32,10 @@ class CommentItemsWidget extends StatefulWidget {
 }
 
 class _CommentItemsWidgetState extends State<CommentItemsWidget> {
+  
+  Color? _color = Colors.black.withOpacity(0.2);
+  late final Future _future;
+
   void _onScrollBottom(){
     if(widget.scrollController.hasClients && widget.scrollController.position.pixels == widget.scrollController.position.maxScrollExtent){
       widget.onScrollBottom();
@@ -39,42 +45,56 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
   @override
   void initState() {
     widget.scrollController.addListener(_onScrollBottom);
+    _future = Future.delayed(
+      const Duration(seconds: 2),
+      (){
+        setState((){
+          _color = ThemeData().cardTheme.color;
+        });
+      }
+    );
     super.initState();
   }
 
   @override
   void dispose() {
     widget.scrollController.removeListener(_onScrollBottom);
+    _future.ignore();
     super.dispose();
   }
   
   @override
   Widget build(BuildContext context) {
-    if(widget.pagination.isLast && widget.pagination.ids.isEmpty) return widget.noItems;
     return SingleChildScrollView(
       controller: widget.scrollController,
-      child: Column(
-        children: [
-          ...List.generate(
-            widget.comments.length,
-            (index) => Container(
-              margin: const EdgeInsets.only(bottom: 15),
-              child: CommentItemWidget(
-                contentController: widget.contentController,
-                focusNode: widget.focusNode,
-                comment: widget.comments.elementAt(index)
+      child: Builder(
+        builder: (context) {
+          if(widget.pagination.isLast && widget.pagination.data.isEmpty) return widget.noItems;
+          return Column(
+            children: [
+              ...List.generate(
+                widget.comments.length,
+                (index) => Container(
+                  margin: const EdgeInsets.only(bottom: 15),
+                  child: CommentItemWidget(
+                    color: widget.comments.elementAt(index).id == widget.focusId ? _color : null,
+                    contentController: widget.contentController,
+                    focusNode: widget.focusNode,
+                    comment: widget.comments.elementAt(index)
+                  )
+                )
+              ),
+              Builder(
+                builder: (context){
+                  if(widget.pagination.loadingNext){
+                    return const LoadingCircleWidget(strokeWidth: 3);
+                  }
+                  return const SpaceSavingWidget();
+                }
               )
-            )
-          ),
-          Builder(
-            builder: (context){
-              if(widget.pagination.loading){
-                return const LoadingCircleWidget(strokeWidth: 3);
-              }
-              return const SpaceSavingWidget();
-            }
-          )
-        ]
+            ]
+          );
+        }
       ),
     );
   }

@@ -22,7 +22,9 @@ SolutionEntityState getNextPageCommentsReducer(SolutionEntityState prev,GetNextP
 SolutionEntityState addNextPageCommentsReducer(SolutionEntityState prev,AddNextPageSolutionCommentsAction action)
   => prev.addNextPageComments(action.solutionId,action.commentsIds);
 SolutionEntityState addCommentReducer(SolutionEntityState prev,AddSolutionCommentAction action)
-  => prev.addSolutionComment(action.solutionId,action.commentId);
+  => prev.addComment(action.solutionId,action.commentId);
+SolutionEntityState removeCommentReducer(SolutionEntityState prev,RemoveSolutionCommentAction action)
+  => prev.removeComment(action.solutionId,action.commentId);
 
 SolutionEntityState startLoadingImageReducer(SolutionEntityState prev,LoadSolutionImageAction action)
   => prev.startLoadingImage(action.solutionId, action.index);
@@ -40,6 +42,7 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
   TypedReducer<SolutionEntityState,GetNextPageSolutionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<SolutionEntityState,AddNextPageSolutionCommentsAction>(addNextPageCommentsReducer).call,
   TypedReducer<SolutionEntityState,AddSolutionCommentAction>(addCommentReducer).call,
+  TypedReducer<SolutionEntityState,RemoveSolutionCommentAction>(removeCommentReducer).call,
 
   TypedReducer<SolutionEntityState,LoadSolutionImageAction>(startLoadingImageReducer).call,
   TypedReducer<SolutionEntityState,LoadSolutionImageSuccessAction>(loadImageReducer).call,

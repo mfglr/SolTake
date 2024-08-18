@@ -201,7 +201,7 @@ final store = Store(
     getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
     getNextPageQuestionCommentIfReadyMiddleware,
     loadCommentMiddleware,
-    getQuestionCommentMiddleware,
+    getOutlierQuestionCommentMiddleware,
 
     //notifications start
     markNotificationsAsViewedMiddleware,

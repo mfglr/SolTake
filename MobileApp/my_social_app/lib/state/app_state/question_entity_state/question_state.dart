@@ -126,7 +126,7 @@ class QuestionState{
         isOwner: isOwner,
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
-        solutions: solutions.startLoading(),
+        solutions: solutions.startLoadingNext(),
         comments: comments,
       );
   QuestionState addNextPageSolutions(Iterable<int> solutionIds)
@@ -150,7 +150,7 @@ class QuestionState{
         comments: comments,
       );
   
-  QuestionState addComment(int questionCommentId)
+  QuestionState addComment(int commentId)
     => QuestionState(
       id: id,
       createdAt: createdAt,
@@ -168,8 +168,28 @@ class QuestionState{
       numberOfSolutions: numberOfSolutions,
       numberOfComments: numberOfComments + 1,
       solutions: solutions,
-      comments: comments.prependOne(questionCommentId),
+      comments: comments.prependOne(commentId),
     );
+  QuestionState removeComment(int commentId)
+    => QuestionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        examId: examId,
+        subjectId: subjectId,
+        topics: topics,
+        images: images,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        isOwner: isOwner,
+        numberOfSolutions: numberOfSolutions,
+        numberOfComments: numberOfComments,
+        solutions: solutions,
+        comments: comments.removeOne(commentId)
+      );
   QuestionState getNextPageComments()
     => QuestionState(
         id: id,
@@ -188,7 +208,7 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments.startLoading(),
+        comments: comments.startLoadingNext(),
       );
   QuestionState addNextPageComments(Iterable<int> commentIds)
     => QuestionState(
@@ -208,8 +228,48 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments.addNextPage0(commentIds),
+        comments: comments.addNextPage(commentIds),
       );
+  QuestionState prependOutlierComment(int commentId)
+    => QuestionState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        appUserId: appUserId,
+        userName: userName,
+        content: content,
+        examId: examId,
+        subjectId: subjectId,
+        topics: topics,
+        images: images,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        isOwner: isOwner,
+        numberOfSolutions: numberOfSolutions,
+        numberOfComments: numberOfComments,
+        solutions: solutions,
+        comments: comments.prependToOutliers(commentId)
+      );
+    QuestionState moveOutlierToIds(int commentId)
+      => QuestionState(
+          id: id,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          appUserId: appUserId,
+          userName: userName,
+          content: content,
+          examId: examId,
+          subjectId: subjectId,
+          topics: topics,
+          images: images,
+          isLiked: isLiked,
+          numberOfLikes: numberOfLikes,
+          isOwner: isOwner,
+          numberOfSolutions: numberOfSolutions,
+          numberOfComments: numberOfComments,
+          solutions: solutions,
+          comments: comments
+        );
 
   QuestionState startLoadingImage(int index){
     if(images.elementAt(index).state != ImageStatus.notStarted) return this;

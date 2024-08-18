@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/comment/widgets/comment_like_button_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/comment/widgets/comment_content_widget.dart';
@@ -13,21 +14,30 @@ import 'package:my_social_app/views/comment/widgets/reply_comment_button_widget.
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+
+enum CommentAction{
+  delete
+}
+
+
 class CommentItemWidget extends StatelessWidget {
   final TextEditingController contentController;
   final FocusNode focusNode;
   final CommentState comment;
+  final Color? color;
 
   const CommentItemWidget({
     super.key,
     required this.contentController,
     required this.focusNode,
-    required this.comment
+    required this.comment,
+    this.color
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -58,15 +68,47 @@ class CommentItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 15),
-                child: Text(
-                  timeago.format(
-                    comment.createdAt,
-                    locale: 'en_short'
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 15),
+                    child: Text(
+                      timeago.format(
+                        comment.createdAt,
+                        locale: 'en_short'
+                      ),
+                      style: const TextStyle(fontSize: 12),
+                    ),
                   ),
-                  style: const TextStyle(fontSize: 12),
-                ),
+                  PopupMenuButton<CommentAction>(
+                    onSelected: (value) async {
+                      switch(value){
+                        case CommentAction.delete:
+                          bool response = await DialogCreator.showDeleteCommentDialog(context);
+                          if(response && context.mounted){
+                            final store = StoreProvider.of<AppState>(context,listen: false);
+                            store.dispatch(const LogOutAction());
+                          }
+                        default:
+                          return;
+                      }
+                    },
+                    itemBuilder: (context) {
+                      return [
+                        const PopupMenuItem<CommentAction>(
+                          value: CommentAction.delete,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Delete"),
+                              Icon(Icons.delete)
+                            ],
+                          )
+                        )
+                      ];
+                    }
+                  ),
+                ],
               ),
             ]
           ),

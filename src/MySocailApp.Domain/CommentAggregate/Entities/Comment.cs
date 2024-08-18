@@ -3,7 +3,6 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
@@ -98,6 +97,5 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public Solution? Solution { get; }
         public Comment? Parent { get; }
         public IReadOnlyCollection<Comment> Children { get; } = null!;
-        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

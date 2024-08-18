@@ -97,9 +97,22 @@ class AddQuestionCommentAction extends redux.Action{
   const AddQuestionCommentAction({required this.commenId, required this.questionId});
 }
 @immutable
-class GetQuestionCommentAction extends redux.Action{
+class RemoveQuestionCommentAction extends redux.Action{
   final int commentId;
-  const GetQuestionCommentAction({required this.commentId});
+  final int questionid;
+  const RemoveQuestionCommentAction({required this.commentId, required this.questionid});
+}
+@immutable
+class GetOutlierQuestionCommentAction extends redux.Action{
+  final int questionId;
+  final int commentId;
+  const GetOutlierQuestionCommentAction({required this.questionId, required this.commentId});
+}
+@immutable
+class GetOutlierQuestionCommentSuccessAction extends redux.Action{
+  final int questionId;
+  final int commentId;
+  const  GetOutlierQuestionCommentSuccessAction({required this.questionId, required this.commentId});
 }
 
 @immutable

@@ -27,6 +27,31 @@ class DialogCreator{
     ).then((value) => value ?? false);
   }
 
+  static Future<bool> showDeleteCommentDialog(BuildContext context){
+    return showDialog<bool>(context: 
+      context, 
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Your Comment'),
+          content: const Text("Are you sure you want to delete your comment?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text("Cancel")
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop(true);
+              }, 
+              child: const Text("Delete")
+            )
+          ],
+        );
+      }
+    ).then((value) => value ?? false);
+  }
 
   static Future<bool> showRemoveFollowerDialog(BuildContext context){
     return showDialog<bool>(context: 
@@ -56,6 +81,4 @@ class DialogCreator{
       }
     ).then((value) => value ?? false);
   }
-
-
 }

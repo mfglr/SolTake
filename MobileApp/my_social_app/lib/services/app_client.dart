@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -88,6 +89,11 @@ class AppClient{
   Future<void> put(String url, { Map<String,Object?>? body }) async {
     final Request request = Request("PUT", generateUri(url));
     request.body = jsonEncode(body);
+    await _sendJsonContent(request);
+  }
+
+  Future<void> delete(String url) async {
+    final Request request = Request("DELETE", generateUri(url));
     await _sendJsonContent(request);
   }
 

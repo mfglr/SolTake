@@ -26,10 +26,14 @@ class QuestionEntityState extends EntityState<QuestionState>{
 
   QuestionEntityState addComment(int questionId,int questionCommentId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addComment(questionCommentId)));
+  QuestionEntityState removeComment(int questionId,int commentId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.removeComment(commentId)));
   QuestionEntityState getNextPageComments(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.getNextPageComments()));
   QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageComments(commentIds)));
+  QuestionEntityState prependOutlierComment(int questionId,int commentId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.prependOutlierComment(commentId)));
 
   QuestionEntityState startLoadingImage(int questionId,int index)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingImage(index)));

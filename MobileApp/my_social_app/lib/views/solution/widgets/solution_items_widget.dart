@@ -70,7 +70,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
             }
           ),
           Builder(builder: (context){
-            if(widget.pagination.loading) return const LoadingCircleWidget(strokeWidth: 3,);
+            if(widget.pagination.loadingNext) return const LoadingCircleWidget(strokeWidth: 3,);
             return const SpaceSavingWidget();
           })
         ]

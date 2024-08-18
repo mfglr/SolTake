@@ -38,7 +38,7 @@ class SearchState{
         subjectId: subjectId,
         topicId: topicId,
         questions: questions,
-        users: users.startLoading(),
+        users: users.startLoadingNext(),
         searchedUsers: searchedUsers
       );
   SearchState addFirstPageUsers(Iterable<int> userIds)
@@ -80,7 +80,7 @@ class SearchState{
         topicId: topicId,
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.startLoading()
+        searchedUsers: searchedUsers.startLoadingNext()
       );
   SearchState addNextPageSearchedUsers(Iterable<int> userIds)
     => SearchState(
@@ -132,7 +132,7 @@ class SearchState{
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
-        questions: questions.startLoading(),
+        questions: questions.startLoadingNext(),
         users: users,
         searchedUsers: searchedUsers
       );

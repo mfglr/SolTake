@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.CommentAggregate.Create;
+using MySocailApp.Application.Commands.CommentAggregate.DeleteComment;
 using MySocailApp.Application.Commands.QuestionCommentAggregate.DislikeQuestionComment;
 using MySocailApp.Application.Commands.QuestionCommentAggregate.LikeQuestionComment;
 using MySocailApp.Application.Queries.CommentAggregate;
@@ -34,7 +35,10 @@ namespace MySocailApp.Api.Controllers
         [HttpPut]
         public async Task DislikeComment(DislikeQuestionCommentDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-
+        [HttpDelete("{commentId}")]
+        public async Task DeleteComment(int commentId,CancellationToken cancellationToken)
+            => await _mediator.Send(new DeleteCommentDto(commentId),cancellationToken);
+                
 
         [HttpGet("{id}")]
         public async Task<CommentResponseDto> GetCommentById(int id,CancellationToken cancellationToken)

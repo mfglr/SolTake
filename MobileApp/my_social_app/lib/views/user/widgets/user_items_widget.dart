@@ -66,7 +66,7 @@ class _UserItemsWidgetState extends State<UserItemsWidget> {
           ),
           Builder(
             builder: (context){
-              if(widget.pagination.loading){
+              if(widget.pagination.loadingNext){
                 return const LoadingCircleWidget(strokeWidth: 3);
               }
               return const SpaceSavingWidget();

@@ -106,3 +106,9 @@ void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+void removeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveCommentAction){
+    
+  }
+  next(action);
+}
