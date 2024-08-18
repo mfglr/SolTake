@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/ids.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/ids.dart';
+import 'package:my_social_app/state/pagination.dart';
+import 'package:my_social_app/state/subject_entity_state/subject_state.dart';
 part 'subject.g.dart';
 
 @immutable

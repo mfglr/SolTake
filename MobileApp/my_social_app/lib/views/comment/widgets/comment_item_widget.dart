@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_like_button_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/comment/widgets/comment_content_widget.dart';
@@ -17,17 +17,20 @@ class CommentItemWidget extends StatelessWidget {
   final TextEditingController contentController;
   final FocusNode focusNode;
   final CommentState comment;
-  
+  final Color? color;
+
   const CommentItemWidget({
     super.key,
     required this.contentController,
     required this.focusNode,
-    required this.comment
+    required this.comment,
+    this.color
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

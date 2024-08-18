@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_image_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/solution_entity_state/solution_image_state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class SolutionImagesSlider extends StatefulWidget {

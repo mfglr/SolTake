@@ -6,8 +6,8 @@ import 'package:my_social_app/constants/account_endpoints.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/account.dart';
-import 'package:my_social_app/state/app_state/account_state/actions.dart';
-import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/account_state/actions.dart';
+import 'package:my_social_app/state/store.dart';
 
 class AppClient{
   static final _apiUrl = "${dotenv.env['API_URL']}/api";

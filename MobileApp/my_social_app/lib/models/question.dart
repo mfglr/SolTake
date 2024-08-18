@@ -5,8 +5,8 @@ import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/question_image.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/multi_pagination.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
 @immutable
@@ -65,7 +65,7 @@ class Question{
     isOwner: isOwner,
     numberOfSolutions: numberOfSolutions,
     numberOfComments: numberOfComments,
-    solutions: Pagination.init(solutionsPerPage),
-    comments: Pagination.init(commentsPerPage),
+    solutionPaginations: MultiPagination(solutionsPerPage),
+    commentPaginations: MultiPagination(commentsPerPage),
   );
 }

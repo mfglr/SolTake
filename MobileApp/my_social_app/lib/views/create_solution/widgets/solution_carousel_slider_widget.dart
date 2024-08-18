@@ -3,8 +3,8 @@ import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
-import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/create_solution_state/actions.dart';
+import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class SolutionCarouselSliderWidget extends StatefulWidget {

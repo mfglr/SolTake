@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
-import 'package:my_social_app/state/app_state/create_solution_state/create_solution_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/create_solution_state/actions.dart';
+import 'package:my_social_app/state/create_solution_state/create_solution_state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/create_solution/widgets/no_solution_image_widget.dart';
 import 'package:my_social_app/views/create_solution/widgets/solution_carousel_slider_widget.dart';

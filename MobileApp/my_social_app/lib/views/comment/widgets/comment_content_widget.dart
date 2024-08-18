@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/comment_font_size.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_tag_widget.dart';
 
 @immutable

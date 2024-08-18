@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/models/message_image.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/message_entity_state/message_state.dart';
 part 'message.g.dart';
 
 @immutable

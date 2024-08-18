@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_image_state.dart';
+import 'package:my_social_app/state/message_entity_state/message_image_state.dart';
 import 'package:my_social_app/views/message/widgets/message_image_grid_widget.dart';
 
 class MessageImagesGridWidget extends StatelessWidget {

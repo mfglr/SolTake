@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/pagination.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -10,7 +11,6 @@ class QuestionItemsWidget extends StatefulWidget {
   final Iterable<QuestionState> questions;
   final Function onScrollBottom;
   final int? firstDisplayedQuestionId;
-
   
   const QuestionItemsWidget({
     super.key,
@@ -38,12 +38,13 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
     };
     _scrollController.addListener(_onScrollBottom);
     
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(_key.currentContext != null){
-        Scrollable.ensureVisible(_key.currentContext!);
-      }
-    });
-
+    if(widget.firstDisplayedQuestionId != null){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if(_key.currentContext != null){
+          Scrollable.ensureVisible(_key.currentContext!);
+        }
+      });
+    }
     super.initState();
   }
  

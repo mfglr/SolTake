@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/notification_entity_state.dart/notification_state.dart';
 part 'notification.g.dart';
 
 @immutable

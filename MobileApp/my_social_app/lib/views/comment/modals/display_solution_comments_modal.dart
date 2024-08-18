@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/create_comment_state/create_comment_state.dart';
+import 'package:my_social_app/state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_field_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_items_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
@@ -85,6 +85,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
                               return const NoCommentsWidget();
                             }
                             return CommentItemsWidget(
+                              offset: -1,
                               contentController: _contentController,
                               focusNode: _focusNode,
                               comments: comments

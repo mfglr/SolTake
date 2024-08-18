@@ -3,9 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_social_app/constants/valid_user_name_characters.dart';
 import 'package:my_social_app/services/account_service.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 

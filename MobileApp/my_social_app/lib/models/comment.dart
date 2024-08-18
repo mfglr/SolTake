@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/pagination.dart';
 part 'comment.g.dart';
 
 @immutable

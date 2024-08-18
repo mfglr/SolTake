@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
-import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/create_message_state/actions.dart';
+import 'package:my_social_app/state/store.dart';
 
 enum MessageFieldType{
   forConversation,

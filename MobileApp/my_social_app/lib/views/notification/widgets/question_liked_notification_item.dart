@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
-import 'package:my_social_app/views/question/pages/display_question_page.dart';
+import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 
 class QuestionLikedNotificationItem extends StatelessWidget {
   final NotificationState notification;
@@ -11,15 +11,16 @@ class QuestionLikedNotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotificationItem(
       notification: notification,
-      onPressed: () => 
+      onPressed: (){
         Navigator
           .of(context)
-          .push( MaterialPageRoute(
-                    builder: (context) => DisplayQuestionPage(
-                      questionId: notification.questionId!,
-                      isOpenCommentModal: false,
-                    )
-                  )),
+          .push(MaterialPageRoute(
+            builder: (context) => DisplayUserQuestionsPage(
+              questionOffset: notification.questionId!,
+              userId: notification.ownerId,
+            )
+          ));
+      },
       icon: const Icon(
         Icons.favorite,
         color: Colors.red,  

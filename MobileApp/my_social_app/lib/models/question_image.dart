@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/app_state/image_status.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
+import 'package:my_social_app/state/image_status.dart';
+import 'package:my_social_app/state/question_entity_state/question_image_state.dart';
 part 'question_image.g.dart';
 
 @immutable

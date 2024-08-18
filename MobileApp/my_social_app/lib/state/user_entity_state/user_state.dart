@@ -1,0 +1,136 @@
+import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/multi_pagination.dart';
+import 'package:my_social_app/state/pagination.dart';
+import 'package:my_social_app/state/user_entity_state/gender.dart';
+
+@immutable
+class UserState{
+  final int id;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  final String userName;
+  final String? name;
+  final DateTime? birthDate;
+  final bool hasImage;
+  final Gender gender;
+  final int numberOfQuestions;
+  final int numberOfFollowers;
+  final int numberOfFolloweds;
+  final bool isFollower;
+  final bool isFollowed;
+  final Pagination followers;
+  final Pagination followeds;
+  final Pagination notFolloweds;
+  final MultiPagination questionPaginations;
+  final Pagination messages;
+
+  String formatName(int count){
+    final r = (name ?? userName);
+    return r.length <= count ? r : "${r.substring(0,count)}...";
+  }
+
+  String formatUserName({int count = 15}){
+    return userName.length <= count ? userName : "${userName.substring(0,count)}...";
+  }
+
+  const UserState({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.userName,
+    required this.hasImage,
+    required this.name,
+    required this.birthDate,
+    required this.gender,
+    required this.numberOfQuestions,
+    required this.numberOfFollowers,
+    required this.numberOfFolloweds,
+    required this.isFollower,
+    required this.isFollowed,
+    required this.followers,
+    required this.followeds,
+    required this.questionPaginations,
+    required this.messages,
+    required this.notFolloweds
+  });
+
+  UserState _optional({
+    DateTime? newUpdatedDate,
+    String? newUserName,
+    String? newName,
+    DateTime? newBirthDate,
+    bool? newHasImage,
+    Gender? newGender,
+    int? newNumberOfQuestions,
+    int? newNumberOfFollowers,
+    int? newNumberOfFolloweds,
+    bool? newIsFollower,
+    bool? newIsFollowed,
+    Pagination? newFollowers,
+    Pagination? newFolloweds,
+    MultiPagination? newQuestionPaginations,
+    Pagination? newMessages,
+    Pagination? newNotFolloweds
+  }) => UserState(
+    id: id,
+    createdAt: createdAt,
+    updatedAt: newUpdatedDate ?? updatedAt,
+    userName: newUserName ?? userName,
+    name: newName ?? name,
+    birthDate: newBirthDate ?? birthDate,
+    hasImage: newHasImage ?? hasImage,
+    gender: newGender ?? gender,
+    numberOfQuestions: newNumberOfQuestions ?? numberOfQuestions,
+    numberOfFollowers: newNumberOfFollowers ?? numberOfFollowers,
+    numberOfFolloweds: newNumberOfFolloweds ?? numberOfFolloweds,
+    isFollower: newIsFollower ?? isFollower,
+    isFollowed: newIsFollowed ?? isFollowed,
+    followers: newFollowers ?? followers,
+    followeds: newFolloweds ?? followeds,
+    questionPaginations: newQuestionPaginations ?? questionPaginations,
+    messages: newMessages ?? messages,
+    notFolloweds: newNotFolloweds ?? notFolloweds
+  );
+  
+  //followers
+  UserState getNextPageFollowers() => _optional(newFollowers: followers.startLoading());
+  UserState addNextPageFollowers(Iterable<int> newFollowers)=> _optional(newFollowers: followers.appendNextPage(newFollowers));
+  UserState addFollower(int followerId)
+    => _optional(newNumberOfFollowers:numberOfFollowers + 1,newIsFollowed:true,newFollowers:followers.prependOne(followerId));
+  UserState removeFollower(int followerId) 
+    => _optional(newNumberOfFollowers:numberOfFollowers - 1,newIsFollowed:false,newFollowers:followers.removeOne(followerId));
+  
+  //followeds
+  UserState getNextPageFolloweds() => _optional(newFolloweds: followeds.startLoading());
+  UserState addNextPageFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.appendNextPage(newFolloweds));
+  UserState addFollowed(int followedId)
+    => _optional(newNumberOfFolloweds: numberOfFolloweds + 1,newFolloweds: followeds.prependOne(followedId));
+  UserState removeFollowed(int followedId)
+    => _optional(newNumberOfFolloweds: numberOfFolloweds - 1,newIsFollower:false,newFolloweds: followeds.removeOne(followedId));
+
+  //not followeds
+  UserState getNextPageNotFolloweds() => _optional(newNotFolloweds: notFolloweds.startLoading());
+  UserState addNextPageNotFolloweds(Iterable<int> userIds) => _optional(newNotFolloweds: notFolloweds.appendNextPage(userIds));
+  UserState removeNotFollowed(int notFollowedId) => _optional(newNotFolloweds: notFolloweds.removeOne(notFollowedId));
+  UserState addNotFollowed(int notFollowedId) => _optional(newNotFolloweds: notFolloweds.prependOne(notFollowedId));
+
+  //questions
+  UserState startLoadingQuestions(int offset) => 
+    _optional(newQuestionPaginations: questionPaginations.startLoading(offset));
+  UserState addNextPageQuestions(int offset,Iterable<int> questionIds) => 
+    _optional(newQuestionPaginations: questionPaginations.addNextPage(offset,questionIds));
+  UserState addQuestion(int offset, int id) => 
+    _optional(newNumberOfQuestions: numberOfQuestions + 1,newQuestionPaginations: questionPaginations.prependOne(offset,id));
+  UserState addQuestionPagination(int offset)
+    => _optional(newQuestionPaginations: questionPaginations.addPagination(offset, questionsPerPage));
+
+  //messages
+  UserState nextPageMessages() => _optional(newMessages: messages.startLoading());
+  UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.addPrevPage(messageIds));
+  UserState addMessage(int messageId) => _optional(newMessages: messages.appendOne(messageId));
+
+  UserState changeProfileImageStatus(bool value) => _optional(newHasImage: value);
+  UserState updateUserName(String userName) => _optional(newUserName: userName);
+  UserState updateName(String name) => _optional(newName: name == "" ? null : name );
+}

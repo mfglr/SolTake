@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/message_entity_state/message_stataus.dart';
+import 'package:my_social_app/state/message_entity_state/message_state.dart';
 
 class MessageStatusWidget extends StatelessWidget {
   final MessageState message;

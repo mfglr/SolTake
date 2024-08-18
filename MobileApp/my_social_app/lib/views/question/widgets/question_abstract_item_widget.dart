@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
 
 class QuestionAbstractItemWidget extends StatefulWidget {

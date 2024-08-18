@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/pagination.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/message/widgets/message_item.dart';
 
 class MessageItems extends StatefulWidget {

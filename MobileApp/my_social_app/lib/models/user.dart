@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/gender.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/multi_pagination.dart';
+import 'package:my_social_app/state/pagination.dart';
+import 'package:my_social_app/state/user_entity_state/gender.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 part "user.g.dart";
 
 @immutable
@@ -58,7 +59,7 @@ class User{
         numberOfFolloweds: numberOfFolloweds,
         isFollower: isFollower,
         isFollowed: isFollowed,
-        questions: Pagination.init(questionsPerPage),
+        questionPaginations: MultiPagination(questionsPerPage),
         followers: Pagination.init(usersPerPage),
         followeds: Pagination.init(usersPerPage),
         notFolloweds: Pagination.init(usersPerPage),

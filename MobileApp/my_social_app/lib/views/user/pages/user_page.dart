@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/multi_pagination.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
@@ -50,16 +51,22 @@ class UserPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: StoreConnector<AppState,Iterable<QuestionState>>(
-                    onInit: (store) => store.dispatch(GetNextPageUserQuestionsIfNoPageAction(userId: user.id)),
-                    converter: (store) => store.state.selectUserQuestions(user.id),
+                    onInit: (store) => store.dispatch(
+                      GetNextPageUserQuestionsIfNoPageAction(
+                        offset: MultiPagination.defaultPaginationOffset, 
+                        userId: user.id
+                      )
+                    ),
+                    converter: (store) => store.state.selectUserQuestions(MultiPagination.defaultPaginationOffset,user.id),
                     builder: (context, questions) => QuestionAbstractItemsWidget(
                       questions: questions,
-                      pagination: user.questions,
+                      pagination: user.questionPaginations.defaultPagination,
                       onTap: (questionId){
                         Navigator
                           .of(context)
                           .push(
                             MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(
+                              questionOffset: MultiPagination.defaultPaginationOffset,
                               userId: user.id,
                               firstDisplayedQuestionId: questionId
                             ))
@@ -67,7 +74,12 @@ class UserPage extends StatelessWidget {
                       },
                       onScrollBottom: (){
                         final store = StoreProvider.of<AppState>(context,listen: false);
-                        store.dispatch(GetNextPageUserQuestionsIfReadyAction(userId: user.id));
+                        store.dispatch(
+                          GetNextPageUserQuestionsIfReadyAction(
+                            offset: MultiPagination.defaultPaginationOffset,
+                            userId: user.id
+                          )
+                        );
                       },
                     )
                   ),

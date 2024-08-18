@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/question_entity_state/question_image_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/store.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
 
 class QuestionImagesSlider extends StatefulWidget {

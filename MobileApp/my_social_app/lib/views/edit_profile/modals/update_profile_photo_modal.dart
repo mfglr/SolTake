@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/app_state/account_state/account_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
+import 'package:my_social_app/state/account_state/account_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class UpdateProfilePhotoModal extends StatelessWidget {
