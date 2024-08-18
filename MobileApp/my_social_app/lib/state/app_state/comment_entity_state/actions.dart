@@ -3,6 +3,12 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 
 @immutable
+class LoadCommentAction extends redux.Action{
+  final int commentId;
+  const LoadCommentAction({required this.commentId});
+}
+
+@immutable
 class GetNextPageCommentLikesIfNoPageAction extends redux.Action{
   final int commentId;
   const GetNextPageCommentLikesIfNoPageAction({required this.commentId});
@@ -17,12 +23,6 @@ class AddNextPageCommentLikesAction extends redux.Action{
   final int commentId;
   final Iterable<int> userIds;
   const AddNextPageCommentLikesAction({required this.commentId, required this.userIds});
-}
-
-@immutable
-class LoadCommentAction extends redux.Action{
-  final int commentId;
-  const LoadCommentAction({required this.commentId});
 }
 
 @immutable
@@ -65,7 +65,6 @@ class DislikeCommentSuccessAction extends redux.Action{
   final int userId;
   const DislikeCommentSuccessAction({required this.questionCommentId,required this.userId});
 }
-
 
 @immutable
 class GetNextPageCommentRepliesIfNoPageAction extends redux.Action{

@@ -3,6 +3,7 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
@@ -27,26 +28,33 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             AppUserId = appUserId;
             Content = content;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new CommentCreatedDomainEvent(this));
         }
+
         internal void CreateQuestionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int questionId)
         {
             Create(appUserId,content,idsOfUsersTagged);
             QuestionId = questionId;
+
+            AddDomainEvent(new QuestionCommentCreatedDomainEvent(this));
             foreach (var id in idsOfUsersTagged)
-                AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
+                if(id != appUserId)
+                    AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
         internal void CreateSolutionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int solutionId)
         {
             Create(appUserId, content, idsOfUsersTagged);
             SolutionId = solutionId;
+
+            AddDomainEvent(new SolutionCommentCreatedDomainEvent(this));
             foreach (var id in idsOfUsersTagged)
                 AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
-        internal void CreateReply(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int parentId)
+        internal void CreateReplyComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int parentId)
         {
             Create(appUserId, content, idsOfUsersTagged);
             ParentId = parentId;
+
+            AddDomainEvent(new ReplyCommentCreatedDomainEvent(this));
         }
 
         public void Update(Content content)
@@ -90,5 +98,6 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public Solution? Solution { get; }
         public Comment? Parent { get; }
         public IReadOnlyCollection<Comment> Children { get; } = null!;
+        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

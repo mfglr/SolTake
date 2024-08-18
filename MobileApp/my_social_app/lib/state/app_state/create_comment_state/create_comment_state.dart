@@ -37,7 +37,7 @@ class CreateCommentState{
         comment: null,
         isRoot: isRoot,
         content: content,
-        hintText: hintText,
+        hintText: "Comment on ${question.formatUserName(10)}' s question...",
       );
   
   CreateCommentState changeSolution(SolutionState solution)
@@ -47,7 +47,7 @@ class CreateCommentState{
         comment: null,
         isRoot: isRoot,
         content: content,
-        hintText: hintText,
+        hintText: "Comment on ${solution.userName}' s solution...",
       );
 
   CreateCommentState changeComment(CommentState comment,bool isRoot)

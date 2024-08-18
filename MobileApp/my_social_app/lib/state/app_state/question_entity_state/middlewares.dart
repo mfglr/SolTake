@@ -103,11 +103,22 @@ void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageQuestionCommentsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
     CommentService()
-      .getCommentsByQuestionId(action.questionId, pagination.lastValue, commentsPerPage,true)
+      .getCommentsByQuestionId(action.questionId, pagination.lastValue, commentsPerPage, true)
       .then((comments){
         store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
         store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddNextPageQuestionCommentsAction(questionId: action.questionId,commentIds: comments.map((e) => e.id)));
+      });
+  }
+  next(action);
+}
+void getQuestionCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetQuestionCommentAction){
+    CommentService()
+      .getById(action.commentId)
+      .then((comment){
+        store.dispatch(AddCommentAction(comment: comment.toCommentState()));
+        store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
       });
   }
   next(action);

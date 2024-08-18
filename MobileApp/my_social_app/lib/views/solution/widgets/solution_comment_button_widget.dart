@@ -23,7 +23,6 @@ class SolutionCommentButtonWidget extends StatelessWidget {
       onPressed: (){
         showCommentModal(context);
         store.dispatch(ChangeSolutionAction(solution: solution));
-        store.dispatch(ChangeHintTextAction(hintText: "Comment on ${solution.userName}' s solution..."));
       },
       child: Row(
         children: [

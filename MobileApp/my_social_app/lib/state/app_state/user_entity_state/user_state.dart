@@ -93,7 +93,7 @@ class UserState{
   
   //followers
   UserState getNextPageFollowers() => _optional(newFollowers: followers.startLoading());
-  UserState addNextPageFollowers(Iterable<int> newFollowers)=> _optional(newFollowers: followers.appendNextPage(newFollowers));
+  UserState addNextPageFollowers(Iterable<int> newFollowers)=> _optional(newFollowers: followers.addNextPage(newFollowers));
   UserState addFollower(int followerId)
     => _optional(newNumberOfFollowers:numberOfFollowers + 1,newIsFollowed:true,newFollowers:followers.prependOne(followerId));
   UserState removeFollower(int followerId) 
@@ -101,7 +101,7 @@ class UserState{
   
   //followeds
   UserState getNextPageFolloweds() => _optional(newFolloweds: followeds.startLoading());
-  UserState addNextPageFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.appendNextPage(newFolloweds));
+  UserState addNextPageFolloweds(Iterable<int> newFolloweds) => _optional(newFolloweds: followeds.addNextPage(newFolloweds));
   UserState addFollowed(int followedId)
     => _optional(newNumberOfFolloweds: numberOfFolloweds + 1,newFolloweds: followeds.prependOne(followedId));
   UserState removeFollowed(int followedId)
@@ -109,13 +109,13 @@ class UserState{
 
   //not followeds
   UserState getNextPageNotFolloweds() => _optional(newNotFolloweds: notFolloweds.startLoading());
-  UserState addNextPageNotFolloweds(Iterable<int> userIds) => _optional(newNotFolloweds: notFolloweds.appendNextPage(userIds));
+  UserState addNextPageNotFolloweds(Iterable<int> userIds) => _optional(newNotFolloweds: notFolloweds.addNextPage(userIds));
   UserState removeNotFollowed(int notFollowedId) => _optional(newNotFolloweds: notFolloweds.removeOne(notFollowedId));
   UserState addNotFollowed(int notFollowedId) => _optional(newNotFolloweds: notFolloweds.prependOne(notFollowedId));
 
   //questions
   UserState getNextPageQuestions() => _optional(newQuestions: questions.startLoading());
-  UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.appendNextPage(newQuestions));
+  UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.addNextPage(newQuestions));
   UserState addQuestion(int id) => _optional(newNumberOfQuestions: numberOfQuestions + 1,newQuestions: questions.prependOne(id));
   
   //messages

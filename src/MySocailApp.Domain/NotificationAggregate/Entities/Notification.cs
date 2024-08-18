@@ -15,28 +15,44 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
         public NotificationType Type { get; private set; }
 
         public int? ParentId { get; private set; }
-        public ParentType? ParentType { get; private set; }
         public int? CommentId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
         
         public void MarkAsViewed() => IsViewed = true;
         
-        private Notification(NotificationType type)
-        {
-            Type = type;
-            IsViewed = false;
-        }
+        private Notification(NotificationType type) => Type = type;
 
-        public static Notification CreateCommentCreatedNotification(int ownerId, int userId, int commentId, ParentType? parentType,int? parentId)
-            => new(NotificationType.CommentCreatedNotification)
+        public static Notification QuestionCommentCreatedNotification(int ownerId, int userId, int commentId, int questionId)
+            => new(NotificationType.QuestionCommentCreatedNotification)
+            {
+                OwnerId = ownerId,
+                UserId = userId,
+                CommentId = commentId,
+                QuestionId = questionId,
+                CreatedAt = DateTime.UtcNow,
+            };
+        
+        public static Notification SolutionCommentCreatedNotification(int ownerId, int userId, int commentId, int solutionId)
+            => new(NotificationType.SolutionCommentCreatedNotification)
+            {
+                OwnerId = ownerId,
+                UserId = userId,
+                CommentId = commentId,
+                SolutionId = solutionId,
+                CreatedAt = DateTime.UtcNow,
+            };
+
+        public static Notification ReplyCommentCreatedNotification(int ownerId, int userId, int commentId, int? questionId, int? solutionId, int parentId)
+            => new(NotificationType.ReplyCommentCreatedNotification)
             {
                 OwnerId = ownerId,
                 CommentId = commentId,
                 UserId = userId,
-                ParentType = parentType,
                 ParentId = parentId,
-                CreatedAt = DateTime.UtcNow,
+                QuestionId = questionId,
+                SolutionId = solutionId,
+                CreatedAt = DateTime.UtcNow
             };
 
         public static Notification QuestionLikedNotification(int ownerId, int questionId, int likerId)

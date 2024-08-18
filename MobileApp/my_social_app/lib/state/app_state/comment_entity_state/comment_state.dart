@@ -77,7 +77,7 @@ class CommentState{
         questionId: questionId,
         solutionId: solutionId,
         parentId: parentId,
-        likes: likes.appendNextPage(nextIds),
+        likes: likes.addNextPage(nextIds),
         replies: replies,
         repliesVisibility: repliesVisibility,
         numberOfDisplayReplies: numberOfDisplayReplies
@@ -178,7 +178,7 @@ class CommentState{
         numberOfLikes: numberOfLikes,
         likes: likes,
         isLiked: isLiked,
-        replies: replies.appendNextPage(replyIds),
+        replies: replies.addNextPage(replyIds),
         numberOfReplies: numberOfReplies,
         parentId: parentId,
         solutionId: solutionId,

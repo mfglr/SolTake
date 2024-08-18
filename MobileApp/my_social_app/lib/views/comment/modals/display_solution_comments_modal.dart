@@ -7,9 +7,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_field_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_items_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/comment/widgets/no_comments_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class DisplaySolutionCommentsModal extends StatefulWidget {
   final int solutionId;
@@ -23,29 +21,11 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
-  late final void Function() _nextPageComments;
-
-  @override
-  void initState() {
-    final store = StoreProvider.of<AppState>(context,listen: false);
-    _nextPageComments = (){
-      if(_scrollController.hasClients){
-        final position = _scrollController.position;
-        final pagination = store.state.solutionEntityState.entities[widget.solutionId]!.comments;
-        if(position.pixels == position.maxScrollExtent && !pagination.isLast && !pagination.loading){
-          store.dispatch(GetNextPageSolutionCommentsAction(solutionId: widget.solutionId));
-        }
-      }
-    };
-    _scrollController.addListener(_nextPageComments);
-    super.initState();
-  }
 
   @override
   void dispose() {
     _contentController.dispose();
     _focusNode.dispose();
-    _scrollController.removeListener(_nextPageComments);
     _scrollController.dispose();
     super.dispose();
   }
@@ -77,30 +57,18 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
                   converter: (store) => store.state.getSolutionComments(widget.solutionId),
                   builder: (context,comments) => StoreConnector<AppState,SolutionState>(
                     converter: (store) => store.state.solutionEntityState.entities[widget.solutionId]!,
-                    builder: (context,solution) => Column(
-                      children: [
-                        Builder(
-                          builder: (context) {
-                            if(solution.comments.isLast && solution.comments.ids.isEmpty){
-                              return const NoCommentsWidget();
-                            }
-                            return CommentItemsWidget(
-                              contentController: _contentController,
-                              focusNode: _focusNode,
-                              comments: comments
-                            );
-                          }
-                        ),
-                        Builder(
-                          builder: (context){
-                            if(solution.comments.loading){
-                              return const LoadingCircleWidget(strokeWidth: 2);
-                            }
-                            return const SpaceSavingWidget();
-                          }
-                        )
-                      ],
-                    ),
+                    builder: (context,solution) => CommentItemsWidget(
+                      scrollController: _scrollController,
+                      contentController: _contentController,
+                      focusNode: _focusNode,
+                      noItems: const NoCommentsWidget(),
+                      pagination: solution.comments,
+                      comments: comments,
+                      onScrollBottom: (){
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        store.dispatch(GetNextPageSolutionCommentsAction(solutionId: widget.solutionId));
+                      },
+                  )
                   ),
                 ),
               ),

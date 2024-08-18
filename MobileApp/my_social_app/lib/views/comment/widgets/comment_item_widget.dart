@@ -17,7 +17,7 @@ class CommentItemWidget extends StatelessWidget {
   final TextEditingController contentController;
   final FocusNode focusNode;
   final CommentState comment;
-  
+
   const CommentItemWidget({
     super.key,
     required this.contentController,
@@ -35,7 +35,15 @@ class CommentItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:[
               TextButton(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: comment.appUserId,userName: null,))),
+                onPressed: () => 
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => UserPage(
+                        userId: comment.appUserId,
+                        userName: null,
+                      )
+                    )
+                  ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

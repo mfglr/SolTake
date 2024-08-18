@@ -66,6 +66,6 @@ class Question{
     numberOfSolutions: numberOfSolutions,
     numberOfComments: numberOfComments,
     solutions: Pagination.init(solutionsPerPage),
-    comments: Pagination.init(commentsPerPage),
+    comments: Pagination.init(commentsPerPage)
   );
 }

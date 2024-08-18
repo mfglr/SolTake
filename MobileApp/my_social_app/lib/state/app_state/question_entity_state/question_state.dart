@@ -42,7 +42,7 @@ class QuestionState{
     required this.numberOfSolutions,
     required this.numberOfComments,
     required this.solutions,
-    required this.comments
+    required this.comments,
   });
 
   String formatUserName(int count)
@@ -66,7 +66,7 @@ class QuestionState{
       numberOfSolutions: numberOfSolutions,
       numberOfComments: numberOfComments,
       solutions: solutions,
-      comments: comments
+      comments: comments,
     );
   QuestionState dislike()
     => QuestionState(
@@ -86,7 +86,7 @@ class QuestionState{
       numberOfSolutions: numberOfSolutions,
       numberOfComments: numberOfComments,
       solutions: solutions,
-      comments: comments
+      comments: comments,
     );
 
   QuestionState addSolution(int solutionId)
@@ -107,7 +107,7 @@ class QuestionState{
       numberOfSolutions: numberOfSolutions + 1,
       numberOfComments: numberOfComments,
       solutions: solutions.prependOne(solutionId),
-      comments: comments
+      comments: comments,
     );
   QuestionState getNextPageSolutions()
     => QuestionState(
@@ -127,7 +127,7 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions.startLoading(),
-        comments: comments
+        comments: comments,
       );
   QuestionState addNextPageSolutions(Iterable<int> solutionIds)
     => QuestionState(
@@ -146,8 +146,8 @@ class QuestionState{
         isOwner: isOwner,
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
-        solutions: solutions.appendNextPage(solutionIds),
-        comments: comments
+        solutions: solutions.addNextPage(solutionIds),
+        comments: comments,
       );
   
   QuestionState addComment(int questionCommentId)
@@ -168,7 +168,7 @@ class QuestionState{
       numberOfSolutions: numberOfSolutions,
       numberOfComments: numberOfComments + 1,
       solutions: solutions,
-      comments: comments.prependOne(questionCommentId)
+      comments: comments.prependOne(questionCommentId),
     );
   QuestionState getNextPageComments()
     => QuestionState(
@@ -188,7 +188,7 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments.startLoading()
+        comments: comments.startLoading(),
       );
   QuestionState addNextPageComments(Iterable<int> commentIds)
     => QuestionState(
@@ -208,7 +208,7 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments.appendNextPage(commentIds)
+        comments: comments.addNextPage0(commentIds),
       );
 
   QuestionState startLoadingImage(int index){
@@ -230,11 +230,10 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments
+        comments: comments,
       );
   }
-
-   QuestionState loadImage(int index,Uint8List image)
+  QuestionState loadImage(int index,Uint8List image)
     => QuestionState(
         id: id,
         createdAt: createdAt,
@@ -252,6 +251,6 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments,
         solutions: solutions,
-        comments: comments
+        comments: comments,
       );
 }

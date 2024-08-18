@@ -11,6 +11,11 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
             builder.OwnsOne(x => x.Content);
 
             builder
+                .HasMany(x => x.Notifications)
+                .WithOne(x => x.Comment)
+                .HasForeignKey(x => x.CommentId);
+
+            builder
                 .HasMany(x => x.Likes)
                 .WithOne(x => x.Comment)
                 .HasForeignKey(x => x.CommentId);

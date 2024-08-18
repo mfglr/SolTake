@@ -3,5 +3,5 @@ using MySocailApp.Domain.CommentAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.DomainEvents
 {
-    public record CommentCreatedDomainEvent(Comment Comment) : IDomainEvent;
+    public record ReplyCommentCreatedDomainEvent(Comment Comment) : IDomainEvent;
 }

@@ -96,6 +96,11 @@ class AddQuestionCommentAction extends redux.Action{
   final int questionId;
   const AddQuestionCommentAction({required this.commenId, required this.questionId});
 }
+@immutable
+class GetQuestionCommentAction extends redux.Action{
+  final int commentId;
+  const GetQuestionCommentAction({required this.commentId});
+}
 
 @immutable
 class LoadQuestionImageAction extends redux.Action{

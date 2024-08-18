@@ -11,11 +11,13 @@ import 'package:my_social_app/views/shared/loading_widget.dart';
 class DisplayQuestionPage extends StatefulWidget {
   final int questionId;
   final bool isOpenCommentModal;
+  final int? displayCommentId;
 
   const DisplayQuestionPage({
     super.key,
     required this.questionId,
-    required this.isOpenCommentModal
+    required this.isOpenCommentModal,
+    this.displayCommentId
   });
 
   @override
@@ -23,7 +25,6 @@ class DisplayQuestionPage extends StatefulWidget {
 }
 
 class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
-  
   @override
   void initState() {
     if(widget.isOpenCommentModal){
@@ -32,7 +33,10 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
           .of(context)
           .push(
             ModalBottomSheetRoute(
-              builder: (context) => DisplayQuestionCommentsModal(questionId: widget.questionId), 
+              builder: (context) => DisplayQuestionCommentsModal(
+                questionId: widget.questionId,
+                displayedCommentId: widget.displayCommentId,
+              ), 
               isScrollControlled: true
             )
           );
@@ -40,25 +44,23 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
     }
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
       converter: (store) => store.state.questionEntityState.entities[widget.questionId],
-      builder: (context,question) => Scaffold(
-        appBar: AppBar(
-          leading: const AppBackButtonWidget(),
-        ),
-        body: Builder(
-          builder: (context) {
-            if(question == null) return const LoadingWidget();
-            return SingleChildScrollView(
-              child: QuestionItemWidget(question: question)
-            );
-          }
-        ),
-      ),
+      builder: (context,question){
+        if(question == null) return const LoadingWidget();
+        return Scaffold(
+          appBar: AppBar(
+            leading: const AppBackButtonWidget(),
+          ),
+          body: SingleChildScrollView(
+            child: QuestionItemWidget(question: question)
+          ),
+        );
+      }
     );
   }
 }

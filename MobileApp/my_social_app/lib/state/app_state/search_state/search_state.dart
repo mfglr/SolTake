@@ -64,7 +64,7 @@ class SearchState{
         subjectId: subjectId,
         topicId: topicId,
         questions: questions,
-        users: users.appendNextPage(userIds),
+        users: users.addNextPage(userIds),
         searchedUsers: searchedUsers
       );
 
@@ -93,7 +93,7 @@ class SearchState{
         topicId: topicId, 
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.appendNextPage(userIds)
+        searchedUsers: searchedUsers.addNextPage(userIds)
       );
   SearchState addSearchedUser(int userId)
     => SearchState(
@@ -158,7 +158,7 @@ class SearchState{
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
-        questions: questions.appendNextPage(questionIds),
+        questions: questions.addNextPage(questionIds),
         users: users,
         searchedUsers: searchedUsers
       );

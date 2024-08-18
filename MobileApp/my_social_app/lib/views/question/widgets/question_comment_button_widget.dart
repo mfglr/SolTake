@@ -26,7 +26,6 @@ class QuestionCommentButtonWidget extends StatelessWidget {
       onPressed: (){
         showCommentModal(context);
         store.dispatch(ChangeQuestionAction(question: question));
-        store.dispatch(ChangeHintTextAction(hintText: "Comment on ${question.formatUserName(10)}' s question..."));
       },
       child: Row(
         children: [

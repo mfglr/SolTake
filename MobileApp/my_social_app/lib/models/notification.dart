@@ -11,9 +11,9 @@ class Notification{
   final DateTime createdAt;
   final bool isViewed;
   final int type;
-  final int? parentType;
   final int? parentId;
   final int? commentId;
+  final String? content;
   final int? questionId;
   final int userId;
   final String userName;
@@ -25,9 +25,9 @@ class Notification{
     required this.createdAt,
     required this.isViewed,
     required this.type,
-    required this.parentType,
     required this.parentId,
     required this.commentId,
+    required this.content,
     required this.questionId,
     required this.userId,
     required this.userName,
@@ -44,9 +44,9 @@ class Notification{
         createdAt: createdAt,
         isViewed: isViewed,
         type: type,
-        parentType: parentType,
         parentId: parentId,
         commentId: commentId,
+        content: content,
         questionId: questionId,
         userId: userId,
         userName: userName,

@@ -35,10 +35,10 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
                     throw new CommentIsNotRootException();
 
                 foreach (var id in comment.Tags.Select(x => x.AppUserId))
-                    if (id != parent.AppUserId && id )
+                    if (id != parent.AppUserId && id != comment.AppUserId)
                         comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, id));
 
-                comment.CreateReply(userId, content, idsOfUsersTagged, (int)parentId);
+                comment.CreateReplyComment(userId, content, idsOfUsersTagged, (int)parentId);
             }
             else if (questionId != null)
             {

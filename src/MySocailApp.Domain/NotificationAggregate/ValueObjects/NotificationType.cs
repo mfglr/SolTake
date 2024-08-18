@@ -2,7 +2,9 @@
 {
     public enum NotificationType
     {
-        CommentCreatedNotification,
+        QuestionCommentCreatedNotification,
+        SolutionCommentCreatedNotification,
+        ReplyCommentCreatedNotification,
         QuestionLikedNotification,
         CommentLikedNotification,
         SolutionCreatedNotification,

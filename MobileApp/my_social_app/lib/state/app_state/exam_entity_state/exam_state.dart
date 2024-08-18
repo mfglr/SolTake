@@ -31,7 +31,7 @@ class ExamState{
         shortName: shortName,
         fullName: fullName,
         subjects: subjects,
-        questions: questions.appendNextPage(questionIds)
+        questions: questions.addNextPage(questionIds)
       );
 
   ExamState getNextPageSubjects(){
