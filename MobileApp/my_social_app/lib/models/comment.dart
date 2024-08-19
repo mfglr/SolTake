@@ -5,8 +5,9 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 import 'package:my_social_app/state/app_state/pagination.dart';
 part 'comment.g.dart';
 
-@immutable
+
 @JsonSerializable()
+@immutable
 class Comment{
   final int id;
   final DateTime createdAt;
@@ -21,6 +22,7 @@ class Comment{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
+  final bool isOwner;
 
   const Comment({
     required this.id,
@@ -35,7 +37,8 @@ class Comment{
     required this.numberOfReplies,
     required this.questionId,
     required this.solutionId,
-    required this.parentId
+    required this.parentId,
+    required this.isOwner
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
@@ -59,7 +62,7 @@ class Comment{
       parentId: parentId,
       solutionId: solutionId,
       repliesVisibility: false,
-      numberOfDisplayReplies: 0
+      isOwner: isOwner
     );
 
 }

@@ -20,6 +20,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       questionId: (json['questionId'] as num?)?.toInt(),
       solutionId: (json['solutionId'] as num?)?.toInt(),
       parentId: (json['parentId'] as num?)?.toInt(),
+      isOwner: json['isOwner'] as bool,
     );
 
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
@@ -36,4 +37,5 @@ Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'questionId': instance.questionId,
       'solutionId': instance.solutionId,
       'parentId': instance.parentId,
+      'isOwner': instance.isOwner,
     };

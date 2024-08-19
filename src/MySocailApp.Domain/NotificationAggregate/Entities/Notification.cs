@@ -1,6 +1,9 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
 {
@@ -42,8 +45,8 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification ReplyCommentCreatedNotification(int ownerId, int userId, int commentId, int? questionId, int? solutionId, int parentId)
-            => new(NotificationType.ReplyCommentCreatedNotification)
+        public static Notification CommentRepliedNotification(int ownerId, int userId, int commentId, int? questionId, int? solutionId, int parentId)
+            => new(NotificationType.CommentRepliedNotification)
             {
                 OwnerId = ownerId,
                 CommentId = commentId,
@@ -91,6 +94,10 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
+        public AppUser Owner { get; } = null!;
         public AppUser User { get; } = null!;
+        public Question? Question { get; }
+        public Comment? Comment { get; }
+        public Solution? Solution { get; }
     }
 }

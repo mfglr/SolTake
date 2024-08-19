@@ -17,7 +17,7 @@ class CommentState{
   final Pagination likes;
   final Pagination replies;
   final bool repliesVisibility;
-  final int numberOfDisplayReplies;
+  final bool isOwner;
 
   const CommentState({
     required this.id,
@@ -36,11 +36,12 @@ class CommentState{
     required this.likes,
     required this.replies,
     required this.repliesVisibility,
-    required this.numberOfDisplayReplies
+    required this.isOwner
   });
 
-  String get formatContent => content.length > 100 ? "${content.substring(0,100)}..." : content;
-  int get numberOfNotDisplayedReplies => numberOfReplies - numberOfDisplayReplies;
+  String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
+  int get numberOfDisplayedReplies => repliesVisibility ? replies.ids.length : 0;
+  int get numberOfNotDisplayedReplies => numberOfReplies - numberOfDisplayedReplies;
 
   CommentState getNextPageLikes()
     => CommentState(
@@ -60,7 +61,7 @@ class CommentState{
         likes: likes.startLoadingNext(),
         replies: replies,
         repliesVisibility: repliesVisibility,
-        numberOfDisplayReplies: numberOfDisplayReplies
+        isOwner: isOwner,
       );
   CommentState addNextPageLikes(Iterable<int> nextIds)
     => CommentState(
@@ -80,7 +81,7 @@ class CommentState{
         likes: likes.addNextPage(nextIds),
         replies: replies,
         repliesVisibility: repliesVisibility,
-        numberOfDisplayReplies: numberOfDisplayReplies
+        isOwner: isOwner,
       );
   CommentState like(int userId)
     => CommentState(
@@ -100,7 +101,7 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
-        numberOfDisplayReplies: numberOfDisplayReplies
+        isOwner: isOwner,
       );
   CommentState dislike(int userId)
     => CommentState(
@@ -120,7 +121,7 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
-        numberOfDisplayReplies: numberOfDisplayReplies
+        isOwner: isOwner,
       );
 
   CommentState addReply(int replyId)
@@ -141,7 +142,7 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: true,
-        numberOfDisplayReplies: numberOfDisplayReplies + 1
+        isOwner: isOwner,
       );
   CommentState removeReply(int replyId)
     => CommentState(
@@ -161,7 +162,7 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: true,
-        numberOfDisplayReplies: numberOfDisplayReplies - 1
+        isOwner: isOwner,
       );
   
   CommentState nextPageReplies()
@@ -182,7 +183,7 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
-        numberOfDisplayReplies: numberOfDisplayReplies
+        isOwner: isOwner,
       );
   CommentState addNextPageReplies(Iterable<int> replyIds)
     => CommentState(
@@ -202,7 +203,7 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
-        numberOfDisplayReplies: repliesVisibility ? numberOfDisplayReplies + replyIds.length : numberOfDisplayReplies
+        isOwner: isOwner,
       );
     
 
@@ -224,7 +225,7 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: visibility,
-        numberOfDisplayReplies: visibility ? replies.ids.length : 0
+        isOwner: isOwner,
       );
 
     

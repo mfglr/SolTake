@@ -16,13 +16,13 @@ namespace MySocailApp.Application.Commands.CommentAggregate.DeleteComment
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
             var comment =
-                await _commentWriteRepository.GetAsync(request.CommentId, cancellationToken) ??
+                await _commentWriteRepository.GetWithAllAsync(request.CommentId, cancellationToken) ??
                 throw new CommentNotFoundException();
 
             if (userId != comment.AppUserId)
                 throw new PermissionDeniedToDeleteCommentException();
 
-                _commentWriteRepository.Delete(comment);
+            _commentWriteRepository.Delete(comment);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

@@ -92,5 +92,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public AppUser AppUser { get; } = null!;
         public IReadOnlyList<Solution> Solutions { get; } = null!;
         public IReadOnlyCollection<Comment> Comments { get; } = null!;
+        public IReadOnlyCollection<Notification> Notifications { get; } 
     }
 }

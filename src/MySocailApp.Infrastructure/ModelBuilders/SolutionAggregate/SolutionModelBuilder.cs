@@ -11,14 +11,22 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
             builder.OwnsOne(x => x.Content);
 
             builder
+                .HasMany(x => x.Notifications)
+                .WithOne(x => x.Solution)
+                .HasForeignKey(x => x.SolutionId)
+                .OnDelete(DeleteBehavior.NoAction); ;
+
+            builder
                 .HasMany(x => x.Images)
                 .WithOne(x => x.Solution)
-                .HasForeignKey(x => x.SolutionId);
+                .HasForeignKey(x => x.SolutionId)
+                .OnDelete(DeleteBehavior.NoAction); ;
 
             builder
                 .HasMany(x => x.Comments)
                 .WithOne(x => x.Solution)
-                .HasForeignKey(x => x.SolutionId);
+                .HasForeignKey(x => x.SolutionId)
+                .OnDelete(DeleteBehavior.NoAction); ;
         }
     }
 }

@@ -3,6 +3,7 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
@@ -16,44 +17,37 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public int AppUserId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
-        public int? ParentId { get; private set; }
+       
         public bool IsEdited { get; private set; }
         public Content Content { get; private set; } = null!;
 
         private void Create(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged)
         {
-            _tags.AddRange(idsOfUsersTagged.Select(x => CommentUserTag.Create(Id, x)));
-            IsEdited = false;
             AppUserId = appUserId;
             Content = content;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
+            _tags.AddRange(idsOfUsersTagged.Select(x => CommentUserTag.Create(Id, x)));
+
+            foreach (var id in idsOfUsersTagged)
+                if (id != appUserId)
+                    AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
 
         internal void CreateQuestionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int questionId)
         {
             Create(appUserId,content,idsOfUsersTagged);
             QuestionId = questionId;
-
-            AddDomainEvent(new QuestionCommentCreatedDomainEvent(this));
-            foreach (var id in idsOfUsersTagged)
-                if(id != appUserId)
-                    AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
         internal void CreateSolutionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int solutionId)
         {
             Create(appUserId, content, idsOfUsersTagged);
             SolutionId = solutionId;
-
-            AddDomainEvent(new SolutionCommentCreatedDomainEvent(this));
-            foreach (var id in idsOfUsersTagged)
-                AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
-        internal void CreateReplyComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int parentId)
+        internal void CreateReplyComment(int appUserId,Content content,IEnumerable<int> idsOfUsersTagged,int parentId,int repliedId)
         {
             Create(appUserId, content, idsOfUsersTagged);
             ParentId = parentId;
-
-            AddDomainEvent(new ReplyCommentCreatedDomainEvent(this));
+            RepliedId = repliedId;
         }
 
         public void Update(Content content)
@@ -62,6 +56,30 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             Content = content;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public void Delete()
+        {
+            foreach (var child in _children)
+            {
+                child._likes.Clear();
+                child._tags.Clear();
+                child._replies.Clear();
+            }
+            _likes.Clear();
+            _tags.Clear();
+            _replies.Clear();
+            _children.Clear();
+        }
+
+        public int? RepliedId { get; private set; }
+        public Comment? Replied { get; }
+        private readonly List<Comment> _replies = [];
+        public IReadOnlyCollection<Comment> Replies => _replies;
+
+        public int? ParentId { get; private set; }
+        public Comment? Parent { get; }
+        private readonly List<Comment> _children = [];
+        public IReadOnlyCollection<Comment> Children => _children;
 
         private readonly List<CommentUserLike> _likes = [];
         public IReadOnlyCollection<CommentUserLike> Likes => _likes;
@@ -95,7 +113,6 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public AppUser AppUser { get; } = null!;
         public Question? Question { get; }
         public Solution? Solution { get; }
-        public Comment? Parent { get; }
-        public IReadOnlyCollection<Comment> Children { get; } = null!;
+        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

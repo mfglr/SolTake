@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
@@ -84,6 +85,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public Question Question { get; } = null!;
         public AppUser AppUser { get; } = null!;
         public IReadOnlyCollection<Comment> Comments { get; } = null!;
+        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
 
         //IDomainEventsContainer
         private readonly List<IDomainEvent> _events = [];

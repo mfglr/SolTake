@@ -24,7 +24,7 @@ namespace MySocailApp.Application.Commands.CommentAggregate.Create
             var userId = _accessTokenReader.GetRequiredAccountId();
             var content = new Content(request.Content);
             var comment = new Comment();
-            await _commentCreator.CreateAsync(comment, userId, content, request.QuestionId, request.SolutionId, request.ParentId, cancellationToken);
+            await _commentCreator.CreateAsync(comment, userId, content, request.QuestionId, request.SolutionId, request.RepliedId, cancellationToken);
             await _commentWriteRepository.CreateAsync(comment, cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);

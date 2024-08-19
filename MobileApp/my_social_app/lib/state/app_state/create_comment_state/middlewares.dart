@@ -11,38 +11,21 @@ void createCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
     final state = store.state.createCommentState;
     final questionId = state.comment != null ? null : state.question?.id;
     final solutionId = state.comment != null ? null : state.solution?.id;
-    final parentId = state.isRoot ? state.comment?.id : state.comment?.parentId;
+    final repliedId = state.comment?.id;
 
     CommentService()
-      .createComment(state.content,questionId,solutionId,parentId)
+      .createComment(state.content,questionId,solutionId,repliedId)
       .then((comment){
-        store.dispatch(
-          AddCommentAction(
-            comment: comment.toCommentState()
-          )
-        );
+        store.dispatch(AddCommentAction(comment: comment.toCommentState()));
 
         if(questionId != null){
-          store.dispatch(
-            AddQuestionCommentAction(
-              questionId: state.question!.id,
-              commenId: comment.id
-            )
-          );
+          store.dispatch(AddQuestionCommentAction(questionId: state.question!.id,commenId: comment.id));
         }
         else if(solutionId != null){
-           store.dispatch(
-            AddSolutionCommentAction(
-              solutionId: state.solution!.id,
-              commentId: comment.id
-            )
-          );
+          store.dispatch(AddSolutionCommentAction(solutionId: state.solution!.id,commentId: comment.id));
         }
-        else if(parentId != null){
-          store.dispatch(AddCommentReplyAction(
-            commentId: parentId,
-            replyId: comment.id
-          ));
+        else if(repliedId != null){
+          store.dispatch(AddCommentReplyAction(commentId: comment.parentId!,replyId: comment.id));
         }
         store.dispatch(const CreateCommentSuccessAction());
       });

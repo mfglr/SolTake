@@ -212,10 +212,10 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public UserConnection UserConnection { get; } = null!;
         public IReadOnlyCollection<Question> Questions { get; } = null!;
         public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } = null!;
-        public IReadOnlyCollection<Solution> Solutions { get; } = null!;
         public IReadOnlyCollection<Comment> Comments { get; } = null!;
         public IReadOnlyCollection<CommentUserLike> CommentsLiked { get; } = null!;
         public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; } = null!;
+        public IReadOnlyCollection<Solution> Solutions { get; } = null!;
         public IReadOnlyCollection<Notification> Noitifications { get; } = null!;
         public IReadOnlyCollection<Notification> NotificationsOutgoing { get; } = null!;
         public IReadOnlyCollection<Message> Messages { get; } = null!;

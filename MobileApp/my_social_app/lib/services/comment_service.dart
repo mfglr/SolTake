@@ -11,7 +11,7 @@ class CommentService{
   static final CommentService _singleton = CommentService._(AppClient());
   factory CommentService() => _singleton;
 
-  Future<Comment> createComment(String content,int? questionId,int? solutionId,int? parentId) async
+  Future<Comment> createComment(String content,int? questionId,int? solutionId,int? repliedId) async
     => Comment.fromJson(
         await _appClient.post(
           "$commentController/$createCommentEndpoint",
@@ -19,12 +19,13 @@ class CommentService{
             'content': content,
             'questionId': questionId,
             'solutionId': solutionId,
-            'parentId': parentId
+            'repliedId': repliedId
           }
         )
       );
 
-  Future<void> removeComment(int commentId) => _appClient.delete("");
+  Future<void> deleteComment(int commentId)
+    => _appClient.delete("$commentController/$deleteCommentEndpoint/$commentId");
 
   Future<void> like(int questionCommentId) async
     => await _appClient.put(

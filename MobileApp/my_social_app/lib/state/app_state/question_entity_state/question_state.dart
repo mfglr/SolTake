@@ -186,7 +186,7 @@ class QuestionState{
         numberOfLikes: numberOfLikes,
         isOwner: isOwner,
         numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments,
+        numberOfComments: numberOfComments - 1,
         solutions: solutions,
         comments: comments.removeOne(commentId)
       );

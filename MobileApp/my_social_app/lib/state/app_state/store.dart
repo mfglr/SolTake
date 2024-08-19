@@ -59,7 +59,7 @@ final store = Store(
     solutionEntityState: const SolutionEntityState(entities: {}),
     homePageState: HomePageState(questions: Pagination.init(questionsPerPage)),
     commentEntityState: const CommentEntityState(entities: {}),
-    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, isRoot: false, content: "", hintText: ""),
+    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
     notificationEntityState: const NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
     messageEntityState: const MessageEntityState(entities: {}),
     messageHomePageState: const MessageHomePageState(isLastConversations: false, isSynchronized: false),
@@ -201,6 +201,7 @@ final store = Store(
     getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
     getNextPageQuestionCommentIfReadyMiddleware,
     loadCommentMiddleware,
+    removeCommentMiddleware,
     getOutlierQuestionCommentMiddleware,
 
     //notifications start

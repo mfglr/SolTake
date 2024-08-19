@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+ import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
@@ -29,12 +31,30 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
+  late final StreamSubscription<QuestionState?> _questionConsumer;
+
+  @override
+  void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    _questionConsumer = 
+      store.onChange
+        .map((state) => state.questionEntityState.entities[widget.questionId])
+        .distinct()
+        .listen((question){
+          if(question != null){
+            store.dispatch(ChangeQuestionAction(question: question));
+          }
+        });
+
+    super.initState();
+  }
 
   @override
   void dispose() {
     _contentController.dispose();
     _focusNode.dispose();
     _scrollController.dispose();
+    _questionConsumer.cancel();
     super.dispose();
   }
 
@@ -100,8 +120,6 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
       converter: (store) => store.state.questionEntityState.entities[widget.questionId],
       builder: (context, question){
         if(question == null) return const LoadingWidget();
-        final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(ChangeQuestionAction(question: question));
         if(widget.displayedCommentId != null){
           return StoreConnector<AppState,CommentState?>(
             onInit: (store) => store.dispatch(

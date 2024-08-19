@@ -4,7 +4,7 @@
     {
         QuestionCommentCreatedNotification,
         SolutionCommentCreatedNotification,
-        ReplyCommentCreatedNotification,
+        CommentRepliedNotification,
         QuestionLikedNotification,
         CommentLikedNotification,
         SolutionCreatedNotification,

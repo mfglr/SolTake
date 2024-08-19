@@ -15,7 +15,8 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         }
 
         public static CommentUserTag Create(int commentId, int appUserId)
-            => new (commentId, appUserId) { CreatedAt = DateTime.UtcNow };
+             => new (commentId, appUserId) { CreatedAt = DateTime.UtcNow };
+        
 
         //readonly navigator properties
         public Comment Comment { get; } = null!;

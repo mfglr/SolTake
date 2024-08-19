@@ -2,22 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/utilities/dialog_creator.dart';
-import 'package:my_social_app/views/comment/widgets/comment_like_button_widget.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
-import 'package:my_social_app/views/comment/widgets/comment_content_widget.dart';
-import 'package:my_social_app/views/comment/widgets/comment_reply_items_widget.dart';
-import 'package:my_social_app/views/comment/widgets/display_remain_replies_button_widget.dart';
+import 'package:my_social_app/views/comment/widgets/comment_header_widget.dart';
 import 'package:my_social_app/views/comment/widgets/display_replies_button_widget.dart';
 import 'package:my_social_app/views/comment/widgets/hide_replies_button_widget.dart';
-import 'package:my_social_app/views/comment/widgets/reply_comment_button_widget.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
-
-enum CommentAction{
-  delete
-}
 
 
 class CommentItemWidget extends StatelessWidget {
@@ -37,155 +26,78 @@ class CommentItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: color,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[
-              TextButton(
-                onPressed: () => 
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => UserPage(
-                        userId: comment.appUserId,
-                        userName: null,
-                      )
-                    )
-                  ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 5),
-                      child: UserImageWidget(userId: comment.appUserId, diameter: 35)
-                    ),
-                    Text(
-                      comment.userName,
-                      style: const TextStyle(fontSize: 11),
-                    )
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 15),
-                    child: Text(
-                      timeago.format(
-                        comment.createdAt,
-                        locale: 'en_short'
-                      ),
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ),
-                  PopupMenuButton<CommentAction>(
-                    onSelected: (value) async {
-                      switch(value){
-                        case CommentAction.delete:
-                          bool response = await DialogCreator.showDeleteCommentDialog(context);
-                          if(response && context.mounted){
-                            final store = StoreProvider.of<AppState>(context,listen: false);
-                            store.dispatch(const LogOutAction());
-                          }
-                        default:
-                          return;
-                      }
-                    },
-                    itemBuilder: (context) {
-                      return [
-                        const PopupMenuItem<CommentAction>(
-                          value: CommentAction.delete,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Delete"),
-                              Icon(Icons.delete)
-                            ],
-                          )
-                        )
-                      ];
-                    }
-                  ),
-                ],
-              ),
-            ]
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15, top: 5,bottom: 5),
-            child: CommentContentWidget(comment: comment,),
-          ),
-          Row(
-            children:[
-              CommentLikeButtonWidget(
-                comment: comment,
-              ),
-              Builder(
-                builder: (context){
-                  if(comment.numberOfReplies > 0){
-                    if(!comment.repliesVisibility){
-                      return DisplayRepliesButtonWidget(comment: comment);
-                    }
-                    return HideRepliesButtonWidget(comment: comment);
-                  }
-                  return const SizedBox.shrink();
-                }
-              ),
-              ReplyCommentButtonWidget(
-                contentController: contentController,
-                focusNode: focusNode,
-                comment: comment,
-                isRoot: true,
-              )
-            ]
-          ),
-          Builder(
-            builder: (context){
-              if(comment.repliesVisibility){
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            CommentHeaderWidget(
+              comment: comment,
+              contentController: contentController,
+              focusNode: focusNode,
+              displayRepliesButton: DisplayRepliesButtonWidget(comment: comment),
+              diameter: 45,
+            ),
+
+            Builder(
+              builder: (context) {
+                if(!comment.repliesVisibility) return const SpaceSavingWidget();
                 return StoreConnector<AppState,Iterable<CommentState>>(
                   converter: (store) => store.state.selectCommentReplies(comment.id),
                   builder: (context,replies){
-                    return Container(
-                      margin: const EdgeInsets.only(left: 30),
-                      child: CommentReplyItemsWidget(
-                        parent: comment,
-                        contentController: contentController,
-                        focusNode: focusNode,
-                        replies: replies,
-                      )
+                    if(replies.isEmpty) return const SpaceSavingWidget();
+                    return Column(
+                      children: replies.map(
+                        (reply) => Padding(
+                          padding: const EdgeInsets.only(left: 50,top: 20),
+                          child: CommentHeaderWidget(
+                            comment: reply,
+                            contentController: contentController,
+                            focusNode: focusNode
+                          ),
+                        )
+                      ).toList(),
                     );
-                  }
+                  } 
                 );
               }
-              return const SizedBox.shrink();
-            }
-          ),
-          Builder(
-            builder: (context){
-              if(comment.repliesVisibility){
-                return Container(
-                  margin: const EdgeInsets.only(left: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:[
-                      HideRepliesButtonWidget(comment: comment,),
-                      Builder(
-                        builder: (context) {
-                          if(comment.numberOfNotDisplayedReplies > 0){
-                            return DisplayRemainRepliesButtonWidget(comment: comment);
-                          }
-                          return const SizedBox.shrink();
+            ),
+
+            Builder(
+              builder: (context) {
+                if(!comment.repliesVisibility) return const SpaceSavingWidget();
+                return Row(
+                  children: [
+                    Builder(
+                      builder: (context){
+                        if(comment.replies.ids.isNotEmpty){
+                          return Padding(
+                            padding: const EdgeInsets.only(left:50, top:20, right: 20),
+                            child: HideRepliesButtonWidget(comment: comment),
+                          );
                         }
-                      )
-                    ]
-                  ),
+                        return const SpaceSavingWidget();
+                      }
+                    ),
+                
+                    Builder(
+                      builder: (context){
+                        if(comment.numberOfNotDisplayedReplies > 0){
+                          return Padding(
+                             padding: const EdgeInsets.only(left:50, top:20),
+                            child: DisplayRepliesButtonWidget(comment: comment),
+                          );
+                        }
+                        return const SpaceSavingWidget();
+                      }
+                    )
+                
+                  ],
                 );
               }
-              return const SizedBox.shrink();
-            }
-          )
-        ],
+            )
+
+          ],
+        ),
       ),
     );
   }

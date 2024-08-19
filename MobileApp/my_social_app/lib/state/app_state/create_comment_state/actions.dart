@@ -31,8 +31,7 @@ class ChangeSolutionAction extends redux.Action{
 @immutable
 class ChangeCommentAction extends redux.Action{
   final CommentState comment;
-  final bool isRoot;
-  const ChangeCommentAction({required this.comment,required this.isRoot});
+  const ChangeCommentAction({required this.comment});
 }
 @immutable
 class CancelReplyAction extends redux.Action{

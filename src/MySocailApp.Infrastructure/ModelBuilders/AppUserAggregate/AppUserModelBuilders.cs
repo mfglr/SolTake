@@ -15,6 +15,18 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
             builder.OwnsOne(x => x.Image);
 
             builder
+                .HasMany(x => x.Solutions)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.Comments)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
                 .HasOne(x => x.UserConnection)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey<UserConnection>(x => x.Id);
@@ -55,18 +67,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
-                .HasMany(x => x.Solutions)
-                .WithOne(x => x.AppUser)
-                .HasForeignKey(x => x.AppUserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.Comments)
-                .WithOne(x => x.AppUser)
-                .HasForeignKey (x => x.AppUserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
                 .HasMany(x => x.CommentsLiked)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
@@ -79,10 +79,15 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
+                .HasMany(x => x.Noitifications)
+                .WithOne(x => x.Owner)
+                .HasForeignKey(x => x.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
                 .HasMany(x => x.NotificationsOutgoing)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(x => x.UserId);
 
             builder
                 .HasMany(x => x.Messages)

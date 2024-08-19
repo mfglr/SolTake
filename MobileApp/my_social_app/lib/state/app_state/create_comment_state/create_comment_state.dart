@@ -6,7 +6,6 @@ class CreateCommentState{
   final QuestionState? question;
   final SolutionState? solution;
   final CommentState? comment;
-  final bool isRoot;
   final String content;
   final String hintText;
 
@@ -15,7 +14,6 @@ class CreateCommentState{
     required this.question,
     required this.solution,
     required this.comment,
-    required this.isRoot,
     required this.content,
     required this.hintText,
   });
@@ -25,7 +23,6 @@ class CreateCommentState{
         question: question,
         solution: solution,
         comment: comment,
-        isRoot: isRoot,
         content: content,
         hintText: hintText,
       );
@@ -34,8 +31,7 @@ class CreateCommentState{
     => CreateCommentState(
         question: question,
         solution: null,
-        comment: null,
-        isRoot: isRoot,
+        comment: comment,
         content: content,
         hintText: "Comment on ${question.formatUserName(10)}' s question...",
       );
@@ -44,19 +40,17 @@ class CreateCommentState{
     => CreateCommentState(
         question: null,
         solution: solution,
-        comment: null,
-        isRoot: isRoot,
+        comment: comment,
         content: content,
         hintText: "Comment on ${solution.userName}' s solution...",
       );
 
-  CreateCommentState changeComment(CommentState comment,bool isRoot)
+  CreateCommentState changeComment(CommentState comment)
     => CreateCommentState(
         question: question,
         solution: solution,
         comment: comment,
-        isRoot: isRoot,
-        content: content,
+        content: "@${comment.userName} ",
         hintText: hintText,
       );
   
@@ -65,7 +59,6 @@ class CreateCommentState{
         question: question,
         solution: solution,
         comment: null,
-        isRoot: isRoot,
         content: "",
         hintText: hintText,
       );
@@ -75,7 +68,6 @@ class CreateCommentState{
         question: question,
         solution: solution,
         comment: comment,
-        isRoot: isRoot,
         content: content,
         hintText: hintText,
       );

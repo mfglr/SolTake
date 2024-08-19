@@ -39,8 +39,13 @@ class AddCommentAction extends redux.Action{
 }
 @immutable
 class RemoveCommentAction extends redux.Action{
+  final CommentState comment;
+  const RemoveCommentAction({required this.comment});
+}
+@immutable
+class RemoveCommentSuccessAction extends redux.Action{
   final int commentId;
-  const RemoveCommentAction({required this.commentId});
+  const RemoveCommentSuccessAction({required this.commentId});
 }
 @immutable
 class AddCommentsAction extends redux.Action{

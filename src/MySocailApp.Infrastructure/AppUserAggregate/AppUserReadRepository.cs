@@ -79,10 +79,11 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .IncludeForUser()
                 .FirstOrDefaultAsync(x => x.Account.UserName == userName, cancellationToken);
 
-        public async Task<List<AppUser>> GetByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
+        public async Task<List<int>> GetIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
             => await _context.AppUsers
                 .AsNoTracking()
                 .Where(x => userNames.Contains(x.Account.UserName))
+                .Select(x => x.Id)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<AppUser>> GetSearchedUsersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)

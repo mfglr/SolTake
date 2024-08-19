@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/constants/comment_font_size.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -21,31 +20,23 @@ class CommentLikeButtonWidget extends StatelessWidget {
           store.dispatch(LikeCommentAction(questionCommentId: comment.id));
         }
       },
-      child: Row(
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            margin: const EdgeInsets.only(right: 5),
-            child: Builder(
-              builder: (context) {
-                if(comment.isLiked){
-                  return const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                    size: commentIconFontSize,
-                  );
-                }
-                return const Icon(
-                  Icons.favorite_outline_sharp,
-                  size: commentIconFontSize,
-                );
-              }
-            ),
+          Icon(
+            comment.isLiked ? Icons.favorite : Icons.favorite_outline,
+            color: comment.isLiked ? Colors.red : null,
+            size: 18,
           ),
           Text(
             comment.numberOfLikes.toString(),
             style: const TextStyle(
-              fontSize: commentContentFontSize
+              fontSize: 11
             ),
           )
         ],

@@ -1,6 +1,8 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
@@ -108,7 +110,20 @@ void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void removeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveCommentAction){
-    
+    CommentService()
+      .deleteComment(action.comment.id)
+      .then((_){
+        if(action.comment.parentId != null){
+          store.dispatch(RemoveCommentReplyAction(commentId: action.comment.parentId!, replyId: action.comment.id));
+        }
+        else if(action.comment.questionId != null){
+          store.dispatch(RemoveQuestionCommentAction(commentId: action.comment.id, questionid: action.comment.questionId!));
+        }
+        else{
+          store.dispatch(RemoveSolutionCommentAction(solutionId: action.comment.solutionId!, commentId: action.comment.id));
+        }
+        store.dispatch(RemoveCommentSuccessAction(commentId: action.comment.id));
+      });
   }
   next(action);
 }

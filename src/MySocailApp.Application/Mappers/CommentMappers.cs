@@ -9,11 +9,12 @@ namespace MySocailApp.Application.Mappers
     {
         public CommentMappers(IAccessTokenReader tokenReader) {
             CreateMap<Comment, CommentResponseDto>()
-                .ForMember(dest => dest.IsLiked, x => x.MapFrom(src => src.Likes.Any(x => x.AppUserId == tokenReader.GetRequiredAccountId())))
+                .ForMember(dest => dest.IsLiked, x => x.MapFrom(src => src.Likes.Any(x => x.AppUserId == tokenReader.GetAccountId())))
                 .ForMember(dest => dest.Content, x => x.MapFrom(src => src.Content.Value))
                 .ForMember(dest => dest.NumberOfLikes, x => x.MapFrom(src => src.Likes.Count))
                 .ForMember(dest => dest.NumberOfReplies, x => x.MapFrom(src => src.Children.Count))
-                .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.AppUser.Account.UserName));
+                .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.AppUser.Account.UserName))
+                .ForMember(dest => dest.IsOwner, x => x.MapFrom(src => src.AppUserId == tokenReader.GetAccountId()));
         }
         public CommentMappers() { }
     }

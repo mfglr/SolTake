@@ -134,7 +134,7 @@ class AppState{
   Iterable<CommentState> getSolutionComments(int solutionId)
     => solutionEntityState.entities[solutionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> selectCommentReplies(int commentId)
-    => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
+    => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!).toList().reversed;
 
   //Select Subjects
   Iterable<SubjectState> get subjectsOfSelectedExam 

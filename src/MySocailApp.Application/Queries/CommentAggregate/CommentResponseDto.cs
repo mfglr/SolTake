@@ -15,6 +15,7 @@
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
         public int? ParentId { get; private set; }
+        public bool IsOwner { get; private set; }
 
         private CommentResponseDto() { }
     }

@@ -38,7 +38,6 @@ class CommentFieldWidget extends StatelessWidget {
                     onPressed: (){
                       contentController.text = "";
                       store.dispatch(const CancelReplyAction());
-                      store.dispatch(const ChangeContentAction(content: ""));
                     },
                     icon: const Icon(Icons.clear)
                   )

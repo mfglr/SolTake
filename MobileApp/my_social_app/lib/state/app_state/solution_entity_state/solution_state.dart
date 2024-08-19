@@ -193,7 +193,7 @@ class SolutionState{
         belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
         isOwner: isOwner,
         images: images,
-        numberOfComments: numberOfComments,
+        numberOfComments: numberOfComments - 1,
         comments: comments.removeOne(commentId)
       );
 

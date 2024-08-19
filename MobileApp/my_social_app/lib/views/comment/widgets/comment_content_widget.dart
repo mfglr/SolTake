@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/comment_font_size.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_tag_widget.dart';
 
@@ -41,14 +40,19 @@ class CommentContentWidget extends StatelessWidget {
     return r;  
   }
   
-
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
+      alignment: WrapAlignment.start,
       children: formatContent(comment.content).map((e){
         if(!e.isUserName){
-          return Text(e.text,style: const TextStyle(fontSize: commentContentFontSize));
+          return Text(
+            e.text,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold
+            )
+          );
         }
         return CommentTagWidget(userName: e.text);
       }).toList()

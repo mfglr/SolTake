@@ -8,27 +8,28 @@ class ReplyCommentButtonWidget extends StatelessWidget {
   final TextEditingController contentController;
   final FocusNode focusNode;
   final CommentState comment;
-  final bool isRoot;
 
   const ReplyCommentButtonWidget({
     super.key,
     required this.contentController,
     required this.focusNode,
     required this.comment,
-    required this.isRoot
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
-        final content =  "@${comment.userName} ";
-        store.dispatch(ChangeCommentAction(comment: comment,isRoot: isRoot));
-        store.dispatch(ChangeContentAction(content: content));
-        contentController.text = content;
+        store.dispatch(ChangeCommentAction(comment: comment));
+        contentController.text = "@${comment.userName} ";
         focusNode.requestFocus();
       },
-      child: const Text("Reply", style: TextStyle(fontSize: 12))
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      child: const Text("Reply", style: TextStyle(fontSize: 11))
     );
   }
 }

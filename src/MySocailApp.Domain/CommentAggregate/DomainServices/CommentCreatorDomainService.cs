@@ -19,38 +19,58 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
         private readonly IAppUserReadRepository _userController = userController;
         private readonly IUserNameReader _userNameReader = userNameReader;
 
-        public async Task CreateAsync(Comment comment, int userId, Content content, int? questionId, int? solutionId, int? parentId, CancellationToken cancellationToken)
+        public async Task CreateAsync(Comment comment, int userId, Content content, int? questionId, int? solutionId, int? repliedId, CancellationToken cancellationToken)
         {
             var userNames = _userNameReader.GetUserNames(content.Value);
-            var users = await _userController.GetByUserNames(userNames, cancellationToken);
-            var idsOfUsersTagged = users.Select(x => x.Id);
+            var idsOfUsersTagged = await _userController.GetIdsByUserNames(userNames, cancellationToken);
 
-            if (parentId != null)
+            if (repliedId != null)
             {
-                var parent =
-                    await _commentReadRepository.GetAsync((int)parentId, cancellationToken) ??
+                var repliedComment =
+                    await _commentReadRepository.GetAsync((int)repliedId, cancellationToken) ??
                     throw new CommentNotFoundException();
 
-                if (parent.ParentId != null)
-                    throw new CommentIsNotRootException();
+                Comment parent;
+                if (repliedComment.ParentId != null)
+                {
+                    parent =
+                        await _commentReadRepository.GetAsync((int)repliedComment.ParentId, cancellationToken) ??
+                        throw new CommentNotFoundException();
 
-                foreach (var id in comment.Tags.Select(x => x.AppUserId))
-                    if (id != parent.AppUserId && id != comment.AppUserId)
-                        comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, id));
+                    if (parent.ParentId != null)
+                        throw new CommentIsNotRootException();
+                    comment.CreateReplyComment(userId, content, idsOfUsersTagged, parent.Id, (int)repliedId);
+                }
+                else
+                {
+                    parent = repliedComment;
+                    comment.CreateReplyComment(userId, content, idsOfUsersTagged, (int)repliedId, (int)repliedId);
+                }
 
-                comment.CreateReplyComment(userId, content, idsOfUsersTagged, (int)parentId);
+                if (repliedComment.AppUserId != userId)
+                    comment.AddDomainEvent(new CommentRepliedDomainEvent(comment, parent, repliedComment));
             }
             else if (questionId != null)
             {
-                if (!await _questionRepository.Exist((int)questionId, cancellationToken))
+                var question =
+                    await _questionRepository.GetAsync((int)questionId, cancellationToken) ??
                     throw new QuestionNotFoundException();
+                
                 comment.CreateQuestionComment(userId, content, idsOfUsersTagged, (int)questionId);
+                
+                if(question.AppUserId != comment.AppUserId)
+                    comment.AddDomainEvent(new QuestionCommentCreatedDomainEvent(comment));
             }
             else if (solutionId != null)
             {
-                if (!await _solutionRepository.Exist((int)solutionId, cancellationToken))
+                var solution = 
+                    await _solutionRepository.GetAsync((int)solutionId, cancellationToken) ??
                     throw new SolutionNotFoundException();
+                
                 comment.CreateSolutionComment(userId, content, idsOfUsersTagged, (int)solutionId);
+                
+                if(solution.AppUserId != comment.AppUserId)
+                    comment.AddDomainEvent(new SolutionCommentCreatedDomainEvent(comment));
             }
             else
                 throw new NoRootException();
