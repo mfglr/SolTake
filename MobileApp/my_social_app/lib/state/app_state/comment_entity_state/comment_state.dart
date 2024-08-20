@@ -36,7 +36,7 @@ class CommentState{
     required this.likes,
     required this.replies,
     required this.repliesVisibility,
-    required this.isOwner
+    required this.isOwner,
   });
 
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
@@ -122,7 +122,6 @@ class CommentState{
         repliesVisibility: repliesVisibility,
         isOwner: isOwner,
       );
-
  
   CommentState getNextPageReplies()
     => CommentState(
@@ -225,6 +224,5 @@ class CommentState{
         repliesVisibility: visibility,
         isOwner: isOwner,
       );
-
     
 }

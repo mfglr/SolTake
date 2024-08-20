@@ -7,7 +7,6 @@ class Pagination{
   final bool loadingPrev;
   final int recordsPerPage;
   final Iterable<int> ids;
-  final Iterable<int> outliers;
 
   const Pagination({
     required this.isLast,
@@ -15,10 +14,8 @@ class Pagination{
     required this.loadingPrev,
     required this.ids,
     required this.recordsPerPage,
-    required this.outliers,
   });
 
-  Iterable<int> _filterOutliers(Iterable<int> nextIds) => nextIds.where((newId) => !outliers.any((outlier) => outlier == newId)); 
 
   factory Pagination.init(recordsPerPage)
     => Pagination(
@@ -27,15 +24,15 @@ class Pagination{
         loadingPrev: false,
         ids: const [],
         recordsPerPage: recordsPerPage,
-        outliers: const []
       );
 
-  Iterable<int> get data => [...outliers,...ids];
   int? get lastValue => ids.lastOrNull;
   int? get firstValue => ids.firstOrNull;
-  bool get hasAtLeastOnePage => data.length >= recordsPerPage;
+  bool get hasAtLeastOnePage => ids.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loadingNext;
   bool get isReadyForPrevPage => !loadingPrev;
+
+  Iterable<int> merge(int id) => [id, ...ids.where((e) => e != id)];
 
   Pagination startLoadingNext()
     => Pagination(
@@ -44,7 +41,6 @@ class Pagination{
         loadingPrev: loadingPrev,
         ids: ids,
         recordsPerPage: recordsPerPage,
-        outliers: outliers
       );
   Pagination startLoadingPrev()
     => Pagination(
@@ -53,25 +49,22 @@ class Pagination{
         loadingPrev: true,
         ids: ids,
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
   Pagination addNextPage(Iterable<int> nextIds)
     => Pagination(
         isLast: nextIds.length < recordsPerPage,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: [...ids, ..._filterOutliers(nextIds)],
+        ids: [...ids, ...nextIds],
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
   Pagination addPrevPage(Iterable<int> nextIds)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: false,
-        ids: [..._filterOutliers(nextIds).toList().reversed, ...ids],
+        ids: [...nextIds.toList().reversed, ...ids],
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
   Pagination prependOne(int newId)
     => Pagination(
@@ -80,7 +73,6 @@ class Pagination{
         loadingPrev: loadingPrev,
         ids: [newId, ...ids],
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
   Pagination appendOne(int newId)
     => Pagination(
@@ -89,7 +81,6 @@ class Pagination{
         loadingPrev: loadingPrev,
         ids: [...ids, newId],
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
   Pagination prependOneAndRemovePrev(int newId)
     => Pagination(
@@ -98,7 +89,6 @@ class Pagination{
         loadingPrev: loadingPrev,
         ids: [newId, ...ids.where((e) => e != newId)],
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
   Pagination removeOne(int id)
     => Pagination(
@@ -107,33 +97,22 @@ class Pagination{
         loadingPrev: loadingPrev,
         ids: ids.where((e) => e != id),
         recordsPerPage: recordsPerPage,
-        outliers: outliers.where((e) => e != id),
       );
   Pagination addfirstPage(Iterable<int> newIds)
     => Pagination(
         isLast: newIds.length < recordsPerPage,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: _filterOutliers(newIds),
+        ids: newIds,
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
   Pagination appendLastPage(Iterable<int> newIds)
     => Pagination(
         isLast: true,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: [...ids, ..._filterOutliers(newIds)],
+        ids: [...ids, ...newIds],
         recordsPerPage: recordsPerPage,
-        outliers: outliers,
       );
-  Pagination prependToOutliers(int id)
-    => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        ids: ids.where((e) => e != id),
-        recordsPerPage: recordsPerPage,
-        outliers: [id, ...outliers.where((e) => e != id)]
-      );
+  
 }

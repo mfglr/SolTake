@@ -22,6 +22,7 @@ CommentEntityState removeReplyReducer(CommentEntityState prev,RemoveCommentReply
 
 CommentEntityState changeVisibilityReducer(CommentEntityState prev,ChangeRepliesVisibilityAction action)
   => prev.changeVisibility(action.commentId, action.visibility);
+
 CommentEntityState addCommentReducer(CommentEntityState prev,AddCommentAction action)
   => CommentEntityState(entities: prev.appendOne(action.comment));
 CommentEntityState removeCommentReducer(CommentEntityState prev,RemoveCommentSuccessAction action)
@@ -41,6 +42,7 @@ Reducer<CommentEntityState> questionCommentEntityStateReducers = combineReducers
   TypedReducer<CommentEntityState,RemoveCommentReplyAction>(removeReplyReducer).call,
 
   TypedReducer<CommentEntityState,ChangeRepliesVisibilityAction>(changeVisibilityReducer).call,
+
   TypedReducer<CommentEntityState,AddCommentAction>(addCommentReducer).call,
   TypedReducer<CommentEntityState,RemoveCommentSuccessAction>(removeCommentReducer).call,
   TypedReducer<CommentEntityState,AddCommentsAction>(addCommentsReducer).call,

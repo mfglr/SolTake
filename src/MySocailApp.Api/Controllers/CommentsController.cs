@@ -10,6 +10,7 @@ using MySocailApp.Application.Commands.QuestionCommentAggregate.LikeQuestionComm
 using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentById;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes;
+using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByIds;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByParentId;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsBySolutionId;
@@ -43,17 +44,25 @@ namespace MySocailApp.Api.Controllers
         [HttpGet("{id}")]
         public async Task<CommentResponseDto> GetCommentById(int id,CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentByIdDto(id),cancellationToken);
+        
         [HttpGet("{questionId}")]
         public async Task<List<CommentResponseDto>> GetCommentsByQuestionId(int questionId, [FromQuery]int? lastValue, [FromQuery]int? take, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentsByQuestionIdDto(questionId, lastValue, take), cancellationToken);
+        
         [HttpGet("{solutionId}")]
         public async Task<List<CommentResponseDto>> GetCommentsBySolutionId(int solutionId, [FromQuery] int? lastValue, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentsBySolutionIdDto(solutionId, lastValue), cancellationToken);
+        
         [HttpGet("{parentId}")]
         public async Task<List<CommentResponseDto>> GetCommentsByParentId(int parentId, [FromQuery]int? lastValue, [FromQuery]int? take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentsByParentIdDto(parentId, lastValue, take,isDescending), cancellationToken);
+        
         [HttpGet("{commentId}")]
         public async Task<List<AppUserResponseDto>> GetCommentLikes(int commentId, [FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentLikesDto(commentId, lastValue, take),cancellationToken);
+        
+        [HttpGet]
+        public async Task<List<CommentResponseDto>> GetCommentsByIds([FromQuery]string ids, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCommentsByIdsDto(ids.Split(",").Select(int.Parse)), cancellationToken);
     }
 }

@@ -112,23 +112,7 @@ void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatc
   }
   next(action);
 }
-void getOutlierQuestionCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetOutlierQuestionCommentAction){
-    if(store.state.commentEntityState.entities[action.commentId] == null){
-      CommentService()
-        .getById(action.commentId)
-        .then((comment){
-          store.dispatch(AddCommentAction(comment: comment.toCommentState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
-          store.dispatch(GetOutlierQuestionCommentSuccessAction(questionId: action.questionId, commentId: action.commentId));
-        });
-    }
-    else{
-      store.dispatch(GetOutlierQuestionCommentSuccessAction(questionId: action.questionId, commentId: action.commentId));
-    }
-  }
-  next(action);
-}
+
 
 void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadQuestionImageAction){

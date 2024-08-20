@@ -13,7 +13,7 @@ class CommentItemsWidget extends StatefulWidget {
   final Widget noItems;
   final void Function() onScrollBottom;
   final Pagination pagination;
-  final int? focusedCommentId;
+  final int? parentId;
 
   const CommentItemsWidget({
     super.key,
@@ -24,7 +24,7 @@ class CommentItemsWidget extends StatefulWidget {
     required this.pagination,
     required this.noItems,
     required this.onScrollBottom,
-    this.focusedCommentId,
+    this.parentId,
   });
 
   @override
@@ -58,7 +58,7 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
       controller: widget.scrollController,
       child: Builder(
         builder: (context) {
-          if(widget.pagination.isLast && widget.pagination.data.isEmpty) return widget.noItems;
+          if(widget.pagination.isLast && widget.pagination.ids.isEmpty) return widget.noItems;
           return Column(
             children: [
               ...List.generate(
@@ -66,7 +66,7 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
                 (index) => Container(
                   margin: const EdgeInsets.only(bottom: 15),
                   child: CommentItemWidget(
-                    isFocused: widget.comments.elementAt(index).id == widget.focusedCommentId,
+                    isFocused: widget.comments.elementAt(index).id == widget.parentId ? true : false,
                     contentController: widget.contentController,
                     focusNode: widget.focusNode,
                     comment: widget.comments.elementAt(index)

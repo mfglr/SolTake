@@ -109,6 +109,21 @@ void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+void loadCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadCommentsAction){
+    final ids = action.commentIds.where((id) => store.state.commentEntityState.entities[id] == null);
+    if(ids.isNotEmpty){
+      CommentService()
+        .getByIds(ids)
+        .then((comments){
+          store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
+          store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(e.appUserId))));
+        });
+    }
+  }
+  next(action);
+}
+
 void removeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveCommentAction){
     CommentService()

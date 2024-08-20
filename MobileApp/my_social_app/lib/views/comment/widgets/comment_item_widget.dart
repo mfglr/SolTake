@@ -14,12 +14,13 @@ class CommentItemWidget extends StatefulWidget {
   final FocusNode focusNode;
   final CommentState comment;
   final bool? isFocused;
+
   const CommentItemWidget({
     super.key,
     required this.contentController,
     required this.focusNode,
     required this.comment,
-    this.isFocused
+    this.isFocused,
   });
 
   @override
@@ -27,7 +28,7 @@ class CommentItemWidget extends StatefulWidget {
 }
 
 class _CommentItemWidgetState extends State<CommentItemWidget> {
-  late Color? color = Colors.black.withOpacity(0.2);
+  late Color? _color = Colors.black.withOpacity(0.2);
   Future? _future;
 
   @override
@@ -37,7 +38,7 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
       const Duration(seconds: 2),
         (){
           setState(() {
-            color = ThemeData().cardTheme.color;
+            _color = ThemeData().cardTheme.color;
           });
         }
       );
@@ -56,11 +57,12 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: widget.isFocused != null && widget.isFocused! ? color : null,
+      color: widget.isFocused != null && widget.isFocused! ? _color : null,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+
             CommentHeaderWidget(
               comment: widget.comment,
               contentController: widget.contentController,
@@ -105,6 +107,7 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                 if(!widget.comment.repliesVisibility) return const SpaceSavingWidget();
                 return Row(
                   children: [
+                    
                     Builder(
                       builder: (context){
                         if(widget.comment.replies.ids.isNotEmpty){
@@ -133,7 +136,6 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                 );
               }
             )
-      
           ],
         ),
       ),

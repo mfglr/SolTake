@@ -7,6 +7,11 @@ class LoadCommentAction extends redux.Action{
   final int commentId;
   const LoadCommentAction({required this.commentId});
 }
+@immutable
+class LoadCommentsAction extends redux.Action{
+  final Iterable<int> commentIds;
+  const LoadCommentsAction({required this.commentIds});
+}
 
 @immutable
 class GetNextPageCommentLikesIfNoPageAction extends redux.Action{

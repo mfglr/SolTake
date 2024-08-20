@@ -49,6 +49,12 @@ class CommentService{
         "$commentController/$getCommentByIdEndpoint/$id"
       )
     );
+    
+  Future<Iterable<Comment>> getByIds(Iterable<int> ids) =>
+    _appClient
+      .get("$commentController/$getCommentsByIdsEndpoint?ids=${ids.join(',')}")
+      .then((response) => (response as List))
+      .then((list) => list.map((e) => Comment.fromJson(e)));
 
   Future<Iterable<Comment>> getCommentsByQuestionId(int questionId,int? lastValue, int? take,bool isDescending) async{
     final endPoint = "$commentController/$getCommentsByQuestionIdEndpoint/$questionId";

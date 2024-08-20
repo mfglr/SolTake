@@ -28,7 +28,6 @@ class QuestionCommentCreatedNotificationItem extends StatelessWidget {
               parentId: notification.commentId,
             ),
           ));
-       
       }
     );
   }

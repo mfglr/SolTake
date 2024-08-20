@@ -102,18 +102,6 @@ class RemoveQuestionCommentAction extends redux.Action{
   final int questionid;
   const RemoveQuestionCommentAction({required this.commentId, required this.questionid});
 }
-@immutable
-class GetOutlierQuestionCommentAction extends redux.Action{
-  final int questionId;
-  final int commentId;
-  const GetOutlierQuestionCommentAction({required this.questionId, required this.commentId});
-}
-@immutable
-class GetOutlierQuestionCommentSuccessAction extends redux.Action{
-  final int questionId;
-  final int commentId;
-  const  GetOutlierQuestionCommentSuccessAction({required this.questionId, required this.commentId});
-}
 
 @immutable
 class LoadQuestionImageAction extends redux.Action{

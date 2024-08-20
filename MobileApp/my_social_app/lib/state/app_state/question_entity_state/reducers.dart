@@ -27,8 +27,6 @@ QuestionEntityState addCommentReducer(QuestionEntityState prev,AddQuestionCommen
   => prev.addComment(action.questionId,action.commenId);
 QuestionEntityState removeCommentReducer(QuestionEntityState prev,RemoveQuestionCommentAction action)
   => prev.removeComment(action.questionid, action.commentId);
-QuestionEntityState prependOutlierCommentReducer(QuestionEntityState prev,GetOutlierQuestionCommentAction action)
-  => prev.prependOutlierComment(action.questionId, action.commentId);
 
 QuestionEntityState startLoadingImageReducer(QuestionEntityState prev,LoadQuestionImageAction action)
   => prev.startLoadingImage(action.questionId, action.index);
@@ -49,7 +47,6 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,AddNextPageQuestionCommentsAction>(addNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionCommentAction>(addCommentReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionCommentAction>(removeCommentReducer).call,
-  TypedReducer<QuestionEntityState,GetOutlierQuestionCommentAction>(prependOutlierCommentReducer).call,
 
   TypedReducer<QuestionEntityState,LoadQuestionImageAction>(startLoadingImageReducer).call,
   TypedReducer<QuestionEntityState,LoadQuestionImageSuccessAction>(loadImageReducer).call,

@@ -26,6 +26,13 @@ namespace MySocailApp.Infrastructure.CommentAggregate
                 .IncludeForComment()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
+        public async Task<List<Comment>> GetByIds(IEnumerable<int> ids, CancellationToken cancellationToken)
+            => await _context.Comments
+                .AsNoTracking()
+                .IncludeForComment()
+                .Where(x => ids.Any(id => x.Id == id))
+                .ToListAsync(cancellationToken);
+
         public async Task<List<Comment>> GetByParentIdAsync(int parentId, int? lastId,int? take,bool isDescending, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()

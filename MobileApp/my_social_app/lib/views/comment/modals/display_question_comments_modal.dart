@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
+import 'package:my_social_app/state/app_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -20,7 +22,7 @@ class DisplayQuestionCommentsModal extends StatefulWidget {
   const DisplayQuestionCommentsModal({
     super.key,
     required this.questionId,
-    this.parentId
+    this.parentId,
   });
 
   @override
@@ -32,7 +34,6 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   late final StreamSubscription<QuestionState?> _questionConsumer;
-
 
   @override
   void initState() {
@@ -58,7 +59,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
     super.dispose();
   }
 
-  Widget _buildModal(QuestionState question){
+  Widget _buildModal(Iterable<CommentState> comments,Pagination pagination){
     return SizedBox(
       height: MediaQuery.of(context).size.height * 3 / 4,
       child: Padding(
@@ -77,23 +78,19 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
               ],
             ),
             Expanded(
-              child: StoreConnector<AppState,Iterable<CommentState>>(
-                onInit:(store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
-                converter: (store) => store.state.getQuestionComments(widget.questionId),
-                builder: (context,comments) => CommentItemsWidget(
-                  scrollController: _scrollController,
-                  contentController: _contentController,
-                  focusNode: _focusNode,
-                  focusedCommentId: widget.parentId,
-                  noItems: const NoCommentsWidget(),
-                  pagination: question.comments,
-                  comments: comments,
-                  onScrollBottom: (){
-                    final store = StoreProvider.of<AppState>(context,listen: false);
-                    store.dispatch(GetNextPageQuestionCommentsIfReadyAction(questionId: widget.questionId));
-                  },
-                )
-              ),
+              child: CommentItemsWidget(
+                scrollController: _scrollController,
+                contentController: _contentController,
+                focusNode: _focusNode,
+                noItems: const NoCommentsWidget(),
+                pagination: pagination,
+                comments: comments,
+                parentId: widget.parentId,
+                onScrollBottom: (){
+                  final store = StoreProvider.of<AppState>(context,listen: false);
+                  store.dispatch(GetNextPageQuestionCommentsIfReadyAction(questionId: widget.questionId));
+                },
+              )
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(20,10,20,20),
@@ -113,7 +110,6 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
@@ -122,20 +118,23 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
         if(question == null) return const LoadingWidget();
         if(widget.parentId != null){
           return StoreConnector<AppState,CommentState?>(
-            onInit: (store) => store.dispatch(
-              GetOutlierQuestionCommentAction(
-                questionId: question.id,
-                commentId: widget.parentId!
-              )
-            ),
+            onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
             converter: (store) => store.state.commentEntityState.entities[widget.parentId],
             builder: (context,comment){
               if(comment == null) return const LoadingWidget();
-              return _buildModal(question);
+              return StoreConnector<AppState,Iterable<CommentState>>(
+                onInit: (store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
+                converter: (store) => store.state.getFormatedQuestionComments(widget.parentId!, widget.questionId),
+                builder:(context,comments) => _buildModal(comments,question.comments)
+              );
             },
           );
         }
-        return _buildModal(question);
+        return StoreConnector<AppState,Iterable<CommentState>>(
+          onInit: (store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
+          converter: (store) => store.state.getQuestionComments(widget.questionId),
+          builder:(context,comments) => _buildModal(comments,question.comments)
+        );
       }
     );
   }
