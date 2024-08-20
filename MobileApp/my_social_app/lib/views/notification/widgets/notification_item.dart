@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -10,13 +11,15 @@ class NotificationItem extends StatelessWidget {
   final String content;
   final Widget icon;
   final void Function() onPressed;
+  final Widget? bottomContent;
 
   const NotificationItem({
     super.key,
     required this.notification,
     required this.content,
     required this.icon,
-    required this.onPressed
+    required this.onPressed,
+    this.bottomContent
   });
 
   @override
@@ -25,29 +28,50 @@ class NotificationItem extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(
-              onPressed: () => Navigator
-                .of(context)
-                .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.userId))),
-              child: badges.Badge(
-                badgeContent: icon,
-                badgeStyle: const badges.BadgeStyle(
-                  badgeColor: Colors.transparent,
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: TextButton(
+                onPressed: () => Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.userId))),
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.zero),
+                  minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-                child: UserImageWidget(
-                  userId: notification.userId,
-                  diameter: 45
-                ),
-              )
-            ),
-           Expanded(
-             child: Text(
-                "${notification.userName}. $content ${timeago.format(notification.createdAt,locale: 'en_short')}",
-                overflow: TextOverflow.visible,  
+                child: badges.Badge(
+                  badgeContent: icon,
+                  badgeStyle: const badges.BadgeStyle(
+                    badgeColor: Colors.transparent,
+                  ),
+                  child: UserImageWidget(
+                    userId: notification.userId,
+                    diameter: 45
+                  ),
+                )
               ),
-           ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${notification.userName}. $content ${timeago.format(notification.createdAt,locale: 'en_short')}",
+                  ),
+                  Builder(
+                    builder: (context) {
+                      if(bottomContent == null) return const SpaceSavingWidget();
+                      return Padding(
+                        padding: const EdgeInsets.only(top:15),
+                        child: bottomContent!,
+                      );
+                    }
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

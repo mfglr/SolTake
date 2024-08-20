@@ -17,6 +17,7 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
         public NotificationType Type { get; private set; }
 
         public int? ParentId { get; private set; }
+        public int? RepliedId { get; private set; }
         public int? CommentId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
@@ -45,13 +46,14 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification CommentRepliedNotification(int ownerId, int userId, int commentId, int? questionId, int? solutionId, int parentId)
+        public static Notification CommentRepliedNotification(int ownerId, int userId, int commentId, int? questionId, int? solutionId, int parentId, int? repliedId)
             => new(NotificationType.CommentRepliedNotification)
             {
                 OwnerId = ownerId,
-                CommentId = commentId,
                 UserId = userId,
                 ParentId = parentId,
+                RepliedId = repliedId,
+                CommentId = commentId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow

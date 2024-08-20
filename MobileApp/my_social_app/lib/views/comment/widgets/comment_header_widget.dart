@@ -23,14 +23,13 @@ class CommentHeaderWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Widget? displayRepliesButton;
   final double? diameter; 
-
   const CommentHeaderWidget({
     super.key,
     required this.comment,
     required this.contentController,
     required this.focusNode,
     this.displayRepliesButton,
-    this.diameter
+    this.diameter,
   });
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,7 @@ class CommentHeaderWidget extends StatelessWidget {
             ),
           ),
         ),
-
+    
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,13 +176,13 @@ class CommentHeaderWidget extends StatelessWidget {
                   ],
                 ),
               ),
-
+    
               
-
+    
             ],
           ),
         ),
-
+    
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -193,7 +192,7 @@ class CommentHeaderWidget extends StatelessWidget {
             ),
           ],
         ),
-
+    
       ],
     );
       

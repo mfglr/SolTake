@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class NotificationState{
   final int id;
   final int ownerId;
@@ -5,6 +8,7 @@ class NotificationState{
   final bool isViewed;
   final int type;
   final int? parentId;
+  final int? repliedId;
   final int? commentId;
   final String? content;
   final int? questionId;
@@ -20,6 +24,7 @@ class NotificationState{
     required this.type,
     required this.parentId,
     required this.commentId,
+    required this.repliedId,
     required this.content,
     required this.questionId,
     required this.userId,
@@ -36,6 +41,7 @@ class NotificationState{
         type: type,
         parentId: parentId,
         commentId: commentId,
+        repliedId: repliedId,
         content: content,
         questionId: questionId,
         userId: userId,

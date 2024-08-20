@@ -15,6 +15,7 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
                 .AsNoTracking()
                 .Include(x => x.User)
                 .ThenInclude(x => x.Account)
+                .Include(x => x.Comment)
                 .Where(x => x.OwnerId == ownerId)
                 .ToPage(lastId,take)
                 .ToListAsync(cancellationToken);
@@ -24,6 +25,7 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
                 .AsNoTracking()
                 .Include(x => x.User)
                 .ThenInclude(x => x.Account)
+                .Include(x => x.Comment)
                 .Where(x => x.OwnerId == ownerId && !x.IsViewed)
                 .OrderByDescending(x => x.Id)
                 .ToListAsync(cancellationToken);

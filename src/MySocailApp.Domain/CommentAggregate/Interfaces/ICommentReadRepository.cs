@@ -10,7 +10,7 @@ namespace MySocailApp.Domain.CommentAggregate.Interfaces
         Task<Comment?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<List<Comment>> GetBySolutoinIdAsync(int solutionId, int? lastId, CancellationToken cancellationToken);
         Task<List<Comment>> GetByQuestionIdAsync(int questionId, int? lastId, int? take, CancellationToken cancellationToken);
-        Task<List<Comment>> GetByParentIdAsync(int parentId,int? lastId,int? take,CancellationToken cancellationToken);
+        Task<List<Comment>> GetByParentIdAsync(int parentId, int? lastId, int? take, bool isDescending, CancellationToken cancellationToken);
         Task<List<AppUser>> GetCommentLikesAsync(int commentId, int? lastId, int? take, CancellationToken cancellationToken);
     }
 }

@@ -12,6 +12,7 @@ namespace MySocailApp.Application.Queries.NotificationAggregate
         public bool IsViewed { get; private set; }
         public NotificationType Type { get; private set; }
         public int? ParentId { get; private set; }
+        public int? RepliedId { get; private set; }
         public int? CommentId { get; private set; }
         public string? Content { get; private set; }
         public int? QuestionId { get; private set; }

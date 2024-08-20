@@ -15,12 +15,12 @@ import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class DisplayQuestionCommentsModal extends StatefulWidget {
   final int questionId;
-  final int? displayedCommentId;
+  final int? parentId;
 
   const DisplayQuestionCommentsModal({
     super.key,
     required this.questionId,
-    this.displayedCommentId
+    this.parentId
   });
 
   @override
@@ -32,6 +32,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   late final StreamSubscription<QuestionState?> _questionConsumer;
+
 
   @override
   void initState() {
@@ -45,7 +46,6 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
             store.dispatch(ChangeQuestionAction(question: question));
           }
         });
-
     super.initState();
   }
 
@@ -84,7 +84,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                   scrollController: _scrollController,
                   contentController: _contentController,
                   focusNode: _focusNode,
-                  focusId: widget.displayedCommentId,
+                  focusedCommentId: widget.parentId,
                   noItems: const NoCommentsWidget(),
                   pagination: question.comments,
                   comments: comments,
@@ -120,15 +120,15 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
       converter: (store) => store.state.questionEntityState.entities[widget.questionId],
       builder: (context, question){
         if(question == null) return const LoadingWidget();
-        if(widget.displayedCommentId != null){
+        if(widget.parentId != null){
           return StoreConnector<AppState,CommentState?>(
             onInit: (store) => store.dispatch(
               GetOutlierQuestionCommentAction(
                 questionId: question.id,
-                commentId: widget.displayedCommentId!
+                commentId: widget.parentId!
               )
             ),
-            converter: (store) => store.state.commentEntityState.entities[widget.displayedCommentId],
+            converter: (store) => store.state.commentEntityState.entities[widget.parentId],
             builder: (context,comment){
               if(comment == null) return const LoadingWidget();
               return _buildModal(question);

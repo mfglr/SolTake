@@ -15,11 +15,10 @@ class QuestionLikedNotificationItem extends StatelessWidget {
         Navigator
           .of(context)
           .push( MaterialPageRoute(
-                    builder: (context) => DisplayQuestionPage(
-                      questionId: notification.questionId!,
-                      isOpenCommentModal: false,
-                    )
-                  )),
+            builder: (context) => DisplayQuestionPage(
+              questionId: notification.questionId!,
+            )
+          )),
       icon: const Icon(
         Icons.favorite,
         color: Colors.red,  

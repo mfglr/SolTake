@@ -9,7 +9,9 @@ namespace MySocailApp.Application.Mappers
         public NotificationMappers()
         {
             CreateMap<Notification, NotificationResponseDto>()
-                .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.User.Account.UserName));
+                .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.User.Account.UserName))
+                .ForMember(dest => dest.Content, x => x.MapFrom(src => src.Comment != null ? src.Comment.Content.Value : null));
+
         }
 
     }

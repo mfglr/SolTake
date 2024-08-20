@@ -85,15 +85,16 @@ void getNextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispat
   if(action is GetNextPageCommentRepliesAction){
     final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
     CommentService()
-      .getByParentId(action.commentId, pagination.lastValue, commentsPerPage,true)
+      .getByParentId(action.commentId, pagination.lastValue, commentsPerPage, false)
       .then((replies){
-        store.dispatch(AddNextPageCommentRepliesAction(commentId: action.commentId,replyIds: replies.map((e) => e.id)));
+        store.dispatch(AddPrevPageCommentRepliesAction(commentId: action.commentId,replyIds: replies.map((e) => e.id)));
         store.dispatch(AddCommentsAction(comments: replies.map((e) => e.toCommentState())));
         store.dispatch(AddUserImagesAction(images: replies.map((e) => UserImageState.init(e.appUserId))));
       });
   }
   next(action);
 }
+
 
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentAction){

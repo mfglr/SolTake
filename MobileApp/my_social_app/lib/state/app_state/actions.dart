@@ -6,6 +6,11 @@ abstract class Action{
   const Action();
 }
 
+@immutable
+class ClearAppStateAction extends Action{
+  const ClearAppStateAction();
+}
+
 class ChangeAccessTokenAction extends Action{
   final String? accessToken;
   const ChangeAccessTokenAction({required this.accessToken});

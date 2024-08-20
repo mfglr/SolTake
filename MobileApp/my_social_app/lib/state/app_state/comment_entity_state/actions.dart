@@ -92,10 +92,10 @@ class GetNextPageCommentRepliesAction extends redux.Action{
   const GetNextPageCommentRepliesAction({required this.commentId});
 }
 @immutable
-class AddNextPageCommentRepliesAction extends redux.Action{
+class AddPrevPageCommentRepliesAction extends redux.Action{
   final int commentId;
   final Iterable<int> replyIds;
-  const AddNextPageCommentRepliesAction({required this.commentId, required this.replyIds});
+  const AddPrevPageCommentRepliesAction({required this.commentId, required this.replyIds});
 }
 @immutable
 class AddCommentReplyAction extends redux.Action{

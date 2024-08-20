@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
+import 'package:my_social_app/views/notification/widgets/comment_replied_notification.dart';
 import 'package:my_social_app/views/notification/widgets/question_comment_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_liked_notification_item.dart';
@@ -24,6 +25,8 @@ class NotificationItems extends StatelessWidget {
             switch(notification.type){
               case NotificationType.questionCommentCreatedNotification :
                 return QuestionCommentCreatedNotificationItem(notification: notification);
+              case NotificationType.commentRepliedNotification :
+                return CommentRepliedNotification(notification: notification);
               case NotificationType.questionLikedNotification :
                 return QuestionLikedNotificationItem(notification: notification);
               case NotificationType.commentLikedNotification :

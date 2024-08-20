@@ -28,27 +28,27 @@ class CommentLikedNotificationItem extends StatelessWidget {
             color: Colors.red,
           ),
           onPressed: (){
-            if(comment.questionId != null){
+           if(comment.questionId != null){
               Navigator
                 .of(context)
                 .push(
                   MaterialPageRoute(
                     builder: (context) => DisplayQuestionPage(
                       questionId: comment.questionId!,
-                      isOpenCommentModal: false,
                     )
                   )
                 );
-              return;
-            }
-            else if(comment.solutionId != null){
-              Navigator
-                .of(context)
-                .push(MaterialPageRoute(builder: (context) => DisplaySolutionPage(solutionId: comment.solutionId!)));
-              return;
             }
             else{
-              
+              Navigator
+                .of(context)
+                .push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplaySolutionPage(
+                      solutionId: comment.solutionId!
+                    )
+                  )
+                );
             }
           }
         );

@@ -19,6 +19,7 @@ class LogOutAction extends redux.Action{
   const LogOutAction();
 }
 
+
 @immutable
 class LoginByPasswordAction extends redux.Action{
   final String emailOrPassword;

@@ -79,9 +79,9 @@ class CommentFieldWidget extends StatelessWidget {
                 store.dispatch(const CreateCommentAction());
                 contentController.text = "";
                 focusNode.unfocus();
-                if(state.comment == null){
-                  scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                }
+                // if(state.comment == null){
+                //   scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                // }
               },
               child: const Icon(Icons.send_outlined)
             )

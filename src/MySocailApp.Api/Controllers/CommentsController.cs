@@ -50,8 +50,8 @@ namespace MySocailApp.Api.Controllers
         public async Task<List<CommentResponseDto>> GetCommentsBySolutionId(int solutionId, [FromQuery] int? lastValue, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentsBySolutionIdDto(solutionId, lastValue), cancellationToken);
         [HttpGet("{parentId}")]
-        public async Task<List<CommentResponseDto>> GetCommentsByParentId(int parentId, [FromQuery]int? lastValue, [FromQuery]int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetCommentsByParentIdDto(parentId, lastValue, take), cancellationToken);
+        public async Task<List<CommentResponseDto>> GetCommentsByParentId(int parentId, [FromQuery]int? lastValue, [FromQuery]int? take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCommentsByParentIdDto(parentId, lastValue, take,isDescending), cancellationToken);
         [HttpGet("{commentId}")]
         public async Task<List<AppUserResponseDto>> GetCommentLikes(int commentId, [FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentLikesDto(commentId, lastValue, take),cancellationToken);

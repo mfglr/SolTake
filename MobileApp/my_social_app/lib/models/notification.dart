@@ -7,17 +7,18 @@ part 'notification.g.dart';
 @JsonSerializable()
 class Notification{
   final int id;
-  final int ownerId;
   final DateTime createdAt;
+  final int ownerId;
+  final int userId;
   final bool isViewed;
   final int type;
   final int? parentId;
+  final int? repliedId;
   final int? commentId;
-  final String? content;
-  final int? questionId;
-  final int userId;
-  final String userName;
   final int? solutionId;
+  final int? questionId;
+  final String? content;
+  final String userName;
 
   const Notification({
     required this.id,
@@ -27,6 +28,7 @@ class Notification{
     required this.type,
     required this.parentId,
     required this.commentId,
+    required this.repliedId,
     required this.content,
     required this.questionId,
     required this.userId,
@@ -46,6 +48,7 @@ class Notification{
         type: type,
         parentId: parentId,
         commentId: commentId,
+        repliedId: repliedId,
         content: content,
         questionId: questionId,
         userId: userId,

@@ -40,8 +40,7 @@ class CommentState{
   });
 
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
-  int get numberOfDisplayedReplies => repliesVisibility ? replies.ids.length : 0;
-  int get numberOfNotDisplayedReplies => numberOfReplies - numberOfDisplayedReplies;
+  int get numberOfNotDisplayedReplies => numberOfReplies - (repliesVisibility ? replies.ids.length : 0);
 
   CommentState getNextPageLikes()
     => CommentState(
@@ -124,7 +123,48 @@ class CommentState{
         isOwner: isOwner,
       );
 
-  CommentState addReply(int replyId)
+ 
+  CommentState getNextPageReplies()
+    => CommentState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        userName: userName,
+        appUserId: appUserId,
+        isEdited: isEdited,
+        content: content,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        numberOfReplies: numberOfReplies,
+        questionId: questionId,
+        solutionId: solutionId,
+        parentId: parentId,
+        likes: likes,
+        replies: replies.startLoadingNext(),
+        repliesVisibility: repliesVisibility,
+        isOwner: isOwner
+      );
+  CommentState addNextPageReplies(Iterable<int> replyIds)
+    => CommentState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        userName: userName,
+        appUserId: appUserId,
+        isEdited: isEdited,
+        content: content,
+        isLiked: isLiked,
+        numberOfLikes: numberOfLikes,
+        numberOfReplies: numberOfReplies,
+        questionId: questionId,
+        solutionId: solutionId,
+        parentId: parentId,
+        likes: likes,
+        replies: replies.addNextPage(replyIds),
+        repliesVisibility: repliesVisibility,
+        isOwner: isOwner
+      );
+  CommentState appendReply(int replyId)
     => CommentState(
         id: id,
         createdAt: createdAt,
@@ -137,7 +177,7 @@ class CommentState{
         numberOfLikes: numberOfLikes,
         likes: likes,
         isLiked: isLiked,
-        replies: replies.prependOne(replyId),
+        replies: replies.appendOne(replyId),
         numberOfReplies: numberOfReplies + 1,
         parentId: parentId,
         solutionId: solutionId,
@@ -164,48 +204,6 @@ class CommentState{
         repliesVisibility: true,
         isOwner: isOwner,
       );
-  
-  CommentState nextPageReplies()
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        questionId: questionId,
-        isEdited: isEdited,
-        content: content,
-        numberOfLikes: numberOfLikes,
-        likes: likes,
-        isLiked: isLiked,
-        replies: replies.startLoadingNext(),
-        numberOfReplies: numberOfReplies,
-        parentId: parentId,
-        solutionId: solutionId,
-        repliesVisibility: repliesVisibility,
-        isOwner: isOwner,
-      );
-  CommentState addNextPageReplies(Iterable<int> replyIds)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        questionId: questionId,
-        isEdited: isEdited,
-        content: content,
-        numberOfLikes: numberOfLikes,
-        likes: likes,
-        isLiked: isLiked,
-        replies: replies.addNextPage(replyIds),
-        numberOfReplies: numberOfReplies,
-        parentId: parentId,
-        solutionId: solutionId,
-        repliesVisibility: repliesVisibility,
-        isOwner: isOwner,
-      );
-    
 
   CommentState changeVisibility(bool visibility)
     => CommentState(

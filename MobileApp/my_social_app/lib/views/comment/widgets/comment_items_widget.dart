@@ -13,7 +13,7 @@ class CommentItemsWidget extends StatefulWidget {
   final Widget noItems;
   final void Function() onScrollBottom;
   final Pagination pagination;
-  final int? focusId;
+  final int? focusedCommentId;
 
   const CommentItemsWidget({
     super.key,
@@ -24,7 +24,7 @@ class CommentItemsWidget extends StatefulWidget {
     required this.pagination,
     required this.noItems,
     required this.onScrollBottom,
-    this.focusId,
+    this.focusedCommentId,
   });
 
   @override
@@ -33,9 +33,6 @@ class CommentItemsWidget extends StatefulWidget {
 
 class _CommentItemsWidgetState extends State<CommentItemsWidget> {
   
-  Color? _color = Colors.black.withOpacity(0.2);
-  late final Future _future;
-
   void _onScrollBottom(){
     if(widget.scrollController.hasClients && widget.scrollController.position.pixels == widget.scrollController.position.maxScrollExtent){
       widget.onScrollBottom();
@@ -45,21 +42,13 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
   @override
   void initState() {
     widget.scrollController.addListener(_onScrollBottom);
-    _future = Future.delayed(
-      const Duration(seconds: 2),
-      (){
-        setState((){
-          _color = ThemeData().cardTheme.color;
-        });
-      }
-    );
     super.initState();
   }
+
 
   @override
   void dispose() {
     widget.scrollController.removeListener(_onScrollBottom);
-    _future.ignore();
     super.dispose();
   }
   
@@ -77,7 +66,7 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
                 (index) => Container(
                   margin: const EdgeInsets.only(bottom: 15),
                   child: CommentItemWidget(
-                    color: widget.comments.elementAt(index).id == widget.focusId ? _color : null,
+                    isFocused: widget.comments.elementAt(index).id == widget.focusedCommentId,
                     contentController: widget.contentController,
                     focusNode: widget.focusNode,
                     comment: widget.comments.elementAt(index)

@@ -18,7 +18,7 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentRepliedDomainEvent
             var parentComment = notification.ParentComment;
 
             await _notficationWriteRepository.CreateAsync(
-                Notification.CommentRepliedNotification(repliedComment.AppUserId, comment.AppUserId, comment.Id, parentComment.QuestionId, parentComment.SolutionId, parentComment.Id),
+                Notification.CommentRepliedNotification(repliedComment.AppUserId, comment.AppUserId, comment.Id, parentComment.QuestionId, parentComment.SolutionId, parentComment.Id, repliedComment.Id),
                 cancellationToken
             );
             await _unitOfWork.CommitAsync(cancellationToken);
