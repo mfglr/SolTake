@@ -29,8 +29,6 @@ class CommentRepliedNotification extends StatelessWidget {
               builder: (context) => DisplayQuestionPage(
                 questionId: notification.questionId!,
                 parentId: notification.parentId,
-                commentId: notification.commentId,
-                repliedId: notification.repliedId,
               ),
             ));
         }

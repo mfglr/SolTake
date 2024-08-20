@@ -9,7 +9,12 @@ import 'package:my_social_app/views/solution/widgets/solution_item_widget.dart';
 
 class DisplaySolutionPage extends StatelessWidget {
   final int solutionId;
-  const DisplaySolutionPage({super.key,required this.solutionId});
+  final int? parentId;
+  const DisplaySolutionPage({
+    super.key,
+    required this.solutionId,
+    this.parentId
+  });
 
   @override
   Widget build(BuildContext context) {

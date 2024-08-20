@@ -6,6 +6,8 @@ import 'package:my_social_app/views/notification/widgets/question_comment_create
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_created_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/user_followed_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/user_tagged_in_comment_item.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class NotificationItems extends StatelessWidget {
@@ -33,6 +35,10 @@ class NotificationItems extends StatelessWidget {
                 return CommentLikedNotificationItem(notification: notification);
               case NotificationType.solutionCreatedNotification:
                 return SolutionCreatedNotificationItem(notification: notification);
+              case NotificationType.userTaggedInCommentNotifcation:
+                return UserTaggedInCommentItem(notification: notification);
+              case NotificationType.userFollowedNotification:
+                return UserFollowedNotificationItem(notification: notification);
             }
             return const SpaceSavingWidget();
           }

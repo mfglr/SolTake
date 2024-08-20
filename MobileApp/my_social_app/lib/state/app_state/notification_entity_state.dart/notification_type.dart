@@ -5,4 +5,6 @@ class NotificationType{
   static const int questionLikedNotification = 3; 
   static const int commentLikedNotification = 4;
   static const int solutionCreatedNotification = 5;
+  static const int userTaggedInCommentNotifcation = 6;
+  static const int userFollowedNotification = 7;
 }

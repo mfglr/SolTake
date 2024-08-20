@@ -11,15 +11,11 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 class DisplayQuestionPage extends StatefulWidget {
   final int questionId;
   final int? parentId;
-  final int? commentId;
-  final int? repliedId;
 
   const DisplayQuestionPage({
     super.key,
     required this.questionId,
     this.parentId,
-    this.commentId,
-    this.repliedId
   });
 
   @override

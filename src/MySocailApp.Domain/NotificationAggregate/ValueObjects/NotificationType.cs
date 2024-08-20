@@ -8,6 +8,7 @@
         QuestionLikedNotification,
         CommentLikedNotification,
         SolutionCreatedNotification,
-        UserTaggedCommentNotification
+        UserTaggedCommentNotification,
+        UserFollowedNotification
     }
 }

@@ -68,10 +68,13 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification CommentLikedNotification(int ownerId, int commentId, int likerId)
+        public static Notification CommentLikedNotification(int ownerId, int? questionId, int? solutionId, int? parentId, int commentId, int likerId)
             => new(NotificationType.CommentLikedNotification)
             {
                 OwnerId = ownerId,
+                QuestionId = questionId,
+                SolutionId = solutionId,
+                ParentId = parentId,
                 CommentId = commentId,
                 UserId = likerId,
                 CreatedAt = DateTime.UtcNow,
@@ -87,14 +90,26 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification UserTaggedToCommentNotification(int ownerId, int userId, int commentId)
+        public static Notification UserTaggedToCommentNotification(int ownerId, int userId, int commentId, int? questionId,int? solutionId,int? parentId)
             => new(NotificationType.UserTaggedCommentNotification)
             {
                 OwnerId = ownerId,
                 UserId = userId,
+                QuestionId = questionId,
+                SolutionId = solutionId,
+                ParentId = parentId,
                 CommentId = commentId,
                 CreatedAt = DateTime.UtcNow,
             };
+
+        public static Notification UserFollowedNotification(int followerId, int followedId)
+            => new(NotificationType.UserFollowedNotification)
+            {
+                OwnerId = followedId,
+                UserId = followerId,
+                CreatedAt = DateTime.UtcNow,
+            };
+
 
         public AppUser Owner { get; } = null!;
         public AppUser User { get; } = null!;

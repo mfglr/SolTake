@@ -88,15 +88,11 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         {
             if (followerId == Id)
                 throw new UnableToFollowYourselfException();
-            if (_blockeds.Any(x => x.BlockedId == followerId))
-                throw new UserNotFoundException();
-            if (_blockers.Any(x => x.BlockerId == followerId))
-                throw new UserIsBlockedException();
             if (_followers.Any(x => x.FollowerId == followerId))
                 throw new UserIsAlreadyFollowedException();
 
             _followers.Add(Entities.Follow.Create(followerId, Id));
-            AddDomainEvent(new FollowCreatedEvent(followerId, Id));
+            AddDomainEvent(new UserFollowedDomainEvent(followerId, Id));
         }
         public void Unfollow(int followerId)
         {

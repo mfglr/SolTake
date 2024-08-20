@@ -4,7 +4,10 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/notification/widgets/notification_bottom_comment_content.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
+import 'package:my_social_app/views/question/pages/display_question_page.dart';
+import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
 
 class UserTaggedInCommentItem extends StatelessWidget {
   final NotificationState notification;
@@ -19,10 +22,60 @@ class UserTaggedInCommentItem extends StatelessWidget {
         content: "You have been tagged in a comment.",
         icon: const Icon(
           Icons.tag,
-          color: Colors.black,
+          color: Colors.orange,
         ),
+        bottomContent: NotificationBottomCommentContent(content: notification.content!),
         onPressed: (){
-
+          if(notification.parentId != null){
+            if(notification.questionId != null){
+              Navigator
+                .of(context)
+                .push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayQuestionPage(
+                      questionId: notification.questionId!,
+                      parentId: notification.parentId,
+                    )
+                  )
+                );
+            }
+            else{
+              Navigator
+                .of(context)
+                .push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplaySolutionPage(
+                      solutionId: notification.solutionId!,
+                      parentId: notification.parentId,
+                    )
+                  )
+                );
+            }
+          }
+          else if(notification.questionId != null){
+            Navigator
+              .of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => DisplayQuestionPage(
+                    questionId: notification.questionId!,
+                    parentId: notification.commentId,
+                  )
+                )
+              );
+          }
+          else{
+            Navigator
+              .of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => DisplaySolutionPage(
+                    solutionId: notification.solutionId!,
+                    parentId: notification.commentId,
+                  )
+                )
+              );
+          }
         }
       ),
     );
