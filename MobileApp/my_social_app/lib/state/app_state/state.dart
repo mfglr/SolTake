@@ -17,6 +17,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_ent
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
@@ -127,7 +128,11 @@ class AppState{
     => userEntityState.entities[userId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
   Iterable<QuestionState> get selectSearchQuestions
     => searchState.questions.ids.map((e) => questionEntityState.entities[e]!);
-    
+  
+  //SelectSolutions
+  Iterable<SolutionState> getQuestionSolutions(int questionId)
+    => questionEntityState.entities[questionId]!.solutions.ids.map((e) => solutionEntityState.entities[e]!);
+
   //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)
     => questionEntityState.entities[questionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);

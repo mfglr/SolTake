@@ -25,6 +25,7 @@ class Solution{
   final bool isOwner;
   final Iterable<SolutionImage> images;
   final int numberOfComments;
+  final int state;
 
   const Solution({
     required this.id,
@@ -41,7 +42,8 @@ class Solution{
     required this.belongsToQuestionOfCurrentUser,
     required this.isOwner,
     required this.images,
-    required this.numberOfComments
+    required this.numberOfComments,
+    required this.state
   });
 
   factory Solution.fromJson(Map<String, dynamic> json) => _$SolutionFromJson(json);
@@ -64,6 +66,7 @@ class Solution{
       isOwner: isOwner,
       images: images.map((e) => e.toSolutionImageState()),
       numberOfComments: numberOfComments,
-      comments: Pagination.init(solutionsPerPage)
+      comments: Pagination.init(solutionsPerPage),
+      state: state,
     );
 }

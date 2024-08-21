@@ -2,7 +2,6 @@
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
-using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.Commands.QuestionCommentAggregate.DislikeQuestionComment
 {

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.Shared;
 using MySocailApp.Domain.UserConnectionAggregate.Entities;
 using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 

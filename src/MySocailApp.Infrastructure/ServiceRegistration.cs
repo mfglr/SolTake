@@ -14,7 +14,6 @@ using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
-using MySocailApp.Domain.Shared;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
@@ -128,6 +127,7 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
                 .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
+                .AddScoped<SolutionStateMarker>()
                 .AddScoped<SolutionCreatorDomainService>();
         }
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)

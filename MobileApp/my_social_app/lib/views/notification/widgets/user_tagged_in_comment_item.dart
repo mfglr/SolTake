@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/notification/widgets/notification_bottom_comment_content.dart';
+import 'package:my_social_app/views/notification/widgets/notification_bottom_text_content.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
 import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
@@ -24,7 +24,7 @@ class UserTaggedInCommentItem extends StatelessWidget {
           Icons.tag,
           color: Colors.orange,
         ),
-        bottomContent: NotificationBottomCommentContent(content: notification.content!),
+        bottomContent: NotificationBottomTextContent(content: notification.commentContent!),
         onPressed: (){
           if(notification.parentId != null){
             if(notification.questionId != null){

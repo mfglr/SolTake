@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.Shared;
+﻿using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.ApplicationServices

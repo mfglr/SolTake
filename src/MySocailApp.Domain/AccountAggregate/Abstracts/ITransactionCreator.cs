@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 
-namespace MySocailApp.Domain.Shared
+namespace MySocailApp.Domain.AccountAggregate.Abstracts
 {
     public interface ITransactionCreator
     {

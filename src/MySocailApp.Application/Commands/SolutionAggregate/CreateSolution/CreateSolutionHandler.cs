@@ -3,7 +3,6 @@ using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Queries.SolutionAggregate;
-using MySocailApp.Domain.Shared;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;

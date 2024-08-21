@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/views/solution/widgets/downvote_button_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_comment_button_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_state_widget.dart';
+import 'package:my_social_app/views/solution/widgets/upvote_button_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
-import 'package:my_social_app/views/solution/widgets/solution_buttons_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_images_slider.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -17,41 +20,51 @@ class SolutionItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: solution.appUserId,userName: null,))),
-                child: Row(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () => 
+                    Navigator
+                      .of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => UserPage(
+                            userId: solution.appUserId,
+                            userName: null
+                          )
+                        )
+                      ),
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(EdgeInsets.zero),
+                    minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 5),
+                        child: UserImageWidget( userId: solution.appUserId, diameter: 45),
+                      ),
+                      Text(solution.formatUserName(10))
+                    ],
+                  ),
+                ),
+                Row(
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
-                      child: UserImageWidget( userId: solution.appUserId, diameter: 45),
+                      child: SolutionStateWidget(solution: solution),
                     ),
-                    Text(solution.formatUserName(10))
+                    Text(
+                      timeago.format(solution.createdAt,locale: 'en_short')
+                    ),
                   ],
-                ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    timeago.format(solution.createdAt,locale: 'en_short')
-                  ),
-                  Builder(
-                    builder: (context){
-                      if(solution.isOwner){
-                        return IconButton(
-                          onPressed: (){
-                          },
-                          icon: const Icon(Icons.more_vert)
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                ],
-              )
-            ],
+                )
+              ],
+            ),
           ),
           Builder(
             builder: (context) {
@@ -72,7 +85,23 @@ class SolutionItemWidget extends StatelessWidget {
               return const SizedBox.shrink();
             }
           ),
-          SolutionButtonsWidget(solution: solution,),
+          Row(
+            children: [
+              Builder(
+                builder: (context) {
+                  if(!solution.isOwner) return UpvoteButtonWidget(solution: solution);
+                  return const SizedBox.shrink();
+                }
+              ),
+              Builder(
+                builder: (context) {
+                  if(!solution.isOwner)return DownvoteButtonWidget(solution: solution);
+                  return const SizedBox.shrink();
+                }
+              ),
+              SolutionCommentButtonWidget(solution: solution)
+            ]
+          )
         ],
       ),
     );

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.Shared
+﻿namespace MySocailApp.Application.ApplicationServices
 {
     public interface IUnitOfWork
     {

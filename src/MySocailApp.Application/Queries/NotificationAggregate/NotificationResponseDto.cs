@@ -14,10 +14,10 @@ namespace MySocailApp.Application.Queries.NotificationAggregate
         public int? ParentId { get; private set; }
         public int? RepliedId { get; private set; }
         public int? CommentId { get; private set; }
-        public string? Content { get; private set; }
+        public string? CommentContent { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
-        
+        public string? SolutionContent { get; private set; }
         private NotificationResponseDto() { }
     }
 }

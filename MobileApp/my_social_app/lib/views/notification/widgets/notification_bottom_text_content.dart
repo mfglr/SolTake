@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class NotificationBottomCommentContent extends StatelessWidget {
+class NotificationBottomTextContent extends StatelessWidget {
   final String content;
-  const NotificationBottomCommentContent({
+  const NotificationBottomTextContent({
     super.key,
     required this.content
   });

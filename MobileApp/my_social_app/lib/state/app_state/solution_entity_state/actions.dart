@@ -104,3 +104,25 @@ class LoadSolutionImageSuccessAction extends redux.Action{
   final Uint8List image;
   const LoadSolutionImageSuccessAction({required this.solutionId, required this.index, required this.image});
 }
+
+@immutable
+class MarkSolutionAsCorrectAction extends redux.Action{
+  final int solutionId;
+  final int questionId;
+  const MarkSolutionAsCorrectAction({required this.solutionId,required this.questionId});
+}
+@immutable
+class MarkSolutionAsCorrectSuccessAction extends redux.Action{
+  final int solutionId;
+  const MarkSolutionAsCorrectSuccessAction({required this.solutionId});
+}
+@immutable
+class MarkSolutionAsIncorrectAction extends redux.Action{
+  final int solutionId;
+  const MarkSolutionAsIncorrectAction({required this.solutionId});
+}
+@immutable
+class MarkSolutionAsIncorrectSuccessAction extends redux.Action{
+  final int solutionId;
+  const MarkSolutionAsIncorrectSuccessAction({required this.solutionId});
+}

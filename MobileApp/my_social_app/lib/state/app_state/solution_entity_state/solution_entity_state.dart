@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -33,6 +31,8 @@ class SolutionEntityState extends EntityState<SolutionState>{
   SolutionEntityState loadImage(int solutionId,int index,Uint8List image)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.loadImage(index, image)));
 
-  Iterable<SolutionState> selectSolutionsByQuestionId(int questionId)
-    => entities.values.where((e) => e.questionId == questionId).sorted((x,y) => y.id.compareTo(x.id));
+  SolutionEntityState markAsCorrect(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.markAsCorrect()));
+  SolutionEntityState markAsIncorrect(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]!.markAsIncorrect()));
 }

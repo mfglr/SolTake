@@ -42,11 +42,11 @@ class DisplayQuestionSolutionsPage extends StatelessWidget {
             !question.isOwner ? FloatingActionButton(
               onPressed: () => Navigator.of(context).pushNamed(addSolutionImagesRoute),
               shape: const CircleBorder(),
-              child: const Icon(Icons.add),
+              child: const Icon(Icons.border_color),
             ) : null,
           body: StoreConnector<AppState,Iterable<SolutionState>>(
             onInit: (store) => store.dispatch(GetNextPageQuestionSolutionsIfNoPageAction(questionId: question.id)),
-            converter: (store) => store.state.solutionEntityState.selectSolutionsByQuestionId(question.id),
+            converter: (store) => store.state.getQuestionSolutions(question.id),
             builder:(context,solutions) => Builder(
               builder: (context) {
                 if(question.solutions.ids.isEmpty && question.solutions.isLast){

@@ -6,6 +6,8 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.SolutionAggregate.CreateSolution;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote;
+using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsCorrect;
+using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsIncorrect;
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote;
 using MySocailApp.Application.Queries.SolutionAggregate;
@@ -43,6 +45,15 @@ namespace MySocailApp.Api.Controllers
         [HttpPut]
         public async Task RemoveDownvote(RemoveDownvoteDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
+
+        [HttpPut]
+        public async Task MarkAsCorrect(MarkSolutionAsCorrectDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPut]
+        public async Task MarkAsIncorrect(MarkSolutionAsIncorrectDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
 
         [HttpGet("{solutionId}/{solutionImageId}")]
         public async Task<FileResult> GetImage(int solutionId,int solutionImageId, CancellationToken cancellationToken)

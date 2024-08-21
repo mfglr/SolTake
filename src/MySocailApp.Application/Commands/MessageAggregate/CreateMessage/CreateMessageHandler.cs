@@ -5,7 +5,6 @@ using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
-using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
 {

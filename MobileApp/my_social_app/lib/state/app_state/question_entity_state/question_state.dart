@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 
 @immutable
 class QuestionState{
@@ -23,6 +24,8 @@ class QuestionState{
   final int numberOfComments;
   final Pagination solutions;
   final Pagination comments;
+  final int state;
+  final DateTime? solvedAt;
 
   const QuestionState({
     required this.id,
@@ -42,6 +45,8 @@ class QuestionState{
     required this.numberOfComments,
     required this.solutions,
     required this.comments,
+    required this.state,
+    required this.solvedAt,
   });
 
   String formatUserName(int count)
@@ -66,6 +71,8 @@ class QuestionState{
       numberOfComments: numberOfComments,
       solutions: solutions,
       comments: comments,
+      state: state,
+      solvedAt: solvedAt,
     );
   QuestionState dislike()
     => QuestionState(
@@ -86,6 +93,8 @@ class QuestionState{
       numberOfComments: numberOfComments,
       solutions: solutions,
       comments: comments,
+      state: state,
+      solvedAt: solvedAt,
     );
 
   QuestionState addSolution(int solutionId)
@@ -107,6 +116,8 @@ class QuestionState{
       numberOfComments: numberOfComments,
       solutions: solutions.prependOne(solutionId),
       comments: comments,
+      state: state,
+      solvedAt: solvedAt,
     );
   QuestionState getNextPageSolutions()
     => QuestionState(
@@ -127,6 +138,8 @@ class QuestionState{
         numberOfComments: numberOfComments,
         solutions: solutions.startLoadingNext(),
         comments: comments,
+        state: state,
+        solvedAt: solvedAt,
       );
   QuestionState addNextPageSolutions(Iterable<int> solutionIds)
     => QuestionState(
@@ -147,6 +160,8 @@ class QuestionState{
         numberOfComments: numberOfComments,
         solutions: solutions.addNextPage(solutionIds),
         comments: comments,
+        state: state,
+        solvedAt: solvedAt,
       );
   
   QuestionState addComment(int commentId)
@@ -168,6 +183,8 @@ class QuestionState{
       numberOfComments: numberOfComments + 1,
       solutions: solutions,
       comments: comments.prependOne(commentId),
+      state: state,
+      solvedAt: solvedAt,
     );
   QuestionState removeComment(int commentId)
     => QuestionState(
@@ -187,7 +204,9 @@ class QuestionState{
         numberOfSolutions: numberOfSolutions,
         numberOfComments: numberOfComments - 1,
         solutions: solutions,
-        comments: comments.removeOne(commentId)
+        comments: comments.removeOne(commentId),
+        state: state,
+        solvedAt: solvedAt,
       );
   QuestionState getNextPageComments()
     => QuestionState(
@@ -208,6 +227,8 @@ class QuestionState{
         numberOfComments: numberOfComments,
         solutions: solutions,
         comments: comments.startLoadingNext(),
+        state: state,
+        solvedAt: solvedAt,
       );
   QuestionState addNextPageComments(Iterable<int> commentIds)
     => QuestionState(
@@ -228,6 +249,8 @@ class QuestionState{
         numberOfComments: numberOfComments,
         solutions: solutions,
         comments: comments.addNextPage(commentIds),
+        state: state,
+        solvedAt: solvedAt,
       );
 
   QuestionState startLoadingImage(int index){
@@ -250,6 +273,8 @@ class QuestionState{
         numberOfComments: numberOfComments,
         solutions: solutions,
         comments: comments,
+        state: state,
+        solvedAt: solvedAt,
       );
   }
   QuestionState loadImage(int index,Uint8List image)
@@ -271,5 +296,33 @@ class QuestionState{
         numberOfComments: numberOfComments,
         solutions: solutions,
         comments: comments,
+        state: state,
+        solvedAt: solvedAt,
       );
+
+  QuestionState markAsSolved(){
+    if(state == QuestionStatus.solved) return this;
+    return QuestionState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      appUserId: appUserId,
+      userName: userName,
+      content: content,
+      examId: examId,
+      subjectId: subjectId,
+      topics: topics,
+      images: images,
+      isLiked: isLiked,
+      numberOfLikes: numberOfLikes,
+      isOwner: isOwner,
+      numberOfSolutions: numberOfSolutions,
+      numberOfComments: numberOfComments,
+      solutions: solutions,
+      comments: comments,
+      state: QuestionStatus.solved,
+      solvedAt: DateTime.now()
+    );
+  }
+    
 }

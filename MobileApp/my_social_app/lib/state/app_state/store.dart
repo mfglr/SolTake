@@ -193,6 +193,8 @@ final store = Store(
     getNextPageSolutionCommentsMiddleware,
     getNextPageSolutionCommentsIfNoPageMiddleware,
     loadSolutionImageMiddleware,
+    markSolutionAsCorrectMiddleware,
+    markSolutionAsIncorrectMiddleware,
     //solution end
 
     //comments entity state

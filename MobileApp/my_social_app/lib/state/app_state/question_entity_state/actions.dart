@@ -116,3 +116,9 @@ class LoadQuestionImageSuccessAction extends redux.Action{
   final Uint8List image;
   const LoadQuestionImageSuccessAction({required this.questionId, required this.index,required this.image});
 }
+
+@immutable
+class MarkQuestionAsSolved extends redux.Action{
+  final int questionId;
+  const MarkQuestionAsSolved({required this.questionId});
+}

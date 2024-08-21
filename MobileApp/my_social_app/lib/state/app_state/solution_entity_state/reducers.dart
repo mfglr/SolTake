@@ -31,6 +31,11 @@ SolutionEntityState startLoadingImageReducer(SolutionEntityState prev,LoadSoluti
 SolutionEntityState loadImageReducer(SolutionEntityState prev,LoadSolutionImageSuccessAction action)
   => prev.loadImage(action.solutionId, action.index, action.image);
 
+SolutionEntityState markAsCorrectReducer(SolutionEntityState prev, MarkSolutionAsCorrectSuccessAction action)
+  => prev.markAsCorrect(action.solutionId);
+SolutionEntityState markAsIncorrectReducer(SolutionEntityState prev, MarkSolutionAsIncorrectSuccessAction action)
+  => prev.markAsIncorrect(action.solutionId);
+
 Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<SolutionEntityState>([
   TypedReducer<SolutionEntityState,AddSolutionAction>(addSolutionReducer).call,
   TypedReducer<SolutionEntityState,AddSolutionsAction>(addSolutionsReducer).call,
@@ -46,4 +51,8 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
 
   TypedReducer<SolutionEntityState,LoadSolutionImageAction>(startLoadingImageReducer).call,
   TypedReducer<SolutionEntityState,LoadSolutionImageSuccessAction>(loadImageReducer).call,
+
+  TypedReducer<SolutionEntityState,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
+  TypedReducer<SolutionEntityState,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,
+
 ]);

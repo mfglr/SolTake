@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/views/question/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_question_solutions_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
@@ -35,7 +36,17 @@ class QuestionItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: question.appUserId,userName: null,))),
+                onPressed: () => 
+                  Navigator
+                    .of(context)
+                    .push(
+                      MaterialPageRoute(
+                        builder: (context) => UserPage(
+                          userId: question.appUserId,
+                          userName: null
+                        )
+                      )
+                    ),
                 child: Row(
                   children: [
                     Container(
@@ -49,11 +60,16 @@ class QuestionItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 15),
-                child: Text(
-                  timeago.format(question.createdAt,locale: 'en_short')
-                )
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 5),
+                    child: QuestionStateWidget(question: question),
+                  ),
+                  Text(
+                    timeago.format(question.createdAt,locale: 'en_short')
+                  ),
+                ],
               )
             ],
           ),
@@ -76,7 +92,13 @@ class QuestionItemWidget extends StatelessWidget {
                       store.dispatch(ChangeQuestionIdAction(questionId: question.id));
                       Navigator
                         .of(context)
-                        .push(MaterialPageRoute(builder: (context) => DisplayQuestionSolutionsPage(questionId: question.id)));
+                        .push(
+                          MaterialPageRoute(
+                            builder: (context) => DisplayQuestionSolutionsPage(
+                              questionId: question.id
+                            )
+                          )
+                        );
                     },
                     child: Row(
                       children: [

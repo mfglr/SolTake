@@ -7,4 +7,7 @@ class NotificationType{
   static const int solutionCreatedNotification = 5;
   static const int userTaggedInCommentNotifcation = 6;
   static const int userFollowedNotification = 7;
+  static const int solutionMarkedAsIncorrectNotification = 8;
+  static const int solutionMarkedAsCorrectNotification = 9;
+  static const int questionSolvedNotification = 10;
 }

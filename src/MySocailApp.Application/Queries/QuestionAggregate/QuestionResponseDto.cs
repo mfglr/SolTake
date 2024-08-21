@@ -1,5 +1,6 @@
 ﻿using MySocailApp.Application.Queries.ExamAggregate;
 using MySocailApp.Application.Queries.SubjectAggregate;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate
 {
@@ -16,6 +17,8 @@ namespace MySocailApp.Application.Queries.QuestionAggregate
         public int NumberOfSolutions { get; private set; }
         public int NumberOfComments { get; private set; }
         public bool IsOwner { get; private set; }
+        public QuestionState State { get; private set; }
+        public DateTime? SolvedAt { get; private set; }
         public ExamResponseDto Exam { get; private set; } = null!;
         public SubjectResponseDto Subject { get; private set; } = null!;
         public List<QuestionTopicResponseDto> Topics { get; private set; } = null!;

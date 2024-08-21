@@ -6,7 +6,6 @@ using MySocailApp.Domain.AccountAggregate.Exceptions;
 using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
-using MySocailApp.Domain.Shared;
 using System.Net;
 
 namespace MySocailApp.Domain.AccountAggregate.DomainServices

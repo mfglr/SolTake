@@ -19,9 +19,9 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public int? SolutionId { get; private set; }
        
         public bool IsEdited { get; private set; }
-        public Content Content { get; private set; } = null!;
+        public CommentContent Content { get; private set; } = null!;
 
-        private void Create(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged)
+        private void Create(int appUserId, CommentContent content, IEnumerable<int> idsOfUsersTagged)
         {
             AppUserId = appUserId;
             Content = content;
@@ -33,24 +33,24 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
                     AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
 
-        internal void CreateQuestionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int questionId)
+        internal void CreateQuestionComment(int appUserId, CommentContent content, IEnumerable<int> idsOfUsersTagged, int questionId)
         {
             Create(appUserId,content,idsOfUsersTagged);
             QuestionId = questionId;
         }
-        internal void CreateSolutionComment(int appUserId, Content content, IEnumerable<int> idsOfUsersTagged, int solutionId)
+        internal void CreateSolutionComment(int appUserId, CommentContent content, IEnumerable<int> idsOfUsersTagged, int solutionId)
         {
             Create(appUserId, content, idsOfUsersTagged);
             SolutionId = solutionId;
         }
-        internal void CreateReplyComment(int appUserId,Content content,IEnumerable<int> idsOfUsersTagged,int parentId,int repliedId)
+        internal void CreateReplyComment(int appUserId,CommentContent content,IEnumerable<int> idsOfUsersTagged,int parentId,int repliedId)
         {
             Create(appUserId, content, idsOfUsersTagged);
             ParentId = parentId;
             RepliedId = repliedId;
         }
 
-        public void Update(Content content)
+        public void Update(CommentContent content)
         {
             IsEdited = true;
             Content = content;

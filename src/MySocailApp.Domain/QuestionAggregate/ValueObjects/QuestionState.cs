@@ -2,7 +2,7 @@
 {
     public enum QuestionState
     {
-        NotSolved,
         Solved,
+        Pending,
     }
 }

@@ -6,7 +6,6 @@ using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.Commands.CommentAggregate.Create
 {
@@ -22,7 +21,7 @@ namespace MySocailApp.Application.Commands.CommentAggregate.Create
         public async Task<CommentResponseDto> Handle(CreateCommentDto request, CancellationToken cancellationToken)
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
-            var content = new Content(request.Content);
+            var content = new CommentContent(request.Content);
             var comment = new Comment();
             await _commentCreator.CreateAsync(comment, userId, content, request.QuestionId, request.SolutionId, request.RepliedId, cancellationToken);
             await _commentWriteRepository.CreateAsync(comment, cancellationToken);

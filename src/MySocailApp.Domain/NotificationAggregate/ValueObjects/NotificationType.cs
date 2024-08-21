@@ -9,6 +9,9 @@
         CommentLikedNotification,
         SolutionCreatedNotification,
         UserTaggedCommentNotification,
-        UserFollowedNotification
+        UserFollowedNotification,
+        SolutionMarkedAdIncorrect,
+        SolutionMarkedAsCorrect,
+        QuestionSolvedNotification,
     }
 }

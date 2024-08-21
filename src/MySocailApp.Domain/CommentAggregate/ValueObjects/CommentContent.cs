@@ -2,11 +2,11 @@
 
 namespace MySocailApp.Domain.CommentAggregate.ValueObjects
 {
-    public class Content
+    public class CommentContent
     {
         public string Value { get; private set; }
 
-        public Content(string value)
+        public CommentContent(string value)
         {
             if (string.IsNullOrEmpty(value))
                 throw new ContentIsEmptyException();

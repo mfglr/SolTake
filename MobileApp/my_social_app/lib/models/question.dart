@@ -27,6 +27,8 @@ class Question{
   final int numberOfSolutions;
   final int numberOfComments;
   final bool isOwner;
+  final int state;
+  final DateTime? solvedAt;
 
   const Question({
     required this.id,
@@ -44,6 +46,8 @@ class Question{
     required this.numberOfSolutions,
     required this.numberOfComments,
     required this.isOwner,
+    required this.state,
+    required this.solvedAt,
   });
 
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
@@ -66,6 +70,8 @@ class Question{
     numberOfSolutions: numberOfSolutions,
     numberOfComments: numberOfComments,
     solutions: Pagination.init(solutionsPerPage),
-    comments: Pagination.init(commentsPerPage)
+    comments: Pagination.init(commentsPerPage),
+    state: state,
+    solvedAt: solvedAt,
   );
 }

@@ -26,6 +26,7 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
       images: (json['images'] as List<dynamic>)
           .map((e) => SolutionImage.fromJson(e as Map<String, dynamic>)),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
+      state: (json['state'] as num).toInt(),
     );
 
 Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
@@ -44,4 +45,5 @@ Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
       'isOwner': instance.isOwner,
       'images': instance.images.toList(),
       'numberOfComments': instance.numberOfComments,
+      'state': instance.state,
     };

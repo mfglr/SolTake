@@ -28,6 +28,10 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       numberOfSolutions: (json['numberOfSolutions'] as num).toInt(),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
       isOwner: json['isOwner'] as bool,
+      state: (json['state'] as num).toInt(),
+      solvedAt: json['solvedAt'] == null
+          ? null
+          : DateTime.parse(json['solvedAt'] as String),
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -46,4 +50,6 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'numberOfSolutions': instance.numberOfSolutions,
       'numberOfComments': instance.numberOfComments,
       'isOwner': instance.isOwner,
+      'state': instance.state,
+      'solvedAt': instance.solvedAt?.toIso8601String(),
     };

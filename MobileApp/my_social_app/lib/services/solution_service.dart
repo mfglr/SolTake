@@ -32,42 +32,58 @@ class SolutionService{
     
     return Solution.fromJson(json);
   }
-  Future<void> makeUpvote(int solutionId) async {
-    await _appClient.put(
+  Future<void> makeUpvote(int solutionId) =>
+    _appClient.put(
       "$solutionController/$makeUpvoteEndpoint",
       body: {'solutionId': solutionId}
     );
-  }
-  Future<void> makeDownvote(int solutionId) async {
-    await _appClient.put(
+  
+  Future<void> makeDownvote(int solutionId) =>
+    _appClient.put(
       "$solutionController/$makeDownvoteEndpoint",
       body: {'solutionId': solutionId}
     );
-  }
-  Future<void> removeUpvote(int solutionId) async {
-    await _appClient.put(
+  
+  Future<void> removeUpvote(int solutionId) =>
+    _appClient.put(
       "$solutionController/$removeUpvoteEndpoint",
       body: { 'solutionId': solutionId }
     );
-  }
-  Future<void> removeDownvote(int solutionId) async {
-    await _appClient.put(
+
+  Future<void> removeDownvote(int solutionId) =>
+    _appClient.put(
       "$solutionController/$removeDownvoteEndpoint",
       body: { 'solutionId': solutionId }
     );
-  }
+
+  Future<void> markAsCorrect(int solutionId) =>
+    _appClient.put(
+      "$solutionController/$markSolutionAsCorrectEndpoint",
+      body: {
+        "solutionId":solutionId
+      }
+    );
+  
+  Future<void> markAsIncorrect(int solutionId) =>
+    _appClient.put(
+      "$solutionController/$markSolutionAsIncorrectEndpoint",
+      body: {
+        "solutionId":solutionId
+      }
+    );
 
   Future<Solution> getSolutionById(int solutionId)
     => _appClient
         .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
         .then((response) => Solution.fromJson(response)); 
+  
   Future<Iterable<Solution>> getByQuestionId(int questionId,int? lastValue,int? take,bool isDescending) async {
     String endPoint = "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId";
     String url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
-
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Solution.fromJson(e));
   }
+
   Future<Uint8List> getImage(int solutionId,int solutionImageId) async {
     String endPoint = "$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId";
     return await _appClient.getBytes(endPoint);

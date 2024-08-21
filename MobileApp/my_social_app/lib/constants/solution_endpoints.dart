@@ -6,5 +6,7 @@ const makeUpvoteEndpoint = "MakeUpvote";
 const makeDownvoteEndpoint = "MakeDownvote";
 const removeUpvoteEndpoint = "removeUpvote";
 const removeDownvoteEndpoint = "removeDownvote";
-const markSolutionAsApprovedEndpoint = "MarkAsApproved";
-const markSolutionAsPendingEndpoint = "MarkAsPending";
+
+const markSolutionAsCorrectEndpoint = "MarkAsCorrect";
+const markSolutionAsIncorrectEndpoint = "MarkAsIncorrect";
+

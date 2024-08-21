@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -37,4 +36,7 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingImage(index)));
   QuestionEntityState loadImage(int questionId,int index,Uint8List image)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.loadImage(index, image)));
+
+  QuestionEntityState markAsSolved(int questionid)
+    => QuestionEntityState(entities: entities[questionid] != null ? updateOne(entities[questionid]!.markAsSolved()) : entities);
 }

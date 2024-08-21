@@ -2,7 +2,6 @@
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
-using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion
 {

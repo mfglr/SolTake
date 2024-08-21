@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
         public async Task CreateAsync(Question question, CancellationToken cancellationToken)
             => await _context.AddAsync(question,cancellationToken);
 
-        public async Task<Question?> GetByIdAsync(int id)
+        public async Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
             => await _context.Questions.FindAsync(id);
 
         public async Task<Question?> GetWithLikeByIdAsync(int id,int userId,CancellationToken cancellationToken)

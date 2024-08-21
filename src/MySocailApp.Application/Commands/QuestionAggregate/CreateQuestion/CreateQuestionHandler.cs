@@ -6,7 +6,6 @@ using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
-using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {

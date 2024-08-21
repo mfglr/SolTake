@@ -19,7 +19,7 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
         private readonly IAppUserReadRepository _userController = userController;
         private readonly IUserNameReader _userNameReader = userNameReader;
 
-        public async Task CreateAsync(Comment comment, int userId, Content content, int? questionId, int? solutionId, int? repliedId, CancellationToken cancellationToken)
+        public async Task CreateAsync(Comment comment, int userId, CommentContent content, int? questionId, int? solutionId, int? repliedId, CancellationToken cancellationToken)
         {
             var userNames = _userNameReader.GetUserNames(content.Value);
             var idsOfUsersTagged = await _userController.GetIdsByUserNames(userNames, cancellationToken);

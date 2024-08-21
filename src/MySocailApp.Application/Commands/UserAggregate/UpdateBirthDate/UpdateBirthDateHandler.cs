@@ -2,7 +2,6 @@
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
-using MySocailApp.Domain.Shared;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateBirthDate
 {

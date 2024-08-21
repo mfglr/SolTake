@@ -1,4 +1,6 @@
-﻿namespace MySocailApp.Application.Queries.SolutionAggregate
+﻿using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+
+namespace MySocailApp.Application.Queries.SolutionAggregate
 {
     public class SolutionResponseDto
     {
@@ -16,6 +18,7 @@
         public bool IsOwner { get; private set; }
         public bool BelongsToQuestionOfCurrentUser { get; private set; }
         public int NumberOfComments { get; private set; }
+        public SolutionState State { get; private set; }
         public IReadOnlyCollection<SolutionImageResponseDto> Images { get; private set; } = null!;
 
         private SolutionResponseDto() { }

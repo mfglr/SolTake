@@ -3,6 +3,7 @@ import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
@@ -91,6 +92,26 @@ void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher nex
           LoadSolutionImageSuccessAction(solutionId: action.solutionId,index: action.index,image: image)
         ));
     }
+  }
+  next(action);
+}
+
+void markSolutionAsCorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkSolutionAsCorrectAction){
+    SolutionService()
+      .markAsCorrect(action.solutionId)
+      .then((_){
+        store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: action.solutionId));
+        store.dispatch(MarkQuestionAsSolved(questionId: action.questionId));
+      });
+  }
+  next(action);
+}
+void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkSolutionAsIncorrectAction){
+    SolutionService()
+      .markAsIncorrect(action.solutionId)
+      .then((_) => store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: action.solutionId)));
   }
   next(action);
 }

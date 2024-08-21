@@ -10,8 +10,8 @@ namespace MySocailApp.Application.Mappers
         {
             CreateMap<Notification, NotificationResponseDto>()
                 .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.User.Account.UserName))
-                .ForMember(dest => dest.Content, x => x.MapFrom(src => src.Comment != null ? src.Comment.Content.Value : null));
-
+                .ForMember(dest => dest.CommentContent, x => x.MapFrom(src => src.Comment != null ? src.Comment.Content.Value : null))
+                .ForMember(dest => dest.SolutionContent, x => x.MapFrom(src => src.Solution != null && src.Solution.Content != null ? src.Solution.Content.Value : null));
         }
 
     }

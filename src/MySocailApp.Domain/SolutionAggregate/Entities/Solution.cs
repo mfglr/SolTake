@@ -30,6 +30,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             QuestionId = questionId;
             AppUserId = appUserId;
             Content = content;
+            State = SolutionState.Pending;
             _images.AddRange(images);
             UpdatedAt = CreatedAt = DateTime.UtcNow;
 
@@ -79,6 +80,20 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             if(index == -1 || _votes[index].Type == SolutionVoteType.Upvote)
                 throw new VoteIsNotFoundException();
             _votes.RemoveAt(index);
+        }
+
+        public SolutionState State { get; private set; }
+        internal void MarkAsCorrect()
+        {
+            State = SolutionState.Correct;
+            UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new SolutionMarkedAsCorrectDomainEvent(this));
+        }
+        internal void MarkAsIncorrect()
+        {
+            State = SolutionState.Incorrect;
+            UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));
         }
 
         //Readonluy navigator properties

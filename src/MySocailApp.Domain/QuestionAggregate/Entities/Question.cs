@@ -20,7 +20,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
         public string? Content { get; private set; }
-        public QuestionState State { get; private set; }
+        
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
@@ -49,15 +49,18 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             Content = content;
             ExamId = examId;
             SubjectId = subjectId;
-            State = QuestionState.NotSolved;
+            State = QuestionState.Pending;
             CreatedAt = DateTime.UtcNow;
             _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(Id, topicId)));
             _images.AddRange(images);
         }
-        public void MarkAsSolved()
+
+        public QuestionState State { get; private set; }
+        public DateTime? SolvedAt { get; private set; }
+        internal void MarkAsSolved()
         {
             State = QuestionState.Solved;
-            UpdatedAt = DateTime.UtcNow;
+            UpdatedAt = SolvedAt = DateTime.UtcNow;
         }
 
         private readonly List<QuestionUserLike> _likes = [];
