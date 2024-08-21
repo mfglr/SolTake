@@ -115,4 +115,15 @@ class Pagination{
         recordsPerPage: recordsPerPage,
       );
   
+  Pagination addSorted(int id){
+    if(ids.isEmpty || id < ids.last) return this;
+    return Pagination(
+      isLast: isLast,
+      loadingNext: loadingNext,
+      loadingPrev: loadingPrev,
+      ids: [...ids.takeWhile((x) => x > id),id,...ids.skipWhile((x) => x > id)], 
+      recordsPerPage: recordsPerPage
+    );
+  }
+
 }

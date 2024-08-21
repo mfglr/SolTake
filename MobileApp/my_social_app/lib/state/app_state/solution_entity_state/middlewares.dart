@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
@@ -98,11 +99,14 @@ void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher nex
 
 void markSolutionAsCorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MarkSolutionAsCorrectAction){
+    final currentUserId = store.state.accountState!.id;
     SolutionService()
       .markAsCorrect(action.solutionId)
       .then((_){
         store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: action.solutionId));
         store.dispatch(MarkQuestionAsSolved(questionId: action.questionId));
+        store.dispatch(RemoveUserUnsolvedQuestionAction(userId: currentUserId, questionId: action.questionId));
+        store.dispatch(AddUserSolvedQuestionAction(userId: currentUserId, questionId: action.questionId));
       });
   }
   next(action);

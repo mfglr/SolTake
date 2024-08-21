@@ -129,11 +129,14 @@ class UserState{
   //solved questions
   UserState getNextPageSolvedQuestions() => _optional(newSolvedQuestions: solvedQuestions.startLoadingNext());
   UserState addNextPageSolvedQuestions(Iterable<int> questionIds) => _optional(newSolvedQuestions: solvedQuestions.addNextPage(questionIds));
+  UserState addSolvedQuestion(int questionId) => _optional(newSolvedQuestions: solvedQuestions.addSorted(questionId));
 
   //unsolved questions
   UserState getNextPageUnsolvedQuestions() => _optional(newUnsolvedQuestions: unsolvedQuestions.startLoadingNext());
   UserState addNextPageUnsolvedQuestions(Iterable<int> questionIds) => _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(questionIds));
-
+  UserState addUnsolvedQuestion(int questionId) => _optional(newUnsolvedQuestions: unsolvedQuestions.prependOne(questionId)); 
+  UserState removeUnsolvedQuestion(int questionId) => _optional(newUnsolvedQuestions: unsolvedQuestions.removeOne(questionId));
+  
   //messages
   UserState nextPageMessages() => _optional(newMessages: messages.startLoadingNext());
   UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.addPrevPage(messageIds));

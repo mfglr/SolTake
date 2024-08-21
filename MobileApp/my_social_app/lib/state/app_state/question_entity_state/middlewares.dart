@@ -14,7 +14,6 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
-
 void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LoadQuestionAction){
     if(store.state.questionEntityState.entities[action.questionId] == null){
@@ -112,7 +111,6 @@ void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatc
   }
   next(action);
 }
-
 
 void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadQuestionImageAction){
