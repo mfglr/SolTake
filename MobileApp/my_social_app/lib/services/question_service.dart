@@ -85,6 +85,18 @@ class QuestionService{
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
+  Future<Iterable<Question>> getSolvedQuestionsByUserId(int userId,int? lastValue,int? take,bool isDescending) async {
+    String endpoint = "$questionController/$getSolvedQuestionsByUserIdEndpoint/$userId";
+    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take, isDescending);
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Question.fromJson(e));
+  }
+  Future<Iterable<Question>> getUnsolvedQuestionsByUserId(int userId,int? lastValue,int? take,bool isDescending) async {
+    String endpoint = "$questionController/$getUnsolvedQuestionsByUserIdEndpoint/$userId";
+    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take, isDescending);
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => Question.fromJson(e));
+  }
   Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,int? lastValue,int? take,bool isDescending) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {

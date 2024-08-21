@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/views/question/widgets/no_question_abstract_items_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -48,6 +49,7 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
 
   @override
   Widget build(BuildContext context) {
+    if(widget.pagination.isLast && widget.pagination.ids.isEmpty) return const NoQuestionAbstractItemsWidget();
     return Column(
       children: [
         Expanded(

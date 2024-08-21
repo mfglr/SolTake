@@ -119,6 +119,14 @@ final store = Store(
     getNextPageUserQuestionsIfReadyMiddleware,
     nextPageOfUserQuestionsMiddleware,
 
+    getNextPageUserSolvedQuestionsIfNoPageMiddleware,
+    getNextPageUserSolvedQuestionsIfReadyMiddleware,
+    getNextPageUserSolvedQuestionsMiddleware,
+
+    getNextPageUserUnsolvedQuestionsIfNoPageMiddleware,
+    getNextPageUserUnsolvedQuestionsIfReadyMiddleware,
+    getNextPageUserUnsolvedQuestionsMiddleware,
+
     updateUserNameMiddleware,
     updateNameMiddleware,
     //user end

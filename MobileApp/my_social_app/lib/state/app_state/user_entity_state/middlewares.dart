@@ -210,6 +210,76 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
   next(action);
 }
 
+void getNextPageUserSolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSolvedQuestionsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserSolvedQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserSolvedQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSolvedQuestionsIfReadyAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserSolvedQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSolvedQuestionsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
+    QuestionService()
+      .getSolvedQuestionsByUserId(action.userId, pagination.lastValue, questionsPerPage, true)
+      .then((questions){
+        store.dispatch(AddNextPageUserSolvedQuestionsAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
+
+void getNextPageUserUnsolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserUnsolvedQuestionsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.unsolvedQuestions;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserUnsolvedQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserUnsolvedQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserUnsolvedQuestionsIfReadyAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.unsolvedQuestions;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserUnsolvedQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserUnsolvedQuestionsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.unsolvedQuestions;
+    QuestionService()
+      .getUnsolvedQuestionsByUserId(action.userId, pagination.lastValue, questionsPerPage, true)
+      .then((questions){
+        store.dispatch(AddNextPageUserUnsolvedQuestionsAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
+
 void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FollowAction){
     final followerId = store.state.accountState!.id;

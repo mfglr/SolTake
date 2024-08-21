@@ -41,6 +41,7 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState addNotFollowed(int userId,int notFollowedId)
     => UserEntityState(entities: updateOne(entities[userId]!.addNotFollowed(notFollowedId)));
 
+  //questions
   UserEntityState getNextPageQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageQuestions()));
   UserEntityState addNextPageQuestions(int userId, Iterable<int> questions)
@@ -48,7 +49,19 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState addQuestion(int userId,int questionId)
     => UserEntityState(entities: updateOne(entities[userId]!.addQuestion(questionId)));
   
+  //solved questions
+  UserEntityState getNextPageSolvedQuestions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]!.getNextPageSolvedQuestions()));
+  UserEntityState addNextPageSolvedQuestions(int userId, Iterable<int> questionIds)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNextPageSolvedQuestions(questionIds)));
+  
+  //unsolved questions
+  UserEntityState getNextPageUnsolvedQuestions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]!.getNextPageUnsolvedQuestions()));
+  UserEntityState addNextPageUnsolvedQuestions(int userId,Iterable<int> questionIds)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNextPageUnsolvedQuestions(questionIds)));
 
+  //messages
   UserEntityState addMessage(int userId,int messageId)
     => UserEntityState(entities: updateOne(entities[userId]!.addMessage(messageId)));
   UserEntityState getNextPageMessages(int userId)

@@ -10,3 +10,5 @@ const getQuestionsBySubjectIdEndpoint = "GetQuestionsBySubjectId";
 const getQuestionsByExamIdEndpoint = "GetQuestionsByExamId";
 const getQuestionImageEndPoint = "GetImage";
 const searchQuestionsEndpoint = "SearchQuestions";
+const getSolvedQuestionsByUserIdEndpoint = "GetSolvedQuestionsByUserId";
+const getUnsolvedQuestionsByUserIdEndpoint = "GetUnsolvedQuestionsByUserId";

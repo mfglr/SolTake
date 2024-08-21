@@ -59,6 +59,8 @@ class User{
         isFollower: isFollower,
         isFollowed: isFollowed,
         questions: Pagination.init(questionsPerPage),
+        solvedQuestions: Pagination.init(questionsPerPage),
+        unsolvedQuestions: Pagination.init(questionsPerPage),
         followers: Pagination.init(usersPerPage),
         followeds: Pagination.init(usersPerPage),
         notFolloweds: Pagination.init(usersPerPage),

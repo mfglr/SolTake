@@ -2,6 +2,7 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extetions;
 
@@ -92,5 +93,21 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 )
                 .ToPage(lastId,take ?? RecordsPerPage.QuestionsPerPage)
                 .ToListAsync(cancellationToken);
+
+        public async Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId, int? offset, int take, bool isDescending, CancellationToken cancellationToken)
+            => await _context.Questions
+                .AsNoTracking()
+                .IncludeForQuestion()
+                .Where(x => x.AppUserId == userId && x.State == QuestionState.Solved)
+                .ToPage(offset,take,isDescending)
+                .ToListAsync (cancellationToken);
+        
+        public async Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, int? offset, int take, bool isDescending, CancellationToken cancellationToken)
+          => await _context.Questions
+              .AsNoTracking()
+              .IncludeForQuestion()
+              .Where(x => x.AppUserId == userId && x.State == QuestionState.Pending)
+              .ToPage(offset, take, isDescending)
+              .ToListAsync(cancellationToken);
     }
 }

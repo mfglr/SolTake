@@ -172,6 +172,50 @@ class AddUserQuestionAction extends redux.Action{
 }
 
 @immutable
+class GetNextPageUserSolvedQuestionsIfNoPageAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserSolvedQuestionsIfNoPageAction({required this.userId});
+}
+@immutable
+class GetNextPageUserSolvedQuestionsIfReadyAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserSolvedQuestionsIfReadyAction({required this.userId});
+}
+@immutable
+class GetNextPageUserSolvedQuestionsAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserSolvedQuestionsAction({required this.userId});
+}
+@immutable
+class AddNextPageUserSolvedQuestionsAction extends redux.Action{
+  final int userId;
+  final Iterable<int> questionIds;
+  const AddNextPageUserSolvedQuestionsAction({required this.userId, required this.questionIds});
+}
+
+@immutable
+class GetNextPageUserUnsolvedQuestionsIfNoPageAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserUnsolvedQuestionsIfNoPageAction({required this.userId});
+}
+@immutable
+class GetNextPageUserUnsolvedQuestionsIfReadyAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserUnsolvedQuestionsIfReadyAction({required this.userId});
+}
+@immutable
+class GetNextPageUserUnsolvedQuestionsAction extends redux.Action{
+  final int userId;
+  const GetNextPageUserUnsolvedQuestionsAction({required this.userId});
+}
+@immutable
+class AddNextPageUserUnsolvedQuestionsAction extends redux.Action{
+  final int userId;
+  final Iterable<int> questionIds;
+  const AddNextPageUserUnsolvedQuestionsAction({required this.userId, required this.questionIds});
+}
+
+@immutable
 class GetNextPageUserMessagesIfNoPageAction extends redux.Action{
   final int userId;
   const GetNextPageUserMessagesIfNoPageAction({required this.userId});

@@ -21,6 +21,8 @@ class UserState{
   final Pagination followeds;
   final Pagination notFolloweds;
   final Pagination questions;
+  final Pagination solvedQuestions;
+  final Pagination unsolvedQuestions;
   final Pagination messages;
 
   String formatName(int count){
@@ -49,6 +51,8 @@ class UserState{
     required this.followers,
     required this.followeds,
     required this.questions,
+    required this.solvedQuestions,
+    required this.unsolvedQuestions,
     required this.messages,
     required this.notFolloweds
   });
@@ -68,6 +72,8 @@ class UserState{
     Pagination? newFollowers,
     Pagination? newFolloweds,
     Pagination? newQuestions,
+    Pagination? newSolvedQuestions,
+    Pagination? newUnsolvedQuestions,
     Pagination? newMessages,
     Pagination? newNotFolloweds
   }) => UserState(
@@ -87,6 +93,8 @@ class UserState{
     followers: newFollowers ?? followers,
     followeds: newFolloweds ?? followeds,
     questions: newQuestions ?? questions,
+    solvedQuestions: newSolvedQuestions ?? solvedQuestions,
+    unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
     messages: newMessages ?? messages,
     notFolloweds: newNotFolloweds ?? notFolloweds
   );
@@ -118,6 +126,14 @@ class UserState{
   UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.addNextPage(newQuestions));
   UserState addQuestion(int id) => _optional(newNumberOfQuestions: numberOfQuestions + 1,newQuestions: questions.prependOne(id));
   
+  //solved questions
+  UserState getNextPageSolvedQuestions() => _optional(newSolvedQuestions: solvedQuestions.startLoadingNext());
+  UserState addNextPageSolvedQuestions(Iterable<int> questionIds) => _optional(newSolvedQuestions: solvedQuestions.addNextPage(questionIds));
+
+  //unsolved questions
+  UserState getNextPageUnsolvedQuestions() => _optional(newUnsolvedQuestions: unsolvedQuestions.startLoadingNext());
+  UserState addNextPageUnsolvedQuestions(Iterable<int> questionIds) => _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(questionIds));
+
   //messages
   UserState nextPageMessages() => _optional(newMessages: messages.startLoadingNext());
   UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.addPrevPage(messageIds));

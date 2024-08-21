@@ -13,9 +13,17 @@ class ProfileEditButton extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 4),
-            child: const Text("Edit your profile")
+            child: const Text(
+              "Edit your profile",
+              style: TextStyle(
+                fontSize: 12
+              ),
+            )
           ),
-          const Icon(Icons.edit)
+          const Icon(
+            Icons.edit,
+            size: 16,
+          )
         ],
       )
     );

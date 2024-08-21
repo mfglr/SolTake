@@ -22,7 +22,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
             children: [
               UserImageWidget(
                 userId: user.id,
-                diameter: 100,
+                diameter: 80,
                 onPressed: () => Navigator
                   .of(context)
                   .push(MaterialPageRoute(builder: (context) => DisplayUserImagePage(userId: user.id))),
@@ -49,7 +49,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
                     Text(
                       user.numberOfQuestions.toString(),
                       style: const TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                       ),
                     ),
                     const Text(
@@ -70,7 +70,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
                     Text(
                       user.numberOfFollowers.toString(),
                       style: const TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                       ),
                     ),
                     const Text(
@@ -91,7 +91,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
                     Text(
                       user.numberOfFolloweds.toString(),
                       style: const TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                       ),
                     ),
                     const Text(

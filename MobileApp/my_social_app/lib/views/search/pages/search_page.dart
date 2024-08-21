@@ -4,9 +4,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/search_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/search/widgets/search_question_widget.dart';
-import 'package:my_social_app/views/search/widgets/label_pagination_widget.dart';
 import 'package:my_social_app/views/search/widgets/search_users_widget.dart';
+import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:rxdart/rxdart.dart';
+
+const labels = ["questions","users"];
+const icons = [Icons.question_mark,Icons.person];
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -20,8 +23,8 @@ class _SearchPageState extends State<SearchPage> {
   late final PageController _pageController;
   late final StreamSubscription<String> _questionKeyConsumer;
   late final StreamSubscription<String> _userKeyConsumer;
+  
   double _page = 0;
-
 
   void _setPage(){
     setState(() {
@@ -118,7 +121,24 @@ class _SearchPageState extends State<SearchPage> {
             padding: const EdgeInsets.only(bottom: 15,top:15),
             child: LabelPaginationWidget(
               initialPage: 0,
-              labels: const ["questions","users"],
+              labelCount: 2,
+              labelBuilder: (isActive,index){
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      icons[index],
+                      color: isActive ? Colors.black : Colors.grey
+                    ),
+                    Text(
+                      labels[index],
+                      style: TextStyle(
+                        color: isActive ? Colors.black : Colors.grey
+                      ),
+                    ),
+                  ],
+                );
+              },
               page: _page,
               width: MediaQuery.of(context).size.width,
               pageController: _pageController,

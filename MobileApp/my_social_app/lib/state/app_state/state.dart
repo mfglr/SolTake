@@ -126,6 +126,10 @@ class AppState{
     => topicEntityState.entities[topicId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
   Iterable<QuestionState> selectUserQuestions(int userId)
     => userEntityState.entities[userId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+  Iterable<QuestionState> selectUserSolvedQuestions(int userId)
+    => userEntityState.entities[userId]!.solvedQuestions.ids.map((e) => questionEntityState.entities[e]!);
+  Iterable<QuestionState> selectUserUnsolvedQuestions(int userId)
+    => userEntityState.entities[userId]!.unsolvedQuestions.ids.map((e) => questionEntityState.entities[e]!);
   Iterable<QuestionState> get selectSearchQuestions
     => searchState.questions.ids.map((e) => questionEntityState.entities[e]!);
   

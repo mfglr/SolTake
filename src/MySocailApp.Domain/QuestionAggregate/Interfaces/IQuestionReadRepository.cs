@@ -14,5 +14,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Interfaces
         Task<List<Question>> GetQuestionsBySubjectIdAsync(int subjectId, int? lastId, int? take, CancellationToken cancellationToken);
         Task<List<Question>> GetQuestionsByExamIdAsync(int examId, int? lastId, int? take, CancellationToken cancellationToken);
         Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId, int? lastId, int? take, CancellationToken cancellationToken);
+        Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId,int? offset, int take, bool isDescending, CancellationToken cancellationToken);
+        Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, int? offset, int take, bool isDescending, CancellationToken cancellationToken);
     }
 }

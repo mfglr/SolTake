@@ -10,6 +10,18 @@ UserEntityState addNextPageQuestionsReducer(UserEntityState prev,AddNextPageUser
 UserEntityState addQuestionReducer(UserEntityState prev, AddUserQuestionAction action)
   => prev.addQuestion(action.userId, action.questionId);
 
+//solved questions
+UserEntityState getNextPageSolvedQuestionsReducer(UserEntityState prev, GetNextPageUserSolvedQuestionsAction action) 
+  => prev.getNextPageSolvedQuestions(action.userId);
+UserEntityState addNextPageSolvedQuestionsReducer(UserEntityState prev, AddNextPageUserSolvedQuestionsAction action)
+  => prev.addNextPageSolvedQuestions(action.userId,action.questionIds);
+
+//unsolved questions
+UserEntityState getNextPageUnsolvedQuestionsReducer(UserEntityState prev, GetNextPageUserUnsolvedQuestionsAction action)
+  => prev.getNextPageUnsolvedQuestions(action.userId);
+UserEntityState addNextPageUnsolvedQuestionsReducer(UserEntityState prev, AddNextPageUserUnsolvedQuestionsAction action)
+  => prev.addNextPageUnsolvedQuestions(action.userId, action.questionIds);
+
 //followers
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
   => prev.getNextPageFollowers(action.userId);
@@ -66,6 +78,14 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,GetNextPageUserQuestionsAction>(getNextPageQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserQuestionsAction>(addNextPageQuestionsReducer).call,
   TypedReducer<UserEntityState,AddUserQuestionAction>(addQuestionReducer).call,
+
+  //solved questions
+  TypedReducer<UserEntityState,GetNextPageUserSolvedQuestionsAction>(getNextPageSolvedQuestionsReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserSolvedQuestionsAction>(addNextPageSolvedQuestionsReducer).call,
+
+  //unsolved questions
+  TypedReducer<UserEntityState,GetNextPageUserUnsolvedQuestionsAction>(getNextPageUnsolvedQuestionsReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserUnsolvedQuestionsAction>(addNextPageUnsolvedQuestionsReducer).call,
 
   //followers
   TypedReducer<UserEntityState,GetNextPageUserFollowersAction>(getNextPageFollowers).call,

@@ -14,6 +14,8 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
+using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUserId;
+using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions;
 
 namespace MySocailApp.Api.Controllers
@@ -73,5 +75,13 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<List<QuestionResponseDto>> SearchQuestions(SearchQuestionsDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request,cancellationToken);
+
+        [HttpGet("{userId}")]
+        public async Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserId(int userId, [FromQuery] int? lastValue, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetSolvedQuestionsByUserIdDto(userId,lastValue, take, isDescending), cancellationToken);
+
+        [HttpGet("{userId}")]
+        public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int? lastValue, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+           => await _mediator.Send(new GetUnsolvedQuestionsByUserIdDto(userId, lastValue, take, isDescending), cancellationToken);
     }
 }
