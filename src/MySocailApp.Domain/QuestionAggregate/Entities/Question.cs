@@ -20,7 +20,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
         public string? Content { get; private set; }
-        
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
@@ -62,6 +61,12 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             State = QuestionState.Solved;
             UpdatedAt = SolvedAt = DateTime.UtcNow;
         }
+        internal void MarkAsPending()
+        {
+            State = QuestionState.Pending;
+            SolvedAt = null;
+            UpdatedAt = DateTime.UtcNow;
+        }
 
         private readonly List<QuestionUserLike> _likes = [];
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
@@ -94,7 +99,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public Subject Subject { get; } = null!;
         public AppUser AppUser { get; } = null!;
         public IReadOnlyList<Solution> Solutions { get; } = null!;
-        public IReadOnlyCollection<Comment> Comments { get; } = null!;
+        public IReadOnlyCollection<QuestionComment> Comments { get; } = null!;
         public IReadOnlyCollection<Notification> Notifications { get; } 
     }
 }

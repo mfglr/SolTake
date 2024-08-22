@@ -26,6 +26,9 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<Comment> Comments { get; private set; }
+        public DbSet<QuestionComment> QuestionComments { get; private set; }
+        public DbSet<SolutionComment> SolutionComments { get; private set; }
+        public DbSet<ChildComment> ChildComments { get; private set; }
         public DbSet<Notification> Notifications { get; private set; }
         public DbSet<Message> Messages { get; private set; }
         public DbSet<UserConnection> UserConnections { get; private set; }

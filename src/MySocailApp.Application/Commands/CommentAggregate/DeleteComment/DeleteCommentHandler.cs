@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Commands.CommentAggregate.DeleteComment
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
             var comment =
-                await _commentWriteRepository.GetWithAllAsync(request.CommentId, cancellationToken) ??
+                await _commentWriteRepository.GetWithChildrenAndRepliesById(request.CommentId, cancellationToken) ??
                 throw new CommentNotFoundException();
 
             if (userId != comment.AppUserId)

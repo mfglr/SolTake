@@ -17,5 +17,19 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
 
         public async Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Solutions.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public async Task<Solution?> GetWithAllAsync(int id, CancellationToken cancellationToken)
+            => await _context.Solutions
+                .Include(x => x.Images)
+                .Include(x => x.Votes)
+                .Include(x => x.Comments)
+                .ThenInclude(x => x.Likes)
+                
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public void Delete(Solution solution, CancellationToken cancellationToken)
+        {
+
+        }
     }
 }

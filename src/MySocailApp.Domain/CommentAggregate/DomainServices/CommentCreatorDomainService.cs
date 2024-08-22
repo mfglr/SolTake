@@ -24,56 +24,56 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
             var userNames = _userNameReader.GetUserNames(content.Value);
             var idsOfUsersTagged = await _userController.GetIdsByUserNames(userNames, cancellationToken);
 
-            if (repliedId != null)
-            {
-                var repliedComment =
-                    await _commentReadRepository.GetAsync((int)repliedId, cancellationToken) ??
-                    throw new CommentNotFoundException();
+            //if (repliedId != null)
+            //{
+            //    var repliedComment =
+            //        await _commentReadRepository.GetAsync((int)repliedId, cancellationToken) ??
+            //        throw new CommentNotFoundException();
 
-                Comment parent;
-                if (repliedComment.ParentId != null)
-                {
-                    parent =
-                        await _commentReadRepository.GetAsync((int)repliedComment.ParentId, cancellationToken) ??
-                        throw new CommentNotFoundException();
+            //    Comment parent;
+            //    if (repliedComment.ParentId != null)
+            //    {
+            //        parent =
+            //            await _commentReadRepository.GetAsync((int)repliedComment.ParentId, cancellationToken) ??
+            //            throw new CommentNotFoundException();
 
-                    if (parent.ParentId != null)
-                        throw new CommentIsNotRootException();
-                    comment.CreateReplyComment(userId, content, idsOfUsersTagged, parent.Id, (int)repliedId);
-                }
-                else
-                {
-                    parent = repliedComment;
-                    comment.CreateReplyComment(userId, content, idsOfUsersTagged, (int)repliedId, (int)repliedId);
-                }
+            //        if (parent.ParentId != null)
+            //            throw new CommentIsNotRootException();
+            //        comment.CreateReplyComment(userId, content, idsOfUsersTagged, parent.Id, (int)repliedId);
+            //    }
+            //    else
+            //    {
+            //        parent = repliedComment;
+            //        comment.CreateReplyComment(userId, content, idsOfUsersTagged, (int)repliedId, (int)repliedId);
+            //    }
 
-                if (repliedComment.AppUserId != userId)
-                    comment.AddDomainEvent(new CommentRepliedDomainEvent(comment, parent, repliedComment));
-            }
-            else if (questionId != null)
-            {
-                var question =
-                    await _questionRepository.GetAsync((int)questionId, cancellationToken) ??
-                    throw new QuestionNotFoundException();
+            //    if (repliedComment.AppUserId != userId)
+            //        comment.AddDomainEvent(new CommentRepliedDomainEvent(comment, parent, repliedComment));
+            //}
+            //else if (questionId != null)
+            //{
+            //    var question =
+            //        await _questionRepository.GetAsync((int)questionId, cancellationToken) ??
+            //        throw new QuestionNotFoundException();
                 
-                comment.CreateQuestionComment(userId, content, idsOfUsersTagged, (int)questionId);
+            //    comment.CreateQuestionComment(userId, content, idsOfUsersTagged, (int)questionId);
                 
-                if(question.AppUserId != comment.AppUserId)
-                    comment.AddDomainEvent(new QuestionCommentCreatedDomainEvent(comment));
-            }
-            else if (solutionId != null)
-            {
-                var solution = 
-                    await _solutionRepository.GetAsync((int)solutionId, cancellationToken) ??
-                    throw new SolutionNotFoundException();
+            //    if(question.AppUserId != comment.AppUserId)
+            //        comment.AddDomainEvent(new QuestionCommentCreatedDomainEvent(comment));
+            //}
+            //else if (solutionId != null)
+            //{
+            //    var solution = 
+            //        await _solutionRepository.GetAsync((int)solutionId, cancellationToken) ??
+            //        throw new SolutionNotFoundException();
                 
-                comment.CreateSolutionComment(userId, content, idsOfUsersTagged, (int)solutionId);
+            //    comment.CreateSolutionComment(userId, content, idsOfUsersTagged, (int)solutionId);
                 
-                if(solution.AppUserId != comment.AppUserId)
-                    comment.AddDomainEvent(new SolutionCommentCreatedDomainEvent(comment));
-            }
-            else
-                throw new NoRootException();
+            //    if(solution.AppUserId != comment.AppUserId)
+            //        comment.AddDomainEvent(new SolutionCommentCreatedDomainEvent(comment));
+            //}
+            //else
+            //    throw new NoRootException();
         }
     }
 }

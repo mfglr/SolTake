@@ -16,26 +16,26 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
 
         public async Task Handle(CommentLikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var comment = notification.Comment;
-            Comment? parent = null;
-            if(comment.ParentId != null)
-            {
-                parent = await _commentReadRepository.GetAsync((int)comment.ParentId, cancellationToken);
-                if (parent == null) return;
-            }
+            //var comment = notification.Comment;
+            //Comment? parent = null;
+            //if(comment.ParentId != null)
+            //{
+            //    parent = await _commentReadRepository.GetAsync((int)comment.ParentId, cancellationToken);
+            //    if (parent == null) return;
+            //}
 
-            await _repository.CreateAsync(
-                Notification.CommentLikedNotification(
-                    notification.Comment.AppUserId,
-                    comment.QuestionId ?? parent?.QuestionId,
-                    comment.SolutionId ?? parent?.SolutionId,
-                    comment.ParentId,
-                    comment.Id,
-                    notification.LikerId
-                ),
-                cancellationToken
-            );
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //await _repository.CreateAsync(
+            //    Notification.CommentLikedNotification(
+            //        notification.Comment.AppUserId,
+            //        comment.QuestionId ?? parent?.QuestionId,
+            //        comment.SolutionId ?? parent?.SolutionId,
+            //        comment.ParentId,
+            //        comment.Id,
+            //        notification.LikerId
+            //    ),
+            //    cancellationToken
+            //);
+            //await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

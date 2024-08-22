@@ -6,6 +6,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Interfaces
     {
         Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<Solution?> GetWithVotesByIdAsync(int id, CancellationToken cancellationToken);
+        Task<Solution?> GetWithAllAsync(int id,CancellationToken cancellationToken);
         Task CreateAsync(Solution solution, CancellationToken cancellationToken);
+        void Delete(Solution solution, CancellationToken cancellationToken);
     }
 }

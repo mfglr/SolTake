@@ -2,6 +2,7 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extetions;
 
@@ -36,5 +37,8 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .Where(x => x.QuestionId == questionId)
                 .ToPage(lastId, take ?? RecordsPerPage.SolutionsPerPage)
                 .ToListAsync(cancellationToken);
+
+        public async Task<int> GetCountOfCorrectSolutionsByQuestionIdAsync(int questionId, CancellationToken cancellationToken)
+            => await _context.Solutions.CountAsync(x => x.QuestionId == questionId && x.State == SolutionState.Correct,cancellationToken);
     }
 }

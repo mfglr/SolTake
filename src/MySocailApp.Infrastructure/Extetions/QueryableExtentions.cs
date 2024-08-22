@@ -35,7 +35,7 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Solutions)
                 .Include(x => x.Comments);
 
-        public static IQueryable<Comment> IncludeForComment(this IQueryable<Comment> query)
+        public static IQueryable<QuestionComment> IncludeForQuestionComment(this IQueryable<QuestionComment> query)
             => query
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
@@ -43,6 +43,23 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Children)
                 .Include(x => x.Tags)
                 .ThenInclude(x => x.AppUser)
+                .ThenInclude(x => x.Account);
+
+        public static IQueryable<SolutionComment> IncludeForSolutionComment(this IQueryable<SolutionComment> query)
+            => query
+                .Include(x => x.AppUser)
+                .ThenInclude(x => x.Account)
+                .Include(x => x.Likes)
+                .Include(x => x.Children)
+                .Include(x => x.Tags)
+                .ThenInclude(x => x.AppUser)
+                .ThenInclude(x => x.Account);
+
+        public static IQueryable<ChildComment> IncludeForChildComment(this IQueryable<ChildComment> query)
+            => query
+                .Include(x => x.Likes)
+                .Include(x => x.Tags)
+                .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account);
 
         public static IQueryable<Solution> IncludeForSolution(this IQueryable<Solution> query)

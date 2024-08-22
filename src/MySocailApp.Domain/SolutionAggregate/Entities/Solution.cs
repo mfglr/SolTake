@@ -96,10 +96,15 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));
         }
 
+        internal void Delete()
+        {
+            _images.Clear();
+            _votes.Clear();
+        }
         //Readonluy navigator properties
         public Question Question { get; } = null!;
         public AppUser AppUser { get; } = null!;
-        public IReadOnlyCollection<Comment> Comments { get; } = null!;
+        public IReadOnlyCollection<SolutionComment> Comments { get; } = null!;
         public IReadOnlyCollection<Notification> Notifications { get; } = null!;
 
         //IDomainEventsContainer

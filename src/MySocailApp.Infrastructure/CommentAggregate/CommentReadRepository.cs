@@ -23,36 +23,36 @@ namespace MySocailApp.Infrastructure.CommentAggregate
         public async Task<Comment?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .IncludeForComment()
+                //.IncludeForComment()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<List<Comment>> GetByIds(IEnumerable<int> ids, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .IncludeForComment()
+                //.IncludeForComment()
                 .Where(x => ids.Any(id => x.Id == id))
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetByParentIdAsync(int parentId, int? lastId,int? take,bool isDescending, CancellationToken cancellationToken)
-            => await _context.Comments
+        public async Task<List<ChildComment>> GetByParentIdAsync(int parentId, int? lastId, int? take, bool isDescending, CancellationToken cancellationToken)
+            => await _context.ChildComments
                 .AsNoTracking()
-                .IncludeForComment()
+                .IncludeForChildComment()
                 .Where(x => x.ParentId == parentId)
                 .ToPage(lastId,take ?? RecordsPerPage.CommentsPerPage,isDescending)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetByQuestionIdAsync(int questionId, int? lastId, int? take, CancellationToken cancellationToken)
-            => await _context.Comments
+        public async Task<List<QuestionComment>> GetByQuestionIdAsync(int questionId, int? lastId, int? take, CancellationToken cancellationToken)
+            => await _context.QuestionComments
                 .AsNoTracking()
-                .IncludeForComment()
+                .IncludeForQuestionComment()
                 .Where(x => x.QuestionId == questionId)
                 .ToPage(lastId, RecordsPerPage.CommentsPerPage)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetBySolutoinIdAsync(int solutionId, int? lastId, CancellationToken cancellationToken)
-            => await _context.Comments
+        public async Task<List<SolutionComment>> GetBySolutionIdAsync(int solutionId, int? lastId, CancellationToken cancellationToken)
+            => await _context.SolutionComments
                 .AsNoTracking()
-                .IncludeForComment()
+                .IncludeForSolutionComment()
                 .Where(x => x.SolutionId == solutionId)
                 .ToPage(lastId, 20)
                 .ToListAsync(cancellationToken);

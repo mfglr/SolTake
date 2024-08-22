@@ -11,12 +11,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
             builder.OwnsOne(x => x.Content);
 
             builder
-                .HasMany(x => x.Replies)
-                .WithOne(x => x.Replied)
-                .HasForeignKey(x => x.RepliedId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
                 .HasMany(x => x.Notifications)
                 .WithOne(x => x.Comment)
                 .HasForeignKey(x => x.CommentId)
@@ -26,19 +20,19 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
                 .HasMany(x => x.Likes)
                 .WithOne(x => x.Comment)
                 .HasForeignKey(x => x.CommentId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasMany(x => x.Children)
-                .WithOne(x => x.Parent)
-                .HasForeignKey(x => x.ParentId)
+                .HasMany(x => x.Replies)
+                .WithOne()
+                .HasForeignKey(x => x.RepliedId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(x => x.Tags)
                 .WithOne(x => x.Comment)
                 .HasForeignKey(x => x.CommentId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
