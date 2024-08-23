@@ -128,6 +128,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
                 .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
                 .AddScoped<SolutionStateMarker>()
+                .AddScoped<SolutionDeleterDomainService>()
                 .AddScoped<SolutionCreatorDomainService>();
         }
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)

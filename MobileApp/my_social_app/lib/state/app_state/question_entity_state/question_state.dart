@@ -10,6 +10,7 @@ class QuestionState{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
+  final int state;
   final int appUserId;
   final String userName;
   final String? content;
@@ -20,17 +21,22 @@ class QuestionState{
   final bool isLiked;
   final int numberOfLikes;
   final bool isOwner;
-  final int numberOfSolutions;
   final int numberOfComments;
-  final Pagination solutions;
   final Pagination comments;
-  final int state;
-  final DateTime? solvedAt;
+  final int numberOfSolutions;
+  final Pagination solutions;
+  final int numberOfCorrectSolutions;
+  final Pagination correctSolutions;
+  final int numberOfPendingSolutions;
+  final Pagination pendingSolutions;
+  final int numberOfIncorrectSolutions;
+  final Pagination incorrectSolutions; 
 
   const QuestionState({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
+    required this.state,
     required this.appUserId,
     required this.userName,
     required this.content,
@@ -41,288 +47,106 @@ class QuestionState{
     required this.isLiked,
     required this.numberOfLikes,
     required this.isOwner,
-    required this.numberOfSolutions,
     required this.numberOfComments,
-    required this.solutions,
     required this.comments,
-    required this.state,
-    required this.solvedAt,
+    required this.numberOfSolutions,
+    required this.solutions,
+    required this.numberOfCorrectSolutions,
+    required this.correctSolutions,
+    required this.numberOfPendingSolutions,
+    required this.pendingSolutions,
+    required this.numberOfIncorrectSolutions,
+    required this.incorrectSolutions,
   });
 
-  String formatUserName(int count)
-    => userName.length <= count ? userName : "${userName.substring(0,10)}...";
+  QuestionState _optional({
+    int? newState,
+    String? newUserName,
+    String? newContent,
+    int? newExamId,
+    int? newSubjectId,
+    Iterable<int>? newTopics,
+    Iterable<QuestionImageState>? newImages,
+    bool? newIsLiked,
+    int? newNumberOfLikes,
+    int? newNumberOfComments,
+    Pagination? newComments,
+    int? newNumberOfSolutions,
+    Pagination? newSolutions,
+    int? newNumberOfCorrectSolutions,
+    Pagination? newCorrectSolutions,
+    int? newNumberOfPendingSolutions,
+    Pagination? newPendingSolutions,
+    int? newNumberOfIncorrectSolutions,
+    Pagination? newIncorrectSolutions,
+  }) => 
+    QuestionState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      state: newState ?? state,
+      appUserId: appUserId,
+      userName: newUserName ?? userName,
+      content: newContent ?? content,
+      examId: newExamId ?? examId,
+      subjectId: newSubjectId ?? subjectId,
+      topics: newTopics ?? topics,
+      images: newImages ?? images,
+      isLiked: newIsLiked ?? isLiked,
+      numberOfLikes: newNumberOfLikes ?? numberOfLikes,
+      isOwner: isOwner,
+      numberOfComments: newNumberOfComments ?? numberOfComments,
+      comments: newComments ?? comments,
+      numberOfSolutions: newNumberOfSolutions ?? numberOfSolutions,
+      solutions: newSolutions ?? solutions,
+      numberOfCorrectSolutions: newNumberOfCorrectSolutions ?? numberOfCorrectSolutions,
+      correctSolutions: newCorrectSolutions ?? correctSolutions,
+      numberOfPendingSolutions: newNumberOfPendingSolutions ?? numberOfPendingSolutions,
+      pendingSolutions: newPendingSolutions ?? pendingSolutions,
+      numberOfIncorrectSolutions: newNumberOfIncorrectSolutions ?? numberOfIncorrectSolutions,
+      incorrectSolutions: newIncorrectSolutions ?? incorrectSolutions
+    );
 
-  QuestionState like()
-    => QuestionState(
-      id: id,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      appUserId: appUserId,
-      userName: userName,
-      content: content,
-      examId: examId,
-      subjectId: subjectId,
-      topics: topics,
-      images: images,
-      isLiked: true,
-      numberOfLikes: numberOfLikes + 1,
-      isOwner: isOwner,
-      numberOfSolutions: numberOfSolutions,
-      numberOfComments: numberOfComments,
-      solutions: solutions,
-      comments: comments,
-      state: state,
-      solvedAt: solvedAt,
-    );
-  QuestionState dislike()
-    => QuestionState(
-      id: id,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      appUserId: appUserId,
-      userName: userName,
-      content: content,
-      examId: examId,
-      subjectId: subjectId,
-      topics: topics,
-      images: images,
-      isLiked: false,
-      numberOfLikes: numberOfLikes - 1,
-      isOwner: isOwner,
-      numberOfSolutions: numberOfSolutions,
-      numberOfComments: numberOfComments,
-      solutions: solutions,
-      comments: comments,
-      state: state,
-      solvedAt: solvedAt,
-    );
+  String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
 
-  QuestionState addSolution(int solutionId)
-    => QuestionState(
-      id: id,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      appUserId: appUserId,
-      userName: userName,
-      content: content,
-      examId: examId,
-      subjectId: subjectId,
-      topics: topics,
-      images: images,
-      isLiked: false,
-      numberOfLikes: numberOfLikes,
-      isOwner: isOwner,
-      numberOfSolutions: numberOfSolutions + 1,
-      numberOfComments: numberOfComments,
-      solutions: solutions.prependOne(solutionId),
-      comments: comments,
-      state: state,
-      solvedAt: solvedAt,
+  QuestionState like() => _optional(newIsLiked: true, newNumberOfLikes: numberOfLikes + 1); 
+  QuestionState dislike() => _optional(newIsLiked: false, newNumberOfLikes: numberOfLikes - 1); 
+ 
+  QuestionState startLoadingNextSolutions() => 
+    _optional(newSolutions: solutions.startLoadingNext());
+  QuestionState addNextPageSolutions(Iterable<int> solutionIds) => 
+    _optional(newSolutions: solutions.addNextPage(solutionIds));
+  QuestionState addSolution(int solutionId) => 
+    _optional(
+      newNumberOfSolutions: numberOfSolutions + 1,
+      newSolutions: solutions.prependOne(solutionId),
     );
-  QuestionState getNextPageSolutions()
-    => QuestionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        examId: examId,
-        subjectId: subjectId,
-        topics: topics,
-        images: images,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        isOwner: isOwner,
-        numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments,
-        solutions: solutions.startLoadingNext(),
-        comments: comments,
-        state: state,
-        solvedAt: solvedAt,
-      );
-  QuestionState addNextPageSolutions(Iterable<int> solutionIds)
-    => QuestionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        examId: examId,
-        subjectId: subjectId,
-        topics: topics,
-        images: images,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        isOwner: isOwner,
-        numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments,
-        solutions: solutions.addNextPage(solutionIds),
-        comments: comments,
-        state: state,
-        solvedAt: solvedAt,
-      );
-  
-  QuestionState addComment(int commentId)
-    => QuestionState(
-      id: id,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      appUserId: appUserId,
-      userName: userName,
-      content: content,
-      examId: examId,
-      subjectId: subjectId,
-      topics: topics,
-      images: images,
-      isLiked: false,
-      numberOfLikes: numberOfLikes,
-      isOwner: isOwner,
-      numberOfSolutions: numberOfSolutions,
-      numberOfComments: numberOfComments + 1,
-      solutions: solutions,
-      comments: comments.prependOne(commentId),
-      state: state,
-      solvedAt: solvedAt,
+  QuestionState removeSolution(int solutionId) =>
+    _optional(
+      newSolutions: solutions.removeOne(solutionId),
+      newNumberOfSolutions: numberOfSolutions - 1,
+      newState: numberOfCorrectSolutions == 1 ? QuestionStatus.pending : state,
     );
-  QuestionState removeComment(int commentId)
-    => QuestionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        examId: examId,
-        subjectId: subjectId,
-        topics: topics,
-        images: images,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        isOwner: isOwner,
-        numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments - 1,
-        solutions: solutions,
-        comments: comments.removeOne(commentId),
-        state: state,
-        solvedAt: solvedAt,
-      );
-  QuestionState getNextPageComments()
-    => QuestionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        examId: examId,
-        subjectId: subjectId,
-        topics: topics,
-        images: images,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        isOwner: isOwner,
-        numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments,
-        solutions: solutions,
-        comments: comments.startLoadingNext(),
-        state: state,
-        solvedAt: solvedAt,
-      );
-  QuestionState addNextPageComments(Iterable<int> commentIds)
-    => QuestionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        examId: examId,
-        subjectId: subjectId,
-        topics: topics,
-        images: images,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        isOwner: isOwner,
-        numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments,
-        solutions: solutions,
-        comments: comments.addNextPage(commentIds),
-        state: state,
-        solvedAt: solvedAt,
-      );
+     
+  QuestionState startLoadingNextComments() =>
+    _optional(newComments: comments.startLoadingNext());
+  QuestionState addNextPageComments(Iterable<int> commentIds) => 
+    _optional(newComments: comments.addNextPage(commentIds));
+  QuestionState addComment(int commentId) => 
+    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.prependOne(commentId));
+  QuestionState removeComment(int commentId) =>
+    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.removeOne(commentId));
 
   QuestionState startLoadingImage(int index){
     if(images.elementAt(index).state != ImageStatus.notStarted) return this;
-    return QuestionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        examId: examId,
-        subjectId: subjectId,
-        topics: topics,
-        images: [...images.take(index),images.elementAt(index).startLoding(),...images.skip(index + 1)],
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        isOwner: isOwner,
-        numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments,
-        solutions: solutions,
-        comments: comments,
-        state: state,
-        solvedAt: solvedAt,
-      );
+    return _optional( newImages: [...images.take(index),images.elementAt(index).startLoding(),...images.skip(index + 1)] );
   }
-  QuestionState loadImage(int index,Uint8List image)
-    => QuestionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        examId: examId,
-        subjectId: subjectId,
-        topics: topics,
-        images: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)],
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        isOwner: isOwner,
-        numberOfSolutions: numberOfSolutions,
-        numberOfComments: numberOfComments,
-        solutions: solutions,
-        comments: comments,
-        state: state,
-        solvedAt: solvedAt,
-      );
+  QuestionState loadImage(int index,Uint8List image) => 
+    _optional(newImages: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)]);
 
   QuestionState markAsSolved(){
     if(state == QuestionStatus.solved) return this;
-    return QuestionState(
-      id: id,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      appUserId: appUserId,
-      userName: userName,
-      content: content,
-      examId: examId,
-      subjectId: subjectId,
-      topics: topics,
-      images: images,
-      isLiked: isLiked,
-      numberOfLikes: numberOfLikes,
-      isOwner: isOwner,
-      numberOfSolutions: numberOfSolutions,
-      numberOfComments: numberOfComments,
-      solutions: solutions,
-      comments: comments,
-      state: QuestionStatus.solved,
-      solvedAt: DateTime.now()
-    );
+    return _optional(newState: QuestionStatus.solved);
   }
     
 }

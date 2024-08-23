@@ -26,12 +26,12 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new CreateMessageDto(receiverId, content, images));
 
         [HttpGet("{userId}")]
-        public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId,[FromQuery]int? lastValue,[FromQuery]int? take,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetMessagesByUserIdDto(userId,lastValue,take),cancellationToken);
+        public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId,[FromQuery]int? offset,[FromQuery]int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetMessagesByUserIdDto(userId, offset, take, isDescending),cancellationToken);
 
         [HttpGet]
-        public async Task<List<MessageResponseDto>> GetConversations([FromQuery]int? lastValue, [FromQuery]int? take,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetConversationsDto(lastValue, take),cancellationToken);
+        public async Task<List<MessageResponseDto>> GetConversations([FromQuery]int? offset, [FromQuery]int take, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetConversationsDto(offset, take),cancellationToken);
 
         [HttpGet]
         public async Task<List<MessageResponseDto>> GetUnviewedMessagesByReceiverId(CancellationToken cancellationToken)

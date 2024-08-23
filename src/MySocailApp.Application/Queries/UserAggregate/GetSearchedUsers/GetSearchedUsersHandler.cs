@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetSearchedUsers
         public async Task<List<AppUserResponseDto>> Handle(GetSearchedUsersDto request, CancellationToken cancellationToken)
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
-            var users = await _userReadRepository.GetSearchedUsersByIdAsync(userId, request.LastValue, request.Take, cancellationToken);
+            var users = await _userReadRepository.GetSearchedUsersByIdAsync(userId, request.Offset, request.Take, cancellationToken);
             return _mapper.Map<List<AppUserResponseDto>>(users);
         }
     }

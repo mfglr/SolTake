@@ -33,36 +33,36 @@ namespace MySocailApp.Infrastructure.CommentAggregate
                 .Where(x => ids.Any(id => x.Id == id))
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetByParentIdAsync(int parentId, int? lastId,int? take,bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<Comment>> GetCommentsByParentIdAsync(int parentId, IPagination pagination, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
                 .IncludeForComment()
                 .Where(x => x.ParentId == parentId)
-                .ToPage(lastId,take ?? RecordsPerPage.CommentsPerPage,isDescending)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetByQuestionIdAsync(int questionId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Comment>> GetCommentsByQuestionIdAsync(int questionId, IPagination pagination, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
                 .IncludeForComment()
                 .Where(x => x.QuestionId == questionId)
-                .ToPage(lastId, RecordsPerPage.CommentsPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetBySolutoinIdAsync(int solutionId, int? lastId, CancellationToken cancellationToken)
+        public async Task<List<Comment>> GetCommentsBySolutionIdAsync(int solutionId, IPagination pagination, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
                 .IncludeForComment()
                 .Where(x => x.SolutionId == solutionId)
-                .ToPage(lastId, 20)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<AppUser>> GetCommentLikesAsync(int commentId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<AppUser>> GetCommentLikesAsync(int commentId, IPagination pagination, CancellationToken cancellationToken)
             => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .Where(x => x.CommentsLiked.Any(x => x.CommentId == commentId))
-                .ToPage(lastId, take ?? 20)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
     }
 }

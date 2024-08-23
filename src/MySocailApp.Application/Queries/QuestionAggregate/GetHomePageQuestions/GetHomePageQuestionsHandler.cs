@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions
         public async Task<List<QuestionResponseDto>> Handle(GetHomePageQuestionsDto request, CancellationToken cancellationToken)
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
-            var questions = await _repository.GetHomePageQuestionsAsync(userId, request.LastValue, request.Take, request.IsDescending, cancellationToken);
+            var questions = await _repository.GetHomePageQuestionsAsync(userId, request, cancellationToken);
             return _mapper.Map<List<QuestionResponseDto>>(questions);
         }
     }

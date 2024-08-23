@@ -95,7 +95,6 @@ void getNextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispat
   next(action);
 }
 
-
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentAction){
     if(store.state.commentEntityState.entities[action.commentId] == null){

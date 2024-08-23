@@ -7,7 +7,7 @@ using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsCorrectDomainEventConsumers
 {
-    public class CreateNotification(IQuestionReadRepository questionReadRepository, INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<SolutionMarkedAsCorrectDomainEvent>
+    public class CreateQuestionSolvedNotification(IQuestionReadRepository questionReadRepository, INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<SolutionMarkedAsCorrectDomainEvent>
     {
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
@@ -19,8 +19,11 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsCorrectDo
             var question = await _questionReadRepository.GetAsync(solution.QuestionId, cancellationToken);
             if (question == null) return;
 
-            var n = Notification.SolutionMarkedAsCorrectNotification(solution.AppUserId, question.AppUserId, solution.Id);
-            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            await _notificationWriteRepository.CreateAsync(
+                Notification.QuestionSolvedNotification(question.AppUserId, solution.AppUserId, solution.Id),
+                cancellationToken
+            );
+
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

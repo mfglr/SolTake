@@ -18,6 +18,8 @@ QuestionEntityState addNextPageSolutionsReducer(QuestionEntityState prev,AddNext
   => prev.addNextPageSolutions(action.questionId, action.solutionIds);
 QuestionEntityState addSolutionReducer(QuestionEntityState prev,AddQuestionSolutionAction action)
   => prev.addSolution(action.questionId,action.solutionId);
+QuestionEntityState removeSolutionReducer(QuestionEntityState prev,RemoveQuestionSolutionAction action)
+  => prev.removeSolution(action.questionId,action.solutionId);
 
 QuestionEntityState getNextPageCommentsReducer(QuestionEntityState prev,GetNextPageQuestionCommentsAction action)
   => prev.getNextPageComments(action.questionId);
@@ -45,6 +47,7 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,GetNextPageQuestionSolutionsAction>(getNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionSolutionsAction>(addNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionSolutionAction>(addSolutionReducer).call,
+  TypedReducer<QuestionEntityState,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
 
   TypedReducer<QuestionEntityState,GetNextPageQuestionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionCommentsAction>(addNextPageCommentsReducer).call,

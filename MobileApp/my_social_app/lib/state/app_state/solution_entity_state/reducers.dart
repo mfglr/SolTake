@@ -6,6 +6,8 @@ SolutionEntityState addSolutionReducer(SolutionEntityState prev, AddSolutionActi
   => SolutionEntityState(entities: prev.appendOne(action.solution));
 SolutionEntityState addSolutionsReducer(SolutionEntityState prev, AddSolutionsAction action)
   => SolutionEntityState(entities: prev.appendMany(action.solutions));
+SolutionEntityState removeSolutionReducer(SolutionEntityState prev,RemoveSolutionSuccessAction action)
+  => SolutionEntityState(entities: prev.removeOne(action.solutionId));
 
 SolutionEntityState makeUpvoteReducer(SolutionEntityState prev,MakeUpvoteSuccessAction action)
   => prev.makeUpvote(action.solutionId);
@@ -39,6 +41,8 @@ SolutionEntityState markAsIncorrectReducer(SolutionEntityState prev, MarkSolutio
 Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<SolutionEntityState>([
   TypedReducer<SolutionEntityState,AddSolutionAction>(addSolutionReducer).call,
   TypedReducer<SolutionEntityState,AddSolutionsAction>(addSolutionsReducer).call,
+  TypedReducer<SolutionEntityState,RemoveSolutionSuccessAction>(removeSolutionReducer).call,
+
   TypedReducer<SolutionEntityState,MakeUpvoteSuccessAction>(makeUpvoteReducer).call,
   TypedReducer<SolutionEntityState,MakeDownvoteSuccessAction>(makeDownvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveUpvoteSuccessAction>(removeUpvoteReducer).call,

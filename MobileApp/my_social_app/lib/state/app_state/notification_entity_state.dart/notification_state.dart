@@ -10,12 +10,9 @@ class NotificationState{
   final int? parentId;
   final int? repliedId;
   final int? commentId;
-  final String? commentContent;
   final int? questionId;
   final int userId;
-  final String userName;
   final int? solutionId;
-  final String? solutionContent;
 
   const NotificationState({
     required this.id,
@@ -26,12 +23,9 @@ class NotificationState{
     required this.parentId,
     required this.commentId,
     required this.repliedId,
-    required this.commentContent,
     required this.questionId,
     required this.userId,
-    required this.userName,
     required this.solutionId,
-    required this.solutionContent
   });
 
   NotificationState markAsViewed()
@@ -44,11 +38,8 @@ class NotificationState{
         parentId: parentId,
         commentId: commentId,
         repliedId: repliedId,
-        commentContent: commentContent,
         questionId: questionId,
         userId: userId,
-        userName: userName,
         solutionId: solutionId,
-        solutionContent: solutionContent,
       );
 }

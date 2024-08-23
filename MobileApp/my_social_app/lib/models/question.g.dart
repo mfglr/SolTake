@@ -26,12 +26,15 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       isLiked: json['isLiked'] as bool,
       numberOfLikes: (json['numberOfLikes'] as num).toInt(),
       numberOfSolutions: (json['numberOfSolutions'] as num).toInt(),
+      numberOfCorrectSolutions:
+          (json['numberOfCorrectSolutions'] as num).toInt(),
+      numberOfPendingSolutions:
+          (json['numberOfPendingSolutions'] as num).toInt(),
+      numberOfIncorrectSolutions:
+          (json['numberOfIncorrectSolutions'] as num).toInt(),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
       isOwner: json['isOwner'] as bool,
       state: (json['state'] as num).toInt(),
-      solvedAt: json['solvedAt'] == null
-          ? null
-          : DateTime.parse(json['solvedAt'] as String),
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -48,8 +51,10 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'isLiked': instance.isLiked,
       'numberOfLikes': instance.numberOfLikes,
       'numberOfSolutions': instance.numberOfSolutions,
+      'numberOfCorrectSolutions': instance.numberOfCorrectSolutions,
+      'numberOfPendingSolutions': instance.numberOfPendingSolutions,
+      'numberOfIncorrectSolutions': instance.numberOfIncorrectSolutions,
       'numberOfComments': instance.numberOfComments,
       'isOwner': instance.isOwner,
       'state': instance.state,
-      'solvedAt': instance.solvedAt?.toIso8601String(),
     };

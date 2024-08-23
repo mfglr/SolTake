@@ -79,17 +79,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
-                .HasMany(x => x.Noitifications)
-                .WithOne(x => x.Owner)
-                .HasForeignKey(x => x.OwnerId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.NotificationsOutgoing)
-                .WithOne(x => x.User)
-                .HasForeignKey(x => x.UserId);
-
-            builder
                 .HasMany(x => x.Messages)
                 .WithOne(x => x.Sender)
                 .HasForeignKey(x => x.SenderId);

@@ -1,6 +1,10 @@
 ﻿using MediatR;
+using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId
 {
-    public record GetQuestionsByTopicIdDto(int TopicId, int? LastValue,int? Take) : IRequest<List<QuestionResponseDto>>;
+    public class GetQuestionsByTopicIdDto(int topicId, int? offset,int take,bool isDescending) : Pagination(offset,take,isDescending), IRequest<List<QuestionResponseDto>>
+    {
+        public int TopicId { get; private set; } = topicId;
+    }
 }

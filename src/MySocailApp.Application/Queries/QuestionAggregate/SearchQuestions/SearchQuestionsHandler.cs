@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions
 
         public async Task<List<QuestionResponseDto>> Handle(SearchQuestionsDto request, CancellationToken cancellationToken)
         {
-            var questions = await _questionReadRepository.SearchQuestions(request.Key, request.ExamId, request.SubjectId, request.TopicId, request.LastValue, request.Take, cancellationToken);
+            var questions = await _questionReadRepository.SearchQuestions(request.Key, request.ExamId, request.SubjectId, request.TopicId, request, cancellationToken);
             return _mapper.Map<List<QuestionResponseDto>>(questions);
         }
     }

@@ -18,7 +18,7 @@ namespace MySocailApp.Infrastructure.MessageAggregate
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
 
-        public async Task<List<Message>> GetMessagesByUserId(int userId1,int userId2,int? lastId,int? take,CancellationToken cancellationToken)
+        public async Task<List<Message>> GetMessagesByUserId(int userId1,int userId2,IPagination pagination, CancellationToken cancellationToken)
             => await _context.Messages
                 .AsNoTracking()
                 .IncludeForMessage()
@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.MessageAggregate
                         (x.ReceiverId == userId1 && x.SenderId == userId2) || 
                         (x.SenderId == userId1 && x.ReceiverId == userId2)
                 )
-                .ToPage(lastId,take ?? RecordsPerPage.MessagesPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<Message>> GetConversationsAsync(int userId, int? lastId, int? take, CancellationToken cancellationToken)

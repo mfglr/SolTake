@@ -6,6 +6,7 @@ import 'package:my_social_app/views/notification/widgets/question_comment_create
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_solved_notification.dart';
+import 'package:my_social_app/views/notification/widgets/solution_comment_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_marked_as_correct_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_marked_as_incorrect_notification_item.dart';
@@ -30,6 +31,8 @@ class NotificationItems extends StatelessWidget {
             switch(notification.type){
               case NotificationType.questionCommentCreatedNotification :
                 return QuestionCommentCreatedNotificationItem(notification: notification);
+              case NotificationType.solutionCommentCreatedNotification :
+                return SolutionCommentCreatedNotificationItem(notification: notification);
               case NotificationType.commentRepliedNotification :
                 return CommentRepliedNotification(notification: notification);
               case NotificationType.questionLikedNotification :

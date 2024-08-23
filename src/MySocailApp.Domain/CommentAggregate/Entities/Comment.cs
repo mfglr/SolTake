@@ -3,7 +3,6 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
@@ -59,16 +58,8 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 
         public void Delete()
         {
-            foreach (var child in _children)
-            {
-                child._likes.Clear();
-                child._tags.Clear();
-                child._replies.Clear();
-            }
-            _likes.Clear();
-            _tags.Clear();
-            _replies.Clear();
-            _children.Clear();
+            foreach (var reply in _replies)
+                reply.RepliedId = null;
         }
 
         public int? RepliedId { get; private set; }
@@ -113,6 +104,5 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public AppUser AppUser { get; } = null!;
         public Question? Question { get; }
         public Solution? Solution { get; }
-        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

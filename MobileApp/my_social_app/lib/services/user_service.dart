@@ -65,54 +65,52 @@ class UserService{
   Future<Uint8List> getImageById(int id)
     => _appClient.getBytes("$userController/$gerUserImageByIdEndPoint/$id");
   
-  Future<Iterable<User>> getFollowersById(int id,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<User>> getFollowersById(int id, int? offset, int take, bool isDescending) async {
     final endPoint = "$userController/$getFollowersByIdEndPoint/$id";
-    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
+    final url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
  
-  Future<Iterable<User>> getFollowedsById(int id, int? lastValue, int? take,bool isDescending) async {
+  Future<Iterable<User>> getFollowedsById(int id, int? offset, int take, bool isDescending) async {
     final endPoint = "$userController/$getFollowedsByIdEndPoint/$id";
-    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
+    final url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getNotFolloweds(int id,int? lastValue, int? take,bool isDescending) async {
+  Future<Iterable<User>> getNotFolloweds(int id, int? offset, int take, bool isDescending) async {
     final endpoint = "$userController/$getNotFollowedsEndpoint/$id";
-    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take,isDescending);
+    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getRequesters(int? lastValue, int? take,bool isDescending) async {
+  Future<Iterable<User>> getRequesters(int? offset, int take, bool isDescending) async {
     const endPoint = "$userController/$getRequestersEndPoint";
-    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
+    final url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getRequesteds(int? lastValue, int? take,bool isDescending) async {
+  Future<Iterable<User>> getRequesteds(int? offset, int take, bool isDescending) async {
     const endPoint = "$userController/$getRequestedsEndPoint";
-    final url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
+    final url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> search(String key, int? lastValue, int? take,bool isDescending) async {
+  Future<Iterable<User>> search(String key, int? offset, int? take, bool isDescending) async {
     const url = "$userController/$searchUserEndPoint";
-    final body = {'key':key,'lastValue':lastValue,'take':take,'isDescending':isDescending};
+    final body = {'key': key, 'offset': offset, 'take': take, 'isDescending': isDescending};
     final list = (await _appClient.post(url,body: body)) as List;
     return list.map((item) => User.fromJson(item));
   }
 
-  Future<Iterable<User>> getSearcheds(int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<User>> getSearcheds(int? offset, int take, bool isDescending) async {
     const endpoint = "$userController/$getSearchedsEndpoint";
-    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take,isDescending);
+    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((item) => User.fromJson(item));
   }
-
-
 }

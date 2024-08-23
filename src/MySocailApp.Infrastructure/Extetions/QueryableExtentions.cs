@@ -10,16 +10,17 @@ namespace MySocailApp.Infrastructure.Extetions
 {
     public static class QueryableExtentions
     {
-        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, int? offset, int? take, bool isDescending = true) where T : IPaginableAggregateRoot
+        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPagination pagination) where T : IPaginableAggregateRoot
         {
-            if (isDescending)
+            if (pagination.IsDescending)
                 return query
-                    .Where(x => offset == null || x.Id < offset)
-                    .OrderByDescending(x => x.Id).Take(take ?? 20);
+                    .Where(x => pagination.Offset == null || x.Id < pagination.Offset)
+                    .OrderByDescending(x => x.Id)
+                    .Take(pagination.Take);
             return query
-                .Where(x => offset == null || x.Id > offset)
+                .Where(x => pagination.Offset == null || x.Id > pagination.Offset)
                 .OrderBy(x => x.Id)
-                .Take(take ?? 20);
+                .Take(pagination.Take);
         }
 
         public static IQueryable<Question> IncludeForQuestion(this IQueryable<Question> query)

@@ -2,10 +2,8 @@
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
-using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
 
@@ -20,7 +18,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
         public string? Content { get; private set; }
-        
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
@@ -49,18 +46,9 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             Content = content;
             ExamId = examId;
             SubjectId = subjectId;
-            State = QuestionState.Pending;
             CreatedAt = DateTime.UtcNow;
             _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(Id, topicId)));
             _images.AddRange(images);
-        }
-
-        public QuestionState State { get; private set; }
-        public DateTime? SolvedAt { get; private set; }
-        internal void MarkAsSolved()
-        {
-            State = QuestionState.Solved;
-            UpdatedAt = SolvedAt = DateTime.UtcNow;
         }
 
         private readonly List<QuestionUserLike> _likes = [];
@@ -95,6 +83,5 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public AppUser AppUser { get; } = null!;
         public IReadOnlyList<Solution> Solutions { get; } = null!;
         public IReadOnlyCollection<Comment> Comments { get; } = null!;
-        public IReadOnlyCollection<Notification> Notifications { get; } 
     }
 }

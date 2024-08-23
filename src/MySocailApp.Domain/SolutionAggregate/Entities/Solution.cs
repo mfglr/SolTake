@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Entities;
+using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
@@ -37,6 +37,12 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             AddDomainEvent(new SolutionCreatedDomainEvent(this));
         }
         
+        internal void Delete()
+        {
+            foreach(var comment in Comments)
+                comment.Delete();
+        }
+
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
         public void MakeUpvote(int voterId)
@@ -95,17 +101,18 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
             AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));
         }
-
-        //Readonluy navigator properties
-        public Question Question { get; } = null!;
-        public AppUser AppUser { get; } = null!;
-        public IReadOnlyCollection<Comment> Comments { get; } = null!;
-        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
-
+        
         //IDomainEventsContainer
         private readonly List<IDomainEvent> _events = [];
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
         public void ClearEvents() => _events.Clear();
+
+        //Readonly navigator properties
+        public Question Question { get; } = null!;
+        public AppUser AppUser { get; } = null!;
+        private readonly List<Comment> _comments = [];
+        public IReadOnlyList<Comment> Comments => _comments;
+
     }
 }

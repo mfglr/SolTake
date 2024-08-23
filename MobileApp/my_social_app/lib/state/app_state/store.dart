@@ -192,14 +192,16 @@ final store = Store(
     // Question image end
 
     //solution entity state
-    loadSolutionMiddleware,
     createSolutionMiddleware,
+    loadSolutionMiddleware,
+    removeSolutionMiddleware,
     makeUpvoteMiddleware,
     makeDownvoteMiddleware,
     removeUpvoteMiddleware,
     removeDownvoteMiddleware,
-    getNextPageSolutionCommentsMiddleware,
     getNextPageSolutionCommentsIfNoPageMiddleware,
+    getNextPageSolutionCommentsIfReadyMiddleware,
+    getNextPageSolutionCommentsMiddleware,
     loadSolutionImageMiddleware,
     markSolutionAsCorrectMiddleware,
     markSolutionAsIncorrectMiddleware,

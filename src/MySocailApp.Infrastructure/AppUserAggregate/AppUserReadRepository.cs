@@ -16,15 +16,15 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
         public async Task<AppUser?> GetAsync(int id, CancellationToken cancellationToken)
             => await _context.AppUsers.FindAsync([id], cancellationToken);
 
-        public async Task<List<AppUser>> GetFollowersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<AppUser>> GetFollowersByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken)
             => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .Where(user => user.Followeds.Any(follow => follow.FollowedId == id))
-                .ToPage(lastId,take ?? RecordsPerPage.UsersPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<AppUser>> SearchUser(string key, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<AppUser>> SearchUser(string key, IPagination pagination, CancellationToken cancellationToken)
         {
             if (key == "") return [];
             var accountId = _accessTokenReader.GetAccountId();
@@ -40,28 +40,26 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                             user.Account.UserName!.ToLower().Contains(keyLower)
                         ) &&
                         !user.IsRemoved &&
-                        !user.Blockeds.Any(x => x.BlockedId == accountId) &&
-                        (lastId == null || user.Id > lastId)
+                        !user.Blockeds.Any(x => x.BlockedId == accountId)
                 )
-                .OrderByDescending(x => x.Id)
-                .Take(take ?? RecordsPerPage.UsersPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<List<AppUser>> GetFollowedsByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<AppUser>> GetFollowedsByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken)
             => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .Where(user => user.Followers.Any(follow => follow.FollowerId == id))
-                .ToPage(lastId, take ?? RecordsPerPage.UsersPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
         
-        public async Task<List<AppUser>> GetNotFollowedsByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<AppUser>> GetNotFollowedsByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken)
             => await _context.AppUsers
                 .AsNoTracking()
                 .IncludeForUser()
                 .Where(x => x.Id != id && !x.Followers.Any(x => x.FollowerId == id))
-                .ToPage(lastId, take ?? RecordsPerPage.UsersPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
         public async Task<AppUser?> GetByIdAsync(int id, CancellationToken cancellationToken)
@@ -86,12 +84,12 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .Select(x => x.Id)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<AppUser>> GetSearchedUsersByIdAsync(int id, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<AppUser>> GetSearchedUsersByIdAsync(int id, int? offset, int take, CancellationToken cancellationToken)
             => await _context.UserSearchs
                 .AsNoTracking()
-                .Where(x => x.SearcherId == id && (lastId == null || x.Id < lastId))
+                .Where(x => x.SearcherId == id && (offset == null || x.Id < offset))
                 .OrderByDescending(x => x.Id)
-                .Take(take ?? RecordsPerPage.UsersPerPage)
+                .Take(take)
                 .Include(x => x.Searched)
                 .ThenInclude(x => x.Account)
                 .Include(x => x.Searched)

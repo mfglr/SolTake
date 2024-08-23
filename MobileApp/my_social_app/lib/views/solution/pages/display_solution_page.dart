@@ -3,13 +3,15 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/comment/modals/display_solution_comments_modal.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item_widget.dart';
 
-class DisplaySolutionPage extends StatelessWidget {
+class DisplaySolutionPage extends StatefulWidget {
   final int solutionId;
   final int? parentId;
+
   const DisplaySolutionPage({
     super.key,
     required this.solutionId,
@@ -17,10 +19,35 @@ class DisplaySolutionPage extends StatelessWidget {
   });
 
   @override
+  State<DisplaySolutionPage> createState() => _DisplaySolutionPageState();
+}
+
+class _DisplaySolutionPageState extends State<DisplaySolutionPage> {
+  @override
+  void initState() {
+    if(widget.parentId != null){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator
+          .of(context)
+          .push(
+            ModalBottomSheetRoute(
+              builder: (context) => DisplaySolutionCommentsModal(
+                solutionId: widget.solutionId,
+                parentId: widget.parentId,
+              ), 
+              isScrollControlled: true
+            )
+          );
+      });
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,SolutionState?>(
-      onInit: (store) => store.dispatch(LoadSolutionAction(solutionId: solutionId)),
-      converter: (store) => store.state.solutionEntityState.entities[solutionId],
+      onInit: (store) => store.dispatch(LoadSolutionAction(solutionId: widget.solutionId)),
+      converter: (store) => store.state.solutionEntityState.entities[widget.solutionId],
       builder: (context,solution){
         if(solution == null) return const LoadingView();
         return Scaffold(
@@ -35,7 +62,9 @@ class DisplaySolutionPage extends StatelessWidget {
             ),
           ),
           body: SingleChildScrollView(
-            child: SolutionItemWidget(solution: solution)
+            child: SolutionItemWidget(
+              solution: solution,
+            )
           ),
         );
       },

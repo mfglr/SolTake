@@ -13,7 +13,7 @@ import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-enum CommentAction{
+enum CommentsAction{
   delete
 }
 
@@ -108,7 +108,7 @@ class CommentHeaderWidget extends StatelessWidget {
                     child: Builder(
                       builder: (context) {
                         if(!comment.isOwner) return const SpaceSavingWidget();
-                        return PopupMenuButton<CommentAction>(
+                        return PopupMenuButton<CommentsAction>(
                           iconSize: 15,
                           style: ButtonStyle(
                             padding: WidgetStateProperty.all(EdgeInsets.zero),
@@ -117,7 +117,7 @@ class CommentHeaderWidget extends StatelessWidget {
                           ),
                           onSelected: (value) async {
                             switch(value){
-                              case CommentAction.delete:
+                              case CommentsAction.delete:
                                 bool response = await DialogCreator.showDeleteCommentDialog(context);
                                 if(response && context.mounted){
                                   final store = StoreProvider.of<AppState>(context,listen: false);
@@ -129,8 +129,8 @@ class CommentHeaderWidget extends StatelessWidget {
                           },
                           itemBuilder: (context) {
                             return [
-                              const PopupMenuItem<CommentAction>(
-                                value: CommentAction.delete,
+                              const PopupMenuItem<CommentsAction>(
+                                value: CommentsAction.delete,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [

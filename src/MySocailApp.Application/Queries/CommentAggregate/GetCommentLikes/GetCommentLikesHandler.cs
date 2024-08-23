@@ -12,7 +12,7 @@ namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes
 
         public async Task<List<AppUserResponseDto>> Handle(GetCommentLikesDto request, CancellationToken cancellationToken)
         {
-            var likes = await _commentReadRepository.GetCommentLikesAsync(request.CommentId, request.LastValue, request.Take, cancellationToken);
+            var likes = await _commentReadRepository.GetCommentLikesAsync(request.CommentId, request, cancellationToken);
             return _mapper.Map<List<AppUserResponseDto>>(likes);
         }
     }

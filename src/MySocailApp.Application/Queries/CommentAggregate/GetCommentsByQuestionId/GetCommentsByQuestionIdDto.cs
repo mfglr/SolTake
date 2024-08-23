@@ -1,6 +1,10 @@
 ﻿using MediatR;
+using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId
 {
-    public record GetCommentsByQuestionIdDto(int QuestionId, int? LastValue, int? Take) : IRequest<List<CommentResponseDto>>;
+    public class GetCommentsByQuestionIdDto(int questionId, int? offset, int take, bool isDescending) : Pagination(offset,take,isDescending), IRequest<List<CommentResponseDto>>
+    {
+        public int QuestionId { get; private set; } = questionId;
+    }
 }

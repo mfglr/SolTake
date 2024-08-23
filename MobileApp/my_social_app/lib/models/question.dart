@@ -25,10 +25,12 @@ class Question{
   final bool isLiked;
   final int numberOfLikes;
   final int numberOfSolutions;
+  final int numberOfCorrectSolutions;
+  final int numberOfPendingSolutions;
+  final int numberOfIncorrectSolutions;
   final int numberOfComments;
   final bool isOwner;
   final int state;
-  final DateTime? solvedAt;
 
   const Question({
     required this.id,
@@ -44,10 +46,12 @@ class Question{
     required this.isLiked,
     required this.numberOfLikes,
     required this.numberOfSolutions,
+    required this.numberOfCorrectSolutions,
+    required this.numberOfPendingSolutions,
+    required this.numberOfIncorrectSolutions,
     required this.numberOfComments,
     required this.isOwner,
     required this.state,
-    required this.solvedAt,
   });
 
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
@@ -57,6 +61,7 @@ class Question{
     id: id,
     createdAt: createdAt,
     updatedAt: updatedAt,
+    state: state,
     appUserId: appUserId,
     userName: userName,
     content: content,
@@ -67,11 +72,15 @@ class Question{
     isLiked: isLiked,
     numberOfLikes: numberOfLikes,
     isOwner: isOwner,
-    numberOfSolutions: numberOfSolutions,
     numberOfComments: numberOfComments,
-    solutions: Pagination.init(solutionsPerPage),
     comments: Pagination.init(commentsPerPage),
-    state: state,
-    solvedAt: solvedAt,
+    numberOfSolutions: numberOfSolutions,
+    solutions: Pagination.init(solutionsPerPage),
+    numberOfCorrectSolutions: numberOfCorrectSolutions,
+    correctSolutions: Pagination.init(solutionsPerPage),
+    numberOfPendingSolutions: numberOfPendingSolutions,
+    pendingSolutions: Pagination.init(solutionsPerPage),
+    numberOfIncorrectSolutions: numberOfIncorrectSolutions,
+    incorrectSolutions: Pagination.init(solutionsPerPage),
   );
 }

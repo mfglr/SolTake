@@ -1,6 +1,10 @@
 ﻿using MediatR;
+using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId
 {
-    public record GetUnsolvedQuestionsByUserIdDto(int UserId,int? Offset,int Take,bool IsDescending) : IRequest<List<QuestionResponseDto>>;
+    public class GetUnsolvedQuestionsByUserIdDto(int userId,int? offset,int take, bool isDescending) : Pagination(offset,take,isDescending), IRequest<List<QuestionResponseDto>>
+    {
+        public int UserId { get; private set; } = userId;
+    }
 }

@@ -32,6 +32,9 @@ class SolutionService{
     
     return Solution.fromJson(json);
   }
+
+  Future<void> delete(int solutionId) => _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");
+
   Future<void> makeUpvote(int solutionId) =>
     _appClient.put(
       "$solutionController/$makeUpvoteEndpoint",
@@ -77,9 +80,9 @@ class SolutionService{
         .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
         .then((response) => Solution.fromJson(response)); 
   
-  Future<Iterable<Solution>> getByQuestionId(int questionId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Solution>> getByQuestionId(int questionId, int? offset, int take, bool isDescending) async {
     String endPoint = "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
+    String url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Solution.fromJson(e));
   }

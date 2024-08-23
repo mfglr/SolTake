@@ -1,5 +1,4 @@
  import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
@@ -38,7 +37,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   @override
   void initState() {
     final store = StoreProvider.of<AppState>(context,listen: false);
-    _questionConsumer = 
+    _questionConsumer =
       store.onChange
         .map((state) => state.questionEntityState.entities[widget.questionId])
         .distinct()

@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions
 {
-    public record GetHomePageQuestionsDto(int? LastValue, int? Take, bool IsDescending) : IRequest<List<QuestionResponseDto>>;
+    public class GetHomePageQuestionsDto(int? offset, int take, bool isDescending) : Pagination(offset,take,isDescending), IRequest<List<QuestionResponseDto>>;
 }

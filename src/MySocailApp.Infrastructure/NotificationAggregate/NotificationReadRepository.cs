@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Core;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
@@ -10,24 +11,16 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<List<Notification>> GetNotificationsByOwnerId(int ownerId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Notification>> GetNotificationsByOwnerId(int ownerId, IPagination pagination, CancellationToken cancellationToken)
             => await _context.Notifications
                 .AsNoTracking()
-                .Include(x => x.User)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Comment)
-                .Include(x => x.Solution)
                 .Where(x => x.OwnerId == ownerId)
-                .ToPage(lastId,take)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<Notification>> GetUnviewedNotificationsByOwnerId(int ownerId, CancellationToken cancellationToken)
             => await _context.Notifications
                 .AsNoTracking()
-                .Include(x => x.User)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Comment)
-                .Include(x => x.Solution)
                 .Where(x => x.OwnerId == ownerId && !x.IsViewed)
                 .OrderByDescending(x => x.Id)
                 .ToListAsync(cancellationToken);

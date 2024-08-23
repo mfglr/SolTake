@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId
         public async Task<List<MessageResponseDto>> Handle(GetMessagesByUserIdDto request, CancellationToken cancellationToken)
         {
             var accountId = _tokenReader.GetRequiredAccountId();
-            var messages = await _messageRepository.GetMessagesByUserId(accountId,request.UserId,request.LastValue,request.Take, cancellationToken);
+            var messages = await _messageRepository.GetMessagesByUserId(accountId, request.UserId, request, cancellationToken);
             return _mapper.Map<List<MessageResponseDto>>(messages);
         }
     }

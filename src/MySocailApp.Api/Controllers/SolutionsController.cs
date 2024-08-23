@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.SolutionAggregate.CreateSolution;
+using MySocailApp.Application.Commands.SolutionAggregate.DeleteSolution;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote;
 using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsCorrect;
@@ -11,6 +12,9 @@ using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsIncorrect
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote;
 using MySocailApp.Application.Queries.SolutionAggregate;
+using MySocailApp.Application.Queries.SolutionAggregate.GetCorrectSolutionsByQuestionId;
+using MySocailApp.Application.Queries.SolutionAggregate.GetIncorrectsSolutionsByQuestionId;
+using MySocailApp.Application.Queries.SolutionAggregate.GetPendingSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionsByQuestionId;
@@ -29,6 +33,10 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<SolutionResponseDto> Create([FromForm]string? content, [FromForm]int questionId, [FromForm]IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateSolutionDto(content, questionId, images),cancellationToken);
+
+        [HttpDelete("{solutionId}")]
+        public async Task Delete(int solutionId, CancellationToken cancellationToken)
+            => await _mediator.Send(new DeleteSolutionDto(solutionId), cancellationToken);
 
         [HttpPut]
         public async Task MakeUpvote(MakeUpvoteDto request,CancellationToken cancellationToken)
@@ -67,7 +75,19 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new GetSolutionByIdDto(id), cancellationToken);
 
         [HttpGet("{questionId}")]
-        public async Task<List<SolutionResponseDto>> GetByQuestionId(int questionId,[FromQuery]int? lastValue,[FromQuery]int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetSolutionsByQuestionIdDto(questionId, lastValue, take), cancellationToken);
+        public async Task<List<SolutionResponseDto>> GetByQuestionId(int questionId,[FromQuery]int? offset,[FromQuery]int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
+
+        [HttpGet("{questionId}")]
+        public async Task<List<SolutionResponseDto>> GetCorrectSolutionsByQuestionId(int questionId, [FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCorrectSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
+
+        [HttpGet("{questionId}")]
+        public async Task<List<SolutionResponseDto>> GetPendingSolutionsByQuestionId(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetPendingSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
+
+        [HttpGet("{questionId}")]
+        public async Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetIncorrectSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
     }
 }

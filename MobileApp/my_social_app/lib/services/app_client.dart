@@ -97,11 +97,9 @@ class AppClient{
     await _sendJsonContent(request);
   }
 
-  String generatePaginationUrl(String url,dynamic lastValue,int? take,bool isDescending){
-    if(lastValue == null && take == null){ return "$url?isDescending=$isDescending"; }
-    else if(lastValue == null && take != null){ return "$url?take=$take&isDescending=$isDescending"; }
-    else if(lastValue != null && take == null){ return "$url?lastValue=$lastValue&isDescending=$isDescending"; }
-    else { return "$url?lastValue=$lastValue&take=$take&isDescending=$isDescending"; }
+  String generatePaginationUrl(String url,dynamic offset,int take,bool isDescending){
+    if(offset == null) return "$url?take=$take&isDescending=$isDescending";
+    return "$url?offset=$offset&take=$take&isDescending=$isDescending";
   }
   
 }

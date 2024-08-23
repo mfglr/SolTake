@@ -17,18 +17,20 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]!.dislike()));
     
   QuestionEntityState getNextPageSolutions(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.getNextPageSolutions()));
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingNextSolutions()));
   QuestionEntityState addNextPageSolutions(int questionId,Iterable<int> solutionIds)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageSolutions(solutionIds)));
   QuestionEntityState addSolution(int questionId,int solutionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addSolution(solutionId)));
+  QuestionEntityState removeSolution(int questionId,int solutionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.removeSolution(solutionId)));
 
   QuestionEntityState addComment(int questionId,int questionCommentId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addComment(questionCommentId)));
   QuestionEntityState removeComment(int questionId,int commentId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.removeComment(commentId)));
   QuestionEntityState getNextPageComments(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.getNextPageComments()));
+    => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingNextComments()));
   QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageComments(commentIds)));
 

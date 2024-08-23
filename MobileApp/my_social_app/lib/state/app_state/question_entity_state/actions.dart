@@ -68,6 +68,12 @@ class AddQuestionSolutionAction extends redux.Action{
   final int questionId;
   const AddQuestionSolutionAction({required this.solutionId, required this.questionId});
 }
+@immutable
+class RemoveQuestionSolutionAction extends redux.Action{
+  final int questionId;
+  final int solutionId;
+  const RemoveQuestionSolutionAction({required this.questionId, required this.solutionId});
+}
 
 @immutable
 class GetNextPageQuestionCommentsIfNoPageAction extends redux.Action{

@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.NotificationAggregate.GetNotifications
 {
-    public record GetNotificationsDto(int? LastValue, int? Take) : IRequest<List<NotificationResponseDto>>;
+    public class GetNotificationsDto(int? offset, int take,bool isDescending) : Pagination(offset,take,isDescending), IRequest<List<NotificationResponseDto>>;
 }

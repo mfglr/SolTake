@@ -24,8 +24,8 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new GetUnviewedNotificationsDto(), cancellationToken);
 
         [HttpGet]
-        public async Task<List<NotificationResponseDto>> GetNotifications([FromQuery] int? lastValue, [FromQuery] int? take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetNotificationsDto(lastValue, take), cancellationToken);
+        public async Task<List<NotificationResponseDto>> GetNotifications([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetNotificationsDto(offset, take, isDescending), cancellationToken);
 
         [HttpPut]
         public async Task MarkAsViewed(MarkAsViewedNotificationsDto request, CancellationToken cancellationToken)

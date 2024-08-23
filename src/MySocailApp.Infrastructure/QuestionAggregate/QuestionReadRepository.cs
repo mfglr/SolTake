@@ -2,7 +2,7 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extetions;
 
@@ -35,52 +35,52 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .IncludeForQuestion()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsByUserIdAsync(int userId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
                 .Where(x => x.AppUserId == userId)
-                .ToPage(lastId, take ?? RecordsPerPage.QuestionsPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsByTopicIdAsync(int topicId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsByTopicIdAsync(int topicId, IPagination pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
                 .Where(x => x.Topics.Any(x => x.TopicId == topicId))
-                .ToPage(lastId, take ?? RecordsPerPage.QuestionsPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsBySubjectIdAsync(int subjectId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsBySubjectIdAsync(int subjectId, IPagination pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
                 .Where(x => x.SubjectId == subjectId)
-                .ToPage(lastId, take ?? RecordsPerPage.QuestionsPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsByExamIdAsync(int examId, int? lastId, int? take, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsByExamIdAsync(int examId, IPagination pagination, CancellationToken cancellationToken)
            => await _context
                .Questions
                .AsNoTracking()
                .IncludeForQuestion()
                .Where(x => x.ExamId == examId)
-               .ToPage(lastId, take ?? RecordsPerPage.QuestionsPerPage)
+               .ToPage(pagination)
                .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetHomePageQuestionsAsync(int userId, int? offset, int? take, bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetHomePageQuestionsAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
                 .Where(x => x.AppUserId != userId)
-                .ToPage(offset, take ?? RecordsPerPage.QuestionsPerPage,isDescending)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId,int? lastId,int? take, CancellationToken cancellationToken)
+        public async Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId, IPagination pagination, CancellationToken cancellationToken)
             => await _context.Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
@@ -91,23 +91,23 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                         (subjectId == null || x.SubjectId == subjectId) &&
                         (topicId == null || x.Topics.Any(x => x.TopicId == topicId))
                 )
-                .ToPage(lastId,take ?? RecordsPerPage.QuestionsPerPage)
+                .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId, int? offset, int take, bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
             => await _context.Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
-                .Where(x => x.AppUserId == userId && x.State == QuestionState.Solved)
-                .ToPage(offset,take,isDescending)
+                .Where(x => x.AppUserId == userId && x.Solutions.Any(x => x.State == SolutionState.Correct))
+                .ToPage(pagination)
                 .ToListAsync (cancellationToken);
         
-        public async Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, int? offset, int take, bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
           => await _context.Questions
               .AsNoTracking()
               .IncludeForQuestion()
-              .Where(x => x.AppUserId == userId && x.State == QuestionState.Pending)
-              .ToPage(offset, take, isDescending)
+              .Where(x => x.AppUserId == userId && !x.Solutions.Any(x => x.State == SolutionState.Correct))
+              .ToPage(pagination)
               .ToListAsync(cancellationToken);
     }
 }

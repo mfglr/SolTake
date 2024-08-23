@@ -1,9 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.ValueObjects;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
 {
@@ -15,7 +11,6 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
         public int UserId { get; private set; }
         public bool IsViewed { get; private set; }
         public NotificationType Type { get; private set; }
-
         public int? ParentId { get; private set; }
         public int? RepliedId { get; private set; }
         public int? CommentId { get; private set; }
@@ -136,11 +131,5 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
             };
-
-        public AppUser Owner { get; } = null!;
-        public AppUser User { get; } = null!;
-        public Question? Question { get; }
-        public Comment? Comment { get; }
-        public Solution? Solution { get; }
     }
 }

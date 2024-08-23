@@ -1,7 +1,5 @@
-﻿using MySocailApp.Domain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionAggregate.Excpetions;
+﻿using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 
@@ -22,12 +20,6 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 throw new PermissionDeniedToChangeStateOfSolution();
 
             solution.MarkAsCorrect();
-
-            if(question.State != QuestionState.Solved)
-            {
-                question.AddDomainEvent(new QuestionSolvedDomainEvent(question, solution));
-                question.MarkAsSolved();
-            }
         }
 
         public async Task MarkAsIncorrectAsync(Solution solution, int markerId, CancellationToken cancellationToken)

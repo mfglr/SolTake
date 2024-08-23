@@ -11,6 +11,40 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
+
+void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadSolutionAction){
+    if(store.state.solutionEntityState.entities[action.solutionId] == null){
+      SolutionService()
+        .getSolutionById(action.solutionId)
+        .then((solution){
+          store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
+        });
+    }
+  }
+  next(action);
+}
+void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveSolutionAction){
+    SolutionService()
+      .delete(action.solution.id)
+      .then((_){
+        store.dispatch(RemoveSolutionSuccessAction(solutionId: action.solution.id));
+        
+        final question = store.state.questionEntityState.entities[action.solution.questionId];
+        if(question == null) return;
+        store.dispatch(RemoveQuestionSolutionAction(questionId: action.solution.questionId, solutionId: action.solution.id));
+        
+        // final user = store.state.userEntityState.entities[question.appUserId];
+        // if(user == null || question.number) return;
+        // store.dispatch()
+
+      });
+  }
+  next(action);
+}
+
 void makeUpvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MakeUpvoteAction){
     SolutionService()
@@ -44,24 +78,19 @@ void removeDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next)
   next(action);
 }
 
-void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadSolutionAction){
-    if(store.state.solutionEntityState.entities[action.solutionId] == null){
-      SolutionService()
-        .getSolutionById(action.solutionId)
-        .then((solution){
-          store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
-        });
-    }
-  }
-  next(action);
-}
-
 void getNextPageSolutionCommentsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSolutionCommentsIfNoPageAction){
     final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
     if(comments.isReadyForNextPage && !comments.hasAtLeastOnePage){
+      store.dispatch(GetNextPageSolutionCommentsAction(solutionId: action.solutionId));
+    }
+  }
+  next(action);
+}
+void getNextPageSolutionCommentsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionCommentsIfReadyAction){
+    final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
+    if(comments.isReadyForNextPage){
       store.dispatch(GetNextPageSolutionCommentsAction(solutionId: action.solutionId));
     }
   }

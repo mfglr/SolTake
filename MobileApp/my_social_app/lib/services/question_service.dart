@@ -55,56 +55,56 @@ class QuestionService{
     return await _appClient.getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$questionImageId");
   }
 
-  Future<Iterable<Question>> getHomePageQuestions(int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> getHomePageQuestions(int? offset, int take, bool isDescending) async {
     String endPoint = "$questionController/$getHomePageQuestionsEndpoint";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take,isDescending);
+    String url = _appClient.generatePaginationUrl(endPoint, offset, take,isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getByUserId(int userId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> getByUserId(int userId, int? offset, int take, bool isDescending) async {
     String endPoint = "$questionController/$getQuestionsByUserIdEndpoint/$userId";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take, isDescending);
+    String url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getByTopicId(int topicId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> getByTopicId(int topicId, int? offset, int take, bool isDescending) async {
     String endPoint = "$questionController/$getQuestionsByTopicIdEndpoint/$topicId";
-    String url = _appClient.generatePaginationUrl(endPoint, lastValue, take, isDescending);
+    String url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getBySubjectId(int subjectId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> getBySubjectId(int subjectId, int? offset, int take, bool isDescending) async {
     final endpoint = "$questionController/$getQuestionsBySubjectIdEndpoint/$subjectId";
-    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take, isDescending);
+    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getByExamId(int examId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> getByExamId(int examId, int? offset, int take, bool isDescending) async {
     String endpoint = "$questionController/$getQuestionsByExamIdEndpoint/$examId";
-    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take, isDescending);
+    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getSolvedQuestionsByUserId(int userId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> getSolvedQuestionsByUserId(int userId, int? offset, int take, bool isDescending) async {
     String endpoint = "$questionController/$getSolvedQuestionsByUserIdEndpoint/$userId";
-    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take, isDescending);
+    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> getUnsolvedQuestionsByUserId(int userId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> getUnsolvedQuestionsByUserId(int userId, int? offset, int take, bool isDescending) async {
     String endpoint = "$questionController/$getUnsolvedQuestionsByUserIdEndpoint/$userId";
-    final url = _appClient.generatePaginationUrl(endpoint, lastValue, take, isDescending);
+    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
   }
-  Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,int? lastValue,int? take,bool isDescending) async {
+  Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,int? offset,int take,bool isDescending) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {
       'key': key == "" ? null : key,
       'examId': examId,
       'subjectId': subjectId,
       'topicId': topicId,
-      'lastValue': lastValue,
+      'offset': offset,
       'take': take,
       'isDescending': isDescending,
     };

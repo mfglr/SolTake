@@ -15,7 +15,6 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.removeUpvote()));
   SolutionEntityState removeDownvote(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.removeDownvote()));
-
   
   SolutionEntityState getNextPageComments(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]!.getNextPageComments()));

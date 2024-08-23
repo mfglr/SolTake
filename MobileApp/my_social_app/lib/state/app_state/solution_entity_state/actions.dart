@@ -19,6 +19,16 @@ class AddSolutionsAction extends redux.Action{
   final Iterable<SolutionState> solutions;
   const AddSolutionsAction({required this.solutions});
 }
+@immutable
+class RemoveSolutionAction extends redux.Action{
+  final SolutionState solution;
+  const RemoveSolutionAction({required this.solution});
+}
+@immutable
+class RemoveSolutionSuccessAction extends redux.Action{
+  final int solutionId;
+  const RemoveSolutionSuccessAction({required this.solutionId});
+}
 
 //votes
 @immutable
@@ -62,17 +72,16 @@ class RemoveDownvoteSuccessAction extends redux.Action{
   const RemoveDownvoteSuccessAction({required this.solutionId});
 }
 
+
 @immutable
-class AddSolutionCommentAction extends redux.Action{
+class GetNextPageSolutionCommentsIfNoPageAction extends redux.Action{
   final int solutionId;
-  final int commentId;
-  const AddSolutionCommentAction({required this.solutionId, required this.commentId});
+  const GetNextPageSolutionCommentsIfNoPageAction({required this.solutionId});
 }
 @immutable
-class RemoveSolutionCommentAction extends redux.Action{
+class GetNextPageSolutionCommentsIfReadyAction extends redux.Action{
   final int solutionId;
-  final int commentId;
-  const RemoveSolutionCommentAction({required this.solutionId, required this.commentId});
+  const GetNextPageSolutionCommentsIfReadyAction({required this.solutionId});
 }
 @immutable
 class GetNextPageSolutionCommentsAction extends redux.Action{
@@ -86,9 +95,16 @@ class AddNextPageSolutionCommentsAction extends redux.Action{
   const AddNextPageSolutionCommentsAction({required this.solutionId, required this.commentsIds});
 }
 @immutable
-class GetNextPageSolutionCommentsIfNoPageAction extends redux.Action{
+class AddSolutionCommentAction extends redux.Action{
   final int solutionId;
-  const GetNextPageSolutionCommentsIfNoPageAction({required this.solutionId});
+  final int commentId;
+  const AddSolutionCommentAction({required this.solutionId, required this.commentId});
+}
+@immutable
+class RemoveSolutionCommentAction extends redux.Action{
+  final int solutionId;
+  final int commentId;
+  const RemoveSolutionCommentAction({required this.solutionId, required this.commentId});
 }
 
 @immutable

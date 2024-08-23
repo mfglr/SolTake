@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetNotFolloweds
 
         public async Task<List<AppUserResponseDto>> Handle(GetNotFollowedsDto request, CancellationToken cancellationToken)
         {
-            var users = await _userReadRepository.GetNotFollowedsByIdAsync(request.Id, request.LastValue, request.Take, cancellationToken);
+            var users = await _userReadRepository.GetNotFollowedsByIdAsync(request.Id, request, cancellationToken);
             return _mapper.Map<List<AppUserResponseDto>>(users);
         }
     }

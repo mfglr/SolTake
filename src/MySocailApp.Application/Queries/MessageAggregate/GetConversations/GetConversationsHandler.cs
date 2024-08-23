@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetConversations
         public async Task<List<MessageResponseDto>> Handle(GetConversationsDto request, CancellationToken cancellationToken)
         {
             var accounId = _tokenReader.GetRequiredAccountId();
-            var users = await _messageRepository.GetConversationsAsync(accounId, request.LastValue, request.Take, cancellationToken);
+            var users = await _messageRepository.GetConversationsAsync(accounId, request.Offset, request.Take, cancellationToken);
             return _mapper.Map<List<MessageResponseDto>>(users);
         }
     }
