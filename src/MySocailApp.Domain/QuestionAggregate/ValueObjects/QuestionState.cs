@@ -3,6 +3,6 @@
     public enum QuestionState
     {
         Solved,
-        Pending,
+        Unsolved,
     }
 }

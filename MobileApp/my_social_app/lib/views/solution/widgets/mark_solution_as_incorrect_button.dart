@@ -16,7 +16,7 @@ class MarkSolutionAsIncorrectButton extends StatelessWidget {
     return TextButton(
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(MarkSolutionAsIncorrectAction(solutionId: solution.id));
+        store.dispatch(MarkSolutionAsIncorrectAction(questionId: solution.questionId, solutionId: solution.id));
       },
       style: ButtonStyle(
         padding: WidgetStateProperty.all(const EdgeInsets.all(0)),

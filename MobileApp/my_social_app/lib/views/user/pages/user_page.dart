@@ -12,7 +12,7 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
 
-const labels = ["all","solved","pending"];
+const labels = ["all","solved","unsolved"];
 const icons = [Icons.question_mark,Icons.done,Icons.pending];
 
 class UserPage extends StatefulWidget {
@@ -158,7 +158,7 @@ class _UserPageState extends State<UserPage> {
               ),
               LabelPaginationWidget(
                 labelCount: 3,
-                labelBuilder: (isActive,index) => Row(
+                labelBuilder: (isActive,index) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(

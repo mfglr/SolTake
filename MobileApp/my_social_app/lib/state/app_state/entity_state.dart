@@ -42,7 +42,8 @@ class EntityState<T extends dynamic> {
   }
   
 
-  Map<int,T> updateOne(T value){
+  Map<int,T> updateOne(T? value){
+    if(value == null) return this.entities;
     final Map<int,T> entities = {};
     entities.addAll(this.entities);
     entities[value.id] = value;

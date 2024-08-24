@@ -134,8 +134,14 @@ class AppState{
     => searchState.questions.ids.map((e) => questionEntityState.entities[e]!);
   
   //SelectSolutions
-  Iterable<SolutionState> getQuestionSolutions(int questionId)
+  Iterable<SolutionState> selectQuestionSolutions(int questionId)
     => questionEntityState.entities[questionId]!.solutions.ids.map((e) => solutionEntityState.entities[e]!);
+  Iterable<SolutionState> selectQuestionCorrectSolutions(int questionId)
+    => questionEntityState.entities[questionId]!.correctSolutions.ids.map((e) => solutionEntityState.entities[e]!);
+  Iterable<SolutionState> selectQuestionPendingSolutions(int questionId)
+    => questionEntityState.entities[questionId]!.pendingSolutions.ids.map((e) => solutionEntityState.entities[e]!);
+  Iterable<SolutionState> selectQuestionIncorrectSolutions(int questionId)
+    => questionEntityState.entities[questionId]!.incorrectSolutions.ids.map((e) => solutionEntityState.entities[e]!);
 
   //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)

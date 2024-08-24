@@ -410,9 +410,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     ExamId = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<int>(type: "int", nullable: false),
                     AppUserId = table.Column<int>(type: "int", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    State = table.Column<int>(type: "int", nullable: false),
-                    SolvedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -536,7 +534,8 @@ namespace MySocailApp.Infrastructure.Migrations
                         name: "FK_QuestionImage_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -559,7 +558,8 @@ namespace MySocailApp.Infrastructure.Migrations
                         name: "FK_QuestionUserLike_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -587,7 +587,8 @@ namespace MySocailApp.Infrastructure.Migrations
                         name: "FK_Solutions_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -605,7 +606,8 @@ namespace MySocailApp.Infrastructure.Migrations
                         name: "FK_QuestionTopic_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_QuestionTopic_Topics_TopicId",
                         column: x => x.TopicId,
@@ -679,7 +681,8 @@ namespace MySocailApp.Infrastructure.Migrations
                         name: "FK_SolutionImage_Solutions_SolutionId",
                         column: x => x.SolutionId,
                         principalTable: "Solutions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -764,8 +767,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "FullName", "ShortName", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(398), "Temel Yeterlilik Testi", "TYT", null },
-                    { 2, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(401), "Alan Yeterlilik Testi", "AYT", null }
+                    { 1, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(1757), "Temel Yeterlilik Testi", "TYT", null },
+                    { 2, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(1759), "Alan Yeterlilik Testi", "AYT", null }
                 });
 
             migrationBuilder.InsertData(
@@ -773,29 +776,29 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "ExamId", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1391), 1, "TYT - Türkçe", null },
-                    { 2, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1394), 1, "TYT - Tarih", null },
-                    { 3, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1394), 1, "TYT - Coğrafya", null },
-                    { 4, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1395), 1, "TYT - Felsefe", null },
-                    { 5, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1395), 1, "TYT - Din Kültürü ve Ahlâk Bilgisi", null },
-                    { 6, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1396), 1, "TYT - Matematik", null },
-                    { 7, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1396), 1, "TYT - Geometri", null },
-                    { 8, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1397), 1, "TYT - Fizik", null },
-                    { 9, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1397), 1, "TYT - Kimya", null },
-                    { 10, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1398), 1, "TYT - Biyoloji", null },
-                    { 11, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1398), 2, "AYT - Matematik", null },
-                    { 12, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1399), 2, "AYT - Geometri", null },
-                    { 13, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1399), 2, "AYT - Fizik", null },
-                    { 14, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1399), 2, "AYT - Kimya", null },
-                    { 15, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1400), 2, "AYT - Biyoloji ", null },
-                    { 16, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1400), 2, "AYT - Coğrafya ", null },
-                    { 17, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1401), 2, "AYT - Tarih ", null },
-                    { 18, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1401), 2, "AYT - Türk Dili ve Edebiyatı", null },
-                    { 19, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1402), 2, "AYT - Din Kültürü ve Ahlâk Bilgisi", null },
-                    { 20, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1402), 2, "AYT - Felsefe", null },
-                    { 21, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1402), 2, "AYT - Psikoloji", null },
-                    { 22, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1403), 2, "AYT - Sosyoloji", null },
-                    { 23, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1403), 2, "AYT - Mantık", null }
+                    { 1, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2777), 1, "TYT - Türkçe", null },
+                    { 2, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2780), 1, "TYT - Tarih", null },
+                    { 3, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2781), 1, "TYT - Coğrafya", null },
+                    { 4, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2781), 1, "TYT - Felsefe", null },
+                    { 5, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2782), 1, "TYT - Din Kültürü ve Ahlâk Bilgisi", null },
+                    { 6, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2782), 1, "TYT - Matematik", null },
+                    { 7, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2783), 1, "TYT - Geometri", null },
+                    { 8, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2783), 1, "TYT - Fizik", null },
+                    { 9, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2783), 1, "TYT - Kimya", null },
+                    { 10, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2784), 1, "TYT - Biyoloji", null },
+                    { 11, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2784), 2, "AYT - Matematik", null },
+                    { 12, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2785), 2, "AYT - Geometri", null },
+                    { 13, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2785), 2, "AYT - Fizik", null },
+                    { 14, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2786), 2, "AYT - Kimya", null },
+                    { 15, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2786), 2, "AYT - Biyoloji ", null },
+                    { 16, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2786), 2, "AYT - Coğrafya ", null },
+                    { 17, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2787), 2, "AYT - Tarih ", null },
+                    { 18, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2787), 2, "AYT - Türk Dili ve Edebiyatı", null },
+                    { 19, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2788), 2, "AYT - Din Kültürü ve Ahlâk Bilgisi", null },
+                    { 20, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2788), 2, "AYT - Felsefe", null },
+                    { 21, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2789), 2, "AYT - Psikoloji", null },
+                    { 22, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2789), 2, "AYT - Sosyoloji", null },
+                    { 23, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2790), 2, "AYT - Mantık", null }
                 });
 
             migrationBuilder.InsertData(
@@ -803,38 +806,38 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Name", "SubjectId", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1510), "Sözcükte Anlam", 1, null },
-                    { 2, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1512), "Söz Yorumu", 1, null },
-                    { 3, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1513), "Deyim ve Atasözü", 1, null },
-                    { 4, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1513), "Cümlede Anlam", 1, null },
-                    { 5, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1514), "Paragraf", 1, null },
-                    { 6, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1514), "Paragrafta Anlatım Teknikleri", 1, null },
-                    { 7, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1515), "Paragrafta Düşünceyi Geliştirme Yolları", 1, null },
-                    { 8, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1515), "Paragrafta Yapı", 1, null },
-                    { 9, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1515), "Paragrafta Konu-Ana Düşünce", 1, null },
-                    { 10, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1516), "Paragrafta Yardımcı Düşünce", 1, null },
-                    { 11, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1516), "Ses Bilgisi", 1, null },
-                    { 12, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1517), "Yazım Kuralları", 1, null },
-                    { 13, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1517), "Noktalama İşaretleri", 1, null },
-                    { 14, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1518), "Sözcükte Yapı/Ekler", 1, null },
-                    { 15, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1518), "Sözcük Türleri", 1, null },
-                    { 16, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1519), "İsimler", 1, null },
-                    { 17, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1519), "Zamirler", 1, null },
-                    { 18, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1520), "Sıfatlar", 1, null },
-                    { 19, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1520), "Zarflar", 1, null },
-                    { 20, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1521), "Edat", 1, null },
-                    { 21, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1521), "Bağlaç", 1, null },
-                    { 22, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1521), "Ünlem", 1, null },
-                    { 23, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1522), "Edat - Bağlaç - Ünlem", 1, null },
-                    { 24, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1522), "Fiiller", 1, null },
-                    { 25, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1523), "Fiilde Anlam (Kip-Kişi-Yapı)", 1, null },
-                    { 26, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1523), "Ek Fiil", 1, null },
-                    { 27, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1524), "Fiilimsi", 1, null },
-                    { 28, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1524), "Fiilde Çatı", 1, null },
-                    { 29, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1525), "Sözcük Grupları", 1, null },
-                    { 30, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1525), "Cümlenin Ögeleri", 1, null },
-                    { 31, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1525), "Cümle Türleri", 1, null },
-                    { 32, new DateTime(2024, 8, 22, 14, 51, 7, 943, DateTimeKind.Utc).AddTicks(1526), "Anlatım Bozukluğu", 1, null }
+                    { 1, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2893), "Sözcükte Anlam", 1, null },
+                    { 2, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2895), "Söz Yorumu", 1, null },
+                    { 3, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2896), "Deyim ve Atasözü", 1, null },
+                    { 4, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2896), "Cümlede Anlam", 1, null },
+                    { 5, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2897), "Paragraf", 1, null },
+                    { 6, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2897), "Paragrafta Anlatım Teknikleri", 1, null },
+                    { 7, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2898), "Paragrafta Düşünceyi Geliştirme Yolları", 1, null },
+                    { 8, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2898), "Paragrafta Yapı", 1, null },
+                    { 9, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2899), "Paragrafta Konu-Ana Düşünce", 1, null },
+                    { 10, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2899), "Paragrafta Yardımcı Düşünce", 1, null },
+                    { 11, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2900), "Ses Bilgisi", 1, null },
+                    { 12, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2900), "Yazım Kuralları", 1, null },
+                    { 13, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2901), "Noktalama İşaretleri", 1, null },
+                    { 14, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2901), "Sözcükte Yapı/Ekler", 1, null },
+                    { 15, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2901), "Sözcük Türleri", 1, null },
+                    { 16, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2902), "İsimler", 1, null },
+                    { 17, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2902), "Zamirler", 1, null },
+                    { 18, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2903), "Sıfatlar", 1, null },
+                    { 19, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2903), "Zarflar", 1, null },
+                    { 20, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2904), "Edat", 1, null },
+                    { 21, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2904), "Bağlaç", 1, null },
+                    { 22, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2905), "Ünlem", 1, null },
+                    { 23, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2905), "Edat - Bağlaç - Ünlem", 1, null },
+                    { 24, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2905), "Fiiller", 1, null },
+                    { 25, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2906), "Fiilde Anlam (Kip-Kişi-Yapı)", 1, null },
+                    { 26, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2906), "Ek Fiil", 1, null },
+                    { 27, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2907), "Fiilimsi", 1, null },
+                    { 28, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2907), "Fiilde Çatı", 1, null },
+                    { 29, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2908), "Sözcük Grupları", 1, null },
+                    { 30, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2908), "Cümlenin Ögeleri", 1, null },
+                    { 31, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2908), "Cümle Türleri", 1, null },
+                    { 32, new DateTime(2024, 8, 24, 12, 17, 55, 305, DateTimeKind.Utc).AddTicks(2909), "Anlatım Bozukluğu", 1, null }
                 });
 
             migrationBuilder.CreateIndex(

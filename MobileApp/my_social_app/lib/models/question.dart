@@ -15,6 +15,8 @@ class Question{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
+  final bool isOwner;
+  final int state;
   final int appUserId;
   final String userName;
   final String? content;
@@ -26,11 +28,8 @@ class Question{
   final int numberOfLikes;
   final int numberOfSolutions;
   final int numberOfCorrectSolutions;
-  final int numberOfPendingSolutions;
-  final int numberOfIncorrectSolutions;
   final int numberOfComments;
-  final bool isOwner;
-  final int state;
+  
 
   const Question({
     required this.id,
@@ -47,8 +46,6 @@ class Question{
     required this.numberOfLikes,
     required this.numberOfSolutions,
     required this.numberOfCorrectSolutions,
-    required this.numberOfPendingSolutions,
-    required this.numberOfIncorrectSolutions,
     required this.numberOfComments,
     required this.isOwner,
     required this.state,
@@ -73,14 +70,12 @@ class Question{
     numberOfLikes: numberOfLikes,
     isOwner: isOwner,
     numberOfComments: numberOfComments,
-    comments: Pagination.init(commentsPerPage),
     numberOfSolutions: numberOfSolutions,
-    solutions: Pagination.init(solutionsPerPage),
     numberOfCorrectSolutions: numberOfCorrectSolutions,
+    comments: Pagination.init(commentsPerPage),
+    solutions: Pagination.init(solutionsPerPage),
     correctSolutions: Pagination.init(solutionsPerPage),
-    numberOfPendingSolutions: numberOfPendingSolutions,
     pendingSolutions: Pagination.init(solutionsPerPage),
-    numberOfIncorrectSolutions: numberOfIncorrectSolutions,
     incorrectSolutions: Pagination.init(solutionsPerPage),
   );
 }

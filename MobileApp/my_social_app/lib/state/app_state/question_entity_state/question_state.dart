@@ -4,6 +4,8 @@ import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
 @immutable
 class QuestionState{
@@ -24,12 +26,10 @@ class QuestionState{
   final int numberOfComments;
   final Pagination comments;
   final int numberOfSolutions;
-  final Pagination solutions;
   final int numberOfCorrectSolutions;
+  final Pagination solutions;
   final Pagination correctSolutions;
-  final int numberOfPendingSolutions;
   final Pagination pendingSolutions;
-  final int numberOfIncorrectSolutions;
   final Pagination incorrectSolutions; 
 
   const QuestionState({
@@ -50,12 +50,10 @@ class QuestionState{
     required this.numberOfComments,
     required this.comments,
     required this.numberOfSolutions,
-    required this.solutions,
     required this.numberOfCorrectSolutions,
+    required this.solutions,
     required this.correctSolutions,
-    required this.numberOfPendingSolutions,
     required this.pendingSolutions,
-    required this.numberOfIncorrectSolutions,
     required this.incorrectSolutions,
   });
 
@@ -72,12 +70,10 @@ class QuestionState{
     int? newNumberOfComments,
     Pagination? newComments,
     int? newNumberOfSolutions,
-    Pagination? newSolutions,
     int? newNumberOfCorrectSolutions,
+    Pagination? newSolutions,
     Pagination? newCorrectSolutions,
-    int? newNumberOfPendingSolutions,
     Pagination? newPendingSolutions,
-    int? newNumberOfIncorrectSolutions,
     Pagination? newIncorrectSolutions,
   }) => 
     QuestionState(
@@ -98,12 +94,10 @@ class QuestionState{
       numberOfComments: newNumberOfComments ?? numberOfComments,
       comments: newComments ?? comments,
       numberOfSolutions: newNumberOfSolutions ?? numberOfSolutions,
-      solutions: newSolutions ?? solutions,
       numberOfCorrectSolutions: newNumberOfCorrectSolutions ?? numberOfCorrectSolutions,
+      solutions: newSolutions ?? solutions,
       correctSolutions: newCorrectSolutions ?? correctSolutions,
-      numberOfPendingSolutions: newNumberOfPendingSolutions ?? numberOfPendingSolutions,
       pendingSolutions: newPendingSolutions ?? pendingSolutions,
-      numberOfIncorrectSolutions: newNumberOfIncorrectSolutions ?? numberOfIncorrectSolutions,
       incorrectSolutions: newIncorrectSolutions ?? incorrectSolutions
     );
 
@@ -112,22 +106,55 @@ class QuestionState{
   QuestionState like() => _optional(newIsLiked: true, newNumberOfLikes: numberOfLikes + 1); 
   QuestionState dislike() => _optional(newIsLiked: false, newNumberOfLikes: numberOfLikes - 1); 
  
+   QuestionState markSolutionAsCorrect(int solutionId) =>
+    _optional(
+      newPendingSolutions: pendingSolutions.removeOne(solutionId),
+      newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1,
+      newCorrectSolutions: correctSolutions.addInOrder(solutionId),
+      newState: QuestionStatus.solved
+    );
+  QuestionState markSolutionAsIncorrect(int solutionId) =>
+    _optional(
+      newPendingSolutions: pendingSolutions.removeOne(solutionId),
+      newIncorrectSolutions: incorrectSolutions.addInOrder(solutionId),
+    );
+
   QuestionState startLoadingNextSolutions() => 
     _optional(newSolutions: solutions.startLoadingNext());
   QuestionState addNextPageSolutions(Iterable<int> solutionIds) => 
     _optional(newSolutions: solutions.addNextPage(solutionIds));
-  QuestionState addSolution(int solutionId) => 
+  QuestionState addNewSolution(int solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
       newSolutions: solutions.prependOne(solutionId),
+      newPendingSolutions: pendingSolutions.prependOne(solutionId)
     );
-  QuestionState removeSolution(int solutionId) =>
+  QuestionState removeSolution(SolutionState solution) =>
     _optional(
-      newSolutions: solutions.removeOne(solutionId),
       newNumberOfSolutions: numberOfSolutions - 1,
-      newState: numberOfCorrectSolutions == 1 ? QuestionStatus.pending : state,
+      newNumberOfCorrectSolutions: solution.state == SolutionStatus.correct ? numberOfCorrectSolutions - 1 : numberOfCorrectSolutions,
+      newSolutions: solutions.removeOne(solution.id),
+      newCorrectSolutions: solution.state == SolutionStatus.correct ? correctSolutions.removeOne(solution.id) : correctSolutions,
+      newPendingSolutions: solution.state == SolutionStatus.pending ? pendingSolutions.removeOne(solution.id) : pendingSolutions,
+      newIncorrectSolutions: solution.state == SolutionStatus.incorrect ? incorrectSolutions.removeOne(solution.id) : incorrectSolutions,
+      newState: solution.state == SolutionStatus.correct && numberOfCorrectSolutions == 1 ? QuestionStatus.unsolved : state,
     );
-     
+
+  QuestionState startLoadingNextCorrectSolutions() =>
+    _optional(newCorrectSolutions: correctSolutions.startLoadingNext());
+  QuestionState addNextPageCorrectSolutions(Iterable<int> solutionIds) =>
+    _optional(newCorrectSolutions: correctSolutions.addNextPage(solutionIds));
+ 
+  QuestionState startLoadingNextPendingSolutions() =>
+    _optional(newPendingSolutions: pendingSolutions.startLoadingNext());
+  QuestionState addNextPagePedingSolutions(Iterable<int> solutionIds) =>
+    _optional(newPendingSolutions: pendingSolutions.addNextPage(solutionIds));
+
+  QuestionState startLoadinNextIncorrectSolutions() =>
+    _optional(newIncorrectSolutions: incorrectSolutions.startLoadingNext());
+  QuestionState addNextPageIncorrectSolutions(Iterable<int> solutionIds) =>
+    _optional(newIncorrectSolutions: incorrectSolutions.addNextPage(solutionIds));
+ 
   QuestionState startLoadingNextComments() =>
     _optional(newComments: comments.startLoadingNext());
   QuestionState addNextPageComments(Iterable<int> commentIds) => 
@@ -144,9 +171,7 @@ class QuestionState{
   QuestionState loadImage(int index,Uint8List image) => 
     _optional(newImages: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)]);
 
-  QuestionState markAsSolved(){
-    if(state == QuestionStatus.solved) return this;
-    return _optional(newState: QuestionStatus.solved);
-  }
+  QuestionState markAsSolved() =>
+    _optional(newState: QuestionStatus.solved);
     
 }

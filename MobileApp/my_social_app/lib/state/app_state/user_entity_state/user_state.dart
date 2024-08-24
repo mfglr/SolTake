@@ -124,19 +124,32 @@ class UserState{
   //questions
   UserState getNextPageQuestions() => _optional(newQuestions: questions.startLoadingNext());
   UserState addNextPageQuestions(Iterable<int> newQuestions) => _optional(newQuestions: questions.addNextPage(newQuestions));
-  UserState addQuestion(int id) => _optional(newNumberOfQuestions: numberOfQuestions + 1,newQuestions: questions.prependOne(id));
+  UserState addNewQuestion(int questionId) => _optional(
+    newNumberOfQuestions: numberOfQuestions + 1,
+    newQuestions: questions.prependOne(questionId),
+    newUnsolvedQuestions: unsolvedQuestions.prependOne(questionId)
+  );
   
   //solved questions
   UserState getNextPageSolvedQuestions() => _optional(newSolvedQuestions: solvedQuestions.startLoadingNext());
   UserState addNextPageSolvedQuestions(Iterable<int> questionIds) => _optional(newSolvedQuestions: solvedQuestions.addNextPage(questionIds));
-  UserState addSolvedQuestion(int questionId) => _optional(newSolvedQuestions: solvedQuestions.addSorted(questionId));
 
   //unsolved questions
   UserState getNextPageUnsolvedQuestions() => _optional(newUnsolvedQuestions: unsolvedQuestions.startLoadingNext());
   UserState addNextPageUnsolvedQuestions(Iterable<int> questionIds) => _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(questionIds));
-  UserState addUnsolvedQuestion(int questionId) => _optional(newUnsolvedQuestions: unsolvedQuestions.prependOne(questionId)); 
-  UserState removeUnsolvedQuestion(int questionId) => _optional(newUnsolvedQuestions: unsolvedQuestions.removeOne(questionId));
   
+  UserState markQuestionAsSolved(int questionId) =>
+    _optional(
+      newSolvedQuestions: solvedQuestions.ids.any((e) => e == questionId) ? solvedQuestions : solvedQuestions.addInOrder(questionId),
+      newUnsolvedQuestions: unsolvedQuestions.removeOne(questionId)
+    );
+  UserState markQuestionAsUnsolved(int questionId) =>
+    _optional(
+      newSolvedQuestions: solvedQuestions.removeOne(questionId),
+      newUnsolvedQuestions: unsolvedQuestions.addInOrder(questionId),
+    );
+
+
   //messages
   UserState nextPageMessages() => _optional(newMessages: messages.startLoadingNext());
   UserState addNextPageMessages(Iterable<int> messageIds) => _optional(newMessages: messages.addPrevPage(messageIds));

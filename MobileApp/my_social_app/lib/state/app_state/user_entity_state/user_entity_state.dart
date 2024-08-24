@@ -41,31 +41,32 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState addNotFollowed(int userId,int notFollowedId)
     => UserEntityState(entities: updateOne(entities[userId]!.addNotFollowed(notFollowedId)));
 
+  //
+  UserEntityState markQuestionAsSolved(int userId,int questionId)
+    => UserEntityState(entities: updateOne(entities[userId]?.markQuestionAsSolved(questionId)));
+  UserEntityState markQuestionAsUnsolved(int userId,int questionId)
+    => UserEntityState(entities: updateOne(entities[userId]?.markQuestionAsUnsolved(questionId)));
+
   //questions
   UserEntityState getNextPageQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageQuestions()));
   UserEntityState addNextPageQuestions(int userId, Iterable<int> questions)
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageQuestions(questions)));
-  UserEntityState addQuestion(int userId,int questionId)
-    => UserEntityState(entities: updateOne(entities[userId]!.addQuestion(questionId)));
+  UserEntityState addNewQuestion(int userId,int questionId)
+    => UserEntityState(entities: updateOne(entities[userId]!.addNewQuestion(questionId)));
   
   //solved questions
   UserEntityState getNextPageSolvedQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageSolvedQuestions()));
   UserEntityState addNextPageSolvedQuestions(int userId, Iterable<int> questionIds)
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageSolvedQuestions(questionIds)));
-  UserEntityState addSolvedQuestion(int userId, int questionId)
-    => UserEntityState(entities: updateOne(entities[userId]!.addSolvedQuestion(questionId)));
-
+  
   //unsolved questions
   UserEntityState getNextPageUnsolvedQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]!.getNextPageUnsolvedQuestions()));
   UserEntityState addNextPageUnsolvedQuestions(int userId,Iterable<int> questionIds)
     => UserEntityState(entities: updateOne(entities[userId]!.addNextPageUnsolvedQuestions(questionIds)));
-  UserEntityState addUnsolvedQuestion(int userId,int questionId)
-    => UserEntityState(entities: updateOne(entities[userId]!.addUnsolvedQuestion(questionId)));
-  UserEntityState removeUnsolveQuestion(int userId,int questionId)
-    =>UserEntityState(entities: updateOne(entities[userId]!.removeUnsolvedQuestion(questionId)));
+  
 
   //messages
   UserEntityState addMessage(int userId,int messageId)

@@ -12,8 +12,9 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
     SolutionService()
       .createAsync(state.content, state.questionId!, state.images)
       .then((solution){
+        final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-        store.dispatch(AddQuestionSolutionAction(questionId: state.questionId!,solutionId: solution.id));
+        store.dispatch(AddNewQuestionSolutionAction(solution: solutionState));
         store.dispatch(const ClearCreateSolutionStateAction());
         ToastCreator.displaySuccess("Solution has been successfully created!");
       });

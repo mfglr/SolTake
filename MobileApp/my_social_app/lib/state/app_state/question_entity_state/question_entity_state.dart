@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
 class QuestionEntityState extends EntityState<QuestionState>{
@@ -16,14 +17,34 @@ class QuestionEntityState extends EntityState<QuestionState>{
   QuestionEntityState dislike(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.dislike()));
     
+  QuestionEntityState markSolutionAsCorrect(int questionId,int solutionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.markSolutionAsCorrect(solutionId)));
+  QuestionEntityState markSolutionAsIncorrect(int questionId,int solutionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.markSolutionAsIncorrect(solutionId)));
+
   QuestionEntityState getNextPageSolutions(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingNextSolutions()));
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextSolutions()));
   QuestionEntityState addNextPageSolutions(int questionId,Iterable<int> solutionIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageSolutions(solutionIds)));
-  QuestionEntityState addSolution(int questionId,int solutionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.addSolution(solutionId)));
-  QuestionEntityState removeSolution(int questionId,int solutionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.removeSolution(solutionId)));
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageSolutions(solutionIds)));
+  QuestionEntityState addNewSolution(SolutionState solution)
+    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.addNewSolution(solution.id)));
+  QuestionEntityState removeSolution(SolutionState solution)
+    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.removeSolution(solution)));
+
+  QuestionEntityState getNextPageCorrectSolutions(int questionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextCorrectSolutions()));
+  QuestionEntityState addNextPageCorrectSolutions(int questionId,Iterable<int> solutionIds) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageCorrectSolutions(solutionIds)));
+
+  QuestionEntityState startLoadingNextPendingSolutions(int questionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextPendingSolutions()));
+  QuestionEntityState addNextPagePedingSolutions(int questionId,Iterable<int> solutionIds) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPagePedingSolutions(solutionIds)));
+
+  QuestionEntityState startLoadingNextIncorrectSolutions(int questionid) =>
+    QuestionEntityState(entities: updateOne(entities[questionid]?.startLoadinNextIncorrectSolutions()));
+  QuestionEntityState addNextPageIncorrectSolutions(int questionId,Iterable<int> solutionIds) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageIncorrectSolutions(solutionIds)));
 
   QuestionEntityState addComment(int questionId,int questionCommentId)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.addComment(questionCommentId)));

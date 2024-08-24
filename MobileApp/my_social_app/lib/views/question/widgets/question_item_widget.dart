@@ -8,7 +8,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/question/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
-import 'package:my_social_app/views/solution/pages/display_question_solutions_page.dart';
+import 'package:my_social_app/views/solution/pages/questions_solutions_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/exam/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_comment_button_widget.dart';
@@ -94,7 +94,7 @@ class QuestionItemWidget extends StatelessWidget {
                         .of(context)
                         .push(
                           MaterialPageRoute(
-                            builder: (context) => DisplayQuestionSolutionsPage(
+                            builder: (context) => QuestionsSolutionsPage(
                               questionId: question.id
                             )
                           )

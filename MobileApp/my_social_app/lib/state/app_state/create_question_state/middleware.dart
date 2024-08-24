@@ -13,9 +13,8 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
     QuestionService()
       .createQuestion(state.images,state.examId!,state.subjectId!,state.topicIds,state.content)
       .then((question) {
-        store.dispatch(AddUserQuestionAction(userId: currentUserId, questionId: question.id));
-        store.dispatch(AddUserUnsolvedQuestionAction(userId: currentUserId,questionId: question.id));
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
+        store.dispatch(AddNewUserQuestionAction(userId: currentUserId, questionId: question.id));
         ToastCreator.displaySuccess("Question has been successfully created!");
       });
   }

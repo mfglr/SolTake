@@ -186,8 +186,19 @@ final store = Store(
     getNextPageQuestionSolutionIfNoPageMiddleware,
     getNextPageQuestionSolutionsIfReadyMiddleware,
     getNextPageQuestionSolutionsMiddleware,
+
+    getNextPageQuestionCorrectSolutionsIfNoPageMiddleware,
+    getNextPageQuestionCorrectSolutionsIfReadyMiddleware,
+    getNextPageQuestionCorrectSolutionsMiddleware,
     
-    // Question image start
+    getNextPageQuestionPendingSolutionsIfNoPageMiddleware,
+    getNextPageQuestionPendingSolutionsIfReadMiddleware,
+    getNextPageQuestionPendingSolutionsMiddleware,
+
+    getNextPageQuestionIncorrectSolutionsIfNoPageMiddleware,
+    getNextPageQuestionIncorrectSolutionsIfReadyMiddleware,
+    getNextPageQuestionIncorrectSolutionsMiddleware,
+
     loadQuestionImageMiddleware,
     // Question image end
 

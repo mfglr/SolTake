@@ -115,8 +115,8 @@ class Pagination{
         recordsPerPage: recordsPerPage,
       );
   
-  Pagination addSorted(int id){
-    if(ids.isEmpty || id < ids.last) return this;
+  Pagination addInOrder(int id){
+    if(!isLast && (ids.isEmpty || id < ids.last)) return this;
     return Pagination(
       isLast: isLast,
       loadingNext: loadingNext,

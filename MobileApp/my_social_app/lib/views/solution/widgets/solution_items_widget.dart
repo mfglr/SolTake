@@ -23,7 +23,7 @@ class SolutionItemsWidget extends StatefulWidget {
 }
 
 class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
-  final GlobalKey _solutoinKey = GlobalKey(); 
+  final GlobalKey _solutionKey = GlobalKey(); 
   final ScrollController _scrollController = ScrollController();
   late final void Function() _onScrollBottom;
 
@@ -37,7 +37,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
     _scrollController.addListener(_onScrollBottom);
 
     WidgetsBinding.instance.addPostFrameCallback((_){
-      final cContext = _solutoinKey.currentContext;
+      final cContext = _solutionKey.currentContext;
       if(cContext != null){
         Scrollable.ensureVisible(cContext);
       }
@@ -63,7 +63,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
             (index){
               final solution = widget.solutions.elementAt(index);
               return Container(
-                key: widget.solutionId == solution.id ? _solutoinKey : null,
+                key: widget.solutionId == solution.id ? _solutionKey : null,
                 margin: const EdgeInsets.only(bottom: 15),
                 child: SolutionItemWidget(solution: solution),
               );

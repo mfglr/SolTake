@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -38,15 +37,9 @@ class DisplayQuestionSolutionsPage extends StatelessWidget {
               ),
             ),
           ),
-          floatingActionButton: 
-            !question.isOwner ? FloatingActionButton(
-              onPressed: () => Navigator.of(context).pushNamed(addSolutionImagesRoute),
-              shape: const CircleBorder(),
-              child: const Icon(Icons.border_color),
-            ) : null,
           body: StoreConnector<AppState,Iterable<SolutionState>>(
             onInit: (store) => store.dispatch(GetNextPageQuestionSolutionsIfNoPageAction(questionId: question.id)),
-            converter: (store) => store.state.getQuestionSolutions(question.id),
+            converter: (store) => store.state.selectQuestionSolutions(question.id),
             builder:(context,solutions) => Builder(
               builder: (context) {
                 if(question.solutions.ids.isEmpty && question.solutions.isLast){

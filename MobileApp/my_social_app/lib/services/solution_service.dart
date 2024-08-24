@@ -33,7 +33,10 @@ class SolutionService{
     return Solution.fromJson(json);
   }
 
-  Future<void> delete(int solutionId) => _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");
+  Future<void> delete(int solutionId) => 
+    _appClient.delete(
+      "$solutionController/$deleteSolutionEndpoint/$solutionId"
+    );
 
   Future<void> makeUpvote(int solutionId) =>
     _appClient.put(
@@ -75,20 +78,65 @@ class SolutionService{
       }
     );
 
-  Future<Solution> getSolutionById(int solutionId)
-    => _appClient
-        .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
-        .then((response) => Solution.fromJson(response)); 
-  
-  Future<Iterable<Solution>> getByQuestionId(int questionId, int? offset, int take, bool isDescending) async {
-    String endPoint = "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId";
-    String url = _appClient.generatePaginationUrl(endPoint, offset, take, isDescending);
-    final list = (await _appClient.get(url)) as List;
-    return list.map((e) => Solution.fromJson(e));
-  }
+  Future<Solution> getSolutionById(int solutionId) =>
+    _appClient
+      .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
+      .then((response) => Solution.fromJson(response)); 
 
-  Future<Uint8List> getImage(int solutionId,int solutionImageId) async {
-    String endPoint = "$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId";
-    return await _appClient.getBytes(endPoint);
-  }
+  Future<Iterable<Solution>> getSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+    _appClient
+      .get(
+        _appClient.generatePaginationUrl(
+          "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId",
+          offset,
+          take,
+          isDescending
+        )
+      )
+      .then((response) => response as List)
+      .then((list) => list.map((json) => Solution.fromJson(json)));
+
+  Future<Iterable<Solution>> getCorrectSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+    _appClient
+      .get(
+        _appClient.generatePaginationUrl(
+          "$solutionController/$getCorrectSolutionsByQuestionIdEndpoint/$questionId",
+          offset,
+          take,
+          isDescending
+        )
+      )
+      .then((response) => response as List)
+      .then((list) => list.map((json) => Solution.fromJson(json)));
+
+  Future<Iterable<Solution>> getPendingSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+    _appClient
+      .get(
+        _appClient.generatePaginationUrl(
+          "$solutionController/$getPendingSolutionsByQuestionIdEndpoint/$questionId",
+          offset,
+          take,
+          isDescending
+        )
+      )
+      .then((response) => response as List)
+      .then((list) => list.map((json) => Solution.fromJson(json)));
+
+  Future<Iterable<Solution>> getIncorrectSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+    _appClient
+      .get(
+        _appClient.generatePaginationUrl(
+          "$solutionController/$getIncorrectSolutionsByQuestionIdEndpoint/$questionId",
+          offset,
+          take,
+          isDescending
+        )
+      )
+      .then((response) => response as List)
+      .then((list) => list.map((json) => Solution.fromJson(json)));
+
+  Future<Uint8List> getSolutionImage(int solutionId,int solutionImageId) =>
+    _appClient.getBytes(
+      "$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId"
+    );
 }

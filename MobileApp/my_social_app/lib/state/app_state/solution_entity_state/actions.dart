@@ -123,9 +123,9 @@ class LoadSolutionImageSuccessAction extends redux.Action{
 
 @immutable
 class MarkSolutionAsCorrectAction extends redux.Action{
-  final int solutionId;
   final int questionId;
-  const MarkSolutionAsCorrectAction({required this.solutionId,required this.questionId});
+  final int solutionId;
+  const MarkSolutionAsCorrectAction({required this.questionId,required this.solutionId,});
 }
 @immutable
 class MarkSolutionAsCorrectSuccessAction extends redux.Action{
@@ -134,8 +134,9 @@ class MarkSolutionAsCorrectSuccessAction extends redux.Action{
 }
 @immutable
 class MarkSolutionAsIncorrectAction extends redux.Action{
+  final int questionId;
   final int solutionId;
-  const MarkSolutionAsIncorrectAction({required this.solutionId});
+  const MarkSolutionAsIncorrectAction({required this.questionId, required this.solutionId});
 }
 @immutable
 class MarkSolutionAsIncorrectSuccessAction extends redux.Action{

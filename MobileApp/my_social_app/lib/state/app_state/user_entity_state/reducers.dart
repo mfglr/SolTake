@@ -2,31 +2,31 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:redux/redux.dart';
 
+
+UserEntityState markQuestionAsSolvedReducer(UserEntityState prev,MarkUserQuestionAsSolvedAction action)
+  => prev.markQuestionAsSolved(action.userId, action.questionId);
+UserEntityState markQuestionAsUnsolvedReducer(UserEntityState prev,MarkUserQuestionAsUnsolvedAction action)
+  => prev.markQuestionAsUnsolved(action.userId, action.questionId);
+
 //questions
 UserEntityState getNextPageQuestionsReducer(UserEntityState prev,GetNextPageUserQuestionsAction action)
   => prev.getNextPageQuestions(action.userId);
 UserEntityState addNextPageQuestionsReducer(UserEntityState prev,AddNextPageUserQuestionsAction action)
   => prev.addNextPageQuestions(action.userId,action.questionIds);
-UserEntityState addQuestionReducer(UserEntityState prev, AddUserQuestionAction action)
-  => prev.addQuestion(action.userId, action.questionId);
+UserEntityState addNewQuestionReducer(UserEntityState prev, AddNewUserQuestionAction action)
+  => prev.addNewQuestion(action.userId, action.questionId);
 
 //solved questions
 UserEntityState getNextPageSolvedQuestionsReducer(UserEntityState prev, GetNextPageUserSolvedQuestionsAction action) 
   => prev.getNextPageSolvedQuestions(action.userId);
 UserEntityState addNextPageSolvedQuestionsReducer(UserEntityState prev, AddNextPageUserSolvedQuestionsAction action)
   => prev.addNextPageSolvedQuestions(action.userId,action.questionIds);
-UserEntityState addSolvedQuestionReducr(UserEntityState prev,AddUserSolvedQuestionAction action)
-  => prev.addSolvedQuestion(action.userId, action.questionId);
 
 //unsolved questions
 UserEntityState getNextPageUnsolvedQuestionsReducer(UserEntityState prev, GetNextPageUserUnsolvedQuestionsAction action)
   => prev.getNextPageUnsolvedQuestions(action.userId);
 UserEntityState addNextPageUnsolvedQuestionsReducer(UserEntityState prev, AddNextPageUserUnsolvedQuestionsAction action)
   => prev.addNextPageUnsolvedQuestions(action.userId, action.questionIds);
-UserEntityState addUnsolvedQuestionReducer(UserEntityState prev,AddUserUnsolvedQuestionAction action)
-  => prev.addUnsolvedQuestion(action.userId, action.questionId);
-UserEntityState removeUnsolvedQuestionReducer(UserEntityState prev,RemoveUserUnsolvedQuestionAction action)
-  => prev.removeUnsolveQuestion(action.userId,action.questionId);
 
 //followers
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
@@ -79,21 +79,22 @@ UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction a
   => prev.updateName(action.userId, action.name);
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
+  //
+  TypedReducer<UserEntityState,MarkUserQuestionAsSolvedAction>(markQuestionAsSolvedReducer).call,
+  TypedReducer<UserEntityState,MarkUserQuestionAsUnsolvedAction>(markQuestionAsUnsolvedReducer).call,
+  
   //questions
   TypedReducer<UserEntityState,GetNextPageUserQuestionsAction>(getNextPageQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserQuestionsAction>(addNextPageQuestionsReducer).call,
-  TypedReducer<UserEntityState,AddUserQuestionAction>(addQuestionReducer).call,
+  TypedReducer<UserEntityState,AddNewUserQuestionAction>(addNewQuestionReducer).call,
 
   //solved questions
   TypedReducer<UserEntityState,GetNextPageUserSolvedQuestionsAction>(getNextPageSolvedQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserSolvedQuestionsAction>(addNextPageSolvedQuestionsReducer).call,
-  TypedReducer<UserEntityState,AddUserSolvedQuestionAction>(addSolvedQuestionReducr).call,
 
   //unsolved questions
   TypedReducer<UserEntityState,GetNextPageUserUnsolvedQuestionsAction>(getNextPageUnsolvedQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserUnsolvedQuestionsAction>(addNextPageUnsolvedQuestionsReducer).call,
-  TypedReducer<UserEntityState,AddUserUnsolvedQuestionAction>(addUnsolvedQuestionReducer).call,
-  TypedReducer<UserEntityState,RemoveUserUnsolvedQuestionAction>(removeUnsolvedQuestionReducer).call,
 
   //followers
   TypedReducer<UserEntityState,GetNextPageUserFollowersAction>(getNextPageFollowers).call,
