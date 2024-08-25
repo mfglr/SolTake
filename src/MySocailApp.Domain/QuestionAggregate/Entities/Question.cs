@@ -56,18 +56,17 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public void Like(int likerId)
         {
             var index = _likes.FindIndex(x => x.AppUserId == likerId);
-            if (index != -1)
-                throw new QuestionWasAlreadyLikedException();
+            if (index != -1) return;
+
             _likes.Add(QuestionUserLike.Create(Id, likerId));
-            
             if(likerId != AppUserId)
                 AddDomainEvent(new QuestionLikedDomainEvent(this, likerId));
         }
         public void Dislike(int userId)
         {
             var index = _likes.FindIndex(x => x.AppUserId == userId);
-            if (index == -1)
-                throw new NoQuestionLikeException();
+            if (index == -1) return;
+
             _likes.RemoveAt(index);
         }
 
