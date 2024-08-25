@@ -10,4 +10,6 @@ class NotificationType{
   static const int solutionMarkedAsIncorrectNotification = 8;
   static const int solutionMarkedAsCorrectNotification = 9;
   static const int questionSolvedNotification = 10;
+  static const int solutionWasUpvotedNotification = 11;
+  static const int solutionWasDownvotedNotification = 12;
 }

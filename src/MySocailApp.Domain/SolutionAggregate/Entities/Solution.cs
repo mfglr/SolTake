@@ -58,6 +58,9 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                 _votes.RemoveAt(index);//Remove downvote
             }
             _votes.Add(SolutionUserVote.GenerateUpvote(Id, voterId));
+
+            AddDomainEvent(new SolutionWasUpvotedDomainEvent(this,voterId));
+
         }
         public void MakeDownvote(int voterId)
         {
@@ -72,6 +75,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                 _votes.RemoveAt(index);//Remove upvote
             }
             _votes.Add(SolutionUserVote.GenerateDownvote(Id, voterId));
+            AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, voterId));
         }
         public void RemoveUpvote(int voterId)
         {
@@ -91,12 +95,16 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public SolutionState State { get; private set; }
         internal void MarkAsCorrect()
         {
+            if (State != SolutionState.Pending)
+                throw new InvalidStateTransitionException();
             State = SolutionState.Correct;
             UpdatedAt = DateTime.UtcNow;
             AddDomainEvent(new SolutionMarkedAsCorrectDomainEvent(this));
         }
         internal void MarkAsIncorrect()
         {
+            if (State != SolutionState.Pending)
+                throw new InvalidStateTransitionException();
             State = SolutionState.Incorrect;
             UpdatedAt = DateTime.UtcNow;
             AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));

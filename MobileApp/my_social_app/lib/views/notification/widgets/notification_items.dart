@@ -10,6 +10,8 @@ import 'package:my_social_app/views/notification/widgets/solution_comment_create
 import 'package:my_social_app/views/notification/widgets/solution_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_marked_as_correct_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_marked_as_incorrect_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/solution_was_downvoted_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/solution_was_upvoted_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/user_followed_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/user_tagged_in_comment_item.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -51,6 +53,10 @@ class NotificationItems extends StatelessWidget {
                 return SolutionMarkedAsCorrectNotificationItem(notification: notification);
               case NotificationType.questionSolvedNotification:
                 return QuestionSolvedNotification(notification: notification);
+              case NotificationType.solutionWasUpvotedNotification:
+                return SolutionWasUpvotedNotificationItem(notification: notification);
+              case NotificationType.solutionWasDownvotedNotification:
+                return SolutionWasDownvotedNotificationItem(notification: notification);
               default :
                 return const SpaceSavingWidget();
             }

@@ -13,5 +13,7 @@
         SolutionMarkedAdIncorrect,
         SolutionMarkedAsCorrect,
         QuestionSolvedNotification,
+        SolutionWasUpvotedNotification,
+        SolutionWasDownvotedNotification
     }
 }

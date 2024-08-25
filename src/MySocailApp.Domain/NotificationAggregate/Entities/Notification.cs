@@ -131,5 +131,23 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
             };
+
+        public static Notification SolutionWasUpvotedNotification(int ownerId, int userId, int solutionId)
+            => new(NotificationType.SolutionWasUpvotedNotification)
+            {
+                OwnerId = ownerId,
+                UserId = userId,
+                SolutionId = solutionId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+        public static Notification SolutionWasDownvotedNotification(int ownerId, int userId, int solutionId)
+            => new(NotificationType.SolutionWasDownvotedNotification)
+            {
+                OwnerId = ownerId,
+                UserId = userId,
+                SolutionId = solutionId,
+                CreatedAt = DateTime.UtcNow
+            };
     }
 }
