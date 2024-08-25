@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -16,8 +16,17 @@ class QuestionImagesSlider extends StatefulWidget {
   State<QuestionImagesSlider> createState() => _QuestionImagesSliderState();
 }
 
-class _QuestionImagesSliderState extends State<QuestionImagesSlider> {
-  
+class _QuestionImagesSliderState extends State<QuestionImagesSlider> with TickerProviderStateMixin {
+  bool _isLiked = false;
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 600),
+    vsync: this
+  );
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.fastOutSlowIn,
+  );
+
   double _getMaxHeightSize(BuildContext context,Iterable<QuestionImageState> images){
     var max = images.first;
     for(final image in images){
@@ -35,32 +44,65 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> {
     super.initState();
   }
 
+  void _handleTap() {
+    if(!widget.question.isLiked){
+      store.dispatch(LikeQuestionAction(questionId: widget.question.id));
+    }
+    setState(() {
+      _isLiked = true;
+    });
+
+    _controller
+      .forward()
+      .then((_){
+        _controller
+          .reverse()
+          .then((_){
+            setState(() {
+              _isLiked = false;
+            });
+          });
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       key: ValueKey(widget.question.id),
-      onDoubleTap: (){
-        if(!widget.question.isLiked){
-          store.dispatch(LikeQuestionAction(questionId: widget.question.id));
-        }
-      },
-      child: CarouselSlider(
-          items: widget.question.images.map(
-            (imageState) => DisplayImageWidget(
-              image: imageState.image, 
-              status: imageState.state,
-            )).toList(),
-          options: CarouselOptions(
-            autoPlay: false,
-            viewportFraction: 1,
-            height: _getMaxHeightSize(context, widget.question.images),
-            enableInfiniteScroll: false,
-            onPageChanged: (index, reason){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(LoadQuestionImageAction(questionId: widget.question.id,index: index));
-            },
+      onDoubleTap: _handleTap,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CarouselSlider(
+            items: widget.question.images.map(
+              (imageState) => DisplayImageWidget(
+                image: imageState.image, 
+                status: imageState.state,
+              )).toList(),
+            options: CarouselOptions(
+              autoPlay: false,
+              viewportFraction: 1,
+              height: _getMaxHeightSize(context, widget.question.images),
+              enableInfiniteScroll: false,
+              onPageChanged: (index, reason){
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                store.dispatch(LoadQuestionImageAction(questionId: widget.question.id,index: index));
+              },
+            ),
           ),
-        ),
+          if(_isLiked)
+            Positioned(
+              child: ScaleTransition(
+                scale: _animation,
+                child: const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                  size: 100,
+                ),
+              )
+            )
+        ],
+      ),
     );
   }
 }
