@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
@@ -10,7 +11,7 @@ namespace MySocailApp.Infrastructure.Extetions
 {
     public static class QueryableExtentions
     {
-        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPagination pagination) where T : IPaginableAggregateRoot
+        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPagination pagination) where T : IEntity
         {
             if (pagination.IsDescending)
                 return query
@@ -60,6 +61,7 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Questions)
                 .Include(x => x.Followers)
                 .Include(x => x.Followeds);
+
 
         public static IQueryable<Message> IncludeForMessage(this IQueryable<Message> query)
             => query

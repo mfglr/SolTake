@@ -105,7 +105,6 @@ class AppState{
     => messageEntityState.entities.values
         .where((e) => e.state != MessageStatus.viewed && e.senderId != accountState!.id)
         .length;
-  //select messages
 
   //select users
   UserState? get currentUser => userEntityState.entities[accountState!.id];
@@ -114,6 +113,8 @@ class AppState{
     => userEntityState.entities[userId]!.notFolloweds.ids.map((e) => userEntityState.entities[e]!);
   Iterable<UserState> get selectSearchedUsers
     => searchState.searchedUsers.ids.map((e) => userEntityState.entities[e]!);
+  Iterable<UserState> selectQuestionLikes(int questionId)
+    => questionEntityState.entities[questionId]?.likes.ids.map((e) => userEntityState.entities[e]!) ?? [];
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions

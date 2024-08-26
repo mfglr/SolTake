@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken
         public async Task<AccountDto> Handle(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
         {
             var account =
-                await _userManager.Users.FirstAsync(x => x.Id == request.Id && !x.IsRemoved, cancellationToken) ??
+                await _userManager.Users.FirstAsync(x => x.Id == request.Id, cancellationToken) ??
                 throw new AccountWasNotFoundException();
             await _accountManager.LoginByRefreshToken(account, request.Token);
             return _mapper.Map<AccountDto>(account);

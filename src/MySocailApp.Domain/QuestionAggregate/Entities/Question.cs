@@ -9,11 +9,8 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
-    public class Question() : IPaginableAggregateRoot, IDomainEventsContainer
+    public class Question() : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set; }
         public int ExamId { get; private set; }
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
@@ -30,7 +27,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             if (topics.Count() > 3)
                 throw new TooManyTopicsException();
             _topics.Clear();
-            _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(Id, topicId)));
+            _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(topicId)));
         }
 
         internal void Create(int appUserId, string? content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
@@ -47,7 +44,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             ExamId = examId;
             SubjectId = subjectId;
             CreatedAt = DateTime.UtcNow;
-            _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(Id, topicId)));
+            _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(topicId)));
             _images.AddRange(images);
         }
 
@@ -58,7 +55,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             var index = _likes.FindIndex(x => x.AppUserId == likerId);
             if (index != -1) return;
 
-            _likes.Add(QuestionUserLike.Create(Id, likerId));
+            _likes.Add(QuestionUserLike.Create(likerId));
             if(likerId != AppUserId)
                 AddDomainEvent(new QuestionLikedDomainEvent(this, likerId));
         }
@@ -69,12 +66,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
             _likes.RemoveAt(index);
         }
-
-        //IDomainEventsContainer
-        private readonly List<IDomainEvent> _events = [];
-        public IReadOnlyList<IDomainEvent> Events => _events;
-        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-        public void ClearEvents() => _events.Clear();
 
         // Readonly navigator properties
         public Exam Exam { get; } = null!;

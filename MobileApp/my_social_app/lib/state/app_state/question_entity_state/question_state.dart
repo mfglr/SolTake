@@ -107,6 +107,10 @@ class QuestionState{
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
 
+  QuestionState startLodingNextLikes() =>
+    _optional(newLikes: likes.startLoadingNext());
+  QuestionState addNextPageLikes(Iterable<int> userIds) =>
+    _optional(newLikes: likes.addNextPage(userIds));
   QuestionState like(int currentUserId) => 
     _optional(
       newIsLiked: true,
@@ -124,6 +128,7 @@ class QuestionState{
       newLikes: likes.addInOrder(userId),
       newNumberOfLikes: numberOfLikes + 1
     );
+
 
   QuestionState markSolutionAsCorrect(int solutionId) =>
     _optional(

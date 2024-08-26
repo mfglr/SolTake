@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/views/question/widgets/display_question_likes_button.dart';
 import 'package:my_social_app/views/question/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/questions_solutions_page.dart';
@@ -80,8 +81,14 @@ class QuestionItemWidget extends StatelessWidget {
               Row(
                 children: [
                   QuestionLikeButton(question: question),
-                  Text(question.numberOfLikes.toString()),
-                  QuestionCommentButtonWidget(question: question)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: DisplayQuestionLikesButton(question: question),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    child: QuestionCommentButtonWidget(question: question)
+                  )
                 ],
               ),
               Row(

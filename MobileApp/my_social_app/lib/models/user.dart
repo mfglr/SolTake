@@ -22,6 +22,7 @@ class User{
   final int numberOfFolloweds;
   final bool isFollower;
   final bool isFollowed;
+  final int likeId;
 
   const User({
     required this.id,
@@ -37,6 +38,7 @@ class User{
     required this.numberOfFolloweds,
     required this.isFollower,
     required this.isFollowed,
+    required this.likeId
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

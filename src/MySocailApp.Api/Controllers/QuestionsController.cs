@@ -11,12 +11,14 @@ using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
+using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions;
+using MySocailApp.Application.Queries.UserAggregate;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -79,6 +81,10 @@ namespace MySocailApp.Api.Controllers
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetSolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
+
+        [HttpGet("{questionId}")]
+        public async Task<List<AppUserResponseDto>> GetQuestionLikes(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetQuestionLikesDto(questionId, offset, take, isDescending),cancellationToken);
 
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery]int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)

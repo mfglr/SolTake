@@ -8,7 +8,7 @@ import 'package:my_social_app/views/user/widgets/user_item_widget.dart';
 class UserItemsWidget extends StatefulWidget {
   final Iterable<UserState> users;
   final Pagination pagination;
-  final Function onScrollBotton;
+  final Function onScrollBottom;
   final Widget Function(UserState user)? rigthButtonBuilder;
   final void Function(UserState)? onPressed;
 
@@ -16,7 +16,7 @@ class UserItemsWidget extends StatefulWidget {
     super.key,
     required this.users,
     required this.pagination,
-    required this.onScrollBotton,
+    required this.onScrollBottom,
     this.rigthButtonBuilder,
     this.onPressed
   });
@@ -33,7 +33,7 @@ class _UserItemsWidgetState extends State<UserItemsWidget> {
   void initState() {
     _onScrollBottom = (){
       if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-        widget.onScrollBotton();
+        widget.onScrollBottom();
       }
     };
     _scrollController.addListener(_onScrollBottom);

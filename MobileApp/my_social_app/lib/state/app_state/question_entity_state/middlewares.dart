@@ -10,6 +10,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
@@ -46,6 +47,37 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
     QuestionService()
       .dislike(action.questionId)
       .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,currentUserId: currentUserId)));
+  }
+  next(action);
+}
+void getNextPageQuestionLikesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionLikesIfNoPageAction){
+    final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageQuestionLikesAction(questionId: action.questionId));
+    }
+  }
+  next(action);
+}
+void getNextPageQuestionLikesIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionLikesIfReadyAction){
+    final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageQuestionLikesAction(questionId: action.questionId));
+    }
+  }
+  next(action);
+}
+void getNextPageQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionLikesAction){
+    final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
+    QuestionService()
+      .getQuestionLikes(action.questionId, pagination.lastValue , usersPerPage, true)
+      .then((users){
+        store.dispatch(AddNextPageQuestionLikesAction(questionId: action.questionId, userIds: users.map((e) => e.id)));
+        store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
+        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      });
   }
   next(action);
 }

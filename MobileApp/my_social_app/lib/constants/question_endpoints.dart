@@ -12,3 +12,4 @@ const getQuestionImageEndPoint = "GetImage";
 const searchQuestionsEndpoint = "SearchQuestions";
 const getSolvedQuestionsByUserIdEndpoint = "GetSolvedQuestionsByUserId";
 const getUnsolvedQuestionsByUserIdEndpoint = "GetUnsolvedQuestionsByUserId";
+const getQuestionLikesEndpoint = "GetQuestionLikes";

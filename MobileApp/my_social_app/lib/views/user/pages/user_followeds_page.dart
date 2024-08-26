@@ -52,7 +52,7 @@ class UserFollowedsPage extends StatelessWidget {
                           return const SpaceSavingWidget();
                         }
                       ),
-                      onScrollBotton: (){
+                      onScrollBottom: (){
                         final store = StoreProvider.of<AppState>(context, listen: false);
                         store.dispatch(GetNextPageUserFollowedsIfReadyAction(userId: userId));
                       },

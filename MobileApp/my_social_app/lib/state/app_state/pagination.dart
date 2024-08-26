@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 @immutable
+abstract class PaginationData<T>{
+  final T paginationProperty;
+  const PaginationData({required this.paginationProperty});
+}
+
+@immutable
 class Pagination{
   final bool isLast;
   final bool loadingNext;
@@ -114,7 +120,6 @@ class Pagination{
         ids: [...ids, ...newIds],
         recordsPerPage: recordsPerPage,
       );
-  
   Pagination addInOrder(int id){
     if(!isLast && (ids.isEmpty || id < ids.last)) return this;
     return Pagination(

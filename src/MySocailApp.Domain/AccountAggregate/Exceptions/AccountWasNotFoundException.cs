@@ -5,8 +5,7 @@ namespace MySocailApp.Domain.AccountAggregate.Exceptions
 {
     public class AccountWasNotFoundException : ClientSideException
     {
-        public AccountWasNotFoundException() : base("The account was not found!", (int)HttpStatusCode.NotFound)
-        {
-        }
+        private readonly static string _message = "The account was not found!";
+        public AccountWasNotFoundException() : base(_message, (int)HttpStatusCode.NotFound){}
     }
 }

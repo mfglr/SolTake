@@ -41,7 +41,7 @@ class SearchUsersWidget extends StatelessWidget {
               final store = StoreProvider.of<AppState>(context,listen: false);
               store.dispatch(AddSearchedUserAction(userId: user.id));
             },
-            onScrollBotton: (){
+            onScrollBottom: (){
               final store = StoreProvider.of<AppState>(context, listen: false);
               if(state.key != ""){
                 store.dispatch(const GetNextPageSearchingUsersIfReadyAction());

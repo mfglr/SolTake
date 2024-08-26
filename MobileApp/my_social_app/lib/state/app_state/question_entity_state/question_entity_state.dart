@@ -19,6 +19,10 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]?.dislike(currentUserId)));
   QuestionEntityState addNewLike(int questionId,int userId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewLike(userId)));
+  QuestionEntityState startLoadingNextLikes(int questionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.startLodingNextLikes()));
+  QuestionEntityState addNextPageLikes(int questionId,Iterable<int> userIds)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageLikes(userIds)));
 
   QuestionEntityState markSolutionAsCorrect(int questionId,int solutionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.markSolutionAsCorrect(solutionId)));

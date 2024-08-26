@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySocailApp.Domain.AccountAggregate.Entities
 {
-    public class Account : IdentityUser<int>, IPaginableAggregateRoot, IRemovable, IDomainEventsContainer
+    public class Account : IdentityUser<int>, IAggregateRoot,IEntity
     {
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
@@ -20,7 +20,6 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             Email = email;
             UserName = ValueObjects.Email.GenerateUserName(email);
             CreatedAt = DateTime.UtcNow;
-            IsRemoved = false;
             EmailConfirmationToken = EmailConfirmationToken.GenerateToken();
 
             AddDomainEvent(new AccountCreatedDominEvent(this));
@@ -59,20 +58,6 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         //Token
         [NotMapped]
         public Token Token { get; set; } = null!;
-
-        //IRemovable
-        public bool IsRemoved { get; private set; }
-        public DateTime? RemovedAt { get; private set; }
-        public void Remove()
-        {
-            IsRemoved = true;
-            RemovedAt = DateTime.UtcNow;
-        }
-        public void Restore()
-        {
-            IsRemoved = false;
-            RemovedAt = null;
-        }
 
         //IDomainEventsContainer;
         private readonly List<IDomainEvent> _events = [];

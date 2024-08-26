@@ -36,7 +36,7 @@ class UsersToFollowWidget extends StatelessWidget {
               users: users,
               pagination: user.notFolloweds,
               rigthButtonBuilder: (user) => FollowButtonWidget(user: user),
-              onScrollBotton: (){
+              onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 store.dispatch(GetNextPageUserNotFollowedsIfReadyAction(userId: user.id));
               },

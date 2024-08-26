@@ -4,11 +4,8 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.TopicAggregate.Entities
 {
-    public class Topic() : IPaginableAggregateRoot
+    public class Topic() : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set; }
         public int SubjectId { get; private set; }
         public string Name { get; private set; }
 

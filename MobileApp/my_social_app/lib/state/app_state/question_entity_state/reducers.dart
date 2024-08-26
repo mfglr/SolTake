@@ -9,13 +9,17 @@ QuestionEntityState addQuestionsReducer(QuestionEntityState prev,AddQuestionsAct
   => prev.addQuestions(action.questions);
 
 //like or dislike questions
+QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, DislikeQuestionSuccessAction action)
+  => prev.dislike(action.questionId,action.currentUserId);
 QuestionEntityState likeQuestionSuccessReducer(QuestionEntityState prev, LikeQuestionSuccessAction action)
   => prev.like(action.questionId,action.currentUserId);
 QuestionEntityState addNewLikeReducer(QuestionEntityState prev,AddNewQuestionLikeAction action)
   => prev.addNewLike(action.questionId, action.userId);
+QuestionEntityState getNextPageLikesReducer(QuestionEntityState prev,GetNextPageQuestionLikesAction action)
+  => prev.startLoadingNextLikes(action.questionId);
+QuestionEntityState addNextPageLikesReducer(QuestionEntityState prev,AddNextPageQuestionLikesAction action)
+  => prev.addNextPageLikes(action.questionId, action.userIds);
 
-QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, DislikeQuestionSuccessAction action)
-  => prev.dislike(action.questionId,action.currentUserId);
 
 //
 QuestionEntityState markSolutionAsCorrectReducer(QuestionEntityState prev, MarkQuestionSolutionAsCorrectAction action)
@@ -74,10 +78,12 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,AddQuestionsAction>(addQuestionsReducer).call,
   
   //question likes
+  TypedReducer<QuestionEntityState,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   TypedReducer<QuestionEntityState,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
   TypedReducer<QuestionEntityState,AddNewQuestionLikeAction>(addNewLikeReducer).call,
+  TypedReducer<QuestionEntityState,GetNextPageQuestionLikesAction>(getNextPageLikesReducer).call,
+  TypedReducer<QuestionEntityState,AddNextPageQuestionLikesAction>(addNextPageLikesReducer).call,
 
-  TypedReducer<QuestionEntityState,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   //
   TypedReducer<QuestionEntityState,MarkQuestionSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
   TypedReducer<QuestionEntityState,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,

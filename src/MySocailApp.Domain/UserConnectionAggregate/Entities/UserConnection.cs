@@ -3,10 +3,9 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 
 namespace MySocailApp.Domain.UserConnectionAggregate.Entities
 {
-    public class UserConnection(int id) : IPaginableAggregateRoot
+    public class UserConnection(int id) : Entity(id), IAggregateRoot
     {
-        public int Id { get; private set; } = id;
-        public string ConnectionId { get; private set; }
+        public string? ConnectionId { get; private set; }
         public bool IsConnected { get; private set; }
 
         public void Connect(string connectionId)
@@ -18,6 +17,7 @@ namespace MySocailApp.Domain.UserConnectionAggregate.Entities
         }
         public void Disconnect() => IsConnected = false;
 
+        //readonly navigator properties
         public AppUser AppUser { get; } = null!;
     }
 }

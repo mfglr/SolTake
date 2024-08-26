@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
 import 'package:my_social_app/models/question.dart';
+import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/services/app_client.dart';
 
 class QuestionService{
@@ -96,6 +97,12 @@ class QuestionService{
     final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
     final list = (await _appClient.get(url)) as List;
     return list.map((e) => Question.fromJson(e));
+  }
+  Future<Iterable<User>> getQuestionLikes(int questionId, int? offset, int take, bool isDescending) async {
+    String endpoint = "$questionController/$getQuestionLikesEndpoint/$questionId";
+    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
+    final list = (await _appClient.get(url)) as List;
+    return list.map((e) => User.fromJson(e));
   }
   Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,int? offset,int take,bool isDescending) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";

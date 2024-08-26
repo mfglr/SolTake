@@ -88,13 +88,6 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             if (!await _userManager.CheckPasswordAsync(account, password))
                 throw new LoginFailedException();
 
-            if (account.IsRemoved)
-            {
-                account.Restore();
-                var user = await _userWriteRepository.GetWithAllAsync(account.Id, cancellationToken);
-                user.Restore();
-            }
-
             //update security stamp to revoke previous refresh token.
             var result = await _userManager.UpdateSecurityStampAsync(account);
             if (!result.Succeeded)

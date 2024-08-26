@@ -18,6 +18,11 @@ class QuestionLikeButton extends StatelessWidget {
           store.dispatch(LikeQuestionAction(questionId: question.id));
         }
       },
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       icon: Builder(
         builder: (context) {
           if(question.isLiked) return const Icon(Icons.favorite,color: Colors.red);

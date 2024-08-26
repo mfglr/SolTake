@@ -5,11 +5,8 @@ using MySocailApp.Domain.MessageAggregate.Exceptions;
 
 namespace MySocailApp.Domain.MessageAggregate.Entities
 {
-    public class Message : IPaginableAggregateRoot, IDomainEventsContainer
+    public class Message : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
         public bool IsEdited { get; private set; }
         public int SenderId { get; private set; }
         public int ReceiverId { get; private set; }
@@ -32,7 +29,7 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         }
         public void Create()
         {
-            CreatedAt = UpdatedAt = DateTime.UtcNow;
+            UpdatedAt = CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new MessageCreatedDomainEvent(this));
         }
 
@@ -63,11 +60,5 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         //readonly navigators
         public AppUser Sender { get; } = null!;
         public AppUser Receiver { get; } = null!;
-
-        //IDomainEventContainer
-        private readonly List<IDomainEvent> _events = [];
-        public IReadOnlyList<IDomainEvent> Events => _events;
-        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-        public void ClearEvents() => _events.Clear();
     }
 }

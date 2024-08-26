@@ -14,7 +14,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Interfaces
         Task<List<AppUser>> SearchUser(string key, IPagination pagination, CancellationToken cancellationToken);
         Task<List<AppUser>> GetFollowedsByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken);
         Task<List<AppUser>> GetNotFollowedsByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken);
-        
         Task<List<AppUser>> GetSearchedUsersByIdAsync(int id, int? offset, int take, CancellationToken cancellationToken);
     }
 }

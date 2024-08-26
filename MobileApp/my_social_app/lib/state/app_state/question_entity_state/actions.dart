@@ -35,7 +35,6 @@ class DislikeQuestionSuccessAction extends redux.Action{
   final int currentUserId;
   const DislikeQuestionSuccessAction({required this.questionId,required this.currentUserId});
 }
-
 @immutable
 class LikeQuestionAction extends redux.Action{
   final int questionId;
@@ -52,6 +51,27 @@ class AddNewQuestionLikeAction extends redux.Action{
   final int questionId;
   final int userId;
   const AddNewQuestionLikeAction({required this.questionId, required this.userId});
+}
+@immutable
+class GetNextPageQuestionLikesIfNoPageAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionLikesIfNoPageAction({required this.questionId});
+}
+@immutable
+class GetNextPageQuestionLikesIfReadyAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionLikesIfReadyAction({required this.questionId});
+}
+@immutable
+class GetNextPageQuestionLikesAction extends redux.Action{
+  final int questionId;
+  const GetNextPageQuestionLikesAction({required this.questionId});
+}
+@immutable
+class AddNextPageQuestionLikesAction extends redux.Action{
+  final int questionId;
+  final Iterable<int> userIds;
+  const AddNextPageQuestionLikesAction({required this.questionId, required this.userIds});
 }
 
 @immutable

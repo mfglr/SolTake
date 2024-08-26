@@ -27,6 +27,11 @@ class QuestionCommentButtonWidget extends StatelessWidget {
         showCommentModal(context);
         store.dispatch(ChangeQuestionAction(question: question));
       },
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       child: Row(
         children: [
           Container(

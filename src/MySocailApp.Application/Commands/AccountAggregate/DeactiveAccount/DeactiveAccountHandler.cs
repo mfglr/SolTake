@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Domain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountAggregate.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.DeactiveAccount
@@ -16,8 +17,10 @@ namespace MySocailApp.Application.Commands.AccountAggregate.DeactiveAccount
         public async Task Handle(DeactiveAccountDto request, CancellationToken cancellationToken)
         {
             var accountId = _tokenReader.GetRequiredAccountId();
-            var account = await _userManager.FindByIdAsync(accountId.ToString());
-            account.Remove();
+            var account = 
+                await _userManager.FindByIdAsync(accountId.ToString()) ??
+                throw new AccountWasNotFoundException();
+            //account.Remove();
             var user = (await _userRepository.GetWithAllAsync(account.Id, cancellationToken))!;
             user.Remove();
 

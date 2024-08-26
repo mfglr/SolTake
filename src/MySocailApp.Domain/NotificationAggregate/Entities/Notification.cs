@@ -3,10 +3,8 @@ using MySocailApp.Domain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
 {
-    public class Notification : IPaginableAggregateRoot
+    public class Notification : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
         public int OwnerId { get; private set; }
         public int UserId { get; private set; }
         public bool IsViewed { get; private set; }

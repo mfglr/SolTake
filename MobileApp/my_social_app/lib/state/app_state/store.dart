@@ -180,9 +180,13 @@ final store = Store(
     // Questions entity state
     loadQuestionMiddleware,
     createQuestionMiddleware,
+
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
-    
+    getNextPageQuestionLikesIfNoPageMiddleware,
+    getNextPageQuestionLikesIfReadyMiddleware,
+    getNextPageQuestionLikesMiddleware,
+
     getNextPageQuestionSolutionIfNoPageMiddleware,
     getNextPageQuestionSolutionsIfReadyMiddleware,
     getNextPageQuestionSolutionsMiddleware,

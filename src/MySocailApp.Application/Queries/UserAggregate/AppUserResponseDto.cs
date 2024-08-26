@@ -17,7 +17,28 @@ namespace MySocailApp.Application.Queries.UserAggregate
         public int NumberOfFolloweds { get; private set; }
         public bool IsFollower { get; private set; }
         public bool IsFollowed { get; private set; }
+        public int LikeId { get; private set; }
+
+        public AppUserResponseDto(int id, DateTime createdAt, DateTime? updatedAt, string userName, string? name, DateTime? birthDate, Gender gender, bool hasImage, int numberOfQuestions, int numberOfFollowers, int numberOfFolloweds, bool isFollower, bool isFollowed, int likeId)
+        {
+            Id = id;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            UserName = userName;
+            Name = name;
+            BirthDate = birthDate;
+            Gender = gender;
+            HasImage = hasImage;
+            NumberOfQuestions = numberOfQuestions;
+            NumberOfFollowers = numberOfFollowers;
+            NumberOfFolloweds = numberOfFolloweds;
+            IsFollower = isFollower;
+            IsFollowed = isFollowed;
+            LikeId = likeId;
+        }
 
         private AppUserResponseDto() { }
+
+
     }
 }

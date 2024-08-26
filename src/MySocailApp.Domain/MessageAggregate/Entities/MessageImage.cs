@@ -1,20 +1,14 @@
-﻿namespace MySocailApp.Domain.MessageAggregate.Entities
+﻿using MySocailApp.Core;
+
+namespace MySocailApp.Domain.MessageAggregate.Entities
 {
-    public class MessageImage
+    public class MessageImage(string blobName, float height, float width) : Entity
     {
-        public int Id { get; private set; }
         public int MessageId { get; private set; }
-        public string BlobName { get; private set; }
-        public float Height { get; private set; }
-        public float Width { get; private set; }
+        public string BlobName { get; private set; } = blobName;
+        public float Height { get; private set; } = height;
+        public float Width { get; private set; } = width;
 
-        public MessageImage(string blobName, float height, float width)
-        {
-            BlobName = blobName;
-            Height = height;
-            Width = width;
-        }
-
-        public Message Message { get; }
+        public Message Message { get; } = null!;
     }
 }

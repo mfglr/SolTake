@@ -5,7 +5,6 @@ using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
@@ -13,17 +12,9 @@ using MySocailApp.Domain.UserConnectionAggregate.Entities;
 
 namespace MySocailApp.Domain.AppUserAggregate.Entities
 {
-    public class AppUser(int id) : IPaginableAggregateRoot, IRemovable, IDomainEventsContainer
+    public class AppUser(int id) : Entity(id), IAggregateRoot
     {
-        public int Id { get; private set; } = id;
-        public DateTime? UpdatedAt { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-
-        internal void Create()
-        {
-            HasImage = false;
-            CreatedAt = DateTime.UtcNow;
-        }
+        internal void Create() => CreatedAt = DateTime.UtcNow;
 
         public bool HasImage { get; private set; }
         public ProfileImage? Image { get; private set; }
@@ -62,14 +53,12 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
                 Name = name;
             UpdatedAt = DateTime.UtcNow;
         }
-
         public Gender Gender { get; private set; }
         public void UpdateGender(Gender gender)
         {
             Gender = gender;
             UpdatedAt = DateTime.UtcNow;
         }
-
         public DateTime? BirthDate { get; private set; }
         public void UpdateBirthDate(DateTime birthDate)
         {
@@ -109,7 +98,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
                 throw new UserIsNotFollowerException();
             _followers.RemoveAt(index);
         }
-        
 
         private readonly List<UserSearch> _searcheds = [];
         public IReadOnlyList<UserSearch> Searcheds => _searcheds;
@@ -165,7 +153,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             _blockers.RemoveAt(index);
         }
 
-
         //IRemovable
         public bool IsRemoved { get; private set; }
         public DateTime? RemovedAt { get; private set; }
@@ -197,12 +184,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             foreach (var item in _followeds)
                 item.Restore();
         }
-
-        //IDomainEventsContainer
-        private readonly List<IDomainEvent> _events = [];
-        public IReadOnlyList<IDomainEvent> Events => _events;
-        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-        public void ClearEvents() => _events.Clear();
 
         //readonly navigator properties
         public Account Account { get; } = null!;

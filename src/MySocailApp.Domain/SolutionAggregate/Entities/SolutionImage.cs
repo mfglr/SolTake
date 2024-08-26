@@ -1,9 +1,9 @@
-﻿namespace MySocailApp.Domain.SolutionAggregate.Entities
+﻿using MySocailApp.Core;
+
+namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
-    public class SolutionImage
+    public class SolutionImage : Entity
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
         public int SolutionId { get; private set; }
         public string BlobName { get; private set; } = null!;
         public float Height { get; private set; }

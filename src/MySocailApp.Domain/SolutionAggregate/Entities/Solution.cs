@@ -1,7 +1,6 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
@@ -9,11 +8,8 @@ using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
-    public class Solution : IPaginableAggregateRoot, IDomainEventsContainer
+    public class Solution : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set; }
         public int QuestionId { get; private set; }
         public int AppUserId { get; private set; }
         public SolutionContent? Content { get; private set; }
@@ -57,7 +53,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                     return;
                 _votes.RemoveAt(index);//Remove downvote
             }
-            _votes.Add(SolutionUserVote.GenerateUpvote(Id, voterId));
+            _votes.Add(SolutionUserVote.GenerateUpvote(voterId));
 
             AddDomainEvent(new SolutionWasUpvotedDomainEvent(this,voterId));
 
@@ -74,7 +70,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                     return;
                 _votes.RemoveAt(index);//Remove upvote
             }
-            _votes.Add(SolutionUserVote.GenerateDownvote(Id, voterId));
+            _votes.Add(SolutionUserVote.GenerateDownvote(voterId));
             AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, voterId));
         }
         public void RemoveUpvote(int voterId)
@@ -109,12 +105,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
             AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));
         }
-        
-        //IDomainEventsContainer
-        private readonly List<IDomainEvent> _events = [];
-        public IReadOnlyList<IDomainEvent> Events => _events;
-        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-        public void ClearEvents() => _events.Clear();
 
         //Readonly navigator properties
         public Question Question { get; } = null!;

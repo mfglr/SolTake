@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
@@ -24,6 +25,7 @@ using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.ApplicationServices;
 using MySocailApp.Infrastructure.ApplicationServices.BlobService;
 using MySocailApp.Infrastructure.ApplicationServices.Email;
+using MySocailApp.Infrastructure.ApplicationServices.QueryRepositories;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
@@ -66,7 +68,8 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddEmailService()
-                .AddBlobService();
+                .AddBlobService()
+                .AddQueryRpositories();
         }
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
@@ -104,6 +107,11 @@ namespace MySocailApp.Infrastructure
                .AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString))
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
+        }
+        private static IServiceCollection AddQueryRpositories(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IAppUserQueryRepository, AppUserQueryRepository>();
         }
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)

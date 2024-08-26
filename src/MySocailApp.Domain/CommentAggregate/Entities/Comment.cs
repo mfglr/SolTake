@@ -8,15 +8,14 @@ using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.Entities
 {
-    public class Comment : IPaginableAggregateRoot, IDomainEventsContainer
+    public class Comment : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
         public int AppUserId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
-       
+        public readonly List<CommentUserTag> _tags = [];
+        public IReadOnlyCollection<CommentUserTag> Tags => _tags;
+
         public bool IsEdited { get; private set; }
         public CommentContent Content { get; private set; } = null!;
 
@@ -90,15 +89,6 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
                 throw new NoCommentLikeException();
             _likes.RemoveAt(index);
         }
-
-        public readonly List<CommentUserTag> _tags = [];
-        public IReadOnlyCollection<CommentUserTag> Tags => _tags;
-
-        //IDomainEventsContainer
-        private readonly List<IDomainEvent> _events = [];
-        public IReadOnlyList<IDomainEvent> Events => _events;
-        public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
-        public void ClearEvents() => _events.Clear();
 
         //readonly navigators
         public AppUser AppUser { get; } = null!;

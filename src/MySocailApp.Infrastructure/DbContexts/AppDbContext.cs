@@ -22,6 +22,7 @@ namespace MySocailApp.Infrastructure.DbContexts
     {
         public DbSet<AppUser> AppUsers { get; private set; }
         public DbSet<Question> Questions { get; private set; }
+        public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }
         public DbSet<Solution> Solutions { get; private set; }

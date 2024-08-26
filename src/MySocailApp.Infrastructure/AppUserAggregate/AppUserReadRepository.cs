@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extetions;
+using MySocailApp.Infrastructure.Extetions.QueryableMappers;
 
 namespace MySocailApp.Infrastructure.AppUserAggregate
 {

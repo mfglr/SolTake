@@ -18,10 +18,6 @@ namespace MySocailApp.Api.Filters
             var account = 
                 await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId) ?? 
                 throw new AccountWasNotFoundException();
-
-            if(account.IsRemoved)
-                throw new AccountDeactivatedException();
-
             await next();
         }
     }
