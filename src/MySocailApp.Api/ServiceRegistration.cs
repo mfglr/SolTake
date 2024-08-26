@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -7,14 +6,9 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.ValueObjects;
-using MySocailApp.Domain.ExamAggregate;
-using MySocailApp.Domain.QuestionAggregate;
-using MySocailApp.Domain.SubjectAggregate;
-using MySocailApp.Domain.TopicAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.TokenProviders;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Text;
 
 namespace MySocailApp.Api
@@ -61,7 +55,8 @@ namespace MySocailApp.Api
                         OnMessageReceived = context =>
                         {
                             var accessToken = context.Request.Query["access_token"];
-                            if (context.Request.Path.StartsWithSegments("/message"))
+                            var pathString = context.Request.Path;
+                            if (pathString.StartsWithSegments("/message") || pathString.StartsWithSegments("/notification"))
                                 context.Token = accessToken;
                             return Task.CompletedTask;
                         }

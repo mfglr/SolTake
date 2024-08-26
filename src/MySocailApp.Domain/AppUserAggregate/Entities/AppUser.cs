@@ -6,6 +6,7 @@ using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.UserConnectionAggregate.Entities;
@@ -206,6 +207,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         //readonly navigator properties
         public Account Account { get; } = null!;
         public UserConnection UserConnection { get; } = null!;
+        public NotificationConnection NotificationConnection { get; } = null!;
         public IReadOnlyCollection<Question> Questions { get; } = null!;
         public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } = null!;
         public IReadOnlyCollection<Comment> Comments { get; } = null!;

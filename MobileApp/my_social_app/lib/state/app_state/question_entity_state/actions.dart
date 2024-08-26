@@ -4,6 +4,9 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
+
+
+
 @immutable
 class LoadQuestionAction extends redux.Action{
   final int questionId;
@@ -20,16 +23,7 @@ class AddQuestionsAction extends redux.Action{
   const AddQuestionsAction({required this.questions});
 }
 
-@immutable
-class LikeQuestionAction extends redux.Action{
-  final int questionId;
-  const LikeQuestionAction({required this.questionId});
-}
-@immutable
-class LikeQuestionSuccessAction extends redux.Action{
-  final int questionId;
-  const LikeQuestionSuccessAction({required this.questionId});
-}
+
 @immutable
 class DislikeQuestionAction extends redux.Action{
   final int questionId;
@@ -38,7 +32,26 @@ class DislikeQuestionAction extends redux.Action{
 @immutable
 class DislikeQuestionSuccessAction extends redux.Action{
   final int questionId;
-  const DislikeQuestionSuccessAction({required this.questionId});
+  final int currentUserId;
+  const DislikeQuestionSuccessAction({required this.questionId,required this.currentUserId});
+}
+
+@immutable
+class LikeQuestionAction extends redux.Action{
+  final int questionId;
+  const LikeQuestionAction({required this.questionId});
+}
+@immutable
+class LikeQuestionSuccessAction extends redux.Action{
+  final int questionId;
+  final int currentUserId;
+  const LikeQuestionSuccessAction({required this.questionId,required this.currentUserId});
+}
+@immutable
+class AddNewQuestionLikeAction extends redux.Action{
+  final int questionId;
+  final int userId;
+  const AddNewQuestionLikeAction({required this.questionId, required this.userId});
 }
 
 @immutable
@@ -76,9 +89,15 @@ class AddNextPageQuestionSolutionsAction extends redux.Action{
   const AddNextPageQuestionSolutionsAction({required this.questionId, required this.solutionIds});
 }
 @immutable
-class AddNewQuestionSolutionAction extends redux.Action{
+class CreateNewQuestionSolutionAction extends redux.Action{
   final SolutionState solution;
-  const AddNewQuestionSolutionAction({required this.solution});
+  const CreateNewQuestionSolutionAction({required this.solution});
+}
+@immutable
+class AddNewQuestionSolutionAction extends redux.Action{
+  final int questionId;
+  final int solutionId;
+  const AddNewQuestionSolutionAction({required this.questionId, required this.solutionId});
 }
 @immutable
 class RemoveQuestionSolutionAction extends redux.Action{
@@ -158,7 +177,6 @@ class AddNextPageQuestionIncorrectSolutionsAction extends redux.Action{
   const AddNextPageQuestionIncorrectSolutionsAction({required this.questionId, required this.solutionIds});
 }
 
-
 @immutable
 class GetNextPageQuestionCommentsIfNoPageAction extends redux.Action{
   final int questionId;
@@ -192,6 +210,19 @@ class RemoveQuestionCommentAction extends redux.Action{
   final int questionid;
   const RemoveQuestionCommentAction({required this.commentId, required this.questionid});
 }
+@immutable
+class AddNewQuestionCommentAction extends redux.Action{
+  final int questionId;
+  final int commentId;
+  const AddNewQuestionCommentAction({required this.questionId, required this.commentId});
+}
+@immutable
+class AddNewQuestionCommentSuccessAction extends redux.Action{
+  final int questionId;
+  final int commentId;
+  const AddNewQuestionCommentSuccessAction({required this.questionId, required this.commentId});
+}
+
 
 @immutable
 class LoadQuestionImageAction extends redux.Action{

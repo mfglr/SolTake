@@ -22,7 +22,6 @@ class Comment{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
-  final bool isOwner;
 
   const Comment({
     required this.id,
@@ -38,7 +37,6 @@ class Comment{
     required this.questionId,
     required this.solutionId,
     required this.parentId,
-    required this.isOwner
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
@@ -62,7 +60,6 @@ class Comment{
       parentId: parentId,
       solutionId: solutionId,
       repliesVisibility: false,
-      isOwner: isOwner
     );
 
 }

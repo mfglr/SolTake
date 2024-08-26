@@ -3,6 +3,12 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 
 @immutable
+class AddNewNotificationAction extends redux.Action{
+  final NotificationState notification;
+  const AddNewNotificationAction({required this.notification});
+}
+
+@immutable
 class MarkNotificationsAsViewedAction extends redux.Action{
   const MarkNotificationsAsViewedAction();
 }

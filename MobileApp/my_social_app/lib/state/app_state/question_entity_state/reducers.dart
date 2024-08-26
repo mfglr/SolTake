@@ -10,9 +10,12 @@ QuestionEntityState addQuestionsReducer(QuestionEntityState prev,AddQuestionsAct
 
 //like or dislike questions
 QuestionEntityState likeQuestionSuccessReducer(QuestionEntityState prev, LikeQuestionSuccessAction action)
-  => prev.like(action.questionId);
+  => prev.like(action.questionId,action.currentUserId);
+QuestionEntityState addNewLikeReducer(QuestionEntityState prev,AddNewQuestionLikeAction action)
+  => prev.addNewLike(action.questionId, action.userId);
+
 QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, DislikeQuestionSuccessAction action)
-  => prev.dislike(action.questionId);
+  => prev.dislike(action.questionId,action.currentUserId);
 
 //
 QuestionEntityState markSolutionAsCorrectReducer(QuestionEntityState prev, MarkQuestionSolutionAsCorrectAction action)
@@ -25,10 +28,13 @@ QuestionEntityState getNextPageSolutionsReducer(QuestionEntityState prev,GetNext
   => prev.getNextPageSolutions(action.questionId);
 QuestionEntityState addNextPageSolutionsReducer(QuestionEntityState prev,AddNextPageQuestionSolutionsAction action)
   => prev.addNextPageSolutions(action.questionId, action.solutionIds);
+QuestionEntityState createNewSolutionReducer(QuestionEntityState prev,CreateNewQuestionSolutionAction action)
+  => prev.createNewSolution(action.solution);
 QuestionEntityState addNewSolutionReducer(QuestionEntityState prev,AddNewQuestionSolutionAction action)
-  => prev.addNewSolution(action.solution);
+  => prev.addNewSolution(action.questionId,action.solutionId);
 QuestionEntityState removeSolutionReducer(QuestionEntityState prev,RemoveQuestionSolutionAction action)
   => prev.removeSolution(action.solution);
+
 //correct solutions
 QuestionEntityState getNextPageCorrectSolutionsReducer(QuestionEntityState prev,GetNextPageQuestionCorrectSolutionsAction action)
   => prev.getNextPageCorrectSolutions(action.questionId);
@@ -44,6 +50,7 @@ QuestionEntityState getNextPageIncorrectSolutionsReducer(QuestionEntityState pre
   => prev.startLoadingNextIncorrectSolutions(action.questionId);
 QuestionEntityState addNextPageIncorrectSolutionsReducer(QuestionEntityState prev,AddNextPageQuestionIncorrectSolutionsAction action)
   => prev.addNextPageIncorrectSolutions(action.questionId,action.solutionIds);
+
 //comments
 QuestionEntityState getNextPageCommentsReducer(QuestionEntityState prev,GetNextPageQuestionCommentsAction action)
   => prev.getNextPageComments(action.questionId);
@@ -53,6 +60,9 @@ QuestionEntityState addCommentReducer(QuestionEntityState prev,AddQuestionCommen
   => prev.addComment(action.questionId,action.commenId);
 QuestionEntityState removeCommentReducer(QuestionEntityState prev,RemoveQuestionCommentAction action)
   => prev.removeComment(action.questionid, action.commentId);
+QuestionEntityState addNewCommentReducer(QuestionEntityState prev,AddNewQuestionCommentSuccessAction action)
+  => prev.addNewComment(action.questionId,action.commentId);
+
 //images
 QuestionEntityState startLoadingImageReducer(QuestionEntityState prev,LoadQuestionImageAction action)
   => prev.startLoadingImage(action.questionId, action.index);
@@ -62,15 +72,20 @@ QuestionEntityState loadImageReducer(QuestionEntityState prev,LoadQuestionImageS
 Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntityState>([
   TypedReducer<QuestionEntityState,AddQuestionAction>(addQuestionReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionsAction>(addQuestionsReducer).call,
-  //
+  
+  //question likes
   TypedReducer<QuestionEntityState,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
+  TypedReducer<QuestionEntityState,AddNewQuestionLikeAction>(addNewLikeReducer).call,
+
   TypedReducer<QuestionEntityState,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   //
   TypedReducer<QuestionEntityState,MarkQuestionSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
   TypedReducer<QuestionEntityState,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,
+  
   //solutions
   TypedReducer<QuestionEntityState,GetNextPageQuestionSolutionsAction>(getNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionSolutionsAction>(addNextPageSolutionsReducer).call,
+  TypedReducer<QuestionEntityState,CreateNewQuestionSolutionAction>(createNewSolutionReducer).call,
   TypedReducer<QuestionEntityState,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
   //correct solutions
@@ -82,11 +97,14 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   //Incorrect solutions
   TypedReducer<QuestionEntityState,GetNextPageQuestionIncorrectSolutionsAction>(getNextPageIncorrectSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionIncorrectSolutionsAction>(addNextPageIncorrectSolutionsReducer).call,
+  
   //comments
   TypedReducer<QuestionEntityState,GetNextPageQuestionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionCommentsAction>(addNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionCommentAction>(addCommentReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionCommentAction>(removeCommentReducer).call,
+  TypedReducer<QuestionEntityState,AddNewQuestionCommentSuccessAction>(addNewCommentReducer).call,
+
   //images
   TypedReducer<QuestionEntityState,LoadQuestionImageAction>(startLoadingImageReducer).call,
   TypedReducer<QuestionEntityState,LoadQuestionImageSuccessAction>(loadImageReducer).call,

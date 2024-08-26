@@ -20,9 +20,6 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
       numberOfUpvotes: (json['numberOfUpvotes'] as num).toInt(),
       isDownvoted: json['isDownvoted'] as bool,
       numberOfDownvotes: (json['numberOfDownvotes'] as num).toInt(),
-      belongsToQuestionOfCurrentUser:
-          json['belongsToQuestionOfCurrentUser'] as bool,
-      isOwner: json['isOwner'] as bool,
       images: (json['images'] as List<dynamic>)
           .map((e) => SolutionImage.fromJson(e as Map<String, dynamic>)),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
@@ -41,8 +38,6 @@ Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
       'numberOfUpvotes': instance.numberOfUpvotes,
       'isDownvoted': instance.isDownvoted,
       'numberOfDownvotes': instance.numberOfDownvotes,
-      'belongsToQuestionOfCurrentUser': instance.belongsToQuestionOfCurrentUser,
-      'isOwner': instance.isOwner,
       'images': instance.images.toList(),
       'numberOfComments': instance.numberOfComments,
       'state': instance.state,

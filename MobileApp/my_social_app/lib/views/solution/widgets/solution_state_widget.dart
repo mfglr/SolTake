@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/mark_solution_as_correct_button.dart';
 import 'package:my_social_app/views/solution/widgets/mark_solution_as_incorrect_button.dart';
 
@@ -24,22 +29,37 @@ class SolutionStateWidget extends StatelessWidget {
           color: Colors.red,
         );
       default:
-        if(solution.belongsToQuestionOfCurrentUser){
-          return Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: MarkSolutionAsCorrectButton(solution: solution),
+        return StoreConnector<AppState,QuestionState?>(
+          onInit: (store) => store.dispatch(LoadQuestionAction(questionId: solution.questionId)),
+          converter: (store) => store.state.questionEntityState.entities[solution.questionId],
+          builder: (store,question){
+            if(question == null) return const LoadingCircleWidget(diameter: 16,strokeWidth: 2);
+            return StoreConnector<AppState,int>(
+              converter: (store) => store.state.accountState!.id,
+              builder:(context,accountId) => Builder(
+                builder: (context) {
+                  if(accountId == question.appUserId){
+                    return Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: MarkSolutionAsCorrectButton(solution: solution),
+                        ),
+                        MarkSolutionAsIncorrectButton(solution: solution)
+                      ],
+                    );
+                  }
+                  return const Icon(
+                    Icons.pending,
+                    size: 25,
+                    color: Colors.yellow,
+                  );
+                }
               ),
-              MarkSolutionAsIncorrectButton(solution: solution)
-            ],
-          );
-        }
-        return const Icon(
-          Icons.pending,
-          size: 25,
-          color: Colors.yellow,
+            );
+          }        
         );
+        
     }
   }
 }

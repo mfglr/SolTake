@@ -17,7 +17,6 @@ class CommentState{
   final Pagination likes;
   final Pagination replies;
   final bool repliesVisibility;
-  final bool isOwner;
 
   const CommentState({
     required this.id,
@@ -36,7 +35,6 @@ class CommentState{
     required this.likes,
     required this.replies,
     required this.repliesVisibility,
-    required this.isOwner,
   });
 
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
@@ -60,7 +58,6 @@ class CommentState{
         likes: likes.startLoadingNext(),
         replies: replies,
         repliesVisibility: repliesVisibility,
-        isOwner: isOwner,
       );
   CommentState addNextPageLikes(Iterable<int> nextIds)
     => CommentState(
@@ -80,7 +77,6 @@ class CommentState{
         likes: likes.addNextPage(nextIds),
         replies: replies,
         repliesVisibility: repliesVisibility,
-        isOwner: isOwner,
       );
   CommentState like(int userId)
     => CommentState(
@@ -100,7 +96,6 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
-        isOwner: isOwner,
       );
   CommentState dislike(int userId)
     => CommentState(
@@ -120,7 +115,6 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
-        isOwner: isOwner,
       );
  
   CommentState getNextPageReplies()
@@ -141,7 +135,6 @@ class CommentState{
         likes: likes,
         replies: replies.startLoadingNext(),
         repliesVisibility: repliesVisibility,
-        isOwner: isOwner
       );
   CommentState addNextPageReplies(Iterable<int> replyIds)
     => CommentState(
@@ -161,7 +154,6 @@ class CommentState{
         likes: likes,
         replies: replies.addNextPage(replyIds),
         repliesVisibility: repliesVisibility,
-        isOwner: isOwner
       );
   CommentState appendReply(int replyId)
     => CommentState(
@@ -181,7 +173,6 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: true,
-        isOwner: isOwner,
       );
   CommentState removeReply(int replyId)
     => CommentState(
@@ -201,7 +192,6 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: true,
-        isOwner: isOwner,
       );
 
   CommentState changeVisibility(bool visibility)
@@ -222,7 +212,6 @@ class CommentState{
         parentId: parentId,
         solutionId: solutionId,
         repliesVisibility: visibility,
-        isOwner: isOwner,
       );
     
 }

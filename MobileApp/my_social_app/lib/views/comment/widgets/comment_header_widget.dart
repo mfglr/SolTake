@@ -105,44 +105,47 @@ class CommentHeaderWidget extends StatelessWidget {
               
                   Container(
                     margin: const EdgeInsets.only(left: 5),
-                    child: Builder(
-                      builder: (context) {
-                        if(!comment.isOwner) return const SpaceSavingWidget();
-                        return PopupMenuButton<CommentsAction>(
-                          iconSize: 15,
-                          style: ButtonStyle(
-                            padding: WidgetStateProperty.all(EdgeInsets.zero),
-                            minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          onSelected: (value) async {
-                            switch(value){
-                              case CommentsAction.delete:
-                                bool response = await DialogCreator.showDeleteCommentDialog(context);
-                                if(response && context.mounted){
-                                  final store = StoreProvider.of<AppState>(context,listen: false);
-                                  store.dispatch(RemoveCommentAction(comment: comment));
-                                }
-                              default:
-                                return;
-                            }
-                          },
-                          itemBuilder: (context) {
-                            return [
-                              const PopupMenuItem<CommentsAction>(
-                                value: CommentsAction.delete,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Delete"),
-                                    Icon(Icons.delete)
-                                  ],
+                    child: StoreConnector<AppState,int>(
+                      converter: (store) => store.state.accountState!.id,
+                      builder: (context,accountId) => Builder(
+                        builder: (context) {
+                          if(comment.appUserId != accountId) return const SpaceSavingWidget();
+                          return PopupMenuButton<CommentsAction>(
+                            iconSize: 15,
+                            style: ButtonStyle(
+                              padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            onSelected: (value) async {
+                              switch(value){
+                                case CommentsAction.delete:
+                                  bool response = await DialogCreator.showDeleteCommentDialog(context);
+                                  if(response && context.mounted){
+                                    final store = StoreProvider.of<AppState>(context,listen: false);
+                                    store.dispatch(RemoveCommentAction(comment: comment));
+                                  }
+                                default:
+                                  return;
+                              }
+                            },
+                            itemBuilder: (context) {
+                              return [
+                                const PopupMenuItem<CommentsAction>(
+                                  value: CommentsAction.delete,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Delete"),
+                                      Icon(Icons.delete)
+                                    ],
+                                  )
                                 )
-                              )
-                            ];
-                          }
-                        );
-                      }
+                              ];
+                            }
+                          );
+                        }
+                      ),
                     ),
                   ),
                 

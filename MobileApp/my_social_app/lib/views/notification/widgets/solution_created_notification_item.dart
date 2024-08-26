@@ -12,6 +12,7 @@ class SolutionCreatedNotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotificationItem(
       notification: notification,
+      content: "A solution has been created for your question.😊👊 Click to check the solution.",
       onPressed: () => 
         Navigator
           .of(context)
@@ -26,7 +27,6 @@ class SolutionCreatedNotificationItem extends StatelessWidget {
         Icons.lightbulb,
         color: Colors.yellow,
       ),
-      content: "A solution has been created for your question.😊👊 Click to check the solution."
     );
   }
 }

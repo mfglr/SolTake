@@ -199,8 +199,12 @@ final store = Store(
     getNextPageQuestionIncorrectSolutionsIfReadyMiddleware,
     getNextPageQuestionIncorrectSolutionsMiddleware,
 
+    getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
+    getNextPageQuestionCommentIfReadyMiddleware,
+    getNextPageQuestionCommentsMiddleware,
+   
     loadQuestionImageMiddleware,
-    // Question image end
+    
 
     //solution entity state
     createSolutionMiddleware,
@@ -220,9 +224,6 @@ final store = Store(
 
     //comments entity state
     createCommentMiddleware,
-    nextPageQuestionCommentsMiddleware,
-    getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
-    getNextPageQuestionCommentIfReadyMiddleware,
     loadCommentMiddleware,
     loadCommentsMiddleware,
     removeCommentMiddleware,

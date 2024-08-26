@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
 using MySocailApp.Domain.UserConnectionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
@@ -30,6 +31,11 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasOne(x => x.UserConnection)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey<UserConnection>(x => x.Id);
+
+            builder
+                .HasOne(x => x.NotificationConnection)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey<NotificationConnection>(x => x.Id);
 
             builder
                 .HasMany(x => x.Followers)

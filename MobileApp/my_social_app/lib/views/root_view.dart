@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/connect_message_hub.dart';
+import 'package:my_social_app/connect_notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -32,6 +33,7 @@ class _RootViewState extends State<RootView> {
     return StoreConnector<AppState,UserState?>(
       onInit: (store){
         store.dispatch(LoadUserAction(userId: store.state.accountState!.id));
+        connectNotificationHub(store);
         connectMessageHub(store);
       },
       converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],

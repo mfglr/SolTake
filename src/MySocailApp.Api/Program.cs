@@ -28,5 +28,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<NotificationHub>("/notification");
 app.MapHub<MessageHub>("/message");
 app.Run();

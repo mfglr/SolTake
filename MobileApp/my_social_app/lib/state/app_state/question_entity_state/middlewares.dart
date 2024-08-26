@@ -33,17 +33,19 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){
-      QuestionService()
-        .like(action.questionId)
-        .then((_) => store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId)));
+    final currentUserId = store.state.accountState!.id;
+    QuestionService()
+      .like(action.questionId)
+      .then((_) => store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId,currentUserId: currentUserId)));
   }
   next(action);
 }
 void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is DislikeQuestionAction){
+    final currentUserId = store.state.accountState!.id;
     QuestionService()
       .dislike(action.questionId)
-      .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId)));
+      .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,currentUserId: currentUserId)));
   }
   next(action);
 }
@@ -194,7 +196,7 @@ void getNextPageQuestionCommentIfReadyMiddleware(Store<AppState> store,action,Ne
   }
   next(action);
 }
-void nextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+void getNextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionCommentsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
     CommentService()

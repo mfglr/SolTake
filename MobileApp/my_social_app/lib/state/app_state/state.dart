@@ -145,7 +145,7 @@ class AppState{
 
   //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)
-    => questionEntityState.entities[questionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
+    => questionEntityState.entities[questionId]?.comments.ids.map((e) => commentEntityState.entities[e]!) ?? [];
   Iterable<CommentState> getFormatedQuestionComments(int id,int questionId)
     => questionEntityState.entities[questionId]!.comments.merge(id).map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> getSolutionComments(int solutionId)

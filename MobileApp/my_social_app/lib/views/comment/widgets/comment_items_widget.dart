@@ -32,7 +32,6 @@ class CommentItemsWidget extends StatefulWidget {
 }
 
 class _CommentItemsWidgetState extends State<CommentItemsWidget> {
-  
   void _onScrollBottom(){
     if(widget.scrollController.hasClients && widget.scrollController.position.pixels == widget.scrollController.position.maxScrollExtent){
       widget.onScrollBottom();
@@ -44,7 +43,6 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
     widget.scrollController.addListener(_onScrollBottom);
     super.initState();
   }
-
 
   @override
   void dispose() {

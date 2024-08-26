@@ -52,7 +52,6 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.Votes)
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
-                .Include(x => x.Question)
                 .Include(x => x.Comments);
 
         public static IQueryable<AppUser> IncludeForUser(this IQueryable<AppUser> query)

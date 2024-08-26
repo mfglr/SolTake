@@ -15,8 +15,6 @@ namespace MySocailApp.Application.Queries.SolutionAggregate
         public int NumberOfUpvotes { get; private set; }
         public bool IsDownvoted { get; private set; }
         public int NumberOfDownvotes { get; private set; }
-        public bool IsOwner { get; private set; }
-        public bool BelongsToQuestionOfCurrentUser { get; private set; }
         public int NumberOfComments { get; private set; }
         public SolutionState State { get; private set; }
         public IReadOnlyCollection<SolutionImageResponseDto> Images { get; private set; } = null!;

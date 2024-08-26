@@ -14,6 +14,14 @@ class NotificationEntityState extends EntityState<NotificationState>{
     required this.lastId
   });
 
+  NotificationEntityState addNewNotification(NotificationState notification)
+    => NotificationEntityState(
+      entities: prependOne(notification), 
+      isUnviewedNotificationsLoaded: isUnviewedNotificationsLoaded,
+      isLast: isLast,
+      lastId: lastId
+    );
+
   NotificationEntityState markAsViewed(Iterable<int> ids)
     => NotificationEntityState(
       entities: updateMany(ids.map((e) => entities[e]!.markAsViewed())),

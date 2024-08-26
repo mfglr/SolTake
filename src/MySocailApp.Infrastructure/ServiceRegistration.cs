@@ -12,6 +12,7 @@ using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
@@ -29,6 +30,7 @@ using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.MessageAggregate;
 using MySocailApp.Infrastructure.NotificationAggregate;
+using MySocailApp.Infrastructure.NotificationConnectionAggregate;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
@@ -56,7 +58,8 @@ namespace MySocailApp.Infrastructure
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
                 .AddMessageAggregate()
-                .AddUserConnectionAggregate();
+                .AddUserConnectionAggregate()
+                .AddNotificationConnectionAggregate();
         }
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
@@ -102,6 +105,7 @@ namespace MySocailApp.Infrastructure
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
+        
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
         {
             return services
@@ -171,6 +175,12 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<IUserConnectionWriteRepository, UserConnectionWriteRepository>()
                 .AddScoped<IUserConnectionReadRepository, UserConnectionReadRepository>();
+        }
+        private static IServiceCollection AddNotificationConnectionAggregate(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<INotificationConnectionReadRepository, NotificationConnectionReadRepository>()
+                .AddScoped<INotificationConnectionWriteRepository, NotificationConnectionWriteRepository>();
         }
     }
 }

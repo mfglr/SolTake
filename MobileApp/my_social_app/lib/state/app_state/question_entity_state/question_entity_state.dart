@@ -12,11 +12,14 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: appendOne(value));
   QuestionEntityState addQuestions(Iterable<QuestionState> values)
     => QuestionEntityState(entities: appendMany(values));
-  QuestionEntityState like(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.like()));
-  QuestionEntityState dislike(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.dislike()));
-    
+  
+  QuestionEntityState like(int questionId,int currentUserId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.like(currentUserId)));
+  QuestionEntityState dislike(int questionId,int currentUserId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.dislike(currentUserId)));
+  QuestionEntityState addNewLike(int questionId,int userId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewLike(userId)));
+
   QuestionEntityState markSolutionAsCorrect(int questionId,int solutionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.markSolutionAsCorrect(solutionId)));
   QuestionEntityState markSolutionAsIncorrect(int questionId,int solutionId)
@@ -26,8 +29,10 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextSolutions()));
   QuestionEntityState addNextPageSolutions(int questionId,Iterable<int> solutionIds)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageSolutions(solutionIds)));
-  QuestionEntityState addNewSolution(SolutionState solution)
-    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.addNewSolution(solution.id)));
+  QuestionEntityState createNewSolution(SolutionState solution)
+    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.createNewSolution(solution.id)));
+  QuestionEntityState addNewSolution(int questionId,int solutionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewSolution(solutionId)));
   QuestionEntityState removeSolution(SolutionState solution)
     => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.removeSolution(solution)));
 
@@ -46,14 +51,17 @@ class QuestionEntityState extends EntityState<QuestionState>{
   QuestionEntityState addNextPageIncorrectSolutions(int questionId,Iterable<int> solutionIds) =>
     QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageIncorrectSolutions(solutionIds)));
 
-  QuestionEntityState addComment(int questionId,int questionCommentId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.addComment(questionCommentId)));
-  QuestionEntityState removeComment(int questionId,int commentId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.removeComment(commentId)));
+  
   QuestionEntityState getNextPageComments(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingNextComments()));
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextComments()));
   QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.addNextPageComments(commentIds)));
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageComments(commentIds)));
+  QuestionEntityState addComment(int questionId,int questionCommentId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addComment(questionCommentId)));
+  QuestionEntityState removeComment(int questionId,int commentId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.removeComment(commentId)));
+  QuestionEntityState addNewComment(int questionId,int commentId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewComment(commentId)));
 
   QuestionEntityState startLoadingImage(int questionId,int index)
     => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingImage(index)));

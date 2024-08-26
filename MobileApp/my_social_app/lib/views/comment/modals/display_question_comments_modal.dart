@@ -29,11 +29,12 @@ class DisplayQuestionCommentsModal extends StatefulWidget {
 }
 
 class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsModal> {
+  
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   late final StreamSubscription<QuestionState?> _questionConsumer;
-
+  
   @override
   void initState() {
     final store = StoreProvider.of<AppState>(context,listen: false);

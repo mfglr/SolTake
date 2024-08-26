@@ -11,9 +11,9 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
-import 'package:my_social_app/views/shared/icon_with_badge.dart';
 import 'package:my_social_app/views/notification/pages/notification_page.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
+import 'package:badges/badges.dart' as badges;
 
 enum MenuAction{
   logout
@@ -36,9 +36,18 @@ class HomePage extends StatelessWidget {
                 store.dispatch(const MarkNotificationsAsViewedAction());
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NotificationPage()));
               },
-              icon: IconWithBadge(
-                icon: Icons.notifications,
-                badgeCount: state.numberOfUnviewedNotifications,
+              icon: badges.Badge(
+                badgeContent: state.numberOfUnviewedNotifications > 0 ? Text(
+                  state.numberOfUnviewedNotifications.toString(),
+                  style:const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12
+                  ),
+                ) : null,
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: state.numberOfUnviewedNotifications > 0 ? Colors.red : Colors.transparent,
+                ),
+                child: const Icon(Icons.notifications),
               ),
             ),
             PopupMenuButton<MenuAction>(

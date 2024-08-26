@@ -8,6 +8,7 @@ using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
@@ -30,6 +31,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Message> Messages { get; private set; }
         public DbSet<UserConnection> UserConnections { get; private set; }
         public DbSet<UserSearch> UserSearchs { get; private set; }
+        public DbSet<NotificationConnection> NotificationConnections { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

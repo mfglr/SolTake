@@ -21,8 +21,6 @@ class Solution{
   final int numberOfUpvotes;
   final bool isDownvoted;
   final int numberOfDownvotes;
-  final bool belongsToQuestionOfCurrentUser;
-  final bool isOwner;
   final Iterable<SolutionImage> images;
   final int numberOfComments;
   final int state;
@@ -39,8 +37,6 @@ class Solution{
     required this.numberOfUpvotes,
     required this.isDownvoted,
     required this.numberOfDownvotes,
-    required this.belongsToQuestionOfCurrentUser,
-    required this.isOwner,
     required this.images,
     required this.numberOfComments,
     required this.state
@@ -62,8 +58,6 @@ class Solution{
       numberOfUpvotes: numberOfUpvotes,
       isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,
-      belongsToQuestionOfCurrentUser: belongsToQuestionOfCurrentUser,
-      isOwner: isOwner,
       images: images.map((e) => e.toSolutionImageState()),
       numberOfComments: numberOfComments,
       comments: Pagination.init(solutionsPerPage),
