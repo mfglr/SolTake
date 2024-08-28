@@ -32,9 +32,9 @@ UserEntityState addNextPageUnsolvedQuestionsReducer(UserEntityState prev, AddNex
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
   => prev.getNextPageFollowers(action.userId);
 UserEntityState addNextPageFollowers(UserEntityState prev,AddNextPageUserFollowersAction action)
-  => prev.addNextPageFollowers(action.userId,action.userIds);
+  => prev.addNextPageFollowers(action.userId,action.followers);
 UserEntityState addFollowerReducer(UserEntityState prev, AddFollowerAction action)
-  => prev.addFollower(action.userId, action.followerId);
+  => prev.addFollower(action.userId, action.follower);
 UserEntityState removeFollowerReducer(UserEntityState prev, RemoveFollowerAction action)
   => prev.removeFollower(action.userId,action.followerId);
 
@@ -42,9 +42,9 @@ UserEntityState removeFollowerReducer(UserEntityState prev, RemoveFollowerAction
 UserEntityState getNextPageFollowedsReducer(UserEntityState prev,GetNextPageUserFollowedsAction action)
   => prev.getNextPageFolloweds(action.userId);
 UserEntityState addNextPageFollowedsReducer(UserEntityState prev,AddNextPageUserFollowedsAction action)
-  => prev.addNextPageFolloweds(action.userId,action.userIds);
+  => prev.addNextPageFolloweds(action.userId,action.followeds);
 UserEntityState addFollowedReducer(UserEntityState prev,AddFollowedAction action)
-  => prev.addFollowed(action.userId, action.followedId);
+  => prev.addFollowed(action.userId, action.followed);
 UserEntityState removeFollowedReducer(UserEntityState prev,RemoveFollowedAction action)
   => prev.removeFollowed(action.userId,action.followedId);
 
@@ -53,10 +53,10 @@ UserEntityState getNextPageNotFollowedsReducer(UserEntityState prev,GetNextPageU
   => prev.getNextPageNotFolloweds(action.userId);
 UserEntityState addNextPageNotFollowedsReducer(UserEntityState prev,AddNextPageUserNotFollowedsAction action)
   => prev.addNextPageNotFolloweds(action.userId, action.userIds);
-UserEntityState removeNotFollowedReducer(UserEntityState prev,RemoveUserNotFollowedAction action)
-  => prev.removeNotFollowed(action.userId,action.notFollowedId);
 UserEntityState addNotFollowedReducer(UserEntityState prev,AddUserNotFollowedAction action)
   => prev.addNotFollowed(action.userId,action.notFollowedId);
+UserEntityState removeNotFollowedReducer(UserEntityState prev,RemoveUserNotFollowedAction action)
+  => prev.removeNotFollowed(action.userId,action.notFollowedId);
 
 //messages
 UserEntityState addMessageReducer(UserEntityState prev,AddUserMessageAction action)

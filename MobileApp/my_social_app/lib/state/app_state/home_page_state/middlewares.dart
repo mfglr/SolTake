@@ -1,4 +1,3 @@
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/home_page_state/actions.dart';
@@ -12,8 +11,8 @@ import 'package:redux/redux.dart';
 
 void getNextPageHomeQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageHomeQuestionsIfNoPageAction){
-    final questions = store.state.homePageState.questions;
-    if(!questions.isLast && questions.ids.isEmpty){
+    final pagination = store.state.homePageState.questions;
+    if(pagination.isReadyForNextPage && pagination.props.isEmpty){
       store.dispatch(const GetNextPageHomeQuestionsAction());
     }
   }
@@ -32,7 +31,7 @@ void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageHomeQuestionsAction){
     final pagination = store.state.homePageState.questions;
     QuestionService()
-      .getHomePageQuestions(pagination.lastValue,questionsPerPage,true)
+      .getHomePageQuestions(pagination.next)
       .then((questions){
         store.dispatch(AddNextPageHomeQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
@@ -57,7 +56,7 @@ void getPrevPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetPrevPageHomeQuestionsAction){
     final pagination = store.state.homePageState.questions;
     QuestionService()
-      .getHomePageQuestions(pagination.firstValue,questionsPerPage,false)
+      .getHomePageQuestions(pagination.prev)
       .then((questions){
         store.dispatch(AddPrevPageHomeQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

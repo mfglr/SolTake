@@ -1,21 +1,22 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetUserById
 {
-    public class GetByIdHandler(IAppUserReadRepository repository, IMapper mapper) : IRequestHandler<GetUserByIdDto, AppUserResponseDto>
+    public class GetByIdHandler(IAppUserQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetUserByIdDto, AppUserResponseDto>
     {
-        private readonly IAppUserReadRepository _repository = repository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly IAppUserQueryRepository _repository = repository;
 
         public async Task<AppUserResponseDto> Handle(GetUserByIdDto request, CancellationToken cancellationToken)
-        {
-            var user = 
-                await _repository.GetByIdAsync(request.Id, cancellationToken) ??
+            => await _repository
+                .GetByIdAsync(
+                    request.Id,
+                    _accessTokenReader.GetRequiredAccountId(),
+                    cancellationToken
+                ) ??
                 throw new UserNotFoundException();
-            return _mapper.Map<AppUserResponseDto>(user);
-        }
     }
 }

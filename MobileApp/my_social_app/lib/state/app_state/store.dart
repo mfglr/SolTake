@@ -21,7 +21,8 @@ import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/pagination/id_state.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
@@ -49,7 +50,12 @@ final store = Store(
     isInitialized: false,
     userEntityState: const UserEntityState(entities: {}),
     userImageEntityState: const UserImageEntityState(entities: {}),
-    searchState: SearchState(activePage: 0,key: "",questionKey: "",userKey:"",examId: null,subjectId: null,topicId: null,questions: Pagination.init(questionsPerPage), users: Pagination.init(usersPerPage),searchedUsers: Pagination.init(usersPerPage)),
+    searchState: SearchState(
+      activePage: 0,key: "",questionKey: "",userKey:"",examId: null,subjectId: null,topicId: null,
+      questions: Pagination<num,IdState>.init(questionsPerPage,true),
+      users: Pagination<num,IdState>.init(usersPerPage,true),
+      searchedUsers: Pagination<num,IdState>.init(usersPerPage,true)
+    ),
     createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: const ExamEntityState(entities: {}, isLast: false,isLoading: false),
@@ -57,7 +63,7 @@ final store = Store(
     topicEntityState: const TopicEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
     solutionEntityState: const SolutionEntityState(entities: {}),
-    homePageState: HomePageState(questions: Pagination.init(questionsPerPage)),
+    homePageState: HomePageState(questions: Pagination<num,IdState>.init(questionsPerPage,true)),
     commentEntityState: const CommentEntityState(entities: {}),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
     notificationEntityState: const NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),

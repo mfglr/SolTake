@@ -48,18 +48,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.Follower)
                 .HasForeignKey(x => x.FollowerId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
-            builder
-                .HasMany(x => x.Blockers)
-                .WithOne(x => x.Blocked)
-                .HasForeignKey(x => x.BlockedId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.Blockeds)
-                .WithOne(x => x.Blocker)
-                .HasForeignKey(x => x.BlockerId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(x => x.Questions)

@@ -37,6 +37,8 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
+      'isOwner': instance.isOwner,
+      'state': instance.state,
       'appUserId': instance.appUserId,
       'userName': instance.userName,
       'content': instance.content,
@@ -49,6 +51,4 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'numberOfSolutions': instance.numberOfSolutions,
       'numberOfCorrectSolutions': instance.numberOfCorrectSolutions,
       'numberOfComments': instance.numberOfComments,
-      'isOwner': instance.isOwner,
-      'state': instance.state,
     };

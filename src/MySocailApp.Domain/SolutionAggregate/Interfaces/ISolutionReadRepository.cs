@@ -11,9 +11,9 @@ namespace MySocailApp.Domain.SolutionAggregate.Interfaces
         Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken);
 
-        Task<List<Solution>> GetSolutionsByQuestionIdAsync(int questionId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Solution>> GetCorrectSolutionsByQuestionId(int questionId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Solution>> GetPendingSolutionsByQuestionId(int questionId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Solution>> GetIncorrectSolutionsByQuestionId(int questionId, IPagination pagination, CancellationToken cancellationToken);
+        Task<List<Solution>> GetSolutionsByQuestionIdAsync(int questionId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Solution>> GetCorrectSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Solution>> GetPendingSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Solution>> GetIncorrectSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken);
     }
 }

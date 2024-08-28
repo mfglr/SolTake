@@ -1,4 +1,6 @@
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/pagination/id_state.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 
 class CommentState{
   final int id;
@@ -14,8 +16,8 @@ class CommentState{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
-  final Pagination likes;
-  final Pagination replies;
+  final Pagination<num,CommentUserLikeState> likes;
+  final Pagination<num,IdState> replies;
   final bool repliesVisibility;
 
   const CommentState({
@@ -38,7 +40,7 @@ class CommentState{
   });
 
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
-  int get numberOfNotDisplayedReplies => numberOfReplies - (repliesVisibility ? replies.ids.length : 0);
+  int get numberOfNotDisplayedReplies => numberOfReplies - (repliesVisibility ? replies.props.length : 0);
 
   CommentState getNextPageLikes()
     => CommentState(
@@ -59,7 +61,7 @@ class CommentState{
         replies: replies,
         repliesVisibility: repliesVisibility,
       );
-  CommentState addNextPageLikes(Iterable<int> nextIds)
+  CommentState addNextPageLikes(Iterable<CommentUserLikeState> likes)
     => CommentState(
         id: id,
         createdAt: createdAt,
@@ -74,11 +76,11 @@ class CommentState{
         questionId: questionId,
         solutionId: solutionId,
         parentId: parentId,
-        likes: likes.addNextPage(nextIds),
+        likes: this.likes.addNextPage(likes),
         replies: replies,
         repliesVisibility: repliesVisibility,
       );
-  CommentState like(int userId)
+  CommentState like(CommentUserLikeState like)
     => CommentState(
         id: id,
         createdAt: createdAt,
@@ -89,7 +91,7 @@ class CommentState{
         isEdited: isEdited,
         content: content,
         numberOfLikes: numberOfLikes + 1,
-        likes: likes.prependOne(id),
+        likes: likes.prependOne(like),
         isLiked: true,
         replies: replies,
         numberOfReplies: numberOfReplies,
@@ -108,7 +110,7 @@ class CommentState{
         isEdited: isEdited,
         content: content,
         numberOfLikes: numberOfLikes - 1,
-        likes: likes.removeOne(id),
+        likes: likes.where((like) => like.userId != userId),
         isLiked: false,
         replies: replies,
         numberOfReplies: numberOfReplies,
@@ -152,7 +154,7 @@ class CommentState{
         solutionId: solutionId,
         parentId: parentId,
         likes: likes,
-        replies: replies.addNextPage(replyIds),
+        replies: replies.addNextPage(replyIds.map((replyId) => IdState(key: replyId))),
         repliesVisibility: repliesVisibility,
       );
   CommentState appendReply(int replyId)
@@ -168,7 +170,7 @@ class CommentState{
         numberOfLikes: numberOfLikes,
         likes: likes,
         isLiked: isLiked,
-        replies: replies.appendOne(replyId),
+        replies: replies.appendOne(IdState(key: replyId)),
         numberOfReplies: numberOfReplies + 1,
         parentId: parentId,
         solutionId: solutionId,
@@ -187,7 +189,7 @@ class CommentState{
         numberOfLikes: numberOfLikes,
         likes: likes,
         isLiked: isLiked,
-        replies: replies.removeOne(replyId),
+        replies: replies.removeOne(IdState(key: replyId)),
         numberOfReplies: numberOfReplies - 1,
         parentId: parentId,
         solutionId: solutionId,

@@ -3,8 +3,8 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetFollowedsById
 {
-    public class GetFollowedsByIdDto(int id, int? offset, int take,bool isDescending) : Pagination(offset,take,isDescending), IRequest<List<AppUserResponseDto>>
+    public class GetFollowedsByIdDto(int userId, int? offset, int take,bool isDescending) : Page(offset,take,isDescending), IRequest<List<FollowResponseDto>>
     {
-        public int Id { get; private set; } = id;
+        public int UserId { get; private set; } = userId;
     }
 }

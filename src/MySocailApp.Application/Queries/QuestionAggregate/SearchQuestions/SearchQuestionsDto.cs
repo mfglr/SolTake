@@ -3,7 +3,7 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions
 {
-    public class SearchQuestionsDto(string? key,int? examId,int? subjectId,int? topicId,int? offset,int take,bool isDescending) : Pagination(offset,take,isDescending), IRequest<List<QuestionResponseDto>>
+    public class SearchQuestionsDto(string? key,int? examId,int? subjectId,int? topicId,int? offset,int take,bool isDescending) : Page(offset,take,isDescending), IRequest<List<QuestionResponseDto>>
     {
         public string? Key { get; private set; } = key;
         public int? ExamId { get; private set; } = examId;

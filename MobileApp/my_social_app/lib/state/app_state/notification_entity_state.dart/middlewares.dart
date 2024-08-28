@@ -35,16 +35,16 @@ void loadUnviewedNotificationMiddleware(Store<AppState> store,action,NextDispatc
 }
 
 void nextPageNotificationsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextPageNotificationsAction){
+  if(action is NextPageNotificationsAction){ 
     if(!store.state.notificationEntityState.isLast){
-      NotificationService()
-        .getNotifications(store.state.notificationEntityState.lastId,notificationsPerPage,true)
-        .then(
-          (notifications){
-            store.dispatch(NextPageNotificationsSuccessAction(notifications: notifications.map((e) => e.toNotificationState())));
-            store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.userId))));
-          }
-        );
+      // NotificationService()
+      //   .getNotifications(store.state.notificationEntityState.lastId,notificationsPerPage,true)
+      //   .then(
+      //     (notifications){
+      //       store.dispatch(NextPageNotificationsSuccessAction(notifications: notifications.map((e) => e.toNotificationState())));
+      //       store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.userId))));
+      //     }
+      //   );
     }
   }
   next(action);

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_image_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 

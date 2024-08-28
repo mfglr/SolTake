@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';

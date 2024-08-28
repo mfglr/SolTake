@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/create_question_state/actions.dart
 import 'package:my_social_app/state/app_state/home_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';

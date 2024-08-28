@@ -21,17 +21,23 @@ namespace MySocailApp.Infrastructure.DbContexts
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<Account,IdentityRole<int>,int>(options)
     {
         public DbSet<AppUser> AppUsers { get; private set; }
+        public DbSet<UserSearch> UserSearchs { get; private set; }
+        public DbSet<Follow> Follows { get; private set; }
+
         public DbSet<Question> Questions { get; private set; }
         public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
+
+        public DbSet<Comment> Comments { get; private set; }
+        public DbSet<CommentUserLike> CommentUserLikes { get; private set; }
+
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
-        public DbSet<Comment> Comments { get; private set; }
         public DbSet<Notification> Notifications { get; private set; }
         public DbSet<Message> Messages { get; private set; }
         public DbSet<UserConnection> UserConnections { get; private set; }
-        public DbSet<UserSearch> UserSearchs { get; private set; }
+        
         public DbSet<NotificationConnection> NotificationConnections { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

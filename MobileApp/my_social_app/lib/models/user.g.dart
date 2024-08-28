@@ -24,7 +24,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       numberOfFolloweds: (json['numberOfFolloweds'] as num).toInt(),
       isFollower: json['isFollower'] as bool,
       isFollowed: json['isFollowed'] as bool,
-      likeId: (json['likeId'] as num).toInt(),
+      paginationKey: (json['paginationKey'] as num?)?.toInt(),
+      paginationDate: json['paginationDate'] == null
+          ? null
+          : DateTime.parse(json['paginationDate'] as String),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -41,5 +44,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'numberOfFolloweds': instance.numberOfFolloweds,
       'isFollower': instance.isFollower,
       'isFollowed': instance.isFollowed,
-      'likeId': instance.likeId
+      'paginationKey': instance.paginationKey,
+      'paginationDate': instance.paginationDate?.toIso8601String(),
     };

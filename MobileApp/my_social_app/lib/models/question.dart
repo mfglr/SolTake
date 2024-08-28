@@ -5,7 +5,9 @@ import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/question_image.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/pagination/id_state.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
@@ -72,11 +74,11 @@ class Question{
     numberOfComments: numberOfComments,
     numberOfSolutions: numberOfSolutions,
     numberOfCorrectSolutions: numberOfCorrectSolutions,
-    likes: Pagination.init(usersPerPage),
-    comments: Pagination.init(commentsPerPage),
-    solutions: Pagination.init(solutionsPerPage),
-    correctSolutions: Pagination.init(solutionsPerPage),
-    pendingSolutions: Pagination.init(solutionsPerPage),
-    incorrectSolutions: Pagination.init(solutionsPerPage),
+    likes: Pagination<num,QuestionUserLikeState>.init(usersPerPage,true),
+    comments: Pagination<num,IdState>.init(commentsPerPage,true),
+    solutions: Pagination<num,IdState>.init(solutionsPerPage,true),
+    correctSolutions: Pagination<num,IdState>.init(solutionsPerPage,true),
+    pendingSolutions: Pagination<num,IdState>.init(solutionsPerPage,true),
+    incorrectSolutions: Pagination<num,IdState>.init(solutionsPerPage,true),
   );
 }

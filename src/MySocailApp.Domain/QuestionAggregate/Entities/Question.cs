@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
@@ -6,6 +7,7 @@ using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
+using System.Net;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
@@ -50,14 +52,16 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         private readonly List<QuestionUserLike> _likes = [];
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
-        public void Like(int likerId)
+        public QuestionUserLike Like(int likerId)
         {
             var index = _likes.FindIndex(x => x.AppUserId == likerId);
-            if (index != -1) return;
+            if (index != -1) throw new ClientSideException("",(int)HttpStatusCode.BadRequest);
 
-            _likes.Add(QuestionUserLike.Create(likerId));
+            var like = QuestionUserLike.Create(likerId);
+            _likes.Add(like);
             if(likerId != AppUserId)
                 AddDomainEvent(new QuestionLikedDomainEvent(this, likerId));
+            return like;
         }
         public void Dislike(int userId)
         {

@@ -12,11 +12,48 @@ namespace MySocailApp.Infrastructure.ApplicationServices.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<List<AppUserResponseDto>> GetLikesByQuestionIdAsync(int questionId, int accountId,IPagination pagination, CancellationToken cancellationToken)
-            => await _context.QuestionUserLikes
+        public Task<AppUserResponseDto?> GetByIdAsync(int id, int accountId, CancellationToken cancellationToken)
+            => _context.AppUsers
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId)
-                .ToPage(pagination)
+                .Where(x => x.Id == id)
+                .ToUserResponseDto(accountId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+        public Task<AppUserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken)
+            => _context.AppUsers
+                .AsNoTracking()
+                .Where(x => x.Account.UserName == userName)
+                .ToUserResponseDto(accountId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+        public Task<List<AppUserResponseDto>> GetSearchedUsersAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
+            => _context.UserSearchs
+                .AsNoTracking()
+                .Where(x => x.SearcherId == userId)
+                .ToPage(page)
+                .ToUserResponseDto(accountId)
+                .ToListAsync(cancellationToken);
+
+        public Task<List<AppUserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
+            => _context.AppUsers
+                .AsNoTracking()
+                .Where(x => x.Id != userId && !x.Followers.Any(x => x.FollowerId == userId))
+                .ToPage(page)
+                .ToUserResponseDto(accountId)
+                .ToListAsync(cancellationToken);
+
+        public Task<List<AppUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
+            => _context.AppUsers
+                .AsNoTracking()
+                .Where(
+                    user =>
+                        (
+                            user.Name != null &&
+                            user.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase)
+                        ) ||
+                        user.Account.UserName!.Contains(key, StringComparison.CurrentCultureIgnoreCase)
+                )
+                .ToPage(page)
                 .ToUserResponseDto(accountId)
                 .ToListAsync(cancellationToken);
     }

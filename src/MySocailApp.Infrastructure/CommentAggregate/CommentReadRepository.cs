@@ -33,7 +33,7 @@ namespace MySocailApp.Infrastructure.CommentAggregate
                 .Where(x => ids.Any(id => x.Id == id))
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetCommentsByParentIdAsync(int parentId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Comment>> GetCommentsByParentIdAsync(int parentId, IPage pagination, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
                 .IncludeForComment()
@@ -41,7 +41,7 @@ namespace MySocailApp.Infrastructure.CommentAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetCommentsByQuestionIdAsync(int questionId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Comment>> GetCommentsByQuestionIdAsync(int questionId, IPage pagination, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
                 .IncludeForComment()
@@ -49,7 +49,7 @@ namespace MySocailApp.Infrastructure.CommentAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Comment>> GetCommentsBySolutionIdAsync(int solutionId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Comment>> GetCommentsBySolutionIdAsync(int solutionId, IPage pagination, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
                 .IncludeForComment()
@@ -57,12 +57,6 @@ namespace MySocailApp.Infrastructure.CommentAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<AppUser>> GetCommentLikesAsync(int commentId, IPagination pagination, CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Where(x => x.CommentsLiked.Any(x => x.CommentId == commentId))
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
+       
     }
 }

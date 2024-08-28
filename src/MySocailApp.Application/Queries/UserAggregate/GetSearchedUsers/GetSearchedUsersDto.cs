@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetSearchedUsers
 {
-    public record GetSearchedUsersDto(int? Offset,int Take) : IRequest<List<AppUserResponseDto>>;
+    public class GetSearchedUsersDto(int? offset,int take,bool isDescending) : Core.Page(offset,take,isDescending), IRequest<List<AppUserResponseDto>>;
 }

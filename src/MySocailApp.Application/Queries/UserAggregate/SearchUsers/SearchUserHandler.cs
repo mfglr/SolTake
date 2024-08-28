@@ -1,18 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.UserAggregate.SearchUsers
 {
-    public class SearchUserHandler(IAppUserReadRepository repository, IMapper mapper) : IRequestHandler<SearchUserDto, List<AppUserResponseDto>>
+    public class SearchUserHandler(IAppUserQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<SearchUserDto, List<AppUserResponseDto>>
     {
-        private readonly IAppUserReadRepository _repository = repository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly IAppUserQueryRepository _repository = repository;
 
         public async Task<List<AppUserResponseDto>> Handle(SearchUserDto request, CancellationToken cancellationToken)
-        {
-            var users = await _repository.SearchUser(request.Key, request, cancellationToken);
-            return _mapper.Map<List<AppUserResponseDto>>(users);
-        }
+            => await _repository
+                .SearchUserAsync(
+                    request.Key,
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request,
+                    cancellationToken
+                );
     }
 }

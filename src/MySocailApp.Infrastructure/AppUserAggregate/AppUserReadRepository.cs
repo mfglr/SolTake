@@ -1,106 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extetions;
-using MySocailApp.Infrastructure.Extetions.QueryableMappers;
 
 namespace MySocailApp.Infrastructure.AppUserAggregate
 {
-    public class AppUserReadRepository(AppDbContext context, IAccessTokenReader accessTokenReader) : IAppUserReadRepository
+    public class AppUserReadRepository(AppDbContext context) : IAppUserReadRepository
     {
         private readonly AppDbContext _context = context;
-        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
         public async Task<AppUser?> GetAsync(int id, CancellationToken cancellationToken)
-            => await _context.AppUsers.FindAsync([id], cancellationToken);
-
-        public async Task<List<AppUser>> GetFollowersByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken)
             => await _context.AppUsers
                 .AsNoTracking()
-                .IncludeForUser()
-                .Where(user => user.Followeds.Any(follow => follow.FollowedId == id))
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<AppUser>> SearchUser(string key, IPagination pagination, CancellationToken cancellationToken)
-        {
-            if (key == "") return [];
-            var accountId = _accessTokenReader.GetAccountId();
-            var keyLower = key.ToLower();
-            
-            return await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Where(
-                    user =>
-                        (
-                            user.Name != null && user.Name.ToLower().Contains(keyLower) ||
-                            user.Account.UserName!.ToLower().Contains(keyLower)
-                        ) &&
-                        !user.IsRemoved &&
-                        !user.Blockeds.Any(x => x.BlockedId == accountId)
-                )
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
-        }
-
-        public async Task<List<AppUser>> GetFollowedsByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Where(user => user.Followers.Any(follow => follow.FollowerId == id))
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         
-        public async Task<List<AppUser>> GetNotFollowedsByIdAsync(int id, IPagination pagination, CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .Where(x => x.Id != id && !x.Followers.Any(x => x.FollowerId == id))
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
-
-        public async Task<AppUser?> GetByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .FirstOrDefaultAsync(
-                    x => x.Id == id && !x.IsRemoved && !x.Blockeds.Any(x => x.BlockedId == _accessTokenReader.GetAccountId()),
-                    cancellationToken
-                );
-
-        public async Task<AppUser?> GetByUserNameAsync(string userName, CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .IncludeForUser()
-                .FirstOrDefaultAsync(x => x.Account.UserName == userName, cancellationToken);
-
         public async Task<List<int>> GetIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
             => await _context.AppUsers
                 .AsNoTracking()
                 .Where(x => userNames.Contains(x.Account.UserName))
                 .Select(x => x.Id)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<AppUser>> GetSearchedUsersByIdAsync(int id, int? offset, int take, CancellationToken cancellationToken)
-            => await _context.UserSearchs
-                .AsNoTracking()
-                .Where(x => x.SearcherId == id && (offset == null || x.Id < offset))
-                .OrderByDescending(x => x.Id)
-                .Take(take)
-                .Include(x => x.Searched)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Searched)
-                .ThenInclude(x => x.Questions)
-                .Include(x => x.Searched)
-                .ThenInclude(x => x.Followers)
-                .Include(x => x.Searched)
-                .ThenInclude(x => x.Followeds)
-                .Select(x => x.Searched)
                 .ToListAsync(cancellationToken);
     }
 }

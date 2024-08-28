@@ -10,6 +10,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
+import 'package:my_social_app/state/pagination/page.dart';
 import 'package:redux/redux.dart';
 
 void getFirstPageSearchingUsersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -28,7 +29,7 @@ void getFirstPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispa
   if(action is GetFirstPageSearchingUsersAction){
     final key = store.state.searchState.key;
     UserService()
-      .search(key, null, usersPerPage,true)
+      .search(key, const Page<num>(offset: null, take: usersPerPage, isDescending: true))
       .then((users){
         store.dispatch(AddFirstPageSearchingUsersAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
@@ -49,9 +50,9 @@ void getNextPageSearchingUsersIfReadyMiddleware(Store<AppState> store,action,Nex
 void getNextPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSearchingUsersAction){
     final key = store.state.searchState.key;
-    final lastId = store.state.searchState.users.lastValue;
+    final pagination = store.state.searchState.users;
     UserService()
-      .search(key, lastId, usersPerPage,true)
+      .search(key, pagination.next)
       .then((users){
         store.dispatch(AddNextPageSearchingUsersAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
@@ -83,7 +84,7 @@ void getNextPageSearchedUsersMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageSearchedUsersAction){
     final pagination = store.state.searchState.searchedUsers;
     UserService()
-      .getSearcheds(pagination.lastValue,usersPerPage,true)
+      .getSearcheds(pagination.next)
       .then((users){
         store.dispatch(AddNextPageSearchedUsersAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
@@ -122,7 +123,7 @@ void getFirstPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextD
   if(action is GetFirstPageSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, null, questionsPerPage,true)
+      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, state.questions.next)
       .then((questions){
         store.dispatch(AddFirstPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
@@ -148,7 +149,7 @@ void getNextPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextDi
   if(action is GetNextPageSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, state.questions.lastValue, questionsPerPage,true)
+      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, state.questions.next)
       .then((questions){
         store.dispatch(AddNextPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

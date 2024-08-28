@@ -7,6 +7,7 @@ import 'package:my_social_app/constants/message_endpoints.dart';
 import 'package:my_social_app/constants/message_functions.dart';
 import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/state/pagination/page.dart';
 
 class MessageService{
   final AppClient _appClient;
@@ -31,29 +32,28 @@ class MessageService{
     return Message.fromJson(json);
   }
 
-  Future<Iterable<Message>> getMessagesByUserId(int userId, int? offset, int take, bool isDescending) async {
-    final endpoint = "$messageController/$getMessagesByUserIdEndpoint/$userId";
-    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
-    final list = (await _appClient.get(url)) as List;
-    return list.map((item) => Message.fromJson(item));
-  }
+  Future<Iterable<Message>> getMessagesByUserId(int userId, Page page) => 
+    _appClient
+      .get(_appClient.generatePaginationUrl("$messageController/$getMessagesByUserIdEndpoint/$userId", page))
+      .then((json) => json as List)
+      .then((list) =>  list.map((item) => Message.fromJson(item)));
 
-  Future<Iterable<Message>> getConversations(int? offset, int take, bool isDescending) async {
-    const endpoint = "$messageController/$getConversationsEndpoint";
-    final url = _appClient.generatePaginationUrl(endpoint, offset, take, isDescending);
-    final list = (await _appClient.get(url)) as List;
-    return list.map((item) => Message.fromJson(item));
-  }
+  Future<Iterable<Message>> getConversations(Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$messageController/$getConversationsEndpoint", page))
+      .then((json) => json as List)
+      .then((list) => list.map((item) => Message.fromJson(item)));
 
-  Future<Iterable<Message>> getNewCommingMessages() async {
-    const url = "$messageController/$getNewCommingMessagesEndpoint";
-    final list = (await _appClient.get(url)) as List;
-    return list.map((item) => Message.fromJson(item));
-  }
+  Future<Iterable<Message>> getNewCommingMessages() =>
+    _appClient
+      .get("$messageController/$getNewCommingMessagesEndpoint")
+      .then((json) => json as List)
+      .then((list) => list.map((item) => Message.fromJson(item)));
 
-  Future<Uint8List> getMessageImage(int messageId,int messageImageId)
-    => _appClient.getBytes(
-      "$messageController/$getMessageImageEndpoint/$messageId/$messageImageId"
-    );
+  Future<Uint8List> getMessageImage(int messageId,int messageImageId) => 
+    _appClient
+      .getBytes(
+        "$messageController/$getMessageImageEndpoint/$messageId/$messageImageId"
+      );
   
 }

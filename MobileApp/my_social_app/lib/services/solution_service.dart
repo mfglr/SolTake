@@ -6,6 +6,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/state/pagination/page.dart';
 
 class SolutionService{
   final AppClient _appClient;
@@ -83,60 +84,33 @@ class SolutionService{
       .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
       .then((response) => Solution.fromJson(response)); 
 
-  Future<Iterable<Solution>> getSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+  Future<Iterable<Solution>> getSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
-      .get(
-        _appClient.generatePaginationUrl(
-          "$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId",
-          offset,
-          take,
-          isDescending
-        )
-      )
+      .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getCorrectSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+  Future<Iterable<Solution>> getCorrectSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
-      .get(
-        _appClient.generatePaginationUrl(
-          "$solutionController/$getCorrectSolutionsByQuestionIdEndpoint/$questionId",
-          offset,
-          take,
-          isDescending
-        )
-      )
+      .get(_appClient.generatePaginationUrl("$solutionController/$getCorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getPendingSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+  Future<Iterable<Solution>> getPendingSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
-      .get(
-        _appClient.generatePaginationUrl(
-          "$solutionController/$getPendingSolutionsByQuestionIdEndpoint/$questionId",
-          offset,
-          take,
-          isDescending
-        )
-      )
+      .get(_appClient.generatePaginationUrl("$solutionController/$getPendingSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getIncorrectSolutionsByQuestionId(int questionId, int? offset, int take, bool isDescending) =>
+  Future<Iterable<Solution>> getIncorrectSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
-      .get(
-        _appClient.generatePaginationUrl(
-          "$solutionController/$getIncorrectSolutionsByQuestionIdEndpoint/$questionId",
-          offset,
-          take,
-          isDescending
-        )
-      )
+      .get(_appClient.generatePaginationUrl("$solutionController/$getIncorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
   Future<Uint8List> getSolutionImage(int solutionId,int solutionImageId) =>
-    _appClient.getBytes(
-      "$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId"
-    );
+    _appClient
+      .getBytes(
+        "$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId"
+      );
 }

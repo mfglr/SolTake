@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/solution_image.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/pagination/id_state.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 part 'solution.g.dart';
 
@@ -60,7 +61,7 @@ class Solution{
       numberOfDownvotes: numberOfDownvotes,
       images: images.map((e) => e.toSolutionImageState()),
       numberOfComments: numberOfComments,
-      comments: Pagination.init(solutionsPerPage),
+      comments: Pagination<num,IdState>.init(solutionsPerPage,true),
       state: state,
     );
 }

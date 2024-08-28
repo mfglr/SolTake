@@ -25,10 +25,10 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageCreatedDomainEvent
                     await _messageRepository.GetMessageByIdAsync(notification.Message.Id, cancellationToken)
                 );
                 await _messageHub.Clients
-                    .Client(receiver.ConnectionId)
+                    .Client(receiver.ConnectionId!)
                     .SendAsync("receiveMessage1", message, cancellationToken);
                 await _messageHub.Clients
-                    .Client(receiver.ConnectionId)
+                    .Client(receiver.ConnectionId!)
                     .SendAsync("receiveMessage2", message, cancellationToken);
             }
         }

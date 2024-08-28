@@ -40,23 +40,23 @@ void nextPageConversationsMiddleware(Store<AppState> store,action,NextDispatcher
     if(!state.isLastConversations){
       final lastValue = store.state.selectLastConversationId();
       final accountId = store.state.accountState!.id;
-      MessageService()
-        .getConversations(lastValue, conversationsPerPage,true)
-        .then(
-          (messages){
-            store.dispatch(NextPageConversationsSuccessAction(messages: messages));
-            store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
-            store.dispatch(
-              AddUserImagesAction(
-                images: messages.map((e) => UserImageState(
-                  id: e.senderId == accountId ? e.receiverId : e.senderId,
-                  image: null,
-                  state: ImageStatus.notStarted
-                ))
-              )
-            );
-          }
-        );
+      // MessageService()
+      //   .getConversations(lastValue, conversationsPerPage,true)
+      //   .then(
+      //     (messages){
+      //       store.dispatch(NextPageConversationsSuccessAction(messages: messages));
+      //       store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
+      //       store.dispatch(
+      //         AddUserImagesAction(
+      //           images: messages.map((e) => UserImageState(
+      //             id: e.senderId == accountId ? e.receiverId : e.senderId,
+      //             image: null,
+      //             state: ImageStatus.notStarted
+      //           ))
+      //         )
+      //       );
+      //     }
+      //   );
     }
   }
   next(action);

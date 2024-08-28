@@ -1,19 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.CommentAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes
 {
-    public class GetCommentLikesHandler(ICommentReadRepository commentReadRepository, IMapper mapper) : IRequestHandler<GetCommentLikesDto, List<AppUserResponseDto>>
+    public class GetCommentLikesHandler(ICommentUserLikeQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetCommentLikesDto, List<CommentUserLikeResponseDto>>
     {
-        private readonly ICommentReadRepository _commentReadRepository = commentReadRepository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly ICommentUserLikeQueryRepository _repository = repository;
 
-        public async Task<List<AppUserResponseDto>> Handle(GetCommentLikesDto request, CancellationToken cancellationToken)
-        {
-            var likes = await _commentReadRepository.GetCommentLikesAsync(request.CommentId, request, cancellationToken);
-            return _mapper.Map<List<AppUserResponseDto>>(likes);
-        }
+        public Task<List<CommentUserLikeResponseDto>> Handle(GetCommentLikesDto request, CancellationToken cancellationToken)
+            => _repository
+                .GetLikesAsync(
+                    request.CommentId,
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request,
+                    cancellationToken
+               );
     }
 }

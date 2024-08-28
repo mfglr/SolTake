@@ -1,18 +1,19 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetFollowedsById
 {
-    public class GetFollowedByIdHandler(IMapper mapper, IAppUserReadRepository repository) : IRequestHandler<GetFollowedsByIdDto, List<AppUserResponseDto>>
+    public class GetFollowedByIdHandler(IFollowQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetFollowedsByIdDto, List<FollowResponseDto>>
     {
-        private readonly IMapper _mapper = mapper;
-        private readonly IAppUserReadRepository _repository = repository;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
-        public async Task<List<AppUserResponseDto>> Handle(GetFollowedsByIdDto request, CancellationToken cancellationToken)
+        private readonly IFollowQueryRepository _repository = repository;
+
+        public async Task<List<FollowResponseDto>> Handle(GetFollowedsByIdDto request, CancellationToken cancellationToken)
         {
-            var users = await _repository.GetFollowedsByIdAsync(request.Id, request, cancellationToken);
-            return _mapper.Map<List<AppUserResponseDto>>(users);
+            var accountId = _accessTokenReader.GetRequiredAccountId();
+            return await _repository.GetFollowedsAsync(request.UserId, accountId, request, cancellationToken);
         }
     }
 }

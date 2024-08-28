@@ -11,7 +11,7 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<List<Notification>> GetNotificationsByOwnerId(int ownerId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Notification>> GetNotificationsByOwnerId(int ownerId, IPage pagination, CancellationToken cancellationToken)
             => await _context.Notifications
                 .AsNoTracking()
                 .Where(x => x.OwnerId == ownerId)

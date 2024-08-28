@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 
 @immutable
 class LoadCommentAction extends redux.Action{
@@ -26,8 +27,8 @@ class GetNextPageCommentLikesAction extends redux.Action{
 @immutable
 class AddNextPageCommentLikesAction extends redux.Action{
   final int commentId;
-  final Iterable<int> userIds;
-  const AddNextPageCommentLikesAction({required this.commentId, required this.userIds});
+  final Iterable<CommentUserLikeState> likes;
+  const AddNextPageCommentLikesAction({required this.commentId, required this.likes});
 }
 
 @immutable
@@ -60,25 +61,25 @@ class AddCommentsAction extends redux.Action{
 
 @immutable
 class LikeCommentAction extends redux.Action{
-  final int questionCommentId;
-  const LikeCommentAction({required this.questionCommentId});
+  final int commentId;
+  const LikeCommentAction({required this.commentId});
 }
 @immutable
 class LikeCommentSuccessAction extends redux.Action{
-  final int questionCommentId;
-  final int userId;
-  const LikeCommentSuccessAction({required this.questionCommentId,required this.userId});
+  final int commentId;
+  final CommentUserLikeState like;
+  const LikeCommentSuccessAction({required this.commentId,required this.like});
 }
 @immutable
 class DislikeCommentAction extends redux.Action{
-  final int questionCommentId;
-  const DislikeCommentAction({required this.questionCommentId});
+  final int commentId;
+  const DislikeCommentAction({required this.commentId});
 }
 @immutable
 class DislikeCommentSuccessAction extends redux.Action{
-  final int questionCommentId;
+  final int commentId;
   final int userId;
-  const DislikeCommentSuccessAction({required this.questionCommentId,required this.userId});
+  const DislikeCommentSuccessAction({required this.commentId,required this.userId});
 }
 
 @immutable

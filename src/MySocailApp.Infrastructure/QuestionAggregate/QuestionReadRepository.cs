@@ -35,7 +35,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .IncludeForQuestion()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsByUserIdAsync(int userId, IPage pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
@@ -44,7 +44,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsByTopicIdAsync(int topicId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsByTopicIdAsync(int topicId, IPage pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
@@ -53,7 +53,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsBySubjectIdAsync(int subjectId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsBySubjectIdAsync(int subjectId, IPage pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
@@ -62,7 +62,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetQuestionsByExamIdAsync(int examId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetQuestionsByExamIdAsync(int examId, IPage pagination, CancellationToken cancellationToken)
            => await _context
                .Questions
                .AsNoTracking()
@@ -71,7 +71,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                .ToPage(pagination)
                .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetHomePageQuestionsAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetHomePageQuestionsAsync(int userId, IPage pagination, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
@@ -80,7 +80,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId, IPage pagination, CancellationToken cancellationToken)
             => await _context.Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
@@ -94,7 +94,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .ToPage(pagination)
                 .ToListAsync(cancellationToken);
 
-        public async Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId, IPage pagination, CancellationToken cancellationToken)
             => await _context.Questions
                 .AsNoTracking()
                 .IncludeForQuestion()
@@ -102,7 +102,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .ToPage(pagination)
                 .ToListAsync (cancellationToken);
         
-        public async Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken)
+        public async Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, IPage pagination, CancellationToken cancellationToken)
           => await _context.Questions
               .AsNoTracking()
               .IncludeForQuestion()

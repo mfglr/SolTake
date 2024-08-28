@@ -9,6 +9,7 @@ import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/pagination/page.dart';
 
 class AppClient{
   static final _apiUrl = "${dotenv.env['API_URL']}/api";
@@ -97,9 +98,11 @@ class AppClient{
     await _sendJsonContent(request);
   }
 
-  String generatePaginationUrl(String url,dynamic offset,int take,bool isDescending){
-    if(offset == null) return "$url?take=$take&isDescending=$isDescending";
-    return "$url?offset=$offset&take=$take&isDescending=$isDescending";
+  String generatePaginationUrl(String url, Page page){
+    if(page.offset == null){
+      return "$url?take=${page.take}&isDescending=${page.isDescending}";
+    }
+    return "$url?offset=${page.offset}&take=${page.take}&isDescending=${page.isDescending}";
   }
   
 }

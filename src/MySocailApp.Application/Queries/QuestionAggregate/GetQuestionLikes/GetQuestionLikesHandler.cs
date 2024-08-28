@@ -1,19 +1,20 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.QueryRepositories;
-using MySocailApp.Application.Queries.UserAggregate;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes
 {
-    public class GetQuestionLikesHandler(IAppUserQueryRepository queryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetQuestionLikesDto, List<AppUserResponseDto>>
+    public class GetQuestionLikesHandler(IQuestionUserLikeQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetQuestionLikesDto, List<QuestionUserLikeResponseDto>>
     {
-        private readonly IAppUserQueryRepository _queryRepository = queryRepository;
+        private readonly IQuestionUserLikeQueryRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
-        public async Task<List<AppUserResponseDto>> Handle(GetQuestionLikesDto request, CancellationToken cancellationToken)
-        {
-            var accountId = _accessTokenReader.GetRequiredAccountId();
-            return await _queryRepository.GetLikesByQuestionIdAsync(request.QuestionId,accountId,request,cancellationToken);
-        }
+        public async Task<List<QuestionUserLikeResponseDto>> Handle(GetQuestionLikesDto request, CancellationToken cancellationToken)
+            => await _repository
+                .GetQuestionLikesAsync(
+                    request.QuestionId,
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request,cancellationToken
+                );
     }
 }

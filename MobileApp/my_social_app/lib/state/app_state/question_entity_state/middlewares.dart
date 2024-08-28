@@ -1,4 +1,3 @@
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
@@ -6,6 +5,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -34,10 +34,11 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){
-    final currentUserId = store.state.accountState!.id;
     QuestionService()
       .like(action.questionId)
-      .then((_) => store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId,currentUserId: currentUserId)));
+      .then((like){
+        store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId,like: like.toQuestionUserLikeState()));
+      });
   }
   next(action);
 }
@@ -72,9 +73,12 @@ void getNextPageQuestionLikesMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageQuestionLikesAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
     QuestionService()
-      .getQuestionLikes(action.questionId, pagination.lastValue , usersPerPage, true)
+      .getQuestionLikes(action.questionId, pagination.next)
       .then((users){
-        store.dispatch(AddNextPageQuestionLikesAction(questionId: action.questionId, userIds: users.map((e) => e.id)));
+        store.dispatch(AddNextPageQuestionLikesAction(
+          questionId: action.questionId,
+          likes: users.map((e) => QuestionUserLikeState(key: e.paginationKey!, userId: e.id,createdAt: e.paginationDate!))
+        ));
         store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
         store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
       });
@@ -104,7 +108,7 @@ void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDi
   if(action is GetNextPageQuestionSolutionsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
     SolutionService()
-      .getSolutionsByQuestionId(action.questionId,pagination.lastValue,solutionsPerPage,true)
+      .getSolutionsByQuestionId(action.questionId,pagination.next)
       .then((solutions){
         store.dispatch(AddNextPageQuestionSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
@@ -136,7 +140,7 @@ void getNextPageQuestionCorrectSolutionsMiddleware(Store<AppState> store, action
   if(action is GetNextPageQuestionCorrectSolutionsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.correctSolutions;
     SolutionService()
-      .getCorrectSolutionsByQuestionId(action.questionId, pagination.lastValue, solutionsPerPage, true)
+      .getCorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
         store.dispatch(AddNextPageQuestionCorrectSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
@@ -168,7 +172,7 @@ void getNextPageQuestionPendingSolutionsMiddleware(Store<AppState> store,action,
   if(action is GetNextPageQuestionPendingSolutionsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.pendingSolutions;
     SolutionService()
-      .getPendingSolutionsByQuestionId(action.questionId, pagination.lastValue, solutionsPerPage, true)
+      .getPendingSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
         store.dispatch(AddNextPageQuestionPendingSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
@@ -200,7 +204,7 @@ void getNextPageQuestionIncorrectSolutionsMiddleware(Store<AppState> store,actio
   if(action is GetNextPageQuestionIncorrectSolutionsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.incorrectSolutions;
     SolutionService()
-      .getIncorrectSolutionsByQuestionId(action.questionId, pagination.lastValue, solutionsPerPage, true)
+      .getIncorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
         store.dispatch(AddNextPageQuestionIncorrectSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
@@ -232,7 +236,7 @@ void getNextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDisp
   if(action is GetNextPageQuestionCommentsAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
     CommentService()
-      .getCommentsByQuestionId(action.questionId, pagination.lastValue, commentsPerPage, true)
+      .getCommentsByQuestionId(action.questionId, pagination.next)
       .then((comments){
         store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
         store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(e.appUserId))));

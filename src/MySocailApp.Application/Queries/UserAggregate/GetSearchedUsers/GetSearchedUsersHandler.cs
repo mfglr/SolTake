@@ -1,21 +1,20 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetSearchedUsers
 {
-    public class GetSearchedUsersHandler(IAppUserReadRepository userReadRepository, IMapper mapper, IAccessTokenReader accessTokenReader) : IRequestHandler<GetSearchedUsersDto, List<AppUserResponseDto>>
+    public class GetSearchedUsersHandler(IAppUserQueryRepository userQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetSearchedUsersDto, List<AppUserResponseDto>>
     {
-        private readonly IAppUserReadRepository _userReadRepository = userReadRepository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAppUserQueryRepository _userQueryRepository = userQueryRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
         public async Task<List<AppUserResponseDto>> Handle(GetSearchedUsersDto request, CancellationToken cancellationToken)
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
-            var users = await _userReadRepository.GetSearchedUsersByIdAsync(userId, request.Offset, request.Take, cancellationToken);
-            return _mapper.Map<List<AppUserResponseDto>>(users);
+            return await _userQueryRepository.GetSearchedUsersAsync(userId, userId, request, cancellationToken);
         }
     }
 }

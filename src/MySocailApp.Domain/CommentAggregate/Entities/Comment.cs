@@ -73,14 +73,16 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 
         private readonly List<CommentUserLike> _likes = [];
         public IReadOnlyCollection<CommentUserLike> Likes => _likes;
-        public void Like(int likerId)
+        public CommentUserLike Like(int likerId)
         {
             if (_likes.Any(x => x.AppUserId == likerId))
                 throw new CommentIsAlreadyLikedException();
-            _likes.Add(CommentUserLike.Create(Id, likerId));
+            var like = CommentUserLike.Create(Id, likerId);
+            _likes.Add(like);
 
             if (likerId != AppUserId)
                 AddDomainEvent(new CommentLikedDomainEvent(this, likerId));
+            return like;
         }
         public void Dislike(int userId)
         {

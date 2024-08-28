@@ -1,6 +1,6 @@
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -20,12 +20,15 @@ void getNextPageCommentLikesIfNoPageMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentLikesAction){
-    final likes = store.state.commentEntityState.entities[action.commentId]!.likes;
-    if(likes.isLast){
+    final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
+    if(pagination.isLast){
       CommentService()
-        .getCommentLikes(action.commentId, likes.lastValue,usersPerPage,true)
+        .getCommentLikes(action.commentId, pagination.next)
         .then((users){
-          store.dispatch(AddNextPageCommentLikesAction(commentId: action.commentId, userIds: users.map((e) => e.id)));
+          store.dispatch(AddNextPageCommentLikesAction(
+            commentId: action.commentId,
+            likes: users.map((e) => CommentUserLikeState(key: e.paginationKey!, userId: e.id,createdAt: e.paginationDate!))
+          ));
           store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
           store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));         
         });
@@ -35,30 +38,19 @@ void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatch
 }
 void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LikeCommentAction){
-    final int userId = store.state.accountState!.id;
     CommentService()
-      .like(action.questionCommentId)
-      .then((_) => store.dispatch(
-        LikeCommentSuccessAction(
-          questionCommentId: action.questionCommentId,
-          userId: userId
-        )
-      )
+      .like(action.commentId)
+      .then((like) => store.dispatch(LikeCommentSuccessAction(commentId: action.commentId,like: like.toCommentUserLikeState()))
     );
   }
   next(action);
 }
 void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DislikeCommentAction){
-    final int userId = store.state.accountState!.id;
+    final int accountId = store.state.accountState!.id;
     CommentService()
-      .dislike(action.questionCommentId)
-      .then((_) => store.dispatch(
-        DislikeCommentSuccessAction(
-          questionCommentId: action.questionCommentId,
-          userId: userId
-        )
-      ));
+      .dislike(action.commentId)
+      .then((_) => store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId,userId: accountId)));
   }
   next(action);
 }
@@ -85,7 +77,7 @@ void getNextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispat
   if(action is GetNextPageCommentRepliesAction){
     final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
     CommentService()
-      .getByParentId(action.commentId, pagination.lastValue, commentsPerPage, false)
+      .getByParentId(action.commentId, pagination.next)
       .then((replies){
         store.dispatch(AddPrevPageCommentRepliesAction(commentId: action.commentId,replyIds: replies.map((e) => e.id)));
         store.dispatch(AddCommentsAction(comments: replies.map((e) => e.toCommentState())));

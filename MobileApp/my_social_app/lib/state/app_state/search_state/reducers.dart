@@ -5,9 +5,9 @@ import 'package:redux/redux.dart';
 SearchState getFirstPageUserReducer(SearchState prev, GetFirstPageSearchingUsersAction action)
   => prev.startLoadingUsers();
 SearchState addFirstPageUserReducer(SearchState prev,AddFirstPageSearchingUsersAction action)
-  => prev.addFirstPageUsers(action.userIds);
+  => prev.addFirstPageUsers(action.ids);
 SearchState addNextPageUsersReducer(SearchState prev,AddNextPageSearchingUsersAction action)
-  => prev.addNextPageUsers(action.userIds);
+  => prev.addNextPageUsers(action.ids);
 
 SearchState getFirstPageQuestionsReducer(SearchState prev,GetFirstPageSearchingQuestionsAction action)
   => prev.startLoadingQuestions();

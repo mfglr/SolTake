@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/pagination.dart';
+import 'package:my_social_app/state/pagination/id_state.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 part 'topic.g.dart';
 
@@ -22,6 +23,6 @@ class Topic{
       id: id,
       subjectId: subjectId,
       name: name,
-      questions: Pagination.init(questionsPerPage)
+      questions: Pagination<num,IdState>.init(questionsPerPage,true)
     );
 }

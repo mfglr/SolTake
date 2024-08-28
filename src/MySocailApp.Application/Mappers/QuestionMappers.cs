@@ -11,8 +11,8 @@ namespace MySocailApp.Application.Mappers
     {
         public QuestionMappers(IAccessTokenReader tokenReader)
         {
+            CreateMap<QuestionUserLike, QuestionUserLikeResponseDto>();
             CreateMap<QuestionImage, QuestionImageResponseDto>();
-
             CreateMap<Question, QuestionResponseDto>()
                 .ForMember(dest => dest.State, x => x.MapFrom(src => src.Solutions.Any(x => x.State == SolutionState.Correct) ? QuestionState.Solved : QuestionState.Unsolved))
                 .ForMember(dest => dest.IsOwner, x => x.MapFrom(src => src.AppUserId == tokenReader.GetRequiredAccountId()))

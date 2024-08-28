@@ -2,10 +2,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-
-
-
 
 @immutable
 class LoadQuestionAction extends redux.Action{
@@ -43,14 +41,14 @@ class LikeQuestionAction extends redux.Action{
 @immutable
 class LikeQuestionSuccessAction extends redux.Action{
   final int questionId;
-  final int currentUserId;
-  const LikeQuestionSuccessAction({required this.questionId,required this.currentUserId});
+  final QuestionUserLikeState like;
+  const LikeQuestionSuccessAction({required this.questionId,required this.like});
 }
 @immutable
 class AddNewQuestionLikeAction extends redux.Action{
   final int questionId;
-  final int userId;
-  const AddNewQuestionLikeAction({required this.questionId, required this.userId});
+  final QuestionUserLikeState like;
+  const AddNewQuestionLikeAction({required this.questionId, required this.like});
 }
 @immutable
 class GetNextPageQuestionLikesIfNoPageAction extends redux.Action{
@@ -70,8 +68,8 @@ class GetNextPageQuestionLikesAction extends redux.Action{
 @immutable
 class AddNextPageQuestionLikesAction extends redux.Action{
   final int questionId;
-  final Iterable<int> userIds;
-  const AddNextPageQuestionLikesAction({required this.questionId, required this.userIds});
+  final Iterable<QuestionUserLikeState> likes;
+  const AddNextPageQuestionLikesAction({required this.questionId, required this.likes});
 }
 
 @immutable

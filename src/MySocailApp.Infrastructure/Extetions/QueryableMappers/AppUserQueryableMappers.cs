@@ -6,7 +6,7 @@ namespace MySocailApp.Infrastructure.Extetions.QueryableMappers
 {
     public static class AppUserQueryableMappers
     {
-        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<QuestionUserLike> queryable, int userId)
+        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<QuestionUserLike> queryable, int accountId)
             => queryable
                 .Select(x => new AppUserResponseDto(
                     x.AppUser.Id,
@@ -20,9 +20,8 @@ namespace MySocailApp.Infrastructure.Extetions.QueryableMappers
                     x.AppUser.Questions.Count,
                     x.AppUser.Followers.Count,
                     x.AppUser.Followeds.Count,
-                    x.AppUser.Followeds.Any(x => x.FollowedId == userId),
-                    x.AppUser.Followers.Any(x => x.FollowerId == userId),
-                    x.Id
+                    x.AppUser.Followeds.Any(x => x.FollowedId == accountId),
+                    x.AppUser.Followers.Any(x => x.FollowerId == accountId)
                 ));
 
         public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<AppUser> query, int accountId)
@@ -40,8 +39,26 @@ namespace MySocailApp.Infrastructure.Extetions.QueryableMappers
                     x.Followers.Count,
                     x.Followeds.Count,
                     x.Followeds.Any(x => x.FollowedId == accountId),
-                    x.Followers.Any(x => x.FollowerId == accountId),
-                    0
+                    x.Followers.Any(x => x.FollowerId == accountId)
                 ));
+
+        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<UserSearch> queryable, int accountId)
+            => queryable
+                .Select(x => new AppUserResponseDto(
+                    x.Searched.Id,
+                    x.Searched.CreatedAt,
+                    x.Searched.UpdatedAt,
+                    x.Searched.Account.UserName!,
+                    x.Searched.Name,
+                    x.Searched.BirthDate,
+                    x.Searched.Gender,
+                    x.Searched.HasImage,
+                    x.Searched.Questions.Count,
+                    x.Searched.Followers.Count,
+                    x.Searched.Followeds.Count,
+                    x.Searched.Followeds.Any(x => x.FollowedId == accountId),
+                    x.Searched.Followers.Any(x => x.FollowerId == accountId)
+                ));
+
     }
 }

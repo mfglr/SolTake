@@ -1,4 +1,3 @@
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/exam_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/subject_service.dart';
@@ -31,9 +30,9 @@ void getNextPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageExamQuestionsAction){
-    final examState = store.state.examEntityState.entities[action.examId]!;
+    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
     QuestionService()
-      .getByExamId(action.examId,examState.questions.lastValue,questionsPerPage,true)
+      .getByExamId(action.examId,pagination.next)
       .then((questions){
         store.dispatch(AddNextPageExamQuestionsAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

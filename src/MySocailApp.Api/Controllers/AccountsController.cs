@@ -7,7 +7,6 @@ using MySocailApp.Application.Commands.AccountAggregate;
 using MySocailApp.Application.Commands.AccountAggregate.ConfirmEmail;
 using MySocailApp.Application.Commands.AccountAggregate.ConfirmEmailByToken;
 using MySocailApp.Application.Commands.AccountAggregate.CreateAccount;
-using MySocailApp.Application.Commands.AccountAggregate.DeactiveAccount;
 using MySocailApp.Application.Commands.AccountAggregate.DeleteAccount;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByPassword;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken;
@@ -63,13 +62,7 @@ namespace MySocailApp.Api.Controllers
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task<AccountDto> UpdatePassword(UpdatePasswordDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-
-        [HttpPut]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
-        public async Task Deactive(CancellationToken cancellationToken)
-            => await _mediator.Send(new DeactiveAccountDto(), cancellationToken);
-
+        
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]

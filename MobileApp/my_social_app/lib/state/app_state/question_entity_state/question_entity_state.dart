@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
@@ -13,16 +14,16 @@ class QuestionEntityState extends EntityState<QuestionState>{
   QuestionEntityState addQuestions(Iterable<QuestionState> values)
     => QuestionEntityState(entities: appendMany(values));
   
-  QuestionEntityState like(int questionId,int currentUserId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.like(currentUserId)));
-  QuestionEntityState dislike(int questionId,int currentUserId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.dislike(currentUserId)));
-  QuestionEntityState addNewLike(int questionId,int userId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewLike(userId)));
+  QuestionEntityState like(int questionId,QuestionUserLikeState like)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.like(like)));
+  QuestionEntityState dislike(int questionId,int userId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.dislike(userId)));
+  QuestionEntityState addNewLike(int questionId,QuestionUserLikeState like)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewLike(like)));
   QuestionEntityState startLoadingNextLikes(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.startLodingNextLikes()));
-  QuestionEntityState addNextPageLikes(int questionId,Iterable<int> userIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageLikes(userIds)));
+  QuestionEntityState addNextPageLikes(int questionId,Iterable<QuestionUserLikeState> likes)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageLikes(likes)));
 
   QuestionEntityState markSolutionAsCorrect(int questionId,int solutionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.markSolutionAsCorrect(solutionId)));

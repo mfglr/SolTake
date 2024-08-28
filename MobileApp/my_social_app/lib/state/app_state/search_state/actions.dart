@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/pagination/id_state.dart';
 
 @immutable
 class GetFirstPageSearchingUsersIfNoPageAction extends redux.Action{
@@ -11,8 +12,8 @@ class GetFirstPageSearchingUsersAction extends redux.Action{
 }
 @immutable
 class AddFirstPageSearchingUsersAction extends redux.Action{
-  final Iterable<int> userIds;
-  const AddFirstPageSearchingUsersAction({required this.userIds});
+  final Iterable<IdState> ids;
+  const AddFirstPageSearchingUsersAction({required this.ids});
 }
 @immutable
 class GetNextPageSearchingUsersIfReadyAction extends redux.Action{
@@ -24,8 +25,8 @@ class GetNextPageSearchingUsersAction extends redux.Action{
 }
 @immutable
 class AddNextPageSearchingUsersAction extends redux.Action{
-  final Iterable<int> userIds;
-  const AddNextPageSearchingUsersAction({required this.userIds});
+  final Iterable<IdState> ids;
+  const AddNextPageSearchingUsersAction({required this.ids});
 }
 
 @immutable
@@ -42,7 +43,7 @@ class GetNextPageSearchedUsersAction extends redux.Action{
 }
 @immutable
 class AddNextPageSearchedUsersAction extends redux.Action{
-  final Iterable<int> userIds;
+  final Iterable<> userIds;
   const AddNextPageSearchedUsersAction({required this.userIds});
 }
 @immutable

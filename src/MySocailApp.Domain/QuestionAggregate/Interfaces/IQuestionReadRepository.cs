@@ -9,13 +9,13 @@ namespace MySocailApp.Domain.QuestionAggregate.Interfaces
         Task<Question?> GetQuestionWithImagesById(int id, CancellationToken cancellationToken);
         Task<Question?> GetAsync(int questionId, CancellationToken cancellationToken);
         Task<Question?> GetQuestionByIdAsync(int id, CancellationToken cancellationToken);
-        Task<List<Question>> GetHomePageQuestionsAsync(int userId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Question>> GetQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Question>> GetQuestionsByTopicIdAsync(int topicId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Question>> GetQuestionsBySubjectIdAsync(int subjectId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Question>> GetQuestionsByExamIdAsync(int examId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken);
-        Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, IPagination pagination, CancellationToken cancellationToken);
+        Task<List<Question>> GetHomePageQuestionsAsync(int userId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Question>> GetQuestionsByUserIdAsync(int userId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Question>> GetQuestionsByTopicIdAsync(int topicId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Question>> GetQuestionsBySubjectIdAsync(int subjectId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Question>> GetQuestionsByExamIdAsync(int examId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Question>> SearchQuestions(string? key, int? examId, int? subjectId, int? topicId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Question>> GetSolvedQuestionsByUserIdAsync(int userId, IPage pagination, CancellationToken cancellationToken);
+        Task<List<Question>> GetUnsolvedQuestionsByUserIdAsync(int userId, IPage pagination, CancellationToken cancellationToken);
     }
 }

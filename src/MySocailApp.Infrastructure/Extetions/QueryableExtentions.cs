@@ -11,7 +11,7 @@ namespace MySocailApp.Infrastructure.Extetions
 {
     public static class QueryableExtentions
     {
-        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPagination pagination) where T : IEntity
+        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPage pagination) where T : IEntity
         {
             if (pagination.IsDescending)
                 return query
@@ -54,14 +54,6 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Include(x => x.AppUser)
                 .ThenInclude(x => x.Account)
                 .Include(x => x.Comments);
-
-        public static IQueryable<AppUser> IncludeForUser(this IQueryable<AppUser> query)
-            => query
-                .Include(x => x.Account)
-                .Include(x => x.Questions)
-                .Include(x => x.Followers)
-                .Include(x => x.Followeds);
-
 
         public static IQueryable<Message> IncludeForMessage(this IQueryable<Message> query)
             => query
