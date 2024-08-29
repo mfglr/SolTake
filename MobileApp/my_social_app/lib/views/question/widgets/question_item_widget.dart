@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/question/widgets/display_question_likes_button.dart';
+import 'package:my_social_app/views/question/widgets/display_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
-import 'package:my_social_app/views/solution/pages/questions_solutions_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/exam/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_comment_button_widget.dart';
@@ -75,51 +74,27 @@ class QuestionItemWidget extends StatelessWidget {
             ],
           ),
           QuestionImagesSlider(question: question),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  QuestionLikeButton(question: question),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: DisplayQuestionLikesButton(question: question),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 8),
-                    child: QuestionCommentButtonWidget(question: question)
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: (){
-                      final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(ChangeQuestionIdAction(questionId: question.id));
-                      Navigator
-                        .of(context)
-                        .push(
-                          MaterialPageRoute(
-                            builder: (context) => QuestionsSolutionsPage(
-                              questionId: question.id
-                            )
-                          )
-                        );
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 5),
-                          child: Text(question.numberOfSolutions.toString())
-                        ),
-                        const Icon(Icons.border_color_outlined),
-                      ],
+          Padding(
+            padding: const EdgeInsets.only(left:5,right: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    QuestionLikeButton(question: question),
+                    Container(
+                      margin: const EdgeInsets.only(left: 5),
+                      child: DisplayQuestionLikesButton(question: question)
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 8),
+                      child: QuestionCommentButtonWidget(question: question)
                     )
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                DisplaySolutionsButton(question: question)
+              ],
+            ),
           ),
           Row(
             children: [
