@@ -35,7 +35,7 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<FollowResponseDto> Follow(FollowDto request, CancellationToken cancellationToken)
+        public async Task<FollowCommandResponseDto> Follow(FollowDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
         
         [HttpDelete("{followedId}")]

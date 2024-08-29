@@ -7,7 +7,7 @@ FollowEntityState addFollowsReducer(FollowEntityState prev,AddFollowsAction acti
 FollowEntityState addFollowReducer(FollowEntityState prev,AddFollowAction action)
   => prev.addFollow(action.follow);
 FollowEntityState removeFollowReducer(FollowEntityState prev,RemoveFollowAction action)
-  => prev.removeFollow(action.id);
+  => prev.removeFollow(action.followId);
 
 Reducer<FollowEntityState> followEntityReducers = combineReducers<FollowEntityState>([
   TypedReducer<FollowEntityState,AddFollowsAction>(addFollowsReducer).call,

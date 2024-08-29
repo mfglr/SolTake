@@ -29,12 +29,12 @@ class UserFollowersPage extends StatelessWidget {
         ),
         body: StoreConnector<AppState,Iterable<UserState>>(
           onInit: (store) => store.dispatch(GetNextPageUserFollowersIfNoPageAction(userId: userId)),
-          converter: (store) => store.state.userEntityState.getFollowers(userId),
+          converter: (store) => store.state.selectFollowers(userId),
           builder: (context,users) => Container(
             margin: const EdgeInsets.all(5),
             child: Builder(
               builder: (context) {
-                if(profileUser.followers.isLast && profileUser.followers.ids.isEmpty){
+                if(profileUser.numberOfFollowers <= 0){
                   return NoFollows(
                     user: profileUser,
                     message: "No Followers"

@@ -7,14 +7,14 @@ using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.UserAggregate.Follow
 {
-    public class FollowHandler(IAppUserWriteRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<FollowDto, FollowResponseDto>
+    public class FollowHandler(IAppUserWriteRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<FollowDto, FollowCommandResponseDto>
     {
         private readonly IAppUserWriteRepository _userRepository = userRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<FollowResponseDto> Handle(FollowDto request, CancellationToken cancellationToken)
+        public async Task<FollowCommandResponseDto> Handle(FollowDto request, CancellationToken cancellationToken)
         {
             var followerId = _accessTokenReader.GetRequiredAccountId();
             var user =
@@ -23,7 +23,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.Follow
             var follow = user.Follow(followerId);
             await _unitOfWork.CommitAsync(cancellationToken);
             
-            return _mapper.Map<FollowResponseDto>(follow);
+            return _mapper.Map<FollowCommandResponseDto>(follow);
         }
     }
 }

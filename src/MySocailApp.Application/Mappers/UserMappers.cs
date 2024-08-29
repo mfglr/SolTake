@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.Commands.UserAggregate.Follow;
 using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 
@@ -9,7 +10,7 @@ namespace MySocailApp.Application.Mappers
     {
         public UserMappers(IAccessTokenReader tokenReader)
         {
-            CreateMap<Follow, FollowResponseDto>();
+            CreateMap<Follow, FollowCommandResponseDto>();
             CreateMap<UserSearch, UserSearchResponseDto>();
             CreateMap<AppUser, AppUserResponseDto>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Account.UserName))

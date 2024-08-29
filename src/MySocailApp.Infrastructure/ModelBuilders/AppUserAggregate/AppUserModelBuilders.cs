@@ -41,7 +41,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasMany(x => x.Followers)
                 .WithOne(x => x.Followed)
                 .HasForeignKey(x => x.FollowedId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Followeds)

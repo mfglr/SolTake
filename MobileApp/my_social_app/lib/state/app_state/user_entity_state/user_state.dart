@@ -104,21 +104,21 @@ class UserState{
     _optional(
       newFollowers: followers.startLoadingNext()
     );
-  UserState addNextPageFollowers(Iterable<int> ids) => 
+  UserState addNextPageFollowers(Iterable<int> followIds) => 
     _optional(
-      newFollowers: followers.addNextPage(ids)
+      newFollowers: followers.addNextPage(followIds)
     );
-  UserState addFollower(int id) => 
+  UserState addFollower(int followId) => 
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
       newIsFollowed: true,
-      newFollowers: followers.prependOne(id)
+      newFollowers: followers.prependOne(followId)
     );
-  UserState removeFollower(int id) => 
+  UserState removeFollower(int followId) => 
     _optional(
       newNumberOfFollowers:numberOfFollowers - 1,
       newIsFollowed:false,
-      newFollowers: followers.removeOne(id)
+      newFollowers: followers.removeOne(followId)
     );
   
   //followeds

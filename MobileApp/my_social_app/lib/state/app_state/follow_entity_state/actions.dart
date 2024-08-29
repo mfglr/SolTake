@@ -16,6 +16,6 @@ class AddFollowAction extends redux.Action{
 
 @immutable
 class RemoveFollowAction extends redux.Action{
-  final int id;
-  const RemoveFollowAction({required this.id});
+  final int followId;
+  const RemoveFollowAction({required this.followId});
 }

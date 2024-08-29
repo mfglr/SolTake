@@ -69,9 +69,9 @@ void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatc
       .getFollowersById(action.userId, pagination.next)
       .then((follows){
         store.dispatch(AddNextPageUserFollowersAction(userId: action.userId,followIds: follows.map((e) => e.id)));
-        store.dispatch(AddFollowsAction(follows:follows.map((e) => e.toFollowState())));
+        store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
         store.dispatch(AddUsersAction(users: follows.map((e) => e.follower!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.follower!.id))));
+        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.followerId))));
       });
   }
   next(action);
@@ -283,12 +283,14 @@ void getNextPageUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,Nex
 void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FollowAction){
     final followerId = store.state.accountState!.id;
+    final followedId = action.followedId;
     UserService()
       .follow(action.followedId)
       .then((follow){
-        store.dispatch(AddUserFollowerAction(userId: action.followedId,followId: follow.id));
-        store.dispatch(AddUserFollowedAction(userId: followerId,followId: follow.id));
-        store.dispatch(RemoveUserNotFollowedAction(userId: followerId,notFollowedId: action.followedId));
+        store.dispatch(AddFollowAction(follow: follow.toFollowState()));
+        store.dispatch(AddUserFollowerAction(userId: followedId, followId: follow.id));
+        store.dispatch(AddUserFollowedAction(userId: followerId, followId: follow.id));
+        store.dispatch(RemoveUserNotFollowedAction(userId: followerId, notFollowedId: followedId));
       });
   }
   next(action);
@@ -296,24 +298,32 @@ void followMiddleware(Store<AppState> store,action,NextDispatcher next){
 void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UnfollowAction){
     final followerId = store.state.accountState!.id;
+    final followedId = action.followedId;
     UserService()
       .unfollow(action.followedId)
       .then((_){
-        store.dispatch(AddUserNotFollowedAction(userId: followerId, notFollowedId: action.followedId));
-        store.dispatch(RemoveUserFollowerAction(userId: action.followedId, followId: followerId));
-        store.dispatch(RemoveUserFollowedAction(userId: followerId, followId: action.followedId));
+        store.dispatch(AddUserNotFollowedAction(userId: followerId, notFollowedId: followedId));
+        final follow = store.state.followEntityState.select(followerId, followedId);
+        if(follow == null) return;
+        store.dispatch(RemoveFollowAction(followId: follow.id));
+        store.dispatch(RemoveUserFollowerAction(userId: followedId, followId: follow.id));
+        store.dispatch(RemoveUserFollowedAction(userId: followerId, followId: follow.id));
       });
   }
   next(action);
 }
 void deleteFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DeleteFollowerAction){
+    final followerId = action.followerId;
     final followedId = store.state.accountState!.id;
     UserService()
       .removeFollower(action.followerId)
       .then((_){
-        store.dispatch(RemoveUserFollowerAction(userId: followedId, followId: action.followerId));
-        store.dispatch(RemoveUserFollowedAction(userId: action.followerId, followId: followedId));
+        final follow = store.state.followEntityState.select(followerId, followedId);
+        if(follow == null) return;
+        store.dispatch(RemoveUserFollowerAction(userId: followedId, followId: follow.id));
+        store.dispatch(RemoveUserFollowedAction(userId: followerId, followId: follow.id));
+        store.dispatch(RemoveFollowAction(followId: follow.id));
       });
   }
   next(action);

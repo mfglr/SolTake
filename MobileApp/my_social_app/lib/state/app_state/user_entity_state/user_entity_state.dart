@@ -14,12 +14,12 @@ class UserEntityState extends EntityState<UserState>{
   //followers
   UserEntityState getNextPageFollowers(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageFollowers()));
-  UserEntityState addNextPageFollowers(int userId, Iterable<int> ids)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFollowers(ids)));
-  UserEntityState addFollower(int userId, int id)
-    => UserEntityState(entities: updateOne(entities[userId]?.addFollower(id)));
-  UserEntityState removeFollower(int userId, int id)
-    => UserEntityState(entities: updateOne(entities[userId]?.removeFollower(id)));
+  UserEntityState addNextPageFollowers(int userId, Iterable<int> followIds)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFollowers(followIds)));
+  UserEntityState addFollower(int userId, int followId)
+    => UserEntityState(entities: updateOne(entities[userId]?.addFollower(followId)));
+  UserEntityState removeFollower(int userId, int followId)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeFollower(followId)));
 
   //foloweds
   UserEntityState getNextPageFolloweds(int userId)
@@ -69,7 +69,6 @@ class UserEntityState extends EntityState<UserState>{
   
 
   //messages
-  
   UserEntityState getNextPageMessages(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.nextPageMessages()));
   UserEntityState addNextPageMessages(int userId,Iterable<int> ids)
@@ -86,9 +85,4 @@ class UserEntityState extends EntityState<UserState>{
 
   UserEntityState updateName(int userId,String name)
     => UserEntityState(entities: updateOne(entities[userId]!.updateName(name)));
-
-  Iterable<UserState> getFollowers(int userId)
-    => entities[userId]?.followers.ids.map((e) => entities[e]!) ?? [];
-  Iterable<UserState> getFolloweds(int userId)
-    => entities[userId]?.followeds.ids.map((e) => entities[e]!) ?? [];
 }
