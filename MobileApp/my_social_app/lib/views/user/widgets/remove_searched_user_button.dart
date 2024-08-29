@@ -13,7 +13,7 @@ class RemoveSearchedUserButton extends StatelessWidget {
     return IconButton(
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(RemoveSearchedUserAction(userId: user.id));
+        store.dispatch(RemoveSearchedUserAction(searchedId: user.id));
       },
       icon: const Icon(Icons.close)
     );

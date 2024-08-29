@@ -4,17 +4,15 @@ import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
@@ -68,18 +66,12 @@ void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatc
   if(action is GetNextPageUserFollowersAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.followers;
     UserService()
-      .getFollowersById(action.userId,pagination.next)
-      .then((users){
-        store.dispatch(AddNextPageUserFollowersAction(
-          userId: action.userId,
-          followers: users.map((e) => FollowerState(
-            key: e.paginationKey!,
-            followerId: e.id,
-            createdAt: e.paginationDate!
-          ))
-        ));
-        store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
-        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      .getFollowersById(action.userId, pagination.next)
+      .then((follows){
+        store.dispatch(AddNextPageUserFollowersAction(userId: action.userId,followIds: follows.map((e) => e.id)));
+        store.dispatch(AddFollowsAction(follows:follows.map((e) => e.toFollowState())));
+        store.dispatch(AddUsersAction(users: follows.map((e) => e.follower!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.follower!.id))));
       });
   }
   next(action);
@@ -104,16 +96,13 @@ void getNextPageUserNotFollowedsIfReadyMiddleware(Store<AppState> store,action, 
   }
   next(action);
 }
-void getNextPageUserNotFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
+void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserNotFollowedsAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.notFolloweds;
     UserService()
       .getNotFolloweds(action.userId, pagination.next)
       .then((users){
-        store.dispatch(AddNextPageUserNotFollowedsAction(
-          userId: action.userId,
-          userIds: users.map((e) => IdState(key: e.id))
-        ));
+        store.dispatch(AddNextPageUserNotFollowedsAction(userId: action.userId,userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
         store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
       });
@@ -144,17 +133,11 @@ void getNextPageUserFollowedsMiddleware(Store<AppState> store,action,NextDispatc
     final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
     UserService()
       .getFollowedsById(action.userId,pagination.next)
-      .then((users){
-        store.dispatch(AddNextPageUserFollowedsAction(
-          userId: action.userId,
-          followeds: users.map((user) => FollowedState(
-            key: user.paginationKey!,
-            followedId: user.id,
-            createdAt: user.paginationDate!
-          ))
-        ));
-        store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      .then((follows){
+        store.dispatch(AddNextPageUserFollowedsAction(userId: action.userId,followIds: follows.map((e) => e.id)));
+        store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
+        store.dispatch(AddUsersAction(users: follows.map((e) => e.followed!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.followed!.id))));
       }
     );
   }
@@ -185,10 +168,7 @@ void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatch
     MessageService()
       .getMessagesByUserId(action.userId, pagination.next)
       .then((messages){
-        store.dispatch(AddNextPageUserMessagesAction(
-          userId: action.userId,
-          messageIds: messages.map((message) => IdState(key: message.id))
-        ));
+        store.dispatch(AddNextPageUserMessagesAction(userId: action.userId,messageIds: messages.map((message) => message.id)));
         store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
       });
   }
@@ -219,10 +199,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
     QuestionService()
       .getByUserId(action.userId,pagination.next)
       .then((questions){
-        store.dispatch(AddNextPageUserQuestionsAction(
-          userId: action.userId,
-          questionIds: questions.map((e) => IdState(key: e.id))
-        ));
+        store.dispatch(AddNextPageUserQuestionsAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
@@ -257,10 +234,7 @@ void getNextPageUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextD
     QuestionService()
       .getSolvedQuestionsByUserId(action.userId, pagination.next)
       .then((questions){
-        store.dispatch(AddNextPageUserSolvedQuestionsAction(
-          userId: action.userId,
-          questionIds: questions.map((question) => IdState(key: question.id))
-        ));
+        store.dispatch(AddNextPageUserSolvedQuestionsAction(userId: action.userId,questionIds: questions.map((question) => question.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
@@ -295,10 +269,7 @@ void getNextPageUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,Nex
     QuestionService()
       .getUnsolvedQuestionsByUserId(action.userId, pagination.next)
       .then((questions){
-        store.dispatch(AddNextPageUserUnsolvedQuestionsAction(
-          userId: action.userId,
-          questionIds: questions.map((e) => IdState(key: e.id))
-        ));
+        store.dispatch(AddNextPageUserUnsolvedQuestionsAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
@@ -315,22 +286,9 @@ void followMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .follow(action.followedId)
       .then((follow){
-        
-        store.dispatch(AddFollowerAction(
-          userId: action.followedId,
-          follower: FollowerState(key: follow.id,followerId: followerId,createdAt: follow.createdAt)
-        ));
-        
-        store.dispatch(AddFollowedAction(
-          userId: followerId,
-          followed: FollowedState(key: follow.id,followedId: action.followedId,createdAt: follow.createdAt)
-        ));
-
-        store.dispatch(RemoveUserNotFollowedAction(
-          userId: followerId,
-          notFollowedId: IdState(key: action.followedId)
-        ));
-
+        store.dispatch(AddUserFollowerAction(userId: action.followedId,followId: follow.id));
+        store.dispatch(AddUserFollowedAction(userId: followerId,followId: follow.id));
+        store.dispatch(RemoveUserNotFollowedAction(userId: followerId,notFollowedId: action.followedId));
       });
   }
   next(action);
@@ -341,9 +299,9 @@ void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .unfollow(action.followedId)
       .then((_){
-        store.dispatch(RemoveFollowerAction(userId: action.followedId, followerId: followerId));
-        store.dispatch(RemoveFollowedAction(userId: followerId, followedId: action.followedId));
-        store.dispatch(AddUserNotFollowedAction(userId: followerId, notFollowedId: IdState(key: action.followedId)));
+        store.dispatch(AddUserNotFollowedAction(userId: followerId, notFollowedId: action.followedId));
+        store.dispatch(RemoveUserFollowerAction(userId: action.followedId, followId: followerId));
+        store.dispatch(RemoveUserFollowedAction(userId: followerId, followId: action.followedId));
       });
   }
   next(action);
@@ -354,8 +312,8 @@ void deleteFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .removeFollower(action.followerId)
       .then((_){
-        store.dispatch(RemoveFollowerAction(userId: followedId, followerId: action.followerId));
-        store.dispatch(RemoveFollowedAction(userId: action.followerId, followedId: followedId));
+        store.dispatch(RemoveUserFollowerAction(userId: followedId, followId: action.followerId));
+        store.dispatch(RemoveUserFollowedAction(userId: action.followerId, followId: followedId));
       });
   }
   next(action);

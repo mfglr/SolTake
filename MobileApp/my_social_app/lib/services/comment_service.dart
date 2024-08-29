@@ -2,7 +2,6 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/comment_endpoints.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/comment_user_like.dart';
-import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
@@ -70,9 +69,9 @@ class CommentService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<User>> getCommentLikes(int commentId, Page page) =>
+  Future<Iterable<CommentUserLike>> getCommentLikes(int commentId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentLikesEndpoint/$commentId", page))
       .then((json) => json as List)
-      .then((list) => list.map((e) => User.fromJson(e)));
+      .then((list) => list.map((e) => CommentUserLike.fromJson(e)));
 }

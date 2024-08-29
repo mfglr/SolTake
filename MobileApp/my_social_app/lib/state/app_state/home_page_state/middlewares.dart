@@ -12,7 +12,7 @@ import 'package:redux/redux.dart';
 void getNextPageHomeQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageHomeQuestionsIfNoPageAction){
     final pagination = store.state.homePageState.questions;
-    if(pagination.isReadyForNextPage && pagination.props.isEmpty){
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(const GetNextPageHomeQuestionsAction());
     }
   }

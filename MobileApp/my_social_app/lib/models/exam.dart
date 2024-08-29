@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 part 'exam.g.dart';
 
-@immutable
 @JsonSerializable()
+@immutable
 class Exam{
   final int id;
   final String shortName;
@@ -27,7 +26,7 @@ class Exam{
         id: id,
         shortName: shortName,
         fullName: fullName,
-        subjects: Pagination<num,IdState>.init(subjectsPerPage,true),
-        questions: Pagination<num,IdState>.init(questionsPerPage,true)
+        subjects: Pagination.init(subjectsPerPage,true),
+        questions: Pagination.init(questionsPerPage,true)
       );
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.Commands.UserAggregate.AddUserSearched;
 using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 

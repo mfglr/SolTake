@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
@@ -30,8 +29,8 @@ class DislikeQuestionAction extends redux.Action{
 @immutable
 class DislikeQuestionSuccessAction extends redux.Action{
   final int questionId;
-  final int currentUserId;
-  const DislikeQuestionSuccessAction({required this.questionId,required this.currentUserId});
+  final int likeId;
+  const DislikeQuestionSuccessAction({required this.questionId,required this.likeId});
 }
 @immutable
 class LikeQuestionAction extends redux.Action{
@@ -41,15 +40,16 @@ class LikeQuestionAction extends redux.Action{
 @immutable
 class LikeQuestionSuccessAction extends redux.Action{
   final int questionId;
-  final QuestionUserLikeState like;
-  const LikeQuestionSuccessAction({required this.questionId,required this.like});
+  final int likeId;
+  const LikeQuestionSuccessAction({required this.questionId,required this.likeId});
 }
 @immutable
 class AddNewQuestionLikeAction extends redux.Action{
   final int questionId;
-  final QuestionUserLikeState like;
-  const AddNewQuestionLikeAction({required this.questionId, required this.like});
+  final int likeId;
+  const AddNewQuestionLikeAction({required this.questionId, required this.likeId});
 }
+
 @immutable
 class GetNextPageQuestionLikesIfNoPageAction extends redux.Action{
   final int questionId;
@@ -68,8 +68,8 @@ class GetNextPageQuestionLikesAction extends redux.Action{
 @immutable
 class AddNextPageQuestionLikesAction extends redux.Action{
   final int questionId;
-  final Iterable<QuestionUserLikeState> likes;
-  const AddNextPageQuestionLikesAction({required this.questionId, required this.likes});
+  final Iterable<int> likeIds;
+  const AddNextPageQuestionLikesAction({required this.questionId, required this.likeIds});
 }
 
 @immutable

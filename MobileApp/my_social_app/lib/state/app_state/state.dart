@@ -5,6 +5,7 @@ import 'package:my_social_app/state/app_state/create_message_state/create_messag
 import 'package:my_social_app/state/app_state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/app_state/create_solution_state/create_solution_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
+import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
@@ -15,6 +16,7 @@ import 'package:my_social_app/state/app_state/message_home_page_state/message_ho
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -26,6 +28,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_entity_stat
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
 import "package:collection/collection.dart";
+import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 
 enum ActiveLoginPage{
   loginPage,
@@ -46,7 +49,6 @@ class AppState{
   final ExamEntityState examEntityState;
   final SubjectEntityState subjectEntityState;
   final TopicEntityState topicEntityState;
-  final QuestionEntityState questionEntityState;
   final SolutionEntityState solutionEntityState;
   final HomePageState homePageState;
   final CommentEntityState commentEntityState;
@@ -55,6 +57,10 @@ class AppState{
   final MessageEntityState messageEntityState;
   final MessageHomePageState messageHomePageState;
   final CreateMessageState createMessageState;
+  final UserSearchEntityState userSearchEntityState;
+  final FollowEntityState followEntityState;
+  final QuestionEntityState questionEntityState;
+  final QuestionUserLikeEntityState questionUserLikeEntityState;
 
   const AppState({
     required this.accessToken,
@@ -69,7 +75,6 @@ class AppState{
     required this.examEntityState,
     required this.subjectEntityState,
     required this.topicEntityState,
-    required this.questionEntityState,
     required this.solutionEntityState,
     required this.homePageState,
     required this.commentEntityState,
@@ -78,6 +83,10 @@ class AppState{
     required this.messageEntityState,
     required this.messageHomePageState,
     required this.createMessageState,
+    required this.userSearchEntityState,
+    required this.followEntityState,
+    required this.questionEntityState,
+    required this.questionUserLikeEntityState,
   });
 
   //select messages
@@ -114,7 +123,9 @@ class AppState{
   Iterable<UserState> get selectSearchedUsers
     => searchState.searchedUsers.ids.map((e) => userEntityState.entities[e]!);
   Iterable<UserState> selectQuestionLikes(int questionId)
-    => questionEntityState.entities[questionId]?.likes.ids.map((e) => userEntityState.entities[e]!) ?? [];
+    => questionEntityState.entities[questionId]!.likes.ids.map(
+      (e) => userEntityState.entities[questionUserLikeEntityState.entities[e]!.appUserId]!
+    );
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions

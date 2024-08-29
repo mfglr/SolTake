@@ -5,9 +5,9 @@ import 'package:redux/redux.dart';
 SearchState getFirstPageUserReducer(SearchState prev, GetFirstPageSearchingUsersAction action)
   => prev.startLoadingUsers();
 SearchState addFirstPageUserReducer(SearchState prev,AddFirstPageSearchingUsersAction action)
-  => prev.addFirstPageUsers(action.ids);
+  => prev.addFirstPageUsers(action.userIds);
 SearchState addNextPageUsersReducer(SearchState prev,AddNextPageSearchingUsersAction action)
-  => prev.addNextPageUsers(action.ids);
+  => prev.addNextPageUsers(action.userIds);
 
 SearchState getFirstPageQuestionsReducer(SearchState prev,GetFirstPageSearchingQuestionsAction action)
   => prev.startLoadingQuestions();
@@ -21,11 +21,11 @@ SearchState addNextPageQuestionsReducer(SearchState prev,AddNextPageSearchingQue
 SearchState getNextPageSearchedUserReducer(SearchState prev,GetNextPageSearchedUsersAction action)
   => prev.startLodingSearchedUsers();
 SearchState addNextPageSearchedUserReducer(SearchState prev,AddNextPageSearchedUsersAction action)
-  => prev.addNextPageSearchedUsers(action.userIds);
+  => prev.addNextPageSearchedUsers(action.ids);
 SearchState addSearchedUserReducer(SearchState prev,AddSearchedUserSuccessAction action)
-  => prev.addSearchedUser(action.userId);
+  => prev.addSearchedUser(action.searchId);
 SearchState removeSearchedUserReducer(SearchState prev,RemoveSearcedUserSuccessAction action)
-  => prev.removeSearchedUser(action.userId);
+  => prev.removeSearchedUser(action.searchId);
 
 SearchState changeActivePage(SearchState prev,ChangeActivePageAction action)
   => prev.changeActivePage(action.page);

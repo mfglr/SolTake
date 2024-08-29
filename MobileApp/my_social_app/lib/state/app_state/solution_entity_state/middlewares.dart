@@ -12,7 +12,6 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
-
 void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionAction){
     if(store.state.solutionEntityState.entities[action.solutionId] == null){
@@ -111,16 +110,14 @@ void getNextPageSolutionCommentsIfReadyMiddleware(Store<AppState> store,action,N
 }
 void getNextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSolutionCommentsAction){
-    final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
-    if(!comments.isLast){
-      CommentService()
-        .getBySolutionId(action.solutionId,comments.lastValue,commentsPerPage,true)
-        .then((comments){
-          store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
-          store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(commentsPerPage))));
-          store.dispatch(AddNextPageSolutionCommentsAction(solutionId: action.solutionId,commentsIds: comments.map((e) => e.id)));
-        });
-    }
+    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.comments;
+    CommentService()
+      .getBySolutionId(action.solutionId,pagination.next)
+      .then((comments){
+        store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
+        store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(commentsPerPage))));
+        store.dispatch(AddNextPageSolutionCommentsAction(solutionId: action.solutionId,commentsIds: comments.map((e) => e.id)));
+      });
   }
   next(action);
 }

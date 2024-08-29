@@ -5,9 +5,9 @@ import 'package:redux/redux.dart';
 CommentEntityState getNextPageLikesReducer(CommentEntityState prev,GetNextPageCommentLikesAction action)
   => prev.getNextPageLikes(action.commentId);
 CommentEntityState addNextPageLikesReducer(CommentEntityState prev,AddNextPageCommentLikesAction action)
-  => prev.addNextPageLikes(action.commentId, action.likes);
+  => prev.addNextPageLikes(action.commentId, action.likeIds);
 CommentEntityState likeCommentReducer(CommentEntityState prev,LikeCommentSuccessAction action)
-  => prev.like(action.commentId, action.like);
+  => prev.like(action.commentId, action.likeId);
 CommentEntityState dislikeCommentReducer(CommentEntityState prev,DislikeCommentSuccessAction action)
   => prev.dislike(action.commentId,action.userId);
 

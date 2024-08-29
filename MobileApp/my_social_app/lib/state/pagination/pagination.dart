@@ -67,21 +67,21 @@ class Pagination{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination addNextPage(Iterable<int> nextIds)
+  Pagination addNextPage(Iterable<int> ids)
     => Pagination(
         isLast: ids.length < recordsPerPage,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: [...ids, ...nextIds],
+        ids: [...this.ids, ...ids],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination addPrevPage(Iterable<int> prevIds)
+  Pagination addPrevPage(Iterable<int> ids)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: false,
-        ids: [...prevIds.toList().reversed, ...ids],
+        ids: [...ids.toList().reversed, ...this.ids],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
@@ -112,53 +112,40 @@ class Pagination{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination removeOne(R one)
+  Pagination removeOne(int id)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
-        ids: ids.where((prop) => prop.key != one.key),
+        ids: ids.where((e) => e != id),
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination where(bool Function(R) predicate)
+  Pagination addfirstPage(Iterable<int> ids)
     => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        ids: ids.where(predicate),
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage
-      );
-  Pagination addfirstPage(Iterable<R> first)
-    => Pagination(
-        isLast: first.length < recordsPerPage,
+        isLast: ids.length < recordsPerPage,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: first,
+        ids: ids,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination appendLastPage(Iterable<R> last)
+  Pagination appendLastPage(Iterable<int> ids)
     => Pagination(
         isLast: true,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: [...ids, ...last],
+        ids: [...this.ids, ...ids],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination addInOrder(R one){
-    if(!isLast && (props.isEmpty || one.key.compareTo(props.last.key) < 0)) return this;
+  Pagination addInOrder(int id){
+    if(!isLast && (ids.isEmpty || id < ids.last)) return this;
     return Pagination(
       isLast: isLast,
       loadingNext: loadingNext,
       loadingPrev: loadingPrev,
-      ids: [
-        ...ids.takeWhile((x) => x.key.compareTo(one.key) > 0),
-        one,
-        ...ids.skipWhile((x) => x.key.compareTo(one.key) > 0)
-      ],
+      ids: [...ids.takeWhile((e) => e > id),id,...ids.skipWhile((e) => e > id)],
       isDescending: isDescending,
       recordsPerPage: recordsPerPage
     );

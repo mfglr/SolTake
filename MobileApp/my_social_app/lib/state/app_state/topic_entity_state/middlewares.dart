@@ -1,4 +1,3 @@
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -29,7 +28,7 @@ void getNextPageTopicQuestionsMiddleware(Store<AppState> store,action,NextDispat
   if(action is GetNextPageTopicQuestionsAction){
     final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
     QuestionService()
-      .getByTopicId(action.topicId, pagination.lastValue, questionsPerPage,true)
+      .getByTopicId(action.topicId, pagination.next)
       .then(
         (questions){
           store.dispatch(AddNextPageTopicQuestionsAction(topicId: action.topicId,questionIds: questions.map((x) => x.id).toList()));

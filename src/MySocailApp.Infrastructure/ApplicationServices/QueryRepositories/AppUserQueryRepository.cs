@@ -25,15 +25,6 @@ namespace MySocailApp.Infrastructure.ApplicationServices.QueryRepositories
                 .Where(x => x.Account.UserName == userName)
                 .ToUserResponseDto(accountId)
                 .FirstOrDefaultAsync(cancellationToken);
-
-        public Task<List<AppUserResponseDto>> GetSearchedUsersAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
-            => _context.UserSearchs
-                .AsNoTracking()
-                .Where(x => x.SearcherId == userId)
-                .ToPage(page)
-                .ToUserResponseDto(accountId)
-                .ToListAsync(cancellationToken);
-
         public Task<List<AppUserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.AppUsers
                 .AsNoTracking()

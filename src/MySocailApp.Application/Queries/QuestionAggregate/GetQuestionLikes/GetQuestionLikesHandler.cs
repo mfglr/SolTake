@@ -9,8 +9,8 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes
         private readonly IQuestionUserLikeQueryRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
-        public async Task<List<QuestionUserLikeResponseDto>> Handle(GetQuestionLikesDto request, CancellationToken cancellationToken)
-            => await _repository
+        public Task<List<QuestionUserLikeResponseDto>> Handle(GetQuestionLikesDto request, CancellationToken cancellationToken)
+            => _repository
                 .GetQuestionLikesAsync(
                     request.QuestionId,
                     _accessTokenReader.GetRequiredAccountId(),

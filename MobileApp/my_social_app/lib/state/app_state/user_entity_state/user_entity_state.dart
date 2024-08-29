@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
 
 @immutable
 class UserEntityState extends EntityState<UserState>{
@@ -17,57 +14,57 @@ class UserEntityState extends EntityState<UserState>{
   //followers
   UserEntityState getNextPageFollowers(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageFollowers()));
-  UserEntityState addNextPageFollowers(int userId, Iterable<FollowerState> followers)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFollowers(followers)));
-  UserEntityState addFollower(int userId, FollowerState follower)
-    => UserEntityState(entities: updateOne(entities[userId]?.addFollower(follower)));
-  UserEntityState removeFollower(int userId, int followerId)
-    => UserEntityState(entities: updateOne(entities[userId]?.removeFollower(followerId)));
+  UserEntityState addNextPageFollowers(int userId, Iterable<int> ids)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFollowers(ids)));
+  UserEntityState addFollower(int userId, int id)
+    => UserEntityState(entities: updateOne(entities[userId]?.addFollower(id)));
+  UserEntityState removeFollower(int userId, int id)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeFollower(id)));
 
   //foloweds
   UserEntityState getNextPageFolloweds(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageFolloweds()));
-  UserEntityState addNextPageFolloweds(int userId, Iterable<FollowedState> followeds)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFolloweds(followeds)));
-  UserEntityState addFollowed(int userId,FollowedState followed)
-    => UserEntityState(entities: updateOne(entities[userId]?.addFollowed(followed)));
-  UserEntityState removeFollowed(int userId,int followedId)
-    => UserEntityState(entities: updateOne(entities[userId]?.removeFollowed(followedId)));
+  UserEntityState addNextPageFolloweds(int userId, Iterable<int> ids)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFolloweds(ids)));
+  UserEntityState addFollowed(int userId,int id)
+    => UserEntityState(entities: updateOne(entities[userId]?.addFollowed(id)));
+  UserEntityState removeFollowed(int userId,int id)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeFollowed(id)));
 
   //not followeds
   UserEntityState getNextPageNotFolloweds(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageNotFolloweds()));
-  UserEntityState addNextPageNotFolloweds(int userId,Iterable<IdState> ids)
+  UserEntityState addNextPageNotFolloweds(int userId,Iterable<int> ids)
     => UserEntityState(entities: updateOne(entities[userId]?.addNextPageNotFolloweds(ids)));
-  UserEntityState addNotFollowed(int userId,IdState id)
+  UserEntityState addNotFollowed(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.addNotFollowed(id)));
-  UserEntityState removeNotFollowed(int userId,IdState id)
+  UserEntityState removeNotFollowed(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.removeNotFollowed(id)));
 
   //
-  UserEntityState markQuestionAsSolved(int userId,IdState id)
+  UserEntityState markQuestionAsSolved(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.markQuestionAsSolved(id)));
-  UserEntityState markQuestionAsUnsolved(int userId,IdState id)
+  UserEntityState markQuestionAsUnsolved(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.markQuestionAsUnsolved(id)));
 
   //questions
   UserEntityState getNextPageQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageQuestions()));
-  UserEntityState addNextPageQuestions(int userId, Iterable<IdState> ids)
+  UserEntityState addNextPageQuestions(int userId, Iterable<int> ids)
     => UserEntityState(entities: updateOne(entities[userId]?.addNextPageQuestions(ids)));
-  UserEntityState addNewQuestion(int userId,IdState id)
+  UserEntityState addNewQuestion(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.addNewQuestion(id)));
   
   //solved questions
   UserEntityState getNextPageSolvedQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageSolvedQuestions()));
-  UserEntityState addNextPageSolvedQuestions(int userId, Iterable<IdState> ids)
+  UserEntityState addNextPageSolvedQuestions(int userId, Iterable<int> ids)
     => UserEntityState(entities: updateOne(entities[userId]?.addNextPageSolvedQuestions(ids)));
   
   //unsolved questions
   UserEntityState getNextPageUnsolvedQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageUnsolvedQuestions()));
-  UserEntityState addNextPageUnsolvedQuestions(int userId,Iterable<IdState> ids)
+  UserEntityState addNextPageUnsolvedQuestions(int userId,Iterable<int> ids)
     => UserEntityState(entities: updateOne(entities[userId]?.addNextPageUnsolvedQuestions(ids)));
   
 
@@ -75,9 +72,9 @@ class UserEntityState extends EntityState<UserState>{
   
   UserEntityState getNextPageMessages(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.nextPageMessages()));
-  UserEntityState addNextPageMessages(int userId,Iterable<IdState> ids)
+  UserEntityState addNextPageMessages(int userId,Iterable<int> ids)
     => UserEntityState(entities: updateOne(entities[userId]?.addNextPageMessages(ids)));
-  UserEntityState addMessage(int userId,IdState id)
+  UserEntityState addMessage(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.addMessage(id)));
   
 
@@ -90,6 +87,8 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState updateName(int userId,String name)
     => UserEntityState(entities: updateOne(entities[userId]!.updateName(name)));
 
-  Iterable<UserState> getFollowers(int userId) => entities[userId]!.followers.props.map((e) => entities[e.key]!);
-  Iterable<UserState> getFolloweds(int userId) => entities[userId]!.followeds.props.map((e) => entities[e.key]!);
+  Iterable<UserState> getFollowers(int userId)
+    => entities[userId]?.followers.ids.map((e) => entities[e]!) ?? [];
+  Iterable<UserState> getFolloweds(int userId)
+    => entities[userId]?.followeds.ids.map((e) => entities[e]!) ?? [];
 }

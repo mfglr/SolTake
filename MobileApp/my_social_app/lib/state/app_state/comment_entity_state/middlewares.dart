@@ -1,6 +1,6 @@
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -24,13 +24,11 @@ void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatch
     if(pagination.isLast){
       CommentService()
         .getCommentLikes(action.commentId, pagination.next)
-        .then((users){
-          store.dispatch(AddNextPageCommentLikesAction(
-            commentId: action.commentId,
-            likes: users.map((e) => CommentUserLikeState(key: e.paginationKey!, userId: e.id,createdAt: e.paginationDate!))
-          ));
-          store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-          store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));         
+        .then((likes){
+          store.dispatch(AddCommentUserLikesAction(likes: likes.map((e) => e.toCommentUserLikeState())));
+          store.dispatch(AddNextPageCommentLikesAction(commentId: action.commentId,likeIds: likes.map((e) => e.id)));
+          store.dispatch(AddUsersAction(users: likes.map((e) => e.appUser!.toUserState())));
+          store.dispatch(AddUserImagesAction(images: likes.map((e) => UserImageState.init(e.appUser!.id))));         
         });
     }
   }
@@ -40,8 +38,9 @@ void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LikeCommentAction){
     CommentService()
       .like(action.commentId)
-      .then((like) => store.dispatch(LikeCommentSuccessAction(commentId: action.commentId,like: like.toCommentUserLikeState()))
-    );
+      .then((like){
+        store.dispatch(LikeCommentSuccessAction(commentId: action.commentId,likeId: like.id));
+      });
   }
   next(action);
 }

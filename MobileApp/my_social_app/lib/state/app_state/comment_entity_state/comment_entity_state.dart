@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 
@@ -9,9 +8,9 @@ class CommentEntityState extends EntityState<CommentState>{
 
   CommentEntityState getNextPageLikes(int commentId)
     => CommentEntityState(entities: updateOne(entities[commentId]!.getNextPageLikes()));
-  CommentEntityState addNextPageLikes(int commentId, Iterable<CommentUserLikeState> likes)
+  CommentEntityState addNextPageLikes(int commentId, Iterable<int> likes)
     => CommentEntityState(entities: updateOne(entities[commentId]!.addNextPageLikes(likes)));
-  CommentEntityState like(int commentId, CommentUserLikeState like)
+  CommentEntityState like(int commentId, int like)
     => CommentEntityState(entities: updateOne(entities[commentId]!.like(like)));
   CommentEntityState dislike(int commentId, int userId)
     => CommentEntityState(entities: updateOne(entities[commentId]!.dislike(userId)));

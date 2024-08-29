@@ -5,14 +5,12 @@ import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/question_image.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
-@immutable
 @JsonSerializable()
+@immutable
 class Question{
   final int id;
   final DateTime createdAt;
@@ -74,11 +72,11 @@ class Question{
     numberOfComments: numberOfComments,
     numberOfSolutions: numberOfSolutions,
     numberOfCorrectSolutions: numberOfCorrectSolutions,
-    likes: Pagination<num,QuestionUserLikeState>.init(usersPerPage,true),
-    comments: Pagination<num,IdState>.init(commentsPerPage,true),
-    solutions: Pagination<num,IdState>.init(solutionsPerPage,true),
-    correctSolutions: Pagination<num,IdState>.init(solutionsPerPage,true),
-    pendingSolutions: Pagination<num,IdState>.init(solutionsPerPage,true),
-    incorrectSolutions: Pagination<num,IdState>.init(solutionsPerPage,true),
+    likes: Pagination.init(usersPerPage,true),
+    comments: Pagination.init(commentsPerPage,true),
+    solutions: Pagination.init(solutionsPerPage,true),
+    correctSolutions: Pagination.init(solutionsPerPage,true),
+    pendingSolutions: Pagination.init(solutionsPerPage,true),
+    incorrectSolutions: Pagination.init(solutionsPerPage,true),
   );
 }

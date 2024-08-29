@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
+import 'package:my_social_app/models/user.dart';
+import 'package:my_social_app/state/app_state/follow_entity_state/follow_state.dart';
 part "follow.g.dart";
 
 @immutable
@@ -11,29 +11,27 @@ class Follow{
   final int followerId;
   final int followedId;
   final DateTime createdAt;
+  final User? follower;
+  final User? followed;
 
   const Follow({
     required this.id,
     required this.followerId,
     required this.followedId,
-    required this.createdAt
+    required this.createdAt,
+    required this.follower,
+    required this.followed
   });
 
   factory Follow.fromJson(Map<String, dynamic> json) => _$FollowFromJson(json);
   Map<String, dynamic> toJson() => _$FollowToJson(this);
-
-  FollowerState toFollowerState()
-    => FollowerState(
-        key: id,
-        followerId: followerId,
-        createdAt: createdAt
-      );
-
-  FollowedState toFollowedState()
-    => FollowedState(
-        key: id,
-        followedId: followedId,
-        createdAt: createdAt
-      );
   
+  FollowState toFollowState()
+    => FollowState(
+        id: id,
+        createdAt: createdAt,
+        followerId: followerId,
+        followedId: followedId
+      );
+
 }

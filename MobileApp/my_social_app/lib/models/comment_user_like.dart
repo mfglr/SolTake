@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
+import 'package:my_social_app/models/user.dart';
+import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_state.dart';
 part 'comment_user_like.g.dart';
 
 @immutable
@@ -10,12 +11,14 @@ class CommentUserLike{
   final int commentId;
   final int appUserId;
   final DateTime createdAt;
+  final User? appUser;
   
   const CommentUserLike({
     required this.id,
     required this.commentId,
     required this.appUserId,
-    required this.createdAt
+    required this.createdAt,
+    required this.appUser
   });
 
 
@@ -24,8 +27,10 @@ class CommentUserLike{
 
   CommentUserLikeState toCommentUserLikeState()
     => CommentUserLikeState(
-        key: id,
-        userId: appUserId
+        id: id,
+        appUserId: appUserId,
+        commentId: commentId,
+        createdAt: createdAt,
       );
 
 }

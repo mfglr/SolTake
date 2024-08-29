@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
 
 @immutable
 class ExamEntityState extends EntityState<ExamState>{
@@ -19,7 +18,7 @@ class ExamEntityState extends EntityState<ExamState>{
       isLoading: isLoading,
       isLast: isLast
     );
-  ExamEntityState addNextPageQuestions(int examId, Iterable<IdState> questionIds)
+  ExamEntityState addNextPageQuestions(int examId, Iterable<int> questionIds)
     => ExamEntityState(
         entities: updateOne(entities[examId]?.addNextPageQuestions(questionIds)),
         isLoading: isLoading,
@@ -51,7 +50,7 @@ class ExamEntityState extends EntityState<ExamState>{
         isLast: isLast,
       );
 
-  ExamEntityState loadExamSubjects(int examId,Iterable<IdState> ids)
+  ExamEntityState loadExamSubjects(int examId,Iterable<int> ids)
     => ExamEntityState(
         entities: updateOne(entities[examId]!.addNextPageSubjects(ids)),
         isLoading: isLoading,

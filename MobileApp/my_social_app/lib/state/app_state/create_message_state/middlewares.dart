@@ -4,7 +4,6 @@ import 'package:my_social_app/state/app_state/create_message_state/actions.dart'
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
 import 'package:redux/redux.dart';
 
 void createMessageWithImagesMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -14,10 +13,7 @@ void createMessageWithImagesMiddleware(Store<AppState> store,action,NextDispatch
       .createMessage(state.receiverId!, state.content, state.images)
       .then((message){
         store.dispatch(AddMessageAction(message: message.toMessageState()));
-        store.dispatch(AddUserMessageAction(
-          userId: state.receiverId!,
-          messageId: IdState(key: message.id)
-        ));
+        store.dispatch(AddUserMessageAction(userId: state.receiverId!,messageId: message.id));
       });
   }
   next(action);
@@ -30,10 +26,7 @@ void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
       .createMessage(state.receiverId!, state.content!)
       .then((message){
         store.dispatch(AddMessageAction(message: message.toMessageState()));
-        store.dispatch(AddUserMessageAction(
-          userId: state.receiverId!,
-          messageId: IdState(key:  message.id)
-        ));
+        store.dispatch(AddUserMessageAction(userId: state.receiverId!,messageId: message.id));
       });
   }
   next(action);

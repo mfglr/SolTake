@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/gender.dart';
 
@@ -20,13 +17,13 @@ class UserState{
   final int numberOfFolloweds;
   final bool isFollower;
   final bool isFollowed;
-  final Pagination<num,FollowerState> followers;
-  final Pagination<num,FollowedState> followeds;
-  final Pagination<num,IdState> notFolloweds;
-  final Pagination<num,IdState> questions;
-  final Pagination<num,IdState> solvedQuestions;
-  final Pagination<num,IdState> unsolvedQuestions;
-  final Pagination<num,IdState> messages;
+  final Pagination followers;
+  final Pagination followeds;
+  final Pagination notFolloweds;
+  final Pagination questions;
+  final Pagination solvedQuestions;
+  final Pagination unsolvedQuestions;
+  final Pagination messages;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -72,13 +69,13 @@ class UserState{
     int? newNumberOfFolloweds,
     bool? newIsFollower,
     bool? newIsFollowed,
-    Pagination<num,FollowerState>? newFollowers,
-    Pagination<num,FollowedState>? newFolloweds,
-    Pagination<num,IdState>? newQuestions,
-    Pagination<num,IdState>? newSolvedQuestions,
-    Pagination<num,IdState>? newUnsolvedQuestions,
-    Pagination<num,IdState>? newMessages,
-    Pagination<num,IdState>? newNotFolloweds
+    Pagination? newFollowers,
+    Pagination? newFolloweds,
+    Pagination? newQuestions,
+    Pagination? newSolvedQuestions,
+    Pagination? newUnsolvedQuestions,
+    Pagination? newMessages,
+    Pagination? newNotFolloweds
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -107,21 +104,21 @@ class UserState{
     _optional(
       newFollowers: followers.startLoadingNext()
     );
-  UserState addNextPageFollowers(Iterable<FollowerState> followers) => 
+  UserState addNextPageFollowers(Iterable<int> ids) => 
     _optional(
-      newFollowers: this.followers.addNextPage(followers)
+      newFollowers: followers.addNextPage(ids)
     );
-  UserState addFollower(FollowerState follower) => 
+  UserState addFollower(int id) => 
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
-      newIsFollowed:true,
-      newFollowers: followers.prependOne(follower)
+      newIsFollowed: true,
+      newFollowers: followers.prependOne(id)
     );
-  UserState removeFollower(int followerId) => 
+  UserState removeFollower(int id) => 
     _optional(
       newNumberOfFollowers:numberOfFollowers - 1,
       newIsFollowed:false,
-      newFollowers: followers.where((e) => e.followerId != followerId)
+      newFollowers: followers.removeOne(id)
     );
   
   //followeds
@@ -129,20 +126,20 @@ class UserState{
     _optional(
       newFolloweds: followeds.startLoadingNext()
     );
-  UserState addNextPageFolloweds(Iterable<FollowedState> followeds) =>
+  UserState addNextPageFolloweds(Iterable<int> ids) =>
     _optional(
-      newFolloweds: this.followeds.addNextPage(followeds)
+      newFolloweds: followeds.addNextPage(ids)
     );
-  UserState addFollowed(FollowedState followed)
+  UserState addFollowed(int id)
     => _optional(
         newNumberOfFolloweds: numberOfFolloweds + 1,
-        newFolloweds: followeds.prependOne(followed)
+        newFolloweds: followeds.prependOne(id)
       );
-  UserState removeFollowed(int followedId)
+  UserState removeFollowed(int id)
     => _optional(
         newNumberOfFolloweds: numberOfFolloweds - 1,
-        newIsFollower:false,
-        newFolloweds: followeds.where((e) => e.followedId != followedId)
+        newIsFollower: false,
+        newFolloweds: followeds.removeOne(id)
       );
 
   //not followeds
@@ -150,15 +147,15 @@ class UserState{
     _optional(
       newNotFolloweds: notFolloweds.startLoadingNext()
     );
-  UserState addNextPageNotFolloweds(Iterable<IdState> ids) =>
+  UserState addNextPageNotFolloweds(Iterable<int> ids) =>
     _optional(
       newNotFolloweds: notFolloweds.addNextPage(ids)
     );
-  UserState addNotFollowed(IdState id) =>
+  UserState addNotFollowed(int id) =>
     _optional(
       newNotFolloweds: notFolloweds.prependOne(id)
     );
-  UserState removeNotFollowed(IdState id) =>
+  UserState removeNotFollowed(int id) =>
     _optional(
       newNotFolloweds: notFolloweds.removeOne(id)
     );
@@ -168,11 +165,11 @@ class UserState{
     _optional(
       newQuestions: questions.startLoadingNext()
     );
-  UserState addNextPageQuestions(Iterable<IdState> ids) =>
+  UserState addNextPageQuestions(Iterable<int> ids) =>
     _optional(
       newQuestions: questions.addNextPage(ids)
     );
-  UserState addNewQuestion(IdState id) =>
+  UserState addNewQuestion(int id) =>
     _optional(
       newNumberOfQuestions: numberOfQuestions + 1,
       newQuestions: questions.prependOne(id),
@@ -184,7 +181,7 @@ class UserState{
     _optional(
       newSolvedQuestions: solvedQuestions.startLoadingNext()
     );
-  UserState addNextPageSolvedQuestions(Iterable<IdState> ids) =>
+  UserState addNextPageSolvedQuestions(Iterable<int> ids) =>
     _optional(
       newSolvedQuestions: solvedQuestions.addNextPage(ids)
     );
@@ -194,17 +191,17 @@ class UserState{
     _optional(
       newUnsolvedQuestions: unsolvedQuestions.startLoadingNext()
     );
-  UserState addNextPageUnsolvedQuestions(Iterable<IdState> ids) =>
+  UserState addNextPageUnsolvedQuestions(Iterable<int> ids) =>
     _optional(
       newUnsolvedQuestions: unsolvedQuestions.addNextPage(ids)
     );
   
-  UserState markQuestionAsSolved(IdState id) =>
+  UserState markQuestionAsSolved(int id) =>
     _optional(
-      newSolvedQuestions: solvedQuestions.props.any((e) => e == id) ? solvedQuestions : solvedQuestions.addInOrder(id),
+      newSolvedQuestions: solvedQuestions.ids.any((e) => e == id) ? solvedQuestions : solvedQuestions.addInOrder(id),
       newUnsolvedQuestions: unsolvedQuestions.removeOne(id)
     );
-  UserState markQuestionAsUnsolved(IdState id) =>
+  UserState markQuestionAsUnsolved(int id) =>
     _optional(
       newSolvedQuestions: solvedQuestions.removeOne(id),
       newUnsolvedQuestions: unsolvedQuestions.addInOrder(id),
@@ -215,11 +212,11 @@ class UserState{
     _optional(
       newMessages: messages.startLoadingNext()
     );
-  UserState addNextPageMessages(Iterable<IdState> ids) =>
+  UserState addNextPageMessages(Iterable<int> ids) =>
     _optional(
       newMessages: messages.addPrevPage(ids)
     );
-  UserState addMessage(IdState id) =>
+  UserState addMessage(int id) =>
     _optional(
       newMessages: messages.appendOne(id)
     );

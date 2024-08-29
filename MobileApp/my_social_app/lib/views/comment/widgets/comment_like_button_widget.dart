@@ -14,10 +14,10 @@ class CommentLikeButtonWidget extends StatelessWidget {
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
         if(comment.isLiked){
-          store.dispatch(DislikeCommentAction(questionCommentId: comment.id));
+          store.dispatch(DislikeCommentAction(commentId: comment.id));
         }
         else{
-          store.dispatch(LikeCommentAction(questionCommentId: comment.id));
+          store.dispatch(LikeCommentAction(commentId: comment.id));
         }
       },
       style: ButtonStyle(

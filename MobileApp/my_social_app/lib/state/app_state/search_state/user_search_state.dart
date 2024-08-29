@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/pagination/has_pagination_property.dart';
 
 @immutable
-class UserSearchState extends HasPaginationProperty<num>{
+class UserSearchState{
+  final int id;
+  final int searcherId;
   final int searchedId;
-  final int createdAt;
+  final DateTime createdAt;
 
   const UserSearchState({
-    required super.key,
+    required this.id,
+    required this.searcherId,
     required this.searchedId,
     required this.createdAt
   });

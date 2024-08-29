@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
-
 
 @immutable
 class LoadUserAction extends redux.Action{
@@ -45,20 +41,20 @@ class GetNextPageUserFollowersAction extends redux.Action{
 @immutable
 class AddNextPageUserFollowersAction extends redux.Action{
   final int userId;
-  final Iterable<FollowerState> followers;
-  const AddNextPageUserFollowersAction({required this.userId, required this.followers});
+  final Iterable<int> followIds;
+  const AddNextPageUserFollowersAction({required this.userId, required this.followIds});
 }
 @immutable
-class AddFollowerAction extends redux.Action{
+class AddUserFollowerAction extends redux.Action{
   final int userId;
-  final FollowerState follower;
-  const AddFollowerAction({required this.userId, required this.follower});
+  final int followId;
+  const AddUserFollowerAction({required this.userId, required this.followId});
 }
 @immutable
-class RemoveFollowerAction extends redux.Action{
+class RemoveUserFollowerAction extends redux.Action{
   final int userId;
-  final int followerId;
-  const RemoveFollowerAction({required this.userId, required this.followerId});
+  final int followId;
+  const RemoveUserFollowerAction({required this.userId, required this.followId});
 }
 
 @immutable
@@ -79,20 +75,20 @@ class GetNextPageUserFollowedsAction extends redux.Action{
 @immutable
 class AddNextPageUserFollowedsAction extends redux.Action{
   final int userId;
-  final Iterable<FollowedState> followeds;
-  const AddNextPageUserFollowedsAction({required this.userId, required this.followeds});
+  final Iterable<int> followIds;
+  const AddNextPageUserFollowedsAction({required this.userId, required this.followIds});
 }
 @immutable
-class AddFollowedAction extends redux.Action{
+class AddUserFollowedAction extends redux.Action{
   final int userId;
-  final FollowedState followed;
-  const AddFollowedAction({required this.userId, required this.followed});
+  final int followId;
+  const AddUserFollowedAction({required this.userId, required this.followId});
 }
 @immutable
-class RemoveFollowedAction extends redux.Action{
+class RemoveUserFollowedAction extends redux.Action{
   final int userId;
-  final int followedId;
-  const RemoveFollowedAction({required this.userId, required this.followedId});
+  final int followId;
+  const RemoveUserFollowedAction({required this.userId, required this.followId});
 }
 
 @immutable
@@ -113,22 +109,21 @@ class GetNextPageUserNotFollowedsAction extends redux.Action{
 @immutable
 class AddNextPageUserNotFollowedsAction extends redux.Action{
   final int userId;
-  final Iterable<IdState> userIds;
+  final Iterable<int> userIds;
   const AddNextPageUserNotFollowedsAction({required this.userId, required this.userIds});
 }
 @immutable
 class RemoveUserNotFollowedAction extends redux.Action{
   final int userId;
-  final IdState notFollowedId;
+  final int notFollowedId;
   const RemoveUserNotFollowedAction({required this.userId, required this.notFollowedId});
 }
 @immutable
 class AddUserNotFollowedAction extends redux.Action{
   final int userId;
-  final IdState notFollowedId;
+  final int notFollowedId;
   const AddUserNotFollowedAction({required this.userId, required this.notFollowedId});
 }
-
 
 @immutable
 class FollowAction extends redux.Action{
@@ -164,26 +159,26 @@ class GetNextPageUserQuestionsAction extends redux.Action{
 @immutable
 class AddNextPageUserQuestionsAction extends redux.Action{
   final int userId;
-  final Iterable<IdState> questionIds;
+  final Iterable<int> questionIds;
   const AddNextPageUserQuestionsAction({required this.userId,required this.questionIds});
 }
 @immutable
 class AddNewUserQuestionAction extends redux.Action{
   final int userId;
-  final IdState questionId;
+  final int questionId;
   const AddNewUserQuestionAction({required this.userId,required this.questionId});
 }
 
 @immutable
 class MarkUserQuestionAsSolvedAction extends redux.Action{
   final int userId;
-  final IdState questionId;
+  final int questionId;
   const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
 }
 @immutable
 class MarkUserQuestionAsUnsolvedAction extends redux.Action{
   final int userId;
-  final IdState questionId;
+  final int questionId;
   const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
 }
 
@@ -205,7 +200,7 @@ class GetNextPageUserSolvedQuestionsAction extends redux.Action{
 @immutable
 class AddNextPageUserSolvedQuestionsAction extends redux.Action{
   final int userId;
-  final Iterable<IdState> questionIds;
+  final Iterable<int> questionIds;
   const AddNextPageUserSolvedQuestionsAction({required this.userId, required this.questionIds});
 }
 
@@ -227,7 +222,7 @@ class GetNextPageUserUnsolvedQuestionsAction extends redux.Action{
 @immutable
 class AddNextPageUserUnsolvedQuestionsAction extends redux.Action{
   final int userId;
-  final Iterable<IdState> questionIds;
+  final Iterable<int> questionIds;
   const AddNextPageUserUnsolvedQuestionsAction({required this.userId, required this.questionIds});
 }
 
@@ -249,13 +244,13 @@ class GetNextPageUserMessagesAction extends redux.Action{
 @immutable
 class AddNextPageUserMessagesAction extends redux.Action{
   final int userId;
-  final Iterable<IdState> messageIds;
+  final Iterable<int> messageIds;
   const AddNextPageUserMessagesAction({required this.userId, required this.messageIds});
 }
 @immutable
 class AddUserMessageAction extends redux.Action{
   final int userId;
-  final IdState messageId;
+  final int messageId;
   const AddUserMessageAction({required this.userId, required this.messageId});
 }
 

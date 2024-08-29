@@ -32,21 +32,21 @@ UserEntityState addNextPageUnsolvedQuestionsReducer(UserEntityState prev, AddNex
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
   => prev.getNextPageFollowers(action.userId);
 UserEntityState addNextPageFollowers(UserEntityState prev,AddNextPageUserFollowersAction action)
-  => prev.addNextPageFollowers(action.userId,action.followers);
-UserEntityState addFollowerReducer(UserEntityState prev, AddFollowerAction action)
-  => prev.addFollower(action.userId, action.follower);
-UserEntityState removeFollowerReducer(UserEntityState prev, RemoveFollowerAction action)
-  => prev.removeFollower(action.userId,action.followerId);
+  => prev.addNextPageFollowers(action.userId,action.followIds);
+UserEntityState addFollowerReducer(UserEntityState prev, AddUserFollowerAction action)
+  => prev.addFollower(action.userId, action.followId);
+UserEntityState removeFollowerReducer(UserEntityState prev, RemoveUserFollowerAction action)
+  => prev.removeFollower(action.userId,action.followId);
 
 //followeds
 UserEntityState getNextPageFollowedsReducer(UserEntityState prev,GetNextPageUserFollowedsAction action)
   => prev.getNextPageFolloweds(action.userId);
 UserEntityState addNextPageFollowedsReducer(UserEntityState prev,AddNextPageUserFollowedsAction action)
-  => prev.addNextPageFolloweds(action.userId,action.followeds);
-UserEntityState addFollowedReducer(UserEntityState prev,AddFollowedAction action)
-  => prev.addFollowed(action.userId, action.followed);
-UserEntityState removeFollowedReducer(UserEntityState prev,RemoveFollowedAction action)
-  => prev.removeFollowed(action.userId,action.followedId);
+  => prev.addNextPageFolloweds(action.userId,action.followIds);
+UserEntityState addFollowedReducer(UserEntityState prev,AddUserFollowedAction action)
+  => prev.addFollowed(action.userId, action.followId);
+UserEntityState removeFollowedReducer(UserEntityState prev,RemoveUserFollowedAction action)
+  => prev.removeFollowed(action.userId,action.followId);
 
 // not followeds
 UserEntityState getNextPageNotFollowedsReducer(UserEntityState prev,GetNextPageUserNotFollowedsAction action)
@@ -99,14 +99,14 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   //followers
   TypedReducer<UserEntityState,GetNextPageUserFollowersAction>(getNextPageFollowers).call,
   TypedReducer<UserEntityState,AddNextPageUserFollowersAction>(addNextPageFollowers).call,
-  TypedReducer<UserEntityState,AddFollowerAction>(addFollowerReducer).call,
-  TypedReducer<UserEntityState,RemoveFollowerAction>(removeFollowerReducer).call,
+  TypedReducer<UserEntityState,AddUserFollowerAction>(addFollowerReducer).call,
+  TypedReducer<UserEntityState,RemoveUserFollowerAction>(removeFollowerReducer).call,
 
   //followeds
   TypedReducer<UserEntityState,GetNextPageUserFollowedsAction>(getNextPageFollowedsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserFollowedsAction>(addNextPageFollowedsReducer).call,
-  TypedReducer<UserEntityState,AddFollowedAction>(addFollowedReducer).call,
-  TypedReducer<UserEntityState,RemoveFollowedAction>(removeFollowedReducer).call,
+  TypedReducer<UserEntityState,AddUserFollowedAction>(addFollowedReducer).call,
+  TypedReducer<UserEntityState,RemoveUserFollowedAction>(removeFollowedReducer).call,
 
   //not followeds
   TypedReducer<UserEntityState,GetNextPageUserNotFollowedsAction>(getNextPageNotFollowedsReducer).call,

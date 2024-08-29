@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/question_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -32,25 +32,6 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   next(action);
 }
 
-void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
-  if(action is LikeQuestionAction){
-    QuestionService()
-      .like(action.questionId)
-      .then((like){
-        store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId,like: like.toQuestionUserLikeState()));
-      });
-  }
-  next(action);
-}
-void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
-  if(action is DislikeQuestionAction){
-    final currentUserId = store.state.accountState!.id;
-    QuestionService()
-      .dislike(action.questionId)
-      .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,currentUserId: currentUserId)));
-  }
-  next(action);
-}
 void getNextPageQuestionLikesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionLikesIfNoPageAction){
     final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
@@ -74,13 +55,36 @@ void getNextPageQuestionLikesMiddleware(Store<AppState> store,action,NextDispatc
     final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
     QuestionService()
       .getQuestionLikes(action.questionId, pagination.next)
-      .then((users){
-        store.dispatch(AddNextPageQuestionLikesAction(
-          questionId: action.questionId,
-          likes: users.map((e) => QuestionUserLikeState(key: e.paginationKey!, userId: e.id,createdAt: e.paginationDate!))
-        ));
-        store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
-        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      .then((likes){
+        store.dispatch(AddNextPageQuestionLikesAction(questionId: action.questionId,likeIds: likes.map((e) => e.id)));
+        store.dispatch(AddQuestionUserLikesAction(likes: likes.map((e) => e.toQuestionUserLikeState())));
+        store.dispatch(AddUsersAction(users: likes.map((user) => user.appUser!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: likes.map((e) => UserImageState.init(e.appUserId))));
+      });
+  }
+  next(action);
+}
+void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is LikeQuestionAction){
+    QuestionService()
+      .like(action.questionId)
+      .then((like){
+        store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId,likeId: like.id));
+        store.dispatch(AddQuestionUserLikeAction(like: like.toQuestionUserLikeState()));
+      });
+  }
+  next(action);
+}
+void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is DislikeQuestionAction){
+    final likerId = store.state.accountState!.id;
+    QuestionService()
+      .dislike(action.questionId)
+      .then((_){
+        final like = store.state.questionUserLikeEntityState.select(likerId);
+        if(like == null) return;
+        store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,likeId: like.id));
+        store.dispatch(RemoveQuestionUserLikeAction(likeId: like.id));
       });
   }
   next(action);

@@ -9,17 +9,16 @@ QuestionEntityState addQuestionsReducer(QuestionEntityState prev,AddQuestionsAct
   => prev.addQuestions(action.questions);
 
 //like or dislike questions
-QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, DislikeQuestionSuccessAction action)
-  => prev.dislike(action.questionId,action.currentUserId);
-QuestionEntityState likeQuestionSuccessReducer(QuestionEntityState prev, LikeQuestionSuccessAction action)
-  => prev.like(action.questionId,action.like);
-QuestionEntityState addNewLikeReducer(QuestionEntityState prev,AddNewQuestionLikeAction action)
-  => prev.addNewLike(action.questionId, action.like);
 QuestionEntityState getNextPageLikesReducer(QuestionEntityState prev,GetNextPageQuestionLikesAction action)
   => prev.startLoadingNextLikes(action.questionId);
 QuestionEntityState addNextPageLikesReducer(QuestionEntityState prev,AddNextPageQuestionLikesAction action)
-  => prev.addNextPageLikes(action.questionId, action.likes);
-
+  => prev.addNextPageLikes(action.questionId, action.likeIds);
+QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, DislikeQuestionSuccessAction action)
+  => prev.dislike(action.questionId,action.likeId);
+QuestionEntityState likeQuestionSuccessReducer(QuestionEntityState prev, LikeQuestionSuccessAction action)
+  => prev.like(action.questionId,action.likeId);
+QuestionEntityState addNewLikeReducer(QuestionEntityState prev,AddNewQuestionLikeAction action)
+  => prev.addNewLike(action.questionId, action.likeId);
 
 //
 QuestionEntityState markSolutionAsCorrectReducer(QuestionEntityState prev, MarkQuestionSolutionAsCorrectAction action)

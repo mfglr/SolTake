@@ -10,6 +10,7 @@ import 'package:my_social_app/state/app_state/create_solution_state/create_solut
 import 'package:my_social_app/state/app_state/create_solution_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
@@ -21,7 +22,8 @@ import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
-import 'package:my_social_app/state/pagination/id_state.dart';
+import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
+import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
@@ -52,24 +54,28 @@ final store = Store(
     userImageEntityState: const UserImageEntityState(entities: {}),
     searchState: SearchState(
       activePage: 0,key: "",questionKey: "",userKey:"",examId: null,subjectId: null,topicId: null,
-      questions: Pagination<num,IdState>.init(questionsPerPage,true),
-      users: Pagination<num,IdState>.init(usersPerPage,true),
-      searchedUsers: Pagination<num,IdState>.init(usersPerPage,true)
+      questions: Pagination.init(questionsPerPage,true),
+      users: Pagination.init(usersPerPage,true),
+      searchedUsers: Pagination.init(usersPerPage,true)
     ),
     createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
     examEntityState: const ExamEntityState(entities: {}, isLast: false,isLoading: false),
     subjectEntityState: const SubjectEntityState(entities: {}),
     topicEntityState: const TopicEntityState(entities: {}),
-    questionEntityState: const QuestionEntityState(entities: {}),
     solutionEntityState: const SolutionEntityState(entities: {}),
-    homePageState: HomePageState(questions: Pagination<num,IdState>.init(questionsPerPage,true)),
+    homePageState: HomePageState(questions: Pagination.init(questionsPerPage,true)),
     commentEntityState: const CommentEntityState(entities: {}),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
     notificationEntityState: const NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
     messageEntityState: const MessageEntityState(entities: {}),
     messageHomePageState: const MessageHomePageState(isLastConversations: false, isSynchronized: false),
-    createMessageState: const CreateMessageState(content: null, images: [], receiverId: null)
+    createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
+    userSearchEntityState: const UserSearchEntityState(entities: {}),
+    followEntityState: const FollowEntityState(entities: {}),
+    questionEntityState: const QuestionEntityState(entities: {}),
+    questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {})
+
   ),
   middleware: [
 
@@ -115,7 +121,7 @@ final store = Store(
 
     getNextPageUserNotFollowedsIfNoPageMiddleware,
     getNextPageUserNotFollowedsIfReadyMiddleware,
-    getNextPageUserNotFollowersMiddleware,
+    getNextPageUserNotFollowedsMiddleware,
 
     getNextPageUserFollowersIfNoPageMiddleware,
     getNextPageUserFollowersIfReadyMiddleware,

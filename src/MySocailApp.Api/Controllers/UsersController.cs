@@ -88,12 +88,12 @@ namespace MySocailApp.Api.Controllers
             => File(await _mediator.Send(new GetUserImageById(userId), cancellationToken), "application/octet-stream");
 
         [HttpGet("{id}")]
-        public async Task<List<FollowResponseDto>> GetFollowersById(int id,[FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowersByIdDto(id, offset, take, isDescending), cancellationToken);
+        public Task<List<FollowResponseDto>> GetFollowersById(int id,[FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => _mediator.Send(new GetFollowersByIdDto(id, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{id}")]
-        public async Task<List<FollowResponseDto>> GetFollowedsById(int id,[FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowedsByIdDto(id, offset, take, isDescending), cancellationToken);
+        public Task<List<FollowResponseDto>> GetFollowedsById(int id,[FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => _mediator.Send(new GetFollowedsByIdDto(id, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{id}")]
         public async Task<List<AppUserResponseDto>> GetNotFolloweds(int id,[FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
@@ -104,7 +104,7 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(request, cancellationToken);
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetSearcheds([FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<UserSearchResponseDto>> GetSearcheds([FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSearchedUsersDto(offset, take, isDescending), cancellationToken);
     }
 }

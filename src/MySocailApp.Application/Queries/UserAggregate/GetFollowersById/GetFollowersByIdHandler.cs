@@ -9,10 +9,13 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetFollowersById
         private readonly IFollowQueryRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
-        public async Task<List<FollowResponseDto>> Handle(GetFollowersByIdDto request, CancellationToken cancellationToken)
-        {
-            var accountId = _accessTokenReader.GetRequiredAccountId();
-            return await _repository.GetFollowersAsync(request.UserId, accountId, request, cancellationToken);
-        }
+        public Task<List<FollowResponseDto>> Handle(GetFollowersByIdDto request, CancellationToken cancellationToken)
+            => _repository
+                .GetFollowersAsync(
+                    request.UserId,
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request,
+                    cancellationToken
+                );
     }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 
 @immutable
 class LoadCommentAction extends redux.Action{
@@ -27,8 +26,8 @@ class GetNextPageCommentLikesAction extends redux.Action{
 @immutable
 class AddNextPageCommentLikesAction extends redux.Action{
   final int commentId;
-  final Iterable<CommentUserLikeState> likes;
-  const AddNextPageCommentLikesAction({required this.commentId, required this.likes});
+  final Iterable<int> likeIds;
+  const AddNextPageCommentLikesAction({required this.commentId, required this.likeIds});
 }
 
 @immutable
@@ -67,8 +66,8 @@ class LikeCommentAction extends redux.Action{
 @immutable
 class LikeCommentSuccessAction extends redux.Action{
   final int commentId;
-  final CommentUserLikeState like;
-  const LikeCommentSuccessAction({required this.commentId,required this.like});
+  final int likeId;
+  const LikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 @immutable
 class DislikeCommentAction extends redux.Action{

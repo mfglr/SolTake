@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MySocailApp.Application.Queries.UserAggregate;
 
 namespace MySocailApp.Application.Commands.UserAggregate.AddUserSearched
 {

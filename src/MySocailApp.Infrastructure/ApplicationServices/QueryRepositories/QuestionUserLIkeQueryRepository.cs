@@ -8,7 +8,7 @@ using MySocailApp.Infrastructure.Extetions.QueryableMappers;
 
 namespace MySocailApp.Infrastructure.ApplicationServices.QueryRepositories
 {
-    public class QuestionUserLIkeQueryRepository(AppDbContext context) : IQuestionUserLikeQueryRepository
+    public class QuestionUserLikeQueryRepository(AppDbContext context) : IQuestionUserLikeQueryRepository
     {
         private readonly AppDbContext _context = context;
 

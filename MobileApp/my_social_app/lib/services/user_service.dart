@@ -5,6 +5,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/user.dart';
+import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
@@ -46,12 +47,13 @@ class UserService{
     _appClient
       .delete("$userController/$removeFollowerEndPoint/$followerId");
     
-  Future<void> addSearched(int searchedId) => 
+  Future<UserSearch> addSearched(int searchedId) => 
     _appClient
       .post(
         "$userController/$addUserSearchedEndpoint",
         body: { 'searchedId': searchedId }
-      );
+      )
+      .then((json) => UserSearch.fromJson(json));
 
   Future<void> removeSearched(int searchedId) => 
     _appClient.delete("$userController/$removeUserSearchedEndpoint/$searchedId");
@@ -70,17 +72,17 @@ class UserService{
     _appClient
       .getBytes("$userController/$gerUserImageByIdEndPoint/$id");
   
-  Future<Iterable<User>> getFollowersById(int id, Page page) =>
+  Future<Iterable<Follow>> getFollowersById(int id, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$userController/$getFollowersByIdEndPoint/$id", page))
       .then((json) => json as List)
-      .then((list) => list.map((item) => User.fromJson(item)));
+      .then((list) => list.map((item) => Follow.fromJson(item)));
  
-  Future<Iterable<User>> getFollowedsById(int id, Page page) =>
+  Future<Iterable<Follow>> getFollowedsById(int id, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$userController/$getFollowedsByIdEndPoint/$id", page))
       .then((json) => json as List)
-      .then((list) => list.map((item) => User.fromJson(item)));
+      .then((list) => list.map((item) => Follow.fromJson(item)));
 
   Future<Iterable<User>> getNotFolloweds(int id, Page page) =>
    _appClient
@@ -102,9 +104,9 @@ class UserService{
       .then((json) => json as List)
       .then((list) => list.map((item) => User.fromJson(item)));
 
-  Future<Iterable<User>> getSearcheds(Page page) =>
+  Future<Iterable<UserSearch>> getSearcheds(Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$userController/$getSearchedsEndpoint",page))
       .then((json) => json as List)
-      .then((list) => list.map((item) => User.fromJson(item)));
+      .then((list) => list.map((item) => UserSearch.fromJson(item)));
 }
