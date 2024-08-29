@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/comment/widgets/comment_content_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_like_button_widget.dart';
+import 'package:my_social_app/views/comment/widgets/display_comment_likes_button.dart';
 import 'package:my_social_app/views/comment/widgets/hide_replies_button_widget.dart';
 import 'package:my_social_app/views/comment/widgets/reply_comment_button_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -190,8 +191,11 @@ class CommentHeaderWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CommentLikeButtonWidget(
-              comment: comment,
+            Column(
+              children: [
+                CommentLikeButtonWidget(comment: comment,),
+                DisplayCommentLikesButton(comment: comment)
+              ],
             ),
           ],
         ),

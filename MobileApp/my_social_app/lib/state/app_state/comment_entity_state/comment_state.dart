@@ -78,7 +78,7 @@ class CommentState{
         replies: replies,
         repliesVisibility: repliesVisibility,
       );
-  CommentState like(int id)
+  CommentState like(int likeId)
     => CommentState(
         id: id,
         createdAt: createdAt,
@@ -89,7 +89,7 @@ class CommentState{
         isEdited: isEdited,
         content: content,
         numberOfLikes: numberOfLikes + 1,
-        likes: likes.prependOne(id),
+        likes: likes.prependOne(likeId),
         isLiked: true,
         replies: replies,
         numberOfReplies: numberOfReplies,
@@ -97,7 +97,7 @@ class CommentState{
         solutionId: solutionId,
         repliesVisibility: repliesVisibility,
       );
-  CommentState dislike(int id)
+  CommentState dislike(int likeId)
     => CommentState(
         id: id,
         createdAt: createdAt,
@@ -108,7 +108,7 @@ class CommentState{
         isEdited: isEdited,
         content: content,
         numberOfLikes: numberOfLikes - 1,
-        likes: likes.removeOne(id),
+        likes: likes.removeOne(likeId),
         isLiked: false,
         replies: replies,
         numberOfReplies: numberOfReplies,

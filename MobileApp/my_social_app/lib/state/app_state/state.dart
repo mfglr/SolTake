@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/create_message_state/create_message_state.dart';
 import 'package:my_social_app/state/app_state/create_question_state/create_question_state.dart';
@@ -42,6 +43,7 @@ class AppState{
   final ActiveLoginPage activeLoginPage;
   final bool isInitialized;
   final UserEntityState userEntityState;
+  final FollowEntityState followEntityState;
   final UserImageEntityState userImageEntityState;
   final SearchState searchState;
   final CreateQuestionState createQuestionState;
@@ -52,13 +54,13 @@ class AppState{
   final SolutionEntityState solutionEntityState;
   final HomePageState homePageState;
   final CommentEntityState commentEntityState;
+  final CommentUserLikeEntityState commentUserLikeEntityState;
   final CreateCommentState createCommentState;
   final NotificationEntityState notificationEntityState;
   final MessageEntityState messageEntityState;
   final MessageHomePageState messageHomePageState;
   final CreateMessageState createMessageState;
   final UserSearchEntityState userSearchEntityState;
-  final FollowEntityState followEntityState;
   final QuestionEntityState questionEntityState;
   final QuestionUserLikeEntityState questionUserLikeEntityState;
 
@@ -78,6 +80,7 @@ class AppState{
     required this.solutionEntityState,
     required this.homePageState,
     required this.commentEntityState,
+    required this.commentUserLikeEntityState,
     required this.createCommentState,
     required this.notificationEntityState,
     required this.messageEntityState,
@@ -125,6 +128,10 @@ class AppState{
   Iterable<UserState> selectQuestionLikes(int questionId)
     => questionEntityState.entities[questionId]!.likes.ids.map(
       (e) => userEntityState.entities[questionUserLikeEntityState.entities[e]!.appUserId]!
+    );
+  Iterable<UserState> selectCommentLikes(int commentId)
+    => commentEntityState.entities[commentId]!.likes.ids.map(
+      (e) => userEntityState.entities[commentUserLikeEntityState.entities[e]!.appUserId]!
     );
 
   //Select questions

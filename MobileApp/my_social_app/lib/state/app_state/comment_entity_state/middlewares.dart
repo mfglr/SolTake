@@ -11,8 +11,17 @@ import 'package:redux/redux.dart';
 
 void getNextPageCommentLikesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentLikesIfNoPageAction){
-    final likes = store.state.commentEntityState.entities[action.commentId]!.likes;
-    if(!likes.hasAtLeastOnePage){
+    final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageCommentLikesAction(commentId: action.commentId));
+    }
+  }
+  next(action);
+}
+void getNextPageCommentLikesIfReadyActionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageCommentLikesIfReadyAction){
+    final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
+    if(pagination.isReadyForNextPage ){
       store.dispatch(GetNextPageCommentLikesAction(commentId: action.commentId));
     }
   }
@@ -21,16 +30,14 @@ void getNextPageCommentLikesIfNoPageMiddleware(Store<AppState> store,action,Next
 void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentLikesAction){
     final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
-    if(pagination.isLast){
-      CommentService()
-        .getCommentLikes(action.commentId, pagination.next)
-        .then((likes){
-          store.dispatch(AddCommentUserLikesAction(likes: likes.map((e) => e.toCommentUserLikeState())));
-          store.dispatch(AddNextPageCommentLikesAction(commentId: action.commentId,likeIds: likes.map((e) => e.id)));
-          store.dispatch(AddUsersAction(users: likes.map((e) => e.appUser!.toUserState())));
-          store.dispatch(AddUserImagesAction(images: likes.map((e) => UserImageState.init(e.appUser!.id))));         
-        });
-    }
+    CommentService()
+      .getCommentLikes(action.commentId, pagination.next)
+      .then((likes){
+        store.dispatch(AddCommentUserLikesAction(likes: likes.map((e) => e.toCommentUserLikeState())));
+        store.dispatch(AddNextPageCommentLikesAction(commentId: action.commentId,likeIds: likes.map((e) => e.id)));
+        store.dispatch(AddUsersAction(users: likes.map((e) => e.appUser!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: likes.map((e) => UserImageState.init(e.appUserId))));         
+      });
   }
   next(action);
 }
@@ -40,6 +47,7 @@ void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
       .like(action.commentId)
       .then((like){
         store.dispatch(LikeCommentSuccessAction(commentId: action.commentId,likeId: like.id));
+        store.dispatch(AddCommentUserLikeAction(like: like.toCommentUserLikeState()));
       });
   }
   next(action);
@@ -49,7 +57,12 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
     final int accountId = store.state.accountState!.id;
     CommentService()
       .dislike(action.commentId)
-      .then((_) => store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId,userId: accountId)));
+      .then((_){
+        final like = store.state.commentUserLikeEntityState.select(action.commentId,accountId);
+        if(like == null) return;
+        store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId,likeId: like.id));
+        store.dispatch(RemoveCommentUserLikeAction(likeId: like.id));
+      });
   }
   next(action);
 }

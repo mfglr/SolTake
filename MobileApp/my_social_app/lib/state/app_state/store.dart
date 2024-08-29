@@ -1,5 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/create_message_state/create_message_state.dart';
@@ -66,6 +67,7 @@ final store = Store(
     solutionEntityState: const SolutionEntityState(entities: {}),
     homePageState: HomePageState(questions: Pagination.init(questionsPerPage,true)),
     commentEntityState: const CommentEntityState(entities: {}),
+    commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
     notificationEntityState: const NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
     messageEntityState: const MessageEntityState(entities: {}),
@@ -81,9 +83,11 @@ final store = Store(
 
     //Comment entity state middleware
     getNextPageCommentLikesIfNoPageMiddleware,
+    getNextPageCommentLikesIfReadyActionMiddleware,
     getNextPageCommentLikesMiddleware,
     likeCommentMiddleware,
     dislikeCommentMiddleware,
+    
     getNextPageCommentRepliesMiddleware,
     getNextPageCommentRepliesIfNoPageMiddleware,
     getNextPageCommentRepliesIfReadyMiddleware,

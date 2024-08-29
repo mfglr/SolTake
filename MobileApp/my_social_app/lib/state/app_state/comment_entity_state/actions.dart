@@ -19,6 +19,11 @@ class GetNextPageCommentLikesIfNoPageAction extends redux.Action{
   const GetNextPageCommentLikesIfNoPageAction({required this.commentId});
 }
 @immutable
+class GetNextPageCommentLikesIfReadyAction extends redux.Action{
+  final int commentId;
+  const GetNextPageCommentLikesIfReadyAction({required this.commentId});
+}
+@immutable
 class GetNextPageCommentLikesAction extends redux.Action{
   final int commentId;
   const GetNextPageCommentLikesAction({required this.commentId});
@@ -77,8 +82,8 @@ class DislikeCommentAction extends redux.Action{
 @immutable
 class DislikeCommentSuccessAction extends redux.Action{
   final int commentId;
-  final int userId;
-  const DislikeCommentSuccessAction({required this.commentId,required this.userId});
+  final int likeId;
+  const DislikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 
 @immutable

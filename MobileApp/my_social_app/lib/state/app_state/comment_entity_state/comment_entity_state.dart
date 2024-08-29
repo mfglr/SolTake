@@ -7,13 +7,13 @@ class CommentEntityState extends EntityState<CommentState>{
   const CommentEntityState({required super.entities});
 
   CommentEntityState getNextPageLikes(int commentId)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.getNextPageLikes()));
+    => CommentEntityState(entities: updateOne(entities[commentId]?.getNextPageLikes()));
   CommentEntityState addNextPageLikes(int commentId, Iterable<int> likes)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.addNextPageLikes(likes)));
-  CommentEntityState like(int commentId, int like)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.like(like)));
-  CommentEntityState dislike(int commentId, int userId)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.dislike(userId)));
+    => CommentEntityState(entities: updateOne(entities[commentId]?.addNextPageLikes(likes)));
+  CommentEntityState like(int commentId, int likeId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.like(likeId)));
+  CommentEntityState dislike(int commentId, int likeId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.dislike(likeId)));
   
   CommentEntityState getNextPageReplies(int commentId)
     => CommentEntityState(entities: updateOne(entities[commentId]!.getNextPageReplies()));

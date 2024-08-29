@@ -9,7 +9,7 @@ CommentEntityState addNextPageLikesReducer(CommentEntityState prev,AddNextPageCo
 CommentEntityState likeCommentReducer(CommentEntityState prev,LikeCommentSuccessAction action)
   => prev.like(action.commentId, action.likeId);
 CommentEntityState dislikeCommentReducer(CommentEntityState prev,DislikeCommentSuccessAction action)
-  => prev.dislike(action.commentId,action.userId);
+  => prev.dislike(action.commentId,action.likeId);
 
 CommentEntityState getNextPageRepliesReducer(CommentEntityState prev,GetNextPageCommentRepliesAction action)
   => prev.getNextPageReplies(action.commentId);

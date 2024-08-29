@@ -4,9 +4,9 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
-class FollowWidgetIconButtonWidget extends StatelessWidget {
+class FollowIconButtonWidget extends StatelessWidget {
   final UserState user;
-  const FollowWidgetIconButtonWidget({super.key,required this.user});
+  const FollowIconButtonWidget({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {

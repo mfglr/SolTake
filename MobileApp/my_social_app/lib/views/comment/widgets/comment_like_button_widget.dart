@@ -10,7 +10,7 @@ class CommentLikeButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return IconButton(
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
         if(comment.isLiked){
@@ -25,22 +25,11 @@ class CommentLikeButtonWidget extends StatelessWidget {
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            comment.isLiked ? Icons.favorite : Icons.favorite_outline,
-            color: comment.isLiked ? Colors.red : null,
-            size: 18,
-          ),
-          Text(
-            comment.numberOfLikes.toString(),
-            style: const TextStyle(
-              fontSize: 11
-            ),
-          )
-        ],
-      )
+      icon: Icon(
+        comment.isLiked ? Icons.favorite : Icons.favorite_outline,
+        color: comment.isLiked ? Colors.red : null,
+        size: 18,
+      ),
     );
   }
 }
