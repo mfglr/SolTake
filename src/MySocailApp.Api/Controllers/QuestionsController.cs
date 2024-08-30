@@ -70,8 +70,8 @@ namespace MySocailApp.Api.Controllers
            => await _mediator.Send(new GetQuestionsByExamIdDto(examId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<QuestionResponseDto>> GetHomePageQuestions([FromQuery]int? lastValue, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetHomePageQuestionsDto(lastValue, take,isDescending),cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetHomePageQuestions([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetHomePageQuestionsDto(offset, take,isDescending),cancellationToken);
 
         [HttpPost]
         public async Task<List<QuestionResponseDto>> SearchQuestions(SearchQuestionsDto request,CancellationToken cancellationToken)
