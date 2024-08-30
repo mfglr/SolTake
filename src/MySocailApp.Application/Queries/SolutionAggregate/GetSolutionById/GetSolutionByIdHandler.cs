@@ -1,21 +1,22 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById
 {
-    public class GetSolutionByIdHandler(IMapper mapper, ISolutionReadRepository repository) : IRequestHandler<GetSolutionByIdDto, SolutionResponseDto>
+    public class GetSolutionByIdHandler(ISolutionQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetSolutionByIdDto, SolutionResponseDto>
     {
-        private readonly IMapper _mapper = mapper;
-        private readonly ISolutionReadRepository _repository = repository;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly ISolutionQueryRepository _repository = repository;
 
         public async Task<SolutionResponseDto> Handle(GetSolutionByIdDto request, CancellationToken cancellationToken)
-        {
-            var solution =
-                await _repository.GetByIdAsync(request.SolutionId, cancellationToken) ??
+            => await _repository
+                .GetByIdAsync(
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request.SolutionId,
+                    cancellationToken
+                ) ??
                 throw new SolutionNotFoundException();
-            return _mapper.Map<SolutionResponseDto>(solution);
-        }
     }
 }

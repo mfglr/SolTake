@@ -24,42 +24,7 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .Include(x => x.Images)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public async Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context.Solutions
-                .AsNoTracking()
-                .IncludeForSolution()
-                .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
-
         public async Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken)
             => await _context.Solutions.CountAsync(x => x.QuestionId == questionId && x.State == SolutionState.Correct, cancellationToken);
-
-        public async Task<List<Solution>> GetSolutionsByQuestionIdAsync(int questionId, IPage pagination, CancellationToken cancellationToken)
-            => await _context.Solutions
-                .AsNoTracking()
-                .IncludeForSolution()
-                .Where(x => x.QuestionId == questionId)
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<Solution>> GetCorrectSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken)
-            => await _context.Solutions
-                .IncludeForSolution()
-                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Correct)
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<Solution>> GetPendingSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken)
-            => await _context.Solutions
-                .IncludeForSolution()
-                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Pending)
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
-
-        public async Task<List<Solution>> GetIncorrectSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken)
-            => await _context.Solutions
-                .IncludeForSolution()
-                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Incorrect)
-                .ToPage(pagination)
-                .ToListAsync(cancellationToken);
     }
 }

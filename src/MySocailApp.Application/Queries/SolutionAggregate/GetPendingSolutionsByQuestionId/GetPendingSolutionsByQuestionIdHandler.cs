@@ -1,18 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.SolutionAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetPendingSolutionsByQuestionId
 {
-    public class GetPendingSolutionsByQuestionIdHandler(ISolutionReadRepository solutionReadRepository, IMapper mapper) : IRequestHandler<GetPendingSolutionsByQuestionIdDto, List<SolutionResponseDto>>
+    public class GetPendingSolutionsByQuestionIdHandler(ISolutionQueryRepository solutionQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetPendingSolutionsByQuestionIdDto, List<SolutionResponseDto>>
     {
-        private readonly ISolutionReadRepository _solutionReadRepository = solutionReadRepository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly ISolutionQueryRepository _solutionQueryRepository = solutionQueryRepository;
 
-        public async Task<List<SolutionResponseDto>> Handle(GetPendingSolutionsByQuestionIdDto request, CancellationToken cancellationToken)
-        {
-            var solutions = await _solutionReadRepository.GetPendingSolutionsByQuestionId(request.QuestionId, request, cancellationToken);
-            return _mapper.Map<List<SolutionResponseDto>>(solutions);
-        }
+        public Task<List<SolutionResponseDto>> Handle(GetPendingSolutionsByQuestionIdDto request, CancellationToken cancellationToken)
+            => _solutionQueryRepository
+                .GetPendingSolutionsByQuestionId(
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request,
+                    request.QuestionId,
+                    cancellationToken
+                );
     }
 }

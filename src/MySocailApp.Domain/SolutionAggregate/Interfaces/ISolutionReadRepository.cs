@@ -8,12 +8,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Interfaces
         Task<Solution?> GetSolutionWithImagesByIdAsync(int id, CancellationToken cancellationToken);
         Task<bool> Exist(int id, CancellationToken cancellationToken);
         Task<Solution?> GetAsync(int id, CancellationToken cancellationToken);
-        Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken);
-
-        Task<List<Solution>> GetSolutionsByQuestionIdAsync(int questionId, IPage pagination, CancellationToken cancellationToken);
-        Task<List<Solution>> GetCorrectSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken);
-        Task<List<Solution>> GetPendingSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken);
-        Task<List<Solution>> GetIncorrectSolutionsByQuestionId(int questionId, IPage pagination, CancellationToken cancellationToken);
     }
 }
