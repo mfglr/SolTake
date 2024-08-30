@@ -8,11 +8,11 @@ UserSearchEntityState addSearchsReducer(UserSearchEntityState prev,AddUserSearch
 UserSearchEntityState addSearchReducer(UserSearchEntityState prev,AddUserSearchAction action)
   => prev.addSearch(action.search);
 
-UserSearchEntityState removeUserSearchReducer(UserSearchEntityState prev,RemoveUserSearchAction action)
+UserSearchEntityState removeSearchReducer(UserSearchEntityState prev,RemoveUserSearchAction action)
   => prev.removeSearch(action.searchId);
 
 Reducer<UserSearchEntityState> userSearchEntityReducers = combineReducers<UserSearchEntityState>([
   TypedReducer<UserSearchEntityState,AddUserSearchsAction>(addSearchsReducer).call,
   TypedReducer<UserSearchEntityState,AddUserSearchAction>(addSearchReducer).call,
-  TypedReducer<UserSearchEntityState,RemoveUserSearchAction>(removeUserSearchReducer).call,
+  TypedReducer<UserSearchEntityState,RemoveUserSearchAction>(removeSearchReducer).call,
 ]);

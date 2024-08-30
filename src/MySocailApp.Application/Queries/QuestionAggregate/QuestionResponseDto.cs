@@ -1,31 +1,10 @@
 ﻿using MySocailApp.Application.Queries.ExamAggregate;
 using MySocailApp.Application.Queries.SubjectAggregate;
+using MySocailApp.Application.Queries.TopicAggregate;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate
 {
-    public class QuestionResponseDto
-    {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set; }
-        public QuestionState State { get; private set; }
-        public bool IsOwner { get; private set; }
-        public int AppUserId { get; private set; }
-        public string UserName { get; private set; } = null!;
-        public string? Content { get; private set; }
-        public bool IsLiked { get; private set; }
-        public int NumberOfLikes { get; private set; }
-        public int NumberOfComments { get; private set; }
-        public int NumberOfSolutions { get; private set; }
-        public int NumberOfCorrectSolutions { get; private set; }
-        public int NumberOfPendingSolutions { get; private set; }
-        public int NumberOfIncorrectSolutions { get; private set; }
-        public ExamResponseDto Exam { get; private set; } = null!;
-        public SubjectResponseDto Subject { get; private set; } = null!;
-        public List<QuestionTopicResponseDto> Topics { get; private set; } = null!;
-        public List<QuestionImageResponseDto> Images { get; private set; } = null!;
-
-        private QuestionResponseDto() { }
-    }
+    public record QuestionResponseDto(int Id, DateTime CreatedAt, DateTime? UpdatedAt, QuestionState State, bool IsOwner, int AppUserId, string UserName, string? Content, bool IsLiked, int NumberOfLikes, int NumberOfComments, int NumberOfSolutions, int NumberOfCorrectSolutions, ExamResponseDto Exam, SubjectResponseDto Subject, IEnumerable<TopicResponseDto> Topics, IEnumerable<QuestionImageResponseDto> Images);
+    
 }

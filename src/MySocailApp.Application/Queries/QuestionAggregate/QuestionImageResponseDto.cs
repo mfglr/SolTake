@@ -1,13 +1,4 @@
 ﻿namespace MySocailApp.Application.Queries.QuestionAggregate
 {
-    public class QuestionImageResponseDto
-    {
-        public int Id { get; private set; }
-        public int QuestionId { get; private set; }
-        public string BlobName { get; private set; } = null!;
-        public int Height { get; private set; }
-        public int Width { get; private set; }
-
-        private QuestionImageResponseDto() { }
-    }
+    public record QuestionImageResponseDto(int Id, int QuestionId, string BlobName, float Height, float Width);
 }

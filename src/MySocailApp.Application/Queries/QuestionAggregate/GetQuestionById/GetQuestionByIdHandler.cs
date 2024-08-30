@@ -1,21 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById
 {
-    public class GetQuestionByIdHandler(IQuestionReadRepository repository, IMapper mapper) : IRequestHandler<GetQuestionByIdDto, QuestionResponseDto>
+    public class GetQuestionByIdHandler(IQuestionQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetQuestionByIdDto, QuestionResponseDto>
     {
-        private readonly IQuestionReadRepository _repository = repository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly IQuestionQueryRepository _repository = repository;
 
         public async Task<QuestionResponseDto> Handle(GetQuestionByIdDto request, CancellationToken cancellationToken)
-        {
-            var question = 
-                await _repository.GetQuestionByIdAsync(request.Id, cancellationToken) ?? 
+            => await _repository.GetQuestionByIdAsync(
+                    request.Id,
+                    _accessTokenReader.GetRequiredAccountId(),
+                    cancellationToken
+                ) ??
                 throw new QuestionNotFoundException();
-            return _mapper.Map<QuestionResponseDto>(question);
-        }
     }
 }

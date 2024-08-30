@@ -1,18 +1,15 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions
 {
-    public class SearchQuestionsHandler(IQuestionReadRepository questionReadRepository, IMapper mapper) : IRequestHandler<SearchQuestionsDto, List<QuestionResponseDto>>
+    public class SearchQuestionsHandler(IQuestionQueryRepository questionQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<SearchQuestionsDto, List<QuestionResponseDto>>
     {
-        private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly IQuestionQueryRepository _questionQueryRepository = questionQueryRepository;
 
-        public async Task<List<QuestionResponseDto>> Handle(SearchQuestionsDto request, CancellationToken cancellationToken)
-        {
-            var questions = await _questionReadRepository.SearchQuestions(request.Key, request.ExamId, request.SubjectId, request.TopicId, request, cancellationToken);
-            return _mapper.Map<List<QuestionResponseDto>>(questions);
-        }
+        public Task<List<QuestionResponseDto>> Handle(SearchQuestionsDto request, CancellationToken cancellationToken)
+            => _questionQueryRepository.SearchQuestionsAsync(_accessTokenReader.GetRequiredAccountId(), request, request.Key, request.ExamId, request.SubjectId, request.TopicId, cancellationToken);
     }
 }

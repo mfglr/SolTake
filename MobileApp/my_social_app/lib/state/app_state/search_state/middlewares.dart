@@ -63,63 +63,6 @@ void getNextPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispat
   next(action);
 }
 
-void getNextPageSearchedUsersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchedUsersIfNoPageAction){
-    final pagination = store.state.searchState.searchedUsers;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(const GetNextPageSearchedUsersAction());
-    }
-  }
-  next(action);
-}
-void getNextPageSearchedUsersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchedUsersIfNoPageAction){
-    final pagination = store.state.searchState.searchedUsers;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(const GetNextPageSearchedUsersAction());
-    }
-  }
-  next(action);
-}
-void getNextPageSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchedUsersAction){
-    final pagination = store.state.searchState.searchedUsers;
-    UserService()
-      .getSearcheds(pagination.next)
-      .then((searchs){
-        store.dispatch(AddNextPageSearchedUsersAction(ids: searchs.map((e) => e.id)));
-        store.dispatch(AddUserSearchsAction(searchs: searchs.map((e) => e.toUserSearchState())));
-        store.dispatch(AddUsersAction(users: searchs.map((e) => e.searched!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: searchs.map((e) => UserImageState.init(e.searched!.id))));
-      });
-  }
-  next(action);
-}
-void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is AddSearchedUserAction){
-    UserService()
-      .addSearched(action.userId)
-      .then((search){
-        store.dispatch(AddSearchedUserSuccessAction(searchId: search.id));
-        store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
-      });
-  }
-  next(action);
-}
-void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is RemoveSearchedUserAction){
-    UserService()
-      .removeSearched(action.searchedId)
-      .then((_){
-        final accountId = store.state.accountState!.id;
-        final search = store.state.userSearchEntityState.select(accountId, action.searchedId);
-        if(search == null) return;
-        store.dispatch(RemoveSearcedUserSuccessAction(searchId: search.id));
-        store.dispatch(RemoveUserSearchAction(searchId: search.id));
-      });
-  }
-  next(action);
-}
 
 void getFirstPageSearchingQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetFirstPageSearhingQuestionsIfNoPageAction){
@@ -168,6 +111,64 @@ void getNextPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextDi
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
+
+void getNextPageSearchedUsersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSearchedUsersIfNoPageAction){
+    final pagination = store.state.searchState.searchedUsers;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(const GetNextPageSearchedUsersAction());
+    }
+  }
+  next(action);
+}
+void getNextPageSearchedUsersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSearchedUsersIfNoPageAction){
+    final pagination = store.state.searchState.searchedUsers;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(const GetNextPageSearchedUsersAction());
+    }
+  }
+  next(action);
+}
+void getNextPageSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSearchedUsersAction){
+    final pagination = store.state.searchState.searchedUsers;
+    UserService()
+      .getSearcheds(pagination.next)
+      .then((searchs){
+        store.dispatch(AddNextPageSearchedUsersAction(searchIds: searchs.map((e) => e.id)));
+        store.dispatch(AddUserSearchsAction(searchs: searchs.map((e) => e.toUserSearchState())));
+        store.dispatch(AddUsersAction(users: searchs.map((e) => e.searched!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: searchs.map((e) => UserImageState.init(e.searchedId))));
+      });
+  }
+  next(action);
+}
+void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is AddSearchedUserAction){
+    UserService()
+      .addSearched(action.userId)
+      .then((search){
+        store.dispatch(AddSearchedUserSuccessAction(searchId: search.id));
+        store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
+      });
+  }
+  next(action);
+}
+void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveSearchedUserAction){
+    UserService()
+      .removeSearched(action.searchedId)
+      .then((_){
+        final accountId = store.state.accountState!.id;
+        final search = store.state.userSearchEntityState.select(accountId, action.searchedId);
+        if(search == null) return;
+        store.dispatch(RemoveSearcedUserSuccessAction(searchId: search.id));
+        store.dispatch(RemoveUserSearchAction(searchId: search.id));
       });
   }
   next(action);

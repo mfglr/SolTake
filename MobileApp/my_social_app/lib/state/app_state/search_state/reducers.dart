@@ -21,7 +21,7 @@ SearchState addNextPageQuestionsReducer(SearchState prev,AddNextPageSearchingQue
 SearchState getNextPageSearchedUserReducer(SearchState prev,GetNextPageSearchedUsersAction action)
   => prev.startLodingSearchedUsers();
 SearchState addNextPageSearchedUserReducer(SearchState prev,AddNextPageSearchedUsersAction action)
-  => prev.addNextPageSearchedUsers(action.ids);
+  => prev.addNextPageSearchedUsers(action.searchIds);
 SearchState addSearchedUserReducer(SearchState prev,AddSearchedUserSuccessAction action)
   => prev.addSearchedUser(action.searchId);
 SearchState removeSearchedUserReducer(SearchState prev,RemoveSearcedUserSuccessAction action)

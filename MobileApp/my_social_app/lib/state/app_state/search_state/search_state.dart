@@ -82,7 +82,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers.startLoadingNext()
       );
-  SearchState addNextPageSearchedUsers(Iterable<int> ids)
+  SearchState addNextPageSearchedUsers(Iterable<int> searchIds)
     => SearchState(
         activePage: activePage,
         key: key,
@@ -93,9 +93,9 @@ class SearchState{
         topicId: topicId, 
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.addNextPage(ids)
+        searchedUsers: searchedUsers.addNextPage(searchIds)
       );
-  SearchState addSearchedUser(int id)
+  SearchState addSearchedUser(int searchId)
     => SearchState(
         activePage: activePage,
         key: key,
@@ -106,9 +106,9 @@ class SearchState{
         topicId: topicId,
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.prependOneAndRemovePrev(id)
+        searchedUsers: searchedUsers.prependOneAndRemovePrev(searchId)
       );
-  SearchState removeSearchedUser(int id)
+  SearchState removeSearchedUser(int searchId)
     => SearchState(
         activePage: activePage,
         key: key,
@@ -119,7 +119,7 @@ class SearchState{
         topicId: topicId,
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.removeOne(id)
+        searchedUsers: searchedUsers.removeOne(searchId)
       );
     
 

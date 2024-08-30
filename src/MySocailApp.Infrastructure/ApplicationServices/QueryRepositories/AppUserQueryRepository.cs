@@ -40,9 +40,9 @@ namespace MySocailApp.Infrastructure.ApplicationServices.QueryRepositories
                     user =>
                         (
                             user.Name != null &&
-                            user.Name.Contains(key, StringComparison.CurrentCultureIgnoreCase)
+                            user.Name.ToLower().Contains(key.ToLower())
                         ) ||
-                        user.Account.UserName!.Contains(key, StringComparison.CurrentCultureIgnoreCase)
+                        user.Account.UserName!.ToLower().Contains(key.ToLower())
                 )
                 .ToPage(page)
                 .ToUserResponseDto(accountId)

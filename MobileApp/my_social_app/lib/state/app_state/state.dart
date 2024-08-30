@@ -120,11 +120,12 @@ class AppState{
 
   //select users
   UserState? get currentUser => userEntityState.entities[accountState!.id];
-  Iterable<UserState> get searchedUsers => searchState.users.ids.map((e) => userEntityState.entities[e]!);
+  Iterable<UserState> get searchedUsers 
+    => searchState.users.ids.map((e) => userEntityState.entities[e]!);
   Iterable<UserState> selectNotFolloweds(int userId)
     => userEntityState.entities[userId]!.notFolloweds.ids.map((e) => userEntityState.entities[e]!);
   Iterable<UserState> get selectSearchedUsers
-    => searchState.searchedUsers.ids.map((e) => userEntityState.entities[e]!);
+    => searchState.searchedUsers.ids.map((e) => userEntityState.entities[userSearchEntityState.entities[e]!.searchedId]!);
   Iterable<UserState> selectFollowers(int userId)
     => userEntityState.entities[userId]!.followers.ids.map(
         (e) => userEntityState.entities[followEntityState.entities[e]!.followerId]!

@@ -42,8 +42,8 @@ class GetNextPageSearchedUsersAction extends redux.Action{
 }
 @immutable
 class AddNextPageSearchedUsersAction extends redux.Action{
-  final Iterable<int> ids;
-  const AddNextPageSearchedUsersAction({required this.ids});
+  final Iterable<int> searchIds;
+  const AddNextPageSearchedUsersAction({required this.searchIds});
 }
 @immutable
 class AddSearchedUserAction extends redux.Action{
