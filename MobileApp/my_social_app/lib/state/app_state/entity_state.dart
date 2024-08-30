@@ -38,17 +38,6 @@ class EntityState<T extends dynamic> {
     }
     return entities;
   }
-
-  Map<int,T> appendManyAndUpdateOne(Iterable<T> values,T value){
-    final Map<int,T> entities = {};
-    final notAvailables = values.where((e) => this.entities[e.id] == null);
-    entities.addAll(this.entities);
-    entities.addEntries(notAvailables.map((e) => MapEntry(e.id, e)));
-    entities[value.id] = value;
-    return entities;
-  }
-  
-
   Map<int,T> updateOne(T? value){
     if(value == null) return this.entities;
     final Map<int,T> entities = {};
