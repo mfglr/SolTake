@@ -42,6 +42,12 @@ void connectNotificationHub(Store<AppState> store){
         store.dispatch(AddSolutionAction(solution: solution));
         store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
       }
+      else if(notification.type == NotificationType.solutionMarkedAsCorrectNotification){
+        store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
+      }
+      else if(notification.type == NotificationType.solutionMarkedAsIncorrectNotification){
+        store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
+      }
       else if(notification.type == NotificationType.commentLikedNotification){
         // final comment = Comment.fromJson(list.last as dynamic).toCommentState();
       }

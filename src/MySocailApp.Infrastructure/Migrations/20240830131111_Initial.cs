@@ -130,8 +130,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -275,50 +273,27 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Block",
+                name: "Follows",
                 columns: table => new
                 {
-                    BlockerId = table.Column<int>(type: "int", nullable: false),
-                    BlockedId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Block", x => new { x.BlockerId, x.BlockedId });
-                    table.ForeignKey(
-                        name: "FK_Block_AppUsers_BlockedId",
-                        column: x => x.BlockedId,
-                        principalTable: "AppUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Block_AppUsers_BlockerId",
-                        column: x => x.BlockerId,
-                        principalTable: "AppUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Follow",
-                columns: table => new
-                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FollowerId = table.Column<int>(type: "int", nullable: false),
                     FollowedId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Follow", x => new { x.FollowerId, x.FollowedId });
+                    table.PrimaryKey("PK_Follows", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Follow_AppUsers_FollowedId",
+                        name: "FK_Follows_AppUsers_FollowedId",
                         column: x => x.FollowedId,
                         principalTable: "AppUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Follow_AppUsers_FollowerId",
+                        name: "FK_Follows_AppUsers_FollowerId",
                         column: x => x.FollowerId,
                         principalTable: "AppUsers",
                         principalColumn: "Id");
@@ -745,7 +720,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CommentUserLike",
+                name: "CommentUserLikes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -757,14 +732,14 @@ namespace MySocailApp.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommentUserLike", x => x.Id);
+                    table.PrimaryKey("PK_CommentUserLikes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CommentUserLike_AppUsers_AppUserId",
+                        name: "FK_CommentUserLikes_AppUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AppUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CommentUserLike_Comments_CommentId",
+                        name: "FK_CommentUserLikes_Comments_CommentId",
                         column: x => x.CommentId,
                         principalTable: "Comments",
                         principalColumn: "Id",
@@ -812,8 +787,8 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "FullName", "ShortName", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(7855), "Temel Yeterlilik Testi", "TYT", null },
-                    { 2, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(7858), "Alan Yeterlilik Testi", "AYT", null }
+                    { 1, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(2524), "Temel Yeterlilik Testi", "TYT", null },
+                    { 2, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(2527), "Alan Yeterlilik Testi", "AYT", null }
                 });
 
             migrationBuilder.InsertData(
@@ -821,29 +796,29 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "ExamId", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8950), 1, "TYT - Türkçe", null },
-                    { 2, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8953), 1, "TYT - Tarih", null },
-                    { 3, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8954), 1, "TYT - Coğrafya", null },
-                    { 4, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8956), 1, "TYT - Felsefe", null },
-                    { 5, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8956), 1, "TYT - Din Kültürü ve Ahlâk Bilgisi", null },
-                    { 6, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8956), 1, "TYT - Matematik", null },
-                    { 7, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8957), 1, "TYT - Geometri", null },
-                    { 8, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8957), 1, "TYT - Fizik", null },
-                    { 9, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8958), 1, "TYT - Kimya", null },
-                    { 10, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(8958), 1, "TYT - Biyoloji", null },
-                    { 11, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9033), 2, "AYT - Matematik", null },
-                    { 12, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9033), 2, "AYT - Geometri", null },
-                    { 13, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9035), 2, "AYT - Fizik", null },
-                    { 14, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9036), 2, "AYT - Kimya", null },
-                    { 15, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9037), 2, "AYT - Biyoloji ", null },
-                    { 16, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9039), 2, "AYT - Coğrafya ", null },
-                    { 17, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9039), 2, "AYT - Tarih ", null },
-                    { 18, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9041), 2, "AYT - Türk Dili ve Edebiyatı", null },
-                    { 19, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9042), 2, "AYT - Din Kültürü ve Ahlâk Bilgisi", null },
-                    { 20, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9044), 2, "AYT - Felsefe", null },
-                    { 21, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9045), 2, "AYT - Psikoloji", null },
-                    { 22, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9046), 2, "AYT - Sosyoloji", null },
-                    { 23, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9047), 2, "AYT - Mantık", null }
+                    { 1, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3638), 1, "TYT - Türkçe", null },
+                    { 2, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3643), 1, "TYT - Tarih", null },
+                    { 3, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3643), 1, "TYT - Coğrafya", null },
+                    { 4, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3644), 1, "TYT - Felsefe", null },
+                    { 5, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3644), 1, "TYT - Din Kültürü ve Ahlâk Bilgisi", null },
+                    { 6, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3645), 1, "TYT - Matematik", null },
+                    { 7, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3645), 1, "TYT - Geometri", null },
+                    { 8, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3646), 1, "TYT - Fizik", null },
+                    { 9, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3647), 1, "TYT - Kimya", null },
+                    { 10, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3647), 1, "TYT - Biyoloji", null },
+                    { 11, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3648), 2, "AYT - Matematik", null },
+                    { 12, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3648), 2, "AYT - Geometri", null },
+                    { 13, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3649), 2, "AYT - Fizik", null },
+                    { 14, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3649), 2, "AYT - Kimya", null },
+                    { 15, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3650), 2, "AYT - Biyoloji ", null },
+                    { 16, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3650), 2, "AYT - Coğrafya ", null },
+                    { 17, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3651), 2, "AYT - Tarih ", null },
+                    { 18, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3651), 2, "AYT - Türk Dili ve Edebiyatı", null },
+                    { 19, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3652), 2, "AYT - Din Kültürü ve Ahlâk Bilgisi", null },
+                    { 20, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3652), 2, "AYT - Felsefe", null },
+                    { 21, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3653), 2, "AYT - Psikoloji", null },
+                    { 22, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3653), 2, "AYT - Sosyoloji", null },
+                    { 23, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3654), 2, "AYT - Mantık", null }
                 });
 
             migrationBuilder.InsertData(
@@ -851,38 +826,38 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Name", "SubjectId", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9158), "Sözcükte Anlam", 1, null },
-                    { 2, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9160), "Söz Yorumu", 1, null },
-                    { 3, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9201), "Deyim ve Atasözü", 1, null },
-                    { 4, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9202), "Cümlede Anlam", 1, null },
-                    { 5, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9202), "Paragraf", 1, null },
-                    { 6, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9203), "Paragrafta Anlatım Teknikleri", 1, null },
-                    { 7, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9204), "Paragrafta Düşünceyi Geliştirme Yolları", 1, null },
-                    { 8, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9204), "Paragrafta Yapı", 1, null },
-                    { 9, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9205), "Paragrafta Konu-Ana Düşünce", 1, null },
-                    { 10, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9205), "Paragrafta Yardımcı Düşünce", 1, null },
-                    { 11, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9206), "Ses Bilgisi", 1, null },
-                    { 12, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9206), "Yazım Kuralları", 1, null },
-                    { 13, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9206), "Noktalama İşaretleri", 1, null },
-                    { 14, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9207), "Sözcükte Yapı/Ekler", 1, null },
-                    { 15, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9207), "Sözcük Türleri", 1, null },
-                    { 16, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9208), "İsimler", 1, null },
-                    { 17, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9208), "Zamirler", 1, null },
-                    { 18, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9208), "Sıfatlar", 1, null },
-                    { 19, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9209), "Zarflar", 1, null },
-                    { 20, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9213), "Edat", 1, null },
-                    { 21, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9214), "Bağlaç", 1, null },
-                    { 22, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9216), "Ünlem", 1, null },
-                    { 23, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9217), "Edat - Bağlaç - Ünlem", 1, null },
-                    { 24, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9217), "Fiiller", 1, null },
-                    { 25, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9219), "Fiilde Anlam (Kip-Kişi-Yapı)", 1, null },
-                    { 26, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9219), "Ek Fiil", 1, null },
-                    { 27, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9219), "Fiilimsi", 1, null },
-                    { 28, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9220), "Fiilde Çatı", 1, null },
-                    { 29, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9220), "Sözcük Grupları", 1, null },
-                    { 30, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9222), "Cümlenin Ögeleri", 1, null },
-                    { 31, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9224), "Cümle Türleri", 1, null },
-                    { 32, new DateTime(2024, 8, 27, 15, 34, 1, 729, DateTimeKind.Utc).AddTicks(9224), "Anlatım Bozukluğu", 1, null }
+                    { 1, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3843), "Sözcükte Anlam", 1, null },
+                    { 2, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3846), "Söz Yorumu", 1, null },
+                    { 3, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3847), "Deyim ve Atasözü", 1, null },
+                    { 4, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3847), "Cümlede Anlam", 1, null },
+                    { 5, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3848), "Paragraf", 1, null },
+                    { 6, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3848), "Paragrafta Anlatım Teknikleri", 1, null },
+                    { 7, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3849), "Paragrafta Düşünceyi Geliştirme Yolları", 1, null },
+                    { 8, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3849), "Paragrafta Yapı", 1, null },
+                    { 9, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3850), "Paragrafta Konu-Ana Düşünce", 1, null },
+                    { 10, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3850), "Paragrafta Yardımcı Düşünce", 1, null },
+                    { 11, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3851), "Ses Bilgisi", 1, null },
+                    { 12, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3851), "Yazım Kuralları", 1, null },
+                    { 13, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3852), "Noktalama İşaretleri", 1, null },
+                    { 14, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3852), "Sözcükte Yapı/Ekler", 1, null },
+                    { 15, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3852), "Sözcük Türleri", 1, null },
+                    { 16, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3853), "İsimler", 1, null },
+                    { 17, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3853), "Zamirler", 1, null },
+                    { 18, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3854), "Sıfatlar", 1, null },
+                    { 19, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3854), "Zarflar", 1, null },
+                    { 20, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3855), "Edat", 1, null },
+                    { 21, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3855), "Bağlaç", 1, null },
+                    { 22, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3856), "Ünlem", 1, null },
+                    { 23, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3856), "Edat - Bağlaç - Ünlem", 1, null },
+                    { 24, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3857), "Fiiller", 1, null },
+                    { 25, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3857), "Fiilde Anlam (Kip-Kişi-Yapı)", 1, null },
+                    { 26, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3858), "Ek Fiil", 1, null },
+                    { 27, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3858), "Fiilimsi", 1, null },
+                    { 28, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3859), "Fiilde Çatı", 1, null },
+                    { 29, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3859), "Sözcük Grupları", 1, null },
+                    { 30, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3860), "Cümlenin Ögeleri", 1, null },
+                    { 31, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3860), "Cümle Türleri", 1, null },
+                    { 32, new DateTime(2024, 8, 30, 13, 11, 10, 937, DateTimeKind.Utc).AddTicks(3861), "Anlatım Bozukluğu", 1, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -930,11 +905,6 @@ namespace MySocailApp.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Block_BlockedId",
-                table: "Block",
-                column: "BlockedId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Comments_AppUserId",
                 table: "Comments",
                 column: "AppUserId");
@@ -960,13 +930,13 @@ namespace MySocailApp.Infrastructure.Migrations
                 column: "SolutionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentUserLike_AppUserId",
-                table: "CommentUserLike",
+                name: "IX_CommentUserLikes_AppUserId",
+                table: "CommentUserLikes",
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentUserLike_CommentId",
-                table: "CommentUserLike",
+                name: "IX_CommentUserLikes_CommentId",
+                table: "CommentUserLikes",
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
@@ -980,9 +950,14 @@ namespace MySocailApp.Infrastructure.Migrations
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Follow_FollowedId",
-                table: "Follow",
+                name: "IX_Follows_FollowedId",
+                table: "Follows",
                 column: "FollowedId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Follows_FollowerId",
+                table: "Follows",
+                column: "FollowerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MessageImage_MessageId",
@@ -1112,16 +1087,13 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Block");
-
-            migrationBuilder.DropTable(
-                name: "CommentUserLike");
+                name: "CommentUserLikes");
 
             migrationBuilder.DropTable(
                 name: "CommentUserTag");
 
             migrationBuilder.DropTable(
-                name: "Follow");
+                name: "Follows");
 
             migrationBuilder.DropTable(
                 name: "MessageImage");
