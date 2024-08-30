@@ -9,6 +9,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
@@ -44,6 +45,8 @@ void connectNotificationHub(Store<AppState> store){
       }
       else if(notification.type == NotificationType.solutionMarkedAsCorrectNotification){
         store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
+        store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
+        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.ownerId, questionId: notification.questionId!));
       }
       else if(notification.type == NotificationType.solutionMarkedAsIncorrectNotification){
         store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));

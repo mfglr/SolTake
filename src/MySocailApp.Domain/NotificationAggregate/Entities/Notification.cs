@@ -112,20 +112,22 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification SolutionMarkedAsCorrectNotification(int ownerId, int userId, int solutionId)
+        public static Notification SolutionMarkedAsCorrectNotification(int ownerId, int userId, int questionId, int solutionId)
             => new(NotificationType.SolutionMarkedAsCorrect)
             {
                 OwnerId = ownerId,
                 UserId = userId,
+                QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification QuestionSolvedNotification(int ownerId, int userId, int solutionId)
+        public static Notification QuestionSolvedNotification(int ownerId, int userId, int questionId, int solutionId)
             => new(NotificationType.QuestionSolvedNotification)
             {
                 OwnerId = ownerId,
                 UserId = userId,
+                QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
             };
