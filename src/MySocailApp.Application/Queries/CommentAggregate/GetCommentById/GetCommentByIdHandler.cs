@@ -1,18 +1,22 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.CommentAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
+using MySocailApp.Domain.CommentAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentById
 {
-    public class GetCommentByIdHandler(ICommentReadRepository repository, IMapper mapper) : IRequestHandler<GetCommentByIdDto, CommentResponseDto>
+    public class GetCommentByIdHandler(ICommentQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetCommentByIdDto, CommentResponseDto>
     {
-        private readonly ICommentReadRepository _repository = repository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly ICommentQueryRepository _repository = repository;
 
         public async Task<CommentResponseDto> Handle(GetCommentByIdDto request, CancellationToken cancellationToken)
-        {
-            var comment = await _repository.GetByIdAsync(request.Id, cancellationToken);
-            return _mapper.Map<CommentResponseDto>(comment);
-        }
+            => await _repository
+                .GetByIdAsync(
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request.Id,
+                    cancellationToken
+                ) ??
+                throw new CommentNotFoundException();
     }
 }

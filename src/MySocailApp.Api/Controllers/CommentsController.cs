@@ -14,7 +14,6 @@ using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByIds;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByParentId;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsBySolutionId;
-using MySocailApp.Application.Queries.UserAggregate;
 
 namespace MySocailApp.Api.Controllers
 {

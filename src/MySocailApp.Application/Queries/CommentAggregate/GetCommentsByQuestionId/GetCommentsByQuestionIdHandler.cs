@@ -1,18 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.CommentAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId
 {
-    public class GetCommentsByQuestionIdHandler(IMapper mapper, ICommentReadRepository repository) : IRequestHandler<GetCommentsByQuestionIdDto, List<CommentResponseDto>>
+    public class GetCommentsByQuestionIdHandler(ICommentQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetCommentsByQuestionIdDto, List<CommentResponseDto>>
     {
-        private readonly IMapper _mapper = mapper;
-        private readonly ICommentReadRepository _repository = repository;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly ICommentQueryRepository _repository = repository;
 
-        public async Task<List<CommentResponseDto>> Handle(GetCommentsByQuestionIdDto request, CancellationToken cancellationToken)
-        {
-            var comments = await _repository.GetCommentsByQuestionIdAsync(request.QuestionId, request, cancellationToken);
-            return _mapper.Map<List<CommentResponseDto>>(comments);
-        }
+        public Task<List<CommentResponseDto>> Handle(GetCommentsByQuestionIdDto request, CancellationToken cancellationToken)
+            => _repository
+                .GetCommentsByQuestionIdAsync(
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request,
+                    request.QuestionId,
+                    cancellationToken
+                );
     }
 }

@@ -20,6 +20,6 @@
             => new(blobName, height, width) { CreatedAt = DateTime.UtcNow };
 
         //readonly navigator properties
-        public Question Question { get; }
+        public Question Question { get; } = null!;
     }
 }

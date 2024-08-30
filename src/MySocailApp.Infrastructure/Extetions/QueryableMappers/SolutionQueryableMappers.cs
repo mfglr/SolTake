@@ -23,6 +23,7 @@ namespace MySocailApp.Infrastructure.Extetions.QueryableMappers
                         x.Votes.Count,
                         x.Comments.Count,
                         x.State,
+                        x.AppUserId == accountId,
                         x.Question.AppUserId == accountId,
                         x.Images.Select(
                             i => new SolutionImageResponseDto(

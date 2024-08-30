@@ -115,9 +115,10 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ICommentUserLikeQueryRepository, CommentUserLikeQueryRepository>()
                 .AddScoped<IQuestionUserLikeQueryRepository, QuestionUserLikeQueryRepository>()
                 .AddScoped<IFollowQueryRepository, FollowQueryRepository>()
-                .AddScoped<IUserSearchQueryRepository,UserSearchQueryRepository>()
-                .AddScoped<IQuestionQueryRepository,QuestionQueryRepository>()
-                .AddScoped<ISolutionQueryRepository,SolutionQueryRepository>();
+                .AddScoped<IUserSearchQueryRepository, UserSearchQueryRepository>()
+                .AddScoped<IQuestionQueryRepository, QuestionQueryRepository>()
+                .AddScoped<ISolutionQueryRepository, SolutionQueryRepository>()
+                .AddScoped<ICommentQueryRepository, CommentQueryRepository>();
         }
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)

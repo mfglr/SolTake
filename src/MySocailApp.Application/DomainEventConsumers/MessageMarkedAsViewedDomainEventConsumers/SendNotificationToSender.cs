@@ -25,7 +25,7 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageMarkedAsViewedDoma
                     await _messageReadRepository.GetMessageByIdAsync(notification.Message.Id, cancellationToken)
                 );
                 await _messageHub.Clients
-                    .Client(sender.ConnectionId)
+                    .Client(sender.ConnectionId!)
                     .SendAsync("messageViewedNotification",message,cancellationToken);
             }
         }

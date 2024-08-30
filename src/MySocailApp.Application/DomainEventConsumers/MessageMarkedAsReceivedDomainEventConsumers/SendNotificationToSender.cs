@@ -25,7 +25,7 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageMarkedAsReceivedDo
                     await _messageReadRepository.GetMessageByIdAsync(notification.Message.Id, cancellationToken)
                 );
                 await _messageHub.Clients
-                    .Client(sender.ConnectionId)
+                    .Client(sender.ConnectionId!)
                     .SendAsync("messageReceivedNotification",message,cancellationToken);
             }
         }

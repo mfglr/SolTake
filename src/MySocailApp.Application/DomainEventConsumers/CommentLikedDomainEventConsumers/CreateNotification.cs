@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Application.Hubs;
-using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.Queries.NotificationAggregate;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
@@ -14,13 +14,14 @@ using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventConsumers
 {
-    public class CreateNotification(INotificationWriteRepository repository, IUnitOfWork unitOfWork, ICommentReadRepository commentReadRepository, IMapper mapper, INotificationConnectionReadRepository notificatinConnectionReadRepository, IHubContext<NotificationHub> notificationHub) : IDomainEventConsumer<CommentLikedDomainEvent>
+    public class CreateNotification(INotificationWriteRepository repository, IUnitOfWork unitOfWork, ICommentReadRepository commentReadRepository, IMapper mapper, INotificationConnectionReadRepository notificatinConnectionReadRepository, IHubContext<NotificationHub> notificationHub, ICommentQueryRepository commentQueryRepository) : IDomainEventConsumer<CommentLikedDomainEvent>
     {
         private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
         private readonly INotificationConnectionReadRepository _notificatinConnectionReadRepository = notificatinConnectionReadRepository;
         private readonly IMapper _mapper = mapper;
 
         private readonly ICommentReadRepository _commentReadRepository = commentReadRepository;
+        private readonly ICommentQueryRepository _commentQueryRepository = commentQueryRepository;
         private readonly INotificationWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
@@ -46,11 +47,14 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
 
             var connection = await _notificatinConnectionReadRepository.GetByIdAsync(comment.AppUserId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
-
-            var c = await _commentReadRepository.GetByIdAsync(comment.Id,cancellationToken);
-            var mc = _mapper.Map<CommentResponseDto>(c);
-            var mn = _mapper.Map<NotificationResponseDto>(n);
-            await _notificationHub.Clients.Client(connection.ConnectionId!).SendAsync("getNotification", mn, mc, cancellationToken);
+            await _notificationHub.Clients
+                .Client(connection.ConnectionId!)
+                .SendAsync(
+                    "getNotification",
+                    _mapper.Map<NotificationResponseDto>(n),
+                    await _commentQueryRepository.GetByIdAsync(comment.AppUserId, comment.Id, cancellationToken),
+                    cancellationToken
+                );
         }
     }
 }

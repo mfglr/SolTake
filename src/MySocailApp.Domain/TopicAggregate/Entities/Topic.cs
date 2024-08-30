@@ -4,10 +4,10 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.TopicAggregate.Entities
 {
-    public class Topic() : Entity, IAggregateRoot
+    public class Topic : Entity, IAggregateRoot
     {
         public int SubjectId { get; private set; }
-        public string Name { get; private set; }
+        public string Name { get; private set; } = null!;
 
         public void Create(int subjectId, string name)
         {
