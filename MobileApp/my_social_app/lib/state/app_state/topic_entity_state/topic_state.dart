@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
 @immutable
-class TopicState{
-  final int id;
+class TopicState extends Entity{
   final int subjectId;
   final String name;
   final Pagination questions;
 
   const TopicState({
-    required this.id,
+    required super.id,
     required this.subjectId,
     required this.name,
     required this.questions

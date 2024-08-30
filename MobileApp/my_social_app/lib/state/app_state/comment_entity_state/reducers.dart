@@ -24,11 +24,11 @@ CommentEntityState changeVisibilityReducer(CommentEntityState prev,ChangeReplies
   => prev.changeVisibility(action.commentId, action.visibility);
 
 CommentEntityState addCommentReducer(CommentEntityState prev,AddCommentAction action)
-  => CommentEntityState(entities: prev.appendOne(action.comment));
+  => CommentEntityState(containers: prev.appendOne(action.comment));
 CommentEntityState removeCommentReducer(CommentEntityState prev,RemoveCommentSuccessAction action)
-  => CommentEntityState(entities: prev.removeOne(action.commentId));
+  => CommentEntityState(containers: prev.removeOne(action.commentId));
 CommentEntityState addCommentsReducer(CommentEntityState prev,AddCommentsAction action)
-  => CommentEntityState(entities: prev.appendMany(action.comments));
+  => CommentEntityState(containers: prev.appendMany(action.comments));
 
 Reducer<CommentEntityState> questionCommentEntityStateReducers = combineReducers<CommentEntityState>([
   TypedReducer<CommentEntityState,GetNextPageCommentLikesAction>(getNextPageLikesReducer).call,

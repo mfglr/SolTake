@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
-class NotificationState{
-  final int id;
-  final int ownerId;
+class NotificationState extends Entity{
   final DateTime createdAt;
+  final int ownerId;
   final bool isViewed;
   final int type;
   final int? parentId;
@@ -15,9 +15,9 @@ class NotificationState{
   final int? solutionId;
 
   const NotificationState({
-    required this.id,
-    required this.ownerId,
+    required super.id,
     required this.createdAt,
+    required this.ownerId,
     required this.isViewed,
     required this.type,
     required this.parentId,
@@ -31,8 +31,8 @@ class NotificationState{
   NotificationState markAsViewed()
     => NotificationState(
         id: id,
-        ownerId: ownerId,
         createdAt: createdAt,
+        ownerId: ownerId,
         isViewed: true,
         type: type,
         parentId: parentId,

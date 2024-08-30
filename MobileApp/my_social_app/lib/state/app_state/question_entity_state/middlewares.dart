@@ -17,7 +17,7 @@ import 'package:redux/redux.dart';
 
 void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LoadQuestionAction){
-    if(store.state.questionEntityState.entities[action.questionId] == null){
+    if(store.state.questionEntityState.containers[action.questionId] == null){
       QuestionService()
         .getById(action.questionId)
         .then((question){
@@ -34,7 +34,7 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 
 void getNextPageQuestionLikesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionLikesIfNoPageAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.likes;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionLikesAction(questionId: action.questionId));
     }
@@ -43,7 +43,7 @@ void getNextPageQuestionLikesIfNoPageMiddleware(Store<AppState> store,action,Nex
 }
 void getNextPageQuestionLikesIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionLikesIfReadyAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.likes;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageQuestionLikesAction(questionId: action.questionId));
     }
@@ -52,7 +52,7 @@ void getNextPageQuestionLikesIfReadyMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionLikesAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.likes;
     QuestionService()
       .getQuestionLikes(action.questionId, pagination.next)
       .then((likes){
@@ -92,7 +92,7 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
 
 void getNextPageQuestionSolutionIfNoPageMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is GetNextPageQuestionSolutionsIfNoPageAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.solutions;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionSolutionsAction(questionId: action.questionId));
     }
@@ -101,7 +101,7 @@ void getNextPageQuestionSolutionIfNoPageMiddleware(Store<AppState> store,action,
 }
 void getNextPageQuestionSolutionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionSolutionsIfReadyAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.solutions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageQuestionSolutionsAction(questionId: action.questionId));
     }
@@ -110,7 +110,7 @@ void getNextPageQuestionSolutionsIfReadyMiddleware(Store<AppState> store,action,
 }
 void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is GetNextPageQuestionSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.solutions;
     SolutionService()
       .getSolutionsByQuestionId(action.questionId,pagination.next)
       .then((solutions){
@@ -124,7 +124,7 @@ void getNextPageQuestionSolutionsMiddleware(Store<AppState> store,action, NextDi
 
 void getNextPageQuestionCorrectSolutionsIfNoPageMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is GetNextPageQuestionCorrectSolutionsIfNoPageAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.correctSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.correctSolutions;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionCorrectSolutionsAction(questionId: action.questionId));
     }
@@ -133,7 +133,7 @@ void getNextPageQuestionCorrectSolutionsIfNoPageMiddleware(Store<AppState> store
 }
 void getNextPageQuestionCorrectSolutionsIfReadyMiddleware(Store<AppState> store, action, NextDispatcher next){
    if(action is GetNextPageQuestionCorrectSolutionsIfReadyAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.correctSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.correctSolutions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageQuestionCorrectSolutionsAction(questionId: action.questionId));
     }
@@ -142,7 +142,7 @@ void getNextPageQuestionCorrectSolutionsIfReadyMiddleware(Store<AppState> store,
 }
 void getNextPageQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is GetNextPageQuestionCorrectSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.correctSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.correctSolutions;
     SolutionService()
       .getCorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
@@ -156,7 +156,7 @@ void getNextPageQuestionCorrectSolutionsMiddleware(Store<AppState> store, action
 
 void getNextPageQuestionPendingSolutionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionPendingSolutionsIfNoPageAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.pendingSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.pendingSolutions;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionPendingSolutionsAction(questionId: action.questionId));
     }
@@ -165,7 +165,7 @@ void getNextPageQuestionPendingSolutionsIfNoPageMiddleware(Store<AppState> store
 }
 void getNextPageQuestionPendingSolutionsIfReadMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionPendingSolutionsIfReadyAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.pendingSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.pendingSolutions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageQuestionPendingSolutionsAction(questionId: action.questionId));
     }
@@ -174,7 +174,7 @@ void getNextPageQuestionPendingSolutionsIfReadMiddleware(Store<AppState> store,a
 }
 void getNextPageQuestionPendingSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionPendingSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.pendingSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.pendingSolutions;
     SolutionService()
       .getPendingSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
@@ -188,7 +188,7 @@ void getNextPageQuestionPendingSolutionsMiddleware(Store<AppState> store,action,
 
 void getNextPageQuestionIncorrectSolutionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionIncorrectSolutionsIfNoPageAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.incorrectSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.incorrectSolutions;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionIncorrectSolutionsAction(questionId: action.questionId));
     }
@@ -197,7 +197,7 @@ void getNextPageQuestionIncorrectSolutionsIfNoPageMiddleware(Store<AppState> sto
 }
 void getNextPageQuestionIncorrectSolutionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionIncorrectSolutionsIfReadyAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.incorrectSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.incorrectSolutions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageQuestionIncorrectSolutionsAction(questionId: action.questionId));
     }
@@ -206,7 +206,7 @@ void getNextPageQuestionIncorrectSolutionsIfReadyMiddleware(Store<AppState> stor
 }
 void getNextPageQuestionIncorrectSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionIncorrectSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.incorrectSolutions;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.incorrectSolutions;
     SolutionService()
       .getIncorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
@@ -220,7 +220,7 @@ void getNextPageQuestionIncorrectSolutionsMiddleware(Store<AppState> store,actio
 
 void getNextPageQuestionCommentsIfNoPageCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionCommentsIfNoPageAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.comments;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageQuestionCommentsAction(questionId: action.questionId));
     }
@@ -229,7 +229,7 @@ void getNextPageQuestionCommentsIfNoPageCommentsMiddleware(Store<AppState> store
 }
 void getNextPageQuestionCommentIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionCommentsIfReadyAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.comments;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageQuestionCommentsAction(questionId: action.questionId));
     }
@@ -238,7 +238,7 @@ void getNextPageQuestionCommentIfReadyMiddleware(Store<AppState> store,action,Ne
 }
 void getNextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionCommentsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
+    final pagination = store.state.questionEntityState.containers[action.questionId]!.entity.comments;
     CommentService()
       .getCommentsByQuestionId(action.questionId, pagination.next)
       .then((comments){
@@ -252,7 +252,7 @@ void getNextPageQuestionCommentsMiddleware(Store<AppState> store,action,NextDisp
 
 void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadQuestionImageAction){
-    final image = store.state.questionEntityState.entities[action.questionId]!.images.elementAt(action.index);
+    final image = store.state.questionEntityState.containers[action.questionId]!.entity.images.elementAt(action.index);
     if(image.state == ImageStatus.notStarted){
       QuestionService()
         .getQuestionImage(action.questionId, image.id)

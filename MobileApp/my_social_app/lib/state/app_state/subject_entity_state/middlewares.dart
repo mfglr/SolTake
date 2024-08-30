@@ -10,7 +10,7 @@ import 'package:redux/redux.dart';
 
 void getNextPageSubjectQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSubjectQuestionsIfNoPageAction){
-    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.questions;
+    final pagination = store.state.subjectEntityState.containers[action.subjectId]!.entity.questions;
     if(!pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageSubjectQuestionsAction(subjectId: action.subjectId));
     }
@@ -19,7 +19,7 @@ void getNextPageSubjectQuestionsIfNoPageMiddleware(Store<AppState> store,action,
 }
 void getNextPageSubjectQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSubjectQuestionsIfReadyAction){
-    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.questions;
+    final pagination = store.state.subjectEntityState.containers[action.subjectId]!.entity.questions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageSubjectQuestionsAction(subjectId: action.subjectId));
     }
@@ -28,7 +28,7 @@ void getNextPageSubjectQuestionsIfReadyMiddleware(Store<AppState> store,action,N
 }
 void getNextPageSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSubjectQuestionsAction){
-    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.questions;
+    final pagination = store.state.subjectEntityState.containers[action.subjectId]!.entity.questions;
     QuestionService()
       .getBySubjectId(action.subjectId,pagination.next)
       .then((questions){
@@ -44,8 +44,8 @@ void getNextPageSubjectQuestionsMiddleware(Store<AppState> store,action,NextDisp
 void getTopicsOfSelectSubjectMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetTopicsOfSelectedSubjectAction){
     final subjectId = store.state.createQuestionState.subjectId!;
-    final subjectState = store.state.subjectEntityState.entities[subjectId]!;
-    if(!subjectState.topics.isLast){
+    final subjectState = store.state.subjectEntityState.containers[subjectId]!;
+    if(!subjectState.entity.topics.isLast){
       TopicService()
         .getBySubjectId(subjectId)
         .then((topics){
@@ -58,7 +58,7 @@ void getTopicsOfSelectSubjectMiddleware(Store<AppState> store,action,NextDispatc
 }
 void getSubjectTopicsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetSubjectTopicsAction){
-    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.topics;
+    final pagination = store.state.subjectEntityState.containers[action.subjectId]!.entity.topics;
     if(!pagination.isLast){
       TopicService()
         .getBySubjectId(action.subjectId)

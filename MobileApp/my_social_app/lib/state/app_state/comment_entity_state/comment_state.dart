@@ -1,9 +1,9 @@
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
-class CommentState{
-  final int id;
+class CommentState extends Entity{
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final String userName;
   final int appUserId;
   final bool isEdited;
@@ -19,7 +19,7 @@ class CommentState{
   final bool repliesVisibility;
 
   const CommentState({
-    required this.id,
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.userName,

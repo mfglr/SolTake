@@ -95,105 +95,105 @@ class AppState{
   //select messages
   int? selectLastConversationId(){
     final accountId = accountState!.id;
-    final list = groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId)
+    final list = groupBy(messageEntityState.containers.values,(x) => x.entity.senderId == accountId ? x.entity.receiverId : x.entity.senderId)
       .values
-      .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last.id)
+      .map((list) => list.sorted((x,y) => x.entity.id.compareTo(y.entity.id)).last.entity.id)
       .sorted((x,y) => y.compareTo(x));
     return list.isNotEmpty ? list.last : null;
   }
   int selectNumberOfConversation(){
     final accountId = accountState!.id;
-    return groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId).length;
+    return groupBy(messageEntityState.containers.values,(x) => x.entity.senderId == accountId ? x.entity.receiverId : x.entity.senderId).length;
   }
   Iterable<MessageState> get selectConversations
     => messageEntityState.selectConversations(accountState!.id);
   Iterable<MessageState> selectUserMessages(int userId)
-    => userEntityState.entities[userId]!.messages.ids.map((e) => messageEntityState.entities[e]!);
+    => userEntityState.containers[userId]!.entity.messages.ids.map((e) => messageEntityState.containers[e]!.entity);
   Iterable<int> get selectIdsOfNewComingMessages
-    => messageEntityState.entities.values
-        .where((e) => e.state == MessageStatus.created && e.senderId != accountState!.id)
-        .map((e) => e.id);
+    => messageEntityState.containers.values
+        .where((e) => e.entity.state == MessageStatus.created && e.entity.senderId != accountState!.id)
+        .map((e) => e.entity.id);
   int get selectNumberOfComingMessages
-    => messageEntityState.entities.values
-        .where((e) => e.state != MessageStatus.viewed && e.senderId != accountState!.id)
+    => messageEntityState.containers.values
+        .where((e) => e.entity.state != MessageStatus.viewed && e.entity.senderId != accountState!.id)
         .length;
 
   //select users
-  UserState? get currentUser => userEntityState.entities[accountState!.id];
+  UserState? get currentUser => userEntityState.containers[accountState!.id]?.entity;
   Iterable<UserState> get searchedUsers 
-    => searchState.users.ids.map((e) => userEntityState.entities[e]!);
+    => searchState.users.ids.map((e) => userEntityState.containers[e]!.entity);
   Iterable<UserState> selectNotFolloweds(int userId)
-    => userEntityState.entities[userId]!.notFolloweds.ids.map((e) => userEntityState.entities[e]!);
+    => userEntityState.containers[userId]!.entity.notFolloweds.ids.map((e) => userEntityState.containers[e]!.entity);
   Iterable<UserState> get selectSearchedUsers
-    => searchState.searchedUsers.ids.map((e) => userEntityState.entities[userSearchEntityState.entities[e]!.searchedId]!);
+    => searchState.searchedUsers.ids.map((e) => userEntityState.containers[userSearchEntityState.containers[e]!.entity.searchedId]!.entity);
   Iterable<UserState> selectFollowers(int userId)
-    => userEntityState.entities[userId]!.followers.ids.map(
-        (e) => userEntityState.entities[followEntityState.entities[e]!.followerId]!
+    => userEntityState.containers[userId]!.entity.followers.ids.map(
+        (e) => userEntityState.containers[followEntityState.containers[e]!.entity.followerId]!.entity
       );
   Iterable<UserState> selectFolloweds(int userId)
-    => userEntityState.entities[userId]!.followeds.ids.map(
-        (e) => userEntityState.entities[followEntityState.entities[e]!.followedId]!
+    => userEntityState.containers[userId]!.entity.followeds.ids.map(
+        (e) => userEntityState.containers[followEntityState.containers[e]!.entity.followedId]!.entity
       );
   Iterable<UserState> selectQuestionLikes(int questionId)
-    => questionEntityState.entities[questionId]!.likes.ids.map(
-      (e) => userEntityState.entities[questionUserLikeEntityState.entities[e]!.appUserId]!
+    => questionEntityState.containers[questionId]!.entity.likes.ids.map(
+      (e) => userEntityState.containers[questionUserLikeEntityState.containers[e]!.entity.appUserId]!.entity
     );
   Iterable<UserState> selectCommentLikes(int commentId)
-    => commentEntityState.entities[commentId]!.likes.ids.map(
-      (e) => userEntityState.entities[commentUserLikeEntityState.entities[e]!.appUserId]!
+    => commentEntityState.containers[commentId]!.entity.likes.ids.map(
+      (e) => userEntityState.containers[commentUserLikeEntityState.containers[e]!.entity.appUserId]!.entity
     );
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions
-    => homePageState.questions.ids.map((e) => questionEntityState.entities[e]!);
+    => homePageState.questions.ids.map((e) => questionEntityState.containers[e]!.entity);
   Iterable<QuestionState> selectExamQuestions(int examId)
-    => examEntityState.entities[examId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+    => examEntityState.containers[examId]!.entity.questions.ids.map((e) => questionEntityState.containers[e]!.entity);
   Iterable<QuestionState> selectSubjectQuestions(int subjectId)
-    => subjectEntityState.entities[subjectId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+    => subjectEntityState.containers[subjectId]!.entity.questions.ids.map((e) => questionEntityState.containers[e]!.entity);
   Iterable<QuestionState> selectTopicQuestions(int topicId)
-    => topicEntityState.entities[topicId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+    => topicEntityState.containers[topicId]!.entity.questions.ids.map((e) => questionEntityState.containers[e]!.entity);
   Iterable<QuestionState> selectUserQuestions(int userId)
-    => userEntityState.entities[userId]!.questions.ids.map((e) => questionEntityState.entities[e]!);
+    => userEntityState.containers[userId]!.entity.questions.ids.map((e) => questionEntityState.containers[e]!.entity);
   Iterable<QuestionState> selectUserSolvedQuestions(int userId)
-    => userEntityState.entities[userId]!.solvedQuestions.ids.map((e) => questionEntityState.entities[e]!);
+    => userEntityState.containers[userId]!.entity.solvedQuestions.ids.map((e) => questionEntityState.containers[e]!.entity);
   Iterable<QuestionState> selectUserUnsolvedQuestions(int userId)
-    => userEntityState.entities[userId]!.unsolvedQuestions.ids.map((e) => questionEntityState.entities[e]!);
+    => userEntityState.containers[userId]!.entity.unsolvedQuestions.ids.map((e) => questionEntityState.containers[e]!.entity);
   Iterable<QuestionState> get selectSearchQuestions
-    => searchState.questions.ids.map((e) => questionEntityState.entities[e]!);
+    => searchState.questions.ids.map((e) => questionEntityState.containers[e]!.entity);
   
   //SelectSolutions
   Iterable<SolutionState> selectQuestionSolutions(int questionId)
-    => questionEntityState.entities[questionId]!.solutions.ids.map((e) => solutionEntityState.entities[e]!);
+    => questionEntityState.containers[questionId]!.entity.solutions.ids.map((e) => solutionEntityState.containers[e]!.entity);
   Iterable<SolutionState> selectQuestionCorrectSolutions(int questionId)
-    => questionEntityState.entities[questionId]!.correctSolutions.ids.map((e) => solutionEntityState.entities[e]!);
+    => questionEntityState.containers[questionId]!.entity.correctSolutions.ids.map((e) => solutionEntityState.containers[e]!.entity);
   Iterable<SolutionState> selectQuestionPendingSolutions(int questionId)
-    => questionEntityState.entities[questionId]!.pendingSolutions.ids.map((e) => solutionEntityState.entities[e]!);
+    => questionEntityState.containers[questionId]!.entity.pendingSolutions.ids.map((e) => solutionEntityState.containers[e]!.entity);
   Iterable<SolutionState> selectQuestionIncorrectSolutions(int questionId)
-    => questionEntityState.entities[questionId]!.incorrectSolutions.ids.map((e) => solutionEntityState.entities[e]!);
+    => questionEntityState.containers[questionId]!.entity.incorrectSolutions.ids.map((e) => solutionEntityState.containers[e]!.entity);
 
   //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)
-    => questionEntityState.entities[questionId]?.comments.ids.map((e) => commentEntityState.entities[e]!) ?? [];
+    => questionEntityState.containers[questionId]!.entity.comments.ids.map((e) => commentEntityState.containers[e]!.entity);
   Iterable<CommentState> getFormatedQuestionComments(int id,int questionId)
-    => questionEntityState.entities[questionId]!.comments.merge(id).map((e) => commentEntityState.entities[e]!);
+    => questionEntityState.containers[questionId]!.entity.comments.merge(id).map((e) => commentEntityState.containers[e]!.entity);
   Iterable<CommentState> getSolutionComments(int solutionId)
-    => solutionEntityState.entities[solutionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
+    => solutionEntityState.containers[solutionId]!.entity.comments.ids.map((e) => commentEntityState.containers[e]!.entity);
   Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
-    => solutionEntityState.entities[solutionId]!.comments.merge(id).map((e) => commentEntityState.entities[e]!);
+    => solutionEntityState.containers[solutionId]!.entity.comments.merge(id).map((e) => commentEntityState.containers[e]!.entity);
   Iterable<CommentState> selectCommentReplies(int commentId)
-    => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
+    => commentEntityState.containers[commentId]!.entity.replies.ids.map((e) => commentEntityState.containers[e]!.entity);
   Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
-    => commentEntityState.entities[commentId]!.replies.merge(id).map((e) => commentEntityState.entities[e]!);
+    => commentEntityState.containers[commentId]!.entity.replies.merge(id).map((e) => commentEntityState.containers[e]!.entity);
 
   //Select Subjects
   Iterable<SubjectState> get subjectsOfSelectedExam 
-    => examEntityState.entities[createQuestionState.examId!]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
+    => examEntityState.containers[createQuestionState.examId!]!.entity.subjects.ids.map((e) => subjectEntityState.containers[e]!.entity);
   Iterable<SubjectState> selectExamSubjects(int examId)
-    => examEntityState.entities[examId]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
+    => examEntityState.containers[examId]!.entity.subjects.ids.map((e) => subjectEntityState.containers[e]!.entity);
 
   // select topics
   Iterable<TopicState> get topicsOfSelecetedSubject
     => topicEntityState.getSubjectTopics(createQuestionState.subjectId);
   Iterable<TopicState> selectSubjectTopics(int subjectId)
-    => subjectEntityState.entities[subjectId]!.topics.ids.map((e) => topicEntityState.entities[e]!);
+    => subjectEntityState.containers[subjectId]!.entity.topics.ids.map((e) => topicEntityState.containers[e]!.entity);
 }

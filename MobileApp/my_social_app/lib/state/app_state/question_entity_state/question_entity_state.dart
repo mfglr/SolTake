@@ -1,77 +1,77 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/entity_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
 class QuestionEntityState extends EntityState<QuestionState>{
-  const QuestionEntityState({required super.entities});
+  const QuestionEntityState({required super.containers});
   
   QuestionEntityState addQuestion(QuestionState value)
-    => QuestionEntityState(entities: appendOne(value));
+    => QuestionEntityState(containers: appendOne(value));
   QuestionEntityState addQuestions(Iterable<QuestionState> values)
-    => QuestionEntityState(entities: appendMany(values));
+    => QuestionEntityState(containers: appendMany(values));
   
   QuestionEntityState startLoadingNextLikes(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.startLodingNextLikes()));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.startLodingNextLikes()));
   QuestionEntityState addNextPageLikes(int questionId,Iterable<int> likeIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageLikes(likeIds)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNextPageLikes(likeIds)));
   QuestionEntityState like(int questionId,int likeId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.like(likeId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.like(likeId)));
   QuestionEntityState dislike(int questionId,int likeId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.dislike(likeId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.dislike(likeId)));
   QuestionEntityState addNewLike(int questionId,int likeId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewLike(likeId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNewLike(likeId)));
 
   QuestionEntityState markSolutionAsCorrect(int questionId,int solutionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.markSolutionAsCorrect(solutionId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.markSolutionAsCorrect(solutionId)));
   QuestionEntityState markSolutionAsIncorrect(int questionId,int solutionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.markSolutionAsIncorrect(solutionId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.markSolutionAsIncorrect(solutionId)));
 
   QuestionEntityState getNextPageSolutions(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextSolutions()));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.startLoadingNextSolutions()));
   QuestionEntityState addNextPageSolutions(int questionId,Iterable<int> solutionIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageSolutions(solutionIds)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNextPageSolutions(solutionIds)));
   QuestionEntityState createNewSolution(SolutionState solution)
-    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.createNewSolution(solution.id)));
+    => QuestionEntityState(containers: updateOne(containers[solution.questionId]?.entity.createNewSolution(solution.id)));
   QuestionEntityState addNewSolution(int questionId,int solutionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewSolution(solutionId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNewSolution(solutionId)));
   QuestionEntityState removeSolution(SolutionState solution)
-    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.removeSolution(solution)));
+    => QuestionEntityState(containers: updateOne(containers[solution.questionId]?.entity.removeSolution(solution)));
 
   QuestionEntityState getNextPageCorrectSolutions(int questionId) =>
-    QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextCorrectSolutions()));
+    QuestionEntityState(containers: updateOne(containers[questionId]?.entity.startLoadingNextCorrectSolutions()));
   QuestionEntityState addNextPageCorrectSolutions(int questionId,Iterable<int> solutionIds) =>
-    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageCorrectSolutions(solutionIds)));
+    QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNextPageCorrectSolutions(solutionIds)));
 
   QuestionEntityState startLoadingNextPendingSolutions(int questionId) =>
-    QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextPendingSolutions()));
+    QuestionEntityState(containers: updateOne(containers[questionId]?.entity.startLoadingNextPendingSolutions()));
   QuestionEntityState addNextPagePedingSolutions(int questionId,Iterable<int> solutionIds) =>
-    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPagePedingSolutions(solutionIds)));
+    QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNextPagePedingSolutions(solutionIds)));
 
   QuestionEntityState startLoadingNextIncorrectSolutions(int questionid) =>
-    QuestionEntityState(entities: updateOne(entities[questionid]?.startLoadinNextIncorrectSolutions()));
+    QuestionEntityState(containers: updateOne(containers[questionid]?.entity.startLoadinNextIncorrectSolutions()));
   QuestionEntityState addNextPageIncorrectSolutions(int questionId,Iterable<int> solutionIds) =>
-    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageIncorrectSolutions(solutionIds)));
+    QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNextPageIncorrectSolutions(solutionIds)));
 
   
   QuestionEntityState getNextPageComments(int questionId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextComments()));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.startLoadingNextComments()));
   QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageComments(commentIds)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNextPageComments(commentIds)));
   QuestionEntityState addComment(int questionId,int questionCommentId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addComment(questionCommentId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addComment(questionCommentId)));
   QuestionEntityState removeComment(int questionId,int commentId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.removeComment(commentId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.removeComment(commentId)));
   QuestionEntityState addNewComment(int questionId,int commentId)
-    => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewComment(commentId)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]?.entity.addNewComment(commentId)));
 
   QuestionEntityState startLoadingImage(int questionId,int index)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingImage(index)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]!.entity.startLoadingImage(index)));
   QuestionEntityState loadImage(int questionId,int index,Uint8List image)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.loadImage(index, image)));
+    => QuestionEntityState(containers: updateOne(containers[questionId]!.entity.loadImage(index, image)));
 
   QuestionEntityState markAsSolved(int questionid)
-    => QuestionEntityState(entities: entities[questionid] != null ? updateOne(entities[questionid]!.markAsSolved()) : entities);
+    => QuestionEntityState(containers: containers[questionid] != null ? updateOne(containers[questionid]!.entity.markAsSolved()) : containers);
 }

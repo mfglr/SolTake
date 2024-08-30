@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
-class CommentUserLikeState{
-  final int id;
+class CommentUserLikeState extends Entity{
+  final DateTime createdAt;
   final int commentId;
   final int appUserId;
-  final DateTime createdAt;
   
   const CommentUserLikeState({
-    required this.id,
+    required super.id,
+    required this.createdAt,
     required this.commentId,
     required this.appUserId,
-    required this.createdAt
   });
 }

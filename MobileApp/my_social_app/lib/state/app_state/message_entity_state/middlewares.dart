@@ -48,7 +48,7 @@ void markComingMessagesAsViewedMiddleware(Store<AppState> store,action,NextDispa
 
 void loadMessageImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadMessageImageAction){
-    final image = store.state.messageEntityState.entities[action.messageId]!.images.where((e) => e.id == action.messageImageId).first;
+    final image = store.state.messageEntityState.containers[action.messageId]!.entity.images.where((e) => e.id == action.messageImageId).first;
     if(image.status == ImageStatus.notStarted){
       MessageService()
         .getMessageImage(action.messageId, action.messageImageId)

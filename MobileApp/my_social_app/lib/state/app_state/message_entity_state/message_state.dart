@@ -2,12 +2,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
-class MessageState{
-  final int id;
+class MessageState extends Entity{
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final bool isEdited;
   final int senderId;
   final int receiverId;
@@ -18,7 +18,7 @@ class MessageState{
   final Iterable<MessageImageState> images;
 
   const MessageState({
-    required this.id,
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.isEdited,

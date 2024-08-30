@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/gender.dart';
 
 @immutable
-class UserState{
-  final int id;
+class UserState extends Entity{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;
@@ -35,7 +35,7 @@ class UserState{
   }
 
   const UserState({
-    required this.id,
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.userName,

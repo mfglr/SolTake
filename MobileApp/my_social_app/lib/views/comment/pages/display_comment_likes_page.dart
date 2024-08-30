@@ -4,9 +4,12 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/entity_state/entity_container.dart';
+import 'package:my_social_app/state/entity_state/loading_state.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/shared/pages/not_found_page.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_icon_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
@@ -21,10 +24,16 @@ class DisplayCommentLikesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,CommentState?>(
-      converter: (store) => store.state.commentEntityState.entities[commentId],
-      builder:(context,comment){
-        if(comment == null) return const LoadingView();
+    return StoreConnector<AppState,EntityContainer<CommentState>?>(
+      onInit: (store) => store.dispatch(LoadCommentAction(commentId: commentId)),
+      converter: (store) => store.state.commentEntityState.containers[commentId],
+      builder:(context,commentContainer){
+        if(commentContainer == null || commentContainer.state == LoadingState.started){
+          return const LoadingView();
+        }
+        if(commentContainer.state == LoadingState.notFound){
+          return const NotFoundPage(message: "The comment was deleted");
+        }
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
@@ -35,7 +44,7 @@ class DisplayCommentLikesPage extends StatelessWidget {
             converter: (store) => store.state.selectCommentLikes(commentId),
             builder: (context,users) => UserItemsWidget(
               users: users,
-              pagination: comment.likes,
+              pagination: commentContainer.entity.likes,
               rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
                 converter: (store) => store.state.accountState!.id,
                 builder:(context,accountId){

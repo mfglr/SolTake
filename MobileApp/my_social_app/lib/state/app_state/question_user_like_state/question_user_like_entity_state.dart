@@ -1,19 +1,19 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/entity_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_state.dart';
 
 @immutable
 class QuestionUserLikeEntityState extends EntityState<QuestionUserLikeState>{
-  const QuestionUserLikeEntityState({required super.entities});
+  const QuestionUserLikeEntityState({required super.containers});
 
   QuestionUserLikeEntityState addLikes(Iterable<QuestionUserLikeState> likes)
-    => QuestionUserLikeEntityState(entities: appendMany(likes));
+    => QuestionUserLikeEntityState(containers: appendMany(likes));
   QuestionUserLikeEntityState addLike(QuestionUserLikeState like)
-    => QuestionUserLikeEntityState(entities: appendOne(like));
+    => QuestionUserLikeEntityState(containers: appendOne(like));
   QuestionUserLikeEntityState removeLike(int likeId)
-    => QuestionUserLikeEntityState(entities: removeOne(likeId));
+    => QuestionUserLikeEntityState(containers: removeOne(likeId));
 
   QuestionUserLikeState? select(int likerId) 
-    => entities.values.firstWhereOrNull((like) => like.appUserId == likerId); 
+    => containers.values.firstWhereOrNull((like) => like.entity.appUserId == likerId)?.entity; 
 }

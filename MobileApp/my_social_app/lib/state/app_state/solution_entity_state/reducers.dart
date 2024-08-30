@@ -3,11 +3,11 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_ent
 import 'package:redux/redux.dart';
 
 SolutionEntityState addSolutionReducer(SolutionEntityState prev, AddSolutionAction action)
-  => SolutionEntityState(entities: prev.appendOne(action.solution));
+  => SolutionEntityState(containers: prev.appendOne(action.solution));
 SolutionEntityState addSolutionsReducer(SolutionEntityState prev, AddSolutionsAction action)
-  => SolutionEntityState(entities: prev.appendMany(action.solutions));
+  => SolutionEntityState(containers: prev.appendMany(action.solutions));
 SolutionEntityState removeSolutionReducer(SolutionEntityState prev,RemoveSolutionSuccessAction action)
-  => SolutionEntityState(entities: prev.removeOne(action.solutionId));
+  => SolutionEntityState(containers: prev.removeOne(action.solutionId));
 
 SolutionEntityState makeUpvoteReducer(SolutionEntityState prev,MakeUpvoteSuccessAction action)
   => prev.makeUpvote(action.solutionId);

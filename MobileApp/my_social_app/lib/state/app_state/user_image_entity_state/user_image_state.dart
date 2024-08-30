@@ -1,15 +1,15 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
-class UserImageState{
-  final int id;
+class UserImageState extends Entity{
   final Uint8List? image;
   final ImageStatus state;
 
   const UserImageState({
-    required this.id,
+    required super.id,
     required this.image,
     required this.state
   });

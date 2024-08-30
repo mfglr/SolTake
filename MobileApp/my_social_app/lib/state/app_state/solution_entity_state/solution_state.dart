@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_image_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
-class SolutionState{
-  final int id;
+class SolutionState extends Entity{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int questionId;
@@ -22,7 +22,7 @@ class SolutionState{
   final int state;
 
   const SolutionState({
-    required this.id,
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.questionId,

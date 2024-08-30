@@ -31,7 +31,7 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadUserByUserNameAction){
-    final user = store.state.userEntityState.entities.values.where((e) => e.userName == action.userName).firstOrNull;
+    final user = store.state.userEntityState.entities.values.where((e) => e.entity.userName == action.userName).firstOrNull;
     if(user == null){
       UserService()
         .getByUserName(action.userName)
@@ -46,7 +46,7 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
 
 void getNextPageUserFollowersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowersIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.followers;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserFollowersAction(userId: action.userId));
     }
@@ -55,7 +55,7 @@ void getNextPageUserFollowersIfNoPageMiddleware(Store<AppState> store,action,Nex
 }
 void getNextPageUserFollowersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowersIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.followers;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserFollowersAction(userId: action.userId));
     }
@@ -64,7 +64,7 @@ void getNextPageUserFollowersIfReadyMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowersAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.followers;
     UserService()
       .getFollowersById(action.userId, pagination.next)
       .then((follows){
@@ -79,7 +79,7 @@ void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatc
 
 void getNextPageUserNotFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserNotFollowedsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.notFolloweds;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.notFolloweds;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserNotFollowedsAction(userId: action.userId));
     }
@@ -89,7 +89,7 @@ void getNextPageUserNotFollowedsIfNoPageMiddleware(Store<AppState> store,action,
 void getNextPageUserNotFollowedsIfReadyMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is GetNextPageUserNotFollowedsIfReadyAction){
     final accountId = store.state.accountState!.id;
-    final pagination = store.state.userEntityState.entities[accountId]!.notFolloweds;
+    final pagination = store.state.userEntityState.entities[accountId]!.entity.notFolloweds;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserNotFollowedsAction(userId: action.userId));
     }
@@ -98,7 +98,7 @@ void getNextPageUserNotFollowedsIfReadyMiddleware(Store<AppState> store,action, 
 }
 void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserNotFollowedsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.notFolloweds;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.notFolloweds;
     UserService()
       .getNotFolloweds(action.userId, pagination.next)
       .then((users){
@@ -112,7 +112,7 @@ void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDisp
 
 void getNextPageUserFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowedsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.followeds;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserFollowedsAction(userId: action.userId));
     }
@@ -121,7 +121,7 @@ void getNextPageUserFollowedsIfNoPageMiddleware(Store<AppState> store,action,Nex
 }
 void getNextPageUserFollowedsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowedsIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.followeds;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserFollowedsAction(userId: action.userId));
     }
@@ -130,7 +130,7 @@ void getNextPageUserFollowedsIfReadyMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowedsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.followeds;
     UserService()
       .getFollowedsById(action.userId,pagination.next)
       .then((follows){
@@ -146,7 +146,7 @@ void getNextPageUserFollowedsMiddleware(Store<AppState> store,action,NextDispatc
 
 void getNextPageUserMessageIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserMessagesIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.messages;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
     }
@@ -155,7 +155,7 @@ void getNextPageUserMessageIfNoPageMiddleware(Store<AppState> store,action,NextD
 }
 void getNextPageUserMessageIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserMessagesIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.messages;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
     }
@@ -164,7 +164,7 @@ void getNextPageUserMessageIfReadyMiddleware(Store<AppState> store,action,NextDi
 }
 void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserMessagesAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.messages;
     MessageService()
       .getMessagesByUserId(action.userId, pagination.next)
       .then((messages){
@@ -177,7 +177,7 @@ void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatch
 
 void getNextPageUserQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserQuestionsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.questions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.questions;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserQuestionsAction(userId: action.userId));
     }
@@ -186,7 +186,7 @@ void getNextPageUserQuestionsIfNoPageMiddleware(Store<AppState> store,action,Nex
 }
 void getNextPageUserQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserQuestionsIfReadyAction){
-   final pagination = store.state.userEntityState.entities[action.userId]!.questions;
+   final pagination = store.state.userEntityState.entities[action.userId]!.entity.questions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserQuestionsAction(userId: action.userId));
     }
@@ -195,7 +195,7 @@ void getNextPageUserQuestionsIfReadyMiddleware(Store<AppState> store,action,Next
 }
 void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserQuestionsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.questions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.questions;
     QuestionService()
       .getByUserId(action.userId,pagination.next)
       .then((questions){
@@ -212,7 +212,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
 
 void getNextPageUserSolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserSolvedQuestionsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.solvedQuestions;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserSolvedQuestionsAction(userId: action.userId));
     }
@@ -221,7 +221,7 @@ void getNextPageUserSolvedQuestionsIfNoPageMiddleware(Store<AppState> store,acti
 }
 void getNextPageUserSolvedQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserSolvedQuestionsIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.solvedQuestions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserSolvedQuestionsAction(userId: action.userId));
     }
@@ -230,7 +230,7 @@ void getNextPageUserSolvedQuestionsIfReadyMiddleware(Store<AppState> store,actio
 }
 void getNextPageUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserSolvedQuestionsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.solvedQuestions;
     QuestionService()
       .getSolvedQuestionsByUserId(action.userId, pagination.next)
       .then((questions){
@@ -247,7 +247,7 @@ void getNextPageUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextD
 
 void getNextPageUserUnsolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserUnsolvedQuestionsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.unsolvedQuestions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.unsolvedQuestions;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageUserUnsolvedQuestionsAction(userId: action.userId));
     }
@@ -256,7 +256,7 @@ void getNextPageUserUnsolvedQuestionsIfNoPageMiddleware(Store<AppState> store,ac
 }
 void getNextPageUserUnsolvedQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserUnsolvedQuestionsIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.unsolvedQuestions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.unsolvedQuestions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserUnsolvedQuestionsAction(userId: action.userId));
     }
@@ -265,7 +265,7 @@ void getNextPageUserUnsolvedQuestionsIfReadyMiddleware(Store<AppState> store,act
 }
 void getNextPageUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserUnsolvedQuestionsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.unsolvedQuestions;
+    final pagination = store.state.userEntityState.entities[action.userId]!.entity.unsolvedQuestions;
     QuestionService()
       .getUnsolvedQuestionsByUserId(action.userId, pagination.next)
       .then((questions){

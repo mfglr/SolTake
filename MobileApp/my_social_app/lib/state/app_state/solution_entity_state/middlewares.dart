@@ -14,7 +14,7 @@ import 'package:redux/redux.dart';
 
 void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionAction){
-    if(store.state.solutionEntityState.entities[action.solutionId] == null){
+    if(store.state.solutionEntityState.containers[action.solutionId] == null){
       SolutionService()
         .getSolutionById(action.solutionId)
         .then((solution){
@@ -27,7 +27,7 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionImageAction){
-    final image = store.state.solutionEntityState.entities[action.solutionId]!.images.elementAt(action.index);
+    final image = store.state.solutionEntityState.containers[action.solutionId]!.entity.images.elementAt(action.index);
     if(image.state == ImageStatus.notStarted){
       SolutionService()
         .getSolutionImage(action.solutionId,image.id)
@@ -41,14 +41,14 @@ void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher nex
 
 void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveSolutionAction){
-    final question = store.state.questionEntityState.entities[action.solution.questionId];
+    final question = store.state.questionEntityState.containers[action.solution.questionId];
     SolutionService()
       .delete(action.solution.id)
       .then((_){
         if(question != null){
           store.dispatch(RemoveQuestionSolutionAction(solution: action.solution));
-          if(action.solution.state == SolutionStatus.correct && question.numberOfCorrectSolutions <= 1){
-            store.dispatch(MarkUserQuestionAsUnsolvedAction(userId: question.appUserId, questionId: action.solution.questionId));
+          if(action.solution.state == SolutionStatus.correct && question.entity.numberOfCorrectSolutions <= 1){
+            store.dispatch(MarkUserQuestionAsUnsolvedAction(userId: question.entity.appUserId, questionId: action.solution.questionId));
           }
         }
         store.dispatch(RemoveSolutionSuccessAction(solutionId: action.solution.id));
@@ -92,7 +92,7 @@ void removeDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next)
 
 void getNextPageSolutionCommentsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSolutionCommentsIfNoPageAction){
-    final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
+    final comments = store.state.solutionEntityState.containers[action.solutionId]!.entity.comments;
     if(comments.isReadyForNextPage && !comments.hasAtLeastOnePage){
       store.dispatch(GetNextPageSolutionCommentsAction(solutionId: action.solutionId));
     }
@@ -101,7 +101,7 @@ void getNextPageSolutionCommentsIfNoPageMiddleware(Store<AppState> store,action,
 }
 void getNextPageSolutionCommentsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSolutionCommentsIfReadyAction){
-    final comments = store.state.solutionEntityState.entities[action.solutionId]!.comments;
+    final comments = store.state.solutionEntityState.containers[action.solutionId]!.entity.comments;
     if(comments.isReadyForNextPage){
       store.dispatch(GetNextPageSolutionCommentsAction(solutionId: action.solutionId));
     }
@@ -110,7 +110,7 @@ void getNextPageSolutionCommentsIfReadyMiddleware(Store<AppState> store,action,N
 }
 void getNextPageSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageSolutionCommentsAction){
-    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.comments;
+    final pagination = store.state.solutionEntityState.containers[action.solutionId]!.entity.comments;
     CommentService()
       .getBySolutionId(action.solutionId,pagination.next)
       .then((comments){

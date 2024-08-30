@@ -8,7 +8,7 @@ import 'package:redux/redux.dart';
 
 void getNextPageTopicQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageTopicQuestionsIfNoPageAction){
-    final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
+    final pagination = store.state.topicEntityState.containers[action.topicId]!.entity.questions;
     if(!pagination.isLast && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageTopicQuestionsAction(topicId: action.topicId));
     }
@@ -17,7 +17,7 @@ void getNextPageTopicQuestionsIfNoPageMiddleware(Store<AppState> store,action,Ne
 }
 void getNextPageTopicQuestionsIfReadyMiddeware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageTopicQuestionsIfReadyAction){
-    final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
+    final pagination = store.state.topicEntityState.containers[action.topicId]!.entity.questions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageTopicQuestionsAction(topicId: action.topicId));
     }
@@ -26,7 +26,7 @@ void getNextPageTopicQuestionsIfReadyMiddeware(Store<AppState> store,action,Next
 }
 void getNextPageTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageTopicQuestionsAction){
-    final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
+    final pagination = store.state.topicEntityState.containers[action.topicId]!.entity.questions;
     QuestionService()
       .getByTopicId(action.topicId, pagination.next)
       .then(

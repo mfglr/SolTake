@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
@@ -8,8 +9,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
 @immutable
-class QuestionState{
-  final int id;
+class QuestionState extends Entity{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int state;
@@ -34,7 +34,7 @@ class QuestionState{
   final Pagination incorrectSolutions; 
 
   const QuestionState({
-    required this.id,
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.state,

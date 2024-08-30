@@ -12,7 +12,7 @@ import 'package:redux/redux.dart';
 
 void getNextPageOfExamQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageExamQuestionsIfNoPageAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    final pagination = store.state.examEntityState.containers[action.examId]!.entity.questions;
     if(!pagination.isLast && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageExamQuestionsAction(examId: action.examId));
     }
@@ -21,7 +21,7 @@ void getNextPageOfExamQuestionsIfNoPageMiddleware(Store<AppState> store,action,N
 }
 void getNextPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageExamQuestionsIfReadyAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    final pagination = store.state.examEntityState.containers[action.examId]!.entity.questions;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageExamQuestionsAction(examId: action.examId));
     }
@@ -30,7 +30,7 @@ void getNextPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageExamQuestionsAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    final pagination = store.state.examEntityState.containers[action.examId]!.entity.questions;
     QuestionService()
       .getByExamId(action.examId,pagination.next)
       .then((questions){
@@ -59,7 +59,7 @@ void getAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
 void getSubjectsOfSelectedExamMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetSubjectsOfSelectedExamAction){
     final examId = store.state.createQuestionState.examId!;
-    final examState = store.state.examEntityState.entities[examId]!;
+    final examState = store.state.examEntityState.containers[examId]!.entity;
     if(!examState.subjects.isLast){
       SubjectService()
         .getByExamId(examId)
@@ -73,7 +73,7 @@ void getSubjectsOfSelectedExamMiddleware(Store<AppState> store,action,NextDispat
 }
 void getExamSubjectsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetExamSubjectsAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.subjects;
+    final pagination = store.state.examEntityState.containers[action.examId]!.entity.subjects;
     if(!pagination.isLast){
       SubjectService()
         .getByExamId(action.examId)

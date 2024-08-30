@@ -11,7 +11,7 @@ import 'package:redux/redux.dart';
 
 void getNextPageCommentLikesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentLikesIfNoPageAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
+    final pagination = store.state.commentEntityState.containers[action.commentId]!.entity.likes;
     if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageCommentLikesAction(commentId: action.commentId));
     }
@@ -20,7 +20,7 @@ void getNextPageCommentLikesIfNoPageMiddleware(Store<AppState> store,action,Next
 }
 void getNextPageCommentLikesIfReadyActionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentLikesIfReadyAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
+    final pagination = store.state.commentEntityState.containers[action.commentId]!.entity.likes;
     if(pagination.isReadyForNextPage ){
       store.dispatch(GetNextPageCommentLikesAction(commentId: action.commentId));
     }
@@ -29,7 +29,7 @@ void getNextPageCommentLikesIfReadyActionMiddleware(Store<AppState> store,action
 }
 void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentLikesAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
+    final pagination = store.state.commentEntityState.containers[action.commentId]!.entity.likes;
     CommentService()
       .getCommentLikes(action.commentId, pagination.next)
       .then((likes){
@@ -69,7 +69,7 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void getNextPageCommentRepliesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentRepliesIfNoPageAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
+    final pagination = store.state.commentEntityState.containers[action.commentId]!.entity.replies;
     if(!pagination.isLast && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageCommentRepliesAction(commentId: action.commentId));
     }
@@ -78,7 +78,7 @@ void getNextPageCommentRepliesIfNoPageMiddleware(Store<AppState> store,action,Ne
 }
 void getNextPageCommentRepliesIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentRepliesIfReadyAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
+    final pagination = store.state.commentEntityState.containers[action.commentId]!.entity.replies;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageCommentRepliesAction(commentId: action.commentId));
     }
@@ -87,7 +87,7 @@ void getNextPageCommentRepliesIfReadyMiddleware(Store<AppState> store,action,Nex
 }
 void getNextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageCommentRepliesAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
+    final pagination = store.state.commentEntityState.containers[action.commentId]!.entity.replies;
     CommentService()
       .getByParentId(action.commentId, pagination.next)
       .then((replies){
@@ -101,7 +101,7 @@ void getNextPageCommentRepliesMiddleware(Store<AppState> store,action,NextDispat
 
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentAction){
-    if(store.state.commentEntityState.entities[action.commentId] == null){
+    if(store.state.commentEntityState.containers[action.commentId] == null){
       CommentService()
         .getById(action.commentId)
         .then((comment){
@@ -114,7 +114,7 @@ void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void loadCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentsAction){
-    final ids = action.commentIds.where((id) => store.state.commentEntityState.entities[id] == null);
+    final ids = action.commentIds.where((id) => store.state.commentEntityState.containers[id] == null);
     if(ids.isNotEmpty){
       CommentService()
         .getByIds(ids)
