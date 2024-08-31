@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.Queries.NotificationAggregate;
+using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Entities;

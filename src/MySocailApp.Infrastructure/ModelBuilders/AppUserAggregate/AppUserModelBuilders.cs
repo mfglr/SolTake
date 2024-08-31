@@ -94,6 +94,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .HasForeignKey(x => x.SearchedId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder
+                .HasMany(x => x.Votes)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

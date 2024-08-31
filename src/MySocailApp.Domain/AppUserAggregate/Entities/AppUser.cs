@@ -125,5 +125,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public IReadOnlyCollection<Solution> Solutions { get; } = null!;
         public IReadOnlyCollection<Message> Messages { get; } = null!;
         public IReadOnlyCollection<Message> MessagesReceived { get; } = null!;
+        public IReadOnlyCollection<SolutionUserVote> Votes { get; } = null!;
     }
 }

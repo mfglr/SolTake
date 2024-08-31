@@ -3,8 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
-using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Application.Configurations;
+using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
@@ -25,7 +25,6 @@ using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.ApplicationServices;
 using MySocailApp.Infrastructure.ApplicationServices.BlobService;
 using MySocailApp.Infrastructure.ApplicationServices.Email;
-using MySocailApp.Infrastructure.ApplicationServices.QueryRepositories;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
@@ -33,6 +32,7 @@ using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.MessageAggregate;
 using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.NotificationConnectionAggregate;
+using MySocailApp.Infrastructure.QueryRepositories;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
@@ -118,7 +118,8 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IUserSearchQueryRepository, UserSearchQueryRepository>()
                 .AddScoped<IQuestionQueryRepository, QuestionQueryRepository>()
                 .AddScoped<ISolutionQueryRepository, SolutionQueryRepository>()
-                .AddScoped<ICommentQueryRepository, CommentQueryRepository>();
+                .AddScoped<ICommentQueryRepository, CommentQueryRepository>()
+                .AddScoped<ISolutionUserVoteQueryRepository,SolutionUserVoteQueryRepository>();
         }
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)

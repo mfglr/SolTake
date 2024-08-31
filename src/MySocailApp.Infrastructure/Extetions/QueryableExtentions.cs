@@ -24,37 +24,6 @@ namespace MySocailApp.Infrastructure.Extetions
                 .Take(pagination.Take);
         }
 
-        public static IQueryable<Question> IncludeForQuestion(this IQueryable<Question> query)
-            => query
-                .Include(x => x.Exam)
-                .Include(x => x.Subject)
-                .Include(x => x.Images)
-                .Include(x => x.Topics)
-                .ThenInclude(x => x.Topic)
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Likes)
-                .Include(x => x.Solutions)
-                .Include(x => x.Comments);
-
-        public static IQueryable<Comment> IncludeForComment(this IQueryable<Comment> query)
-            => query
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Likes)
-                .Include(x => x.Children)
-                .Include(x => x.Tags)
-                .ThenInclude(x => x.AppUser)
-                .ThenInclude(x => x.Account);
-
-        public static IQueryable<Solution> IncludeForSolution(this IQueryable<Solution> query)
-            => query
-                .Include(x => x.Images)
-                .Include(x => x.Votes)
-                .Include(x => x.AppUser)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Comments);
-
         public static IQueryable<Message> IncludeForMessage(this IQueryable<Message> query)
             => query
                 .Include(x => x.Images)
@@ -64,6 +33,5 @@ namespace MySocailApp.Infrastructure.Extetions
                 .ThenInclude(x => x.Account)
                 .Include(x => x.Receiver)
                 .ThenInclude(x => x.Account);
-
     }
 }

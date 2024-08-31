@@ -40,28 +40,19 @@ class SolutionService{
     );
 
   Future<void> makeUpvote(int solutionId) =>
-    _appClient.put(
+    _appClient.post(
       "$solutionController/$makeUpvoteEndpoint",
       body: {'solutionId': solutionId}
     );
   
   Future<void> makeDownvote(int solutionId) =>
-    _appClient.put(
-      "$solutionController/$makeDownvoteEndpoint",
-      body: {'solutionId': solutionId}
-    );
+    _appClient.delete("$solutionController/$makeDownvoteEndpoint/$solutionId");
   
   Future<void> removeUpvote(int solutionId) =>
-    _appClient.put(
-      "$solutionController/$removeUpvoteEndpoint",
-      body: { 'solutionId': solutionId }
-    );
+    _appClient.delete("$solutionController/$removeUpvoteEndpoint/$solutionId");
 
   Future<void> removeDownvote(int solutionId) =>
-    _appClient.put(
-      "$solutionController/$removeDownvoteEndpoint",
-      body: { 'solutionId': solutionId }
-    );
+    _appClient.delete("$solutionController/$removeDownvoteEndpoint/$solutionId");
 
   Future<void> markAsCorrect(int solutionId) =>
     _appClient.put(

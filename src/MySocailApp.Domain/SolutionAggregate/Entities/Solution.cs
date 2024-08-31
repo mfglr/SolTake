@@ -41,7 +41,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
-        public void MakeUpvote(int voterId)
+        public SolutionUserVote MakeUpvote(int voterId)
         {
             if (AppUserId == voterId)
                 throw new UnableToVoteForYourSolutions();
@@ -50,12 +50,14 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             if (index != -1)
             {
                 if (_votes[index].Type == SolutionVoteType.Upvote)
-                    return;
+                    throw new SolutionUpvotedBeforeException();
                 _votes.RemoveAt(index);//Remove downvote
             }
-            _votes.Add(SolutionUserVote.GenerateUpvote(voterId));
-
+            var vote = SolutionUserVote.GenerateUpvote(voterId);
+            _votes.Add(vote);
             AddDomainEvent(new SolutionWasUpvotedDomainEvent(this,voterId));
+
+            return vote;
 
         }
         public void MakeDownvote(int voterId)

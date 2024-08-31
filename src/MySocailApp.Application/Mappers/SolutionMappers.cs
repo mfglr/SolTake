@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote;
 using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
@@ -10,6 +11,8 @@ namespace MySocailApp.Application.Mappers
     {
         public SolutionMappers(IAccessTokenReader reader)
         {
+            CreateMap<SolutionUserVote, MakeUpvoteCommandResponseDto>();
+
             CreateMap<SolutionImage, SolutionImageResponseDto>();
             CreateMap<Solution, SolutionResponseDto>()
                 .ForMember(dest => dest.Content,x => x.MapFrom(src => src.Content != null ? src.Content.Value : null))

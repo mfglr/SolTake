@@ -30,14 +30,15 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Comment> Comments { get; private set; }
         public DbSet<CommentUserLike> CommentUserLikes { get; private set; }
 
+        public DbSet<Solution> Solutions { get; private set; }
+        public DbSet<SolutionUserVote> SolutionUserVotes { get; private set; }
+
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }
-        public DbSet<Solution> Solutions { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<Notification> Notifications { get; private set; }
         public DbSet<Message> Messages { get; private set; }
         public DbSet<UserConnection> UserConnections { get; private set; }
-        
         public DbSet<NotificationConnection> NotificationConnections { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

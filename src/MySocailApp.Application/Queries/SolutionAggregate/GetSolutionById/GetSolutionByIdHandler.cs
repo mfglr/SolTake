@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.QueryRepositories;
+using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById

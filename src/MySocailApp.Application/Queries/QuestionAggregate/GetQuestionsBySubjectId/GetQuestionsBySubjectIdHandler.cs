@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.QueryRepositories;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
+using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionBySubjectId
 {
