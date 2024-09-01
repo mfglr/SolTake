@@ -14,7 +14,7 @@ SolutionEntityState getNextPageUpvotesReducer(SolutionEntityState prev,GetNextPa
 SolutionEntityState addNextPageUpvotesReducer(SolutionEntityState prev,AddNextPageSolutionUpvatesAction action)
   => prev.addNextPageUpvotes(action.solutionId, action.voteIds);
 SolutionEntityState makeUpvoteReducer(SolutionEntityState prev,MakeSolutionUpvoteSuccessAction action)
-  => prev.makeUpvote(action.solutionId,action.voteId);
+  => prev.makeUpvote(action.solutionId,action.upvoteId,action.downvoteId);
 SolutionEntityState removeUpvoteReducer(SolutionEntityState prev,RemoveSolutionUpvoteSuccessAction action)
   => prev.removeUpvote(action.solutionId,action.voteId);
 
@@ -23,7 +23,7 @@ SolutionEntityState getNextPageDownvotesReducer(SolutionEntityState prev,GetNext
 SolutionEntityState addNextPageDownvotesReducer(SolutionEntityState prev,AddNextPageSolutionDownvotesAction action)
   => prev.addNextPageDownvotes(action.solutionId, action.voteIds);
 SolutionEntityState makeDownvoteReducer(SolutionEntityState prev,MakeSolutionDownvoteSuccessAction action)
-  => prev.makeDownvote(action.solutionId,action.voteId);
+  => prev.makeDownvote(action.solutionId,action.upvoteId,action.downvoteId);
 SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveSolutionDownvoteSuccessAction action)
   => prev.removeDownvote(action.solutionId,action.voteId);
 

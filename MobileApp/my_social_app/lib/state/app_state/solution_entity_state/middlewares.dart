@@ -94,14 +94,11 @@ void makeSolutionUpvoteMiddleware(Store<AppState> store,action,NextDispatcher ne
     final accountId = store.state.accountState!.id;
     SolutionService()
       .makeUpvote(action.solutionId)
-      .then((vote){
-        final downvote = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId);
-        if(downvote != null){
-          store.dispatch(RemoveSolutionDownvoteSuccessAction(solutionId: action.solutionId, voteId: downvote.id));
-          store.dispatch(RemoveSolutionUserVoteAction(voteId: downvote.id));
-        }
-        store.dispatch(AddSolutionUserVoteAction(vote: vote.toSolutionUserVoteState()));
-        store.dispatch(MakeSolutionUpvoteSuccessAction(solutionId: action.solutionId,voteId: vote.id));
+      .then((upvote){
+        final downvoteId = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId)?.id ?? 0;
+        store.dispatch(RemoveSolutionUserVoteAction(voteId: downvoteId));
+        store.dispatch(AddSolutionUserVoteAction(vote: upvote.toSolutionUserVoteState()));
+        store.dispatch(MakeSolutionUpvoteSuccessAction(solutionId: action.solutionId,upvoteId: upvote.id,downvoteId: downvoteId));
       });
   }
   next(action);
@@ -157,14 +154,11 @@ void makeSolutionDownvoteMiddleware(Store<AppState> store,action,NextDispatcher 
     final accountId = store.state.accountState!.id;
     SolutionService()
       .makeDownvote(action.solutionId)
-      .then((vote){
-        final upvote = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId);
-        if(upvote != null){
-          store.dispatch(RemoveSolutionUpvoteSuccessAction(solutionId: action.solutionId, voteId: upvote.id));
-          store.dispatch(RemoveSolutionUserVoteAction(voteId: upvote.id));
-        }
-        store.dispatch(AddSolutionUserVoteAction(vote: vote.toSolutionUserVoteState()));
-        store.dispatch(MakeSolutionDownvoteSuccessAction(solutionId: action.solutionId,voteId: vote.id));
+      .then((downvote){
+        final upvoteId = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId)?.id ?? 0;
+        store.dispatch(RemoveSolutionUserVoteAction(voteId: upvoteId));
+        store.dispatch(AddSolutionUserVoteAction(vote: downvote.toSolutionUserVoteState()));
+        store.dispatch(MakeSolutionDownvoteSuccessAction(solutionId: action.solutionId,upvoteId: upvoteId,downvoteId: downvote.id));
       });
   }
   next(action);

@@ -86,14 +86,14 @@ class SolutionState{
     => _optinal(newUpvotes: upvotes.startLoadingNext());
   SolutionState addNextPageUpvotes(Iterable<int> voteIds)
     => _optinal(newUpvotes: upvotes.addNextPage(voteIds));
-  SolutionState makeUpvote(int voteId)
+  SolutionState makeUpvote(int upvoteId,int downvoteId)
     => _optinal(
       newIsUpvoted: true,
       newNumberOfUpvotes: numberOfUpvotes + 1,
-      newUpvotes: upvotes.prependOne(voteId),
+      newUpvotes: upvotes.prependOne(upvoteId),
       newIsDownvoted: false,
       newNumberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
-      newDownvotes: isDownvoted ? downvotes.removeOne(voteId) : downvotes,
+      newDownvotes: isDownvoted ? downvotes.removeOne(downvoteId) : downvotes
     ); 
   SolutionState removeUpvote(int voteId)
     => _optinal(
@@ -106,11 +106,14 @@ class SolutionState{
     => _optinal(newDownvotes: downvotes.startLoadingNext());
   SolutionState addNextPageDownvotes(Iterable<int> voteIds)
     => _optinal(newDownvotes: downvotes.addNextPage(voteIds));
-  SolutionState makeDownvote(int voteId)
+  SolutionState makeDownvote(int upvoteId,int downvoteId)
     => _optinal(
+      newIsUpvoted: false,
+      newNumberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
+      newUpvotes: isUpvoted ? upvotes.removeOne(upvoteId) : upvotes,
       newIsDownvoted: true,
       newNumberOfDownvotes: numberOfDownvotes + 1,
-      newDownvotes: downvotes.prependOne(voteId),
+      newDownvotes: downvotes.prependOne(downvoteId),
     );
   SolutionState removeDownvote(int voteId)
     => _optinal(

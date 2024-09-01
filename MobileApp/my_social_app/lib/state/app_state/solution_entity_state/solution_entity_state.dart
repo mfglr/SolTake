@@ -11,8 +11,8 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingNextUpvotes()));
   SolutionEntityState addNextPageUpvotes(int solutionId, Iterable<int> voteIds)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextPageUpvotes(voteIds)));
-  SolutionEntityState makeUpvote(int solutionId,int voteId)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeUpvote(voteId)));
+  SolutionEntityState makeUpvote(int solutionId,int upvoteId,int downvoteId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeUpvote(upvoteId,downvoteId)));
   SolutionEntityState removeUpvote(int solutionId,int voteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeUpvote(voteId)));
   
@@ -20,8 +20,8 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingNextDownvotes()));
   SolutionEntityState addNextPageDownvotes(int solutionId,Iterable<int> voteIds)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextPageDownvotes(voteIds)));
-  SolutionEntityState makeDownvote(int solutionId,int voteId)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeDownvote(voteId)));
+  SolutionEntityState makeDownvote(int solutionId,int upvoteId,int downvoteId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeDownvote(upvoteId,downvoteId)));
   SolutionEntityState removeDownvote(int solutionId,int voteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeDownvote(voteId)));
   

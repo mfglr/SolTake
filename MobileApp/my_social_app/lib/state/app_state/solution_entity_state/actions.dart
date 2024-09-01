@@ -61,8 +61,14 @@ class MakeSolutionUpvoteAction extends redux.Action{
 @immutable
 class MakeSolutionUpvoteSuccessAction extends redux.Action{
   final int solutionId;
-  final int voteId;
-  const MakeSolutionUpvoteSuccessAction({required this.solutionId,required this.voteId});
+  final int upvoteId;
+  final int downvoteId;
+
+  const MakeSolutionUpvoteSuccessAction({
+    required this.solutionId,
+    required this.upvoteId,
+    required this.downvoteId
+  });
 }
 @immutable 
 class RemoveSolutionUpvoteAction extends redux.Action{
@@ -105,10 +111,12 @@ class MakeSolutionDownvoteAction extends redux.Action{
 @immutable
 class MakeSolutionDownvoteSuccessAction extends redux.Action{
   final int solutionId;
-  final int voteId;
+  final int upvoteId;
+  final int downvoteId;
   const MakeSolutionDownvoteSuccessAction({
     required this.solutionId,
-    required this.voteId,
+    required this.upvoteId,
+    required this.downvoteId
   });
 }
 @immutable
