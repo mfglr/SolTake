@@ -77,7 +77,7 @@ void getFirstPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextD
   if(action is GetFirstPageSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, state.questions.next)
+      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, const Page(isDescending: true,offset: null,take: questionsPerPage))
       .then((questions){
         store.dispatch(AddFirstPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

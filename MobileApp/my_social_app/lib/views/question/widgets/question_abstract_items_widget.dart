@@ -4,7 +4,6 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/views/question/widgets/no_question_abstract_items_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class QuestionAbstractItemsWidget extends StatefulWidget {
   final Iterable<QuestionState> questions;
@@ -49,9 +48,13 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
 
   @override
   Widget build(BuildContext context) {
-    if(widget.pagination.isLast && widget.pagination.ids.isEmpty) return const NoQuestionAbstractItemsWidget();
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        if(widget.pagination.isLast && widget.pagination.ids.isEmpty)
+          const Expanded(
+            child: NoQuestionAbstractItemsWidget()
+          ),
         Expanded(
           child: GridView.builder(
             controller: _scrollController,
@@ -65,12 +68,8 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
             )
           ),
         ),
-        Builder(
-          builder: (context){
-            if(widget.pagination.loadingNext) return const LoadingCircleWidget(strokeWidth: 3);
-            return const SpaceSavingWidget();
-          }
-        )
+        if(widget.pagination.loadingNext)
+          const LoadingCircleWidget(strokeWidth: 3)
       ],
     );
   }
