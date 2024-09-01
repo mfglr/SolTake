@@ -37,8 +37,8 @@ SearchState changeSubjectIdReducer(SearchState prev,ChangeSearchSubjectIdAction 
   => prev.changeSubjectId(action.subjectId);
 SearchState changeTopicIdReducer(SearchState prev,ChangeSearchTopicIdAction action)
   => prev.changeTopicId(action.topicId);
-SearchState clearSearchingReducer(SearchState prev,ClearKeyAction action)
-  => prev.clear();
+SearchState clearKeyReducer(SearchState prev,ClearKeyAction action)
+  => prev.clearKey();
 
 Reducer<SearchState> searchStateReducers = combineReducers<SearchState>([
   TypedReducer<SearchState,GetFirstPageSearchingUsersAction>(getFirstPageUserReducer).call,
@@ -60,5 +60,5 @@ Reducer<SearchState> searchStateReducers = combineReducers<SearchState>([
   TypedReducer<SearchState,ChangeSearchExamIdAction>(changeExamIdReducer).call,
   TypedReducer<SearchState,ChangeSearchSubjectIdAction>(changeSubjectIdReducer).call,
   TypedReducer<SearchState,ChangeSearchTopicIdAction>(changeTopicIdReducer).call,
-  TypedReducer<SearchState,ClearKeyAction>(clearSearchingReducer).call,
+  TypedReducer<SearchState,ClearKeyAction>(clearKeyReducer).call,
 ]);

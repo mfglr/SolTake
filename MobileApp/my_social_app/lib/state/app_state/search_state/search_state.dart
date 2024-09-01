@@ -6,8 +6,6 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 class SearchState{
   final int activePage;
   final String key;
-  final String userKey;
-  final String questionKey;
   final int? examId;
   final int? subjectId;
   final int? topicId;
@@ -18,8 +16,6 @@ class SearchState{
   const SearchState({
     required this.activePage,
     required this.key,
-    required this.questionKey,
-    required this.userKey,
     required this.examId,
     required this.subjectId,
     required this.topicId,
@@ -32,8 +28,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -45,8 +39,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -58,8 +50,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -72,8 +62,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId:
         subjectId,
@@ -86,8 +74,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId, 
@@ -99,8 +85,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -112,8 +96,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -121,14 +103,11 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers.removeOne(searchId)
       );
-    
 
   SearchState startLoadingQuestions()
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -140,8 +119,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -153,8 +130,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -167,8 +142,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: activePage ==  0 ? key : questionKey,
-        userKey: activePage ==  1 ? key : userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -180,8 +153,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: activePage ==  0 ? key : questionKey,
-        userKey: activePage ==  1 ? key : userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -193,8 +164,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: null,
         topicId: null,
@@ -206,8 +175,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: null,
@@ -219,8 +186,6 @@ class SearchState{
     => SearchState(
         activePage: activePage,
         key: key,
-        questionKey: questionKey,
-        userKey: userKey,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
@@ -228,12 +193,10 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers
       );
-  SearchState clear()
+  SearchState clearKey()
     => SearchState(
         activePage: activePage,
         key: "",
-        questionKey: "",
-        userKey: "",
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
