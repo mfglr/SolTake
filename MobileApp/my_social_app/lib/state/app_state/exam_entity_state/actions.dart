@@ -3,15 +3,6 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 
 @immutable
-class GetAllExamsAction extends redux.Action{
-  const GetAllExamsAction();
-}
-@immutable
-class AddAllExamsAction extends redux.Action{
-  final Iterable<ExamState> exams;
-  const AddAllExamsAction({required this.exams});
-}
-@immutable
 class AddExamAction extends redux.Action{
   final ExamState exam;
   const AddExamAction({required this.exam});

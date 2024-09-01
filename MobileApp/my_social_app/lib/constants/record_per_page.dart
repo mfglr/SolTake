@@ -6,3 +6,4 @@ const usersPerPage = 8;
 const solutionsPerPage = 12;
 const questionsPerPage = 16;
 const subjectsPerPage = 150;
+const examsPerPage = 20;

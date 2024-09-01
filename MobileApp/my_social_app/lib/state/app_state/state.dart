@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/create_message_state/create_messag
 import 'package:my_social_app/state/app_state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/app_state/create_solution_state/create_solution_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
+import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
@@ -31,6 +32,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart'
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
 import "package:collection/collection.dart";
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 
 enum ActiveLoginPage{
   loginPage,
@@ -65,7 +67,8 @@ class AppState{
   final QuestionEntityState questionEntityState;
   final QuestionUserLikeEntityState questionUserLikeEntityState;
   final SolutionUserVoteEntityState solutionUserVoteEntityState;
-  
+  final Pagination exams;
+
   const AppState({
     required this.accessToken,
     required this.accountState,
@@ -93,6 +96,7 @@ class AppState{
     required this.questionEntityState,
     required this.questionUserLikeEntityState,
     required this.solutionUserVoteEntityState,
+    required this.exams
   });
 
   //select messages
@@ -195,6 +199,9 @@ class AppState{
     => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
     => commentEntityState.entities[commentId]!.replies.merge(id).map((e) => commentEntityState.entities[e]!);
+
+  //select exams
+  Iterable<ExamState> get selectExams => exams.ids.map((e) => examEntityState.entities[e]!);
 
   //Select Subjects
   Iterable<SubjectState> get subjectsOfSelectedExam 

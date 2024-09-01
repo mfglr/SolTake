@@ -1,4 +1,3 @@
-import 'package:my_social_app/services/exam_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/subject_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
@@ -45,16 +44,6 @@ void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispat
   next(action);
 }
 
-void getAllExamsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetAllExamsAction){
-    if(!store.state.examEntityState.isLoading && !store.state.examEntityState.isLast){
-      ExamService()
-        .getAll()
-        .then((exams) => store.dispatch(AddAllExamsAction(exams: exams.map((e) => e.toExamState()))));
-    }
-  }
-  next(action);
-}
 
 void getSubjectsOfSelectedExamMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetSubjectsOfSelectedExamAction){

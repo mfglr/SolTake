@@ -31,3 +31,23 @@ class InitAppAction extends Action{
 class ApplicationSuccessfullyInitAction extends Action{
   const ApplicationSuccessfullyInitAction();
 }
+
+
+@immutable
+class GetNextPageExamsIfNoPageAction extends Action{
+  const GetNextPageExamsIfNoPageAction();
+}
+@immutable
+class GetNextPageExamsIfReadyAction extends Action{
+  const GetNextPageExamsIfReadyAction();
+}
+@immutable
+class GetNextPageExamsAction extends Action{
+  const GetNextPageExamsAction();
+}
+@immutable
+class AddNextPageExamsAction extends Action{
+  final Iterable<int> examIds;
+  const AddNextPageExamsAction({required this.examIds});
+}
+

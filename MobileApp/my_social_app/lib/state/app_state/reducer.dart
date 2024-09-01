@@ -23,6 +23,8 @@ import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:redux/redux.dart';
 
 ActiveLoginPage changeActiveLoginPageReducer(ActiveLoginPage oldState,Action action)
   => action is ChangeActiveLoginPageAction ? action.payload : oldState;
@@ -33,6 +35,17 @@ String? changeAccessTokenReducer(String? oldState,Action action)
 bool appSuccessfullyInitReducer(bool oldState,Action action){
   return action is ApplicationSuccessfullyInitAction ? true : oldState;
 }
+
+//exams reducers//
+Pagination getNextPageExamsReducer(Pagination prev,GetNextPageExamsAction action)
+  => prev.startLoadingNext();
+Pagination addNextPageExamsReducer(Pagination prev,AddNextPageExamsAction action)
+  => prev.addNextPage(action.examIds);
+
+Reducer<Pagination> examsReducers = combineReducers<Pagination>([
+  TypedReducer<Pagination,GetNextPageExamsAction>(getNextPageExamsReducer).call,
+  TypedReducer<Pagination,AddNextPageExamsAction>(addNextPageExamsReducer).call,
+]);
 
 AppState appReducer(AppState prev,action) => AppState(
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
@@ -60,6 +73,7 @@ AppState appReducer(AppState prev,action) => AppState(
   followEntityState: followEntityReducers(prev.followEntityState,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
   questionUserLikeEntityState: questionUserLikeEntityReducers(prev.questionUserLikeEntityState,action),
-  solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action)
+  solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
+  exams: examsReducers(prev.exams,action)
 );
 

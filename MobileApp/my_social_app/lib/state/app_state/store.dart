@@ -62,7 +62,7 @@ final store = Store(
     ),
     createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     createSolutionState: const CreateSolutionState(questionId: null, content: "", images: []),
-    examEntityState: const ExamEntityState(entities: {}, isLast: false,isLoading: false),
+    examEntityState: const ExamEntityState(entities: {}),
     subjectEntityState: const SubjectEntityState(entities: {}),
     topicEntityState: const TopicEntityState(entities: {}),
     solutionEntityState: const SolutionEntityState(entities: {}),
@@ -78,9 +78,16 @@ final store = Store(
     followEntityState: const FollowEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
     questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
-    solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {})
+    solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
+    exams: Pagination.init(examsPerPage, true)
   ),
   middleware: [
+
+    //exams middlewares
+    getNextPageExamsIfNoPageMiddleware,
+    getNextPageExamsIfReadyMiddleware,
+    getNextPageExamsMidleware,
+    //
 
     //Comment entity state middleware
     getNextPageCommentLikesIfNoPageMiddleware,
@@ -170,11 +177,9 @@ final store = Store(
     getFirstPageSearchingQuestionsMiddleware,
     getNextPageSearchingQuestionsIfReadyMiddleare,
     getNextPageSearchingQuestionsMiddleware,
-
     //search end
     
     //Exam entity state
-    getAllExamsMiddleware,
     getSubjectsOfSelectedExamMiddleware,
     getExamSubjectsMiddleware,
     getNextPageExamQeuestionsMiddleware,

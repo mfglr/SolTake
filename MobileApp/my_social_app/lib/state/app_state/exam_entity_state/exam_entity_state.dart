@@ -4,59 +4,24 @@ import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart'
 
 @immutable
 class ExamEntityState extends EntityState<ExamState>{
-  final bool isLoading;
-  final bool isLast;
-  const ExamEntityState({
-    required super.entities,
-    required this.isLoading,
-    required this.isLast
-  });
+  
+  const ExamEntityState({required super.entities});
 
   ExamEntityState getNextPageQuestions(int examId)
-    => ExamEntityState(
-      entities: updateOne(entities[examId]!.getNextPageQuestions()),
-      isLoading: isLoading,
-      isLast: isLast
-    );
+    => ExamEntityState(entities: updateOne(entities[examId]!.getNextPageQuestions()));
   ExamEntityState addNextPageQuestions(int examId, Iterable<int> questionIds)
-    => ExamEntityState(
-        entities: updateOne(entities[examId]?.addNextPageQuestions(questionIds)),
-        isLoading: isLoading,
-        isLast: isLast
-      );
+    => ExamEntityState(entities: updateOne(entities[examId]?.addNextPageQuestions(questionIds)));
 
   ExamEntityState getAllExams()
-    => ExamEntityState(
-        entities: entities,
-        isLoading: true,
-        isLast: isLast
-      );
+    => ExamEntityState(entities: entities);
   ExamEntityState addAllExams(Iterable<ExamState> exams)
-    => ExamEntityState(
-        entities: appendMany(exams),
-        isLoading: false,
-        isLast: true,
-      );
+    => ExamEntityState(entities: appendMany(exams));
   ExamEntityState addExam(ExamState exam)
-    => ExamEntityState(
-        entities: appendOne(exam),
-        isLoading: isLoading,
-        isLast: isLast
-      );
+    => ExamEntityState(entities: appendOne(exam));
   ExamEntityState addExams(Iterable<ExamState> exams)
-    => ExamEntityState(
-        entities: appendMany(exams),
-        isLoading: isLoading,
-        isLast: isLast,
-      );
+    => ExamEntityState(entities: appendMany(exams));
 
   ExamEntityState loadExamSubjects(int examId,Iterable<int> ids)
-    => ExamEntityState(
-        entities: updateOne(entities[examId]!.addNextPageSubjects(ids)),
-        isLoading: isLoading,
-        isLast: isLast,
-      );
-
-  Iterable<ExamState> get exams => entities.values;
+    => ExamEntityState(entities: updateOne(entities[examId]!.addNextPageSubjects(ids)));
 }
 

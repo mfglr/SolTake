@@ -1,1 +1,1 @@
-const getAllExams = "getAll";
+const getExamsEndpoint = "getExams";

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Queries.ExamAggregate;
-using MySocailApp.Application.Queries.ExamAggregate.GetAll;
+using MySocailApp.Application.Queries.ExamAggregate.GetExams;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -18,7 +18,7 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpGet]
-        public async Task<List<ExamResponseDto>> GetAll(CancellationToken cancellationToken)
-            => await _mediator.Send(new GetAllExamsDto(), cancellationToken);
+        public async Task<List<ExamResponseDto>> GetExams(CancellationToken cancellationToken, [FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending)
+            => await _mediator.Send(new GetExamsDto(offset,take,isDescending), cancellationToken);
     }
 }

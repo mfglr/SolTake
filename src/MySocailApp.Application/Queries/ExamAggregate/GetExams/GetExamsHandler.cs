@@ -2,14 +2,14 @@
 using MediatR;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 
-namespace MySocailApp.Application.Queries.ExamAggregate.GetAll
+namespace MySocailApp.Application.Queries.ExamAggregate.GetExams
 {
-    public class GetAllExamsHandler(IMapper mapper, IExamReadRepository repository) : IRequestHandler<GetAllExamsDto, List<ExamResponseDto>>
+    public class GetExamsHandler(IMapper mapper, IExamReadRepository repository) : IRequestHandler<GetExamsDto, List<ExamResponseDto>>
     {
         private readonly IMapper _mapper = mapper;
         private readonly IExamReadRepository _repository = repository;
 
-        public async Task<List<ExamResponseDto>> Handle(GetAllExamsDto request, CancellationToken cancellationToken)
+        public async Task<List<ExamResponseDto>> Handle(GetExamsDto request, CancellationToken cancellationToken)
             => _mapper.Map<List<ExamResponseDto>>(await _repository.GetAllAsync(cancellationToken));
     }
 }
