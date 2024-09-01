@@ -1,12 +1,13 @@
-﻿namespace MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote
+﻿namespace MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote
 {
-    public class MakeUpvoteCommandResponseDto
+    public class MakeDownvoteCommandResponseDto
     {
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public int SolutionId { get; private set; }
         public int AppUserId { get; private set; }
+        
+        private MakeDownvoteCommandResponseDto() { }
 
-        private MakeUpvoteCommandResponseDto() { }
     }
 }

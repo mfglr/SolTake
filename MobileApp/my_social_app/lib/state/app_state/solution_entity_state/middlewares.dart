@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
+import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
@@ -38,7 +39,6 @@ void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher nex
   }
   next(action);
 }
-
 void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveSolutionAction){
     final question = store.state.questionEntityState.entities[action.solution.questionId];
@@ -57,35 +57,128 @@ void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void makeUpvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MakeUpvoteAction){
+void getNextPageSolutionUpvotesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionUpvotesIfNoPageAction){
+    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.upvotes;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageSolutionUpvotesAction(solutionId: action.solutionId));
+    }
+  }
+  next(action);
+}
+void getNextPageSolutionUpvotesIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionUpvotesIfReadyAction){
+    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.upvotes;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageSolutionUpvotesAction(solutionId: action.solutionId));
+    }
+  }
+  next(action);
+}
+void getNextPageSolutionUpvotesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionUpvotesAction){
+    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.upvotes;
+    SolutionService()
+      .getSolutionUpvotes(action.solutionId, pagination.next)
+      .then((votes){
+        store.dispatch(AddSolutionUserVotesAction(votes: votes.map((e) => e.toSolutionUserVoteState())));
+        store.dispatch(AddUsersAction(users: votes.map((e) => e.appUser!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: votes.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddNextPageSolutionUpvatesAction(solutionId: action.solutionId, voteIds: votes.map((e) => e.id)));
+      });
+  }
+  next(action);
+}
+void makeSolutionUpvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MakeSolutionUpvoteAction){
+    final accountId = store.state.accountState!.id;
     SolutionService()
       .makeUpvote(action.solutionId)
-      .then((_) => store.dispatch(MakeUpvoteSuccessAction(solutionId: action.solutionId)));
+      .then((vote){
+        final downvote = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId);
+        if(downvote != null){
+          store.dispatch(RemoveSolutionDownvoteSuccessAction(solutionId: action.solutionId, voteId: downvote.id));
+          store.dispatch(RemoveSolutionUserVoteAction(voteId: downvote.id));
+        }
+        store.dispatch(AddSolutionUserVoteAction(vote: vote.toSolutionUserVoteState()));
+        store.dispatch(MakeSolutionUpvoteSuccessAction(solutionId: action.solutionId,voteId: vote.id));
+      });
   }
   next(action);
 }
-void makeDownvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MakeDownvoteAction){
-    SolutionService()
-      .makeDownvote(action.solutionId)
-      .then((_) => store.dispatch(MakeDownvoteSuccessAction(solutionId: action.solutionId)));
-  }
-  next(action);
-}
-void removeUpvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
-  if(action is RemoveUpvoteAction){
+void removeSolutionUpvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is RemoveSolutionUpvoteAction){
+    final accountId = store.state.accountState!.id;
     SolutionService()
       .removeUpvote(action.solutionId)
-      .then((_) => store.dispatch(RemoveUpvoteSuccessAction(solutionId: action.solutionId)));
+      .then((_){
+        final voteId = store.state.solutionUserVoteEntityState.select(action.solutionId, accountId)?.id ?? -1;
+        store.dispatch(RemoveSolutionUpvoteSuccessAction(solutionId: action.solutionId,voteId: voteId));
+        store.dispatch(RemoveSolutionUserVoteAction(voteId: voteId));
+      });
   }
   next(action);
 }
-void removeDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
-  if(action is RemoveDownvoteAction){
+
+void getNextSolutionPageDownvotesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionDownvotesIfNoPageAction){
+    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.downvotes;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageSolutionDownvotesAction(solutionId: action.solutionId));
+    }
+  }
+  next(action);
+}
+void getNextPageSolutionDownvotesIfReady(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionDownvotesIfReadyAction){
+    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.downvotes;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageSolutionDownvotesAction(solutionId: action.solutionId));
+    }
+  }
+  next(action);
+}
+void getNextPageDownvotesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSolutionDownvotesAction){
+    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.downvotes;
+    SolutionService()
+      .getSolutionDownvotes(action.solutionId, pagination.next)
+      .then((votes){
+        store.dispatch(AddSolutionUserVotesAction(votes: votes.map((e) => e.toSolutionUserVoteState())));
+        store.dispatch(AddUsersAction(users: votes.map((e) => e.appUser!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: votes.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddNextPageSolutionDownvotesAction(solutionId: action.solutionId, voteIds: votes.map((e) => e.id)));
+      });
+  }
+  next(action);
+}
+void makeSolutionDownvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MakeSolutionDownvoteAction){
+    final accountId = store.state.accountState!.id;
+    SolutionService()
+      .makeDownvote(action.solutionId)
+      .then((vote){
+        final upvote = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId);
+        if(upvote != null){
+          store.dispatch(RemoveSolutionUpvoteSuccessAction(solutionId: action.solutionId, voteId: upvote.id));
+          store.dispatch(RemoveSolutionUserVoteAction(voteId: upvote.id));
+        }
+        store.dispatch(AddSolutionUserVoteAction(vote: vote.toSolutionUserVoteState()));
+        store.dispatch(MakeSolutionDownvoteSuccessAction(solutionId: action.solutionId,voteId: vote.id));
+      });
+  }
+  next(action);
+}
+void removeSolutionDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is RemoveSolutionDownvoteAction){
+    final accountId = store.state.accountState!.id;
     SolutionService()
       .removeDownvote(action.solutionId)
-      .then((_) => store.dispatch(RemoveDownvoteSuccessAction(solutionId: action.solutionId)));
+      .then((_){
+        final voteId = store.state.solutionUserVoteEntityState.select(action.solutionId, accountId)?.id ?? 0;
+        store.dispatch(RemoveSolutionDownvoteSuccessAction(solutionId: action.solutionId, voteId: voteId));
+        store.dispatch(RemoveSolutionUserVoteAction(voteId: voteId));
+      });
   }
   next(action);
 }

@@ -44,11 +44,12 @@ namespace MySocailApp.Api.Controllers
         public async Task<MakeUpvoteCommandResponseDto> MakeUpvote(MakeUpvoteDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request,cancellationToken);
         [HttpDelete("{solutionId}")]
-        public async Task MakeDownvote(int solutionId, CancellationToken cancellationToken)
-            => await _mediator.Send(new MakeDownvoteDto(solutionId), cancellationToken);
-        [HttpDelete("{solutionId}")]
         public async Task RemoveUpvote(int solutionId, CancellationToken cancellationToken)
             => await _mediator.Send(new RemoveUpvoteDto(solutionId), cancellationToken);
+
+        [HttpPost]
+        public async Task<MakeDownvoteCommandResponseDto> MakeDownvote(MakeDownvoteDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
         [HttpDelete("{solutionId}")]
         public async Task RemoveDownvote(int solutionId, CancellationToken cancellationToken)
             => await _mediator.Send(new RemoveDownvoteDto(solutionId), cancellationToken);

@@ -15,6 +15,7 @@ class Solution{
   final DateTime? updatedAt;
   final int questionId;
   final int appUserId;
+  final bool isOwner;
   final String userName;
   final String? content;
   final bool isUpvoted;
@@ -31,6 +32,7 @@ class Solution{
     required this.updatedAt,
     required this.questionId,
     required this.appUserId,
+    required this.isOwner,
     required this.userName,
     required this.content,
     required this.isUpvoted,
@@ -50,17 +52,20 @@ class Solution{
       id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      state: state,
       questionId: questionId,
       appUserId: appUserId,
+      isOwner: isOwner,
       userName: userName,
       content: content,
-      isUpvoted: isUpvoted,
-      numberOfUpvotes: numberOfUpvotes,
-      isDownvoted: isDownvoted,
-      numberOfDownvotes: numberOfDownvotes,
       images: images.map((e) => e.toSolutionImageState()),
       numberOfComments: numberOfComments,
-      comments: Pagination.init(solutionsPerPage,true),
-      state: state,
+      comments: Pagination.init(commentsPerPage,true),
+      isUpvoted: isUpvoted,
+      numberOfUpvotes: numberOfUpvotes,
+      upvotes: Pagination.init(usersPerPage, true),
+      isDownvoted: isDownvoted,
+      numberOfDownvotes: numberOfDownvotes,
+      downvotes: Pagination.init(usersPerPage,true)
     );
 }

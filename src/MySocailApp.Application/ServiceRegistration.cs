@@ -22,7 +22,6 @@ namespace MySocailApp.Application
 
                     cfg.AddProfile(new UserMappers(reader));
                     cfg.AddProfile(new QuestionMappers(reader));
-                    cfg.AddProfile(new SolutionMappers(reader));
                     cfg.AddProfile(new CommentMappers(reader));
                 })
                 .AddAutoMapper(assembly)

@@ -6,8 +6,8 @@ import 'package:my_social_app/state/app_state/user_entity_state/gender.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 part "user.g.dart";
 
-@JsonSerializable()
 @immutable
+@JsonSerializable()
 class User{
   final int id;
   final DateTime createdAt;

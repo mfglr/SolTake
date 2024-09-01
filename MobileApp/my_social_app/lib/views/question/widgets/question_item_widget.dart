@@ -75,7 +75,7 @@ class QuestionItemWidget extends StatelessWidget {
           ),
           QuestionImagesSlider(question: question),
           Padding(
-            padding: const EdgeInsets.only(left:5,right: 5),
+            padding: const EdgeInsets.only(left:12,right: 12,top: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

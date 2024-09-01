@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_image_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -10,16 +9,19 @@ class SolutionState{
   final DateTime? updatedAt;
   final int questionId;
   final int appUserId;
+  final bool isOwner;
   final String userName;
   final String? content;
   final bool isUpvoted;
   final int numberOfUpvotes;
   final bool isDownvoted;
+  final Pagination upvotes;
+  final Pagination downvotes;
   final int numberOfDownvotes;
+  final int state;
   final Iterable<SolutionImageState> images;
   final int numberOfComments;
   final Pagination comments;
-  final int state;
 
   const SolutionState({
     required this.id,
@@ -27,6 +29,7 @@ class SolutionState{
     required this.updatedAt,
     required this.questionId,
     required this.appUserId,
+    required this.isOwner,
     required this.userName,
     required this.content,
     required this.isUpvoted,
@@ -36,230 +39,114 @@ class SolutionState{
     required this.images,
     required this.numberOfComments,
     required this.comments,
-    required this.state
+    required this.state,
+    required this.upvotes,
+    required this.downvotes
   });
 
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
 
-  SolutionState makeUpvote()
+  SolutionState _optinal({
+    String? newUserName,
+    String? newContent,
+    bool? newIsUpvoted,
+    int? newNumberOfUpvotes,
+    bool? newIsDownvoted,
+    int? newNumberOfDownvotes,
+    Pagination? newComments,
+    Iterable<SolutionImageState>? newImages,
+    int? newNumberOfComments,
+    int? newState,
+    Pagination? newUpvotes,
+    Pagination? newDownvotes
+  })
     => SolutionState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         questionId: questionId,
         appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: true,
-        numberOfUpvotes: numberOfUpvotes + 1,
-        isDownvoted: false,
-        numberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: state,
+        isOwner: isOwner,
+        userName: newUserName ?? userName,
+        content: newContent ?? content,
+        isUpvoted: newIsUpvoted ?? isUpvoted,
+        numberOfUpvotes: newNumberOfUpvotes ?? numberOfUpvotes,
+        isDownvoted: newIsDownvoted ?? isDownvoted,
+        numberOfDownvotes: newNumberOfDownvotes ?? numberOfDownvotes,
+        images: newImages ?? images,
+        numberOfComments: newNumberOfComments ?? numberOfComments,
+        comments: newComments ?? comments,
+        state: newState ?? state,
+        upvotes: newUpvotes ?? upvotes,
+        downvotes: newDownvotes ?? downvotes
       );
-  SolutionState makeDownvote()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: false,
-        numberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
-        isDownvoted: true,
-        numberOfDownvotes: numberOfDownvotes + 1,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: state,
-      );
-  SolutionState removeUpvote()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: false,
-        numberOfUpvotes: numberOfUpvotes - 1,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: state,
-      );
-  SolutionState removeDownvote()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: false,
-        numberOfDownvotes: numberOfDownvotes - 1,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: state,
-      );
+
+  SolutionState startLoadingNextUpvotes()
+    => _optinal(newUpvotes: upvotes.startLoadingNext());
+  SolutionState addNextPageUpvotes(Iterable<int> voteIds)
+    => _optinal(newUpvotes: upvotes.addNextPage(voteIds));
+  SolutionState makeUpvote(int voteId)
+    => _optinal(
+      newIsUpvoted: true,
+      newNumberOfUpvotes: numberOfUpvotes + 1,
+      newUpvotes: upvotes.prependOne(voteId),
+      newIsDownvoted: false,
+      newNumberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
+      newDownvotes: isDownvoted ? downvotes.removeOne(voteId) : downvotes,
+    ); 
+  SolutionState removeUpvote(int voteId)
+    => _optinal(
+      newIsUpvoted: false,
+      newNumberOfUpvotes: numberOfUpvotes - 1,
+      newUpvotes: upvotes.removeOne(voteId)
+    );
+
+  SolutionState startLoadingNextDownvotes()
+    => _optinal(newDownvotes: downvotes.startLoadingNext());
+  SolutionState addNextPageDownvotes(Iterable<int> voteIds)
+    => _optinal(newDownvotes: downvotes.addNextPage(voteIds));
+  SolutionState makeDownvote(int voteId)
+    => _optinal(
+      newIsDownvoted: true,
+      newNumberOfDownvotes: numberOfDownvotes + 1,
+      newDownvotes: downvotes.prependOne(voteId),
+    );
+  SolutionState removeDownvote(int voteId)
+    => _optinal(
+      newIsDownvoted: false,
+      newNumberOfDownvotes: numberOfDownvotes - 1,
+      newDownvotes: downvotes.removeOne(voteId)
+    );
+  
 
   SolutionState getNextPageComments()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments.startLoadingNext(),
-        state: state,
-      );
+    => _optinal(newComments: comments.startLoadingNext());
   SolutionState addNextPageComments(Iterable<int> commentIds)
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments.addNextPage(commentIds),
-        state: state,
-      );
+    => _optinal(newComments: comments.addNextPage(commentIds),);
   SolutionState addComment(int commentId)
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments + 1,
-        comments: comments.prependOne(commentId),
-        state: state,
-      );
+    => _optinal(
+      newNumberOfComments: numberOfComments + 1,
+      newComments: comments.prependOne(commentId),
+    );
   SolutionState removeComment(int commentId)
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments - 1,
-        comments: comments.removeOne(commentId),
-        state: state,
-      );
+    => _optinal(
+      newNumberOfComments: numberOfComments - 1,
+      newComments: comments.removeOne(commentId),
+    );
 
   SolutionState startLoadingImage(int index)
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: [...images.take(index),images.elementAt(index).startLoading(),...images.skip(index + 1)],
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: state,
-      );
+    => _optinal(
+      newImages: [...images.take(index),images.elementAt(index).startLoading(),...images.skip(index + 1)],
+    );
   SolutionState loadImage(int index,Uint8List image)
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)],
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: state,
+    => _optinal(
+        newImages: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)],
       );
 
   SolutionState markAsCorrect()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: SolutionStatus.correct
-      );
+    => _optinal(newState: SolutionStatus.correct);
   SolutionState markAsIncorrect()
-    => SolutionState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        questionId: questionId,
-        appUserId: appUserId,
-        userName: userName,
-        content: content,
-        isUpvoted: isUpvoted,
-        numberOfUpvotes: numberOfUpvotes,
-        isDownvoted: isDownvoted,
-        numberOfDownvotes: numberOfDownvotes,
-        images: images,
-        numberOfComments: numberOfComments,
-        comments: comments,
-        state: SolutionStatus.incorrect
-      );  
+    => _optinal(newState: SolutionStatus.incorrect);  
 
 }

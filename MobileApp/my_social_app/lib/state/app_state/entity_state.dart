@@ -13,9 +13,7 @@ class EntityState<T extends dynamic> {
     return entities;
   }
   Map<int,T> appendOne(T value){
-    if(this.entities[value.id] != null){
-      return this.entities;
-    }
+    if(this.entities[value.id] != null) return this.entities;
     final Map<int,T> entities = {};
     entities.addAll(this.entities);
     entities.addEntries([MapEntry(value.id, value)]);

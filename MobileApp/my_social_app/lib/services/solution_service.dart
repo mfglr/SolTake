@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/models/solution.dart';
+import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
@@ -33,24 +34,38 @@ class SolutionService{
     
     return Solution.fromJson(json);
   }
-
   Future<void> delete(int solutionId) => 
-    _appClient.delete(
-      "$solutionController/$deleteSolutionEndpoint/$solutionId"
-    );
+    _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");
+  
 
-  Future<void> makeUpvote(int solutionId) =>
-    _appClient.post(
-      "$solutionController/$makeUpvoteEndpoint",
-      body: {'solutionId': solutionId}
-    );
-  
-  Future<void> makeDownvote(int solutionId) =>
-    _appClient.delete("$solutionController/$makeDownvoteEndpoint/$solutionId");
-  
+  Future<Iterable<SolutionUserVote>> getSolutionUpvotes(int solutionId,Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionUpvotesEndpoint/$solutionId", page))
+      .then((json) => json as List)
+      .then((list) => list.map((e) => SolutionUserVote.fromJson(e)));
+  Future<SolutionUserVote> makeUpvote(int solutionId) =>
+    _appClient
+      .post(
+        "$solutionController/$makeUpvoteEndpoint",
+        body: {'solutionId': solutionId}
+      )
+      .then((json) => SolutionUserVote.fromJson(json));
   Future<void> removeUpvote(int solutionId) =>
     _appClient.delete("$solutionController/$removeUpvoteEndpoint/$solutionId");
 
+  
+  Future<Iterable<SolutionUserVote>> getSolutionDownvotes(int solutionId,Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionDownvotesEndpoint/$solutionId", page))
+      .then((json) => json as List)
+      .then((list) => list.map((e) => SolutionUserVote.fromJson(e)));
+  Future<SolutionUserVote> makeDownvote(int solutionId) =>
+    _appClient
+      .post(
+        "$solutionController/$makeDownvoteEndpoint",
+        body: {'solutionId': solutionId}
+      )
+      .then((json) => SolutionUserVote.fromJson(json));
   Future<void> removeDownvote(int solutionId) =>
     _appClient.delete("$solutionController/$removeDownvoteEndpoint/$solutionId");
 

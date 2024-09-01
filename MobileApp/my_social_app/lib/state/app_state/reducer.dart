@@ -16,6 +16,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/reducers.dar
 import 'package:my_social_app/state/app_state/question_user_like_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
@@ -58,6 +59,7 @@ AppState appReducer(AppState prev,action) => AppState(
   userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
   followEntityState: followEntityReducers(prev.followEntityState,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
-  questionUserLikeEntityState: questionUserLikeEntityReducers(prev.questionUserLikeEntityState,action)
+  questionUserLikeEntityState: questionUserLikeEntityReducers(prev.questionUserLikeEntityState,action),
+  solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action)
 );
 

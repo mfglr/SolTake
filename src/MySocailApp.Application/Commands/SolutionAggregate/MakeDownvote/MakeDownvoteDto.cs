@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote
 {
-    public record MakeDownvoteDto(int SolutionId) : IRequest;
+    public record MakeDownvoteDto(int SolutionId) : IRequest<MakeDownvoteCommandResponseDto>;
 }

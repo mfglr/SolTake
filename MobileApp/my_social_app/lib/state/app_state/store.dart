@@ -24,6 +24,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_entit
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
@@ -76,8 +77,8 @@ final store = Store(
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
-    questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {})
-
+    questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
+    solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {})
   ),
   middleware: [
 
@@ -230,10 +231,20 @@ final store = Store(
     createSolutionMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
-    makeUpvoteMiddleware,
-    makeDownvoteMiddleware,
-    removeUpvoteMiddleware,
-    removeDownvoteMiddleware,
+
+    getNextPageSolutionUpvotesIfNoPageMiddleware,
+    getNextPageSolutionUpvotesIfReadyMiddleware,
+    getNextPageSolutionUpvotesMiddleware,
+    makeSolutionUpvoteMiddleware,
+    removeSolutionUpvoteMiddleware,
+
+    getNextSolutionPageDownvotesIfNoPageMiddleware,
+    getNextPageSolutionDownvotesIfReady,
+    getNextPageDownvotesMiddleware,
+    makeSolutionDownvoteMiddleware,
+    removeSolutionDownvoteMiddleware,
+   
+    
     getNextPageSolutionCommentsIfNoPageMiddleware,
     getNextPageSolutionCommentsIfReadyMiddleware,
     getNextPageSolutionCommentsMiddleware,

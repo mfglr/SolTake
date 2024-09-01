@@ -7,10 +7,14 @@ const getIncorrectSolutionsByQuestionIdEndpoint = "GetIncorrectSolutionsByQuesti
 
 const createSolutionEndpoint = "Create";
 const deleteSolutionEndpoint = "Delete";
-const makeUpvoteEndpoint = "MakeUpvote";
+
+const getSolutionDownvotesEndpoint = "GetSolutionDownvotes";
 const makeDownvoteEndpoint = "MakeDownvote";
-const removeUpvoteEndpoint = "removeUpvote";
 const removeDownvoteEndpoint = "removeDownvote";
+
 const markSolutionAsCorrectEndpoint = "MarkAsCorrect";
 const markSolutionAsIncorrectEndpoint = "MarkAsIncorrect";
 
+const getSolutionUpvotesEndpoint = "GetSolutionUpvotes";
+const makeUpvoteEndpoint = "MakeUpvote";
+const removeUpvoteEndpoint = "removeUpvote";

@@ -9,14 +9,23 @@ SolutionEntityState addSolutionsReducer(SolutionEntityState prev, AddSolutionsAc
 SolutionEntityState removeSolutionReducer(SolutionEntityState prev,RemoveSolutionSuccessAction action)
   => SolutionEntityState(entities: prev.removeOne(action.solutionId));
 
-SolutionEntityState makeUpvoteReducer(SolutionEntityState prev,MakeUpvoteSuccessAction action)
-  => prev.makeUpvote(action.solutionId);
-SolutionEntityState makeDownvoteReducer(SolutionEntityState prev,MakeDownvoteSuccessAction action)
-  => prev.makeDownvote(action.solutionId);
-SolutionEntityState removeUpvoteReducer(SolutionEntityState prev,RemoveUpvoteSuccessAction action)
-  => prev.removeUpvote(action.solutionId);
-SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveDownvoteSuccessAction action)
-  => prev.removeDownvote(action.solutionId);
+SolutionEntityState getNextPageUpvotesReducer(SolutionEntityState prev,GetNextPageSolutionUpvotesAction action)
+  => prev.startLoadinNextUpvotes(action.solutionId);
+SolutionEntityState addNextPageUpvotesReducer(SolutionEntityState prev,AddNextPageSolutionUpvatesAction action)
+  => prev.addNextPageUpvotes(action.solutionId, action.voteIds);
+SolutionEntityState makeUpvoteReducer(SolutionEntityState prev,MakeSolutionUpvoteSuccessAction action)
+  => prev.makeUpvote(action.solutionId,action.voteId);
+SolutionEntityState removeUpvoteReducer(SolutionEntityState prev,RemoveSolutionUpvoteSuccessAction action)
+  => prev.removeUpvote(action.solutionId,action.voteId);
+
+SolutionEntityState getNextPageDownvotesReducer(SolutionEntityState prev,GetNextPageSolutionDownvotesAction action)
+  => prev.starLoadingNextDownvotes(action.solutionId);
+SolutionEntityState addNextPageDownvotesReducer(SolutionEntityState prev,AddNextPageSolutionDownvotesAction action)
+  => prev.addNextPageDownvotes(action.solutionId, action.voteIds);
+SolutionEntityState makeDownvoteReducer(SolutionEntityState prev,MakeSolutionDownvoteSuccessAction action)
+  => prev.makeDownvote(action.solutionId,action.voteId);
+SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveSolutionDownvoteSuccessAction action)
+  => prev.removeDownvote(action.solutionId,action.voteId);
 
 
 SolutionEntityState getNextPageCommentsReducer(SolutionEntityState prev,GetNextPageSolutionCommentsAction action)
@@ -43,10 +52,15 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
   TypedReducer<SolutionEntityState,AddSolutionsAction>(addSolutionsReducer).call,
   TypedReducer<SolutionEntityState,RemoveSolutionSuccessAction>(removeSolutionReducer).call,
 
-  TypedReducer<SolutionEntityState,MakeUpvoteSuccessAction>(makeUpvoteReducer).call,
-  TypedReducer<SolutionEntityState,MakeDownvoteSuccessAction>(makeDownvoteReducer).call,
-  TypedReducer<SolutionEntityState,RemoveUpvoteSuccessAction>(removeUpvoteReducer).call,
-  TypedReducer<SolutionEntityState,RemoveDownvoteSuccessAction>(removeDownVoteAction).call,
+  TypedReducer<SolutionEntityState,GetNextPageSolutionUpvotesAction>(getNextPageUpvotesReducer).call,
+  TypedReducer<SolutionEntityState,AddNextPageSolutionUpvatesAction>(addNextPageUpvotesReducer).call,
+  TypedReducer<SolutionEntityState,MakeSolutionUpvoteSuccessAction>(makeUpvoteReducer).call,
+  TypedReducer<SolutionEntityState,RemoveSolutionUpvoteSuccessAction>(removeUpvoteReducer).call,
+
+  TypedReducer<SolutionEntityState,GetNextPageSolutionDownvotesAction>(getNextPageDownvotesReducer).call,
+  TypedReducer<SolutionEntityState,AddNextPageSolutionDownvotesAction>(addNextPageDownvotesReducer).call,
+  TypedReducer<SolutionEntityState,MakeSolutionDownvoteSuccessAction>(makeDownvoteReducer).call,
+  TypedReducer<SolutionEntityState,RemoveSolutionDownvoteSuccessAction>(removeDownVoteAction).call,
 
   TypedReducer<SolutionEntityState,GetNextPageSolutionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<SolutionEntityState,AddNextPageSolutionCommentsAction>(addNextPageCommentsReducer).call,
@@ -58,5 +72,4 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
 
   TypedReducer<SolutionEntityState,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
   TypedReducer<SolutionEntityState,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,
-
 ]);

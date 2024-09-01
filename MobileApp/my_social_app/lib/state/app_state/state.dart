@@ -21,6 +21,7 @@ import 'package:my_social_app/state/app_state/question_user_like_state/question_
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
@@ -63,7 +64,8 @@ class AppState{
   final UserSearchEntityState userSearchEntityState;
   final QuestionEntityState questionEntityState;
   final QuestionUserLikeEntityState questionUserLikeEntityState;
-
+  final SolutionUserVoteEntityState solutionUserVoteEntityState;
+  
   const AppState({
     required this.accessToken,
     required this.accountState,
@@ -90,6 +92,7 @@ class AppState{
     required this.followEntityState,
     required this.questionEntityState,
     required this.questionUserLikeEntityState,
+    required this.solutionUserVoteEntityState,
   });
 
   //select messages
@@ -141,6 +144,14 @@ class AppState{
   Iterable<UserState> selectCommentLikes(int commentId)
     => commentEntityState.entities[commentId]!.likes.ids.map(
       (e) => userEntityState.entities[commentUserLikeEntityState.entities[e]!.appUserId]!
+    );
+  Iterable<UserState> selectSolutionUpvotes(int solutionId)
+    => solutionEntityState.entities[solutionId]!.upvotes.ids.map(
+      (voteId) => userEntityState.entities[solutionUserVoteEntityState.entities[voteId]!.appUserId]!
+    );
+  Iterable<UserState> selectSolutionDownvotes(int solutionId)
+    => solutionEntityState.entities[solutionId]!.downvotes.ids.map(
+      (voteId) => userEntityState.entities[solutionUserVoteEntityState.entities[voteId]!.appUserId]!
     );
 
   //Select questions

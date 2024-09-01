@@ -4,9 +4,9 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/comment/modals/display_solution_comments_modal.dart';
 
-class SolutionCommentButtonWidget extends StatelessWidget {
+class SolutionCommentButton extends StatelessWidget {
   final SolutionState solution;
-  const SolutionCommentButtonWidget({super.key,required this.solution});
+  const SolutionCommentButton({super.key,required this.solution});
 
  void showCommentModal(BuildContext context){
     showModalBottomSheet<void>(
@@ -24,6 +24,11 @@ class SolutionCommentButtonWidget extends StatelessWidget {
         showCommentModal(context);
         store.dispatch(ChangeSolutionAction(solution: solution));
       },
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       child: Row(
         children: [
           Container(
