@@ -22,9 +22,15 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
   @override
   void initState() {
     _searchTextController = TextEditingController();
+    
     final store = StoreProvider.of<AppState>(context,listen: false);
     store.dispatch(const ChangeActivePageAction(page: 0));
     _searchTextController.text = store.state.searchState.key;
+
+    if(store.state.searchState.key == ""){
+      store.dispatch(const GetNextPageSearchedUsersIfNoPageAction());
+    }
+
     super.initState();
   }
 
@@ -67,7 +73,7 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
                   }
                 },
                 style: const TextStyle(
-                  fontSize: 10,
+                  fontSize: 14,
                 ),
                 decoration: InputDecoration(
                   hintText: "Search",
@@ -80,6 +86,7 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
                       _searchTextController.clear();
                       final store = StoreProvider.of<AppState>(context,listen: false);
                       store.dispatch(const ClearKeyAction());
+                      store.dispatch(const GetNextPageSearchedUsersIfNoPageAction());
                     },
                     icon: const Icon(Icons.clear),
                   ) : null,
