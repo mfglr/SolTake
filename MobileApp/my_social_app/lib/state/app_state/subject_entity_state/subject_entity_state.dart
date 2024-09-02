@@ -19,7 +19,10 @@ class SubjectEntityState extends EntityState<SubjectState>{
   SubjectEntityState addSubjects(Iterable<SubjectState> subjects)
     => SubjectEntityState(entities: appendMany(subjects));
 
-  
+  SubjectEntityState getPrevPageQuestions(int subjectId)
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.getPrevPageQuestions()));
+  SubjectEntityState addPrevPageQuestions(int subjectId,Iterable<int> questionIds)
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.addPrevPageQuestions(questionIds)));
 
   Iterable<SubjectState> getSubjectsByExamId(int? examId)
     => entities.values.where((x) => x.examId == examId);

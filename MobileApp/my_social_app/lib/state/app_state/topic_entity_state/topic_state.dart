@@ -22,7 +22,6 @@ class TopicState{
         name: name,
         questions: questions.startLoadingNext(),
       );
-
   TopicState addNextPageQuestions(Iterable<int> quesionIds)
     => TopicState(
         id: id,
@@ -30,6 +29,22 @@ class TopicState{
         name: name,
         questions: questions.addNextPage(quesionIds),
       );
+
+  TopicState getPrevPageQuestions()
+    => TopicState(
+        id: id,
+        subjectId: subjectId,
+        name: name,
+        questions: questions.startLoadingPrev()
+      );
+  TopicState addPrevPageQuestions(Iterable<int> questionIds)
+    => TopicState(
+        id: id,
+        subjectId: subjectId,
+        name: name,
+        questions: questions.addPrevPage(questionIds)
+      );
+    
   TopicState addQuestionId(int questionId)
     => TopicState(
         id: id,

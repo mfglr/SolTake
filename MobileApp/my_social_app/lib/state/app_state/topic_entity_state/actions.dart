@@ -15,14 +15,19 @@ class AddTopicsListAction extends redux.Action{
 }
 
 @immutable
-class GetNextPageTopicQuestionsAction extends redux.Action{
-  final int topicId;
-  const GetNextPageTopicQuestionsAction({required this.topicId});
-}
-@immutable
 class GetNextPageTopicQuestionsIfReadyAction extends redux.Action{
   final int topicId;
   const GetNextPageTopicQuestionsIfReadyAction({required this.topicId});
+}
+@immutable
+class GetNextPageTopicQuestionsIfNoPageAction extends redux.Action{
+  final int topicId;
+  const GetNextPageTopicQuestionsIfNoPageAction({required this.topicId});
+}
+@immutable
+class GetNextPageTopicQuestionsAction extends redux.Action{
+  final int topicId;
+  const GetNextPageTopicQuestionsAction({required this.topicId});
 }
 @immutable
 class AddNextPageTopicQuestionsAction extends redux.Action{
@@ -30,8 +35,20 @@ class AddNextPageTopicQuestionsAction extends redux.Action{
   final List<int> questionIds;
   const AddNextPageTopicQuestionsAction({required this.topicId, required this.questionIds});
 }
+
 @immutable
-class GetNextPageTopicQuestionsIfNoPageAction extends redux.Action{
+class GetPrevPageTopicQuestionsIfReadyAction extends redux.Action{
   final int topicId;
-  const GetNextPageTopicQuestionsIfNoPageAction({required this.topicId});
+  const GetPrevPageTopicQuestionsIfReadyAction({required this.topicId});
+}
+@immutable
+class GetPrevPageTopicQuestionsAction extends redux.Action{
+  final int topicId;
+  const GetPrevPageTopicQuestionsAction({required this.topicId});
+}
+@immutable
+class AddPrevPageTopicQuestionsAction extends redux.Action{
+  final int topicId;
+  final Iterable<int> questionIds;
+  const AddPrevPageTopicQuestionsAction({required this.topicId, required this.questionIds});
 }

@@ -26,16 +26,23 @@ class DisplaySubjectQuestionsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => store.dispatch(GetNextPageSubjectQuestionsIfNoPageAction(subjectId: subjectId)),
-          converter: (store) => store.state.selectSubjectQuestions(subjectId),
-          builder: (context,questions) => QuestionItemsWidget(
-            questions: questions.toList(),
-            pagination: subject.questions,
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(GetNextPageSubjectQuestionsIfReadyAction(subjectId: subjectId));
-            },
+        body: RefreshIndicator(
+          onRefresh: (){
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            store.dispatch(GetPrevPageSubjectQuestionsIfReadyAction(subjectId: subjectId));
+            return store.onChange.map((state) => state.subjectEntityState.entities[subjectId]!.questions).firstWhere((e) => !e.loadingPrev);
+          },
+          child: StoreConnector<AppState,Iterable<QuestionState>>(
+            onInit: (store) => store.dispatch(GetNextPageSubjectQuestionsIfNoPageAction(subjectId: subjectId)),
+            converter: (store) => store.state.selectSubjectQuestions(subjectId),
+            builder: (context,questions) => QuestionItemsWidget(
+              questions: questions.toList(),
+              pagination: subject.questions,
+              onScrollBottom: (){
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                store.dispatch(GetNextPageSubjectQuestionsIfReadyAction(subjectId: subjectId));
+              },
+            ),
           ),
         ),
       ),

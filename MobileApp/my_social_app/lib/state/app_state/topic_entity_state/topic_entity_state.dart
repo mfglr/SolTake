@@ -11,6 +11,11 @@ class TopicEntityState extends EntityState<TopicState>{
   TopicEntityState addNextPageQuestions(int topicId,Iterable<int> questionIds)
     => TopicEntityState(entities: updateOne(entities[topicId]!.addNextPageQuestions(questionIds)));
 
+  TopicEntityState getPrevPageQuestions(int topicId)
+    => TopicEntityState(entities: updateOne(entities[topicId]?.getPrevPageQuestions()));
+  TopicEntityState addPrevPageQuestions(int topicId,Iterable<int> questionIds)
+    => TopicEntityState(entities: updateOne(entities[topicId]?.addPrevPageQuestions(questionIds)));
+
   TopicEntityState addTopics(Iterable<TopicState> topics)
     => TopicEntityState(entities: appendMany(topics));
   TopicEntityState addLists(Iterable<Iterable<TopicState>> lists)

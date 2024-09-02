@@ -6,6 +6,12 @@ SubjectEntityState getNextPageSubjectQuestionsReducer(SubjectEntityState prev,Ge
   => prev.getNextPageQuestions(action.subjectId);
 SubjectEntityState addNextPageSubjectQuestionsReducer(SubjectEntityState prev,AddNextPageSubjectQuestionsAction action)
   => prev.addNextPageQuestions(action.subjectId,action.questions);
+
+SubjectEntityState getPrevPageQuestionReducer(SubjectEntityState prev,GetPrevPageSubjectQuestionsAction action)
+  => prev.getPrevPageQuestions(action.subjectId);
+SubjectEntityState addPrevPageQuestionReducer(SubjectEntityState prev,AddPrevPageSubjectQuestionsAction action)
+  => prev.addPrevPageQuestions(action.subjectId,action.questionIds);
+
 SubjectEntityState addSubjectReducer(SubjectEntityState prev,AddSubjectAction action)
   => prev.addSubject(action.subject);
 SubjectEntityState addSubjectsReducer(SubjectEntityState prev,AddSubjectsAction action)
@@ -17,6 +23,10 @@ SubjectEntityState loadTopicsOfSelectSubjectSuccessReducer(SubjectEntityState pr
 Reducer<SubjectEntityState> subjectEntityStateReducers = combineReducers<SubjectEntityState>([
   TypedReducer<SubjectEntityState,GetNextPageSubjectQuestionsAction>(getNextPageSubjectQuestionsReducer).call,
   TypedReducer<SubjectEntityState,AddNextPageSubjectQuestionsAction>(addNextPageSubjectQuestionsReducer).call,
+
+  TypedReducer<SubjectEntityState,GetPrevPageSubjectQuestionsAction>(getPrevPageQuestionReducer).call,
+  TypedReducer<SubjectEntityState,AddPrevPageSubjectQuestionsAction>(addPrevPageQuestionReducer).call,
+
   TypedReducer<SubjectEntityState,AddSubjectAction>(addSubjectReducer).call,
   TypedReducer<SubjectEntityState,AddSubjectsAction>(addSubjectsReducer).call,
 

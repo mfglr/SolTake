@@ -12,7 +12,7 @@ import 'package:redux/redux.dart';
 void getNextPageOfExamQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageExamQuestionsIfNoPageAction){
     final pagination = store.state.examEntityState.entities[action.examId]!.questions;
-    if(!pagination.isLast && !pagination.hasAtLeastOnePage){
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageExamQuestionsAction(examId: action.examId));
     }
   }
@@ -44,6 +44,31 @@ void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispat
   next(action);
 }
 
+void getPrevPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetPrevPageExamQuestionsIfReadyAction){
+    final pagination = store.state.exams;
+    if(pagination.isReadyForPrevPage){
+      store.dispatch(GetPrevPageExamQuestionsAction(examId: action.examId));
+    }
+  }
+  next(action);
+}
+void getPrevPageExamQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetPrevPageExamQuestionsAction){
+    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    QuestionService()
+      .getByExamId(action.examId, pagination.prev)
+      .then((questions){
+        store.dispatch(AddPrevPageExamQuestionsAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
 
 void getSubjectsOfSelectedExamMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetSubjectsOfSelectedExamAction){

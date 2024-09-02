@@ -8,9 +8,14 @@ class ExamEntityState extends EntityState<ExamState>{
   const ExamEntityState({required super.entities});
 
   ExamEntityState getNextPageQuestions(int examId)
-    => ExamEntityState(entities: updateOne(entities[examId]!.getNextPageQuestions()));
+    => ExamEntityState(entities: updateOne(entities[examId]?.getNextPageQuestions()));
   ExamEntityState addNextPageQuestions(int examId, Iterable<int> questionIds)
     => ExamEntityState(entities: updateOne(entities[examId]?.addNextPageQuestions(questionIds)));
+
+  ExamEntityState getPrevPageQuestions(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]?.getPrevPageQuestions()));
+  ExamEntityState addPrevPageQuestions(int examId,Iterable<int> questionIds)
+    => ExamEntityState(entities: updateOne(entities[examId]?.addPrevPageQuestions(questionIds)));
 
   ExamEntityState getAllExams()
     => ExamEntityState(entities: entities);

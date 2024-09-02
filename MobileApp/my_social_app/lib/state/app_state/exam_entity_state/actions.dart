@@ -36,6 +36,23 @@ class AddNextPageExamQuestionsAction extends redux.Action{
 }
 
 @immutable
+class GetPrevPageExamQuestionsIfReadyAction extends redux.Action{
+  final int examId;
+  const GetPrevPageExamQuestionsIfReadyAction({required this.examId});
+}
+@immutable
+class GetPrevPageExamQuestionsAction extends redux.Action{
+  final int examId;
+  const GetPrevPageExamQuestionsAction({required this.examId});
+}
+@immutable
+class AddPrevPageExamQuestionsAction extends redux.Action{
+  final int examId;
+  final Iterable<int> questionIds;
+  const AddPrevPageExamQuestionsAction({required this.examId, required this.questionIds});
+}
+
+@immutable
 class GetExamSubjectsAction extends redux.Action{
   final int examId;
   const GetExamSubjectsAction({required this.examId});

@@ -26,16 +26,23 @@ class DisplayTopicQuestionsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => store.dispatch(GetNextPageTopicQuestionsIfNoPageAction(topicId: topicId)),
-          converter: (store) => store.state.selectTopicQuestions(topicId),
-          builder: (context,questions) => QuestionItemsWidget(
-            questions: questions.toList(),
-            pagination: topic.questions,
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(GetNextPageTopicQuestionsIfReadyAction(topicId: topicId));
-            },
+        body: RefreshIndicator(
+          onRefresh: (){
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            store.dispatch(GetPrevPageTopicQuestionsIfReadyAction(topicId: topicId));
+            return store.onChange.firstWhere((state) => !state.topicEntityState.entities[topicId]!.questions.loadingPrev);
+          },
+          child: StoreConnector<AppState,Iterable<QuestionState>>(
+            onInit: (store) => store.dispatch(GetNextPageTopicQuestionsIfNoPageAction(topicId: topicId)),
+            converter: (store) => store.state.selectTopicQuestions(topicId),
+            builder: (context,questions) => QuestionItemsWidget(
+              questions: questions.toList(),
+              pagination: topic.questions,
+              onScrollBottom: (){
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                store.dispatch(GetNextPageTopicQuestionsIfReadyAction(topicId: topicId));
+              },
+            ),
           ),
         ),
       ),

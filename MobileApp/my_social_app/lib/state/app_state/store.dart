@@ -182,21 +182,33 @@ final store = Store(
     //Exam entity state
     getSubjectsOfSelectedExamMiddleware,
     getExamSubjectsMiddleware,
+
     getNextPageExamQeuestionsMiddleware,
     getNextPageOfExamQuestionsIfNoPageMiddleware,
     getNextPageExamQuestionsIfReadyMiddleware,
+
+    getPrevPageExamQuestionsIfReadyMiddleware,
+    getPrevPageExamQuestionsMiddleware,
 
     //subject entity state
     getNextPageSubjectQuestionsIfNoPageMiddleware,
     getNextPageSubjectQuestionsIfReadyMiddleware,
     getNextPageSubjectQuestionsMiddleware,
+
+    getPrevPageSubjectQuestionsIfReadyMiddleware,
+    getPrevPageSubjectQuestionsMiddleware,
+
     getTopicsOfSelectSubjectMiddleware,
     getSubjectTopicsMiddleware,
+
 
     //Topic start
     getNextPageTopicQuestionsMiddleware,
     getNextPageTopicQuestionsIfNoPageMiddleware,
     getNextPageTopicQuestionsIfReadyMiddeware,
+
+    getPrevPageTopicQuestionsIfReadyMiddleware,
+    getPrevPageTopicQuestionsMiddleware,
     //Topic end
 
     // Questions entity state

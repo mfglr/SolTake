@@ -8,6 +8,11 @@ TopicEntityState getNextPageQuestionsReducer(TopicEntityState prev,GetNextPageTo
 TopicEntityState addNextPageQuestionsReducer(TopicEntityState prev,AddNextPageTopicQuestionsAction action)
   => prev.addNextPageQuestions(action.topicId, action.questionIds);
 
+TopicEntityState getPrevPageQuestionsReducer(TopicEntityState prev,GetPrevPageTopicQuestionsAction action)
+  => prev.getPrevPageQuestions(action.topicId);
+TopicEntityState addPrevPageQuestionsReducer(TopicEntityState prev,AddPrevPageTopicQuestionsAction action)
+  => prev.addPrevPageQuestions(action.topicId,action.questionIds);
+
 TopicEntityState addTopicsReducer(TopicEntityState prev,Action action)
   => action is AddTopicsAction ? prev.addTopics(action.topics) : prev;
 TopicEntityState addTopicsListsReducer(TopicEntityState prev,Action action)
@@ -16,6 +21,9 @@ TopicEntityState addTopicsListsReducer(TopicEntityState prev,Action action)
 Reducer<TopicEntityState> topicEntityStateReducers = combineReducers<TopicEntityState>([
   TypedReducer<TopicEntityState,GetNextPageTopicQuestionsAction>(getNextPageQuestionsReducer).call,
   TypedReducer<TopicEntityState,AddNextPageTopicQuestionsAction>(addNextPageQuestionsReducer).call,
+
+  TypedReducer<TopicEntityState,GetPrevPageTopicQuestionsAction>(getPrevPageQuestionsReducer).call,
+  TypedReducer<TopicEntityState,AddPrevPageTopicQuestionsAction>(addPrevPageQuestionsReducer).call,
 
   TypedReducer<TopicEntityState,AddTopicsAction>(addTopicsReducer).call,
   TypedReducer<TopicEntityState,AddTopicsListAction>(addTopicsListsReducer).call,

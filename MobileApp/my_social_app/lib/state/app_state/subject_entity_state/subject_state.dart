@@ -35,6 +35,23 @@ class SubjectState{
         questions: questions.addNextPage(ids)
       );
 
+  SubjectState getPrevPageQuestions()
+    => SubjectState(
+        id: id,
+        examId: examId,
+        name: name,
+        topics: topics,
+        questions: questions.startLoadingPrev()
+      );
+  SubjectState addPrevPageQuestions(Iterable<int> questionIds)
+    => SubjectState(
+        id: id,
+        examId: examId,
+        name: name,
+        topics: topics,
+        questions: questions.addPrevPage(questionIds)
+      );
+
   SubjectState loadTopics(Iterable<int> ids)
     => SubjectState(
         id: id,

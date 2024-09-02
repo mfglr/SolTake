@@ -50,3 +50,20 @@ class AddNextPageSubjectQuestionsAction extends redux.Action{
   final Iterable<int> questions;
   const AddNextPageSubjectQuestionsAction({required this.subjectId, required this.questions});
 }
+
+@immutable
+class GetPrevPageSubjectQuestionsIfReadyAction extends redux.Action{
+  final int subjectId;
+  const GetPrevPageSubjectQuestionsIfReadyAction({required this.subjectId});
+}
+@immutable
+class GetPrevPageSubjectQuestionsAction extends redux.Action{
+  final int subjectId;
+  const GetPrevPageSubjectQuestionsAction({required this.subjectId});
+}
+@immutable
+class AddPrevPageSubjectQuestionsAction extends redux.Action{
+  final int subjectId;
+  final Iterable<int> questionIds;
+  const AddPrevPageSubjectQuestionsAction({required this.subjectId, required this.questionIds});
+}

@@ -9,7 +9,7 @@ import 'package:redux/redux.dart';
 void getNextPageTopicQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageTopicQuestionsIfNoPageAction){
     final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
-    if(!pagination.isLast && !pagination.hasAtLeastOnePage){
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
       store.dispatch(GetNextPageTopicQuestionsAction(topicId: action.topicId));
     }
   }
@@ -32,6 +32,32 @@ void getNextPageTopicQuestionsMiddleware(Store<AppState> store,action,NextDispat
       .then(
         (questions){
           store.dispatch(AddNextPageTopicQuestionsAction(topicId: action.topicId,questionIds: questions.map((x) => x.id).toList()));
+          store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState()).toList()));
+          store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+          store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+        }
+      );
+  }
+  next(action);
+}
+
+void getPrevPageTopicQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetPrevPageTopicQuestionsIfReadyAction){
+    final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
+    if(pagination.isReadyForPrevPage){
+      store.dispatch(GetPrevPageTopicQuestionsAction(topicId: action.topicId));
+    }
+  }
+  next(action);
+}
+void getPrevPageTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetPrevPageTopicQuestionsAction){
+    final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
+    QuestionService()
+      .getByTopicId(action.topicId, pagination.prev)
+      .then(
+        (questions){
+          store.dispatch(AddPrevPageTopicQuestionsAction(topicId: action.topicId,questionIds: questions.map((x) => x.id).toList()));
           store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState()).toList()));
           store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
           store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));

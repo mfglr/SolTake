@@ -26,16 +26,23 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => store.dispatch(GetNextPageExamQuestionsIfNoPageAction(examId: examId)),
-          converter: (store) => store.state.selectExamQuestions(examId),
-          builder: (context,questions) => QuestionItemsWidget(
-            questions: questions.toList(),
-            pagination: exam.questions,
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(GetNextPageExamQuestionsIfReadyAction(examId: examId));
-            },
+        body: RefreshIndicator(
+          onRefresh: (){
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            store.dispatch(GetPrevPageExamQuestionsIfReadyAction(examId: examId));
+            return store.onChange.map((state) => state.examEntityState.entities[examId]!.questions).firstWhere((x) => !x.loadingPrev);
+          },
+          child: StoreConnector<AppState,Iterable<QuestionState>>(
+            onInit: (store) => store.dispatch(GetNextPageExamQuestionsIfNoPageAction(examId: examId)),
+            converter: (store) => store.state.selectExamQuestions(examId),
+            builder: (context,questions) => QuestionItemsWidget(
+              questions: questions.toList(),
+              pagination: exam.questions,
+              onScrollBottom: (){
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                store.dispatch(GetNextPageExamQuestionsIfReadyAction(examId: examId));
+              },
+            ),
           ),
         ),
       ),
