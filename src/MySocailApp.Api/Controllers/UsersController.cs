@@ -67,7 +67,7 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(request, cancellationToken);
     
         [HttpPost]
-        public async Task<UserSearchResponseDto> AddSearched(AddUserSearchedDto request, CancellationToken cancellationToken)
+        public async Task<AddUserSearchedCommandResponseDto> AddSearched(AddUserSearchedDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpDelete("{searchedId}")]

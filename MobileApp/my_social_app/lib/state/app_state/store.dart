@@ -55,7 +55,7 @@ final store = Store(
     userEntityState: const UserEntityState(entities: {}),
     userImageEntityState: const UserImageEntityState(entities: {}),
     searchState: SearchState(
-      activePage: 0,key: "",examId: null,subjectId: null,topicId: null,
+      key: "",examId: null,subjectId: null,topicId: null,
       questions: Pagination.init(questionsPerPage,true),
       users: Pagination.init(usersPerPage,true),
       searchedUsers: Pagination.init(usersPerPage,true)

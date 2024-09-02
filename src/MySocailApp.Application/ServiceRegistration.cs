@@ -20,7 +20,6 @@ namespace MySocailApp.Application
                     var sp = services.BuildServiceProvider();
                     var reader = sp.GetRequiredService<IAccessTokenReader>();
 
-                    cfg.AddProfile(new UserMappers(reader));
                     cfg.AddProfile(new QuestionMappers(reader));
                     cfg.AddProfile(new CommentMappers(reader));
                 })

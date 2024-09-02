@@ -150,11 +150,14 @@ void getNextPageSearchedUsersMiddleware(Store<AppState> store,action,NextDispatc
 }
 void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is AddSearchedUserAction){
+    final int searcherId = store.state.accountState!.id;
     UserService()
       .addSearched(action.userId)
       .then((search){
-        store.dispatch(AddSearchedUserSuccessAction(searchId: search.id));
+        final removedOne = store.state.userSearchEntityState.select(searcherId, action.userId)?.id ?? 0;
+        store.dispatch(RemoveUserSearchAction(searchId: removedOne));
         store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
+        store.dispatch(AddSearchedUserSuccessAction(addedOne: search.id,removedOne: removedOne));
       });
   }
   next(action);

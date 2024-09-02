@@ -112,6 +112,15 @@ class Pagination{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
+  Pagination prependOneAndRemoveOne(int addedOne,int removedOne)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        ids: [addedOne, ...ids.where((e) => e != removedOne)],
+      );
   Pagination removeOne(int id)
     => Pagination(
         isLast: isLast,

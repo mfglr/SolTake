@@ -52,8 +52,9 @@ class AddSearchedUserAction extends redux.Action{
 }
 @immutable
 class AddSearchedUserSuccessAction extends redux.Action{
-  final int searchId;
-  const AddSearchedUserSuccessAction({required this.searchId});
+  final int addedOne;
+  final int removedOne;
+  const AddSearchedUserSuccessAction({required this.addedOne,required this.removedOne});
 }
 @immutable
 class RemoveSearchedUserAction extends redux.Action{
@@ -93,11 +94,6 @@ class AddNextPageSearchingQuestionsAction extends redux.Action{
   const AddNextPageSearchingQuestionsAction({required this.questionIds});
 }
 
-@immutable
-class ChangeActivePageAction extends redux.Action{
-  final int page;
-  const ChangeActivePageAction({required this.page});
-}
 @immutable
 class ChangeSearchKeyAction extends redux.Action{
   final String key;

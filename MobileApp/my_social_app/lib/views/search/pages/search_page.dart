@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/search_state/actions.dart';
-import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/search/widgets/search_question_widget.dart';
 import 'package:my_social_app/views/search/widgets/search_users_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
@@ -21,15 +18,10 @@ class _SearchPageState extends State<SearchPage> {
   
   double _page = 0;
 
+
   void _setPage(){
     setState(() {
       _page = _pageController.page ?? 0;
-      final store = StoreProvider.of<AppState>(context,listen: false);
-      final prevPage = store.state.searchState.activePage;
-      final nextPage = _page.round();
-      if(prevPage != nextPage){
-        store.dispatch(ChangeActivePageAction(page: nextPage));
-      }
     });
   }
 
@@ -37,10 +29,6 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     _pageController = PageController();
     _pageController.addListener(_setPage);
-
-    final store = StoreProvider.of<AppState>(context,listen: false);
-    store.dispatch(const ChangeActivePageAction(page: 0));
-
     super.initState();
   }
 

@@ -24,7 +24,9 @@ class UserItemWidget extends StatelessWidget {
         child: TextButton(
           onPressed: (){
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: user.id)));
-            if(onPressed != null) onPressed!(user);
+            if(onPressed != null){
+              onPressed!(user);
+            }
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

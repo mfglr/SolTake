@@ -4,7 +4,6 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 
 @immutable
 class SearchState{
-  final int activePage;
   final String key;
   final int? examId;
   final int? subjectId;
@@ -14,7 +13,6 @@ class SearchState{
   final Pagination searchedUsers;
 
   const SearchState({
-    required this.activePage,
     required this.key,
     required this.examId,
     required this.subjectId,
@@ -26,7 +24,6 @@ class SearchState{
   
   SearchState startLoadingUsers()
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -37,7 +34,6 @@ class SearchState{
       );
   SearchState addFirstPageUsers(Iterable<int> ids)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -48,7 +44,6 @@ class SearchState{
       );
   SearchState addNextPageUsers(Iterable<int> ids)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -60,7 +55,6 @@ class SearchState{
 
   SearchState startLodingSearchedUsers()
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId:
@@ -72,7 +66,6 @@ class SearchState{
       );
   SearchState addNextPageSearchedUsers(Iterable<int> searchIds)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -81,20 +74,18 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers.addNextPage(searchIds)
       );
-  SearchState addSearchedUser(int searchId)
+  SearchState addSearchedUser(int addedOne,int removeOne)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.prependOneAndRemovePrev(searchId)
+        searchedUsers: searchedUsers.prependOneAndRemoveOne(addedOne,removeOne)
       );
   SearchState removeSearchedUser(int searchId)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -106,7 +97,6 @@ class SearchState{
 
   SearchState startLoadingQuestions()
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -117,7 +107,6 @@ class SearchState{
       );
   SearchState addFirstPageQuestions(Iterable<int> questionIds)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -128,7 +117,6 @@ class SearchState{
       );
   SearchState addNextPageQuestions(Iterable<int> questionIds)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -138,20 +126,8 @@ class SearchState{
         searchedUsers: searchedUsers
       );
 
-  SearchState changeActivePage(int activePage)
-    => SearchState(
-        activePage: activePage,
-        key: key,
-        examId: examId,
-        subjectId: subjectId,
-        topicId: topicId,
-        questions: questions,
-        users: users,
-        searchedUsers: searchedUsers
-      );
   SearchState changeKey(String key)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -162,7 +138,6 @@ class SearchState{
       );
   SearchState changeExamId(int examId)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: null,
@@ -173,7 +148,6 @@ class SearchState{
       );
   SearchState changeSubjectId(int subjectId)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -184,7 +158,6 @@ class SearchState{
       );
   SearchState changeTopicId(int topicId)
     => SearchState(
-        activePage: activePage,
         key: key,
         examId: examId,
         subjectId: subjectId,
@@ -195,7 +168,6 @@ class SearchState{
       );
   SearchState clearKey()
     => SearchState(
-        activePage: activePage,
         key: "",
         examId: examId,
         subjectId: subjectId,

@@ -23,12 +23,10 @@ SearchState getNextPageSearchedUserReducer(SearchState prev,GetNextPageSearchedU
 SearchState addNextPageSearchedUserReducer(SearchState prev,AddNextPageSearchedUsersAction action)
   => prev.addNextPageSearchedUsers(action.searchIds);
 SearchState addSearchedUserReducer(SearchState prev,AddSearchedUserSuccessAction action)
-  => prev.addSearchedUser(action.searchId);
+  => prev.addSearchedUser(action.addedOne,action.removedOne);
 SearchState removeSearchedUserReducer(SearchState prev,RemoveSearcedUserSuccessAction action)
   => prev.removeSearchedUser(action.searchId);
 
-SearchState changeActivePage(SearchState prev,ChangeActivePageAction action)
-  => prev.changeActivePage(action.page);
 SearchState changeKeyReducer(SearchState prev,ChangeSearchKeyAction action)
   => prev.changeKey(action.key);
 SearchState changeExamIdReducer(SearchState prev,ChangeSearchExamIdAction action)
@@ -55,7 +53,6 @@ Reducer<SearchState> searchStateReducers = combineReducers<SearchState>([
   TypedReducer<SearchState,AddSearchedUserSuccessAction>(addSearchedUserReducer).call,
   TypedReducer<SearchState,RemoveSearcedUserSuccessAction>(removeSearchedUserReducer).call,
 
-  TypedReducer<SearchState,ChangeActivePageAction>(changeActivePage).call,
   TypedReducer<SearchState,ChangeSearchKeyAction>(changeKeyReducer).call,
   TypedReducer<SearchState,ChangeSearchExamIdAction>(changeExamIdReducer).call,
   TypedReducer<SearchState,ChangeSearchSubjectIdAction>(changeSubjectIdReducer).call,

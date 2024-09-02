@@ -24,7 +24,6 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
     _searchTextController = TextEditingController();
     
     final store = StoreProvider.of<AppState>(context,listen: false);
-    store.dispatch(const ChangeActivePageAction(page: 0));
     _searchTextController.text = store.state.searchState.key;
 
     if(store.state.searchState.key == ""){
@@ -95,30 +94,32 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
               )
             ),
           ),
-          Container(
-            margin: const EdgeInsets.all(5),
-            child: StoreConnector<AppState,Iterable<UserState>>(
-              converter: (store){
-                if(state.key == "") return store.state.selectSearchedUsers;
-                return store.state.searchedUsers;
-              },
-              builder: (context,users) => UserItemsWidget(
-                users: users,
-                pagination: state.key == "" ? state.searchedUsers : state.users,
-                rigthButtonBuilder: (user) => _rigthButtonBuilder(state,user),
-                onPressed: (user){
-                  final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(AddSearchedUserAction(userId: user.id));
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(5),
+              child: StoreConnector<AppState,Iterable<UserState>>(
+                converter: (store){
+                  if(state.key == "") return store.state.selectSearchedUsers;
+                  return store.state.searchedUsers;
                 },
-                onScrollBottom: (){
-                  final store = StoreProvider.of<AppState>(context, listen: false);
-                  if(state.key != ""){
-                    store.dispatch(const GetNextPageSearchingUsersIfReadyAction());
-                  }
-                  else{
-                    store.dispatch(const GetNextPageSearchedUsersIfReadyAction());
-                  }
-                },
+                builder: (context,users) => UserItemsWidget(
+                  users: users,
+                  pagination: state.key == "" ? state.searchedUsers : state.users,
+                  rigthButtonBuilder: (user) => _rigthButtonBuilder(state,user),
+                  onPressed: (user){
+                    final store = StoreProvider.of<AppState>(context,listen: false);
+                    store.dispatch(AddSearchedUserAction(userId: user.id));
+                  },
+                  onScrollBottom: (){
+                    final store = StoreProvider.of<AppState>(context, listen: false);
+                    if(state.key != ""){
+                      store.dispatch(const GetNextPageSearchingUsersIfReadyAction());
+                    }
+                    else{
+                      store.dispatch(const GetNextPageSearchedUsersIfReadyAction());
+                    }
+                  },
+                ),
               ),
             ),
           ),
