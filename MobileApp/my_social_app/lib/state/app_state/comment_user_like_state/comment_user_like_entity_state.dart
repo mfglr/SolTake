@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_state.dart';
-import 'package:my_social_app/state/app_state/entity_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 
 class CommentUserLikeEntityState extends EntityState<CommentUserLikeState>{
   const CommentUserLikeEntityState({required super.entities});

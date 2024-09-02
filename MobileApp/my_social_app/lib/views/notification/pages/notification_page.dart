@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
+import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
@@ -23,7 +23,7 @@ class NotificationPage extends StatelessWidget {
         ),
       ),
       body: StoreConnector<AppState,Iterable<NotificationState>>(
-        onInit: (store) => store.dispatch(const NextPageNotificationsIfNoNotificationsActions()),
+        onInit: (store) => store.dispatch(const GetNextPageNotificationsIfNoPageAction()),
         converter: (store) => store.state.notificationEntityState.notifications,
         builder: (context,notifications) => NotificationItems(
           notifications: notifications

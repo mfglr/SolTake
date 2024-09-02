@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/entity_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 
 @immutable

@@ -20,7 +20,6 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCreatedDomainEven
         private readonly ISolutionQueryRepository _solutionQueryRepository = solutionQueryRepository;
         private readonly IMapper _mapper = mapper;
 
-
         private readonly INotificationWriteRepository _notificationRepsitory = notificationRepsitory;
         private readonly IQuestionReadRepository _questionRepository = questionRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;

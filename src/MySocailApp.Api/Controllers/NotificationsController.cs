@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.NotificationAggregate.MarkAsViewedNotifications;
 using MySocailApp.Application.Queries.NotificationAggregate;
-using MySocailApp.Application.Queries.NotificationAggregate.GetNotifications;
 using MySocailApp.Application.Queries.NotificationAggregate.GetUnviewedNotifications;
+using MySocailApp.Application.Queries.NotificationAggregate.GetViewedNotifications;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -25,7 +25,7 @@ namespace MySocailApp.Api.Controllers
 
         [HttpGet]
         public async Task<List<NotificationResponseDto>> GetNotifications([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetNotificationsDto(offset, take, isDescending), cancellationToken);
+            => await _mediator.Send(new GetViewedNotificationsDto(offset, take, isDescending), cancellationToken);
 
         [HttpPut]
         public async Task MarkAsViewed(MarkAsViewedNotificationsDto request, CancellationToken cancellationToken)

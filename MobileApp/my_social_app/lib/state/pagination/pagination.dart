@@ -49,6 +49,25 @@ class Pagination{
 
   Iterable<int> merge(int id) => [id, ...ids.where((e) => e != id)];
 
+  Pagination prependMany(Iterable<int> ids)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        ids: [...ids, ...this.ids]
+      );
+  Pagination appendMany(Iterable<int> ids)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        ids: [...this.ids,...ids]
+      );
+
   Pagination startLoadingNext()
     => Pagination(
         isLast: isLast,

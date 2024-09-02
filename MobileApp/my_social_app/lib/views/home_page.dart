@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
+import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/create_question_state/actions.dart';
 import 'package:my_social_app/state/app_state/home_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,NotificationEntityState>(
-      onInit: (store) => store.dispatch(const LoadUnviewedNotificationsAction()),
+      onInit: (store) => store.dispatch(const GetUnviewedNotificationsAction()),
       converter: (store) => store.state.notificationEntityState,
       builder: (context,state) => Scaffold(
         appBar: AppBar(

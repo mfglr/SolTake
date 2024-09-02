@@ -3,9 +3,14 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 
 @immutable
-class AddNewNotificationAction extends redux.Action{
+class AddNotificationsAction extends redux.Action{
+  final Iterable<NotificationState> notifications;
+  const AddNotificationsAction({required this.notifications});
+}
+@immutable
+class AddNotificationAction extends redux.Action{
   final NotificationState notification;
-  const AddNewNotificationAction({required this.notification});
+  const AddNotificationAction({required this.notification});
 }
 
 @immutable
@@ -18,26 +23,3 @@ class MarkNotificationsAsViewedSuccessAction extends redux.Action{
   const MarkNotificationsAsViewedSuccessAction({required this.ids});
 }
 
-@immutable
-class LoadUnviewedNotificationsAction extends redux.Action{
-  const LoadUnviewedNotificationsAction();
-}
-@immutable
-class LoadUnviewedNotificationsSuccessAction extends redux.Action{
-  final Iterable<NotificationState> notifications;
-  const LoadUnviewedNotificationsSuccessAction({required this.notifications});
-}
-
-@immutable
-class NextPageNotificationsAction extends redux.Action{
-  const NextPageNotificationsAction();
-}
-@immutable
-class NextPageNotificationsSuccessAction extends redux.Action{
-  final Iterable<NotificationState> notifications;
-  const NextPageNotificationsSuccessAction({required this.notifications});
-}
-@immutable
-class NextPageNotificationsIfNoNotificationsActions extends redux.Action{
-  const NextPageNotificationsIfNoNotificationsActions();
-}

@@ -70,7 +70,7 @@ final store = Store(
     commentEntityState: const CommentEntityState(entities: {}),
     commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
-    notificationEntityState: const NotificationEntityState(entities: {},isUnviewedNotificationsLoaded: false,isLast: false,lastId: null),
+    notificationEntityState: const NotificationEntityState(entities: {}),
     messageEntityState: const MessageEntityState(entities: {}),
     messageHomePageState: const MessageHomePageState(isLastConversations: false, isSynchronized: false),
     createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
@@ -79,7 +79,8 @@ final store = Store(
     questionEntityState: const QuestionEntityState(entities: {}),
     questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
-    exams: Pagination.init(examsPerPage, true)
+    exams: Pagination.init(examsPerPage, true),
+    notifications: Pagination.init(notificationsPerPage, true)
   ),
   middleware: [
 
@@ -278,9 +279,10 @@ final store = Store(
 
     //notifications start
     markNotificationsAsViewedMiddleware,
-    loadUnviewedNotificationMiddleware,
-    nextPageNotificationsMiddleware,
-    nextPageNotificationsIfNoNoficationsMiddleware,
+    getUnviewedNotificationMiddleware,
+    getNextPageNotificationsIfNoPageMiddeware,
+    getNextPageNotificationsIfReadyActionMiddleware,
+    getNextPageNotificationsMiddleware,
     //notifications end
 
     //conversations start
