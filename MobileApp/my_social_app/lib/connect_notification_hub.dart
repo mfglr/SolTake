@@ -3,7 +3,6 @@ import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/notification.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/services/notification_hub.dart';
-import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
@@ -55,7 +54,7 @@ void connectNotificationHub(Store<AppState> store){
       else if(notification.type == NotificationType.commentLikedNotification){
         // final comment = Comment.fromJson(list.last as dynamic).toCommentState();
       }
-      store.dispatch(AddNotificationAction(notification: notification));
+      store.dispatch(PrependNotificationAction(notification: notification));
     }
   );
 }

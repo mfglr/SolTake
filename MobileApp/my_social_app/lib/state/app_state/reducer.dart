@@ -47,20 +47,6 @@ Reducer<Pagination> examsReducers = combineReducers<Pagination>([
 ]);
 //exams reducers//
 
-//notifications reducers//
-Pagination getNextPageNotificationsReducer(Pagination prev, GetNextPageNotificationsAction action)
-  => prev.startLoadingNext();
-Pagination addNextPageNotificationsReducer(Pagination prev, AddNextPageNotificationsAction action)
-  => prev.addNextPage(action.notificationIds);
-Pagination addUvnviewedNotificationsReducer(Pagination prev,AddUnviewedNotificationsAction action)
-  => prev.prependMany(action.notificationIds);
-Reducer<Pagination> notificationReducers = combineReducers<Pagination>([
-  TypedReducer<Pagination,GetNextPageNotificationsAction>(getNextPageNotificationsReducer).call,
-  TypedReducer<Pagination,AddNextPageNotificationsAction>(addNextPageNotificationsReducer).call,
-  TypedReducer<Pagination,AddUnviewedNotificationsAction>(addUvnviewedNotificationsReducer).call,
-]);
-//notifications reducers//
-
 AppState appReducer(AppState prev,action) => AppState(
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
   accountState: updateAccountStateReducer(prev.accountState,action),
@@ -89,6 +75,5 @@ AppState appReducer(AppState prev,action) => AppState(
   questionUserLikeEntityState: questionUserLikeEntityReducers(prev.questionUserLikeEntityState,action),
   solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
   exams: examsReducers(prev.exams,action),
-  notifications: notificationReducers(prev.notifications,action)
 );
 

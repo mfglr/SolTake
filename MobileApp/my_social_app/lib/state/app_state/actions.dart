@@ -52,32 +52,3 @@ class AddNextPageExamsAction extends Action{
   const AddNextPageExamsAction({required this.examIds});
 }
 //exams//
-
-//notifications//
-@immutable
-class GetNextPageNotificationsIfNoPageAction extends Action{
-  const GetNextPageNotificationsIfNoPageAction();
-}
-@immutable 
-class GetNextPageNotificationsIfReadyAction extends Action{
-  const GetNextPageNotificationsIfReadyAction();
-}
-@immutable
-class GetNextPageNotificationsAction extends Action {
-  const GetNextPageNotificationsAction();
-}
-@immutable
-class AddNextPageNotificationsAction extends Action{
-  final Iterable<int> notificationIds;
-  const AddNextPageNotificationsAction({required this.notificationIds});
-}
-@immutable
-class GetUnviewedNotificationsAction extends Action{
-  const GetUnviewedNotificationsAction();
-}
-@immutable
-class AddUnviewedNotificationsAction extends Action{
-  final Iterable<int> notificationIds;
-  const AddUnviewedNotificationsAction({required this.notificationIds});
-}
-//notifications//

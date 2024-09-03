@@ -68,7 +68,6 @@ class AppState{
   final QuestionUserLikeEntityState questionUserLikeEntityState;
   final SolutionUserVoteEntityState solutionUserVoteEntityState;
   final Pagination exams;
-  final Pagination notifications;
 
   const AppState({
     required this.accessToken,
@@ -98,7 +97,6 @@ class AppState{
     required this.questionUserLikeEntityState,
     required this.solutionUserVoteEntityState,
     required this.exams,
-    required this.notifications
   });
 
   //select messages

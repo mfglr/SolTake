@@ -26,6 +26,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
+import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
@@ -70,7 +71,7 @@ final store = Store(
     commentEntityState: const CommentEntityState(entities: {}),
     commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
-    notificationEntityState: const NotificationEntityState(entities: {}),
+    notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
     messageEntityState: const MessageEntityState(entities: {}),
     messageHomePageState: const MessageHomePageState(isLastConversations: false, isSynchronized: false),
     createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
@@ -80,7 +81,6 @@ final store = Store(
     questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
-    notifications: Pagination.init(notificationsPerPage, true)
   ),
   middleware: [
 
