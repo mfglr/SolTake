@@ -32,46 +32,54 @@ class QuestionItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: () => 
-                  Navigator
-                    .of(context)
-                    .push(
-                      MaterialPageRoute(
-                        builder: (context) => UserPage(
-                          userId: question.appUserId,
-                          userName: null
+          Padding(
+            padding: const EdgeInsets.only(left:12,right: 12,top: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () => 
+                    Navigator
+                      .of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => UserPage(
+                            userId: question.appUserId,
+                            userName: null
+                          )
                         )
-                      )
-                    ),
-                child: Row(
+                      ),
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(EdgeInsets.zero),
+                    minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 5),
+                        child: UserImageWidget(
+                          userId: question.appUserId,
+                          diameter: 45
+                        ),
+                      ),
+                      Text(question.formatUserName(10))
+                    ],
+                  ),
+                ),
+                Row(
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
-                      child: UserImageWidget(
-                        userId: question.appUserId,
-                        diameter: 45
-                      ),
+                      child: QuestionStateWidget(question: question),
                     ),
-                    Text(question.formatUserName(10))
+                    Text(
+                      timeago.format(question.createdAt,locale: 'en_short')
+                    ),
                   ],
-                ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    child: QuestionStateWidget(question: question),
-                  ),
-                  Text(
-                    timeago.format(question.createdAt,locale: 'en_short')
-                  ),
-                ],
-              )
-            ],
+                )
+              ],
+            ),
           ),
           QuestionImagesSlider(
             key: ValueKey(question.id),
