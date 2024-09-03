@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.NotificationAggregate
@@ -11,6 +12,9 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
 
         public async Task CreateAsync(Notification notification, CancellationToken cancellationToken)
             => await _context.Notifications.AddAsync(notification,cancellationToken);
+
+        public void Delete(Notification notification)
+            => _context.Notifications.Remove(notification);
 
         public void DeleteRange(IEnumerable<Notification> notifications)
             => _context.Notifications.RemoveRange(notifications);
@@ -23,5 +27,10 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
 
         public async Task<List<Notification>> GetBySolutionIdAsync(int solutionId, CancellationToken cancellationToken)
             => await _context.Notifications.Where(x => x.SolutionId == solutionId).ToListAsync(cancellationToken);
+
+        public async Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int ownerId, CancellationToken cancellationToken)
+            => await _context.Notifications
+                .Where(x => x.CommentId == commentId && x.OwnerId == ownerId && x.Type == NotificationType.CommentLikedNotification)
+                .FirstOrDefaultAsync(cancellationToken);
     }
 }

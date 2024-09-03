@@ -34,6 +34,34 @@ class AddNextPageCommentLikesAction extends redux.Action{
   final Iterable<int> likeIds;
   const AddNextPageCommentLikesAction({required this.commentId, required this.likeIds});
 }
+@immutable
+class LikeCommentAction extends redux.Action{
+  final int commentId;
+  const LikeCommentAction({required this.commentId});
+}
+@immutable
+class LikeCommentSuccessAction extends redux.Action{
+  final int commentId;
+  final int likeId;
+  const LikeCommentSuccessAction({required this.commentId,required this.likeId});
+}
+@immutable
+class DislikeCommentAction extends redux.Action{
+  final int commentId;
+  const DislikeCommentAction({required this.commentId});
+}
+@immutable
+class DislikeCommentSuccessAction extends redux.Action{
+  final int commentId;
+  final int likeId;
+  const DislikeCommentSuccessAction({required this.commentId,required this.likeId});
+}
+@immutable
+class AddNewCommingCommentLikeAction extends redux.Action{
+  final int commentId;
+  final int likeId;
+  const AddNewCommingCommentLikeAction({required this.commentId, required this.likeId});
+}
 
 @immutable
 class ChangeRepliesVisibilityAction extends redux.Action{
@@ -61,29 +89,6 @@ class RemoveCommentSuccessAction extends redux.Action{
 class AddCommentsAction extends redux.Action{
   final Iterable<CommentState> comments;
   const AddCommentsAction({required this.comments});
-}
-
-@immutable
-class LikeCommentAction extends redux.Action{
-  final int commentId;
-  const LikeCommentAction({required this.commentId});
-}
-@immutable
-class LikeCommentSuccessAction extends redux.Action{
-  final int commentId;
-  final int likeId;
-  const LikeCommentSuccessAction({required this.commentId,required this.likeId});
-}
-@immutable
-class DislikeCommentAction extends redux.Action{
-  final int commentId;
-  const DislikeCommentAction({required this.commentId});
-}
-@immutable
-class DislikeCommentSuccessAction extends redux.Action{
-  final int commentId;
-  final int likeId;
-  const DislikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 
 @immutable

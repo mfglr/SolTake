@@ -6,5 +6,6 @@ namespace MySocailApp.Application.QueryRepositories
     public interface ICommentUserLikeQueryRepository
     {
         Task<List<CommentUserLikeResponseDto>> GetLikesAsync(int commentId, int accountId, IPage page, CancellationToken cancellationToken);
+        Task<CommentUserLikeResponseDto?> GetLikeAsync(int likeId,int accountId,CancellationToken cancellationToken);
     }
 }

@@ -14,12 +14,12 @@ using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventConsumers
 {
-    public class CreateNotification(INotificationWriteRepository repository, IUnitOfWork unitOfWork, ICommentReadRepository commentReadRepository, IMapper mapper, INotificationConnectionReadRepository notificatinConnectionReadRepository, IHubContext<NotificationHub> notificationHub, ICommentQueryRepository commentQueryRepository) : IDomainEventConsumer<CommentLikedDomainEvent>
+    public class CreateNotification(INotificationWriteRepository repository, IUnitOfWork unitOfWork, ICommentReadRepository commentReadRepository, IMapper mapper, INotificationConnectionReadRepository notificatinConnectionReadRepository, IHubContext<NotificationHub> notificationHub, ICommentQueryRepository commentQueryRepository, ICommentUserLikeQueryRepository commentUserLikeQueryRepository) : IDomainEventConsumer<CommentLikedDomainEvent>
     {
         private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
         private readonly INotificationConnectionReadRepository _notificatinConnectionReadRepository = notificatinConnectionReadRepository;
         private readonly IMapper _mapper = mapper;
-
+        private readonly ICommentUserLikeQueryRepository _commentUserLikeQueryRepository = commentUserLikeQueryRepository;
         private readonly ICommentReadRepository _commentReadRepository = commentReadRepository;
         private readonly ICommentQueryRepository _commentQueryRepository = commentQueryRepository;
         private readonly INotificationWriteRepository _repository = repository;
@@ -40,7 +40,7 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
                 comment.SolutionId ?? parent?.SolutionId,
                 comment.ParentId,
                 comment.Id,
-                notification.LikerId
+                notification.Like.AppUserId
             );
             await _repository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
@@ -53,6 +53,7 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
                     "getNotification",
                     _mapper.Map<NotificationResponseDto>(n),
                     await _commentQueryRepository.GetByIdAsync(comment.AppUserId, comment.Id, cancellationToken),
+                    await _commentUserLikeQueryRepository.GetLikeAsync(notification.Like.Id,comment.AppUserId,cancellationToken),
                     cancellationToken
                 );
         }

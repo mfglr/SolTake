@@ -10,6 +10,8 @@ CommentEntityState likeCommentReducer(CommentEntityState prev,LikeCommentSuccess
   => prev.like(action.commentId, action.likeId);
 CommentEntityState dislikeCommentReducer(CommentEntityState prev,DislikeCommentSuccessAction action)
   => prev.dislike(action.commentId,action.likeId);
+CommentEntityState addNewCommingLikeReducer(CommentEntityState prev,AddNewCommingCommentLikeAction action)
+  => prev.addNewCommingLike(action.commentId, action.likeId);
 
 CommentEntityState getNextPageRepliesReducer(CommentEntityState prev,GetNextPageCommentRepliesAction action)
   => prev.getNextPageReplies(action.commentId);
@@ -35,6 +37,7 @@ Reducer<CommentEntityState> questionCommentEntityStateReducers = combineReducers
   TypedReducer<CommentEntityState,AddNextPageCommentLikesAction>(addNextPageLikesReducer).call,
   TypedReducer<CommentEntityState,LikeCommentSuccessAction>(likeCommentReducer).call,
   TypedReducer<CommentEntityState,DislikeCommentSuccessAction>(dislikeCommentReducer).call,
+  TypedReducer<CommentEntityState,AddNewCommingCommentLikeAction>(addNewCommingLikeReducer).call,
 
   TypedReducer<CommentEntityState,GetNextPageCommentRepliesAction>(getNextPageRepliesReducer).call,
   TypedReducer<CommentEntityState,AddPrevPageCommentRepliesAction>(addNextPageRepliesReducer).call,

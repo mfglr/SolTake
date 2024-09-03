@@ -26,80 +26,80 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,NotificationEntityState>(
       converter: (store) => store.state.notificationEntityState,
-      builder: (context,state) => Scaffold(
-        appBar: AppBar(
-          title: const Text("SolverWay"),
-          actions: [
-            IconButton(
-              onPressed: (){
-                store.dispatch(const MarkNotificationsAsViewedAction());
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NotificationPage()));
-              },
-              icon: badges.Badge(
-                badgeContent: state.numberOfUnviewedNotifications > 0 ? Text(
-                  state.numberOfUnviewedNotifications.toString(),
-                  style:const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12
+      builder: (context,state) => RefreshIndicator(
+        onRefresh: (){
+          final store = StoreProvider.of<AppState>(context,listen: false);
+          store.dispatch(const GetPrevPageHomePageQuestionsIfReadyAction());
+          return store.onChange.map((state) => state.homePageState.questions).firstWhere((x) => !x.loadingPrev);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("SolverWay"),
+            actions: [
+              IconButton(
+                onPressed: (){
+                  store.dispatch(const MarkNotificationsAsViewedAction());
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NotificationPage()));
+                },
+                icon: badges.Badge(
+                  badgeContent: state.numberOfUnviewedNotifications > 0 ? Text(
+                    state.numberOfUnviewedNotifications.toString(),
+                    style:const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12
+                    ),
+                  ) : null,
+                  badgeStyle: badges.BadgeStyle(
+                    badgeColor: state.numberOfUnviewedNotifications > 0 ? Colors.red : Colors.transparent,
                   ),
-                ) : null,
-                badgeStyle: badges.BadgeStyle(
-                  badgeColor: state.numberOfUnviewedNotifications > 0 ? Colors.red : Colors.transparent,
+                  child: const Icon(Icons.notifications),
                 ),
-                child: const Icon(Icons.notifications),
               ),
-            ),
-            PopupMenuButton<MenuAction>(
-              onSelected: (value) async {
-                switch(value){
-                  case MenuAction.logout:
-                    bool logOut = await DialogCreator.showLogOutDialog(context);
-                    if(logOut){
-                      store.dispatch(const LogOutAction());
-                    }
-                  default:
-                    return;
-                }
-              },
-              itemBuilder: (context) {
-                return [
-                  const PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Logout"),
-                        Icon(Icons.logout)
-                      ],
+              PopupMenuButton<MenuAction>(
+                onSelected: (value) async {
+                  switch(value){
+                    case MenuAction.logout:
+                      bool logOut = await DialogCreator.showLogOutDialog(context);
+                      if(logOut){
+                        store.dispatch(const LogOutAction());
+                      }
+                    default:
+                      return;
+                  }
+                },
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem<MenuAction>(
+                      value: MenuAction.logout,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Logout"),
+                          Icon(Icons.logout)
+                        ],
+                      )
                     )
-                  )
-                ];
-              }
-            ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            final store = StoreProvider.of<AppState>(context,listen: false);
-            store.dispatch(const ClearCreateQuestionStateAction());
-            Navigator.of(context).pushNamed(selectExamRoute);
-          },
-          shape: const CircleBorder(),
-          child: const Icon(Icons.question_mark),
-        ),
-        
-        body: StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => store.dispatch(const GetNextPageHomeQuestionsIfNoPageAction()),
-          converter: (store) => store.state.selectHomePageQuestions,
-          builder:(context,questions) => StoreConnector<AppState,Pagination>(
-            converter: (store) => store.state.homePageState.questions,
-            builder: (context,pagination) => RefreshIndicator(
-              onRefresh: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(const GetPrevPageHomePageQuestionsIfReadyAction());
-                return store.onChange.map((state) => state.homePageState.questions).firstWhere((x) => !x.loadingPrev);
-              },
-              child: QuestionItemsWidget(
+                  ];
+                }
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: (){
+              final store = StoreProvider.of<AppState>(context,listen: false);
+              store.dispatch(const ClearCreateQuestionStateAction());
+              Navigator.of(context).pushNamed(selectExamRoute);
+            },
+            shape: const CircleBorder(),
+            child: const Icon(Icons.question_mark),
+          ),
+          
+          body: StoreConnector<AppState,Iterable<QuestionState>>(
+            onInit: (store) => store.dispatch(const GetNextPageHomeQuestionsIfNoPageAction()),
+            converter: (store) => store.state.selectHomePageQuestions,
+            builder:(context,questions) => StoreConnector<AppState,Pagination>(
+              converter: (store) => store.state.homePageState.questions,
+              builder: (context,pagination) => QuestionItemsWidget(
                 questions: questions,
                 pagination: pagination,
                 onScrollBottom: (){

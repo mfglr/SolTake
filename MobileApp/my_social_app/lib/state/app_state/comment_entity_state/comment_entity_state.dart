@@ -14,7 +14,9 @@ class CommentEntityState extends EntityState<CommentState>{
     => CommentEntityState(entities: updateOne(entities[commentId]?.like(likeId)));
   CommentEntityState dislike(int commentId, int likeId)
     => CommentEntityState(entities: updateOne(entities[commentId]?.dislike(likeId)));
-  
+  CommentEntityState addNewCommingLike(int commentId, int likeId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.addNewCommingLike(likeId)));
+
   CommentEntityState getNextPageReplies(int commentId)
     => CommentEntityState(entities: updateOne(entities[commentId]!.getNextPageReplies()));
   CommentEntityState addNextPageReplies(int commentId,Iterable<int> replyIds)

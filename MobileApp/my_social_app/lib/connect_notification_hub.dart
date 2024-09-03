@@ -1,9 +1,11 @@
 import 'package:my_social_app/constants/notification_functions.dart';
 import 'package:my_social_app/models/comment.dart';
+import 'package:my_social_app/models/comment_user_like.dart';
 import 'package:my_social_app/models/notification.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
@@ -52,7 +54,15 @@ void connectNotificationHub(Store<AppState> store){
         store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
       }
       else if(notification.type == NotificationType.commentLikedNotification){
-        // final comment = Comment.fromJson(list.last as dynamic).toCommentState();
+        final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
+        final like = CommentUserLike.fromJson(list[2] as dynamic);
+        final commentUserLikeState = like.toCommentUserLikeState();
+        final user = like.appUser!.toUserState();
+        
+        store.dispatch(AddCommentUserLikeAction(like: commentUserLikeState));
+        store.dispatch(AddUserAction(user: user));
+        store.dispatch(AddUserImageAction(image: UserImageState.init(user.id)));
+        store.dispatch(AddNewCommingCommentLikeAction(commentId: comment.id,likeId:like.id));
       }
       store.dispatch(PrependNotificationAction(notification: notification));
     }

@@ -40,178 +40,74 @@ class CommentState{
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
   int get numberOfNotDisplayedReplies => numberOfReplies - (repliesVisibility ? replies.ids.length : 0);
 
+  CommentState _optional({
+    String? newUserName,
+    bool? newIsEdited,
+    String? newContent,
+    bool? newIsLiked,
+    int? newNumberOfLikes,
+    int? newNumberOfReplies,
+    Pagination? newLikes,
+    Pagination? newReplies,
+    bool? newRepliesVisibility
+  }) => CommentState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      userName: newUserName ?? userName,
+      appUserId: appUserId,
+      isEdited: newIsEdited ?? isEdited,
+      content: newContent ?? content,
+      isLiked: newIsLiked ?? isLiked,
+      numberOfLikes: newNumberOfLikes ?? numberOfLikes,
+      numberOfReplies: newNumberOfReplies ?? numberOfReplies,
+      questionId: questionId,
+      solutionId: solutionId,
+      parentId: parentId,
+      likes: newLikes ?? likes,
+      replies: newReplies ?? replies,
+      repliesVisibility: newRepliesVisibility ?? repliesVisibility
+    );
+
   CommentState getNextPageLikes()
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        userName: userName,
-        appUserId: appUserId,
-        isEdited: isEdited,
-        content: content,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        numberOfReplies: numberOfReplies,
-        questionId: questionId,
-        solutionId: solutionId,
-        parentId: parentId,
-        likes: likes.startLoadingNext(),
-        replies: replies,
-        repliesVisibility: repliesVisibility,
-      );
+    => _optional(newLikes: likes.startLoadingNext());
   CommentState addNextPageLikes(Iterable<int> ids)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        userName: userName,
-        appUserId: appUserId,
-        isEdited: isEdited,
-        content: content,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        numberOfReplies: numberOfReplies,
-        questionId: questionId,
-        solutionId: solutionId,
-        parentId: parentId,
-        likes: likes.addNextPage(ids),
-        replies: replies,
-        repliesVisibility: repliesVisibility,
-      );
+    => _optional(newLikes: likes.addNextPage(ids));
   CommentState like(int likeId)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        questionId: questionId,
-        isEdited: isEdited,
-        content: content,
-        numberOfLikes: numberOfLikes + 1,
-        likes: likes.prependOne(likeId),
-        isLiked: true,
-        replies: replies,
-        numberOfReplies: numberOfReplies,
-        parentId: parentId,
-        solutionId: solutionId,
-        repliesVisibility: repliesVisibility,
+    => _optional(
+        newNumberOfLikes: numberOfLikes + 1,
+        newLikes: likes.prependOne(likeId),
+        newIsLiked: true,
       );
   CommentState dislike(int likeId)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        questionId: questionId,
-        isEdited: isEdited,
-        content: content,
-        numberOfLikes: numberOfLikes - 1,
-        likes: likes.removeOne(likeId),
-        isLiked: false,
-        replies: replies,
-        numberOfReplies: numberOfReplies,
-        parentId: parentId,
-        solutionId: solutionId,
-        repliesVisibility: repliesVisibility,
+    => _optional(
+        newNumberOfLikes: numberOfLikes - 1,
+        newLikes: likes.removeOne(likeId),
       );
+  CommentState addNewCommingLike(int likeId)
+    => _optional(
+        newNumberOfLikes: numberOfLikes + 1,
+        newLikes: likes.addInOrder(likeId)
+      );
+  
  
   CommentState getNextPageReplies()
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        userName: userName,
-        appUserId: appUserId,
-        isEdited: isEdited,
-        content: content,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        numberOfReplies: numberOfReplies,
-        questionId: questionId,
-        solutionId: solutionId,
-        parentId: parentId,
-        likes: likes,
-        replies: replies.startLoadingNext(),
-        repliesVisibility: repliesVisibility,
-      );
+    => _optional(newReplies: replies.startLoadingNext());
   CommentState addNextPageReplies(Iterable<int> replyIds)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        userName: userName,
-        appUserId: appUserId,
-        isEdited: isEdited,
-        content: content,
-        isLiked: isLiked,
-        numberOfLikes: numberOfLikes,
-        numberOfReplies: numberOfReplies,
-        questionId: questionId,
-        solutionId: solutionId,
-        parentId: parentId,
-        likes: likes,
-        replies: replies.addNextPage(replyIds),
-        repliesVisibility: repliesVisibility,
-      );
+    => _optional(newReplies: replies.addNextPage(replyIds));
   CommentState appendReply(int replyId)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        questionId: questionId,
-        isEdited: isEdited,
-        content: content,
-        numberOfLikes: numberOfLikes,
-        likes: likes,
-        isLiked: isLiked,
-        replies: replies.appendOne(replyId),
-        numberOfReplies: numberOfReplies + 1,
-        parentId: parentId,
-        solutionId: solutionId,
-        repliesVisibility: true,
+    => _optional(
+        newReplies: replies.appendOne(replyId),
+        newNumberOfReplies: numberOfReplies + 1,
+        newRepliesVisibility: true,
       );
   CommentState removeReply(int replyId)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        questionId: questionId,
-        isEdited: isEdited,
-        content: content,
-        numberOfLikes: numberOfLikes,
-        likes: likes,
-        isLiked: isLiked,
-        replies: replies.removeOne(replyId),
-        numberOfReplies: numberOfReplies - 1,
-        parentId: parentId,
-        solutionId: solutionId,
-        repliesVisibility: true,
+    => _optional(
+        newReplies: replies.removeOne(replyId),
+        newNumberOfReplies: numberOfReplies - 1,
+        newRepliesVisibility: true,
       );
 
   CommentState changeVisibility(bool visibility)
-    => CommentState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        appUserId: appUserId,
-        userName: userName,
-        questionId: questionId,
-        isEdited: isEdited,
-        content: content,
-        numberOfLikes: numberOfLikes,
-        likes: likes,
-        isLiked: isLiked,
-        replies: replies,
-        numberOfReplies: numberOfReplies,
-        parentId: parentId,
-        solutionId: solutionId,
-        repliesVisibility: visibility,
-      );
-    
+    => _optional(newRepliesVisibility: visibility);
 }
