@@ -46,7 +46,7 @@ void connectNotificationHub(Store<AppState> store){
       else if(notification.type == NotificationType.solutionMarkedAsCorrectNotification){
         store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
         store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
-        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.ownerId, questionId: notification.questionId!));
+        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
       }
       else if(notification.type == NotificationType.solutionMarkedAsIncorrectNotification){
         store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));

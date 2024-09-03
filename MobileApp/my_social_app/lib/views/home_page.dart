@@ -25,11 +25,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,NotificationEntityState>(
-      onInit: (store) => store.dispatch(const GetUnviewedNotificationsAction()),
       converter: (store) => store.state.notificationEntityState,
       builder: (context,state) => Scaffold(
         appBar: AppBar(
-          title: const Text("E-CLASS"),
+          title: const Text("SolverWay"),
           actions: [
             IconButton(
               onPressed: (){
