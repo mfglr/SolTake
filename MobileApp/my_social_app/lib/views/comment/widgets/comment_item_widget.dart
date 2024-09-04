@@ -7,7 +7,6 @@ import 'package:my_social_app/views/comment/widgets/display_remain_replies_butto
 import 'package:my_social_app/views/comment/widgets/display_replies_button_widget.dart';
 import 'package:my_social_app/views/comment/widgets/hide_replies_button_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class CommentItemWidget extends StatefulWidget {
   final TextEditingController contentController;
@@ -62,7 +61,6 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-
             CommentHeaderWidget(
               comment: widget.comment,
               contentController: widget.contentController,
@@ -71,71 +69,43 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
               diameter: 45,
             ),
       
-            Builder(
-              builder: (context) {
-                if(!widget.comment.repliesVisibility) return const SpaceSavingWidget();
-                return StoreConnector<AppState,Iterable<CommentState>>(
-                  converter: (store) => store.state.selectCommentReplies(widget.comment.id),
-                  builder: (context,replies) => Column(
-                    children: [
-                      ...replies.map(
-                        (reply) => Padding(
-                          padding: const EdgeInsets.only(left: 50,top: 20),
-                          child: CommentHeaderWidget(
-                            comment: reply,
-                            contentController: widget.contentController,
-                            focusNode: widget.focusNode
-                          ),
-                        )
-                      ),
-                      Builder(
-                        builder: (context){
-                          if(widget.comment.replies.loadingNext){
-                            return const LoadingCircleWidget(strokeWidth: 2);
-                          }
-                          return const SpaceSavingWidget();
-                        }
-                      )
-                    ]
-                  )
-                );
-              }
-            ),
-      
-            Builder(
-              builder: (context) {
-                if(!widget.comment.repliesVisibility) return const SpaceSavingWidget();
-                return Row(
+            if(widget.comment.repliesVisibility)
+              StoreConnector<AppState,Iterable<CommentState>>(
+                converter: (store) => store.state.selectCommentReplies(widget.comment.id),
+                builder: (context,replies) => Column(
                   children: [
-                    
-                    Builder(
-                      builder: (context){
-                        if(widget.comment.replies.ids.isNotEmpty){
-                          return Padding(
-                            padding: const EdgeInsets.only(left:50, top:20, right: 20),
-                            child: HideRepliesButtonWidget(comment: widget.comment),
-                          );
-                        }
-                        return const SpaceSavingWidget();
-                      }
+                    ...replies.map(
+                      (reply) => Padding(
+                        padding: const EdgeInsets.only(left: 50,top: 20),
+                        child: CommentHeaderWidget(
+                          comment: reply,
+                          contentController: widget.contentController,
+                          focusNode: widget.focusNode
+                        ),
+                      )
                     ),
-                
-                    Builder(
-                      builder: (context){
-                        if(widget.comment.numberOfNotDisplayedReplies > 0){
-                          return Padding(
-                            padding: const EdgeInsets.only(left:50, top:20),
-                            child: DisplayRemainRepliesButtonWidget(comment: widget.comment),
-                          );
-                        }
-                        return const SpaceSavingWidget();
-                      }
+                    if(widget.comment.replies.loadingNext)
+                      const LoadingCircleWidget(strokeWidth: 2)
+                  ]
+                )
+              ),
+
+            if(widget.comment.repliesVisibility)
+              Row(
+                children: [
+                  if(widget.comment.replies.ids.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left:50, top:20, right: 20),
+                      child: HideRepliesButtonWidget(comment: widget.comment),
+                    ),
+
+                  if(widget.comment.numberOfNotDisplayedReplies > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(left:50, top:20),
+                      child: DisplayRemainRepliesButtonWidget(comment: widget.comment),
                     )
-                
-                  ],
-                );
-              }
-            )
+                ],
+              )
           ],
         ),
       ),

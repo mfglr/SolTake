@@ -116,7 +116,7 @@ class AddPrevPageCommentRepliesAction extends redux.Action{
 class AddCommentReplyAction extends redux.Action{
   final int commentId;
   final int replyId;
-  const AddCommentReplyAction({required this.replyId, required this.commentId});
+  const AddCommentReplyAction({required this.commentId, required this.replyId});
 }
 @immutable
 class RemoveCommentReplyAction extends redux.Action{
