@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/create_comment_state/actions.dart'
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class CommentFieldWidget extends StatelessWidget {
@@ -26,20 +27,26 @@ class CommentFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if(state.comment != null)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("You are replying to ${state.comment!.userName}"),
-              IconButton(
-                onPressed: (){
-                  contentController.text = "";
-                  store.dispatch(const CancelReplyAction());
-                },
-                icon: const Icon(Icons.clear)
-              )
-            ],
-          ),
+        Builder(
+          builder: (context){
+            if(state.comment != null){
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("You are replying to ${state.comment!.userName}"),
+                  IconButton(
+                    onPressed: (){
+                      contentController.text = "";
+                      store.dispatch(const CancelReplyAction());
+                    },
+                    icon: const Icon(Icons.clear)
+                  )
+                ],
+              );
+            }
+            return const SpaceSavingWidget();
+          },
+        ),
         Row(
           children: [
             Container(
@@ -72,6 +79,9 @@ class CommentFieldWidget extends StatelessWidget {
                 store.dispatch(const CreateCommentAction());
                 contentController.text = "";
                 focusNode.unfocus();
+                // if(state.comment == null){
+                //   scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                // }
               },
               child: const Icon(Icons.send_outlined)
             )

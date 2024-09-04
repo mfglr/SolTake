@@ -18,14 +18,14 @@ class CommentEntityState extends EntityState<CommentState>{
     => CommentEntityState(entities: updateOne(entities[commentId]?.addNewCommingLike(likeId)));
 
   CommentEntityState getNextPageReplies(int commentId)
-    => CommentEntityState(entities: updateOne(entities[commentId]?.getNextPageReplies()));
+    => CommentEntityState(entities: updateOne(entities[commentId]!.getNextPageReplies()));
   CommentEntityState addNextPageReplies(int commentId,Iterable<int> replyIds)
-    => CommentEntityState(entities: updateOne(entities[commentId]?.addNextPageReplies(replyIds)));
+    => CommentEntityState(entities: updateOne(entities[commentId]!.addNextPageReplies(replyIds)));
   CommentEntityState addReply(int commentId, int replyId)
-    => CommentEntityState(entities: updateOne(entities[commentId]?.appendReply(replyId)));
+    => CommentEntityState(entities: updateOne(entities[commentId]!.appendReply(replyId)));
   CommentEntityState removeReply(int commentId, int replyId)
-    => CommentEntityState(entities: updateOne(entities[commentId]?.removeReply(replyId)));
+    => CommentEntityState(entities: updateOne(entities[commentId]!.removeReply(replyId)));
   
   CommentEntityState changeVisibility(int commentId,bool visibility)
-    => CommentEntityState(entities: updateOne(entities[commentId]?.changeVisibility(visibility)));
+    => CommentEntityState(entities: updateOne(entities[commentId]!.changeVisibility(visibility)));
 }
