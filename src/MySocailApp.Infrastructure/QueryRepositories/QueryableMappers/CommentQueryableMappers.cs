@@ -18,7 +18,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         x.Content.Value,
                         x.Likes.Any(x => x.AppUserId == accountId),
                         x.Likes.Count,
-                        x.Replies.Count,
+                        x.Children.Count,
                         x.AppUserId == accountId,
                         x.QuestionId,
                         x.SolutionId,

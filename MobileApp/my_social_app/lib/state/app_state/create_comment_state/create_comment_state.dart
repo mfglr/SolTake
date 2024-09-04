@@ -31,7 +31,7 @@ class CreateCommentState{
     => CreateCommentState(
         question: question,
         solution: null,
-        comment: comment,
+        comment: null,
         content: content,
         hintText: "Comment on ${question.formatUserName(10)}' s question...",
       );
@@ -40,7 +40,7 @@ class CreateCommentState{
     => CreateCommentState(
         question: null,
         solution: solution,
-        comment: comment,
+        comment: null,
         content: content,
         hintText: "Comment on ${solution.userName}' s solution...",
       );
@@ -62,13 +62,12 @@ class CreateCommentState{
         content: "",
         hintText: hintText,
       );
-
-  CreateCommentState changeHintText(String hintText)
-    => CreateCommentState(
-        question: question,
-        solution: solution,
-        comment: comment,
-        content: content,
-        hintText: hintText,
+  CreateCommentState clear()
+    => const CreateCommentState(
+        question: null,
+        solution: null,
+        comment: null,
+        content: "",
+        hintText: ""
       );
 }

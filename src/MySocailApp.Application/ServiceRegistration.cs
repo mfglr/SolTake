@@ -21,7 +21,6 @@ namespace MySocailApp.Application
                     var reader = sp.GetRequiredService<IAccessTokenReader>();
 
                     cfg.AddProfile(new QuestionMappers(reader));
-                    cfg.AddProfile(new CommentMappers(reader));
                 })
                 .AddAutoMapper(assembly)
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))

@@ -36,6 +36,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
   @override
   void initState() {
     final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(const ClearCreateCommentStateAction());
     _questionConsumer =
       store.onChange
         .map((state) => state.solutionEntityState.entities[widget.solutionId])
