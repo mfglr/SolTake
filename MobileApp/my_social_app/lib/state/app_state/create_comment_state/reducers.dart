@@ -12,8 +12,10 @@ CreateCommentState changeCommentReducer(CreateCommentState prev,ChangeCommentAct
   => prev.changeComment(action.comment);
 CreateCommentState cancelReplyReducer(CreateCommentState prev,CancelReplyAction action)
   => prev.cancelReply();
-CreateCommentState clearReducer(CreateCommentState prev,ClearCreateCommentStateAction action)
-  => prev.clear();
+CreateCommentState changeCommentFieldReducer(CreateCommentState prev,ChangeHintTextAction action)
+  => prev.changeHintText(action.hintText);
+CreateCommentState createCommentSuccessReducer(CreateCommentState prev, CreateCommentSuccessAction action)
+  => prev.cancelReply();
 
 Reducer<CreateCommentState> createCommentStateReducers = combineReducers<CreateCommentState>([
   TypedReducer<CreateCommentState,ChangeContentAction>(changeContentReducer).call,
@@ -21,5 +23,6 @@ Reducer<CreateCommentState> createCommentStateReducers = combineReducers<CreateC
   TypedReducer<CreateCommentState,ChangeSolutionAction>(changeSolutionReducer).call,
   TypedReducer<CreateCommentState,ChangeCommentAction>(changeCommentReducer).call,
   TypedReducer<CreateCommentState,CancelReplyAction>(cancelReplyReducer).call,
-  TypedReducer<CreateCommentState,ClearCreateCommentStateAction>(clearReducer).call,
+  TypedReducer<CreateCommentState,ChangeHintTextAction>(changeCommentFieldReducer).call,
+  TypedReducer<CreateCommentState,CreateCommentSuccessAction>(createCommentSuccessReducer).call,
 ]);

@@ -1,7 +1,5 @@
-import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
@@ -19,6 +17,7 @@ void createCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
       .createComment(state.content,questionId,solutionId,repliedId)
       .then((comment){
         store.dispatch(AddCommentAction(comment: comment.toCommentState()));
+
         if(questionId != null){
           store.dispatch(AddQuestionCommentAction(questionId: state.question!.id,commenId: comment.id));
         }
@@ -28,16 +27,7 @@ void createCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
         else if(repliedId != null){
           store.dispatch(AddCommentReplyAction(commentId: comment.parentId!,replyId: comment.id));
         }
-        store.dispatch(const CancelReplyAction());
-      })
-      .catchError((e){
-        if(e is BackendException && e.statusCode == 404){
-          if(state.comment != null){
-            removeCommentDispathcer(store,state.comment!);
-          }
-        }
-        store.dispatch(const CancelReplyAction());
-        throw e;
+        store.dispatch(const CreateCommentSuccessAction());
       });
   }
   next(action);

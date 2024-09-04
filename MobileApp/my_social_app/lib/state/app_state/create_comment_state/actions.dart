@@ -8,6 +8,10 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 class CreateCommentAction extends redux.Action{
   const CreateCommentAction();
 }
+@immutable
+class CreateCommentSuccessAction extends redux.Action{
+  const CreateCommentSuccessAction();
+}
 
 @immutable
 class ChangeContentAction extends redux.Action{
@@ -34,6 +38,12 @@ class CancelReplyAction extends redux.Action{
   const CancelReplyAction();
 }
 @immutable
-class ClearCreateCommentStateAction extends redux.Action{
-  const ClearCreateCommentStateAction();
+class ChangeHintTextAction extends redux.Action{
+  final String hintText;
+  const ChangeHintTextAction({required this.hintText});
+}
+@immutable
+class PressReplyButtonAction extends redux.Action{
+  final CommentState comment;
+  const PressReplyButtonAction({required this.comment});
 }

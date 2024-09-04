@@ -106,10 +106,7 @@ class QuestionState{
     );
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
-  String? formatContent(int count){
-    if(content == null) return null;
-    return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
-  }
+
   QuestionState startLodingNextLikes() =>
     _optional(newLikes: likes.startLoadingNext());
   QuestionState addNextPageLikes(Iterable<int> likeIds) =>
@@ -208,20 +205,11 @@ class QuestionState{
   QuestionState addNextPageComments(Iterable<int> commentIds) => 
     _optional(newComments: comments.addNextPage(commentIds));
   QuestionState addComment(int commentId) => 
-    _optional(
-      newNumberOfComments: numberOfComments + 1,
-      newComments: comments.prependOne(commentId)
-    );
+    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.prependOne(commentId));
   QuestionState removeComment(int commentId) =>
-    _optional(
-      newNumberOfComments: numberOfComments - 1,
-      newComments: comments.removeOne(commentId)
-    );
+    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.removeOne(commentId));
   QuestionState addNewComment(int commentId) =>
-    _optional(
-      newNumberOfComments: numberOfComments + 1,
-      newComments: comments.addInOrder(commentId)
-    );
+    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.addInOrder(commentId));
 
   QuestionState startLoadingImage(int index){
     if(images.elementAt(index).state != ImageStatus.notStarted) return this;
