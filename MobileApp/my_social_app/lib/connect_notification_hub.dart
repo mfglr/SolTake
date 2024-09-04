@@ -36,8 +36,7 @@ void connectNotificationHub(Store<AppState> store){
         store.dispatch(AddCommentAction(comment: comment));
         store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
       }
-      else if(notification.type == NotificationType.questionLikedNotification){
-        store.dispatch(AddNewQuestionLikeAction(questionId: notification.questionId!,likeId: notification.userId));
+      else if(notification.type == NotificationType.commentRepliedNotification){
       }
       else if(notification.type == NotificationType.solutionCreatedNotification){
         final solution = Solution.fromJson(list.last as dynamic).toSolutionState();

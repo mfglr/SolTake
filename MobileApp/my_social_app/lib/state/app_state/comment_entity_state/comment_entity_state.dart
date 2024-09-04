@@ -22,7 +22,7 @@ class CommentEntityState extends EntityState<CommentState>{
   CommentEntityState addNextPageReplies(int commentId,Iterable<int> replyIds)
     => CommentEntityState(entities: updateOne(entities[commentId]!.addNextPageReplies(replyIds)));
   CommentEntityState addReply(int commentId, int replyId)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.appendReply(replyId)));
+    => CommentEntityState(entities: updateOne(entities[commentId]!.addReply(replyId)));
   CommentEntityState removeReply(int commentId, int replyId)
     => CommentEntityState(entities: updateOne(entities[commentId]!.removeReply(replyId)));
   

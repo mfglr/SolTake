@@ -95,9 +95,9 @@ class CommentState{
     => _optional(newReplies: replies.startLoadingNext());
   CommentState addNextPageReplies(Iterable<int> replyIds)
     => _optional(newReplies: replies.addNextPage(replyIds));
-  CommentState appendReply(int replyId)
+  CommentState addReply(int replyId)
     => _optional(
-        newReplies: replies.appendOne(replyId),
+        newReplies: replies.prependOne(replyId),
         newNumberOfReplies: numberOfReplies + 1,
         newRepliesVisibility: true,
       );

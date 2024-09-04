@@ -19,7 +19,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToCommentResponseDto(accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<List<CommentResponseDto>> GetByIds(int accountId, IEnumerable<int> ids, CancellationToken cancellationToken)
+        public Task<List<CommentResponseDto>> GetByIdsAsync(int accountId, IEnumerable<int> ids, CancellationToken cancellationToken)
             => _context.Comments
                 .AsNoTracking()
                 .Where(x => ids.Any(id => x.Id == id))

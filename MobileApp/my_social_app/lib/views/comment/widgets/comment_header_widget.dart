@@ -7,6 +7,8 @@ import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/comment/widgets/comment_content_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_like_button_widget.dart';
 import 'package:my_social_app/views/comment/widgets/display_comment_likes_button.dart';
+import 'package:my_social_app/views/comment/widgets/display_remain_replies_button_widget.dart';
+import 'package:my_social_app/views/comment/widgets/display_replies_button_widget.dart';
 import 'package:my_social_app/views/comment/widgets/hide_replies_button_widget.dart';
 import 'package:my_social_app/views/comment/widgets/reply_comment_button_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -22,14 +24,14 @@ class CommentHeaderWidget extends StatelessWidget {
   final CommentState comment;
   final TextEditingController contentController;
   final FocusNode focusNode;
-  final Widget? displayRepliesButton;
-  final double? diameter; 
+  final bool isRoot;
+  final double? diameter;
   const CommentHeaderWidget({
     super.key,
     required this.comment,
     required this.contentController,
     required this.focusNode,
-    this.displayRepliesButton,
+    required this.isRoot,
     this.diameter,
   });
   @override
@@ -170,19 +172,24 @@ class CommentHeaderWidget extends StatelessWidget {
                         comment: comment,
                       ),
                     ),
-                    Builder(
-                      builder: (context) {
-                        if(displayRepliesButton == null || comment.numberOfReplies == 0) return const SpaceSavingWidget();
-                        if(comment.repliesVisibility) return HideRepliesButtonWidget(comment: comment);
-                        return displayRepliesButton!; 
-                      }
-                    )
+
+                    if(isRoot && !comment.repliesVisibility)
+                      DisplayRepliesButtonWidget(comment: comment)
+                    else if (isRoot && comment.repliesVisibility && comment.numberOfNotDisplayedReplies > 0)
+                      Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: HideRepliesButtonWidget(comment: comment)
+                          ),
+                          DisplayRemainRepliesButtonWidget(comment: comment),
+                        ],
+                      )
+                    else if(isRoot && comment.repliesVisibility && comment.numberOfNotDisplayedReplies <= 0)
+                      HideRepliesButtonWidget(comment: comment)
                   ],
                 ),
               ),
-    
-              
-    
             ],
           ),
         ),

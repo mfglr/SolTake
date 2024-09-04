@@ -12,7 +12,7 @@ namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsByIds
 
         public Task<List<CommentResponseDto>> Handle(GetCommentsByIdsDto request, CancellationToken cancellationToken)
             => _commentQueryRepository
-                .GetByIds(
+                .GetByIdsAsync(
                     _accessTokenReader.GetRequiredAccountId(),
                     request.Ids,
                     cancellationToken

@@ -3,8 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_header_widget.dart';
-import 'package:my_social_app/views/comment/widgets/display_remain_replies_button_widget.dart';
-import 'package:my_social_app/views/comment/widgets/display_replies_button_widget.dart';
 import 'package:my_social_app/views/comment/widgets/hide_replies_button_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
@@ -66,7 +64,7 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
               comment: widget.comment,
               contentController: widget.contentController,
               focusNode: widget.focusNode,
-              displayRepliesButton: DisplayRepliesButtonWidget(comment: widget.comment),
+              isRoot: true,
               diameter: 45,
             ),
       
@@ -75,40 +73,29 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                 converter: (store) => store.state.selectCommentReplies(widget.comment.id),
                 builder: (context,replies) => Column(
                   children: [
+                    if(widget.comment.replies.loadingNext)
+                      const LoadingCircleWidget(strokeWidth: 2),
                     ...replies.map(
                       (reply) => Padding(
                         padding: const EdgeInsets.only(left: 50,top: 20),
                         child: CommentHeaderWidget(
                           comment: reply,
+                          isRoot: false,
                           contentController: widget.contentController,
                           focusNode: widget.focusNode
                         ),
                       )
                     ),
-                    if(widget.comment.replies.loadingNext)
-                      const LoadingCircleWidget(strokeWidth: 2)
                   ]
                 )
               ),
       
-            if(widget.comment.repliesVisibility)
-              Row(
-                children: [
-                  
-                  if(widget.comment.replies.ids.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left:50, top:20, right: 20),
-                      child: HideRepliesButtonWidget(comment: widget.comment),
-                    ),
-
-                  if(widget.comment.numberOfNotDisplayedReplies > 0)
-                    Padding(
-                      padding: const EdgeInsets.only(left:50, top:20),
-                      child: DisplayRemainRepliesButtonWidget(comment: widget.comment),
-                    )
-              
-                ],
+            if(widget.comment.repliesVisibility && widget.comment.replies.ids.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(left:50, top:20, right: 20),
+                child: HideRepliesButtonWidget(comment: widget.comment),
               ),
+              
           ],
         ),
       ),

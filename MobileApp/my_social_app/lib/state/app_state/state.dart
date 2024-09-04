@@ -196,7 +196,7 @@ class AppState{
   Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
     => solutionEntityState.entities[solutionId]!.comments.merge(id).map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> selectCommentReplies(int commentId)
-    => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!);
+    => commentEntityState.entities[commentId]!.replies.ids.map((e) => commentEntityState.entities[e]!).toList().reversed;
   Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
     => commentEntityState.entities[commentId]!.replies.merge(id).map((e) => commentEntityState.entities[e]!);
 

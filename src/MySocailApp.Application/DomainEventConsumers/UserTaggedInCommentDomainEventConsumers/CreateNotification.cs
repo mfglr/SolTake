@@ -1,15 +1,24 @@
-﻿using MySocailApp.Application.ApplicationServices;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
+using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.Hubs;
+using MySocailApp.Application.Queries.NotificationAggregate;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserTaggedInCommentDomainEventConsumers
 {
-    public class CreateNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, ICommentReadRepository commentReadRepsitory) : IDomainEventConsumer<UserTaggedInCommentDomainEvent>
+    public class CreateNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, ICommentReadRepository commentReadRepsitory, INotificationConnectionReadRepository notificationConnectionReadRepository, IHubContext<NotificationHub> notificationHub, IMapper mapper) : IDomainEventConsumer<UserTaggedInCommentDomainEvent>
     {
+        private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
+        private readonly INotificationConnectionReadRepository _notificationConnectionReadRepository = notificationConnectionReadRepository;
+        private readonly IMapper _mapper = mapper;
+
         private readonly ICommentReadRepository _commentReadRepsitory = commentReadRepsitory;
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -21,7 +30,7 @@ namespace MySocailApp.Application.DomainEventConsumers.UserTaggedInCommentDomain
             if (comment.ParentId != null)
             {
                 parent = await _commentReadRepsitory.GetAsync((int)comment.ParentId, cancellationToken);
-                if(parent == null) return;
+                if (parent == null) return;
             }
             var n = Notification.UserTaggedToCommentNotification(
                 notification.UserId,
@@ -33,6 +42,18 @@ namespace MySocailApp.Application.DomainEventConsumers.UserTaggedInCommentDomain
             );
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
+
+            var connection = await _notificationConnectionReadRepository.GetByIdAsync(notification.UserId, cancellationToken);
+            if (connection == null || !connection.IsConnected) return;
+
+            await _notificationHub.Clients
+                .Client(connection.ConnectionId!)
+                .SendAsync(
+                    "getNotification",
+                    _mapper.Map<NotificationResponseDto>(n),
+                    cancellationToken
+                );
+
         }
     }
 }
