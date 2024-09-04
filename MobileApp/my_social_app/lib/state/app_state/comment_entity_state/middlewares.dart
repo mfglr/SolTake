@@ -1,5 +1,6 @@
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
@@ -127,21 +128,24 @@ void loadCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
+void removeCommentDispathcer(Store<AppState> store, CommentState comment){
+  if(comment.parentId != null){
+    store.dispatch(RemoveCommentReplyAction(commentId: comment.parentId!, replyId: comment.id));
+  }
+  else if(comment.questionId != null){
+    store.dispatch(RemoveQuestionCommentAction(commentId: comment.id, questionid: comment.questionId!));
+  }
+  else{
+    store.dispatch(RemoveSolutionCommentAction(solutionId: comment.solutionId!, commentId: comment.id));
+  }
+  store.dispatch(RemoveCommentSuccessAction(commentId: comment.id));
+}
 void removeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveCommentAction){
     CommentService()
       .deleteComment(action.comment.id)
       .then((_){
-        if(action.comment.parentId != null){
-          store.dispatch(RemoveCommentReplyAction(commentId: action.comment.parentId!, replyId: action.comment.id));
-        }
-        else if(action.comment.questionId != null){
-          store.dispatch(RemoveQuestionCommentAction(commentId: action.comment.id, questionid: action.comment.questionId!));
-        }
-        else{
-          store.dispatch(RemoveSolutionCommentAction(solutionId: action.comment.solutionId!, commentId: action.comment.id));
-        }
-        store.dispatch(RemoveCommentSuccessAction(commentId: action.comment.id));
+        removeCommentDispathcer(store,action.comment);
       });
   }
   next(action);

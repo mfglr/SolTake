@@ -3,7 +3,6 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/views/comment/widgets/comment_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class CommentItemsWidget extends StatefulWidget {
   final ScrollController scrollController;
@@ -71,14 +70,8 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
                   )
                 )
               ),
-              Builder(
-                builder: (context){
-                  if(widget.pagination.loadingNext){
-                    return const LoadingCircleWidget(strokeWidth: 3);
-                  }
-                  return const SpaceSavingWidget();
-                }
-              )
+              if(widget.pagination.loadingNext)
+                const LoadingCircleWidget(strokeWidth: 3)
             ]
           );
         }

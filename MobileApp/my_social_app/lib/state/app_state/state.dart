@@ -187,11 +187,11 @@ class AppState{
     => questionEntityState.entities[questionId]!.incorrectSolutions.ids.map((e) => solutionEntityState.entities[e]!);
 
   //Select comments
-  Iterable<CommentState> getQuestionComments(int questionId)
+  Iterable<CommentState> selectQuestionComments(int questionId)
     => questionEntityState.entities[questionId]?.comments.ids.map((e) => commentEntityState.entities[e]!) ?? [];
-  Iterable<CommentState> getFormatedQuestionComments(int id,int questionId)
+  Iterable<CommentState> selectFormatedQuestionComments(int id,int questionId)
     => questionEntityState.entities[questionId]!.comments.merge(id).map((e) => commentEntityState.entities[e]!);
-  Iterable<CommentState> getSolutionComments(int solutionId)
+  Iterable<CommentState> selectSolutionComments(int solutionId)
     => solutionEntityState.entities[solutionId]!.comments.ids.map((e) => commentEntityState.entities[e]!);
   Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
     => solutionEntityState.entities[solutionId]!.comments.merge(id).map((e) => commentEntityState.entities[e]!);

@@ -5,6 +5,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -39,12 +40,23 @@ void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher nex
   }
   next(action);
 }
+
+void removeSolutionDispathcer(Store<AppState> store,SolutionState solution){
+  final question = store.state.questionEntityState.entities[solution.questionId];
+  if(question != null){
+    store.dispatch(RemoveQuestionSolutionAction(solution: solution));
+    if(solution.state == SolutionStatus.correct && question.numberOfCorrectSolutions <= 1){
+      store.dispatch(MarkUserQuestionAsUnsolvedAction(userId: question.appUserId, questionId: solution.questionId));
+    }
+  }
+  store.dispatch(RemoveSolutionSuccessAction(solutionId: solution.id));
+}
 void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveSolutionAction){
-    final question = store.state.questionEntityState.entities[action.solution.questionId];
     SolutionService()
       .delete(action.solution.id)
       .then((_){
+        final question = store.state.questionEntityState.entities[action.solution.questionId];
         if(question != null){
           store.dispatch(RemoveQuestionSolutionAction(solution: action.solution));
           if(action.solution.state == SolutionStatus.correct && question.numberOfCorrectSolutions <= 1){
