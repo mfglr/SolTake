@@ -36,7 +36,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsCorrectDo
             if (connection == null || !connection.IsConnected) return;
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)
-                .SendAsync("getNotification",_mapper.Map<NotificationResponseDto>(n),cancellationToken);
+                .SendAsync("getSolutionMarkAsCorrectNotification",_mapper.Map<NotificationResponseDto>(n),cancellationToken);
         }
     }
 }

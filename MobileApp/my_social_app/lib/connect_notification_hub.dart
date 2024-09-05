@@ -28,7 +28,7 @@ void connectNotificationHub(Store<AppState> store){
   ?.then((_){
     store.dispatch(const GetUnviewedNotificationsAction());
   });
-
+  //getQuestionLikedNotification
   hub.hubConnection.on(
     getQuestionLikedNotification,
     (list){
@@ -45,7 +45,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
     }
   );
-
+  //getSolutionWasUpvotedNotification
   hub.hubConnection.on(
     getSolutionWasUpvotedNotification,
     (list){
@@ -62,7 +62,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
     }
   );
-
+  //getSolutionWasDownvotedNotification
   hub.hubConnection.on(
     getSolutionWasDownvotedNotification,
     (list){
@@ -79,7 +79,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
     }
   );
-
+  //getSolutionMarkAsIncorrectNotification
   hub.hubConnection.on(
     getSolutionMarkAsIncorrectNotification,
     (list){
@@ -90,6 +90,19 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
       store.dispatch(MarkQuestionSolutionAsIncorrectAction(questionId:notification.questionId!,solutionId:notification.solutionId!));
+    }
+  );
+  //getSolutionMarkAsCorrectNotification
+  hub.hubConnection.on(
+    getSolutionMarkAsCorrectNotification,
+    (list){
+      if(list == null || list.length != 1 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+
+      store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
+      store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
+      store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
     }
   );
 
@@ -111,11 +124,6 @@ void connectNotificationHub(Store<AppState> store){
         store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
         store.dispatch(AddSolutionAction(solution: solution));
         store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
-      }
-      else if(notification.type == NotificationType.solutionMarkedAsCorrectNotification){
-        store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
-        store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
-        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
       }
       else if(notification.type == NotificationType.commentLikedNotification){
         final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
