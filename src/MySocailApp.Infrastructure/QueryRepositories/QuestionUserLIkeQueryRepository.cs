@@ -15,14 +15,14 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<QuestionUserLikeResponseDto?> GetQuestionLikeAsync(int accountId, int likeId, CancellationToken cancellationToken)
             => _context.QuestionUserLikes
                 .AsNoTracking()
-                .Where(x => x.Id == likeId && !x.IsRemoved)
+                .Where(x => x.Id == likeId)
                 .ToQuestionUserLikeResponseDto(accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<QuestionUserLikeResponseDto>> GetQuestionLikesAsync(int questionId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.QuestionUserLikes
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && !x.IsRemoved)
+                .Where(x => x.QuestionId == questionId)
                 .ToPage(page)
                 .ToQuestionUserLikeResponseDto(accountId)
                 .ToListAsync(cancellationToken);

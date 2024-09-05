@@ -14,6 +14,7 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionDislikedDomainEve
         {
             var n = await _notificationWriteRepository.GetQuestionLikedNotificationAsync(notification.Question.Id, notification.Question.AppUserId, cancellationToken);
             if (n == null) return;
+
             _notificationWriteRepository.Delete(n);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

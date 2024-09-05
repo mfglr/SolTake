@@ -29,6 +29,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
+                .HasMany(x => x.LikeNotifications)
+                .WithOne(x => x.Comment)
+                .HasForeignKey(x => x.CommentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
                 .HasMany(x => x.Tags)
                 .WithOne(x => x.Comment)
                 .HasForeignKey(x => x.CommentId)

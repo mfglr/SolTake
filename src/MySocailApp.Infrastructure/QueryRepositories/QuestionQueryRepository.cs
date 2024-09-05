@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
-using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;

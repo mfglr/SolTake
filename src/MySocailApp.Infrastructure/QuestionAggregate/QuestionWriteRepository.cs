@@ -18,6 +18,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
         public async Task<Question?> GetWithLikeByIdAsync(int id,int userId,CancellationToken cancellationToken)
             => await _context.Questions
                 .Include(x => x.Likes.Where(x => x.AppUserId == userId))
+                .Include(x => x.LikeNotifications.Where(x => x.AppUserId == userId))
                 .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
     }
 }

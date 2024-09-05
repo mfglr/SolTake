@@ -53,30 +53,28 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         private readonly List<QuestionUserLike> _likes = [];
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
+        private readonly List<QuestionLikeNotification> _likeNotifications = [];
+        public IReadOnlyList<QuestionLikeNotification> LikeNotifications => _likeNotifications;
         public QuestionUserLike Like(int likerId)
         {
-            var like = _likes.FirstOrDefault(x => x.AppUserId == likerId);
-            if (like == null)
+            if (_likes.Any(x => x.AppUserId == likerId))
+                throw new QuestionWasAlreadyLikedException();
+
+            var like = QuestionUserLike.Create(likerId);
+            _likes.Add(like);
+            if (likerId != AppUserId && !_likeNotifications.Any(x => x.AppUserId == likerId))
             {
-                like = QuestionUserLike.Create(likerId);
-                _likes.Add(like);
-                if (likerId != AppUserId)
-                    AddDomainEvent(new QuestionLikedDomainEvent(this, like));
-            }
-            if (like.IsRemoved)
-            {
-                _likes.Remove(like);
-                like = QuestionUserLike.Create(likerId);
-                _likes.Add(like);
+                _likeNotifications.Add(new QuestionLikeNotification(likerId));
+                AddDomainEvent(new QuestionLikedDomainEvent(this, like));
             }
             return like;
         }
         public void Dislike(int userId)
         {
-            var like = _likes.FirstOrDefault(x => x.AppUserId == userId);
-            if (like == null || like.IsRemoved)
+            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            if (index == -1)
                 return;
-            like.Remove();
+            _likes.RemoveAt(index);
             AddDomainEvent(new QuestionDislikedDomainEvent(this));
         }
 

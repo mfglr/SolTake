@@ -3,6 +3,7 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
 using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.Entities
@@ -72,30 +73,27 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 
         private readonly List<CommentUserLike> _likes = [];
         public IReadOnlyCollection<CommentUserLike> Likes => _likes;
+        private readonly List<CommentLikeNotification> _likeNotifications = [];
+        public IReadOnlyCollection<CommentLikeNotification> LikeNotifications => _likeNotifications;
         public CommentUserLike Like(int likerId)
         {
-            var like = _likes.FirstOrDefault(x => x.AppUserId == likerId);
-            if (like == null)
+            if (_likes.Any(x => x.AppUserId == likerId))
+                throw new CommentWasAlreadyLikedException();
+
+            var like = CommentUserLike.Create(likerId);
+            _likes.Add(like);
+            if (likerId != AppUserId && !LikeNotifications.Any(x => x.AppUserId == likerId))
             {
-                like = CommentUserLike.Create(likerId);
-                _likes.Add(like);
-                if (likerId != AppUserId)
-                    AddDomainEvent(new CommentLikedDomainEvent(this, like));
-            }
-            if (like.IsRemoved)
-            {
-                _likes.Remove(like);
-                like = CommentUserLike.Create(likerId);
-                _likes.Add(like);
+                _likeNotifications.Add(new CommentLikeNotification(likerId));
+                AddDomainEvent(new CommentLikedDomainEvent(this, like));
             }
             return like;
         }
         public void Dislike(int userId)
         {
-            var like = _likes.FirstOrDefault(x => x.AppUserId == userId);
-            if (like == null || like.IsRemoved)
-                return;
-            like.Remove();
+            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            if (index == -1) return;
+            _likes.RemoveAt(index);
             AddDomainEvent(new CommentDislikedDomainEvent(this));
         }
 

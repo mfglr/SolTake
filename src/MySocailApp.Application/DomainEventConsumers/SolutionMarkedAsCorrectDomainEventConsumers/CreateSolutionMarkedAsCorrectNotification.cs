@@ -29,13 +29,14 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsCorrectDo
             if (question == null) return;
 
             var n = Notification.SolutionMarkedAsCorrectNotification(solution.AppUserId, question.AppUserId, solution.QuestionId, solution.Id);
-            await _notificationWriteRepository.CreateAsync(n,cancellationToken);
+            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
             var connection = await _notificationConnectionRepository.GetByIdAsync(solution.AppUserId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
-            var mn = _mapper.Map<NotificationResponseDto>(n);
-            await _notificationHub.Clients.Client(connection.ConnectionId!).SendAsync("getNotification", mn, cancellationToken);
+            await _notificationHub.Clients
+                .Client(connection.ConnectionId!)
+                .SendAsync("getNotification",_mapper.Map<NotificationResponseDto>(n),cancellationToken);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             }
             var vote = SolutionUserVote.GenerateUpvote(voterId);
             _votes.Add(vote);
-            AddDomainEvent(new SolutionWasUpvotedDomainEvent(this,voterId));
+            AddDomainEvent(new SolutionWasUpvotedDomainEvent(this, vote));
 
             return vote;
 
@@ -91,6 +91,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         {
             if (State != SolutionState.Pending)
                 throw new InvalidStateTransitionException();
+
             State = SolutionState.Correct;
             UpdatedAt = DateTime.UtcNow;
             AddDomainEvent(new SolutionMarkedAsCorrectDomainEvent(this));

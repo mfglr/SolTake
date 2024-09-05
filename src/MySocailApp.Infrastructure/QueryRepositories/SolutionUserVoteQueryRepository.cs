@@ -28,5 +28,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToPage(page)
                 .ToSolutionUserVoteDto(accountId)
                 .ToListAsync(cancellationToken);
+
+        public async Task<SolutionUserVoteResponseDto?> GetSolutionVote(int accountId, int voteId, CancellationToken cancellationToken)
+            => await _context.SolutionUserVotes
+                .AsNoTracking()
+                .Where(x => x.Id == voteId)
+                .ToSolutionUserVoteDto(accountId)
+                .FirstOrDefaultAsync(cancellationToken);
     }
 }
