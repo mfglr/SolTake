@@ -81,6 +81,19 @@ void connectNotificationHub(Store<AppState> store){
   );
 
   hub.hubConnection.on(
+    getSolutionMarkAsIncorrectNotification,
+    (list){
+      if(list == null || list.length != 1 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
+      store.dispatch(MarkQuestionSolutionAsIncorrectAction(questionId:notification.questionId!,solutionId:notification.solutionId!));
+    }
+  );
+
+  hub.hubConnection.on(
     getNotifications,
     (list){
       final notification = Notification.fromJson((list!.first as dynamic)).toNotificationState();
@@ -103,9 +116,6 @@ void connectNotificationHub(Store<AppState> store){
         store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
         store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
         store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
-      }
-      else if(notification.type == NotificationType.solutionMarkedAsIncorrectNotification){
-        store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
       }
       else if(notification.type == NotificationType.commentLikedNotification){
         final comment = Comment.fromJson(list[1] as dynamic).toCommentState();

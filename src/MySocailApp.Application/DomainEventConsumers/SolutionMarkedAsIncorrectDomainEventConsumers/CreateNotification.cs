@@ -28,7 +28,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsIncorrect
             var question = await _questionReadRepository.GetAsync(solution.QuestionId, cancellationToken);
             if (question == null) return;
 
-            var n = Notification.SolutionMarkedAsIncorrectNotification(solution.AppUserId, question.AppUserId, solution.Id);
+            var n = Notification.SolutionMarkedAsIncorrectNotification(solution.AppUserId, question.AppUserId, solution.QuestionId, solution.Id);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
@@ -36,7 +36,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsIncorrect
             if (connection == null || !connection.IsConnected) return;
 
             var mn = _mapper.Map<NotificationResponseDto>(n);
-            await _notificationHub.Clients.Client(connection.ConnectionId!).SendAsync("getNotification", mn, cancellationToken);
+            await _notificationHub.Clients.Client(connection.ConnectionId!).SendAsync("getSolutionMarkAsIncorrectNotification", mn, cancellationToken);
         }
     }
 }

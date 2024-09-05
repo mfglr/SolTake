@@ -103,11 +103,12 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification SolutionMarkedAsIncorrectNotification(int ownerId, int userId, int solutionId)
+        public static Notification SolutionMarkedAsIncorrectNotification(int ownerId, int userId, int questionId, int solutionId)
             => new(NotificationType.SolutionMarkedAdIncorrect)
             {
                 OwnerId = ownerId,
                 UserId = userId,
+                QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
             };
