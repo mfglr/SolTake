@@ -101,6 +101,11 @@ class SolutionState{
       newNumberOfUpvotes: numberOfUpvotes - 1,
       newUpvotes: upvotes.removeOne(voteId)
     );
+  SolutionState addNewUpvote(int voteId)
+    => _optinal(
+      newNumberOfUpvotes: numberOfUpvotes + 1,
+      newUpvotes: upvotes.addInOrder(voteId),
+    );
 
   SolutionState startLoadingNextDownvotes()
     => _optinal(newDownvotes: downvotes.startLoadingNext());
@@ -120,6 +125,11 @@ class SolutionState{
       newIsDownvoted: false,
       newNumberOfDownvotes: numberOfDownvotes - 1,
       newDownvotes: downvotes.removeOne(voteId)
+    );
+  SolutionState addNewDownvote(int voteId)
+    => _optinal(
+      newNumberOfDownvotes: numberOfDownvotes + 1,
+      newDownvotes: downvotes.addInOrder(voteId)
     );
   
 

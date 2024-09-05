@@ -18,12 +18,11 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote
             int voterId = _tokenReader.GetRequiredAccountId();
 
             var solution =
-                await _solutionWriteRepository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
+                await _solutionWriteRepository.GetWithVoteAndVoteNotificationByIdAsync(request.SolutionId, voterId, cancellationToken) ??
                 throw new SolutionNotFoundException();
+
             var vote = solution.MakeUpvote(voterId);
-
             await _unitOfWork.CommitAsync(cancellationToken);
-
             return _mapper.Map<MakeUpvoteCommandResponseDto>(vote);
         }
     }

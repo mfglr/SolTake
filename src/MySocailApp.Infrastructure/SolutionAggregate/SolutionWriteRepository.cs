@@ -9,14 +9,22 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<Solution?> GetWithVotesByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context.Solutions.Include(x => x.Votes).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        public Task<Solution?> GetWithVoteByIdAsync(int solutionId, int voterId, CancellationToken cancellationToken)
+            => _context.Solutions
+                .Include(x => x.Votes.Where(x => x.AppUserId == voterId))
+                .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
+
+        public Task<Solution?> GetWithVoteAndVoteNotificationByIdAsync(int solutionId, int voterId, CancellationToken cancellationToken)
+            => _context.Solutions
+                .Include(x => x.Votes.Where(x => x.AppUserId == voterId))
+                .Include(x => x.VoteNotifications.Where(x => x.AppUserId == voterId))
+                .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
 
         public async Task CreateAsync(Solution solution, CancellationToken cancellationToken)
             => await _context.AddAsync(solution, cancellationToken);
 
-        public async Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context.Solutions.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        public Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
+            => _context.Solutions.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<Solution?> GetWithCommentsByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Solutions
@@ -35,5 +43,6 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
             }
             _context.Solutions.Remove(solution);
         }
+
     }
 }

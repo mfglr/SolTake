@@ -13,11 +13,12 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote
 
         public async Task Handle(RemoveUpvoteDto request, CancellationToken cancellationToken)
         {
-            var userId = _accessTokenReader.GetRequiredAccountId();
+            var voterId = _accessTokenReader.GetRequiredAccountId();
             var solution =
-                await _repository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
+                await _repository.GetWithVoteByIdAsync(request.SolutionId, voterId, cancellationToken) ??
                 throw new SolutionNotFoundException();
-            solution.RemoveUpvote(userId);
+
+            solution.RemoveUpvote(voterId);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

@@ -4,6 +4,7 @@ import 'package:my_social_app/models/comment_user_like.dart';
 import 'package:my_social_app/models/notification.dart';
 import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/models/solution.dart';
+import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
@@ -12,6 +13,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
@@ -41,6 +43,40 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, likeId: like.id));
       store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
       store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
+    }
+  );
+
+  hub.hubConnection.on(
+    getSolutionWasUpvotedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final vote = SolutionUserVote.fromJson(list[1] as dynamic);
+      final voteState = vote.toSolutionUserVoteState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddSolutionUserVoteAction(vote: voteState));
+      store.dispatch(AddNewSolutionUpvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
+      store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
+    }
+  );
+
+  hub.hubConnection.on(
+    getSolutionWasDownvotedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final vote = SolutionUserVote.fromJson(list[1] as dynamic);
+      final voteState = vote.toSolutionUserVoteState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddSolutionUserVoteAction(vote: voteState));
+      store.dispatch(AddNewSolutionDownvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
+      store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
     }
   );
 

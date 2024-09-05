@@ -4,10 +4,12 @@ namespace MySocailApp.Domain.SolutionAggregate.Interfaces
 {
     public interface ISolutionWriteRepository
     {
-        Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken);
-        Task<Solution?> GetWithVotesByIdAsync(int id, CancellationToken cancellationToken);
-        Task CreateAsync(Solution solution, CancellationToken cancellationToken);
-        Task<Solution?> GetWithCommentsByIdAsync(int id, CancellationToken cancellationToken);
         void Delete(Solution solution);
+        Task CreateAsync(Solution solution, CancellationToken cancellationToken);
+
+        Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<Solution?> GetWithCommentsByIdAsync(int id, CancellationToken cancellationToken);
+        Task<Solution?> GetWithVoteByIdAsync(int solutionId, int voterId, CancellationToken cancellationToken);
+        Task<Solution?> GetWithVoteAndVoteNotificationByIdAsync(int solutionId, int voterId, CancellationToken cancellationToken);
     }
 }

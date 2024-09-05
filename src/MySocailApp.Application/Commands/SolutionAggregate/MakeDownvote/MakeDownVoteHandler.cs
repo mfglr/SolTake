@@ -17,11 +17,11 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote
         {
             var voterId = _tokenReader.GetRequiredAccountId();
             var solution =
-                await _writeRepository.GetWithVotesByIdAsync(request.SolutionId, cancellationToken) ??
+                await _writeRepository.GetWithVoteAndVoteNotificationByIdAsync(request.SolutionId, voterId, cancellationToken) ??
                 throw new SolutionNotFoundException();
+
             var vote = solution.MakeDownvote(voterId);
             await _unitOfWork.CommitAsync(cancellationToken);
-
             return _mapper.Map<MakeDownvoteCommandResponseDto>(vote);
         }
     }

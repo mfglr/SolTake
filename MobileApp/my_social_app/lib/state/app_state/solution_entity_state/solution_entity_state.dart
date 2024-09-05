@@ -24,7 +24,9 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeDownvote(upvoteId,downvoteId)));
   SolutionEntityState removeDownvote(int solutionId,int voteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeDownvote(voteId)));
-  
+  SolutionEntityState addNewUpvote(int solutionId,int voteId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewUpvote(voteId)));
+
   SolutionEntityState getNextPageComments(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.getNextPageComments()));
   SolutionEntityState addNextPageComments(int solutionId, Iterable<int> commentIds)
@@ -33,6 +35,8 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.addComment(commentId)));
   SolutionEntityState removeComment(int solutionId,int commentId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeComment(commentId)));
+  SolutionEntityState addNewDownvote(int solutionId,int voteId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewDownvote(voteId)));
 
   SolutionEntityState startLoadingImage(int solutionId,int index)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingImage(index)));

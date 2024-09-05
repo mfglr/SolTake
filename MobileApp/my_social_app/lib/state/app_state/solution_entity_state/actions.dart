@@ -81,6 +81,13 @@ class RemoveSolutionUpvoteSuccessAction extends redux.Action{
   final int voteId;
   const RemoveSolutionUpvoteSuccessAction({required this.solutionId,required this.voteId});
 }
+@immutable
+class AddNewSolutionUpvoteAction extends redux.Action{
+  final int solutionId;
+  final int voteId;
+  const AddNewSolutionUpvoteAction({required this.solutionId, required this.voteId});
+}
+
 
 @immutable
 class GetNextPageSolutionDownvotesIfNoPageAction extends redux.Action{
@@ -129,6 +136,12 @@ class RemoveSolutionDownvoteSuccessAction extends redux.Action{
   final int solutionId;
   final int voteId;
   const RemoveSolutionDownvoteSuccessAction({required this.solutionId,required this.voteId});
+}
+@immutable
+class AddNewSolutionDownvoteAction extends redux.Action{
+  final int solutionId;
+  final int voteId;
+  const AddNewSolutionDownvoteAction({required this.solutionId, required this.voteId});
 }
 
 

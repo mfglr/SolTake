@@ -41,6 +41,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
+        private readonly List<SolutionVoteNotification> _voteNotifications = [];
+        public IReadOnlyCollection<SolutionVoteNotification> VoteNotifications => _voteNotifications;
         public SolutionUserVote MakeUpvote(int voterId)
         {
             var index = _votes.FindIndex(x => x.AppUserId == voterId);
@@ -49,13 +51,18 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                 if (_votes[index].Type == SolutionVoteType.Upvote)
                     throw new SolutionUpvotedBeforeException();
                 _votes.RemoveAt(index);//Remove downvote
+                AddDomainEvent(new SolutionDownvoteRemovedDomainEvent(this));
             }
+            
             var vote = SolutionUserVote.GenerateUpvote(voterId);
             _votes.Add(vote);
-            AddDomainEvent(new SolutionWasUpvotedDomainEvent(this, vote));
 
+            if(AppUserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
+            {
+                _voteNotifications.Add(new SolutionVoteNotification(voterId));
+                AddDomainEvent(new SolutionWasUpvotedDomainEvent(this, vote));
+            }
             return vote;
-
         }
         public SolutionUserVote MakeDownvote(int voterId)
         {
@@ -63,13 +70,20 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             if (index != -1)
             {
                 if (_votes[index].Type == SolutionVoteType.Downvote)
-                    throw new SolutionDownvotedBeforeException(); ;
+                    throw new SolutionDownvotedBeforeException();
                 _votes.RemoveAt(index);//Remove upvote
+                AddDomainEvent(new SolutionUpvoteRemovedDomainEvent(this));
             }
-            var solution = SolutionUserVote.GenerateDownvote(voterId);
-            _votes.Add(solution);
-            AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, voterId));
-            return solution;
+            
+            var vote = SolutionUserVote.GenerateDownvote(voterId);
+            _votes.Add(vote);
+
+            if(AppUserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
+            {
+                _voteNotifications.Add(new SolutionVoteNotification(voterId));
+                AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, vote));
+            }
+            return vote;
         }
         public void RemoveUpvote(int voterId)
         {
@@ -77,6 +91,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             if (index == -1 || _votes[index].Type == SolutionVoteType.Downvote)
                 throw new VoteIsNotFoundException();
             _votes.RemoveAt(index);
+            AddDomainEvent(new SolutionUpvoteRemovedDomainEvent(this));
         }
         public void RemoveDownvote(int voterId)
         {
@@ -84,6 +99,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             if(index == -1 || _votes[index].Type == SolutionVoteType.Upvote)
                 throw new VoteIsNotFoundException();
             _votes.RemoveAt(index);
+            AddDomainEvent(new SolutionDownvoteRemovedDomainEvent(this));
         }
 
         public SolutionState State { get; private set; }

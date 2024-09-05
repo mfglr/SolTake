@@ -31,14 +31,15 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionUpvotedDomainEven
             var connection = await _notificationConnectionReadRepository.GetByIdAsync(notification.Solution.AppUserId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
 
-            //var vote = await _solutionUserVoteQueryRepository.GetSolutionVote(notification.Solution.AppUserId,)
+            var vote = await _solutionUserVoteQueryRepository.GetSolutionVote(notification.Solution.AppUserId, notification.Vote.Id, cancellationToken);
+            if (vote == null) return;
 
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)
                 .SendAsync(
                     "getSolutionWasUpvotedNotification",
                     _mapper.Map<NotificationResponseDto>(n),
-
+                    vote,
                     cancellationToken
                 );
         }

@@ -17,6 +17,8 @@ SolutionEntityState makeUpvoteReducer(SolutionEntityState prev,MakeSolutionUpvot
   => prev.makeUpvote(action.solutionId,action.upvoteId,action.downvoteId);
 SolutionEntityState removeUpvoteReducer(SolutionEntityState prev,RemoveSolutionUpvoteSuccessAction action)
   => prev.removeUpvote(action.solutionId,action.voteId);
+SolutionEntityState addNewSolutionUpvoteReducer(SolutionEntityState prev,AddNewSolutionUpvoteAction action)
+  => prev.addNewUpvote(action.solutionId,action.voteId);
 
 SolutionEntityState getNextPageDownvotesReducer(SolutionEntityState prev,GetNextPageSolutionDownvotesAction action)
   => prev.starLoadingNextDownvotes(action.solutionId);
@@ -26,7 +28,8 @@ SolutionEntityState makeDownvoteReducer(SolutionEntityState prev,MakeSolutionDow
   => prev.makeDownvote(action.solutionId,action.upvoteId,action.downvoteId);
 SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveSolutionDownvoteSuccessAction action)
   => prev.removeDownvote(action.solutionId,action.voteId);
-
+SolutionEntityState addNewSolutionDownvoteReducer(SolutionEntityState prev,AddNewSolutionDownvoteAction action)
+  => prev.addNewDownvote(action.solutionId,action.voteId);
 
 SolutionEntityState getNextPageCommentsReducer(SolutionEntityState prev,GetNextPageSolutionCommentsAction action)
   => prev.getNextPageComments(action.solutionId);
@@ -56,11 +59,14 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
   TypedReducer<SolutionEntityState,AddNextPageSolutionUpvatesAction>(addNextPageUpvotesReducer).call,
   TypedReducer<SolutionEntityState,MakeSolutionUpvoteSuccessAction>(makeUpvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveSolutionUpvoteSuccessAction>(removeUpvoteReducer).call,
+  TypedReducer<SolutionEntityState,AddNewSolutionUpvoteAction>(addNewSolutionUpvoteReducer).call,
 
   TypedReducer<SolutionEntityState,GetNextPageSolutionDownvotesAction>(getNextPageDownvotesReducer).call,
   TypedReducer<SolutionEntityState,AddNextPageSolutionDownvotesAction>(addNextPageDownvotesReducer).call,
   TypedReducer<SolutionEntityState,MakeSolutionDownvoteSuccessAction>(makeDownvoteReducer).call,
   TypedReducer<SolutionEntityState,RemoveSolutionDownvoteSuccessAction>(removeDownVoteAction).call,
+  TypedReducer<SolutionEntityState,AddNewSolutionDownvoteAction>(addNewSolutionDownvoteReducer).call,
+
 
   TypedReducer<SolutionEntityState,GetNextPageSolutionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<SolutionEntityState,AddNextPageSolutionCommentsAction>(addNextPageCommentsReducer).call,
