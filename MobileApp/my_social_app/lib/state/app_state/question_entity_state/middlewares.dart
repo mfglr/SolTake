@@ -77,14 +77,13 @@ void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 }
 void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is DislikeQuestionAction){
-    final likerId = store.state.accountState!.id;
+    final accountId = store.state.accountState!.id;
     QuestionService()
       .dislike(action.questionId)
       .then((_){
-        final like = store.state.questionUserLikeEntityState.select(likerId);
-        if(like == null) return;
-        store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,likeId: like.id));
-        store.dispatch(RemoveQuestionUserLikeAction(likeId: like.id));
+        final likeId = store.state.questionUserLikeEntityState.select(action.questionId, accountId)?.id ?? 0;
+        store.dispatch(RemoveQuestionUserLikeAction(likeId: likeId));
+        store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,likeId: likeId));
       });
   }
   next(action);

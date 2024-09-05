@@ -12,6 +12,7 @@ class Comment{
   final int id;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final bool isOwner;
   final String userName;
   final int appUserId;
   final bool isEdited;
@@ -27,6 +28,7 @@ class Comment{
     required this.id,
     required this.createdAt,
     required this.updatedAt,
+    required this.isOwner,
     required this.userName,
     required this.appUserId,
     required this.isEdited,
@@ -47,6 +49,7 @@ class Comment{
       id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      isOwner: isOwner,
       appUserId: appUserId,
       userName: userName,
       questionId: questionId,

@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
@@ -54,21 +55,29 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
         public QuestionUserLike Like(int likerId)
         {
-            var index = _likes.FindIndex(x => x.AppUserId == likerId);
-            if (index != -1) throw new ClientSideException("",(int)HttpStatusCode.BadRequest);
-
-            var like = QuestionUserLike.Create(likerId);
-            _likes.Add(like);
-            if(likerId != AppUserId)
-                AddDomainEvent(new QuestionLikedDomainEvent(this, likerId));
+            var like = _likes.FirstOrDefault(x => x.AppUserId == likerId);
+            if (like == null)
+            {
+                like = QuestionUserLike.Create(likerId);
+                _likes.Add(like);
+                if (likerId != AppUserId)
+                    AddDomainEvent(new QuestionLikedDomainEvent(this, like));
+            }
+            if (like.IsRemoved)
+            {
+                _likes.Remove(like);
+                like = QuestionUserLike.Create(likerId);
+                _likes.Add(like);
+            }
             return like;
         }
         public void Dislike(int userId)
         {
-            var index = _likes.FindIndex(x => x.AppUserId == userId);
-            if (index == -1) return;
-
-            _likes.RemoveAt(index);
+            var like = _likes.FirstOrDefault(x => x.AppUserId == userId);
+            if (like == null || like.IsRemoved)
+                return;
+            like.Remove();
+            AddDomainEvent(new QuestionDislikedDomainEvent(this));
         }
 
         // Readonly navigator properties

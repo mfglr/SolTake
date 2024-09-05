@@ -14,6 +14,6 @@ class QuestionUserLikeEntityState extends EntityState<QuestionUserLikeState>{
   QuestionUserLikeEntityState removeLike(int likeId)
     => QuestionUserLikeEntityState(entities: removeOne(likeId));
 
-  QuestionUserLikeState? select(int likerId) 
-    => entities.values.firstWhereOrNull((like) => like.appUserId == likerId); 
+  QuestionUserLikeState? select(int questionId, int likerId) 
+    => entities.values.firstWhereOrNull((like) => like.questionId == questionId && like.appUserId == likerId); 
 }

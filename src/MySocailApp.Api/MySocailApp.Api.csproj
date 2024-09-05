@@ -24,9 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\ProfileImages\no_profile_image.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="MailMessages\EmailConfirmationByToken.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

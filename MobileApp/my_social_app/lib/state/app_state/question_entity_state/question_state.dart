@@ -211,7 +211,7 @@ class QuestionState{
   QuestionState addComment(int commentId) => 
     _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.prependOne(commentId));
   QuestionState removeComment(int commentId) =>
-    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.removeOne(commentId));
+    _optional(newNumberOfComments: numberOfComments - 1,newComments: comments.removeOne(commentId));
   QuestionState addNewComment(int commentId) =>
     _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.addInOrder(commentId));
 

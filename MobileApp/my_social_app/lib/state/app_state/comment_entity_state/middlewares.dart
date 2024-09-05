@@ -59,10 +59,9 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
     CommentService()
       .dislike(action.commentId)
       .then((_){
-        final like = store.state.commentUserLikeEntityState.select(action.commentId,accountId);
-        if(like == null) return;
-        store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId,likeId: like.id));
-        store.dispatch(RemoveCommentUserLikeAction(likeId: like.id));
+        final likeId = store.state.commentUserLikeEntityState.select(action.commentId,accountId)?.id ?? 0;
+        store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId,likeId: likeId));
+        store.dispatch(RemoveCommentUserLikeAction(likeId: likeId));
       });
   }
   next(action);

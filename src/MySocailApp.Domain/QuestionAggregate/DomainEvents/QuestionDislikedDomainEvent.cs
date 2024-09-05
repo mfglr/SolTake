@@ -3,5 +3,5 @@ using MySocailApp.Domain.QuestionAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.DomainEvents
 {
-    public record QuestionLikedDomainEvent(Question Question,QuestionUserLike Like) : IDomainEvent;
+    public record QuestionDislikedDomainEvent(Question Question) : IDomainEvent;
 }

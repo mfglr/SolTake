@@ -77,7 +77,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             var like = _likes.FirstOrDefault(x => x.AppUserId == likerId);
             if (like == null)
             {
-                like = CommentUserLike.Create(Id, likerId);
+                like = CommentUserLike.Create(likerId);
                 _likes.Add(like);
                 if (likerId != AppUserId)
                     AddDomainEvent(new CommentLikedDomainEvent(this, like));
@@ -85,7 +85,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             if (like.IsRemoved)
             {
                 _likes.Remove(like);
-                like = CommentUserLike.Create(Id, likerId);
+                like = CommentUserLike.Create(likerId);
                 _likes.Add(like);
             }
             return like;
@@ -93,7 +93,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public void Dislike(int userId)
         {
             var like = _likes.FirstOrDefault(x => x.AppUserId == userId);
-            if (like == null)
+            if (like == null || like.IsRemoved)
                 return;
             like.Remove();
             AddDomainEvent(new CommentDislikedDomainEvent(this));

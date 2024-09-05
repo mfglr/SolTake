@@ -8,14 +8,9 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public int CommentId { get; private set; }
         public int AppUserId { get; private set; }
 
-        private CommentUserLike(int commentId, int appUserId)
-        {
-            CommentId = commentId;
-            AppUserId = appUserId;
-        }
+        private CommentUserLike(int appUserId) =>AppUserId = appUserId;
 
-        public static CommentUserLike Create(int questionCommentId, int appUserId)
-            => new(questionCommentId, appUserId) { CreatedAt = DateTime.UtcNow };
+        public static CommentUserLike Create(int appUserId) => new(appUserId) { CreatedAt = DateTime.UtcNow };
 
         //IRemovable
         public bool IsRemoved { get; private set; }

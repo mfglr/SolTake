@@ -92,10 +92,11 @@ class QuestionItemWidget extends StatelessWidget {
                 Row(
                   children: [
                     QuestionLikeButton(question: question),
-                    Container(
-                      margin: const EdgeInsets.only(left: 5),
-                      child: DisplayQuestionLikesButton(question: question)
-                    ),
+                    if(question.numberOfLikes > 0)
+                      Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        child: DisplayQuestionLikesButton(question: question)
+                      ),
                     Container(
                       margin: const EdgeInsets.only(left: 8),
                       child: QuestionCommentButtonWidget(question: question)

@@ -4,6 +4,7 @@ class CommentState{
   final int id;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final bool isOwner;
   final String userName;
   final int appUserId;
   final bool isEdited;
@@ -22,6 +23,7 @@ class CommentState{
     required this.id,
     required this.createdAt,
     required this.updatedAt,
+    required this.isOwner,
     required this.userName,
     required this.appUserId,
     required this.isEdited,
@@ -54,6 +56,7 @@ class CommentState{
       id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      isOwner: isOwner,
       userName: newUserName ?? userName,
       appUserId: appUserId,
       isEdited: newIsEdited ?? isEdited,
@@ -83,13 +86,13 @@ class CommentState{
     => _optional(
         newNumberOfLikes: numberOfLikes - 1,
         newLikes: likes.removeOne(likeId),
+        newIsLiked: false
       );
   CommentState addNewCommingLike(int likeId)
     => _optional(
         newNumberOfLikes: numberOfLikes + 1,
         newLikes: likes.addInOrder(likeId)
       );
-  
  
   CommentState getNextPageReplies()
     => _optional(newReplies: replies.startLoadingNext());

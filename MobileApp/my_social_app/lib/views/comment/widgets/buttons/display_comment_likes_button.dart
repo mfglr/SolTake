@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/views/question/pages/display_question_likes_page.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/views/comment/pages/display_comment_likes_page.dart';
 
-class DisplayQuestionLikesButton extends StatelessWidget {
-  final QuestionState question;
-  const DisplayQuestionLikesButton({
+class DisplayCommentLikesButton extends StatelessWidget {
+  final CommentState comment;
+
+  const DisplayCommentLikesButton({
     super.key,
-    required this.question
+    required this.comment
   });
 
   @override
@@ -15,15 +16,16 @@ class DisplayQuestionLikesButton extends StatelessWidget {
       onPressed: () => 
         Navigator
           .of(context)
-          .push(MaterialPageRoute(builder:(context) => DisplayQuestionLikesPage(questionId: question.id))),
+          .push(MaterialPageRoute(builder:(context) => DisplayCommentLikesPage(commentId: comment.id))),
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Text(
-        "${question.numberOfLikes.toString()} likes",
+        "${comment.numberOfLikes.toString()} likes",
         style: const TextStyle(
+          fontSize: 11,
           decoration: TextDecoration.underline
         ),
       )
