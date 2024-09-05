@@ -99,10 +99,26 @@ void connectNotificationHub(Store<AppState> store){
       if(list == null || list.length != 1 || list.any((e) => e == null)) return;
 
       final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
-
+      
+      store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
       store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
       store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
+    }
+  );
+  //getQuestionCommentCreatedNotification
+  hub.hubConnection.on(
+    getQuestionCommentCreatedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddNewQuestionCommentSuccessAction(questionId: comment.questionId!, commentId: comment.id));
+      store.dispatch(AddCommentAction(comment: comment));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
     }
   );
 
@@ -111,13 +127,8 @@ void connectNotificationHub(Store<AppState> store){
     (list){
       final notification = Notification.fromJson((list!.first as dynamic)).toNotificationState();
       
-      if(notification.type == NotificationType.questionCommentCreatedNotification){
-        final comment = Comment.fromJson(list.last as dynamic).toCommentState();
-        store.dispatch(AddNewQuestionCommentSuccessAction(questionId: comment.questionId!, commentId: comment.id));
-        store.dispatch(AddCommentAction(comment: comment));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
-      }
-      else if(notification.type == NotificationType.commentRepliedNotification){
+      
+      if(notification.type == NotificationType.commentRepliedNotification){
       }
       else if(notification.type == NotificationType.solutionCreatedNotification){
         final solution = Solution.fromJson(list.last as dynamic).toSolutionState();

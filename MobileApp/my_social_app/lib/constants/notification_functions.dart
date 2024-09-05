@@ -4,3 +4,4 @@ const getSolutionWasUpvotedNotification = "getSolutionWasUpvotedNotification";
 const getSolutionWasDownvotedNotification = "getSolutionWasDownvotedNotification";
 const getSolutionMarkAsIncorrectNotification = "getSolutionMarkAsIncorrectNotification";
 const getSolutionMarkAsCorrectNotification = "getSolutionMarkAsCorrectNotification";
+const getQuestionCommentCreatedNotification = "getQuestionCommentCreatedNotification";

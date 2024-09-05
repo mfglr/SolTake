@@ -13,7 +13,7 @@ using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionCommentCreatedDomainEventConsumers
 {
-    public class CreateNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IQuestionReadRepository questionReadRepository, INotificationConnectionReadRepository notificationConnectionReadRepository, IHubContext<NotificationHub> notificationHub, IMapper mapper, ICommentQueryRepository commentQueryRepository) : IDomainEventConsumer<QuestionCommentCreatedDomainEvent>
+    public class CreateQuestionCommentCreatedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IQuestionReadRepository questionReadRepository, INotificationConnectionReadRepository notificationConnectionReadRepository, IHubContext<NotificationHub> notificationHub, IMapper mapper, ICommentQueryRepository commentQueryRepository) : IDomainEventConsumer<QuestionCommentCreatedDomainEvent>
     {
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -40,8 +40,14 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionCommentCreatedDom
             var c = await _commentQueryRepository.GetByIdAsync(question.AppUserId, comment.Id, cancellationToken);
             if (c == null) return;
 
-            var mn = _mapper.Map<NotificationResponseDto>(n);
-            await _notificationHub.Clients.Client(connection.ConnectionId!).SendAsync("getNotification", mn, c, cancellationToken);
+            await _notificationHub.Clients
+                .Client(connection.ConnectionId!)
+                .SendAsync(
+                    "getQuestionCommentCreatedNotification",
+                     _mapper.Map<NotificationResponseDto>(n),
+                     c,
+                     cancellationToken
+                );
         }
     }
 }
