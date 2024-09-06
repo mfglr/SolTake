@@ -144,7 +144,6 @@ class AddNewSolutionDownvoteAction extends redux.Action{
   const AddNewSolutionDownvoteAction({required this.solutionId, required this.voteId});
 }
 
-
 @immutable
 class GetNextPageSolutionCommentsIfNoPageAction extends redux.Action{
   final int solutionId;
@@ -177,6 +176,12 @@ class RemoveSolutionCommentAction extends redux.Action{
   final int solutionId;
   final int commentId;
   const RemoveSolutionCommentAction({required this.solutionId, required this.commentId});
+}
+@immutable
+class AddNewSolutionCommentAction extends redux.Action{
+  final int solutionId;
+  final int commentId;
+  const AddNewSolutionCommentAction({required this.solutionId, required this.commentId});
 }
 
 @immutable

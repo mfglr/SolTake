@@ -63,7 +63,7 @@ QuestionEntityState addCommentReducer(QuestionEntityState prev,AddQuestionCommen
   => prev.addComment(action.questionId,action.commenId);
 QuestionEntityState removeCommentReducer(QuestionEntityState prev,RemoveQuestionCommentAction action)
   => prev.removeComment(action.questionid, action.commentId);
-QuestionEntityState addNewCommentReducer(QuestionEntityState prev,AddNewQuestionCommentSuccessAction action)
+QuestionEntityState addNewCommentReducer(QuestionEntityState prev,AddNewQuestionCommentAction action)
   => prev.addNewComment(action.questionId,action.commentId);
 
 //images
@@ -108,7 +108,7 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,AddNextPageQuestionCommentsAction>(addNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionCommentAction>(addCommentReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionCommentAction>(removeCommentReducer).call,
-  TypedReducer<QuestionEntityState,AddNewQuestionCommentSuccessAction>(addNewCommentReducer).call,
+  TypedReducer<QuestionEntityState,AddNewQuestionCommentAction>(addNewCommentReducer).call,
 
   //images
   TypedReducer<QuestionEntityState,LoadQuestionImageAction>(startLoadingImageReducer).call,

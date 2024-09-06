@@ -133,19 +133,22 @@ class SolutionState{
     );
   
 
-  SolutionState getNextPageComments()
-    => _optinal(newComments: comments.startLoadingNext());
-  SolutionState addNextPageComments(Iterable<int> commentIds)
-    => _optinal(newComments: comments.addNextPage(commentIds),);
-  SolutionState addComment(int commentId)
-    => _optinal(
+  SolutionState getNextPageComments() => _optinal(newComments: comments.startLoadingNext());
+  SolutionState addNextPageComments(Iterable<int> commentIds) => _optinal(newComments: comments.addNextPage(commentIds));
+  SolutionState addComment(int commentId) =>
+    _optinal(
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.prependOne(commentId),
     );
-  SolutionState removeComment(int commentId)
-    => _optinal(
+  SolutionState removeComment(int commentId) =>
+    _optinal(
       newNumberOfComments: numberOfComments - 1,
       newComments: comments.removeOne(commentId),
+    );
+  SolutionState addNewComment(int commentId) =>
+    _optinal(
+      newNumberOfComments: numberOfComments + 1,
+      newComments: comments.addInOrder(commentId)
     );
 
   SolutionState startLoadingImage(int index)

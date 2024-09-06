@@ -46,12 +46,16 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
 
             var connection = await _notificatinConnectionReadRepository.GetByIdAsync(comment.AppUserId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
+
+            var like = await _commentUserLikeQueryRepository.GetLikeAsync(notification.Like.Id, comment.AppUserId, cancellationToken);
+            if(like == null) return;
+
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)
                 .SendAsync(
                     "getCommentLikedNotification",
                     _mapper.Map<NotificationResponseDto>(n),
-                    await _commentUserLikeQueryRepository.GetLikeAsync(notification.Like.Id,comment.AppUserId,cancellationToken),
+                    like,
                     cancellationToken
                 );
         }

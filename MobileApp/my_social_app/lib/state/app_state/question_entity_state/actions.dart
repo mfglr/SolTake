@@ -234,12 +234,6 @@ class AddNewQuestionCommentAction extends redux.Action{
   final int commentId;
   const AddNewQuestionCommentAction({required this.questionId, required this.commentId});
 }
-@immutable
-class AddNewQuestionCommentSuccessAction extends redux.Action{
-  final int questionId;
-  final int commentId;
-  const AddNewQuestionCommentSuccessAction({required this.questionId, required this.commentId});
-}
 
 
 @immutable

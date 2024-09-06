@@ -15,7 +15,9 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeUpvote(upvoteId,downvoteId)));
   SolutionEntityState removeUpvote(int solutionId,int voteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeUpvote(voteId)));
-  
+  SolutionEntityState addNewUpvote(int solutionId,int voteId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewUpvote(voteId)));
+
   SolutionEntityState starLoadingNextDownvotes(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingNextDownvotes()));
   SolutionEntityState addNextPageDownvotes(int solutionId,Iterable<int> voteIds)
@@ -24,8 +26,8 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeDownvote(upvoteId,downvoteId)));
   SolutionEntityState removeDownvote(int solutionId,int voteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeDownvote(voteId)));
-  SolutionEntityState addNewUpvote(int solutionId,int voteId)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewUpvote(voteId)));
+  SolutionEntityState addNewDownvote(int solutionId,int voteId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewDownvote(voteId)));
 
   SolutionEntityState getNextPageComments(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.getNextPageComments()));
@@ -35,8 +37,8 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.addComment(commentId)));
   SolutionEntityState removeComment(int solutionId,int commentId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeComment(commentId)));
-  SolutionEntityState addNewDownvote(int solutionId,int voteId)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewDownvote(voteId)));
+  SolutionEntityState addNewComment(int solutionId,int commentId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewComment(commentId)));
 
   SolutionEntityState startLoadingImage(int solutionId,int index)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingImage(index)));

@@ -29,6 +29,41 @@ void connectNotificationHub(Store<AppState> store){
   ?.then((_){
     store.dispatch(const GetUnviewedNotificationsAction());
   });
+
+
+   //getQuestionCommentCreatedNotification
+  hub.hubConnection.on(
+    getQuestionCommentCreatedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddNewQuestionCommentAction(questionId: comment.questionId!, commentId: comment.id));
+      store.dispatch(AddCommentAction(comment: comment));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
+    }
+  );
+
+  //getSolutionCommentCreatedNotification
+  hub.hubConnection.on(
+    getSolutionCommentCreatedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddNewSolutionCommentAction(solutionId: comment.solutionId!, commentId: comment.id));
+      store.dispatch(AddCommentAction(comment: comment));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
+    }
+  );
+
+
   //getQuestionLikedNotification
   hub.hubConnection.on(
     getQuestionLikedNotification,
@@ -107,21 +142,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
     }
   );
-  //getQuestionCommentCreatedNotification
-  hub.hubConnection.on(
-    getQuestionCommentCreatedNotification,
-    (list){
-      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
-
-      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
-
-      store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddNewQuestionCommentSuccessAction(questionId: comment.questionId!, commentId: comment.id));
-      store.dispatch(AddCommentAction(comment: comment));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
-    }
-  );
+ 
   //getUserFollowedNotification
   hub.hubConnection.on(
     getUserFollowedNotification,
