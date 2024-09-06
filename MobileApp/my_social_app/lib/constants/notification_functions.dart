@@ -7,5 +7,6 @@ const getSolutionWasDownvotedNotification = "getSolutionWasDownvotedNotification
 const getSolutionMarkAsIncorrectNotification = "getSolutionMarkAsIncorrectNotification";
 const getSolutionMarkAsCorrectNotification = "getSolutionMarkAsCorrectNotification";
 const getUserFollowedNotification = "getUserFollowedNotification";
+const getQuestionSolvedNotification = "getQuestionSolvedNotification";
 const getSolutionCreatedNotification = "getSolutionCreatedNotification";
 const getCommentLikedNotification = "getCommentLikedNotification";

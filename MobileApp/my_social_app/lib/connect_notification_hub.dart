@@ -122,7 +122,57 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
     }
   );
-  
+  //UserFollowedNotification
+  hub.hubConnection.on(
+    getUserFollowedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final follow = Follow.fromJson(list[1] as dynamic);
+      final followState = follow.toFollowState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddFollowAction(follow: followState));
+      store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
+    }
+  );
+  //SolutionMarkAsIncorrectNotification
+  hub.hubConnection.on(
+    getSolutionMarkAsIncorrectNotification,
+    (list){
+      if(list == null || list.length != 1 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
+      store.dispatch(MarkQuestionSolutionAsIncorrectAction(questionId:notification.questionId!,solutionId:notification.solutionId!));
+    }
+  );
+  //SolutionMarkAsCorrectNotification
+  hub.hubConnection.on(
+    getSolutionMarkAsCorrectNotification,
+    (list){
+      if(list == null || list.length != 1 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
+      store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
+      store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
+    }
+  );
+  //getQuestionSolvedNotification
+  hub.hubConnection.on(
+    getQuestionSolvedNotification,
+    (list){
+      if(list == null || list.length != 1 || list.any((e) => e == null)) return;
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      store.dispatch(PrependNotificationAction(notification: notification));
+    }
+  );
   //getSolutionWasUpvotedNotification
   hub.hubConnection.on(
     getSolutionWasUpvotedNotification,
@@ -157,48 +207,9 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
     }
   );
-  //getSolutionMarkAsIncorrectNotification
-  hub.hubConnection.on(
-    getSolutionMarkAsIncorrectNotification,
-    (list){
-      if(list == null || list.length != 1 || list.any((e) => e == null)) return;
-
-      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
-
-      store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
-      store.dispatch(MarkQuestionSolutionAsIncorrectAction(questionId:notification.questionId!,solutionId:notification.solutionId!));
-    }
-  );
-  //getSolutionMarkAsCorrectNotification
-  hub.hubConnection.on(
-    getSolutionMarkAsCorrectNotification,
-    (list){
-      if(list == null || list.length != 1 || list.any((e) => e == null)) return;
-
-      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      
-      store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
-      store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
-      store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
-    }
-  );
-  //getUserFollowedNotification
-  hub.hubConnection.on(
-    getUserFollowedNotification,
-    (list){
-      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
-
-      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      final follow = Follow.fromJson(list[1] as dynamic);
-      final followState = follow.toFollowState();
-
-      store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddFollowAction(follow: followState));
-      store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
-    }
-  );
+  
+  
+  
  
   
 }

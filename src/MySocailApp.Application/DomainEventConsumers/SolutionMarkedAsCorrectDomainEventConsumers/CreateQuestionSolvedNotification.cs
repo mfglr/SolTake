@@ -35,8 +35,13 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsCorrectDo
             var connection = await _notificationConnectionRepository.GetByIdAsync(question.AppUserId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
 
-            var mn = _mapper.Map<NotificationResponseDto>(n);
-            await _notificationHub.Clients.Client(connection.ConnectionId!).SendAsync("getNotification", mn,cancellationToken);
+            await _notificationHub.Clients
+                .Client(connection.ConnectionId!)
+                .SendAsync(
+                    "getQuestionSolvedNotification",
+                    _mapper.Map<NotificationResponseDto>(n),
+                    cancellationToken
+                );
         }
     }
 }
