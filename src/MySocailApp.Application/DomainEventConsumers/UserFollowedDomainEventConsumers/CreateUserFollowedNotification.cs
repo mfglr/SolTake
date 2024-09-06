@@ -4,7 +4,6 @@ using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Commands.UserAggregate.Follow;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.Queries.NotificationAggregate;
-using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Entities;

@@ -40,8 +40,14 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCreatedDomainEven
             var s = await _solutionQueryRepository.GetByIdAsync(question.AppUserId, solution.Id, cancellationToken);
             if(s == null) return;
 
-            var mn = _mapper.Map<NotificationResponseDto>(n);
-            await _notificationHub.Clients.Client(connection.ConnectionId!).SendAsync("getNotification", mn, s, cancellationToken);
+            await _notificationHub.Clients
+                .Client(connection.ConnectionId!)
+                .SendAsync(
+                    "getSolutionCreatedNotification",
+                    _mapper.Map<NotificationResponseDto>(n),
+                    s,
+                    cancellationToken
+                );
         }
     }
 }

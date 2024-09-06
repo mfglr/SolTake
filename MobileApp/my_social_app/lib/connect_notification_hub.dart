@@ -138,20 +138,28 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
     }
   );
+  //getSolutionCreatedNotification
+  hub.hubConnection.on(
+    getSolutionCreatedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final solution = Solution.fromJson(list.last as dynamic).toSolutionState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
+      store.dispatch(AddSolutionAction(solution: solution));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
+    }
+  );
 
   hub.hubConnection.on(
     getNotifications,
     (list){
       final notification = Notification.fromJson((list!.first as dynamic)).toNotificationState();
       
-      
       if(notification.type == NotificationType.commentRepliedNotification){
-      }
-      else if(notification.type == NotificationType.solutionCreatedNotification){
-        final solution = Solution.fromJson(list.last as dynamic).toSolutionState();
-        store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
-        store.dispatch(AddSolutionAction(solution: solution));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
       }
       else if(notification.type == NotificationType.commentLikedNotification){
         final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
