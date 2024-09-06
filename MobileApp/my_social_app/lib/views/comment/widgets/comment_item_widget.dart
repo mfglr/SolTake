@@ -11,6 +11,7 @@ class CommentItemWidget extends StatefulWidget {
   final FocusNode focusNode;
   final CommentState comment;
   final bool? isFocused;
+  final Iterable<int>? childIds;
 
   const CommentItemWidget({
     super.key,
@@ -18,6 +19,7 @@ class CommentItemWidget extends StatefulWidget {
     required this.focusNode,
     required this.comment,
     this.isFocused,
+    this.childIds
   });
 
   @override
@@ -54,20 +56,20 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: widget.isFocused != null && widget.isFocused! ? _color : null,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-
+          
             CommentHeaderWidget(
+              color: widget.isFocused != null && widget.isFocused! ? _color : null,
               comment: widget.comment,
               contentController: widget.contentController,
               focusNode: widget.focusNode,
               isRoot: true,
               diameter: 45,
             ),
-      
+
             if(widget.comment.repliesVisibility)
               StoreConnector<AppState,Iterable<CommentState>>(
                 converter: (store) => store.state.selectCommentReplies(widget.comment.id),
@@ -91,9 +93,14 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
               ),
       
             if(widget.comment.repliesVisibility && widget.comment.replies.ids.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(left:50, top:20, right: 20),
-                child: HideRepliesButton(comment: widget.comment),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left:50, top:20),
+                    child: HideRepliesButton(comment: widget.comment),
+                  ),
+                ],
               ),
               
           ],

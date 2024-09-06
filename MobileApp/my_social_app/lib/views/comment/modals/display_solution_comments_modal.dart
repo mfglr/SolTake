@@ -120,12 +120,21 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
             onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
             converter: (store) => store.state.commentEntityState.entities[widget.parentId],
             builder: (context,comment){
-              if(comment == null) return const LoadingWidget();
+              
+              if(comment == null){
+                return StoreConnector<AppState,Iterable<CommentState>>(
+                  onInit: (store) => store.dispatch(GetNextPageSolutionCommentsIfNoPageAction(solutionId: widget.solutionId)),
+                  converter: (store) => store.state.getSolutionComments(widget.solutionId),
+                  builder:(context,comments) => _buildModal(comments,solution.comments)
+                );
+              }
+              
               return StoreConnector<AppState,Iterable<CommentState>>(
                 onInit: (store) => store.dispatch(GetNextPageSolutionCommentsIfNoPageAction(solutionId: widget.solutionId)),
                 converter: (store) => store.state.getFormatedSolutionComments(widget.parentId!, widget.solutionId),
                 builder:(context,comments) => _buildModal(comments,solution.comments)
               );
+
             },
           );
         }

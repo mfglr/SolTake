@@ -30,8 +30,7 @@ void connectNotificationHub(Store<AppState> store){
     store.dispatch(const GetUnviewedNotificationsAction());
   });
 
-
-   //getQuestionCommentCreatedNotification
+  //getQuestionCommentCreatedNotification
   hub.hubConnection.on(
     getQuestionCommentCreatedNotification,
     (list){
@@ -81,6 +80,41 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
     }
   );
+  
+  //getCommentLikedNotification
+  hub.hubConnection.on(
+    getCommentLikedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final like = CommentUserLike.fromJson(list[1] as dynamic);
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddCommentUserLikeAction(like: like.toCommentUserLikeState()));
+      store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
+      store.dispatch(AddNewCommentLikeAction(commentId: notification.commentId!, likeId:like.id));
+    }
+  );
+
+  //getSolutionCreatedNotification
+  hub.hubConnection.on(
+    getSolutionCreatedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final solution = Solution.fromJson(list.last as dynamic).toSolutionState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
+      store.dispatch(AddSolutionAction(solution: solution));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
+    }
+  );
+
+  
   //getSolutionWasUpvotedNotification
   hub.hubConnection.on(
     getSolutionWasUpvotedNotification,
@@ -158,35 +192,6 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
     }
   );
-  //getSolutionCreatedNotification
-  hub.hubConnection.on(
-    getSolutionCreatedNotification,
-    (list){
-      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
-
-      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      final solution = Solution.fromJson(list.last as dynamic).toSolutionState();
-
-      store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
-      store.dispatch(AddSolutionAction(solution: solution));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
-    }
-  );
-  //getCommentLikedNotification
-  hub.hubConnection.on(
-    getCommentLikedNotification,
-    (list){
-      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
-
-      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      final like = CommentUserLike.fromJson(list[1] as dynamic);
-
-      store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddCommentUserLikeAction(like: like.toCommentUserLikeState()));
-      store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
-      store.dispatch(AddNewCommentLikeAction(commentId: notification.commentId!, likeId:like.id));
-    }
-  );
+ 
+  
 }

@@ -17,11 +17,13 @@ import 'package:my_social_app/views/shared/loading_widget.dart';
 class DisplayQuestionCommentsModal extends StatefulWidget {
   final int questionId;
   final int? parentId;
+  final Iterable<int>? childIds;
 
   const DisplayQuestionCommentsModal({
     super.key,
     required this.questionId,
     this.parentId,
+    this.childIds,
   });
 
   @override
@@ -121,13 +123,22 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
           return StoreConnector<AppState,CommentState?>(
             onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
             converter: (store) => store.state.commentEntityState.entities[widget.parentId],
-            builder: (context,comment){
-              if(comment == null) return const LoadingWidget();
+            builder: (context,parent){
+              
+              if(parent == null){
+                return StoreConnector<AppState,Iterable<CommentState>>(
+                  onInit: (store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
+                  converter: (store) => store.state.getQuestionComments(widget.questionId),
+                  builder:(context,comments) => _buildModal(comments,question.comments)
+                );
+              }
+
               return StoreConnector<AppState,Iterable<CommentState>>(
                 onInit: (store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
                 converter: (store) => store.state.getFormatedQuestionComments(widget.parentId!, widget.questionId),
                 builder:(context,comments) => _buildModal(comments,question.comments)
               );
+              
             },
           );
         }
