@@ -10,3 +10,4 @@ const getUserFollowedNotification = "getUserFollowedNotification";
 const getQuestionSolvedNotification = "getQuestionSolvedNotification";
 const getSolutionCreatedNotification = "getSolutionCreatedNotification";
 const getCommentLikedNotification = "getCommentLikedNotification";
+const getUserTagInCommentNotification = "getUserTagInCommentNotification";

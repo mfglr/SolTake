@@ -49,6 +49,10 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
 
                 if (repliedComment.AppUserId != userId)
                     comment.AddDomainEvent(new CommentRepliedDomainEvent(comment, parent, repliedComment));
+
+                foreach (var id in idsOfUsersTagged)
+                    if (id != comment.AppUserId && id != repliedComment.AppUserId)
+                        comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, id));
             }
             else if (questionId != null)
             {
@@ -60,6 +64,10 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
                 
                 if(question.AppUserId != comment.AppUserId)
                     comment.AddDomainEvent(new QuestionCommentCreatedDomainEvent(comment));
+
+                foreach (var id in idsOfUsersTagged)
+                    if (id != comment.AppUserId && id != question.AppUserId)
+                        comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, id));
             }
             else if (solutionId != null)
             {
@@ -71,6 +79,10 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
                 
                 if(solution.AppUserId != comment.AppUserId)
                     comment.AddDomainEvent(new SolutionCommentCreatedDomainEvent(comment));
+
+                foreach (var id in idsOfUsersTagged)
+                    if (id != comment.AppUserId && id != solution.AppUserId)
+                        comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, id));
             }
             else
                 throw new NoRootException();

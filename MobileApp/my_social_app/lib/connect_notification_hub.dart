@@ -173,7 +173,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(PrependNotificationAction(notification: notification));
     }
   );
-  //getSolutionWasUpvotedNotification
+  //SolutionWasUpvotedNotification
   hub.hubConnection.on(
     getSolutionWasUpvotedNotification,
     (list){
@@ -190,7 +190,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
     }
   );
-  //getSolutionWasDownvotedNotification
+  //SolutionWasDownvotedNotification
   hub.hubConnection.on(
     getSolutionWasDownvotedNotification,
     (list){
@@ -207,9 +207,27 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
     }
   );
-  
-  
-  
- 
-  
+  //UserTagInCommentNotification
+  hub.hubConnection.on(
+    getUserTagInCommentNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddCommentAction(comment: comment));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
+      if(comment.questionId != null){
+        store.dispatch(AddNewQuestionCommentAction(questionId: comment.questionId!, commentId: comment.id));
+      }
+      else if(comment.solutionId != null){
+        store.dispatch(AddNewSolutionCommentAction(solutionId: comment.questionId!, commentId: comment.id));
+      }
+      else{
+        store.dispatch(AddNewCommentReplyAction(commentId: comment.parentId!,replyId: comment.id));
+      }
+    }
+  );
 }

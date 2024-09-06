@@ -25,10 +25,6 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             Content = content;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
             _tags.AddRange(idsOfUsersTagged.Select(x => CommentUserTag.Create(Id, x)));
-
-            foreach (var id in idsOfUsersTagged)
-                if (id != appUserId)
-                    AddDomainEvent(new UserTaggedInCommentDomainEvent(this, id));
         }
 
         internal void CreateQuestionComment(int appUserId, CommentContent content, IEnumerable<int> idsOfUsersTagged, int questionId)
