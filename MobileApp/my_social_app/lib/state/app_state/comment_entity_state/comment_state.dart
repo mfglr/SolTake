@@ -72,45 +72,40 @@ class CommentState{
       repliesVisibility: newRepliesVisibility ?? repliesVisibility
     );
 
-  CommentState getNextPageLikes()
-    => _optional(newLikes: likes.startLoadingNext());
-  CommentState addNextPageLikes(Iterable<int> ids)
-    => _optional(newLikes: likes.addNextPage(ids));
-  CommentState like(int likeId)
-    => _optional(
-        newNumberOfLikes: numberOfLikes + 1,
-        newLikes: likes.prependOne(likeId),
-        newIsLiked: true,
-      );
-  CommentState dislike(int likeId)
-    => _optional(
-        newNumberOfLikes: numberOfLikes - 1,
-        newLikes: likes.removeOne(likeId),
-        newIsLiked: false
-      );
-  CommentState addNewCommingLike(int likeId)
-    => _optional(
-        newNumberOfLikes: numberOfLikes + 1,
-        newLikes: likes.addInOrder(likeId)
-      );
+  CommentState getNextPageLikes() => _optional(newLikes: likes.startLoadingNext());
+  CommentState addNextPageLikes(Iterable<int> ids) => _optional(newLikes: likes.addNextPage(ids));
+  CommentState like(int likeId) =>
+    _optional(
+      newNumberOfLikes: numberOfLikes + 1,
+      newLikes: likes.prependOne(likeId),
+      newIsLiked: true,
+    );
+  CommentState dislike(int likeId) =>
+    _optional(
+      newNumberOfLikes: numberOfLikes - 1,
+      newLikes: likes.removeOne(likeId),
+      newIsLiked: false
+    );
+  CommentState addNewLike(int likeId) =>
+    _optional(
+      newNumberOfLikes: numberOfLikes + 1,
+      newLikes: likes.addInOrder(likeId)
+    );
  
-  CommentState getNextPageReplies()
-    => _optional(newReplies: replies.startLoadingNext());
-  CommentState addNextPageReplies(Iterable<int> replyIds)
-    => _optional(newReplies: replies.addNextPage(replyIds));
-  CommentState addReply(int replyId)
-    => _optional(
-        newReplies: replies.prependOne(replyId),
-        newNumberOfReplies: numberOfReplies + 1,
-        newRepliesVisibility: true,
-      );
-  CommentState removeReply(int replyId)
-    => _optional(
-        newReplies: replies.removeOne(replyId),
-        newNumberOfReplies: numberOfReplies - 1,
-        newRepliesVisibility: true,
-      );
+  CommentState getNextPageReplies() => _optional(newReplies: replies.startLoadingNext());
+  CommentState addNextPageReplies(Iterable<int> replyIds) => _optional(newReplies: replies.addNextPage(replyIds));
+  CommentState addReply(int replyId) =>
+    _optional(
+      newReplies: replies.prependOne(replyId),
+      newNumberOfReplies: numberOfReplies + 1,
+      newRepliesVisibility: true,
+    );
+  CommentState removeReply(int replyId) =>
+    _optional(
+      newReplies: replies.removeOne(replyId),
+      newNumberOfReplies: numberOfReplies - 1,
+      newRepliesVisibility: true,
+    );
 
-  CommentState changeVisibility(bool visibility)
-    => _optional(newRepliesVisibility: visibility);
+  CommentState changeVisibility(bool visibility) => _optional(newRepliesVisibility: visibility);
 }

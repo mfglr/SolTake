@@ -7,3 +7,4 @@ const getSolutionMarkAsCorrectNotification = "getSolutionMarkAsCorrectNotificati
 const getQuestionCommentCreatedNotification = "getQuestionCommentCreatedNotification";
 const getUserFollowedNotification = "getUserFollowedNotification";
 const getSolutionCreatedNotification = "getSolutionCreatedNotification";
+const getCommentLikedNotification = "getCommentLikedNotification";

@@ -11,7 +11,6 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
@@ -153,26 +152,20 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
     }
   );
-
+  //getCommentLikedNotification
   hub.hubConnection.on(
-    getNotifications,
+    getCommentLikedNotification,
     (list){
-      final notification = Notification.fromJson((list!.first as dynamic)).toNotificationState();
-      
-      if(notification.type == NotificationType.commentRepliedNotification){
-      }
-      else if(notification.type == NotificationType.commentLikedNotification){
-        final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
-        final like = CommentUserLike.fromJson(list[2] as dynamic);
-        final commentUserLikeState = like.toCommentUserLikeState();
-        final user = like.appUser!.toUserState();
-        
-        store.dispatch(AddCommentUserLikeAction(like: commentUserLikeState));
-        store.dispatch(AddUserAction(user: user));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(user.id)));
-        store.dispatch(AddNewCommingCommentLikeAction(commentId: comment.id,likeId:like.id));
-      }
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final like = CommentUserLike.fromJson(list[1] as dynamic);
+
       store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddCommentUserLikeAction(like: like.toCommentUserLikeState()));
+      store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
+      store.dispatch(AddNewCommentLikeAction(commentId: notification.commentId!, likeId:like.id));
     }
   );
 }

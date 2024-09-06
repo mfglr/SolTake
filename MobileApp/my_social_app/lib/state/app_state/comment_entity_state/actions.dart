@@ -57,10 +57,10 @@ class DislikeCommentSuccessAction extends redux.Action{
   const DislikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 @immutable
-class AddNewCommingCommentLikeAction extends redux.Action{
+class AddNewCommentLikeAction extends redux.Action{
   final int commentId;
   final int likeId;
-  const AddNewCommingCommentLikeAction({required this.commentId, required this.likeId});
+  const AddNewCommentLikeAction({required this.commentId, required this.likeId});
 }
 
 @immutable
