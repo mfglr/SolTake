@@ -12,6 +12,27 @@ class LoadCommentsAction extends redux.Action{
   final Iterable<int> commentIds;
   const LoadCommentsAction({required this.commentIds});
 }
+@immutable
+class AddCommentAction extends redux.Action{
+  final CommentState comment;
+  const AddCommentAction({required this.comment});
+}
+@immutable
+class RemoveCommentAction extends redux.Action{
+  final CommentState comment;
+  const RemoveCommentAction({required this.comment});
+}
+@immutable
+class RemoveCommentSuccessAction extends redux.Action{
+  final int commentId;
+  const RemoveCommentSuccessAction({required this.commentId});
+}
+@immutable
+class AddCommentsAction extends redux.Action{
+  final Iterable<CommentState> comments;
+  const AddCommentsAction({required this.comments});
+}
+
 
 @immutable
 class GetNextPageCommentLikesIfNoPageAction extends redux.Action{
@@ -70,26 +91,6 @@ class ChangeRepliesVisibilityAction extends redux.Action{
   const ChangeRepliesVisibilityAction({required this.commentId, required this.visibility});
 }
 
-@immutable
-class AddCommentAction extends redux.Action{
-  final CommentState comment;
-  const AddCommentAction({required this.comment});
-}
-@immutable
-class RemoveCommentAction extends redux.Action{
-  final CommentState comment;
-  const RemoveCommentAction({required this.comment});
-}
-@immutable
-class RemoveCommentSuccessAction extends redux.Action{
-  final int commentId;
-  const RemoveCommentSuccessAction({required this.commentId});
-}
-@immutable
-class AddCommentsAction extends redux.Action{
-  final Iterable<CommentState> comments;
-  const AddCommentsAction({required this.comments});
-}
 
 @immutable
 class GetNextPageCommentRepliesIfNoPageAction extends redux.Action{
@@ -123,4 +124,10 @@ class RemoveCommentReplyAction extends redux.Action{
   final int commentId;
   final int replyId;
   const RemoveCommentReplyAction({required this.commentId, required this.replyId});
+}
+@immutable
+class AddNewCommentReplyAction extends redux.Action{
+  final int commentId;
+  final int replyId;
+  const AddNewCommentReplyAction({required this.commentId, required this.replyId});
 }

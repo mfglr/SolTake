@@ -30,7 +30,7 @@ void connectNotificationHub(Store<AppState> store){
     store.dispatch(const GetUnviewedNotificationsAction());
   });
 
-  //getQuestionCommentCreatedNotification
+  //QuestionCommentCreatedNotification
   hub.hubConnection.on(
     getQuestionCommentCreatedNotification,
     (list){
@@ -45,8 +45,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
     }
   );
-
-  //getSolutionCommentCreatedNotification
+  //SolutionCommentCreatedNotification
   hub.hubConnection.on(
     getSolutionCommentCreatedNotification,
     (list){
@@ -61,9 +60,21 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
     }
   );
+  //CommentRepliedNotification
+  hub.hubConnection.on(
+    getCommentRepliedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final comment = Comment.fromJson(list[1] as dynamic).toCommentState();
 
-
-  //getQuestionLikedNotification
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddNewCommentReplyAction(commentId: comment.parentId!,replyId: comment.id));
+      store.dispatch(AddCommentAction(comment: comment));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
+    }
+  );
+  //QuestionLikedNotification
   hub.hubConnection.on(
     getQuestionLikedNotification,
     (list){
@@ -80,8 +91,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
     }
   );
-  
-  //getCommentLikedNotification
+  //CommentLikedNotification
   hub.hubConnection.on(
     getCommentLikedNotification,
     (list){
@@ -97,8 +107,7 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddNewCommentLikeAction(commentId: notification.commentId!, likeId:like.id));
     }
   );
-
-  //getSolutionCreatedNotification
+  //SolutionCreatedNotification
   hub.hubConnection.on(
     getSolutionCreatedNotification,
     (list){
@@ -113,7 +122,6 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
     }
   );
-
   
   //getSolutionWasUpvotedNotification
   hub.hubConnection.on(
@@ -176,7 +184,6 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
     }
   );
- 
   //getUserFollowedNotification
   hub.hubConnection.on(
     getUserFollowedNotification,

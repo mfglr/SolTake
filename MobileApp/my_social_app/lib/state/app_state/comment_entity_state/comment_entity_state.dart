@@ -25,7 +25,9 @@ class CommentEntityState extends EntityState<CommentState>{
     => CommentEntityState(entities: updateOne(entities[commentId]!.addReply(replyId)));
   CommentEntityState removeReply(int commentId, int replyId)
     => CommentEntityState(entities: updateOne(entities[commentId]!.removeReply(replyId)));
-  
+  CommentEntityState addNewReply(int commentId, int replyId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.addNewReply(replyId)));
+
   CommentEntityState changeVisibility(int commentId,bool visibility)
     => CommentEntityState(entities: updateOne(entities[commentId]!.changeVisibility(visibility)));
 }

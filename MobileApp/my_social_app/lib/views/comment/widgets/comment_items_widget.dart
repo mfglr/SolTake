@@ -13,7 +13,6 @@ class CommentItemsWidget extends StatefulWidget {
   final void Function() onScrollBottom;
   final Pagination pagination;
   final int? parentId;
-  final Iterable<int>? childIds;
 
   const CommentItemsWidget({
     super.key,
@@ -25,7 +24,6 @@ class CommentItemsWidget extends StatefulWidget {
     required this.noItems,
     required this.onScrollBottom,
     this.parentId,
-    this.childIds,
   });
 
   @override

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.Queries.NotificationAggregate;
+using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Entities;
@@ -11,11 +12,12 @@ using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.CommentRepliedDomainEventConsumers
 {
-    public class CreateNotification(INotificationWriteRepository notficationWriteRepository, IUnitOfWork unitOfWork, IHubContext<NotificationHub> notificationHub, INotificationConnectionReadRepository notificationConnectionReadRepository, IMapper mapper) : IDomainEventConsumer<CommentRepliedDomainEvent>
+    public class CreateCommentRepliedNotification(INotificationWriteRepository notficationWriteRepository, IUnitOfWork unitOfWork, IHubContext<NotificationHub> notificationHub, INotificationConnectionReadRepository notificationConnectionReadRepository, IMapper mapper, ICommentQueryRepository commentQueryRepository) : IDomainEventConsumer<CommentRepliedDomainEvent>
     {
         private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
         private readonly INotificationConnectionReadRepository _notificationConnectionReadRepository = notificationConnectionReadRepository;
         private readonly IMapper _mapper = mapper;
+        private readonly ICommentQueryRepository _commentQueryRepository = commentQueryRepository;
 
         private readonly INotificationWriteRepository _notficationWriteRepository = notficationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -33,11 +35,15 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentRepliedDomainEvent
             var connection = await _notificationConnectionReadRepository.GetByIdAsync(repliedComment.AppUserId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
 
+            var c = await _commentQueryRepository.GetByIdAsync(repliedComment.AppUserId, comment.Id, cancellationToken);
+            if (c == null) return;
+
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)
                 .SendAsync(
-                    "getNotification",
+                    "getCommentRepliedNotification",
                     _mapper.Map<NotificationResponseDto>(n),
+                    c,
                     cancellationToken
                 );
         }

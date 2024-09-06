@@ -106,6 +106,12 @@ class CommentState{
       newNumberOfReplies: numberOfReplies - 1,
       newRepliesVisibility: true,
     );
+  CommentState addNewReply(int replyId) =>
+    _optional(
+      newReplies: replies.addInOrder(replyId),
+      newNumberOfReplies: numberOfReplies + 1,
+      newRepliesVisibility: true,
+    );
 
   CommentState changeVisibility(bool visibility) => _optional(newRepliesVisibility: visibility);
 }

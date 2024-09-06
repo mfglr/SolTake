@@ -1,6 +1,6 @@
 const getQuestionCommentCreatedNotification = "getQuestionCommentCreatedNotification";
 const getSolutionCommentCreatedNotification = "getSolutionCommentCreatedNotification";
-
+const getCommentRepliedNotification = "getCommentRepliedNotification";
 const getQuestionLikedNotification = "getQuestionLikedNotification";
 const getSolutionWasUpvotedNotification = "getSolutionWasUpvotedNotification";
 const getSolutionWasDownvotedNotification = "getSolutionWasDownvotedNotification";

@@ -11,7 +11,6 @@ class CommentItemWidget extends StatefulWidget {
   final FocusNode focusNode;
   final CommentState comment;
   final bool? isFocused;
-  final Iterable<int>? childIds;
 
   const CommentItemWidget({
     super.key,
@@ -19,7 +18,6 @@ class CommentItemWidget extends StatefulWidget {
     required this.focusNode,
     required this.comment,
     this.isFocused,
-    this.childIds
   });
 
   @override
