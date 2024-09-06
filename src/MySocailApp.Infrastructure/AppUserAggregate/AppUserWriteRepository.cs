@@ -31,13 +31,10 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .Include(x => x.Followeds)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public Task<AppUser?> GetWithBlocker(int id, int userId, CancellationToken cancellationToken)
-            => _context.AppUsers
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-
         public Task<AppUser?> GetWithFollowerByIdAsync(int id, int followerId, CancellationToken cancellationToken)
             => _context.AppUsers
                 .Include(x => x.Followers.Where(x => x.FollowerId == followerId))
+                .Include(x => x.UserFollowNotifications.Where(x => x.FollowerId == followerId))
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public Task<AppUser?> GetWithSearchedByIdAsync(int id, int searchedId, CancellationToken cancellationToken)

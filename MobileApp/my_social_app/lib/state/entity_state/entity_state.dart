@@ -43,11 +43,11 @@ class EntityState<T extends dynamic> {
     entities[value.id] = value;
     return entities;
   }
-  Map<int,T> updateMany(Iterable<T> values){
+  Map<int,T> updateMany(Iterable<T?> values){
     final Map<int,T> entities = {};
     entities.addAll(this.entities);
     for(final value in values){
-      entities[value.id] = value;
+      if(value != null) entities[value.id] = value;
     }
     return entities;
   }

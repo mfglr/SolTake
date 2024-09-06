@@ -1,6 +1,7 @@
 import 'package:my_social_app/constants/notification_functions.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/comment_user_like.dart';
+import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/notification.dart';
 import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/models/solution.dart';
@@ -8,6 +9,7 @@ import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
+import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
@@ -119,6 +121,21 @@ void connectNotificationHub(Store<AppState> store){
       store.dispatch(AddNewQuestionCommentSuccessAction(questionId: comment.questionId!, commentId: comment.id));
       store.dispatch(AddCommentAction(comment: comment));
       store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
+    }
+  );
+  //getUserFollowedNotification
+  hub.hubConnection.on(
+    getUserFollowedNotification,
+    (list){
+      if(list == null || list.length != 2 || list.any((e) => e == null)) return;
+
+      final notification = Notification.fromJson((list[0] as dynamic)).toNotificationState();
+      final follow = Follow.fromJson(list[1] as dynamic);
+      final followState = follow.toFollowState();
+
+      store.dispatch(PrependNotificationAction(notification: notification));
+      store.dispatch(AddFollowAction(follow: followState));
+      store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
     }
   );
 

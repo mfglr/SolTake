@@ -122,11 +122,11 @@ final store = Store(
 
     followMiddleware,
     unfollowMiddleware,
-    deleteFollowerMiddleware,
+    removeFollowerMiddleware,
 
-    getNextPageUserMessageIfNoPageMiddleware,
-    getNextPageUserMessageIfReadyMiddleware,
-    getNextPageUserMessagesMiddleware,
+    getNextPageUserFollowersIfNoPageMiddleware,
+    getNextPageUserFollowersIfReadyMiddleware,
+    getNextPageUserFollowersMiddleware,
 
     getNextPageUserFollowedsIfNoPageMiddleware,
     getNextPageUserFollowedsIfReadyMiddleware,
@@ -136,9 +136,10 @@ final store = Store(
     getNextPageUserNotFollowedsIfReadyMiddleware,
     getNextPageUserNotFollowedsMiddleware,
 
-    getNextPageUserFollowersIfNoPageMiddleware,
-    getNextPageUserFollowersIfReadyMiddleware,
-    getNextPageUserFollowersMiddleware,
+
+    getNextPageUserMessageIfNoPageMiddleware,
+    getNextPageUserMessageIfReadyMiddleware,
+    getNextPageUserMessagesMiddleware,
 
     getNextPageUserQuestionsIfNoPageMiddleware,
     getNextPageUserQuestionsIfReadyMiddleware,

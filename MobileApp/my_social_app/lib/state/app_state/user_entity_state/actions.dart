@@ -23,6 +23,64 @@ class AddUsersAction extends redux.Action{
   const AddUsersAction({required this.users});
 }
 
+
+@immutable
+class AddNewFollowerAction extends redux.Action{
+  final int curentUserId;
+  final int followerId;
+  final int followId;
+  const AddNewFollowerAction({
+    required this.curentUserId,
+    required this.followerId,
+    required this.followId
+  });
+}
+
+@immutable
+class FollowUserAction extends redux.Action{
+  final int followedId;
+  const FollowUserAction({required this.followedId});
+}
+@immutable
+class FollowUserSuccessAction extends redux.Action{
+  final int currentUserId;
+  final int followedId;
+  final int followId;
+  const FollowUserSuccessAction({
+    required this.currentUserId,
+    required this.followedId,
+    required this.followId
+  });
+}
+@immutable
+class UnfollowUserAction extends redux.Action{
+  final int followedId;
+  const UnfollowUserAction({required this.followedId});
+}
+@immutable
+class UnfollowUserSuccessAction extends redux.Action{
+  final int currentUserId;
+  final int followedId;
+  final int followId;
+  const UnfollowUserSuccessAction({
+    required this.currentUserId,
+    required this.followedId,
+    required this.followId
+  });
+}
+@immutable
+class RemoveFollowerAction extends redux.Action{
+  final int followerId;
+  const RemoveFollowerAction({required this.followerId});
+}
+@immutable
+class RemoveFollowerSuccessAction extends redux.Action{
+  final int currentUserId;
+  final int followerId;
+  final int followId;
+  const RemoveFollowerSuccessAction({required this.currentUserId, required this.followerId, required this.followId});
+}
+
 @immutable
 class GetNextPageUserFollowersIfNoPageAction extends redux.Action{
   final int userId;
@@ -43,18 +101,6 @@ class AddNextPageUserFollowersAction extends redux.Action{
   final int userId;
   final Iterable<int> followIds;
   const AddNextPageUserFollowersAction({required this.userId, required this.followIds});
-}
-@immutable
-class AddUserFollowerAction extends redux.Action{
-  final int userId;
-  final int followId;
-  const AddUserFollowerAction({required this.userId, required this.followId});
-}
-@immutable
-class RemoveUserFollowerAction extends redux.Action{
-  final int userId;
-  final int followId;
-  const RemoveUserFollowerAction({required this.userId, required this.followId});
 }
 
 @immutable
@@ -77,18 +123,6 @@ class AddNextPageUserFollowedsAction extends redux.Action{
   final int userId;
   final Iterable<int> followIds;
   const AddNextPageUserFollowedsAction({required this.userId, required this.followIds});
-}
-@immutable
-class AddUserFollowedAction extends redux.Action{
-  final int userId;
-  final int followId;
-  const AddUserFollowedAction({required this.userId, required this.followId});
-}
-@immutable
-class RemoveUserFollowedAction extends redux.Action{
-  final int userId;
-  final int followId;
-  const RemoveUserFollowedAction({required this.userId, required this.followId});
 }
 
 @immutable
@@ -123,22 +157,6 @@ class AddUserNotFollowedAction extends redux.Action{
   final int userId;
   final int notFollowedId;
   const AddUserNotFollowedAction({required this.userId, required this.notFollowedId});
-}
-
-@immutable
-class FollowAction extends redux.Action{
-  final int followedId;
-  const FollowAction({required this.followedId});
-}
-@immutable
-class UnfollowAction extends redux.Action{
-  final int followedId;
-  const UnfollowAction({required this.followedId});
-}
-@immutable
-class DeleteFollowerAction extends redux.Action{
-  final int followerId;
-  const DeleteFollowerAction({required this.followerId});
 }
 
 @immutable

@@ -14,11 +14,11 @@ class FollowButtonWidget extends StatelessWidget {
       onPressed: () {
         if(user.isFollowed){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(UnfollowAction(followedId: user.id));
+          store.dispatch(UnfollowUserAction(followedId: user.id));
         }
         else{
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(FollowAction(followedId: user.id));
+          store.dispatch(FollowUserAction(followedId: user.id));
         }
       },
       child: Row(

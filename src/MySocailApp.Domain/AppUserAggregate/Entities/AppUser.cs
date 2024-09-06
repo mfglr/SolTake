@@ -64,8 +64,10 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         //following
         private readonly List<Follow> _followers = [];
         private readonly List<Follow> _followeds = [];
+        private readonly List<UserFollowNotification> _userFollowNotifications = [];
         public IReadOnlyList<Follow> Followers => _followers;
         public IReadOnlyList<Follow> Followeds => _followeds;
+        public IReadOnlyCollection<UserFollowNotification> UserFollowNotifications => _userFollowNotifications;
         public Follow Follow(int followerId)
         {
             if (followerId == Id)
@@ -73,10 +75,16 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             if (_followers.Any(x => x.FollowerId == followerId))
                 throw new UserIsAlreadyFollowedException();
 
-            AddDomainEvent(new UserFollowedDomainEvent(followerId, Id));
-
             var follow = Entities.Follow.Create(followerId, Id);
             _followers.Add(follow);
+
+            var notification = _userFollowNotifications.FirstOrDefault(x => x.FollowerId == followerId);
+            if (notification == null || DateTime.UtcNow >= notification.CreatedAt.AddDays(1))
+            {
+                if (notification != null) _userFollowNotifications.Remove(notification);
+                _userFollowNotifications.Add(UserFollowNotification.Create(followerId));
+                AddDomainEvent(new UserFollowedDomainEvent(follow));
+            }
             return follow;
         }
         public void Unfollow(int followerId)
@@ -85,12 +93,12 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             if (index == -1)
                 throw new NoFollowException();
             _followers.RemoveAt(index);
+            AddDomainEvent(new UserUnfollowedDomainEvent(followerId,Id));
         }
         public void RemoveFollower(int followerId)
         {
             var index = _followers.FindIndex(x => x.FollowerId == followerId);
-            if (index == -1)
-                throw new UserIsNotFollowerException();
+            if (index == -1) return;
             _followers.RemoveAt(index);
         }
 

@@ -14,7 +14,7 @@ class RemoveFollowerButtonWidget extends StatelessWidget {
     return OutlinedButton(
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(DeleteFollowerAction(followerId: user.id));
+        store.dispatch(RemoveFollowerAction(followerId: user.id));
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

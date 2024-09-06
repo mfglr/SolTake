@@ -36,7 +36,8 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public Task<Notification?> GetQuestionLikedNotificationAsync(int questionId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications
                 .FirstOrDefaultAsync(x => x.QuestionId == questionId && x.OwnerId == ownerId && x.Type == NotificationType.QuestionLikedNotification,cancellationToken);
-
-        
+        public Task<Notification?> GetUserFollowedNotificationAsync(int userId, int ownerId, CancellationToken cancellationToken)
+            => _context.Notifications
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.OwnerId == ownerId && x.Type == NotificationType.UserFollowedNotification,cancellationToken);
     }
 }

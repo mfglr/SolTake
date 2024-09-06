@@ -17,5 +17,6 @@ namespace MySocailApp.Domain.NotificationAggregate.Interfaces
         Task<Notification?> GetSolutionWasDownvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken);
         Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int ownerId, CancellationToken cancellationToken);
         Task<Notification?> GetQuestionLikedNotificationAsync(int questionId, int ownerId, CancellationToken cancellationToken);
+        Task<Notification?> GetUserFollowedNotificationAsync(int userId,int ownerId, CancellationToken cancellationToken);
     }
 }

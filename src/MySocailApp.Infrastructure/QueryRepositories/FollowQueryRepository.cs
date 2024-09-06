@@ -12,6 +12,14 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
+
+        public Task<FollowResponseDto?> GetFollowerAsync(int accountId, int followId, CancellationToken cancellationToken)
+            => _context.Follows
+                .AsNoTracking()
+                .Where(x => x.Id == followId)
+                .ToFollowerResponseDto(accountId)
+                .FirstOrDefaultAsync(cancellationToken);
+
         public Task<List<FollowResponseDto>> GetFollowersAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.Follows
                 .AsNoTracking()
@@ -27,5 +35,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToPage(page)
                 .ToFollowedResponseDto(accountId)
                 .ToListAsync(cancellationToken);
+
+        
     }
 }

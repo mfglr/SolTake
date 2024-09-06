@@ -116,11 +116,21 @@ class UserState{
     );
   UserState removeFollower(int followId) => 
     _optional(
-      newNumberOfFollowers:numberOfFollowers - 1,
-      newIsFollowed:false,
+      newNumberOfFollowers: numberOfFollowers - 1,
+      newIsFollowed: false,
       newFollowers: followers.removeOne(followId)
     );
-  
+  UserState addFollowerToCurrentUser(int followId) =>
+    _optional(
+      newNumberOfFollowers: numberOfFollowers + 1,
+      newFollowers: followers.prependOne(followId)
+    );
+  UserState removeFollowerToCurrentUser(int followId) =>
+    _optional(
+      newNumberOfFollowers: numberOfFollowers - 1,
+      newFollowers: followers.removeOne(followId)
+    );
+
   //followeds
   UserState getNextPageFolloweds() =>
     _optional(
@@ -130,17 +140,29 @@ class UserState{
     _optional(
       newFolloweds: followeds.addNextPage(ids)
     );
-  UserState addFollowed(int id)
+  UserState addFollowed(int followId)
     => _optional(
         newNumberOfFolloweds: numberOfFolloweds + 1,
-        newFolloweds: followeds.prependOne(id)
+        newIsFollower: true,
+        newFolloweds: followeds.prependOne(followId)
       );
-  UserState removeFollowed(int id)
-    => _optional(
-        newNumberOfFolloweds: numberOfFolloweds - 1,
-        newIsFollower: false,
-        newFolloweds: followeds.removeOne(id)
-      );
+  UserState removeFollowed(int followId) =>
+    _optional(
+      newNumberOfFolloweds: numberOfFolloweds - 1,
+      newIsFollower: false,
+      newFolloweds: followeds.removeOne(followId)
+    );
+  UserState addFollowedToCurrentUser(int followId) =>
+    _optional(
+      newNumberOfFolloweds: numberOfFolloweds + 1,
+      newFolloweds: followeds.prependOne(followId)
+    );
+  UserState removeFollowedToCurrentUser(int followId) =>
+    _optional(
+      newNumberOfFolloweds: numberOfFolloweds - 1,
+      newFolloweds: followeds.removeOne(followId)
+    );
+
 
   //not followeds
   UserState getNextPageNotFolloweds() =>
