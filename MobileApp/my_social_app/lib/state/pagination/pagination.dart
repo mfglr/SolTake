@@ -31,14 +31,14 @@ class Pagination{
   
   pagination.Page get prev => 
     pagination.Page(
-      offset: ids.firstOrNull,
+      offset: ids.firstOrNull ?? 2147483647,
       take: recordsPerPage,
       isDescending: !isDescending
     );
 
   pagination.Page get next =>
     pagination.Page(
-      offset: ids.lastOrNull,
+      offset: ids.lastOrNull ?? 2147483647,
       take: recordsPerPage,
       isDescending: isDescending
     );

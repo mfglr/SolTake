@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/views/message/widgets/single_message_image_widget.dart';
 
 class MessageContentWidget extends StatelessWidget {
   final MessageState message;
@@ -11,10 +10,6 @@ class MessageContentWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ...message.images.map((messageImage) => Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: SingleMessageImageWidget(messageImage: messageImage),
-        )),
         Builder(
           builder: (context){
             if(message.content == null) return const SizedBox.shrink();

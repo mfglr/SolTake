@@ -1,19 +1,18 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Queries.MessageAggregate;
+using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
 {
-    public class CreateMessageHandler(IMessageWriteRepository messageRepository, IAccessTokenReader tokenReader, IMapper mapper, IBlobService blobService, IUnitOfWork unitOfWork, IMessageReadRepository messageReadRepository) : IRequestHandler<CreateMessageDto, MessageResponseDto>
+    public class CreateMessageHandler(IMessageWriteRepository messageRepository, IAccessTokenReader tokenReader, IBlobService blobService, IUnitOfWork unitOfWork, IMessageQueryRepository messageQueryRepository) : IRequestHandler<CreateMessageDto, MessageResponseDto>
     {
         private readonly IMessageWriteRepository _messageRepository = messageRepository;
-        private readonly IMessageReadRepository _messageReadRepository = messageReadRepository;
+        private readonly IMessageQueryRepository _messageQueryRepository = messageQueryRepository;
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IMapper _mapper = mapper;
         private readonly IBlobService _blobService = blobService;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
@@ -32,9 +31,7 @@ namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
             await _messageRepository.CreateAsync(message, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return _mapper.Map<MessageResponseDto>(
-                await _messageReadRepository.GetMessageByIdAsync(message.Id,cancellationToken)
-            );
+            return (await _messageQueryRepository.GetMessageByIdAsync(senderId, message.Id, cancellationToken))!;
         }
     }
 }

@@ -18,7 +18,7 @@ class MessageHomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(5),
         child: StoreConnector<AppState,Iterable<MessageState>>(
-          onInit: (store) => store.dispatch(const NextPageConversationsIfNoConversationsAction()),
+          onInit: (store) => store.dispatch(const GetNextPageConversationsIfNoPageAction()),
           converter: (store) => store.state.selectConversations,
           builder: (context,messages) => ConversationItems(messages: messages)
         ),

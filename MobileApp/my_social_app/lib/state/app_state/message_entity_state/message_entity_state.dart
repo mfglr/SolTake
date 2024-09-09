@@ -40,8 +40,8 @@ class MessageEntityState extends EntityState<MessageState>{
     => selectUnviewedMessagesOfUser(userId).length;
   Iterable<int> selectIdsOfUnviewedMessagesOfUser(int userId)
     => selectUnviewedMessagesOfUser(userId).map((e) => e.id);
-  Iterable<MessageState> selectConversations(int accountId){
-    return groupBy(entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId)
+  Iterable<MessageState> get selectConversations{
+    return groupBy(entities.values,(x) => x.conversationId)
       .values
       .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last)
       .sorted((x,y) => y.id.compareTo(x.id));

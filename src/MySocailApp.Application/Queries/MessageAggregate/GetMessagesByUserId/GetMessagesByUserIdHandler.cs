@@ -1,21 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.MessageAggregate.Interfaces;
+using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId
 {
-    public class GetMessagesByUserIdHandler(IMessageReadRepository messageRepository, IMapper mapper, IAccessTokenReader tokenReader) : IRequestHandler<GetMessagesByUserIdDto, List<MessageResponseDto>>
+    public class GetMessagesByUserIdHandler(IAccessTokenReader tokenReader, IMessageQueryRepository messageQueryRepository) : IRequestHandler<GetMessagesByUserIdDto, List<MessageResponseDto>>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IMessageReadRepository _messageRepository = messageRepository;
-        private readonly IMapper _mapper = mapper;
+        private readonly IMessageQueryRepository _messageQueryRepository = messageQueryRepository;
 
-        public async Task<List<MessageResponseDto>> Handle(GetMessagesByUserIdDto request, CancellationToken cancellationToken)
-        {
-            var accountId = _tokenReader.GetRequiredAccountId();
-            var messages = await _messageRepository.GetMessagesByUserId(accountId, request.UserId, request, cancellationToken);
-            return _mapper.Map<List<MessageResponseDto>>(messages);
-        }
+        public Task<List<MessageResponseDto>> Handle(GetMessagesByUserIdDto request, CancellationToken cancellationToken)
+            => _messageQueryRepository
+                .GetMessagesByUserIdAsync(
+                    _tokenReader.GetRequiredAccountId(),
+                    request.UserId,
+                    request,
+                    cancellationToken
+                );
     }
 }

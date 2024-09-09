@@ -1,37 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/models/message_image.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 part 'message.g.dart';
 
-@immutable
 @JsonSerializable()
+@immutable
 class Message{
   final int id;
   final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isEdited;
-  final int receiverId;
+  final DateTime? updatedAt;
+  final bool isOwner;
+  final String userName;
+  final int conversationId;
   final int senderId;
-  final String senderUserName;
-  final String receiverUserName;
+  final int receiverId;
+  final bool isEdited;
   final String? content; 
   final int state;
-  final Iterable<MessageImage> images;
-
+  final int numberOfImages;
+  
   const Message({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.isEdited,
-    required this.senderUserName,
-    required this.receiverUserName,
-    required this.receiverId,
+    required this.isOwner,
+    required this.userName,
+    required this.conversationId,
     required this.senderId,
+    required this.receiverId,
+    required this.isEdited,
     required this.content,
     required this.state,
-    required this.images,
+    required this.numberOfImages
   });
+
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
   Map<String, dynamic> toJson() => _$MessageToJson(this);
@@ -41,13 +44,15 @@ class Message{
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        isOwner: isOwner,
+        userName: userName,
+        conversationId: conversationId,
         senderId: senderId,
-        isEdited: isEdited,
-        senderUserName: senderUserName,
-        receiverUserName: receiverUserName,
         receiverId: receiverId,
+        isEdited: isEdited,
         content: content,
         state: state,
-        images: images.map((e) => e.toMessageImageState()),
+        numberOfImages: numberOfImages,
+        images: List.generate(numberOfImages, (index) => MessageImageState.init(id)),
       );
 }

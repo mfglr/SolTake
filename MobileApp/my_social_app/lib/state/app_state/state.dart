@@ -30,7 +30,6 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
-import "package:collection/collection.dart";
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
@@ -100,22 +99,10 @@ class AppState{
   });
 
   //select messages
-  int? selectLastConversationId(){
-    final accountId = accountState!.id;
-    final list = groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId)
-      .values
-      .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last.id)
-      .sorted((x,y) => y.compareTo(x));
-    return list.isNotEmpty ? list.last : null;
-  }
-  int selectNumberOfConversation(){
-    final accountId = accountState!.id;
-    return groupBy(messageEntityState.entities.values,(x) => x.senderId == accountId ? x.receiverId : x.senderId).length;
-  }
-  Iterable<MessageState> get selectConversations
-    => messageEntityState.selectConversations(accountState!.id);
+  Iterable<MessageState> get selectConversations => messageEntityState.selectConversations;
   Iterable<MessageState> selectUserMessages(int userId)
-    => userEntityState.entities[userId]!.messages.ids.map((e) => messageEntityState.entities[e]!);
+    => userEntityState.entities[userId]!.messages.ids
+      .map((e) => messageEntityState.entities[e]!);
   Iterable<int> get selectIdsOfNewComingMessages
     => messageEntityState.entities.values
         .where((e) => e.state == MessageStatus.created && e.senderId != accountState!.id)

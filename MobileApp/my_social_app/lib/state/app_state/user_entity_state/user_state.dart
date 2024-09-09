@@ -231,28 +231,17 @@ class UserState{
 
   //messages
   UserState nextPageMessages() =>
-    _optional(
-      newMessages: messages.startLoadingNext()
-    );
+    _optional(newMessages: messages.startLoadingNext());
   UserState addNextPageMessages(Iterable<int> ids) =>
-    _optional(
-      newMessages: messages.addPrevPage(ids)
-    );
+    _optional(newMessages: messages.addNextPage(ids));
   UserState addMessage(int id) =>
-    _optional(
-      newMessages: messages.appendOne(id)
-    );
+    _optional(newMessages: messages.prependOne(id));
+
 
   UserState changeProfileImageStatus(bool value) =>
-    _optional(
-      newHasImage: value
-    );
+    _optional(newHasImage: value);
   UserState updateUserName(String userName) =>
-    _optional(
-      newUserName: userName
-    );
+    _optional(newUserName: userName);
   UserState updateName(String name) =>
-    _optional(
-      newName: name == "" ? null : name
-    );
+    _optional(newName: name == "" ? null : name);
 }

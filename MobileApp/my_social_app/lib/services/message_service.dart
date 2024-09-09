@@ -44,16 +44,14 @@ class MessageService{
       .then((json) => json as List)
       .then((list) => list.map((item) => Message.fromJson(item)));
 
-  Future<Iterable<Message>> getNewCommingMessages() =>
+  Future<Iterable<Message>> getUnviewedMessages() =>
     _appClient
-      .get("$messageController/$getNewCommingMessagesEndpoint")
+      .get("$messageController/$getUnviewedMessagesEndpoint")
       .then((json) => json as List)
       .then((list) => list.map((item) => Message.fromJson(item)));
 
-  Future<Uint8List> getMessageImage(int messageId,int messageImageId) => 
+  Future<Uint8List> getMessageImage(int messageId,int index) => 
     _appClient
-      .getBytes(
-        "$messageController/$getMessageImageEndpoint/$messageId/$messageImageId"
-      );
+      .getBytes("$messageController/$getMessageImageEndpoint/$messageId/$index");
   
 }

@@ -1,8 +1,12 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+
+@immutable
+class GetUnviewedMessagesAction extends redux.Action{
+  const GetUnviewedMessagesAction();
+}
 
 @immutable
 class AddMessageAction extends redux.Action{
@@ -65,17 +69,17 @@ class MarkOutgoingMessageAsViewedAction extends redux.Action{
 @immutable
 class LoadMessageImageAction extends redux.Action{
   final int messageId;
-  final int messageImageId;
-  const LoadMessageImageAction({required this.messageId, required this.messageImageId});
+  final int index;
+  const LoadMessageImageAction({required this.messageId, required this.index});
 }
 @immutable
 class LoadMessageImageSuccessAction extends redux.Action{
   final int messageId;
-  final int messageImageId;
+  final int index;
   final Uint8List image;
   const LoadMessageImageSuccessAction({
     required this.messageId,
-    required this.messageImageId,
+    required this.index,
     required this.image
   });
 }

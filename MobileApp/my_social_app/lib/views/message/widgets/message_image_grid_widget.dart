@@ -18,7 +18,7 @@ class _MessageImageGridWidgetState extends State<MessageImageGridWidget> {
     store.dispatch(
       LoadMessageImageAction(
         messageId: widget.messageImage.messageId,
-        messageImageId: widget.messageImage.id
+        index: 0
       )
     );
     super.initState();

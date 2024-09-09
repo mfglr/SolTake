@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
@@ -37,9 +38,12 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Subject> Subjects { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<Notification> Notifications { get; private set; }
-        public DbSet<Message> Messages { get; private set; }
+        
         public DbSet<UserConnection> UserConnections { get; private set; }
         public DbSet<NotificationConnection> NotificationConnections { get; private set; }
+
+        public DbSet<Message> Messages { get; private set; }
+        public DbSet<MessageResponseDto> MessageResponseDtos { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

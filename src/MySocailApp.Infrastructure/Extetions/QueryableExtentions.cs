@@ -1,37 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+﻿using MySocailApp.Core;
 
 namespace MySocailApp.Infrastructure.Extetions
 {
     public static class QueryableExtentions
     {
-        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPage pagination) where T : IEntity
+        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPage page) where T : IEntity
         {
-            if (pagination.IsDescending)
+            if (page.IsDescending)
                 return query
-                    .Where(x => pagination.Offset == null || x.Id < pagination.Offset)
+                    .Where(x => page.Offset == null || x.Id < page.Offset)
                     .OrderByDescending(x => x.Id)
-                    .Take(pagination.Take);
+                    .Take(page.Take);
             return query
-                .Where(x => pagination.Offset == null || x.Id > pagination.Offset)
+                .Where(x => page.Offset == null || x.Id > page.Offset)
                 .OrderBy(x => x.Id)
-                .Take(pagination.Take);
+                .Take(page.Take);
         }
-
-        public static IQueryable<Message> IncludeForMessage(this IQueryable<Message> query)
-            => query
-                .Include(x => x.Images)
-                .Include(x => x.Viewers)
-                .Include(x => x.Receivers)
-                .Include(x => x.Sender)
-                .ThenInclude(x => x.Account)
-                .Include(x => x.Receiver)
-                .ThenInclude(x => x.Account);
     }
 }

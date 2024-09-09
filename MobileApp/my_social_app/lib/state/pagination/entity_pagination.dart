@@ -44,14 +44,14 @@ class EntityPagination<T extends dynamic>{
 
   Page get prev => 
     Page(
-      offset: entities.values.firstOrNull?.id,
+      offset: entities.values.firstOrNull?.id ?? 2147483647,
       take: recordsPerPage,
       isDescending: !isDescending
     );
 
   Page get next =>
     Page(
-      offset:  entities.values.lastOrNull?.id,
+      offset:  entities.values.lastOrNull?.id ?? 2147483647,
       take: recordsPerPage,
       isDescending: isDescending
     );

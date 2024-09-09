@@ -12,7 +12,7 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         public int ReceiverId { get; private set; }
         public string? Content { get; private set; }
         private readonly List<MessageImage> _images = [];
-        public IReadOnlyCollection<MessageImage> Images => _images;
+        public IReadOnlyList<MessageImage> Images => _images;
 
         private Message() { }
         public Message(int senderId,int receiverId, string? content, IEnumerable<MessageImage>? images)

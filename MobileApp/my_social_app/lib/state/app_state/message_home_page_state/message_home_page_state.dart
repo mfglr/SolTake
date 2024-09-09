@@ -1,24 +1,15 @@
-import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/models/message.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 
 class MessageHomePageState{
-  final bool isLastConversations;
-  final bool isSynchronized;
+  final Pagination conversations;
   
   const MessageHomePageState({
-    required this.isLastConversations,
-    required this.isSynchronized
+    required this.conversations
   });
 
-  MessageHomePageState synchronize()
-    => MessageHomePageState(
-        isLastConversations: isLastConversations,
-        isSynchronized: true
-      );
-
-  MessageHomePageState nextPage(Iterable<Message> messages)
-    => MessageHomePageState(
-        isLastConversations: messages.length < conversationsPerPage,
-        isSynchronized: isSynchronized
-      );
+  MessageHomePageState startLoadingNext()
+    => MessageHomePageState(conversations: conversations.startLoadingNext());
+ 
+  MessageHomePageState nextPage(Iterable<int> messageIds)
+    => MessageHomePageState(conversations: conversations.addNextPage(messageIds));
 }

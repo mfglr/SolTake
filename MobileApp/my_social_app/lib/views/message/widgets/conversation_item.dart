@@ -19,7 +19,6 @@ class ConversationItem extends StatelessWidget {
       converter: (store) => store.state.accountState!.id,
       builder: (context,accountId){
         final userId = message.senderId == accountId ? message.receiverId : message.senderId;
-        final userName = message.senderId == accountId ? message.receiverUserName : message.senderUserName;
         return Card(
           child: TextButton(
             onPressed: (){
@@ -40,7 +39,7 @@ class ConversationItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        userName,
+                        message.userName,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

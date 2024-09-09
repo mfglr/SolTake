@@ -1,7 +1,6 @@
 const createMessageEndpoint = "CreateMessage";
 
-const receiveMessage1 = "receiveMessage1";
-const receiveMessage2 = "receiveMessage2";
+const receiveMessage = "receiveMessage";
 const createMessageWebSocket = "CreateMessage";
 const markMessagesAsReceivedWebSocket = "MarkMessagesAsReceived";
 const markMessagesAsViewedWebSocket = "MarkMessagesAsViewed";

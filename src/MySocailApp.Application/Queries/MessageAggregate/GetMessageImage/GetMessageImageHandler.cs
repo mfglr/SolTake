@@ -24,10 +24,10 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
             if (accountId != message.SenderId && accountId != message.ReceiverId)
                 throw new PermissionDeniedToAccessMessageImage();
             
-            var image =
-                message.Images.FirstOrDefault(x => x.Id == request.MessageImageId) ??
+            if(request.Index < 0 || request.Index >= message.Images.Count)
                 throw new MessageImageNotFoundException();
 
+            var image = message.Images[request.Index];
             var stream = _blobService.Read(ContainerName.MesssageImages, image.BlobName);
             return await stream.ToByteArrayAsync();
         }

@@ -73,7 +73,7 @@ final store = Store(
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
     notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
     messageEntityState: const MessageEntityState(entities: {}),
-    messageHomePageState: const MessageHomePageState(isLastConversations: false, isSynchronized: false),
+    messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
     createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),
@@ -287,8 +287,9 @@ final store = Store(
     //notifications end
 
     //conversations start
-    nextPageConversationsMiddleware,
-    nextPageConversationsIfNoConversationsMiddleware,
+    getNextPageConversationsMiddleware,
+    getNextPageConversationsIfNoPageMiddleware,
+    getNextPageConversationsIfReadyActionMiddleware,
     //conversations end
 
     //message
@@ -301,7 +302,7 @@ final store = Store(
     createMessageWithImagesMiddleware,
     createMessageMiddleware,
     
-    getComingMessagesMiddleware,
+    getUnviewedMessagesMiddleware,
 
   ]
 );

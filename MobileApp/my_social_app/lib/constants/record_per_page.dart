@@ -1,5 +1,5 @@
 const notificationsPerPage = 20;
-const conversationsPerPage = 12;
+const conversationsPerPage = 100;
 const messagesPerPage = 20;
 const commentsPerPage = 12;
 const usersPerPage = 8;

@@ -8,7 +8,7 @@ using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessageImage;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId;
-using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessageByReceiverId;
+using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessages;
 
 namespace MySocailApp.Api.Controllers
 {
@@ -22,20 +22,20 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<MessageResponseDto> CreateMessage([FromForm]int receiverId,[FromForm]string? content,[FromForm] IFormFileCollection images)
+        public async Task<MessageResponseDto> CreateMessage([FromForm] int receiverId, [FromForm] string? content, [FromForm] IFormFileCollection images)
             => await _mediator.Send(new CreateMessageDto(receiverId, content, images));
 
         [HttpGet("{userId}")]
-        public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId,[FromQuery]int? offset,[FromQuery]int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetMessagesByUserIdDto(userId, offset, take, isDescending),cancellationToken);
+        public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetMessagesByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<MessageResponseDto>> GetConversations([FromQuery]int? offset, [FromQuery]int take, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetConversationsDto(offset, take),cancellationToken);
+        public async Task<List<MessageResponseDto>> GetConversations([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetConversationsDto(offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<MessageResponseDto>> GetUnviewedMessagesByReceiverId(CancellationToken cancellationToken)
-            => await _mediator.Send(new GetUnviewedMessagesByReceiverIdDto(), cancellationToken);
+        public async Task<List<MessageResponseDto>> GetUnviewedMessages(CancellationToken cancellationToken)
+            => await _mediator.Send(new GetUnviewedMessagesDto(), cancellationToken);
 
         [HttpGet("{messageId}/{messageImageId}")]
         public async Task<FileResult> GetMessageImage(int messageId, int messageImageId, CancellationToken cancellationToken)

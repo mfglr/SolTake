@@ -278,7 +278,6 @@ class ChangeProfileImageStatusAction extends redux.Action{
   final bool value;
   const ChangeProfileImageStatusAction({required this.userId, required this.value});
 }
-
 @immutable
 class UpdateUserNameAction extends redux.Action{
   final String userName;
@@ -290,7 +289,6 @@ class UpdateUserNameSuccessAction extends redux.Action{
   final String userName;
   const UpdateUserNameSuccessAction({required this.userId,required this.userName});
 }
-
 @immutable
 class UpdateNameAction extends redux.Action{
   final String name;
