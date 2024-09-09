@@ -19,6 +19,12 @@ class CreateMessageState{
         images: const [],
         receiverId: receiverId
       );
+  CreateMessageState clear()
+    => const CreateMessageState(
+        content: null,
+        images: [],
+        receiverId: null
+      );
 
   CreateMessageState changeContent(String content)
     => CreateMessageState(

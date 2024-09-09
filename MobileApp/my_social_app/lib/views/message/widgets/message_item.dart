@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/widgets/message_content_widget.dart';
+import 'package:my_social_app/views/message/widgets/message_images_grid/message_images_grid_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_status_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -22,6 +23,8 @@ class MessageItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if(message.numberOfImages > 0)
+              MessageImagesGridWidget(message: message),
             MessageContentWidget(message: message),
             Padding(
               padding: const EdgeInsets.only(top: 5),

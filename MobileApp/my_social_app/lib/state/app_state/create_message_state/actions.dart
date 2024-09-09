@@ -7,7 +7,6 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 class ClearMessageContentAndImagesAction extends redux.Action{
   const ClearMessageContentAndImagesAction();
 }
-
 @immutable
 class CreateMessageWithImagesAction extends redux.Action{
   const CreateMessageWithImagesAction();
