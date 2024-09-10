@@ -8,14 +8,21 @@ class MessageImagesGridWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      children: List.generate(
-        message.images.length,
-        (index) => MessageImageGridWidget(
-          messageImage:  message.images.elementAt(index)
-        )
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: message.numberOfImages == 1 ? 1 : 2,
+        childAspectRatio: 1.0,
+        mainAxisSpacing: 1.0,
+        crossAxisSpacing: 1.0,
       ),
+      itemCount: message.numberOfImages,
+      itemBuilder:(context,index ) => MessageImageGridWidget(
+        key: ValueKey(index),
+        index: index,
+        messageImage:  message.images.elementAt(index)
+      )
     );
   }
 }

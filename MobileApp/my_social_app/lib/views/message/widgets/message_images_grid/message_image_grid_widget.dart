@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class MessageImageGridWidget extends StatefulWidget {
+  final int index;
   final MessageImageState messageImage;
-  const MessageImageGridWidget({super.key,required this.messageImage});
+  const MessageImageGridWidget({
+    super.key,
+    required this.index,
+    required this.messageImage
+  });
 
   @override
   State<MessageImageGridWidget> createState() => _MessageImageGridWidgetState();
@@ -18,7 +23,7 @@ class _MessageImageGridWidgetState extends State<MessageImageGridWidget> {
     store.dispatch(
       LoadMessageImageAction(
         messageId: widget.messageImage.messageId,
-        index: 0
+        index: widget.index
       )
     );
     super.initState();
@@ -29,7 +34,7 @@ class _MessageImageGridWidgetState extends State<MessageImageGridWidget> {
     return Padding(
       padding: const EdgeInsets.all(1),
       child: Builder(builder: (context) {
-        if(widget.messageImage.image == null) return const LoadingView();
+        if(widget.messageImage.image == null) return const LoadingWidget();
         return Image.memory(
           widget.messageImage.image!,
           fit: BoxFit.cover,

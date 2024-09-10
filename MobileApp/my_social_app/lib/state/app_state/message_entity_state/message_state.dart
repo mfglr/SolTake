@@ -62,7 +62,7 @@ class MessageState{
   MessageState markAsReceived() => _optinal( newState: state != MessageStatus.viewed ? MessageStatus.received : state);
   MessageState markAsViewed() => _optinal(newState: MessageStatus.viewed);
   MessageState startLoadingMessageImage(int index)
-    => _optinal(newImages: [...images.take(index + 1), images.elementAt(index).startLoading(),...images.skip(index + 1)]);
+    => _optinal(newImages: [...images.take(index), images.elementAt(index).startLoading(),...images.skip(index + 1)]);
   MessageState loadMessageImage(int index,Uint8List image)
-    => _optinal(newImages: [...images.take(index + 1), images.elementAt(index).load(image),...images.skip(index + 1)]);
+    => _optinal(newImages: [...images.take(index), images.elementAt(index).load(image),...images.skip(index + 1)]);
 }

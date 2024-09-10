@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/message_hub.dart';
+import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -31,6 +32,9 @@ class _ConversationPageState extends State<ConversationPage>{
 
   @override
   void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(ChangeReceiverIdAction(receiverId: widget.userId));
+
     _onScrollBottom = (){
       if(_scrollController.position.pixels == 0){
         setState(() {
@@ -42,12 +46,9 @@ class _ConversationPageState extends State<ConversationPage>{
     
     _messageConsumer = MessageHub().receivedMessages.stream.listen((message){
       if(message.senderId == widget.userId){
-        final store = StoreProvider.of<AppState>(context,listen: false);
         store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
         if(_scrollController.position.pixels != 0){
-          setState(() {
-            _numberOfNewMessages++;
-          });
+          setState(() { _numberOfNewMessages++; });
         }
       }
     });

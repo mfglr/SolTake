@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/widgets/message_content_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_images_grid/message_images_grid_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_status_widget.dart';
@@ -25,22 +23,16 @@ class MessageItem extends StatelessWidget {
           children: [
             if(message.numberOfImages > 0)
               MessageImagesGridWidget(message: message),
-            MessageContentWidget(message: message),
+            if(message.content != null)
+              MessageContentWidget(message: message),
             Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  StoreConnector<AppState,int>(
-                    converter: (store) => store.state.accountState!.id,
-                    builder: (context,accountId){
-                      if(accountId == message.senderId){
-                        return MessageStatusWidget(message: message);
-                      }
-                      return const SizedBox.shrink();
-                    }, 
-                  ),
+                  if(message.isOwner)
+                    MessageStatusWidget(message: message),
                   Text(
                     timeago.format(message.createdAt,locale: 'en_short'),
                     style: const TextStyle(fontSize: 11),
