@@ -6,6 +6,8 @@ import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/message_image_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -170,6 +172,9 @@ void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatch
       .then((messages){
         store.dispatch(AddNextPageUserMessagesAction(userId: action.userId,messageIds: messages.map((message) => message.id)));
         store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
+        store.dispatch(AddMessageImagesListAction(list: messages.map(
+          (e) => List.generate(e.numberOfImages, (index) => MessageImageState.init(e.id, index)))
+        ));
       });
   }
   next(action);

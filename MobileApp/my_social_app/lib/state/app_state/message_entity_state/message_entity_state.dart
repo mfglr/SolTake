@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:collection/collection.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
@@ -28,11 +26,6 @@ class MessageEntityState extends EntityState<MessageState>{
   }
   MessageEntityState markOutgoingMessageAsViewed(MessageState message)
     => MessageEntityState(entities: updateOne(message));
-  
-  MessageEntityState startloadingMessageImage(int messageId,int messageImageId)
-    => MessageEntityState(entities: updateOne(entities[messageId]!.startLoadingMessageImage(messageImageId)));
-  MessageEntityState loadMessageImage(int messageId,int messageImageId,Uint8List image)
-    => MessageEntityState(entities: updateOne(entities[messageId]!.loadMessageImage(messageImageId, image)));
 
   Iterable<MessageState> selectUnviewedMessagesOfUser(int userId)
     => entities.values.where((e) => e.senderId == userId && e.state != MessageStatus.viewed);

@@ -18,6 +18,8 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_entit
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_entity_state.dart';
+import 'package:my_social_app/state/app_state/message_image_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
@@ -73,6 +75,7 @@ final store = Store(
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
     notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
     messageEntityState: const MessageEntityState(entities: {}),
+    messageImageEntityState: const MessageImageEntityState(entities: {}),
     messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
     createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
     userSearchEntityState: const UserSearchEntityState(entities: {}),
@@ -297,12 +300,12 @@ final store = Store(
     markComingMessageAsViewedMiddleware,
     markComingMessagesAsReceivedMiddleware,
     markComingMessagesAsViewedMiddleware,
-    loadMessageImageMiddleware,
-    
     createMessageWithImagesMiddleware,
     createMessageMiddleware,
-    
     getUnviewedMessagesMiddleware,
+
+    //message image
+    loadMessageImageMiddleware,
 
   ]
 );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 part 'message.g.dart';
 
@@ -53,6 +52,5 @@ class Message{
         content: content,
         state: state,
         numberOfImages: numberOfImages,
-        images: List.generate(numberOfImages, (index) => MessageImageState.init(id)),
       );
 }

@@ -86,7 +86,7 @@ class _MessageFieldState extends State<MessageField> {
                     .pickMultiImage(imageQuality: 100)
                     .then(
                       (images){
-                        store.dispatch(AddMessageImagesAction(images: images));
+                        store.dispatch(CreateMessageImagesAction(images: images));
                         if(images.isNotEmpty && widget.type == MessageFieldType.forConversation){
                           Navigator.of(context).pushNamed(displayMessageImagesRoute);
                         }

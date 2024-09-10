@@ -8,7 +8,7 @@ CreateMessageState changeContentReducer(CreateMessageState prev,ChangeMessageCon
   => prev.changeContent(action.content);
 CreateMessageState changeInterlocutorIdReducer(CreateMessageState prev,ChangeReceiverIdAction action)
   => prev.changeReceiverId(action.receiverId);
-CreateMessageState addImagesReducer(CreateMessageState prev,AddMessageImagesAction action)
+CreateMessageState addImagesReducer(CreateMessageState prev,CreateMessageImagesAction action)
   => prev.addImages(action.images);
 CreateMessageState addImageReducer(CreateMessageState prev,AddMessageImageAction action)
   => prev.addImage(action.image);
@@ -19,7 +19,7 @@ Reducer<CreateMessageState> createMessageReducers = combineReducers<CreateMessag
   TypedReducer<CreateMessageState,ClearMessageContentAndImagesAction>(clearMessageContentAndImagesReducer).call,
   TypedReducer<CreateMessageState,ChangeMessageContentAction>(changeContentReducer).call,
   TypedReducer<CreateMessageState,ChangeReceiverIdAction>(changeInterlocutorIdReducer).call,
-  TypedReducer<CreateMessageState,AddMessageImagesAction>(addImagesReducer).call,
+  TypedReducer<CreateMessageState,CreateMessageImagesAction>(addImagesReducer).call,
   TypedReducer<CreateMessageState,AddMessageImageAction>(addImageReducer).call,
   TypedReducer<CreateMessageState,RemoveMessageImageAction>(removeImageReducer).call,
 ]);

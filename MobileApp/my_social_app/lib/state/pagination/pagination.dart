@@ -104,24 +104,28 @@ class Pagination{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination prependOne(int id)
-    => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        ids: [id, ...ids],
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-      );
-  Pagination appendOne(int id)
-    => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        ids: [...ids, id],
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-      );
+  Pagination prependOne(int id){
+    if(ids.any((e) => e == id)) return this;
+    return Pagination(
+      isLast: isLast,
+      loadingNext: loadingNext,
+      loadingPrev: loadingPrev,
+      ids: [id, ...ids],
+      isDescending: isDescending,
+      recordsPerPage: recordsPerPage,
+    );
+  }
+  Pagination appendOne(int id){
+    if(ids.any((e) => e == id)) return this;
+    return Pagination(
+      isLast: isLast,
+      loadingNext: loadingNext,
+      loadingPrev: loadingPrev,
+      ids: [...ids, id],
+      isDescending: isDescending,
+      recordsPerPage: recordsPerPage,
+    );
+  }
   Pagination prependOneAndRemovePrev(int id)
     => Pagination(
         isLast: isLast,

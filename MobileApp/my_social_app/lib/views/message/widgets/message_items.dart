@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
-import 'package:my_social_app/views/message/widgets/message_item.dart';
+import 'package:my_social_app/views/message/widgets/message_content_item.dart';
+import 'package:my_social_app/views/message/widgets/message_images_grid/message_images_grid_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class MessageItems extends StatefulWidget {
@@ -48,7 +52,17 @@ class _MessageItemsState extends State<MessageItems> {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 3 / 4,
-            child: MessageItem(message: message),
+            child: Column(
+              children: [
+                if(message.numberOfImages > 0)
+                  StoreConnector<AppState,Iterable<MessageImageState>>(
+                    converter: (store) => store.state.messageImageEntityState.selectMessageImages(message.id),
+                    builder:(context,images) => MessageImagesGridWidget(images: images)
+                  ),
+                if(message.content != null)
+                  MessageContentItem(message: message),
+              ],
+            ),
           )
         ],
       )

@@ -26,9 +26,9 @@ class ChangeReceiverIdAction extends redux.Action{
   const ChangeReceiverIdAction({required this.receiverId});
 }
 @immutable
-class AddMessageImagesAction extends redux.Action{
+class CreateMessageImagesAction extends redux.Action{
   final Iterable<XFile> images;
-  const AddMessageImagesAction({required this.images});
+  const CreateMessageImagesAction({required this.images});
 }
 @immutable
 class AddMessageImageAction extends redux.Action{

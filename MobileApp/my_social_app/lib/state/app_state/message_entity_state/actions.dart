@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
@@ -64,22 +63,4 @@ class MarkOutgoingMessageAsReceivedAction extends redux.Action{
 class MarkOutgoingMessageAsViewedAction extends redux.Action{
   final MessageState message;
   const MarkOutgoingMessageAsViewedAction({required this.message});
-}
-
-@immutable
-class LoadMessageImageAction extends redux.Action{
-  final int messageId;
-  final int index;
-  const LoadMessageImageAction({required this.messageId, required this.index});
-}
-@immutable
-class LoadMessageImageSuccessAction extends redux.Action{
-  final int messageId;
-  final int index;
-  final Uint8List image;
-  const LoadMessageImageSuccessAction({
-    required this.messageId,
-    required this.index,
-    required this.image
-  });
 }
