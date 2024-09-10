@@ -53,5 +53,10 @@ class MessageService{
   Future<Uint8List> getMessageImage(int messageId,int index) => 
     _appClient
       .getBytes("$messageController/$getMessageImageEndpoint/$messageId/$index");
+
+  Future<Message> getMessageById(int messageId) =>
+    _appClient
+      .get("$messageController/$getMessageByIdEndpoint/$messageId")
+      .then((json) => Message.fromJson(json));
   
 }

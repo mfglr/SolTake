@@ -26,19 +26,21 @@ class MessageImageState{
         status: ImageStatus.notStarted
       );
 
-  MessageImageState startLoading()
-    => MessageImageState(
-        messageId: messageId,
-        index: index,
-        image: image,
-        status: ImageStatus.started
-      );
+  MessageImageState startLoading(){
+    if(status != ImageStatus.notStarted) return this;
+    return MessageImageState(
+      messageId: messageId,
+      index: index,
+      image: image,
+      status: ImageStatus.started
+    );
+  }
 
   MessageImageState load(Uint8List image)
     => MessageImageState(
         messageId: messageId,
         index: index,
         image: image,
-        status: status
+        status: ImageStatus.done
       );
 }

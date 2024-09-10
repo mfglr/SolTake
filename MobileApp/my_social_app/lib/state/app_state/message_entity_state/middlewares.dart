@@ -8,6 +8,24 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
+void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadMessageAction){
+    if(store.state.messageEntityState.entities[action.messageId] == null){
+      MessageService()
+        .getMessageById(action.messageId)
+        .then((message){
+          store.dispatch(AddMessageAction(message: message.toMessageState()));
+          store.dispatch(AddMessageImagesAction(images: List.generate(
+            message.numberOfImages, (index) => MessageImageState.init(message.id, index)
+          )));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(message.conversationId)));
+          
+        });
+    }
+  }
+  next(action);
+}
+
 void getUnviewedMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetUnviewedMessagesAction){
     MessageService()

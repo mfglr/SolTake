@@ -15,7 +15,7 @@ class _TakeImagePageState extends State<TakeImagePage> {
   
   @override
   void initState() {
-    _controller = CameraController(widget.camera,ResolutionPreset.ultraHigh);
+    _controller = CameraController(widget.camera,ResolutionPreset.max);
     _initializeControllerFuture = _controller.initialize();
     super.initState();
   }

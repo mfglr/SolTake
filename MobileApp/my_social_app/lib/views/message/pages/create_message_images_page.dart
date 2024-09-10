@@ -5,8 +5,8 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/widgets/carousel_slider_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_field.dart';
 
-class DisplayMessageImages extends StatelessWidget {
-  const DisplayMessageImages({super.key});
+class CreateMessageImagesPage extends StatelessWidget {
+  const CreateMessageImagesPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -303,6 +303,7 @@ final store = Store(
     createMessageWithImagesMiddleware,
     createMessageMiddleware,
     getUnviewedMessagesMiddleware,
+    loadMessageMiddleware,
 
     //message image
     loadMessageImageMiddleware,

@@ -17,7 +17,6 @@ import 'package:my_social_app/views/account/login_view.dart';
 import 'package:my_social_app/views/create_question/pages/display_question_images_page.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_images_page.dart';
-import 'package:my_social_app/views/message/pages/display_message_images.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/account/register_view.dart';
 import 'package:my_social_app/views/root_view.dart';
@@ -92,7 +91,6 @@ Future<void> main() async {
           addSolutionContentRoute: (context) => const AddSolutionContentPage(),
 
           takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
-          displayMessageImagesRoute: (context) => const DisplayMessageImages(),
 
           takeImageRoute: (context) => TakeImagePage(camera: cameras.first)
         },

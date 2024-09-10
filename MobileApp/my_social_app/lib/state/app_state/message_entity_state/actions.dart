@@ -3,8 +3,9 @@ import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 
 @immutable
-class GetUnviewedMessagesAction extends redux.Action{
-  const GetUnviewedMessagesAction();
+class LoadMessageAction extends redux.Action{
+  final int messageId;
+  const LoadMessageAction({required this.messageId});
 }
 
 @immutable
@@ -21,6 +22,11 @@ class AddMessagesAction extends redux.Action{
 class AddMessagesListsAction extends redux.Action{
   final Iterable<Iterable<MessageState>> lists;
   const AddMessagesListsAction({required this.lists});
+}
+
+@immutable
+class GetUnviewedMessagesAction extends redux.Action{
+  const GetUnviewedMessagesAction();
 }
 
 @immutable

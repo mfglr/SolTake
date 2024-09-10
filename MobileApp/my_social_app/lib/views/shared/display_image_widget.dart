@@ -9,31 +9,37 @@ class DisplayImageWidget extends StatelessWidget {
   final Uint8List? image;
   final ImageStatus status;
   final BoxFit? boxFit;
+  final void Function()? onTap;
+
   const DisplayImageWidget({
     super.key,
     required this.image,
     required this.status,
-    this.boxFit
+    this.boxFit,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
-    return  Builder(              
-      builder: (context){
-        switch(status){
-          case ImageStatus.done:
-            return Image.memory(
-              image!,
-              fit: boxFit,
-            );
-          case ImageStatus.started:
-            return const LoadingWidget();
-          case ImageStatus.notStarted:
-            return const LoadingWidget();
-          case ImageStatus.notFound:
-            return const ImageNotFoundWidget();
+    return  GestureDetector(
+      onTap: onTap,
+      child: Builder(              
+        builder: (context){
+          switch(status){
+            case ImageStatus.done:
+              return Image.memory(
+                image!,
+                fit: boxFit,
+              );
+            case ImageStatus.started:
+              return const LoadingWidget();
+            case ImageStatus.notStarted:
+              return const LoadingWidget();
+            case ImageStatus.notFound:
+              return const ImageNotFoundWidget();
+          }
         }
-      }
+      ),
     );
   }
 }

@@ -22,7 +22,6 @@ class MessageImagesGridWidget extends StatelessWidget {
           ),
           itemCount: images.length,
           itemBuilder:(context, index) => MessageImageGridWidget(
-            index: index,
             messageImage: images.elementAt(index)
           )
         ),
