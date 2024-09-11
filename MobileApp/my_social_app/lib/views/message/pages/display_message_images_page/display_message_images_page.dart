@@ -102,28 +102,34 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                           top: MediaQuery.of(context).size.height / 32,
                           bottom: 5
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const AppBackButtonWidget(
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                            StoreConnector<AppState,UserState?>(
-                              converter: (store) => store.state.userEntityState.entities[message.senderId],
-                              onInit: (store) => store.dispatch(LoadUserAction(userId: message.senderId)),
-                              builder: (store,user){
-                                if(user == null) return const SpaceSavingWidget();
-                                return UserImageWithNamesWidget(
-                                  user: user,
-                                  diameter: 40,
-                                  userNameColor: Colors.white,
-                                  nameColor: Colors.white,
-                                );
-                              }
-                            )
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                child: AppBackButtonWidget(
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ),
+                              StoreConnector<AppState,UserState?>(
+                                converter: (store) => store.state.userEntityState.entities[message.senderId],
+                                onInit: (store) => store.dispatch(LoadUserAction(userId: message.senderId)),
+                                builder: (store,user){
+                                  if(user == null) return const SpaceSavingWidget();
+                                  return UserImageWithNamesWidget(
+                                    user: user,
+                                    diameter: 40,
+                                    userNameColor: Colors.white,
+                                    nameColor: Colors.white,
+                                  );
+                                }
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )

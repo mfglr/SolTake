@@ -7,6 +7,8 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart'
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_solved_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page.dart';
+import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
@@ -148,7 +150,8 @@ class _UserPageState extends State<UserPage> {
         if(user == null) return const LoadingView();
         return Scaffold(
           appBar: AppBar(
-            title: Text(user.userName),
+            title: AppTitle(title: user.userName),
+            leading: const AppBackButtonWidget(),
           ),
           body: Column(
             children: [

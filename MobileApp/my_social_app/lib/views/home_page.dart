@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("SolverWay"),
+            title: const Text("SolTake"),
             actions: [
               IconButton(
                 onPressed: (){

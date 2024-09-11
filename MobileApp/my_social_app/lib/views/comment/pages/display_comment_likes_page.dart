@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title_widget.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_icon_button_widget.dart';
@@ -28,7 +28,7 @@ class DisplayCommentLikesPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: const AppTitleWidget(title: "Likes"),
+            title: const AppTitle(title: "Likes"),
           ),
           body: StoreConnector<AppState,Iterable<UserState>>(
             onInit: (store) => store.dispatch(GetNextPageCommentLikesIfNoPageAction(commentId: commentId)),

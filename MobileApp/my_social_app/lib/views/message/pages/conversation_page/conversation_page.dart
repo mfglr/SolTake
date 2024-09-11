@@ -76,6 +76,11 @@ class _ConversationPageState extends State<ConversationPage>{
               onPressed: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.userId)));
               },
+              style: ButtonStyle(
+                padding: WidgetStateProperty.all(EdgeInsets.zero),
+                minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
               child: UserImageWithNamesWidget(
                 user: user,
                 diameter: 50,

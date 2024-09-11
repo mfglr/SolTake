@@ -20,11 +20,17 @@ class AppBackButtonWidget extends StatelessWidget {
         }
         Navigator.of(context).pop();
       },
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       child: Icon(
         Icons.arrow_back,
         color: color,
         size: size,
       ),
+      
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/modals/display_solution_comments_modal.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title_widget.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item_widget.dart';
 
@@ -54,7 +54,7 @@ class _DisplaySolutionPageState extends State<DisplaySolutionPage> {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: AppTitleWidget(title: "${solution.userName}'s solution"),
+            title: AppTitle(title: "${solution.userName}'s solution"),
           ),
           body: SingleChildScrollView(
             child: SolutionItemWidget(

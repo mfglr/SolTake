@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 import 'package:my_social_app/views/question/widgets/question_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title_widget.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class DisplayQuestionPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: AppTitleWidget(
+            title: AppTitle(
               title: "${question.userName}'s question"
             ),
           ),

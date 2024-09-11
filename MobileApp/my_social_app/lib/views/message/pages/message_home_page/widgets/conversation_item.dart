@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
-import 'package:my_social_app/views/message/widgets/message_status_widget.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_status_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class ConversationItem extends StatelessWidget {
