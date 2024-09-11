@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using System.IO;
 
 namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 {
@@ -8,11 +11,11 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
         private readonly IBlobNameGenerator _generator = generator;
         private readonly IDimentionCalculator _dimentionCalculator = dimentionCalculator;
         private static readonly string _rootPath = "Images";
-        private readonly List<Image> _images = [];
+        private readonly List<Application.ApplicationServices.BlobService.Image> _images = [];
 
         private static string GetPath(string containerName, string blobName) => $"{_rootPath}/{containerName}/{blobName}";
 
-        public async Task<Image> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        public async Task<Application.ApplicationServices.BlobService.Image> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
             string blobName = _generator.Generate();
             using var stream = file.OpenReadStream();
@@ -20,10 +23,11 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
             stream.Position = 0;
 
             var path = GetPath(containerName, blobName);
-            using var fileStream = File.Create(path);
-            await stream.CopyToAsync(fileStream, cancellationToken);
+            var options = new JpegEncoder { Quality = 25 };
+            using var t = await SixLabors.ImageSharp.Image.LoadAsync(stream, cancellationToken);
+            await t.SaveAsync(path, options, cancellationToken);
 
-            var image = new Image(containerName, blobName, dimention);
+            var image = new Application.ApplicationServices.BlobService.Image(containerName, blobName, dimention);
             _images.Add(image);
             return image;
         }
@@ -31,9 +35,9 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
         public Stream Read(string containerName, string blobName)
             => File.OpenRead(GetPath(containerName, blobName));
 
-        public async Task<List<Image>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
+        public async Task<List<Application.ApplicationServices.BlobService.Image>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
         {
-            List<Image> images = [];
+            List<Application.ApplicationServices.BlobService.Image> images = [];
             foreach (var file in files)
                 images.Add(await UploadAsync(containerName, file, cancellationToken));
             return images;

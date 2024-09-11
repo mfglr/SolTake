@@ -32,7 +32,8 @@ class _MessageImageGridWidgetState extends State<MessageImageGridWidget> {
           .push(
             MaterialPageRoute(
               builder: (context) => DisplayMessageImagesPage(
-                messageId:widget.messageImage.messageId
+                messageId:widget.messageImage.messageId,
+                activeIndex: widget.messageImage.index,
               )
             )
           ); 

@@ -8,12 +8,12 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/message/widgets/buttons/scroll_to_bottom_button.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_field.dart';
-import 'package:my_social_app/views/message/widgets/message_items.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_items.dart';
 import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.dart';
 
 class ConversationPage extends StatefulWidget {

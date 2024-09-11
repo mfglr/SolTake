@@ -10,6 +10,8 @@ class UserImageWithNamesWidget extends StatelessWidget {
   final FontWeight userNameFontWeight;
   final double nameFontSize;
   final FontWeight nameFontWeight;
+  final Color? userNameColor;
+  final Color? nameColor;
   
   const UserImageWithNamesWidget({
     super.key,
@@ -19,7 +21,9 @@ class UserImageWithNamesWidget extends StatelessWidget {
     this.userNameFontSize = 14,
     this.nameFontSize = 12,
     this.userNameFontWeight = FontWeight.bold,
-    this.nameFontWeight = FontWeight.normal
+    this.nameFontWeight = FontWeight.normal,
+    this.userNameColor,
+    this.nameColor
   });
 
   @override
@@ -38,7 +42,8 @@ class UserImageWithNamesWidget extends StatelessWidget {
               user.formatUserName(),
               style: TextStyle(
                 fontSize: userNameFontSize,
-                fontWeight: userNameFontWeight
+                fontWeight: userNameFontWeight,
+                color: userNameColor
               ),
             ),
             Builder(
@@ -48,7 +53,8 @@ class UserImageWithNamesWidget extends StatelessWidget {
                   user.formatName(15),
                   style: TextStyle(
                     fontSize: nameFontSize,
-                    fontWeight: nameFontWeight
+                    fontWeight: nameFontWeight,
+                    color: nameColor
                   ),
                 );
               }
