@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/views/message/pages/create_message_images_page.dart';
 
 class TakeMessageImagePage extends StatefulWidget {
   final CameraDescription camera;
@@ -82,7 +82,8 @@ class _TakeMessageImagePageState extends State<TakeMessageImagePage> {
             store.dispatch(AddMessageImageAction(image: image));
             if (!context.mounted) return;
             if(store.state.createMessageState.images.length == 1){
-              Navigator.of(context).popAndPushNamed(displayMessageImagesRoute);
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CreateMessageImagesPage()));
             }
             else{
               Navigator.of(context).pop();

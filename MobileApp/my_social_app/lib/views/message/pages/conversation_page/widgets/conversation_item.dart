@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/message/pages/conversation_page.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
 import 'package:my_social_app/views/message/widgets/message_status_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
@@ -18,13 +18,12 @@ class ConversationItem extends StatelessWidget {
     return StoreConnector<AppState,int>(
       converter: (store) => store.state.accountState!.id,
       builder: (context,accountId){
-        final userId = message.senderId == accountId ? message.receiverId : message.senderId;
         return Card(
           child: TextButton(
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(userId: userId)));
-              store.dispatch(ChangeReceiverIdAction(receiverId: userId));
-              store.dispatch(MarkComingMessagesAsViewedAction(userId: userId));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(userId: message.conversationId)));
+              store.dispatch(ChangeReceiverIdAction(receiverId: message.conversationId));
+              store.dispatch(MarkComingMessagesAsViewedAction(userId: message.conversationId));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,7 +32,7 @@ class ConversationItem extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 5),
-                    child: UserImageWidget(userId: userId,diameter: 50),
+                    child: UserImageWidget(userId: message.conversationId,diameter: 50),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,21 +49,15 @@ class ConversationItem extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.only(right: 5),
                             child: Text(
-                              message.content ?? 'Image...',
+                              message.formatContent(25) ?? 'Image...',
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal
                               ),
                             ),
                           ),
-                          Builder(
-                            builder: (context) {
-                              if(accountId == message.senderId){
-                                return MessageStatusWidget(message: message);
-                              }
-                              return const SizedBox.shrink();
-                            }
-                          )
+                          if(message.isOwner)
+                            MessageStatusWidget(message: message),
                         ],
                       ),
                     ],
@@ -72,7 +65,7 @@ class ConversationItem extends StatelessWidget {
                 ],
               ),
               StoreConnector<AppState,int>(
-                converter: (store) => store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(userId),
+                converter: (store) => store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(message.conversationId),
                 builder: (context,count){
                   if(count > 0){
                     return Text(count.toString());

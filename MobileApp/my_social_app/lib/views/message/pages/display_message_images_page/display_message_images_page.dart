@@ -5,10 +5,14 @@ import 'package:my_social_app/state/app_state/message_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/message/pages/display_message_images_page/widgets/message_content.dart';
+import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class DisplayMessageImagesPage extends StatefulWidget {
+
+  static const int maxContentCharacters = 120;
   final int messageId;
   
   const DisplayMessageImagesPage({
@@ -54,32 +58,18 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                   ).toList(),
                 ),
               ),
-              if(message.content != null && _contentVisibility)
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 5,
-                  color: Colors.black.withOpacity(0.5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            message.content!,
-                            style: const TextStyle(
-                              color: Colors.white
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+              const Positioned(
+                top: 15,
+                child: AppBackButtonWidget(
+                  color: Colors.white,
+                  size: 30,
                 )
               ),
+              if(message.content != null && _contentVisibility)
+                Positioned(
+                  bottom: 0,
+                  child: MessageContent(content: message.content!)
+                ),
             ],
           ),
         );

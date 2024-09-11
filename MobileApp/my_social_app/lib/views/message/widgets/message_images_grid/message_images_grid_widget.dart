@@ -16,9 +16,9 @@ class MessageImagesGridWidget extends StatelessWidget {
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: images.length == 1 ? 1 : 2,
-            childAspectRatio: 1.0,
-            mainAxisSpacing: 1.0,
-            crossAxisSpacing: 1.0,
+            childAspectRatio: 1,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
           ),
           itemCount: images.length,
           itemBuilder:(context, index) => MessageImageGridWidget(

@@ -53,6 +53,11 @@ class MessageState{
         numberOfImages: newNumberOfImages ?? numberOfImages,
       );
   
+  String? formatContent(int count){
+    if(content == null || content!.length <= count) return content;
+    return "${content!.substring(0,count - 3)}...";
+  }  
+
   MessageState markAsReceived() => _optinal( newState: state != MessageStatus.viewed ? MessageStatus.received : state);
   MessageState markAsViewed() => _optinal(newState: MessageStatus.viewed);
   
