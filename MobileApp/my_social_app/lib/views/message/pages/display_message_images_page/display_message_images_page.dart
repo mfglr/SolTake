@@ -141,7 +141,7 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                             activeIndex: _activeIndex,
                             activeColor: Colors.blue,
                             passiveColor: Colors.grey,
-                            diameter: 8,
+                            diameter: 6,
                             changeActiveIndex: _changeActiveIndex
                           ),
                         ],
