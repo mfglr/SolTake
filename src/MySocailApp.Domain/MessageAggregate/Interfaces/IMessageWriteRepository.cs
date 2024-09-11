@@ -5,7 +5,9 @@ namespace MySocailApp.Domain.MessageAggregate.Interfaces
     public interface IMessageWriteRepository
     {
         Task CreateAsync(Message message, CancellationToken cancellationToken);
+        void Delete(Message message);
         Task<Message?> GetById(int id, CancellationToken cancellationToken);
         Task<List<Message>> GetByIds(IEnumerable<int> ids, CancellationToken cancellationToken);
+        Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken);
     }
 }

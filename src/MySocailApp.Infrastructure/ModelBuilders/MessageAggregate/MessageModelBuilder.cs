@@ -11,17 +11,26 @@ namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
             builder
                 .HasMany(x => x.Images)
                 .WithOne(x => x.Message)
-                .HasForeignKey(x => x.MessageId);
+                .HasForeignKey(x => x.MessageId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Receivers)
                 .WithOne(x => x.Message)
-                .HasForeignKey(x => x.MessageId);
+                .HasForeignKey(x => x.MessageId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Viewers)
                 .WithOne(x => x.Message)
-                .HasForeignKey(x => x.MessageId);
+                .HasForeignKey(x => x.MessageId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasMany(x => x.Removers)
+                .WithOne(x => x.Message)
+                .HasForeignKey(x => x.MessageId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.MessageAggregate.CreateMessage;
+using MySocailApp.Application.Commands.MessageAggregate.RemoveMessage;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessageById;
@@ -25,6 +26,10 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<MessageResponseDto> CreateMessage([FromForm] int receiverId, [FromForm] string? content, [FromForm] IFormFileCollection images)
             => await _mediator.Send(new CreateMessageDto(receiverId, content, images));
+
+        [HttpDelete("{messageId}")]
+        public async Task RemoveMessage(int messageId, CancellationToken cancellationToken)
+            => await _mediator.Send(new RemoveMessageDto(messageId), cancellationToken);
 
         [HttpGet("{userId}")]
         public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)

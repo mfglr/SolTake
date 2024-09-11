@@ -12,6 +12,8 @@ namespace MySocailApp.Infrastructure.MessageAggregate
         public async Task CreateAsync(Message message, CancellationToken cancellationToken)
             => await _context.Messages.AddAsync(message, cancellationToken);
 
+        public void Delete(Message message) => _context.Messages.Remove(message);
+
         public async Task<Message?> GetById(int id, CancellationToken cancellationToken)
             => await _context.Messages
                 .Include(x => x.Receivers)
@@ -24,5 +26,10 @@ namespace MySocailApp.Infrastructure.MessageAggregate
                 .Include(x => x.Viewers)
                 .Where(x => ids.Contains(x.Id))
                 .ToListAsync(cancellationToken);
+
+        public async Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken)
+            => await _context.Messages
+                .Include(x => x.Removers)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

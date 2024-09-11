@@ -11,6 +11,7 @@ using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
+using MySocailApp.Domain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
@@ -185,7 +186,8 @@ namespace MySocailApp.Infrastructure
         {
             return services
                 .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
-                .AddScoped<IMessageReadRepository, MessageReadRepository>();
+                .AddScoped<IMessageReadRepository, MessageReadRepository>()
+                .AddScoped<MessageRemoverDomainService>();
         }
         private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
         {

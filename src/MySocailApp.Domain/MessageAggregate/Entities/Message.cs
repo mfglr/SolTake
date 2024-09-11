@@ -57,6 +57,19 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         }
         public int State => _viewers.Any() ? 2 : _receivers.Any() ? 1 : 0;
 
+        private readonly List<MessageUserRemove> _removers = [];
+        public IReadOnlyList<MessageUserRemove> Removers => _removers;
+        internal void Remove(int removerId)
+        {
+            if (removerId != ReceiverId && removerId != SenderId)
+                throw new PermissionDeniedToRemoveMessageException();
+            
+            if (_removers.Any(x => x.AppUserId == removerId))
+                return;
+
+            _removers.Add(new MessageUserRemove(removerId));
+        }
+
         //readonly navigators
         public AppUser Sender { get; } = null!;
         public AppUser Receiver { get; } = null!;
