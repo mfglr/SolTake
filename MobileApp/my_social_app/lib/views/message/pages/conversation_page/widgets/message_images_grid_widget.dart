@@ -4,7 +4,14 @@ import 'package:my_social_app/views/message/pages/conversation_page/widgets/mess
 
 class MessageImagesGridWidget extends StatelessWidget {
   final Iterable<MessageImageState> images;
-  const MessageImagesGridWidget({super.key,required this.images});
+  final Iterable<int> selectedMessageIds;
+  final void Function(int messageId) onSelectedMessageItem;
+  const MessageImagesGridWidget({
+    super.key,
+    required this.images,
+    required this.selectedMessageIds,
+    required this.onSelectedMessageItem
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,9 @@ class MessageImagesGridWidget extends StatelessWidget {
         ),
         itemCount: images.length,
         itemBuilder:(context, index) => MessageImageGridWidget(
-          messageImage: images.elementAt(index)
+          messageImage: images.elementAt(index),
+          selectedMessageIds: selectedMessageIds,
+          onPressMessageItem: onSelectedMessageItem,
         )
       ),
     );

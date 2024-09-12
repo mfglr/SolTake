@@ -304,6 +304,8 @@ final store = Store(
     createMessageMiddleware,
     getUnviewedMessagesMiddleware,
     loadMessageMiddleware,
+    removeMessageMiddleware,
+    removeMessagesMiddleware,
 
     //message image
     loadMessageImageMiddleware,

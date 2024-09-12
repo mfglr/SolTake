@@ -23,6 +23,27 @@ class AddMessagesListsAction extends redux.Action{
   final Iterable<Iterable<MessageState>> lists;
   const AddMessagesListsAction({required this.lists});
 }
+@immutable
+class RemoveMessageAction extends redux.Action{
+  final int messageId;
+  const RemoveMessageAction({required this.messageId});
+}
+@immutable
+class RemoveMessageSuccessAction extends redux.Action{
+  final int messageId;
+  const RemoveMessageSuccessAction({required this.messageId});
+}
+@immutable
+class RemoveMessagesAction extends redux.Action{
+  final int userId;
+  final Iterable<int> messageIds;
+  const RemoveMessagesAction({required this.userId, required this.messageIds});
+}
+@immutable
+class RemoveMessagesSuccessAction extends redux.Action{
+  final Iterable<int> messageIds;
+  const RemoveMessagesSuccessAction({required this.messageIds});
+}
 
 @immutable
 class GetUnviewedMessagesAction extends redux.Action{

@@ -18,6 +18,16 @@ class AddMessageImagesListAction extends redux.Action{
   final Iterable<Iterable<MessageImageState>> list;
   const AddMessageImagesListAction({required this.list});
 }
+@immutable
+class RemoveMessageImagesAction extends redux.Action{
+  final int messageId;
+  const RemoveMessageImagesAction({required this.messageId});
+}
+@immutable
+class RemoveMessagesImagesAction extends redux.Action{
+  final Iterable<int> messageIds;
+  const RemoveMessagesImagesAction({required this.messageIds});
+}
 
 @immutable
 class LoadMessageImageAction extends redux.Action{

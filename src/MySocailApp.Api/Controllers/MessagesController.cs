@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.MessageAggregate.CreateMessage;
 using MySocailApp.Application.Commands.MessageAggregate.RemoveMessage;
+using MySocailApp.Application.Commands.MessageAggregate.RemoveMessages;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessageById;
@@ -30,6 +31,10 @@ namespace MySocailApp.Api.Controllers
         [HttpDelete("{messageId}")]
         public async Task RemoveMessage(int messageId, CancellationToken cancellationToken)
             => await _mediator.Send(new RemoveMessageDto(messageId), cancellationToken);
+
+        [HttpDelete]
+        public async Task RemoveMessages(RemoveMessagesDto request,CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
 
         [HttpGet("{userId}")]
         public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)

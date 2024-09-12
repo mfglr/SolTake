@@ -12,6 +12,10 @@ class MessageEntityState extends EntityState<MessageState>{
     => MessageEntityState(entities: appendMany(messages));
   MessageEntityState addLists(Iterable<Iterable<MessageState>> lists)
     => MessageEntityState(entities: appendLists(lists));
+  MessageEntityState removeMessage(int messageId)
+    => MessageEntityState(entities: removeOne(messageId));
+  MessageEntityState removeMessages(Iterable<int> messageIds)
+    => MessageEntityState(entities: removeMany(messageIds));
 
   MessageEntityState markComingMessagesAsReceived(Iterable<int> messageIds)
     => MessageEntityState(entities: updateMany(messageIds.map((e) => entities[e]!.markAsReceived())));

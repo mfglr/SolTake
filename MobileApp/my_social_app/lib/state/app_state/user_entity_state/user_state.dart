@@ -232,11 +232,14 @@ class UserState{
   //messages
   UserState nextPageMessages() =>
     _optional(newMessages: messages.startLoadingNext());
-  UserState addNextPageMessages(Iterable<int> ids) =>
-    _optional(newMessages: messages.addNextPage(ids));
-  UserState addMessage(int id) =>
-    _optional(newMessages: messages.prependOne(id));
-
+  UserState addNextPageMessages(Iterable<int> messageIds) =>
+    _optional(newMessages: messages.addNextPage(messageIds));
+  UserState addMessage(int messageId) =>
+    _optional(newMessages: messages.prependOne(messageId));
+  UserState removeMessage(int messageId) =>
+    _optional(newMessages: messages.removeOne(messageId));
+  UserState removeMessages(Iterable<int> messageIds) =>
+    _optional(newMessages: messages.removeMany(messageIds));
 
   UserState changeProfileImageStatus(bool value) =>
     _optional(newHasImage: value);

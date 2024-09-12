@@ -31,6 +31,18 @@ class MessageService{
     final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
     return Message.fromJson(json);
   }
+  
+  Future<void> removeMessage(int messageId) =>
+    _appClient
+      .delete("$messageController/$removeMessageEndpoint");
+
+  Future<void> removeMessages(Iterable<int> messageIds) =>
+    _appClient
+      .delete(
+        "$messageController/$removeMessagesEndpoint",
+        body:{ 'messageIds': messageIds }
+      );
+
 
   Future<Iterable<Message>> getMessagesByUserId(int userId, Page page) => 
     _appClient

@@ -11,6 +11,11 @@ class MessageImageEntityState extends EntityState<MessageImageState>{
     => MessageImageEntityState(entities: appendMany(images));
   MessageImageEntityState addMessageImagesList(Iterable<Iterable<MessageImageState>> lists)
     => MessageImageEntityState(entities: appendLists(lists));
+  MessageImageEntityState removeMessageImages(int messageId)
+    => MessageImageEntityState(entities: where((e) => e.messageId != messageId));
+  MessageImageEntityState removeMessagesImages(Iterable<int> messageIds)
+    => MessageImageEntityState(entities: where((e) => !messageIds.any((messageId) => e.messageId == messageId)));
+
   MessageImageEntityState startLoading(int messageId,int index)
     => MessageImageEntityState(entities: updateOne(entities[MessageImageState.generateId(messageId, index)]?.startLoading()));
   MessageImageEntityState load(int messageId,int index,Uint8List image)

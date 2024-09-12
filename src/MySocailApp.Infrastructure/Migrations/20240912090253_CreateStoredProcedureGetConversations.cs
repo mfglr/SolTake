@@ -38,13 +38,20 @@ namespace MySocailApp.Infrastructure.Migrations
 							FROM (
 								SELECT *, CASE  WHEN [messages].[SenderId] = @accountId THEN [messages].[ReceiverId] ELSE [messages].[SenderId]  END AS [ConversationId]
 									FROM [Messages] AS [messages]
-									WHERE [messages].[SenderId] = @accountId OR [messages].[ReceiverId] = @accountId
+									WHERE 
+										([messages].[SenderId] = @accountId OR [messages].[ReceiverId] = @accountId) AND
+										NOT EXISTS (
+											SELECT 1
+												FROM [MessageUserRemove] AS [mUR]
+												WHERE [messages].[Id] = [mUR].[MessageId] AND [mUR].[AppUserId] = @accountId
+										)
 							) AS [fM]
 						) AS [pM]
 					) AS [all]
 					JOIN AspNetUsers AS [accounts] ON [accounts].[Id] = [all].[ConversationId]
 					WHERE ([all].[SenderId] = @accountId OR [all].[State] = 2) AND [all].[row] <= 1 AND (@offset IS NULL OR [all].Id < @offset)
 					ORDER BY [all].Id DESC
+
 				END
             ");
         }

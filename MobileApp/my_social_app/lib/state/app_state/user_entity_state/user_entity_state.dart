@@ -84,18 +84,20 @@ class UserEntityState extends EntityState<UserState>{
   //messages
   UserEntityState getNextPageMessages(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.nextPageMessages()));
-  UserEntityState addNextPageMessages(int userId,Iterable<int> ids)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageMessages(ids)));
-  UserEntityState addMessage(int userId,int id)
-    => UserEntityState(entities: updateOne(entities[userId]?.addMessage(id)));
-  
+  UserEntityState addNextPageMessages(int userId,Iterable<int> messageIds)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageMessages(messageIds)));
+  UserEntityState addMessage(int userId,int messageId)
+    => UserEntityState(entities: updateOne(entities[userId]?.addMessage(messageId)));
+  UserEntityState removeMessage(int userId,int messageId)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeMessage(messageId)));
+  UserEntityState removeMessages(int userId,Iterable<int> messageIds)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeMessages(messageIds)));
+
 
   UserEntityState changeProfileImageStatus(int userId,bool value)
     => UserEntityState(entities: updateOne(entities[userId]!.changeProfileImageStatus(value)));
-
   UserEntityState updateUserName(int userId,String userName)
     => UserEntityState(entities: updateOne(entities[userId]!.updateUserName(userName)));
-
   UserEntityState updateName(int userId,String name)
     => UserEntityState(entities: updateOne(entities[userId]!.updateName(name)));
 }

@@ -8,6 +8,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
@@ -24,11 +25,37 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage>{
-
-  int _numberOfNewMessages = 0;
   final ScrollController _scrollController = ScrollController();
   late final StreamSubscription<MessageState> _messageConsumer;
   late final void Function() _onScrollBottom;
+
+  Iterable<int> _selectedIds = [];
+  void _onLongPressed(int messageId){
+    if(_selectedIds.isEmpty){
+      setState(() { _selectedIds = [..._selectedIds, messageId]; });
+    }
+  }
+  void _onPressed(int messageId){
+    if(_selectedIds.isNotEmpty){
+      if(_selectedIds.any((e) => e == messageId)){
+        setState(() { _selectedIds = _selectedIds.where((e) => e != messageId); });
+      }
+      else{
+        setState(() { _selectedIds = [..._selectedIds, messageId]; });
+      }
+    }
+  }
+  void _clearAllSelectedIds(){
+    setState(() { _selectedIds = []; });
+  }
+
+  int _numberOfNewMessages = 0;
+  void _initNumberOfNewMessages(){
+    setState(() { _numberOfNewMessages = 0; });
+  }
+  void _increaseNumberOfNewMessages(){
+    setState(() { _numberOfNewMessages++; });
+  }
 
   @override
   void initState() {
@@ -37,9 +64,7 @@ class _ConversationPageState extends State<ConversationPage>{
 
     _onScrollBottom = (){
       if(_scrollController.position.pixels == 0){
-        setState(() {
-          _numberOfNewMessages = 0;
-        });
+        _initNumberOfNewMessages();
       }
     };
     _scrollController.addListener(_onScrollBottom);
@@ -48,7 +73,7 @@ class _ConversationPageState extends State<ConversationPage>{
       if(message.senderId == widget.userId){
         store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
         if(_scrollController.position.pixels != 0){
-          setState(() { _numberOfNewMessages++; });
+          _increaseNumberOfNewMessages();
         }
       }
     });
@@ -72,26 +97,54 @@ class _ConversationPageState extends State<ConversationPage>{
         if(user == null) return const LoadingView();
         return Scaffold(
           appBar: AppBar(
-            title: TextButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.userId)));
-              },
-              style: ButtonStyle(
-                padding: WidgetStateProperty.all(EdgeInsets.zero),
-                minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: UserImageWithNamesWidget(
-                user: user,
-                diameter: 50,
-                marginRight: 5,
-                userNameFontSize: 12,
-                userNameFontWeight: FontWeight.bold,
-                nameFontSize: 11,
-                nameFontWeight: FontWeight.normal,
-              )
+            title: _selectedIds.isEmpty ?
+              TextButton(
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.userId)));
+                },
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.zero),
+                  minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: UserImageWithNamesWidget(
+                  user: user,
+                  diameter: 50,
+                  marginRight: 5,
+                  userNameFontSize: 12,
+                  userNameFontWeight: FontWeight.bold,
+                  nameFontSize: 11,
+                  nameFontWeight: FontWeight.normal,
+                )
+              ) : null,
+            leading: Builder(
+              builder: (context) {
+                if(_selectedIds.isEmpty) return const AppBackButtonWidget();
+                return IconButton(
+                  onPressed: _clearAllSelectedIds,
+                  icon: const Icon(Icons.clear)
+                );
+              }
             ),
-            leading: const AppBackButtonWidget(),
+            actions: [
+              if(_selectedIds.isNotEmpty)
+                IconButton(
+                  onPressed: () => 
+                    DialogCreator
+                      .showDeleteMessageDialog(context)
+                      .then((value){
+                        if(value){
+                          final store = StoreProvider.of<AppState>(context,listen: false);
+                          store.dispatch(RemoveMessagesAction(userId: widget.userId, messageIds: _selectedIds));
+                          _clearAllSelectedIds();
+                        }
+                      }),
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  )
+                )
+            ],
           ),
           body: Stack(
             children: [
@@ -112,6 +165,9 @@ class _ConversationPageState extends State<ConversationPage>{
                             final store = StoreProvider.of<AppState>(context,listen: false);
                             store.dispatch(GetNextPageUserMessagesIfReadyAction(userId: widget.userId));
                           },
+                          onPressedMessageItem: _onPressed,
+                          onLongPressedMessageItem: _onLongPressed,
+                          selectedMessageIds: _selectedIds,
                         );
                       }
                     ),

@@ -8,6 +8,10 @@ MessageImageEntityState addMessageImagesReducer(MessageImageEntityState prev,Add
   => prev.addMessageImages(action.images);
 MessageImageEntityState addMessageImagesListReducer(MessageImageEntityState prev,AddMessageImagesListAction action)
   => prev.addMessageImagesList(action.list);
+MessageImageEntityState removeMessageImagesReducer(MessageImageEntityState prev,RemoveMessageImagesAction action)
+  => prev.removeMessageImages(action.messageId);
+MessageImageEntityState removeMessagesImagesReducer(MessageImageEntityState prev,RemoveMessagesImagesAction action)
+  => prev.removeMessagesImages(action.messageIds);
 
 MessageImageEntityState loadMessageImageReducer(MessageImageEntityState prev,LoadMessageImageAction action)
   => prev.startLoading(action.messageId, action.index);
@@ -18,6 +22,8 @@ Reducer<MessageImageEntityState> messageImageEntityReducers = combineReducers<Me
   TypedReducer<MessageImageEntityState,AddMessageImageAction>(addMessageImageReducer).call,
   TypedReducer<MessageImageEntityState,AddMessageImagesAction>(addMessageImagesReducer).call,
   TypedReducer<MessageImageEntityState,AddMessageImagesListAction>(addMessageImagesListReducer).call,
+  TypedReducer<MessageImageEntityState,RemoveMessageImagesAction>(removeMessageImagesReducer).call,
+  TypedReducer<MessageImageEntityState,RemoveMessagesImagesAction>(removeMessagesImagesReducer).call,
   
   TypedReducer<MessageImageEntityState,LoadMessageImageAction>(loadMessageImageReducer).call,
   TypedReducer<MessageImageEntityState,LoadMessageImageSuccessAction>(loadMessageImageSuccessReducer).call,

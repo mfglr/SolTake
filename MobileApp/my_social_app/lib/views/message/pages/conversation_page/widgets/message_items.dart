@@ -11,6 +11,9 @@ class MessageItems extends StatefulWidget {
   final ScrollController scrollController;
   final void Function() onScrollTop;
   final int? numberOfNewMessages;
+  final void Function(int messageId) onPressedMessageItem;
+  final void Function(int messageId) onLongPressedMessageItem;
+  final Iterable<int> selectedMessageIds;
 
   const MessageItems({
     super.key,
@@ -19,7 +22,10 @@ class MessageItems extends StatefulWidget {
     required this.spaceBottom,
     required this.scrollController,
     required this.onScrollTop,
-    this.numberOfNewMessages
+    this.numberOfNewMessages,
+    required this.onPressedMessageItem,
+    required this.onLongPressedMessageItem,
+    required this.selectedMessageIds
   });
 
   @override
@@ -29,6 +35,7 @@ class MessageItems extends StatefulWidget {
 class _MessageItemsState extends State<MessageItems> {
 
   late final void Function() _onSCrollTop;
+
   @override
   void initState() {
     _onSCrollTop = (){
@@ -39,16 +46,24 @@ class _MessageItemsState extends State<MessageItems> {
     widget.scrollController.addListener(_onSCrollTop);
     super.initState();
   }
+ 
 
   Widget _generateMessageItem(MessageState message) => 
     Container(
+      color: widget.selectedMessageIds.any((e) => e == message.id) ? Colors.black.withOpacity(0.1) : null,
       margin: EdgeInsets.only(bottom: widget.spaceBottom),
       child: Row(
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: message.isOwner ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 3 / 4,
-            child: MessageItem(message: message)
+            child: MessageItem(
+              selectedMessageIds: widget.selectedMessageIds,
+              onPressedMesssageItem: widget.onPressedMessageItem,
+              onLongPressedMessageItem: widget.onLongPressedMessageItem,
+              message: message,
+            )
           )
         ],
       )

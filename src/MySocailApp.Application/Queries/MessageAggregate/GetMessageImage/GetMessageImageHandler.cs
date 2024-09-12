@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
             var accountId = _accessTokenReader.GetRequiredAccountId();
             
             var message =
-                await _messageReadRepository.GetMessageWithImagesAsync(request.MessageId, cancellationToken) ??
+                await _messageReadRepository.GetMessageWithImagesAsync(accountId, request.MessageId, cancellationToken) ??
                 throw new MessageNotFoundException();
 
             if (accountId != message.SenderId && accountId != message.ReceiverId)

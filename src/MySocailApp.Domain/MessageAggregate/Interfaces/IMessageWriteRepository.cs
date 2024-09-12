@@ -9,5 +9,6 @@ namespace MySocailApp.Domain.MessageAggregate.Interfaces
         Task<Message?> GetById(int id, CancellationToken cancellationToken);
         Task<List<Message>> GetByIds(IEnumerable<int> ids, CancellationToken cancellationToken);
         Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken);
+        Task<List<Message>> GetMessagesWithRemovers(IEnumerable<int> messageIds, CancellationToken cancellationToken);
     }
 }

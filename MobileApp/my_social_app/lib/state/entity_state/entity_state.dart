@@ -56,4 +56,24 @@ class EntityState<T extends dynamic> {
     entities.removeWhere((key,value) => key == id);
     return entities;
   }
+  Map<dynamic,T> removeMany(Iterable<int> ids){
+    final Map<dynamic,T> entities = {};
+    entities.addAll(this.entities); 
+    entities.removeWhere((key,value) => ids.any((id) => id == key));
+    return entities;
+  }
+  Map<dynamic,T> removeLists(Iterable<Iterable<int>> lists){
+    final Map<dynamic,T> entities = {};
+    entities.addAll(this.entities);
+    for(final list in lists){
+      entities.removeWhere((key,e) => list.any((id) => id == key));
+    }
+    return entities;
+  }
+  Map<dynamic,T> where(bool Function(T) predicate){
+    final Map<dynamic,T> entities = {};
+    final values = this.entities.values.where(predicate);
+    entities.addEntries(values.map((e) => MapEntry(e.id, e)));
+    return entities;
+  }
 }

@@ -81,4 +81,56 @@ class DialogCreator{
       }
     ).then((value) => value ?? false);
   }
+
+
+  static Future<bool> showDeleteMessageDialog(BuildContext context){
+    return showDialog<bool>(context: 
+      context, 
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Your Messages'),
+          content: const Text("Are you sure you want to delete your messages?"),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        child: const Text("Cancel")
+                      ),
+                      const Icon(Icons.clear)
+                    ],
+                  )
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true), 
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        child: const Text(
+                          "Delete",
+                          style: TextStyle(
+                            color: Colors.red
+                          ),
+                        )
+                      ),
+                      const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      )
+                    ],
+                  )
+                )
+               ],
+            )
+          ],
+        );
+      }
+    ).then((value) => value ?? false);
+  }
 }

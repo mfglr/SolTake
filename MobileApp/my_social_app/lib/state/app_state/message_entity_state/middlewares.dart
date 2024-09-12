@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/message_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
@@ -22,6 +23,36 @@ void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
           
         });
     }
+  }
+  next(action);
+}
+
+void removeMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveMessageAction){
+    final message = store.state.messageEntityState.entities[action.messageId];
+    if(message != null){
+      final conversationId = message.conversationId;
+      MessageService()
+        .removeMessage(action.messageId)
+        .then((_){
+          store.dispatch(RemoveMessageSuccessAction(messageId: action.messageId));
+          store.dispatch(RemoveUserMessageAction(userId: conversationId, messageId: action.messageId));
+          store.dispatch(RemoveMessageImagesAction(messageId: action.messageId));
+        });
+    }
+  }
+  next(action);
+}
+
+void removeMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveMessagesAction && action.messageIds.isNotEmpty){
+    MessageService()
+      .removeMessages(action.messageIds)
+      .then((_){
+        store.dispatch(RemoveMessagesSuccessAction(messageIds: action.messageIds));
+        store.dispatch(RemoveUserMessagesAction(userId: action.userId, messageIds: action.messageIds));
+        store.dispatch(RemoveMessagesImagesAction(messageIds: action.messageIds));
+      });
   }
   next(action);
 }

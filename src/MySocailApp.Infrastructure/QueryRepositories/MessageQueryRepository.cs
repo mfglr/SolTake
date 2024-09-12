@@ -24,8 +24,11 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(
                     x => 
-                        (x.ReceiverId == userId && x.SenderId == accountId) || 
-                        (x.SenderId == userId && x.ReceiverId == accountId)
+                        (
+                            (x.ReceiverId == userId && x.SenderId == accountId) || 
+                            (x.SenderId == userId && x.ReceiverId == accountId)
+                        ) &&
+                        !x.Removers.Any(x => x.AppUserId == accountId)
                 )
                 .ToPage(page)
                 .ToMessageResponseDto(accountId)
@@ -39,7 +42,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<MessageResponseDto>> GetUnviewedMessagesAsync(int accountId, CancellationToken cancellationToken)
             => _context.Messages
                 .AsNoTracking()
-                .Where(x => x.ReceiverId == accountId && x.Viewers.Count == 0)
+                .Where(
+                    x => 
+                        x.ReceiverId == accountId && 
+                        x.Viewers.Count == 0 &&
+                        !x.Removers.Any(x => x.AppUserId == accountId)
+                )
                 .ToMessageResponseDto(accountId)
                 .ToListAsync(cancellationToken);
     }

@@ -7,9 +7,14 @@ import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class MessageImageGridWidget extends StatefulWidget {
   final MessageImageState messageImage;
+  final Iterable<int> selectedMessageIds;
+  final void Function(int messageId) onPressMessageItem;
+
   const MessageImageGridWidget({
     super.key,
-    required this.messageImage
+    required this.messageImage,
+    required this.selectedMessageIds,
+    required this.onPressMessageItem
   });
 
   @override
@@ -27,16 +32,21 @@ class _MessageImageGridWidgetState extends State<MessageImageGridWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator
-          .of(context)
-          .push(
-            MaterialPageRoute(
-              builder: (context) => DisplayMessageImagesPage(
-                messageId:widget.messageImage.messageId,
-                activeIndex: widget.messageImage.index,
+        if(widget.selectedMessageIds.isEmpty){
+          Navigator
+            .of(context)
+            .push(
+              MaterialPageRoute(
+                builder: (context) => DisplayMessageImagesPage(
+                  messageId:widget.messageImage.messageId,
+                  activeIndex: widget.messageImage.index,
+                )
               )
-            )
-          ); 
+            );
+        }
+        else{
+          widget.onPressMessageItem(widget.messageImage.messageId);
+        }
       },
       child: Builder(
         builder: (context){

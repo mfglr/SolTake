@@ -1,4 +1,6 @@
 const createMessageEndpoint = "CreateMessage";
+const removeMessageEndpoint = "RemoveMessage";
+const removeMessagesEndpoint = "RemoveMessages";
 
 const receiveMessage = "receiveMessage";
 const createMessageWebSocket = "CreateMessage";

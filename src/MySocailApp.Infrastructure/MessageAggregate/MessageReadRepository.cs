@@ -9,10 +9,10 @@ namespace MySocailApp.Infrastructure.MessageAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public Task<Message?> GetMessageWithImagesAsync(int id, CancellationToken cancellationToken)
+        public Task<Message?> GetMessageWithImagesAsync(int accountId, int id, CancellationToken cancellationToken)
             => _context.Messages
                 .AsNoTracking()
                 .Include(x => x.Images)
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id && !x.Removers.Any(x => x.AppUserId == accountId), cancellationToken);
     }
 }

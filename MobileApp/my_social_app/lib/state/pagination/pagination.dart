@@ -153,6 +153,15 @@ class Pagination{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
+  Pagination removeMany(Iterable<int> ids)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        ids: this.ids.where((e) => !ids.any((id) => e == id))
+      );
   Pagination addfirstPage(Iterable<int> ids)
     => Pagination(
         isLast: ids.length < recordsPerPage,

@@ -271,6 +271,21 @@ class AddUserMessageAction extends redux.Action{
   final int messageId;
   const AddUserMessageAction({required this.userId, required this.messageId});
 }
+@immutable
+class RemoveUserMessageAction extends redux.Action{
+  final int userId;
+  final int messageId;
+  const RemoveUserMessageAction({
+    required this.userId,
+    required this.messageId
+  });
+}
+@immutable
+class RemoveUserMessagesAction extends redux.Action{
+  final int userId;
+  final Iterable<int> messageIds;
+  const RemoveUserMessagesAction({required this.userId, required this.messageIds});
+}
 
 @immutable
 class ChangeProfileImageStatusAction extends redux.Action{

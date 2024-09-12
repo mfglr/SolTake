@@ -61,8 +61,12 @@ UserEntityState addMessageReducer(UserEntityState prev,AddUserMessageAction acti
   => prev.addMessage(action.userId, action.messageId);
 UserEntityState getNextPageMessagesReducer(UserEntityState prev,GetNextPageUserMessagesAction action)
   => prev.getNextPageMessages(action.userId);
-UserEntityState addNextPageUserMessagesReducer(UserEntityState prev,AddNextPageUserMessagesAction action)
+UserEntityState addNextPageMessagesReducer(UserEntityState prev,AddNextPageUserMessagesAction action)
   => prev.addNextPageMessages(action.userId, action.messageIds);
+UserEntityState removeMessageReducer(UserEntityState prev,RemoveUserMessageAction action)
+  => prev.removeMessage(action.userId, action.messageId);
+UserEntityState removeMessagesReducer(UserEntityState prev,RemoveUserMessagesAction action)
+  => prev.removeMessages(action.userId, action.messageIds);
 
 UserEntityState loadUserReducer(UserEntityState prev,AddUserAction action)
   => prev.addUser(action.user);
@@ -110,9 +114,13 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,RemoveUserNotFollowedAction>(removeNotFollowedReducer).call,
   TypedReducer<UserEntityState,AddUserNotFollowedAction>(addNotFollowedReducer).call,
 
+  //messages
   TypedReducer<UserEntityState,AddUserMessageAction>(addMessageReducer).call,
   TypedReducer<UserEntityState,GetNextPageUserMessagesAction>(getNextPageMessagesReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserMessagesAction>(addNextPageUserMessagesReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserMessagesAction>(addNextPageMessagesReducer).call,
+  TypedReducer<UserEntityState,RemoveUserMessageAction>(removeMessageReducer).call,
+  TypedReducer<UserEntityState,RemoveUserMessagesAction>(removeMessagesReducer).call,
+
 
   TypedReducer<UserEntityState,AddUserAction>(loadUserReducer).call,
   TypedReducer<UserEntityState,AddUsersAction>(addUsersReducer).call,

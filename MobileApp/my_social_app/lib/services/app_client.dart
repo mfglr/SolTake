@@ -93,8 +93,9 @@ class AppClient{
     await _sendJsonContent(request);
   }
 
-  Future<void> delete(String url) async {
+  Future<void> delete(String url,{ Map<String,Object?>? body }) async {
     final Request request = Request("DELETE", generateUri(url));
+    request.body = jsonEncode(body);
     await _sendJsonContent(request);
   }
 
