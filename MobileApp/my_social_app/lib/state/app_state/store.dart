@@ -219,6 +219,7 @@ final store = Store(
     // Questions entity state
     loadQuestionMiddleware,
     createQuestionMiddleware,
+    deleteQuestionMiddleware,
 
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,

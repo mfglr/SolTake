@@ -31,6 +31,18 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   }
   next(action);
 }
+void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is DeleteQuestionAction){
+    final accountId = store.state.accountState!.id;
+    QuestionService()
+      .delete(action.questionId)
+      .then((_){
+        store.dispatch(DeleteQuestionSuccessAction(questionId: action.questionId));
+        store.dispatch(RemoveUserQuestionAction(userId: accountId, questionId: action.questionId));
+      });
+  }
+  next(action);
+}
 
 void getNextPageQuestionLikesIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageQuestionLikesIfNoPageAction){

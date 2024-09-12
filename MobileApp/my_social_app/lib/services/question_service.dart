@@ -34,6 +34,10 @@ class QuestionService{
     return Question.fromJson(json);
   }
 
+  Future<void> delete(int questionId) =>
+    _appClient
+      .delete("$questionController/$deleteQuestionEndpoint/$questionId");
+
   Future<QuestionUserLike> like(int questionId) =>
     _appClient
       .post(

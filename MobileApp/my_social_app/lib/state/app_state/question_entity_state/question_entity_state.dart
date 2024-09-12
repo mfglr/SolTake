@@ -12,7 +12,9 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: appendOne(value));
   QuestionEntityState addQuestions(Iterable<QuestionState> values)
     => QuestionEntityState(entities: appendMany(values));
-  
+  QuestionEntityState removeQuestion(int questionId)
+    => QuestionEntityState(entities: removeOne(questionId));
+
   QuestionEntityState startLoadingNextLikes(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.startLodingNextLikes()));
   QuestionEntityState addNextPageLikes(int questionId,Iterable<int> likeIds)

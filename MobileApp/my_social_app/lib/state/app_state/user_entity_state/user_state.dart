@@ -197,6 +197,13 @@ class UserState{
       newQuestions: questions.prependOne(id),
       newUnsolvedQuestions: unsolvedQuestions.prependOne(id)
     );
+  UserState removeQuestion(int questionId) =>
+    _optional(
+      newNumberOfQuestions: numberOfQuestions - 1,
+      newQuestions: questions.removeOne(questionId),
+      newSolvedQuestions: solvedQuestions.removeOne(questionId),
+      newUnsolvedQuestions: unsolvedQuestions.removeOne(questionId)
+    );
   
   //solved questions
   UserState getNextPageSolvedQuestions() =>

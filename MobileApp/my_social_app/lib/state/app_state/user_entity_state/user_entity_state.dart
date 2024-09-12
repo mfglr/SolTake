@@ -67,7 +67,9 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(entities: updateOne(entities[userId]?.addNextPageQuestions(ids)));
   UserEntityState addNewQuestion(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.addNewQuestion(id)));
-  
+  UserEntityState removeQuestion(int userId,int questionId)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeQuestion(questionId)));
+
   //solved questions
   UserEntityState getNextPageSolvedQuestions(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.getNextPageSolvedQuestions()));

@@ -19,7 +19,16 @@ class AddQuestionsAction extends redux.Action{
   final Iterable<QuestionState> questions;
   const AddQuestionsAction({required this.questions});
 }
-
+@immutable
+class DeleteQuestionAction extends redux.Action{
+  final int questionId;
+  const DeleteQuestionAction({required this.questionId});
+}
+@immutable
+class DeleteQuestionSuccessAction extends redux.Action{
+  final int questionId;
+  const DeleteQuestionSuccessAction({required this.questionId});
+}
 
 @immutable
 class DislikeQuestionAction extends redux.Action{

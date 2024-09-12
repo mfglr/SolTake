@@ -1,6 +1,36 @@
 import 'package:flutter/material.dart';
 
 class DialogCreator{
+
+  static Future<bool> showAppDialog(BuildContext context, String title, String content){
+    return showDialog<bool>(
+      context: context, 
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text("Cancel")
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop(true);
+              }, 
+              child: const Text(
+                "Remove",
+                style: TextStyle(color: Colors.red),
+              )
+            )
+          ],
+        );
+      }
+    ).then((value) => value ?? false);
+  }
+
   static Future<bool> showLogOutDialog(BuildContext context){
     return showDialog<bool>(context: 
       context, 

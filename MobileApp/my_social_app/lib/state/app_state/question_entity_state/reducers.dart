@@ -7,6 +7,8 @@ QuestionEntityState addQuestionReducer(QuestionEntityState prev,AddQuestionActio
   => prev.addQuestion(action.value);
 QuestionEntityState addQuestionsReducer(QuestionEntityState prev,AddQuestionsAction action)
   => prev.addQuestions(action.questions);
+QuestionEntityState removeQuestionReducer(QuestionEntityState prev,DeleteQuestionSuccessAction action)
+  => prev.removeQuestion(action.questionId);
 
 //like or dislike questions
 QuestionEntityState getNextPageLikesReducer(QuestionEntityState prev,GetNextPageQuestionLikesAction action)
@@ -75,7 +77,8 @@ QuestionEntityState loadImageReducer(QuestionEntityState prev,LoadQuestionImageS
 Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntityState>([
   TypedReducer<QuestionEntityState,AddQuestionAction>(addQuestionReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionsAction>(addQuestionsReducer).call,
-  
+  TypedReducer<QuestionEntityState,DeleteQuestionSuccessAction>(removeQuestionReducer).call,
+
   //question likes
   TypedReducer<QuestionEntityState,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   TypedReducer<QuestionEntityState,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,

@@ -15,6 +15,8 @@ UserEntityState addNextPageQuestionsReducer(UserEntityState prev,AddNextPageUser
   => prev.addNextPageQuestions(action.userId,action.questionIds);
 UserEntityState addNewQuestionReducer(UserEntityState prev, AddNewUserQuestionAction action)
   => prev.addNewQuestion(action.userId, action.questionId);
+UserEntityState removeQuestionReducer(UserEntityState prev, RemoveUserQuestionAction action)
+  => prev.removeQuestion(action.userId,action.questionId);
 
 //solved questions
 UserEntityState getNextPageSolvedQuestionsReducer(UserEntityState prev, GetNextPageUserSolvedQuestionsAction action) 
@@ -89,6 +91,7 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,GetNextPageUserQuestionsAction>(getNextPageQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserQuestionsAction>(addNextPageQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNewUserQuestionAction>(addNewQuestionReducer).call,
+  TypedReducer<UserEntityState,RemoveUserQuestionAction>(removeQuestionReducer).call,
 
   //solved questions
   TypedReducer<UserEntityState,GetNextPageUserSolvedQuestionsAction>(getNextPageSolvedQuestionsReducer).call,

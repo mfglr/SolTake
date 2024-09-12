@@ -1,4 +1,5 @@
 const createQuestioinEndpoint = "Create";
+const deleteQuestionEndpoint = "Delete";
 const likeQuestionEndpoint = "like";
 const dislikeQuestionEndpoint = "dislike";
 

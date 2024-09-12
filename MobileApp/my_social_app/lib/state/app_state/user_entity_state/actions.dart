@@ -160,6 +160,19 @@ class AddUserNotFollowedAction extends redux.Action{
 }
 
 @immutable
+class MarkUserQuestionAsSolvedAction extends redux.Action{
+  final int userId;
+  final int questionId;
+  const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
+}
+@immutable
+class MarkUserQuestionAsUnsolvedAction extends redux.Action{
+  final int userId;
+  final int questionId;
+  const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
+}
+
+@immutable
 class GetNextPageUserQuestionsIfNoPageAction extends redux.Action{
   final int userId;
   const GetNextPageUserQuestionsIfNoPageAction({required this.userId});
@@ -186,19 +199,13 @@ class AddNewUserQuestionAction extends redux.Action{
   final int questionId;
   const AddNewUserQuestionAction({required this.userId,required this.questionId});
 }
+@immutable
+class RemoveUserQuestionAction extends redux.Action{
+  final int userId;
+  final int questionId;
+  const RemoveUserQuestionAction({required this.userId, required this.questionId});
+}
 
-@immutable
-class MarkUserQuestionAsSolvedAction extends redux.Action{
-  final int userId;
-  final int questionId;
-  const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
-}
-@immutable
-class MarkUserQuestionAsUnsolvedAction extends redux.Action{
-  final int userId;
-  final int questionId;
-  const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
-}
 
 @immutable
 class GetNextPageUserSolvedQuestionsIfNoPageAction extends redux.Action{
