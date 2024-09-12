@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices.BlobService;
-using MySocailApp.Application.Extentions;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
@@ -21,8 +20,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
                 question.Images.FirstOrDefault(x => x.Id == request.QuestionImageId) ??
                 throw new QuestionImageNotFoundException();
 
-            var stream = _blobService.Read(ContainerName.QuestionImages, image.BlobName);
-            return await stream.ToByteArrayAsync();
+            return await _blobService.ReadAsync(ContainerName.QuestionImages, image.BlobName);
         }
     }
 }

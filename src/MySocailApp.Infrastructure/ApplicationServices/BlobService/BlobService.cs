@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.Extentions;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
-using System.IO;
 
 namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 {
@@ -32,8 +32,14 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
             return image;
         }
 
-        public Stream Read(string containerName, string blobName)
-            => File.OpenRead(GetPath(containerName, blobName));
+        public async Task<byte[]> ReadAsync(string containerName, string blobName)
+        {
+            using var stream = File.OpenRead(GetPath(containerName, blobName));
+            var bytes = await stream.ToByteArrayAsync();
+            stream.Close();
+            stream.Dispose();
+            return bytes;
+        }
 
         public async Task<List<Application.ApplicationServices.BlobService.Image>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
         {
@@ -51,6 +57,15 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
                 if (File.Exists(path))
                     File.Delete(path);
             }
+        }
+
+        public void Delete(string containerName, string blobName)
+            => File.Delete(GetPath(containerName, blobName));
+
+        public void DeleteRange(string containerName, IEnumerable<string> blobNames)
+        {
+            foreach (var blobName in blobNames)
+                File.Delete(GetPath(containerName, blobName));
         }
     }
 }

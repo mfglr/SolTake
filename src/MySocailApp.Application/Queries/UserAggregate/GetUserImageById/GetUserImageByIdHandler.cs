@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices.BlobService;
-using MySocailApp.Application.Extentions;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
@@ -18,8 +17,8 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetUserImageById
                 throw new UserNotFoundException();
 
             if(user.Image != null)
-                return await _blobService.Read(ContainerName.UserImages, user.Image.BlobName).ToByteArrayAsync();
-            return await _blobService.Read(ContainerName.UserImages, DefaultBlobNames.NoProfileImage).ToByteArrayAsync();
+                return await _blobService.ReadAsync(ContainerName.UserImages, user.Image.BlobName);
+            return await _blobService.ReadAsync(ContainerName.UserImages, DefaultBlobNames.NoProfileImage);
         }
     }
 }

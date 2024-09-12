@@ -17,12 +17,15 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public void DeleteRange(IEnumerable<Notification> notifications)
             => _context.Notifications.RemoveRange(notifications);
 
-        public async Task<List<Notification>> GetByCommentIdAsync(int commentId, CancellationToken cancellationToken)
-            => await _context.Notifications.Where(x => x.CommentId == commentId || x.ParentId == commentId).ToListAsync(cancellationToken);
-        public async Task<List<Notification>> GetByIds(List<int> ids, CancellationToken cancellationToken)
-            => await _context.Notifications.Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-        public async Task<List<Notification>> GetBySolutionIdAsync(int solutionId, CancellationToken cancellationToken)
-            => await _context.Notifications.Where(x => x.SolutionId == solutionId).ToListAsync(cancellationToken);
+        public Task<List<Notification>> GetByCommentIdAsync(int commentId, CancellationToken cancellationToken)
+            => _context.Notifications.Where(x => x.CommentId == commentId || x.ParentId == commentId).ToListAsync(cancellationToken);
+        public Task<List<Notification>> GetByIds(List<int> ids, CancellationToken cancellationToken)
+            => _context.Notifications.Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
+        public Task<List<Notification>> GetBySolutionIdAsync(int solutionId, CancellationToken cancellationToken)
+            => _context.Notifications.Where(x => x.SolutionId == solutionId).ToListAsync(cancellationToken);
+        public Task<List<Notification>> GetQuestionNotifications(int questionId, CancellationToken cancellationToken)
+            => _context.Notifications.Where(x => x.QuestionId == questionId).ToListAsync(cancellationToken);
+
 
         public Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications
@@ -39,5 +42,7 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public Task<Notification?> GetUserFollowedNotificationAsync(int userId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.OwnerId == ownerId && x.Type == NotificationType.UserFollowedNotification,cancellationToken);
+
+        
     }
 }

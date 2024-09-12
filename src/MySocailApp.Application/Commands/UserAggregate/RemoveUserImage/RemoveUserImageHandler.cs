@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
-using MySocailApp.Application.Extentions;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
@@ -20,7 +19,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
             user.RemoveImage();
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return await _blobService.Read(ContainerName.UserImages, DefaultBlobNames.NoProfileImage).ToByteArrayAsync();
+            return await _blobService.ReadAsync(ContainerName.UserImages, DefaultBlobNames.NoProfileImage);
         }
     }
 }

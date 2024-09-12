@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion;
+using MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
@@ -34,6 +35,10 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<QuestionResponseDto> Create([FromForm]string? content, [FromForm]int examId, [FromForm]int subjectId, [FromForm]string? topicIds, [FromForm]IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateQuestionDto(content, examId, subjectId, topicIds, images), cancellationToken);
+
+        [HttpDelete("{questionId}")]
+        public async Task Delete(int questionId, CancellationToken cancellationToken)
+            => await _mediator.Send(new DeleteQuestionDto(questionId), cancellationToken);
 
         [HttpPost]
         public async Task<QuestionUserLikeResponseDto> Like(LikeQuestionDto request,CancellationToken cancellationToken)

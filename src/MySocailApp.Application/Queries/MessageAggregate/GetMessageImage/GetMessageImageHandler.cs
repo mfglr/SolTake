@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
-using MySocailApp.Application.Extentions;
 using MySocailApp.Domain.MessageAggregate.Exceptions;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 
@@ -28,8 +27,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
                 throw new MessageImageNotFoundException();
 
             var image = message.Images[request.Index];
-            var stream = _blobService.Read(ContainerName.MesssageImages, image.BlobName);
-            return await stream.ToByteArrayAsync();
+            return await _blobService.ReadAsync(ContainerName.MesssageImages, image.BlobName);
         }
     }
 }
