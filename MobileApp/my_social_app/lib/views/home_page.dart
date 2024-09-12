@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/create_question_state/actions.dart';
 import 'package:my_social_app/state/app_state/home_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
@@ -10,7 +9,6 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/notification/pages/notification_page.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 import 'package:badges/badges.dart' as badges;
@@ -19,8 +17,17 @@ enum MenuAction{
   logout
 }
 
-class HomePage extends StatelessWidget {
+const List<String> list = <String>['Follwing Questins', 'New Questions'];
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,33 +62,33 @@ class HomePage extends StatelessWidget {
                   child: const Icon(Icons.notifications),
                 ),
               ),
-              PopupMenuButton<MenuAction>(
-                onSelected: (value) async {
-                  switch(value){
-                    case MenuAction.logout:
-                      bool logOut = await DialogCreator.showLogOutDialog(context);
-                      if(logOut){
-                        store.dispatch(const LogOutAction());
-                      }
-                    default:
-                      return;
-                  }
-                },
-                itemBuilder: (context) {
-                  return [
-                    const PopupMenuItem<MenuAction>(
-                      value: MenuAction.logout,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Logout"),
-                          Icon(Icons.logout)
-                        ],
-                      )
-                    )
-                  ];
-                }
-              ),
+              // PopupMenuButton<MenuAction>(
+              //   onSelected: (value) async {
+              //     switch(value){
+              //       case MenuAction.logout:
+              //         bool logOut = await DialogCreator.showLogOutDialog(context);
+              //         if(logOut){
+              //           store.dispatch(const LogOutAction());
+              //         }
+              //       default:
+              //         return;
+              //     }
+              //   },
+              //   itemBuilder: (context) {
+              //     return [
+              //       const PopupMenuItem<MenuAction>(
+              //         value: MenuAction.logout,
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Text("Logout"),
+              //             Icon(Icons.logout)
+              //           ],
+              //         )
+              //       )
+              //     ];
+              //   }
+              // ),
             ],
           ),
           floatingActionButton: FloatingActionButton(

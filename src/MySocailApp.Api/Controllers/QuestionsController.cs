@@ -8,6 +8,7 @@ using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
+using MySocailApp.Application.Queries.QuestionAggregate.GetFollowedsQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
@@ -88,5 +89,9 @@ namespace MySocailApp.Api.Controllers
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery]int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetUnsolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
+
+        [HttpGet]
+        public async Task<List<QuestionResponseDto>> GetFollowedsQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetFollowedsQuestionsDto(offset, take, isDescending), cancellationToken);
     }
 }

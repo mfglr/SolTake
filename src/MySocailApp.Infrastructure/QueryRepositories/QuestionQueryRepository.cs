@@ -57,5 +57,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => GetListAsync(accountId, page, x => x.AppUserId == userId && x.Solutions.Any(x => x.State == SolutionState.Correct), cancellationToken);
         public Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
            => GetListAsync(accountId, page, x => x.AppUserId == userId && !x.Solutions.Any(x => x.State == SolutionState.Correct), cancellationToken);
+        public Task<List<QuestionResponseDto>> GetFollowedsQuestionsAsync(int accountId, IPage page, CancellationToken cancellationToken)
+            => GetListAsync(accountId, page, x => x.AppUser.Followers.Any(x => x.FollowerId == accountId), cancellationToken);
     }
 }
