@@ -18,7 +18,6 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       birthDate: json['birthDate'] == null
           ? null
           : DateTime.parse(json['birthDate'] as String),
-      gender: (json['gender'] as num).toInt(),
       numberOfQuestions: (json['numberOfQuestions'] as num).toInt(),
       numberOfFollowers: (json['numberOfFollowers'] as num).toInt(),
       numberOfFolloweds: (json['numberOfFolloweds'] as num).toInt(),
@@ -38,7 +37,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'name': instance.name,
       'hasImage': instance.hasImage,
       'birthDate': instance.birthDate?.toIso8601String(),
-      'gender': instance.gender,
       'numberOfQuestions': instance.numberOfQuestions,
       'numberOfFollowers': instance.numberOfFollowers,
       'numberOfFolloweds': instance.numberOfFolloweds,

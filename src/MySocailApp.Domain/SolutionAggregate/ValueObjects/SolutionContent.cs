@@ -12,7 +12,6 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
             ArgumentNullException.ThrowIfNull(value);
             if (value.Length > MaxSoluiontContentLength)
                 throw new SolutionContentLengthExceededException();
-
             Value = value;
         }
     }

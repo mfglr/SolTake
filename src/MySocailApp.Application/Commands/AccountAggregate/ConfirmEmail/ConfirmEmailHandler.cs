@@ -12,7 +12,9 @@ namespace MySocailApp.Application.Commands.AccountAggregate.ConfirmEmail
 
         public async Task Handle(ConfirmEmailDto request, CancellationToken cancellationToken)
         {
-            var account = await _userManager.FindByIdAsync(request.Id) ?? throw new AccountWasNotFoundException();
+            var account = 
+                await _userManager.FindByIdAsync(request.Id) ??
+                throw new AccountNotFoundException();
             await _userManager.ConfirmEmailByEncodedTokenAsync(account, request.Token);
         }
     }

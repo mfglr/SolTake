@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/gender.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 part "user.g.dart";
 
@@ -16,7 +15,6 @@ class User{
   final String? name;
   final bool hasImage;
   final DateTime? birthDate;
-  final int gender;
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;
@@ -33,7 +31,6 @@ class User{
     required this.userName,
     required this.name,
     required this.birthDate,
-    required this.gender,
     required this.numberOfQuestions,
     required this.numberOfFollowers,
     required this.numberOfFolloweds,
@@ -56,7 +53,6 @@ class User{
         name: name,
         hasImage: hasImage,
         birthDate: birthDate,
-        gender: Gender.values[gender],
         numberOfQuestions: numberOfQuestions,
         numberOfFollowers: numberOfFollowers,
         numberOfFolloweds: numberOfFolloweds,

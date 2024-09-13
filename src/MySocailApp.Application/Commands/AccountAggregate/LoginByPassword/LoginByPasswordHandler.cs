@@ -26,7 +26,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
                     await _userManager.FindByNameAsync(request.EmailOrUserName) ??
                     throw new LoginFailedException();
 
-            await _accountManager.LoginByPassword(account, request.Password, cancellationToken);
+            await _accountManager.LoginByPassword(account, request.Password);
             return _mapper.Map<AccountDto>(account);
         }
     }

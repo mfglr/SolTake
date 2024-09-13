@@ -1,12 +1,20 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.QuestionAggregate.Excpetions
 {
-    public class TopicIsNotIncludedInSubjectException : ClientSideException
+    public class TopicIsNotIncludedInSubjectException : AppException
     {
-        private readonly static string _message = "Some topics are not included in the topic!";
-        public TopicIsNotIncludedInSubjectException() : base(_message, (int)HttpStatusCode.BadRequest)
+        private readonly static string _messageEn = "Some topics are not included in the subject!";
+        private readonly static string _messageTr = "Seçtiğin konulardan bazıları seçtiğin derse ait değil!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public TopicIsNotIncludedInSubjectException() : base((int)HttpStatusCode.BadRequest)
         {
         }
     }

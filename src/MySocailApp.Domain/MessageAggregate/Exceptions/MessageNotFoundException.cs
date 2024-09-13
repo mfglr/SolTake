@@ -1,11 +1,18 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.MessageAggregate.Exceptions
 {
-    public class MessageNotFoundException : ClientSideException
+    public class MessageNotFoundException : AppException
     {
-        private readonly static string _message = "Message could not found!";
-        public MessageNotFoundException() : base(_message, (int)HttpStatusCode.BadRequest) { }
+        private readonly static string _messageEn = "Message could not found!";
+        private readonly static string _messageTr = "Mesaj bulunamadı!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public MessageNotFoundException() : base((int)HttpStatusCode.BadRequest) { }
     }
 }

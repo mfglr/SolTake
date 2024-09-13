@@ -20,8 +20,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.DeleteAccount
             var user = (await _userRepository.GetWithAllAsync(account.Id, cancellationToken))!;
             _userRepository.Delete(user);
             var result = await _userManager.DeleteAsync(account);
-            if(!result.Succeeded)
-                throw new ServerSideException(result.Errors.Select(x => x.Description).ToList());
+            if(!result.Succeeded) throw new ServerSideException();
         }
     }
 }

@@ -22,10 +22,10 @@ namespace MySocailApp.Application.Extentions
                 throw new NotAuthorizedException();
         }
 
-        public static async Task WriteAppExceptionAsync(this HttpContext? context, AppException ex)
+        public static async Task WriteAppExceptionAsync(this HttpContext? context, string culture, AppException ex)
         {
             ThrowExceptionIfContextIsNull(context);
-            var body = Encoding.ASCII.GetBytes(ex.Message);
+            var body = Encoding.ASCII.GetBytes(ex.GetErrorMessage(culture));
             context!.Response.StatusCode = ex.StatusCode;
             context!.Response.ContentType = "application/json";
             await context.Response.Body.WriteAsync(body);

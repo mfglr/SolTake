@@ -1,5 +1,6 @@
 ﻿using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Extentions;
+using MySocailApp.Core;
 using MySocailApp.Core.Exceptions;
 
 
@@ -17,12 +18,14 @@ namespace MySocailApp.Api.Middlewares
             }
             catch (AppException ex)
             {
-                await context.WriteAppExceptionAsync(ex);
+                var culture = context.Request.Headers.AcceptLanguage.FirstOrDefault();
+                string language = Languages.GetLanguage(culture);
+                await context.WriteAppExceptionAsync(language, ex);
                 blobService.Rollback();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                await context.WriteExceptionAsync(new ServerSideException(ex.InnerException?.Message ?? ex.Message));
+                await context.WriteExceptionAsync(new ServerSideException());
                 blobService.Rollback();
             }
         }

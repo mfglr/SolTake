@@ -17,6 +17,11 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
 
         internal void Create(string email)
         {
+            if (email == null)
+                throw new EmailIsRequiredException();
+            if(!ValueObjects.Email.IsValid(email))
+                throw new InvalidEmailException();
+
             Email = email;
             UserName = ValueObjects.Email.GenerateUserName(email);
             CreatedAt = DateTime.UtcNow;
@@ -31,6 +36,9 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         }
         internal void UpdateEmail(string email)
         {
+            if(email == null) throw new EmailIsRequiredException();
+            if(!ValueObjects.Email.IsValid(email)) throw new InvalidEmailException();
+
             Email = email;
             UpdatedAt = DateTime.UtcNow;
         }

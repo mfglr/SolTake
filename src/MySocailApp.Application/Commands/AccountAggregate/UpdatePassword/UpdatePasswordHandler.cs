@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.UpdatePassword
         {
             var accountId = _tokenReader.GetRequiredAccountId();
             var account = (await _userManager.FindByIdAsync(accountId.ToString()))!;
-            await _accountManager.UpdatePasswordAsync(account, request.CurrentPassword, request.NewPassword);
+            await _accountManager.UpdatePasswordAsync(account, request.CurrentPassword, request.NewPassword,request.NewPasswordConfirmation);
             return _mapper.Map<AccountDto>(account);
         }
     }

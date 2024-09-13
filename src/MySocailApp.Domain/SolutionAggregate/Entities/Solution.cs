@@ -20,7 +20,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         {
             if(content == null && !images.Any())
                 throw new SolutionContentOrImagesRequiredException();
-            if (images.Count() > 10)
+            if (images.Count() > 3)
                 throw new TooManySolutionImageException();
 
             QuestionId = questionId;

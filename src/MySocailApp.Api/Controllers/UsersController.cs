@@ -10,7 +10,6 @@ using MySocailApp.Application.Commands.UserAggregate.RemoveUserImage;
 using MySocailApp.Application.Commands.UserAggregate.RemoveUserSearched;
 using MySocailApp.Application.Commands.UserAggregate.Unfollow;
 using MySocailApp.Application.Commands.UserAggregate.UpdateBirthDate;
-using MySocailApp.Application.Commands.UserAggregate.UpdateGender;
 using MySocailApp.Application.Commands.UserAggregate.UpdateName;
 using MySocailApp.Application.Commands.UserAggregate.UpdateUserImage;
 using MySocailApp.Application.Queries.UserAggregate;
@@ -56,10 +55,6 @@ namespace MySocailApp.Api.Controllers
 
         [HttpPut]
         public async Task UpdateName(UpdateNameDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
-
-        [HttpPut]
-        public async Task UpdateGender(UpdateGenderDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPut]

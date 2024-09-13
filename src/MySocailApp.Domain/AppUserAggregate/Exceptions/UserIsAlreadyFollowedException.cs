@@ -1,12 +1,20 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.AppUserAggregate.Exceptions
 {
-    public class UserIsAlreadyFollowedException : ClientSideException
+    public class UserIsAlreadyFollowedException : AppException
     {
-        private readonly static string _message = "You have followed the user before!";
-        public UserIsAlreadyFollowedException() : base(_message, (int)HttpStatusCode.BadRequest)
+        private readonly static string _messageEn = "You are already following this user!";
+        private readonly static string _messageTr = "Bu kullanıcıyı zaten takip ediyorsun!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+        public override string GetErrorMessage(string culture) => _messages[culture];
+
+        public UserIsAlreadyFollowedException() : base((int)HttpStatusCode.BadRequest)
         {
         }
     }

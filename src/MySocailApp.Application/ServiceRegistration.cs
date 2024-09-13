@@ -1,8 +1,5 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.Mappers;
 using MySocailApp.Application.PipelineBehaviours;
 using System.Reflection;
 
@@ -15,18 +12,9 @@ namespace MySocailApp.Application
             var assembly = Assembly.GetExecutingAssembly();
 
             return services
-                .AddAutoMapper(cfg =>
-                {
-                    var sp = services.BuildServiceProvider();
-                    var reader = sp.GetRequiredService<IAccessTokenReader>();
-
-                    cfg.AddProfile(new QuestionMappers(reader));
-                })
                 .AddAutoMapper(assembly)
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))
-                .AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidationPipelineBehaviour<,>))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(DomainEventsPublicationPipelineBehaviour<,>))
-                .AddValidatorsFromAssembly(assembly);
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(DomainEventsPublicationPipelineBehaviour<,>));
         }
     }
 }

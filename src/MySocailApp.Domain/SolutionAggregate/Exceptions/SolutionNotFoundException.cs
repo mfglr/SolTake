@@ -1,11 +1,19 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.SolutionAggregate.Exceptions
 {
-    public class SolutionNotFoundException : ClientSideException
+    public class SolutionNotFoundException : AppException
     {
-        private readonly static string _message = "Solution could not be found! It may have been deleted after it was loaded.";
-        public SolutionNotFoundException() : base(_message, (int)HttpStatusCode.BadRequest){}
+        private readonly static string _messageEn = "Solution could not be found!";
+        private readonly static string _messageTr = "Çözüm bulunamadı!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public SolutionNotFoundException() : base((int)HttpStatusCode.BadRequest){}
     }
 }

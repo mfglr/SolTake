@@ -1,17 +1,8 @@
-﻿using System.Net;
-
-namespace MySocailApp.Core.Exceptions
+﻿namespace MySocailApp.Core.Exceptions
 {
-    public class AppException : Exception
+    public abstract class AppException(int statusCode) : Exception
     {
-        public int StatusCode { get; private set; }
-        public AppException(string message, int statusCode) : base(message)
-        {
-            StatusCode = statusCode;
-        }
-        public AppException(IEnumerable<string> messages, int statusCode) : base(string.Join(", ", messages))
-        {
-            StatusCode = statusCode;
-        }
+        public int StatusCode { get; private set; } = statusCode;
+        public abstract string GetErrorMessage(string culture);
     }
 }

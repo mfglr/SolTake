@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/gender.dart';
 
 @immutable
 class UserState{
@@ -11,7 +10,6 @@ class UserState{
   final String? name;
   final DateTime? birthDate;
   final bool hasImage;
-  final Gender gender;
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;
@@ -42,7 +40,6 @@ class UserState{
     required this.hasImage,
     required this.name,
     required this.birthDate,
-    required this.gender,
     required this.numberOfQuestions,
     required this.numberOfFollowers,
     required this.numberOfFolloweds,
@@ -63,7 +60,6 @@ class UserState{
     String? newName,
     DateTime? newBirthDate,
     bool? newHasImage,
-    Gender? newGender,
     int? newNumberOfQuestions,
     int? newNumberOfFollowers,
     int? newNumberOfFolloweds,
@@ -84,7 +80,6 @@ class UserState{
     name: newName ?? name,
     birthDate: newBirthDate ?? birthDate,
     hasImage: newHasImage ?? hasImage,
-    gender: newGender ?? gender,
     numberOfQuestions: newNumberOfQuestions ?? numberOfQuestions,
     numberOfFollowers: newNumberOfFollowers ?? numberOfFollowers,
     numberOfFolloweds: newNumberOfFolloweds ?? numberOfFolloweds,

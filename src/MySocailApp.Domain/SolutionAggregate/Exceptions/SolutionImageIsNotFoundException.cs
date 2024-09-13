@@ -1,12 +1,21 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.SolutionAggregate.Exceptions
 {
-    public class SolutionImageIsNotFoundException : ClientSideException
+    public class SolutionImageIsNotFoundException : AppException
     {
-        private readonly static string _message = "Solution image was not found!";
-        public SolutionImageIsNotFoundException() : base(_message, (int)HttpStatusCode.BadRequest)
+        private readonly static string _messageEn = "Solution image was not found!";
+        private readonly static string _messageTr = "Çözümün resmi bulunamadı!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+
+        public override string GetErrorMessage(string culture) => _messages[culture];
+
+        public SolutionImageIsNotFoundException() : base((int)HttpStatusCode.BadRequest)
         {
         }
     }

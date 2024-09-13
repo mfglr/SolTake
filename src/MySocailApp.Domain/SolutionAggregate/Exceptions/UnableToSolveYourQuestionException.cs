@@ -1,11 +1,19 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.SolutionAggregate.Exceptions
 {
-    public class UnableToSolveYourQuestionException : ClientSideException
+    public class UnableToSolveYourQuestionException : AppException
     {
-        private readonly static string _message = "You can't solve your questions!";
-        public UnableToSolveYourQuestionException() : base(_message, (int)HttpStatusCode.BadRequest){}
+        private readonly static string _messageEn = "You can't solve your questions!";
+        private readonly static string _messageTr = "Kendi sorunu çözemezsin!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public UnableToSolveYourQuestionException() : base((int)HttpStatusCode.BadRequest){}
     }
 }

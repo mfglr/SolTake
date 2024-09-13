@@ -13,7 +13,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
         public async Task<AccountDto> Handle(CreateAccountDto request, CancellationToken cancellationToken)
         {
             var account = new Account();
-            await _accountManager.CreateAsync(account,request.Email,request.Password,cancellationToken);
+            await _accountManager.CreateAsync(account,request.Email,request.Password,request.PasswordConfirm,cancellationToken);
             return _mapper.Map<AccountDto>(account);
         }
     }

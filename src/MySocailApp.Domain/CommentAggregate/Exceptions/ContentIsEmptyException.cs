@@ -1,11 +1,19 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.CommentAggregate.Exceptions
 {
-    public class ContentIsEmptyException : ClientSideException
+    public class ContentIsEmptyException : AppException
     {
-        private readonly static string _message = "Comment must not be empty";
-        public ContentIsEmptyException() : base(_message, (int)HttpStatusCode.BadRequest) { }
+        private readonly static string _messageEn = "Comment must not be empty";
+        private readonly static string _messageTr = "Yorum boş olamaz!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public ContentIsEmptyException() : base((int)HttpStatusCode.BadRequest) { }
     }
 }

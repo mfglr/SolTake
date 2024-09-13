@@ -45,12 +45,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
                 Name = name;
             UpdatedAt = DateTime.UtcNow;
         }
-        public Gender Gender { get; private set; }
-        public void UpdateGender(Gender gender)
-        {
-            Gender = gender;
-            UpdatedAt = DateTime.UtcNow;
-        }
+        
         public DateTime? BirthDate { get; private set; }
         public void UpdateBirthDate(DateTime birthDate)
         {
@@ -71,7 +66,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public Follow Follow(int followerId)
         {
             if (followerId == Id)
-                throw new UnableToFollowYourselfException();
+                throw new PermissionDeniedToFollowYourselfException();
             if (_followers.Any(x => x.FollowerId == followerId))
                 throw new UserIsAlreadyFollowedException();
 
@@ -90,8 +85,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public void Unfollow(int followerId)
         {
             var index = _followers.FindIndex(x => x.FollowerId == followerId);
-            if (index == -1)
-                throw new NoFollowException();
+            if (index == -1) return;
             _followers.RemoveAt(index);
             AddDomainEvent(new UserUnfollowedDomainEvent(followerId,Id));
         }

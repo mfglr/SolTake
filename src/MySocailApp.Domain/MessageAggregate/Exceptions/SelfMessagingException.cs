@@ -1,11 +1,18 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.MessageAggregate.Exceptions
 {
-    public class SelfMessagingException : ClientSideException
+    public class SelfMessagingException : AppException
     {
-        private readonly static string _message = "You can't message to yourself!";
-        public SelfMessagingException() : base(_message, (int)HttpStatusCode.BadRequest) { }
+        private readonly static string _messageEn = "You can't send messages to yourself!";
+        private readonly static string _messageTr = "Kendine mesaj gönderemezsin!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public SelfMessagingException() : base((int)HttpStatusCode.BadRequest) { }
     }
 }

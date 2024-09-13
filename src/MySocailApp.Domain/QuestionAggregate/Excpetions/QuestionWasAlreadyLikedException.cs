@@ -1,11 +1,19 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.QuestionAggregate.Excpetions
 {
-    public class QuestionWasAlreadyLikedException : ClientSideException
+    public class QuestionWasAlreadyLikedException : AppException
     {
-        private readonly static string _message = "You have already liked the question before!";
-        public QuestionWasAlreadyLikedException() : base(_message, (int)HttpStatusCode.BadRequest){}
+        private readonly static string _messageEn = "You have already liked the question before!";
+        private readonly static string _messageTr = "Bu soruyu zaten beğendin!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public QuestionWasAlreadyLikedException() : base((int)HttpStatusCode.BadRequest){}
     }
 }

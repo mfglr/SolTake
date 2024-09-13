@@ -1,11 +1,19 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.AppUserAggregate.Exceptions
 {
-    public class UserNotFoundException : ClientSideException
+    public class UserNotFoundException : AppException
     {
-        private readonly static string _message = "The user was not found! The user have may deleted its account!";
-        public UserNotFoundException() : base(_message, (int)HttpStatusCode.NotFound) { }
+        private readonly static string _messageEn = "The user was not found!";
+        private readonly static string _messageTr = "Kullanıcı bulunamadı!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+        public override string GetErrorMessage(string culture) => _messages[culture];
+
+        public UserNotFoundException() : base((int)HttpStatusCode.NotFound) { }
     }
 }

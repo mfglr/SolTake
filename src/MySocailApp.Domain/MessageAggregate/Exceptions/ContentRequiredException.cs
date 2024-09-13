@@ -1,11 +1,20 @@
-﻿using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core;
+using MySocailApp.Core.Exceptions;
 using System.Net;
 
 namespace MySocailApp.Domain.MessageAggregate.Exceptions
 {
-    public class ContentRequiredException : ClientSideException
+    public class ContentRequiredException : AppException
     {
-        private readonly static string _message = "A message can't be empty! A content or an image is required!";
-        public ContentRequiredException() : base(_message, (int)HttpStatusCode.BadRequest) { }
+        private readonly static string _messageEn = "A message can't be empty! A content or an image is required!";
+        private readonly static string _messageTr = "Mesajin boş olamaz. İçerik ya da resim eklemelisin!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+        public override string GetErrorMessage(string culture) => _messages[culture];
+
+        public ContentRequiredException() : base((int)HttpStatusCode.BadRequest) { }
+
     }
 }

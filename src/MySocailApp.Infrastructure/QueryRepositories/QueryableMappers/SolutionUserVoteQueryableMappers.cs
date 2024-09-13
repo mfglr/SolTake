@@ -22,7 +22,6 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             x.AppUser.Account.UserName!,
                             x.AppUser.Name,
                             x.AppUser.BirthDate,
-                            x.AppUser.Gender,
                             x.AppUser.HasImage,
                             x.AppUser.Questions.Count,
                             x.AppUser.Followers.Count,

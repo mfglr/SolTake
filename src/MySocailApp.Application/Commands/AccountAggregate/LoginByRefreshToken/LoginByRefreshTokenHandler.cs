@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken
         {
             var account =
                 await _userManager.Users.FirstAsync(x => x.Id == request.Id, cancellationToken) ??
-                throw new AccountWasNotFoundException();
+                throw new AccountNotFoundException();
             await _accountManager.LoginByRefreshToken(account, request.Token);
             return _mapper.Map<AccountDto>(account);
         }

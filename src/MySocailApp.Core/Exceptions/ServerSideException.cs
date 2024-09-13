@@ -4,9 +4,16 @@ namespace MySocailApp.Core.Exceptions
 {
     public class ServerSideException : AppException
     {
-        private readonly static string _message = "Something went wrong! Please try again!";
-        public ServerSideException(string message) : base($"{_message} : {message}", (int)HttpStatusCode.InternalServerError){}
-        public ServerSideException(IEnumerable<string> messages) : base($"{_message} : {string.Join(' ',messages)}", (int)HttpStatusCode.InternalServerError) { }
+        private readonly static string _messageEn = "Something went wrong! Please try again!";
+        private readonly static string _messageTr = "Bir şeyler yanlış gitti! Lütfen tekrar deneyin!";
+        private readonly static Dictionary<string, string> _messages = new()
+        {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+        public override string GetErrorMessage(string culture) => _messages[culture];
+
+        public ServerSideException() : base((int)HttpStatusCode.InternalServerError){}
 
     }
 }
