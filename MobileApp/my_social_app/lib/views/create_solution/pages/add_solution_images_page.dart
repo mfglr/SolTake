@@ -8,6 +8,8 @@ import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/create_solution/widgets/no_solution_image_widget.dart';
 import 'package:my_social_app/views/create_solution/widgets/solution_carousel_slider_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 
 class AddSolutionImagesPage extends StatefulWidget {
   const AddSolutionImagesPage({super.key});
@@ -20,7 +22,7 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
 
   Future<void> _addAPhoto(CreateSolutionState state) async {
     if(state.images.length >= 3){
-      ToastCreator.displayError("You can't upload up to 3 images per a solution!");
+      ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_images_page_error);
       return;
     }
 
@@ -54,12 +56,8 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
       builder: (context,state) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
-          title: const Text(
-            "Create a Solution",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold
-            ),
+          title: AppTitle(
+            title: AppLocalizations.of(context)!.add_solution_images_page_title,
           ),
           actions: [
             TextButton(
@@ -68,7 +66,7 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 5),
-                    child: const Text("Add a Photo")
+                    child: Text(AppLocalizations.of(context)!.add_solution_images_page_add_photo_button)
                   ),
                   const Icon(Icons.add_a_photo)
                 ],
@@ -85,7 +83,9 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 5),
-                  child: const Text("Continue"),
+                  child: Text(
+                    AppLocalizations.of(context)!.add_solution_images_page_continue_button,
+                  ),
                 ),
                 const Icon(
                   Icons.arrow_forward,

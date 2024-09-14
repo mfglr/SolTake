@@ -7,7 +7,6 @@ class CreateCommentState{
   final SolutionState? solution;
   final CommentState? comment;
   final String content;
-  final String hintText;
 
 
   const CreateCommentState({
@@ -15,7 +14,6 @@ class CreateCommentState{
     required this.solution,
     required this.comment,
     required this.content,
-    required this.hintText,
   });
 
   CreateCommentState changeContent(String content)
@@ -24,7 +22,6 @@ class CreateCommentState{
         solution: solution,
         comment: comment,
         content: content,
-        hintText: hintText,
       );
 
   CreateCommentState changeQuestion(QuestionState question)
@@ -33,7 +30,6 @@ class CreateCommentState{
         solution: null,
         comment: null,
         content: content,
-        hintText: "Comment on ${question.formatUserName(10)}' s question...",
       );
   
   CreateCommentState changeSolution(SolutionState solution)
@@ -42,7 +38,6 @@ class CreateCommentState{
         solution: solution,
         comment: null,
         content: content,
-        hintText: "Comment on ${solution.userName}' s solution...",
       );
 
   CreateCommentState changeComment(CommentState comment)
@@ -51,7 +46,6 @@ class CreateCommentState{
         solution: solution,
         comment: comment,
         content: "@${comment.userName} ",
-        hintText: hintText,
       );
   
   CreateCommentState cancelReply()
@@ -60,7 +54,6 @@ class CreateCommentState{
         solution: solution,
         comment: null,
         content: "",
-        hintText: hintText,
       );
   CreateCommentState clear()
     => const CreateCommentState(
@@ -68,6 +61,5 @@ class CreateCommentState{
         solution: null,
         comment: null,
         content: "",
-        hintText: ""
       );
 }

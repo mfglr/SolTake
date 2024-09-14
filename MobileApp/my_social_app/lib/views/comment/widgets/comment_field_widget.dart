@@ -6,8 +6,8 @@ import 'package:my_social_app/state/app_state/create_comment_state/actions.dart'
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CommentFieldWidget extends StatelessWidget {
   final CreateCommentState state;
@@ -27,26 +27,20 @@ class CommentFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Builder(
-          builder: (context){
-            if(state.comment != null){
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("You are replying to ${state.comment!.userName}"),
-                  IconButton(
-                    onPressed: (){
-                      contentController.text = "";
-                      store.dispatch(const CancelReplyAction());
-                    },
-                    icon: const Icon(Icons.clear)
-                  )
-                ],
-              );
-            }
-            return const SpaceSavingWidget();
-          },
-        ),
+        if(state.comment != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("${AppLocalizations.of(context)!.comment_field_widget_reply_content} ${state.comment!.userName}"),
+              IconButton(
+                onPressed: (){
+                  contentController.text = "";
+                  store.dispatch(const CancelReplyAction());
+                },
+                icon: const Icon(Icons.clear)
+              )
+            ],
+          ),
         Row(
           children: [
             Container(
@@ -64,7 +58,7 @@ class CommentFieldWidget extends StatelessWidget {
                 focusNode: focusNode,
                 controller: contentController,
                 decoration: InputDecoration(
-                  hintText: state.hintText,
+                  hintText: AppLocalizations.of(context)!.comment_field_widget_hint_text,
                   hintStyle: const TextStyle(fontSize: commentTextFontSize)
                 ),
                 onChanged: (value) => store.dispatch(ChangeContentAction(content: value)),
@@ -79,9 +73,6 @@ class CommentFieldWidget extends StatelessWidget {
                 store.dispatch(const CreateCommentAction());
                 contentController.text = "";
                 focusNode.unfocus();
-                // if(state.comment == null){
-                //   scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                // }
               },
               child: const Icon(Icons.send_outlined)
             )

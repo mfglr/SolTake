@@ -17,8 +17,6 @@ enum MenuAction{
   logout
 }
 
-const List<String> list = <String>['Follwing Questins', 'New Questions'];
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 

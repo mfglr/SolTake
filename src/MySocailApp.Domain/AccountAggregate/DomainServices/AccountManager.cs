@@ -52,7 +52,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
         }
         public async Task UpdateEmailAsync(Account account, string email)
         {
-            if (await _userManager.Users.AnyAsync(x => x.Email == email))
+            if (await _userManager.FindByEmailAsync(email) != null)
                 throw new EmailIsAlreadyTakenException();
 
             //update email of account
@@ -71,7 +71,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             if (!UserName.IsValid(userName))
                 throw new InvalidUserNameException();
 
-            if (await _userManager.Users.AnyAsync(x => x.UserName == userName))
+            if ((await _userManager.FindByNameAsync(userName)) != null)
                 throw new EmailIsAlreadyTakenException();
 
             //update user name of account

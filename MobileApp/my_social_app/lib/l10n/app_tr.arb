@@ -1,0 +1,99 @@
+{
+    "login_email": "Email addresinizi ya da kullanıcı adınızı giriniz.",
+    "login_password": "Şifrenizi giriniz.",
+    "login_button": "Giriş Yap",
+    "login_register_label": "Henüz bir hesabınız yok mu? Kayıt olun.",
+    "login_register_button": "Kayıt Ol",
+
+    "register_button": "Kayıt Ol",
+    "register_email": "Email addresinizi giriniz.",
+    "register_password": "Şifrenizi giriniz.",
+    "register_password_confirmation": "Şifrenizi onaylayın.",
+    "register_login_label": "Zaten bir hesabınız var mı? Giriş Yapın.",
+    "register_login_button": "Giriş Yap",
+
+    "verify_email_label": "Email hesabınızı onaylamanız için size bir mail gönderdik. Lütfen maildeki kodu yazınız.",
+    "verify_email_code": "Kodu giriniz.",
+    "verify_email_button": "Emaili Onayla",
+    "verify_email_send_mail_label": "Mail gelmedi mi?",
+    "verify_email_send_mail_button": "Tekrar Mail Gönder",
+    "verify_email_login_label": "Bir hesabın var mı? Giriş Yap.",
+    "verify_email_login_button": "Giriş Yap",
+    "verify_email_register_label": "Kayıt sayfasına gerı git.",
+    "verify_email_register_button": "Kayıt Ol",
+
+    "show_app_dialog_cancel_button": "İptal",
+    "show_app_dialog_delete_button": "Sil",
+
+
+
+    "question_state_unsolved": "Çözümsüz",
+    "question_state_solved": "Çözümlü",
+    "display_question_likes": "Beğeni",
+    "no_questions_abstract_items": "Soru Yok",
+    "question_item_popup_menu_delete_action": "Sil",
+    "question_item_popup_menu_title": "Soruyu Sil",
+    "question_item_popup_menu_description": "Bu soruyu silmek istediğine emin misin?",
+    "display_exam_questions_page_exam": "Sınav",
+    "display_question_likes_page_likes": "Beğeniler",
+    "display_question_page_title": " adlı kullanıcının sorusu",
+    "display_search_questions_page_title": "Filtrelenmiş Sorular",
+    "display_subject_questions_page_title": "Ders",
+    "display_topic_questions_page_title": "Konu",
+    "display_user_questions_page_title": " adlı kullanıcının soruları",
+    "display_user_solved_questions_page_title": " adlı kullanıcının çözümlü soruları",
+    "display_user_unsolved_questions_page_title": " adlı kullnıcının çözümsüz soruları",
+
+    "display_comment_likes_button_likes": "Beğeni",
+    "hiide_replies_button": "Gizle",
+    "reply_comment_button": "Yanıtla",
+    "comment_field_widget_reply_content": "Yanıt verdiğin kişi",
+    "comment_field_widget_hint_text": "Yorum yap...",
+    "comment_popup_menu_delete_action": "Sil",
+    "comment_popup_menu_title": "Yorumu Sil",
+    "comment_popup_menu_description": "Yorumu silmek istediğine emin misin?",
+    "no_comments_title": "Hiç Yorum Yok",
+    "no_comments_description": "İlk yorumu yapan sen ol.",
+    "display_comment_likes_page_title": "Beğeniler",
+
+    "select_exam_page_title": "Bir sınav seç",
+    "select_subject_page_title": "Bir konu seç",
+    "select_topics_page_title": "Konuları seç",
+    "select_topics_page_label": "Konulari seç",
+    "select_topics_page_about_question": "Soru hakkında bir şeyler yaz...",
+    "select_topics_page_topic_error_message": "Bir soru için en fazla 3 konu ekleyebilirsin!",
+    "select_topics_page_add_images_button": "Resim ekle",
+
+    "add_question_images_page_error_message": "Bir soru için en fazla 3 resim yükleyebilirsiniz.",
+    "add_question_images_page_title": "Resim Yükle",
+    "add_question_image_page_label": "Sorunuzun daha çok dikkat çekebilmesi için resim yükleyiniz.",
+    "add_question_image_page_create_question_button": "Soruyu oluştur",
+
+    "no_solution_image_widget_label": "Çözümünüzün daha çok dikkat çekmesi için resim yükleyin.",
+    "no_solution_image_widget_add_photo_button": "Resim ekleyin.",
+
+    "add_solution_images_page_error": "Bir çözüm için en fazla 3 resim yükleyebilirsiniz!",
+    "add_solution_images_page_title": "Çözüm oluştur",
+    "add_solution_images_page_add_photo_button": "Resim Ekleyin",
+    "add_solution_images_page_continue_button": "Devam Et",
+
+    "add_solution_content_page_text_field": "Çözümün hakkında bir şeyler yaz...",
+    "add_solution_content_page_title": "Bir şeyler yaz",
+    "add_solution_content_page_error": "Çözüm hakkında bir şeyler yazmalı ya da en az bir resim yüklemelisin!",
+    "add_solution_content_page_create_solution_button": "Çözümü oluştur",
+
+    "edit_user_field_widget_button_text": "Düzenle",
+
+    "edit_name_page_title": "İsmini Düzenle",
+
+    "edit_user_name_page_title": "Kullanıcı Adını Düzenle",
+    "edit_user_name_page_invalid_characters": "Geçersiz karekter!",
+
+    "edit_profile_page_title": "Profilini Düzenle",
+    "edit_profile_page_user_name_label": "Kullanıcı Adı",
+    "edit_profile_page_name_label": "İsim",
+
+    "update_profile_photo_modal_camera": "Kamera",
+    "update_profile_photo_modal_galeri": "Galeri",
+    "update_profile_phot_modal_remove_button": "Kaldır"
+}

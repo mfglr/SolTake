@@ -9,6 +9,8 @@ import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectTopicPage extends StatelessWidget {
   const SelectTopicPage({super.key});
@@ -18,6 +20,7 @@ class SelectTopicPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
+        title: AppTitle(title: AppLocalizations.of(context)!.select_topics_page_title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
@@ -31,8 +34,8 @@ class SelectTopicPage extends StatelessWidget {
                 builder:(context,topics) => DropdownSearch<String>.multiSelection(
                   items: topics.map((e) => e.name).toList(),
                   onBeforeChange: (prevItems, nextItems){
-                    if(nextItems.length >= 4){
-                      ToastCreator.displayError("You can't select up to 3 topics per question");
+                    if(nextItems.length > 3){
+                      ToastCreator.displayError(AppLocalizations.of(context)!.select_topics_page_topic_error_message);
                       return Future.value(false);
                     }
                     return Future.value(true);
@@ -41,9 +44,9 @@ class SelectTopicPage extends StatelessWidget {
                     showSearchBox: true,
                     searchDelay: Duration(),
                   ),
-                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                  dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "Select Topics"
+                      labelText: AppLocalizations.of(context)!.select_topics_page_label
                     ),
                   ),
                   onChanged: (value){
@@ -57,9 +60,9 @@ class SelectTopicPage extends StatelessWidget {
               minLines: 5,
               maxLines: null,
               onChanged: (value) => store.dispatch(UpdateContentAction(content: value)),
-              decoration: const InputDecoration(
-                hintText: "Type somethings about the question...",
-                border: OutlineInputBorder()
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.select_topics_page_about_question,
+                border: const OutlineInputBorder()
               ),
             )
           ],
@@ -76,7 +79,7 @@ class SelectTopicPage extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 4),
-                child: const Text("Add Images"),
+                child: Text(AppLocalizations.of(context)!.select_topics_page_add_images_button),
               ),
               const Icon(Icons.photo)
             ],

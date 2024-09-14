@@ -3,6 +3,7 @@ import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -48,9 +49,9 @@ class _RegisterViewState extends State<RegisterView> {
                 keyboardType: TextInputType.emailAddress,
                 enableSuggestions: false,
                 autocorrect: false,
-                decoration: const InputDecoration(
-                  hintText: "Enter your email.",
-                  border: OutlineInputBorder()
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.register_email,
+                  border: const OutlineInputBorder()
                 ),
               ),
             ),
@@ -62,9 +63,9 @@ class _RegisterViewState extends State<RegisterView> {
                 enableSuggestions: false,
                 autocorrect: false,
                 controller: _password,
-                decoration: const InputDecoration(
-                  hintText: "Enter your password.",
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.register_password,
+                  border: const OutlineInputBorder(),
                 ),
               ),
             ),
@@ -76,9 +77,9 @@ class _RegisterViewState extends State<RegisterView> {
                 enableSuggestions: false,
                 autocorrect: false,
                 controller: _passwordConfirmation,
-                decoration: const InputDecoration(
-                  hintText: "Re-enter your password.",
-                  border: OutlineInputBorder()
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.register_password_confirmation,
+                  border: const OutlineInputBorder()
                 ),
               ),
             ),
@@ -95,7 +96,7 @@ class _RegisterViewState extends State<RegisterView> {
                 children: [
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                    child: const Text("REGISTER")
+                    child: Text(AppLocalizations.of(context)!.register_button,)
                   ), 
                   const Icon(Icons.create)
                 ],
@@ -107,7 +108,7 @@ class _RegisterViewState extends State<RegisterView> {
               padding: const EdgeInsets.fromLTRB(0, 48, 0, 0),
               child: Column(
                 children: [
-                  const Text("Do you have an account? Login."),
+                  Text(AppLocalizations.of(context)!.register_login_label),
                   OutlinedButton(
                     onPressed: () {
                       store.dispatch(const ChangeActiveLoginPageAction(payload: ActiveLoginPage.loginPage));
@@ -117,7 +118,7 @@ class _RegisterViewState extends State<RegisterView> {
                       children: [
                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                          child: const Text("LOGIN")
+                          child: Text(AppLocalizations.of(context)!.register_login_button)
                         ),
                         const Icon(Icons.login)
                       ]

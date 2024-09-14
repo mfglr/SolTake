@@ -14,7 +14,7 @@ import 'package:my_social_app/views/create_question/pages/select_exam_page.dart'
 import 'package:my_social_app/views/create_solution/pages/add_solution_content_page.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/account/login_view.dart';
-import 'package:my_social_app/views/create_question/pages/display_question_images_page.dart';
+import 'package:my_social_app/views/create_question/pages/add_question_images_page.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_images_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
@@ -22,17 +22,28 @@ import 'package:my_social_app/views/account/register_view.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/verify_email_view.dart';
 import 'package:my_social_app/views/take_image_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 Future loadEnvironmentVariables() async {
   const bool isProduction = bool.fromEnvironment('dart.vm.product');
   await dotenv.load(fileName: isProduction ? ".env.prod" : ".env.dev");
 }
 
+void addTimeAgo(){
+  timeago.setLocaleMessages('tr', timeago.TrMessages());
+  timeago.setLocaleMessages('tr', timeago.TrShortMessages());
+}
+
 Future<void> main() async {
   
+
   WidgetsFlutterBinding.ensureInitialized();
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
+
+  addTimeAgo();
 
   FlutterError.onError = (error) {
     handleErrors(error.exception);
@@ -48,6 +59,17 @@ Future<void> main() async {
       store: store,
       child: MaterialApp(
         title: 'Flutter Demo',
+        locale: Locale(PlatformDispatcher.instance.locale.languageCode),
+        supportedLocales: const [
+          Locale('en'),
+          Locale('tr'),
+        ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
@@ -83,7 +105,7 @@ Future<void> main() async {
           verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),
 
-          displayQuestionImagesRoute: (context) => const DisplayQuestionImagesPage(),
+          displayQuestionImagesRoute: (context) => const AddQuestionImagesPage(),
           selectTopicRoute: (context) => const SelectTopicPage(),
           selectExamRoute: (context) => const SelectExamPage(),
           

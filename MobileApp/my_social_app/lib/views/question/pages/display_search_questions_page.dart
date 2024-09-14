@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySearchQuestionsPage extends StatelessWidget {
   final int? firstDisplayedQuestionId;
@@ -22,9 +23,9 @@ class DisplaySearchQuestionsPage extends StatelessWidget {
       builder:(context,state) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
-          title: const Text(
-            "Questions",
-            style: TextStyle(
+          title: Text(
+            AppLocalizations.of(context)!.display_search_questions_page_title,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold
             ),

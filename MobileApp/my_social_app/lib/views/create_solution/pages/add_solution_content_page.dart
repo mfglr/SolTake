@@ -5,6 +5,8 @@ import 'package:my_social_app/state/app_state/create_solution_state/actions.dart
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 
 class AddSolutionContentPage extends StatefulWidget {
   const AddSolutionContentPage({super.key});
@@ -33,6 +35,7 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
+        title: AppTitle(title: AppLocalizations.of(context)!.add_solution_content_page_title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -40,9 +43,9 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
           controller: _contentController,
           minLines: 10,
           maxLines: 10,
-          decoration: const InputDecoration(
-            hintText: "Type somethings about your solution",
-            border: OutlineInputBorder()
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.add_solution_content_page_text_field,
+            border: const OutlineInputBorder()
           ),
           onChanged: (value){
             final store = StoreProvider.of<AppState>(context,listen: false);
@@ -57,7 +60,7 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
             final store = StoreProvider.of<AppState>(context,listen: false);
             final state = store.state.createSolutionState;
             if((state.content == null || state.content == "") && state.images.isEmpty){
-              ToastCreator.displayError("You have to type a content or upload at least an image!");
+              ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_error);
               return;
             }
             store.dispatch(const CreateSolutionAction());
@@ -69,7 +72,7 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 5),
-                child: const Text("Create a Solution"),
+                child: Text(AppLocalizations.of(context)!.add_solution_content_page_create_solution_button),
               ),
               const Icon(Icons.create)
             ],

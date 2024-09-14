@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/views/comment/pages/display_comment_likes_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayCommentLikesButton extends StatelessWidget {
   final CommentState comment;
@@ -23,7 +24,7 @@ class DisplayCommentLikesButton extends StatelessWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Text(
-        "${comment.numberOfLikes.toString()} likes",
+        "${comment.numberOfLikes.toString()} ${AppLocalizations.of(context)!.display_comment_likes_button_likes}",
         style: const TextStyle(
           fontSize: 11,
           decoration: TextDecoration.underline

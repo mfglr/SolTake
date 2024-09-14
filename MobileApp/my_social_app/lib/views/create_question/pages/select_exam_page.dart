@@ -6,7 +6,9 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/views/create_question/widgets/exam_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectExamPage extends StatefulWidget {
   const SelectExamPage({super.key});
@@ -42,7 +44,9 @@ class _SelectExamPageState extends State<SelectExamPage> {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: const Text("Select an Exam"),
+        title: AppTitle(
+          title: AppLocalizations.of(context)!.select_exam_page_title
+        ),
       ),
       body: StoreConnector<AppState,Pagination>(
         converter: (store) => store.state.exams,

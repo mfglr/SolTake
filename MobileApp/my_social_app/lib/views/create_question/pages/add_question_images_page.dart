@@ -10,16 +10,17 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/create_question/widgets/carousel_slider_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class DisplayQuestionImagesPage extends StatefulWidget {
+class AddQuestionImagesPage extends StatefulWidget {
 
-  const DisplayQuestionImagesPage({super.key});
+  const AddQuestionImagesPage({super.key});
 
   @override
-  State<DisplayQuestionImagesPage> createState() => _DisplayQuesionImagesPageState();
+  State<AddQuestionImagesPage> createState() => _AddQuestionImagesPageState();
 }
 
-class _DisplayQuesionImagesPageState extends State<DisplayQuestionImagesPage> {
+class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
   final ValueNotifier<bool> _isDialOpen = ValueNotifier(false);
 
   SpeedDial _createSpeedDial(CreateQuestionState state,SpeedDialDirection direction){
@@ -39,16 +40,16 @@ class _DisplayQuesionImagesPageState extends State<DisplayQuestionImagesPage> {
           shape: const CircleBorder(),
           backgroundColor: Colors.green,
           onTap: (){
-            if(state.images.length >= 5){
-              ToastCreator.displayError("You can upload up to 5 images per a question!");
+            if(state.images.length > 3){
+              ToastCreator.displayError(AppLocalizations.of(context)!.add_question_images_page_error_message);
               return;
             }
             final store = StoreProvider.of<AppState>(context,listen: false);
             ImagePicker()
               .pickMultiImage(imageQuality: 100)
               .then((images){
-                if(images.length + state.images.length > 5){
-                  ToastCreator.displayError("You can upload up to 5 images per a question! The remain will be not load!");
+                if(images.length + state.images.length > 3){
+                  ToastCreator.displayError(AppLocalizations.of(context)!.add_question_images_page_error_message);
                   final count = 5 - state.images.length;
                   final newImages = images.whereIndexed((i,e) => i < count);
                   store.dispatch(CreateQuestionImagesAction(images: newImages));
@@ -64,8 +65,8 @@ class _DisplayQuesionImagesPageState extends State<DisplayQuestionImagesPage> {
           shape: const CircleBorder(),
           backgroundColor: Colors.blue,
           onTap: () async {
-            if(state.images.length >= 5){
-              ToastCreator.displayError("You can upload up to 5 images per a question!");
+            if(state.images.length > 3){
+              ToastCreator.displayError(AppLocalizations.of(context)!.add_question_images_page_error_message);
               return;
             }
 
@@ -93,7 +94,7 @@ class _DisplayQuesionImagesPageState extends State<DisplayQuestionImagesPage> {
       builder: (context,state) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
-          title: const Text("Upload Images"),
+          title: Text(AppLocalizations.of(context)!.add_question_images_page_title),
         ),
         body: Builder(
           builder: (context){
@@ -108,12 +109,10 @@ class _DisplayQuesionImagesPageState extends State<DisplayQuestionImagesPage> {
                       Icons.photo_outlined,
                       size: 75,
                     ),
-                    const Text(
-                      "Upload pictures and your question will get more attention from other users.",
+                    Text(
+                      AppLocalizations.of(context)!.add_question_image_page_label,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20
-                      ),
+                      style: const TextStyle( fontSize: 20),
                     ),
                     _createSpeedDial(state, SpeedDialDirection.down)
                   ],
@@ -138,7 +137,7 @@ class _DisplayQuesionImagesPageState extends State<DisplayQuestionImagesPage> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 4),
-                  child: const Text("Create Question"),
+                  child: Text(AppLocalizations.of(context)!.add_question_image_page_create_question_button),
                 ),
                 const Icon(Icons.create)
               ],

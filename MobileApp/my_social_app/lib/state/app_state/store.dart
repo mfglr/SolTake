@@ -72,7 +72,7 @@ final store = Store(
     homePageState: HomePageState(questions: Pagination.init(questionsPerPage,true)),
     commentEntityState: const CommentEntityState(entities: {}),
     commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
-    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: "", hintText: ""),
+    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
     messageEntityState: const MessageEntityState(entities: {}),
     messageImageEntityState: const MessageImageEntityState(entities: {}),

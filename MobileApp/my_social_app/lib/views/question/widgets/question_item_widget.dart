@@ -1,14 +1,15 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
-import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/question/widgets/display_question_likes_button.dart';
 import 'package:my_social_app/views/question/widgets/display_solutions_button.dart';
+import 'package:my_social_app/views/question/widgets/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/exam/exam_tag_item.dart';
@@ -19,10 +20,6 @@ import 'package:my_social_app/views/subject/subject_tag_item.dart';
 import 'package:my_social_app/views/topic/topic_tag_item.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
-enum QuestionActions{
-  delete
-}
 
 class QuestionItemWidget extends StatelessWidget {
   final QuestionState question;
@@ -79,46 +76,10 @@ class QuestionItemWidget extends StatelessWidget {
                       child: QuestionStateWidget(question: question),
                     ),
                     Text(
-                      timeago.format(question.createdAt,locale: 'en_short')
+                      timeago.format(question.createdAt,locale: "en_short")
                     ),
                     if(question.isOwner)
-                      PopupMenuButton<QuestionActions>(
-                        style: ButtonStyle(
-                          padding: WidgetStateProperty.all(EdgeInsets.zero),
-                          minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onSelected: (value) async {
-                          switch(value){
-                            case QuestionActions.delete:
-                              bool response = await DialogCreator.showAppDialog(
-                                context,
-                                "Delete Your Question",
-                                "Are your sure you want to delete your question?"
-                              );
-                              if(response && context.mounted){
-                                final store = StoreProvider.of<AppState>(context,listen: false);
-                                store.dispatch(DeleteQuestionAction(questionId: question.id));
-                              }
-                            default:
-                              return;
-                          }
-                        },
-                        itemBuilder: (context) {
-                          return [
-                            const PopupMenuItem<QuestionActions>(
-                              value: QuestionActions.delete,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Delete"),
-                                  Icon(Icons.delete)
-                                ],
-                              )
-                            )
-                          ];
-                        }
-                      ),
+                      QuestionItemPopupMenu(question: question)
                   ],
                 )
               ],

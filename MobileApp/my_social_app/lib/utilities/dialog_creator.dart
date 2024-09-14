@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DialogCreator{
 
@@ -14,15 +15,38 @@ class DialogCreator{
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text("Cancel")
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 4),
+                    child: Text(
+                      AppLocalizations.of(context)!.show_app_dialog_cancel_button,
+                    ),
+                  ),
+                  const Icon(Icons.close)
+                ],
+              )
             ),
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop(true);
               }, 
-              child: const Text(
-                "Remove",
-                style: TextStyle(color: Colors.red),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 4),
+                    child: Text(
+                      AppLocalizations.of(context)!.show_app_dialog_delete_button,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  )
+                ],
               )
             )
           ],
@@ -57,31 +81,6 @@ class DialogCreator{
     ).then((value) => value ?? false);
   }
 
-  static Future<bool> showDeleteCommentDialog(BuildContext context){
-    return showDialog<bool>(context: 
-      context, 
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Delete Your Comment'),
-          content: const Text("Are you sure you want to delete your comment?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: const Text("Cancel")
-            ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop(true);
-              }, 
-              child: const Text("Delete")
-            )
-          ],
-        );
-      }
-    ).then((value) => value ?? false);
-  }
 
   static Future<bool> showRemoveFollowerDialog(BuildContext context){
     return showDialog<bool>(context: 

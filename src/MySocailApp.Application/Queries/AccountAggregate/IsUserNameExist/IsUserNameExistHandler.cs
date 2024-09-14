@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
 using MySocailApp.Domain.AccountAggregate.Entities;
 
 namespace MySocailApp.Application.Queries.UserAggregate.IsUserNameExist
@@ -9,7 +10,7 @@ namespace MySocailApp.Application.Queries.UserAggregate.IsUserNameExist
     {
         private readonly UserManager<Account> _userManager = userManager;
 
-        public async Task<bool> Handle(IsUserNameExistDto request, CancellationToken cancellationToken)
-            => await _userManager.Users.AnyAsync(x => x.UserName == request.UserName);
+        public Task<bool> Handle(IsUserNameExistDto request, CancellationToken cancellationToken)
+            => _userManager.Users.AnyAsync(x => x.UserName!.ToLower() == request.UserName.ToLower(),cancellationToken);
     }
 }

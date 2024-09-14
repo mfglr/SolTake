@@ -16,7 +16,7 @@ using MySocailApp.Application.Commands.AccountAggregate.UpdateEmail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmationToken;
 using MySocailApp.Application.Commands.AccountAggregate.UpdatePassword;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateUserName;
-using MySocailApp.Application.Queries.UserAggregate.IsUserNameExist;
+using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
 
 namespace MySocailApp.Api.Controllers
 {

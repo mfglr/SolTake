@@ -8,6 +8,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditUserNamePage extends StatefulWidget {
   final UserState user; 
@@ -62,9 +63,9 @@ class _EditUserNamePageState extends State<EditUserNamePage> {
               const Icon(Icons.check)
           )
         ],
-        title: const Text(
-          "Edit User Name",
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.edit_user_name_page_title,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold
           ),
@@ -80,7 +81,10 @@ class _EditUserNamePageState extends State<EditUserNamePage> {
           ),
           onChanged: (value) => setState(() {
             if(value.isNotEmpty && !validUserNameChracters.contains(value[value.length - 1])){
-              ToastCreator.displayError("Invalid character!!!",length: Toast.LENGTH_SHORT);
+              ToastCreator.displayError(
+                AppLocalizations.of(context)!.edit_user_name_page_invalid_characters,
+                length: Toast.LENGTH_SHORT
+              );
               _controller.text = value.substring(0,value.length - 1);
               return;
             }

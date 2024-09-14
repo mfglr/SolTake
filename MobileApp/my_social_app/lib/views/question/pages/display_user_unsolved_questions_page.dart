@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
   final int userId;
@@ -25,7 +26,7 @@ class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
           title: Text(
-            "${user.userName}'s unsolved questions",
+            "${user.userName}${AppLocalizations.of(context)!.display_user_unsolved_questions_page_title}",
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold

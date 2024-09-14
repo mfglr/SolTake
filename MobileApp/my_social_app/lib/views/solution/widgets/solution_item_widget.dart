@@ -81,7 +81,11 @@ class SolutionItemWidget extends StatelessWidget {
                         onSelected: (value) async {
                           switch(value){
                             case SolutionActions.delete:
-                              bool response = await DialogCreator.showDeleteCommentDialog(context);
+                              bool response = await DialogCreator.showAppDialog(
+                                context,
+                                "",
+                                ""
+                              );
                               if(response && context.mounted){
                                 final store = StoreProvider.of<AppState>(context,listen: false);
                                 store.dispatch(RemoveSolutionAction(solution: solution));

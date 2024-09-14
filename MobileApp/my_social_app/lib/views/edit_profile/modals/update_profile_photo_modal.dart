@@ -8,6 +8,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateProfilePhotoModal extends StatelessWidget {
   const UpdateProfilePhotoModal({super.key});
@@ -49,18 +50,21 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                               style: ButtonStyle(
                                 shape:WidgetStateProperty.all(const CircleBorder()) 
                               ),
-                              onPressed: () async {
-                                final dynamic image = await Navigator.of(context).pushNamed(takeImageRoute);
-                                if(image != null && context.mounted){
-                                  final store = StoreProvider.of<AppState>(context,listen: false);
-                                  store.dispatch(UpdateCurrentUserImageAction(file: image));
-                                  Navigator.of(context).pop();
-                                }
-                              },
-                              child: const Column(
+                              onPressed: () =>
+                                Navigator
+                                  .of(context)
+                                  .pushNamed(takeImageRoute)
+                                  .then((image){
+                                    if(image != null){
+                                      final store = StoreProvider.of<AppState>(context,listen: false);
+                                      store.dispatch(UpdateCurrentUserImageAction(file: image as XFile));
+                                      Navigator.of(context).pop();
+                                    }
+                                  }),
+                              child: Column(
                                 children: [
-                                  Icon(Icons.photo_camera),
-                                  Text("Camera")
+                                  const Icon(Icons.photo_camera),
+                                  Text(AppLocalizations.of(context)!.update_profile_photo_modal_camera)
                                 ],
                               ),
                               
@@ -80,10 +84,10 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                     }
                                   });
                               },
-                              child: const Column(
+                              child: Column(
                                 children: [
-                                  Icon(Icons.photo),
-                                  Text("Galeri")
+                                  const Icon(Icons.photo),
+                                  Text(AppLocalizations.of(context)!.update_profile_photo_modal_galeri)
                                 ],
                               )
                             )
@@ -109,7 +113,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                             color: user.hasImage ?Colors.red : Colors.red[100],
                           ),
                           Text(
-                            "Remove",
+                            AppLocalizations.of(context)!.update_profile_phot_modal_remove_button,
                             style: TextStyle(
                               color: user.hasImage ?Colors.red : Colors.red[100],
                             ),

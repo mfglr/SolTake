@@ -7,11 +7,10 @@ import 'package:my_social_app/views/edit_profile/pages/edit_name_page.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_user_name_page.dart';
 import 'package:my_social_app/views/edit_profile/widgets/edit_user_field_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditProfilePage extends StatefulWidget {
-  
   const EditProfilePage({super.key});
 
   @override
@@ -24,7 +23,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void initState() {
-    final store = StoreProvider.of<AppState>(context,listen: false);
+    final store = StoreProvider.of<AppState>(context, listen: false);
     final user = store.state.currentUser!;
     _userNameController.text = user.userName;
     _nameController.text = user.name ?? "";
@@ -48,9 +47,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: const Text(
-              "Edit your profile",
-              style: TextStyle(
+            title: Text(
+              AppLocalizations.of(context)!.edit_profile_page_title,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold
               ),
@@ -96,17 +95,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
-                              Builder(
-                                builder: (context) {
-                                  if(user.name == null) return const SpaceSavingWidget();
-                                  return Text(
-                                    user.name!,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  );
-                                }
-                              )
+                              if(user.name != null)
+                                Text(
+                                  user.name!,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                )
                             ],
                           )
                         ],
@@ -122,7 +117,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Container(
                         margin: const EdgeInsets.only(bottom: 15),
                         child: EditUserFieldWidget(
-                          label: "User Name",
+                          label: AppLocalizations.of(context)!.edit_profile_page_user_name_label,
                           value: user.formatUserName(),
                           onPressed: (){
                             Navigator.of(context).push(MaterialPageRoute(builder: (contex) => EditUserNamePage(user: user)));
@@ -132,7 +127,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Container(
                         margin: const EdgeInsets.only(bottom: 15),
                         child: EditUserFieldWidget(
-                          label: "Name",
+                          label: AppLocalizations.of(context)!.edit_profile_page_name_label,
                           value: user.name ?? "",
                           onPressed: (){
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditNamePage(user:user)));

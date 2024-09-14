@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditUserFieldWidget extends StatelessWidget {
   final String label;
@@ -43,7 +44,7 @@ class EditUserFieldWidget extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 5),
-                    child: const Text("Edit")
+                    child: Text(AppLocalizations.of(context)!.edit_user_field_widget_button_text)
                   ),
                   const Icon(Icons.edit_document,size: 18),
                 ],

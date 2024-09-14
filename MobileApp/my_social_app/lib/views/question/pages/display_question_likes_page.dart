@@ -10,6 +10,7 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_icon_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayQuestionLikesPage extends StatelessWidget {
   final int questionId;
@@ -28,7 +29,9 @@ class DisplayQuestionLikesPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: const AppTitle(title: "Likes"),
+            title: AppTitle(
+              title: AppLocalizations.of(context)!.display_question_likes_page_likes
+            ),
           ),
           body: StoreConnector<AppState,Iterable<UserState>>(
             onInit: (store) => store.dispatch(GetNextPageQuestionLikesIfNoPageAction(questionId: questionId)),

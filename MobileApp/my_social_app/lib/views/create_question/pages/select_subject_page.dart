@@ -5,6 +5,8 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/views/create_question/widgets/subject_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 
 class SelectSubjectPage extends StatelessWidget {
   const SelectSubjectPage({super.key});
@@ -14,7 +16,9 @@ class SelectSubjectPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: const Text("Select a Subject"),
+        title: AppTitle(
+          title: AppLocalizations.of(context)!.select_subject_page_title
+        ),
       ),
       body:StoreConnector<AppState,Iterable<SubjectState>>(
         onInit: (store) => store.dispatch(const GetSubjectsOfSelectedExamAction()),

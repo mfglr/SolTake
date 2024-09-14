@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReplyCommentButton extends StatelessWidget {
   
@@ -22,14 +23,19 @@ class ReplyCommentButton extends StatelessWidget {
       onPressed: (){
         store.dispatch(ChangeCommentAction(comment: comment));
         contentController.text = "@${comment.userName} ";
-        focusNode.requestFocus();
+        WidgetsBinding.instance.addPostFrameCallback((_){
+          FocusScope.of(context).requestFocus(focusNode);
+        });
       },
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: const Text("Reply", style: TextStyle(fontSize: 11))
+      child: Text(
+        AppLocalizations.of(context)!.reply_comment_button,
+        style: const TextStyle(fontSize: 11)
+      )
     );
   }
 }

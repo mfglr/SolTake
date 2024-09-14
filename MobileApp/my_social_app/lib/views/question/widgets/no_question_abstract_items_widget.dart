@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoQuestionAbstractItemsWidget extends StatelessWidget {
   const NoQuestionAbstractItemsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
+        const Icon(
           Icons.not_interested,
           size: 45,
         ),
         Text(
-          "No Questions",
-          style: TextStyle(
+          AppLocalizations.of(context)!.no_questions_abstract_items,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 30
           ),

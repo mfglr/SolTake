@@ -1,0 +1,106 @@
+{
+    "login_email": "Enter your email or username.",
+    "login_password": "Enter your password",
+    "login_button": "Login",
+    "login_register_label": "Don't you have an account? Register",
+    "login_register_button": "Register",
+    
+    "register_email": "Enter your email.",
+    "register_password": "Enter your password.",
+    "register_password_confirmation": "Confirm the password.",
+    "register_button": "Register",
+    "register_login_label": "Do you have an account? Login.",
+    "register_login_button": "Login",
+
+    "verify_email_label": "We have been sent a mail to confirm your email. Please type the code in the mail.",
+    "verify_email_code": "Enter the code.",
+    "verify_email_button": "Verify Email",
+    "verify_email_send_mail_label": "Didn't you receive the email",
+    "verify_email_send_mail_button": "Resend Mail",
+    "verify_email_login_label": "Do you have an account? Login",
+    "verify_email_login_button": "Login",
+    "verify_email_register_label": "Go back to register page.",
+    "verify_email_register_button": "Register",
+
+    "show_app_dialog_cancel_button": "Cancel",
+    "show_app_dialog_delete_button": "Delete",
+    
+    "question_state_unsolved": "Unsolved",
+    "question_state_solved": "Solved",
+    "display_question_likes": "Likes",
+    "no_questions_abstract_items": "No Questions",
+    "question_item_popup_menu_delete_action": "Delete",
+    "question_item_popup_menu_title": "Delete Your Question",
+    "question_item_popup_menu_description": "Are your sure you want to delete your question?",
+    "display_exam_questions_page_exam": "Exam",
+    "display_question_likes_page_likes": "Likes",
+    "display_question_page_title": "' s question",
+    "display_search_questions_page_title": "Filtered questions",
+    "display_subject_questions_page_title": "Subject",
+    "display_topic_questions_page_title": "Topic",
+    "display_user_questions_page_title": "'s questions",
+    "display_user_solved_questions_page_title": "'s solved questions",
+    "display_user_unsolved_questions_page_title": "'s unsolved questions",
+
+
+    "display_comment_likes_button_likes": "Likes",
+    "hiide_replies_button": "Hide replies",
+    "reply_comment_button": "Reply",
+    "comment_field_widget_reply_content": "You are replying to",
+    "comment_field_widget_hint_text": "Leave a comment...",
+    "comment_popup_menu_delete_action": "Delete",
+    "comment_popup_menu_title": "Delete Your Comment",
+    "comment_popup_menu_description": "Are your sure you want to delete your comment?",
+    "no_comments_title": "No Comments",
+    "no_comments_description": "Be the first to comment.",
+    "display_comment_likes_page_title": "Likes",
+
+    
+    "select_exam_page_title": "Select an exam",
+    
+    "select_subject_page_title": "Select a subject",
+    
+    "select_topics_page_title": "Select topics",
+    "select_topics_page_label": "Select topics",
+    "select_topics_page_about_question": "Type somethings about the question...",
+    "select_topics_page_topic_error_message": "You can't select up to 3 topics per question",
+    "select_topics_page_add_images_button": "Add Images",
+
+    "add_question_images_page_error_message": "You can upload up to 3 images per a question!",
+    "add_question_images_page_title": "Upload images",
+    "add_question_image_page_label": "Upload images to make your question more visible to other users.",
+    "add_question_image_page_create_question_button": "Create Question",
+
+    "no_solution_image_widget_label": "Upload an image to make your solution stand out more.",
+    "no_solution_image_widget_add_photo_button": "Add a photo",
+
+    "add_solution_images_page_error": "You can't upload up to 3 images per a solution!",
+    "add_solution_images_page_title":  "Create a Solution",
+    "add_solution_images_page_add_photo_button": "Add a Photo",
+    "add_solution_images_page_continue_button": "Continue",
+
+    "add_solution_content_page_text_field": "Type somethings about your solution...",
+    "add_solution_content_page_title": "Type somethings",
+    "add_solution_content_page_error": "You have to type a content or upload at least an image!",
+    "add_solution_content_page_create_solution_button": "Create Solution",
+
+    "edit_user_field_widget_button_text": "Edit",
+
+    "edit_name_page_title": "Edit Name",
+
+    "edit_user_name_page_title": "Edit Username",
+    "edit_user_name_page_invalid_characters": "Invalid chracter!",
+
+    "edit_profile_page_title": "Edit Your Profile",
+    "edit_profile_page_user_name_label": "User Name",
+    "edit_profile_page_name_label": "Name",
+
+    "update_profile_photo_modal_camera": "Camera",
+    "update_profile_photo_modal_galeri": "Galeri",
+    "update_profile_phot_modal_remove_button": "Remove"
+
+
+
+
+
+}

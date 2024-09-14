@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySubjectQuestionsPage extends StatelessWidget {
   final int subjectId;
@@ -19,7 +20,7 @@ class DisplaySubjectQuestionsPage extends StatelessWidget {
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
           title: Text(
-            "Subject: ${subject.name}",
+            "${AppLocalizations.of(context)!.display_subject_questions_page_title}: ${subject.name}",
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold

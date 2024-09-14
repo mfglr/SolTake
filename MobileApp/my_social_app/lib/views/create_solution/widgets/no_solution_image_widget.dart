@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoSolutionImageWidget extends StatelessWidget {
   const NoSolutionImageWidget({super.key});
@@ -20,12 +21,10 @@ class NoSolutionImageWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          "Upload an image to highlight your solution.",
+        Text(
+          AppLocalizations.of(context)!.no_solution_image_widget_label,
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 25
-          ),
+          style: const TextStyle( fontSize: 25 ),
         ),
         TextButton(
           onPressed: () => _addAPhoto(context),
@@ -35,9 +34,9 @@ class NoSolutionImageWidget extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 5),
-                child: const Text(
-                  "Add a Photo",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.no_solution_image_widget_add_photo_button,
+                  style: const TextStyle(
                     fontSize: 25
                   ),
                 )

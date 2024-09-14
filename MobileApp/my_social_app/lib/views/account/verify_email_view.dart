@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -38,8 +39,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
-              child: const Text(
-                "We have been sent a mail to confirm your email. Please type the code in the mail.",
+              child: Text(
+                AppLocalizations.of(context)!.verify_email_label,
                 textAlign: TextAlign.center,
               )
             ),
@@ -50,9 +51,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 enableSuggestions: false,
                 autocorrect: false,
                 controller: _token,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Enter the code."
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: AppLocalizations.of(context)!.verify_email_code
                 ),
               ),
             ),
@@ -68,7 +69,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                   children: [
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                      child: const Text("Verify Email")
+                      child: Text(AppLocalizations.of(context)!.verify_email_button)
                     ),
                     const Icon(Icons.verified)
                   ],
@@ -78,7 +79,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
 
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 8) ,
-              child: const Text("Didn't you receive the email?"),
+              child: Text(AppLocalizations.of(context)!.verify_email_send_mail_label),
             ),
 
             Container(
@@ -92,7 +93,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                   children: [
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                      child: const Text("Resend Email")
+                      child: Text(AppLocalizations.of(context)!.verify_email_send_mail_button)
                     ),
                     const Icon(Icons.email)
                   ],
@@ -102,7 +103,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
 
             Column(
               children: [
-                const Text("Do you have an account? Login."),
+                Text(AppLocalizations.of(context)!.verify_email_login_label),
                 OutlinedButton(
                   onPressed: () {
                     store.dispatch(const LogOutAction());
@@ -113,13 +114,13 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     children: [
                       Container(
                         margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                        child: const Text("LOGIN")
+                        child: Text(AppLocalizations.of(context)!.verify_email_login_button)
                       ),
                       const Icon(Icons.login)
                     ]
                   )
                 ),
-                const Text("Go back to register page."),
+                Text(AppLocalizations.of(context)!.verify_email_register_label),
                 OutlinedButton(
                   onPressed: () {
                     store.dispatch(const LogOutAction());
@@ -130,7 +131,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     children: [ 
                       Container(
                         margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                        child: const Text("REGISTER")
+                        child: Text(AppLocalizations.of(context)!.verify_email_register_button)
                       ),
                       const Icon(Icons.create)
                     ]
