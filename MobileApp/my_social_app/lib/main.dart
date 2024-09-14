@@ -38,7 +38,6 @@ void addTimeAgo(){
 
 Future<void> main() async {
   
-
   WidgetsFlutterBinding.ensureInitialized();
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();

@@ -26,12 +26,14 @@ class NoFollows extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              message,
-              style: const TextStyle(
-                fontSize: 45,
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 45,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),

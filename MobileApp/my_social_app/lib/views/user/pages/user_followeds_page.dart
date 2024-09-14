@@ -7,6 +7,7 @@ import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/no_follows.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserFollowedsPage extends StatelessWidget {
   final int userId;
@@ -19,7 +20,7 @@ class UserFollowedsPage extends StatelessWidget {
       builder: (context,profileUser) => Scaffold(
         appBar: AppBar(
           title: Text(
-            "${profileUser.userName}' s Followings",
+            "${profileUser.userName} ${AppLocalizations.of(context)!.user_followeds_page_title}",
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold
@@ -36,7 +37,7 @@ class UserFollowedsPage extends StatelessWidget {
                 if(profileUser.numberOfFolloweds <= 0){
                   return NoFollows(
                     user: profileUser,
-                    message: "No Followings"
+                    message: AppLocalizations.of(context)!.user_followeds_page_no_followings
                   );
                 }
                 return UserItemsWidget(
@@ -62,12 +63,3 @@ class UserFollowedsPage extends StatelessWidget {
     );
   }
 }
-
-
-// StoreConnector<AppState,int>( 
-//                   converter: (store) => store.state.accountState!.id,
-//                   builder:(context,accountId){
-//                     if(accountId != profileUser.id) return const SpaceSavingWidget();
-//                     return UsersToFollowWidget(user: profileUser);
-//                   }
-//                 )

@@ -13,9 +13,7 @@ import 'package:my_social_app/views/shared/label_pagination_widget/label_paginat
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
-
-const labels = ["all","solved","unsolved"];
-const icons = [Icons.question_mark,Icons.done,Icons.pending];
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserPage extends StatefulWidget {
   final int? userId;
@@ -34,6 +32,8 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final PageController _pageController = PageController();
   late final void Function() _onPageChange;
+  late Iterable<String> labels;
+  final icons = [Icons.question_mark,Icons.done,Icons.pending];
   double _page = 0;
 
   @override
@@ -44,6 +44,7 @@ class _UserPageState extends State<UserPage> {
       });
     };
     _pageController.addListener(_onPageChange);
+  
     super.initState();
   }
 
@@ -131,6 +132,11 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
+    labels = [
+      AppLocalizations.of(context)!.user_page_label_all,
+      AppLocalizations.of(context)!.user_page_label_solved,
+      AppLocalizations.of(context)!.user_page_label_unsolved,
+    ];
     return StoreConnector<AppState, UserState?>(
       onInit: (store){
         if(widget.userId != null){
@@ -170,7 +176,7 @@ class _UserPageState extends State<UserPage> {
                       size: 16,
                     ),
                     Text(
-                      labels[index],
+                      labels.elementAt(index),
                       style: TextStyle(
                         color: isActive ? Colors.black : Colors.grey,
                         fontSize: 13

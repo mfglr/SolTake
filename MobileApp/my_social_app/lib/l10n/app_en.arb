@@ -97,10 +97,16 @@
 
     "update_profile_photo_modal_camera": "Camera",
     "update_profile_photo_modal_galeri": "Galeri",
-    "update_profile_phot_modal_remove_button": "Remove"
+    "update_profile_phot_modal_remove_button": "Remove",
 
+    "user_followeds_page_title": "'s followings",
+    "user_followeds_page_no_followings": "No Followings",
 
+    "user_followers_page_title": "'s followers",
+    "user_followers_page_no_followers": "No Followers",
 
-
+    "user_page_label_all": "all",
+    "user_page_label_solved": "solved",
+    "user_page_label_unsolved": "unsolved"
 
 }

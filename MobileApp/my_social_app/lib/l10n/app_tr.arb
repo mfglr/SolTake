@@ -95,5 +95,15 @@
 
     "update_profile_photo_modal_camera": "Kamera",
     "update_profile_photo_modal_galeri": "Galeri",
-    "update_profile_phot_modal_remove_button": "Kaldır"
+    "update_profile_phot_modal_remove_button": "Kaldır",
+
+    "user_followeds_page_title": "adlı kullanıcının takip ettikleri",
+    "user_followeds_page_no_followings": "Takip Edilen Yok",
+
+    "user_followers_page_title": "adlı kullanıcının takipçileri",
+    "user_followers_page_no_followers": "Takipçi Yok",
+
+    "user_page_label_all": "hepsi",
+    "user_page_label_solved": "çözümlü",
+    "user_page_label_unsolved": "çözümsüz"
 }

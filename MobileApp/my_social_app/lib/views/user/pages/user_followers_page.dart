@@ -8,6 +8,7 @@ import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/no_follows.dart';
 import 'package:my_social_app/views/user/widgets/remove_follower_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserFollowersPage extends StatelessWidget {
   final int userId;
@@ -20,7 +21,7 @@ class UserFollowersPage extends StatelessWidget {
       builder: (context,profileUser) => Scaffold(
         appBar: AppBar(
           title: Text(
-            "${profileUser.userName}' s Followers",
+            "${profileUser.userName} ${AppLocalizations.of(context)!.user_followers_page_title}",
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold
@@ -37,7 +38,7 @@ class UserFollowersPage extends StatelessWidget {
                 if(profileUser.numberOfFollowers <= 0){
                   return NoFollows(
                     user: profileUser,
-                    message: "No Followers"
+                    message: AppLocalizations.of(context)!.user_followers_page_no_followers
                   );
                 }
                 return UserItemsWidget(
