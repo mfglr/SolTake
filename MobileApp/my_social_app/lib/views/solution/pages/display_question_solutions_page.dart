@@ -8,6 +8,7 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayQuestionSolutionsPage extends StatelessWidget {
   final int questionId;
@@ -29,9 +30,9 @@ class DisplayQuestionSolutionsPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: const Text(
-              "Solutions",
-              style: TextStyle(
+            title: Text(
+              AppLocalizations.of(context)!.display_question_solutions_page_title,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold
               ),

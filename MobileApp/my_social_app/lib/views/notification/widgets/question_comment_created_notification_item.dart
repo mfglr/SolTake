@@ -8,6 +8,7 @@ import 'package:my_social_app/views/notification/widgets/notification_bottom_tex
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
 import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuestionCommentCreatedNotificationItem extends StatelessWidget {
   
@@ -22,7 +23,7 @@ class QuestionCommentCreatedNotificationItem extends StatelessWidget {
         Icons.comment,
         color: Colors.blue,
       ),
-      content: "Your question has been commented",
+      content: AppLocalizations.of(context)!.question_comment_created_notification_item_content,
       bottomContent: StoreConnector<AppState,CommentState?>(
         onInit: (store) => store.dispatch(LoadCommentAction(commentId: notification.commentId!)),
         converter: (store) => store.state.commentEntityState.entities[notification.commentId!],

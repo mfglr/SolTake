@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/views/search/widgets/search_question_widget.dart';
 import 'package:my_social_app/views/search/widgets/search_users_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-const labels = ["questions","users"];
 const icons = [Icons.question_mark,Icons.person];
 
 class SearchPage extends StatefulWidget {
@@ -42,6 +42,10 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Iterable<String> labels = [
+      AppLocalizations.of(context)!.search_page_label_question,
+      AppLocalizations.of(context)!.search_page_label_user,
+    ];
     return Scaffold(
       body: Column(
         children: [
@@ -59,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
                       color: isActive ? Colors.black : Colors.grey
                     ),
                     Text(
-                      labels[index],
+                      labels.elementAt(index),
                       style: TextStyle(
                         color: isActive ? Colors.black : Colors.grey
                       ),

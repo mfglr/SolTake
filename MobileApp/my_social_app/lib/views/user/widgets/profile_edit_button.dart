@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_profile_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileEditButton extends StatelessWidget {
   const ProfileEditButton({super.key});
@@ -13,9 +14,9 @@ class ProfileEditButton extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 4),
-            child: const Text(
-              "Edit your profile",
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.profile_edit_button_content,
+              style: const TextStyle(
                 fontSize: 12
               ),
             )

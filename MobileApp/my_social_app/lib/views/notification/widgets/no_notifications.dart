@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoNotifications extends StatelessWidget {
   const NoNotifications({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.notifications_off,
             size: 50,
           ),
           Text(
-            "No Notifications!",
+            AppLocalizations.of(context)!.no_notifications_content,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 40
             ),
           )

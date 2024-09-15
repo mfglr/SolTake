@@ -107,6 +107,95 @@
 
     "user_page_label_all": "all",
     "user_page_label_solved": "solved",
-    "user_page_label_unsolved": "unsolved"
+    "user_page_label_unsolved": "unsolved",
 
+    "message_items_new_messages": "new messages",
+    "message_items_new_message": "new message",
+
+    "conversation_page_message_field_hint_text": "Message ...",
+    "conversation_page_delete_cancel_button": "Cancel",
+    "conversation_page_delete_button": "Delete",
+    "conversation_page_delete_dialog_title": "Delete Your Messages",
+    "conversation_page_delete_dialog_content": "Are you sure you want to delete your messages?",
+
+    "messages_home_page_title": "Messages",
+
+    "conversation_item": "Image ...",
+
+    "create_message_images_page_message_field_hint_text": "Message ...",
+
+
+    "comment_liked_notification_item_content": "Your comment has been liked.",
+    "comment_replied_notification_content": "Your comment has been replied.",
+    "no_notifications_content": "No Notifications",
+    "question_comment_created_notification_item_content": "Your question has been commented.",
+    "question_liked_notification_item_content": "Your question has been liked.",
+    "question_solved_notification_item_content": "YAY!!!🥳 Your question has been solved. Click to display the solution.",
+    "solution_comment_created_notification_item_content": "Your solution has been commented",
+    "solution_created_notification_item_content": "A solution has been created for your question.😊👊 Click to check the solution.",
+    "solution_marked_as_correct_notification_item_context": "Your solution has been marked as correct.👏👏👏",
+    "solution_marked_as_incorrect_notification_imte_content": "Your solution has been marked as incorrect!😓",
+    "solutin_was_downvoted_notification_item_content": "Oh No🙁 Your solution has been downvoted!👎",
+    "solution_was_upvoted_notification_item_content": "Hey!!! Your solution has been upvoted!👍",
+    "user_followed_notification_item_content": "You have a new follower.",
+    "user_tagged_in_comment_item_content": "You have been tagged in a comment.",
+
+    "search_question_widget_select_exam": "Select Exam",
+    "search_question_widget_select_subject": "Select Subject",
+    "search_question_widget_select_topic": "Select Topic",
+
+    "search_users_widget_search_field_hint_text": "Search",
+
+    "search_page_label_question": "questions",
+    "search_page_label_user": "users",
+
+    "image_not_font_widget_content": "Image not Found.",
+
+    "display_question_correct_solutions_page_title": "Correct solutions",
+    "display_question_correct_solutions_page_no_solutions": "No Correct Solutions",
+
+    "display_question_incorrect_solutions_page_title": "Incorrect solutions",
+    "display_question_incorrect_solutions_page_not_solutions": "No Incorrect Solutions",
+
+    "display_question_pending_solutions_page_title": "Pending solutions",
+    "display_question_pending_solutions_page_no_solutions": "No Pending Solutions",
+
+    "display_question_solutions_page_title": "Solutions",
+
+    "display_solutions_downvote_page_title": "Downvotes",
+
+    "display_solutions_page_title": "'s solutions",
+
+    "display_solution_upvotes_title": "Upvotes",
+
+    "display_question_solutions_page_no_correct_solutins": "No Correct Solutions",
+    "display_question_solutions_page_no_pending_solutions": "No Pending Solutions",
+    "display_question_solutions_page_no_incorrect_solutions": "No Incorrect Solutions",
+    "display_question_solutions_page_title": "Question Solutions",
+
+    "no_solutions_widget_conten1": "No Solutions Yet!!!😢",
+    "no_solutions_widget_conten2": "Dont Worry! Your question will be solved soon.🤞",
+    "no_solutions_widget_conten3": "No Solutions Yet!!!😢",
+    "no_solutions_widget_conten4": "Be the first to solve this question.👍",
+
+    "solution_popup_menu_titte": "Delete Your Solution",
+    "solution_popup_menu_content": "Are you sure you want to delete your solution?",
+    "solution_popup_menu_delete_button": "Delete",
+
+    "mark_solution_as_correct_button_content": "Correct",
+
+    "mark_solution_as_incorrect_button_content": "Incorrect",
+
+    "follow_button_widget_unfollow": "unfollow",
+    "follow_button_widget_follow": "follow",
+
+    "message_button_widget_content": "message",
+
+    "profile_edit_button_content": "Edit your profile",
+
+    "remove_follower_button_content": "Remove",
+
+    "user_info_header_widget_questions": "Questions",
+    "user_info_header_widget_followers": "Followers",
+    "user_info_header_widget_followings": "Followings"
 }

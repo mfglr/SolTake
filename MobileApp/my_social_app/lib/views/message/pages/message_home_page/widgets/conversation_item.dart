@@ -8,6 +8,7 @@ import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_status_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConversationItem extends StatelessWidget {
   final MessageState message;
@@ -49,7 +50,7 @@ class ConversationItem extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.only(right: 5),
                             child: Text(
-                              message.formatContent(25) ?? 'Image...',
+                              message.formatContent(25) ?? AppLocalizations.of(context)!.conversation_item,
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal

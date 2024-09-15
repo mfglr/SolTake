@@ -15,6 +15,7 @@ import 'package:my_social_app/views/solution/pages/display_question_solutions_pa
 import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close];
 
@@ -87,7 +88,9 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.correctSolutions,
-        noItems: const NoSolutions(text: "No Correct Solutions"),
+        noItems: NoSolutions(
+          text: AppLocalizations.of(context)!.display_question_solutions_page_no_correct_solutins
+        ),
         onTap: (solutionId) =>
           Navigator
             .of(context)
@@ -114,7 +117,9 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.pendingSolutions,
-         noItems: const NoSolutions(text: "No Pending Solutions"),
+         noItems: NoSolutions(
+          text: AppLocalizations.of(context)!.display_question_solutions_page_no_pending_solutions
+        ),
         onTap: (solutionId) =>
           Navigator
             .of(context)
@@ -141,7 +146,9 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.incorrectSolutions,
-         noItems: const NoSolutions(text: "No Incorrect Solutions",),
+         noItems: NoSolutions(
+          text: AppLocalizations.of(context)!.display_question_solutions_page_no_incorrect_solutions
+        ),
         onTap: (solutionId) =>
           Navigator
             .of(context)
@@ -172,9 +179,9 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: const Text(
-              "Question Solutions",
-              style: TextStyle(
+            title: Text(
+              AppLocalizations.of(context)!.display_question_solutions_page_title,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold
               ),

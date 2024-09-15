@@ -5,6 +5,7 @@ import 'package:my_social_app/views/user/pages/display_user_image_page.dart';
 import 'package:my_social_app/views/user/pages/user_followeds_page.dart';
 import 'package:my_social_app/views/user/pages/user_followers_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserInfoHeaderWidget extends StatelessWidget {
   final UserState user;
@@ -52,9 +53,9 @@ class UserInfoHeaderWidget extends StatelessWidget {
                         fontSize: 16
                       ),
                     ),
-                    const Text(
-                      "Questions",
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      AppLocalizations.of(context)!.user_info_header_widget_questions,
+                      style: const TextStyle(fontSize: 12),
                     )
                   ],
                 ),
@@ -73,9 +74,9 @@ class UserInfoHeaderWidget extends StatelessWidget {
                         fontSize: 16
                       ),
                     ),
-                    const Text(
-                      "Followers",
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      AppLocalizations.of(context)!.user_info_header_widget_followers,
+                      style: const TextStyle(fontSize: 12),
                     )
                   ],
                 ),
@@ -94,9 +95,9 @@ class UserInfoHeaderWidget extends StatelessWidget {
                         fontSize: 16
                       ),
                     ),
-                    const Text(
-                      "Followings",
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      AppLocalizations.of(context)!.user_info_header_widget_followings,
+                      style: const TextStyle(fontSize: 12),
                     )
                   ],
                 ),

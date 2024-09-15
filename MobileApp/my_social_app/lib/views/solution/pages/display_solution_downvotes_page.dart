@@ -10,6 +10,7 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_icon_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySolutionDownvotesPage extends StatelessWidget {
   final int solutionId;
@@ -29,7 +30,9 @@ class DisplaySolutionDownvotesPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: const AppTitle(title: "Downvotes"),
+            title: AppTitle(
+              title: AppLocalizations.of(context)!.display_solutions_downvote_page_title
+            ),
           ),
           body: StoreConnector<AppState,Iterable<UserState>>(
             onInit: (store) => store.dispatch(GetNextPageSolutionDownvotesIfNoPageAction(solutionId: solutionId)),

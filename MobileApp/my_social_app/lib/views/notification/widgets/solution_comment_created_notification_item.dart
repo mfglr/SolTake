@@ -8,6 +8,7 @@ import 'package:my_social_app/views/notification/widgets/notification_bottom_tex
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SolutionCommentCreatedNotificationItem extends StatelessWidget {
   final NotificationState notification;
@@ -20,7 +21,7 @@ class SolutionCommentCreatedNotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotificationItem(
       notification: notification,
-      content: "Your solution has been commented",
+      content: AppLocalizations.of(context)!.solution_comment_created_notification_item_content,
        bottomContent: StoreConnector<AppState,CommentState?>(
         onInit: (store) => store.dispatch(LoadCommentAction(commentId: notification.commentId!)),
         converter: (store) => store.state.commentEntityState.entities[notification.commentId!],

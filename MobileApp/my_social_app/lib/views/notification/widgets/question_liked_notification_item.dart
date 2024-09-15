@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
 import 'package:my_social_app/views/question/pages/display_question_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuestionLikedNotificationItem extends StatelessWidget {
   final NotificationState notification;
@@ -23,7 +24,7 @@ class QuestionLikedNotificationItem extends StatelessWidget {
         Icons.favorite,
         color: Colors.red,  
       ),
-      content: "Your question has been liked.",
+      content: AppLocalizations.of(context)!.question_liked_notification_item_content,
     );
   }
 }

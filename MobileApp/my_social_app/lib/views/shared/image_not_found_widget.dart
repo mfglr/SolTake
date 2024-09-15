@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImageNotFoundWidget extends StatelessWidget {
   const ImageNotFoundWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.cancel_outlined,
             size: 40,
           ),
           Text(
-            "Not Found!",
-            style: TextStyle(
+            AppLocalizations.of(context)!.image_not_font_widget_content,
+            style: const TextStyle(
               fontSize: 45
             ),
           )

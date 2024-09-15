@@ -9,6 +9,7 @@ import 'package:my_social_app/views/notification/widgets/notification_item.dart'
 import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CommentRepliedNotification extends StatelessWidget {
   final NotificationState notification;
@@ -21,7 +22,7 @@ class CommentRepliedNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotificationItem(
       notification: notification,
-      content: "Your comment has been replied",
+      content: AppLocalizations.of(context)!.comment_replied_notification_content,
       icon: const Icon(
         Icons.reply,
         color: Colors.green,

@@ -9,6 +9,7 @@ import 'package:my_social_app/views/notification/widgets/notification_item.dart'
 import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CommentLikedNotificationItem extends StatelessWidget {
   final NotificationState notification;
@@ -18,7 +19,7 @@ class CommentLikedNotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotificationItem(
       notification: notification,
-      content: "Your comment has been liked.",
+      content: AppLocalizations.of(context)!.comment_liked_notification_item_content,
       icon: const Icon(
         Icons.favorite,
         color: Colors.red,

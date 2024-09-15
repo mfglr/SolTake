@@ -4,6 +4,8 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/message_home_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/widgets/conversation_items.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MessageHomePage extends StatelessWidget {
   
@@ -13,7 +15,9 @@ class MessageHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Messages"),
+        title: AppTitle(
+          title: AppLocalizations.of(context)!.messages_home_page_title
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(5),

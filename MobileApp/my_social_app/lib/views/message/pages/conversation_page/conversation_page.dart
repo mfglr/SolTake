@@ -11,11 +11,13 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart'
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_field.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_items.dart';
 import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConversationPage extends StatefulWidget {
   final int userId;
@@ -117,21 +119,30 @@ class _ConversationPageState extends State<ConversationPage>{
                   nameFontWeight: FontWeight.normal,
                 )
               ) : null,
-            leading: Builder(
-              builder: (context) {
-                if(_selectedIds.isEmpty) return const AppBackButtonWidget();
-                return IconButton(
-                  onPressed: _clearAllSelectedIds,
-                  icon: const Icon(Icons.clear)
-                );
-              }
-            ),
+            leading: _selectedIds.isEmpty ? const AppBackButtonWidget() : const SpaceSavingWidget(),
             actions: [
               if(_selectedIds.isNotEmpty)
-                IconButton(
+                TextButton(
+                  onPressed: _clearAllSelectedIds,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        child: Text(AppLocalizations.of(context)!.conversation_page_delete_cancel_button)
+                      ),
+                      const Icon(Icons.close)
+                    ],
+                  )
+                ),
+              if(_selectedIds.isNotEmpty)
+                TextButton(
                   onPressed: () => 
                     DialogCreator
-                      .showDeleteMessageDialog(context)
+                      .showAppDialog(
+                        context,
+                        AppLocalizations.of(context)!.conversation_page_delete_dialog_title,
+                        AppLocalizations.of(context)!.conversation_page_delete_dialog_content
+                      )
                       .then((value){
                         if(value){
                           final store = StoreProvider.of<AppState>(context,listen: false);
@@ -139,9 +150,22 @@ class _ConversationPageState extends State<ConversationPage>{
                           _clearAllSelectedIds();
                         }
                       }),
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        child: Text(
+                          AppLocalizations.of(context)!.conversation_page_delete_button,
+                          style: const TextStyle(
+                            color: Colors.red
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                    ],
                   )
                 )
             ],
@@ -175,7 +199,7 @@ class _ConversationPageState extends State<ConversationPage>{
                   Padding(
                     padding: const EdgeInsets.fromLTRB(5,5,5,20),
                     child: MessageField(
-                      hintText: "Say hello to ${user.userName}",
+                      hintText: AppLocalizations.of(context)!.conversation_page_message_field_hint_text,
                       type: MessageFieldType.forConversation,
                       scrollController: _scrollController,
                     ),

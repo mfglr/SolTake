@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/widgets/carousel_slider_widget.dart';
 import 'package:my_social_app/views/message/widgets/message_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateMessageImagesPage extends StatelessWidget {
   const CreateMessageImagesPage({super.key});
@@ -22,10 +23,10 @@ class CreateMessageImagesPage extends StatelessWidget {
             ),
           ),
           
-          const Padding(
-            padding: EdgeInsets.only(bottom:15,top: 5),
+          Padding(
+            padding: const EdgeInsets.only(bottom:15,top: 5),
             child: MessageField(
-              hintText: "Type somethings",
+              hintText: AppLocalizations.of(context)!.create_message_images_page_message_field_hint_text,
               type: MessageFieldType.forDisplayMessageImages,
             ),
           )

@@ -8,6 +8,7 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySolutionPage extends StatefulWidget {
   final int solutionId;
@@ -54,7 +55,7 @@ class _DisplaySolutionPageState extends State<DisplaySolutionPage> {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: AppTitle(title: "${solution.userName}'s solution"),
+            title: AppTitle(title: "${solution.userName}${AppLocalizations.of(context)!.display_solutions_page_title}"),
           ),
           body: SingleChildScrollView(
             child: SolutionItemWidget(

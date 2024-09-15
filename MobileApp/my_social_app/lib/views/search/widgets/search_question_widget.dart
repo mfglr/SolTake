@@ -13,6 +13,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/question/pages/display_search_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchQuestionWidget extends StatefulWidget {
   const SearchQuestionWidget({super.key});
@@ -39,9 +40,9 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                     builder:(context,exams) => DropdownSearch<String>(
                       selectedItem: exams.where((x) => x.id == state.examId).firstOrNull?.shortName,
                       items: exams.map((e) => e.shortName).toList(),
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Select Exams"
+                          labelText: AppLocalizations.of(context)!.search_question_widget_select_exam
                         ),
                       ),
                       onChanged: (value){
@@ -69,9 +70,9 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                     },
                     builder: (context,subjects) => DropdownSearch<String>(
                       enabled: state.examId != null,
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Select Subjects"
+                          labelText: AppLocalizations.of(context)!.search_question_widget_select_subject
                         ),
                       ),
                       selectedItem: subjects.where((subject) => subject.id == state.subjectId).firstOrNull?.name,
@@ -102,9 +103,9 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
               },
               builder: (context,topics) => DropdownSearch<String>(
                 enabled: state.subjectId != null,
-                dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownDecoratorProps: DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
-                    labelText: "Select Topics"
+                    labelText: AppLocalizations.of(context)!.search_question_widget_select_topic
                   ),
                 ),
                 selectedItem: topics.where((x) => x.id == state.topicId).firstOrNull?.name,

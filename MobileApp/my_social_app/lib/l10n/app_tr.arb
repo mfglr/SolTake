@@ -105,5 +105,95 @@
 
     "user_page_label_all": "hepsi",
     "user_page_label_solved": "çözümlü",
-    "user_page_label_unsolved": "çözümsüz"
+    "user_page_label_unsolved": "çözümsüz",
+
+    "message_items_new_messages": "yeni mesaj",
+    "message_items_new_message": "yeni mesaj",
+
+    "conversation_page_message_field_hint_text": "Mesaj ...",
+    "conversation_page_delete_cancel_button": "İptal",
+    "conversation_page_delete_button": "Sil",
+    "conversation_page_delete_dialog_title": "Mesajları Sil",
+    "conversation_page_delete_dialog_content": "Mesajları silmek istediğine emin misin?",
+
+    "messages_home_page_title": "Mesajlar",
+
+    "conversation_item": "Resim ...",
+
+    "create_message_images_page_message_field_hint_text": "Mesaj ...",
+
+
+
+    "comment_liked_notification_item_content": "Yorumun beğenildi.",
+    "comment_replied_notification_content": "Yorumuna yanıt geldi.",
+    "no_notifications_content": "No Notifications",
+    "question_comment_created_notification_item_content": "Soruna yorum yapıldı.",
+    "question_liked_notification_item_content": "Sorun beğenildi.",
+    "question_solved_notification_item_content": "YAŞASIN!!!🥳 Sorun çözüldü. Çözümü görmek için tıkla.",
+    "solution_comment_created_notification_item_content": "Çözümüne yorum yapıldı.",
+    "solution_created_notification_item_content": "Sorun için bir çözüm oluşturuldu!😊👊 Çözümü kontrol etmek için tıklayın.",
+    "solution_marked_as_correct_notification_item_context": "Çözümün doğru olarak işaretlendi.👏👏👏",
+    "solution_marked_as_incorrect_notification_imte_content": "Çözümün yanlış olarak işaretlendi!😓",
+    "solutin_was_downvoted_notification_item_content": "Olamaz🙁 Çözümün olumsuz oy aldı!👎",
+    "solution_was_upvoted_notification_item_content": "Hey!!! Çözümün olumlu oy aldı!👍",
+    "user_followed_notification_item_content": "Yeni takipçin var.",
+    "user_tagged_in_comment_item_content": "Bir yoruma etiketlendin.",
+
+    "search_question_widget_select_exam": "Sınav Seç",
+    "search_question_widget_select_subject": "Ders Seç",
+    "search_question_widget_select_topic": "Konu Seç",
+
+    "search_users_widget_search_field_hint_text": "Ara",
+    "search_page_label_question": "sorular",
+    "search_page_label_user": "kullanıcılar",
+
+    "image_not_font_widget_content": "Resim bulunamadı.",
+
+    "display_question_correct_solutions_page_title": "Doğru çözümler",
+    "display_question_correct_solutions_page_no_solutions": "Doğru Çözüm Yok",
+
+    "display_question_incorrect_solutions_page_title": "Incorrect solutions",
+    "display_question_incorrect_solutions_page_not_solutions": "No Incorrect Solutions",
+
+    "display_question_pending_solutions_page_title": "Onay bekleyen çözümler",
+    "display_question_pending_solutions_page_no_solutions": "Onay Bekleyen Çözüm Yok",
+
+    "display_question_solutions_page_title": "Çözümler",
+
+    "display_solutions_downvote_page_title": "Olumsuz Oylar",
+
+    "display_solutions_page_title": "adlı kullanıcıların çözümleri",
+
+    "display_solution_upvotes_title": "Olumlu oylar",
+
+    "display_question_solutions_page_no_correct_solutins": "Doğru Çözüm Yok",
+    "display_question_solutions_page_no_pending_solutions": "Onaylanmamış Çözüm Yok",
+    "display_question_solutions_page_no_incorrect_solutions": "Yanlış Çözüm Yok",
+    "display_question_solutions_page_title": "Sorunun Çözümleri",
+
+    "no_solutions_widget_conten1": "Henüz Çözüm Yok!!!😢",
+    "no_solutions_widget_conten2": "Endişelenme! Sorun Yakında Çözülecektir.🤞",
+    "no_solutions_widget_conten3": "Henüz Çözüm Yok!!!😢",
+    "no_solutions_widget_conten4": "Soruyu çözen ilk sen ol!👍",
+
+    "solution_popup_menu_titte": "Çözümü Sil",
+    "solution_popup_menu_content": "Çözümü silmek istediğine emin misin?",
+    "solution_popup_menu_delete_button": "Sil",
+
+    "mark_solution_as_correct_button_content": "Doğru",
+
+    "mark_solution_as_incorrect_button_content": "Yanlış",
+
+    "follow_button_widget_unfollow": "takip etme",
+    "follow_button_widget_follow": "takip et",
+
+    "message_button_widget_content": "mesaj",
+
+    "profile_edit_button_content": "Profilini düzenle",
+
+    "remove_follower_button_content": "Kaldır",
+
+    "user_info_header_widget_questions": "Sorular",
+    "user_info_header_widget_followers": "Takipçi",
+    "user_info_header_widget_followings": "Takip"
 }

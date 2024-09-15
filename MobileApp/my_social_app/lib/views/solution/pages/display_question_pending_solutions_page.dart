@@ -8,6 +8,7 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
   final int questionId;
@@ -29,9 +30,9 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: const Text(
-              "Pending Solutions",
-              style: TextStyle(
+            title: Text(
+              AppLocalizations.of(context)!.display_question_pending_solutions_page_title,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold
               ),
@@ -43,7 +44,9 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
             builder:(context,solutions) => Builder(
               builder: (context) {
                 if(question.pendingSolutions.ids.isEmpty && question.pendingSolutions.isLast){
-                  return const NoSolutions(text: "No Pending Solutions",);
+                  return NoSolutions(
+                    text: AppLocalizations.of(context)!.display_question_pending_solutions_page_no_solutions,
+                  );
                 }
                 return SolutionItemsWidget(
                   solutions: solutions,

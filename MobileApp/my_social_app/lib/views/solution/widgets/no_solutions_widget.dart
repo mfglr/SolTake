@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoSolutionsWidget extends StatelessWidget {
   final QuestionState question;
@@ -8,21 +9,21 @@ class NoSolutionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(question.isOwner){
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Oh No!!! No Solutions Yet!!!😢",
+              AppLocalizations.of(context)!.no_solutions_widget_conten1,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20
               ),
             ),
             Text(
-              "Dont Worry! Your question will be solved soon.🤞",
+              AppLocalizations.of(context)!.no_solutions_widget_conten2,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30
               ),
             )
@@ -30,21 +31,21 @@ class NoSolutionsWidget extends StatelessWidget {
         ),
       );
     }
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "No Solutions Yet!!!😢",
+            AppLocalizations.of(context)!.no_solutions_widget_conten3,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20
             ),
           ),
           Text(
-             "Be the first to solve this question.👍",
+             AppLocalizations.of(context)!.no_solutions_widget_conten4,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30
             ),
           )

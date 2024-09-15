@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MarkSolutionAsIncorrectButton extends StatelessWidget {
   final SolutionState solution;
@@ -23,16 +24,16 @@ class MarkSolutionAsIncorrectButton extends StatelessWidget {
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.close,
             size: 18,
             color: Colors.red,
           ),
           Text(
-            "Correct",
-            style: TextStyle(
+            AppLocalizations.of(context)!.mark_solution_as_incorrect_button_content,
+            style: const TextStyle(
               color: Colors.red,
               fontSize: 11
             ),

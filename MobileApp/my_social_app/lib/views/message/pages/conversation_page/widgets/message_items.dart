@@ -3,6 +3,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_item.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MessageItems extends StatefulWidget {
   final Iterable<MessageState> messages;
@@ -104,7 +105,7 @@ class _MessageItemsState extends State<MessageItems> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "You have ${widget.numberOfNewMessages} ${widget.numberOfNewMessages == 1 ? 'new message' : 'mew messages'}",
+                                "${widget.numberOfNewMessages} ${widget.numberOfNewMessages == 1 ? AppLocalizations.of(context)!.message_items_new_message : AppLocalizations.of(context)!.message_items_new_messages}",
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold

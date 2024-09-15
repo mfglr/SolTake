@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart'
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/no_follows.dart';
-import 'package:my_social_app/views/user/widgets/remove_follower_button_widget.dart';
+import 'package:my_social_app/views/user/widgets/remove_follower_button.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -47,7 +47,7 @@ class UserFollowersPage extends StatelessWidget {
                   rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
                     converter: (store) => store.state.accountState!.id,
                     builder: (context,accountId){
-                      if(accountId == profileUser.id) return RemoveFollowerButtonWidget(user: user);
+                      if(accountId == profileUser.id) return RemoveFollowerButton(user: user);
                       if(accountId != user.id) return FollowButtonWidget(user: user);
                       return const SpaceSavingWidget();
                     }

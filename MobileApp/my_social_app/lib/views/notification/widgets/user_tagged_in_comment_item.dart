@@ -9,6 +9,7 @@ import 'package:my_social_app/views/notification/widgets/notification_item.dart'
 import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserTaggedInCommentItem extends StatelessWidget {
   final NotificationState notification;
@@ -17,7 +18,7 @@ class UserTaggedInCommentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotificationItem(
       notification: notification,
-      content: "You have been tagged in a comment.",
+      content: AppLocalizations.of(context)!.user_tagged_in_comment_item_content,
       icon: const Icon(
         Icons.tag,
         color: Colors.orange,

@@ -8,6 +8,7 @@ import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/remove_searched_user_button.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchUsersWidget extends StatefulWidget {
   const SearchUsersWidget({super.key});
@@ -75,7 +76,7 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
                   fontSize: 14,
                 ),
                 decoration: InputDecoration(
-                  hintText: "Search",
+                  hintText: AppLocalizations.of(context)!.search_users_widget_search_field_hint_text,
                   hintStyle: const TextStyle(
                     fontSize: 14,
                   ),
