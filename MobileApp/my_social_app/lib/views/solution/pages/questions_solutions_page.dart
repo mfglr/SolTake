@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/add_solution_images_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
@@ -190,7 +191,13 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
           floatingActionButton: 
             !question.isOwner ? FloatingActionButton(
               onPressed: (){
-                Navigator.of(context).pushNamed(addSolutionImagesRoute);
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (context) => const AddSolutionImagesPage()))
+                  .then((value) => store.dispatch(CreateSolutionAction(
+                    questionId: widget.questionId, content: value.content, images: value.images))
+                  );
               },
               shape: const CircleBorder(),
               child: const Icon(Icons.border_color),

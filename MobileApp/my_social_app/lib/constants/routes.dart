@@ -8,8 +8,6 @@ const displayQuestionImagesRoute = "/display-question-images/";
 const selectTopicRoute = "/select-topic/";
 const selectExamRoute = "/select-exam";
 
-const addSolutionImagesRoute = "/add-solution-images/";
-const addSolutionContentRoute = "/add-solution-content";
 
 const takeMessageImageRoute = "/take-message-image/";
 

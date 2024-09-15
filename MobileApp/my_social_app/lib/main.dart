@@ -11,12 +11,10 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/create_question/pages/select_exam_page.dart';
-import 'package:my_social_app/views/create_solution/pages/add_solution_content_page.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/account/login_view.dart';
 import 'package:my_social_app/views/create_question/pages/add_question_images_page.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
-import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/add_solution_images_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/account/register_view.dart';
 import 'package:my_social_app/views/root_view.dart';
@@ -108,9 +106,6 @@ Future<void> main() async {
           displayQuestionImagesRoute: (context) => const AddQuestionImagesPage(),
           selectTopicRoute: (context) => const SelectTopicPage(),
           selectExamRoute: (context) => const SelectExamPage(),
-          
-          addSolutionImagesRoute: (context) => const AddSolutionImagesPage(),
-          addSolutionContentRoute: (context) => const AddSolutionContentPage(),
 
           takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
 

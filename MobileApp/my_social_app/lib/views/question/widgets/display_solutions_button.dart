@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/solution/pages/questions_solutions_page.dart';
 
 class DisplaySolutionsButton extends StatelessWidget {
@@ -13,8 +10,6 @@ class DisplaySolutionsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
-        final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(ChangeQuestionIdAction(questionId: question.id));
         Navigator
           .of(context)
           .push(

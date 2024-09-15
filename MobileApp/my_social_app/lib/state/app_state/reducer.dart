@@ -4,7 +4,6 @@ import 'package:my_social_app/state/app_state/comment_user_like_state/reducer.da
 import 'package:my_social_app/state/app_state/create_comment_state/reducers.dart';
 import 'package:my_social_app/state/app_state/create_message_state/reducers.dart';
 import 'package:my_social_app/state/app_state/create_question_state/reducers.dart';
-import 'package:my_social_app/state/app_state/create_solution_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/home_page_state/reducers.dart';
@@ -57,7 +56,6 @@ AppState appReducer(AppState prev,action) => AppState(
   userImageEntityState: userImageEntityStateReducers(prev.userImageEntityState,action),
   searchState: searchStateReducers(prev.searchState,action),
   createQuestionState: createQuestionReducers(prev.createQuestionState,action),
-  createSolutionState: createrSolutionReducers(prev.createSolutionState,action),
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),

@@ -11,7 +11,22 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
+
+void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateSolutionAction){
+    SolutionService()
+      .createAsync(action.content, action.questionId, action.images)
+      .then((solution){
+        final solutionState = solution.toSolutionState();
+        store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
+        store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
+        ToastCreator.displaySuccess("Solution has been successfully created!");
+      });
+  }
+  next(action);
+}
 
 void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionAction){

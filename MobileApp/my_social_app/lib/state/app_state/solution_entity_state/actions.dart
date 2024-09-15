@@ -1,8 +1,18 @@
 import 'dart:typed_data';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_social_app/state/app_state/actions.dart' as redux;
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+
+
+@immutable
+class CreateSolutionAction extends redux.Action{
+  final int questionId;
+  final String? content;
+  final Iterable<XFile> images;
+  const CreateSolutionAction({required this.questionId, required this.content, required this.images});
+}
 
 @immutable
 class LoadSolutionAction extends redux.Action{

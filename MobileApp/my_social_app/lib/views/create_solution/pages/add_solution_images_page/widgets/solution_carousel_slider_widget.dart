@@ -2,13 +2,17 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
-import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
 
 class SolutionCarouselSliderWidget extends StatefulWidget {
   final Iterable<XFile> images;
-  const SolutionCarouselSliderWidget({super.key,required this.images});
+  final void Function(XFile) removeImage;
+
+  const SolutionCarouselSliderWidget({
+    super.key,
+    required this.images,
+    required this.removeImage
+  });
 
   @override
   State<SolutionCarouselSliderWidget> createState() => _SolutionCarouselSliderWidgetState();
@@ -44,7 +48,7 @@ class _SolutionCarouselSliderWidgetState extends State<SolutionCarouselSliderWid
                 top: 0,
                 right: 0,
                 child: IconButton(
-                  onPressed: () => store.dispatch(RemoveSolutoionImageAction(image: image)),
+                  onPressed: () => widget.removeImage(image),
                   icon: const Icon(
                     Icons.close,
                     color: Colors.black,
