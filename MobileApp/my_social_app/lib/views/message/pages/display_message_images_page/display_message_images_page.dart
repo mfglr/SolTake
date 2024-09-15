@@ -145,9 +145,6 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                           CirclePaginationWidget(
                             numberOfCircles: message.numberOfImages,
                             activeIndex: _activeIndex,
-                            activeColor: Colors.blue,
-                            passiveColor: Colors.grey,
-                            diameter: 6,
                             changeActiveIndex: _changeActiveIndex
                           ),
                         ],

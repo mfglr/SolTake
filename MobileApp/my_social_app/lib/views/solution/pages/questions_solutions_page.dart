@@ -189,7 +189,9 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
           ),
           floatingActionButton: 
             !question.isOwner ? FloatingActionButton(
-              onPressed: () => Navigator.of(context).pushNamed(addSolutionImagesRoute),
+              onPressed: (){
+                Navigator.of(context).pushNamed(addSolutionImagesRoute);
+              },
               shape: const CircleBorder(),
               child: const Icon(Icons.border_color),
             ) : null,

@@ -11,11 +11,11 @@ class CirclePaginationWidget extends StatelessWidget {
   const CirclePaginationWidget({
     super.key,
     required this.numberOfCircles,
-    required this.activeIndex,
-    required this.activeColor,
-    required this.passiveColor,
-    required this.diameter,
-    required this.changeActiveIndex
+    required this.changeActiveIndex,
+    this.activeIndex = 0,
+    this.activeColor = Colors.blue,
+    this.passiveColor = Colors.grey,
+    this.diameter = 6
   });
 
   @override

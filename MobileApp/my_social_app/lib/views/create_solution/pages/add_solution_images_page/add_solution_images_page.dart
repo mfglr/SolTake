@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/create_solution_state/actions.dart';
 import 'package:my_social_app/state/app_state/create_solution_state/create_solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
-import 'package:my_social_app/views/create_solution/widgets/no_solution_image_widget.dart';
-import 'package:my_social_app/views/create_solution/widgets/solution_carousel_slider_widget.dart';
+import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/widgets/no_solution_image_widget.dart';
+import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/widgets/solution_carousel_slider_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
@@ -20,18 +21,22 @@ class AddSolutionImagesPage extends StatefulWidget {
 class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
   late final TextEditingController contentController;
 
-  Future<void> _addAPhoto(CreateSolutionState state) async {
+  Future<void> _addAPhoto(CreateSolutionState state){
     if(state.images.length >= 3){
       ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_images_page_error);
-      return;
+      return Future.value();
     }
 
     final store = StoreProvider.of<AppState>(context,listen: false);
-    final dynamic image = await Navigator.of(context).pushNamed(takeImageRoute);
-
-    if(image != null){
-      store.dispatch(CreateSolutionImageAction(image: image));
-    }
+    Navigator
+      .of(context)
+      .pushNamed(takeImageRoute)
+      .then((image){
+        if(image != null){
+          store.dispatch(CreateSolutionImageAction(image: image as XFile));
+        }
+      });
+      return Future.value();
   }
 
   @override
