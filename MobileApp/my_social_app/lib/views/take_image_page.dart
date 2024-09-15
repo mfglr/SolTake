@@ -10,7 +10,7 @@ class TakeImagePage extends StatefulWidget {
 }
 
 class _TakeImagePageState extends State<TakeImagePage> {
- late CameraController _controller;
+  late CameraController _controller;
   late Future<void> _initializeControllerFuture;
   
   @override

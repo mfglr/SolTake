@@ -14,4 +14,5 @@ const addSolutionContentRoute = "/add-solution-content";
 const takeMessageImageRoute = "/take-message-image/";
 
 const takeImageRoute = "/take-image/";
+const takeVideoRoute = "/take_video/";
 

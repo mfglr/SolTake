@@ -21,13 +21,12 @@ class AddQuestionImagesPage extends StatefulWidget {
 }
 
 class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
-  final ValueNotifier<bool> _isDialOpen = ValueNotifier(false);
 
   SpeedDial _createSpeedDial(CreateQuestionState state,SpeedDialDirection direction){
     return SpeedDial(
       icon: Icons.camera,
       activeIcon: Icons.close,
-      openCloseDial: _isDialOpen,
+      openCloseDial: ValueNotifier(false),
       spaceBetweenChildren: 15,
       direction: direction,
       renderOverlay: true,
@@ -64,18 +63,21 @@ class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
           child: const Icon(Icons.photo_camera),
           shape: const CircleBorder(),
           backgroundColor: Colors.blue,
-          onTap: () async {
+          onTap: (){
             if(state.images.length > 3){
               ToastCreator.displayError(AppLocalizations.of(context)!.add_question_images_page_error_message);
               return;
             }
 
             final store = StoreProvider.of<AppState>(context,listen: false);
-            final dynamic image = await Navigator.of(context).pushNamed(takeImageRoute);
-            
-            if(image != null && context.mounted){
-              store.dispatch(CreateQuestionImageAction(image: image));
-            } 
+            Navigator
+              .of(context)
+              .pushNamed(takeImageRoute)
+              .then((image){
+                if(image != null){
+                  store.dispatch(CreateQuestionImageAction(image: image as XFile));
+                }
+              });
           }
         )
       ],

@@ -24,6 +24,7 @@ import 'package:my_social_app/views/account/verify_email_view.dart';
 import 'package:my_social_app/views/take_image_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/take_video_page/take_vieo_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 Future loadEnvironmentVariables() async {
@@ -113,7 +114,8 @@ Future<void> main() async {
 
           takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
 
-          takeImageRoute: (context) => TakeImagePage(camera: cameras.first)
+          takeImageRoute: (context) => TakeImagePage(camera: cameras.first),
+          takeVideoRoute: (context) => TakeVieoPage(camera: cameras.first)
         },
       ),
     )
