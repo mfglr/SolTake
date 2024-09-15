@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Extentions;
 using SixLabors.ImageSharp;
@@ -23,9 +24,15 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
             stream.Position = 0;
 
             var path = GetPath(containerName, blobName);
-            var options = new JpegEncoder { Quality = 25 };
+            JpegEncoder options;
+            if (stream.Length > 409600)
+                options = new JpegEncoder { Quality = 25 };
+            else
+                options = new JpegEncoder { Quality = 100 };
+
             using var t = await SixLabors.ImageSharp.Image.LoadAsync(stream, cancellationToken);
             await t.SaveAsync(path, options, cancellationToken);
+
 
             var image = new Application.ApplicationServices.BlobService.Image(containerName, blobName, dimention);
             _images.Add(image);
