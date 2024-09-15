@@ -9,6 +9,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/question/widgets/question_item/display_question_likes_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/display_solutions_button.dart';
+import 'package:my_social_app/views/question/widgets/question_item/question_content_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_state_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
@@ -112,16 +113,8 @@ class QuestionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          Row(
-            children: [
-              if(question.content != null)
-                TextButton(
-                  onPressed: (){},
-                  child: Text(question.formatContent(15)!)
-                )
-            ],
-          ),
-          
+          if(question.content != null)
+            QuestionContentWidget(content: question.content!),
           Container(
             margin: const EdgeInsets.all(8),
             child: Wrap(
