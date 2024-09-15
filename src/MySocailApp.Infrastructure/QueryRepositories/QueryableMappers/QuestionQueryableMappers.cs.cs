@@ -20,7 +20,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     x.AppUserId == accountId,
                     x.AppUserId,
                     x.AppUser.Account.UserName!,
-                    x.Content,
+                    x.Content != null ? x.Content.Value : null,
                     x.Likes.Any(x => x.AppUserId == accountId),
                     x.Likes.Count,
                     x.Comments.Count,

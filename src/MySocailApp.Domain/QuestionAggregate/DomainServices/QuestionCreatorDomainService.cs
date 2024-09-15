@@ -2,6 +2,7 @@
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SubjectAggregate.Exceptions;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
@@ -14,7 +15,7 @@ namespace MySocailApp.Domain.QuestionAggregate.DomainServices
         private readonly ISubjectReadRepository _subjectRepository = subjectRepository;
         private readonly ITopicReadRepository _topicRepository = topicRepository;
 
-        public async Task CreateAsync(Question question, int userId, string? content, int examId, int subjectId, IEnumerable<int> topicIds, IEnumerable<QuestionImage> images, CancellationToken cancellationToken)
+        public async Task CreateAsync(Question question, int userId, QuestionContent? content, int examId, int subjectId, IEnumerable<int> topicIds, IEnumerable<QuestionImage> images, CancellationToken cancellationToken)
         {
             var exam =
                 await _examRepository.GetByIdAsync(examId, cancellationToken) ??

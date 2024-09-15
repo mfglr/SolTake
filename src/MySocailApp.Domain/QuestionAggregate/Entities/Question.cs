@@ -1,14 +1,12 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
-using System.Net;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
@@ -17,7 +15,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public int ExamId { get; private set; }
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
-        public string? Content { get; private set; }
+        public QuestionContent? Content { get; private set; }
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
@@ -33,7 +31,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(topicId)));
         }
 
-        internal void Create(int appUserId, string? content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
+        internal void Create(int appUserId, QuestionContent? content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
         {
             if (topics.Count() > 3)
                 throw new TooManyTopicsException();

@@ -47,7 +47,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 accountId,
                 page,
                 x =>
-                    (key == null || x.Content != null && x.Content.ToLower().Contains(key.ToLower())) &&
+                    (key == null || x.Content != null && x.Content.Value.ToLower().Contains(key.ToLower())) &&
                     (examId == null || x.ExamId == examId) &&
                     (subjectId == null || x.SubjectId == subjectId) &&
                     (topicId == null || x.Topics.Any(x => x.TopicId == topicId)),

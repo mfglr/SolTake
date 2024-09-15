@@ -4,7 +4,7 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
 {
     public class SolutionContent
     {
-        public readonly static int MaxSoluiontContentLength = 256;
+        public readonly static int MaxSoluiontContentLength = 2200;
         public string Value { get; private set; }
 
         public SolutionContent(string value)

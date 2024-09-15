@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Queries.QuestionAggregate;
@@ -7,6 +6,7 @@ using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
@@ -26,7 +26,8 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
             var images = (await _blobService.UploadAsync(ContainerName.QuestionImages, request.Images, cancellationToken)).Select(x => QuestionImage.Create(x.BlobName, x.Dimention.Height,x.Dimention.Width));
             
             var question = new Question();
-            await _questionCreator.CreateAsync(question, accountId, request.Content, request.ExamId, request.SubjectId, request.TopicIds, images,cancellationToken);
+            var content = request.Content != null ? new QuestionContent(request.Content) : null;
+            await _questionCreator.CreateAsync(question, accountId, content, request.ExamId, request.SubjectId, request.TopicIds, images,cancellationToken);
             await _repository.CreateAsync(question, cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);
