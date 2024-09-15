@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
 
 class QuestionImagesSlider extends StatefulWidget {
@@ -18,6 +19,8 @@ class QuestionImagesSlider extends StatefulWidget {
 
 class _QuestionImagesSliderState extends State<QuestionImagesSlider> with TickerProviderStateMixin {
   bool _isLiked = false;
+  int _index = 0;
+  final CarouselController _carouselController = CarouselController();
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 600),
     vsync: this
@@ -35,6 +38,16 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
       }
     }
     return (MediaQuery.of(context).size.width * max.height) / max.width;
+  }
+
+  void _changeIndex(index){
+    _carouselController
+      .animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.linear
+      );
+    setState(() { _index = index; });
   }
 
   @override
@@ -74,6 +87,7 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
         alignment: Alignment.center,
         children: [
           CarouselSlider(
+            carouselController: _carouselController,
             items: widget.question.images.map(
               (imageState) => DisplayImageWidget(
                 image: imageState.image, 
@@ -87,9 +101,27 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
               onPageChanged: (index, reason){
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 store.dispatch(LoadQuestionImageAction(questionId: widget.question.id,index: index));
+                setState(() { _index = index; });
               },
             ),
           ),
+          if(widget.question.images.length > 1)
+            Positioned(
+              bottom: 15,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CirclePaginationWidget(
+                      numberOfCircles: widget.question.images.length,
+                      changeActiveIndex: _changeIndex,
+                      activeIndex: _index,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           if(_isLiked)
             Positioned(
               child: ScaleTransition(

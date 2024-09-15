@@ -41,11 +41,7 @@ class _RootViewState extends State<RootView> {
         if(user != null){
           return Scaffold(
             bottomNavigationBar: NavigationBar(
-              onDestinationSelected: (index) => {
-                setState(() {
-                  currentPageIndex = index;
-                })
-              },
+              onDestinationSelected: (index) => setState(() { currentPageIndex = index;}),
               selectedIndex: currentPageIndex,
               destinations: [
                 const NavigationDestination(

@@ -7,17 +7,17 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
-import 'package:my_social_app/views/question/widgets/display_question_likes_button.dart';
-import 'package:my_social_app/views/question/widgets/display_solutions_button.dart';
-import 'package:my_social_app/views/question/widgets/question_item_popup_menu.dart';
-import 'package:my_social_app/views/question/widgets/question_state_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_item/display_question_likes_button.dart';
+import 'package:my_social_app/views/question/widgets/question_item/display_solutions_button.dart';
+import 'package:my_social_app/views/question/widgets/question_item/question_item_popup_menu.dart';
+import 'package:my_social_app/views/question/widgets/question_item/question_state_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
-import 'package:my_social_app/views/exam/exam_tag_item.dart';
-import 'package:my_social_app/views/question/widgets/question_comment_button_widget.dart';
-import 'package:my_social_app/views/question/widgets/question_images_slider.dart';
-import 'package:my_social_app/views/question/widgets/question_like_button.dart';
-import 'package:my_social_app/views/subject/subject_tag_item.dart';
-import 'package:my_social_app/views/topic/topic_tag_item.dart';
+import 'package:my_social_app/views/question/widgets/question_item/exam_tag_item.dart';
+import 'package:my_social_app/views/question/widgets/question_item/question_comment_button_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_item/question_images_slider.dart';
+import 'package:my_social_app/views/question/widgets/question_item/question_like_button.dart';
+import 'package:my_social_app/views/question/widgets/question_item/subject_tag_item.dart';
+import 'package:my_social_app/views/question/widgets/question_item/topic_tag_item.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
