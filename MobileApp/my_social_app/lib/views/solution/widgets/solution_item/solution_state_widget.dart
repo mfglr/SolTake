@@ -6,8 +6,8 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/solution/widgets/buttons/mark_solution_as_correct_button.dart';
-import 'package:my_social_app/views/solution/widgets/buttons/mark_solution_as_incorrect_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/mark_solution_as_correct_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/mark_solution_as_incorrect_button.dart';
 
 class SolutionStateWidget extends StatelessWidget {
   final SolutionState solution;

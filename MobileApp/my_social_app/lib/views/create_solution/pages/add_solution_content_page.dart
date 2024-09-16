@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/question.dart';
+import 'package:my_social_app/constants/solution.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,6 +26,7 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
     _contentController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +40,7 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
           controller: _contentController,
           minLines: 10,
           maxLines: 10,
+          maxLength: solutionContentMaxLength,
           decoration: InputDecoration(
             hintText: AppLocalizations.of(context)!.add_solution_content_page_text_field,
             border: const OutlineInputBorder()
@@ -47,11 +51,16 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
         padding: const EdgeInsets.all(8),
         child: OutlinedButton(
           onPressed: (){
-            if((_contentController.text == "") && widget.images.isEmpty){
-              ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_error);
+            final content = _contentController.text.trim();
+            if((content == "") && widget.images.isEmpty){
+              ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_error);
               return;
             }
-            Navigator.of(context).pop(_contentController.text);
+            if(content.length > questionContentMaxLenght){
+              ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_length_error);
+              return;
+            }
+            Navigator.of(context).pop(content);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

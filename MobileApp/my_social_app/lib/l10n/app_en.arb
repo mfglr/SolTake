@@ -81,7 +81,8 @@
 
     "add_solution_content_page_text_field": "Type somethings about your solution...",
     "add_solution_content_page_title": "Type somethings",
-    "add_solution_content_page_error": "You have to type a content or upload at least an image!",
+    "add_solution_content_page_content_error": "You have to type a content or upload at least an image!",
+    "add_solution_content_page_content_length_error": "The content is too long",
     "add_solution_content_page_create_solution_button": "Create Solution",
 
     "edit_user_field_widget_button_text": "Edit",

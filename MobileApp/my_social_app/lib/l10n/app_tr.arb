@@ -79,7 +79,8 @@
 
     "add_solution_content_page_text_field": "Çözümün hakkında bir şeyler yaz...",
     "add_solution_content_page_title": "Bir şeyler yaz",
-    "add_solution_content_page_error": "Çözüm hakkında bir şeyler yazmalı ya da en az bir resim yüklemelisin!",
+    "add_solution_content_page_content_error": "Çözüm hakkında bir şeyler yazmalı ya da en az bir resim yüklemelisin!",
+    "add_solution_content_page_content_length_error": "İçerik çok uzun!",
     "add_solution_content_page_create_solution_button": "Çözümü oluştur",
 
     "edit_user_field_widget_button_text": "Düzenle",

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
-import 'package:my_social_app/views/solution/widgets/buttons/display_solution_downvotes_button.dart';
-import 'package:my_social_app/views/solution/widgets/buttons/display_solution_upvotes_button.dart';
-import 'package:my_social_app/views/solution/widgets/buttons/downvote_button.dart';
-import 'package:my_social_app/views/solution/widgets/buttons/solution_comment_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_downvotes_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_upvotes_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/downvote_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/solution_comment_button.dart';
+import 'package:my_social_app/views/solution/widgets/no_solution_image.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
-import 'package:my_social_app/views/solution/widgets/buttons/upvote_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_images_slider.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
@@ -72,16 +73,12 @@ class SolutionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          Builder(
-            builder: (context) {
-              if(solution.images.isNotEmpty){
-                return SolutionImagesSlider(solution: solution,);
-              }
-              return const SizedBox.shrink();
-            }
-          ),
+          if(solution.images.isNotEmpty)
+            SolutionImagesSlider(solution: solution)
+          else
+            const NoSolutionImage(),
           Padding(
-            padding: const EdgeInsets.only(left:12,right: 12,top: 15),
+            padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(
               children: [
                 UpvoteButton(solution: solution),
@@ -100,7 +97,7 @@ class SolutionItemWidget extends StatelessWidget {
           ),
           if(solution.content != null)
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.only(left:12, right: 12, bottom: 15),
               child: ExtendableContent(
                 content: solution.content!,
                 numberOfExtention: 25,

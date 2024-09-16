@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
+import 'package:my_social_app/views/solution/widgets/no_solution_image.dart';
 
 class SolutionAbstractItemWidget extends StatefulWidget {
   final SolutionState solution;
@@ -39,7 +39,7 @@ class _SolutionAbstractItemWidgetState extends State<SolutionAbstractItemWidget>
         child: Builder(
           builder: (context){
             final image = widget.solution.images.firstOrNull;
-            if(image == null) return const SpaceSavingWidget();
+            if(image == null) return const NoSolutionImage();
             return DisplayImageWidget(
               image: widget.solution.images.first.image,
               status: image.state,

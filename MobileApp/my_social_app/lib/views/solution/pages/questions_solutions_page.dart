@@ -195,9 +195,13 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
                 Navigator
                   .of(context)
                   .push(MaterialPageRoute(builder: (context) => const AddSolutionImagesPage()))
-                  .then((value) => store.dispatch(CreateSolutionAction(
-                    questionId: widget.questionId, content: value.content, images: value.images))
-                  );
+                  .then((value){
+                    if(value != null){
+                      store.dispatch(CreateSolutionAction(
+                        questionId: widget.questionId, content: value.content, images: value.images
+                      ));
+                    }
+                  });
               },
               shape: const CircleBorder(),
               child: const Icon(Icons.border_color),

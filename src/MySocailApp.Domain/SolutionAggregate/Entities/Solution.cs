@@ -18,14 +18,14 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
         internal void Create(int questionId, int appUserId, SolutionContent? content, IEnumerable<SolutionImage> images)
         {
-            if(content == null && !images.Any())
+            if((content == null || content.Value.Trim() == "") && !images.Any())
                 throw new SolutionContentOrImagesRequiredException();
             if (images.Count() > 3)
                 throw new TooManySolutionImageException();
 
             QuestionId = questionId;
             AppUserId = appUserId;
-            Content = content;
+            Content = content?.Value.Trim() == "" ? null : content;
             State = SolutionState.Pending;
             _images.AddRange(images);
             UpdatedAt = CreatedAt = DateTime.UtcNow;

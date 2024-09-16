@@ -53,6 +53,7 @@ class _SolutionImagesSliderState extends State<SolutionImagesSlider> {
     return Stack(
       children: [
         CarouselSlider(
+          carouselController: _carouselController,
           key: ValueKey(widget.solution.id),
           items: widget.solution.images.map(
             (imageState) => Builder(

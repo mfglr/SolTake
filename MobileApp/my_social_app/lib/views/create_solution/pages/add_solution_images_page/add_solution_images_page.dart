@@ -16,7 +16,6 @@ class AddSolutionImagesPage extends StatefulWidget {
 }
 
 class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
-  late final TextEditingController contentController;
   Iterable<XFile> _images = [];
 
   void _addImage(){
@@ -37,13 +36,11 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
 
   @override
   void initState() {
-    contentController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    contentController.dispose();
     super.dispose();
   }
 
@@ -77,7 +74,10 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
             Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (context) => AddSolutionContentPage(images: _images)))
-              .then((content) => Navigator.of(context).pop((images: _images,content: content as String))),
+              .then((content){
+                if(content == null) return;
+                Navigator.of(context).pop((images: _images,content: content as String));
+              }),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/constants/question.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/create_question_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -59,6 +60,7 @@ class SelectTopicPage extends StatelessWidget {
             TextField(
               minLines: 5,
               maxLines: null,
+              maxLength: questionContentMaxLenght,
               onChanged: (value) => store.dispatch(UpdateContentAction(content: value)),
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.select_topics_page_about_question,

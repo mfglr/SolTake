@@ -1,0 +1,1 @@
+const solutionContentMaxLength = 500;

@@ -3,7 +3,7 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
-import 'package:my_social_app/views/solution/widgets/solution_abstract_item_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_abstract_item/solution_abstract_item_widget.dart';
 
 class SolutionAbstractItems extends StatefulWidget {
   final Iterable<SolutionState> solutions;

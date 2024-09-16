@@ -1,0 +1,1 @@
+const questionContentMaxLenght = 500;
