@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/solution/widgets/buttons/display_solution_downvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/buttons/display_solution_upvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/buttons/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/buttons/solution_comment_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_popup_menu.dart';
-import 'package:my_social_app/views/solution/widgets/solution_state_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/buttons/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
-import 'package:my_social_app/views/solution/widgets/solution_images_slider.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/solution_images_slider.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -100,7 +101,10 @@ class SolutionItemWidget extends StatelessWidget {
           if(solution.content != null)
             Padding(
               padding: const EdgeInsets.all(15),
-              child: Text(solution.content!),
+              child: ExtendableContent(
+                content: solution.content!,
+                numberOfExtention: 25,
+              ),
             ),
         ],
       ),

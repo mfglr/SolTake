@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
@@ -9,9 +7,9 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/question/widgets/question_item/display_question_likes_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/display_solutions_button.dart';
-import 'package:my_social_app/views/question/widgets/question_item/question_content_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_state_widget.dart';
+import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/question/widgets/question_item/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_comment_button_widget.dart';
@@ -114,7 +112,13 @@ class QuestionItemWidget extends StatelessWidget {
             ),
           ),
           if(question.content != null)
-            QuestionContentWidget(content: question.content!),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ExtendableContent(
+                content: question.content!,
+                numberOfExtention: 25,
+              ),
+            ),
           Container(
             margin: const EdgeInsets.all(8),
             child: Wrap(
