@@ -88,7 +88,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _saves.Add(save);
             return save;
         }
-        public void RemoveSaved(int saverId)
+        public void DeleteSave(int saverId)
         {
             var save = _saves.FirstOrDefault(x => x.AppUserId == saverId);
             if (save == null)

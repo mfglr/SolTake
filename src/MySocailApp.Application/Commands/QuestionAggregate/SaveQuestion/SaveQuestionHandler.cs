@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion
@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion
             var saverId = _accessTokenReader.GetRequiredAccountId();
             var question =
                 await _questionWriteRepository.GetQuestionWithSaveAsync(request.QuestionId, saverId, cancellationToken) ??
-                throw new UserNotFoundException();
+                throw new QuestionNotFoundException();
             var save = question.Save(saverId);
             await _unitOfWork.CommitAsync(cancellationToken);
             return _mapper.Map<SaveQuestionCommandResponseDto>(save);
