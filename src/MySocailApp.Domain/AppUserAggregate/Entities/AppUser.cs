@@ -87,6 +87,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             _followers.RemoveAt(index);
         }
 
+
         private readonly List<UserSearch> _searcheds = [];
         public IReadOnlyList<UserSearch> Searcheds => _searcheds;
         public IReadOnlyCollection<UserSearch> Searchers { get; } = null!;

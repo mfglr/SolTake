@@ -18,7 +18,5 @@ namespace MySocailApp.Application.Queries.QuestionAggregate
             AppUserId = appUserId;
             AppUser = appUser;
         }
-
-        private QuestionUserLikeResponseDto() { }
     };
 }

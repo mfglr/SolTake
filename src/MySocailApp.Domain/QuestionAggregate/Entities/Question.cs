@@ -76,6 +76,27 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             AddDomainEvent(new QuestionDislikedDomainEvent(this));
         }
 
+
+        //saving questions
+        private readonly List<QuestionUserSave> _saves = [];
+        public IReadOnlyList<QuestionUserSave> Saves => _saves;
+        public QuestionUserSave Save(int saverId)
+        {
+            if (_saves.Any(x => x.AppUserId == saverId))
+                throw new QuestionAlreadySavedException();
+            var save = QuestionUserSave.Create(saverId);
+            _saves.Add(save);
+            return save;
+        }
+        public void RemoveSaved(int saverId)
+        {
+            var save = _saves.FirstOrDefault(x => x.AppUserId == saverId);
+            if (save == null)
+                throw new QuestionNotSavedException();
+            _saves.Remove(save);
+        }
+
+
         // Readonly navigator properties
         public Exam Exam { get; } = null!;
         public Subject Subject { get; } = null!;

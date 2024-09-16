@@ -9,5 +9,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Interfaces
         Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken);
         Task<Question?> GetQuestionWithImagesAsync(int questionId,CancellationToken cancellationToken);
         Task<Question?> GetWithLikeByIdAsync(int id, int userId, CancellationToken cancellationToken);
+        Task<Question?> GetQuestionWithSaveAsync(int questionId, int saverId, CancellationToken cancellationToken);
     }
 }

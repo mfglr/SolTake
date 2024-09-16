@@ -7,6 +7,7 @@ using MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
+using MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetFollowedsQuestions;
@@ -41,12 +42,16 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new DeleteQuestionDto(questionId), cancellationToken);
 
         [HttpPost]
-        public async Task<QuestionUserLikeResponseDto> Like(LikeQuestionDto request,CancellationToken cancellationToken)
+        public async Task<LikeQuestionCommandResponseDto> Like(LikeQuestionDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-
+        
         [HttpDelete("{questionId}")]
         public async Task Dislike(int questionId, CancellationToken cancellationToken)
             => await _mediator.Send(new DislikeQuestionDto(questionId), cancellationToken);
+
+        [HttpPost]
+        public async Task<SaveQuestionCommandResponseDto> SaveQuestion(SaveQuestionDto request,CancellationToken cancellationToken)
+            => await _mediator.Send(request,cancellationToken);
 
         [HttpGet("{questionId}/{questionImageId}")]
         public async Task<FileResult> GetImage(int questionId, int questionImageId, CancellationToken cancellationToken)
