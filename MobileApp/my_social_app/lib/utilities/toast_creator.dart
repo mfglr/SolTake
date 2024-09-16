@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastCreator{
   static void displaySuccess(String message){
+    Fluttertoast.cancel();
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
@@ -15,6 +16,7 @@ class ToastCreator{
   }
 
   static void displayError(String message,{Toast? length}){
+    Fluttertoast.cancel();
     Fluttertoast.showToast(
       msg: message,
       toastLength: length ?? Toast.LENGTH_LONG,
