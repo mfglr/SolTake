@@ -2,6 +2,7 @@ const createQuestioinEndpoint = "Create";
 const deleteQuestionEndpoint = "Delete";
 const likeQuestionEndpoint = "like";
 const dislikeQuestionEndpoint = "dislike";
+const saveQuestionEndpoint = "SaveQuestion";
 
 const getHomePageQuestionsEndpoint = "GetHomePageQuestions";
 const getQuestionByIdEndpoint = "GetQuestionById";
@@ -14,3 +15,4 @@ const searchQuestionsEndpoint = "SearchQuestions";
 const getSolvedQuestionsByUserIdEndpoint = "GetSolvedQuestionsByUserId";
 const getUnsolvedQuestionsByUserIdEndpoint = "GetUnsolvedQuestionsByUserId";
 const getQuestionLikesEndpoint = "GetQuestionLikes";
+const getSavedQuestionsEndpoint = "GetSavedQuestions";

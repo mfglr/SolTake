@@ -19,6 +19,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
+import 'package:my_social_app/state/app_state/question_user_save_state/question_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -65,6 +66,7 @@ class AppState{
   final UserSearchEntityState userSearchEntityState;
   final QuestionEntityState questionEntityState;
   final QuestionUserLikeEntityState questionUserLikeEntityState;
+  final QuestionUserSaveEntityState questionUserSaveEntityState;
   final SolutionUserVoteEntityState solutionUserVoteEntityState;
   final Pagination exams;
 
@@ -94,6 +96,7 @@ class AppState{
     required this.followEntityState,
     required this.questionEntityState,
     required this.questionUserLikeEntityState,
+    required this.questionUserSaveEntityState,
     required this.solutionUserVoteEntityState,
     required this.exams,
   });

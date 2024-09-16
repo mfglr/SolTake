@@ -24,6 +24,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_entit
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
+import 'package:my_social_app/state/app_state/question_user_save_state/question_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
@@ -79,6 +80,7 @@ final store = Store(
     followEntityState: const FollowEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
     questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
+    questionUserSaveEntityState: const QuestionUserSaveEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
   ),
@@ -152,6 +154,10 @@ final store = Store(
     getNextPageUserUnsolvedQuestionsIfNoPageMiddleware,
     getNextPageUserUnsolvedQuestionsIfReadyMiddleware,
     getNextPageUserUnsolvedQuestionsMiddleware,
+
+    getNextPageUserSavedQuestionsIfNoPageMiddleware,
+    getNextPageUserSavedQuestionsIfReadyMiddleware,
+    getNextPageUserSavedQuestionsMiddleware,
 
     updateUserNameMiddleware,
     updateNameMiddleware,

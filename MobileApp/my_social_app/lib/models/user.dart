@@ -61,6 +61,7 @@ class User{
         questions: Pagination.init(questionsPerPage,true),
         solvedQuestions: Pagination.init(questionsPerPage,true),
         unsolvedQuestions: Pagination.init(questionsPerPage,true),
+        savedQuestions: Pagination.init(questionsPerPage, true),
         followers: Pagination.init(usersPerPage,true),
         followeds: Pagination.init(usersPerPage,true),
         notFolloweds: Pagination.init(usersPerPage,true),

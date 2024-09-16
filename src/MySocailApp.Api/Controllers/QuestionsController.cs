@@ -19,6 +19,7 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
+using MySocailApp.Application.Queries.QuestionAggregate.GetSavedQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions;
@@ -108,5 +109,9 @@ namespace MySocailApp.Api.Controllers
         [HttpGet]
         public async Task<List<QuestionResponseDto>> GetFollowedsQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetFollowedsQuestionsDto(offset, take, isDescending), cancellationToken);
+
+        [HttpGet]
+        public async Task<List<QuestionUserSaveResponseDto>> GetSavedQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetSavedQuestionsDto(offset, take, isDescending), cancellationToken);
     }
 }

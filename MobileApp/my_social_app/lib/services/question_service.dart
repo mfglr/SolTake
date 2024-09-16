@@ -6,6 +6,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/models/question_user_like.dart';
+import 'package:my_social_app/models/question_user_save.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
@@ -49,6 +50,14 @@ class QuestionService{
   Future<void> dislike(int questionId) =>
     _appClient
       .delete("$questionController/$dislikeQuestionEndpoint/$questionId");
+
+  Future<void> save(int questionId) =>
+    _appClient
+      .post(
+        "$questionController/$saveQuestionEndpoint",
+        body: { "QuestionId": questionId }
+      );
+  
 
   Future<Question> getById(int questionId) =>
     _appClient
@@ -106,7 +115,14 @@ class QuestionService{
       .get(_appClient.generatePaginationUrl("$questionController/$getQuestionLikesEndpoint/$questionId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => QuestionUserLike.fromJson(e)));
-   
+  
+  Future<Iterable<QuestionUserSave>> getSavedQuestions(Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$questionController/$getSavedQuestionsEndpoint", page))
+      .then((json) => json as List)
+      .then((list) => list.map((e) => QuestionUserSave.fromJson(e)));
+
+
   Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,Page page) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {

@@ -111,11 +111,11 @@ class QuestionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          if(question.content != null)
+          if(question.content != "")
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ExtendableContent(
-                content: question.content!,
+                content: question.content,
                 numberOfExtention: 25,
               ),
             ),

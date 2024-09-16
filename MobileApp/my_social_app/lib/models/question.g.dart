@@ -14,7 +14,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
           : DateTime.parse(json['updatedAt'] as String),
       appUserId: (json['appUserId'] as num).toInt(),
       userName: json['userName'] as String,
-      content: json['content'] as String?,
+      content: json['content'] as String,
       topics: (json['topics'] as List<dynamic>)
           .map((e) => Topic.fromJson(e as Map<String, dynamic>))
           .toList(),

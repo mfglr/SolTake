@@ -15,7 +15,7 @@ namespace MySocailApp.Domain.QuestionAggregate.DomainServices
         private readonly ISubjectReadRepository _subjectRepository = subjectRepository;
         private readonly ITopicReadRepository _topicRepository = topicRepository;
 
-        public async Task CreateAsync(Question question, int userId, QuestionContent? content, int examId, int subjectId, IEnumerable<int> topicIds, IEnumerable<QuestionImage> images, CancellationToken cancellationToken)
+        public async Task CreateAsync(Question question, int userId, QuestionContent content, int examId, int subjectId, IEnumerable<int> topicIds, IEnumerable<QuestionImage> images, CancellationToken cancellationToken)
         {
             var exam =
                 await _examRepository.GetByIdAsync(examId, cancellationToken) ??

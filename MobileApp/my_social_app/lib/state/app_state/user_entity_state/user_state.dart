@@ -21,6 +21,7 @@ class UserState{
   final Pagination questions;
   final Pagination solvedQuestions;
   final Pagination unsolvedQuestions;
+  final Pagination savedQuestions;
   final Pagination messages;
 
   String formatName(int count){
@@ -50,6 +51,7 @@ class UserState{
     required this.questions,
     required this.solvedQuestions,
     required this.unsolvedQuestions,
+    required this.savedQuestions,
     required this.messages,
     required this.notFolloweds
   });
@@ -70,6 +72,7 @@ class UserState{
     Pagination? newQuestions,
     Pagination? newSolvedQuestions,
     Pagination? newUnsolvedQuestions,
+    Pagination? newSavedQuestions,
     Pagination? newMessages,
     Pagination? newNotFolloweds
   }) => UserState(
@@ -90,6 +93,7 @@ class UserState{
     questions: newQuestions ?? questions,
     solvedQuestions: newSolvedQuestions ?? solvedQuestions,
     unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
+    savedQuestions: newSavedQuestions ?? savedQuestions,
     messages: newMessages ?? messages,
     notFolloweds: newNotFolloweds ?? notFolloweds
   );
@@ -229,6 +233,16 @@ class UserState{
     _optional(
       newSolvedQuestions: solvedQuestions.removeOne(id),
       newUnsolvedQuestions: unsolvedQuestions.addInOrder(id),
+    );
+  
+  //saved questions
+  UserState getNextPageSavedQuestions() =>
+    _optional(
+      newSavedQuestions: savedQuestions.startLoadingNext()
+    );
+  UserState addNextPageSavedQuestions(Iterable<int> saveIds) =>
+    _optional(
+      newSavedQuestions: savedQuestions.addNextPage(saveIds)
     );
 
   //messages

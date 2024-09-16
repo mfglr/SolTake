@@ -9,6 +9,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/message_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_user_save_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
@@ -180,6 +181,7 @@ void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatch
   next(action);
 }
 
+//questions
 void getNextPageUserQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserQuestionsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.questions;
@@ -214,7 +216,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
   }
   next(action);
 }
-
+//solved questions
 void getNextPageUserSolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserSolvedQuestionsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
@@ -249,7 +251,7 @@ void getNextPageUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextD
   }
   next(action);
 }
-
+//unsolved questions
 void getNextPageUserUnsolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserUnsolvedQuestionsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.unsolvedQuestions;
@@ -280,6 +282,42 @@ void getNextPageUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,Nex
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
+//saved questions
+void getNextPageUserSavedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSavedQuestionsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.savedQuestions;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserSavedQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserSavedQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSavedQuestionsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.savedQuestions;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserSavedQuestionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserSavedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSavedQuestionsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.savedQuestions;
+    QuestionService()
+      .getSavedQuestions(pagination.next)
+      .then((saves){
+        store.dispatch(AddQuestionUserSavesAction(saves: saves.map((e) => e.toQuestionUserSaveState())));
+        store.dispatch(AddNextPageUserSavedQuestionsAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
+        store.dispatch(AddQuestionsAction(questions: saves.map((e) => e.question!.toQuestionState())));
+        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: saves.map((e) => e.question!.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: saves.map((e) => e.question!.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: saves.map((e) => e.question!.topics.map((e) => e.toTopicState()))));
       });
   }
   next(action);

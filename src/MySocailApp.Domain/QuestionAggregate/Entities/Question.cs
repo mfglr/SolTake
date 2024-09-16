@@ -15,7 +15,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public int ExamId { get; private set; }
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
-        public QuestionContent? Content { get; private set; }
+        public QuestionContent Content { get; private set; }
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
@@ -31,7 +31,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(topicId)));
         }
 
-        internal void Create(int appUserId, QuestionContent? content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
+        internal void Create(int appUserId, QuestionContent content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
         {
             if (topics.Count() > 3)
                 throw new TooManyTopicsException();
@@ -90,9 +90,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         }
         public void DeleteSave(int saverId)
         {
-            var save = _saves.FirstOrDefault(x => x.AppUserId == saverId);
-            if (save == null)
-                throw new QuestionNotSavedException();
+            var save = _saves.FirstOrDefault(x => x.AppUserId == saverId) ?? throw new QuestionNotSavedException();
             _saves.Remove(save);
         }
 

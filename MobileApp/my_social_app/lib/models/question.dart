@@ -19,7 +19,7 @@ class Question{
   final int state;
   final int appUserId;
   final String userName;
-  final String? content;
+  final String content;
   final Exam exam;
   final Subject subject;
   final List<Topic> topics;

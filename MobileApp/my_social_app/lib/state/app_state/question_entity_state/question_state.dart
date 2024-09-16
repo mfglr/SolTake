@@ -15,7 +15,7 @@ class QuestionState{
   final int state;
   final int appUserId;
   final String userName;
-  final String? content;
+  final String content;
   final int examId;
   final int subjectId;
   final Iterable<int> topics;
@@ -107,8 +107,8 @@ class QuestionState{
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
   String? formatContent(int count){
-    if(content == null) return null;
-    return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
+    if(content == "") return null;
+    return content.length <= count ? content : "${content.substring(0,count - 3)}...";
   }
   
   QuestionState startLodingNextLikes() =>

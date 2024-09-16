@@ -2,7 +2,6 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:redux/redux.dart';
 
-
 UserEntityState markQuestionAsSolvedReducer(UserEntityState prev,MarkUserQuestionAsSolvedAction action)
   => prev.markQuestionAsSolved(action.userId, action.questionId);
 UserEntityState markQuestionAsUnsolvedReducer(UserEntityState prev,MarkUserQuestionAsUnsolvedAction action)
@@ -29,6 +28,12 @@ UserEntityState getNextPageUnsolvedQuestionsReducer(UserEntityState prev, GetNex
   => prev.getNextPageUnsolvedQuestions(action.userId);
 UserEntityState addNextPageUnsolvedQuestionsReducer(UserEntityState prev, AddNextPageUserUnsolvedQuestionsAction action)
   => prev.addNextPageUnsolvedQuestions(action.userId, action.questionIds);
+
+//saved questions
+UserEntityState getNextPageSavedQuestionsReducer(UserEntityState prev,GetNextPageUserSavedQuestionsAction action)
+  => prev.getNextPageSavedQuestions(action.userId);
+UserEntityState addNextPageSavedQuestionsReducer(UserEntityState prev,AddNextPageUserSavedQuestionsAction action)
+  => prev.addNextPageSavedQuestions(action.userId,action.savedIds);
 
 //follows
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
@@ -102,6 +107,10 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   //unsolved questions
   TypedReducer<UserEntityState,GetNextPageUserUnsolvedQuestionsAction>(getNextPageUnsolvedQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserUnsolvedQuestionsAction>(addNextPageUnsolvedQuestionsReducer).call,
+
+  //saved questions
+  TypedReducer<UserEntityState,GetNextPageUserSavedQuestionsAction>(getNextPageSavedQuestionsReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserSavedQuestionsAction>(addNextPageSavedQuestionsReducer).call,
 
   //follow
   TypedReducer<UserEntityState,GetNextPageUserFollowersAction>(getNextPageFollowers).call,
