@@ -10,7 +10,7 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
 import 'package:my_social_app/views/search/pages/search_page.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/profile_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class RootView extends StatefulWidget {
@@ -25,6 +25,9 @@ class _RootViewState extends State<RootView> {
 
   @override
   void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    connectNotificationHub(store);
+    connectMessageHub(store);
     super.initState();
   }
 
@@ -33,8 +36,6 @@ class _RootViewState extends State<RootView> {
     return StoreConnector<AppState,UserState?>(
       onInit: (store){
         store.dispatch(LoadUserAction(userId: store.state.accountState!.id));
-        connectNotificationHub(store);
-        connectMessageHub(store);
       },
       converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],
       builder: (context,user){
@@ -88,7 +89,7 @@ class _RootViewState extends State<RootView> {
               const HomePage(),
               const SearchPage(),
               const MessageHomePage(),
-              UserPage(userId: user.id,userName: null,)
+              const ProfilePage()
             ][currentPageIndex]
           );
         }
