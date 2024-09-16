@@ -97,9 +97,11 @@ class UserEntityState extends EntityState<UserState>{
 
 
   UserEntityState changeProfileImageStatus(int userId,bool value)
-    => UserEntityState(entities: updateOne(entities[userId]!.changeProfileImageStatus(value)));
+    => UserEntityState(entities: updateOne(entities[userId]?.changeProfileImageStatus(value)));
   UserEntityState updateUserName(int userId,String userName)
-    => UserEntityState(entities: updateOne(entities[userId]!.updateUserName(userName)));
+    => UserEntityState(entities: updateOne(entities[userId]?.updateUserName(userName)));
   UserEntityState updateName(int userId,String name)
-    => UserEntityState(entities: updateOne(entities[userId]!.updateName(name)));
+    => UserEntityState(entities: updateOne(entities[userId]?.updateName(name)));
+  UserEntityState updateBiography(int userId,String biography)
+    => UserEntityState(entities: updateOne(entities[userId]?.updateBiography(biography)));
 }

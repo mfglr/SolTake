@@ -12,9 +12,9 @@ class User{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;
-  final String? name;
+  final String name;
+  final String biography;
   final bool hasImage;
-  final DateTime? birthDate;
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;
@@ -30,7 +30,7 @@ class User{
     required this.updatedAt,
     required this.userName,
     required this.name,
-    required this.birthDate,
+    required this.biography,
     required this.numberOfQuestions,
     required this.numberOfFollowers,
     required this.numberOfFolloweds,
@@ -51,8 +51,8 @@ class User{
         updatedAt: updatedAt,
         userName: userName,
         name: name,
+        biography: biography,
         hasImage: hasImage,
-        birthDate: birthDate,
         numberOfQuestions: numberOfQuestions,
         numberOfFollowers: numberOfFollowers,
         numberOfFolloweds: numberOfFolloweds,

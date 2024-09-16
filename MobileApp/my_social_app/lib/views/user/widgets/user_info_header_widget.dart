@@ -15,6 +15,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           margin: const EdgeInsets.only(right: 5),
@@ -35,73 +36,93 @@ class UserInfoHeaderWidget extends StatelessWidget {
             ]
           ),
         ),
-        
         Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              TextButton(
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id))
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      user.numberOfQuestions.toString(),
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id))
                     ),
-                    Text(
-                      AppLocalizations.of(context)!.user_info_header_widget_questions,
-                      style: const TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          user.numberOfQuestions.toString(),
+                          style: const TextStyle(
+                            fontSize: 16
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.user_info_header_widget_questions,
+                          style: const TextStyle(fontSize: 12),
+                        )
+                      ],
+                    ),
+                  ),
+                    
+                  TextButton(
+                    onPressed: () =>
+                      Navigator
+                        .of(context)
+                        .push(
+                          MaterialPageRoute(
+                            builder: (context) => UserFollowersPage(
+                              userId: user.id
+                            )
+                          )
+                        ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          user.numberOfFollowers.toString(),
+                          style: const TextStyle(
+                            fontSize: 16
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.user_info_header_widget_followers,
+                          style: const TextStyle(fontSize: 12),
+                        )
+                      ],
+                    ),
+                  ),
+              
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowedsPage(userId: user.id)));
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          user.numberOfFolloweds.toString(),
+                          style: const TextStyle(
+                            fontSize: 16
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.user_info_header_widget_followings,
+                          style: const TextStyle(fontSize: 12),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-                
-              TextButton(
-                onPressed: () async {
-                  await Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowersPage(userId: user.id)));
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      user.numberOfFollowers.toString(),
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.user_info_header_widget_followers,
-                      style: const TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-              ),
-          
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowedsPage(userId: user.id)));
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      user.numberOfFolloweds.toString(),
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.user_info_header_widget_followings,
-                      style: const TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-              )
+              if(user.biography != "")
+                Text(
+                  user.biography,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13
+                  ),
+                )
             ],
           ),
         ),

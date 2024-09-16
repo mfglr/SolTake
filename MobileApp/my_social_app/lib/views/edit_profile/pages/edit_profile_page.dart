@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photo_modal.dart';
+import 'package:my_social_app/views/edit_profile/pages/edit_biography_page.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_name_page.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_user_name_page.dart';
 import 'package:my_social_app/views/edit_profile/widgets/edit_user_field_widget.dart';
@@ -26,7 +28,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final store = StoreProvider.of<AppState>(context, listen: false);
     final user = store.state.currentUser!;
     _userNameController.text = user.userName;
-    _nameController.text = user.name ?? "";
+    _nameController.text = user.name;
     super.initState();
   }
 
@@ -95,9 +97,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
-                              if(user.name != null)
+                              if(user.name != "")
                                 Text(
-                                  user.name!,
+                                  user.name,
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
@@ -118,22 +120,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         margin: const EdgeInsets.only(bottom: 15),
                         child: EditUserFieldWidget(
                           label: AppLocalizations.of(context)!.edit_profile_page_user_name_label,
-                          value: user.formatUserName(),
-                          onPressed: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (contex) => EditUserNamePage(user: user)));
-                          }
+                          value: compressText(user.userName, 15),
+                          onPressed: () =>
+                            Navigator
+                              .of(context)
+                              .push(MaterialPageRoute(builder: (contex) => EditUserNamePage(user: user))),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 15),
                         child: EditUserFieldWidget(
                           label: AppLocalizations.of(context)!.edit_profile_page_name_label,
-                          value: user.name ?? "",
-                          onPressed: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditNamePage(user:user)));
-                          },
+                          value: compressText(user.name, 15),
+                          onPressed: () => 
+                            Navigator
+                              .of(context)
+                              .push(MaterialPageRoute(builder: (context) => EditNamePage(user:user))),
                         ),
-                      )
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 15),
+                        child: EditUserFieldWidget(
+                          label: AppLocalizations.of(context)!.edit_profile_page_biography_label,
+                          value: compressText(user.biography, 20),
+                          onPressed: () =>
+                            Navigator
+                              .of(context)
+                              .push(MaterialPageRoute(builder: (context) => EditBiographyPage(user: user))),
+                        ),
+                      ),
+                      
                     ],
                   ),
                 )

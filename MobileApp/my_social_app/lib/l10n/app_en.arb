@@ -88,13 +88,14 @@
     "edit_user_field_widget_button_text": "Edit",
 
     "edit_name_page_title": "Edit Name",
-
     "edit_user_name_page_title": "Edit Username",
     "edit_user_name_page_invalid_characters": "Invalid chracter!",
-
+    "edit_biography_page_title": "Edit Biography",
+    "edit_biography_page_hint_text": "Type somethings about you. Which exam are you preparing for?",
     "edit_profile_page_title": "Edit Your Profile",
     "edit_profile_page_user_name_label": "User Name",
     "edit_profile_page_name_label": "Name",
+    "edit_profile_page_biography_label": "Biography",
 
     "update_profile_photo_modal_camera": "Camera",
     "update_profile_photo_modal_galeri": "Galeri",

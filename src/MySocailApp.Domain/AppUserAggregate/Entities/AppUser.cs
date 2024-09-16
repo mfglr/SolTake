@@ -14,7 +14,12 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
 {
     public class AppUser(int id) : Entity(id), IAggregateRoot
     {
-        internal void Create() => CreatedAt = DateTime.UtcNow;
+        internal void Create()
+        {
+            Name = "";
+            Biography = new Biography("");
+            CreatedAt = DateTime.UtcNow;
+        }
 
         public bool HasImage { get; private set; }
         public ProfileImage? Image { get; private set; }
@@ -36,25 +41,14 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             Image = null;
         }
 
-        public string? Name { get; private set; }
+        public string Name { get; private set; }
         public void UpdateName(string name)
         {
-            if (name == "")
-                Name = null;
-            else
-                Name = name;
+            Name = name ?? throw new NameRequiredException();
             UpdatedAt = DateTime.UtcNow;
         }
-        
-        public DateTime? BirthDate { get; private set; }
-        public void UpdateBirthDate(DateTime birthDate)
-        {
-            if (birthDate >= DateTime.UtcNow)
-                throw new InvalidBirthDateException();
 
-            BirthDate = birthDate;
-            UpdatedAt = DateTime.UtcNow;
-        }
+        public Biography Biography { get; set; }
 
         //following
         private readonly List<Follow> _followers = [];

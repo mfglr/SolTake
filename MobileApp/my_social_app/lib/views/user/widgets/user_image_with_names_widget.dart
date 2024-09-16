@@ -46,19 +46,15 @@ class UserImageWithNamesWidget extends StatelessWidget {
                 color: userNameColor
               ),
             ),
-            Builder(
-              builder: (context){
-                if(user.name == null) return const SizedBox.shrink();
-                return Text(
-                  user.formatName(15),
-                  style: TextStyle(
-                    fontSize: nameFontSize,
-                    fontWeight: nameFontWeight,
-                    color: nameColor
-                  ),
-                );
-              }
-            )
+            if(user.name != "")
+              Text(
+                user.formatName(15),
+                style: TextStyle(
+                  fontSize: nameFontSize,
+                  fontWeight: nameFontWeight,
+                  color: nameColor
+                ),
+              )
           ],
         )
       ],

@@ -7,8 +7,8 @@ class UserState{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;
-  final String? name;
-  final DateTime? birthDate;
+  final String name;
+  final String biography;
   final bool hasImage;
   final int numberOfQuestions;
   final int numberOfFollowers;
@@ -24,7 +24,7 @@ class UserState{
   final Pagination messages;
 
   String formatName(int count){
-    final r = (name ?? userName);
+    final r = (name == "" ? userName : name);
     return r.length <= count ? r : "${r.substring(0,count)}...";
   }
 
@@ -39,7 +39,7 @@ class UserState{
     required this.userName,
     required this.hasImage,
     required this.name,
-    required this.birthDate,
+    required this.biography,
     required this.numberOfQuestions,
     required this.numberOfFollowers,
     required this.numberOfFolloweds,
@@ -58,7 +58,7 @@ class UserState{
     DateTime? newUpdatedDate,
     String? newUserName,
     String? newName,
-    DateTime? newBirthDate,
+    String? newBiography,
     bool? newHasImage,
     int? newNumberOfQuestions,
     int? newNumberOfFollowers,
@@ -78,7 +78,7 @@ class UserState{
     updatedAt: newUpdatedDate ?? updatedAt,
     userName: newUserName ?? userName,
     name: newName ?? name,
-    birthDate: newBirthDate ?? birthDate,
+    biography: newBiography ?? biography,
     hasImage: newHasImage ?? hasImage,
     numberOfQuestions: newNumberOfQuestions ?? numberOfQuestions,
     numberOfFollowers: newNumberOfFollowers ?? numberOfFollowers,
@@ -248,5 +248,7 @@ class UserState{
   UserState updateUserName(String userName) =>
     _optional(newUserName: userName);
   UserState updateName(String name) =>
-    _optional(newName: name == "" ? null : name);
+    _optional(newName: name);
+  UserState updateBiography(String biography) =>
+    _optional(newBiography: biography);
 }

@@ -81,6 +81,8 @@ UserEntityState updateUserNameReducer(UserEntityState prev,UpdateUserNameSuccess
   => prev.updateUserName(action.userId, action.userName);
 UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction action)
   => prev.updateName(action.userId, action.name);
+UserEntityState updateBiographyReducer(UserEntityState prev, UpdateBiographySuccessAction action)
+  => prev.updateBiography(action.userId, action.biography);
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   //
@@ -131,4 +133,5 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,ChangeProfileImageStatusAction>(changeProfileImageStatusReducer).call,
   TypedReducer<UserEntityState,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
   TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
+  TypedReducer<UserEntityState,UpdateBiographySuccessAction>(updateBiographyReducer).call,
 ]);

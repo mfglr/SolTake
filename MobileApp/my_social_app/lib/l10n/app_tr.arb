@@ -84,15 +84,15 @@
     "add_solution_content_page_create_solution_button": "Çözümü oluştur",
 
     "edit_user_field_widget_button_text": "Düzenle",
-
     "edit_name_page_title": "İsmini Düzenle",
-
     "edit_user_name_page_title": "Kullanıcı Adını Düzenle",
     "edit_user_name_page_invalid_characters": "Geçersiz karekter!",
-
+    "edit_biography_page_title": "Biyografini Düzenle",
+    "edit_biography_page_hint_text": "Kendin hakkında bir şeyler yaz. Hangi sınava hazırlanıyorsun?",
     "edit_profile_page_title": "Profilini Düzenle",
     "edit_profile_page_user_name_label": "Kullanıcı Adı",
     "edit_profile_page_name_label": "İsim",
+    "edit_profile_page_biography_label": "Biyografi",
 
     "update_profile_photo_modal_camera": "Kamera",
     "update_profile_photo_modal_galeri": "Galeri",

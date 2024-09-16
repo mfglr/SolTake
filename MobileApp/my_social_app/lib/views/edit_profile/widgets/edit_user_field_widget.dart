@@ -10,7 +10,7 @@ class EditUserFieldWidget extends StatelessWidget {
     super.key,
     required this.label,
     required this.value,
-    required this.onPressed
+    required this.onPressed,
   });
 
   @override
@@ -30,12 +30,7 @@ class EditUserFieldWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold
                   ),
                 ),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                Text(value),
               ],
             ),
             OutlinedButton(

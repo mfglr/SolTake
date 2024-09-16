@@ -344,9 +344,20 @@ void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
       .updateName(action.name)
       .then((_){
         store.dispatch(UpdateNameSuccessAction(userId: accountId, name: action.name));
-        ToastCreator.displaySuccess("Yout name has been successfully updated.");
+        ToastCreator.displaySuccess("Your name has been successfully updated.");
       });
   }
   next(action);
 }
-
+void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateBiographyAction){
+    final accountId = store.state.accountState!.id;
+    UserService()
+      .updateBiography(action.biography)
+      .then((_){
+        store.dispatch(UpdateBiographySuccessAction(userId: accountId, biography: action.biography));
+        ToastCreator.displaySuccess("Your biography has been successfully updated.");
+      });
+  }
+  next(action);
+}

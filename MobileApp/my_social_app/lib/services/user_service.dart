@@ -31,6 +31,10 @@ class UserService{
     _appClient
       .put("$userController/$updateNameEndpoint",body: {'name' : name});
   
+  Future<void> updateBiography(String biography) =>
+    _appClient
+      .put("$userController/$updateBiographyEndpoint",body: {'biography': biography});
+  
   Future<Follow> follow(int followedId) => 
     _appClient
       .post(

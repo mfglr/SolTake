@@ -15,6 +15,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 
             builder.OwnsOne(x => x.Image);
 
+            builder.OwnsOne(x => x.Biography);
+
             builder
                 .HasMany(x => x.Solutions)
                 .WithOne(x => x.AppUser)

@@ -322,3 +322,14 @@ class UpdateNameSuccessAction extends redux.Action{
   final String name;
   const UpdateNameSuccessAction({required this.userId, required this.name});
 }
+@immutable
+class UpdateBiographyAction extends redux.Action{
+  final String biography;
+  const UpdateBiographyAction({required this.biography});
+}
+@immutable
+class UpdateBiographySuccessAction extends redux.Action{
+  final int userId;
+  final String biography;
+  const UpdateBiographySuccessAction({required this.userId, required this.biography});
+}

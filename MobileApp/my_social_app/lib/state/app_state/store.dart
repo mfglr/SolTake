@@ -155,6 +155,7 @@ final store = Store(
 
     updateUserNameMiddleware,
     updateNameMiddleware,
+    updateBiographyMidleware,
     //user end
 
     //user image start

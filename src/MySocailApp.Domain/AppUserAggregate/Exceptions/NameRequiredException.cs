@@ -4,18 +4,17 @@ using System.Net;
 
 namespace MySocailApp.Domain.AppUserAggregate.Exceptions
 {
-    public class InvalidBirthDateException : AppException
+    public class NameRequiredException : AppException
     {
-        public static readonly string _messageEn = "The date of birth must be earlier than the current date!";
-        public static readonly string _messageTr = "Tarih güncel tarihten daha erken bir değer değil!";
+
+        public static readonly string _messageEn = "Name field is required!";
+        public static readonly string _messageTr = "İsim alanı gereklidir!";
         private readonly static Dictionary<string, string> _messages = new() {
             { Languages.EN, _messageEn },
             { Languages.TR, _messageTr }
         };
         public override string GetErrorMessage(string culture) => _messages[culture];
 
-        public InvalidBirthDateException() : base((int)HttpStatusCode.BadRequest)
-        {
-        }
+        public NameRequiredException() : base((int)HttpStatusCode.BadRequest){}
     }
 }

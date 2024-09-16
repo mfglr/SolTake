@@ -9,7 +9,7 @@ using MySocailApp.Application.Commands.UserAggregate.RemoveFollower;
 using MySocailApp.Application.Commands.UserAggregate.RemoveUserImage;
 using MySocailApp.Application.Commands.UserAggregate.RemoveUserSearched;
 using MySocailApp.Application.Commands.UserAggregate.Unfollow;
-using MySocailApp.Application.Commands.UserAggregate.UpdateBirthDate;
+using MySocailApp.Application.Commands.UserAggregate.UpdateBiography;
 using MySocailApp.Application.Commands.UserAggregate.UpdateName;
 using MySocailApp.Application.Commands.UserAggregate.UpdateUserImage;
 using MySocailApp.Application.Queries.UserAggregate;
@@ -58,8 +58,8 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPut]
-        public async Task UpdateBirthDate(UpdateBirthDateDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
+        public async Task UpdateBiography(UpdateBiographyDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request,cancellationToken);
     
         [HttpPost]
         public async Task<AddUserSearchedCommandResponseDto> AddSearched(AddUserSearchedDto request, CancellationToken cancellationToken)
