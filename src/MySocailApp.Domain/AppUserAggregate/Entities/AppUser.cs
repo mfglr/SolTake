@@ -23,12 +23,9 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
 
         public bool HasImage { get; private set; }
         public ProfileImage? Image { get; private set; }
-        private readonly List<AppUserImage> _images = [];
-        public IReadOnlyCollection<AppUserImage> Images => _images;
         public void UpdateImage(ProfileImage image)
         {
-            if (Image != null)
-                _images.Add(Image.ToAppUserImage());
+            if(Image != null) AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
             HasImage = true;
             Image = image;
         }
@@ -36,8 +33,8 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         {
             if (Image == null)
                 throw new UserImageIsNotAvailableException();
+            AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
             HasImage = false;
-            _images.Add(Image.ToAppUserImage());
             Image = null;
         }
 
