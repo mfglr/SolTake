@@ -286,6 +286,7 @@ void getNextPageUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,Nex
   }
   next(action);
 }
+
 //saved questions
 void getNextPageUserSavedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserSavedQuestionsIfNoPageAction){
@@ -312,9 +313,10 @@ void getNextPageUserSavedQuestionsMiddleware(Store<AppState> store,action,NextDi
       .getSavedQuestions(pagination.next)
       .then((saves){
         store.dispatch(AddQuestionUserSavesAction(saves: saves.map((e) => e.toQuestionUserSaveState())));
-        store.dispatch(AddNextPageUserSavedQuestionsAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: saves.map((e) => e.question!.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddNextPageUserSavedQuestionsAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
+        
         store.dispatch(AddExamsAction(exams: saves.map((e) => e.question!.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: saves.map((e) => e.question!.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: saves.map((e) => e.question!.topics.map((e) => e.toTopicState()))));

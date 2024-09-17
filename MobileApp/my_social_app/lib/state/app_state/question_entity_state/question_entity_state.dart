@@ -76,4 +76,9 @@ class QuestionEntityState extends EntityState<QuestionState>{
 
   QuestionEntityState markAsSolved(int questionid)
     => QuestionEntityState(entities: entities[questionid] != null ? updateOne(entities[questionid]!.markAsSolved()) : entities);
+
+  QuestionEntityState save(int questionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.save()));
+  QuestionEntityState unsave(int questionId)
+    => QuestionEntityState(entities: updateOne(entities[questionId]?.unsave()));
 }

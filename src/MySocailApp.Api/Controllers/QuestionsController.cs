@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion;
-using MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestionSave;
 using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion;
+using MySocailApp.Application.Commands.QuestionAggregate.UnsaveQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetFollowedsQuestions;
@@ -56,8 +56,8 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(request,cancellationToken);
 
         [HttpDelete("{questionId}")]
-        public async Task DeleteQuestionSave(int questionId, CancellationToken cancellationToken)
-            => await _mediator.Send(new DeleteQuestionSaveDto(questionId), cancellationToken);
+        public async Task UnsaveQuestion(int questionId, CancellationToken cancellationToken)
+            => await _mediator.Send(new UnsaveQuestionDto(questionId), cancellationToken);
 
         [HttpGet("{questionId}/{questionImageId}")]
         public async Task<FileResult> GetImage(int questionId, int questionImageId, CancellationToken cancellationToken)

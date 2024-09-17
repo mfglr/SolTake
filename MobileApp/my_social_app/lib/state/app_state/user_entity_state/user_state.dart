@@ -236,14 +236,10 @@ class UserState{
     );
   
   //saved questions
-  UserState getNextPageSavedQuestions() =>
-    _optional(
-      newSavedQuestions: savedQuestions.startLoadingNext()
-    );
-  UserState addNextPageSavedQuestions(Iterable<int> saveIds) =>
-    _optional(
-      newSavedQuestions: savedQuestions.addNextPage(saveIds)
-    );
+  UserState getNextPageSavedQuestions() => _optional(newSavedQuestions: savedQuestions.startLoadingNext());
+  UserState addNextPageSavedQuestions(Iterable<int> saveIds) => _optional(newSavedQuestions: savedQuestions.addNextPage(saveIds));
+  UserState addSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.prependOne(saveId));
+  UserState removeSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.removeOne(saveId));
 
   //messages
   UserState nextPageMessages() =>

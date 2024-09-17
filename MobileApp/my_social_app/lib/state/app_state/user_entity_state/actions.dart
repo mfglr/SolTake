@@ -272,6 +272,18 @@ class AddNextPageUserSavedQuestionsAction extends redux.Action{
   final Iterable<int> savedIds;
   const AddNextPageUserSavedQuestionsAction({required this.userId, required this.savedIds});
 }
+@immutable
+class AddUserSavedQuestionAction extends redux.Action{
+  final int userId;
+  final int saveId;
+  const AddUserSavedQuestionAction({required this.userId, required this.saveId});
+}
+@immutable
+class RemoveUserSavedQuestionAction extends redux.Action{
+  final int userId;
+  final int saveId;
+  const RemoveUserSavedQuestionAction({required this.userId,required this.saveId});
+}
 
 @immutable
 class GetNextPageUserMessagesIfNoPageAction extends redux.Action{

@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_menu_button.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_solved_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page.dart';
@@ -139,6 +140,9 @@ class _ProfilePageState extends State<ProfilePage> {
         return Scaffold(
           appBar: AppBar(
             title: AppTitle(title: user.userName),
+            actions: const [
+              ProfileMenuButton()
+            ]
           ),
           body: Column(
             children: [

@@ -8,7 +8,10 @@ namespace MySocailApp.Application.DomainEventConsumers.ProfileImageDeleteDomainE
     {
         private readonly IBlobService _blobService = blobService;
 
-        public async Task Handle(ProfileImageDeletedDomainEvent notification, CancellationToken cancellationToken)
-            => _blobService.Delete(ContainerName.UserImages, notification.Image.BlobName);
+        public Task Handle(ProfileImageDeletedDomainEvent notification, CancellationToken cancellationToken)
+        {
+            _blobService.Delete(ContainerName.UserImages, notification.Image.BlobName);
+            return Task.CompletedTask;
+        }
     }
 }

@@ -74,6 +74,11 @@ QuestionEntityState startLoadingImageReducer(QuestionEntityState prev,LoadQuesti
 QuestionEntityState loadImageReducer(QuestionEntityState prev,LoadQuestionImageSuccessAction action)
   => prev.loadImage(action.questionId, action.index, action.image);
 
+QuestionEntityState saveReducer(QuestionEntityState prev,SaveQuestionSuccessAction action)
+  => prev.save(action.questionId);
+QuestionEntityState unsaveReducer(QuestionEntityState prev,UnsaveQuestionSuccessAction action)
+  => prev.unsave(action.questionId);
+
 Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntityState>([
   TypedReducer<QuestionEntityState,AddQuestionAction>(addQuestionReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionsAction>(addQuestionsReducer).call,
@@ -116,5 +121,7 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   //images
   TypedReducer<QuestionEntityState,LoadQuestionImageAction>(startLoadingImageReducer).call,
   TypedReducer<QuestionEntityState,LoadQuestionImageSuccessAction>(loadImageReducer).call,
-
+  
+  TypedReducer<QuestionEntityState,SaveQuestionSuccessAction>(saveReducer).call,
+  TypedReducer<QuestionEntityState,UnsaveQuestionSuccessAction>(unsaveReducer).call
 ]);

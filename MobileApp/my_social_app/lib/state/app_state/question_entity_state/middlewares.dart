@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_user_save_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -39,6 +40,33 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       .then((_){
         store.dispatch(DeleteQuestionSuccessAction(questionId: action.questionId));
         store.dispatch(RemoveUserQuestionAction(userId: accountId, questionId: action.questionId));
+      });
+  }
+  next(action);
+}
+void saveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is SaveQuestionAction){
+    final accountId = store.state.accountState!.id;
+    QuestionService()
+      .save(action.questionId)
+      .then((save){
+        store.dispatch(SaveQuestionSuccessAction(questionId: action.questionId));
+        store.dispatch(AddQuestionUserSaveAction(save: save.toQuestionUserSaveState()));
+        store.dispatch(AddUserSavedQuestionAction(userId: accountId, saveId: save.id));
+      });
+  }
+  next(action);
+}
+void unsaveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UnsaveQuestionAction){
+    final accountId = store.state.accountState!.id;
+    QuestionService()
+      .unsave(action.questionId)
+      .then((_){
+        final saveId = store.state.questionUserSaveEntityState.select(action.questionId, accountId)?.id ?? 0;
+        store.dispatch(UnsaveQuestionSuccessAction(questionId: action.questionId));
+        store.dispatch(RemoveQuestionUserSaveAction(saveId: saveId));
+        store.dispatch(RemoveUserSavedQuestionAction(userId: accountId, saveId: saveId));
       });
   }
   next(action);

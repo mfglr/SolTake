@@ -25,6 +25,7 @@ class Question{
   final List<Topic> topics;
   final List<QuestionImage> images;
   final bool isLiked;
+  final bool isSaved;
   final int numberOfLikes;
   final int numberOfSolutions;
   final int numberOfCorrectSolutions;
@@ -43,6 +44,7 @@ class Question{
     required this.subject,
     required this.images,
     required this.isLiked,
+    required this.isSaved,
     required this.numberOfLikes,
     required this.numberOfSolutions,
     required this.numberOfCorrectSolutions,
@@ -67,6 +69,7 @@ class Question{
     topics: topics.map((e) => e.id),
     images: images.map((e) => e.toQuestionImageState()),
     isLiked: isLiked,
+    isSaved: isSaved,
     isOwner: isOwner,
     numberOfLikes: numberOfLikes,
     numberOfComments: numberOfComments,

@@ -258,3 +258,24 @@ class LoadQuestionImageSuccessAction extends redux.Action{
   final Uint8List image;
   const LoadQuestionImageSuccessAction({required this.questionId, required this.index,required this.image});
 }
+
+@immutable
+class SaveQuestionAction extends redux.Action{
+  final int questionId;
+  const SaveQuestionAction({required this.questionId});
+}
+@immutable
+class SaveQuestionSuccessAction extends redux.Action{
+  final int questionId;
+  const SaveQuestionSuccessAction({required this.questionId});
+}
+@immutable
+class UnsaveQuestionAction extends redux.Action{
+  final int questionId;
+  const UnsaveQuestionAction({required this.questionId});
+}
+@immutable
+class UnsaveQuestionSuccessAction extends redux.Action{
+  final int questionId;
+  const UnsaveQuestionSuccessAction({required this.questionId});
+}

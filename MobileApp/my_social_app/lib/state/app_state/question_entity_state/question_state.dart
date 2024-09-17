@@ -21,6 +21,7 @@ class QuestionState{
   final Iterable<int> topics;
   final Iterable<QuestionImageState> images;
   final bool isLiked;
+  final bool isSaved;
   final bool isOwner;
   final int numberOfLikes;
   final int numberOfComments;
@@ -46,6 +47,7 @@ class QuestionState{
     required this.topics,
     required this.images,
     required this.isLiked,
+    required this.isSaved,
     required this.isOwner,
     required this.numberOfLikes,
     required this.numberOfComments,
@@ -68,6 +70,7 @@ class QuestionState{
     Iterable<int>? newTopics,
     Iterable<QuestionImageState>? newImages,
     bool? newIsLiked,
+    bool? newIsSaved,
     int? newNumberOfLikes,
     int? newNumberOfComments,
     int? newNumberOfSolutions,
@@ -92,6 +95,7 @@ class QuestionState{
       topics: newTopics ?? topics,
       images: newImages ?? images,
       isLiked: newIsLiked ?? isLiked,
+      isSaved: newIsSaved ?? isSaved,
       isOwner: isOwner,
       numberOfComments: newNumberOfComments ?? numberOfComments,
       numberOfLikes: newNumberOfLikes ?? numberOfLikes,
@@ -225,4 +229,6 @@ class QuestionState{
   QuestionState markAsSolved() =>
     _optional(newState: QuestionStatus.solved);
     
+  QuestionState save() => _optional(newIsSaved: true);
+  QuestionState unsave() => _optional(newIsSaved: false);
 }

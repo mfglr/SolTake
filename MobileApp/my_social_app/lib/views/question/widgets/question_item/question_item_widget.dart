@@ -9,6 +9,7 @@ import 'package:my_social_app/views/question/widgets/question_item/display_quest
 import 'package:my_social_app/views/question/widgets/question_item/display_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_state_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_item/save_question_button.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/question/widgets/question_item/exam_tag_item.dart';
@@ -107,7 +108,12 @@ class QuestionItemWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                DisplaySolutionsButton(question: question)
+                Row(
+                  children: [
+                    SaveQuestionButton(question: question),
+                    DisplaySolutionsButton(question: question)
+                  ],
+                )
               ],
             ),
           ),

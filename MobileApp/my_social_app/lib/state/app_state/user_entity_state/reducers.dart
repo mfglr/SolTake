@@ -34,6 +34,10 @@ UserEntityState getNextPageSavedQuestionsReducer(UserEntityState prev,GetNextPag
   => prev.getNextPageSavedQuestions(action.userId);
 UserEntityState addNextPageSavedQuestionsReducer(UserEntityState prev,AddNextPageUserSavedQuestionsAction action)
   => prev.addNextPageSavedQuestions(action.userId,action.savedIds);
+UserEntityState addSavedQuestionReducer(UserEntityState prev,AddUserSavedQuestionAction action)
+  => prev.addSavedQuestion(action.userId,action.saveId);
+UserEntityState removeSaveQuestionReducer(UserEntityState prev,RemoveUserSavedQuestionAction action)
+  => prev.removeSavedQuestion(action.userId,action.saveId);
 
 //follows
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
@@ -111,6 +115,8 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   //saved questions
   TypedReducer<UserEntityState,GetNextPageUserSavedQuestionsAction>(getNextPageSavedQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserSavedQuestionsAction>(addNextPageSavedQuestionsReducer).call,
+  TypedReducer<UserEntityState,AddUserSavedQuestionAction>(addSavedQuestionReducer).call,
+  TypedReducer<UserEntityState,RemoveUserSavedQuestionAction>(removeSaveQuestionReducer).call,
 
   //follow
   TypedReducer<UserEntityState,GetNextPageUserFollowersAction>(getNextPageFollowers).call,

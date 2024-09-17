@@ -224,6 +224,8 @@ final store = Store(
     loadQuestionMiddleware,
     createQuestionMiddleware,
     deleteQuestionMiddleware,
+    saveQuestionMiddleware,
+    unsaveQuestionMiddleware,
 
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,

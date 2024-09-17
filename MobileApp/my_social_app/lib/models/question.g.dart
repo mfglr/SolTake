@@ -24,6 +24,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
           .map((e) => QuestionImage.fromJson(e as Map<String, dynamic>))
           .toList(),
       isLiked: json['isLiked'] as bool,
+      isSaved: json['isSaved'] as bool,
       numberOfLikes: (json['numberOfLikes'] as num).toInt(),
       numberOfSolutions: (json['numberOfSolutions'] as num).toInt(),
       numberOfCorrectSolutions:
@@ -47,6 +48,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'topics': instance.topics,
       'images': instance.images,
       'isLiked': instance.isLiked,
+      'isSaved': instance.isSaved,
       'numberOfLikes': instance.numberOfLikes,
       'numberOfSolutions': instance.numberOfSolutions,
       'numberOfCorrectSolutions': instance.numberOfCorrectSolutions,

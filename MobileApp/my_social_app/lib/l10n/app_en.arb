@@ -199,5 +199,13 @@
 
     "user_info_header_widget_questions": "Questions",
     "user_info_header_widget_followers": "Followers",
-    "user_info_header_widget_followings": "Followings"
+    "user_info_header_widget_followings": "Followings",
+
+
+    "profile_menu_page_title" : "My Account",
+    "profile_menu_page_saves_item": "Questions Saved",
+
+    "display_abstract_questions_page_title": "Questions Saved",
+
+    "display_saved_question_page_title": "Questions Saved"
 }

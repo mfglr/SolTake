@@ -51,12 +51,17 @@ class QuestionService{
     _appClient
       .delete("$questionController/$dislikeQuestionEndpoint/$questionId");
 
-  Future<void> save(int questionId) =>
+  Future<QuestionUserSave> save(int questionId) =>
     _appClient
       .post(
         "$questionController/$saveQuestionEndpoint",
         body: { "QuestionId": questionId }
-      );
+      )
+      .then((json) => QuestionUserSave.fromJson(json));
+  
+  Future<void> unsave(int questionId) =>
+    _appClient
+      .delete("$questionController/$unsaveQuestionEndpoint/$questionId");
   
 
   Future<Question> getById(int questionId) =>
