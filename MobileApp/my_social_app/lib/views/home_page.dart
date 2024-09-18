@@ -13,19 +13,8 @@ import 'package:my_social_app/views/notification/pages/notification_page.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 import 'package:badges/badges.dart' as badges;
 
-enum MenuAction{
-  logout
-}
-
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
 
   @override
   Widget build(BuildContext context) {

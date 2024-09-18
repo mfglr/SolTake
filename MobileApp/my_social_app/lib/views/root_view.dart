@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/connect_message_hub.dart';
-import 'package:my_social_app/connect_notification_hub.dart';
+import 'package:my_social_app/services/message_hub.dart';
+import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -15,20 +16,38 @@ import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class RootView extends StatefulWidget {
   const RootView({super.key});
-
   @override
   State<RootView> createState() => _RootViewState();
 }
 
 class _RootViewState extends State<RootView> {
   int currentPageIndex = 0;
-
+  late StreamSubscription<String?> _accessTokenConsumer;
+  
   @override
   void initState() {
     final store = StoreProvider.of<AppState>(context,listen: false);
-    connectNotificationHub(store);
-    connectMessageHub(store);
+
+    _accessTokenConsumer = store.onChange
+      .map((state) => state.accessToken)
+      .distinct()
+      .listen((token){
+        if(token != null){
+          MessageHub.init(store);
+          NotificationHub.init(store);
+        }
+        else{
+          MessageHub.close();
+          NotificationHub.close();
+        }
+      });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _accessTokenConsumer.cancel();
+    super.dispose();
   }
 
   @override
