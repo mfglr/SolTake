@@ -43,52 +43,68 @@ class UserInfoHeaderWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id))
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          user.numberOfQuestions.toString(),
-                          style: const TextStyle(
-                            fontSize: 16
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id))
+                      ),
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            user.numberOfQuestions.toString(),
+                            style: const TextStyle(
+                              fontSize: 16
+                            ),
                           ),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.user_info_header_widget_questions,
-                          style: const TextStyle(fontSize: 12),
-                        )
-                      ],
+                          Text(
+                            AppLocalizations.of(context)!.user_info_header_widget_questions,
+                            style: const TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                     
-                  TextButton(
-                    onPressed: () =>
-                      Navigator
-                        .of(context)
-                        .push(
-                          MaterialPageRoute(
-                            builder: (context) => UserFollowersPage(
-                              userId: user.id
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: TextButton(
+                      onPressed: () =>
+                        Navigator
+                          .of(context)
+                          .push(
+                            MaterialPageRoute(
+                              builder: (context) => UserFollowersPage(
+                                userId: user.id
+                              )
                             )
-                          )
-                        ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          user.numberOfFollowers.toString(),
-                          style: const TextStyle(
-                            fontSize: 16
                           ),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.user_info_header_widget_followers,
-                          style: const TextStyle(fontSize: 12),
-                        )
-                      ],
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            user.numberOfFollowers.toString(),
+                            style: const TextStyle(
+                              fontSize: 16
+                            ),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.user_info_header_widget_followers,
+                            style: const TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
                     ),
                   ),
               
@@ -96,6 +112,11 @@ class UserInfoHeaderWidget extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowedsPage(userId: user.id)));
                     },
+                    style: ButtonStyle(
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
+                      minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -115,12 +136,20 @@ class UserInfoHeaderWidget extends StatelessWidget {
                 ],
               ),
               if(user.biography != "")
-                Text(
-                  user.biography,
-                  textAlign: TextAlign.end,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        user.biography,
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13
+                        ),
+                      ),
+                    ],
                   ),
                 )
             ],

@@ -36,7 +36,7 @@ class ProfileMenuPage extends StatelessWidget {
                   ),
             ),
             ProfileMenuItem(
-              name: "Çıkış yap",
+              name: AppLocalizations.of(context)!.profile_menu_page_logout_item,
               icon: Icons.logout,
               displayRightArrow: false,
               iconColor: Colors.red,

@@ -208,6 +208,7 @@
 
     "profile_menu_page_title" : "My Account",
     "profile_menu_page_saves_item": "Questions Saved",
+    "profile_menu_page_logout_item": "Logout",
 
     "display_abstract_questions_page_title": "Questions Saved",
 
