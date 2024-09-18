@@ -38,6 +38,20 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
 
             AddDomainEvent(new AccountCreatedDominEvent(this));
         }
+        internal void CreateByGoogle(string? email)
+        {
+            IsThirdPartyAuthenticated = true;
+            if(email == null)
+                UserName = $"user_{BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0)}";
+            else
+            {
+                UserName = ValueObjects.Email.GenerateUserName(email);
+                Email = email;
+            }
+            CreatedAt = DateTime.UtcNow;
+
+            AddDomainEvent(new AccountCreatedDominEvent(this));
+        }
 
         internal void UpdateUserName(string username)
         {

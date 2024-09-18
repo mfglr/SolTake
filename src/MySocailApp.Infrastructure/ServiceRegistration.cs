@@ -130,6 +130,7 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<IFaceBookTokenReader,FaceBookTokenReader>()
+                .AddScoped<IGoogleTokenReader,GoogleTokenReader>()
                 .AddScoped<ITransactionCreator, TransactionCreator>()
                 .AddScoped<AccountManager>();
         }

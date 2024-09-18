@@ -33,6 +33,12 @@ class LoginByFaceBookAction extends AppAction{
 }
 
 @immutable
+class LoginByGoogleAction extends AppAction{
+  final String accessToken;
+  const LoginByGoogleAction({required this.accessToken});
+}
+
+@immutable
 class CreateAccountAction extends AppAction{
   final String email;
   final String password;

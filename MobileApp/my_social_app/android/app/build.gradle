@@ -47,6 +47,15 @@ android {
         
     }
 
+    signingConfigs{
+        debug{
+            keyAlias('androiddebugkey')
+            keyPassword '15953025178Mfg.'
+            storeFile file('mykey.jks')
+            storePassword '15953025178Mfg.'
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

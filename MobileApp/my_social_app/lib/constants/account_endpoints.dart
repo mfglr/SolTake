@@ -3,6 +3,7 @@ const String updateEmailConfirmationTokenEndPoint = "UpdateEmailConfirmationToke
 const String confirmEmailByTokenEntPoint = "ConfirmEmailByToken";
 const String loginByPasswordEndPoint = "LoginByPassword";
 const String loginByFaceBookEndpoint = "LoginByFaceBook";
+const String loginByGoogleEndpoint = "LoginByGoogle";
 const String loginByRefreshTokenEndPoint = "loginByRefreshToken";
 const String updateEmailEndPoint = "UpdateEmail";
 const String updateUserNameEndPoint = "UpdateUserName";

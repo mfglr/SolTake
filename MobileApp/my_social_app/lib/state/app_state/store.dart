@@ -115,6 +115,7 @@ final store = Store(
     confirmEmailMiddleware,
     loginByPaswordMiddleware,
     loginByFaceBookMiddleware,
+    loginByGoogleMiddleware,
     createAccountMiddleware,
     logOutMiddleware,
     //account end

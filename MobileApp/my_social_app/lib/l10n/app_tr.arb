@@ -9,6 +9,8 @@
 
     "face_book_login_button_error": "Bir şeyler yanlış gitti! Lütfen tekrar deneyin.",
 
+    "google_login_button_error": "Bir şeyler yanlış gitti! Lütfen tekrar deneyin.",
+
     "register_button": "Kayıt Ol",
     "register_email": "Email addresinizi giriniz.",
     "register_password": "Şifrenizi giriniz.",

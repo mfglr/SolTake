@@ -9,6 +9,7 @@ using MySocailApp.Application.Commands.AccountAggregate.ConfirmEmailByToken;
 using MySocailApp.Application.Commands.AccountAggregate.CreateAccount;
 using MySocailApp.Application.Commands.AccountAggregate.DeleteAccount;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByFaceBook;
+using MySocailApp.Application.Commands.AccountAggregate.LoginByGoogle;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByPassword;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken;
 using MySocailApp.Application.Commands.AccountAggregate.LogOut;
@@ -42,6 +43,10 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<AccountDto> LoginByFaceBook(LoginByFaceBookDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request,cancellationToken);
+
+        [HttpPost]
+        public async Task<AccountDto> LoginByGoogle(LoginByGoogleDto request,CancellationToken cancelToken)
+            => await _mediator.Send(request, cancelToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

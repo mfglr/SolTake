@@ -3,6 +3,7 @@ import 'package:my_social_app/constants/account_endpoints.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/views/account/login_page/widgets/google_login_button.dart';
 
 class AccountService {
   final AppClient _appClient;
@@ -51,6 +52,18 @@ class AccountService {
         body: { 'accessToken': accessToken}
       )
       .then((json) => Account.fromJson(json));
+  
+  Future<Account> loginByGoogle(String accessToken) =>
+    _appClient
+      .post(
+        "$accountController/$loginByGoogleEndpoint",
+        body: { 'accessToken': accessToken }
+      )
+      .then((json) => Account.fromJson(json))
+      .catchError((e) async {
+        await googleSignIn.disconnect();
+        throw e;
+      });
 
   Future<Account> loginByReshtoken(int id,String token) =>
     _appClient

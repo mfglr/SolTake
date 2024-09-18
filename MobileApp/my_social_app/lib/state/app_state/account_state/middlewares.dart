@@ -17,8 +17,7 @@ void setAccount(Store<AppState> store,Account account){
 
 void loginByPaswordMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoginByPasswordAction){
-    final accountService = AccountService();
-    accountService
+    AccountService()
       .loginByPassword(action.emailOrPassword, action.password)
       .then((account) => setAccount(store, account));
   }
@@ -27,9 +26,17 @@ void loginByPaswordMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void loginByFaceBookMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoginByFaceBookAction){
-    final accountService = AccountService();
-    accountService
+    AccountService()
       .loginByFaceBook(action.accessToken)
+      .then((account) => setAccount(store, account));
+  }
+  next(action);
+}
+
+void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoginByGoogleAction){
+    AccountService()
+      .loginByGoogle(action.accessToken)
       .then((account) => setAccount(store, account));
   }
   next(action);
@@ -37,8 +44,7 @@ void loginByFaceBookMiddleware(Store<AppState> store,action,NextDispatcher next)
 
 void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is ConfirmEmailByTokenAction){
-    final accountService = AccountService();
-    accountService
+    AccountService()
       .confirmEmailByToken(action.token)
       .then((account) => setAccount(store, account));
   }
@@ -47,8 +53,7 @@ void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateAccountAction){
-    final accountService = AccountService();
-    accountService
+    AccountService()
       .create(action.email, action.password, action.passwordConfirmation)
       .then((account) => setAccount(store, account));
   }

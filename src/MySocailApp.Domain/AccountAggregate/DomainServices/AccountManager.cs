@@ -167,6 +167,50 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             await _tokenService.UpdateTokenAsync(account);
             return account;
         }
+
+        public async Task<Account> LoginByGoogleAsync(GoogleUser googleUser,CancellationToken cancellationToken)
+        {
+            var account = await _userManager.FindByLoginAsync(LoginProvider.Google, googleUser.UserId);
+            if (account == null)
+            {
+
+                if(googleUser.Email != null && (await _userManager.Users.AnyAsync(x => x.Email == googleUser.Email)))
+                    throw new EmailIsAlreadyTakenException();
+
+                account = new Account();
+                account.CreateByGoogle(googleUser.Email);
+
+                var transaction = await _transactionCreator.CreateTransactionAsync(cancellationToken);
+
+                //create account
+                var result = await _userManager.CreateAsync(account);
+                if (!result.Succeeded) throw new ServerSideException();
+
+                //create user
+                var user = new AppUser(account.Id);
+                user.Create();
+                await _userWriteRepository.CreateAsync(user, cancellationToken);
+
+                //add role to account
+                result = await _userManager.AddToRoleAsync(account, Roles.USER);
+                if (!result.Succeeded) throw new ServerSideException();
+
+                //add login to account
+                result = await _userManager.AddLoginAsync(account, new(LoginProvider.Google, googleUser.UserId, null));
+                if (!result.Succeeded) throw new ServerSideException();
+
+                await transaction.CommitAsync(cancellationToken);
+            }
+            else
+            {
+                //update security stamp to revoke previous refresh token.
+                var result = await _userManager.UpdateSecurityStampAsync(account);
+                if (!result.Succeeded) throw new ServerSideException();
+            }
+            await _tokenService.UpdateTokenAsync(account);
+            return account;
+        }
+
         public async Task LoginByRefreshToken(Account account, string refrehToken)
         {
             if (refrehToken == null)

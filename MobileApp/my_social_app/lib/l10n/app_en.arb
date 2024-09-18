@@ -9,6 +9,8 @@
 
     "face_book_login_button_error": "Something went wrong! Please try again.",
 
+    "google_login_button_error": "Something went wrong! Please try again.",
+
     "register_email": "Enter your email.",
     "register_password": "Enter your password.",
     "register_password_confirmation": "Confirm the password.",
