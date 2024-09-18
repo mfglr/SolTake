@@ -1,9 +1,13 @@
 {
-    "login_email": "Email addresinizi ya da kullanıcı adınızı giriniz.",
-    "login_password": "Şifrenizi giriniz.",
-    "login_button": "Giriş Yap",
+    "login_form_email": "Email addresinizi ya da kullanıcı adınızı giriniz.",
+    "login_form_password": "Şifrenizi giriniz.",
+    "login_form_button": "Giriş Yap",
     "login_register_label": "Henüz bir hesabınız yok mu? Kayıt olun.",
     "login_register_button": "Kayıt Ol",
+
+    "login_page_diveder_or": "ya da",
+
+    "face_book_login_button_error": "Bir şeyler yanlış gitti! Lütfen tekrar deneyin.",
 
     "register_button": "Kayıt Ol",
     "register_email": "Email addresinizi giriniz.",

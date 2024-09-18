@@ -21,11 +21,13 @@ namespace MySocailApp.Api
             var tokenProviderOptions = configuration.GetRequiredSection("TokenProviderOptions").Get<TokenProviderOptions>()!;
             var emailServiceSettings = configuration.GetRequiredSection("EmailServiceSettings").Get<EmailServiceSettings>()!;
             var applicationSettings = configuration.GetRequiredSection("ApplicationSettings").Get<ApplicationSettings>()!;
+            var faceBookSettings = configuration.GetRequiredSection("FaceBookSettings").Get<FaceBookSettings>()!;
 
             return services
                 .AddSingleton<ITokenProviderOptions>(tokenProviderOptions)
                 .AddSingleton<IEmailServiceSettings>(emailServiceSettings)
-                .AddSingleton<IApplicationSettings>(applicationSettings);
+                .AddSingleton<IApplicationSettings>(applicationSettings)
+                .AddSingleton<IFaceBookSettings>(faceBookSettings);
         }
 
         public static IServiceCollection AddFilters(this IServiceCollection services)
@@ -89,7 +91,6 @@ namespace MySocailApp.Api
                         opt.Password.RequiredLength = 6;
 
                         opt.User.AllowedUserNameCharacters = "0123456789abcdefghijklmnopqrstuvwxyz_.";
-                        opt.User.RequireUniqueEmail = true;
 
                         opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
                         opt.Lockout.MaxFailedAccessAttempts = 5;

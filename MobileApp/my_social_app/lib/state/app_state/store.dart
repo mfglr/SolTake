@@ -113,7 +113,8 @@ final store = Store(
     //account start
     initAppMiddleware,
     confirmEmailMiddleware,
-    loginByPasword,
+    loginByPaswordMiddleware,
+    loginByFaceBookMiddleware,
     createAccountMiddleware,
     logOutMiddleware,
     //account end

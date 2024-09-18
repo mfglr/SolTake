@@ -12,9 +12,10 @@ AccountState _$AccountStateFromJson(Map<String, dynamic> json) => AccountState(
       json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      json['email'] as String,
+      json['email'] as String?,
       json['userName'] as String,
       json['emailConfirmed'] as bool,
+      json['isThirdPartyAuthenticated'] as bool,
       json['refreshToken'] as String,
     );
 
@@ -26,5 +27,6 @@ Map<String, dynamic> _$AccountStateToJson(AccountState instance) =>
       'email': instance.email,
       'userName': instance.userName,
       'emailConfirmed': instance.emailConfirmed,
+      'isThirdPartyAuthenticated': instance.isThirdPartyAuthenticated,
       'refreshToken': instance.refreshToken,
     };

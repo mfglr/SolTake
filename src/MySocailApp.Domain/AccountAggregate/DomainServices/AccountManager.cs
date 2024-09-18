@@ -32,7 +32,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             var transaction = await _transactionCreator.CreateTransactionAsync(cancellationToken);
 
             //create account
-            account.Create(email);
+            account.CreateByEmail(email);
             var result = await _userManager.CreateAsync(account, password);
             if (!result.Succeeded) throw new ServerSideException();
 
@@ -125,6 +125,47 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
                 throw new ServerSideException();
 
             await _tokenService.UpdateTokenAsync(account);
+        }
+        public async Task<Account> LoginByFacebookAsync(string userId, CancellationToken cancellationToken)
+        {
+            if (userId == null)
+                throw new ServerSideException();
+            
+            var account = await _userManager.FindByLoginAsync(LoginProvider.FaceBook,userId);
+            if(account == null)
+            {
+                account = new Account();
+                account.CreateByFaceBookLogin();
+
+                var transaction = await _transactionCreator.CreateTransactionAsync(cancellationToken);
+                
+                //create account
+                var result = await _userManager.CreateAsync(account);
+                if (!result.Succeeded) throw new ServerSideException();
+                
+                //create user
+                var user = new AppUser(account.Id);
+                user.Create();
+                await _userWriteRepository.CreateAsync(user, cancellationToken);
+                
+                //add role to account
+                result = await _userManager.AddToRoleAsync(account, Roles.USER);
+                if (!result.Succeeded) throw new ServerSideException();
+
+                //add login to account
+                result = await _userManager.AddLoginAsync(account, new(LoginProvider.FaceBook, userId, null));
+                if (!result.Succeeded) throw new ServerSideException();
+
+                await transaction.CommitAsync(cancellationToken);
+            }
+            else
+            {
+                //update security stamp to revoke previous refresh token.
+                var result = await _userManager.UpdateSecurityStampAsync(account);
+                if (!result.Succeeded) throw new ServerSideException();
+            }
+            await _tokenService.UpdateTokenAsync(account);
+            return account;
         }
         public async Task LoginByRefreshToken(Account account, string refrehToken)
         {

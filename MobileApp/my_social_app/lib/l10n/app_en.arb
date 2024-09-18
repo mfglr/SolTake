@@ -1,10 +1,14 @@
 {
-    "login_email": "Enter your email or username.",
-    "login_password": "Enter your password",
-    "login_button": "Login",
+    "login_form_email": "Enter your email or username.",
+    "login_form_password": "Enter your password",
+    "login_form_button": "Login",
     "login_register_label": "Don't you have an account? Register",
     "login_register_button": "Register",
     
+    "login_page_diveder_or": "or",
+
+    "face_book_login_button_error": "Something went wrong! Please try again.",
+
     "register_email": "Enter your email.",
     "register_password": "Enter your password.",
     "register_password_confirmation": "Confirm the password.",

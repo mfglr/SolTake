@@ -24,7 +24,6 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 new (JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new (ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new (ClaimTypes.Name,account.UserName!),
-                new (ClaimTypes.Email,account.Email!),
                 new (JwtRegisteredClaimNames.Aud, _tokenConfiguration.Audience)
             };
 

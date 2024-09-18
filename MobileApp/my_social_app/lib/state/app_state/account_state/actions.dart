@@ -28,6 +28,12 @@ class LoginByPasswordAction extends redux.Action{
 }
 
 @immutable
+class LoginByFaceBookAction extends redux.Action{
+  final String accessToken;
+  const LoginByFaceBookAction({required this.accessToken});
+}
+
+@immutable
 class CreateAccountAction extends redux.Action{
   final String email;
   final String password;

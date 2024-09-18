@@ -8,9 +8,10 @@ class AccountState{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
-  final String email;
+  final String? email;
   final String userName;
   final bool emailConfirmed;
+  final bool isThirdPartyAuthenticated;
   final String refreshToken;
 
   const AccountState(
@@ -20,6 +21,7 @@ class AccountState{
     this.email,
     this.userName,
     this.emailConfirmed,
+    this.isThirdPartyAuthenticated,
     this.refreshToken,
   );
 
@@ -27,5 +29,5 @@ class AccountState{
   Map<String, dynamic> toJson() => _$AccountStateToJson(this);
 
   AccountState confirmEmail()
-    => AccountState(id, createdAt, updatedAt, email, userName, true, refreshToken);
+    => AccountState(id, createdAt, updatedAt, email, userName, true, isThirdPartyAuthenticated, refreshToken);
 }

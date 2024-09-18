@@ -2,6 +2,7 @@ const String createEndPoint = "create";
 const String updateEmailConfirmationTokenEndPoint = "UpdateEmailConfirmationToken";
 const String confirmEmailByTokenEntPoint = "ConfirmEmailByToken";
 const String loginByPasswordEndPoint = "LoginByPassword";
+const String loginByFaceBookEndpoint = "LoginByFaceBook";
 const String loginByRefreshTokenEndPoint = "loginByRefreshToken";
 const String updateEmailEndPoint = "UpdateEmail";
 const String updateUserNameEndPoint = "UpdateUserName";

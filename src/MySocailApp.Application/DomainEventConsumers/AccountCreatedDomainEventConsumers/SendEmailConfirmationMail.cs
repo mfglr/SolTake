@@ -11,9 +11,10 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountCreatedDomainEvent
         public async Task Handle(AccountCreatedDominEvent notification, CancellationToken cancellationToken)
         {
             var account = notification.Account;
-            await _emailService.SendEmailConfirmationByTokenMail(
-                account.EmailConfirmationToken, notification.Account.UserName!,notification.Account.Email!,cancellationToken
-            );
+            if(!account.IsThirdPartyAuthenticated)
+                await _emailService.SendEmailConfirmationByTokenMail(
+                    account.EmailConfirmationToken!, notification.Account.UserName!,notification.Account.Email!,cancellationToken
+                );
         }
     }
 }

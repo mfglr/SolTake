@@ -12,7 +12,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/create_question/pages/select_exam_page.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
-import 'package:my_social_app/views/account/login_view.dart';
+import 'package:my_social_app/views/account/login_page/login_page.dart';
 import 'package:my_social_app/views/create_question/pages/add_question_images_page.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
@@ -84,12 +84,12 @@ Future<void> main() async {
                     return StoreConnector<AppState,ActiveLoginPage>(
                       converter: (store) => store.state.activeLoginPage,
                       builder: (context,activeLoginPage){
-                        if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginView();
+                        if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
                         return const RegisterView();
                       },
                     );
                   }
-                  if(!accountState.emailConfirmed) return const VerifyEmailView();
+                  if(!accountState.isThirdPartyAuthenticated && !accountState.emailConfirmed) return const VerifyEmailView();
                   return const RootView();
                 },
               );
@@ -98,7 +98,6 @@ Future<void> main() async {
           }
         ),
         routes: {
-          loginRoute: (context) => const LoginView(),
           registerRoute: (context) => const RegisterView(),
           verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),

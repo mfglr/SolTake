@@ -11,9 +11,9 @@ class AccountService {
   static final AccountService _singleton = AccountService._(AppClient());
   factory AccountService() => _singleton;
 
-  Future<Account> create(String email, String password, String passwordConfirmation) async {
-    return Account.fromJson(
-      await _appClient.post(
+  Future<Account> create(String email, String password, String passwordConfirmation) =>
+    _appClient
+      .post(
         "$accountController/$createEndPoint",
         body: {
           'email':email,
@@ -21,71 +21,67 @@ class AccountService {
           "passwordConfirm":passwordConfirmation
         }
       )
-    );
-  }
+      .then((json) => Account.fromJson(json));
 
-  Future<Account> updateEmailConfirmationToken() async {
-    return Account.fromJson(
-      await _appClient.post(
-        "$accountController/$updateEmailConfirmationTokenEndPoint"
-      )
-    );
-  }
+  Future<Account> updateEmailConfirmationToken() =>
+    _appClient
+      .post("$accountController/$updateEmailConfirmationTokenEndPoint")
+      .then((json) => Account.fromJson(json));
 
-  Future<Account> confirmEmailByToken(String token) async {
-    return Account.fromJson(
-      await _appClient.post(
+  Future<Account> confirmEmailByToken(String token) =>
+    _appClient
+      .post(
         "$accountController/$confirmEmailByTokenEntPoint",
         body: { 'token': token }
       )
-    );
-  }
+      .then((json) => Account.fromJson(json));
 
-  Future<Account> loginByPassword(String emailOrUserName, String password) async {
-    return Account.fromJson(
-      await _appClient.post(
+  Future<Account> loginByPassword(String emailOrUserName, String password) =>
+    _appClient
+      .post(
         "$accountController/$loginByPasswordEndPoint",
-        body: {
-          'emailOrUserName':emailOrUserName,
-          'password':password
-        }
+        body: { 'emailOrUserName':emailOrUserName, 'password':password }
       )
-    );
-  }
+      .then((json) => Account.fromJson(json));
+  
+  Future<Account> loginByFaceBook(String accessToken) =>
+    _appClient
+      .post(
+        "$accountController/$loginByFaceBookEndpoint",
+        body: { 'accessToken': accessToken}
+      )
+      .then((json) => Account.fromJson(json));
 
-  Future<Account> loginByReshtoken(int id,String token) async{
-    return Account.fromJson(
-      await _appClient.post(
+  Future<Account> loginByReshtoken(int id,String token) =>
+    _appClient
+      .post(
         "$accountController/$loginByRefreshTokenEndPoint",
         body: { 'id': id.toString(),'token': token}
       )
-    );
-  }
+      .then((json) => Account.fromJson(json));
 
-  Future<Account> updateEmail(String email) async {
-    return Account.fromJson(
-      await _appClient.post(
+  Future<Account> updateEmail(String email) =>
+    _appClient
+      .post(
         "$accountController/$updateEmailEndPoint",
-        body: {
-          'email': email
-        }
+        body: { 'email': email }
       )
-    );
-  }
+      .then((json) => Account.fromJson(json));
 
-  Future<Account> updateUserName(String userName)
-    => _appClient
-          .post(
-            "$accountController/$updateUserNameEndPoint",
-            body: { 'userName': userName}
-          )
-          .then((account) => Account.fromJson(account));
+  Future<Account> updateUserName(String userName) =>
+    _appClient
+      .post(
+        "$accountController/$updateUserNameEndPoint",
+        body: { 'userName': userName}
+      )
+      .then((account) => Account.fromJson(account));
 
-  Future<void> logOut()
-    => _appClient.put("$accountController/$logOutEndPoint");
+  Future<void> logOut() =>
+    _appClient
+      .put("$accountController/$logOutEndPoint");
 
-  Future<bool> isUserNameExist(String userName)
-    => _appClient
-        .get("$accountController/$isUserNameExistEndPoint/$userName")
-        .then((response) => response as bool);
+  Future<bool> isUserNameExist(String userName) =>
+    _appClient
+      .get("$accountController/$isUserNameExistEndPoint/$userName")
+      .then((response) => response as bool);
 }

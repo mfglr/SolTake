@@ -14,14 +14,15 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         public DateTime? UpdatedAt { get; private set; }
 
         public Account() { }
-
-        internal void Create(string email)
+        public bool IsThirdPartyAuthenticated { get; private set; }
+        internal void CreateByEmail(string email)
         {
             if (email == null)
                 throw new EmailIsRequiredException();
             if(!ValueObjects.Email.IsValid(email))
                 throw new InvalidEmailException();
 
+            IsThirdPartyAuthenticated = false;
             Email = email;
             UserName = ValueObjects.Email.GenerateUserName(email);
             CreatedAt = DateTime.UtcNow;
@@ -29,6 +30,15 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
 
             AddDomainEvent(new AccountCreatedDominEvent(this));
         }
+        internal void CreateByFaceBookLogin()
+        {
+            IsThirdPartyAuthenticated = true;
+            UserName = $"user_{BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0)}";
+            CreatedAt = DateTime.UtcNow;
+
+            AddDomainEvent(new AccountCreatedDominEvent(this));
+        }
+
         internal void UpdateUserName(string username)
         {
             UserName = username;
@@ -44,7 +54,7 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         }
 
         //Email verfication Token
-        public EmailConfirmationToken EmailConfirmationToken { get; private set; } = null!;
+        public EmailConfirmationToken? EmailConfirmationToken { get; private set; } = null!;
         public void UpdateEmailConfirmationToken()
         {
             if (EmailConfirmed)
@@ -55,7 +65,7 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         }
         internal void ConfirmEmailByToken(string token)
         {
-            if (!EmailConfirmationToken.IsValid(token))
+            if (!EmailConfirmationToken!.IsValid(token))
                 EmailConfirmationToken = EmailConfirmationToken.IncreaseNumberOfFailedAttemps();
             else
                 EmailConfirmed = true;

@@ -1,3 +1,4 @@
+import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/account_storage.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
@@ -5,18 +6,30 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 
-void loginByPasword(Store<AppState> store,action,NextDispatcher next){
+
+void setAccount(Store<AppState> store,Account account){
+  final state = account.toAccountState();
+  AccountStorage().set(state);
+  store.dispatch(ChangeAccessTokenAction(accessToken: account.accessToken));
+  store.dispatch(UpdateAccountStateAction(payload: state));
+}
+
+void loginByPaswordMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoginByPasswordAction){
     final accountService = AccountService();
-    final accountStorage = AccountStorage();
     accountService
       .loginByPassword(action.emailOrPassword, action.password)
-      .then((account){
-        final newAccountState = account.toAccountState();
-        accountStorage.set(newAccountState);
-        store.dispatch(ChangeAccessTokenAction(accessToken: account.accessToken));
-        store.dispatch(UpdateAccountStateAction(payload: newAccountState));
-      });
+      .then((account) => setAccount(store, account));
+  }
+  next(action);
+}
+
+void loginByFaceBookMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoginByFaceBookAction){
+    final accountService = AccountService();
+    accountService
+      .loginByFaceBook(action.accessToken)
+      .then((account) => setAccount(store, account));
   }
   next(action);
 }
@@ -24,15 +37,9 @@ void loginByPasword(Store<AppState> store,action,NextDispatcher next){
 void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is ConfirmEmailByTokenAction){
     final accountService = AccountService();
-    final accountStorage = AccountStorage();
     accountService
       .confirmEmailByToken(action.token)
-      .then((account){
-        final newAccountState = account.toAccountState();
-        accountStorage.set(newAccountState);
-        store.dispatch(ChangeAccessTokenAction(accessToken: account.accessToken));
-        store.dispatch(UpdateAccountStateAction(payload: newAccountState));
-      });
+      .then((account) => setAccount(store, account));
   }
   next(action);
 }
@@ -40,15 +47,9 @@ void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
 void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateAccountAction){
     final accountService = AccountService();
-    final accountStorage = AccountStorage();
     accountService
       .create(action.email, action.password, action.passwordConfirmation)
-      .then((account){
-        final newAccountState = account.toAccountState();
-        accountStorage.set(newAccountState);
-        store.dispatch(ChangeAccessTokenAction(accessToken: account.accessToken));
-        store.dispatch(UpdateAccountStateAction(payload: newAccountState));
-      });
+      .then((account) => setAccount(store, account));
   }
   next(action);
 }

@@ -15,7 +15,7 @@ namespace MySocailApp.Api.Filters
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
             var account = await _userManager.FindByIdAsync(accountId.ToString());
-            if (!account!.EmailConfirmed)
+            if (!account!.IsThirdPartyAuthenticated && !account!.EmailConfirmed)
                 throw new EmailIsNotConfirmedException();
             await next();
         }

@@ -7,9 +7,10 @@ class Account{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
-  final String email;
+  final String? email;
   final String userName;
   final bool emailConfirmed;
+  final bool isThirdPartyAuthenticated;
   final String accessToken;
   final String refreshToken;
 
@@ -20,6 +21,7 @@ class Account{
     this.userName,
     this.email,
     this.emailConfirmed,
+    this.isThirdPartyAuthenticated,
     this.accessToken,
     this.refreshToken
   );
@@ -28,5 +30,5 @@ class Account{
   Map<String, dynamic> toJson() => _$AccountToJson(this);
   
   AccountState toAccountState()
-    => AccountState(id, createdAt, updatedAt, email, userName, emailConfirmed,refreshToken);
+    => AccountState(id, createdAt, updatedAt, email, userName, emailConfirmed, isThirdPartyAuthenticated, refreshToken);
 }
