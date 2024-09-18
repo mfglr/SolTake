@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
@@ -32,6 +33,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_entity_stat
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
+import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
 enum ActiveLoginPage{
@@ -100,6 +102,42 @@ class AppState{
     required this.solutionUserVoteEntityState,
     required this.exams,
   });
+
+  AppState clear() => AppState(
+    accessToken: null,
+    accountState: null,
+    activeLoginPage: ActiveLoginPage.loginPage,
+    isInitialized: true,
+    userEntityState: const UserEntityState(entities: {}),
+    userImageEntityState: const UserImageEntityState(entities: {}),
+    searchState: SearchState(
+      key: "",examId: null,subjectId: null,topicId: null,
+      questions: Pagination.init(questionsPerPage,true),
+      users: Pagination.init(usersPerPage,true),
+      searchedUsers: Pagination.init(usersPerPage,true)
+    ),
+    createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
+    examEntityState: const ExamEntityState(entities: {}),
+    subjectEntityState: const SubjectEntityState(entities: {}),
+    topicEntityState: const TopicEntityState(entities: {}),
+    solutionEntityState: const SolutionEntityState(entities: {}),
+    homePageState: HomePageState(questions: Pagination.init(questionsPerPage,true)),
+    commentEntityState: const CommentEntityState(entities: {}),
+    commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
+    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
+    notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
+    messageEntityState: const MessageEntityState(entities: {}),
+    messageImageEntityState: const MessageImageEntityState(entities: {}),
+    messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
+    createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
+    userSearchEntityState: const UserSearchEntityState(entities: {}),
+    followEntityState: const FollowEntityState(entities: {}),
+    questionEntityState: const QuestionEntityState(entities: {}),
+    questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
+    questionUserSaveEntityState: const QuestionUserSaveEntityState(entities: {}),
+    solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
+    exams: Pagination.init(examsPerPage, true),
+  );
 
   //select messages
   Iterable<MessageState> get selectConversations => messageEntityState.selectConversations;

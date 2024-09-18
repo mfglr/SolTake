@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
 @immutable
-class LoadUserAction extends redux.Action{
+class LoadUserAction extends AppAction{
   final int userId;
   const LoadUserAction({required this.userId});
 }
 @immutable
-class LoadUserByUserNameAction extends redux.Action{
+class LoadUserByUserNameAction extends AppAction{
   final String userName;
   const LoadUserByUserNameAction({required this.userName});
 }
 @immutable
-class AddUserAction extends redux.Action{
+class AddUserAction extends AppAction{
   final UserState user;
   const AddUserAction({required this.user});
 }
 @immutable
-class AddUsersAction extends redux.Action{
+class AddUsersAction extends AppAction{
   final Iterable<UserState> users;
   const AddUsersAction({required this.users});
 }
 
 
 @immutable
-class AddNewFollowerAction extends redux.Action{
+class AddNewFollowerAction extends AppAction{
   final int curentUserId;
   final int followerId;
   final int followId;
@@ -37,12 +37,12 @@ class AddNewFollowerAction extends redux.Action{
 }
 
 @immutable
-class FollowUserAction extends redux.Action{
+class FollowUserAction extends AppAction{
   final int followedId;
   const FollowUserAction({required this.followedId});
 }
 @immutable
-class FollowUserSuccessAction extends redux.Action{
+class FollowUserSuccessAction extends AppAction{
   final int currentUserId;
   final int followedId;
   final int followId;
@@ -53,12 +53,12 @@ class FollowUserSuccessAction extends redux.Action{
   });
 }
 @immutable
-class UnfollowUserAction extends redux.Action{
+class UnfollowUserAction extends AppAction{
   final int followedId;
   const UnfollowUserAction({required this.followedId});
 }
 @immutable
-class UnfollowUserSuccessAction extends redux.Action{
+class UnfollowUserSuccessAction extends AppAction{
   final int currentUserId;
   final int followedId;
   final int followId;
@@ -69,12 +69,12 @@ class UnfollowUserSuccessAction extends redux.Action{
   });
 }
 @immutable
-class RemoveFollowerAction extends redux.Action{
+class RemoveFollowerAction extends AppAction{
   final int followerId;
   const RemoveFollowerAction({required this.followerId});
 }
 @immutable
-class RemoveFollowerSuccessAction extends redux.Action{
+class RemoveFollowerSuccessAction extends AppAction{
   final int currentUserId;
   final int followerId;
   final int followId;
@@ -82,125 +82,125 @@ class RemoveFollowerSuccessAction extends redux.Action{
 }
 
 @immutable
-class GetNextPageUserFollowersIfNoPageAction extends redux.Action{
+class GetNextPageUserFollowersIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserFollowersIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserFollowersIfReadyAction extends redux.Action{
+class GetNextPageUserFollowersIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserFollowersIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserFollowersAction extends redux.Action{
+class GetNextPageUserFollowersAction extends AppAction{
   final int userId;
   const GetNextPageUserFollowersAction({required this.userId});
 }
 @immutable
-class AddNextPageUserFollowersAction extends redux.Action{
+class AddNextPageUserFollowersAction extends AppAction{
   final int userId;
   final Iterable<int> followIds;
   const AddNextPageUserFollowersAction({required this.userId, required this.followIds});
 }
 
 @immutable
-class GetNextPageUserFollowedsIfNoPageAction extends redux.Action{
+class GetNextPageUserFollowedsIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserFollowedsIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserFollowedsIfReadyAction extends redux.Action{
+class GetNextPageUserFollowedsIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserFollowedsIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserFollowedsAction extends redux.Action{
+class GetNextPageUserFollowedsAction extends AppAction{
   final int userId;
   const GetNextPageUserFollowedsAction({required this.userId});
 }
 @immutable
-class AddNextPageUserFollowedsAction extends redux.Action{
+class AddNextPageUserFollowedsAction extends AppAction{
   final int userId;
   final Iterable<int> followIds;
   const AddNextPageUserFollowedsAction({required this.userId, required this.followIds});
 }
 
 @immutable
-class GetNextPageUserNotFollowedsIfNoPageAction extends redux.Action{
+class GetNextPageUserNotFollowedsIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserNotFollowedsIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserNotFollowedsIfReadyAction extends redux.Action{
+class GetNextPageUserNotFollowedsIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserNotFollowedsIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserNotFollowedsAction extends redux.Action{
+class GetNextPageUserNotFollowedsAction extends AppAction{
   final int userId;
   const GetNextPageUserNotFollowedsAction({required this.userId});
 }
 @immutable
-class AddNextPageUserNotFollowedsAction extends redux.Action{
+class AddNextPageUserNotFollowedsAction extends AppAction{
   final int userId;
   final Iterable<int> userIds;
   const AddNextPageUserNotFollowedsAction({required this.userId, required this.userIds});
 }
 @immutable
-class RemoveUserNotFollowedAction extends redux.Action{
+class RemoveUserNotFollowedAction extends AppAction{
   final int userId;
   final int notFollowedId;
   const RemoveUserNotFollowedAction({required this.userId, required this.notFollowedId});
 }
 @immutable
-class AddUserNotFollowedAction extends redux.Action{
+class AddUserNotFollowedAction extends AppAction{
   final int userId;
   final int notFollowedId;
   const AddUserNotFollowedAction({required this.userId, required this.notFollowedId});
 }
 
 @immutable
-class MarkUserQuestionAsSolvedAction extends redux.Action{
+class MarkUserQuestionAsSolvedAction extends AppAction{
   final int userId;
   final int questionId;
   const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
 }
 @immutable
-class MarkUserQuestionAsUnsolvedAction extends redux.Action{
+class MarkUserQuestionAsUnsolvedAction extends AppAction{
   final int userId;
   final int questionId;
   const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
 }
 
 @immutable
-class GetNextPageUserQuestionsIfNoPageAction extends redux.Action{
+class GetNextPageUserQuestionsIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserQuestionsIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserQuestionsIfReadyAction extends redux.Action{
+class GetNextPageUserQuestionsIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserQuestionsIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserQuestionsAction extends redux.Action{
+class GetNextPageUserQuestionsAction extends AppAction{
   final int userId;
   const GetNextPageUserQuestionsAction({required this.userId});
 }
 @immutable
-class AddNextPageUserQuestionsAction extends redux.Action{
+class AddNextPageUserQuestionsAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
   const AddNextPageUserQuestionsAction({required this.userId,required this.questionIds});
 }
 @immutable
-class AddNewUserQuestionAction extends redux.Action{
+class AddNewUserQuestionAction extends AppAction{
   final int userId;
   final int questionId;
   const AddNewUserQuestionAction({required this.userId,required this.questionId});
 }
 @immutable
-class RemoveUserQuestionAction extends redux.Action{
+class RemoveUserQuestionAction extends AppAction{
   final int userId;
   final int questionId;
   const RemoveUserQuestionAction({required this.userId, required this.questionId});
@@ -208,112 +208,112 @@ class RemoveUserQuestionAction extends redux.Action{
 
 
 @immutable
-class GetNextPageUserSolvedQuestionsIfNoPageAction extends redux.Action{
+class GetNextPageUserSolvedQuestionsIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserSolvedQuestionsIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserSolvedQuestionsIfReadyAction extends redux.Action{
+class GetNextPageUserSolvedQuestionsIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserSolvedQuestionsIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserSolvedQuestionsAction extends redux.Action{
+class GetNextPageUserSolvedQuestionsAction extends AppAction{
   final int userId;
   const GetNextPageUserSolvedQuestionsAction({required this.userId});
 }
 @immutable
-class AddNextPageUserSolvedQuestionsAction extends redux.Action{
+class AddNextPageUserSolvedQuestionsAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
   const AddNextPageUserSolvedQuestionsAction({required this.userId, required this.questionIds});
 }
 
 @immutable
-class GetNextPageUserUnsolvedQuestionsIfNoPageAction extends redux.Action{
+class GetNextPageUserUnsolvedQuestionsIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserUnsolvedQuestionsIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserUnsolvedQuestionsIfReadyAction extends redux.Action{
+class GetNextPageUserUnsolvedQuestionsIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserUnsolvedQuestionsIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserUnsolvedQuestionsAction extends redux.Action{
+class GetNextPageUserUnsolvedQuestionsAction extends AppAction{
   final int userId;
   const GetNextPageUserUnsolvedQuestionsAction({required this.userId});
 }
 @immutable
-class AddNextPageUserUnsolvedQuestionsAction extends redux.Action{
+class AddNextPageUserUnsolvedQuestionsAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
   const AddNextPageUserUnsolvedQuestionsAction({required this.userId, required this.questionIds});
 }
 
 @immutable
-class GetNextPageUserSavedQuestionsIfNoPageAction extends redux.Action{
+class GetNextPageUserSavedQuestionsIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserSavedQuestionsIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserSavedQuestionsIfReadyAction extends redux.Action{
+class GetNextPageUserSavedQuestionsIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserSavedQuestionsIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserSavedQuestionsAction extends redux.Action{
+class GetNextPageUserSavedQuestionsAction extends AppAction{
   final int userId;
   const GetNextPageUserSavedQuestionsAction({required this.userId});
 }
 @immutable
-class AddNextPageUserSavedQuestionsAction extends redux.Action{
+class AddNextPageUserSavedQuestionsAction extends AppAction{
   final int userId;
   final Iterable<int> savedIds;
   const AddNextPageUserSavedQuestionsAction({required this.userId, required this.savedIds});
 }
 @immutable
-class AddUserSavedQuestionAction extends redux.Action{
+class AddUserSavedQuestionAction extends AppAction{
   final int userId;
   final int saveId;
   const AddUserSavedQuestionAction({required this.userId, required this.saveId});
 }
 @immutable
-class RemoveUserSavedQuestionAction extends redux.Action{
+class RemoveUserSavedQuestionAction extends AppAction{
   final int userId;
   final int saveId;
   const RemoveUserSavedQuestionAction({required this.userId,required this.saveId});
 }
 
 @immutable
-class GetNextPageUserMessagesIfNoPageAction extends redux.Action{
+class GetNextPageUserMessagesIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserMessagesIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserMessagesIfReadyAction extends redux.Action{
+class GetNextPageUserMessagesIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserMessagesIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserMessagesAction extends redux.Action{
+class GetNextPageUserMessagesAction extends AppAction{
   final int userId;
   const GetNextPageUserMessagesAction({required this.userId});
 }
 @immutable
-class AddNextPageUserMessagesAction extends redux.Action{
+class AddNextPageUserMessagesAction extends AppAction{
   final int userId;
   final Iterable<int> messageIds;
   const AddNextPageUserMessagesAction({required this.userId, required this.messageIds});
 }
 @immutable
-class AddUserMessageAction extends redux.Action{
+class AddUserMessageAction extends AppAction{
   final int userId;
   final int messageId;
   const AddUserMessageAction({required this.userId, required this.messageId});
 }
 @immutable
-class RemoveUserMessageAction extends redux.Action{
+class RemoveUserMessageAction extends AppAction{
   final int userId;
   final int messageId;
   const RemoveUserMessageAction({
@@ -322,47 +322,47 @@ class RemoveUserMessageAction extends redux.Action{
   });
 }
 @immutable
-class RemoveUserMessagesAction extends redux.Action{
+class RemoveUserMessagesAction extends AppAction{
   final int userId;
   final Iterable<int> messageIds;
   const RemoveUserMessagesAction({required this.userId, required this.messageIds});
 }
 
 @immutable
-class ChangeProfileImageStatusAction extends redux.Action{
+class ChangeProfileImageStatusAction extends AppAction{
   final int userId;
   final bool value;
   const ChangeProfileImageStatusAction({required this.userId, required this.value});
 }
 @immutable
-class UpdateUserNameAction extends redux.Action{
+class UpdateUserNameAction extends AppAction{
   final String userName;
   const UpdateUserNameAction({required this.userName});
 }
 @immutable
-class UpdateUserNameSuccessAction extends redux.Action{
+class UpdateUserNameSuccessAction extends AppAction{
   final int userId;
   final String userName;
   const UpdateUserNameSuccessAction({required this.userId,required this.userName});
 }
 @immutable
-class UpdateNameAction extends redux.Action{
+class UpdateNameAction extends AppAction{
   final String name;
   const UpdateNameAction({required this.name});
 }
 @immutable
-class UpdateNameSuccessAction extends redux.Action{
+class UpdateNameSuccessAction extends AppAction{
   final int userId;
   final String name;
   const UpdateNameSuccessAction({required this.userId, required this.name});
 }
 @immutable
-class UpdateBiographyAction extends redux.Action{
+class UpdateBiographyAction extends AppAction{
   final String biography;
   const UpdateBiographyAction({required this.biography});
 }
 @immutable
-class UpdateBiographySuccessAction extends redux.Action{
+class UpdateBiographySuccessAction extends AppAction{
   final int userId;
   final String biography;
   const UpdateBiographySuccessAction({required this.userId, required this.biography});

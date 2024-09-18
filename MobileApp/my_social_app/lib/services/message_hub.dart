@@ -11,6 +11,7 @@ class MessageHub{
     HubConnectionBuilder()
       .withUrl("${dotenv.env['API_URL']}/message?access_token=${store.state.accessToken}")
       .build();
+      
   final receivedMessages = PublishSubject<MessageState>();
 
   HubConnection get hubConnection => _hubConnection;

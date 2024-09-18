@@ -60,33 +60,6 @@ class _HomePageState extends State<HomePage> {
                   child: const Icon(Icons.notifications),
                 ),
               ),
-              // PopupMenuButton<MenuAction>(
-              //   onSelected: (value) async {
-              //     switch(value){
-              //       case MenuAction.logout:
-              //         bool logOut = await DialogCreator.showLogOutDialog(context);
-              //         if(logOut){
-              //           store.dispatch(const LogOutAction());
-              //         }
-              //       default:
-              //         return;
-              //     }
-              //   },
-              //   itemBuilder: (context) {
-              //     return [
-              //       const PopupMenuItem<MenuAction>(
-              //         value: MenuAction.logout,
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             Text("Logout"),
-              //             Icon(Icons.logout)
-              //           ],
-              //         )
-              //       )
-              //     ];
-              //   }
-              // ),
             ],
           ),
           floatingActionButton: FloatingActionButton(

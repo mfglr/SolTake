@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 
 @immutable
-class GetNextPageNotificationsIfNoPageAction extends redux.Action{
+class GetNextPageNotificationsIfNoPageAction extends AppAction{
   const GetNextPageNotificationsIfNoPageAction();
 }
 @immutable 
-class GetNextPageNotificationsIfReadyAction extends redux.Action{
+class GetNextPageNotificationsIfReadyAction extends AppAction{
   const GetNextPageNotificationsIfReadyAction();
 }
 @immutable
-class GetNextPageNotificationsAction extends redux.Action {
+class GetNextPageNotificationsAction extends AppAction {
   const GetNextPageNotificationsAction();
 }
 @immutable
-class AddNextPageNotificationsAction extends redux.Action{
+class AddNextPageNotificationsAction extends AppAction{
   final Iterable<NotificationState> notifications;
   const AddNextPageNotificationsAction({required this.notifications});
 }
 
 @immutable
-class PrependNotificationAction extends redux.Action{
+class PrependNotificationAction extends AppAction{
   final NotificationState notification;
   const PrependNotificationAction({required this.notification});
 }
 
 @immutable
-class GetUnviewedNotificationsAction extends redux.Action{
+class GetUnviewedNotificationsAction extends AppAction{
   const GetUnviewedNotificationsAction();
 }
 @immutable
-class AddUnviewedNotificationsAction extends redux.Action{
+class AddUnviewedNotificationsAction extends AppAction{
   final Iterable<NotificationState> notifications;
   const AddUnviewedNotificationsAction({required this.notifications});
 }
 
 @immutable
-class MarkNotificationsAsViewedAction extends redux.Action{
+class MarkNotificationsAsViewedAction extends AppAction{
   const MarkNotificationsAsViewedAction();
 }
 @immutable
-class MarkNotificationsAsViewedSuccessAction extends redux.Action{
+class MarkNotificationsAsViewedSuccessAction extends AppAction{
   final Iterable<int> ids;
   const MarkNotificationsAsViewedSuccessAction({required this.ids});
 }

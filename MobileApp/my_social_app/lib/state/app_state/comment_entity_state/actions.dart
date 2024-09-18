@@ -1,91 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 
 @immutable
-class LoadCommentAction extends redux.Action{
+class LoadCommentAction extends AppAction{
   final int commentId;
   const LoadCommentAction({required this.commentId});
 }
 @immutable
-class LoadCommentsAction extends redux.Action{
+class LoadCommentsAction extends AppAction{
   final Iterable<int> commentIds;
   const LoadCommentsAction({required this.commentIds});
 }
 @immutable
-class AddCommentAction extends redux.Action{
+class AddCommentAction extends AppAction{
   final CommentState comment;
   const AddCommentAction({required this.comment});
 }
 @immutable
-class RemoveCommentAction extends redux.Action{
+class RemoveCommentAction extends AppAction{
   final CommentState comment;
   const RemoveCommentAction({required this.comment});
 }
 @immutable
-class RemoveCommentSuccessAction extends redux.Action{
+class RemoveCommentSuccessAction extends AppAction{
   final int commentId;
   const RemoveCommentSuccessAction({required this.commentId});
 }
 @immutable
-class AddCommentsAction extends redux.Action{
+class AddCommentsAction extends AppAction{
   final Iterable<CommentState> comments;
   const AddCommentsAction({required this.comments});
 }
 
 
 @immutable
-class GetNextPageCommentLikesIfNoPageAction extends redux.Action{
+class GetNextPageCommentLikesIfNoPageAction extends AppAction{
   final int commentId;
   const GetNextPageCommentLikesIfNoPageAction({required this.commentId});
 }
 @immutable
-class GetNextPageCommentLikesIfReadyAction extends redux.Action{
+class GetNextPageCommentLikesIfReadyAction extends AppAction{
   final int commentId;
   const GetNextPageCommentLikesIfReadyAction({required this.commentId});
 }
 @immutable
-class GetNextPageCommentLikesAction extends redux.Action{
+class GetNextPageCommentLikesAction extends AppAction{
   final int commentId;
   const GetNextPageCommentLikesAction({required this.commentId});
 }
 @immutable
-class AddNextPageCommentLikesAction extends redux.Action{
+class AddNextPageCommentLikesAction extends AppAction{
   final int commentId;
   final Iterable<int> likeIds;
   const AddNextPageCommentLikesAction({required this.commentId, required this.likeIds});
 }
 @immutable
-class LikeCommentAction extends redux.Action{
+class LikeCommentAction extends AppAction{
   final int commentId;
   const LikeCommentAction({required this.commentId});
 }
 @immutable
-class LikeCommentSuccessAction extends redux.Action{
+class LikeCommentSuccessAction extends AppAction{
   final int commentId;
   final int likeId;
   const LikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 @immutable
-class DislikeCommentAction extends redux.Action{
+class DislikeCommentAction extends AppAction{
   final int commentId;
   const DislikeCommentAction({required this.commentId});
 }
 @immutable
-class DislikeCommentSuccessAction extends redux.Action{
+class DislikeCommentSuccessAction extends AppAction{
   final int commentId;
   final int likeId;
   const DislikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 @immutable
-class AddNewCommentLikeAction extends redux.Action{
+class AddNewCommentLikeAction extends AppAction{
   final int commentId;
   final int likeId;
   const AddNewCommentLikeAction({required this.commentId, required this.likeId});
 }
 
 @immutable
-class ChangeRepliesVisibilityAction extends redux.Action{
+class ChangeRepliesVisibilityAction extends AppAction{
   final int commentId;
   final bool visibility;
   const ChangeRepliesVisibilityAction({required this.commentId, required this.visibility});
@@ -93,40 +93,40 @@ class ChangeRepliesVisibilityAction extends redux.Action{
 
 
 @immutable
-class GetNextPageCommentRepliesIfNoPageAction extends redux.Action{
+class GetNextPageCommentRepliesIfNoPageAction extends AppAction{
   final int commentId;
   const GetNextPageCommentRepliesIfNoPageAction({required this.commentId});
 }
 @immutable
-class GetNextPageCommentRepliesIfReadyAction extends redux.Action{
+class GetNextPageCommentRepliesIfReadyAction extends AppAction{
   final int commentId;
   const GetNextPageCommentRepliesIfReadyAction({required this.commentId});
 }
 @immutable
-class GetNextPageCommentRepliesAction extends redux.Action{
+class GetNextPageCommentRepliesAction extends AppAction{
   final int commentId;
   const GetNextPageCommentRepliesAction({required this.commentId});
 }
 @immutable
-class AddPrevPageCommentRepliesAction extends redux.Action{
+class AddPrevPageCommentRepliesAction extends AppAction{
   final int commentId;
   final Iterable<int> replyIds;
   const AddPrevPageCommentRepliesAction({required this.commentId, required this.replyIds});
 }
 @immutable
-class AddCommentReplyAction extends redux.Action{
+class AddCommentReplyAction extends AppAction{
   final int commentId;
   final int replyId;
   const AddCommentReplyAction({required this.replyId, required this.commentId});
 }
 @immutable
-class RemoveCommentReplyAction extends redux.Action{
+class RemoveCommentReplyAction extends AppAction{
   final int commentId;
   final int replyId;
   const RemoveCommentReplyAction({required this.commentId, required this.replyId});
 }
 @immutable
-class AddNewCommentReplyAction extends redux.Action{
+class AddNewCommentReplyAction extends AppAction{
   final int commentId;
   final int replyId;
   const AddNewCommentReplyAction({required this.commentId, required this.replyId});

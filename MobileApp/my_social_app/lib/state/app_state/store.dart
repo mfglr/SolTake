@@ -1,5 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
@@ -20,22 +21,18 @@ import 'package:my_social_app/state/app_state/message_image_entity_state/message
 import 'package:my_social_app/state/app_state/message_image_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
-import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
-import 'package:my_social_app/state/app_state/question_user_save_state/question_user_save_entity_state.dart';
-import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
-import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
-import 'package:my_social_app/state/pagination/entity_pagination.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
+import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
+import 'package:my_social_app/state/app_state/question_user_save_state/question_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
@@ -45,10 +42,13 @@ import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
+import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
+import 'package:my_social_app/state/pagination/entity_pagination.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
-  appReducer,
+  reducers,
   initialState: AppState(
     accessToken: null,
     accountState: null,

@@ -33,9 +33,9 @@ ActiveLoginPage changeActiveLoginPageReducer(ActiveLoginPage oldState,Action act
 String? changeAccessTokenReducer(String? oldState,Action action)
   => action is ChangeAccessTokenAction ? action.accessToken : oldState;
 
-bool appSuccessfullyInitReducer(bool oldState,Action action){
-  return action is ApplicationSuccessfullyInitAction ? true : oldState;
-}
+bool appSuccessfullyInitReducer(bool oldState,Action action)
+  => action is ApplicationSuccessfullyInitAction ? true : oldState;
+
 
 //exams reducers//
 Pagination getNextPageExamsReducer(Pagination prev,GetNextPageExamsAction action)
@@ -48,7 +48,10 @@ Reducer<Pagination> examsReducers = combineReducers<Pagination>([
 ]);
 //exams reducers//
 
-AppState appReducer(AppState prev,action) => AppState(
+
+AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
+
+AppState appReducer(AppState prev,AppAction action) => AppState(
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
   accountState: updateAccountStateReducer(prev.accountState,action),
   activeLoginPage: changeActiveLoginPageReducer(prev.activeLoginPage,action),
@@ -79,3 +82,7 @@ AppState appReducer(AppState prev,action) => AppState(
   exams: examsReducers(prev.exams,action),
 );
 
+Reducer<AppState> reducers = combineReducers<AppState>([
+  TypedReducer<AppState,ClearStateAction>(clearStateReducer).call,
+  TypedReducer<AppState,AppAction>(appReducer).call,
+]);

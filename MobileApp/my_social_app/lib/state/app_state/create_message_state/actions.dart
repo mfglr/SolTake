@@ -1,42 +1,42 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 
 @immutable
-class CreateMessageWithImagesAction extends redux.Action{
+class CreateMessageWithImagesAction extends AppAction{
   const CreateMessageWithImagesAction();
 }
 @immutable
-class CreateMessageAction extends redux.Action{
+class CreateMessageAction extends AppAction{
   const CreateMessageAction();
 }
 
 @immutable
-class ClearMessageContentAndImagesAction extends redux.Action{
+class ClearMessageContentAndImagesAction extends AppAction{
   const ClearMessageContentAndImagesAction();
 }
 @immutable
-class ChangeMessageContentAction extends redux.Action{
+class ChangeMessageContentAction extends AppAction{
   final String content;
   const ChangeMessageContentAction({required this.content});
 }
 @immutable
-class ChangeReceiverIdAction extends redux.Action{
+class ChangeReceiverIdAction extends AppAction{
   final int receiverId;
   const ChangeReceiverIdAction({required this.receiverId});
 }
 @immutable
-class CreateMessageImagesAction extends redux.Action{
+class CreateMessageImagesAction extends AppAction{
   final Iterable<XFile> images;
   const CreateMessageImagesAction({required this.images});
 }
 @immutable
-class AddMessageImageAction extends redux.Action{
+class AddMessageImageAction extends AppAction{
   final XFile image;
   const AddMessageImageAction({required this.image});
 }
 @immutable
-class RemoveMessageImageAction extends redux.Action{
+class RemoveMessageImageAction extends AppAction{
   final XFile image;
   const RemoveMessageImageAction({required this.image});
 }

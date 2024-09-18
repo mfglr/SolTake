@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 
 @immutable
-class AddHomePageQuestionAction extends redux.Action{
+class AddHomePageQuestionAction extends AppAction{
   final int questionId;
   const AddHomePageQuestionAction({required this.questionId});
 }
 
 @immutable
-class GetNextPageHomeQuestionsIfNoPageAction extends redux.Action{
+class GetNextPageHomeQuestionsIfNoPageAction extends AppAction{
   const GetNextPageHomeQuestionsIfNoPageAction();
 }
 @immutable
-class GetNextPageHomeQuestionsIfReadyAction extends redux.Action{
+class GetNextPageHomeQuestionsIfReadyAction extends AppAction{
   const GetNextPageHomeQuestionsIfReadyAction();
 }
 @immutable
-class GetNextPageHomeQuestionsAction extends redux.Action{
+class GetNextPageHomeQuestionsAction extends AppAction{
   const GetNextPageHomeQuestionsAction();
 }
 @immutable
-class AddNextPageHomeQuestionsAction extends redux.Action{
+class AddNextPageHomeQuestionsAction extends AppAction{
   final Iterable<int> questionIds;
   const AddNextPageHomeQuestionsAction({required this.questionIds});
 }
 @immutable
-class GetPrevPageHomePageQuestionsIfReadyAction extends redux.Action{
+class GetPrevPageHomePageQuestionsIfReadyAction extends AppAction{
   const GetPrevPageHomePageQuestionsIfReadyAction();
 }
 @immutable
-class GetPrevPageHomeQuestionsAction extends redux.Action{
+class GetPrevPageHomeQuestionsAction extends AppAction{
   const GetPrevPageHomeQuestionsAction();
 }
 @immutable
-class AddPrevPageHomeQuestionsAction extends redux.Action{
+class AddPrevPageHomeQuestionsAction extends AppAction{
   final Iterable<int> questionIds;
   const AddPrevPageHomeQuestionsAction({required this.questionIds});
 }

@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
-import '../actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 
 @immutable
-class UpdateAccountStateAction extends redux.Action{
+class UpdateAccountStateAction extends AppAction{
   final AccountState? payload;
   const UpdateAccountStateAction({required this.payload});
 }
 
 @immutable
-class ConfirmEmailByTokenAction extends redux.Action{
+class ConfirmEmailByTokenAction extends AppAction{
   final String token;
   const ConfirmEmailByTokenAction({required this.token});
 }
 
 @immutable
-class LogOutAction extends redux.Action{
+class LogOutAction extends AppAction{
   const LogOutAction();
 }
 
-
 @immutable
-class LoginByPasswordAction extends redux.Action{
+class LoginByPasswordAction extends AppAction{
   final String emailOrPassword;
   final String password;
   const LoginByPasswordAction({required this.emailOrPassword, required this.password});
 }
 
 @immutable
-class LoginByFaceBookAction extends redux.Action{
+class LoginByFaceBookAction extends AppAction{
   final String accessToken;
   const LoginByFaceBookAction({required this.accessToken});
 }
 
 @immutable
-class CreateAccountAction extends redux.Action{
+class CreateAccountAction extends AppAction{
   final String email;
   final String password;
   final String passwordConfirmation;

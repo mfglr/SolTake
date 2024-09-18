@@ -9,15 +9,30 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
+import 'package:signalr_netcore/signalr_client.dart';
 
 void connectMessageHub(Store<AppState> store){
   final hub = MessageHub();
   
-  hub.hubConnection
-    .start()
-    ?.then((_){
-      store.dispatch(const GetUnviewedMessagesAction());
-    });
+  if(hub.hubConnection.state == HubConnectionState.Connected){
+    hub.hubConnection
+      .stop()
+      .then((_){
+        hub.hubConnection
+          .start()
+          ?.then((_){
+            store.dispatch(const GetUnviewedMessagesAction());
+          });
+      });
+  }
+  else{
+    hub.hubConnection
+      .start()
+      ?.then((_){
+        store.dispatch(const GetUnviewedMessagesAction());
+      });
+  }
+  
   
   hub.hubConnection.on(
     receiveMessage,

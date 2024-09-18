@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 class ProfileMenuItem extends StatelessWidget {
   final String name;
   final IconData icon;
+  final Color? nameColor;
+  final Color? iconColor;
   final void Function() onPressed;
+  final bool displayRightArrow;
   const ProfileMenuItem({
     super.key,
     required this.name,
     required this.icon,
-    required this.onPressed
+    required this.onPressed,
+    this.iconColor,
+    this.nameColor,
+    this.displayRightArrow = true
   });
 
   @override
@@ -22,11 +28,20 @@ class ProfileMenuItem extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(icon),
-                Text(name),
+                Icon(
+                  icon,
+                  color: iconColor,
+                ),
+                Text(
+                  name,
+                  style: TextStyle(
+                    color: nameColor
+                  ),
+                ),
               ],
             ),
-            const Icon(Icons.keyboard_arrow_right)
+            if(displayRightArrow)
+              const Icon(Icons.keyboard_arrow_right)
           ],
         ),
       ),

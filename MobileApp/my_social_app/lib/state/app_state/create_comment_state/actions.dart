@@ -1,43 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
-class CreateCommentAction extends redux.Action{
+class CreateCommentAction extends AppAction{
   const CreateCommentAction();
 }
 @immutable
-class CreateCommentSuccessAction extends redux.Action{
+class CreateCommentSuccessAction extends AppAction{
   const CreateCommentSuccessAction();
 }
 
 @immutable
-class ChangeContentAction extends redux.Action{
+class ChangeContentAction extends AppAction{
   final String content;
   const ChangeContentAction({required this.content});
 }
 @immutable
-class ChangeQuestionAction extends redux.Action{
+class ChangeQuestionAction extends AppAction{
   final QuestionState question;
   const ChangeQuestionAction({required this.question});
 }
 @immutable
-class ChangeSolutionAction extends redux.Action{
+class ChangeSolutionAction extends AppAction{
   final SolutionState solution;
   const ChangeSolutionAction({required this.solution});
 }
 @immutable
-class ChangeCommentAction extends redux.Action{
+class ChangeCommentAction extends AppAction{
   final CommentState comment;
   const ChangeCommentAction({required this.comment});
 }
 @immutable
-class CancelReplyAction extends redux.Action{
+class CancelReplyAction extends AppAction{
   const CancelReplyAction();
 }
 @immutable
-class ClearCreateCommentStateAction extends redux.Action{
+class ClearCreateCommentStateAction extends AppAction{
   const ClearCreateCommentStateAction();
 }

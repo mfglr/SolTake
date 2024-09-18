@@ -1,6 +1,8 @@
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/account_storage.dart';
+import 'package:my_social_app/services/message_hub.dart';
+import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -56,14 +58,13 @@ void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void logOutMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LogOutAction){
-    final accountService = AccountService();
-    final accountStorage = AccountStorage();
-    accountService
+    AccountService()
       .logOut()
       .then((_){
-        accountStorage.remove();
-        store.dispatch(const ChangeAccessTokenAction(accessToken: null));
-        store.dispatch(const UpdateAccountStateAction(payload: null));
+        AccountStorage().remove();
+        MessageHub().hubConnection.stop();
+        NotificationHub().hubConnection.stop();
+        store.dispatch(const ClearStateAction());
       });
   }
   next(action);

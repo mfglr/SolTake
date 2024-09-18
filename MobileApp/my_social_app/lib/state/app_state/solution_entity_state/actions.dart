@@ -2,12 +2,12 @@ import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:my_social_app/state/app_state/actions.dart' as redux;
+import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 
 @immutable
-class CreateSolutionAction extends redux.Action{
+class CreateSolutionAction extends AppAction{
   final int questionId;
   final String? content;
   final Iterable<XFile> images;
@@ -15,61 +15,61 @@ class CreateSolutionAction extends redux.Action{
 }
 
 @immutable
-class LoadSolutionAction extends redux.Action{
+class LoadSolutionAction extends AppAction{
   final int solutionId;
   const LoadSolutionAction({required this.solutionId});
 }
 
 @immutable
-class AddSolutionAction extends redux.Action{
+class AddSolutionAction extends AppAction{
   final SolutionState solution;
   const AddSolutionAction({required this.solution});
 }
 @immutable
-class AddSolutionsAction extends redux.Action{
+class AddSolutionsAction extends AppAction{
   final Iterable<SolutionState> solutions;
   const AddSolutionsAction({required this.solutions});
 }
 @immutable
-class RemoveSolutionAction extends redux.Action{
+class RemoveSolutionAction extends AppAction{
   final SolutionState solution;
   const RemoveSolutionAction({required this.solution});
 }
 @immutable
-class RemoveSolutionSuccessAction extends redux.Action{
+class RemoveSolutionSuccessAction extends AppAction{
   final int solutionId;
   const RemoveSolutionSuccessAction({required this.solutionId});
 }
 
 //upvotes
 @immutable
-class GetNextPageSolutionUpvotesIfNoPageAction extends redux.Action{
+class GetNextPageSolutionUpvotesIfNoPageAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionUpvotesIfNoPageAction({required this.solutionId});
 }
 @immutable
-class GetNextPageSolutionUpvotesIfReadyAction extends redux.Action{
+class GetNextPageSolutionUpvotesIfReadyAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionUpvotesIfReadyAction({required this.solutionId});
 }
 @immutable
-class GetNextPageSolutionUpvotesAction extends redux.Action{
+class GetNextPageSolutionUpvotesAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionUpvotesAction({required this.solutionId});
 }
 @immutable
-class AddNextPageSolutionUpvatesAction extends redux.Action{
+class AddNextPageSolutionUpvatesAction extends AppAction{
   final int solutionId;
   final Iterable<int> voteIds;
   const AddNextPageSolutionUpvatesAction({required this.solutionId, required this.voteIds});
 }
 @immutable
-class MakeSolutionUpvoteAction extends redux.Action{
+class MakeSolutionUpvoteAction extends AppAction{
   final int solutionId;
   const MakeSolutionUpvoteAction({required this.solutionId});
 }
 @immutable
-class MakeSolutionUpvoteSuccessAction extends redux.Action{
+class MakeSolutionUpvoteSuccessAction extends AppAction{
   final int solutionId;
   final int upvoteId;
   final int downvoteId;
@@ -81,18 +81,18 @@ class MakeSolutionUpvoteSuccessAction extends redux.Action{
   });
 }
 @immutable 
-class RemoveSolutionUpvoteAction extends redux.Action{
+class RemoveSolutionUpvoteAction extends AppAction{
   final int solutionId;
   const RemoveSolutionUpvoteAction({required this.solutionId});
 }
 @immutable
-class RemoveSolutionUpvoteSuccessAction extends redux.Action{
+class RemoveSolutionUpvoteSuccessAction extends AppAction{
   final int solutionId;
   final int voteId;
   const RemoveSolutionUpvoteSuccessAction({required this.solutionId,required this.voteId});
 }
 @immutable
-class AddNewSolutionUpvoteAction extends redux.Action{
+class AddNewSolutionUpvoteAction extends AppAction{
   final int solutionId;
   final int voteId;
   const AddNewSolutionUpvoteAction({required this.solutionId, required this.voteId});
@@ -100,33 +100,33 @@ class AddNewSolutionUpvoteAction extends redux.Action{
 
 
 @immutable
-class GetNextPageSolutionDownvotesIfNoPageAction extends redux.Action{
+class GetNextPageSolutionDownvotesIfNoPageAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionDownvotesIfNoPageAction({required this.solutionId});
 }
 @immutable
-class GetNextPageSolutionDownvotesIfReadyAction extends redux.Action{
+class GetNextPageSolutionDownvotesIfReadyAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionDownvotesIfReadyAction({required this.solutionId});
 }
 @immutable
-class GetNextPageSolutionDownvotesAction extends redux.Action{
+class GetNextPageSolutionDownvotesAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionDownvotesAction({required this.solutionId});
 }
 @immutable
-class AddNextPageSolutionDownvotesAction extends redux.Action{
+class AddNextPageSolutionDownvotesAction extends AppAction{
   final int solutionId;
   final Iterable<int> voteIds;
   const AddNextPageSolutionDownvotesAction({required this.solutionId, required this.voteIds});
 }
 @immutable
-class MakeSolutionDownvoteAction extends redux.Action{
+class MakeSolutionDownvoteAction extends AppAction{
   final int solutionId;
   const MakeSolutionDownvoteAction({required this.solutionId});
 }
 @immutable
-class MakeSolutionDownvoteSuccessAction extends redux.Action{
+class MakeSolutionDownvoteSuccessAction extends AppAction{
   final int solutionId;
   final int upvoteId;
   final int downvoteId;
@@ -137,71 +137,71 @@ class MakeSolutionDownvoteSuccessAction extends redux.Action{
   });
 }
 @immutable
-class RemoveSolutionDownvoteAction extends redux.Action{
+class RemoveSolutionDownvoteAction extends AppAction{
   final int solutionId;
   const RemoveSolutionDownvoteAction({required this.solutionId});
 }
 @immutable
-class RemoveSolutionDownvoteSuccessAction extends redux.Action{
+class RemoveSolutionDownvoteSuccessAction extends AppAction{
   final int solutionId;
   final int voteId;
   const RemoveSolutionDownvoteSuccessAction({required this.solutionId,required this.voteId});
 }
 @immutable
-class AddNewSolutionDownvoteAction extends redux.Action{
+class AddNewSolutionDownvoteAction extends AppAction{
   final int solutionId;
   final int voteId;
   const AddNewSolutionDownvoteAction({required this.solutionId, required this.voteId});
 }
 
 @immutable
-class GetNextPageSolutionCommentsIfNoPageAction extends redux.Action{
+class GetNextPageSolutionCommentsIfNoPageAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionCommentsIfNoPageAction({required this.solutionId});
 }
 @immutable
-class GetNextPageSolutionCommentsIfReadyAction extends redux.Action{
+class GetNextPageSolutionCommentsIfReadyAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionCommentsIfReadyAction({required this.solutionId});
 }
 @immutable
-class GetNextPageSolutionCommentsAction extends redux.Action{
+class GetNextPageSolutionCommentsAction extends AppAction{
   final int solutionId;
   const GetNextPageSolutionCommentsAction({required this.solutionId});
 }
 @immutable
-class AddNextPageSolutionCommentsAction extends redux.Action{
+class AddNextPageSolutionCommentsAction extends AppAction{
   final int solutionId;
   final Iterable<int> commentsIds;
   const AddNextPageSolutionCommentsAction({required this.solutionId, required this.commentsIds});
 }
 @immutable
-class AddSolutionCommentAction extends redux.Action{
+class AddSolutionCommentAction extends AppAction{
   final int solutionId;
   final int commentId;
   const AddSolutionCommentAction({required this.solutionId, required this.commentId});
 }
 @immutable
-class RemoveSolutionCommentAction extends redux.Action{
+class RemoveSolutionCommentAction extends AppAction{
   final int solutionId;
   final int commentId;
   const RemoveSolutionCommentAction({required this.solutionId, required this.commentId});
 }
 @immutable
-class AddNewSolutionCommentAction extends redux.Action{
+class AddNewSolutionCommentAction extends AppAction{
   final int solutionId;
   final int commentId;
   const AddNewSolutionCommentAction({required this.solutionId, required this.commentId});
 }
 
 @immutable
-class LoadSolutionImageAction extends redux.Action{
+class LoadSolutionImageAction extends AppAction{
   final int solutionId;
   final int index;
   const LoadSolutionImageAction({required this.solutionId, required this.index});
 }
 @immutable
-class LoadSolutionImageSuccessAction extends redux.Action{
+class LoadSolutionImageSuccessAction extends AppAction{
   final int solutionId;
   final int index;
   final Uint8List image;
@@ -209,24 +209,24 @@ class LoadSolutionImageSuccessAction extends redux.Action{
 }
 
 @immutable
-class MarkSolutionAsCorrectAction extends redux.Action{
+class MarkSolutionAsCorrectAction extends AppAction{
   final int questionId;
   final int solutionId;
   const MarkSolutionAsCorrectAction({required this.questionId,required this.solutionId,});
 }
 @immutable
-class MarkSolutionAsCorrectSuccessAction extends redux.Action{
+class MarkSolutionAsCorrectSuccessAction extends AppAction{
   final int solutionId;
   const MarkSolutionAsCorrectSuccessAction({required this.solutionId});
 }
 @immutable
-class MarkSolutionAsIncorrectAction extends redux.Action{
+class MarkSolutionAsIncorrectAction extends AppAction{
   final int questionId;
   final int solutionId;
   const MarkSolutionAsIncorrectAction({required this.questionId, required this.solutionId});
 }
 @immutable
-class MarkSolutionAsIncorrectSuccessAction extends redux.Action{
+class MarkSolutionAsIncorrectSuccessAction extends AppAction{
   final int solutionId;
   const MarkSolutionAsIncorrectSuccessAction({required this.solutionId});
 }

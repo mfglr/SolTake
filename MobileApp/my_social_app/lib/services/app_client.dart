@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/account_endpoints.dart';
@@ -18,13 +19,11 @@ class AppClient{
   static const AppClient _singleton = AppClient._();
   factory AppClient() => _singleton;
 
-  Map<String,String> _setAuthenticationToken(){
-    final Map<String,String> headers = {};
-    if(store.state.accessToken != null){
-      headers.addAll({ "Authorization" : "Bearer ${store.state.accessToken}"});
-    }
-    return headers;
-  }
+  Map<String,String> _getHeader() =>
+    {
+      "Authorization": "Bearer ${store.state.accessToken}",
+      "Accept-Language": PlatformDispatcher.instance.locale.languageCode
+    };
 
   Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
 
@@ -43,7 +42,7 @@ class AppClient{
   }
 
   Future<StreamedResponse> send(BaseRequest request) async {
-    request.headers.addAll(_setAuthenticationToken());
+    request.headers.addAll(_getHeader());
     var response = await request.send();
     if(response.statusCode >= 400){
       switch(response.statusCode){

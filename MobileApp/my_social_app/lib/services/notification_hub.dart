@@ -9,4 +9,9 @@ class NotificationHub{
       .withUrl("${dotenv.env['API_URL']}/notification?access_token=${store.state.accessToken}")
       .build();
   HubConnection get hubConnection => _hubConnection;
+
+  void stop(){
+    _hubConnection.stop();
+  }
+
 }

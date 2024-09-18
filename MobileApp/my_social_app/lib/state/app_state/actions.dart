@@ -7,19 +7,13 @@ abstract class Action{
 }
 
 @immutable
-class ClearAppStateAction extends Action{
-  const ClearAppStateAction();
-}
-
-class ChangeAccessTokenAction extends Action{
-  final String? accessToken;
-  const ChangeAccessTokenAction({required this.accessToken});
+class AppAction extends Action{
+  const AppAction();
 }
 
 @immutable
-class ChangeActiveLoginPageAction extends Action{
-  final ActiveLoginPage payload;
-  const ChangeActiveLoginPageAction({required this.payload});
+class ClearStateAction extends Action{
+  const ClearStateAction();
 }
 
 @immutable
@@ -27,27 +21,37 @@ class InitAppAction extends Action{
   const InitAppAction();
 }
 
+class ChangeAccessTokenAction extends AppAction{
+  final String? accessToken;
+  const ChangeAccessTokenAction({required this.accessToken});
+}
+
 @immutable
-class ApplicationSuccessfullyInitAction extends Action{
+class ChangeActiveLoginPageAction extends AppAction{
+  final ActiveLoginPage payload;
+  const ChangeActiveLoginPageAction({required this.payload});
+}
+
+@immutable
+class ApplicationSuccessfullyInitAction extends AppAction{
   const ApplicationSuccessfullyInitAction();
 }
 
-
 //exams//
 @immutable
-class GetNextPageExamsIfNoPageAction extends Action{
+class GetNextPageExamsIfNoPageAction extends AppAction{
   const GetNextPageExamsIfNoPageAction();
 }
 @immutable
-class GetNextPageExamsIfReadyAction extends Action{
+class GetNextPageExamsIfReadyAction extends AppAction{
   const GetNextPageExamsIfReadyAction();
 }
 @immutable
-class GetNextPageExamsAction extends Action{
+class GetNextPageExamsAction extends AppAction{
   const GetNextPageExamsAction();
 }
 @immutable
-class AddNextPageExamsAction extends Action{
+class AddNextPageExamsAction extends AppAction{
   final Iterable<int> examIds;
   const AddNextPageExamsAction({required this.examIds});
 }
