@@ -32,29 +32,5 @@ namespace MySocailApp.Infrastructure.ApplicationServices.Email
             message.To.Add(new MailAddress(email));
             return message;
         }
-
-        public async Task<MailMessage> CreateEmailConfirmationByTokenMailMessageAsync(
-           string token, string userName, string email, CancellationToken cancellationToken = default)
-        {
-
-            using var bodyFile = File.OpenRead("MailMessages/EmailConfirmationByToken.html");
-            using var streamReader = new StreamReader(bodyFile);
-
-            var body = await streamReader.ReadToEndAsync(cancellationToken);
-            body = body.Replace("{applicationUrl}", _applicationSettings.ApplicationUrl);
-            body = body.Replace("{userName}", userName);
-            body = body.Replace("{token}", token);
-
-            var message = new MailMessage()
-            {
-                IsBodyHtml = true,
-                From = new MailAddress(_emailServiceSettings.SenderMail, _emailServiceSettings.DisplayName),
-                Subject = EmailSubjects.EmailVerification,
-                Body = body
-            };
-            message.To.Add(new MailAddress(email));
-            return message;
-        }
-
     }
 }

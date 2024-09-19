@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.Exceptions;
+using MySocailApp.Core;
 using MySocailApp.Core.Exceptions;
 using System.Security.Claims;
 using System.Text;
@@ -19,6 +20,13 @@ namespace MySocailApp.Application.Extentions
             return
                 context!.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ??
                 throw new NotAuthorizedException();
+        }
+
+        public static string GetLanguage(this HttpContext? context)
+        {
+            if (context == null) return Languages.EN;
+            var culture = context!.Request.Headers.AcceptLanguage.FirstOrDefault();
+            return Languages.GetLanguage(culture);
         }
 
         public static async Task WriteAppExceptionAsync(this HttpContext? context, string culture, AppException ex)

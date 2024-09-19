@@ -14,6 +14,6 @@ namespace MySocailApp.Domain.AccountAggregate.Exceptions
         };
 
         public override string GetErrorMessage(string culture) => _messages[culture];
-        public EmailIsAlreadyTakenException() : base((int)HttpStatusCode.NotFound) { }
+        public EmailIsAlreadyTakenException() : base((int)HttpStatusCode.BadRequest) { }
     }
 }

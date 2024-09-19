@@ -26,6 +26,7 @@ using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.ApplicationServices;
 using MySocailApp.Infrastructure.ApplicationServices.BlobService;
 using MySocailApp.Infrastructure.ApplicationServices.Email;
+using MySocailApp.Infrastructure.ApplicationServices.Email.MailMessageFactories;
 using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
@@ -91,6 +92,7 @@ namespace MySocailApp.Infrastructure
                     }
                 )
                 .AddScoped<MailMessageFactory>()
+                .AddScoped<EmailConfirmationMailMessageFactory>()
                 .AddScoped<IEmailService, EmailService>();
         }
         private static IServiceCollection AddBlobService(this IServiceCollection services)
