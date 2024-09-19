@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                           margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                           child: Text(AppLocalizations.of(context)!.login_register_button)
                         ),
-                        const Icon(Icons.create)
+                        const Icon(Icons.email)
                       ]
                     )
                   ),

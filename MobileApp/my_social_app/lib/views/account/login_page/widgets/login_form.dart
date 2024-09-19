@@ -76,7 +76,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               validator: (value){
                 if(value == null || value.isEmpty) return AppLocalizations.of(context)!.login_form_password_required_error;
-                if(value.length <= 6) return AppLocalizations.of(context)!.login_form_password_length_error;
+                if(value.length < 6) return AppLocalizations.of(context)!.login_form_password_length_error;
                 return null;
               },
             ),

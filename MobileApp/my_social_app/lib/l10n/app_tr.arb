@@ -8,9 +8,16 @@
     "login_form_email_required_error": "Email ya da kullanıcı adı gerekli!",
     "login_form_email_invalid_error": "Email geçersiz!",
     "login_form_password_required_error": "Şifre gerekli!",
-    "login_form_password_length_error": "Şifre 6 karakterden daha uzun olmalıdır.",
+    "login_form_password_length_error": "Şifre 5 karakterden daha uzun olmalıdır!",
 
     "login_page_diveder_or": "ya da",
+
+    "register_form_email_required_error": "Email gerekli!",
+    "register_form_email_invalid_error": "Email geçersiz",
+    "register_form_password_required_error": "Şifre gereklidir!",
+    "register_form_password_confirm_required_error": "Şifre onayı gereklidir",
+    "register_form_password_and_password_cofirm_not_match_error": "Şifre ve şifre onayı eşleşmiyor!",
+    "register_form_password_length_error": "Şifre 5 karakterden daha uzun olmalıdır!",
 
     "face_book_login_button_error": "Bir şeyler yanlış gitti! Lütfen tekrar deneyin.",
 
