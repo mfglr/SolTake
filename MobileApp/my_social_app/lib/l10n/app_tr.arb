@@ -5,6 +5,11 @@
     "login_register_label": "Henüz bir hesabınız yok mu? Kayıt olun.",
     "login_register_button": "Kayıt Ol",
 
+    "login_form_email_required_error": "Email ya da kullanıcı adı gerekli!",
+    "login_form_email_invalid_error": "Email geçersiz!",
+    "login_form_password_required_error": "Şifre gerekli!",
+    "login_form_password_length_error": "Şifre 6 karakterden daha uzun olmalıdır.",
+
     "login_page_diveder_or": "ya da",
 
     "face_book_login_button_error": "Bir şeyler yanlış gitti! Lütfen tekrar deneyin.",

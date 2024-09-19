@@ -5,6 +5,11 @@
     "login_register_label": "Don't you have an account? Register",
     "login_register_button": "Register",
     
+    "login_form_email_required_error": "Email or username is required!",
+    "login_form_email_invalid_error": "Email is invalid!",
+    "login_form_password_required_error": "Password is required!",
+    "login_form_password_length_error": "Password must be longer than 6 characters.",
+
     "login_page_diveder_or": "or",
 
     "face_book_login_button_error": "Something went wrong! Please try again.",
