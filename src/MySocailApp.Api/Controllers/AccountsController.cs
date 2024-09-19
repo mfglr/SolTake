@@ -73,10 +73,10 @@ namespace MySocailApp.Api.Controllers
         public async Task<AccountDto> UpdatePassword(UpdatePasswordDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
         
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
-        public async Task<AccountDto> UpdateEmailConfirmationToken(CancellationToken cancellationToken)
+        public async Task UpdateEmailConfirmationToken(CancellationToken cancellationToken)
             => await _mediator.Send(new UpdateEmailConfirmationTokenDto(), cancellationToken);
 
         [HttpGet("{id}/{token}")]

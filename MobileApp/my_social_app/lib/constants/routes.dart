@@ -1,4 +1,3 @@
-const verifyEmailRoute = "/verify-email/";
 const rootRoute = "/root/";
 
 const takeQuestionImageRoute = "/take-picture/";

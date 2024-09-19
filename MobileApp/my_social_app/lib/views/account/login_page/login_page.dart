@@ -62,7 +62,7 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [ 
                         Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          margin: const EdgeInsets.only(right: 4),
                           child: Text(AppLocalizations.of(context)!.login_register_button)
                         ),
                         const Icon(Icons.email)

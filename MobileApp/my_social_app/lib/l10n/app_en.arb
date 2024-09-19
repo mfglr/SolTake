@@ -30,15 +30,15 @@
     "register_login_label": "Do you have an account? Login.",
     "register_login_button": "Login",
 
-    "verify_email_label": "We have been sent a mail to confirm your email. Please type the code in the mail.",
-    "verify_email_code": "Enter the code.",
-    "verify_email_button": "Verify Email",
-    "verify_email_send_mail_label": "Didn't you receive the email",
-    "verify_email_send_mail_button": "Resend Mail",
-    "verify_email_login_label": "Do you have an account? Login",
-    "verify_email_login_button": "Login",
-    "verify_email_register_label": "Go back to register page.",
-    "verify_email_register_button": "Register",
+    "verify_email_form_label": "We have been sent a mail to confirm your email. Please type the code in the mail.",
+    "verify_email_form_code": "Enter the code.",
+    "verify_email_form_button": "Verify Email",
+
+    "send_email_confirmation_mail_button_content": "Resend Mail",
+    "send_eamil_confirmation_mail_button_success": "Email has been successfully send!",
+    "send_eamil_confirmation_mail_button_label": "Didn't you receive the email",
+
+    "logout_button_content": "Logout",
 
     "show_app_dialog_cancel_button": "Cancel",
     "show_app_dialog_delete_button": "Delete",

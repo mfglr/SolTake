@@ -24,10 +24,8 @@ class AccountService {
       )
       .then((json) => Account.fromJson(json));
 
-  Future<Account> updateEmailConfirmationToken() =>
-    _appClient
-      .post("$accountController/$updateEmailConfirmationTokenEndPoint")
-      .then((json) => Account.fromJson(json));
+  Future<void> updateEmailConfirmationToken() =>
+    _appClient.put("$accountController/$updateEmailConfirmationTokenEndPoint");
 
   Future<Account> confirmEmailByToken(String token) =>
     _appClient

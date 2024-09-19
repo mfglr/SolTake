@@ -107,8 +107,17 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
                 throw new EmailConfirmationTokenRequiredException();
 
             //confirmEmail
-            account.ConfirmEmailByToken(token);
+            try
+            {
+                account.ConfirmEmailByToken(token);
+            }
+            catch (InvalidEmailConfirmationToken)
+            {
+                await _userManager.UpdateAsync(account);
+                throw;
+            }
             await _userManager.UpdateAsync(account);
+
             //update token
             await _tokenService.UpdateTokenAsync(account);
         }
@@ -167,7 +176,6 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             await _tokenService.UpdateTokenAsync(account);
             return account;
         }
-
         public async Task<Account> LoginByGoogleAsync(GoogleUser googleUser,CancellationToken cancellationToken)
         {
             var account = await _userManager.FindByLoginAsync(LoginProvider.Google, googleUser.UserId);
@@ -210,7 +218,6 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             await _tokenService.UpdateTokenAsync(account);
             return account;
         }
-
         public async Task LoginByRefreshToken(Account account, string refrehToken)
         {
             if (refrehToken == null)

@@ -18,7 +18,7 @@ namespace MySocailApp.Application.DomainEventConsumers.EmailConfirmationTokenUpd
             await _emailService
                 .SendEmailConfirmationByTokenMail(
                     _contextAccessor.HttpContext.GetLanguage(),
-                    notification.Account.EmailConfirmationToken,
+                    notification.Account.EmailConfirmationToken.Token,
                     notification.Account.UserName!,
                     notification.Account.Email!,
                     cancellationToken

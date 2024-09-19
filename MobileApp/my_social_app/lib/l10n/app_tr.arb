@@ -30,19 +30,20 @@
     "register_login_label": "Zaten bir hesabınız var mı? Giriş Yapın.",
     "register_login_button": "Giriş Yap",
 
-    "verify_email_label": "Email hesabınızı onaylamanız için size bir mail gönderdik. Lütfen maildeki kodu yazınız.",
-    "verify_email_code": "Kodu giriniz.",
-    "verify_email_button": "Emaili Onayla",
-    "verify_email_send_mail_label": "Mail gelmedi mi?",
-    "verify_email_send_mail_button": "Tekrar Mail Gönder",
-    "verify_email_login_label": "Bir hesabın var mı? Giriş Yap.",
-    "verify_email_login_button": "Giriş Yap",
-    "verify_email_register_label": "Kayıt sayfasına gerı git.",
-    "verify_email_register_button": "Kayıt Ol",
+
+    "verify_email_form_label": "Email hesabınızı onaylamanız için size bir mail gönderdik. Lütfen maildeki kodu yazınız.",
+    "verify_email_form_code": "Kodu giriniz.",
+    "verify_email_form_button": "Emaili Onayla",
+
+    "send_email_confirmation_mail_button_content": "Tekrar Mail Gönder",
+    "send_eamil_confirmation_mail_button_success": "Mail başarıyla gönderildi!", 
+    "send_eamil_confirmation_mail_button_label": "Mail gelmedi mi?",
+
+    "logout_button_content": "Çıkış Yap",
+
 
     "show_app_dialog_cancel_button": "İptal",
     "show_app_dialog_delete_button": "Sil",
-
 
 
     "question_state_unsolved": "Çözümsüz",

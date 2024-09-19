@@ -18,7 +18,7 @@ import 'package:my_social_app/views/create_question/pages/add_question_images_pa
 import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/root_view.dart';
-import 'package:my_social_app/views/account/verify_email_view.dart';
+import 'package:my_social_app/views/account/verify_email_page.dart/verify_email_page.dart';
 import 'package:my_social_app/views/take_image_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -89,7 +89,7 @@ Future<void> main() async {
                       },
                     );
                   }
-                  if(!accountState.isThirdPartyAuthenticated && !accountState.emailConfirmed) return const VerifyEmailView();
+                  if(!accountState.isThirdPartyAuthenticated && !accountState.emailConfirmed) return const VerifyEmailPage();
                   return const RootView();
                 },
               );
@@ -98,7 +98,6 @@ Future<void> main() async {
           }
         ),
         routes: {
-          verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),
 
           displayQuestionImagesRoute: (context) => const AddQuestionImagesPage(),

@@ -17,20 +17,18 @@ namespace MySocailApp.Infrastructure.ApplicationServices.Email
             string token, int id, string userName, string email, CancellationToken cancellationToken = default
         )
         {
-            var mailMessagge = await _messageFactory.CreateEmailConfirmationMailMessageAsync(
-                token, id, userName, email, cancellationToken
-            );
+            var mailMessagge = await _messageFactory.CreateEmailConfirmationMailMessageAsync(token, id, userName, email, cancellationToken);
             await _smtpClient.SendMailAsync(mailMessagge, cancellationToken);
         }
 
-        public async Task SendEmailConfirmationByTokenMail(string language,EmailConfirmationToken token, string userName, string email, CancellationToken cancellationToken)
+        public async Task SendEmailConfirmationByTokenMail(string language, string token, string userName, string email, CancellationToken cancellationToken)
         {
             await _smtpClient
                 .SendMailAsync(
                     await _emailConfirmationMailMessageFactory
                         .Create(
                             language,
-                            token.Token,
+                            token,
                             userName,
                             email,
                             cancellationToken

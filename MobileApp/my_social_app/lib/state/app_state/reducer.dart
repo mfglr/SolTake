@@ -36,7 +36,6 @@ String? changeAccessTokenReducer(String? oldState,Action action)
 bool appSuccessfullyInitReducer(bool oldState,Action action)
   => action is ApplicationSuccessfullyInitAction ? true : oldState;
 
-
 //exams reducers//
 Pagination getNextPageExamsReducer(Pagination prev,GetNextPageExamsAction action)
   => prev.startLoadingNext();
