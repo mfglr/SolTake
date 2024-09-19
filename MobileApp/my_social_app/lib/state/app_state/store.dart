@@ -111,7 +111,7 @@ final store = Store(
     getPrevPageHomePageQuestionsIfReadyMiddleware,
     
     //account start
-    initAppMiddleware,
+    loginByRefreshTokenMiddleware,
     confirmEmailMiddleware,
     loginByPaswordMiddleware,
     loginByFaceBookMiddleware,

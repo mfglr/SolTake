@@ -5,14 +5,14 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<RegisterPage> createState() => _RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _RegisterViewState extends State<RegisterPage> {
 
   late final TextEditingController _email;
   late final TextEditingController _password;

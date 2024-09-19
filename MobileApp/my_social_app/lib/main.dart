@@ -7,16 +7,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/global_error_handling.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
-import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/views/account/application_initializing_page/application_initializing_page.dart';
+import 'package:my_social_app/views/account/register_page/register_page.dart';
 import 'package:my_social_app/views/create_question/pages/select_exam_page.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/account/login_page/login_page.dart';
 import 'package:my_social_app/views/create_question/pages/add_question_images_page.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
-import 'package:my_social_app/views/account/register_view.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/verify_email_view.dart';
 import 'package:my_social_app/views/take_image_page.dart';
@@ -73,7 +73,7 @@ Future<void> main() async {
           useMaterial3: true,
         ),
         home: StoreConnector<AppState,bool>(
-          onInit: (store) => store.dispatch(const InitAppAction()),
+          onInit: (store) => store.dispatch(const LoginByRefreshToken()),
           converter: (store) => store.state.isInitialized,
           builder: (context, isInitialized){
             if(isInitialized){
@@ -85,7 +85,7 @@ Future<void> main() async {
                       converter: (store) => store.state.activeLoginPage,
                       builder: (context,activeLoginPage){
                         if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
-                        return const RegisterView();
+                        return const RegisterPage();
                       },
                     );
                   }
@@ -94,11 +94,10 @@ Future<void> main() async {
                 },
               );
             }
-            return const LoadingView();
+            return const ApplicationInitializingPage();
           }
         ),
         routes: {
-          registerRoute: (context) => const RegisterView(),
           verifyEmailRoute: (context) => const VerifyEmailView(),
           rootRoute: (context) => const RootView(),
 

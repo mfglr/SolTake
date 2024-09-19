@@ -135,7 +135,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             if(account == null)
             {
                 account = new Account();
-                account.CreateByFaceBookLogin();
+                account.Create(null);
 
                 var transaction = await _transactionCreator.CreateTransactionAsync(cancellationToken);
                 
@@ -178,7 +178,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
                     throw new EmailIsAlreadyTakenException();
 
                 account = new Account();
-                account.CreateByGoogle(googleUser.Email);
+                account.Create(googleUser.Email);
 
                 var transaction = await _transactionCreator.CreateTransactionAsync(cancellationToken);
 

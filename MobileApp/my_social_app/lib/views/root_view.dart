@@ -6,8 +6,8 @@ import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/account/application_initializing_page/application_initializing_page.dart';
 import 'package:my_social_app/views/shared/icon_with_badge.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
 import 'package:my_social_app/views/search/pages/search_page.dart';
@@ -58,61 +58,59 @@ class _RootViewState extends State<RootView> {
       },
       converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],
       builder: (context,user){
-        if(user != null){
-          return Scaffold(
-            bottomNavigationBar: NavigationBar(
-              onDestinationSelected: (index) => setState(() { currentPageIndex = index;}),
-              selectedIndex: currentPageIndex,
-              destinations: [
-                const NavigationDestination(
-                  selectedIcon: Icon(Icons.home),
-                  icon: Icon(Icons.home_outlined),
-                  label: '',
-                ),
-                
-                const NavigationDestination(
-                  selectedIcon: Icon(Icons.search),
-                  icon: Icon(Icons.search_outlined),
-                  label: '',
-                ),
-          
-                StoreConnector<AppState,int>(
-                  converter: (store) => store.state.selectNumberOfComingMessages,
-                  builder: (context,count) => NavigationDestination(
-                    selectedIcon: IconWithBadge(
-                      badgeCount: count,
-                      icon: Icons.message,
-                    ),
-                    icon: IconWithBadge(
-                      badgeCount: count,
-                      icon: Icons.message_outlined,
-                    ),
-                    label: ''
+        if(user == null) return const ApplicationInitializingPage();
+        return Scaffold(
+          bottomNavigationBar: NavigationBar(
+            onDestinationSelected: (index) => setState(() { currentPageIndex = index;}),
+            selectedIndex: currentPageIndex,
+            destinations: [
+              const NavigationDestination(
+                selectedIcon: Icon(Icons.home),
+                icon: Icon(Icons.home_outlined),
+                label: '',
+              ),
+              
+              const NavigationDestination(
+                selectedIcon: Icon(Icons.search),
+                icon: Icon(Icons.search_outlined),
+                label: '',
+              ),
+        
+              StoreConnector<AppState,int>(
+                converter: (store) => store.state.selectNumberOfComingMessages,
+                builder: (context,count) => NavigationDestination(
+                  selectedIcon: IconWithBadge(
+                    badgeCount: count,
+                    icon: Icons.message,
                   ),
-                ),
-          
-                NavigationDestination(
-                  selectedIcon: UserImageWidget(
-                    userId: user.id,
-                    diameter: 30
+                  icon: IconWithBadge(
+                    badgeCount: count,
+                    icon: Icons.message_outlined,
                   ),
-                  icon: UserImageWidget(
-                    userId: user.id,
-                    diameter: 30
-                  ),
-                  label: '',
+                  label: ''
                 ),
-              ],
-            ),
-            body: [
-              const HomePage(),
-              const SearchPage(),
-              const MessageHomePage(),
-              const ProfilePage()
-            ][currentPageIndex]
-          );
-        }
-        return const LoadingView();
+              ),
+        
+              NavigationDestination(
+                selectedIcon: UserImageWidget(
+                  userId: user.id,
+                  diameter: 30
+                ),
+                icon: UserImageWidget(
+                  userId: user.id,
+                  diameter: 30
+                ),
+                label: '',
+              ),
+            ],
+          ),
+          body: [
+            const HomePage(),
+            const SearchPage(),
+            const MessageHomePage(),
+            const ProfilePage()
+          ][currentPageIndex]
+        );
       }
     );
   }

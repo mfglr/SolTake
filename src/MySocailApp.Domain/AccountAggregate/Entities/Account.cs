@@ -30,26 +30,18 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
 
             AddDomainEvent(new AccountCreatedDominEvent(this));
         }
-        internal void CreateByFaceBookLogin()
-        {
-            IsThirdPartyAuthenticated = true;
-            UserName = $"user_{BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0)}";
-            CreatedAt = DateTime.UtcNow;
-
-            AddDomainEvent(new AccountCreatedDominEvent(this));
-        }
-        internal void CreateByGoogle(string? email)
+        internal void Create(string? email)//third party authentication;
         {
             IsThirdPartyAuthenticated = true;
             if(email == null)
                 UserName = $"user_{BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0)}";
             else
             {
+                EmailConfirmed = true;
                 UserName = ValueObjects.Email.GenerateUserName(email);
                 Email = email;
             }
             CreatedAt = DateTime.UtcNow;
-
             AddDomainEvent(new AccountCreatedDominEvent(this));
         }
 

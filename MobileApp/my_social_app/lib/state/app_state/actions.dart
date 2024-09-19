@@ -16,11 +16,6 @@ class ClearStateAction extends Action{
   const ClearStateAction();
 }
 
-@immutable
-class InitAppAction extends Action{
-  const InitAppAction();
-}
-
 class ChangeAccessTokenAction extends AppAction{
   final String? accessToken;
   const ChangeAccessTokenAction({required this.accessToken});

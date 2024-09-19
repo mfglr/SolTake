@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.Exceptions;
 using MySocailApp.Core.Exceptions;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -27,15 +26,6 @@ namespace MySocailApp.Application.Extentions
             ThrowExceptionIfContextIsNull(context);
             var body = Encoding.ASCII.GetBytes(ex.GetErrorMessage(culture));
             context!.Response.StatusCode = ex.StatusCode;
-            context!.Response.ContentType = "application/json";
-            await context.Response.Body.WriteAsync(body);
-        }
-
-        public static async Task WriteExceptionAsync(this HttpContext? context, Exception ex)
-        {
-            ThrowExceptionIfContextIsNull(context);
-            var body = Encoding.ASCII.GetBytes(ex.Message);
-            context!.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context!.Response.ContentType = "application/json";
             await context.Response.Body.WriteAsync(body);
         }
