@@ -14,19 +14,20 @@ class AddSubjectsAction extends AppAction{
 }
 
 @immutable
-class GetSubjectTopicsAction extends AppAction{
+class GetNextPageSubjectTopicsIfNoPageAction extends AppAction{
   final int subjectId;
-  const GetSubjectTopicsAction({required this.subjectId});
+  const GetNextPageSubjectTopicsIfNoPageAction({required this.subjectId});
 }
 @immutable
-class GetTopicsOfSelectedSubjectAction extends AppAction{
-  const GetTopicsOfSelectedSubjectAction();
+class GetNextPageSubjectTopicsAction extends AppAction{
+  final int subjectId;
+  const GetNextPageSubjectTopicsAction({required this.subjectId});
 }
 @immutable
-class GetSubjectTopicsSuccessAction extends AppAction{
+class AddNextPageSubjectTopicsAction extends AppAction{
   final int subjectId;
   final Iterable<int> topicIds;
-  const GetSubjectTopicsSuccessAction({required this.subjectId, required this.topicIds});
+  const AddNextPageSubjectTopicsAction({required this.subjectId, required this.topicIds});
 }
 
 @immutable

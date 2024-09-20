@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/app_state/create_question_state/actions.dart';
+import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/home_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
@@ -21,12 +20,15 @@ class HomePage extends StatelessWidget {
     return StoreConnector<AppState,NotificationEntityState>(
       converter: (store) => store.state.notificationEntityState,
       builder: (context,state) => RefreshIndicator(
+        
         onRefresh: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
           store.dispatch(const GetPrevPageHomePageQuestionsIfReadyAction());
           return store.onChange.map((state) => state.homePageState.questions).firstWhere((x) => !x.loadingPrev);
         },
+
         child: Scaffold(
+
           appBar: AppBar(
             title: const Text("SolTake"),
             actions: [
@@ -51,12 +53,9 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
+
           floatingActionButton: FloatingActionButton(
-            onPressed: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(const ClearCreateQuestionStateAction());
-              Navigator.of(context).pushNamed(selectExamRoute);
-            },
+            onPressed: () => startCreatingQuestion(context),
             shape: const CircleBorder(),
             child: const Icon(Icons.question_mark),
           ),

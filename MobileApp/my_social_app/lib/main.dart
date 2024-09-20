@@ -12,10 +12,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/account/application_initializing_page/application_initializing_page.dart';
 import 'package:my_social_app/views/account/register_page/register_page.dart';
-import 'package:my_social_app/views/create_question/pages/select_exam_page.dart';
 import 'package:my_social_app/views/account/login_page/login_page.dart';
-import 'package:my_social_app/views/create_question/pages/add_question_images_page.dart';
-import 'package:my_social_app/views/create_question/pages/select_topic_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/verify_email_page.dart/verify_email_page.dart';
@@ -56,7 +53,7 @@ Future<void> main() async {
     StoreProvider(
       store: store,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'SolTake.com',
         locale: Locale(PlatformDispatcher.instance.locale.languageCode),
         supportedLocales: const [
           Locale('en'),
@@ -98,14 +95,7 @@ Future<void> main() async {
           }
         ),
         routes: {
-          rootRoute: (context) => const RootView(),
-
-          displayQuestionImagesRoute: (context) => const AddQuestionImagesPage(),
-          selectTopicRoute: (context) => const SelectTopicPage(),
-          selectExamRoute: (context) => const SelectExamPage(),
-
           takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
-
           takeImageRoute: (context) => TakeImagePage(camera: cameras.first),
           takeVideoRoute: (context) => TakeVieoPage(camera: cameras.first)
         },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/ids.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
 @immutable
@@ -7,7 +6,7 @@ class SubjectState{
   final int id;
   final int examId;
   final String name;
-  final Ids topics;
+  final Pagination topics;
   final Pagination questions;
   
   const SubjectState({
@@ -52,12 +51,21 @@ class SubjectState{
         questions: questions.addPrevPage(questionIds)
       );
 
-  SubjectState loadTopics(Iterable<int> ids)
+  SubjectState startloading()
     => SubjectState(
         id: id,
         examId: examId,
         name: name,
-        topics: topics.lastPage(ids),
+        topics: topics.startLoadingNext(),
+        questions: questions
+      );
+
+  SubjectState adNextPageTopics(Iterable<int> ids)
+    => SubjectState(
+        id: id,
+        examId: examId,
+        name: name,
+        topics: topics.appendLastPage(ids),
         questions: questions
       );
 }

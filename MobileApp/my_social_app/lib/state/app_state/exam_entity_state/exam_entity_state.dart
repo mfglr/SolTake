@@ -26,7 +26,9 @@ class ExamEntityState extends EntityState<ExamState>{
   ExamEntityState addExams(Iterable<ExamState> exams)
     => ExamEntityState(entities: appendMany(exams));
 
-  ExamEntityState loadExamSubjects(int examId,Iterable<int> ids)
+  ExamEntityState getNextPageSubjects(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]!.startLoadingNextSubjects()));
+  ExamEntityState addNextPageSubjects(int examId,Iterable<int> ids)
     => ExamEntityState(entities: updateOne(entities[examId]!.addNextPageSubjects(ids)));
 }
 

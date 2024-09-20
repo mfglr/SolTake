@@ -18,7 +18,7 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpGet("{subjectId}")]
-        public async Task<List<TopicResponseDto>> GetBySubjectId(int subjectId, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetTopicsBySubjectIdDto(subjectId), cancellationToken);
+        public async Task<List<TopicResponseDto>> GetBySubjectId(int subjectId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetTopicsBySubjectIdDto(subjectId,offset,take,isDescending), cancellationToken);
     }
 }

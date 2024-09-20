@@ -53,20 +53,18 @@ class AddPrevPageExamQuestionsAction extends AppAction{
 }
 
 @immutable
-class GetExamSubjectsAction extends AppAction{
+class GetNextPageExamSubjectsIfNoPageAction extends AppAction{
   final int examId;
-  const GetExamSubjectsAction({required this.examId});
+  const GetNextPageExamSubjectsIfNoPageAction({required this.examId});
 }
 @immutable
-class GetSubjectsOfSelectedExamAction extends AppAction{
-  const GetSubjectsOfSelectedExamAction();
+class GetNextPageExamSubjectsAction extends AppAction{
+  final int examId;
+  const GetNextPageExamSubjectsAction({required this.examId});
 }
 @immutable
-class GetExamSubjectsSuccessAction extends AppAction{
+class AddNextPageExamSubjectsAction extends AppAction{
   final int examId;
-  final Iterable<int> ids;
-  const GetExamSubjectsSuccessAction({
-    required this.examId,
-    required this.ids
-  });
+  final Iterable<int> subjectIds;
+  const AddNextPageExamSubjectsAction({required this.examId, required this.subjectIds});
 }

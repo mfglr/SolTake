@@ -1,8 +1,26 @@
 import 'dart:typed_data';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+
+@immutable
+class CreateQuestionAction extends AppAction{
+  final int examId;
+  final int subjectId;
+  final Iterable<int> topicIds;
+  final String content;
+  final Iterable<XFile> images;
+
+  const CreateQuestionAction({
+    required this.examId,
+    required this.subjectId,
+    required this.topicIds,
+    required this.content,
+    required this.images
+  });
+}
 
 @immutable
 class LoadQuestionAction extends AppAction{

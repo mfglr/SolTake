@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -34,9 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     _onPageChange = (){
-      setState(() {
-        _page = _pageController.page ?? 0;
-      });
+      setState(() { _page = _pageController.page ?? 0; });
     };
     _pageController.addListener(_onPageChange);
   
@@ -140,8 +139,17 @@ class _ProfilePageState extends State<ProfilePage> {
         return Scaffold(
           appBar: AppBar(
             title: AppTitle(title: user.userName),
-            actions: const [
-              ProfileMenuButton()
+            actions: [
+              IconButton(
+                onPressed: () => startCreatingQuestion(context),
+                icon: const Icon(Icons.question_mark),
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
+                  minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+              ),
+              const ProfileMenuButton()
             ]
           ),
           body: Column(

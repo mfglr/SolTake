@@ -17,8 +17,10 @@ ExamEntityState getPrevPageQuestionsReducer(ExamEntityState prev,GetPrevPageExam
 ExamEntityState addPrevPageQuestionsReducer(ExamEntityState prev,AddPrevPageExamQuestionsAction action)
   => prev.addPrevPageQuestions(action.examId, action.questionIds);
 
-ExamEntityState loadSubjectsOfSelectedExamSuccessReducer(ExamEntityState prev,GetExamSubjectsSuccessAction action)
-  =>prev.loadExamSubjects(action.examId, action.ids);
+ExamEntityState getNextPageSubjectsReducer(ExamEntityState prev,GetNextPageExamSubjectsAction action)
+  => prev.getNextPageSubjects(action.examId);
+ExamEntityState addNextPageSubjectsReducer(ExamEntityState prev,AddNextPageExamSubjectsAction action)
+  => prev.addNextPageSubjects(action.examId,action.subjectIds);
 
 Reducer<ExamEntityState> examEntityStateReducers = combineReducers<ExamEntityState>([
   TypedReducer<ExamEntityState,GetNextPageExamQuestionsAction>(getNextPageQuestionsReducer).call,
@@ -30,5 +32,6 @@ Reducer<ExamEntityState> examEntityStateReducers = combineReducers<ExamEntitySta
   TypedReducer<ExamEntityState,AddExamAction>(addExamReducer).call,
   TypedReducer<ExamEntityState,AddExamsAction>(addExamsReducer).call,
   
-  TypedReducer<ExamEntityState,GetExamSubjectsSuccessAction>(loadSubjectsOfSelectedExamSuccessReducer).call,
+  TypedReducer<ExamEntityState,GetNextPageExamSubjectsAction>(getNextPageSubjectsReducer).call,
+  TypedReducer<ExamEntityState,AddNextPageExamSubjectsAction>(addNextPageSubjectsReducer).call,
 ]);

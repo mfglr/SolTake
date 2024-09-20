@@ -1,18 +1,13 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.TopicAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.TopicAggregate.GetBySubjectId
 {
-    public class GetTopicsBySubjectIdHandler(IMapper mapper, ITopicReadRepository readRepository) : IRequestHandler<GetTopicsBySubjectIdDto, List<TopicResponseDto>>
+    public class GetTopicsBySubjectIdHandler(ITopicQueryRepository topicQueryRepository) : IRequestHandler<GetTopicsBySubjectIdDto, List<TopicResponseDto>>
     {
-        private readonly IMapper _mapper = mapper;
-        private readonly ITopicReadRepository _readRepository = readRepository;
+        private readonly ITopicQueryRepository _topicQueryRepository = topicQueryRepository;
 
-        public async Task<List<TopicResponseDto>> Handle(GetTopicsBySubjectIdDto request, CancellationToken cancellationToken)
-        {
-            var topics = await _readRepository.GetBySubjectId(request.SubjectId, cancellationToken);
-            return _mapper.Map<List<TopicResponseDto>>(topics);
-        }
+        public Task<List<TopicResponseDto>> Handle(GetTopicsBySubjectIdDto request, CancellationToken cancellationToken)
+            => _topicQueryRepository.GetSubjectTopicsAsync(request.SubjectId, request, cancellationToken);
     }
 }

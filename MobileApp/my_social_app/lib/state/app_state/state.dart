@@ -4,7 +4,6 @@ import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/create_message_state/create_message_state.dart';
-import 'package:my_social_app/state/app_state/create_question_state/create_question_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
@@ -51,7 +50,6 @@ class AppState{
   final FollowEntityState followEntityState;
   final UserImageEntityState userImageEntityState;
   final SearchState searchState;
-  final CreateQuestionState createQuestionState;
   final ExamEntityState examEntityState;
   final SubjectEntityState subjectEntityState;
   final TopicEntityState topicEntityState;
@@ -80,7 +78,6 @@ class AppState{
     required this.userEntityState,
     required this.userImageEntityState,
     required this.searchState,
-    required this.createQuestionState,
     required this.examEntityState,
     required this.subjectEntityState,
     required this.topicEntityState,
@@ -116,7 +113,6 @@ class AppState{
       users: Pagination.init(usersPerPage,true),
       searchedUsers: Pagination.init(usersPerPage,true)
     ),
-    createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     examEntityState: const ExamEntityState(entities: {}),
     subjectEntityState: const SubjectEntityState(entities: {}),
     topicEntityState: const TopicEntityState(entities: {}),
@@ -236,14 +232,10 @@ class AppState{
   Iterable<ExamState> get selectExams => exams.ids.map((e) => examEntityState.entities[e]!);
 
   //Select Subjects
-  Iterable<SubjectState> get subjectsOfSelectedExam 
-    => examEntityState.entities[createQuestionState.examId!]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
-  Iterable<SubjectState> selectExamSubjects(int examId)
-    => examEntityState.entities[examId]!.subjects.ids.map((e) => subjectEntityState.entities[e]!);
+  Iterable<SubjectState> selectExamSubjects(int? examId)
+    => examEntityState.entities[examId]?.subjects.ids.map((e) => subjectEntityState.entities[e]!) ?? [];
 
   // select topics
-  Iterable<TopicState> get topicsOfSelecetedSubject
-    => topicEntityState.getSubjectTopics(createQuestionState.subjectId);
-  Iterable<TopicState> selectSubjectTopics(int subjectId)
-    => subjectEntityState.entities[subjectId]!.topics.ids.map((e) => topicEntityState.entities[e]!);
+  Iterable<TopicState> selectSubjectTopics(int? subjectId)
+    => subjectEntityState.entities[subjectId]?.topics.ids.map((e) => topicEntityState.entities[e]!) ?? [];
 }

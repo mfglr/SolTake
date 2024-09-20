@@ -14,7 +14,22 @@ import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
+
+
+void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateQuestionAction){
+    QuestionService()
+      .createQuestion(action.images,action.examId,action.subjectId,action.topicIds,action.content)
+      .then((question) {
+        store.dispatch(AddQuestionAction(value: question.toQuestionState()));
+        store.dispatch(AddNewUserQuestionAction(userId: store.state.accountState!.id,questionId: question.id));
+        ToastCreator.displaySuccess("Question has been successfully created!");
+      });
+  }
+  next(action);
+}
 
 void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LoadQuestionAction){

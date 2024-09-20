@@ -2,19 +2,29 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/question.dart';
-import 'package:my_social_app/constants/routes.dart';
-import 'package:my_social_app/state/app_state/create_question_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/create_question/pages/add_question_image_page/add_question_images_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SelectTopicPage extends StatelessWidget {
-  const SelectTopicPage({super.key});
+class SelectTopicPage extends StatefulWidget {
+  final int subjectId;
+  const SelectTopicPage({
+    super.key,
+    required this.subjectId
+  });
+
+  @override
+  State<SelectTopicPage> createState() => _SelectTopicPageState();
+}
+
+class _SelectTopicPageState extends State<SelectTopicPage> {
+  String _content = "";
+  Iterable<int> _topicIds = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +40,8 @@ class SelectTopicPage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 25),
               child: StoreConnector<AppState,Iterable<TopicState>>(
-                onInit: (store) => store.dispatch(const GetTopicsOfSelectedSubjectAction()),
-                converter: (store) => store.state.topicsOfSelecetedSubject,
+                onInit: (store) => store.dispatch(GetNextPageSubjectTopicsIfNoPageAction(subjectId: widget.subjectId)),
+                converter: (store) => store.state.selectSubjectTopics(widget.subjectId),
                 builder:(context,topics) => DropdownSearch<String>.multiSelection(
                   items: topics.map((e) => e.name).toList(),
                   onBeforeChange: (prevItems, nextItems){
@@ -50,10 +60,9 @@ class SelectTopicPage extends StatelessWidget {
                       labelText: AppLocalizations.of(context)!.select_topics_page_label
                     ),
                   ),
-                  onChanged: (value){
-                    final topicIds = topics.where((x) => value.any((name) => name == x.name)).map((x) => x.id);
-                    store.dispatch(UpdateTopicIdsAction(topicIds: topicIds));
-                  },
+                  onChanged: (value) => setState(() {
+                    _topicIds = topics.where((x) => value.any((name) => name == x.name)).map((x) => x.id);
+                  }),
                 ),
               ),
             ),
@@ -61,7 +70,7 @@ class SelectTopicPage extends StatelessWidget {
               minLines: 5,
               maxLines: null,
               maxLength: questionContentMaxLenght,
-              onChanged: (value) => store.dispatch(UpdateContentAction(content: value)),
+              onChanged: (value) => setState(() { _content = value; }),
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.select_topics_page_about_question,
                 border: const OutlineInputBorder()
@@ -74,7 +83,19 @@ class SelectTopicPage extends StatelessWidget {
         padding: const  EdgeInsets.all(15),
         child: OutlinedButton(
           onPressed: (){
-            Navigator.of(context).pushNamed(displayQuestionImagesRoute);
+            Navigator
+              .of(context)
+              .push(MaterialPageRoute(builder: (context) => const AddQuestionImagesPage()))
+              .then((value){
+                if(value == null) return;
+                Navigator
+                  .of(context)
+                  .pop((
+                    content: _content,
+                    topicIds: _topicIds,
+                    images: value
+                  ));
+              });
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

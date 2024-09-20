@@ -43,7 +43,6 @@ void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispat
   }
   next(action);
 }
-
 void getPrevPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetPrevPageExamQuestionsIfReadyAction){
     final pagination = store.state.exams;
@@ -70,32 +69,24 @@ void getPrevPageExamQuestionsMiddleware(Store<AppState> store,action,NextDispatc
   next(action);
 }
 
-void getSubjectsOfSelectedExamMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetSubjectsOfSelectedExamAction){
-    final examId = store.state.createQuestionState.examId!;
-    final examState = store.state.examEntityState.entities[examId]!;
-    if(!examState.subjects.isLast){
-      SubjectService()
-        .getByExamId(examId)
-        .then((subjects){
-          store.dispatch(AddSubjectsAction(subjects: subjects.map((e) => e.toSubjectState())));
-          store.dispatch(GetExamSubjectsSuccessAction(examId: examId,ids: subjects.map((e) => e.id)));
-        });
+void getNextPageExamSubjectsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageExamSubjectsIfNoPageAction){
+    final pagination = store.state.examEntityState.entities[action.examId]!.subjects;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageExamSubjectsAction(examId: action.examId));
     }
   }
   next(action);
 }
-void getExamSubjectsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetExamSubjectsAction){
+void getNextPageExamSubjectsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageExamSubjectsAction){
     final pagination = store.state.examEntityState.entities[action.examId]!.subjects;
-    if(!pagination.isLast){
-      SubjectService()
-        .getByExamId(action.examId)
-        .then((subjects){
-          store.dispatch(AddSubjectsAction(subjects: subjects.map((e) => e.toSubjectState())));
-          store.dispatch(GetExamSubjectsSuccessAction(examId: action.examId,ids: subjects.map((e) => e.id)));
-        });
-    }
+    SubjectService()
+      .getByExamId(action.examId,pagination.next)
+      .then((subjects){
+        store.dispatch(AddSubjectsAction(subjects: subjects.map((e) => e.toSubjectState())));
+        store.dispatch(AddNextPageExamSubjectsAction(examId: action.examId,subjectIds: subjects.map((e) => e.id)));
+      });
   }
   next(action);
 }

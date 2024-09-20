@@ -51,22 +51,21 @@ class ExamState{
         questions: questions.addPrevPage(questionIds)
       );
 
-  ExamState getNextPageSubjects(){
-    if(subjects.isLast || subjects.loadingNext) return this;
-    return ExamState(
+  ExamState startLoadingNextSubjects()
+    => ExamState(
       id: id,
       shortName: shortName,
       fullName: fullName,
       subjects: subjects.startLoadingNext(),
       questions: questions
     );
-  }
+  
   ExamState addNextPageSubjects(Iterable<int> ids)
     => ExamState(
         id: id,
         shortName: shortName,
         fullName: fullName,
-        subjects: subjects.appendLastPage(ids),
+        subjects: subjects.addNextPage(ids),
         questions: questions
       );
 }

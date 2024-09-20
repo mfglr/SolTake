@@ -15,7 +15,12 @@ class ProfileMenuButton extends StatelessWidget {
               builder: (context) => const ProfileMenuPage()
             )
           ),
-      icon: const Icon(Icons.menu)
+      icon: const Icon(Icons.menu),
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
     );
   }
 }

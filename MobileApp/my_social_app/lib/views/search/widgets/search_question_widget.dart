@@ -49,10 +49,10 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                         setState(() {
                           final store = StoreProvider.of<AppState>(context,listen: false);
                           final examId = exams.firstWhere((exam) => exam.shortName == value).id;
-                          if(examId == store.state.searchState.examId) return;
+                          if(examId == state.examId) return;
 
                           store.dispatch(ChangeSearchExamIdAction(examId: examId));
-                          store.dispatch(GetExamSubjectsAction(examId: examId));
+                          store.dispatch(GetNextPageExamSubjectsIfNoPageAction(examId: examId));
                           store.dispatch(const GetFirstPageSearchingQuestionsAction());
                         });
                       },
@@ -81,10 +81,10 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                         setState(() {
                           final subjectId = subjects.firstWhere((exam) => exam.name == value).id;
                           final store = StoreProvider.of<AppState>(context,listen: false);
-                          if(subjectId == store.state.searchState.subjectId) return;
+                          if(subjectId == state.subjectId) return;
 
                           store.dispatch(ChangeSearchSubjectIdAction(subjectId: subjectId));
-                          store.dispatch(GetSubjectTopicsAction(subjectId: subjectId));
+                          store.dispatch(GetNextPageSubjectTopicsIfNoPageAction(subjectId: subjectId));
                           store.dispatch(const GetFirstPageSearchingQuestionsAction());
                         });
                       },

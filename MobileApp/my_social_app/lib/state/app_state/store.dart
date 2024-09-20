@@ -6,8 +6,6 @@ import 'package:my_social_app/state/app_state/create_comment_state/create_commen
 import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/create_message_state/create_message_state.dart';
 import 'package:my_social_app/state/app_state/create_message_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/create_question_state/create_question_state.dart';
-import 'package:my_social_app/state/app_state/create_question_state/middleware.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
@@ -62,7 +60,6 @@ final store = Store(
       users: Pagination.init(usersPerPage,true),
       searchedUsers: Pagination.init(usersPerPage,true)
     ),
-    createQuestionState: const CreateQuestionState(images: [],examId: null, subjectId: null, topicIds: [], content: null),
     examEntityState: const ExamEntityState(entities: {}),
     subjectEntityState: const SubjectEntityState(entities: {}),
     topicEntityState: const TopicEntityState(entities: {}),
@@ -191,8 +188,8 @@ final store = Store(
     //search end
     
     //Exam entity state
-    getSubjectsOfSelectedExamMiddleware,
-    getExamSubjectsMiddleware,
+    getNextPageExamSubjectsIfNoPageMiddleware,
+    getNextPageExamSubjectsMiddleware,
 
     getNextPageExamQeuestionsMiddleware,
     getNextPageOfExamQuestionsIfNoPageMiddleware,
@@ -209,9 +206,8 @@ final store = Store(
     getPrevPageSubjectQuestionsIfReadyMiddleware,
     getPrevPageSubjectQuestionsMiddleware,
 
-    getTopicsOfSelectSubjectMiddleware,
+    getSubjectTopicsIfNoPageMiddleware,
     getSubjectTopicsMiddleware,
-
 
     //Topic start
     getNextPageTopicQuestionsMiddleware,

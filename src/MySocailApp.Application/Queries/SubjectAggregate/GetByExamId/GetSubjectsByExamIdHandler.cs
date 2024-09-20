@@ -1,18 +1,13 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Domain.SubjectAggregate.Interfaces;
+﻿using MediatR;
+using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.SubjectAggregate.GetByExamId
 {
-    public class GetSubjectsByExamIdHandler(IMapper mapper, ISubjectReadRepository repository) : IRequestHandler<GetSubjectsByExamIdDto, List<SubjectResponseDto>>
+    public class GetSubjectsByExamIdHandler(ISubjectQueryRepository repository) : IRequestHandler<GetSubjectsByExamIdDto, List<SubjectResponseDto>>
     {
-        private readonly IMapper _mapper = mapper;
-        private readonly ISubjectReadRepository _repository = repository;
+        private readonly ISubjectQueryRepository _repository = repository;
 
-        public async Task<List<SubjectResponseDto>> Handle(GetSubjectsByExamIdDto request, CancellationToken cancellationToken)
-        {
-            var subjects = await _repository.GetByExamIdAsync(request.ExamId, cancellationToken);
-            return _mapper.Map<List<SubjectResponseDto>>(subjects);
-        }
+        public Task<List<SubjectResponseDto>> Handle(GetSubjectsByExamIdDto request, CancellationToken cancellationToken)
+            => _repository.GetExamSubjectsAsync(request.ExamId, request, cancellationToken);
     }
 }

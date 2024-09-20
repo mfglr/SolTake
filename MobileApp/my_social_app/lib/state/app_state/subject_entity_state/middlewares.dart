@@ -65,32 +65,25 @@ void getPrevPageSubjectQuestionsMiddleware(Store<AppState> store,action,NextDisp
   next(action);
 }
 
-void getTopicsOfSelectSubjectMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetTopicsOfSelectedSubjectAction){
-    final subjectId = store.state.createQuestionState.subjectId!;
-    final subjectState = store.state.subjectEntityState.entities[subjectId]!;
-    if(!subjectState.topics.isLast){
-      TopicService()
-        .getBySubjectId(subjectId)
-        .then((topics){
-          store.dispatch(AddTopicsAction(topics: topics.map((e) => e.toTopicState())));
-          store.dispatch(GetSubjectTopicsSuccessAction(subjectId: subjectId,topicIds: topics.map((e) => e.id)));
-        });
+
+void getSubjectTopicsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageSubjectTopicsIfNoPageAction){
+    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.topics;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageSubjectTopicsAction(subjectId: action.subjectId));
     }
   }
   next(action);
 }
 void getSubjectTopicsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetSubjectTopicsAction){
+  if(action is GetNextPageSubjectTopicsAction){
     final pagination = store.state.subjectEntityState.entities[action.subjectId]!.topics;
-    if(!pagination.isLast){
-      TopicService()
-        .getBySubjectId(action.subjectId)
-        .then((topics){
-          store.dispatch(AddTopicsAction(topics: topics.map((e) => e.toTopicState())));
-          store.dispatch(GetSubjectTopicsSuccessAction(subjectId: action.subjectId,topicIds: topics.map((e) => e.id)));
-        });
-    }
+    TopicService()
+      .getBySubjectId(action.subjectId,pagination.next)
+      .then((topics){
+        store.dispatch(AddTopicsAction(topics: topics.map((e) => e.toTopicState())));
+        store.dispatch(AddNextPageSubjectTopicsAction(subjectId: action.subjectId,topicIds: topics.map((e) => e.id)));
+      });
   }
   next(action);
 }

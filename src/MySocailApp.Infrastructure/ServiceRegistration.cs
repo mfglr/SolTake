@@ -112,8 +112,7 @@ namespace MySocailApp.Infrastructure
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
         private static IServiceCollection AddQueryRpositories(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<IAppUserQueryRepository, AppUserQueryRepository>()
                 .AddScoped<ICommentUserLikeQueryRepository, CommentUserLikeQueryRepository>()
                 .AddScoped<IFollowQueryRepository, FollowQueryRepository>()
@@ -123,9 +122,10 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IQuestionUserSaveQueryRepository, QuestionUserSaveQuestionRepository>()
                 .AddScoped<ISolutionQueryRepository, SolutionQueryRepository>()
                 .AddScoped<ICommentQueryRepository, CommentQueryRepository>()
-                .AddScoped<ISolutionUserVoteQueryRepository,SolutionUserVoteQueryRepository>()
-                .AddScoped<IMessageQueryRepository,MessageQueryRepository>();
-        }
+                .AddScoped<ISolutionUserVoteQueryRepository, SolutionUserVoteQueryRepository>()
+                .AddScoped<IMessageQueryRepository, MessageQueryRepository>()
+                .AddScoped<ITopicQueryRepository, TopicQueryRepository>()
+                .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>();
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
         {

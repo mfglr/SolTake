@@ -11,7 +11,5 @@ namespace MySocailApp.Infrastructure.SubjectAggregate
 
         public async Task<Subject?> GetByIdAsync(int id, CancellationToken cancellationToken) =>
             await _context.Subjects.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        public async Task<List<Subject>> GetByExamIdAsync(int examId,CancellationToken cancellationToken)
-            => await _context.Subjects.AsNoTracking().Where(x => x.ExamId == examId).ToListAsync(cancellationToken);
     }
 }
