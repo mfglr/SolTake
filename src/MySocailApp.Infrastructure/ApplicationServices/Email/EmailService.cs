@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Infrastructure.ApplicationServices.Email.MailMessageFactories;
 using System.Net.Mail;
 
