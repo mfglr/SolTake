@@ -103,14 +103,13 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
         }
         public async Task ConfirmEmailByToken(Account account, string token)
         {
-            if(token == null)
-                throw new EmailConfirmationTokenRequiredException();
+            ArgumentNullException.ThrowIfNull(token);
 
             try
             {
                 account.ConfirmEmailByToken(token);
             }
-            catch (InvalidEmailConfirmationToken)
+            catch (InvalidVerificationTokenException)
             {
                 await _userManager.UpdateAsync(account);
                 throw;

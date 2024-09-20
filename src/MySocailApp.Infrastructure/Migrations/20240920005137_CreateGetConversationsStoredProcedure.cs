@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MySocailApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateStoredProcedureGetConversations : Migration
+    public partial class CreateGetConversationsStoredProcedure : Migration
     {
-        /// <inheritdoc />
+            /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql($@"

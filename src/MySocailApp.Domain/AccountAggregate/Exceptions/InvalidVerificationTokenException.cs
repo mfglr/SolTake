@@ -3,7 +3,7 @@ using System.Net;
 
 namespace MySocailApp.Domain.AccountAggregate.Exceptions
 {
-    public class InvalidEmailConfirmationToken : AppException
+    public class InvalidVerificationTokenException : AppException
     {
         private readonly static string _messageTr = "Girdiğiniz kod hatalı ya da artık gecerli değil!";
         private readonly static string _messageEn = "The code is incorrect or no longer valid";
@@ -15,6 +15,6 @@ namespace MySocailApp.Domain.AccountAggregate.Exceptions
         };
         public override string GetErrorMessage(string culture) => _messages[culture];
         
-        public InvalidEmailConfirmationToken() : base((int)HttpStatusCode.BadRequest){}
+        public InvalidVerificationTokenException() : base((int)HttpStatusCode.BadRequest){}
     }
 }

@@ -17,8 +17,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
 
         public static async Task ConfirmEmailByEncodedTokenAsync(this UserManager<Account> userManager, Account account, string token)
         {
-            if (token == null)
-                throw new EmailConfirmationTokenRequiredException();
+            ArgumentNullException.ThrowIfNull(token);
 
             if (account.EmailConfirmed)
                 throw new EmailWasAlreadyConfirmedException();

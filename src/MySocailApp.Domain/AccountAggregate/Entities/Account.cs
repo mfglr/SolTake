@@ -4,7 +4,6 @@ using MySocailApp.Domain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Domain.AppUserAggregate.Entities;
-using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySocailApp.Domain.AccountAggregate.Entities
@@ -75,25 +74,15 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             if (!EmailConfirmationToken!.IsValid(token))
             {
                 EmailConfirmationToken = EmailConfirmationToken.IncreaseNumberOfFailedAttemps();
-                throw new InvalidEmailConfirmationToken();
+                throw new InvalidVerificationTokenException();
             }
             else
+            {
                 EmailConfirmed = true;
+                EmailConfirmationToken = null;
+            }
         }
-
-        public VerificationToken? ResetPasswordToken { get; private set; }
-        public void UpdateResetPasswordToken()
-        {
-            ResetPasswordToken = VerificationToken.GenerateToken();
-            AddDomainEvent(new EmailConfirmationtokenUpdatedDomainEvent(this));
-        }
-        internal void ResetPassword(string token)
-        {
-            if (!ResetPasswordToken!.IsValid(token))
-                EmailConfirmationToken = ResetPasswordToken.IncreaseNumberOfFailedAttemps();
-            AddDomainEvent(new ResetPasswordTokenUpdatedDomainEvent());
-        }
-
+       
         public AppUser AppUser { get; } = null!;
 
         //Token
