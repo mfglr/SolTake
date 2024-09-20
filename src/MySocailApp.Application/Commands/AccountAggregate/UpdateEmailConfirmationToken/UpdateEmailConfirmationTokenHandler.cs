@@ -7,12 +7,10 @@ using MySocailApp.Domain.AccountAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmationToken
 {
-    public class UpdateEmailConfirmationTokenHandler(IAccessTokenReader tokenReader, UserManager<Account> userManager, IMapper mapper, AccountManager accountManager) : IRequestHandler<UpdateEmailConfirmationTokenDto>
+    public class UpdateEmailConfirmationTokenHandler(IAccessTokenReader tokenReader, UserManager<Account> userManager) : IRequestHandler<UpdateEmailConfirmationTokenDto>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly AccountManager _accountManager = accountManager;
-        private readonly IMapper _mapper = mapper;
 
         public async Task Handle(UpdateEmailConfirmationTokenDto request, CancellationToken cancellationToken)
         {

@@ -106,7 +106,6 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             if(token == null)
                 throw new EmailConfirmationTokenRequiredException();
 
-            //confirmEmail
             try
             {
                 account.ConfirmEmailByToken(token);
