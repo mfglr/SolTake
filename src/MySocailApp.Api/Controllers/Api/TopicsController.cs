@@ -6,7 +6,7 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Queries.TopicAggregate;
 using MySocailApp.Application.Queries.TopicAggregate.GetBySubjectId;
 
-namespace MySocailApp.Api.Controllers
+namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -19,6 +19,6 @@ namespace MySocailApp.Api.Controllers
 
         [HttpGet("{subjectId}")]
         public async Task<List<TopicResponseDto>> GetBySubjectId(int subjectId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetTopicsBySubjectIdDto(subjectId,offset,take,isDescending), cancellationToken);
+            => await _mediator.Send(new GetTopicsBySubjectIdDto(subjectId, offset, take, isDescending), cancellationToken);
     }
 }

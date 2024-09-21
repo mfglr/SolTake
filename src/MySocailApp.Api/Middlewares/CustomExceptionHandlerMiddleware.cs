@@ -20,7 +20,7 @@ namespace MySocailApp.Api.Middlewares
                 await context.WriteAppExceptionAsync(context.GetLanguage(), ex);
                 blobService.Rollback();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 await context.WriteAppExceptionAsync(context.GetLanguage(), new ServerSideException());
                 blobService.Rollback();

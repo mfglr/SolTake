@@ -15,7 +15,7 @@ using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByParentId;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsBySolutionId;
 
-namespace MySocailApp.Api.Controllers
+namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -28,44 +28,44 @@ namespace MySocailApp.Api.Controllers
 
         [HttpPost]
         public async Task<CommentResponseDto> CreateComment(CreateCommentDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request,cancellationToken);
-        
-        [HttpPost]
-        public async Task<CommentUserLikeResponseDto> LikeComment(LikeCommentDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-        
+
+        [HttpPost]
+        public async Task<CommentUserLikeResponseDto> LikeComment(LikeCommentDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
         [HttpDelete("{commentId}")]
         public async Task DislikeComment(int commentId, CancellationToken cancellationToken)
             => await _mediator.Send(new DislikeCommentDto(commentId), cancellationToken);
 
         [HttpDelete("{commentId}")]
-        public async Task DeleteComment(int commentId,CancellationToken cancellationToken)
-            => await _mediator.Send(new DeleteCommentDto(commentId),cancellationToken);
+        public async Task DeleteComment(int commentId, CancellationToken cancellationToken)
+            => await _mediator.Send(new DeleteCommentDto(commentId), cancellationToken);
 
         [HttpGet("{id}")]
-        public async Task<CommentResponseDto> GetCommentById(int id,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetCommentByIdDto(id),cancellationToken);
-        
+        public async Task<CommentResponseDto> GetCommentById(int id, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCommentByIdDto(id), cancellationToken);
+
         [HttpGet("{questionId}")]
-        public async Task<List<CommentResponseDto>> GetCommentsByQuestionId(int questionId, [FromQuery]int? offset, [FromQuery]int take,
-            [FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetCommentsByQuestionIdDto(questionId, offset, take,isDescending), cancellationToken);
-        
-        [HttpGet("{solutionId}")]
-        public async Task<List<CommentResponseDto>> GetCommentsBySolutionId(int solutionId, [FromQuery]int? offset, [FromQuery]int take,
+        public async Task<List<CommentResponseDto>> GetCommentsByQuestionId(int questionId, [FromQuery] int? offset, [FromQuery] int take,
             [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetCommentsBySolutionIdDto(solutionId, offset,take,isDescending), cancellationToken);
-        
+            => await _mediator.Send(new GetCommentsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
+
+        [HttpGet("{solutionId}")]
+        public async Task<List<CommentResponseDto>> GetCommentsBySolutionId(int solutionId, [FromQuery] int? offset, [FromQuery] int take,
+            [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCommentsBySolutionIdDto(solutionId, offset, take, isDescending), cancellationToken);
+
         [HttpGet("{parentId}")]
-        public async Task<List<CommentResponseDto>> GetCommentsByParentId(int parentId, [FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetCommentsByParentIdDto(parentId, offset, take,isDescending), cancellationToken);
-        
+        public async Task<List<CommentResponseDto>> GetCommentsByParentId(int parentId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCommentsByParentIdDto(parentId, offset, take, isDescending), cancellationToken);
+
         [HttpGet("{commentId}")]
-        public async Task<List<CommentUserLikeResponseDto>> GetCommentLikes(int commentId, [FromQuery]int? offset, [FromQuery]int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetCommentLikesDto(commentId, offset, take, isDescending),cancellationToken);
-        
+        public async Task<List<CommentUserLikeResponseDto>> GetCommentLikes(int commentId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCommentLikesDto(commentId, offset, take, isDescending), cancellationToken);
+
         [HttpGet]
-        public async Task<List<CommentResponseDto>> GetCommentsByIds([FromQuery]string ids, CancellationToken cancellationToken)
+        public async Task<List<CommentResponseDto>> GetCommentsByIds([FromQuery] string ids, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentsByIdsDto(ids.Split(",").Select(int.Parse)), cancellationToken);
     }
 }

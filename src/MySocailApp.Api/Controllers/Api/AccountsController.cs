@@ -20,7 +20,7 @@ using MySocailApp.Application.Commands.AccountAggregate.UpdatePassword;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateUserName;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
 
-namespace MySocailApp.Api.Controllers
+namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -41,11 +41,11 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<AccountDto> LoginByFaceBook(LoginByFaceBookDto request,CancellationToken cancellationToken)
-            => await _mediator.Send(request,cancellationToken);
+        public async Task<AccountDto> LoginByFaceBook(LoginByFaceBookDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<AccountDto> LoginByGoogle(LoginByGoogleDto request,CancellationToken cancelToken)
+        public async Task<AccountDto> LoginByGoogle(LoginByGoogleDto request, CancellationToken cancelToken)
             => await _mediator.Send(request, cancelToken);
 
         [HttpPut]
@@ -72,7 +72,7 @@ namespace MySocailApp.Api.Controllers
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task<AccountDto> UpdatePassword(UpdatePasswordDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-        
+
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
@@ -80,8 +80,8 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new UpdateEmailConfirmationTokenDto(), cancellationToken);
 
         [HttpGet("{id}/{token}")]
-        public async Task ConfirmEmail(string id,string token,CancellationToken cancellationToken)
-            => await _mediator.Send(new ConfirmEmailDto(id,token), cancellationToken);
+        public async Task ConfirmEmail(string id, string token, CancellationToken cancellationToken)
+            => await _mediator.Send(new ConfirmEmailDto(id, token), cancellationToken);
 
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -13,7 +13,7 @@ using MySocailApp.Application.Queries.MessageAggregate.GetMessageImage;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId;
 using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessages;
 
-namespace MySocailApp.Api.Controllers
+namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -33,7 +33,7 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new RemoveMessageDto(messageId), cancellationToken);
 
         [HttpDelete]
-        public async Task RemoveMessages(RemoveMessagesDto request,CancellationToken cancellationToken)
+        public async Task RemoveMessages(RemoveMessagesDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpGet("{userId}")]
@@ -41,7 +41,7 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new GetMessagesByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<MessageResponseDto>> GetConversations([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<MessageResponseDto>> GetConversations([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetConversationsDto(offset, take, isDescending), cancellationToken);
 
         [HttpGet]

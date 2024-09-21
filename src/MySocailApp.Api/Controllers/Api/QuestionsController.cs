@@ -24,7 +24,7 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUser
 using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions;
 
-namespace MySocailApp.Api.Controllers
+namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -36,7 +36,7 @@ namespace MySocailApp.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<QuestionResponseDto> Create([FromForm]string? content, [FromForm]int examId, [FromForm]int subjectId, [FromForm]string? topicIds, [FromForm]IFormFileCollection images, CancellationToken cancellationToken)
+        public async Task<QuestionResponseDto> Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] string? topicIds, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateQuestionDto(content, examId, subjectId, topicIds, images), cancellationToken);
 
         [HttpDelete("{questionId}")]
@@ -44,16 +44,16 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new DeleteQuestionDto(questionId), cancellationToken);
 
         [HttpPost]
-        public async Task<LikeQuestionCommandResponseDto> Like(LikeQuestionDto request,CancellationToken cancellationToken)
+        public async Task<LikeQuestionCommandResponseDto> Like(LikeQuestionDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-        
+
         [HttpDelete("{questionId}")]
         public async Task Dislike(int questionId, CancellationToken cancellationToken)
             => await _mediator.Send(new DislikeQuestionDto(questionId), cancellationToken);
 
         [HttpPost]
-        public async Task<SaveQuestionCommandResponseDto> SaveQuestion(SaveQuestionDto request,CancellationToken cancellationToken)
-            => await _mediator.Send(request,cancellationToken);
+        public async Task<SaveQuestionCommandResponseDto> SaveQuestion(SaveQuestionDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
 
         [HttpDelete("{questionId}")]
         public async Task UnsaveQuestion(int questionId, CancellationToken cancellationToken)
@@ -71,28 +71,28 @@ namespace MySocailApp.Api.Controllers
            => await _mediator.Send(new GetQuestionByIdDto(id), cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsByUserId(int userId, [FromQuery]int? offset, [FromQuery]int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{topicId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsByTopicId(int topicId,[FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsByTopicId(int topicId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsByTopicIdDto(topicId, offset, take, isDescending), cancellationToken);
-        
+
         [HttpGet("{subjectId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsBySubjectId(int subjectId, [FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsBySubjectId(int subjectId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsBySubjectIdDto(subjectId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{examId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsByExamId(int examId, [FromQuery]int? offset, [FromQuery]int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsByExamId(int examId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetQuestionsByExamIdDto(examId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<QuestionResponseDto>> GetHomePageQuestions([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetHomePageQuestionsDto(offset, take,isDescending),cancellationToken);
+        public async Task<List<QuestionResponseDto>> GetHomePageQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetHomePageQuestionsDto(offset, take, isDescending), cancellationToken);
 
         [HttpPost]
-        public async Task<List<QuestionResponseDto>> SearchQuestions(SearchQuestionsDto request,CancellationToken cancellationToken)
-            => await _mediator.Send(request,cancellationToken);
+        public async Task<List<QuestionResponseDto>> SearchQuestions(SearchQuestionsDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
 
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
@@ -100,10 +100,10 @@ namespace MySocailApp.Api.Controllers
 
         [HttpGet("{questionId}")]
         public Task<List<QuestionUserLikeResponseDto>> GetQuestionLikes(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => _mediator.Send(new GetQuestionLikesDto(questionId, offset, take, isDescending),cancellationToken);
+            => _mediator.Send(new GetQuestionLikesDto(questionId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery]int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetUnsolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]

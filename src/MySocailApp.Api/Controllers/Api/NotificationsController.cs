@@ -8,7 +8,7 @@ using MySocailApp.Application.Queries.NotificationAggregate;
 using MySocailApp.Application.Queries.NotificationAggregate.GetUnviewedNotifications;
 using MySocailApp.Application.Queries.NotificationAggregate.GetViewedNotifications;
 
-namespace MySocailApp.Api.Controllers
+namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -24,7 +24,7 @@ namespace MySocailApp.Api.Controllers
             => await _mediator.Send(new GetUnviewedNotificationsDto(), cancellationToken);
 
         [HttpGet]
-        public async Task<List<NotificationResponseDto>> GetNotifications([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<NotificationResponseDto>> GetNotifications([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetViewedNotificationsDto(offset, take, isDescending), cancellationToken);
 
         [HttpPut]

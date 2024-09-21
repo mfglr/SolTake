@@ -71,7 +71,8 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddEmailService()
                 .AddBlobService()
-                .AddQueryRpositories();
+                .AddQueryRpositories()
+                .AddSingleton<IStaticHtmlReader,StaticHtmlReader>();
         }
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {

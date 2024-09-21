@@ -22,7 +22,7 @@ using MySocailApp.Application.Queries.UserAggregate.GetUserByUserName;
 using MySocailApp.Application.Queries.UserAggregate.GetUserImageById;
 using MySocailApp.Application.Queries.UserAggregate.SearchUsers;
 
-namespace MySocailApp.Api.Controllers
+namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -36,18 +36,18 @@ namespace MySocailApp.Api.Controllers
         [HttpPost]
         public async Task<FollowCommandResponseDto> Follow(FollowDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-        
+
         [HttpDelete("{followedId}")]
         public async Task Unfollow(int followedId, CancellationToken cancellationToken)
             => await _mediator.Send(new UnfollowDto(followedId), cancellationToken);
-        
+
         [HttpDelete("{followerId}")]
         public async Task RemoveFollower(int followerId, CancellationToken cancellationToken)
             => await _mediator.Send(new RemoveFollowerDto(followerId), cancellationToken);
 
         [HttpPost]
         public async Task UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
-             => await _mediator.Send(new UpdateUserImageDto(file),cancellationToken);
+             => await _mediator.Send(new UpdateUserImageDto(file), cancellationToken);
 
         [HttpGet]
         public async Task<FileContentResult> RemoveImage(CancellationToken cancellationToken)
@@ -59,8 +59,8 @@ namespace MySocailApp.Api.Controllers
 
         [HttpPut]
         public async Task UpdateBiography(UpdateBiographyDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request,cancellationToken);
-    
+            => await _mediator.Send(request, cancellationToken);
+
         [HttpPost]
         public async Task<AddUserSearchedCommandResponseDto> AddSearched(AddUserSearchedDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
@@ -71,35 +71,35 @@ namespace MySocailApp.Api.Controllers
 
         //Queries
         [HttpGet("{id}")]
-        public async Task<AppUserResponseDto> GetById(int id,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetUserByIdDto(id),cancellationToken);
+        public async Task<AppUserResponseDto> GetById(int id, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetUserByIdDto(id), cancellationToken);
 
         [HttpGet("{userName}")]
-        public async Task<AppUserResponseDto> GetByUserName(string userName,CancellationToken cancellationToken)
-            => await _mediator.Send(new GetUserByUserNameDto(userName),cancellationToken);
+        public async Task<AppUserResponseDto> GetByUserName(string userName, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetUserByUserNameDto(userName), cancellationToken);
 
         [HttpGet("{userId}")]
         public async Task<FileContentResult> GetImageById(int userId, CancellationToken cancellationToken)
             => File(await _mediator.Send(new GetUserImageById(userId), cancellationToken), "application/octet-stream");
 
         [HttpGet("{id}")]
-        public Task<List<FollowResponseDto>> GetFollowersById(int id,[FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public Task<List<FollowResponseDto>> GetFollowersById(int id, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => _mediator.Send(new GetFollowersByIdDto(id, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{id}")]
-        public Task<List<FollowResponseDto>> GetFollowedsById(int id,[FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public Task<List<FollowResponseDto>> GetFollowedsById(int id, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => _mediator.Send(new GetFollowedsByIdDto(id, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{id}")]
-        public async Task<List<AppUserResponseDto>> GetNotFolloweds(int id,[FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetNotFollowedsDto(id, offset, take,isDescending), cancellationToken);
-        
+        public async Task<List<AppUserResponseDto>> GetNotFolloweds(int id, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetNotFollowedsDto(id, offset, take, isDescending), cancellationToken);
+
         [HttpPost]
         public async Task<List<AppUserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpGet]
-        public async Task<List<UserSearchResponseDto>> GetSearcheds([FromQuery]int? offset, [FromQuery] int take,[FromQuery]bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<UserSearchResponseDto>> GetSearcheds([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSearchedUsersDto(offset, take, isDescending), cancellationToken);
     }
 }
