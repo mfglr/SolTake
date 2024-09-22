@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
@@ -10,8 +9,5 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         private QuestionUserLike(int appUserId) => AppUserId = appUserId;
         public static QuestionUserLike Create(int appUserId) => new(appUserId) { CreatedAt = DateTime.UtcNow };
-      
-        public Question Question { get; } = null!;
-        public AppUser AppUser { get; } = null!;
     }
 }

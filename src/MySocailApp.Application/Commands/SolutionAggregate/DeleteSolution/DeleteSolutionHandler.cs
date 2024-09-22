@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.DeleteSolution
         public async Task Handle(DeleteSolutionDto request, CancellationToken cancellationToken)
         {
             var solution =
-                await _solutionWriteRepository.GetWithCommentsByIdAsync(request.SolutionId, cancellationToken) ??
+                await _solutionWriteRepository.GetByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionNotFoundException();
 
             await _solutionDeleter.DeleteAsync(solution, cancellationToken);

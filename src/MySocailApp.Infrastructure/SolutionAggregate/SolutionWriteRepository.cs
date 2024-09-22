@@ -25,24 +25,9 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
 
         public Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => _context.Solutions.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-
-        public async Task<Solution?> GetWithCommentsByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context.Solutions
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Children)
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-                .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
-
+        
         public void Delete(Solution solution)
-        {
-            foreach(var comment in solution.Comments)
-            {
-                _context.Comments.RemoveRange(comment.Children);
-                _context.Comments.Remove(comment);
-            }
-            _context.Solutions.Remove(solution);
-        }
+            => _context.Solutions.Remove(solution);
 
     }
 }

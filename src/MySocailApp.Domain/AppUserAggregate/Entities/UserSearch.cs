@@ -9,8 +9,5 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
 
         private UserSearch(int searchedId) => SearchedId = searchedId;
         public static UserSearch Create(int searchedId) => new (searchedId){ CreatedAt = DateTime.UtcNow };
-
-        public AppUser Searcher { get; } = null!;
-        public AppUser Searched { get; } = null!;
     }
 }

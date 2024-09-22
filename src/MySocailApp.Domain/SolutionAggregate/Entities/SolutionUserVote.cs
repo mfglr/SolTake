@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities
@@ -17,9 +16,5 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
         public static SolutionUserVote GenerateDownvote(int appUserId)
             => new(appUserId) { Type = SolutionVoteType.Downvote, CreatedAt = DateTime.UtcNow };
-
-        //readonly navigator properties
-        public Solution Solution { get; } = null!;
-        public AppUser AppUser { get; } = null!;
     }
 }

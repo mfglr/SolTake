@@ -19,7 +19,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.Questions
                 .AsNoTracking()
                 .Where(predicate)
-                .ToQuestionResponseDto(accountId)
+                .Join(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         private Task<List<QuestionResponseDto>> GetListAsync(int accountId, IPage page, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(predicate)
                 .ToPage(page)
-                .ToQuestionResponseDto(accountId)
+                .Join(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<QuestionResponseDto?> GetQuestionByIdAsync(int id, int accountId, CancellationToken cancellationToken)
@@ -54,10 +54,26 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 cancellationToken
             );
         public Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.AppUserId == userId && x.Solutions.Any(x => x.State == SolutionState.Correct), cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                q => q.AppUserId == userId && _context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
+                cancellationToken
+            );
+
         public Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
-           => GetListAsync(accountId, page, x => x.AppUserId == userId && !x.Solutions.Any(x => x.State == SolutionState.Correct), cancellationToken);
+           => GetListAsync(
+               accountId,
+               page,
+               q => q.AppUserId == userId && !_context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
+               cancellationToken
+            );
         public Task<List<QuestionResponseDto>> GetFollowedsQuestionsAsync(int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.AppUser.Followers.Any(x => x.FollowerId == accountId), cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                q => _context.Follows.Any(u => q.AppUserId == u.FollowedId && u.FollowerId == accountId),
+                cancellationToken
+            );
     }
 }

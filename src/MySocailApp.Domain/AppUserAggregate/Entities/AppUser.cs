@@ -1,14 +1,10 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
 using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.UserConnectionAggregate.Entities;
 
 namespace MySocailApp.Domain.AppUserAggregate.Entities
 {
@@ -108,17 +104,9 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         }
 
         //readonly navigator properties
-        public Account Account { get; } = null!;
-        public UserConnection UserConnection { get; } = null!;
-        public NotificationConnection NotificationConnection { get; } = null!;
-        public IReadOnlyCollection<Question> Questions { get; } = null!;
         public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } = null!;
-        public IReadOnlyCollection<Comment> Comments { get; } = null!;
         public IReadOnlyCollection<CommentUserLike> CommentsLiked { get; } = null!;
         public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; } = null!;
-        public IReadOnlyCollection<Solution> Solutions { get; } = null!;
-        public IReadOnlyCollection<Message> Messages { get; } = null!;
-        public IReadOnlyCollection<Message> MessagesReceived { get; } = null!;
         public IReadOnlyCollection<SolutionUserVote> Votes { get; } = null!;
     }
 }

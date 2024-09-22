@@ -1,7 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
@@ -12,33 +9,27 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
     {
         public int QuestionId { get; private set; }
         public int AppUserId { get; private set; }
-        public SolutionContent? Content { get; private set; }
+        public SolutionContent Content { get; private set; } = null!;
         private readonly List<SolutionImage> _images = [];
         public IReadOnlyCollection<SolutionImage> Images => _images;
 
-        internal void Create(int questionId, int appUserId, SolutionContent? content, IEnumerable<SolutionImage> images)
+        internal void Create(int questionId, int appUserId, SolutionContent content, IEnumerable<SolutionImage> images)
         {
-            if((content == null || content.Value.Trim() == "") && !images.Any())
+            if(content.Value.Trim() == "" && !images.Any())
                 throw new SolutionContentOrImagesRequiredException();
             if (images.Count() > 3)
                 throw new TooManySolutionImageException();
 
             QuestionId = questionId;
             AppUserId = appUserId;
-            Content = content?.Value.Trim() == "" ? null : content;
+            Content = content;
             State = SolutionState.Pending;
             _images.AddRange(images);
             UpdatedAt = CreatedAt = DateTime.UtcNow;
 
             AddDomainEvent(new SolutionCreatedDomainEvent(this));
         }
-        
-        internal void Delete()
-        {
-            foreach(var comment in Comments)
-                comment.Delete();
-        }
-
+       
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
         private readonly List<SolutionVoteNotification> _voteNotifications = [];
@@ -120,12 +111,5 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
             AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));
         }
-
-        //Readonly navigator properties
-        public Question Question { get; } = null!;
-        public AppUser AppUser { get; } = null!;
-        private readonly List<Comment> _comments = [];
-        public IReadOnlyList<Comment> Comments => _comments;
-
     }
 }

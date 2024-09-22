@@ -1,62 +1,79 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class FollowQueryableMappers
     {
-        public static IQueryable<FollowResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, int accountId)
+        public static IQueryable<FollowResponseDto> JoinFollower(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
-                .Select(
-                    x => new FollowResponseDto(
-                        x.Id,
-                        x.CreatedAt,
-                        x.FollowerId,
-                        x.FollowedId,
-                        new AppUserResponseDto(
-                            x.Follower.Id,
-                            x.Follower.CreatedAt,
-                            x.Follower.UpdatedAt,
-                            x.Follower.Account.UserName!,
-                            x.Follower.Name,
-                            x.Follower.Biography.Value,
-                            x.Follower.HasImage,
-                            x.Follower.Questions.Count,
-                            x.Follower.Followers.Count,
-                            x.Follower.Followeds.Count,
-                            x.Follower.Followeds.Any(x => x.FollowedId == accountId),
-                            x.Follower.Followers.Any(x => x.FollowerId == accountId)
+                .Join(
+                    context.Users,
+                    f => f.FollowerId,
+                    a => a.Id,
+                    (f, a) => new { f, a }
+                )
+                .Join(
+                    context.AppUsers,
+                    j => j.f.FollowerId,
+                    u => u.Id,
+                    (j, u) => new FollowResponseDto(
+                        j.f.Id,
+                        j.f.CreatedAt,
+                        j.f.FollowerId,
+                        j.f.FollowedId,
+                        new(
+                            u.Id,
+                            u.CreatedAt,
+                            u.UpdatedAt,
+                            j.a.UserName!,
+                            u.Name,
+                            u.Biography.Value,
+                            u.HasImage,
+                            context.Questions.Count(q => q.AppUserId == u.Id),
+                            u.Followers.Count,
+                            u.Followeds.Count,
+                            u.Followeds.Any(f => f.FollowedId == accountId),
+                            u.Followers.Any(f => f.FollowerId == accountId)
                         ),
                         null
                     )
                 );
-        public static IQueryable<FollowResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, int accountId)
+
+        public static IQueryable<FollowResponseDto> JoinFollowed(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
-                .Select(
-                    x => new FollowResponseDto(
-                        x.Id,
-                        x.CreatedAt,
-                        x.FollowerId,
-                        x.FollowedId,
-                        null,
-                        new AppUserResponseDto(
-                            x.Followed.Id,
-                            x.Followed.CreatedAt,
-                            x.Followed.UpdatedAt,
-                            x.Followed.Account.UserName!,
-                            x.Followed.Name,
-                            x.Followed.Biography.Value,
-                            x.Followed.HasImage,
-                            x.Followed.Questions.Count,
-                            x.Followed.Followers.Count,
-                            x.Followed.Followeds.Count,
-                            x.Followed.Followeds.Any(x => x.FollowedId == accountId),
-                            x.Followed.Followers.Any(x => x.FollowerId == accountId)
-                        )
+                .Join(
+                    context.Users,
+                    f => f.FollowedId,
+                    a => a.Id,
+                    (f, a) => new { f, a }
+                )
+                .Join(
+                    context.AppUsers,
+                    j => j.f.FollowedId,
+                    u => u.Id,
+                    (j, u) => new FollowResponseDto(
+                        j.f.Id,
+                        j.f.CreatedAt,
+                        j.f.FollowerId,
+                        j.f.FollowedId,
+                        new(
+                            u.Id,
+                            u.CreatedAt,
+                            u.UpdatedAt,
+                            j.a.UserName!,
+                            u.Name,
+                            u.Biography.Value,
+                            u.HasImage,
+                            context.Questions.Count(q => q.AppUserId == u.Id),
+                            u.Followers.Count,
+                            u.Followeds.Count,
+                            u.Followeds.Any(f => f.FollowedId == accountId),
+                            u.Followers.Any(f => f.FollowerId == accountId)
+                        ),
+                        null
                     )
                 );
-
-
-
     }
 }

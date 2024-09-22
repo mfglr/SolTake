@@ -16,21 +16,22 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.AppUsers
                 .AsNoTracking()
                 .Where(x => x.Id == id)
-                .ToUserResponseDto(accountId)
+                .Join(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<AppUserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken)
             => _context.AppUsers
                 .AsNoTracking()
-                .Where(x => x.Account.UserName == userName)
+                .Where(x => )
                 .ToUserResponseDto(accountId)
                 .FirstOrDefaultAsync(cancellationToken);
+
         public Task<List<AppUserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.AppUsers
                 .AsNoTracking()
                 .Where(x => x.Id != userId && !x.Followers.Any(x => x.FollowerId == userId))
                 .ToPage(page)
-                .ToUserResponseDto(accountId)
+                .Join(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<AppUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
@@ -38,14 +39,11 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(
                     user =>
-                        
-                            user.Name != null &&
-                            user.Name.ToLower().Contains(key.ToLower())
-                         ||
+                        (user.Name != null && user.Name.ToLower().Contains(key.ToLower())) ||
                         user.Account.UserName!.ToLower().Contains(key.ToLower())
                 )
                 .ToPage(page)
-                .ToUserResponseDto(accountId)
+                .Join(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

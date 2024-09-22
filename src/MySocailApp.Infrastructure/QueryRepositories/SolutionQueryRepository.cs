@@ -17,7 +17,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.Solutions
                 .AsNoTracking()
                 .Where(x => x.Id == solutionId)
-                .ToSolutionResponseDto(accountId)
+                .Join(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetSolutionsByQuestionIdAsync(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
@@ -25,7 +25,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.QuestionId == questionId)
                 .ToPage(page)
-                .ToSolutionResponseDto(accountId)
+                .Join(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetCorrectSolutionsByQuestionId(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.QuestionId == questionId && x.State == SolutionState.Correct)
                 .ToPage(page)
-                .ToSolutionResponseDto(accountId)
+                .Join(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetPendingSolutionsByQuestionId(int accountId, IPage pagination, int questionId, CancellationToken cancellationToken)
@@ -41,7 +41,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.QuestionId == questionId && x.State == SolutionState.Pending)
                 .ToPage(pagination)
-                .ToSolutionResponseDto(accountId)
+                .Join(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int accountId, IPage pagination, int questionId, CancellationToken cancellationToken)
@@ -49,7 +49,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.QuestionId == questionId && x.State == SolutionState.Incorrect)
                 .ToPage(pagination)
-                .ToSolutionResponseDto(accountId)
+                .Join(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

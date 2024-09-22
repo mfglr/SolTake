@@ -9,16 +9,22 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<AppUser?> GetAsync(int id, CancellationToken cancellationToken)
-            => await _context.AppUsers
+        public Task<AppUser?> GetAsync(int id, CancellationToken cancellationToken)
+            => _context.AppUsers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         
-        public async Task<List<int>> GetIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
-            => await _context.AppUsers
+        public Task<List<int>> GetIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
+            => _context.AppUsers
                 .AsNoTracking()
-                .Where(x => userNames.Contains(x.Account.UserName))
-                .Select(x => x.Id)
+                .Join(
+                    _context.Users,
+                    u => u.Id,
+                    a => a.Id,
+                    (u, a) => new { u, a }
+                )
+                .Where(x => userNames.Contains(x.a.UserName))
+                .Select(x => x.a.Id)
                 .ToListAsync(cancellationToken);
     }
 }

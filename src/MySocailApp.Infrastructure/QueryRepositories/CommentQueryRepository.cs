@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
@@ -11,6 +12,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     public class CommentQueryRepository(AppDbContext context) : ICommentQueryRepository
     {
         private readonly AppDbContext _context = context;
+
 
         public Task<CommentResponseDto?> GetByIdAsync(int accountId, int commentId, CancellationToken cancellationToken)
             => _context.Comments

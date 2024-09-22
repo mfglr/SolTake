@@ -1,11 +1,8 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
@@ -76,7 +73,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             AddDomainEvent(new QuestionDislikedDomainEvent(this));
         }
 
-
         //saving questions
         private readonly List<QuestionUserSave> _saves = [];
         public IReadOnlyList<QuestionUserSave> Saves => _saves;
@@ -94,12 +90,8 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _saves.Remove(save);
         }
 
-
         // Readonly navigator properties
         public Exam Exam { get; } = null!;
         public Subject Subject { get; } = null!;
-        public AppUser AppUser { get; } = null!;
-        public IReadOnlyList<Solution> Solutions { get; } = null!;
-        public IReadOnlyCollection<Comment> Comments { get; } = null!;
     }
 }

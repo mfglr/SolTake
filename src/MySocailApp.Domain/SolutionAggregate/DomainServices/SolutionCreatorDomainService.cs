@@ -12,7 +12,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 
         public async Task CreateAsync(Solution solution,int userId,int questionId,string? content,IEnumerable<SolutionImage> images,CancellationToken cancellationToken)
         {
-            var solutionContent = content != null ? new SolutionContent(content) : null; 
+            var solutionContent = new SolutionContent(content ?? ""); 
             var question = 
                 await _questionRepository.GetAsync(questionId, cancellationToken) ??
                 throw new QuestionNotFoundException();

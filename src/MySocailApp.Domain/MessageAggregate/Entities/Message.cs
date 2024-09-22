@@ -69,9 +69,5 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
 
             _removers.Add(new MessageUserRemove(removerId));
         }
-
-        //readonly navigators
-        public AppUser Sender { get; } = null!;
-        public AppUser Receiver { get; } = null!;
     }
 }

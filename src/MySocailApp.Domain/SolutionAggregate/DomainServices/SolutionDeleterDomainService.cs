@@ -1,5 +1,4 @@
-﻿using MediatR;
-using MySocailApp.Domain.QuestionAggregate.DomainEvents;
+﻿using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
@@ -22,13 +21,11 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 await _questionWriteRepository.GetByIdAsync(solution.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            question.AddDomainEvent(new SolutionDeletedDomainEvent(solution.Id));
+            _solutionWriteRepository.Delete(solution);
 
+            question.AddDomainEvent(new SolutionDeletedDomainEvent(solution.Id));
             if (numberOfCorrectSolution == 1)
                 question.AddDomainEvent(new LastCorrectSolutionDeletedDomainEvent(question));
-            
-            solution.Delete();
-            _solutionWriteRepository.Delete(solution);
         }
     }
 }
