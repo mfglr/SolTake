@@ -27,8 +27,9 @@ namespace MySocailApp.Infrastructure.CommentAggregate
                 .Include(x => x.LikeNotifications.Where(x => x.AppUserId == userId))
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
 
-        public async Task<Comment?> GetWithRepliesAndChildrenAsync(int id, CancellationToken cancellationToken)
+        public async Task<Comment?> GetCommentWithAllByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Comments
+                .Include(x => x.Notifications)
                 .Include(x => x.Replies)
                 .Include(x => x.Children)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);

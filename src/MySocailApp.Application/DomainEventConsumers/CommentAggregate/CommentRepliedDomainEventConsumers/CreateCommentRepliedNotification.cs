@@ -10,7 +10,7 @@ using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 
-namespace MySocailApp.Application.DomainEventConsumers.CommentRepliedDomainEventConsumers
+namespace MySocailApp.Application.DomainEventConsumers.CommentAggregate.CommentRepliedDomainEventConsumers
 {
     public class CreateCommentRepliedNotification(INotificationWriteRepository notficationWriteRepository, IUnitOfWork unitOfWork, IHubContext<NotificationHub> notificationHub, INotificationConnectionReadRepository notificationConnectionReadRepository, IMapper mapper, ICommentQueryRepository commentQueryRepository) : IDomainEventConsumer<CommentRepliedDomainEvent>
     {

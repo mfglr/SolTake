@@ -3,6 +3,7 @@ using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
@@ -55,7 +56,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public void Remove()
         {
             IsRemoved = true;
-            AddDomainEvent(new CommentDeletedDomainEvent(this));
+            AddDomainEvent(new CommentDeletedDomainEvent(Id));
         }
         public void SetRepliedIdsAsNull()
         {
@@ -103,5 +104,6 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public AppUser AppUser { get; } = null!;
         public Question? Question { get; }
         public Solution? Solution { get; }
+        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

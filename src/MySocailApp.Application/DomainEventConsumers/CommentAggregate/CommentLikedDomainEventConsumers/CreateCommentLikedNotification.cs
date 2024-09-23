@@ -12,7 +12,7 @@ using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 
-namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventConsumers
+namespace MySocailApp.Application.DomainEventConsumers.CommentAggregate.CommentLikedDomainEventConsumers
 {
     public class CreateCommentLikedNotification(INotificationWriteRepository repository, IUnitOfWork unitOfWork, ICommentReadRepository commentReadRepository, IMapper mapper, INotificationConnectionReadRepository notificatinConnectionReadRepository, IHubContext<NotificationHub> notificationHub, ICommentUserLikeQueryRepository commentUserLikeQueryRepository) : IDomainEventConsumer<CommentLikedDomainEvent>
     {
@@ -48,7 +48,7 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
             if (connection == null || !connection.IsConnected) return;
 
             var like = await _commentUserLikeQueryRepository.GetLikeAsync(notification.Like.Id, comment.AppUserId, cancellationToken);
-            if(like == null) return;
+            if (like == null) return;
 
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)

@@ -39,6 +39,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
                 .WithOne(x => x.Parent)
                 .HasForeignKey(x => x.ParentId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.Notifications)
+                .WithOne(x => x.Comment)
+                .HasForeignKey(x => x.CommentId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

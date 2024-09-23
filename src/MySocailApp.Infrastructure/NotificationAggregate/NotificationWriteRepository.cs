@@ -17,8 +17,6 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public void DeleteRange(IEnumerable<Notification> notifications)
             => _context.Notifications.RemoveRange(notifications);
 
-        public Task<List<Notification>> GetByCommentIdAsync(int commentId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.CommentId == commentId || x.ParentId == commentId).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetByIds(List<int> ids, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetBySolutionIdAsync(int solutionId, CancellationToken cancellationToken)

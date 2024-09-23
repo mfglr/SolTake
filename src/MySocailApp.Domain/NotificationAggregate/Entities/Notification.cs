@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
@@ -150,5 +151,7 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow
             };
+
+        public Comment? Comment { get; }
     }
 }

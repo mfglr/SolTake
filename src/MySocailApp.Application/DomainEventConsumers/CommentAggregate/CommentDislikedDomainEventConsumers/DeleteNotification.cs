@@ -3,7 +3,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 
-namespace MySocailApp.Application.DomainEventConsumers.CommentDislikedDomainEventConsumers
+namespace MySocailApp.Application.DomainEventConsumers.CommentAggregate.CommentDislikedDomainEventConsumers
 {
     public class DeleteNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<CommentDislikedDomainEvent>
     {
