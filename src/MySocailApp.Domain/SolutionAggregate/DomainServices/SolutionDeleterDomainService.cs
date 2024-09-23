@@ -1,33 +1,24 @@
-﻿using MediatR;
-using MySocailApp.Domain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
-using MySocailApp.Domain.SolutionAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+﻿using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 {
-    public class SolutionDeleterDomainService(ISolutionWriteRepository solutionWriteRepository, IQuestionWriteRepository questionWriteRepository, ISolutionReadRepository solutionReadRepository)
+    public class SolutionDeleterDomainService(ISolutionWriteRepository solutionWriteRepository, ICommentWriteRepository commentWriteRepository)
     {
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
-        private readonly ISolutionReadRepository _solutionReadRepository = solutionReadRepository;
-        private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
+        private readonly ICommentWriteRepository _commentWriteRepository = commentWriteRepository;
 
-        public async Task DeleteAsync(Solution solution, CancellationToken cancellationToken)
+        public async Task DeleteAsync(int solutionId, CancellationToken cancellationToken)
         {
-            var numberOfCorrectSolution = await _solutionReadRepository.GetNumberOfQuestionCorrectSolutionsAsync(solution.QuestionId, cancellationToken);
-
-            var question =
-                await _questionWriteRepository.GetByIdAsync(solution.QuestionId, cancellationToken) ??
-                throw new QuestionNotFoundException();
-
-            question.AddDomainEvent(new SolutionDeletedDomainEvent(solution.Id));
-
-            if (numberOfCorrectSolution == 1)
-                question.AddDomainEvent(new LastCorrectSolutionDeletedDomainEvent(question));
+            var solution = await _solutionWriteRepository.GetWithCommentsByIdAsync(solutionId, cancellationToken);
+            if (solution == null) return;
             
             solution.Delete();
+            foreach (var comment in solution.Comments)
+            {
+                _commentWriteRepository.DeleteRange(comment.Children);
+                _commentWriteRepository.Delete(comment);
+            }
             _solutionWriteRepository.Delete(solution);
         }
     }

@@ -33,10 +33,16 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             AddDomainEvent(new SolutionCreatedDomainEvent(this));
         }
         
+        public bool IsRemoved { get; private set; }
+        public void Remove()
+        {
+            IsRemoved = true;
+            AddDomainEvent(new SolutionDeletedDomainEvent(Id));
+        }
         internal void Delete()
         {
-            foreach(var comment in Comments)
-                comment.Remove();
+            foreach (var comment in _comments)
+                comment.SetRepliedIdsAsNull();
         }
 
         private readonly List<SolutionUserVote> _votes = [];

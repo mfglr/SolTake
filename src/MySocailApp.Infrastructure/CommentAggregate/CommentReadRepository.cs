@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extetions;
 
 namespace MySocailApp.Infrastructure.CommentAggregate
 {
@@ -13,11 +10,11 @@ namespace MySocailApp.Infrastructure.CommentAggregate
         private readonly AppDbContext _context = context;
 
         public async Task<bool> Exist(int id, CancellationToken cancellationToken)
-            => await _context.Comments.AnyAsync(x => x.Id == id, cancellationToken);
+            => await _context.Comments.AnyAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
 
         public async Task<Comment?> GetAsync(int id, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);       
+                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);       
     }
 }
