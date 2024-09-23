@@ -31,6 +31,6 @@ namespace MySocailApp.Infrastructure.CommentAggregate
             => await _context.Comments
                 .Include(x => x.Replies)
                 .Include(x => x.Children)
-                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

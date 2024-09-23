@@ -1,26 +1,27 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Core.Exceptions;
+using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
+using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.DeleteAccount
 {
-    public class DeleteAccountHandler(UserManager<Account> userManager, IAppUserWriteRepository userRepository, IAccessTokenReader tokenReader) : IRequestHandler<DeleteAccountDto>
+    public class DeleteAccountHandler(UserManager<Account> userManager, IAccessTokenReader tokenReader, AccountRemoverDomainService accountRemover, IUnitOfWork unitOfWork) : IRequestHandler<DeleteAccountDto>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly IAppUserWriteRepository _userRepository = userRepository;
+        private readonly AccountRemoverDomainService _accountRemover = accountRemover;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(DeleteAccountDto request, CancellationToken cancellationToken)
         {
             var accountId = _tokenReader.GetRequiredAccountId();
-            var account = (await _userManager.FindByIdAsync(accountId.ToString()))!;
-            var user = (await _userRepository.GetWithAllAsync(account.Id, cancellationToken))!;
-            _userRepository.Delete(user);
-            var result = await _userManager.DeleteAsync(account);
-            if(!result.Succeeded) throw new ServerSideException();
+            var account =
+                await _userManager.FindByIdAsync(accountId.ToString()) ??
+                throw new AccountNotFoundException();
+            await _accountRemover.RemoveAsync(account, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

@@ -39,11 +39,11 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             IsRemoved = true;
             AddDomainEvent(new SolutionDeletedDomainEvent(Id));
         }
-        internal void Delete()
-        {
-            foreach (var comment in _comments)
-                comment.SetRepliedIdsAsNull();
-        }
+        //internal void Delete()
+        //{
+        //    foreach (var comment in _comments)
+        //        comment.SetRepliedIdsAsNull();
+        //}
 
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;

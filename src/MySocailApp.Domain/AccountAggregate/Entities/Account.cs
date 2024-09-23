@@ -59,6 +59,13 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
+        public bool IsRemoved { get; private set; }
+        internal void Remove()
+        {
+            IsRemoved = true;
+            AddDomainEvent(new AccountDeletedDomainEvent(this));
+        }
+
         //Email verfication Token
         public VerificationToken? EmailConfirmationToken { get; private set; }
         public void UpdateEmailConfirmationToken()
@@ -82,12 +89,12 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
                 EmailConfirmationToken = null;
             }
         }
-       
-        public AppUser AppUser { get; } = null!;
 
         //Token
         [NotMapped]
         public Token Token { get; set; } = null!;
+
+        public AppUser AppUser { get; } = null!;
 
         //IDomainEventsContainer;
         private readonly List<IDomainEvent> _events = [];

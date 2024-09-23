@@ -9,7 +9,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Interfaces
 
         Task<AppUser> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<AppUser?> GetWithFollowerByIdAsync(int id, int followerId, CancellationToken cancellationToken);
-        Task<AppUser?> GetWithAllAsync(int id, int userId, CancellationToken cancellationToken);
         Task<AppUser?> GetWithSearchedByIdAsync(int id, int searchedId, CancellationToken cancellationToken);
         Task<AppUser?> GetWithAllAsync(int id, CancellationToken cancellationToken);
     }

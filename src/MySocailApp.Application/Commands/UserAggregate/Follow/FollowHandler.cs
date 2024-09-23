@@ -22,7 +22,6 @@ namespace MySocailApp.Application.Commands.UserAggregate.Follow
                 throw new UserNotFoundException();
             var follow = user.Follow(followerId);
             await _unitOfWork.CommitAsync(cancellationToken);
-            
             return _mapper.Map<FollowCommandResponseDto>(follow);
         }
     }

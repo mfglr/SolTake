@@ -87,10 +87,19 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             _followers.RemoveAt(index);
         }
 
+        public bool IsRemoved { get; private set; }
+        internal void Remove() => IsRemoved = true;
+
+        internal void Delete()
+        {
+            _followeds.Clear();
+            _searchers.Clear();
+        }
 
         private readonly List<UserSearch> _searcheds = [];
         public IReadOnlyList<UserSearch> Searcheds => _searcheds;
-        public IReadOnlyCollection<UserSearch> Searchers { get; } = null!;
+        private readonly List<UserSearch> _searchers = [];
+        public IReadOnlyCollection<UserSearch> Searchers => _searchers;
         public UserSearch AddSearched(int searchedId)
         {
             var index = _searcheds.FindIndex(x => x.SearchedId == searchedId);

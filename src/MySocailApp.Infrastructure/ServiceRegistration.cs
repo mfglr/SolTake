@@ -48,8 +48,7 @@ namespace MySocailApp.Infrastructure
     public static class ServiceRegistration
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddServices()
                 .AddDbContext()
                 .AddAccountAggregate()
@@ -64,15 +63,14 @@ namespace MySocailApp.Infrastructure
                 .AddMessageAggregate()
                 .AddUserConnectionAggregate()
                 .AddNotificationConnectionAggregate();
-        }
+        
         private static IServiceCollection AddServices(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddEmailService()
                 .AddBlobService()
                 .AddQueryRepositories();
-        }
+        
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
             var emailServiceSettings = services.BuildServiceProvider().GetRequiredService<IEmailServiceSettings>()!;
@@ -95,13 +93,13 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<EmailConfirmationMailMessageFactory>()
                 .AddScoped<IEmailService, EmailService>();
         }
+        
         private static IServiceCollection AddBlobService(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddSingleton<IBlobNameGenerator,BlobNameGenerator>()
                 .AddSingleton<IDimentionCalculator, DimentionCalculator>()
                 .AddScoped<IBlobService,BlobService>();
-        }
+        
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {
             var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
@@ -128,85 +126,74 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>();
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<IFaceBookTokenReader,FaceBookTokenReader>()
                 .AddScoped<IGoogleTokenReader,GoogleTokenReader>()
                 .AddScoped<ITransactionCreator, TransactionCreator>()
-                .AddScoped<AccountManager>();
-        }
+                .AddScoped<AccountManager>()
+                .AddScoped<AccountRemoverDomainService>()
+                .AddScoped<AccountDeleterDomainService>();
+
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<IAppUserWriteRepository, AppUserWriteRepository>()
                 .AddScoped<IAppUserReadRepository, AppUserReadRepository>();
-        }
+        
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
                 .AddScoped<QuestionCreatorDomainService>()
                 .AddScoped<QuestionDeleterDomainService>();
-        }
+        
         private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
                 .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
                 .AddScoped<SolutionStateMarker>()
                 .AddScoped<SolutionDeleterDomainService>()
                 .AddScoped<SolutionCreatorDomainService>();
-        }
+        
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<IExamReadRepository, ExamReadRepository>();
-        }
+        
         private static IServiceCollection AddSubjectAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<ISubjectReadRepository, SubjectReadRepository>();
-        }
+        
         private static IServiceCollection AddTopicAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<ITopicReadRepository, TopicReadRepository>();
-        }
+        
         private static IServiceCollection AddCommentAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<ICommentReadRepository, CommentReadRepository>()
                 .AddScoped<ICommentWriteRepository, CommentWriteRepository>()
                 .AddScoped<CommentCreatorDomainService>()
                 .AddScoped<CommentDeleterDomainService>()
                 .AddSingleton<IUserNameReader,UserNameReader>();
-        }
+        
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<INotificationWriteRepository, NotificationWriteRepository>()
                 .AddScoped<INotificationReadRepository, NotificationReadRepository>();
-        }
+        
         private static IServiceCollection AddMessageAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
                 .AddScoped<IMessageReadRepository, MessageReadRepository>()
                 .AddScoped<MessageRemoverDomainService>();
-        }
+        
         private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<IUserConnectionWriteRepository, UserConnectionWriteRepository>()
                 .AddScoped<IUserConnectionReadRepository, UserConnectionReadRepository>();
-        }
+        
         private static IServiceCollection AddNotificationConnectionAggregate(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<INotificationConnectionReadRepository, NotificationConnectionReadRepository>()
                 .AddScoped<INotificationConnectionWriteRepository, NotificationConnectionWriteRepository>();
-        }
     }
 }

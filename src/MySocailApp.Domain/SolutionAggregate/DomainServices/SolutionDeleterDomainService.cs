@@ -13,9 +13,9 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
             var solution = await _solutionWriteRepository.GetWithCommentsByIdAsync(solutionId, cancellationToken);
             if (solution == null) return;
             
-            solution.Delete();
             foreach (var comment in solution.Comments)
             {
+                comment.SetRepliedIdsAsNull();
                 _commentWriteRepository.DeleteRange(comment.Children);
                 _commentWriteRepository.Delete(comment);
             }

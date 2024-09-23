@@ -12,7 +12,11 @@ namespace MySocailApp.Infrastructure.MessageAggregate
         public async Task CreateAsync(Message message, CancellationToken cancellationToken)
             => await _context.Messages.AddAsync(message, cancellationToken);
 
-        public void Delete(Message message) => _context.Messages.Remove(message);
+        public void Delete(Message message)
+            => _context.Messages.Remove(message);
+
+        public void DeleteRange(IEnumerable<Message> messages)
+            => _context.Messages.RemoveRange(messages);
 
         public async Task<Message?> GetById(int id, CancellationToken cancellationToken)
             => await _context.Messages

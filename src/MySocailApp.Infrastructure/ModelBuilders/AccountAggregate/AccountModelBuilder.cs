@@ -13,7 +13,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AccountAggregate
             builder
                 .HasOne(x => x.AppUser)
                 .WithOne(x => x.Account)
-                .HasForeignKey<AppUser>(x => x.Id);
+                .HasForeignKey<AppUser>(x => x.Id)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
