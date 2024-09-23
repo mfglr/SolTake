@@ -16,15 +16,19 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
 
         public async Task<AccountDto> Handle(LoginByPasswordDto request, CancellationToken cancellationToken)
         {
-            Account account;
+            Account? account;
             if (Email.IsValid(request.EmailOrUserName))
-                account =
-                    await _userManager.FindByEmailAsync(request.EmailOrUserName) ??
+            {
+                account = await _userManager.FindByEmailAsync(request.EmailOrUserName);
+                if(account == null || account.IsRemoved)
                     throw new LoginFailedException();
+            }
             else
-                account =
-                    await _userManager.FindByNameAsync(request.EmailOrUserName) ??
+            {
+                account = await _userManager.FindByNameAsync(request.EmailOrUserName);
+                if (account == null || account.IsRemoved)
                     throw new LoginFailedException();
+            }
 
             await _accountManager.LoginByPassword(account, request.Password);
             return _mapper.Map<AccountDto>(account);

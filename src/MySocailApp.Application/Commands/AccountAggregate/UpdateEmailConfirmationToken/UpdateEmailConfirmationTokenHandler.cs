@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmationToken
 {
@@ -15,7 +15,10 @@ namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmat
         public async Task Handle(UpdateEmailConfirmationTokenDto request, CancellationToken cancellationToken)
         {
             var accountId = _tokenReader.GetRequiredAccountId();
-            var account = (await _userManager.FindByIdAsync(accountId.ToString()))!;
+            var account =
+                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId && !x.IsRemoved, cancellationToken) ??
+                throw new AccountNotFoundException();
+
             account.UpdateEmailConfirmationToken();
             await _userManager.UpdateAsync(account);
         }

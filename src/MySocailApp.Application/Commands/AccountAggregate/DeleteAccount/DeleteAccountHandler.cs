@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AccountAggregate.Entities;
@@ -18,7 +19,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.DeleteAccount
         {
             var accountId = _tokenReader.GetRequiredAccountId();
             var account =
-                await _userManager.FindByIdAsync(accountId.ToString()) ??
+                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId && !x.IsRemoved, cancellationToken) ??
                 throw new AccountNotFoundException();
             await _accountRemover.RemoveAsync(account, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);

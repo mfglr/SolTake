@@ -50,11 +50,8 @@ namespace MySocailApp.Infrastructure.AccountAggregate
             account.Token = new(accessToken, refreshToken);
         }
 
-        public async Task<bool> VerifyRefreshToken(Account account, string refreshToken)
-        {
-            return await _userManager.VerifyUserTokenAsync(
-                account, TokenProviders.REFRESH_TOKEN_PROVIDER, _purpose, refreshToken
-            );
-        }
+        public Task<bool> VerifyRefreshToken(Account account, string refreshToken)
+            => _userManager
+                .VerifyUserTokenAsync(account, TokenProviders.REFRESH_TOKEN_PROVIDER, _purpose, refreshToken);
     }
 }
