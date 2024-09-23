@@ -18,20 +18,6 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
         public async Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
             => await _context.Questions.FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved);
 
-        public Task<Question?> GetQuestionWithAllAsync(int questionId, CancellationToken cancellationToken)
-            => _context.Questions
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Children)
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Children)
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-                .FirstOrDefaultAsync(x => x.Id == questionId && !x.IsRemoved, cancellationToken);
-
         public Task<Question?> GetQuestionWithImagesAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
                 .Include(x => x.Images)
@@ -47,5 +33,22 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Include(x => x.Likes.Where(x => x.AppUserId == userId))
                 .Include(x => x.LikeNotifications.Where(x => x.AppUserId == userId))
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+
+        public Task<Question?> GetQuestionWithAllAsync(int questionId, CancellationToken cancellationToken)
+            => _context.Questions
+                .Include(x => x.Images)
+                .Include(x => x.Comments)
+                .ThenInclude(x => x.Replies)
+                .Include(x => x.Comments)
+                .ThenInclude(x => x.Children)
+                .Include(x => x.Solutions)
+                .ThenInclude(x => x.Comments)
+                .ThenInclude(x => x.Children)
+                .Include(x => x.Solutions)
+                .ThenInclude(x => x.Comments)
+                .ThenInclude(x => x.Replies)
+                .Include(x => x.Solutions)
+                .ThenInclude(x => x.Images)
+                .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
     }
 }

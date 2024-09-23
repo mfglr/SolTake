@@ -132,8 +132,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IGoogleTokenReader,GoogleTokenReader>()
                 .AddScoped<ITransactionCreator, TransactionCreator>()
                 .AddScoped<AccountManager>()
-                .AddScoped<AccountRemoverDomainService>()
-                .AddScoped<AccountDeleterDomainService>();
+                .AddScoped<AccountRemoverDomainService>();
 
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
             => services
@@ -144,15 +143,13 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
-                .AddScoped<QuestionCreatorDomainService>()
-                .AddScoped<QuestionDeleterDomainService>();
+                .AddScoped<QuestionCreatorDomainService>();
         
         private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
                 .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
                 .AddScoped<SolutionStateMarker>()
-                .AddScoped<SolutionDeleterDomainService>()
                 .AddScoped<SolutionCreatorDomainService>();
         
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)

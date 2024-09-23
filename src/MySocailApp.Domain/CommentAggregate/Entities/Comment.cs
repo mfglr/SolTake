@@ -57,7 +57,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             IsRemoved = true;
             AddDomainEvent(new CommentDeletedDomainEvent(this));
         }
-        internal void SetRepliedIdsAsNull()
+        public void SetRepliedIdsAsNull()
         {
             foreach (var reply in _replies)
                 reply.RepliedId = null;

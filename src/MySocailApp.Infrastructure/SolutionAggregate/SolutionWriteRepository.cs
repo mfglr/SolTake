@@ -40,6 +40,7 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
 
         public async Task<Solution?> GetWithCommentsByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Solutions
+                .Include(x => x.Images)
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Children)
                 .Include(x => x.Comments)

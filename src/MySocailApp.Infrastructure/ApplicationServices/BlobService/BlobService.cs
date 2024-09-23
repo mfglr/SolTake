@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Extentions;
 using SixLabors.ImageSharp;
@@ -67,12 +66,20 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
         }
 
         public void Delete(string containerName, string blobName)
-            => File.Delete(GetPath(containerName, blobName));
+        {
+            var path = GetPath(containerName, blobName);
+            if (File.Exists(path))
+                File.Delete(path);
+        }
 
         public void DeleteRange(string containerName, IEnumerable<string> blobNames)
         {
             foreach (var blobName in blobNames)
-                File.Delete(GetPath(containerName, blobName));
+            {
+                var path = GetPath(containerName, blobName);
+                if(File.Exists(path))
+                    File.Delete(path);
+            }
         }
     }
 }

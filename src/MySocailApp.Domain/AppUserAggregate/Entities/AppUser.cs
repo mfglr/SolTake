@@ -90,12 +90,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public bool IsRemoved { get; private set; }
         internal void Remove() => IsRemoved = true;
 
-        internal void Delete()
-        {
-            _followeds.Clear();
-            _searchers.Clear();
-        }
-
         private readonly List<UserSearch> _searcheds = [];
         public IReadOnlyList<UserSearch> Searcheds => _searcheds;
         private readonly List<UserSearch> _searchers = [];
