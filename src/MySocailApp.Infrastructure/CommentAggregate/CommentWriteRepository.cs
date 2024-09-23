@@ -12,14 +12,14 @@ namespace MySocailApp.Infrastructure.CommentAggregate
         public async Task CreateAsync(Comment comment, CancellationToken cancellationToken)
             => await _context.AddAsync(comment, cancellationToken);
 
-        public async Task<Comment?> GetAsync(int commentId, CancellationToken cancellationToken)
-            => await _context.Comments.FirstOrDefaultAsync(x => x.Id == commentId, cancellationToken);
+        public Task<Comment?> GetAsync(int commentId, CancellationToken cancellationToken)
+            => _context.Comments.FirstOrDefaultAsync(x => x.Id == commentId, cancellationToken);
 
         public void Delete(Comment comment)
-        {
-            _context.Comments.RemoveRange(comment.Children);
-            _context.Comments.Remove(comment);
-        }
+            => _context.Comments.Remove(comment);
+
+        public void DeleteRange(IEnumerable<Comment> comments)
+            => _context.Comments.RemoveRange(comments);
 
         public async Task<Comment?> GetWithLikeByIdAsync(int id, int userId, CancellationToken cancellationToken)
             => await _context.Comments

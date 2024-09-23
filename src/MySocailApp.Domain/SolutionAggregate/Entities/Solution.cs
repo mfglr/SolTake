@@ -36,7 +36,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         internal void Delete()
         {
             foreach(var comment in Comments)
-                comment.Delete();
+                comment.Remove();
         }
 
         private readonly List<SolutionUserVote> _votes = [];

@@ -54,7 +54,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
             builder
                 .HasMany(x => x.Questions)
                 .WithOne(x => x.AppUser)
-                .HasForeignKey(x => x.AppUserId);
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(x => x.QuestionsLiked)

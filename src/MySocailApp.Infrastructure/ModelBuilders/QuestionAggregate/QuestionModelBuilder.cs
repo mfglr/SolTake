@@ -35,16 +35,16 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasMany(x => x.Solutions)
+                .HasMany(x => x.Saves)
                 .WithOne(x => x.Question)
                 .HasForeignKey(x => x.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasMany(x => x.Saves)
+                .HasMany(x => x.Solutions)
                 .WithOne(x => x.Question)
                 .HasForeignKey(x => x.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(x => x.Comments)

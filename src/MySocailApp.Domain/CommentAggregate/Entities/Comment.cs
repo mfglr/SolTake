@@ -4,7 +4,6 @@ using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.Entities
@@ -52,7 +51,13 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void Delete()
+        public bool IsRemoved { get; private set; }
+        public void Remove()
+        {
+            IsRemoved = true;
+            AddDomainEvent(new CommentDeletedDomainEvent(this));
+        }
+        internal void SetRepliedIdsAsNull()
         {
             foreach (var reply in _replies)
                 reply.RepliedId = null;

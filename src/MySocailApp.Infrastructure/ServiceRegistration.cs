@@ -71,8 +71,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddEmailService()
                 .AddBlobService()
-                .AddQueryRpositories()
-                .AddSingleton<IStaticHtmlReader,StaticHtmlReader>();
+                .AddQueryRpositories();
         }
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
@@ -180,6 +179,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ICommentReadRepository, CommentReadRepository>()
                 .AddScoped<ICommentWriteRepository, CommentWriteRepository>()
                 .AddScoped<CommentCreatorDomainService>()
+                .AddScoped<CommentDeleterDomainService>()
                 .AddSingleton<IUserNameReader,UserNameReader>();
         }
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)

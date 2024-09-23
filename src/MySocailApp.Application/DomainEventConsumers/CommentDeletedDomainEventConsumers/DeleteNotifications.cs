@@ -12,7 +12,7 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentDeletedDomainEvent
 
         public async Task Handle(CommentDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var notifications = await _notificationWriteRepository.GetByCommentIdAsync(notification.CommentId, cancellationToken);
+            var notifications = await _notificationWriteRepository.GetByCommentIdAsync(notification.Comment.Id, cancellationToken);
             _notificationWriteRepository.DeleteRange(notifications);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
