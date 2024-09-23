@@ -71,7 +71,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddEmailService()
                 .AddBlobService()
-                .AddQueryRpositories();
+                .AddQueryRepositories();
         }
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
@@ -111,7 +111,7 @@ namespace MySocailApp.Infrastructure
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
-        private static IServiceCollection AddQueryRpositories(this IServiceCollection services)
+        private static IServiceCollection AddQueryRepositories(this IServiceCollection services)
             => services
                 .AddScoped<IAppUserQueryRepository, AppUserQueryRepository>()
                 .AddScoped<ICommentUserLikeQueryRepository, CommentUserLikeQueryRepository>()
@@ -147,7 +147,8 @@ namespace MySocailApp.Infrastructure
             return services
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
                 .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
-                .AddScoped<QuestionCreatorDomainService>();
+                .AddScoped<QuestionCreatorDomainService>()
+                .AddScoped<QuestionDeleterDomainService>();
         }
         private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
         {

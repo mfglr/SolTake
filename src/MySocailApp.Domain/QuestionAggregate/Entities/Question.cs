@@ -49,6 +49,13 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _images.AddRange(images);
         }
 
+        public bool IsRemoved { get; private set; }
+        public void Remove()
+        {
+            IsRemoved = true;
+            AddDomainEvent(new QuestionDeletedDomainEvent(this));
+        }
+
         private readonly List<QuestionUserLike> _likes = [];
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
         private readonly List<QuestionLikeNotification> _likeNotifications = [];
