@@ -13,7 +13,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.DeleteSolution
         public async Task Handle(DeleteSolutionDto request, CancellationToken cancellationToken)
         {
             var solution =
-                await _solutionWriteRepository.GetByIdAsync(request.SolutionId, cancellationToken) ??
+                await _solutionWriteRepository.GetWithImagesByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionNotFoundException();
 
             solution.Remove();

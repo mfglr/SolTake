@@ -30,7 +30,13 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .FirstOrDefaultAsync(x => x.Id == solutionId && !x.IsRemoved, cancellationToken);
 
         public Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
-            => _context.Solutions.FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+            => _context.Solutions
+                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+
+        public Task<Solution?> GetWithImagesByIdAsync(int id, CancellationToken cancellationToken)
+            => _context.Solutions
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
 
         public async Task<Solution?> GetWithCommentsByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Solutions
@@ -38,6 +44,6 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .ThenInclude(x => x.Children)
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Replies)
-                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }
