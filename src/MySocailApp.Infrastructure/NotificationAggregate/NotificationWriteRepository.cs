@@ -25,7 +25,8 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
             => _context.Notifications.Where(x => x.SolutionId == solutionId).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetQuestionNotifications(int questionId, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => x.QuestionId == questionId).ToListAsync(cancellationToken);
-
+        public Task<List<Notification>> GetNotificationsByUserId(int userId, CancellationToken cancellationToken)
+            => _context.Notifications.Where(x => x.UserId == userId || x.OwnerId == userId).ToListAsync(cancellationToken);
 
         public Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications

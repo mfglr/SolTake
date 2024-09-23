@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.NotificationAggregate.Interfaces
 {
@@ -13,7 +12,8 @@ namespace MySocailApp.Domain.NotificationAggregate.Interfaces
         Task<List<Notification>> GetByCommentIdAsync(int commentId, CancellationToken cancellationToken);
         Task<List<Notification>> GetBySolutionIdAsync(int solutionId, CancellationToken cancellationToken);
         Task<List<Notification>> GetQuestionNotifications(int questionId, CancellationToken cancellationToken);
-        
+        Task<List<Notification>> GetNotificationsByUserId(int userId, CancellationToken cancellationToken);
+
         Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken);
         Task<Notification?> GetSolutionWasDownvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken);
         Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int ownerId, CancellationToken cancellationToken);
