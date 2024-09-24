@@ -11,7 +11,7 @@ class NotificationState{
   final int? repliedId;
   final int? commentId;
   final int? questionId;
-  final int userId;
+  final int appUserId;
   final int? solutionId;
 
   const NotificationState({
@@ -24,7 +24,7 @@ class NotificationState{
     required this.commentId,
     required this.repliedId,
     required this.questionId,
-    required this.userId,
+    required this.appUserId,
     required this.solutionId,
   });
 
@@ -39,7 +39,7 @@ class NotificationState{
         commentId: commentId,
         repliedId: repliedId,
         questionId: questionId,
-        userId: userId,
+        appUserId: appUserId,
         solutionId: solutionId,
       );
 }

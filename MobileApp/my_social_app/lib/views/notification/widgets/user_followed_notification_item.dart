@@ -26,7 +26,7 @@ class UserFollowedNotificationItem extends StatelessWidget {
           .push(
             MaterialPageRoute(
               builder: (context) => UserPage(
-                userId: notification.userId
+                userId: notification.appUserId
               )
             )
           )

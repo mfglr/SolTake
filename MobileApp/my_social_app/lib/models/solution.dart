@@ -16,6 +16,7 @@ class Solution{
   final int questionId;
   final int appUserId;
   final bool isOwner;
+  final bool isSaved;
   final String userName;
   final String? content;
   final bool isUpvoted;
@@ -33,6 +34,7 @@ class Solution{
     required this.questionId,
     required this.appUserId,
     required this.isOwner,
+    required this.isSaved,
     required this.userName,
     required this.content,
     required this.isUpvoted,
@@ -56,6 +58,7 @@ class Solution{
       questionId: questionId,
       appUserId: appUserId,
       isOwner: isOwner,
+      isSaved: isSaved,
       userName: userName,
       content: content,
       images: images.map((e) => e.toSolutionImageState()),

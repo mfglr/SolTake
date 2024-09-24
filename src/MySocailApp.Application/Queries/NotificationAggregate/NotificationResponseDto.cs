@@ -7,7 +7,7 @@ namespace MySocailApp.Application.Queries.NotificationAggregate
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public int OwnerId { get; private set; }
-        public int? UserId { get; private set; }
+        public int AppUserId { get; private set; }
         public bool IsViewed { get; private set; }
         public NotificationType Type { get; private set; }
         public int? ParentId { get; private set; }

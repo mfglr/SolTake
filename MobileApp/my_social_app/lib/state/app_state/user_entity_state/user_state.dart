@@ -22,6 +22,7 @@ class UserState{
   final Pagination solvedQuestions;
   final Pagination unsolvedQuestions;
   final Pagination savedQuestions;
+  final Pagination savedSolutions;
   final Pagination messages;
 
   String formatName(int count){
@@ -52,6 +53,7 @@ class UserState{
     required this.solvedQuestions,
     required this.unsolvedQuestions,
     required this.savedQuestions,
+    required this.savedSolutions,
     required this.messages,
     required this.notFolloweds
   });
@@ -73,6 +75,7 @@ class UserState{
     Pagination? newSolvedQuestions,
     Pagination? newUnsolvedQuestions,
     Pagination? newSavedQuestions,
+    Pagination? newSavedSolutions,
     Pagination? newMessages,
     Pagination? newNotFolloweds
   }) => UserState(
@@ -94,6 +97,7 @@ class UserState{
     solvedQuestions: newSolvedQuestions ?? solvedQuestions,
     unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
     savedQuestions: newSavedQuestions ?? savedQuestions,
+    savedSolutions: newSavedSolutions ?? savedSolutions,
     messages: newMessages ?? messages,
     notFolloweds: newNotFolloweds ?? notFolloweds
   );
@@ -240,6 +244,12 @@ class UserState{
   UserState addNextPageSavedQuestions(Iterable<int> saveIds) => _optional(newSavedQuestions: savedQuestions.addNextPage(saveIds));
   UserState addSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.prependOne(saveId));
   UserState removeSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.removeOne(saveId));
+
+  //saved solutions
+  UserState getNextPageSavedSolutions() => _optional(newSavedSolutions: savedSolutions.startLoadingNext());
+  UserState addNextPageSavedSolutions(Iterable<int> saveIds) => _optional(newSavedSolutions: savedSolutions.addNextPage(saveIds));
+  UserState addSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(saveId));
+  UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
 
   //messages
   UserState nextPageMessages() =>

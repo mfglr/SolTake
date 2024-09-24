@@ -286,6 +286,40 @@ class RemoveUserSavedQuestionAction extends AppAction{
 }
 
 @immutable
+class GetNextPageUserSavedSolutionsIfNoPageAction extends AppAction{
+  final int userId;
+  const GetNextPageUserSavedSolutionsIfNoPageAction({required this.userId});
+}
+@immutable
+class GetNextPageUserSavedSolutionsIfReadyAction extends AppAction{
+  final int userId;
+  const GetNextPageUserSavedSolutionsIfReadyAction({required this.userId});
+}
+@immutable
+class GetNextPageUserSavedSolutionsAction extends AppAction{
+  final int userId;
+  const GetNextPageUserSavedSolutionsAction({required this.userId});
+}
+@immutable
+class AddNextPageUserSavedSolutionsAction extends AppAction{
+  final int userId;
+  final Iterable<int> savedIds;
+  const AddNextPageUserSavedSolutionsAction({required this.userId, required this.savedIds});
+}
+@immutable
+class AddUserSavedSolutionAction extends AppAction{
+  final int userId;
+  final int saveId;
+  const AddUserSavedSolutionAction({required this.userId, required this.saveId});
+}
+@immutable
+class RemoveUserSavedSolutionAction extends AppAction{
+  final int userId;
+  final int saveId;
+  const RemoveUserSavedSolutionAction({required this.userId, required this.saveId});
+}
+
+@immutable
 class GetNextPageUserMessagesIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserMessagesIfNoPageAction({required this.userId});

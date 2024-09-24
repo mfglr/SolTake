@@ -4,6 +4,7 @@ import 'package:my_social_app/views/shared/extendable_content/extendable_content
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_downvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_upvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/downvote_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/save_solution_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_comment_button.dart';
 import 'package:my_social_app/views/solution/widgets/no_solution_image.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
@@ -80,19 +81,25 @@ class SolutionItemWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                UpvoteButton(solution: solution),
-                DisplaySolutionUpvotesButton(solution: solution),
-                Container(
-                  margin: const EdgeInsets.only(left: 12),
-                  child: DownvoteButton(solution: solution)
+                Row(
+                  children: [
+                    UpvoteButton(solution: solution),
+                    DisplaySolutionUpvotesButton(solution: solution),
+                    Container(
+                      margin: const EdgeInsets.only(left: 12),
+                      child: DownvoteButton(solution: solution)
+                    ),
+                    DisplaySolutionDownvotesButton(solution: solution),
+                    Container(
+                      margin: const EdgeInsets.only(left: 12),
+                      child: SolutionCommentButton(solution: solution),
+                    )
+                  ]
                 ),
-                DisplaySolutionDownvotesButton(solution: solution),
-                Container(
-                  margin: const EdgeInsets.only(left: 12),
-                  child: SolutionCommentButton(solution: solution),
-                )
-              ]
+                SaveSolutionButton(solution: solution)
+              ],
             ),
           ),
           if(solution.content != null)

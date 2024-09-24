@@ -9,7 +9,7 @@ class Notification{
   final int id;
   final DateTime createdAt;
   final int ownerId;
-  final int userId;
+  final int appUserId;
   final bool isViewed;
   final int type;
   final int? parentId;
@@ -28,7 +28,7 @@ class Notification{
     required this.commentId,
     required this.repliedId,
     required this.questionId,
-    required this.userId,
+    required this.appUserId,
     required this.solutionId,
   });
 
@@ -46,7 +46,7 @@ class Notification{
         commentId: commentId,
         repliedId: repliedId,
         questionId: questionId,
-        userId: userId,
+        appUserId: appUserId,
         solutionId: solutionId,
       );
 }

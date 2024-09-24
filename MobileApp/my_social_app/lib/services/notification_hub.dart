@@ -215,7 +215,7 @@ class NotificationHub{
         store.dispatch(PrependNotificationAction(notification: notification));
         store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
         store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
-        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
+        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.appUserId, questionId: notification.questionId!));
       }
     );
   //getQuestionSolvedNotification

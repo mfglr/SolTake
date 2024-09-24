@@ -10,6 +10,7 @@ class SolutionState{
   final int questionId;
   final int appUserId;
   final bool isOwner;
+  final bool isSaved;
   final String userName;
   final String? content;
   final bool isUpvoted;
@@ -30,6 +31,7 @@ class SolutionState{
     required this.questionId,
     required this.appUserId,
     required this.isOwner,
+    required this.isSaved,
     required this.userName,
     required this.content,
     required this.isUpvoted,
@@ -50,6 +52,7 @@ class SolutionState{
   SolutionState _optinal({
     String? newUserName,
     String? newContent,
+    bool? newIsSaved,
     bool? newIsUpvoted,
     int? newNumberOfUpvotes,
     bool? newIsDownvoted,
@@ -68,6 +71,7 @@ class SolutionState{
         questionId: questionId,
         appUserId: appUserId,
         isOwner: isOwner,
+        isSaved: newIsSaved ?? isSaved,
         userName: newUserName ?? userName,
         content: newContent ?? content,
         isUpvoted: newIsUpvoted ?? isUpvoted,
@@ -165,4 +169,8 @@ class SolutionState{
   SolutionState markAsIncorrect()
     => _optinal(newState: SolutionStatus.incorrect);  
 
+  SolutionState save()
+    => _optinal(newIsSaved: true);
+  SolutionState unsave()
+    => _optinal(newIsSaved: false);
 }

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
+import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
@@ -10,6 +11,8 @@ import 'package:my_social_app/state/app_state/message_image_entity_state/actions
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_save_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_user_save_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
@@ -320,6 +323,40 @@ void getNextPageUserSavedQuestionsMiddleware(Store<AppState> store,action,NextDi
         store.dispatch(AddExamsAction(exams: saves.map((e) => e.question!.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: saves.map((e) => e.question!.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: saves.map((e) => e.question!.topics.map((e) => e.toTopicState()))));
+      });
+  }
+  next(action);
+}
+
+//saved solutions
+void getNextPageUserSavedSolutionsIfNoPageMiddleaware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSavedSolutionsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.savedSolutions;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserSavedSolutionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserSavedSolutionsIfReadyMiddleaware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSavedSolutionsIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.savedSolutions;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserSavedSolutionsAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserSavedSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserSavedSolutionsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.savedSolutions;
+    SolutionService()
+      .getSavedSolutions(pagination.next)
+      .then((saves){
+        store.dispatch(AddSolutionUserSavesAction(saves: saves.map((e) => e.toSolutionUserSaveState())));
+        store.dispatch(AddSolutionsAction(solutions: saves.map((e) => e.solution!.toSolutionState())));
+        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddNextPageUserSavedSolutionsAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
       });
   }
   next(action);

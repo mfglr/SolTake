@@ -23,6 +23,7 @@ import 'package:my_social_app/state/app_state/question_user_save_state/question_
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
@@ -54,6 +55,8 @@ class AppState{
   final SubjectEntityState subjectEntityState;
   final TopicEntityState topicEntityState;
   final SolutionEntityState solutionEntityState;
+  final SolutionUserVoteEntityState solutionUserVoteEntityState;
+  final SolutionUserSaveEntityState solutionUserSaveEntityState;
   final HomePageState homePageState;
   final CommentEntityState commentEntityState;
   final CommentUserLikeEntityState commentUserLikeEntityState;
@@ -67,7 +70,6 @@ class AppState{
   final QuestionEntityState questionEntityState;
   final QuestionUserLikeEntityState questionUserLikeEntityState;
   final QuestionUserSaveEntityState questionUserSaveEntityState;
-  final SolutionUserVoteEntityState solutionUserVoteEntityState;
   final Pagination exams;
 
   const AppState({
@@ -82,6 +84,8 @@ class AppState{
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.solutionEntityState,
+    required this.solutionUserVoteEntityState,
+    required this.solutionUserSaveEntityState,
     required this.homePageState,
     required this.commentEntityState,
     required this.commentUserLikeEntityState,
@@ -96,7 +100,6 @@ class AppState{
     required this.questionEntityState,
     required this.questionUserLikeEntityState,
     required this.questionUserSaveEntityState,
-    required this.solutionUserVoteEntityState,
     required this.exams,
   });
 
@@ -132,6 +135,7 @@ class AppState{
     questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
     questionUserSaveEntityState: const QuestionUserSaveEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
+    solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
   );
 

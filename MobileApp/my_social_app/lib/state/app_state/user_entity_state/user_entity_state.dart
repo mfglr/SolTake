@@ -92,6 +92,16 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState removeSavedQuestion(int userId, int saveId)
     => UserEntityState(entities: updateOne(entities[userId]?.removeSavedQuestion(saveId)));
 
+  //saved solutions
+  UserEntityState getNextPageSavedSolutions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.getNextPageSavedSolutions()));
+  UserEntityState addNextPageSavedSolutions(int userId,Iterable<int> saveIds)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageSavedSolutions(saveIds)));
+  UserEntityState addSavedSolution(int userId, int saveId)
+    => UserEntityState(entities: updateOne(entities[userId]?.addSavedSolution(saveId)));
+  UserEntityState removeSavedSolution(int userId,int saveId)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeSavedSolution(saveId)));
+
   //messages
   UserEntityState getNextPageMessages(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.nextPageMessages()));

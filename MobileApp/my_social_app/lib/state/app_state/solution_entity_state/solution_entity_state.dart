@@ -49,5 +49,9 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.markAsCorrect()));
   SolutionEntityState markAsIncorrect(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.markAsIncorrect()));
-  
+
+  SolutionEntityState save(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.save()));
+  SolutionEntityState unsave(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.unsave()));
 }

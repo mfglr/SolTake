@@ -30,6 +30,7 @@ import 'package:my_social_app/state/app_state/search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
@@ -79,6 +80,7 @@ final store = Store(
     questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
     questionUserSaveEntityState: const QuestionUserSaveEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
+    solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
   ),
   middleware: [
@@ -159,6 +161,10 @@ final store = Store(
     getNextPageUserSavedQuestionsIfReadyMiddleware,
     getNextPageUserSavedQuestionsMiddleware,
 
+    getNextPageUserSavedSolutionsIfNoPageMiddleaware,
+    getNextPageUserSavedSolutionsIfReadyMiddleaware,
+    getNextPageUserSavedSolutionsMiddleware,
+    
     updateUserNameMiddleware,
     updateNameMiddleware,
     updateBiographyMidleware,
@@ -272,13 +278,16 @@ final store = Store(
     makeSolutionDownvoteMiddleware,
     removeSolutionDownvoteMiddleware,
    
-    
     getNextPageSolutionCommentsIfNoPageMiddleware,
     getNextPageSolutionCommentsIfReadyMiddleware,
     getNextPageSolutionCommentsMiddleware,
     loadSolutionImageMiddleware,
+    
     markSolutionAsCorrectMiddleware,
     markSolutionAsIncorrectMiddleware,
+
+    saveSolutionMiddleware,
+    unsaveSolutionMiddleware,
     //solution end
 
     //comments entity state

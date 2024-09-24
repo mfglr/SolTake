@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
+import 'package:my_social_app/state/app_state/solution_user_save_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -244,6 +245,34 @@ void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatch
       .then((_){
         store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: action.solutionId));
         store.dispatch(MarkQuestionSolutionAsIncorrectAction(questionId: action.questionId, solutionId: action.solutionId));
+      });
+  }
+  next(action);
+}
+
+void saveSolutionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is SaveSolutionAction){
+    final accountId = store.state.accountState!.id;
+    SolutionService()
+      .saveSolution(action.solutionId)
+      .then((save){
+        store.dispatch(AddUserSavedSolutionAction(userId: accountId, saveId: save.id));
+        store.dispatch(AddSolutionUserSaveAction(save: save.toSolutionUserSaveState()));
+        store.dispatch(SaveSolutionSuccessAction(solutionId: action.solutionId));
+      });
+  }
+  next(action);
+}
+void unsaveSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UnsaveSolutionAction){
+    final accountId = store.state.accountState!.id;
+    SolutionService()
+      .unsaveSolution(action.solutionId)
+      .then((save){
+        final saveId = store.state.solutionUserSaveEntityState.select(action.solutionId, accountId)?.id ?? 0;
+        store.dispatch(RemoveSolutionUserSaveAction(saveId: saveId));
+        store.dispatch(RemoveUserSavedSolutionAction(userId: accountId, saveId: saveId));
+        store.dispatch(UnsaveSolutionSuccessAction(solutionId: action.solutionId));
       });
   }
   next(action);

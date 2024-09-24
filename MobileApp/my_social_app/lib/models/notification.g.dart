@@ -16,7 +16,7 @@ Notification _$NotificationFromJson(Map<String, dynamic> json) => Notification(
       commentId: (json['commentId'] as num?)?.toInt(),
       repliedId: (json['repliedId'] as num?)?.toInt(),
       questionId: (json['questionId'] as num?)?.toInt(),
-      userId: (json['userId'] as num).toInt(),
+      appUserId: (json['appUserId'] as num).toInt(),
       solutionId: (json['solutionId'] as num?)?.toInt(),
     );
 
@@ -25,7 +25,7 @@ Map<String, dynamic> _$NotificationToJson(Notification instance) =>
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
       'ownerId': instance.ownerId,
-      'userId': instance.userId,
+      'appUserId': instance.appUserId,
       'isViewed': instance.isViewed,
       'type': instance.type,
       'parentId': instance.parentId,

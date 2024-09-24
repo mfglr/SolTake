@@ -41,7 +41,6 @@ class User{
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   UserState toUserState()
@@ -62,6 +61,7 @@ class User{
         solvedQuestions: Pagination.init(questionsPerPage,true),
         unsolvedQuestions: Pagination.init(questionsPerPage,true),
         savedQuestions: Pagination.init(questionsPerPage, true),
+        savedSolutions: Pagination.init(solutionsPerPage, true),
         followers: Pagination.init(usersPerPage,true),
         followeds: Pagination.init(usersPerPage,true),
         notFolloweds: Pagination.init(usersPerPage,true),

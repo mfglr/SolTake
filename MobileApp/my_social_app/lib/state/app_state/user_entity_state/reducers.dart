@@ -36,8 +36,18 @@ UserEntityState addNextPageSavedQuestionsReducer(UserEntityState prev,AddNextPag
   => prev.addNextPageSavedQuestions(action.userId,action.savedIds);
 UserEntityState addSavedQuestionReducer(UserEntityState prev,AddUserSavedQuestionAction action)
   => prev.addSavedQuestion(action.userId,action.saveId);
-UserEntityState removeSaveQuestionReducer(UserEntityState prev,RemoveUserSavedQuestionAction action)
+UserEntityState removeSavedQuestionReducer(UserEntityState prev,RemoveUserSavedQuestionAction action)
   => prev.removeSavedQuestion(action.userId,action.saveId);
+
+//saved solutions
+UserEntityState getNextPageSavedSolutionsReducer(UserEntityState prev, GetNextPageUserSavedSolutionsAction action)
+  => prev.getNextPageSavedSolutions(action.userId);
+UserEntityState addNextPageSavedSolutionsReducer(UserEntityState prev, AddNextPageUserSavedSolutionsAction action)
+  => prev.addNextPageSavedSolutions(action.userId,action.savedIds);
+UserEntityState addSavedSolutionReducer(UserEntityState prev, AddUserSavedSolutionAction action)
+  => prev.addSavedSolution(action.userId, action.saveId);
+UserEntityState removeSavedSolutionReducer(UserEntityState prev, RemoveUserSavedSolutionAction action)
+  => prev.removeSavedSolution(action.userId, action.saveId);
 
 //follows
 UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
@@ -116,7 +126,13 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,GetNextPageUserSavedQuestionsAction>(getNextPageSavedQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNextPageUserSavedQuestionsAction>(addNextPageSavedQuestionsReducer).call,
   TypedReducer<UserEntityState,AddUserSavedQuestionAction>(addSavedQuestionReducer).call,
-  TypedReducer<UserEntityState,RemoveUserSavedQuestionAction>(removeSaveQuestionReducer).call,
+  TypedReducer<UserEntityState,RemoveUserSavedQuestionAction>(removeSavedQuestionReducer).call,
+
+  //saved solutions
+  TypedReducer<UserEntityState,GetNextPageUserSavedSolutionsAction>(getNextPageSavedSolutionsReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserSavedSolutionsAction>(addNextPageSavedSolutionsReducer).call,
+  TypedReducer<UserEntityState,AddUserSavedSolutionAction>(addSavedSolutionReducer).call,
+  TypedReducer<UserEntityState,RemoveUserSavedSolutionAction>(removeSavedSolutionReducer).call,
 
   //follow
   TypedReducer<UserEntityState,GetNextPageUserFollowersAction>(getNextPageFollowers).call,

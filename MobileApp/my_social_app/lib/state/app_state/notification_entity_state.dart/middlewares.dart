@@ -24,7 +24,7 @@ void getUnviewedNotificationMiddleware(Store<AppState> store,action,NextDispatch
       .then(
         (notifications){
           store.dispatch(AddUnviewedNotificationsAction(notifications: notifications.map((e) => e.toNotificationState())));
-          store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.userId))));
+          store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.appUserId))));
         }
       );
   }
@@ -55,7 +55,7 @@ void getNextPageNotificationsMiddleware(Store<AppState> store,action,NextDispatc
       .getNotifications(store.state.notificationEntityState.pagination.next)
       .then((notifications){
         store.dispatch(AddNextPageNotificationsAction(notifications: notifications.map((e) => e.toNotificationState())));
-        store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.userId))));
+        store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.appUserId))));
       });
   }
   next(action);

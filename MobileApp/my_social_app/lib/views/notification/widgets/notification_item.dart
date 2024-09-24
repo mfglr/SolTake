@@ -39,7 +39,7 @@ class NotificationItem extends StatelessWidget {
               child: TextButton(
                 onPressed: () => Navigator
                   .of(context)
-                  .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.userId))),
+                  .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.appUserId))),
                 style: ButtonStyle(
                   padding: WidgetStateProperty.all(EdgeInsets.zero),
                   minimumSize: WidgetStateProperty.all(const Size(0, 0)),
@@ -51,7 +51,7 @@ class NotificationItem extends StatelessWidget {
                     badgeColor: Colors.transparent,
                   ),
                   child: UserImageWidget(
-                    userId: notification.userId,
+                    userId: notification.appUserId,
                     diameter: 45
                   ),
                 )
@@ -62,8 +62,8 @@ class NotificationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StoreConnector<AppState,UserState?>(
-                    onInit: (store) => store.dispatch(LoadUserAction(userId: notification.userId)),
-                    converter: (store) => store.state.userEntityState.entities[notification.userId],
+                    onInit: (store) => store.dispatch(LoadUserAction(userId: notification.appUserId)),
+                    converter: (store) => store.state.userEntityState.entities[notification.appUserId],
                     builder:(context,user){
                       if(user == null) return const SpaceSavingWidget();
                       return Text(
