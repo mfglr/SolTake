@@ -78,7 +78,9 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
 
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Children)
-
+                
+                .Include(x => x.NotificationsIncoming)
+                .Include(x => x.NotificationsOutgoing)
                 .Include(x => x.Account)
                 .Include(x => x.MessagesReceived)
                 .Include(x => x.Searchers)

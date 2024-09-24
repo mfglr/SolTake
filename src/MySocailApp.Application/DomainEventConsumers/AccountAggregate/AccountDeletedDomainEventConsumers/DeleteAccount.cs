@@ -7,6 +7,7 @@ using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.Entities;
@@ -14,13 +15,14 @@ using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountDeletedDomainEventConsumers
 {
-    public class DeleteAccount(IAppUserWriteRepository userWriteRepository, IQuestionWriteRepository questionWriteRepository, ISolutionWriteRepository solutionWriteRepository, ICommentWriteRepository commentWriteRepository, IMessageWriteRepository messageWriteRepository, UserManager<Account> userManager, IBlobService blobService) : IDomainEventConsumer<AccountDeletedDomainEvent>
+    public class DeleteAccount(IAppUserWriteRepository userWriteRepository, IQuestionWriteRepository questionWriteRepository, ISolutionWriteRepository solutionWriteRepository, ICommentWriteRepository commentWriteRepository, IMessageWriteRepository messageWriteRepository, UserManager<Account> userManager, IBlobService blobService, INotificationWriteRepository notificationWriteRepository) : IDomainEventConsumer<AccountDeletedDomainEvent>
     {
         private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly ICommentWriteRepository _commentWriteRepository = commentWriteRepository;
         private readonly IMessageWriteRepository _messageWriteRepository = messageWriteRepository;
+        private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly UserManager<Account> _userManager = userManager;
         private readonly IBlobService _blobService = blobService;
 
@@ -57,6 +59,9 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountD
             if (user == null) return;
 
             _messageWriteRepository.DeleteRange(user.MessagesReceived);
+            _notificationWriteRepository.DeleteRange(user.NotificationsIncoming);
+            _notificationWriteRepository.DeleteRange(user.NotificationsOutgoing);
+
             foreach (var comment in user.Comments)
                 DeleteComment(comment);
             foreach (var solution in user.Solutions)
