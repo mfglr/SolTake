@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/profile/pages/display_abstract_saved_questions_page/display_abstract_saved_questions_page.dart';
+import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/delete_account_menu_item.dart';
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/profile_menu_item.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
@@ -52,7 +53,8 @@ class ProfileMenuPage extends StatelessWidget {
                     }
                   });
               }
-            )
+            ),
+            const DeleteAccountMenuItem()
           ],
         ),
       ),

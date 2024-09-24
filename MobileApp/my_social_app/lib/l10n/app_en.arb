@@ -224,6 +224,10 @@
     "profile_menu_page_saves_item": "Questions Saved",
     "profile_menu_page_logout_item": "Logout",
 
+    "delete_account_menu_item_content": "Delete My Account",
+    "delete_account_menu_item_app_dialog_title": "Delete Your Account",
+    "delete_account_menu_item_app_dialog_content": "Are you sure you want to delete your acccount!. We are so sorry to see you leave us!",
+
     "display_abstract_questions_page_title": "Questions Saved",
 
     "display_saved_question_page_title": "Questions Saved"

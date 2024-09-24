@@ -41,7 +41,6 @@
     <Folder Include="Images\MessageImages\" />
     <Folder Include="Images\SolutionImages\" />
     <Folder Include="Images\QuestionImages\" />
-    <Folder Include="Images\ProfileImages\" />
   </ItemGroup>
 
 </Project>

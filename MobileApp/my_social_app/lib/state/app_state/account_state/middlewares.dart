@@ -119,6 +119,15 @@ void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
+void deleteAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is DeleteAccountAction){
+    AccountService()
+      .delete()
+      .then((_) => _clearSession(store));
+  }
+  next(action);
+}
+
 void logOutMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LogOutAction){
     AccountService()

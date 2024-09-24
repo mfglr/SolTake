@@ -114,6 +114,7 @@ final store = Store(
     loginByFaceBookMiddleware,
     loginByGoogleMiddleware,
     createAccountMiddleware,
+    deleteAccountMiddleware,
     logOutMiddleware,
     //account end
 

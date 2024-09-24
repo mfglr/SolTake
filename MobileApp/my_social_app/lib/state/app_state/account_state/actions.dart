@@ -42,6 +42,11 @@ class LogOutAction extends AppAction{
 }
 
 @immutable
+class DeleteAccountAction extends AppAction{
+  const DeleteAccountAction();
+}
+
+@immutable
 class CreateAccountAction extends AppAction{
   final String email;
   final String password;

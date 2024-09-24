@@ -90,6 +90,10 @@ class AccountService {
   Future<void> logOut() =>
     _appClient
       .put("$accountController/$logOutEndPoint");
+  
+  Future<void> delete() =>
+    _appClient
+      .delete("$accountController/$deleteAccountEndpoint");
 
   Future<bool> isUserNameExist(String userName) =>
     _appClient

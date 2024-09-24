@@ -221,6 +221,10 @@
     "profile_menu_page_saves_item": "Kaydedilen Sorular",
     "profile_menu_page_logout_item": "Çıkış Yap",
 
+    "delete_account_menu_item_content": "Hesabımı Sil",
+    "delete_account_menu_item_app_dialog_title": "Hesabını Sil",
+    "delete_account_menu_item_app_dialog_content": "Hesabını silmek istediğine emin misi?. Aramızdan ayrıldığınız için çok üzgünüz!",
+
     "display_abstract_questions_page_title": "Kaydedilen Sorular",
 
     "display_saved_question_page_title": "Kaydedilen Sorular"
