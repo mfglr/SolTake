@@ -34,6 +34,7 @@ namespace MySocailApp.Infrastructure.DbContexts
 
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<SolutionUserVote> SolutionUserVotes { get; private set; }
+        public DbSet<SolutionUserSave> SolutionUserSaves { get; private set; }
 
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }

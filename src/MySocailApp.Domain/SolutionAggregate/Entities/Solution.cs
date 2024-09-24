@@ -13,20 +13,23 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
     {
         public int QuestionId { get; private set; }
         public int AppUserId { get; private set; }
-        public SolutionContent? Content { get; private set; }
+        public SolutionContent Content { get; private set; } = null!;
         private readonly List<SolutionImage> _images = [];
         public IReadOnlyCollection<SolutionImage> Images => _images;
 
-        internal void Create(int questionId, int appUserId, SolutionContent? content, IEnumerable<SolutionImage> images)
+        internal void Create(int questionId, int appUserId, SolutionContent content, IEnumerable<SolutionImage> images)
         {
+
             if((content == null || content.Value.Trim() == "") && !images.Any())
                 throw new SolutionContentOrImagesRequiredException();
             if (images.Count() > 3)
                 throw new TooManySolutionImageException();
 
+            ArgumentNullException.ThrowIfNull(content);
+            
             QuestionId = questionId;
             AppUserId = appUserId;
-            Content = content?.Value.Trim() == "" ? null : content;
+            Content = content;
             State = SolutionState.Pending;
             _images.AddRange(images);
             UpdatedAt = CreatedAt = DateTime.UtcNow;

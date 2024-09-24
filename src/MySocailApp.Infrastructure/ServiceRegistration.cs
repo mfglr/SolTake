@@ -123,7 +123,8 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISolutionUserVoteQueryRepository, SolutionUserVoteQueryRepository>()
                 .AddScoped<IMessageQueryRepository, MessageQueryRepository>()
                 .AddScoped<ITopicQueryRepository, TopicQueryRepository>()
-                .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>();
+                .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
+                .AddScoped<ISolutionUserSaveQueryRepository,SolutionUserSaveQueryRepository>();
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
             => services

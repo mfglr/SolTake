@@ -1,7 +1,6 @@
 ﻿using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using System.Linq;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
@@ -17,7 +16,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         x.QuestionId,
                         x.AppUser.Account.UserName!,
                         x.AppUserId,
-                        x.Content != null ? x.Content.Value : null,
+                        x.Content.Value,
                         x.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Upvote),
                         x.Votes.Count(v => v.Type == SolutionVoteType.Upvote),
                         x.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Downvote),
@@ -25,6 +24,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         x.Comments.Count,
                         x.State,
                         x.AppUserId == accountId,
+                        x.Savers.Any(x => x.AppUserId == accountId),
                         x.Question.AppUserId == accountId,
                         x.Images.Select(
                             i => new SolutionImageResponseDto(
