@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
@@ -31,13 +32,14 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
         
-        public static Notification SolutionCommentCreatedNotification(int ownerId, int userId, int commentId, int solutionId)
+        public static Notification SolutionCommentCreatedNotification(int ownerId, int userId, int commentId, int solutionId, int questionId)
             => new(NotificationType.SolutionCommentCreatedNotification)
             {
                 OwnerId = ownerId,
                 UserId = userId,
                 CommentId = commentId,
                 SolutionId = solutionId,
+                QuestionId = questionId,
                 CreatedAt = DateTime.UtcNow,
             };
 
@@ -135,25 +137,28 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification SolutionWasUpvotedNotification(int ownerId, int userId, int solutionId)
+        public static Notification SolutionWasUpvotedNotification(int ownerId, int userId, int questionId, int solutionId)
             => new(NotificationType.SolutionWasUpvotedNotification)
             {
                 OwnerId = ownerId,
                 UserId = userId,
+                QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow
             };
 
-        public static Notification SolutionWasDownvotedNotification(int ownerId, int userId, int solutionId)
+        public static Notification SolutionWasDownvotedNotification(int ownerId, int userId, int questionId, int solutionId)
             => new(NotificationType.SolutionWasDownvotedNotification)
             {
                 OwnerId = ownerId,
                 UserId = userId,
+                QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow
             };
 
         public Comment? Comment { get; }
         public Solution? Solution { get; }
+        public Question? Question { get; }
     }
 }

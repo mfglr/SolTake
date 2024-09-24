@@ -51,6 +51,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
                 .WithOne(x => x.Question)
                 .HasForeignKey(x => x.QuestionId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(x => x.Notifications)
+                .WithOne(x => x.Question)
+                .HasForeignKey(x => x.QuestionId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

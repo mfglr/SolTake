@@ -2,6 +2,7 @@
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
@@ -108,5 +109,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public AppUser AppUser { get; } = null!;
         public IReadOnlyList<Solution> Solutions { get; } = null!;
         public IReadOnlyCollection<Comment> Comments { get; } = null!;
+        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

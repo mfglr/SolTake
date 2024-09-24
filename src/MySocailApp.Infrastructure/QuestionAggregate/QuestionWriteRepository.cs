@@ -36,6 +36,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 
         public Task<Question?> GetQuestionWithAllAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
+                .Include(x => x.Notifications)
                 .Include(x => x.Images)
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Replies)

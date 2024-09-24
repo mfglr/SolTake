@@ -30,7 +30,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionAggregate.Solutio
             var solution = await _solutionReadRepository.GetAsync((int)comment.SolutionId!, cancellationToken);
             if (solution == null) return;
 
-            var n = Notification.SolutionCommentCreatedNotification(solution.AppUserId, comment.AppUserId, comment.Id, solution.Id);
+            var n = Notification.SolutionCommentCreatedNotification(solution.AppUserId, comment.AppUserId, comment.Id, solution.Id, solution.QuestionId);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

@@ -9,7 +9,6 @@ namespace MySocailApp.Domain.NotificationAggregate.Interfaces
         void Delete(Notification notification);
 
         Task<List<Notification>> GetByIds(List<int> ids, CancellationToken cancellationToken);
-        Task<List<Notification>> GetQuestionNotifications(int questionId, CancellationToken cancellationToken);
         Task<List<Notification>> GetNotificationsByUserId(int userId, CancellationToken cancellationToken);
 
         Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken);

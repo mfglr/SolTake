@@ -25,7 +25,8 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionAggregate.Solutio
 
         public async Task Handle(SolutionWasDownvotedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = Notification.SolutionWasDownvotedNotification(notification.Solution.AppUserId, notification.Vote.AppUserId, notification.Solution.Id);
+            var solution = notification.Solution;
+            var n = Notification.SolutionWasDownvotedNotification(solution.AppUserId, notification.Vote.AppUserId, solution.QuestionId, solution.Id);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

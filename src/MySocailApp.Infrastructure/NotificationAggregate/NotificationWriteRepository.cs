@@ -19,8 +19,6 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
 
         public Task<List<Notification>> GetByIds(List<int> ids, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-        public Task<List<Notification>> GetQuestionNotifications(int questionId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.QuestionId == questionId).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetNotificationsByUserId(int userId, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => x.UserId == userId || x.OwnerId == userId).ToListAsync(cancellationToken);
 
