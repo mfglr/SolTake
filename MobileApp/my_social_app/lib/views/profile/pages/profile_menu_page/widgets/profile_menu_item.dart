@@ -28,9 +28,12 @@ class ProfileMenuItem extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  icon,
-                  color: iconColor,
+                Container(
+                  margin: const EdgeInsets.only(right: 5),
+                  child: Icon(
+                    icon,
+                    color: iconColor,
+                  ),
                 ),
                 Text(
                   name,

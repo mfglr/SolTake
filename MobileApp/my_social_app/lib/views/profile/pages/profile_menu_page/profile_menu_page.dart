@@ -5,6 +5,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/profile/pages/display_abstract_saved_questions_page/display_abstract_saved_questions_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/delete_account_menu_item.dart';
+import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/display_saved_solutions_menu_item.dart';
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/profile_menu_item.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
@@ -26,7 +27,7 @@ class ProfileMenuPage extends StatelessWidget {
           children: [
             ProfileMenuItem(
               name: AppLocalizations.of(context)!.profile_menu_page_saves_item,
-              icon: Icons.bookmark,
+              icon: Icons.question_mark,
               onPressed: () =>
                 Navigator
                   .of(context)
@@ -36,6 +37,7 @@ class ProfileMenuPage extends StatelessWidget {
                     )
                   ),
             ),
+            const DisplaySavedSolutionsMenuItem(),
             ProfileMenuItem(
               name: AppLocalizations.of(context)!.profile_menu_page_logout_item,
               icon: Icons.logout,

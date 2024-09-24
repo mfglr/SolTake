@@ -19,7 +19,7 @@ class DisplayAbstractSavedQuestionsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: AppTitle(title: AppLocalizations.of(context)!.display_abstract_questions_page_title),
+        title: AppTitle(title: AppLocalizations.of(context)!.display_abstract_saved_questions_page_title),
       ),
       body: StoreConnector<AppState,UserState?>(
         onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),

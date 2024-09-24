@@ -217,6 +217,10 @@ class AppState{
     => questionEntityState.entities[questionId]!.pendingSolutions.ids.map((e) => solutionEntityState.entities[e]!);
   Iterable<SolutionState> selectQuestionIncorrectSolutions(int questionId)
     => questionEntityState.entities[questionId]!.incorrectSolutions.ids.map((e) => solutionEntityState.entities[e]!);
+  Iterable<SolutionState> selectUserSavedSolutions(int userId) =>
+    userEntityState.entities[userId]!.savedSolutions.ids.map(
+      (saveId) => solutionEntityState.entities[solutionUserSaveEntityState.entities[saveId]!.solutionId]!
+    );
 
   //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)
