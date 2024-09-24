@@ -123,6 +123,23 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));
         }
 
+        private readonly List<SolutionUserSave> _savers = [];
+        public IReadOnlyCollection<SolutionUserSave> Savers => _savers;
+        public SolutionUserSave Save(int saverId)
+        {
+            if (_savers.Any(x => x.AppUserId == saverId))
+                throw new SolutionAlreadySavedException();
+            var save = SolutionUserSave.Create(saverId);
+            _savers.Add(save);
+            return save;
+        }
+        public void Unsave(int saverId)
+        {
+            var index = _savers.FindIndex(x => x.AppUserId == saverId);
+            if (index == -1) return;
+            _savers.RemoveAt(index);
+        }
+
         //Readonly navigator properties
         public Question Question { get; } = null!;
         public AppUser AppUser { get; } = null!;

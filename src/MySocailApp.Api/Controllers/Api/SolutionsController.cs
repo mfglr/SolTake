@@ -11,6 +11,8 @@ using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsCorrect;
 using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsIncorrect;
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote;
+using MySocailApp.Application.Commands.SolutionAggregate.SaveSolution;
+using MySocailApp.Application.Commands.SolutionAggregate.UnsaveSolution;
 using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Application.Queries.SolutionAggregate.GetCorrectSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionAggregate.GetIncorrectsSolutionsByQuestionId;
@@ -61,6 +63,12 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task MarkAsIncorrect(MarkSolutionAsIncorrectDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
+        [HttpPost]
+        public async Task<SaveSolutionCommandResponseDto> Save(SaveSolutionDto request,CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+        [HttpDelete("{solutionId}")]
+        public async Task Unsave(int solutionId, CancellationToken cancellationToken)
+            => await _mediator.Send(new UnsaveSolutionDto(solutionId),cancellationToken);
 
         [HttpGet("{solutionId}/{solutionImageId}")]
         public async Task<FileResult> GetSolutionImage(int solutionId, int solutionImageId, CancellationToken cancellationToken)

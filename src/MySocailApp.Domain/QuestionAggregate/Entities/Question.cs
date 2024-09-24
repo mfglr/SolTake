@@ -84,24 +84,22 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             AddDomainEvent(new QuestionDislikedDomainEvent(this));
         }
 
-
         //saving questions
-        private readonly List<QuestionUserSave> _saves = [];
-        public IReadOnlyList<QuestionUserSave> Saves => _saves;
-        public QuestionUserSave Save(int saverId)
+        private readonly List<QuestionUserSave> _savers = [];
+        public IReadOnlyList<QuestionUserSave> Savers => _savers;
+        public QuestionUserSave Save(int appUserId)
         {
-            if (_saves.Any(x => x.AppUserId == saverId))
+            if (_savers.Any(x => x.AppUserId == appUserId))
                 throw new QuestionAlreadySavedException();
-            var save = QuestionUserSave.Create(saverId);
-            _saves.Add(save);
+            var save = QuestionUserSave.Create(appUserId);
+            _savers.Add(save);
             return save;
         }
-        public void Unsave(int saverId)
+        public void Unsave(int appUserId)
         {
-            var save = _saves.FirstOrDefault(x => x.AppUserId == saverId) ?? throw new QuestionNotSavedException();
-            _saves.Remove(save);
+            var save = _savers.FirstOrDefault(x => x.AppUserId == appUserId) ?? throw new QuestionNotSavedException();
+            _savers.Remove(save);
         }
-
 
         // Readonly navigator properties
         public Exam Exam { get; } = null!;

@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         x.Question.AppUser.Account.UserName!,
                         x.Question.Content.Value,
                         x.Question.Likes.Any(x => x.AppUserId == accountId),
-                        x.Question.Saves.Any(x => x.AppUserId == accountId),
+                        x.Question.Savers.Any(x => x.AppUserId == accountId),
                         x.Question.Likes.Count,
                         x.Question.Comments.Count,
                         x.Question.Solutions.Count,

@@ -29,6 +29,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
+                .HasMany(x => x.Savers)
+                .WithOne(x => x.Solution)
+                .HasForeignKey(x => x.SolutionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
                 .HasMany(x => x.Comments)
                 .WithOne(x => x.Solution)
                 .HasForeignKey(x => x.SolutionId)

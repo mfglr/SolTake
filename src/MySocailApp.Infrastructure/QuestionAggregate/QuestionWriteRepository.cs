@@ -25,7 +25,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 
         public Task<Question?> GetQuestionWithSaveAsync(int questionId, int saverId, CancellationToken cancellationToken)
             => _context.Questions
-                .Include(x => x.Saves.Where(x => x.AppUserId == saverId))
+                .Include(x => x.Savers.Where(x => x.AppUserId == saverId))
                 .FirstOrDefaultAsync(x => x.Id == questionId && !x.IsRemoved, cancellationToken);
 
         public async Task<Question?> GetWithLikeByIdAsync(int id,int userId,CancellationToken cancellationToken)

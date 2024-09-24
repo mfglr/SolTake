@@ -12,9 +12,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
         {
 
             builder.Property(e => e.Id).ValueGeneratedNever();
-
             builder.OwnsOne(x => x.Image);
-
             builder.OwnsOne(x => x.Biography);
 
             builder
@@ -34,31 +32,38 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);
+            builder
+                .HasMany(x => x.QuestionsLiked)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder
+                .HasMany(x => x.QuestionsSaved)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Solutions)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);
+            builder
+                .HasMany(x => x.SolutionsSaved)
+                .WithOne(x => x.AppUser)
+                .HasForeignKey(x => x.AppUserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Comments)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.QuestionsLiked)
-                .WithOne(x => x.AppUser)
-                .HasForeignKey(x => x.AppUserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder
                 .HasMany(x => x.CommentsLiked)
                 .WithOne(x => x.AppUser)
                 .HasForeignKey(x => x.AppUserId)
                 .OnDelete(DeleteBehavior.Cascade);
-
             builder
                 .HasMany(x => x.CommentsTagged)
                 .WithOne(x => x.AppUser)
@@ -76,7 +81,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.Sender)
                 .HasForeignKey(x => x.SenderId)
                 .OnDelete(DeleteBehavior.Cascade);
-
             builder
                 .HasMany(x => x.MessagesReceived)
                 .WithOne(x => x.Receiver)
@@ -88,7 +92,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.Searcher)
                 .HasForeignKey(x => x.SearcherId)
                 .OnDelete(DeleteBehavior.Cascade);
-
             builder
                 .HasMany(x => x.Searchers)
                 .WithOne(x => x.Searched)
@@ -100,7 +103,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.Followed)
                 .HasForeignKey(x => x.FollowedId)
                 .OnDelete(DeleteBehavior.Cascade);
-
             builder
                 .HasMany(x => x.Followeds)
                 .WithOne(x => x.Follower)
@@ -112,7 +114,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
                 .WithOne(x => x.Owner)
                 .HasForeignKey(x => x.OwnerId)
                 .OnDelete(DeleteBehavior.NoAction);
-
             builder
                 .HasMany(x => x.NotificationsOutgoing)
                 .WithOne(x => x.AppUser)

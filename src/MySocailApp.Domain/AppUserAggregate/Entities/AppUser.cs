@@ -115,15 +115,22 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public Account Account { get; } = null!;
         public UserConnection UserConnection { get; } = null!;
         public NotificationConnection NotificationConnection { get; } = null!;
+        
         public IReadOnlyCollection<Question> Questions { get; } = null!;
         public IReadOnlyCollection<QuestionUserLike> QuestionsLiked { get; } = null!;
+        public IReadOnlyCollection<QuestionUserSave> QuestionsSaved { get; } = null!;
+
         public IReadOnlyCollection<Comment> Comments { get; } = null!;
         public IReadOnlyCollection<CommentUserLike> CommentsLiked { get; } = null!;
         public IReadOnlyCollection<CommentUserTag> CommentsTagged { get; } = null!;
+        
         public IReadOnlyCollection<Solution> Solutions { get; } = null!;
+        public IReadOnlyCollection<SolutionUserSave> SolutionsSaved { get; } = null!;
         public IReadOnlyCollection<Message> Messages { get; } = null!;
         public IReadOnlyCollection<Message> MessagesReceived { get; } = null!;
+        
         public IReadOnlyCollection<SolutionUserVote> Votes { get; } = null!;
+        
         public IReadOnlyCollection<Notification> NotificationsIncoming { get; } = null!;
         public IReadOnlyCollection<Notification> NotificationsOutgoing { get; } = null!;
     }

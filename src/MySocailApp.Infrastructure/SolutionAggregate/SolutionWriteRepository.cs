@@ -47,5 +47,10 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Replies)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public Task<Solution?> GetWithSaverByIdAsync(int solutionId, int saverId, CancellationToken cancellationToken)
+            => _context.Solutions
+                .Include(x => x.Savers.Where(x => x.AppUserId == saverId))
+                .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
     }
 }

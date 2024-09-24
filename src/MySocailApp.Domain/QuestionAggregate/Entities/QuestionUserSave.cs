@@ -9,7 +9,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public int AppUserId { get; private set; }
 
         private QuestionUserSave(int appUserId) => AppUserId = appUserId;
-
         public static QuestionUserSave Create(int appUserId) => new (appUserId) { CreatedAt = DateTime.UtcNow };
 
         public Question Question { get; } = null!;
