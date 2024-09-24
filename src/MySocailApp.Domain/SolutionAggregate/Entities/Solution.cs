@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
@@ -125,8 +126,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         //Readonly navigator properties
         public Question Question { get; } = null!;
         public AppUser AppUser { get; } = null!;
-        private readonly List<Comment> _comments = [];
-        public IReadOnlyList<Comment> Comments => _comments;
-
+        public IReadOnlyList<Comment> Comments { get; } = null!;
+        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

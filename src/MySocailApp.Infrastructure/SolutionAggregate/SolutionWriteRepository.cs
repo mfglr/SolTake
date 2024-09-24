@@ -38,8 +38,9 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .Include(x => x.Images)
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
 
-        public async Task<Solution?> GetWithCommentsByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<Solution?> GetWithAllByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.Solutions
+                .Include(x => x.Notifications)
                 .Include(x => x.Images)
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Children)

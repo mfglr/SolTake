@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
 {
@@ -153,5 +154,6 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
             };
 
         public Comment? Comment { get; }
+        public Solution? Solution { get; }
     }
 }
