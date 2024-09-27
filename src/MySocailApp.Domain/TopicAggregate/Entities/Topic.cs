@@ -4,19 +4,12 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.TopicAggregate.Entities
 {
-    public class Topic : Entity, IAggregateRoot
+    public class Topic(string name) : IHasId, IAggregateRoot
     {
-        public int SubjectId { get; private set; }
-        public string Name { get; private set; } = null!;
-
-        public void Create(int subjectId, string name)
-        {
-            SubjectId = subjectId;
-            Name = name;
-            CreatedAt = DateTime.UtcNow;
-        }
+        public int Id { get; private set; }
+        public string Name { get; private set; } = name;
 
         public IReadOnlyCollection<QuestionTopic> Questions { get; } = null!;
-        public Subject Subject { get; } = null!;
+        public IReadOnlyCollection<SubjectTopic> Subjects { get; } = null!;
     }
 }

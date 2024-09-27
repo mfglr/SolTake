@@ -4,17 +4,11 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.ExamAggregate.Entitities
 {
-    public class Exam() : Entity, IAggregateRoot
+    public class Exam(string shortName, string fullName) : IHasId, IAggregateRoot
     {
-        public string ShortName { get; private set; } = null!;
-        public string FullName { get; private set; } = null!;
-
-        public void Create(string shortName, string fullName)
-        {
-            ShortName = shortName;
-            FullName = fullName;
-            CreatedAt = DateTime.UtcNow;
-        }
+        public int Id { get; private set; }
+        public string ShortName { get; private set; } = shortName;
+        public string FullName { get; private set; } = fullName;
 
         public IReadOnlyCollection<Subject> Subjects { get; } = null!;
         public IReadOnlyCollection<Question> Quesitons { get; } = null!;

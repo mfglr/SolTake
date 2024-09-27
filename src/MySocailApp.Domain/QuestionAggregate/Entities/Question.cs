@@ -13,6 +13,9 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
     public class Question() : Entity, IAggregateRoot
     {
+        public readonly static int MaxTopicCountPerQuestion = 3;
+        public readonly static int MaxImageCountPerQuestion = 3;
+
         public int ExamId { get; private set; }
         public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
@@ -26,7 +29,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public IReadOnlyCollection<QuestionTopic> Topics => _topics;
         internal void AddNewTopics(IEnumerable<int> topics)
         {
-            if (topics.Count() > 3)
+            if (topics.Count() > MaxTopicCountPerQuestion)
                 throw new TooManyTopicsException();
             _topics.Clear();
             _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(topicId)));
@@ -34,11 +37,11 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         internal void Create(int appUserId, QuestionContent content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
         {
-            if (topics.Count() > 3)
+            if (topics.Count() > MaxTopicCountPerQuestion)
                 throw new TooManyTopicsException();
             if (!images.Any())
                 throw new QuestionImageIsRequiredException();
-            if (images.Count() > 5)
+            if (images.Count() > MaxImageCountPerQuestion)
                 throw new TooManyQuestionImagesException();
 
             AppUserId = appUserId;

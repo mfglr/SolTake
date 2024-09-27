@@ -40,7 +40,6 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     x.Topics.Select(
                         t => new TopicResponseDto(
                             t.Topic.Id,
-                            t.Topic.SubjectId,
                             t.Topic.Name
                         )
                     ),

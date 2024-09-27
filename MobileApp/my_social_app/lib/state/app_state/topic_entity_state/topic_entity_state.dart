@@ -20,8 +20,4 @@ class TopicEntityState extends EntityState<TopicState>{
     => TopicEntityState(entities: appendMany(topics));
   TopicEntityState addLists(Iterable<Iterable<TopicState>> lists)
     => TopicEntityState(entities: appendLists(lists));
-
-  
-  Iterable<TopicState> getSubjectTopics(int? subjectId)
-    => entities.values.where((e) => e.subjectId == subjectId);
 }

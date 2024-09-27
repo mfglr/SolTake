@@ -9,10 +9,9 @@ part 'topic.g.dart';
 @JsonSerializable()
 class Topic{
   final int id;
-  final int subjectId;
   final String name;
 
-  const Topic({required this.id, required this.subjectId, required this.name});
+  const Topic({required this.id, required this.name});
 
   factory Topic.fromJson(Map<String, dynamic> json) => _$TopicFromJson(json);
   Map<String, dynamic> toJson() => _$TopicToJson(this);
@@ -20,7 +19,6 @@ class Topic{
   TopicState toTopicState()
     => TopicState(
       id: id,
-      subjectId: subjectId,
       name: name,
       questions: Pagination.init(questionsPerPage,true)
     );

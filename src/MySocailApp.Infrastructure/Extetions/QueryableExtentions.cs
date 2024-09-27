@@ -4,7 +4,7 @@ namespace MySocailApp.Infrastructure.Extetions
 {
     public static class QueryableExtentions
     {
-        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPage page) where T : IEntity
+        public static IQueryable<T> ToPage<T>(this IQueryable<T> query, IPage page) where T : IHasId
         {
             if (page.IsDescending)
                 return query

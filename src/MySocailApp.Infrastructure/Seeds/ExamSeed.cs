@@ -9,8 +9,10 @@ namespace MySocailApp.Infrastructure.Seeds
         public void Configure(EntityTypeBuilder<Exam> builder)
         {
             builder.HasData(
-                new { Id = 1, CreatedAt = DateTime.UtcNow, ShortName = "TYT", FullName = "Temel Yeterlilik Testi" },
-                new { Id = 2, CreatedAt = DateTime.UtcNow, ShortName = "AYT", FullName = "Alan Yeterlilik Testi" }
+                new { Id = 1, ShortName = "TYT", FullName = "Temel Yeterlilik Testi" },
+                new { Id = 2, ShortName = "AYT", FullName = "Alan Yeterlilik Testi" },
+                new { Id = 3, ShortName = "LGS", FullName = "Liselere Geçiş Sistemi" },
+                new { Id = 4, ShortName = "KPSS", FullName = "Kamu Personeli Seçme Sınavı" }
             );
         }
     }

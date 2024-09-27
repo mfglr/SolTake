@@ -15,7 +15,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<TopicResponseDto>> GetSubjectTopicsAsync(int subjectId, IPage page, CancellationToken cancellationToken)
             => _context.Topics
                 .AsNoTracking()
-                .Where(x => x.SubjectId == subjectId)
+                .Where(x => x.Subjects.Any(x => x.SubjectId == subjectId))
                 .ToPage(page)
                 .ToTopicResponseDto()
                 .ToListAsync(cancellationToken);

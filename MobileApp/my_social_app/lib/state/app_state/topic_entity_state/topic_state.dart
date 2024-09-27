@@ -4,13 +4,11 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 @immutable
 class TopicState{
   final int id;
-  final int subjectId;
   final String name;
   final Pagination questions;
 
   const TopicState({
     required this.id,
-    required this.subjectId,
     required this.name,
     required this.questions
   });
@@ -18,14 +16,12 @@ class TopicState{
   TopicState getNextPageQuestions()
     => TopicState(
         id: id,
-        subjectId: subjectId,
         name: name,
         questions: questions.startLoadingNext(),
       );
   TopicState addNextPageQuestions(Iterable<int> quesionIds)
     => TopicState(
         id: id,
-        subjectId: subjectId,
         name: name,
         questions: questions.addNextPage(quesionIds),
       );
@@ -33,14 +29,12 @@ class TopicState{
   TopicState getPrevPageQuestions()
     => TopicState(
         id: id,
-        subjectId: subjectId,
         name: name,
         questions: questions.startLoadingPrev()
       );
   TopicState addPrevPageQuestions(Iterable<int> questionIds)
     => TopicState(
         id: id,
-        subjectId: subjectId,
         name: name,
         questions: questions.addPrevPage(questionIds)
       );
@@ -48,14 +42,12 @@ class TopicState{
   TopicState addQuestionId(int questionId)
     => TopicState(
         id: id,
-        subjectId: subjectId,
         name: name,
         questions: questions.prependOne(questionId)
       );
   TopicState removeQuestionId(int questionId)
     => TopicState(
         id: id,
-        subjectId: subjectId,
         name: name,
         questions: questions.removeOne(questionId)
       );

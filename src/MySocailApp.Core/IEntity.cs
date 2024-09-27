@@ -1,8 +1,7 @@
 ﻿namespace MySocailApp.Core
 {
-    public interface IEntity : IDomainEventsContainer
+    public interface IEntity : IHasId, IDomainEventsContainer
     {
-        int Id { get; }
         DateTime CreatedAt { get; }
         DateTime? UpdatedAt { get; }
     }

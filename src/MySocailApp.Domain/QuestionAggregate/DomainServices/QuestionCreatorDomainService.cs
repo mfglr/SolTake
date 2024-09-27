@@ -29,10 +29,10 @@ namespace MySocailApp.Domain.QuestionAggregate.DomainServices
                 throw new SubjectIsNotIncludedInExamException();
 
             var topics = await _topicRepository.GetByTopicIds(topicIds, cancellationToken);
-            if (topics.Count != topics.Count)
+            if (topics.Count != topicIds.Count())
                 throw new TopicNotFoundException();
             
-            if(topics.Any(x => x.SubjectId != subjectId))
+            if(topics.Any(x => !x.Subjects.Any(x => x.SubjectId == subjectId)))
                 throw new TopicIsNotIncludedInSubjectException();
 
             question.Create(userId, content, examId, subjectId, topicIds, images);
