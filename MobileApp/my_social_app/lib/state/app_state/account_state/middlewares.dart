@@ -96,6 +96,10 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
                 throw e;
               });
           });
+      })
+      .catchError((e){
+        _googleSignIn.disconnect();
+        throw e;
       });
   }
   next(action);

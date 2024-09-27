@@ -1,4 +1,4 @@
-package com.example.my_social_app
+package com.soltake.app
 
 import io.flutter.embedding.android.FlutterActivity
 
