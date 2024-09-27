@@ -2,9 +2,9 @@
 
 namespace MySocailApp.Api.Controllers
 {
-    public class AccountDeletion : Controller
+    [Route("/")]
+    public class HomeController : Controller
     {
         public IActionResult Index() => View();
-        public IActionResult English() => View();
     }
 }

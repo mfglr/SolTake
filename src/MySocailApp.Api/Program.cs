@@ -25,6 +25,7 @@ app.InitializeDb();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRequestLocalization();
