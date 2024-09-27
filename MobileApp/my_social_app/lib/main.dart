@@ -53,7 +53,7 @@ Future<void> main() async {
     StoreProvider(
       store: store,
       child: MaterialApp(
-        title: 'SolTake.com',
+        title: 'SolTake',
         locale: Locale(PlatformDispatcher.instance.locale.languageCode),
         supportedLocales: const [
           Locale('en'),

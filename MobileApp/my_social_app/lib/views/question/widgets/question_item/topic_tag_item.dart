@@ -19,10 +19,11 @@ class TopicTagItem extends StatelessWidget {
               )
             )
           ),
-      child:  Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
+            textAlign: TextAlign.center,
             topic.name,
             style: const TextStyle(
               fontSize: 13,
