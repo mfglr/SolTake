@@ -99,11 +99,12 @@ class _ConversationPageState extends State<ConversationPage>{
         if(user == null) return const LoadingView();
         return Scaffold(
           appBar: AppBar(
-            title: _selectedIds.isEmpty ?
-              TextButton(
-                onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.userId)));
-                },
+            title: _selectedIds.isEmpty 
+              ? TextButton(
+                onPressed: () =>
+                  Navigator
+                    .of(context)
+                    .push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.userId))),
                 style: ButtonStyle(
                   padding: WidgetStateProperty.all(EdgeInsets.zero),
                   minimumSize: WidgetStateProperty.all(const Size(0, 0)),
@@ -118,7 +119,8 @@ class _ConversationPageState extends State<ConversationPage>{
                   nameFontSize: 11,
                   nameFontWeight: FontWeight.normal,
                 )
-              ) : null,
+              ) 
+              : Text(_selectedIds.length.toString()),
             leading: _selectedIds.isEmpty ? const AppBackButtonWidget() : const SpaceSavingWidget(),
             actions: [
               if(_selectedIds.isNotEmpty)
