@@ -89,6 +89,18 @@ UserEntityState removeMessageReducer(UserEntityState prev,RemoveUserMessageActio
 UserEntityState removeMessagesReducer(UserEntityState prev,RemoveUserMessagesAction action)
   => prev.removeMessages(action.userId, action.messageIds);
 
+//conversations
+UserEntityState getNextPageConversationReducer(UserEntityState prev,GetNextPageUserConversationAction action)
+  => prev.getNextPageConversations(action.userId);
+UserEntityState addNextPageConversationReducer(UserEntityState prev,AddNextPageUserConversationsAction action)
+  => prev.addNextPageConversations(action.userId,action.ids);
+UserEntityState addConversationReducer(UserEntityState prev, AddUserConversationAction action)
+  => prev.addConversation(action.userId,action.id);
+UserEntityState addConversationInOrderReducer(UserEntityState prev,AddUserConversationInOrderAction action)
+  => prev.addConversationInOrder(action.userId, action.id);
+UserEntityState removeConversationReducer(UserEntityState prev, RemoveUserConversationAction action)
+  => prev.removeConversation(action.userId, action.id);
+
 UserEntityState loadUserReducer(UserEntityState prev,AddUserAction action)
   => prev.addUser(action.user);
 UserEntityState addUsersReducer(UserEntityState prev,AddUsersAction action)
@@ -157,6 +169,12 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,RemoveUserMessageAction>(removeMessageReducer).call,
   TypedReducer<UserEntityState,RemoveUserMessagesAction>(removeMessagesReducer).call,
 
+  //conversations
+  TypedReducer<UserEntityState,GetNextPageUserConversationAction>(getNextPageConversationReducer).call,
+  TypedReducer<UserEntityState,AddNextPageUserConversationsAction>(addNextPageConversationReducer).call,
+  TypedReducer<UserEntityState,AddUserConversationAction>(addConversationReducer).call,
+  TypedReducer<UserEntityState,AddUserConversationInOrderAction>(addConversationInOrderReducer).call,
+  TypedReducer<UserEntityState,RemoveUserConversationAction>(removeConversationReducer).call,
 
   TypedReducer<UserEntityState,AddUserAction>(loadUserReducer).call,
   TypedReducer<UserEntityState,AddUsersAction>(addUsersReducer).call,

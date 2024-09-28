@@ -24,6 +24,7 @@ class UserState{
   final Pagination savedQuestions;
   final Pagination savedSolutions;
   final Pagination messages;
+  final Pagination conversations;
 
   String formatName(int count){
     final r = (name == "" ? userName : name);
@@ -55,7 +56,8 @@ class UserState{
     required this.savedQuestions,
     required this.savedSolutions,
     required this.messages,
-    required this.notFolloweds
+    required this.notFolloweds,
+    required this.conversations,
   });
 
   UserState _optional({
@@ -77,7 +79,8 @@ class UserState{
     Pagination? newSavedQuestions,
     Pagination? newSavedSolutions,
     Pagination? newMessages,
-    Pagination? newNotFolloweds
+    Pagination? newNotFolloweds,
+    Pagination? newConversations,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -99,7 +102,8 @@ class UserState{
     savedQuestions: newSavedQuestions ?? savedQuestions,
     savedSolutions: newSavedSolutions ?? savedSolutions,
     messages: newMessages ?? messages,
-    notFolloweds: newNotFolloweds ?? notFolloweds
+    notFolloweds: newNotFolloweds ?? notFolloweds,
+    conversations: newConversations ?? conversations
   );
   
   //followers
@@ -262,6 +266,18 @@ class UserState{
     _optional(newMessages: messages.removeOne(messageId));
   UserState removeMessages(Iterable<int> messageIds) =>
     _optional(newMessages: messages.removeMany(messageIds));
+
+  //converations
+  UserState getNextPageConversations() =>
+    _optional(newConversations: conversations.startLoadingNext());
+  UserState addNextPageConversations(Iterable<int> ids) =>
+    _optional(newConversations: conversations.addNextPage(ids));
+  UserState addConversation(int id) =>
+    _optional(newConversations: conversations.prependOne(id));
+  UserState addConversationInOrder(int id) =>
+    _optional(newConversations: conversations.addInOrder(id));
+  UserState removeConversation(int id) =>
+    _optional(newConversations: conversations.removeOne(id));
 
   UserState changeProfileImageStatus(bool value) =>
     _optional(newHasImage: value);

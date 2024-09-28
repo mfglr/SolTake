@@ -114,6 +114,17 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState removeMessages(int userId,Iterable<int> messageIds)
     => UserEntityState(entities: updateOne(entities[userId]?.removeMessages(messageIds)));
 
+  //conversations
+  UserEntityState getNextPageConversations(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.getNextPageConversations()));
+  UserEntityState addNextPageConversations(int userId,Iterable<int> ids)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageConversations(ids)));
+  UserEntityState addConversation(int userId,int id)
+    => UserEntityState(entities: updateOne(entities[userId]?.addConversation(id)));
+  UserEntityState addConversationInOrder(int userId, int id)
+    => UserEntityState(entities: updateOne(entities[userId]?.addConversationInOrder(id)));
+  UserEntityState removeConversation(int userId,int id)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeConversation(id)));
 
   UserEntityState changeProfileImageStatus(int userId,bool value)
     => UserEntityState(entities: updateOne(entities[userId]?.changeProfileImageStatus(value)));

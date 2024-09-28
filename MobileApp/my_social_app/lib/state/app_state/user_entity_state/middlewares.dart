@@ -362,6 +362,39 @@ void getNextPageUserSavedSolutionsMiddleware(Store<AppState> store,action,NextDi
   next(action);
 }
 
+//conversations
+void getNextPageUserConversationsMiddlewareIfNoPageAction(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserConversationIfNoPageAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.conversations;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageUserConversationAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserConversationsMiddlewareIfReadyAction(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserConversationIfReadyAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.conversations;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageUserConversationAction(userId: action.userId));
+    }
+  }
+  next(action);
+}
+void getNextPageUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageUserConversationAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.conversations;
+    UserService()
+      .getCreateConversationPageUsers(pagination.next)
+      .then((users){
+        store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
+        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+        store.dispatch(AddNextPageUserConversationsAction(userId: store.state.accountState!.id, ids: users.map((e) => e.id)));
+      });
+  }
+  next(action);
+}
+
 void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FollowUserAction){
     final currentUserId = store.state.accountState!.id;

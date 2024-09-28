@@ -6,6 +6,7 @@ const getFollowedsByIdEndPoint = "GetFollowedsById";
 const getNotFollowedsEndpoint = "GetNotFolloweds";
 const searchUserEndPoint = "Search";
 const getSearchedsEndpoint = "GetSearcheds";
+const getCreateConversationPageUsersEndpoint = "GetCreateConversationPageUsers";
 
 const followEndPoint = "follow";
 const unfollowEndPoint = "Unfollow";

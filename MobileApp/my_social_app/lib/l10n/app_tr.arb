@@ -241,5 +241,8 @@
 
     "display_saved_solutions_page_title": "Kaydedilen Çözümler",
 
-    "display_saved_question_page_title": "Kaydedilen Sorular"
+    "display_saved_question_page_title": "Kaydedilen Sorular",
+
+    "create_conversation_page_title": "Yeni sohbet başlat"
+
 }

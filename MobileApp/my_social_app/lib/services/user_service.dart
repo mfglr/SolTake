@@ -113,4 +113,10 @@ class UserService{
       .get(_appClient.generatePaginationUrl("$userController/$getSearchedsEndpoint",page))
       .then((json) => json as List)
       .then((list) => list.map((item) => UserSearch.fromJson(item)));
+
+  Future<Iterable<User>> getCreateConversationPageUsers(Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$userController/$getCreateConversationPageUsersEndpoint", page))
+      .then((json) => json as List)
+      .then((list) => list.map((item) => User.fromJson(item)));
 }

@@ -13,6 +13,7 @@ using MySocailApp.Application.Commands.UserAggregate.UpdateBiography;
 using MySocailApp.Application.Commands.UserAggregate.UpdateName;
 using MySocailApp.Application.Commands.UserAggregate.UpdateUserImage;
 using MySocailApp.Application.Queries.UserAggregate;
+using MySocailApp.Application.Queries.UserAggregate.GetCreateConversationPageUsers;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowedsById;
 using MySocailApp.Application.Queries.UserAggregate.GetFollowersById;
 using MySocailApp.Application.Queries.UserAggregate.GetNotFolloweds;
@@ -101,5 +102,10 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet]
         public async Task<List<UserSearchResponseDto>> GetSearcheds([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSearchedUsersDto(offset, take, isDescending), cancellationToken);
+
+        [HttpGet]
+        public async Task<List<AppUserResponseDto>> GetCreateConversationPageUsers([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetCreateConversationPageUsersDto(offset, take, isDescending), cancellationToken);
+
     }
 }

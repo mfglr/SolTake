@@ -29,51 +29,49 @@ class ConversationItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    child: UserImageWidget(userId: message.conversationId,diameter: 50),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        message.userName,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: UserImageWidget(userId: message.conversationId,diameter: 50),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          message.userName,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 5),
-                            child: Text(
-                              message.formatContent(25) ?? AppLocalizations.of(context)!.conversation_item,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal
+                        Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              child: Text(
+                                message.formatContent(25) ?? AppLocalizations.of(context)!.conversation_item,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal
+                                ),
                               ),
                             ),
-                          ),
-                          if(message.isOwner)
-                            MessageStatusWidget(message: message),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              StoreConnector<AppState,int>(
-                converter: (store) => store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(message.conversationId),
-                builder: (context,count){
-                  if(count > 0){
-                    return Text(count.toString());
+                            if(message.isOwner)
+                              MessageStatusWidget(message: message),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                StoreConnector<AppState,int>(
+                  converter: (store) => store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(message.conversationId),
+                  builder: (context,count){
+                    if(count > 0) return Text(count.toString());
+                    return const SizedBox.shrink();
                   }
-                  return const SizedBox.shrink();
-                }
-              )
+                )
               ],
             ),
           )

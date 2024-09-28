@@ -66,5 +66,6 @@ class User{
         followeds: Pagination.init(usersPerPage,true),
         notFolloweds: Pagination.init(usersPerPage,true),
         messages: Pagination.init(messagesPerPage,true),
+        conversations: Pagination.init(usersPerPage, true)
       );
 }

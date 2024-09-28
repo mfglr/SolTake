@@ -362,6 +362,48 @@ class RemoveUserMessagesAction extends AppAction{
   const RemoveUserMessagesAction({required this.userId, required this.messageIds});
 }
 
+
+@immutable
+class GetNextPageUserConversationIfNoPageAction extends AppAction{
+  final int userId;
+  const GetNextPageUserConversationIfNoPageAction({required this.userId});
+}
+@immutable
+class GetNextPageUserConversationIfReadyAction extends AppAction{
+  final int userId;
+  const GetNextPageUserConversationIfReadyAction({required this.userId});
+}
+@immutable
+class GetNextPageUserConversationAction extends AppAction{
+  final int userId;
+  const GetNextPageUserConversationAction({required this.userId});
+}
+@immutable
+class AddNextPageUserConversationsAction extends AppAction{
+  final int userId;
+  final Iterable<int> ids;
+  const AddNextPageUserConversationsAction({required this.userId,required this.ids});
+}
+@immutable
+class AddUserConversationAction extends AppAction{
+  final int userId;
+  final int id;
+  const AddUserConversationAction({required this.userId, required this.id});
+}
+@immutable
+class AddUserConversationInOrderAction extends AppAction{
+  final int userId;
+  final int id;
+  const AddUserConversationInOrderAction({required this.userId, required this.id});
+}
+@immutable
+class RemoveUserConversationAction extends AppAction{
+  final int userId;
+  final int id;
+  const RemoveUserConversationAction({required this.userId, required this.id});
+}
+
+
 @immutable
 class ChangeProfileImageStatusAction extends AppAction{
   final int userId;

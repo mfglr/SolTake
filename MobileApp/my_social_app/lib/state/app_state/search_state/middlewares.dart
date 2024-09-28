@@ -154,10 +154,11 @@ void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next)
     UserService()
       .addSearched(action.userId)
       .then((search){
-        final removedOne = store.state.userSearchEntityState.select(searcherId, action.userId)?.id ?? 0;
-        store.dispatch(RemoveUserSearchAction(searchId: removedOne));
+        final searchId = store.state.userSearchEntityState.select(searcherId, action.userId)?.id ?? 0;
+        store.dispatch(RemoveUserSearchAction(searchId: searchId));
         store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
-        store.dispatch(AddSearchedUserSuccessAction(addedOne: search.id,removedOne: removedOne));
+        store.dispatch(AddSearchedUserSuccessAction(addedOne: search.id,removedOne: searchId));
+        store.dispatch(AddUserConversationInOrderAction(userId: searcherId, id: action.userId));
       });
   }
   next(action);
@@ -168,10 +169,10 @@ void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher ne
       .removeSearched(action.searchedId)
       .then((_){
         final accountId = store.state.accountState!.id;
-        final search = store.state.userSearchEntityState.select(accountId, action.searchedId);
-        if(search == null) return;
-        store.dispatch(RemoveSearcedUserSuccessAction(searchId: search.id));
-        store.dispatch(RemoveUserSearchAction(searchId: search.id));
+        final searchId = store.state.userSearchEntityState.select(accountId, action.searchedId)?.id ?? 0;
+        store.dispatch(RemoveSearcedUserSuccessAction(searchId: searchId));
+        store.dispatch(RemoveUserSearchAction(searchId: searchId));
+        store.dispatch(RemoveUserConversationAction(userId: accountId, id: action.searchedId));
       });
   }
   next(action);

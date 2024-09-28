@@ -185,6 +185,8 @@ class AppState{
     => solutionEntityState.entities[solutionId]!.downvotes.ids.map(
       (voteId) => userEntityState.entities[solutionUserVoteEntityState.entities[voteId]!.appUserId]!
     );
+  Iterable<UserState> selectUserConversations(int userId)
+    => userEntityState.entities[userId]!.conversations.ids.map((id) => userEntityState.entities[id]!);
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions

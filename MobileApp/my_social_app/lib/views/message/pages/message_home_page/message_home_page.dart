@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/message/pages/create_conversation_page/create_conversation_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/widgets/conversation_items.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,6 +19,16 @@ class MessageHomePage extends StatelessWidget {
         title: AppTitle(
           title: AppLocalizations.of(context)!.messages_home_page_title
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () => 
+          Navigator
+            .of(context)
+            .push(
+              MaterialPageRoute(builder: (context) => const CreateConversationPage())
+            ),
+        child: const Icon(Icons.add),
       ),
       body: Padding(
         padding: const EdgeInsets.all(5),

@@ -140,7 +140,6 @@ final store = Store(
     getNextPageUserNotFollowedsIfReadyMiddleware,
     getNextPageUserNotFollowedsMiddleware,
 
-
     getNextPageUserMessageIfNoPageMiddleware,
     getNextPageUserMessageIfReadyMiddleware,
     getNextPageUserMessagesMiddleware,
@@ -165,6 +164,10 @@ final store = Store(
     getNextPageUserSavedSolutionsIfReadyMiddleaware,
     getNextPageUserSavedSolutionsMiddleware,
     
+    getNextPageUserConversationsMiddlewareIfNoPageAction,
+    getNextPageUserConversationsMiddlewareIfReadyAction,
+    getNextPageUserConvesationsMiddleware,
+
     updateUserNameMiddleware,
     updateNameMiddleware,
     updateBiographyMidleware,
