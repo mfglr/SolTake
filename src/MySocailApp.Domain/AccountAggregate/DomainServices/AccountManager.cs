@@ -101,24 +101,6 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             //update token
             await _tokenService.UpdateTokenAsync(account);
         }
-        public async Task ConfirmEmailByToken(Account account, string token)
-        {
-            ArgumentNullException.ThrowIfNull(token);
-
-            try
-            {
-                account.ConfirmEmailByToken(token);
-            }
-            catch (InvalidVerificationTokenException)
-            {
-                await _userManager.UpdateAsync(account);
-                throw;
-            }
-            await _userManager.UpdateAsync(account);
-
-            //update token
-            await _tokenService.UpdateTokenAsync(account);
-        }
         public async Task LoginByPassword(Account account, string password)
         {
             if (password == null)

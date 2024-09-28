@@ -76,7 +76,7 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             EmailConfirmationToken = VerificationToken.GenerateToken();
             AddDomainEvent(new EmailConfirmationtokenUpdatedDomainEvent(this));
         }
-        internal void ConfirmEmailByToken(string token)
+        public void ConfirmEmailByToken(string token)
         {
             if (!EmailConfirmationToken!.IsValid(token))
             {
@@ -88,6 +88,17 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
                 EmailConfirmed = true;
                 EmailConfirmationToken = null;
             }
+        }
+
+        public string? Language { get; private set; }
+        public void UpdateLanguage(string cultere)
+        {
+            var lang = Languages.GetLanguage(cultere);
+            if (!Languages.IsAcceptedLanguage(lang))
+                throw new InvalidLanguageException();
+
+            Language = lang;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         //Token

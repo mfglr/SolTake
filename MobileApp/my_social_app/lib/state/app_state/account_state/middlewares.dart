@@ -1,5 +1,6 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_social_app/exceptions/unexpected_exception.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/account_storage.dart';
@@ -26,24 +27,26 @@ void _clearSession(Store<AppState> store){
 
 void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoginByRefreshToken){
-    AccountStorage().get().then((oldAccuntState){
-      if(oldAccuntState != null){
-        AccountService()
-          .loginByReshtoken(oldAccuntState.id, oldAccuntState.refreshToken)
-          .then((newAccountState){
-            _setAccount(store, newAccountState);
-            store.dispatch(const ApplicationSuccessfullyInitAction());
-          })
-          .catchError((error){
-            _clearSession(store);
-            store.dispatch(const ApplicationSuccessfullyInitAction());
-            throw error;
-          });
-      }
-      else{
-        store.dispatch(const ApplicationSuccessfullyInitAction());
-      }
-    });
+    AccountStorage()
+      .get()
+      .then((prev){
+        if(prev != null){
+          AccountService()
+            .loginByReshtoken(prev.id, prev.refreshToken)
+            .then((account){
+              _setAccount(store, account);
+              store.dispatch(const ApplicationSuccessfullyInitAction());
+            })
+            .catchError((error){
+              _clearSession(store);
+              store.dispatch(const ApplicationSuccessfullyInitAction());
+              throw error;
+            });
+        }
+        else{
+          store.dispatch(const ApplicationSuccessfullyInitAction());
+        }
+      });
   }
   next(action);
 }
@@ -64,7 +67,10 @@ void loginByFaceBookMiddleware(Store<AppState> store,action,NextDispatcher next)
       .then((value){
         FacebookAuth.instance.accessToken
           .then((value){
-            if(value == null) throw "Something went wrong.Please try again";
+            if(value == null){
+              FacebookAuth.instance.logOut();
+              throw throw UnexpectedException();
+            }
             AccountService()
               .loginByFaceBook(value.tokenString)
               .then((account) => _setAccount(store, account))
@@ -83,11 +89,11 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
     _googleSignIn
       .signIn()
       .then((value){
-        if(value == null) throw "Something went wrong.Please try again";
+        if(value == null) throw UnexpectedException();
         value.authentication
           .then((e){
             final accessToken = e.accessToken;
-            if(accessToken == null) throw "Something went wrong.Please try again";
+            if(accessToken == null) throw UnexpectedException();
             AccountService()
               .loginByGoogle(accessToken)
               .then((account) => _setAccount(store, account))
@@ -109,7 +115,7 @@ void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is ConfirmEmailByTokenAction){
     AccountService()
       .confirmEmailByToken(action.token)
-      .then((account) => _setAccount(store, account));
+      .then((_) => store.dispatch(const ConfirmEmailByTokenSuccessAction()));
   }
   next(action);
 }
@@ -119,6 +125,15 @@ void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
     AccountService()
       .create(action.email, action.password, action.passwordConfirmation)
       .then((account) => _setAccount(store, account));
+  }
+  next(action);
+}
+
+void updateLanguageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateLanguageAction){
+    AccountService()
+      .updateLanguage(action.language)
+      .then((_) => store.dispatch(UpdateLanguageSuccessAction(language: action.language)));
   }
   next(action);
 }

@@ -9,6 +9,7 @@
         public string UserName { get; private set; } = null!;
         public bool EmailConfirmed { get; private set; }
         public bool IsThirdPartyAuthenticated { get; private set; }
+        public string Language { get; private set; }
         public string AccessToken { get; private set; } = null!;
         public string RefreshToken { get; private set; } = null!;
         

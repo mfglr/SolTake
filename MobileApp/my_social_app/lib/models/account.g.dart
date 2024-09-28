@@ -7,17 +7,18 @@ part of 'account.dart';
 // **************************************************************************
 
 Account _$AccountFromJson(Map<String, dynamic> json) => Account(
-      (json['id'] as num).toInt(),
-      DateTime.parse(json['createdAt'] as String),
-      json['updatedAt'] == null
+      id: (json['id'] as num).toInt(),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      json['userName'] as String,
-      json['email'] as String?,
-      json['emailConfirmed'] as bool,
-      json['isThirdPartyAuthenticated'] as bool,
-      json['accessToken'] as String,
-      json['refreshToken'] as String,
+      email: json['email'] as String?,
+      userName: json['userName'] as String,
+      emailConfirmed: json['emailConfirmed'] as bool,
+      isThirdPartyAuthenticated: json['isThirdPartyAuthenticated'] as bool,
+      language: json['language'] as String?,
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
     );
 
 Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
@@ -28,6 +29,7 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'userName': instance.userName,
       'emailConfirmed': instance.emailConfirmed,
       'isThirdPartyAuthenticated': instance.isThirdPartyAuthenticated,
+      'language': instance.language,
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
     };

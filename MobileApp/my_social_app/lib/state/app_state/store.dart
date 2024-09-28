@@ -112,6 +112,7 @@ final store = Store(
     //account start
     loginByRefreshTokenMiddleware,
     confirmEmailMiddleware,
+    updateLanguageMiddleware,
     loginByPaswordMiddleware,
     loginByFaceBookMiddleware,
     loginByGoogleMiddleware,

@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 part 'account.g.dart';
 
 @JsonSerializable()
+@immutable
 class Account{
   final int id;
   final DateTime createdAt;
@@ -11,24 +13,37 @@ class Account{
   final String userName;
   final bool emailConfirmed;
   final bool isThirdPartyAuthenticated;
+  final String? language;
   final String accessToken;
   final String refreshToken;
-
-  Account(
-    this.id,
-    this.createdAt,
-    this.updatedAt,
-    this.userName,
-    this.email,
-    this.emailConfirmed,
-    this.isThirdPartyAuthenticated,
-    this.accessToken,
-    this.refreshToken
-  );
+  
+  const Account({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.email,
+    required this.userName,
+    required this.emailConfirmed,
+    required this.isThirdPartyAuthenticated,
+    required this.language,
+    required this.accessToken,
+    required this.refreshToken
+  });
 
   factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
+
   Map<String, dynamic> toJson() => _$AccountToJson(this);
   
   AccountState toAccountState()
-    => AccountState(id, createdAt, updatedAt, email, userName, emailConfirmed, isThirdPartyAuthenticated, refreshToken);
+    => AccountState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        email: email,
+        userName: userName,
+        emailConfirmed: emailConfirmed,
+        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        language: language,
+        refreshToken: refreshToken
+      );
 }

@@ -27,13 +27,12 @@ class AccountService {
   Future<void> updateEmailConfirmationToken() =>
     _appClient.put("$accountController/$updateEmailConfirmationTokenEndPoint");
 
-  Future<Account> confirmEmailByToken(String token) =>
+  Future<void> confirmEmailByToken(String token) =>
     _appClient
-      .post(
+      .put(
         "$accountController/$confirmEmailByTokenEntPoint",
         body: { 'token': token }
-      )
-      .then((json) => Account.fromJson(json));
+      );
 
   Future<Account> loginByPassword(String emailOrUserName, String password) =>
     _appClient
@@ -87,10 +86,17 @@ class AccountService {
       )
       .then((account) => Account.fromJson(account));
 
+  Future<void> updateLanguage(String language) =>
+    _appClient
+      .put(
+        "$accountController/$updateLanguageEndpoint",
+        body: {'language': language }
+      );
+  
   Future<void> logOut() =>
     _appClient
       .put("$accountController/$logOutEndPoint");
-  
+
   Future<void> delete() =>
     _appClient
       .delete("$accountController/$deleteAccountEndpoint");

@@ -37,7 +37,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
-
   addTimeAgo();
 
   FlutterError.onError = (error) {
@@ -48,58 +47,56 @@ Future<void> main() async {
     handleErrors(error);
     return true;
   };
-  
+
   runApp(
     StoreProvider(
       store: store,
-      child: MaterialApp(
-        title: 'SolTake',
-        locale: Locale(PlatformDispatcher.instance.locale.languageCode),
-        supportedLocales: const [
-          Locale('en'),
-          Locale('tr'),
-        ],
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: StoreConnector<AppState,bool>(
-          onInit: (store) => store.dispatch(const LoginByRefreshToken()),
-          converter: (store) => store.state.isInitialized,
-          builder: (context, isInitialized){
-            if(isInitialized){
-              return StoreConnector<AppState,AccountState?>(
-                converter: (store) => store.state.accountState,
-                builder: (context,accountState){
-                  if(accountState == null){
-                    return StoreConnector<AppState,ActiveLoginPage>(
-                      converter: (store) => store.state.activeLoginPage,
-                      builder: (context,activeLoginPage){
-                        if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
-                        return const RegisterPage();
-                      },
-                    );
-                  }
-                  if(!accountState.isThirdPartyAuthenticated && !accountState.emailConfirmed) return const VerifyEmailPage();
-                  return const RootView();
-                },
-              );
+      child: StoreConnector<AppState,AccountState?>(
+        onInit: (store) => store.dispatch(const LoginByRefreshToken()),
+        converter: (store) => store.state.accountState,
+        builder: (context,account) => MaterialApp(
+          title: 'SolTake',
+          locale: Locale(account?.language ?? PlatformDispatcher.instance.locale.languageCode),
+          supportedLocales: const [
+            Locale('en'),
+            Locale('tr'),
+          ],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: StoreConnector<AppState,bool>(
+            converter: (store) => store.state.isInitialized,
+            builder: (context, isInitialized){
+              if(isInitialized){
+                if(account == null){
+                  return StoreConnector<AppState,ActiveLoginPage>(
+                    converter: (store) => store.state.activeLoginPage,
+                    builder: (context,activeLoginPage){
+                      if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
+                      return const RegisterPage();
+                    },
+                  );
+                }
+                if(!account.isThirdPartyAuthenticated && !account.emailConfirmed) return const VerifyEmailPage();
+                return const RootView();
+              }
+              return const ApplicationInitializingPage();
             }
-            return const ApplicationInitializingPage();
-          }
+          ),
+          routes: {
+            takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
+            takeImageRoute: (context) => TakeImagePage(camera: cameras.first),
+            takeVideoRoute: (context) => TakeVieoPage(camera: cameras.first)
+          },
         ),
-        routes: {
-          takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
-          takeImageRoute: (context) => TakeImagePage(camera: cameras.first),
-          takeVideoRoute: (context) => TakeVieoPage(camera: cameras.first)
-        },
-      ),
+      )
     )
   );
 }

@@ -1,30 +1,33 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.ConfirmEmailByToken
 {
-    public class ConfirmEmailByTokenHandler(IAccessTokenReader tokenReader, AccountManager accountManager, IMapper mapper, UserManager<Account> userManager) : IRequestHandler<ConfirmEmailByTokenDto, AccountDto>
+    public class ConfirmEmailByTokenHandler(IAccessTokenReader tokenReader, UserManager<Account> userManager) : IRequestHandler<ConfirmEmailByTokenDto>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly AccountManager _accountManager = accountManager;
-        private readonly IMapper _mapper = mapper;
 
-        public async Task<AccountDto> Handle(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)
+        public async Task Handle(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)
         {
             var accountId = _tokenReader.GetRequiredAccountId();
             var account = 
                 await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId && !x.IsRemoved, cancellationToken) ?? 
                 throw new AccountNotFoundException();
-            
-            await _accountManager.ConfirmEmailByToken(account, request.Token);
-            return _mapper.Map<AccountDto>(account);
+            try
+            {
+                account.ConfirmEmailByToken(request.Token);
+            }
+            catch (InvalidVerificationTokenException)
+            {
+                await _userManager.UpdateAsync(account);
+                throw;
+            }
+            await _userManager.UpdateAsync(account);
         }
     }
 }

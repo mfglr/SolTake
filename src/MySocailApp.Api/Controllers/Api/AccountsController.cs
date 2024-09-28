@@ -16,6 +16,7 @@ using MySocailApp.Application.Commands.AccountAggregate.LogOut;
 using MySocailApp.Application.Commands.AccountAggregate.SendEmailConfirmationMail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmailConfirmationToken;
+using MySocailApp.Application.Commands.AccountAggregate.UpdateLanguage;
 using MySocailApp.Application.Commands.AccountAggregate.UpdatePassword;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateUserName;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
@@ -48,6 +49,7 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task<AccountDto> LoginByGoogle(LoginByGoogleDto request, CancellationToken cancelToken)
             => await _mediator.Send(request, cancelToken);
 
+
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
@@ -79,6 +81,12 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task UpdateEmailConfirmationToken(CancellationToken cancellationToken)
             => await _mediator.Send(new UpdateEmailConfirmationTokenDto(), cancellationToken);
 
+        [HttpPut]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task UpdateLanguage(UpdateLanguageDto request,CancellationToken cancellationToken)
+            => await _mediator.Send(request,cancellationToken);
+
         [HttpGet("{id}/{token}")]
         public async Task ConfirmEmail(string id, string token, CancellationToken cancellationToken)
             => await _mediator.Send(new ConfirmEmailDto(id, token), cancellationToken);
@@ -86,7 +94,7 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
-        public async Task<AccountDto> ConfirmEmailByToken(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)
+        public async Task ConfirmEmailByToken(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpGet]

@@ -1,4 +1,7 @@
 {
+    "unexpected_exception": "Something went wrong! Please try again.",
+
+    
     "login_form_email": "Enter your email or username.",
     "login_form_password": "Enter your password",
     "login_form_button": "Login",
@@ -151,7 +154,6 @@
 
     "create_message_images_page_message_field_hint_text": "Message ...",
 
-
     "comment_liked_notification_item_content": "Your comment has been liked.",
     "comment_replied_notification_content": "Your comment has been replied.",
     "no_notifications_content": "No Notifications",
@@ -235,6 +237,8 @@
     "delete_account_menu_item_app_dialog_content": "Are you sure you want to delete your acccount!. We are so sorry to see you leave us!",
 
     "display_saved_solutions_menu_item_name": "Saved Solutions",
+
+    "change_language_menu_item_name": "Change Language of The Application",
 
     "display_abstract_saved_questions_page_title": "Questions Saved",
 

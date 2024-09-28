@@ -52,7 +52,7 @@ AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear(
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
-  accountState: updateAccountStateReducer(prev.accountState,action),
+  accountState: accoutStateReducers(prev.accountState,action),
   activeLoginPage: changeActiveLoginPageReducer(prev.activeLoginPage,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),

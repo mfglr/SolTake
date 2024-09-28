@@ -7,6 +7,7 @@ const String loginByGoogleEndpoint = "LoginByGoogle";
 const String loginByRefreshTokenEndPoint = "loginByRefreshToken";
 const String updateEmailEndPoint = "UpdateEmail";
 const String updateUserNameEndPoint = "UpdateUserName";
+const String updateLanguageEndpoint = "UpdateLanguage";
 const String logOutEndPoint = "LogOut";
 const String deleteAccountEndpoint = "delete";
 const String isUserNameExistEndPoint = "IsUserNameExist";

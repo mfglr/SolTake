@@ -1,4 +1,7 @@
 {
+
+    "unexpected_exception": "Bir şeyler yanlış gitt! Lütfen daha sonra tekrar deneyin!",
+
     "login_form_email": "Email addresinizi ya da kullanıcı adınızı giriniz.",
     "login_form_password": "Şifrenizi giriniz.",
     "login_form_button": "Giriş Yap",
@@ -232,6 +235,8 @@
     "delete_account_menu_item_app_dialog_content": "Hesabını silmek istediğine emin misi?. Aramızdan ayrıldığınız için çok üzgünüz!",
 
     "display_saved_solutions_menu_item_name": "Kaydedilen Çözümler",
+
+    "change_language_menu_item_name": "Uygulamanın dilini değiştir.",
 
     "display_abstract_saved_questions_page_title": "Kaydedilen Sorular",
     

@@ -9,12 +9,6 @@ class UpdateAccountStateAction extends AppAction{
 }
 
 @immutable
-class ConfirmEmailByTokenAction extends AppAction{
-  final String token;
-  const ConfirmEmailByTokenAction({required this.token});
-}
-
-@immutable
 class LoginByRefreshToken extends AppAction{
   const LoginByRefreshToken();
 }
@@ -34,6 +28,28 @@ class LoginByFaceBookAction extends AppAction{
 @immutable
 class LoginByGoogleAction extends AppAction{
   const LoginByGoogleAction();
+}
+
+@immutable
+class UpdateLanguageAction extends AppAction{
+  final String language;
+  const UpdateLanguageAction({required this.language});
+}
+@immutable
+class UpdateLanguageSuccessAction extends AppAction{
+  final String language;
+  const UpdateLanguageSuccessAction({required this.language});
+}
+
+@immutable
+class ConfirmEmailByTokenAction extends AppAction{
+  final String token;
+  const ConfirmEmailByTokenAction({required this.token});
+}
+
+@immutable
+class ConfirmEmailByTokenSuccessAction extends AppAction{
+  const ConfirmEmailByTokenSuccessAction();
 }
 
 @immutable
