@@ -31,7 +31,8 @@ class SolutionPopupMenu extends StatelessWidget {
             bool response = await DialogCreator.showAppDialog(
               context,
               AppLocalizations.of(context)!.solution_popup_menu_titte,
-              AppLocalizations.of(context)!.solution_popup_menu_content
+              AppLocalizations.of(context)!.solution_popup_menu_content,
+              AppLocalizations.of(context)!.show_app_dialog_delete_button
             );
             if(response && context.mounted){
               final store = StoreProvider.of<AppState>(context,listen: false);

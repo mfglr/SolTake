@@ -31,7 +31,8 @@ class QuestionItemPopupMenu extends StatelessWidget {
             bool response = await DialogCreator.showAppDialog(
               context,
               AppLocalizations.of(context)!.question_item_popup_menu_title,
-              AppLocalizations.of(context)!.question_item_popup_menu_description
+              AppLocalizations.of(context)!.question_item_popup_menu_description,
+              AppLocalizations.of(context)!.show_app_dialog_delete_button
             );
             if(response && context.mounted){
               final store = StoreProvider.of<AppState>(context,listen: false);

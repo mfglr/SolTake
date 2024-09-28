@@ -141,7 +141,8 @@ class _ConversationPageState extends State<ConversationPage>{
                       .showAppDialog(
                         context,
                         AppLocalizations.of(context)!.conversation_page_delete_dialog_title,
-                        AppLocalizations.of(context)!.conversation_page_delete_dialog_content
+                        AppLocalizations.of(context)!.conversation_page_delete_dialog_content,
+                        AppLocalizations.of(context)!.show_app_dialog_delete_button
                       )
                       .then((value){
                         if(value){

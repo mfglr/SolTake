@@ -46,7 +46,12 @@ class ProfileMenuPage extends StatelessWidget {
               nameColor: Colors.red,
               onPressed: (){
                 DialogCreator
-                  .showLogOutDialog(context)
+                  .showAppDialog(
+                    context,
+                    AppLocalizations.of(context)!.show_logout_dialog_title,
+                    AppLocalizations.of(context)!.show_logout_dialog_content,
+                    AppLocalizations.of(context)!.show_logout_dialog_content_of_approve_button,
+                  )
                   .then((value){
                     if(value){
                       final store = StoreProvider.of<AppState>(context,listen: false);

@@ -42,6 +42,11 @@
 
     "show_app_dialog_cancel_button": "Cancel",
     "show_app_dialog_delete_button": "Delete",
+
+    "show_logout_dialog_title": "Log Out",
+    "show_logout_dialog_content": "Are you sure you want to log out?",
+    "show_logout_dialog_content_of_approve_button": "Log Out",
+
     
     "question_state_unsolved": "Unsolved",
     "question_state_solved": "Solved",

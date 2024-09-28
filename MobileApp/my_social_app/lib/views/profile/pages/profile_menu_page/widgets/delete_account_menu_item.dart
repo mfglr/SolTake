@@ -22,7 +22,8 @@ class DeleteAccountMenuItem extends StatelessWidget {
           .showAppDialog(
             context,
             AppLocalizations.of(context)!.delete_account_menu_item_app_dialog_title,
-            AppLocalizations.of(context)!.delete_account_menu_item_app_dialog_content
+            AppLocalizations.of(context)!.delete_account_menu_item_app_dialog_content,
+            AppLocalizations.of(context)!.show_app_dialog_delete_button
           )
           .then((value){
             if(value){

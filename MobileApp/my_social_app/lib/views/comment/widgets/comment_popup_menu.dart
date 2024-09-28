@@ -33,6 +33,7 @@ class CommentPopupMenu extends StatelessWidget {
               context,
               AppLocalizations.of(context)!.comment_popup_menu_title,
               AppLocalizations.of(context)!.comment_popup_menu_description,
+              AppLocalizations.of(context)!.show_app_dialog_delete_button
             );
             if(response && context.mounted){
               final store = StoreProvider.of<AppState>(context,listen: false);

@@ -45,6 +45,10 @@
     "show_app_dialog_cancel_button": "İptal",
     "show_app_dialog_delete_button": "Sil",
 
+    "show_logout_dialog_title": "Çıkış Yap",
+    "show_logout_dialog_content": "Çıkmak istediğine emin misin?",
+    "show_logout_dialog_content_of_approve_button": "Çıkış Yap",
+
 
     "question_state_unsolved": "Çözümsüz",
     "question_state_solved": "Çözümlü",
