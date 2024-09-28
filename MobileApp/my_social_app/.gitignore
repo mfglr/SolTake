@@ -45,3 +45,4 @@ app.*.map.json
 .env.prod
 .env.dev
 *.jks
+key.properties
