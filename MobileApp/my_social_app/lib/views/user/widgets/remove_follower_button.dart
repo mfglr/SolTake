@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/utilities/dialog_creator.dart';
 
 class RemoveFollowerButton extends StatelessWidget {
   
@@ -14,8 +15,19 @@ class RemoveFollowerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: (){
-        final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(RemoveFollowerAction(followerId: user.id));
+        DialogCreator
+          .showAppDialog(
+            context,
+            AppLocalizations.of(context)!.show_remove_follower_dialog_title,
+            AppLocalizations.of(context)!.show_remove_follower_dialog_content,
+            AppLocalizations.of(context)!.show_remove_follower_dialog_content_of_approve_button,
+          )
+          .then((response){
+            if(response){
+              final store = StoreProvider.of<AppState>(context,listen: false);
+              store.dispatch(RemoveFollowerAction(followerId: user.id));
+            }
+          });
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

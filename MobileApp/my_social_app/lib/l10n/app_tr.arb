@@ -6,7 +6,6 @@
     "login_register_button": "Kayıt Ol",
 
     "login_form_email_required_error": "Email ya da kullanıcı adı gerekli!",
-    "login_form_email_invalid_error": "Email geçersiz!",
     "login_form_password_required_error": "Şifre gerekli!",
     "login_form_password_length_error": "Şifre 5 karakterden daha uzun olmalıdır!",
 
@@ -49,6 +48,9 @@
     "show_logout_dialog_content": "Çıkmak istediğine emin misin?",
     "show_logout_dialog_content_of_approve_button": "Çıkış Yap",
 
+    "show_remove_follower_dialog_title": "Takipçiyi Kaldır",
+    "show_remove_follower_dialog_content": "Takipçiyi kaldırmak istediğine emin misin?",
+    "show_remove_follower_dialog_content_of_approve_button": "Kaldır",
 
     "question_state_unsolved": "Çözümsüz",
     "question_state_solved": "Çözümlü",

@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:email_validator/email_validator.dart';
 
 
 class LoginForm extends StatefulWidget {
@@ -54,7 +53,6 @@ class _LoginFormState extends State<LoginForm> {
               ),
               validator: (value){
                 if (value == null || value.isEmpty) return AppLocalizations.of(context)!.login_form_email_required_error;
-                if(!EmailValidator.validate(value)) return AppLocalizations.of(context)!.login_form_email_invalid_error;
                 return null;
               },
             ),

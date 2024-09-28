@@ -6,7 +6,6 @@
     "login_register_button": "Register",
     
     "login_form_email_required_error": "Email or username is required!",
-    "login_form_email_invalid_error": "Email is invalid!",
     "login_form_password_required_error": "Password is required!",
     "login_form_password_length_error": "Password must be longer than 5 characters!",
 
@@ -47,6 +46,9 @@
     "show_logout_dialog_content": "Are you sure you want to log out?",
     "show_logout_dialog_content_of_approve_button": "Log Out",
 
+    "show_remove_follower_dialog_title": "Remove Follower",
+    "show_remove_follower_dialog_content": "Are you sure you want to remove the follower?",
+    "show_remove_follower_dialog_content_of_approve_button": "Remove",
     
     "question_state_unsolved": "Unsolved",
     "question_state_solved": "Solved",
