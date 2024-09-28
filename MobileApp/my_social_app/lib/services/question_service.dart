@@ -128,10 +128,9 @@ class QuestionService{
       .then((list) => list.map((e) => QuestionUserSave.fromJson(e)));
 
 
-  Future<Iterable<Question>> searchQuestions(String? key,int? examId,int? subjectId,int? topicId,Page page) async {
+  Future<Iterable<Question>> searchQuestions(int? examId,int? subjectId,int? topicId,Page page) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {
-      'key': key == "" ? null : key,
       'examId': examId,
       'subjectId': subjectId,
       'topicId': topicId,

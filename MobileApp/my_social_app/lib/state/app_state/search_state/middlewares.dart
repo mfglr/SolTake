@@ -77,7 +77,7 @@ void getFirstPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextD
   if(action is GetFirstPageSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, Page.init(questionsPerPage, true))
+      .searchQuestions(state.examId, state.subjectId, state.topicId, Page.init(questionsPerPage, true))
       .then((questions){
         store.dispatch(AddFirstPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
@@ -103,7 +103,7 @@ void getNextPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextDi
   if(action is GetNextPageSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.key, state.examId, state.subjectId, state.topicId, state.questions.next)
+      .searchQuestions(state.examId, state.subjectId, state.topicId, state.questions.next)
       .then((questions){
         store.dispatch(AddNextPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));

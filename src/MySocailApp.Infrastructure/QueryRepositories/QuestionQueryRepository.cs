@@ -48,16 +48,16 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int accountId, IPage page, CancellationToken cancellationToken)
             => GetListAsync(accountId, page, x => x.ExamId == examId && !x.IsRemoved, cancellationToken);
         
-        public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page, string? key, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
+        public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
             => GetListAsync(
                 accountId,
                 page,
                 x =>
-                    (key == null || (x.Content != null && x.Content.Value.ToLower().Contains(key.ToLower()))) &&
                     (examId == null || x.ExamId == examId) &&
                     (subjectId == null || x.SubjectId == subjectId) &&
                     (topicId == null || x.Topics.Any(x => x.TopicId == topicId)) &&
-                    !x.IsRemoved,
+                    !x.IsRemoved &&
+                    x.AppUserId != accountId,
                 cancellationToken
             );
         
