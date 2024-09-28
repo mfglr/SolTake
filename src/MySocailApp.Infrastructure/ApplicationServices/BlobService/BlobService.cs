@@ -24,14 +24,13 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 
             var path = GetPath(containerName, blobName);
             JpegEncoder options;
-            if (stream.Length > 409600)
+            if (stream.Length > 1048576)
                 options = new JpegEncoder { Quality = 25 };
             else
                 options = new JpegEncoder { Quality = 100 };
 
             using var t = await SixLabors.ImageSharp.Image.LoadAsync(stream, cancellationToken);
             await t.SaveAsync(path, options, cancellationToken);
-
 
             var image = new Application.ApplicationServices.BlobService.Image(containerName, blobName, dimention);
             _images.Add(image);

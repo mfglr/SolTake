@@ -35,7 +35,10 @@ class ExamItemWidget extends StatelessWidget {
                   exam.shortName,
                   style: const TextStyle(fontSize: 32),
                 ),
-                Text(exam.fullName)
+                Text(
+                  exam.fullName,
+                  textAlign: TextAlign.center,
+                )
               ],
             )
           ),
