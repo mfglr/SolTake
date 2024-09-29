@@ -325,6 +325,7 @@ final store = Store(
     loadMessageMiddleware,
     removeMessageMiddleware,
     removeMessagesMiddleware,
+    removeMessagesByUserIdsMiddleware,
 
     //message image
     loadMessageImageMiddleware,

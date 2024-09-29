@@ -20,11 +20,11 @@ class DialogCreator{
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 4),
-                    child: Text(
-                      AppLocalizations.of(context)!.show_app_dialog_cancel_button,
-                    ),
+                    child: const Icon(Icons.cancel),
                   ),
-                  const Icon(Icons.close)
+                  Text(
+                    AppLocalizations.of(context)!.show_app_dialog_cancel_button,
+                  )
                 ],
               )
             ),
@@ -37,14 +37,14 @@ class DialogCreator{
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 4),
-                    child: Text(
-                      contentOfApproveButton,
-                      style: const TextStyle(color: Colors.red),
-                    ),
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    )
                   ),
-                  const Icon(
-                    Icons.delete,
-                    color: Colors.red,
+                  Text(
+                    contentOfApproveButton,
+                    style: const TextStyle(color: Colors.red),
                   )
                 ],
               )

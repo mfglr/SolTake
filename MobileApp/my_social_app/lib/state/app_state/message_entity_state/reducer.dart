@@ -12,6 +12,8 @@ MessageEntityState removeMessageReducer(MessageEntityState prev,RemoveMessageSuc
   => prev.removeMessage(action.messageId);
 MessageEntityState removeMessagesReducer(MessageEntityState prev,RemoveMessagesSuccessAction action)
   => prev.removeMessages(action.messageIds);
+MessageEntityState removeMessagesByUserIdsReducer(MessageEntityState prev,RemoveMessagesByUserIdsSuccessAction action)
+  => prev.removeMessagesByUserIds(action.userIds);
 
 MessageEntityState markComingMessagesAsReceivedSuccessAction(MessageEntityState prev,MarkComingMessagesAsReceivedSuccessAction action)
   => prev.markComingMessagesAsReceived(action.messageIds);
@@ -29,6 +31,7 @@ Reducer<MessageEntityState> messageEntityStateReducers = combineReducers<Message
   TypedReducer<MessageEntityState,AddMessagesListsAction>(addMessagesListsReducer).call,
   TypedReducer<MessageEntityState,RemoveMessageSuccessAction>(removeMessageReducer).call,
   TypedReducer<MessageEntityState,RemoveMessagesSuccessAction>(removeMessagesReducer).call,
+  TypedReducer<MessageEntityState,RemoveMessagesByUserIdsSuccessAction>(removeMessagesByUserIdsReducer).call,
 
   TypedReducer<MessageEntityState,MarkComingMessagesAsReceivedSuccessAction>(markComingMessagesAsReceivedSuccessAction).call,
   TypedReducer<MessageEntityState,MarkComingMessagesAsViewedSuccessAction>(markComingMessagesAsViewedSuccessAction).call,

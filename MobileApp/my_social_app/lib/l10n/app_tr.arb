@@ -248,6 +248,11 @@
 
     "display_saved_question_page_title": "Kaydedilen Sorular",
 
-    "create_conversation_page_title": "Yeni sohbet başlat"
-
+    "create_conversation_page_title": "Yeni sohbet başlat",
+    
+    "message_home_page_delete_conversations_title": "Sohbetleri sil",
+    "message_home_page_delete_conversations_content": "Sohbetleri silmek istediğine emin misin?",
+    "message_home_page_content_aprove_button": "sil",
+    "delete_conversations_button": "sil",
+    "cancel_deletion_of_conversations_button": "iptal"
 }

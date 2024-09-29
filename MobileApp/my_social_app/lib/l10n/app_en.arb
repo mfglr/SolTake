@@ -250,5 +250,12 @@
 
     "display_saved_question_page_title": "Questions Saved",
 
-    "create_conversation_page_title": "Create a new conversation"
+    "create_conversation_page_title": "Create a new conversation",
+
+    "message_home_page_delete_conversations_title": "Delete Conversations",
+    "message_home_page_delete_conversations_content": "Are you sure you want to delete the conversations?",
+    "message_home_page_content_aprove_button": "delete",
+
+    "delete_conversations_button": "delete",
+    "cancel_deletion_of_conversations_button": "cancel"
 }

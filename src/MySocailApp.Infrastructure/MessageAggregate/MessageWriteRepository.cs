@@ -31,6 +31,16 @@ namespace MySocailApp.Infrastructure.MessageAggregate
                 .Where(x => ids.Contains(x.Id))
                 .ToListAsync(cancellationToken);
 
+        public Task<List<Message>> GetMessagesWithRemoverByUserIds(List<int> userIds, int accountId, CancellationToken cancellationToken)
+            => _context.Messages
+                .Include(x => x.Removers)
+                .Where(
+                    x => 
+                        (x.SenderId == accountId && userIds.Any(userId => userId == x.ReceiverId)) || 
+                        (x.ReceiverId == accountId && userIds.Any(userId => userId == x.SenderId))
+                )
+                .ToListAsync(cancellationToken);
+
         public Task<List<Message>> GetMessagesWithRemovers(IEnumerable<int> messageIds,CancellationToken cancellationToken)
             => _context.Messages
                 .Include(x => x.Removers)

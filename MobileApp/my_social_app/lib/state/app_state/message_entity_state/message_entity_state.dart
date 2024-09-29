@@ -16,6 +16,8 @@ class MessageEntityState extends EntityState<MessageState>{
     => MessageEntityState(entities: removeOne(messageId));
   MessageEntityState removeMessages(Iterable<int> messageIds)
     => MessageEntityState(entities: removeMany(messageIds));
+  MessageEntityState removeMessagesByUserIds(Iterable<int> userIds)
+    => MessageEntityState(entities: where((e) => !userIds.any((userId) => userId == e.senderId || userId == e.receiverId)));
 
   MessageEntityState markComingMessagesAsReceived(Iterable<int> messageIds)
     => MessageEntityState(entities: updateMany(messageIds.map((e) => entities[e]!.markAsReceived())));
@@ -43,4 +45,7 @@ class MessageEntityState extends EntityState<MessageState>{
       .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last)
       .sorted((x,y) => y.id.compareTo(x.id));
   }
+
+  Iterable<MessageState> selectUserMessages(int userId) =>
+    entities.values.where((e) => e.senderId == userId || e.receiverId == userId);
 }

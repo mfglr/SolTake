@@ -57,6 +57,22 @@ void removeMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
+void removeMessagesByUserIdsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveMessagesByUserIdsAction){
+    MessageService()
+      .removeMessagesByUserIds(action.userIds)
+      .then((_){
+        store.dispatch(RemoveMessagesByUserIdsSuccessAction(userIds: action.userIds));
+        for(var userId in action.userIds){
+          var messageIds = store.state.messageEntityState.selectUserMessages(userId).map((e) => e.id);
+          store.dispatch(RemoveUserMessagesAction(userId: userId, messageIds: messageIds));
+          store.dispatch(RemoveMessagesImagesAction(messageIds: messageIds));
+        }
+      });
+  }
+  next(action);
+}
+
 void getUnviewedMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetUnviewedMessagesAction){
     MessageService()

@@ -45,6 +45,16 @@ class RemoveMessagesSuccessAction extends AppAction{
   final Iterable<int> messageIds;
   const RemoveMessagesSuccessAction({required this.messageIds});
 }
+@immutable
+class RemoveMessagesByUserIdsAction extends AppAction{
+  final Iterable<int> userIds;
+  const RemoveMessagesByUserIdsAction({required this.userIds});
+}
+@immutable
+class RemoveMessagesByUserIdsSuccessAction extends AppAction{
+  final Iterable<int> userIds;
+  const RemoveMessagesByUserIdsSuccessAction({required this.userIds});
+}
 
 @immutable
 class GetUnviewedMessagesAction extends AppAction{

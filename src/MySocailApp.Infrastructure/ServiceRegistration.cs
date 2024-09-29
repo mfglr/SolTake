@@ -181,7 +181,8 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
                 .AddScoped<IMessageReadRepository, MessageReadRepository>()
-                .AddScoped<MessageRemoverDomainService>();
+                .AddScoped<MessageRemoverDomainService>()
+                .AddScoped<MessageCreaterDomainService>();
         
         private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
             => services

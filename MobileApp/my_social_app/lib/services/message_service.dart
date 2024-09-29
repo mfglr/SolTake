@@ -43,6 +43,12 @@ class MessageService{
         body:{ 'messageIds': messageIds }
       );
 
+  Future<void> removeMessagesByUserIds(Iterable<int> userIds) =>
+    _appClient
+      .delete(
+        "$messageController/$removeMessagesByUserIdsEndpoint",
+        body: { 'userIds': userIds.toList() }
+      );
 
   Future<Iterable<Message>> getMessagesByUserId(int userId, Page page) => 
     _appClient

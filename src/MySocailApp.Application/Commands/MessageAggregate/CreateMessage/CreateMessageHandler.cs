@@ -3,15 +3,15 @@ using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.QueryRepositories;
+using MySocailApp.Domain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
 {
-    public class CreateMessageHandler(IMessageWriteRepository messageRepository, IAccessTokenReader tokenReader, IBlobService blobService, IUnitOfWork unitOfWork, IMessageQueryRepository messageQueryRepository) : IRequestHandler<CreateMessageDto, MessageResponseDto>
+    public class CreateMessageHandler(IAccessTokenReader tokenReader, IBlobService blobService, IUnitOfWork unitOfWork, IMessageQueryRepository messageQueryRepository, MessageCreaterDomainService messageCreator) : IRequestHandler<CreateMessageDto, MessageResponseDto>
     {
-        private readonly IMessageWriteRepository _messageRepository = messageRepository;
         private readonly IMessageQueryRepository _messageQueryRepository = messageQueryRepository;
+        private readonly MessageCreaterDomainService _messageCreator = messageCreator;
         private readonly IAccessTokenReader _tokenReader = tokenReader;
         private readonly IBlobService _blobService = blobService;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -24,11 +24,10 @@ namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
                 var images = await _blobService.UploadAsync(ContainerName.MesssageImages, request.Images, cancellationToken);
                 messageImages = images.Select(x => new MessageImage(x.BlobName, x.Dimention.Height, x.Dimention.Width));
             }
-
             var senderId = _tokenReader.GetRequiredAccountId();
-            var message = new Message(senderId, request.ReceiverId, request.Content, messageImages);
-            message.Create();
-            await _messageRepository.CreateAsync(message, cancellationToken);
+            var message = new Message(senderId, request.Content, messageImages);
+            await _messageCreator.CreateAsync(message, request.ReceiverId, cancellationToken);
+            
             await _unitOfWork.CommitAsync(cancellationToken);
 
             return (await _messageQueryRepository.GetMessageByIdAsync(senderId, message.Id, cancellationToken))!;

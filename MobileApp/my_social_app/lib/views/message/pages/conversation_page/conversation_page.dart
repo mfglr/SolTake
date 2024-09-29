@@ -130,9 +130,10 @@ class _ConversationPageState extends State<ConversationPage>{
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 4),
-                        child: Text(AppLocalizations.of(context)!.conversation_page_delete_cancel_button)
+                        child: const Icon(Icons.cancel)
                       ),
-                      const Icon(Icons.close)
+                      Text(AppLocalizations.of(context)!.conversation_page_delete_cancel_button)
+                      
                     ],
                   )
                 ),
@@ -157,16 +158,16 @@ class _ConversationPageState extends State<ConversationPage>{
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 4),
-                        child: Text(
-                          AppLocalizations.of(context)!.conversation_page_delete_button,
-                          style: const TextStyle(
-                            color: Colors.red
-                          ),
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
                         ),
                       ),
-                      const Icon(
-                        Icons.delete,
-                        color: Colors.red,
+                      Text(
+                        AppLocalizations.of(context)!.conversation_page_delete_button,
+                        style: const TextStyle(
+                          color: Colors.red
+                        ),
                       ),
                     ],
                   )

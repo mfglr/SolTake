@@ -15,20 +15,20 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         public IReadOnlyList<MessageImage> Images => _images;
 
         private Message() { }
-        public Message(int senderId,int receiverId, string? content, IEnumerable<MessageImage>? images)
+        public Message(int senderId,string? content, IEnumerable<MessageImage>? images)
         {
-            if (senderId == receiverId)
-                throw new SelfMessagingException();
             if (string.IsNullOrEmpty(content) && (images == null || !images.Any()))
                 throw new ContentRequiredException();
             SenderId = senderId;
-            ReceiverId = receiverId;
             Content = content;
             if (images != null)
                 _images.AddRange(images);
         }
-        public void Create()
+        public void Create(int receiverId)
         {
+            if (SenderId == receiverId)
+                throw new SelfMessagingException();
+            ReceiverId = receiverId;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new MessageCreatedDomainEvent(this));
         }

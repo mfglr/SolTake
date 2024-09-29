@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_status_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConversationItem extends StatelessWidget {
   final MessageState message;
-  const ConversationItem({super.key,required this.message});
+  final bool isSelected;
+  final void Function(int conversationId) onLongPressed;
+  final void Function(int conversationId,bool isSelected) onPress;
+
+  const ConversationItem({
+    super.key,
+    required this.message,
+    required this.isSelected,
+    required this.onLongPressed,
+    required this.onPress
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +26,10 @@ class ConversationItem extends StatelessWidget {
       converter: (store) => store.state.accountState!.id,
       builder: (context,accountId){
         return Card(
+          color: isSelected ? Colors.black.withOpacity(0.2) : null,
           child: TextButton(
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(userId: message.conversationId)));
-              store.dispatch(ChangeReceiverIdAction(receiverId: message.conversationId));
-              store.dispatch(MarkComingMessagesAsViewedAction(userId: message.conversationId));
-            },
+            onLongPress: () => onLongPressed(message.conversationId),
+            onPressed: () => onPress(message.conversationId, isSelected),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
