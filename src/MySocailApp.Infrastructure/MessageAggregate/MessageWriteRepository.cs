@@ -33,6 +33,7 @@ namespace MySocailApp.Infrastructure.MessageAggregate
 
         public Task<List<Message>> GetMessagesWithRemoverByUserIds(List<int> userIds, int accountId, CancellationToken cancellationToken)
             => _context.Messages
+                .Include(x => x.Images)
                 .Include(x => x.Removers)
                 .Where(
                     x => 
@@ -43,12 +44,14 @@ namespace MySocailApp.Infrastructure.MessageAggregate
 
         public Task<List<Message>> GetMessagesWithRemovers(IEnumerable<int> messageIds,CancellationToken cancellationToken)
             => _context.Messages
+                .Include(x => x.Images)
                 .Include(x => x.Removers)
                 .Where(x => messageIds.Any(messageId => x.Id == messageId))
                 .ToListAsync(cancellationToken);
 
         public async Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken)
             => await _context.Messages
+                .Include(x => x.Images)
                 .Include(x => x.Removers)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }

@@ -19,7 +19,7 @@ namespace MySocailApp.Application.Commands.MessageAggregate.RemoveMessages
             var messsages = await _messageWriteRepository.GetMessagesWithRemovers(request.MessageIds, cancellationToken);
 
             foreach (var message in messsages)
-                _messageRemover.Remove(message, removerId);
+                await _messageRemover.RemoveAsync(message, removerId);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }

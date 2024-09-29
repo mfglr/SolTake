@@ -14,11 +14,11 @@ namespace MySocailApp.Application.Commands.MessageAggregate.RemoveMessagesByUser
 
         public async Task Handle(RemoveMessagesByUserIdsDto request, CancellationToken cancellationToken)
         {
-            var acccountId = _accessTokenReader.GetRequiredAccountId();
-            var messages = await _messageWriteRepository.GetMessagesWithRemoverByUserIds(request.UserIds, acccountId, cancellationToken);
+            var accountId = _accessTokenReader.GetRequiredAccountId();
+            var messages = await _messageWriteRepository.GetMessagesWithRemoverByUserIds(request.UserIds, accountId, cancellationToken);
 
             foreach (var message in messages)
-                _messageRemover.Remove(message, acccountId);
+                await _messageRemover.RemoveAsync(message, accountId);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }
