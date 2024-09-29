@@ -39,8 +39,10 @@
 
   <ItemGroup>
     <Folder Include="Images\MessageImages\" />
+    <Folder Include="Videos\SolutionVideos\" />
     <Folder Include="Images\SolutionImages\" />
     <Folder Include="Images\QuestionImages\" />
+    <Folder Include="Videos\" />
   </ItemGroup>
 
 </Project>

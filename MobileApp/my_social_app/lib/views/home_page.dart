@@ -11,6 +11,7 @@ import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/notification/pages/notification_page.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:video_player/video_player.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
