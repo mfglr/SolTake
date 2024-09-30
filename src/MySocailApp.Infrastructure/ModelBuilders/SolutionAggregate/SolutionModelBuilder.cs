@@ -9,6 +9,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
         public void Configure(EntityTypeBuilder<Solution> builder)
         {
             builder.OwnsOne(x => x.Content);
+            builder.OwnsOne(x => x.Video);
 
             builder
                 .HasMany(x => x.Images)

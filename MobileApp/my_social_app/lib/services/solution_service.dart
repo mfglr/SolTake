@@ -140,4 +140,8 @@ class SolutionService{
   Future<Uint8List> getSolutionImage(int solutionId,int solutionImageId) =>
     _appClient
       .getBytes("$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId");
+  
+  Future<Uint8List> getSolutionVideo(int solutionId) =>
+    _appClient
+      .getBytes("$solutionController/$getSolutionVideoEndpoint/$solutionId");
 }

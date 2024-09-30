@@ -30,6 +30,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             x.Solution.State,
                             x.Solution.AppUserId == accountId,
                             x.Solution.Savers.Any(s => s.AppUserId == accountId),
+                            x.Solution.Video != null,
                             x.Solution.Question.AppUserId == accountId,
                             x.Solution.Images.Select(
                                 i => new SolutionImageResponseDto(

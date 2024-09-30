@@ -25,6 +25,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         x.State,
                         x.AppUserId == accountId,
                         x.Savers.Any(x => x.AppUserId == accountId),
+                        x.Video != null,
                         x.Question.AppUserId == accountId,
                         x.Images.Select(
                             i => new SolutionImageResponseDto(
