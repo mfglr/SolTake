@@ -4,10 +4,10 @@ using System.Net;
 
 namespace MySocailApp.Domain.SolutionAggregate.Exceptions
 {
-    public class SolutionContentOrImagesRequiredException : AppException
+    public class SolutionContentRequiredException : AppException
     {
-        private readonly static string _messageEn = "You must upload images or type something about questions!";
-        private readonly static string _messageTr = "Çözüme hakkında bir şeyler yazmalı ya da resim yüklemelisin!";
+        private readonly static string _messageEn = "You must upload images or a video or type something about questions!";
+        private readonly static string _messageTr = "Çözüme hakkında bir şeyler yazmalı ya da resim veya video yüklemelisin!";
         private readonly static Dictionary<string, string> _messages = new() {
             { Languages.EN, _messageEn },
             { Languages.TR, _messageTr }
@@ -15,6 +15,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Exceptions
 
         public override string GetErrorMessage(string culture) => _messages[culture];
 
-        public SolutionContentOrImagesRequiredException() : base((int)HttpStatusCode.BadRequest){}
+        public SolutionContentRequiredException() : base((int)HttpStatusCode.BadRequest){}
     }
 }

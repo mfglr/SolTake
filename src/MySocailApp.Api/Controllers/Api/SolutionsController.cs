@@ -24,6 +24,7 @@ using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionDownvotes;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionUpvotes;
+using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionVideo;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -81,6 +82,13 @@ namespace MySocailApp.Api.Controllers.Api
              => File(
                await _mediator.Send(new GetSolutionImageDto(solutionId, solutionImageId), cancellationToken),
                "application/octet-stream"
+            );
+
+        [HttpGet("{solutionId}")]
+        public async Task<FileResult> GetSolutionVideo(int solutionId, CancellationToken cancellationToken)
+            => File(
+                await _mediator.Send(new GetSolutionVideoDto(solutionId),cancellationToken),
+                "application/octet-stream"
             );
 
         [HttpGet("{id}")]

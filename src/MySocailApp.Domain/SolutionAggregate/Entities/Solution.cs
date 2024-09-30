@@ -16,7 +16,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public SolutionContent Content { get; private set; } = null!;
         private readonly List<SolutionImage> _images = [];
         public IReadOnlyCollection<SolutionImage> Images => _images;
-        public bool HasVideo { get; private set; }
         public SolutionVideo? Video { get; private set; }
 
         private Solution() { }
@@ -24,7 +23,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public Solution(SolutionContent content, IEnumerable<SolutionImage> images)
         {
             if ((content == null || content.Value.Trim() == "") && !images.Any())
-                throw new SolutionContentOrImagesRequiredException();
+                throw new SolutionContentRequiredException();
             if (images.Count() > 3)
                 throw new TooManySolutionImageException();
             
@@ -42,7 +41,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
             Content = content;
             Video = video;
-            HasVideo = true;
         }
 
         internal void Create(int questionId, int appUserId)

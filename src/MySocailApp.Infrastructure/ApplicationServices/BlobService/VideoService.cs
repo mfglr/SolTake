@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.Extentions;
 
 namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 {
@@ -26,6 +27,15 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
             TimeSpan duration = tfile.Properties.Duration;
 
             return new(blobName, duration.TotalSeconds);
+        }
+
+        public async Task<byte[]> ReadAsync(string containerName, string blobName)
+        {
+            using var stream = File.OpenRead(GetPath(containerName, blobName));
+            var bytes = await stream.ToByteArrayAsync();
+            stream.Close();
+            stream.Dispose();
+            return bytes;
         }
 
         public void RollBack()
