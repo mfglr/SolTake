@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -13,6 +14,7 @@ import 'package:my_social_app/views/message/pages/message_home_page/message_home
 import 'package:my_social_app/views/search/pages/search_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
+import 'package:my_social_app/views/video_player_page/video_palayer_page.dart';
 
 class RootView extends StatefulWidget {
   const RootView({super.key});
@@ -75,7 +77,13 @@ class _RootViewState extends State<RootView> {
                 icon: Icon(Icons.search_outlined),
                 label: '',
               ),
-        
+
+               const NavigationDestination(
+                selectedIcon: Icon(Icons.video_library),
+                icon: Icon(Icons.video_library_outlined),
+                label: ''
+              ),
+
               StoreConnector<AppState,int>(
                 converter: (store) => store.state.selectNumberOfComingMessages,
                 builder: (context,count) => NavigationDestination(
@@ -107,6 +115,7 @@ class _RootViewState extends State<RootView> {
           body: [
             const HomePage(),
             const SearchPage(),
+            VideoPalayerPage(url: AppClient().generateUri("solutions/GetSolutionVideo/3")),       
             const MessageHomePage(),
             const ProfilePage()
           ][currentPageIndex]
