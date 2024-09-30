@@ -80,6 +80,9 @@ namespace MySocailApp.Api
         }
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
+            var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+            var tokenProviderOptions = configuration.GetRequiredSection("TokenProviderOptions").Get<TokenProviderOptions>()!;
+
             services
                 .AddIdentity<Account, IdentityRole<int>>(
                     opt =>
@@ -99,6 +102,8 @@ namespace MySocailApp.Api
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders()
                 .AddTokenProvider<RefreshTokenProvider<Account>>(TokenProviders.REFRESH_TOKEN_PROVIDER);
+
+            services.Configure<RefreshTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromMinutes(tokenProviderOptions.RefreshTokenExpiration));
 
             return services;
         }

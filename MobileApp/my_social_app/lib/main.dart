@@ -10,7 +10,7 @@ import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/account/application_initializing_page/application_initializing_page.dart';
+import 'package:my_social_app/views/account/application_loading_page/application_loading_page.dart';
 import 'package:my_social_app/views/account/register_page/register_page.dart';
 import 'package:my_social_app/views/account/login_page/login_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
@@ -71,25 +71,7 @@ Future<void> main() async {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: StoreConnector<AppState,bool>(
-            converter: (store) => store.state.isInitialized,
-            builder: (context, isInitialized){
-              if(isInitialized){
-                if(account == null){
-                  return StoreConnector<AppState,ActiveLoginPage>(
-                    converter: (store) => store.state.activeLoginPage,
-                    builder: (context,activeLoginPage){
-                      if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
-                      return const RegisterPage();
-                    },
-                  );
-                }
-                if(!account.isThirdPartyAuthenticated && !account.emailConfirmed) return const VerifyEmailPage();
-                return const RootView();
-              }
-              return const ApplicationInitializingPage();
-            }
-          ),
+          home: MainView(account: account),
           routes: {
             takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
             takeImageRoute: (context) => TakeImagePage(camera: cameras.first),
@@ -99,4 +81,35 @@ Future<void> main() async {
       )
     )
   );
+}
+
+class MainView extends StatelessWidget {
+  final AccountState? account;
+  const MainView({
+    super.key,
+    required this.account,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState,bool>(
+      converter: (store) => store.state.isInitialized,
+      builder: (context, isInitialized){
+        if(isInitialized){
+          if(account == null){
+            return StoreConnector<AppState,ActiveLoginPage>(
+              converter: (store) => store.state.activeLoginPage,
+              builder: (context,activeLoginPage){
+                if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
+                return const RegisterPage();
+              },
+            );
+          }
+          if(!account!.isThirdPartyAuthenticated && !account!.emailConfirmed) return const VerifyEmailPage();
+          return const RootView();
+        }
+        return const ApplicationLoadingPage();
+      }
+    );
+  }
 }

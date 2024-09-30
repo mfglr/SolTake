@@ -29,7 +29,6 @@ class AccountState{
   
 
   factory AccountState.fromJson(Map<String, dynamic> json) => _$AccountStateFromJson(json);
-
   Map<String, dynamic> toJson() => _$AccountStateToJson(this);
 
   AccountState confirmEmail()

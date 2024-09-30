@@ -32,9 +32,8 @@ namespace MySocailApp.Application.Extentions
         public static async Task WriteAppExceptionAsync(this HttpContext? context, string culture, AppException ex)
         {
             ThrowExceptionIfContextIsNull(context);
-            var body = Encoding.ASCII.GetBytes(ex.GetErrorMessage(culture));
+            var body = Encoding.UTF8.GetBytes(ex.GetErrorMessage(culture));
             context!.Response.StatusCode = ex.StatusCode;
-            context!.Response.ContentType = "application/json";
             await context.Response.Body.WriteAsync(body);
         }
     }

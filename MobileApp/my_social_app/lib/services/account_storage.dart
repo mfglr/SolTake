@@ -10,17 +10,14 @@ class AccountStorage {
   static final AccountStorage _singleton = AccountStorage._();
   factory AccountStorage() => _singleton;
 
-  Future<AccountState?> get() async {
-    String? value = await storage.read(key: account_storage_key);
-    return value != null ? AccountState.fromJson(jsonDecode(value) as Map<String, dynamic>) : null;
-  }
+  Future<AccountState?> get() =>
+    storage
+      .read(key: accountStorageKey)
+      .then((value) => value != null ? AccountState.fromJson(jsonDecode(value) as Map<String, dynamic>) : null);
 
-  Future<void> remove() async {
-    await storage.delete(key: account_storage_key);
-  }
+  Future<void> remove() =>
+    storage.delete(key: accountStorageKey);
 
-  Future<void> set(AccountState state) async {
-    final String value = jsonEncode(state.toJson());
-    await storage.write(key: account_storage_key, value: value);
-  }
+  Future<void> set(AccountState state) =>
+    storage.write(key: accountStorageKey, value: jsonEncode(state.toJson()));
 }

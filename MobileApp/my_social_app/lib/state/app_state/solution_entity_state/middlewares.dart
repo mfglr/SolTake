@@ -1,4 +1,6 @@
+import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
@@ -23,7 +25,7 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
-        ToastCreator.displaySuccess("Solution has been successfully created!");
+        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);

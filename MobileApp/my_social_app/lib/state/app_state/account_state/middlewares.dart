@@ -1,14 +1,15 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_social_app/exceptions/unexpected_exception.dart';
+import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/account_storage.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
-
 
 final _googleSignIn = GoogleSignIn();
 
@@ -69,7 +70,8 @@ void loginByFaceBookMiddleware(Store<AppState> store,action,NextDispatcher next)
           .then((value){
             if(value == null){
               FacebookAuth.instance.logOut();
-              throw throw UnexpectedException();
+              ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageCode(store)]!);
+              return; 
             }
             AccountService()
               .loginByFaceBook(value.tokenString)
@@ -89,11 +91,19 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
     _googleSignIn
       .signIn()
       .then((value){
-        if(value == null) throw UnexpectedException();
+        if(value == null){
+          _googleSignIn.disconnect();
+          ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageCode(store)]!);
+          return;
+        }
         value.authentication
           .then((e){
             final accessToken = e.accessToken;
-            if(accessToken == null) throw UnexpectedException();
+            if(accessToken == null){
+              _googleSignIn.disconnect();
+              ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageCode(store)]!);
+              return;
+            }
             AccountService()
               .loginByGoogle(accessToken)
               .then((account) => _setAccount(store, account))

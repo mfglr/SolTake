@@ -43,10 +43,10 @@ enum ActiveLoginPage{
 
 @immutable
 class AppState{
+  final bool isInitialized;
+  final ActiveLoginPage activeLoginPage;
   final String? accessToken;
   final AccountState? accountState;
-  final ActiveLoginPage activeLoginPage;
-  final bool isInitialized;
   final UserEntityState userEntityState;
   final FollowEntityState followEntityState;
   final UserImageEntityState userImageEntityState;

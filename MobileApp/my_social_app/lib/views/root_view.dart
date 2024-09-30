@@ -6,7 +6,7 @@ import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/account/application_initializing_page/application_initializing_page.dart';
+import 'package:my_social_app/views/account/application_loading_page/application_loading_page.dart';
 import 'package:my_social_app/views/shared/icon_with_badge.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
@@ -53,12 +53,10 @@ class _RootViewState extends State<RootView> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState?>(
-      onInit: (store){
-        store.dispatch(LoadUserAction(userId: store.state.accountState!.id));
-      },
+      onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
       converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],
       builder: (context,user){
-        if(user == null) return const ApplicationInitializingPage();
+        if(user == null) return const ApplicationLoadingPage();
         return Scaffold(
           bottomNavigationBar: NavigationBar(
             onDestinationSelected: (index) => setState(() { currentPageIndex = index;}),

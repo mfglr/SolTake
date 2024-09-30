@@ -1,3 +1,5 @@
+import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
@@ -25,7 +27,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
         store.dispatch(AddNewUserQuestionAction(userId: store.state.accountState!.id,questionId: question.id));
-        ToastCreator.displaySuccess("Question has been successfully created!");
+        ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);

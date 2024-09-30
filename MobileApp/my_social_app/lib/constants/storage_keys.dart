@@ -1,1 +1,1 @@
-const String account_storage_key = "account_storage_key";
+const String accountStorageKey = "account_storage_key";
