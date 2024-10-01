@@ -27,6 +27,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     x.Comments.Count,
                     x.Solutions.Count,
                     x.Solutions.Count(x => x.State == SolutionState.Correct),
+                    x.Solutions.Count(x => x.Video != null),
                     new ExamResponseDto(
                         x.Exam.Id,
                         x.Exam.ShortName,

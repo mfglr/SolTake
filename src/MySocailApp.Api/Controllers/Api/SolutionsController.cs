@@ -18,6 +18,7 @@ using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Application.Queries.SolutionAggregate.GetCorrectSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionAggregate.GetIncorrectsSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionAggregate.GetPendingSolutionsByQuestionId;
+using MySocailApp.Application.Queries.SolutionAggregate.GetQuestionSolutionsThatHaveVideo;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSavedSolutions;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionDownvotes;
@@ -88,7 +89,8 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task<FileResult> GetSolutionVideo(int solutionId, CancellationToken cancellationToken)
             => File(
                 await _mediator.Send(new GetSolutionVideoDto(solutionId),cancellationToken),
-                "application/octet-stream"
+                "application/octet-stream",
+                true
             );
 
         [HttpGet("{id}")]
@@ -122,5 +124,9 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet]
         public async Task<List<SolutionUserSaveResponseDto>> GetSavedSolutions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSavedSolutionsDto(offset, take, isDescending), cancellationToken);
+
+        [HttpGet("{questionId}")]
+        public async Task<List<SolutionResponseDto>> GetVideoSolutions(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetVideoSolutionsDto(questionId,offset,take,isDescending), cancellationToken);
     }
 }

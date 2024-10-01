@@ -57,7 +57,15 @@ class QuestionEntityState extends EntityState<QuestionState>{
   QuestionEntityState addNextPageIncorrectSolutions(int questionId,Iterable<int> solutionIds) =>
     QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageIncorrectSolutions(solutionIds)));
 
-  
+  QuestionEntityState startLoadingNextVideoSolutions(int questionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextVideoSolutions()));
+  QuestionEntityState addNextPageVideoSolutions(int questionId, Iterable<int> solutionIds) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageVideoSolutions(solutionIds)));
+  QuestionEntityState addVideoSolution(int questionId, int solutionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.addVideoSolution(solutionId)));
+  QuestionEntityState removeVideoSolution(int questionId, int solutionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.removeVideoSolution(solutionId)));
+
   QuestionEntityState getNextPageComments(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextComments()));
   QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)

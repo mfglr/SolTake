@@ -195,6 +195,9 @@
 
     "display_solution_upvotes_title": "Olumlu oylar",
 
+    "display_video_solutions_page_title": "Video Çözümler",
+    "display_video_solutions_page_no_solutions": "Video Çözüm Yok",
+
     "display_question_solutions_page_no_correct_solutins": "Doğru Çözüm Yok",
     "display_question_solutions_page_no_pending_solutions": "Onaylanmamış Çözüm Yok",
     "display_question_solutions_page_no_incorrect_solutions": "Yanlış Çözüm Yok",

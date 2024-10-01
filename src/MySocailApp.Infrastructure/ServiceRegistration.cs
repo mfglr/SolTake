@@ -96,9 +96,13 @@ namespace MySocailApp.Infrastructure
         
         private static IServiceCollection AddBlobService(this IServiceCollection services)
             => services
-                .AddSingleton<IBlobNameGenerator,BlobNameGenerator>()
-                .AddSingleton<IDimentionCalculator, DimentionCalculator>()
+                .AddScoped<IBlobNameGenerator,BlobNameGenerator>()
+                .AddScoped<IPathFinder,PathFinder>()
+                .AddScoped<IDimentionCalculator, DimentionCalculator>()
+                .AddScoped<IPathsContainer, PathsContainer>()
                 .AddScoped<IBlobService,BlobService>()
+                .AddScoped<IFrameCatcher, FrameCatcher>()
+                .AddScoped<IVideoDurationCalculator, VideoDurationCalculator>()
                 .AddScoped<IVideoService,VideoService>();
         
         private static IServiceCollection AddDbContext(this IServiceCollection services)

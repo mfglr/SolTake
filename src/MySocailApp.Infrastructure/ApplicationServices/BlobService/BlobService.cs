@@ -1,72 +1,60 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.Extentions;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 {
-    public class BlobService(IBlobNameGenerator generator, IDimentionCalculator dimentionCalculator) : IBlobService
+    public class BlobService(IBlobNameGenerator generator, IDimentionCalculator dimentionCalculator, IPathsContainer pathContainer, IPathFinder pathFinder) : IBlobService
     {
         private readonly IBlobNameGenerator _generator = generator;
         private readonly IDimentionCalculator _dimentionCalculator = dimentionCalculator;
-        private static readonly string _rootPath = "Images";
-        private readonly List<Application.ApplicationServices.BlobService.Image> _images = [];
+        private readonly IPathsContainer _pathContainer = pathContainer;
+        private readonly IPathFinder _pathFinder = pathFinder;
 
-        private static string GetPath(string containerName, string blobName) => $"{_rootPath}/{containerName}/{blobName}";
-
-        public async Task<Application.ApplicationServices.BlobService.Image> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        public async Task<AppImage> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
-            string blobName = _generator.Generate();
+            string blobName = _generator.Generate(RootName.Image, containerName);
             using var stream = file.OpenReadStream();
             Dimention dimention = _dimentionCalculator.Calculate(stream);
             stream.Position = 0;
 
-            var path = GetPath(containerName, blobName);
+            var path = _pathFinder.GetPath(RootName.Image, containerName, blobName);
             JpegEncoder options;
             if (stream.Length > 1048576)
                 options = new JpegEncoder { Quality = 25 };
             else
                 options = new JpegEncoder { Quality = 100 };
 
-            using var t = await SixLabors.ImageSharp.Image.LoadAsync(stream, cancellationToken);
+            using var t = await Image.LoadAsync(stream, cancellationToken);
             await t.SaveAsync(path, options, cancellationToken);
+            _pathContainer.Add(path);
 
-            var image = new Application.ApplicationServices.BlobService.Image(containerName, blobName, dimention);
-            _images.Add(image);
-            return image;
+            return new AppImage(containerName, blobName, dimention);
+        }
+
+        public async Task<List<AppImage>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
+        {
+            List<AppImage> images = [];
+            foreach (var file in files)
+                images.Add(await UploadAsync(containerName, file, cancellationToken));
+            return images;
         }
 
         public async Task<byte[]> ReadAsync(string containerName, string blobName)
         {
-            using var stream = File.OpenRead(GetPath(containerName, blobName));
+            using var stream = File.OpenRead(_pathFinder.GetPath(RootName.Image, containerName, blobName));
             var bytes = await stream.ToByteArrayAsync();
             stream.Close();
             stream.Dispose();
             return bytes;
         }
 
-        public async Task<List<Application.ApplicationServices.BlobService.Image>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
-        {
-            List<Application.ApplicationServices.BlobService.Image> images = [];
-            foreach (var file in files)
-                images.Add(await UploadAsync(containerName, file, cancellationToken));
-            return images;
-        }
-
-        public void Rollback()
-        {
-            foreach (var image in _images)
-            {
-                var path = GetPath(image.ContainerName, image.BlobName);
-                if (File.Exists(path))
-                    File.Delete(path);
-            }
-        }
-
         public void Delete(string containerName, string blobName)
         {
-            var path = GetPath(containerName, blobName);
+            var path = _pathFinder.GetPath(RootName.Image, containerName, blobName);
             if (File.Exists(path))
                 File.Delete(path);
         }
@@ -75,8 +63,8 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
         {
             foreach (var blobName in blobNames)
             {
-                var path = GetPath(containerName, blobName);
-                if(File.Exists(path))
+                var path = _pathFinder.GetPath(RootName.Image, containerName, blobName);
+                if (File.Exists(path))
                     File.Delete(path);
             }
         }

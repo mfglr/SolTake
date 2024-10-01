@@ -2,6 +2,6 @@
 {
     public interface IBlobNameGenerator
     {
-        string Generate();
+        string Generate(string root,string containerName,string? extention = null);
     }
 }

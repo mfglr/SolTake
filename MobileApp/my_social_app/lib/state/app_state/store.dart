@@ -258,6 +258,10 @@ final store = Store(
     getNextPageQuestionIncorrectSolutionsIfReadyMiddleware,
     getNextPageQuestionIncorrectSolutionsMiddleware,
 
+    getNextPageQuestionVideoSolutionsIfNoPageMiddleware,
+    getNextPageQuestionVideoSolutionsIfReadyMiddleware,
+    getNextPageQuestionVideoSolutionsMiddleware,
+
     getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
     getNextPageQuestionCommentIfReadyMiddleware,
     getNextPageQuestionCommentsMiddleware,

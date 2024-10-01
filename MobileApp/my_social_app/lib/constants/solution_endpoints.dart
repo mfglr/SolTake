@@ -5,6 +5,7 @@ const getSolutionsByQuestionIdEndpoint = "GetSolutionsByQuestionId";
 const getCorrectSolutionsByQuestionIdEndpoint = "GetCorrectSolutionsByQuestionId";
 const getPendingSolutionsByQuestionIdEndpoint = "GetPendingSolutionsByQuestionId";
 const getIncorrectSolutionsByQuestionIdEndpoint = "GetIncorrectSolutionsByQuestionId";
+const getVideoSolutionsEndpoint = "GetVideoSolutions";
 const getSavedSolutionsEndpoint = "GetSavedSolutions";
 
 const createSolutionEndpoint = "Create";

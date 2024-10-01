@@ -29,6 +29,7 @@ class Question{
   final int numberOfLikes;
   final int numberOfSolutions;
   final int numberOfCorrectSolutions;
+  final int numberOfVideoSolutions;
   final int numberOfComments;
   
 
@@ -48,6 +49,7 @@ class Question{
     required this.numberOfLikes,
     required this.numberOfSolutions,
     required this.numberOfCorrectSolutions,
+    required this.numberOfVideoSolutions,
     required this.numberOfComments,
     required this.isOwner,
     required this.state,
@@ -75,11 +77,13 @@ class Question{
     numberOfComments: numberOfComments,
     numberOfSolutions: numberOfSolutions,
     numberOfCorrectSolutions: numberOfCorrectSolutions,
+    numberOfVideoSolutions: numberOfVideoSolutions,
     likes: Pagination.init(usersPerPage,true),
     comments: Pagination.init(commentsPerPage,true),
     solutions: Pagination.init(solutionsPerPage,true),
     correctSolutions: Pagination.init(solutionsPerPage,true),
     pendingSolutions: Pagination.init(solutionsPerPage,true),
     incorrectSolutions: Pagination.init(solutionsPerPage,true),
+    videoSolutions: Pagination.init(solutionsPerPage,true)
   );
 }

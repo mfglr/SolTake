@@ -19,7 +19,6 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/user_image
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
-
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     QuestionService()
@@ -267,6 +266,38 @@ void getNextPageQuestionIncorrectSolutionsMiddleware(Store<AppState> store,actio
       .getIncorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
         store.dispatch(AddNextPageQuestionIncorrectSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
+        store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
+        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
+      });
+  }
+  next(action);
+}
+
+void getNextPageQuestionVideoSolutionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionVideoSolutionsIfNoPageAction){
+    final pagination = store.state.questionEntityState.entities[action.questionId]!.videoSolutions;
+    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
+      store.dispatch(GetNextPageQuestionVideoSolutionsAction(questionId: action.questionId));
+    }
+  }
+  next(action);
+}
+void getNextPageQuestionVideoSolutionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionVideoSolutionsIfReadyAction){
+    final pagination = store.state.questionEntityState.entities[action.questionId]!.videoSolutions;
+    if(pagination.isReadyForNextPage){
+      store.dispatch(GetNextPageQuestionVideoSolutionsAction(questionId: action.questionId));
+    }
+  }
+  next(action);
+}
+void getNextPageQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is GetNextPageQuestionVideoSolutionsAction){
+    final pagination = store.state.questionEntityState.entities[action.questionId]!.videoSolutions;
+    SolutionService()
+      .getVideoSolutions(action.questionId, pagination.next)
+      .then((solutions){
+        store.dispatch(AddNextPageQuestionVideoSolutionsAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
         store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
       });

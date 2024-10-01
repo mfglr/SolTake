@@ -56,6 +56,16 @@ QuestionEntityState getNextPageIncorrectSolutionsReducer(QuestionEntityState pre
 QuestionEntityState addNextPageIncorrectSolutionsReducer(QuestionEntityState prev,AddNextPageQuestionIncorrectSolutionsAction action)
   => prev.addNextPageIncorrectSolutions(action.questionId,action.solutionIds);
 
+//video solutions
+QuestionEntityState getNextPageVideoSolutionsReducer(QuestionEntityState prev,GetNextPageQuestionVideoSolutionsAction action)
+  => prev.startLoadingNextVideoSolutions(action.questionId);
+QuestionEntityState addNextPageVideoSolutionReducer(QuestionEntityState prev,AddNextPageQuestionVideoSolutionsAction action)
+  => prev.addNextPageVideoSolutions(action.questionId,action.solutionIds);
+QuestionEntityState addVideoSolutionReducer(QuestionEntityState prev,AddQuestionVideoSolutionAction action)
+  => prev.addVideoSolution(action.questionId, action.solutionId);
+QuestionEntityState removeVideoSolutionReducer(QuestionEntityState prev,RemoveQuestionVideoSolutionAction action)
+  => prev.removeVideoSolution(action.questionId,action.solutionId);
+
 //comments
 QuestionEntityState getNextPageCommentsReducer(QuestionEntityState prev,GetNextPageQuestionCommentsAction action)
   => prev.getNextPageComments(action.questionId);
@@ -111,6 +121,12 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,GetNextPageQuestionIncorrectSolutionsAction>(getNextPageIncorrectSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionIncorrectSolutionsAction>(addNextPageIncorrectSolutionsReducer).call,
   
+  //video solutions
+  TypedReducer<QuestionEntityState,GetNextPageQuestionVideoSolutionsAction>(getNextPageVideoSolutionsReducer).call,
+  TypedReducer<QuestionEntityState,AddNextPageQuestionVideoSolutionsAction>(addNextPageVideoSolutionReducer).call,
+  TypedReducer<QuestionEntityState,AddQuestionVideoSolutionAction>(addVideoSolutionReducer).call,
+  TypedReducer<QuestionEntityState,RemoveQuestionVideoSolutionAction>(removeVideoSolutionReducer).call,
+
   //comments
   TypedReducer<QuestionEntityState,GetNextPageQuestionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionCommentsAction>(addNextPageCommentsReducer).call,

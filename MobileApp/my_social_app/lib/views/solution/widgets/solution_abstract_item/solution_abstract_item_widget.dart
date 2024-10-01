@@ -40,8 +40,28 @@ class _SolutionAbstractItemWidgetState extends State<SolutionAbstractItemWidget>
           builder: (context){
             final image = widget.solution.images.firstOrNull;
             if(image == null) return const NoSolutionImage();
+            if(widget.solution.hasVideo){
+              return Stack(
+                alignment: AlignmentDirectional.center,
+                fit: StackFit.expand,
+                children: [
+                  DisplayImageWidget(
+                    image: image.image,
+                    status: image.state,
+                    boxFit: BoxFit.cover,
+                  ),
+                  const Positioned(
+                    child: Icon(
+                      color: Colors.grey,
+                      size: 60,
+                      Icons.play_circle_fill_rounded,
+                    )
+                  )
+                ],
+              );
+            }
             return DisplayImageWidget(
-              image: widget.solution.images.first.image,
+              image: image.image,
               status: image.state,
               boxFit: BoxFit.cover,
             );

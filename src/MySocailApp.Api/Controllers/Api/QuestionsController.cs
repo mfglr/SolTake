@@ -19,6 +19,7 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
+using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsThatHaveVideoSolutions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSavedQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
@@ -113,5 +114,9 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet]
         public async Task<List<QuestionUserSaveResponseDto>> GetSavedQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSavedQuestionsDto(offset, take, isDescending), cancellationToken);
+
+        [HttpPost]
+        public async Task<List<QuestionResponseDto>> GetQuestionsThatHaveVideoSolution(GetQuestionsThatHaveVideoSolutionsDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
     }
 }

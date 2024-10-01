@@ -20,7 +20,7 @@ class QuestionImagesSlider extends StatefulWidget {
 class _QuestionImagesSliderState extends State<QuestionImagesSlider> with TickerProviderStateMixin {
   bool _isLiked = false;
   int _index = 0;
-  final CarouselController _carouselController = CarouselController();
+  final CarouselSliderController _carouselController = CarouselSliderController();
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 600),
     vsync: this

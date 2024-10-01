@@ -130,7 +130,13 @@ class SolutionService{
       .get(_appClient.generatePaginationUrl("$solutionController/$getIncorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
-  
+
+    Future<Iterable<Solution>> getVideoSolutions(int questionId, Page page) =>
+      _appClient
+        .get(_appClient.generatePaginationUrl("$solutionController/$getVideoSolutionsEndpoint/$questionId",page))
+        .then((response) => response as List)
+        .then((list) => list.map((json) => Solution.fromJson(json)));
+
   Future<Iterable<SolutionUserSave>> getSavedSolutions(Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getSavedSolutionsEndpoint", page))
@@ -144,4 +150,5 @@ class SolutionService{
   Future<Uint8List> getSolutionVideo(int solutionId) =>
     _appClient
       .getBytes("$solutionController/$getSolutionVideoEndpoint/$solutionId");
+
 }

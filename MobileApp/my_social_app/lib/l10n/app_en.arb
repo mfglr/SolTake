@@ -197,6 +197,9 @@
 
     "display_solution_upvotes_title": "Upvotes",
 
+    "display_video_solutions_page_title": "Video Solutions",
+    "display_video_solutions_page_no_solutions": "No Video Solutions",
+
     "display_question_solutions_page_no_correct_solutins": "No Correct Solutions",
     "display_question_solutions_page_no_pending_solutions": "No Pending Solutions",
     "display_question_solutions_page_no_incorrect_solutions": "No Incorrect Solutions",

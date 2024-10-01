@@ -1,50 +1,38 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.ApplicationServices.BlobService;
-using MySocailApp.Application.Extentions;
+using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 
 namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 {
-    public class VideoService(IBlobNameGenerator generator) : IVideoService
+    public class VideoService(IBlobNameGenerator generator, IPathFinder pathFinder, IFrameCatcher frameCatcher, IPathsContainer pathContainer, IVideoDurationCalculator videoDurationCalculator) : IVideoService
     {
-        private static readonly string _rootPath = "Videos";
+
         private readonly IBlobNameGenerator _generator = generator;
-        private readonly List<string> _blobs = [];
+        private readonly IFrameCatcher _frameCatcher = frameCatcher;
+        private readonly IVideoDurationCalculator _videoDurationCalculator = videoDurationCalculator;
+        private readonly IPathsContainer _pathContainer = pathContainer;
+        private readonly IPathFinder _pathFinder = pathFinder;
 
-        private static string GetPath(string containerName, string blobName) => $"{_rootPath}/{containerName}/{blobName}.mp4";
-        
-        public async Task<AppVideo> SaveAsync(IFormFile file,CancellationToken cancellationToken)
+        public async Task<AppVideo> SaveAsync(IFormFile file, string containerNameOfVideo, string containerNameOfFrame, CancellationToken cancellationToken)
         {
-            var blobName = _generator.Generate();
-            var path = GetPath(ContainerName.SolutionVideos, blobName);
-            
+            var blobNameOfVideo = _generator.Generate(RootName.Video, containerNameOfVideo);
+            var videoPath = _pathFinder.GetPath(RootName.Video, containerNameOfVideo, blobNameOfVideo);
+
             using var stream = file.OpenReadStream();
-            using var savedFile = File.Create(path);
-            await stream.CopyToAsync(savedFile,cancellationToken);
+            using var savedFile = File.Create(videoPath);
+            await stream.CopyToAsync(savedFile, cancellationToken);
             savedFile.Close();
-            _blobs.Add(path);
+            _pathContainer.Add(videoPath);
 
-            using var tfile = TagLib.File.Create(path);
-            TimeSpan duration = tfile.Properties.Duration;
+            var frame = await _frameCatcher.GetFrameAsync(videoPath, containerNameOfFrame, 0, cancellationToken);
+            _pathContainer.Add(_pathFinder.GetPath(RootName.Image,containerNameOfFrame,frame.BlobName));
 
-            return new(blobName, duration.TotalSeconds);
+            var duration = await _videoDurationCalculator.CalculateAsync(videoPath, cancellationToken);
+
+            return new(blobNameOfVideo, duration, frame);
         }
 
-        public async Task<byte[]> ReadAsync(string containerName, string blobName)
-        {
-            using var stream = File.OpenRead(GetPath(containerName, blobName));
-            var bytes = await stream.ToByteArrayAsync();
-            stream.Close();
-            stream.Dispose();
-            return bytes;
-        }
-
-        public void RollBack()
-        {
-            foreach (var blob in _blobs)
-            {
-                if (File.Exists(blob))
-                    File.Delete(blob);
-            }
-        }
+        public Stream Read(string containerName, string blobName)
+            => File.OpenRead(_pathFinder.GetPath(RootName.Video, containerName, blobName));
     }
 }

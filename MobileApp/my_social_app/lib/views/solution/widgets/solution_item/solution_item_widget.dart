@@ -9,6 +9,7 @@ import 'package:my_social_app/views/solution/widgets/solution_item/solution_comm
 import 'package:my_social_app/views/solution/widgets/no_solution_image.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/solution_video_player.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_images_slider.dart';
@@ -74,8 +75,10 @@ class SolutionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          if(solution.images.isNotEmpty)
+          if(solution.images.isNotEmpty && !solution.hasVideo)
             SolutionImagesSlider(solution: solution)
+          else if(solution.images.isNotEmpty && solution.hasVideo)
+            SolutionVideoPlayer(solution: solution)
           else
             const NoSolutionImage(),
           Padding(

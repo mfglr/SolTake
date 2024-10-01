@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
@@ -19,8 +20,8 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateVideoSolution
 
         public async Task<SolutionResponseDto> Handle(CreateVideoSolutionDto request, CancellationToken cancellationToken)
         {
-            var appVideo = await _videoService.SaveAsync(request.File, cancellationToken);
-            var video = new SolutionVideo(appVideo.BlobName, appVideo.Duration);
+            var appVideo = await _videoService.SaveAsync(request.File, ContainerName.SolutionVideos,ContainerName.SolutionImages, cancellationToken);
+            var video = new SolutionVideo(appVideo.BlobName, appVideo.Duration, appVideo.Frame.BlobName,appVideo.Frame.Dimention.Height, appVideo.Frame.Dimention.Width);
             var content = new SolutionContent(request.Content ?? "");
             var solution = new Solution(content, video);
             

@@ -29,9 +29,9 @@ class DisplaySolutionsButton extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 5),
-            child: Text(question.numberOfSolutions.toString())
+            child: const Icon(Icons.border_color),
           ),
-          const Icon(Icons.border_color_outlined),
+          Text(question.numberOfSolutions.toString())
         ],
       )
     );

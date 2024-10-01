@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 
 namespace MySocailApp.Application.ApplicationServices.BlobService
 {
     public interface IVideoService
     {
-        Task<AppVideo> SaveAsync(IFormFile file, CancellationToken cancellationToken);
-        Task<byte[]> ReadAsync(string containerName, string blobName);
-        void RollBack();
+        Task<AppVideo> SaveAsync(IFormFile file, string containerNameOfVideo, string containerNameOfFrame, CancellationToken cancellationToken);
+        Stream Read(string containerName, string blobName);
     }
 }

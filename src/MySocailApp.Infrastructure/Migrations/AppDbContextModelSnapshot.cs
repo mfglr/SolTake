@@ -11184,6 +11184,16 @@ namespace MySocailApp.Infrastructure.Migrations
                             b1.Property<double>("Duration")
                                 .HasColumnType("float");
 
+                            b1.Property<string>("FrameBlobName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<float>("FrameHeight")
+                                .HasColumnType("real");
+
+                            b1.Property<float>("FrameWidth")
+                                .HasColumnType("real");
+
                             b1.HasKey("SolutionId");
 
                             b1.ToTable("Solutions");

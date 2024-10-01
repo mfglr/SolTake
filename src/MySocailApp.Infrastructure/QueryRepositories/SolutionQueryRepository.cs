@@ -36,19 +36,27 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToSolutionResponseDto(accountId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<SolutionResponseDto>> GetPendingSolutionsByQuestionId(int accountId, IPage pagination, int questionId, CancellationToken cancellationToken)
+        public Task<List<SolutionResponseDto>> GetPendingSolutionsByQuestionId(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
            => _context.Solutions
                 .AsNoTracking()
                 .Where(x => x.QuestionId == questionId && x.State == SolutionState.Pending && !x.IsRemoved)
-                .ToPage(pagination)
+                .ToPage(page)
                 .ToSolutionResponseDto(accountId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int accountId, IPage pagination, int questionId, CancellationToken cancellationToken)
+        public Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => _context.Solutions
                 .AsNoTracking()
                 .Where(x => x.QuestionId == questionId && x.State == SolutionState.Incorrect && !x.IsRemoved)
-                .ToPage(pagination)
+                .ToPage(page)
+                .ToSolutionResponseDto(accountId)
+                .ToListAsync(cancellationToken);
+
+        public Task<List<SolutionResponseDto>> GetVideoSolutions(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
+            => _context.Solutions
+                .AsNoTracking()
+                .Where(x => x.QuestionId == questionId && x.Video != null && !x.IsRemoved)
+                .ToPage(page)
                 .ToSolutionResponseDto(accountId)
                 .ToListAsync(cancellationToken);
     }
