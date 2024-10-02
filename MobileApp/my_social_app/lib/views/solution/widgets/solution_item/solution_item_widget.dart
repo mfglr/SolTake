@@ -15,10 +15,21 @@ import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_images_slider.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:video_player/video_player.dart';
 
 class SolutionItemWidget extends StatelessWidget {
   final SolutionState solution;
-  const SolutionItemWidget({super.key,required this.solution});
+  final VideoPlayerController? controller;
+  final void Function(int solutionId)? play;
+  final void Function(int solutionId)? pause;
+
+  const SolutionItemWidget({
+    super.key,
+    required this.solution,
+    this.play,
+    this.pause,
+    this.controller
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +86,20 @@ class SolutionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          if(solution.images.isNotEmpty && !solution.hasVideo)
-            SolutionImagesSlider(solution: solution)
-          else if(solution.images.isNotEmpty && solution.hasVideo)
-            SolutionVideoPlayer(solution: solution)
+          
+          if(solution.hasVideo)
+            SolutionVideoPlayer(
+              solution: solution,
+              controller: controller,
+              play: play!,
+              pause: pause!,
+            )
           else
-            const NoSolutionImage(),
+            if(solution.images.isNotEmpty)
+              SolutionImagesSlider(solution: solution)
+            else
+              const NoSolutionImage(),
+
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(
