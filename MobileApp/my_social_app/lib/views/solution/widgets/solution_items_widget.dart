@@ -41,7 +41,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
     if(controller != null){
       controller.play().then((_){ setState((){}); });
       _videoControllers.forEach((key,value){
-        if(key != solutionId && value.value.isInitialized && value.value.isPlaying){
+        if(key != solutionId && value.value.isPlaying){
           value.pause().then((_){ setState((){}); });
         }
       });
@@ -50,11 +50,11 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
 
   void _pause(int solutionId){
     final controller = _videoControllers[solutionId];
-    if(controller != null){
+    if(controller != null && controller.value.isPlaying){
       controller.pause().then((_){ setState((){}); });
     }
   }
-  
+
   void _setVideoControllers(){
     final store = StoreProvider.of<AppState>(context,listen: false);
     final s = widget.solutions.where((x) => x.hasVideo);
@@ -69,21 +69,10 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
           final controller = VideoPlayerController.file(file);
           controller
             .initialize()
-            .then((_){ setState((){}); });
-          
-          controller.addListener((){
-            if(controller.value.isCompleted){
-              setState(() {});
-            }
-          });
-
-          controller.addListener((){
-            Future
-              .delayed(const Duration(milliseconds: 1000))
-              .then((_){ setState(() {});});
-          });
-
-          _videoControllers[solution.id] = controller;
+            .then((_){ 
+              _videoControllers[solution.id] = controller;
+              setState((){}); 
+            });
         });
       }
     }
@@ -109,13 +98,11 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
 
   @override
   void didUpdateWidget(covariant SolutionItemsWidget oldWidget) {
-
     if(oldWidget.solutions.length != widget.solutions.length){
       _setVideoControllers();
       super.didUpdateWidget(oldWidget);
       return;
     }
-
     for(int i = 0; i < oldWidget.solutions.length; i++){
       if(oldWidget.solutions.elementAt(i).id != widget.solutions.elementAt(i).id){
         _setVideoControllers();
@@ -123,7 +110,6 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
         return;
       }
     }
-    
     super.didUpdateWidget(oldWidget);
   }
 

@@ -25,7 +25,33 @@ class AppVideoPlayer extends StatefulWidget {
 }
 
 class _AppVideoPlayerState extends State<AppVideoPlayer> {
-  
+
+  void onCompleted(){
+    if(widget.controller.value.isCompleted){
+      setState(() {});
+    }
+  }
+
+  void onDurationChanged(){
+    Future
+      .delayed(const Duration(milliseconds: 1000))
+      .then((_){ if(mounted)setState(() {});});
+  }
+
+  @override
+  void initState() {
+    widget.controller.addListener(onCompleted);
+    widget.controller.addListener(onDurationChanged);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(onCompleted);
+    widget.controller.removeListener(onDurationChanged);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return widget.controller.value.isInitialized 
@@ -78,7 +104,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Text(
-                        widget.controller.value.position.inSeconds.toString(),
+                        (widget.controller.value.duration.inSeconds - widget.controller.value.position.inSeconds).toString(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
