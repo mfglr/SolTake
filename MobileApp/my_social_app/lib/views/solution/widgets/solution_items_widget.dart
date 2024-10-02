@@ -10,6 +10,7 @@ class SolutionItemsWidget extends StatefulWidget {
   final Function onScrollBottom;
   final Pagination pagination;
   final int? solutionId;
+
   const SolutionItemsWidget({
     super.key,
     required this.pagination,

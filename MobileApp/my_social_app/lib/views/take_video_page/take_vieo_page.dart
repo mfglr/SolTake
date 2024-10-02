@@ -19,7 +19,6 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
 
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  bool _isRecording = false;
 
   @override
   void initState() {
@@ -37,6 +36,7 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot){
@@ -78,12 +78,11 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
         margin: const EdgeInsets.only(bottom: 15),
         child: FloatingActionButton(
           shape: const CircleBorder(),
-          child: _isRecording ? const StopVideoButton() : const StartVideoButton(),
+          child: _controller.value.isRecordingVideo ? const StopVideoButton() : const StartVideoButton(),
           onPressed: () {
-            if(_isRecording){
+            if(_controller.value.isRecordingVideo){
               _initializeControllerFuture
                 .then((_){
-                  setState(() { _isRecording = false; });
                   _controller
                     .stopVideoRecording()
                     .then((video) => Navigator.of(context).pop(video));
@@ -91,7 +90,6 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
             }else{
               _initializeControllerFuture
               .then((_){
-                setState(() { _isRecording = true; });
                 _controller.startVideoRecording();
               });
             }

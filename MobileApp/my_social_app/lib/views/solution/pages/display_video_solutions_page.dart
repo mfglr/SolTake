@@ -41,6 +41,7 @@ class DisplayVideoSolutionsPage extends StatelessWidget {
                   text: AppLocalizations.of(context)!.display_video_solutions_page_no_solutions
                 );
               }
+              
               return SolutionItemsWidget(
                 solutions: solutions,
                 pagination: question.videoSolutions,

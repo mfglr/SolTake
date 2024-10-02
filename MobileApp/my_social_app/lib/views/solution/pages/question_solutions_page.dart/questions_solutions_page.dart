@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/add_solution_images_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
@@ -13,6 +11,7 @@ import 'package:my_social_app/views/solution/pages/display_question_correct_solu
 import 'package:my_social_app/views/solution/pages/display_question_incorrect_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_pending_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_solutions_page.dart';
+import 'package:my_social_app/views/solution/pages/question_solutions_page.dart/widgets/create_solution_speed_dial.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
@@ -168,7 +167,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
       )
     );
   }
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -189,23 +188,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
             ),
           ),
           floatingActionButton: 
-            !question.isOwner ? FloatingActionButton(
-              onPressed: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                Navigator
-                  .of(context)
-                  .push(MaterialPageRoute(builder: (context) => const AddSolutionImagesPage()))
-                  .then((value){
-                    if(value != null){
-                      store.dispatch(CreateSolutionAction(
-                        questionId: widget.questionId, content: value.content, images: value.images
-                      ));
-                    }
-                  });
-              },
-              shape: const CircleBorder(),
-              child: const Icon(Icons.border_color),
-            ) : null,
+            !question.isOwner ? CreateSolutionSpeedDial(questionId: question.id) : null,
           body: Column(
             children: [
               LabelPaginationWidget(
