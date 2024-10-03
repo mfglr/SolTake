@@ -16,7 +16,7 @@ import 'package:my_social_app/views/account/login_page/login_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/verify_email_page.dart/verify_email_page.dart';
-import 'package:my_social_app/views/take_image_page.dart';
+import 'package:my_social_app/views/take_image_page/take_image_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/take_video_page/take_vieo_page.dart';
@@ -47,7 +47,7 @@ Future<void> main() async {
     handleErrors(error);
     return true;
   };
-
+  
   runApp(
     StoreProvider(
       store: store,

@@ -4,31 +4,29 @@ import 'package:my_social_app/views/shared/clear_upload_button/clear_upload_butt
 import 'package:my_social_app/views/shared/loading_widget.dart';
 import 'package:video_player/video_player.dart';
 
-class AppVideoPlayer extends StatefulWidget {
+class SolutionCreationVideoPlayer extends StatefulWidget {
   final VideoPlayerController controller;
-  final double aspectRatio;
   final bool displayVolumeOffButton;
   final bool displayDuration;
   final void Function() play;
   final void Function() pause;
   final void Function()? onDeleted;
 
-  const AppVideoPlayer({
+  const SolutionCreationVideoPlayer({
     super.key,
     required this.controller,
     required this.play,
     required this.pause,
-    required this.aspectRatio,
     this.displayVolumeOffButton = true,
     this.displayDuration = true,
     this.onDeleted
   });
 
   @override
-  State<AppVideoPlayer> createState() => _AppVideoPlayerState();
+  State<SolutionCreationVideoPlayer> createState() => _SolutionCreationVideoPlayerState();
 }
 
-class _AppVideoPlayerState extends State<AppVideoPlayer> {
+class _SolutionCreationVideoPlayerState extends State<SolutionCreationVideoPlayer> {
 
   void onCompleted(){
     if(widget.controller.value.isCompleted){
@@ -58,19 +56,15 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.controller.value.isInitialized 
+    return widget.controller.value.isInitialized
       ? GestureDetector(
         onTap: () => widget.controller.value.isPlaying ? widget.pause() : widget.play(),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width / widget.aspectRatio,
-              child: RotatedBox(
-                quarterTurns: 1,
-                child: VideoPlayer(widget.controller)
-              )
+            RotatedBox(
+              quarterTurns: 1,
+              child: VideoPlayer(widget.controller)
             ),
             if(widget.displayVolumeOffButton)
               Positioned(
@@ -148,9 +142,8 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
           ],
         ),
       ) 
-      : AspectRatio(
-        aspectRatio: widget.aspectRatio,
-        child: const LoadingWidget()
+      : const Center(
+        child: LoadingWidget()
       );
   }
 }

@@ -169,6 +169,14 @@ class QuestionState{
       newSolutions: solutions.prependOne(solutionId),
       newPendingSolutions: pendingSolutions.prependOne(solutionId)
     );
+  QuestionState createNewVideoSolution(int solutionId) => 
+    _optional(
+      newNumberOfSolutions: numberOfSolutions + 1,
+      newNumberOfVideoSolutions: numberOfVideoSolutions + 1,
+      newSolutions: solutions.prependOne(solutionId),
+      newPendingSolutions: pendingSolutions.prependOne(solutionId),
+      newVideoSolutions: videoSolutions.prependOne(solutionId),
+    );
   QuestionState addNewSolution(int solutionId) =>
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
@@ -195,6 +203,14 @@ class QuestionState{
         solution.state == SolutionStatus.incorrect
           ? incorrectSolutions.removeOne(solution.id)
           : incorrectSolutions,
+      newNumberOfVideoSolutions: 
+        solution.hasVideo
+          ? numberOfVideoSolutions - 1
+          : numberOfVideoSolutions,
+      newVideoSolutions:
+        solution.hasVideo
+          ? videoSolutions.removeOne(solution.id)
+          : videoSolutions,
       newState: 
         solution.state == SolutionStatus.correct && numberOfCorrectSolutions == 1
           ? QuestionStatus.unsolved

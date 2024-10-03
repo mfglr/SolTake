@@ -13,6 +13,13 @@ class CreateSolutionAction extends AppAction{
   final Iterable<XFile> images;
   const CreateSolutionAction({required this.questionId, required this.content, required this.images});
 }
+@immutable
+class CreateVideoSolutionAction extends AppAction{
+  final int questionId;
+  final String? content;
+  final XFile video;
+  const CreateVideoSolutionAction({required this.questionId, required this.content, required this.video});
+}
 
 @immutable
 class LoadSolutionAction extends AppAction{

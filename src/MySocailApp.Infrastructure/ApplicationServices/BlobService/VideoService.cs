@@ -32,6 +32,13 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
             return new(blobNameOfVideo, duration, frame);
         }
 
+        public void Delete(string containerName,string blobName)
+        {
+            var path = _pathFinder.GetPath(RootName.Video,containerName, blobName);
+            if(File.Exists(path))
+                File.Delete(path);
+        }
+
         public Stream Read(string containerName, string blobName)
             => File.OpenRead(_pathFinder.GetPath(RootName.Video, containerName, blobName));
     }

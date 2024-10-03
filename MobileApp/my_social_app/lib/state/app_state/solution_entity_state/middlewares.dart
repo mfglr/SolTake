@@ -20,11 +20,24 @@ import 'package:redux/redux.dart';
 void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
     SolutionService()
-      .createAsync(action.content, action.questionId, action.images)
+      .create(action.content, action.questionId, action.images)
       .then((solution){
         final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
+        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
+      });
+  }
+  next(action);
+}
+void createVideoSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+   if(action is CreateVideoSolutionAction){
+    SolutionService()
+      .createVideoSolution(action.questionId,action.content, action.video)
+      .then((solution){
+        final solutionState = solution.toSolutionState();
+        store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
+        store.dispatch(CreateNewQuestionVideoSolutionAction(solution: solutionState));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
       });
   }

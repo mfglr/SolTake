@@ -139,6 +139,11 @@ class CreateNewQuestionSolutionAction extends AppAction{
   const CreateNewQuestionSolutionAction({required this.solution});
 }
 @immutable
+class CreateNewQuestionVideoSolutionAction extends AppAction{
+  final SolutionState solution;
+  const CreateNewQuestionVideoSolutionAction({required this.solution});
+}
+@immutable
 class AddNewQuestionSolutionAction extends AppAction{
   final int questionId;
   final int solutionId;

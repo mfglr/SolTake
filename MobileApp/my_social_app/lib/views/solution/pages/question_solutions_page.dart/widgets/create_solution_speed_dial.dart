@@ -54,6 +54,13 @@ class CreateSolutionSpeedDial extends StatelessWidget {
             Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (context) => const DisplayVideoSolutionPage()))
+              .then((value){
+                if(value == null) return;
+                if(context.mounted){
+                  final store = StoreProvider.of<AppState>(context,listen: false);
+                  store.dispatch(CreateVideoSolutionAction(questionId: questionId, content: value.content, video: value.video));
+                }
+              })
         )
       ],
     );

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
 class StopVideoButton extends StatelessWidget {
+  final void Function() onPressed;
   const StopVideoButton({
     super.key,
+    required this.onPressed
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 25,
-      height: 25,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
+    return FloatingActionButton(
+      shape: const CircleBorder(),
+      backgroundColor: Colors.white,
+      onPressed: onPressed,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -17,7 +17,7 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-  Future<Solution> createAsync(String? content,int questionId, Iterable<XFile>? images) async {
+  Future<Solution> create(String? content,int questionId, Iterable<XFile>? images) async {
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
@@ -33,6 +33,19 @@ class SolutionService{
     final response = await _appClient.send(request);
     final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
     
+    return Solution.fromJson(json);
+  }
+
+  Future<Solution> createVideoSolution(int questionId, String? content, XFile video) async {
+    MultipartRequest request = MultipartRequest(
+      "POST",
+      _appClient.generateUri("$solutionController/$createVideoSolutionEndpoint")
+    );
+    if(content != null) request.fields["content"] = content;
+    request.files.add(await MultipartFile.fromPath("file",video.path));
+    request.fields["questionId"] = questionId.toString();
+    final response = await _appClient.send(request);
+    final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
     return Solution.fromJson(json);
   }
 

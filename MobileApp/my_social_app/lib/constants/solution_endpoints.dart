@@ -9,6 +9,7 @@ const getVideoSolutionsEndpoint = "GetVideoSolutions";
 const getSavedSolutionsEndpoint = "GetSavedSolutions";
 
 const createSolutionEndpoint = "Create";
+const createVideoSolutionEndpoint = "CreateVideoSolution";
 const deleteSolutionEndpoint = "Delete";
 
 const getSolutionDownvotesEndpoint = "GetSolutionDownvotes";

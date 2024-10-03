@@ -8,10 +8,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 
 class AddSolutionContentPage extends StatefulWidget {
-  final Iterable<XFile> images;
+  final Iterable<XFile> multiMedya;
   const AddSolutionContentPage({
     super.key,
-    required this.images
+    required this.multiMedya
   });
 
   @override
@@ -52,7 +52,7 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
         child: OutlinedButton(
           onPressed: (){
             final content = _contentController.text.trim();
-            if((content == "") && widget.images.isEmpty){
+            if((content == "") && widget.multiMedya.isEmpty){
               ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_error);
               return;
             }

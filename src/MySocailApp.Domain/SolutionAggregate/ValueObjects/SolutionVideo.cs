@@ -4,7 +4,7 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
 {
     public class SolutionVideo
     {
-        public readonly static int MaxDuration = 60; 
+        public readonly static int MaxDuration = 30; 
 
         public string BlobName { get; private set; }
         public double Duration { get; private set; }

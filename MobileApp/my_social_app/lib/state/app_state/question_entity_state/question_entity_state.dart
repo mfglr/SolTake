@@ -37,6 +37,8 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageSolutions(solutionIds)));
   QuestionEntityState createNewSolution(SolutionState solution)
     => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.createNewSolution(solution.id)));
+  QuestionEntityState createNewVideoSolution(SolutionState solution)
+    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.createNewVideoSolution(solution.id)));
   QuestionEntityState addNewSolution(int questionId,int solutionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewSolution(solutionId)));
   QuestionEntityState removeSolution(SolutionState solution)

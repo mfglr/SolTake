@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/create_solution/pages/add_solution_content_page/add_solution_content_page.dart';
+import 'package:my_social_app/views/create_solution/pages/display_video_solution_page/widgets/solution_creation_video_player.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:video_player/video_player.dart';
 
 class DisplayVideoSolutionPage extends StatefulWidget {
@@ -16,7 +18,7 @@ class DisplayVideoSolutionPage extends StatefulWidget {
 
 class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
   late VideoPlayerController _controller;
-  XFile? _file;
+  XFile? _video;
   
   void _initController(File file){
     _controller = VideoPlayerController.file(file);
@@ -30,7 +32,7 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
       .of(context)
       .pushNamed(takeVideoRoute)
       .then((value){
-        setState(() { _file = (value as XFile?);});
+        setState(() { _video = (value as XFile?);});
         if(value != null){
           _initController(File((value as XFile).path));
         }
@@ -48,14 +50,14 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
         ),
         actions: [
           TextButton(
-            onPressed: _file != null ? (){} : null,
+            onPressed: _takeVideo,
             child: Row(
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 4),
-                  child: const Icon(Icons.done),
+                  child: const Icon(Icons.photo_camera_sharp),
                 ),
-                const Text("Create Solution")
+                const Text("New Video")
               ],
             )
           )
@@ -64,7 +66,7 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
       body: Center(
         child: Builder(
           builder: (context){
-            if(_file == null){
+            if(_video == null){
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -103,21 +105,42 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
                 ],
               );
             }
-            return _controller.value.isInitialized
-              ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    VideoPlayer(_controller),
-                    const Positioned(
-                      child: Icon(Icons.play_circle_filled)
-                    )
-                  ],
-                ),
-              )
-              : const LoadingView();
+            return SolutionCreationVideoPlayer(
+              controller: _controller,
+              onDeleted: () => setState(() { _video = null; }),
+              play: (){
+                _controller
+                  .play()
+                  .then((_){ setState((){}); });
+              },
+              pause: (){
+                _controller
+                  .pause()
+                  .then((_){ setState((){}); });
+              }
+            );
           }
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: OutlinedButton(
+          onPressed: (){
+            if(_video == null){
+              ToastCreator.displayError("You have to upload a video");
+              return;
+            }
+            Navigator
+              .of(context)
+              .push(MaterialPageRoute(builder: (context) => AddSolutionContentPage(multiMedya: [_video!])))
+              .then((value){
+                if(value == null) return;
+                if(context.mounted){
+                  Navigator.of(context).pop((content: value, video: _video));
+                }
+              });
+          },
+          child: const Text("Contuinue") 
         ),
       ),
     );

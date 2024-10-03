@@ -35,6 +35,8 @@ QuestionEntityState addNextPageSolutionsReducer(QuestionEntityState prev,AddNext
   => prev.addNextPageSolutions(action.questionId, action.solutionIds);
 QuestionEntityState createNewSolutionReducer(QuestionEntityState prev,CreateNewQuestionSolutionAction action)
   => prev.createNewSolution(action.solution);
+QuestionEntityState createNewVideoSolutionReducer(QuestionEntityState prev,CreateNewQuestionVideoSolutionAction action)
+  => prev.createNewVideoSolution(action.solution);
 QuestionEntityState addNewSolutionReducer(QuestionEntityState prev,AddNewQuestionSolutionAction action)
   => prev.addNewSolution(action.questionId,action.solutionId);
 QuestionEntityState removeSolutionReducer(QuestionEntityState prev,RemoveQuestionSolutionAction action)
@@ -109,6 +111,7 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,GetNextPageQuestionSolutionsAction>(getNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionSolutionsAction>(addNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,CreateNewQuestionSolutionAction>(createNewSolutionReducer).call,
+  TypedReducer<QuestionEntityState,CreateNewQuestionVideoSolutionAction>(createNewVideoSolutionReducer).call,
   TypedReducer<QuestionEntityState,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
   //correct solutions

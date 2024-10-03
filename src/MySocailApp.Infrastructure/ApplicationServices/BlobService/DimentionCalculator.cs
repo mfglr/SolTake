@@ -7,7 +7,6 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 {
     public class DimentionCalculator : IDimentionCalculator
     {
-        //*
         private void TransformImage(SixLabors.ImageSharp.Image image,ushort orentation)
         {
             switch (orentation)
