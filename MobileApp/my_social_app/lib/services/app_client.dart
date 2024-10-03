@@ -22,7 +22,7 @@ class AppClient{
   Map<String,String> _getHeader() =>
     {
       "Authorization": "Bearer ${store.state.accessToken}",
-      "Accept-Language": PlatformDispatcher.instance.locale.languageCode
+      "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode
     };
 
   Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
@@ -41,8 +41,11 @@ class AppClient{
     return Account.fromJson(jsonDecode(data));
   }
 
-  Future<StreamedResponse> send(BaseRequest request) async {
+  Future<StreamedResponse> send(BaseRequest request,{Map<String, String>? headers}) async {
+    
     request.headers.addAll(_getHeader());
+    if(headers != null) request.headers.addAll(headers);
+
     var response = await request.send();
     if(response.statusCode >= 400){
       switch(response.statusCode){
@@ -78,6 +81,13 @@ class AppClient{
     final response = await send(request);
     return await response.stream.toBytes();
   }
+
+  Future<ByteStream> getRangeBytes(String url, int start, int end){
+    var request = Request("GET", generateUri(url));
+    var headers = {'Range': "bytes:$start-$end"};
+    return send(request,headers: headers).then((response) => response.stream);
+  }
+  
 
   Future<dynamic> post(String url, { Map<String,Object?>? body }) async {
     final Request request = Request("POST", generateUri(url));

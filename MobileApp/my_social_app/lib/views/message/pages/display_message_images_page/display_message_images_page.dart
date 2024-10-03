@@ -84,7 +84,8 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                       (image) => Center(
                         child: DisplayImageWidget(
                           image: image.image,
-                          status: image.status
+                          status: image.status,
+                          aspectRatio: 1,
                         )
                       ),
                     ).toList(),

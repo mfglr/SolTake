@@ -29,14 +29,13 @@ class AppVideoPlayer extends StatefulWidget {
 }
 
 class _AppVideoPlayerState extends State<AppVideoPlayer> {
-
-  void onCompleted(){
+  void _onCompleted(){
     if(widget.controller.value.isCompleted){
       setState(() {});
     }
   }
 
-  void onDurationChanged(){
+  void _onDurationChanged(){
     Future
       .delayed(const Duration(milliseconds: 1000))
       .then((_){ if(mounted) setState(() {}); });
@@ -44,21 +43,21 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
   @override
   void initState() {
-    widget.controller.addListener(onCompleted);
-    widget.controller.addListener(onDurationChanged);
+    widget.controller.addListener(_onCompleted);
+    widget.controller.addListener(_onDurationChanged);
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(onCompleted);
-    widget.controller.removeListener(onDurationChanged);
+    widget.controller.removeListener(_onCompleted);
+    widget.controller.removeListener(_onDurationChanged);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.controller.value.isInitialized 
+    return widget.controller.value.isInitialized
       ? GestureDetector(
         onTap: () => widget.controller.value.isPlaying ? widget.pause() : widget.play(),
         child: Stack(
@@ -144,7 +143,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                 top: 5,
                 right: 5,
                 child: ClearUploadButton(onPressed: widget.onDeleted!)
-              )
+              ),
           ],
         ),
       ) 

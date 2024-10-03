@@ -36,15 +36,40 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
 
   final Map<int,VideoPlayerController> _videoControllers = {};
 
+  void _playController(int solutionId){
+    _videoControllers[solutionId]!.play().then((_){ setState((){}); });
+    _videoControllers.forEach((key,value){
+      if(key != solutionId && value.value.isPlaying){
+        value.pause().then((_){ setState((){}); });
+      }
+    });
+  }
+
+  void _setController(int solutionId){
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    DefaultCacheManager()
+      .getSingleFile(
+        "${dotenv.env['API_URL']}/api/$solutionController/$getSolutionVideoEndpoint/$solutionId",
+        headers: { "Authorization": "Bearer ${store.state.accessToken}" }
+      )
+      .then((file){
+        final controller = VideoPlayerController.file(file);
+        controller
+          .initialize()
+          .then((_){ 
+            _videoControllers[solutionId] = controller;
+            _playController(solutionId);
+          });
+      });
+  }
+
   void _play(int solutionId){
     final controller = _videoControllers[solutionId];
     if(controller != null){
-      controller.play().then((_){ setState((){}); });
-      _videoControllers.forEach((key,value){
-        if(key != solutionId && value.value.isPlaying){
-          value.pause().then((_){ setState((){}); });
-        }
-      });
+      _playController(solutionId);
+    }
+    else{
+      _setController(solutionId);
     }
   }
 
@@ -54,30 +79,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
       controller.pause().then((_){ setState((){}); });
     }
   }
-
-  void _setVideoControllers(){
-    final store = StoreProvider.of<AppState>(context,listen: false);
-    final s = widget.solutions.where((x) => x.hasVideo);
-    for(var solution in s){
-      if(_videoControllers[solution.id] == null){
-        DefaultCacheManager()
-        .getSingleFile(
-          "${dotenv.env['API_URL']}/api/$solutionController/$getSolutionVideoEndpoint/${solution.id}",
-          headers: { "Authorization": "Bearer ${store.state.accessToken}" }
-        )
-        .then((file){
-          final controller = VideoPlayerController.file(file);
-          controller
-            .initialize()
-            .then((_){ 
-              _videoControllers[solution.id] = controller;
-              setState((){}); 
-            });
-        });
-      }
-    }
-  }
-
+ 
   @override
   void initState() {
     _onScrollBottom = (){
@@ -92,25 +94,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
         Scrollable.ensureVisible(cContext);
       }
     });
-    _setVideoControllers();
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant SolutionItemsWidget oldWidget) {
-    if(oldWidget.solutions.length != widget.solutions.length){
-      _setVideoControllers();
-      super.didUpdateWidget(oldWidget);
-      return;
-    }
-    for(int i = 0; i < oldWidget.solutions.length; i++){
-      if(oldWidget.solutions.elementAt(i).id != widget.solutions.elementAt(i).id){
-        _setVideoControllers();
-        super.didUpdateWidget(oldWidget);
-        return;
-      }
-    }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
