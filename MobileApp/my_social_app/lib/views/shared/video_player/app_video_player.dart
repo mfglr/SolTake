@@ -29,8 +29,9 @@ class AppVideoPlayer extends StatefulWidget {
 }
 
 class _AppVideoPlayerState extends State<AppVideoPlayer> {
-  void _onCompleted(){
-    if(widget.controller.value.isCompleted){
+  Future<void> _onCompleted() async {
+    final position = (await widget.controller.position)?.inSeconds;
+    if(position != null && position >= widget.controller.value.duration.inSeconds){
       setState(() {});
     }
   }
@@ -40,13 +41,14 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       .delayed(const Duration(milliseconds: 1000))
       .then((_){ if(mounted) setState(() {}); });
   }
-
+ 
   @override
   void initState() {
     widget.controller.addListener(_onCompleted);
     widget.controller.addListener(_onDurationChanged);
     super.initState();
   }
+  
 
   @override
   void dispose() {

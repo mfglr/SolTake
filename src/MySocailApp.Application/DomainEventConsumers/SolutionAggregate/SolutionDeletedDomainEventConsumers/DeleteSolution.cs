@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
+using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;

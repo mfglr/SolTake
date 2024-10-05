@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/add_solution_images_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/create_solution/pages/display_video_solution_page/display_video_solution_page.dart';
+import 'package:my_social_app/views/create_solution/pages/create_video_solution_page/create_video_solution_page.dart';
 
 class CreateSolutionSpeedDial extends StatelessWidget {
   final int questionId;
@@ -53,7 +53,7 @@ class CreateSolutionSpeedDial extends StatelessWidget {
           onTap: () =>
             Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => const DisplayVideoSolutionPage()))
+              .push(MaterialPageRoute(builder: (context) => const CreateVideoSolutionPage()))
               .then((value){
                 if(value == null) return;
                 if(context.mounted){

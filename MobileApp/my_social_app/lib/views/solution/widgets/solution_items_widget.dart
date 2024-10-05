@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -47,20 +46,17 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
 
   void _setController(int solutionId){
     final store = StoreProvider.of<AppState>(context,listen: false);
-    DefaultCacheManager()
-      .getSingleFile(
-        "${dotenv.env['API_URL']}/api/$solutionController/$getSolutionVideoEndpoint/$solutionId",
-        headers: { "Authorization": "Bearer ${store.state.accessToken}" }
-      )
-      .then((file){
-        final controller = VideoPlayerController.file(file);
-        controller
-          .initialize()
-          .then((_){ 
-            _videoControllers[solutionId] = controller;
-            _playController(solutionId);
-          });
-      });
+    final controller = VideoPlayerController
+      .networkUrl(
+        AppClient().generateUri("$solutionController/$getSolutionVideoEndpoint/$solutionId"),
+        httpHeaders: { "Authorization": "Bearer ${store.state.accessToken}" }
+      );
+      controller
+        .initialize()
+        .then((_){ 
+          _videoControllers[solutionId] = controller;
+          _playController(solutionId);
+        });
   }
 
   void _play(int solutionId){

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http.Features;
 using MySocailApp.Api;
 using MySocailApp.Api.Middlewares;
 using MySocailApp.Application;
@@ -6,8 +6,15 @@ using MySocailApp.Application.Hubs;
 using MySocailApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = int.MaxValue);
 // Add services to the container.
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = int.MaxValue;
+});
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 builder.Services
@@ -18,6 +25,7 @@ builder.Services
     .AddHttpContextAccessor()
     .AddApplicationServices()
     .AddInfrastructureServices();
+
 
 var app = builder.Build();
 app.InitializeDb();

@@ -20,6 +20,7 @@ class AddSolutionContentPage extends StatefulWidget {
 
 class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
   final TextEditingController _contentController = TextEditingController();
+  final _focusNode = FocusNode();
 
   @override
   void dispose() {
@@ -36,42 +37,52 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: TextField(
-          controller: _contentController,
-          minLines: 10,
-          maxLines: 10,
-          maxLength: solutionContentMaxLength,
-          decoration: InputDecoration(
-            hintText: AppLocalizations.of(context)!.add_solution_content_page_text_field,
-            border: const OutlineInputBorder()
-          ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8),
-        child: OutlinedButton(
-          onPressed: (){
-            final content = _contentController.text.trim();
-            if((content == "") && widget.multiMedya.isEmpty){
-              ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_error);
-              return;
-            }
-            if(content.length > questionContentMaxLenght){
-              ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_length_error);
-              return;
-            }
-            Navigator.of(context).pop(content);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(right: 5),
-                child: Text(AppLocalizations.of(context)!.add_solution_content_page_create_solution_button),
+        child: Column(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _contentController,
+                focusNode: _focusNode,
+                onTap: (){
+                  if(_focusNode.hasFocus){
+                    _focusNode.unfocus();
+                  }
+                },
+                autocorrect: true,
+                minLines: 10,
+                maxLines: 10,
+                maxLength: solutionContentMaxLength,
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.add_solution_content_page_text_field,
+                  border: const OutlineInputBorder()
+                ),
               ),
-              const Icon(Icons.create)
-            ],
-          )
+            ),
+            OutlinedButton(
+              onPressed: (){
+                final content = _contentController.text.trim();
+                if((content == "") && widget.multiMedya.isEmpty){
+                  ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_error);
+                  return;
+                }
+                if(content.length > questionContentMaxLenght){
+                  ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_length_error);
+                  return;
+                }
+                Navigator.of(context).pop(content);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 5),
+                    child: Text(AppLocalizations.of(context)!.add_solution_content_page_create_solution_button),
+                  ),
+                  const Icon(Icons.create)
+                ],
+              )
+            ),
+          ],
         ),
       ),
     );

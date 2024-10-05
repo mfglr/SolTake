@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
+using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 
-namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
+namespace MySocailApp.Infrastructure.ApplicationServices.BlobService.VideoServices
 {
     public class VideoService(IBlobNameGenerator generator, IPathFinder pathFinder, IFrameCatcher frameCatcher, IPathsContainer pathContainer, IVideoDurationCalculator videoDurationCalculator) : IVideoService
     {
@@ -25,18 +26,30 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
             _pathContainer.Add(videoPath);
 
             var frame = await _frameCatcher.GetFrameAsync(videoPath, containerNameOfFrame, 0, cancellationToken);
-            _pathContainer.Add(_pathFinder.GetPath(RootName.Image,containerNameOfFrame,frame.BlobName));
+            _pathContainer.Add(_pathFinder.GetPath(RootName.Image, containerNameOfFrame, frame.BlobName));
 
             var duration = await _videoDurationCalculator.CalculateAsync(videoPath, cancellationToken);
-
-            return new(blobNameOfVideo, duration, frame);
+            return new(blobNameOfVideo, duration, frame, stream.Length);
         }
 
-        public void Delete(string containerName,string blobName)
+        public void Delete(string containerName, string blobName)
         {
-            var path = _pathFinder.GetPath(RootName.Video,containerName, blobName);
-            if(File.Exists(path))
+            var path = _pathFinder.GetPath(RootName.Video, containerName, blobName);
+            if (File.Exists(path))
                 File.Delete(path);
+        }
+
+        public async Task<byte[]> Read(string containerName, string blobName, int offset, int count, CancellationToken cancellationToken)
+        {
+            using var stream = File.OpenRead(_pathFinder.GetPath(RootName.Video, containerName, blobName));
+            var length = stream.Length;
+            if (offset > length) return [];
+            if (offset + count > length)
+                count = (int)(length - offset);
+            var data = new byte[count];
+            stream.Position = offset;
+            await stream.ReadAsync(data.AsMemory(0, count), cancellationToken);
+            return data;
         }
 
         public Stream Read(string containerName, string blobName)

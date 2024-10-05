@@ -7,6 +7,7 @@ import 'package:my_social_app/views/notification/widgets/no_notifications.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/notification/widgets/notification_items.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -43,9 +44,9 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: const Text(
-          "Notifications",
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.notifications_page_title,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold
           ),

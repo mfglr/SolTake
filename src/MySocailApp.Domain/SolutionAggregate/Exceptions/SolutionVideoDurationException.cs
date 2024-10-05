@@ -7,7 +7,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Exceptions
 {
     public class SolutionVideoDurationException : AppException
     {
-        private readonly static string _messageEn = $"The duration of the video must be less than {SolutionVideo.MaxDuration} seconds!";
+        private readonly static string _messageEn = $"The duration of the video must be shorter than {SolutionVideo.MaxDuration} seconds!";
         private readonly static string _messageTr = $"Videonun süresi {SolutionVideo.MaxDuration} saniyeden küçük olmalıdır!";
         private readonly static Dictionary<string, string> _messages = new()
         {

@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.ApplicationServices.BlobService;
+﻿using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Core.Exceptions;
 using OpenCvSharp;
 
-namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
+namespace MySocailApp.Infrastructure.ApplicationServices.BlobService.VideoServices
 {
     public class VideoDurationCalculator : IVideoDurationCalculator
     {

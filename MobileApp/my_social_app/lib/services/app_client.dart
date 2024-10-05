@@ -82,10 +82,9 @@ class AppClient{
     return await response.stream.toBytes();
   }
 
-  Future<ByteStream> getRangeBytes(String url, int start, int end){
-    var request = Request("GET", generateUri(url));
-    var headers = {'Range': "bytes:$start-$end"};
-    return send(request,headers: headers).then((response) => response.stream);
+  Future<Uint8List> getRangeBytes(String url, int offset, int count){
+    var request = Request("GET",generateUri("$url?offset=$offset&count=$count"));
+    return send(request).then((response) => response.stream.toBytes());
   }
   
 

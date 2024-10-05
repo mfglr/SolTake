@@ -89,9 +89,9 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task<FileResult> GetSolutionVideo(int solutionId, CancellationToken cancellationToken)
             => File(
                 await _mediator.Send(new GetSolutionVideoDto(solutionId),cancellationToken),
-                "application/octet-stream",
-                true
+                "application/octet-stream"
             );
+
 
         [HttpGet("{id}")]
         public async Task<SolutionResponseDto> GetSolutionById(int id, CancellationToken cancellationToken)

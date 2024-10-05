@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 import 'package:my_social_app/views/take_video_page/widgets/start_video_button.dart';
 import 'package:my_social_app/views/take_video_page/widgets/stop_video_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TakeVieoPage extends StatefulWidget {
   final CameraDescription camera;
@@ -39,11 +41,12 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
     Timer.periodic(
       const Duration(seconds: 1),
       (timer){
-        if(timer.tick == 30 && mounted){
+        if(timer.tick == 60 && mounted){
           _controller
             .stopVideoRecording()
             .then((file){
               if(mounted){
+                ToastCreator.displayError(AppLocalizations.of(context)!.take_video_page_duration_exception);
                 Navigator.of(context).pop(file);
               }
             });

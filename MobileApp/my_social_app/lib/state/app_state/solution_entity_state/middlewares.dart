@@ -32,6 +32,7 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void createVideoSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
    if(action is CreateVideoSolutionAction){
+    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
     SolutionService()
       .createVideoSolution(action.questionId,action.content, action.video)
       .then((solution){

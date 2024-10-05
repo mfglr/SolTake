@@ -83,7 +83,9 @@
     "no_comments_description": "Be the first to comment.",
     "display_comment_likes_page_title": "Likes",
 
-    
+    "notifications_page_title": "Notifications",
+    "no_notifications_content": "No Notifications",
+
     "select_exam_page_title": "Select an exam",
     
     "select_subject_page_title": "Select a subject",
@@ -156,7 +158,7 @@
 
     "comment_liked_notification_item_content": "Your comment has been liked.",
     "comment_replied_notification_content": "Your comment has been replied.",
-    "no_notifications_content": "No Notifications",
+    
     "question_comment_created_notification_item_content": "Your question has been commented.",
     "question_liked_notification_item_content": "Your question has been liked.",
     "question_solved_notification_item_content": "YAY!!!🥳 Your question has been solved. Click to display the solution.",
@@ -262,5 +264,15 @@
     "message_home_page_content_aprove_button": "delete",
 
     "delete_conversations_button": "delete",
-    "cancel_deletion_of_conversations_button": "cancel"
+    "cancel_deletion_of_conversations_button": "cancel",
+
+    "take_video_page_duration_exception": "The duration of the video must be shorter than 60 seconds",
+
+    "create_video_solution_page_title": "Create Video Solution",
+    "create_video_solution_page_new_video_content": "New Video",
+    "create_video_solution_page_content1": "Record a Video",
+    "create_video_solution_page_content2": "Explain your solution by recording a video.",
+    "create_video_solution_page_no_video_error": "You need to upload a video in order to proceed.",
+    "create_video_solution_page_contiune_button_content": "Continue"
+
 }

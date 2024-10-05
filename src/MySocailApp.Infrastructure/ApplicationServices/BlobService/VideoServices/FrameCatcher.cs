@@ -1,9 +1,10 @@
 ﻿using MySocailApp.Application.ApplicationServices.BlobService;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
+using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Core.Exceptions;
 using OpenCvSharp;
 
-namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
+namespace MySocailApp.Infrastructure.ApplicationServices.BlobService.VideoServices
 {
     public class FrameCatcher(IBlobNameGenerator blobNameGenerator, IPathFinder pathFinder) : IFrameCatcher
     {
@@ -22,7 +23,7 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
                     if (frame == null)
                         throw new ServerSideException();
 
-                    var blobName = _blobNameGenerator.Generate(RootName.Image, containerName,"jpeg");
+                    var blobName = _blobNameGenerator.Generate(RootName.Image, containerName, "jpeg");
                     var pathName = _pathFinder.GetPath(RootName.Image, containerName, blobName);
 
                     if (!Cv2.ImWrite(pathName, frame))

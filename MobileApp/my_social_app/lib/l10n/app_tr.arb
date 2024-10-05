@@ -84,6 +84,9 @@
     "no_comments_description": "İlk yorumu yapan sen ol.",
     "display_comment_likes_page_title": "Beğeniler",
 
+    "notifications_page_title": "Bildirimler",
+    "no_notifications_content": "Hiç Bildirim Yok",
+
     "select_exam_page_title": "Bir sınav seç",
     "select_subject_page_title": "Bir konu seç",
     "select_topics_page_title": "Konuları seç",
@@ -155,7 +158,7 @@
 
     "comment_liked_notification_item_content": "Yorumun beğenildi.",
     "comment_replied_notification_content": "Yorumuna yanıt geldi.",
-    "no_notifications_content": "No Notifications",
+    
     "question_comment_created_notification_item_content": "Soruna yorum yapıldı.",
     "question_liked_notification_item_content": "Sorun beğenildi.",
     "question_solved_notification_item_content": "YAŞASIN!!!🥳 Sorun çözüldü. Çözümü görmek için tıkla.",
@@ -259,5 +262,14 @@
     "message_home_page_delete_conversations_content": "Sohbetleri silmek istediğine emin misin?",
     "message_home_page_content_aprove_button": "sil",
     "delete_conversations_button": "sil",
-    "cancel_deletion_of_conversations_button": "iptal"
+    "cancel_deletion_of_conversations_button": "iptal",
+
+    "take_video_page_duration_exception": "Videonun süresi 60 saniyeden az olmalıdır!",
+
+    "create_video_solution_page_title": "Video Çözüm Oluştur",
+    "create_video_solution_page_new_video_content": "Yeni Video",
+    "create_video_solution_page_content1": "Video Çek",
+    "create_video_solution_page_content2": "Çözümünü video çekerek anlat!",
+    "create_video_solution_page_no_video_error": "İlerleyebilmek için bir video yüklemelisin!",
+    "create_video_solution_page_contiune_button_content": "Devam Et"
 }

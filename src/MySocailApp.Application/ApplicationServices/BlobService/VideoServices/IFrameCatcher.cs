@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 
-namespace MySocailApp.Application.ApplicationServices.BlobService
+namespace MySocailApp.Application.ApplicationServices.BlobService.VideoServices
 {
     public interface IFrameCatcher
     {

@@ -91,7 +91,7 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task ConfirmEmail(string id, string token, CancellationToken cancellationToken)
             => await _mediator.Send(new ConfirmEmailDto(id, token), cancellationToken);
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         public async Task ConfirmEmailByToken(ConfirmEmailByTokenDto request, CancellationToken cancellationToken)

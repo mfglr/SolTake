@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_content_page/add_solution_content_page.dart';
-import 'package:my_social_app/views/create_solution/pages/display_video_solution_page/widgets/solution_creation_video_player.dart';
+import 'package:my_social_app/views/create_solution/pages/create_video_solution_page/widgets/solution_creation_video_player.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class DisplayVideoSolutionPage extends StatefulWidget {
-  const DisplayVideoSolutionPage({super.key});
+class CreateVideoSolutionPage extends StatefulWidget {
+  const CreateVideoSolutionPage({super.key});
 
   @override
-  State<DisplayVideoSolutionPage> createState() => _DisplayVideoSolutionPageState();
+  State<CreateVideoSolutionPage> createState() => _DisplayVideoSolutionPageState();
 }
 
-class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
+class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
   late VideoPlayerController _controller;
   XFile? _video;
   
@@ -45,8 +46,8 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: const AppTitle(
-          title: "Create Video Solution"
+        title: AppTitle(
+          title: AppLocalizations.of(context)!.create_video_solution_page_title
         ),
         actions: [
           TextButton(
@@ -57,7 +58,7 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
                   margin: const EdgeInsets.only(right: 4),
                   child: const Icon(Icons.photo_camera_sharp),
                 ),
-                const Text("New Video")
+                Text(AppLocalizations.of(context)!.create_video_solution_page_new_video_content)
               ],
             )
           )
@@ -79,20 +80,20 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 15),
-                    child: const Text(
-                      "Take A Video",
+                    child: Text(
+                      AppLocalizations.of(context)!.create_video_solution_page_content1,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30,
                       ),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 30),
-                    child: const Text(
-                      "Explain your solution by recording a video.",
+                    child: Text(
+                      AppLocalizations.of(context)!.create_video_solution_page_content2,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20
                       ),
                     ),
@@ -127,7 +128,7 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
         child: OutlinedButton(
           onPressed: (){
             if(_video == null){
-              ToastCreator.displayError("You have to upload a video");
+              ToastCreator.displayError(AppLocalizations.of(context)!.create_video_solution_page_no_video_error);
               return;
             }
             Navigator
@@ -140,7 +141,7 @@ class _DisplayVideoSolutionPageState extends State<DisplayVideoSolutionPage> {
                 }
               });
           },
-          child: const Text("Contuinue") 
+          child: Text(AppLocalizations.of(context)!.create_video_solution_page_contiune_button_content) 
         ),
       ),
     );

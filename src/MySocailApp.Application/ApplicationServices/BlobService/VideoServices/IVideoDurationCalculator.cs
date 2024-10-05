@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.ApplicationServices.BlobService
+﻿namespace MySocailApp.Application.ApplicationServices.BlobService.VideoServices
 {
     public interface IVideoDurationCalculator
     {
