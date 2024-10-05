@@ -19,7 +19,7 @@ class SolutionCarouselSliderWidget extends StatefulWidget {
 }
 
 class _SolutionCarouselSliderWidgetState extends State<SolutionCarouselSliderWidget> {
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
   int _activeIndex = 0;
 
   void _changeActiveIndex(index){

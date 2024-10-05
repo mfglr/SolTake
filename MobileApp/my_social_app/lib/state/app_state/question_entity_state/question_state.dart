@@ -27,12 +27,14 @@ class QuestionState{
   final int numberOfComments;
   final int numberOfSolutions;
   final int numberOfCorrectSolutions;
+  final int numberOfVideoSolutions;
   final Pagination likes;
   final Pagination comments;
   final Pagination solutions;
   final Pagination correctSolutions;
   final Pagination pendingSolutions;
-  final Pagination incorrectSolutions; 
+  final Pagination incorrectSolutions;
+  final Pagination videoSolutions;
 
   const QuestionState({
     required this.id,
@@ -53,12 +55,14 @@ class QuestionState{
     required this.numberOfComments,
     required this.numberOfSolutions,
     required this.numberOfCorrectSolutions,
+    required this.numberOfVideoSolutions,
     required this.likes,
     required this.comments,
     required this.solutions,
     required this.correctSolutions,
     required this.pendingSolutions,
     required this.incorrectSolutions,
+    required this.videoSolutions
   });
 
   QuestionState _optional({
@@ -75,12 +79,14 @@ class QuestionState{
     int? newNumberOfComments,
     int? newNumberOfSolutions,
     int? newNumberOfCorrectSolutions,
+    int? newNumberOfVideoSolutions,
     Pagination? newLikes,
     Pagination? newComments,
     Pagination? newSolutions,
     Pagination? newCorrectSolutions,
     Pagination? newPendingSolutions,
     Pagination? newIncorrectSolutions,
+    Pagination? newVideoSolutions,
   }) => 
     QuestionState(
       id: id,
@@ -101,12 +107,14 @@ class QuestionState{
       numberOfLikes: newNumberOfLikes ?? numberOfLikes,
       numberOfSolutions: newNumberOfSolutions ?? numberOfSolutions,
       numberOfCorrectSolutions: newNumberOfCorrectSolutions ?? numberOfCorrectSolutions,
+      numberOfVideoSolutions: newNumberOfVideoSolutions ?? numberOfVideoSolutions,
       comments: newComments ?? comments,
       likes: newLikes ?? likes,
       solutions: newSolutions ?? solutions,
       correctSolutions: newCorrectSolutions ?? correctSolutions,
       pendingSolutions: newPendingSolutions ?? pendingSolutions,
-      incorrectSolutions: newIncorrectSolutions ?? incorrectSolutions
+      incorrectSolutions: newIncorrectSolutions ?? incorrectSolutions,
+      videoSolutions: newVideoSolutions ?? videoSolutions,
     );
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
@@ -161,6 +169,14 @@ class QuestionState{
       newSolutions: solutions.prependOne(solutionId),
       newPendingSolutions: pendingSolutions.prependOne(solutionId)
     );
+  QuestionState createNewVideoSolution(int solutionId) => 
+    _optional(
+      newNumberOfSolutions: numberOfSolutions + 1,
+      newNumberOfVideoSolutions: numberOfVideoSolutions + 1,
+      newSolutions: solutions.prependOne(solutionId),
+      newPendingSolutions: pendingSolutions.prependOne(solutionId),
+      newVideoSolutions: videoSolutions.prependOne(solutionId),
+    );
   QuestionState addNewSolution(int solutionId) =>
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
@@ -187,6 +203,14 @@ class QuestionState{
         solution.state == SolutionStatus.incorrect
           ? incorrectSolutions.removeOne(solution.id)
           : incorrectSolutions,
+      newNumberOfVideoSolutions: 
+        solution.hasVideo
+          ? numberOfVideoSolutions - 1
+          : numberOfVideoSolutions,
+      newVideoSolutions:
+        solution.hasVideo
+          ? videoSolutions.removeOne(solution.id)
+          : videoSolutions,
       newState: 
         solution.state == SolutionStatus.correct && numberOfCorrectSolutions == 1
           ? QuestionStatus.unsolved
@@ -208,6 +232,15 @@ class QuestionState{
   QuestionState addNextPageIncorrectSolutions(Iterable<int> solutionIds) =>
     _optional(newIncorrectSolutions: incorrectSolutions.addNextPage(solutionIds));
  
+  QuestionState startLoadingNextVideoSolutions() =>
+    _optional(newVideoSolutions: videoSolutions.startLoadingNext());
+  QuestionState addNextPageVideoSolutions(Iterable<int> solutionIds) =>
+    _optional(newVideoSolutions: videoSolutions.addNextPage(solutionIds));
+  QuestionState addVideoSolution(int solutionId) =>
+    _optional(newVideoSolutions: videoSolutions.prependOne(solutionId));
+  QuestionState removeVideoSolution(int solutionId) =>
+    _optional(newVideoSolutions: videoSolutions.removeOne(solutionId));
+
   QuestionState startLoadingNextComments() =>
     _optional(newComments: comments.startLoadingNext());
   QuestionState addNextPageComments(Iterable<int> commentIds) => 

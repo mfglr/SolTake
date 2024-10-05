@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/constants/controllers.dart';
+import 'package:my_social_app/constants/solution_endpoints.dart';
+import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_item_widget.dart';
+import 'package:video_player/video_player.dart';
 
 class SolutionItemsWidget extends StatefulWidget {
   final Iterable<SolutionState> solutions;
   final Function onScrollBottom;
   final Pagination pagination;
   final int? solutionId;
+
   const SolutionItemsWidget({
     super.key,
     required this.pagination,
@@ -27,6 +33,49 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
   final ScrollController _scrollController = ScrollController();
   late final void Function() _onScrollBottom;
 
+  final Map<int,VideoPlayerController> _videoControllers = {};
+
+  void _playController(int solutionId){
+    _videoControllers[solutionId]!.play().then((_){ setState((){}); });
+    _videoControllers.forEach((key,value){
+      if(key != solutionId && value.value.isPlaying){
+        value.pause().then((_){ setState((){}); });
+      }
+    });
+  }
+
+  void _setController(int solutionId){
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    final controller = VideoPlayerController
+      .networkUrl(
+        AppClient().generateUri("$solutionController/$getSolutionVideoEndpoint/$solutionId"),
+        httpHeaders: { "Authorization": "Bearer ${store.state.accessToken}" }
+      );
+      controller
+        .initialize()
+        .then((_){ 
+          _videoControllers[solutionId] = controller;
+          _playController(solutionId);
+        });
+  }
+
+  void _play(int solutionId){
+    final controller = _videoControllers[solutionId];
+    if(controller != null){
+      _playController(solutionId);
+    }
+    else{
+      _setController(solutionId);
+    }
+  }
+
+  void _pause(int solutionId){
+    final controller = _videoControllers[solutionId];
+    if(controller != null && controller.value.isPlaying){
+      controller.pause().then((_){ setState((){}); });
+    }
+  }
+ 
   @override
   void initState() {
     _onScrollBottom = (){
@@ -35,7 +84,6 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
       }
     };
     _scrollController.addListener(_onScrollBottom);
-
     WidgetsBinding.instance.addPostFrameCallback((_){
       final cContext = _solutionKey.currentContext;
       if(cContext != null){
@@ -65,14 +113,17 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
               return Container(
                 key: widget.solutionId == solution.id ? _solutionKey : null,
                 margin: const EdgeInsets.only(bottom: 15),
-                child: SolutionItemWidget(solution: solution),
+                child: SolutionItemWidget(
+                  solution: solution,
+                  controller: _videoControllers[solution.id],
+                  play: solution.hasVideo ? _play : null,
+                  pause: solution.hasVideo ? _pause : null,
+                ),
               );
             }
           ),
-          Builder(builder: (context){
-            if(widget.pagination.loadingNext) return const LoadingCircleWidget(strokeWidth: 3,);
-            return const SpaceSavingWidget();
-          })
+          if(widget.pagination.loadingNext)
+            const LoadingCircleWidget(strokeWidth: 3)
         ]
       ),
     );

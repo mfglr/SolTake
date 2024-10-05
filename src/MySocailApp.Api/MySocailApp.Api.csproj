@@ -42,6 +42,7 @@
     <Folder Include="Images\SolutionImages\" />
     <Folder Include="Images\SolutionImages\" />
     <Folder Include="Images\QuestionImages\" />
+    <Folder Include="Videos\SolutionVideos\" />
   </ItemGroup>
 
 </Project>

@@ -37,6 +37,8 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageSolutions(solutionIds)));
   QuestionEntityState createNewSolution(SolutionState solution)
     => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.createNewSolution(solution.id)));
+  QuestionEntityState createNewVideoSolution(SolutionState solution)
+    => QuestionEntityState(entities: updateOne(entities[solution.questionId]?.createNewVideoSolution(solution.id)));
   QuestionEntityState addNewSolution(int questionId,int solutionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewSolution(solutionId)));
   QuestionEntityState removeSolution(SolutionState solution)
@@ -57,7 +59,15 @@ class QuestionEntityState extends EntityState<QuestionState>{
   QuestionEntityState addNextPageIncorrectSolutions(int questionId,Iterable<int> solutionIds) =>
     QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageIncorrectSolutions(solutionIds)));
 
-  
+  QuestionEntityState startLoadingNextVideoSolutions(int questionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextVideoSolutions()));
+  QuestionEntityState addNextPageVideoSolutions(int questionId, Iterable<int> solutionIds) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.addNextPageVideoSolutions(solutionIds)));
+  QuestionEntityState addVideoSolution(int questionId, int solutionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.addVideoSolution(solutionId)));
+  QuestionEntityState removeVideoSolution(int questionId, int solutionId) =>
+    QuestionEntityState(entities: updateOne(entities[questionId]?.removeVideoSolution(solutionId)));
+
   QuestionEntityState getNextPageComments(int questionId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.startLoadingNextComments()));
   QuestionEntityState addNextPageComments(int questionId,Iterable<int> commentIds)

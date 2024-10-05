@@ -139,6 +139,11 @@ class CreateNewQuestionSolutionAction extends AppAction{
   const CreateNewQuestionSolutionAction({required this.solution});
 }
 @immutable
+class CreateNewQuestionVideoSolutionAction extends AppAction{
+  final SolutionState solution;
+  const CreateNewQuestionVideoSolutionAction({required this.solution});
+}
+@immutable
 class AddNewQuestionSolutionAction extends AppAction{
   final int questionId;
   final int solutionId;
@@ -223,6 +228,40 @@ class AddNextPageQuestionIncorrectSolutionsAction extends AppAction{
 }
 
 @immutable
+class GetNextPageQuestionVideoSolutionsIfNoPageAction extends AppAction{
+  final int questionId;
+  const GetNextPageQuestionVideoSolutionsIfNoPageAction({required this.questionId});
+}
+@immutable
+class GetNextPageQuestionVideoSolutionsIfReadyAction extends AppAction{
+  final int questionId;
+  const GetNextPageQuestionVideoSolutionsIfReadyAction({required this.questionId});
+}
+@immutable
+class GetNextPageQuestionVideoSolutionsAction extends AppAction{
+  final int questionId;
+  const GetNextPageQuestionVideoSolutionsAction({required this.questionId});
+}
+@immutable
+class AddNextPageQuestionVideoSolutionsAction extends AppAction{
+  final int questionId;
+  final Iterable<int> solutionIds;
+  const AddNextPageQuestionVideoSolutionsAction({required this.questionId, required this.solutionIds});
+}
+@immutable
+class AddQuestionVideoSolutionAction extends AppAction{
+  final int questionId;
+  final int solutionId;
+  const AddQuestionVideoSolutionAction({required this.questionId, required this.solutionId});
+}
+@immutable
+class RemoveQuestionVideoSolutionAction extends AppAction{
+  final int questionId;
+  final int solutionId;
+  const RemoveQuestionVideoSolutionAction({required this.questionId, required this.solutionId});
+}
+
+@immutable
 class GetNextPageQuestionCommentsIfNoPageAction extends AppAction{
   final int questionId;
   const GetNextPageQuestionCommentsIfNoPageAction({required this.questionId});
@@ -297,3 +336,4 @@ class UnsaveQuestionSuccessAction extends AppAction{
   final int questionId;
   const UnsaveQuestionSuccessAction({required this.questionId});
 }
+

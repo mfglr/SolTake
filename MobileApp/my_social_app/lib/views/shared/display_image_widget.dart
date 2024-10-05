@@ -8,12 +8,18 @@ class DisplayImageWidget extends StatefulWidget {
   final Uint8List? image;
   final ImageStatus status;
   final BoxFit? boxFit;
+  final StackFit stackFit;
+  final double aspectRatio;
   final void Function()? onTap;
+  final Widget? centerWidget;
   const DisplayImageWidget({
     super.key,
     required this.image,
     required this.status,
+    required this.aspectRatio,
+    this.centerWidget,
     this.boxFit,
+    this.stackFit = StackFit.loose,
     this.onTap,
   });
 
@@ -24,15 +30,29 @@ class DisplayImageWidget extends StatefulWidget {
 class _DisplayImageWidgetState extends State<DisplayImageWidget> {
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
-      onTap: widget.onTap,
+    return  SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.width / widget.aspectRatio,
       child: Builder(
         builder: (context){
           switch(widget.status){
             case ImageStatus.done:
-              return Image.memory(
-                widget.image!,
-                fit: widget.boxFit,
+              return GestureDetector(
+                onTap: widget.onTap,
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  fit: widget.stackFit,
+                  children: [
+                    Image.memory(
+                      widget.image!,
+                      fit: widget.boxFit,
+                    ),
+                    if(widget.centerWidget != null)
+                      Positioned(
+                        child: widget.centerWidget!
+                      )
+                  ],
+                ),
               );
             case ImageStatus.started:
               return const LoadingWidget();

@@ -17,7 +17,7 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-  Future<Solution> createAsync(String? content,int questionId, Iterable<XFile>? images) async {
+  Future<Solution> create(String? content,int questionId, Iterable<XFile>? images) async {
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
@@ -33,6 +33,19 @@ class SolutionService{
     final response = await _appClient.send(request);
     final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
     
+    return Solution.fromJson(json);
+  }
+
+  Future<Solution> createVideoSolution(int questionId, String? content, XFile video) async {
+    MultipartRequest request = MultipartRequest(
+      "POST",
+      _appClient.generateUri("$solutionController/$createVideoSolutionEndpoint")
+    );
+    if(content != null) request.fields["content"] = content;
+    request.files.add(await MultipartFile.fromPath("file",video.path));
+    request.fields["questionId"] = questionId.toString();
+    final response = await _appClient.send(request);
+    final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
     return Solution.fromJson(json);
   }
 
@@ -130,7 +143,13 @@ class SolutionService{
       .get(_appClient.generatePaginationUrl("$solutionController/$getIncorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
-  
+
+    Future<Iterable<Solution>> getVideoSolutions(int questionId, Page page) =>
+      _appClient
+        .get(_appClient.generatePaginationUrl("$solutionController/$getVideoSolutionsEndpoint/$questionId",page))
+        .then((response) => response as List)
+        .then((list) => list.map((json) => Solution.fromJson(json)));
+
   Future<Iterable<SolutionUserSave>> getSavedSolutions(Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getSavedSolutionsEndpoint", page))
@@ -140,4 +159,9 @@ class SolutionService{
   Future<Uint8List> getSolutionImage(int solutionId,int solutionImageId) =>
     _appClient
       .getBytes("$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId");
+  
+  Future<Uint8List> getSolutionVideo(int solutionId) =>
+    _appClient
+      .getBytes("$solutionController/$getSolutionVideoEndpoint/$solutionId");
+
 }

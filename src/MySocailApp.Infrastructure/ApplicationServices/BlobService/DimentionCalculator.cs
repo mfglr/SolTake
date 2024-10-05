@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using SixLabors.ImageSharp.Processing;
 
@@ -6,7 +7,6 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService
 {
     public class DimentionCalculator : IDimentionCalculator
     {
-        //*
         private void TransformImage(SixLabors.ImageSharp.Image image,ushort orentation)
         {
             switch (orentation)

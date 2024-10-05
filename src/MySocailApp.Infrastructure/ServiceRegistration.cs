@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
@@ -25,6 +26,7 @@ using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.ApplicationServices;
 using MySocailApp.Infrastructure.ApplicationServices.BlobService;
+using MySocailApp.Infrastructure.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Infrastructure.ApplicationServices.Email;
 using MySocailApp.Infrastructure.ApplicationServices.Email.MailMessageFactories;
 using MySocailApp.Infrastructure.AppUserAggregate;
@@ -96,9 +98,14 @@ namespace MySocailApp.Infrastructure
         
         private static IServiceCollection AddBlobService(this IServiceCollection services)
             => services
-                .AddSingleton<IBlobNameGenerator,BlobNameGenerator>()
-                .AddSingleton<IDimentionCalculator, DimentionCalculator>()
-                .AddScoped<IBlobService,BlobService>();
+                .AddScoped<IBlobNameGenerator,BlobNameGenerator>()
+                .AddScoped<IPathFinder,PathFinder>()
+                .AddScoped<IDimentionCalculator, DimentionCalculator>()
+                .AddScoped<IPathsContainer, PathsContainer>()
+                .AddScoped<IBlobService,BlobService>()
+                .AddScoped<IFrameCatcher, FrameCatcher>()
+                .AddScoped<IVideoDurationCalculator, VideoDurationCalculator>()
+                .AddScoped<IVideoService,VideoService>();
         
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {

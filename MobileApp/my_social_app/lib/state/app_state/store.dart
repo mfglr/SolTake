@@ -258,6 +258,10 @@ final store = Store(
     getNextPageQuestionIncorrectSolutionsIfReadyMiddleware,
     getNextPageQuestionIncorrectSolutionsMiddleware,
 
+    getNextPageQuestionVideoSolutionsIfNoPageMiddleware,
+    getNextPageQuestionVideoSolutionsIfReadyMiddleware,
+    getNextPageQuestionVideoSolutionsMiddleware,
+
     getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
     getNextPageQuestionCommentIfReadyMiddleware,
     getNextPageQuestionCommentsMiddleware,
@@ -267,6 +271,7 @@ final store = Store(
 
     //solution entity state
     createSolutionMiddleware,
+    createVideoSolutionMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
 

@@ -12,9 +12,7 @@ class DialogCreator{
           content: Text(content),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+              onPressed: () => Navigator.of(context).pop(false),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

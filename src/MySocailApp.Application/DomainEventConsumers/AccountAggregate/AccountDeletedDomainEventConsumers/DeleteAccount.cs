@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.AccountAggregate.Entities;

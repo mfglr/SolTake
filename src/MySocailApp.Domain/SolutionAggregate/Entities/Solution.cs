@@ -16,27 +16,43 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public SolutionContent Content { get; private set; } = null!;
         private readonly List<SolutionImage> _images = [];
         public IReadOnlyCollection<SolutionImage> Images => _images;
+        public SolutionVideo? Video { get; private set; }
 
-        internal void Create(int questionId, int appUserId, SolutionContent content, IEnumerable<SolutionImage> images)
+        private Solution() { }
+
+        public Solution(SolutionContent content, IEnumerable<SolutionImage> images)
         {
-
-            if((content == null || content.Value.Trim() == "") && !images.Any())
-                throw new SolutionContentOrImagesRequiredException();
+            if ((content == null || content.Value.Trim() == "") && !images.Any())
+                throw new SolutionContentRequiredException();
             if (images.Count() > 3)
                 throw new TooManySolutionImageException();
-
-            ArgumentNullException.ThrowIfNull(content);
             
+            ArgumentNullException.ThrowIfNull(content);
+
+            Content = content;
+            _images.AddRange(images);
+            State = SolutionState.Pending;
+        }
+
+        public Solution(SolutionContent content,SolutionVideo video)
+        {
+            ArgumentNullException.ThrowIfNull(content);
+            ArgumentNullException.ThrowIfNull(video);
+
+            Content = content;
+            Video = video;
+            _images.Add(SolutionImage.Create(video.FrameBlobName,video.FrameHeight,video.FrameWidth));
+            State = SolutionState.Pending;
+        }
+
+        internal void Create(int questionId, int appUserId)
+        {
             QuestionId = questionId;
             AppUserId = appUserId;
-            Content = content;
-            State = SolutionState.Pending;
-            _images.AddRange(images);
             UpdatedAt = CreatedAt = DateTime.UtcNow;
-
             AddDomainEvent(new SolutionCreatedDomainEvent(this));
         }
-        
+
         public bool IsRemoved { get; private set; }
         public void Remove()
         {

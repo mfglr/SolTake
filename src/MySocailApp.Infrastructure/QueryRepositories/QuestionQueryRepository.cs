@@ -60,7 +60,22 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                     x.AppUserId != accountId,
                 cancellationToken
             );
-        
+
+        public Task<List<QuestionResponseDto>> GetQuestionsThatHasSolutionVideoAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
+            => GetListAsync(
+                accountId,
+                page,
+                x =>
+                    (examId == null || x.ExamId == examId) &&
+                    (subjectId == null || x.SubjectId == subjectId) &&
+                    (topicId == null || x.Topics.Any(x => x.TopicId == topicId)) &&
+                    x.Solutions.Any(x => x.Video != null) &&
+                    !x.IsRemoved &&
+                    x.AppUserId != accountId,
+                cancellationToken
+            );
+
+
         public Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
             => GetListAsync(accountId, page, x => x.AppUserId == userId && x.Solutions.Any(x => x.State == SolutionState.Correct) && !x.IsRemoved, cancellationToken);
         

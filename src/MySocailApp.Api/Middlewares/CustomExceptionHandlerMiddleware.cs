@@ -9,7 +9,7 @@ namespace MySocailApp.Api.Middlewares
     {
         private readonly RequestDelegate _next = next;
 
-        public async Task InvokeAsync(HttpContext context,IBlobService blobService)
+        public async Task InvokeAsync(HttpContext context, IPathsContainer pathContainer)
         {
             try
             {
@@ -18,12 +18,12 @@ namespace MySocailApp.Api.Middlewares
             catch (AppException ex)
             {
                 await context.WriteAppExceptionAsync(context.GetLanguage(), ex);
-                blobService.Rollback();
+                pathContainer.Rollback();
             }
             catch (Exception ex)
             {
                 await context.WriteAppExceptionAsync(context.GetLanguage(), new ServerSideException());
-                blobService.Rollback();
+                pathContainer.Rollback();
             }
         }
     }

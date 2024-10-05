@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
-import 'package:my_social_app/views/create_solution/pages/add_solution_content_page.dart';
+import 'package:my_social_app/views/create_solution/pages/add_solution_content_page/add_solution_content_page.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/widgets/no_solution_image_widget.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/widgets/solution_carousel_slider_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
@@ -73,7 +73,7 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
           onPressed: () => 
             Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => AddSolutionContentPage(images: _images)))
+              .push(MaterialPageRoute(builder: (context) => AddSolutionContentPage(multiMedya: _images)))
               .then((content){
                 if(content == null) return;
                 Navigator.of(context).pop((images: _images,content: content as String));

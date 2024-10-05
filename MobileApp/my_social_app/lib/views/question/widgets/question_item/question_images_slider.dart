@@ -20,7 +20,7 @@ class QuestionImagesSlider extends StatefulWidget {
 class _QuestionImagesSliderState extends State<QuestionImagesSlider> with TickerProviderStateMixin {
   bool _isLiked = false;
   int _index = 0;
-  final CarouselController _carouselController = CarouselController();
+  final CarouselSliderController _carouselController = CarouselSliderController();
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 600),
     vsync: this
@@ -30,14 +30,15 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
     curve: Curves.fastOutSlowIn,
   );
 
-  double _getMaxHeightSize(BuildContext context,Iterable<QuestionImageState> images){
-    var max = images.first;
+  double _getMinAspectRatio(BuildContext context,Iterable<QuestionImageState> images){
+    var min = images.first.width / images.first.height;
     for(final image in images){
-      if(image.height > max.height){
-        max = image;
+      var aspectRatio = (image.width / image.height);
+      if( aspectRatio < min){
+        min = aspectRatio;
       }
     }
-    return (MediaQuery.of(context).size.width * max.height) / max.width;
+    return min;
   }
 
   void _changeIndex(index){
@@ -90,13 +91,14 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
             carouselController: _carouselController,
             items: widget.question.images.map(
               (imageState) => DisplayImageWidget(
-                image: imageState.image, 
+                image: imageState.image,
                 status: imageState.state,
+                aspectRatio: _getMinAspectRatio(context, widget.question.images),
               )).toList(),
             options: CarouselOptions(
               autoPlay: false,
               viewportFraction: 1,
-              height: _getMaxHeightSize(context, widget.question.images),
+              height: MediaQuery.of(context).size.width / _getMinAspectRatio(context, widget.question.images),
               enableInfiniteScroll: false,
               onPageChanged: (index, reason){
                 final store = StoreProvider.of<AppState>(context,listen: false);

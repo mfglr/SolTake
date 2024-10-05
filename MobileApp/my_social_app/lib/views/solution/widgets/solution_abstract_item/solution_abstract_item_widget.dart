@@ -21,7 +21,6 @@ class SolutionAbstractItemWidget extends StatefulWidget {
 }
 
 class _SolutionAbstractItemWidgetState extends State<SolutionAbstractItemWidget> {
-
   @override
   void initState() {
     if(widget.solution.images.firstOrNull != null){
@@ -34,19 +33,26 @@ class _SolutionAbstractItemWidgetState extends State<SolutionAbstractItemWidget>
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(1.0),
-      child: GestureDetector(
-        onTap: () => widget.onTap(widget.solution.id),
-        child: Builder(
-          builder: (context){
-            final image = widget.solution.images.firstOrNull;
-            if(image == null) return const NoSolutionImage();
-            return DisplayImageWidget(
-              image: widget.solution.images.first.image,
-              status: image.state,
-              boxFit: BoxFit.cover,
-            );
-          }
-        ),
+      child: Builder(
+        builder: (context){
+          final image = widget.solution.images.firstOrNull;
+          if(image == null) return const NoSolutionImage();
+          return DisplayImageWidget(
+            onTap: () => widget.onTap(widget.solution.id),
+            image: image.image,
+            status: image.state,
+            aspectRatio: 1,
+            stackFit: StackFit.expand,
+            boxFit: BoxFit.cover,
+            centerWidget: widget.solution.hasVideo 
+              ? const Icon(
+                color: Colors.white,
+                size: 60,
+                Icons.play_circle_fill_rounded,
+              ) 
+              : null,
+          );
+        }
       ),
     );
   }

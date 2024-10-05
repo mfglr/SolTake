@@ -73,7 +73,7 @@ class _RootViewState extends State<RootView> {
                 icon: Icon(Icons.search_outlined),
                 label: '',
               ),
-        
+
               StoreConnector<AppState,int>(
                 converter: (store) => store.state.selectNumberOfComingMessages,
                 builder: (context,count) => NavigationDestination(

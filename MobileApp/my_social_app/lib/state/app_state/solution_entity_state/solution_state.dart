@@ -11,6 +11,7 @@ class SolutionState{
   final int appUserId;
   final bool isOwner;
   final bool isSaved;
+  final bool hasVideo;
   final String userName;
   final String? content;
   final bool isUpvoted;
@@ -32,6 +33,7 @@ class SolutionState{
     required this.appUserId,
     required this.isOwner,
     required this.isSaved,
+    required this.hasVideo,
     required this.userName,
     required this.content,
     required this.isUpvoted,
@@ -72,6 +74,7 @@ class SolutionState{
         appUserId: appUserId,
         isOwner: isOwner,
         isSaved: newIsSaved ?? isSaved,
+        hasVideo: hasVideo,
         userName: newUserName ?? userName,
         content: newContent ?? content,
         isUpvoted: newIsUpvoted ?? isUpvoted,

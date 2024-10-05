@@ -11172,12 +11172,47 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("SolutionId");
                         });
 
+                    b.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionVideo", "Video", b1 =>
+                        {
+                            b1.Property<int>("SolutionId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("BlobName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<double>("Duration")
+                                .HasColumnType("float");
+
+                            b1.Property<string>("FrameBlobName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<float>("FrameHeight")
+                                .HasColumnType("real");
+
+                            b1.Property<float>("FrameWidth")
+                                .HasColumnType("real");
+
+                            b1.Property<long>("Length")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("SolutionId");
+
+                            b1.ToTable("Solutions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SolutionId");
+                        });
+
                     b.Navigation("AppUser");
 
                     b.Navigation("Content")
                         .IsRequired();
 
                     b.Navigation("Question");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionImage", b =>

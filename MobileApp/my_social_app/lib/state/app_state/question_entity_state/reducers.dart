@@ -35,6 +35,8 @@ QuestionEntityState addNextPageSolutionsReducer(QuestionEntityState prev,AddNext
   => prev.addNextPageSolutions(action.questionId, action.solutionIds);
 QuestionEntityState createNewSolutionReducer(QuestionEntityState prev,CreateNewQuestionSolutionAction action)
   => prev.createNewSolution(action.solution);
+QuestionEntityState createNewVideoSolutionReducer(QuestionEntityState prev,CreateNewQuestionVideoSolutionAction action)
+  => prev.createNewVideoSolution(action.solution);
 QuestionEntityState addNewSolutionReducer(QuestionEntityState prev,AddNewQuestionSolutionAction action)
   => prev.addNewSolution(action.questionId,action.solutionId);
 QuestionEntityState removeSolutionReducer(QuestionEntityState prev,RemoveQuestionSolutionAction action)
@@ -55,6 +57,16 @@ QuestionEntityState getNextPageIncorrectSolutionsReducer(QuestionEntityState pre
   => prev.startLoadingNextIncorrectSolutions(action.questionId);
 QuestionEntityState addNextPageIncorrectSolutionsReducer(QuestionEntityState prev,AddNextPageQuestionIncorrectSolutionsAction action)
   => prev.addNextPageIncorrectSolutions(action.questionId,action.solutionIds);
+
+//video solutions
+QuestionEntityState getNextPageVideoSolutionsReducer(QuestionEntityState prev,GetNextPageQuestionVideoSolutionsAction action)
+  => prev.startLoadingNextVideoSolutions(action.questionId);
+QuestionEntityState addNextPageVideoSolutionReducer(QuestionEntityState prev,AddNextPageQuestionVideoSolutionsAction action)
+  => prev.addNextPageVideoSolutions(action.questionId,action.solutionIds);
+QuestionEntityState addVideoSolutionReducer(QuestionEntityState prev,AddQuestionVideoSolutionAction action)
+  => prev.addVideoSolution(action.questionId, action.solutionId);
+QuestionEntityState removeVideoSolutionReducer(QuestionEntityState prev,RemoveQuestionVideoSolutionAction action)
+  => prev.removeVideoSolution(action.questionId,action.solutionId);
 
 //comments
 QuestionEntityState getNextPageCommentsReducer(QuestionEntityState prev,GetNextPageQuestionCommentsAction action)
@@ -99,6 +111,7 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,GetNextPageQuestionSolutionsAction>(getNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionSolutionsAction>(addNextPageSolutionsReducer).call,
   TypedReducer<QuestionEntityState,CreateNewQuestionSolutionAction>(createNewSolutionReducer).call,
+  TypedReducer<QuestionEntityState,CreateNewQuestionVideoSolutionAction>(createNewVideoSolutionReducer).call,
   TypedReducer<QuestionEntityState,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
   //correct solutions
@@ -111,6 +124,12 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,GetNextPageQuestionIncorrectSolutionsAction>(getNextPageIncorrectSolutionsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionIncorrectSolutionsAction>(addNextPageIncorrectSolutionsReducer).call,
   
+  //video solutions
+  TypedReducer<QuestionEntityState,GetNextPageQuestionVideoSolutionsAction>(getNextPageVideoSolutionsReducer).call,
+  TypedReducer<QuestionEntityState,AddNextPageQuestionVideoSolutionsAction>(addNextPageVideoSolutionReducer).call,
+  TypedReducer<QuestionEntityState,AddQuestionVideoSolutionAction>(addVideoSolutionReducer).call,
+  TypedReducer<QuestionEntityState,RemoveQuestionVideoSolutionAction>(removeVideoSolutionReducer).call,
+
   //comments
   TypedReducer<QuestionEntityState,GetNextPageQuestionCommentsAction>(getNextPageCommentsReducer).call,
   TypedReducer<QuestionEntityState,AddNextPageQuestionCommentsAction>(addNextPageCommentsReducer).call,

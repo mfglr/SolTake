@@ -10,5 +10,8 @@ namespace MySocailApp.Application.QueryRepositories
         Task<List<SolutionResponseDto>> GetCorrectSolutionsByQuestionId(int accountId, IPage page, int questionId, CancellationToken cancellationToken);
         Task<List<SolutionResponseDto>> GetPendingSolutionsByQuestionId(int accountId, IPage pagination, int questionId, CancellationToken cancellationToken);
         Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int accountId, IPage pagination, int questionId, CancellationToken cancellationToken);
+        Task<List<SolutionResponseDto>> GetVideoSolutions(int accountId, IPage page, int questionId, CancellationToken cancellationToken);
+
+
     }
 }

@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
+import 'package:my_social_app/views/shared/clear_upload_button/clear_upload_button.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
   final Iterable<XFile> images;
@@ -20,7 +21,7 @@ class CarouselSliderWidget extends StatefulWidget {
 
 class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
   int _index = 0;
-  final CarouselController _carouselController = CarouselController();
+  final CarouselSliderController _carouselController = CarouselSliderController();
   
   void _changeIndex(index){
     _carouselController
@@ -31,7 +32,6 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
       );
     setState(() { _index = index; });
   }
-
 
   @override
   void initState() {
@@ -55,18 +55,8 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                 Positioned(
                   right: 8,
                   top: 8,
-                  child: FilledButton(
+                  child: ClearUploadButton(
                     onPressed: () => widget.removeImage(image),
-                    style: ButtonStyle(
-                      padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
-                      minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 20
-                    ),
                   ),
                 ),
               ]

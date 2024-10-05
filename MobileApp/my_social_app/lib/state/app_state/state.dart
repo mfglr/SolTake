@@ -223,6 +223,8 @@ class AppState{
     userEntityState.entities[userId]!.savedSolutions.ids.map(
       (saveId) => solutionEntityState.entities[solutionUserSaveEntityState.entities[saveId]!.solutionId]!
     );
+  Iterable<SolutionState> selectQuestionVideoSolutions(int questionId) =>
+    questionEntityState.entities[questionId]!.videoSolutions.ids.map((e) => solutionEntityState.entities[e]!);
 
   //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)

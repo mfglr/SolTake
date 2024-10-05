@@ -32,13 +32,13 @@ class _QuestionAbstractItemWidgetState extends State<QuestionAbstractItemWidget>
     return Padding(
       key: ValueKey(widget.question.id),
       padding: const EdgeInsets.all(1.0),
-      child: GestureDetector(
+      child: DisplayImageWidget(
         onTap: widget.onTap != null ? (){ widget.onTap!(widget.question.id); } : null,
-        child: DisplayImageWidget(
-          image: widget.question.images.first.image,
-          status: widget.question.images.first.state,
-          boxFit: BoxFit.cover,
-        ),
+        image: widget.question.images.first.image,
+        status: widget.question.images.first.state,
+        aspectRatio: 1,
+        stackFit: StackFit.expand,
+        boxFit: BoxFit.cover,
       ),
     );
   }
