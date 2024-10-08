@@ -13,6 +13,8 @@ class Account{
   final String userName;
   final bool emailConfirmed;
   final bool isThirdPartyAuthenticated;
+  final bool isPrivacyPolicyApproved;
+  final bool isTermsOfUseApproved;
   final String? language;
   final String accessToken;
   final String refreshToken;
@@ -27,7 +29,9 @@ class Account{
     required this.isThirdPartyAuthenticated,
     required this.language,
     required this.accessToken,
-    required this.refreshToken
+    required this.refreshToken,
+    required this.isPrivacyPolicyApproved,
+    required this.isTermsOfUseApproved,
   });
 
   factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
@@ -43,6 +47,8 @@ class Account{
         userName: userName,
         emailConfirmed: emailConfirmed,
         isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
+        isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
         refreshToken: refreshToken
       );

@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateUserImage
 {
-    public class UpdateUserImageHandler(IAppUserWriteRepository appUserRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IBlobService blobService) : IRequestHandler<UpdateUserImageDto>
+    public class UpdateUserImageHandler(IAppUserWriteRepository appUserRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IImageService blobService) : IRequestHandler<UpdateUserImageDto>
     {
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
         private readonly IAppUserWriteRepository _appUserRepository = appUserRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;

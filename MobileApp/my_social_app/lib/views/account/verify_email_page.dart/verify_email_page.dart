@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/account/verify_email_page.dart/widgets/logout_button.dart';
-import 'package:my_social_app/views/account/verify_email_page.dart/widgets/send_email_confirmation_mail_button.dart';
+import 'package:my_social_app/views/account/verify_email_page.dart/widgets/send_email_verification_mail_button.dart';
 import 'package:my_social_app/views/account/verify_email_page.dart/widgets/verify_email_form.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -37,7 +37,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               child: const VerifyEmailForm()
             ),
             
-            const SendEmailConfirmationMailButton(),
+            const SendEmailVerificationMailButton(),
             const LogoutButton()
            
           ],

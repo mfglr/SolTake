@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SolTake</string>
-    <string name="facebook_app_id">916302830522195</string>
-    <string name="fb_login_protocol_scheme">fb916302830522195</string>
-    <string name="facebook_client_token">cd6ea5d1c193abf4b2d61cb108914ecb</string>
+    <string name="facebook_app_id">1749458745800031</string>
+    <string name="fb_login_protocol_scheme">fb1749458745800031</string>
+    <string name="facebook_client_token">ede054903280f73f9b8c8d78cda27b60</string>
 </resources>

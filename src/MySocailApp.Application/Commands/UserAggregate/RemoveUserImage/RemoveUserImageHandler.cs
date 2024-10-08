@@ -1,17 +1,17 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
 {
-    public class RemoveUserImageHandler(IAppUserWriteRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IBlobService blobService) : IRequestHandler<RemoveUserImageDto, byte[]>
+    public class RemoveUserImageHandler(IAppUserWriteRepository repository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IImageService blobService) : IRequestHandler<RemoveUserImageDto, byte[]>
     {
         private readonly IAppUserWriteRepository _repository = repository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
 
         public async Task<byte[]> Handle(RemoveUserImageDto request, CancellationToken cancellationToken)
         {

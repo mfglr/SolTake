@@ -12,6 +12,8 @@ class AccountState{
   final String userName;
   final bool emailConfirmed;
   final bool isThirdPartyAuthenticated;
+  final bool isPrivacyPolicyApproved;
+  final bool isTermsOfUseApproved;
   final String? language;
   final String refreshToken;
 
@@ -24,7 +26,9 @@ class AccountState{
     required this.emailConfirmed,
     required this.isThirdPartyAuthenticated,
     required this.language,
-    required this.refreshToken
+    required this.refreshToken,
+    required this.isPrivacyPolicyApproved,
+    required this.isTermsOfUseApproved,
   });
   
 
@@ -40,6 +44,8 @@ class AccountState{
         userName: userName,
         emailConfirmed: true,
         isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
+        isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
         refreshToken: refreshToken
       );
@@ -53,7 +59,40 @@ class AccountState{
         userName: userName,
         emailConfirmed: emailConfirmed,
         isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isTermsOfUseApproved: isTermsOfUseApproved,
+        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         language: language,
         refreshToken: refreshToken
-      ); 
+      );
+
+  AccountState approvePrivacyPolicy()
+    => AccountState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        email: email,
+        userName: userName,
+        emailConfirmed: emailConfirmed,
+        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isTermsOfUseApproved: isTermsOfUseApproved,
+        isPrivacyPolicyApproved: true,
+        language: language,
+        refreshToken: refreshToken,
+        
+      );
+  AccountState approveTermsOfUse()
+    => AccountState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        email: email,
+        userName: userName,
+        emailConfirmed: emailConfirmed,
+        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isTermsOfUseApproved: true,
+        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
+        language: language,
+        refreshToken: refreshToken,
+        
+      );
 }

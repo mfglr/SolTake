@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
 {
-    public record UpdateUserNameDto(string UserName) : IRequest<AccountDto>;
+    public record UpdateUserNameDto(string UserName) : IRequest;
 }

@@ -13,19 +13,16 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountC
 
         public async Task Handle(AccountCreatedDominEvent notification, CancellationToken cancellationToken)
         {
-            var account = notification.Account;
-
-            if (account.EmailConfirmationToken == null || notification.Account.Email == null) return;
-
-            if (!account.IsThirdPartyAuthenticated)
-                await _emailService
-                    .SendEmailConfirmationByTokenMail(
-                        _contextAccessor.HttpContext.GetLanguage(),
-                        account.EmailConfirmationToken.Token,
-                        notification.Account.UserName!,
-                        notification.Account.Email,
-                        cancellationToken
-                    );
+            if (notification.Account.IsThirdPartyAuthenticated) return;
+            var verificationToken = notification.Account.VerificationTokens.OrderByDescending(x => x.Id).First();
+            await _emailService
+                .SendEmailConfirmationByTokenMail(
+                    _contextAccessor.HttpContext.GetLanguage(),
+                    verificationToken.Token,
+                    notification.Account.UserName!,
+                    notification.Account.Email!,
+                    cancellationToken
+                );
         }
     }
 }

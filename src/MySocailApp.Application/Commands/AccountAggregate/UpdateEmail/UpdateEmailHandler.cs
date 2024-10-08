@@ -1,29 +1,27 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmail
 {
-    public class UpdateEmailHandler(IMapper mapper, IAccessTokenReader tokenReader, AccountManager accountManager, UserManager<Account> userManager) : IRequestHandler<UpdateEmailDto, AccountDto>
+    public class UpdateEmailHandler(IMapper mapper, IAccessTokenReader tokenReader, EmailUpdaterDomainService emailUpdater, IAccountWriteRepository accountWriteRepository) : IRequestHandler<UpdateEmailDto, AccountDto>
     {
-        private readonly AccountManager _accountManager = accountManager;
+        private readonly EmailUpdaterDomainService _emailUpdater = emailUpdater;
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly UserManager<Account> _userManager = userManager;
         private readonly IMapper _mapper = mapper;
+        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
 
         public async Task<AccountDto> Handle(UpdateEmailDto request, CancellationToken cancellationToken)
         {
             var accountId = _tokenReader.GetRequiredAccountId();
             var account =
-                await _userManager.Users.FirstOrDefaultAsync (x => x.Id == accountId && !x.IsRemoved, cancellationToken) ?? 
+                await _accountWriteRepository.GetAccountAsync(accountId, cancellationToken) ??
                 throw new AccountNotFoundException();
 
-            await _accountManager.UpdateEmailAsync(account, request.Email);
+            await _emailUpdater.UpdateAsync(account, request.Email);
             return _mapper.Map<AccountDto>(account);
         }
     }

@@ -24,13 +24,13 @@ class AccountService {
       )
       .then((json) => Account.fromJson(json));
 
-  Future<void> updateEmailConfirmationToken() =>
-    _appClient.put("$accountController/$updateEmailConfirmationTokenEndPoint");
+  Future<void> updateEmailVerificationToken() =>
+    _appClient.put("$accountController/$updateEmailVerificationTokenEndPoint");
 
-  Future<void> confirmEmailByToken(String token) =>
+  Future<void> verifyEmailByToken(String token) =>
     _appClient
       .put(
-        "$accountController/$confirmEmailByTokenEntPoint",
+        "$accountController/$verifyEmailByTokenEntPoint",
         body: { 'token': token }
       );
 
@@ -105,4 +105,12 @@ class AccountService {
     _appClient
       .get("$accountController/$isUserNameExistEndPoint/$userName")
       .then((response) => response as bool);
+
+  Future<void> approvePolicy() =>
+    _appClient
+      .put("$accountController/$approvePrivacyPolicyEndpoint");
+
+  Future<void> approveTermsOfUse() =>
+    _appClient
+      .put("$accountController/$approveTermsOfUseEndpoint");
 }

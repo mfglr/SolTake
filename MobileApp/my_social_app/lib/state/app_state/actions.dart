@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/state.dart';
 
 @immutable
 abstract class Action{
@@ -19,12 +18,6 @@ class ClearStateAction extends Action{
 class ChangeAccessTokenAction extends AppAction{
   final String? accessToken;
   const ChangeAccessTokenAction({required this.accessToken});
-}
-
-@immutable
-class ChangeActiveLoginPageAction extends AppAction{
-  final ActiveLoginPage payload;
-  const ChangeActiveLoginPageAction({required this.payload});
 }
 
 @immutable

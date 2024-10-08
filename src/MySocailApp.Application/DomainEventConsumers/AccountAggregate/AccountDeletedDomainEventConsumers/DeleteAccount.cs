@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
@@ -16,7 +16,7 @@ using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountDeletedDomainEventConsumers
 {
-    public class DeleteAccount(IAppUserWriteRepository userWriteRepository, IQuestionWriteRepository questionWriteRepository, ISolutionWriteRepository solutionWriteRepository, ICommentWriteRepository commentWriteRepository, IMessageWriteRepository messageWriteRepository, UserManager<Account> userManager, IBlobService blobService, INotificationWriteRepository notificationWriteRepository) : IDomainEventConsumer<AccountDeletedDomainEvent>
+    public class DeleteAccount(IAppUserWriteRepository userWriteRepository, IQuestionWriteRepository questionWriteRepository, ISolutionWriteRepository solutionWriteRepository, ICommentWriteRepository commentWriteRepository, IMessageWriteRepository messageWriteRepository, UserManager<Account> userManager, IImageService blobService, INotificationWriteRepository notificationWriteRepository) : IDomainEventConsumer<AccountDeletedDomainEvent>
     {
         private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
@@ -25,7 +25,7 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountD
         private readonly IMessageWriteRepository _messageWriteRepository = messageWriteRepository;
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
 
         private void DeleteComment(Comment comment)
         {

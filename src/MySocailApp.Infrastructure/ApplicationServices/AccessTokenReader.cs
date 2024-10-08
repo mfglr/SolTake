@@ -32,23 +32,5 @@ namespace MySocailApp.Infrastructure.ApplicationServices
                 throw new NotAuthorizedException();
             return int.Parse(value);
         }
-
-        public string GetRequiredUserName()
-        {
-            var context = _contextAccessor.HttpContext;
-            ThrowExceptionIfContextIsNull(context);
-            return
-                context!.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value ??
-                throw new NotAuthorizedException();
-        }
-
-        public string GetRequiredEmail()
-        {
-            var context = _contextAccessor.HttpContext;
-            ThrowExceptionIfContextIsNull(context);
-            return
-                context!.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value ??
-                throw new NotAuthorizedException();
-        }
     }
 }

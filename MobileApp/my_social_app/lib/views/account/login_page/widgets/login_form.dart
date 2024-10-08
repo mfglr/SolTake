@@ -16,7 +16,8 @@ class _LoginFormState extends State<LoginForm> {
   late final TextEditingController _emailOrUserName;
   late final TextEditingController _password;
   final _formKey = GlobalKey<FormState>();
-  
+  bool _passwordVisibility = false;
+
   @override
   void initState() {
     _emailOrUserName = TextEditingController();
@@ -49,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.login_form_email,
-                border: const OutlineInputBorder()
+                border: const OutlineInputBorder(),
               ),
               validator: (value){
                 if (value == null || value.isEmpty) return AppLocalizations.of(context)!.login_form_email_required_error;
@@ -61,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
           Container(
             padding: const EdgeInsets.only(bottom: 8),
             child: TextFormField(
-              obscureText: true,
+              obscureText: !_passwordVisibility,
               enableSuggestions: false,
               autocorrect: false,
               controller: _password,
@@ -71,6 +72,10 @@ class _LoginFormState extends State<LoginForm> {
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.login_form_password,
                 border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  onPressed: () => setState(() { _passwordVisibility = !_passwordVisibility; }),
+                  icon: Icon(_passwordVisibility ? Icons.visibility : Icons.visibility_off),
+                )
               ),
               validator: (value){
                 if(value == null || value.isEmpty) return AppLocalizations.of(context)!.login_form_password_required_error;

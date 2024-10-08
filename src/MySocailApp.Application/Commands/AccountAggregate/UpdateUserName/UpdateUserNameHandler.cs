@@ -9,21 +9,20 @@ using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
 {
-    public class UpdateUserNamehandler(IMapper mapper, IAccessTokenReader tokenReader, AccountManager accountManager, UserManager<Account> userManager) : IRequestHandler<UpdateUserNameDto, AccountDto>
+    public class UpdateUserNamehandler(IAccessTokenReader tokenReader, UserNameUpdaterDomainService accountManager, UserManager<Account> userManager) : IRequestHandler<UpdateUserNameDto>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IMapper _mapper = mapper;
         private readonly UserManager<Account> _userManager = userManager;
-        private readonly AccountManager _accountManager = accountManager;
+        private readonly UserNameUpdaterDomainService _accountManager = accountManager;
 
-        public async Task<AccountDto> Handle(UpdateUserNameDto request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateUserNameDto request, CancellationToken cancellationToken)
         {
             var accountId = _tokenReader.GetRequiredAccountId();
             var account =
                 await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId && !x.IsRemoved, cancellationToken) ??
                 throw new AccountNotFoundException();
-            await _accountManager.UpdateUserNameAsync(account, request.UserName);
-            return _mapper.Map<AccountDto>(account);
+
+            await _accountManager.UpdateAsync(account, request.UserName);
         }
     }
 }

@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.soltake.app"
+    namespace = "com.soltake"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -40,7 +40,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.soltake.app"
+        applicationId = "com.soltake"
         minSdkVersion 21
         targetSdkVersion 33
         minSdk = flutter.minSdkVersion

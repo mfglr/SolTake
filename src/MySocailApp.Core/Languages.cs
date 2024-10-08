@@ -8,7 +8,7 @@
 
         private readonly static string[] _list = [TR, EN];
 
-        public static bool IsAcceptedLanguage(string language)
+        public static bool IsValidLanguageCode(string language)
         {
             foreach (var item in _list)
                 if(language == item)
@@ -20,7 +20,7 @@
         {
             if (culture == null) return EN;
             var language = new string(culture.TakeWhile(x => x != '-').ToArray());
-            return IsAcceptedLanguage(language) ? language : EN;
+            return IsValidLanguageCode(language) ? language : EN;
         }
     }
 }

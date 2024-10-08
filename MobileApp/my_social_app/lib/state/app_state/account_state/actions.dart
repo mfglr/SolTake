@@ -69,3 +69,21 @@ class CreateAccountAction extends AppAction{
   final String passwordConfirmation;
   const CreateAccountAction({required this.email, required this.password, required this.passwordConfirmation});
 }
+
+@immutable
+class ApprovePrivacyPolicyAction extends AppAction{
+  const ApprovePrivacyPolicyAction();
+}
+@immutable
+class ApprovePrivacyPolicySuccessAction extends AppAction{
+  const ApprovePrivacyPolicySuccessAction();
+}
+
+@immutable
+class ApproveTermsOfUseAction extends AppAction{
+  const ApproveTermsOfUseAction();
+}
+@immutable
+class ApproveTermsOfUseSuccessAction extends AppAction{
+  const ApproveTermsOfUseSuccessAction();
+}

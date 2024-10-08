@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
+using MySocailApp.Application.ApplicationServices.BlobService.TextService;
 using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.QueryRepositories;
@@ -16,16 +18,20 @@ using MySocailApp.Domain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
+using MySocailApp.Domain.PrivacyPolicyAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
+using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
 using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.ApplicationServices;
 using MySocailApp.Infrastructure.ApplicationServices.BlobService;
+using MySocailApp.Infrastructure.ApplicationServices.BlobService.ImageServices;
+using MySocailApp.Infrastructure.ApplicationServices.BlobService.TextServices;
 using MySocailApp.Infrastructure.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Infrastructure.ApplicationServices.Email;
 using MySocailApp.Infrastructure.ApplicationServices.Email.MailMessageFactories;
@@ -36,10 +42,12 @@ using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.MessageAggregate;
 using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.NotificationConnectionAggregate;
+using MySocailApp.Infrastructure.PrivacyPolicyAggreagate;
 using MySocailApp.Infrastructure.QueryRepositories;
 using MySocailApp.Infrastructure.QuestionAggregate;
 using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
+using MySocailApp.Infrastructure.TermsOfUseAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
 using MySocailApp.Infrastructure.UserConnectionAggregate;
 using System.Net;
@@ -63,16 +71,16 @@ namespace MySocailApp.Infrastructure
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
                 .AddMessageAggregate()
+                .AddPrivacyPolicyAggregate()
+                .AddTermsOfUseAggregate()
                 .AddUserConnectionAggregate()
                 .AddNotificationConnectionAggregate();
-        
         private static IServiceCollection AddServices(this IServiceCollection services)
             => services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddEmailService()
                 .AddBlobService()
                 .AddQueryRepositories();
-        
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
             var emailServiceSettings = services.BuildServiceProvider().GetRequiredService<IEmailServiceSettings>()!;
@@ -95,18 +103,17 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<EmailConfirmationMailMessageFactory>()
                 .AddScoped<IEmailService, EmailService>();
         }
-        
         private static IServiceCollection AddBlobService(this IServiceCollection services)
             => services
                 .AddScoped<IBlobNameGenerator,BlobNameGenerator>()
                 .AddScoped<IPathFinder,PathFinder>()
                 .AddScoped<IDimentionCalculator, DimentionCalculator>()
                 .AddScoped<IPathsContainer, PathsContainer>()
-                .AddScoped<IBlobService,BlobService>()
+                .AddScoped<IImageService,ImageService>()
                 .AddScoped<IFrameCatcher, FrameCatcher>()
+                .AddScoped<ITextService,TextService>()
                 .AddScoped<IVideoDurationCalculator, VideoDurationCalculator>()
                 .AddScoped<IVideoService,VideoService>();
-        
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {
             var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
@@ -135,12 +142,19 @@ namespace MySocailApp.Infrastructure
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
             => services
-                .AddScoped<ITokenService, TokenService>()
-                .AddScoped<IFaceBookTokenReader,FaceBookTokenReader>()
-                .AddScoped<IGoogleTokenReader,GoogleTokenReader>()
-                .AddScoped<ITransactionCreator, TransactionCreator>()
-                .AddScoped<AccountManager>()
-                .AddScoped<AccountRemoverDomainService>();
+                .AddScoped<IAccountReadRepository, AccountReadRepository>()
+                .AddScoped<IAccountWriteRepository, AccountWriteRepository>()
+                .AddScoped<ITransactionCreator, TransactionCreator>();
+
+        private static IServiceCollection AddPrivacyPolicyAggregate(this IServiceCollection services)
+            => services
+                .AddScoped<IPrivacyPolicyReadRepository, PolicyReadRepository>()
+                .AddScoped<IPrivacyPolicyWriteRepository, PolicyWriteRepository>();
+
+        private static IServiceCollection AddTermsOfUseAggregate(this IServiceCollection services)
+            => services
+                .AddScoped<ITermsOfUseReadRepository, TermsOfUseReadRepository>()
+                .AddScoped<ITermsOfUseWriteRepository, TermsOfUseWriteRepository>();
 
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
             => services

@@ -14,10 +14,11 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
-
   late final TextEditingController _email;
   late final TextEditingController _password;
   late final TextEditingController _passwordConfirmation;
+  bool _passwordVisibility = false;
+  bool _passwordConfirmVisibility = false;
 
   @override
   void initState() {
@@ -67,7 +68,7 @@ class _RegisterFormState extends State<RegisterForm> {
           Container(
             padding: const EdgeInsets.only(bottom: 8),
             child: TextFormField(
-              obscureText: true,
+              obscureText: !_passwordVisibility,
               enableSuggestions: false,
               autocorrect: false,
               controller: _password,
@@ -77,6 +78,10 @@ class _RegisterFormState extends State<RegisterForm> {
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.register_password,
                 border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  onPressed: () => setState(() { _passwordVisibility = !_passwordVisibility; }),
+                  icon: Icon(_passwordVisibility ? Icons.visibility : Icons.visibility_off),
+                )
               ),
               validator: (value){
                 if(value == null || value.isEmpty) return AppLocalizations.of(context)!.register_form_password_required_error;
@@ -89,7 +94,7 @@ class _RegisterFormState extends State<RegisterForm> {
           Container(
             padding: const EdgeInsets.only(bottom: 8),
             child: TextFormField(
-              obscureText: true,
+              obscureText: !_passwordConfirmVisibility,
               enableSuggestions: false,
               autocorrect: false,
               controller: _passwordConfirmation,
@@ -98,7 +103,11 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.register_password_confirmation,
-                border: const OutlineInputBorder()
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  onPressed: () => setState(() { _passwordConfirmVisibility = !_passwordConfirmVisibility; }),
+                  icon: Icon(_passwordConfirmVisibility ? Icons.visibility : Icons.visibility_off),
+                )
               ),
               validator: (value){
                 if(value == null || value.isEmpty) return AppLocalizations.of(context)!.register_form_password_confirm_required_error;

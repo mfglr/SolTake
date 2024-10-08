@@ -18,6 +18,8 @@ AccountState _$AccountStateFromJson(Map<String, dynamic> json) => AccountState(
       isThirdPartyAuthenticated: json['isThirdPartyAuthenticated'] as bool,
       language: json['language'] as String?,
       refreshToken: json['refreshToken'] as String,
+      isPrivacyPolicyApproved: json['isPrivacyPolicyApproved'] as bool,
+      isTermsOfUseApproved: json['isTermsOfUseApproved'] as bool,
     );
 
 Map<String, dynamic> _$AccountStateToJson(AccountState instance) =>
@@ -29,6 +31,8 @@ Map<String, dynamic> _$AccountStateToJson(AccountState instance) =>
       'userName': instance.userName,
       'emailConfirmed': instance.emailConfirmed,
       'isThirdPartyAuthenticated': instance.isThirdPartyAuthenticated,
+      'isPrivacyPolicyApproved': instance.isPrivacyPolicyApproved,
+      'isTermsOfUseApproved': instance.isTermsOfUseApproved,
       'language': instance.language,
       'refreshToken': instance.refreshToken,
     };

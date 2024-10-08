@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Core;
@@ -12,14 +12,14 @@ using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionAggregate.QuestionDeletedDomainEventComsumers
 {
-    public class DeleteQuestion(IUnitOfWork unitOfWork, IQuestionWriteRepository questionWriteRepository, ICommentWriteRepository commentWriteRepository, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, INotificationWriteRepository notificationWriteRepository, IVideoService videoService) : IDomainEventConsumer<QuestionDeletedDomainEvent>
+    public class DeleteQuestion(IUnitOfWork unitOfWork, IQuestionWriteRepository questionWriteRepository, ICommentWriteRepository commentWriteRepository, ISolutionWriteRepository solutionWriteRepository, IImageService blobService, INotificationWriteRepository notificationWriteRepository, IVideoService videoService) : IDomainEventConsumer<QuestionDeletedDomainEvent>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
         private readonly ICommentWriteRepository _commentWriteRepository = commentWriteRepository;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
         private readonly IVideoService _videoService = videoService;
 
         private void DeleteComments(Comment comment)

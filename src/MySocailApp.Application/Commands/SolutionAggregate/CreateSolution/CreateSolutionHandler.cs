@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Application.QueryRepositories;
@@ -10,12 +10,12 @@ using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
 {
-    public class CreateSolutionHandler(SolutionCreatorDomainService solutionCreator, IUnitOfWork unitOfWork, IAccessTokenReader tokenReader, IBlobService blobService, ISolutionQueryRepository solutionQueryRepository) : IRequestHandler<CreateSolutionDto, SolutionResponseDto>
+    public class CreateSolutionHandler(SolutionCreatorDomainService solutionCreator, IUnitOfWork unitOfWork, IAccessTokenReader tokenReader, IImageService blobService, ISolutionQueryRepository solutionQueryRepository) : IRequestHandler<CreateSolutionDto, SolutionResponseDto>
     {
         private readonly SolutionCreatorDomainService _solutionCreator = solutionCreator;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
         private readonly ISolutionQueryRepository _solutionQueryRepository = solutionQueryRepository;
 
         public async Task<SolutionResponseDto> Handle(CreateSolutionDto request, CancellationToken cancellationToken)

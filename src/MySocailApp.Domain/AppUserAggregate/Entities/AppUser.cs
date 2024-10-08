@@ -13,8 +13,10 @@ using MySocailApp.Domain.UserConnectionAggregate.Entities;
 
 namespace MySocailApp.Domain.AppUserAggregate.Entities
 {
-    public class AppUser(int id) : Entity(id), IAggregateRoot
+    public class AppUser : Entity, IAggregateRoot
     {
+        internal AppUser(int id) : base(id) { }
+
         internal void Create()
         {
             Name = "";

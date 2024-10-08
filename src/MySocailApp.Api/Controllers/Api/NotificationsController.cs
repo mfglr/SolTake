@@ -14,6 +14,8 @@ namespace MySocailApp.Api.Controllers.Api
     [ApiController]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+    [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+    [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
     public class NotificationsController(IMediator mediator) : ControllerBase
     {

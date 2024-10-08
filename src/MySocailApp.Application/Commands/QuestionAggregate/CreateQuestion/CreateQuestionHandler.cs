@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.QueryRepositories;
@@ -11,14 +11,14 @@ using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
-    public class CreateQuestionHandler(IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IQuestionWriteRepository repository, IQuestionQueryRepository questionQueryRepository, QuestionCreatorDomainService questionCreator, IBlobService blobService) : IRequestHandler<CreateQuestionDto, QuestionResponseDto>
+    public class CreateQuestionHandler(IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IQuestionWriteRepository repository, IQuestionQueryRepository questionQueryRepository, QuestionCreatorDomainService questionCreator, IImageService blobService) : IRequestHandler<CreateQuestionDto, QuestionResponseDto>
     {
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly QuestionCreatorDomainService _questionCreator = questionCreator;
         private readonly IQuestionWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IQuestionQueryRepository _questionQueryRepository = questionQueryRepository;
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
 
         public async Task<QuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
         {

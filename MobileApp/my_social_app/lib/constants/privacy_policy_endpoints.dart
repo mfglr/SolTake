@@ -1,0 +1,1 @@
+const getLastPolicyEnpoint = "GetLastPrivacyPolicy";

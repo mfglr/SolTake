@@ -1,6 +1,6 @@
 const String createEndPoint = "create";
-const String updateEmailConfirmationTokenEndPoint = "UpdateEmailConfirmationToken";
-const String confirmEmailByTokenEntPoint = "ConfirmEmailByToken";
+const String updateEmailVerificationTokenEndPoint = "UpdateEmailVerificationToken";
+const String verifyEmailByTokenEntPoint = "VerifyEmailByToken";
 const String loginByPasswordEndPoint = "LoginByPassword";
 const String loginByFaceBookEndpoint = "LoginByFaceBook";
 const String loginByGoogleEndpoint = "LoginByGoogle";
@@ -9,5 +9,7 @@ const String updateEmailEndPoint = "UpdateEmail";
 const String updateUserNameEndPoint = "UpdateUserName";
 const String updateLanguageEndpoint = "UpdateLanguage";
 const String logOutEndPoint = "LogOut";
+const String approvePrivacyPolicyEndpoint = "ApprovePrivacyPolicy";
+const String approveTermsOfUseEndpoint = "ApproveTermsOfUse";
 const String deleteAccountEndpoint = "delete";
 const String isUserNameExistEndPoint = "IsUserNameExist";

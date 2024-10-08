@@ -1,25 +1,24 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken
 {
-    public class LoginByRefreshTokenHandler(UserManager<Account> userManager,IMapper mapper, AccountManager accountManager) : IRequestHandler<LoginByRefreshTokenDto, AccountDto>
+    public class LoginByRefreshTokenHandler(IMapper mapper, RefreshTokenAuthenticatorDomainService loginByRefreshToken, IAccountWriteRepository accountWriteRepository) : IRequestHandler<LoginByRefreshTokenDto, AccountDto>
     {
-        private readonly UserManager<Account> _userManager = userManager;
-        private readonly AccountManager _accountManager = accountManager;
+        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly RefreshTokenAuthenticatorDomainService _refreshTokenAuthenticator = loginByRefreshToken;
         private readonly IMapper _mapper = mapper;
 
         public async Task<AccountDto> Handle(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
         {
             var account =
-                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id && !x.IsRemoved, cancellationToken) ??
+                await _accountWriteRepository.GetAccountAsync(request.Id, cancellationToken) ??
                 throw new AccountNotFoundException();
-            await _accountManager.LoginByRefreshToken(account, request.Token);
+
+            await _refreshTokenAuthenticator.LoginAsync(account, request.Token, cancellationToken);
             return _mapper.Map<AccountDto>(account);
         }
     }

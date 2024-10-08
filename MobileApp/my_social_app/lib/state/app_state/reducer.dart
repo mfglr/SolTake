@@ -7,10 +7,12 @@ import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/home_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/login_state/reducer.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
+import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/reducer.dart';
 import 'package:my_social_app/state/app_state/question_user_save_state/reducers.dart';
@@ -26,9 +28,6 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/reducers.d
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:redux/redux.dart';
-
-ActiveLoginPage changeActiveLoginPageReducer(ActiveLoginPage oldState,Action action)
-  => action is ChangeActiveLoginPageAction ? action.payload : oldState;
 
 String? changeAccessTokenReducer(String? oldState,Action action)
   => action is ChangeAccessTokenAction ? action.accessToken : oldState;
@@ -53,7 +52,6 @@ AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear(
 AppState appReducer(AppState prev,AppAction action) => AppState(
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
   accountState: accoutStateReducers(prev.accountState,action),
-  activeLoginPage: changeActiveLoginPageReducer(prev.activeLoginPage,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userImageEntityState: userImageEntityStateReducers(prev.userImageEntityState,action),
@@ -79,6 +77,8 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
   solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
   exams: examsReducers(prev.exams,action),
+  policyState: policyReducers(prev.policyState,action),
+  loginState: loginReducers(prev.loginState,action),
 );
 
 Reducer<AppState> reducers = combineReducers<AppState>([

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/app_state/login_state/actions.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/account/login_page/widgets/login_form.dart';
 import 'package:my_social_app/views/account/login_page/widgets/facebook_login_button.dart';
+import 'package:my_social_app/views/account/login_page/widgets/login_form.dart';
 import 'package:my_social_app/views/account/login_page/widgets/google_login_button.dart';
 import 'package:my_social_app/views/account/login_page/widgets/login_page_diveder.dart';
 
@@ -30,33 +31,32 @@ class LoginPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 2.0),
-                    child: FacebookLoginButton(),
+                    padding: EdgeInsets.only(right: 2),
+                    child: GoogleLoginButton(),
                   ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 2),
-                    child: GoogleLoginButton(),
+                    padding: EdgeInsets.only(left: 2.0),
+                    child: FacebookLoginButton(),
                   ),
-                )
+                ),
               ],
             ),
 
-            const Padding(
-              padding: EdgeInsets.only(left: 48,right: 48, top:20, bottom: 20),
-              child: LoginPageDiveder()
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(left: 48,right: 48, top:20, bottom: 20),
+            //   child: LoginPageDiveder()
+            // ),
 
             Container(
               padding: const EdgeInsets.only(top: 5),
               child: Column(
                 children: [
-                  Text(AppLocalizations.of(context)!.login_register_label),
                   OutlinedButton(
                     onPressed: () {
                       final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(const ChangeActiveLoginPageAction(payload: ActiveLoginPage.registerPage));
+                      store.dispatch(const ChangeActiveLoginPageAction(activeLoginPage: ActiveLoginPage.registerPage));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

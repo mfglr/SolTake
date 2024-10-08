@@ -9,3 +9,5 @@ const commentController = "comments";
 const notificationController = "notifications";
 const conversationController = "conversations";
 const messageController = "messages";
+const privacyPolicyController = "PrivacyPolicies";
+const termsOfUseController = "TermsOfUses";

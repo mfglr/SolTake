@@ -10,9 +10,11 @@ using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
+using MySocailApp.Domain.PrivacyPolicyAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
+using MySocailApp.Domain.TermsOfUseAggregate;
 using MySocailApp.Domain.TopicAggregate.Entities;
 using MySocailApp.Domain.UserConnectionAggregate.Entities;
 using System.Reflection;
@@ -46,6 +48,9 @@ namespace MySocailApp.Infrastructure.DbContexts
 
         public DbSet<Message> Messages { get; private set; }
         public DbSet<MessageResponseDto> MessageResponseDtos { get; private set; }
+
+        public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
+        public DbSet<TermsOfUse> TermsOfUses { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

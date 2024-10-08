@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
@@ -10,12 +11,14 @@ import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_entity_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
+import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
@@ -36,15 +39,10 @@ import 'package:my_social_app/state/app_state/user_search_state/user_search_enti
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
-enum ActiveLoginPage{
-  loginPage,
-  registerPage
-}
 
 @immutable
 class AppState{
   final bool isInitialized;
-  final ActiveLoginPage activeLoginPage;
   final String? accessToken;
   final AccountState? accountState;
   final UserEntityState userEntityState;
@@ -71,11 +69,12 @@ class AppState{
   final QuestionUserLikeEntityState questionUserLikeEntityState;
   final QuestionUserSaveEntityState questionUserSaveEntityState;
   final Pagination exams;
+  final PolicyState policyState;
+  final LoginState loginState;
 
   const AppState({
     required this.accessToken,
     required this.accountState,
-    required this.activeLoginPage,
     required this.isInitialized,
     required this.userEntityState,
     required this.userImageEntityState,
@@ -101,12 +100,13 @@ class AppState{
     required this.questionUserLikeEntityState,
     required this.questionUserSaveEntityState,
     required this.exams,
+    required this.policyState,
+    required this.loginState,
   });
 
   AppState clear() => AppState(
     accessToken: null,
     accountState: null,
-    activeLoginPage: ActiveLoginPage.loginPage,
     isInitialized: true,
     userEntityState: const UserEntityState(entities: {}),
     userImageEntityState: const UserImageEntityState(entities: {}),
@@ -137,6 +137,8 @@ class AppState{
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
+    policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
+    loginState: LoginState(activeLoginPage: ActiveLoginPage.loginPage, language: PlatformDispatcher.instance.locale.languageCode)
   );
 
   //select messages
@@ -250,4 +252,9 @@ class AppState{
   // select topics
   Iterable<TopicState> selectSubjectTopics(int? subjectId)
     => subjectEntityState.entities[subjectId]?.topics.ids.map((e) => topicEntityState.entities[e]!) ?? [];
+
+  //select privacy policy
+  String? get selectPrivacyPolicy => policyState.privacyPolicies[loginState.language];
+  //select terms of use
+  String? get selectTermsOfUse => policyState.termOfUses[loginState.language];
 }

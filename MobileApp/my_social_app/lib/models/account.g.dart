@@ -19,6 +19,8 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       language: json['language'] as String?,
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
+      isPrivacyPolicyApproved: json['isPrivacyPolicyApproved'] as bool,
+      isTermsOfUseApproved: json['isTermsOfUseApproved'] as bool,
     );
 
 Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
@@ -29,6 +31,8 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'userName': instance.userName,
       'emailConfirmed': instance.emailConfirmed,
       'isThirdPartyAuthenticated': instance.isThirdPartyAuthenticated,
+      'isPrivacyPolicyApproved': instance.isPrivacyPolicyApproved,
+      'isTermsOfUseApproved': instance.isTermsOfUseApproved,
       'language': instance.language,
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,

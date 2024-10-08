@@ -1,11 +1,16 @@
 {
-
     "unexpected_exception": "Bir şeyler yanlış gitt! Lütfen daha sonra tekrar deneyin!",
+
+    "aprove_terms_of_use_page_title": "Kullanıcı Sözleşmesi",
+    "aprove_privacy_policy_page_title": "Gizlilik Sözleşmesi",
+    "aprove_privacy_policy_page_checkbox_label": "Gizlilik sözleşmesini okudum ve kabul ediyorum.",
+    "approve_terms_of_use_page_checkbox_label": "Kullanıcı Sözleşmesini okudum ve kabul ediyorum.",
+    "approve_policy_page_eror": "Devam etmek için Gizlilik Politikasını ve Kullanım Koşullarını onaylamanız gerekmektedir!",
+    "approve_policy_page_button_content": "Devam Et",
 
     "login_form_email": "Email addresinizi ya da kullanıcı adınızı giriniz.",
     "login_form_password": "Şifrenizi giriniz.",
     "login_form_button": "Giriş Yap",
-    "login_register_label": "Henüz bir hesabınız yok mu? Kayıt olun.",
     "login_register_button": "Kayıt Ol",
 
     "login_form_email_required_error": "Email ya da kullanıcı adı gerekli!",

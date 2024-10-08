@@ -8,9 +8,12 @@ import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/global_error_handling.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/account/application_loading_page/application_loading_page.dart';
+import 'package:my_social_app/views/account/approve_privacy_policy_page/approve_privacy_policy_page.dart';
+import 'package:my_social_app/views/account/approve_terms_of_use_page/approve_terms_of_use_page.dart';
 import 'package:my_social_app/views/account/register_page/register_page.dart';
 import 'package:my_social_app/views/account/login_page/login_page.dart';
 import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
@@ -98,13 +101,15 @@ class MainView extends StatelessWidget {
         if(isInitialized){
           if(account == null){
             return StoreConnector<AppState,ActiveLoginPage>(
-              converter: (store) => store.state.activeLoginPage,
+              converter: (store) => store.state.loginState.activeLoginPage,
               builder: (context,activeLoginPage){
                 if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
                 return const RegisterPage();
               },
             );
           }
+          if(!account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
+          if(!account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
           if(!account!.isThirdPartyAuthenticated && !account!.emailConfirmed) return const VerifyEmailPage();
           return const RootView();
         }

@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
+using MySocailApp.Domain.AccountAggregate.Configurations;
 using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AccountAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.TokenProviders;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
@@ -34,6 +33,8 @@ namespace MySocailApp.Api
         {
             return services
                 .AddScoped<CheckAccountFilterAttribute>()
+                .AddScoped<CheckPrivacyPolicyApprovalFilterAttribute>()
+                .AddScoped<CheckTermsOfUseApprovalFilterAttribute>()
                 .AddScoped<CheckEmailConfirmationFilterAttribute>();
         }
 
@@ -80,9 +81,6 @@ namespace MySocailApp.Api
         }
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
-            var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-            var tokenProviderOptions = configuration.GetRequiredSection("TokenProviderOptions").Get<TokenProviderOptions>()!;
-
             services
                 .AddIdentity<Account, IdentityRole<int>>(
                     opt =>
@@ -100,11 +98,7 @@ namespace MySocailApp.Api
                     }
                 )
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders()
-                .AddTokenProvider<RefreshTokenProvider<Account>>(TokenProviders.REFRESH_TOKEN_PROVIDER);
-
-            services.Configure<RefreshTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromMinutes(tokenProviderOptions.RefreshTokenExpiration));
-
+                .AddDefaultTokenProviders();
             return services;
         }
         public static void InitializeDb(this WebApplication app)

@@ -1,17 +1,17 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Domain.MessageAggregate.Exceptions;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
 {
-    public class GetMessageImageHandler(IMessageReadRepository messageReadRepository, IBlobService blobService, IAccessTokenReader accessTokenReader) : IRequestHandler<GetMessageImageDto, byte[]>
+    public class GetMessageImageHandler(IMessageReadRepository messageReadRepository, IImageService blobService, IAccessTokenReader accessTokenReader) : IRequestHandler<GetMessageImageDto, byte[]>
     {
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IMessageReadRepository _messageReadRepository = messageReadRepository;
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
 
         public async Task<byte[]> Handle(GetMessageImageDto request, CancellationToken cancellationToken)
         {

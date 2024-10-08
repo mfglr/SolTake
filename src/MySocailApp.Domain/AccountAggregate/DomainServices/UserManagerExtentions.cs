@@ -20,7 +20,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             ArgumentNullException.ThrowIfNull(token);
 
             if (account.EmailConfirmed)
-                throw new EmailWasAlreadyConfirmedException();
+                throw new EmailAlreadyConfirmedException();
 
             var codeDecoded = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
             var result = await userManager.ConfirmEmailAsync(account, codeDecoded);

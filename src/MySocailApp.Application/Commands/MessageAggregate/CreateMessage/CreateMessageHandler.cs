@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.ApplicationServices.BlobService;
+using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.QueryRepositories;
@@ -9,12 +9,12 @@ using MySocailApp.Domain.MessageAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
 {
-    public class CreateMessageHandler(IAccessTokenReader tokenReader, IBlobService blobService, IUnitOfWork unitOfWork, IMessageQueryRepository messageQueryRepository, MessageCreaterDomainService messageCreator) : IRequestHandler<CreateMessageDto, MessageResponseDto>
+    public class CreateMessageHandler(IAccessTokenReader tokenReader, IImageService blobService, IUnitOfWork unitOfWork, IMessageQueryRepository messageQueryRepository, MessageCreaterDomainService messageCreator) : IRequestHandler<CreateMessageDto, MessageResponseDto>
     {
         private readonly IMessageQueryRepository _messageQueryRepository = messageQueryRepository;
         private readonly MessageCreaterDomainService _messageCreator = messageCreator;
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IBlobService _blobService = blobService;
+        private readonly IImageService _blobService = blobService;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task<MessageResponseDto> Handle(CreateMessageDto request, CancellationToken cancellationToken)

@@ -11,8 +11,16 @@ AccountState? updateLanguageReducer(AccountState? prev,UpdateLanguageSuccessActi
 AccountState? confirmEmailReducer(AccountState? prev,ConfirmEmailByTokenSuccessAction action)
   => prev?.confirmEmail();
 
+AccountState? approveTermsOfUseReducer(AccountState? prev,ApproveTermsOfUseSuccessAction action)
+  => prev?.approveTermsOfUse();
+AccountState? approvePrivacyPolicyReducer(AccountState? prev, ApprovePrivacyPolicySuccessAction action)
+  => prev?.approvePrivacyPolicy();
+
+
 final Reducer<AccountState?> accoutStateReducers = combineReducers<AccountState?>([
   TypedReducer<AccountState?,UpdateAccountStateAction>(updateAccountStateReducer).call,
   TypedReducer<AccountState?,UpdateLanguageSuccessAction>(updateLanguageReducer).call,
   TypedReducer<AccountState?,ConfirmEmailByTokenSuccessAction>(confirmEmailReducer).call,
+  TypedReducer<AccountState?,ApprovePrivacyPolicySuccessAction>(approvePrivacyPolicyReducer).call,
+  TypedReducer<AccountState?,ApproveTermsOfUseSuccessAction>(approveTermsOfUseReducer).call,
 ]);

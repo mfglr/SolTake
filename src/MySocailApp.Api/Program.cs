@@ -3,6 +3,7 @@ using MySocailApp.Api;
 using MySocailApp.Api.Middlewares;
 using MySocailApp.Application;
 using MySocailApp.Application.Hubs;
+using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,8 @@ builder.Services
     .AddIdentity()
     .AddHttpContextAccessor()
     .AddApplicationServices()
-    .AddInfrastructureServices();
+    .AddInfrastructureServices()
+    .AddAccountDomainServices();
 
 
 var app = builder.Build();

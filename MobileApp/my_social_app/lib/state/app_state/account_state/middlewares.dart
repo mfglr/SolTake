@@ -124,7 +124,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
 void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is ConfirmEmailByTokenAction){
     AccountService()
-      .confirmEmailByToken(action.token)
+      .verifyEmailByToken(action.token)
       .then((_) => store.dispatch(const ConfirmEmailByTokenSuccessAction()));
   }
   next(action);
@@ -153,6 +153,24 @@ void deleteAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
     AccountService()
       .delete()
       .then((_) => _clearSession(store));
+  }
+  next(action);
+}
+
+void approvePrivacyPolicyMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is ApprovePrivacyPolicyAction){
+    AccountService()
+      .approvePolicy()
+      .then((_) => store.dispatch(const ApprovePrivacyPolicySuccessAction()));
+  }
+  next(action);
+}
+
+void approveTersmOfUseMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is ApproveTermsOfUseAction){
+    AccountService()
+      .approveTermsOfUse()
+      .then((_) => store.dispatch(const ApproveTermsOfUseSuccessAction()));
   }
   next(action);
 }
