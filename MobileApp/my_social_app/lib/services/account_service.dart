@@ -78,13 +78,12 @@ class AccountService {
       )
       .then((json) => Account.fromJson(json));
 
-  Future<Account> updateUserName(String userName) =>
+  Future<void> updateUserName(String userName) =>
     _appClient
-      .post(
+      .put(
         "$accountController/$updateUserNameEndPoint",
-        body: { 'userName': userName}
-      )
-      .then((account) => Account.fromJson(account));
+        body: { 'userName': userName }
+      );
 
   Future<void> updateLanguage(String language) =>
     _appClient

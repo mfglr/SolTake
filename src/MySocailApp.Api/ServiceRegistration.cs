@@ -75,6 +75,7 @@ namespace MySocailApp.Api
                         ValidateAudience = true,
                         ValidateIssuer = true,
                         ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
             return services;

@@ -18,7 +18,7 @@ class SolutionVideoPlayer extends StatefulWidget {
     required this.solution,
     required this.controller,
     required this.play,
-    required this.pause
+    required this.pause,
   });
 
   @override

@@ -7,6 +7,7 @@ import 'package:my_social_app/views/create_question/pages/select_subject_page/wi
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class SelectSubjectPage extends StatefulWidget {
   final int examId;
@@ -33,6 +34,7 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
         onInit: (store) => store.dispatch(GetNextPageExamSubjectsIfNoPageAction(examId: widget.examId)),
         converter: (store) => store.state.selectExamSubjects(widget.examId),
         builder:(context,subjects){
+          if(subjects.isEmpty) return const LoadingWidget();
           return GridView.count(
             crossAxisCount: 2,
             children: List<Widget>.generate(

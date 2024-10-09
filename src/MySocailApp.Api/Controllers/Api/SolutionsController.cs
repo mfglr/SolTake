@@ -31,27 +31,42 @@ namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckAccountFilterAttribute))]
-    [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
     public class SolutionsController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpPost]
         public async Task<SolutionResponseDto> Create([FromForm] string? content, [FromForm] int questionId, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateSolutionDto(content, questionId, images), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpPost]
         public async Task<SolutionResponseDto> CreateVideoSolution([FromForm] string? content, [FromForm] int questionId, [FromForm] IFormFile file, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateVideoSolutionDto(questionId, file, content), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpDelete("{solutionId}")]
         public async Task Delete(int solutionId, CancellationToken cancellationToken)
             => await _mediator.Send(new DeleteSolutionDto(solutionId), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpPost]
         public async Task<MakeUpvoteCommandResponseDto> MakeUpvote(MakeUpvoteDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
@@ -59,6 +74,11 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task RemoveUpvote(int solutionId, CancellationToken cancellationToken)
             => await _mediator.Send(new RemoveUpvoteDto(solutionId), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpPost]
         public async Task<MakeDownvoteCommandResponseDto> MakeDownvote(MakeDownvoteDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
@@ -66,20 +86,47 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task RemoveDownvote(int solutionId, CancellationToken cancellationToken)
             => await _mediator.Send(new RemoveDownvoteDto(solutionId), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpPut]
         public async Task MarkAsCorrect(MarkSolutionAsCorrectDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
+
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpPut]
         public async Task MarkAsIncorrect(MarkSolutionAsIncorrectDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpPost]
         public async Task<SaveSolutionCommandResponseDto> Save(SaveSolutionDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
+
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpDelete("{solutionId}")]
         public async Task Unsave(int solutionId, CancellationToken cancellationToken)
             => await _mediator.Send(new UnsaveSolutionDto(solutionId),cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{solutionId}/{solutionImageId}")]
         public async Task<FileResult> GetSolutionImage(int solutionId, int solutionImageId, CancellationToken cancellationToken)
              => File(
@@ -94,39 +141,83 @@ namespace MySocailApp.Api.Controllers.Api
                 "application/octet-stream"
             );
 
-
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{id}")]
         public async Task<SolutionResponseDto> GetSolutionById(int id, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSolutionByIdDto(id), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetSolutionsByQuestionId(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetCorrectSolutionsByQuestionId(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCorrectSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetPendingSolutionsByQuestionId(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetPendingSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetIncorrectSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{solutionId}")]
         public async Task<List<SolutionUserVoteResponseDto>> GetSolutionUpvotes(int solutionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSolutionUpvotesDto(solutionId, offset, take, isDescending), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{solutionId}")]
         public async Task<List<SolutionUserVoteResponseDto>> GetSolutionDownvotes(int solutionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSolutionDownvotesDto(solutionId, offset, take, isDescending), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet]
         public async Task<List<SolutionUserSaveResponseDto>> GetSavedSolutions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSavedSolutionsDto(offset, take, isDescending), cancellationToken);
 
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetVideoSolutions(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetVideoSolutionsDto(questionId,offset,take,isDescending), cancellationToken);

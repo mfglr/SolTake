@@ -1,4 +1,6 @@
 import 'package:collection/collection.dart';
+import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
@@ -442,7 +444,7 @@ void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
       .updateUserName(action.userName)
       .then((_){
         store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));
-        ToastCreator.displaySuccess("Your user name has been successfully updated.");
+        ToastCreator.displaySuccess(userNameUpdatedNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);
@@ -454,7 +456,7 @@ void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
       .updateName(action.name)
       .then((_){
         store.dispatch(UpdateNameSuccessAction(userId: accountId, name: action.name));
-        ToastCreator.displaySuccess("Your name has been successfully updated.");
+        ToastCreator.displaySuccess(nameUpdatedNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);
@@ -466,7 +468,7 @@ void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
       .updateBiography(action.biography)
       .then((_){
         store.dispatch(UpdateBiographySuccessAction(userId: accountId, biography: action.biography));
-        ToastCreator.displaySuccess("Your biography has been successfully updated.");
+        ToastCreator.displaySuccess(biographyUpdatedNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);

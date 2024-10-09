@@ -10,6 +10,7 @@ import 'package:my_social_app/views/create_question/pages/add_question_image_pag
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class SelectTopicPage extends StatefulWidget {
   final int subjectId;
@@ -43,6 +44,7 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                 onInit: (store) => store.dispatch(GetNextPageSubjectTopicsIfNoPageAction(subjectId: widget.subjectId)),
                 converter: (store) => store.state.selectSubjectTopics(widget.subjectId),
                 builder:(context,topics) => DropdownSearch<String>.multiSelection(
+                  enabled: topics.isNotEmpty,
                   items: topics.map((e) => e.name).toList(),
                   onBeforeChange: (prevItems, nextItems){
                     if(nextItems.length > 3){
@@ -51,10 +53,15 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                     }
                     return Future.value(true);
                   },
-                  popupProps: const PopupPropsMultiSelection.menu(
+                  popupProps: PopupPropsMultiSelection.menu(
                     showSearchBox: true,
-                    searchDelay: Duration(),
+                    searchDelay: const Duration(),
+                    emptyBuilder: (context,item){
+                      if(topics.isEmpty) return const LoadingCircleWidget();
+                      return Container();
+                    }
                   ),
+                  
                   dropdownDecoratorProps: DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.select_topics_page_label
@@ -88,13 +95,15 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
               .push(MaterialPageRoute(builder: (context) => const AddQuestionImagesPage()))
               .then((value){
                 if(value == null) return;
-                Navigator
-                  .of(context)
-                  .pop((
-                    content: _content,
-                    topicIds: _topicIds,
-                    images: value
-                  ));
+                if(context.mounted){
+                  Navigator
+                    .of(context)
+                    .pop((
+                      content: _content,
+                      topicIds: _topicIds,
+                      images: value
+                    ));
+                }
               });
           },
           child: Row(

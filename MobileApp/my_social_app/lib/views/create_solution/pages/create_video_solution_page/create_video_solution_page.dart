@@ -18,12 +18,12 @@ class CreateVideoSolutionPage extends StatefulWidget {
 }
 
 class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   XFile? _video;
   
   void _initController(File file){
     _controller = VideoPlayerController.file(file);
-    _controller
+    _controller!
       .initialize()
       .then((_) => setState(() {}));  
   }
@@ -38,6 +38,11 @@ class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
           _initController(File((value as XFile).path));
         }
       });
+  }
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
 
@@ -107,15 +112,15 @@ class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
               );
             }
             return SolutionCreationVideoPlayer(
-              controller: _controller,
+              controller: _controller!,
               onDeleted: () => setState(() { _video = null; }),
               play: (){
-                _controller
+                _controller!
                   .play()
                   .then((_){ setState((){}); });
               },
               pause: (){
-                _controller
+                _controller!
                   .pause()
                   .then((_){ setState((){}); });
               }
@@ -131,6 +136,7 @@ class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
               ToastCreator.displayError(AppLocalizations.of(context)!.create_video_solution_page_no_video_error);
               return;
             }
+            _controller?.pause();
             Navigator
               .of(context)
               .push(MaterialPageRoute(builder: (context) => AddSolutionContentPage(multiMedya: [_video!])))

@@ -23,6 +23,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices.InternalDomainServi
                 ValidateIssuer = true,
                 ValidateLifetime = true,
                 ValidateAudience = true,
+                ClockSkew = TimeSpan.Zero
             };
 
             var result = await handler.ValidateTokenAsync(token, validationParameters);

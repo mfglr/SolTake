@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/models/solution_user_save.dart';
 import 'package:my_social_app/models/solution_user_vote.dart';
@@ -17,12 +18,12 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-  Future<Solution> create(String? content,int questionId, Iterable<XFile>? images) async {
+  Future<MultipartRequest> _createSolutionRequest(String? content,int questionId, Iterable<XFile>? images) async {
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
     );
-
+    request.headers.addAll(_appClient.getHeader());
     if(images != null){
       for(final image in images){
         request.files.add(await MultipartFile.fromPath("images",image.path));
@@ -30,24 +31,76 @@ class SolutionService{
     }
     request.fields["questionId"] = questionId.toString();
     if(content != null) request.fields["content"] = content;
-    final response = await _appClient.send(request);
-    final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
-    
-    return Solution.fromJson(json);
+    return request;
   }
+  Future<Solution> create(String? content,int questionId, Iterable<XFile>? images) =>
+    _createSolutionRequest(content, questionId, images)
+      .then((request) => request.send())
+      .then((response) async {
+        if(response.statusCode >= 400){
+          if(response.statusCode == 401){
+            return await _appClient
+              .loginByRefreshToken()
+              .then((_) => _createSolutionRequest(content, questionId, images))
+              .then((request) => request.send());
+          }
+          var message = utf8.decode(await response.stream.toBytes());
+          throw BackendException(message: message, statusCode: response.statusCode);
+        }
+        return response;
+      })
+      .then(
+        (response) => response.stream
+          .toBytes()
+          .then((bytes) => utf8.decode(bytes))
+          .then((data){
+            if(response.statusCode > 400){
+              throw BackendException(message: data,statusCode: response.statusCode);
+            }
+            return Solution.fromJson(jsonDecode(data));
+          })
+      );
 
-  Future<Solution> createVideoSolution(int questionId, String? content, XFile video) async {
+
+  Future<MultipartRequest> _createVideoSolutionRequest(int questionId, String? content, XFile video) async{
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createVideoSolutionEndpoint")
     );
+    request.headers.addAll(_appClient.getHeader());
     if(content != null) request.fields["content"] = content;
     request.files.add(await MultipartFile.fromPath("file",video.path));
     request.fields["questionId"] = questionId.toString();
-    final response = await _appClient.send(request);
-    final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
-    return Solution.fromJson(json);
+    return request;
   }
+
+  Future<Solution> createVideoSolution(int questionId, String? content, XFile video) =>
+    _createVideoSolutionRequest(questionId, content, video)
+      .then((request) => request.send())
+      .then((response) async {
+        if(response.statusCode >= 400){
+          if(response.statusCode == 401){
+            return await _appClient
+              .loginByRefreshToken()
+              .then((_) => _createVideoSolutionRequest(questionId, content, video))
+              .then((request) => request.send());
+          }
+          var message = utf8.decode(await response.stream.toBytes());
+          throw BackendException(message: message, statusCode: response.statusCode);
+        }
+        return response;
+      })
+      .then(
+        (response) => response.stream
+          .toBytes()
+          .then((bytes) => utf8.decode(bytes))
+          .then((data){
+            if(response.statusCode > 400){
+              throw BackendException(message: data,statusCode: response.statusCode);
+            }
+            return Solution.fromJson(jsonDecode(data));
+          })
+      );
 
   Future<void> delete(int solutionId) => 
     _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");

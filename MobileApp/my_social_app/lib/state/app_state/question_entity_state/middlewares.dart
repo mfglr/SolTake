@@ -21,6 +21,7 @@ import 'package:redux/redux.dart';
 
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
+    ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageCode(store)]!);
     QuestionService()
       .createQuestion(action.images,action.examId,action.subjectId,action.topicIds,action.content)
       .then((question) {

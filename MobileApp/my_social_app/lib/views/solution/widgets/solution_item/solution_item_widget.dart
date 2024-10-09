@@ -28,7 +28,7 @@ class SolutionItemWidget extends StatelessWidget {
     required this.solution,
     this.play,
     this.pause,
-    this.controller
+    this.controller,
   });
 
   @override

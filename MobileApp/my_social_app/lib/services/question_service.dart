@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/models/question_user_save.dart';
@@ -17,11 +18,12 @@ class QuestionService{
   static final QuestionService _singleton = QuestionService._(AppClient());
   factory QuestionService() => _singleton;
 
-  Future<Question> createQuestion(Iterable<XFile> images,int examId,int subjectId,Iterable<int> topicIds,String? content) async {
+  Future<MultipartRequest> _createQuestionRequest(Iterable<XFile> images,int examId,int subjectId,Iterable<int> topicIds,String? content) async{
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")
     );
+    request.headers.addAll(_appClient.getHeader());
     for(final image in images){
       request.files.add(await MultipartFile.fromPath("images",image.path));
     }
@@ -29,11 +31,34 @@ class QuestionService{
     request.fields["examId"] = examId.toString();
     request.fields["subjectId"] = subjectId.toString();
     if(content != null) request.fields["content"] = content;
-    
-    final response = await _appClient.send(request);
-    final json = jsonDecode(utf8.decode(await response.stream.toBytes()));
-    return Question.fromJson(json);
+    return request;
   }
+
+  Future<Question> createQuestion(Iterable<XFile> images,int examId,int subjectId,Iterable<int> topicIds,String? content) =>
+    _createQuestionRequest(images,examId,subjectId,topicIds,content)
+      .then((request) => request.send())
+      .then((response) async {
+        if(response.statusCode < 400) return response;
+        if(response.statusCode == 401){
+          return await _appClient
+            .loginByRefreshToken()
+            .then((_) => _createQuestionRequest(images, examId, subjectId, topicIds, content))
+            .then((request) => request.send());
+        }
+        var message = utf8.decode(await response.stream.toBytes());
+        throw BackendException(message: message, statusCode: response.statusCode);
+      })
+      .then(
+        (response) => response.stream
+          .toBytes()
+          .then((bytes) => utf8.decode(bytes))
+          .then((data){
+            if(response.statusCode > 400){
+              throw BackendException(message: data,statusCode: response.statusCode);
+            }
+            return Question.fromJson(jsonDecode(data));
+          })
+      );
 
   Future<void> delete(int questionId) =>
     _appClient

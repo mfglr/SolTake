@@ -58,7 +58,7 @@ Future<void> main() async {
         onInit: (store) => store.dispatch(const LoginByRefreshToken()),
         converter: (store) => store.state.accountState,
         builder: (context,account) => MaterialApp(
-          title: 'SolTake',
+          title: 'SolTake', 
           locale: Locale(account?.language ?? PlatformDispatcher.instance.locale.languageCode),
           supportedLocales: const [
             Locale('en'),
@@ -103,6 +103,7 @@ class MainView extends StatelessWidget {
             return StoreConnector<AppState,ActiveLoginPage>(
               converter: (store) => store.state.loginState.activeLoginPage,
               builder: (context,activeLoginPage){
+                if(activeLoginPage == ActiveLoginPage.appLodingPage) return const ApplicationLoadingPage();
                 if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
                 return const RegisterPage();
               },

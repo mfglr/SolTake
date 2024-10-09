@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
@@ -32,11 +30,14 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
   final GlobalKey _solutionKey = GlobalKey(); 
   final ScrollController _scrollController = ScrollController();
   late final void Function() _onScrollBottom;
-
+  
   final Map<int,VideoPlayerController> _videoControllers = {};
 
   void _playController(int solutionId){
-    _videoControllers[solutionId]!.play().then((_){ setState((){}); });
+    _videoControllers[solutionId]!
+      .play()
+      .then((_){ setState((){}); });
+
     _videoControllers.forEach((key,value){
       if(key != solutionId && value.value.isPlaying){
         value.pause().then((_){ setState((){}); });
@@ -45,18 +46,15 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
   }
 
   void _setController(int solutionId){
-    final store = StoreProvider.of<AppState>(context,listen: false);
     final controller = VideoPlayerController
-      .networkUrl(
-        AppClient().generateUri("$solutionController/$getSolutionVideoEndpoint/$solutionId"),
-        httpHeaders: { "Authorization": "Bearer ${store.state.accessToken}" }
-      );
+      .networkUrl(AppClient().generateUri("$solutionController/$getSolutionVideoEndpoint/$solutionId"));
       controller
         .initialize()
-        .then((_){ 
+        .then((_){
           _videoControllers[solutionId] = controller;
           _playController(solutionId);
         });
+        
   }
 
   void _play(int solutionId){
@@ -97,6 +95,11 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
   void dispose() {
     _scrollController.removeListener(_onScrollBottom);
     _scrollController.dispose();
+
+    for(var controller in _videoControllers.values){
+      controller.dispose();
+    }
+
     super.dispose();
   }
 

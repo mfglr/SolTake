@@ -1,6 +1,7 @@
 enum ActiveLoginPage{
   loginPage,
-  registerPage
+  registerPage,
+  appLodingPage
 }
 
 
