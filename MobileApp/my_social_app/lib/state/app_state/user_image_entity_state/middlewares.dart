@@ -1,3 +1,5 @@
+import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -15,7 +17,7 @@ void updateCurrentUserImageMiddleware(Store<AppState> store,action,NextDispatche
       .then((image){
         store.dispatch(LoadUserImageSuccessAction(userId: accountId, image: image));
         store.dispatch(ChangeProfileImageStatusAction(userId: accountId,value: true));
-        ToastCreator.displaySuccess("Photo has been successfully updated.");
+        ToastCreator.displaySuccess(userPhotoUpdatedNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);
@@ -28,7 +30,7 @@ void removeCurrentUserImageMiddleware(Store<AppState> store,action,NextDispatche
       .then((image){
         store.dispatch(LoadUserImageSuccessAction(userId: accountId, image: image));
         store.dispatch(ChangeProfileImageStatusAction(userId: accountId,value: false));
-        ToastCreator.displaySuccess("Photo has been successfully deleted.");
+        ToastCreator.displaySuccess(userPhotoRemoveNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);

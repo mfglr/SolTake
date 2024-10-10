@@ -37,3 +37,13 @@ const biographyUpdatedNotificationContent = {
   "en": "Your biography has been successfully updated.",
   "tr": "Biyografin başarılı bir şekide güncellendi."
 };
+
+const userPhotoUpdatedNotificationContent = {
+  "en": "Your profile photo has been successfully updated.",
+  "tr": "Profil fotoğrafın başarılı bir şekide güncellendi."
+};
+
+const userPhotoRemoveNotificationContent = {
+  "en": "Your profile photo has been successfully removed.",
+  "tr": "Profile fotoğrafın başarılı bir şekilde kaldırıldı."
+};
