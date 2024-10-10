@@ -68,10 +68,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width / widget.aspectRatio,
-              child: RotatedBox(
-                quarterTurns: 1,
-                child: VideoPlayer(widget.controller)
-              )
+              child: VideoPlayer(widget.controller)
             ),
             if(widget.displayVolumeOffButton)
               Positioned(
