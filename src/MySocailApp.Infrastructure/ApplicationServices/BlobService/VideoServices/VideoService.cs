@@ -5,7 +5,7 @@ using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 
 namespace MySocailApp.Infrastructure.ApplicationServices.BlobService.VideoServices
 {
-    public class VideoService(IBlobNameGenerator generator, IPathFinder pathFinder, IFrameCatcher frameCatcher, IPathsContainer pathContainer, IVideoDurationCalculator videoDurationCalculator) : IVideoService
+    public class VideoService(IBlobNameGenerator generator, IPathFinder pathFinder, IFrameCatcher frameCatcher, IPathsContainer pathContainer, IVideoDurationCalculator videoDurationCalculator, IVideoFastStartConverter videoFastStartConverter) : IVideoService
     {
 
         private readonly IBlobNameGenerator _generator = generator;
@@ -13,23 +13,29 @@ namespace MySocailApp.Infrastructure.ApplicationServices.BlobService.VideoServic
         private readonly IVideoDurationCalculator _videoDurationCalculator = videoDurationCalculator;
         private readonly IPathsContainer _pathContainer = pathContainer;
         private readonly IPathFinder _pathFinder = pathFinder;
+        private readonly IVideoFastStartConverter _videoFastStartConverter = videoFastStartConverter;
 
         public async Task<AppVideo> SaveAsync(IFormFile file, string containerNameOfVideo, string containerNameOfFrame, CancellationToken cancellationToken)
         {
-            var blobNameOfVideo = _generator.Generate(RootName.Video, containerNameOfVideo);
+            var blobNameOfVideo = _generator.Generate(RootName.Video, containerNameOfVideo,"mp4");
             var videoPath = _pathFinder.GetPath(RootName.Video, containerNameOfVideo, blobNameOfVideo);
 
             using var stream = file.OpenReadStream();
             using var savedFile = File.Create(videoPath);
             await stream.CopyToAsync(savedFile, cancellationToken);
             savedFile.Close();
-            _pathContainer.Add(videoPath);
 
-            var frame = await _frameCatcher.GetFrameAsync(videoPath, containerNameOfFrame, 0, cancellationToken);
+            var convertedBlobNameOfVideo = await _videoFastStartConverter.Convert(containerNameOfVideo, blobNameOfVideo, cancellationToken);
+            File.Delete(videoPath);
+
+            var convertedVideoPath = _pathFinder.GetPath(RootName.Video, containerNameOfVideo, convertedBlobNameOfVideo);
+            _pathContainer.Add(convertedVideoPath);
+
+            var frame = await _frameCatcher.GetFrameAsync(convertedVideoPath, containerNameOfFrame, 0, cancellationToken);
             _pathContainer.Add(_pathFinder.GetPath(RootName.Image, containerNameOfFrame, frame.BlobName));
 
-            var duration = await _videoDurationCalculator.CalculateAsync(videoPath, cancellationToken);
-            return new(blobNameOfVideo, duration, frame, stream.Length);
+            var duration = await _videoDurationCalculator.CalculateAsync(convertedVideoPath, cancellationToken);
+            return new(convertedBlobNameOfVideo, duration, frame, stream.Length);
         }
 
         public void Delete(string containerName, string blobName)

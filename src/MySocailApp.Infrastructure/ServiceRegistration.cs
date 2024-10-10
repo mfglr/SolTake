@@ -112,8 +112,10 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IImageService,ImageService>()
                 .AddScoped<IFrameCatcher, FrameCatcher>()
                 .AddScoped<ITextService,TextService>()
+                .AddScoped<IVideoFastStartConverter, VideoFastStartConverter>()
                 .AddScoped<IVideoDurationCalculator, VideoDurationCalculator>()
                 .AddScoped<IVideoService,VideoService>();
+
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {
             var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
