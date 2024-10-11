@@ -91,8 +91,12 @@ class SolutionState{
 
   SolutionState startLoadingNextUpvotes()
     => _optinal(newUpvotes: upvotes.startLoadingNext());
-  SolutionState addNextPageUpvotes(Iterable<int> voteIds)
+  SolutionState stopLoadingNextUpvotes()
+    => _optinal(newUpvotes: upvotes.stopLoadingNext());
+  SolutionState addNextUpvotes(Iterable<int> voteIds)
     => _optinal(newUpvotes: upvotes.addNextPage(voteIds));
+  
+  
   SolutionState makeUpvote(int upvoteId,int downvoteId)
     => _optinal(
       newIsUpvoted: true,
@@ -116,8 +120,11 @@ class SolutionState{
 
   SolutionState startLoadingNextDownvotes()
     => _optinal(newDownvotes: downvotes.startLoadingNext());
-  SolutionState addNextPageDownvotes(Iterable<int> voteIds)
+  SolutionState addNextDownvotes(Iterable<int> voteIds)
     => _optinal(newDownvotes: downvotes.addNextPage(voteIds));
+  SolutionState stopLoadinNextDownvotes()
+    => _optinal(newDownvotes: downvotes.stopLoadingNext());
+    
   SolutionState makeDownvote(int upvoteId,int downvoteId)
     => _optinal(
       newIsUpvoted: false,
@@ -140,8 +147,13 @@ class SolutionState{
     );
   
 
-  SolutionState getNextPageComments() => _optinal(newComments: comments.startLoadingNext());
-  SolutionState addNextPageComments(Iterable<int> commentIds) => _optinal(newComments: comments.addNextPage(commentIds));
+  SolutionState startLoadingNextComments()
+    => _optinal(newComments: comments.startLoadingNext());
+  SolutionState addNextComments(Iterable<int> commentIds)
+    => _optinal(newComments: comments.addNextPage(commentIds));
+  SolutionState stopLoadingNextComments()
+    => _optinal(newComments: comments.stopLoadingNext());
+    
   SolutionState addComment(int commentId) =>
     _optinal(
       newNumberOfComments: numberOfComments + 1,

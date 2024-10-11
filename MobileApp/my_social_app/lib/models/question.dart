@@ -84,6 +84,6 @@ class Question{
     correctSolutions: Pagination.init(solutionsPerPage,true),
     pendingSolutions: Pagination.init(solutionsPerPage,true),
     incorrectSolutions: Pagination.init(solutionsPerPage,true),
-    videoSolutions: Pagination.init(2,true)
+    videoSolutions: Pagination.init(solutionsPerPage,true)
   );
 }

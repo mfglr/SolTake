@@ -16,4 +16,9 @@ class ExamService{
       .get(_appClient.generatePaginationUrl("$examController/$getExamsEndpoint", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Exam.fromJson(e)));
+
+  Future<Exam> getExamById(int examId) =>
+    _appClient
+      .get("$examController/$getExamByIdEndpoint")
+      .then((json) => Exam.fromJson(json));
 }

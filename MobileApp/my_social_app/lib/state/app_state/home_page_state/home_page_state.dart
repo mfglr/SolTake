@@ -4,15 +4,17 @@ class HomePageState{
   final Pagination questions;
   const HomePageState({required this.questions});
 
-  HomePageState getNextPageQuestions()
+  HomePageState startLoadingNextQuestions()
     => HomePageState(questions: questions.startLoadingNext());
-  HomePageState addNextPageQuestions(Iterable<int> questionIds)
+  HomePageState stopLoadingNextQuestions()
+    => HomePageState(questions: questions.stopLoadingNext());
+  HomePageState addNextQuestions(Iterable<int> questionIds)
     => HomePageState(questions: questions.addNextPage(questionIds));
-  HomePageState getPrevPageQuestions()
+
+  HomePageState startLoadingPrevPageQuestions()
     => HomePageState(questions: questions.startLoadingPrev());
   HomePageState addPrevPageQuestions(Iterable<int> questionIds)
     => HomePageState(questions: questions.addPrevPage(questionIds));
-  HomePageState prependQuestion(int questionId)
-    => HomePageState(questions: questions.prependOne(questionId));
-
+  HomePageState stopLoadingPrevPageQuestions()
+    => HomePageState(questions: questions.stopLoadingPrev());
 }

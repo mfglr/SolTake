@@ -6,25 +6,31 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 class SubjectEntityState extends EntityState<SubjectState>{
   const SubjectEntityState({required super.entities});
   
-  SubjectEntityState getNextPageQuestions(int subjectId)
-    => SubjectEntityState(entities: updateOne(entities[subjectId]!.getNextPageQuestions()));
+  SubjectEntityState startLoadingNextQuestions(int subjectId)
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.startLoadingNextQuestions()));
   SubjectEntityState addNextPageQuestions(int subjectId, Iterable<int> quesionIds)
-    => SubjectEntityState(entities: updateOne(entities[subjectId]!.addNextPageQuestions(quesionIds)));
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.addNextPageQuestions(quesionIds)));
+  SubjectEntityState stopLoadingNextQuestions(int subjectId)
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.stopLoadingNextQuestions()));
 
   SubjectEntityState startLoadingNextTopics(int subjectId)
-    => SubjectEntityState(entities: updateOne(entities[subjectId]?.startloading()));
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.startloadingNextTopics()));
   SubjectEntityState addNextPageTopics(int subjectId,Iterable<int> topicIds)
-    => SubjectEntityState(entities: updateOne(entities[subjectId]?.adNextPageTopics(topicIds)));
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.addNextTopics(topicIds)));
+  SubjectEntityState stopLoadingNextTopics(int subjectId)
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.stopLoadingNextTopics()));
 
   SubjectEntityState addSubject(SubjectState subject)
     => SubjectEntityState(entities: appendOne(subject));
   SubjectEntityState addSubjects(Iterable<SubjectState> subjects)
     => SubjectEntityState(entities: appendMany(subjects));
 
-  SubjectEntityState getPrevPageQuestions(int subjectId)
-    => SubjectEntityState(entities: updateOne(entities[subjectId]?.getPrevPageQuestions()));
+  SubjectEntityState startLoadingPrevQuestions(int subjectId)
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.startLoadingPrevQuestions()));
   SubjectEntityState addPrevPageQuestions(int subjectId,Iterable<int> questionIds)
-    => SubjectEntityState(entities: updateOne(entities[subjectId]?.addPrevPageQuestions(questionIds)));
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.addPrevQuestions(questionIds)));
+  SubjectEntityState stopLoadingPrevQuestions(int subjectId)
+    => SubjectEntityState(entities: updateOne(entities[subjectId]?.stopLoadingPrevQuestions()));
 
   Iterable<SubjectState> getSubjectsByExamId(int? examId)
     => entities.values.where((x) => x.examId == examId);

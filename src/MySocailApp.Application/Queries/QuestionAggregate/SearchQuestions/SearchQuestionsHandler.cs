@@ -10,6 +10,6 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions
         private readonly IQuestionQueryRepository _questionQueryRepository = questionQueryRepository;
 
         public Task<List<QuestionResponseDto>> Handle(SearchQuestionsDto request, CancellationToken cancellationToken)
-            => _questionQueryRepository.SearchQuestionsAsync(_accessTokenReader.GetRequiredAccountId(), request,request.ExamId, request.SubjectId, request.TopicId, cancellationToken);
+            => _questionQueryRepository.SearchQuestionsAsync(_accessTokenReader.GetRequiredAccountId(), request, request.ExamId, request.SubjectId, request.TopicId, cancellationToken);
     }
 }

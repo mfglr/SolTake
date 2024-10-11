@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -35,7 +36,11 @@ class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
             ),
           ),
           body: StoreConnector<AppState,Iterable<SolutionState>>(
-            onInit: (store) => store.dispatch(GetNextPageQuestionIncorrectSolutionsIfNoPageAction(questionId: question.id)),
+            onInit: (store) => getNextPageIfNoPage(
+              store,
+              question.incorrectSolutions,
+              NextQuestionIncorrectSolutionsAction(questionId: question.id),
+            ),
             converter: (store) => store.state.selectQuestionIncorrectSolutions(question.id),
             builder:(context,solutions) => Builder(
               builder: (context) {
@@ -50,7 +55,11 @@ class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
                   solutionId: solutionId,
                   onScrollBottom: (){
                     final store = StoreProvider.of<AppState>(context,listen: false);
-                    store.dispatch(GetNextPageQuestionIncorrectSolutionsIfReadyAction(questionId: question.id));
+                    getNextPageIfReady(
+                      store,
+                      question.incorrectSolutions,
+                      NextQuestionIncorrectSolutionsAction(questionId: question.id),
+                    );
                   },
                 );
               }

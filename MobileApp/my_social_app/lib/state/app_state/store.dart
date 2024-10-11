@@ -96,22 +96,15 @@ final store = Store(
     //
 
     //Comment entity state middleware
-    getNextPageCommentLikesIfNoPageMiddleware,
-    getNextPageCommentLikesIfReadyActionMiddleware,
     getNextPageCommentLikesMiddleware,
     likeCommentMiddleware,
     dislikeCommentMiddleware,
     
-    getNextPageCommentRepliesMiddleware,
-    getNextPageCommentRepliesIfNoPageMiddleware,
-    getNextPageCommentRepliesIfReadyMiddleware,
+    nextCommentRepliesMiddleware,
 
     //Home page state
-    getNextPageHomeQuestionsIfNoPageMiddleware,
-    getNextPageHomeQuestionsIfReadyMiddleware,
     getNextPageHomeQuestionsMiddleware,
     getPrevPageHomeQuestionsMiddleware,
-    getPrevPageHomePageQuestionsIfReadyMiddleware,
     
     //account start
     loginByRefreshTokenMiddleware,
@@ -187,50 +180,32 @@ final store = Store(
     //user imgage end
 
     //search state
-    getFirstPageSearchingUsersIfNoPageMiddleware,
-    getFirstPageSearchingUsersMiddleware,
-    getNextPageSearchingUsersIfReadyMiddleware,
-    getNextPageSearchingUsersMiddleware,
-
-    getNextPageSearchedUsersIfNoPageMiddleware,
-    getNextPageSearchedUsersIfReadyMiddleware,
-    getNextPageSearchedUsersMiddleware,
+    firstSearchingUsersMiddleware,
+    nextSearchingUsersMiddleware,
+    nextSearchedUsersMiddleware,
     addSearchedUserMiddleware,
     removeSearchedUserMiddleware,
     
-    getFirstPageSearchingQuestionsIfNoPageMiddleware,
-    getFirstPageSearchingQuestionsMiddleware,
-    getNextPageSearchingQuestionsIfReadyMiddleare,
-    getNextPageSearchingQuestionsMiddleware,
+    firstSearchingQuestionsMiddleware,
+    nextSearchingQuestionsMiddleware,
     //search end
     
     //Exam entity state
-    getNextPageExamSubjectsIfNoPageMiddleware,
-    getNextPageExamSubjectsMiddleware,
-
-    getNextPageExamQeuestionsMiddleware,
-    getNextPageOfExamQuestionsIfNoPageMiddleware,
-    getNextPageExamQuestionsIfReadyMiddleware,
-
-    getPrevPageExamQuestionsIfReadyMiddleware,
-    getPrevPageExamQuestionsMiddleware,
+    loadExamMiddleare,
+    nextExamSubjectsMiddleware,
+    nextExamQeuestionsMiddleware,
+    prevExamQuestionsMiddleware,
 
     //subject entity state
-    getNextPageSubjectQuestionsIfNoPageMiddleware,
-    getNextPageSubjectQuestionsIfReadyMiddleware,
-    getNextPageSubjectQuestionsMiddleware,
-
-    getPrevPageSubjectQuestionsIfReadyMiddleware,
-    getPrevPageSubjectQuestionsMiddleware,
-
-    getSubjectTopicsIfNoPageMiddleware,
-    getSubjectTopicsMiddleware,
+    loadSubjectMiddleware,
+    nextSubjectQuestionsMiddleware,
+    prevSubjectQuestionsMiddleware,
+    nextSubjectTopicsMiddleware,
 
     //Topic start
     getNextPageTopicQuestionsMiddleware,
     getNextPageTopicQuestionsIfNoPageMiddleware,
     getNextPageTopicQuestionsIfReadyMiddeware,
-
     getPrevPageTopicQuestionsIfReadyMiddleware,
     getPrevPageTopicQuestionsMiddleware,
     //Topic end
@@ -239,70 +214,38 @@ final store = Store(
     loadQuestionMiddleware,
     createQuestionMiddleware,
     deleteQuestionMiddleware,
+    loadQuestionImageMiddleware,
     saveQuestionMiddleware,
     unsaveQuestionMiddleware,
-
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
-    getNextPageQuestionLikesIfNoPageMiddleware,
-    getNextPageQuestionLikesIfReadyMiddleware,
-    getNextPageQuestionLikesMiddleware,
 
-    getNextPageQuestionSolutionIfNoPageMiddleware,
-    getNextPageQuestionSolutionsIfReadyMiddleware,
-    getNextPageQuestionSolutionsMiddleware,
-
-    getNextPageQuestionCorrectSolutionsIfNoPageMiddleware,
-    getNextPageQuestionCorrectSolutionsIfReadyMiddleware,
-    getNextPageQuestionCorrectSolutionsMiddleware,
-    
-    getNextPageQuestionPendingSolutionsIfNoPageMiddleware,
-    getNextPageQuestionPendingSolutionsIfReadMiddleware,
-    getNextPageQuestionPendingSolutionsMiddleware,
-
-    getNextPageQuestionIncorrectSolutionsIfNoPageMiddleware,
-    getNextPageQuestionIncorrectSolutionsIfReadyMiddleware,
-    getNextPageQuestionIncorrectSolutionsMiddleware,
-
-    getNextPageQuestionVideoSolutionsIfNoPageMiddleware,
-    getNextPageQuestionVideoSolutionsIfReadyMiddleware,
-    getNextPageQuestionVideoSolutionsMiddleware,
-
-    getNextPageQuestionCommentsIfNoPageCommentsMiddleware,
-    getNextPageQuestionCommentIfReadyMiddleware,
-    getNextPageQuestionCommentsMiddleware,
-   
-    loadQuestionImageMiddleware,
-    
+    nextQuestionLikesMiddleware,
+    nextQuestionSolutionsMiddleware,
+    nextQuestionCorrectSolutionsMiddleware,
+    nextQuestionPendingSolutionsMiddleware,
+    nextQuestionIncorrectSolutionsMiddleware,
+    nextQuestionVideoSolutionsMiddleware,
+    nextQuestionCommentsMiddleware,
 
     //solution entity state
     createSolutionMiddleware,
     createVideoSolutionMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
-
-    getNextPageSolutionUpvotesIfNoPageMiddleware,
-    getNextPageSolutionUpvotesIfReadyMiddleware,
-    getNextPageSolutionUpvotesMiddleware,
     makeSolutionUpvoteMiddleware,
     removeSolutionUpvoteMiddleware,
-
-    getNextSolutionPageDownvotesIfNoPageMiddleware,
-    getNextPageSolutionDownvotesIfReady,
-    getNextPageDownvotesMiddleware,
-    makeSolutionDownvoteMiddleware,
-    removeSolutionDownvoteMiddleware,
-   
-    getNextPageSolutionCommentsIfNoPageMiddleware,
-    getNextPageSolutionCommentsIfReadyMiddleware,
-    getNextPageSolutionCommentsMiddleware,
     loadSolutionImageMiddleware,
-    
     markSolutionAsCorrectMiddleware,
     markSolutionAsIncorrectMiddleware,
-
     saveSolutionMiddleware,
     unsaveSolutionMiddleware,
+    makeSolutionDownvoteMiddleware,
+    removeSolutionDownvoteMiddleware,
+
+    nextSolutionUpvotesMiddleware,
+    nextSolutionDownvotesMiddleware,
+    nextSolutionCommentsMiddleware,
     //solution end
 
     //comments entity state
@@ -320,9 +263,7 @@ final store = Store(
     //notifications end
 
     //conversations start
-    getNextPageConversationsMiddleware,
-    getNextPageConversationsIfNoPageMiddleware,
-    getNextPageConversationsIfReadyActionMiddleware,
+    nextConversationsMiddleware,
     //conversations end
 
     //message

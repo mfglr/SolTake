@@ -45,7 +45,9 @@ class Pagination{
 
   bool get hasAtLeastOnePage => ids.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loadingNext;
+  bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
+
 
   Iterable<int> merge(int id) => [id, ...ids.where((e) => e != id)];
 
@@ -77,11 +79,29 @@ class Pagination{
         recordsPerPage: recordsPerPage,
         ids: ids,
       );
+  Pagination stopLoadingNext()
+    => Pagination(
+        isLast: isLast,
+        loadingNext: false,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        ids: ids,
+      );
   Pagination startLoadingPrev()
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: true,
+        ids: ids,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+      );
+  Pagination stopLoadingPrev()
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: false,
         ids: ids,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
@@ -95,6 +115,7 @@ class Pagination{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
+
   Pagination addPrevPage(Iterable<int> ids)
     => Pagination(
         isLast: isLast,

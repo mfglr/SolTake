@@ -20,7 +20,6 @@ void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
             message.numberOfImages, (index) => MessageImageState.init(message.id, index)
           )));
           store.dispatch(AddUserImageAction(image: UserImageState.init(message.conversationId)));
-          
         });
     }
   }

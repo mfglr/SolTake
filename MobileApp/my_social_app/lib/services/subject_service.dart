@@ -16,4 +16,9 @@ class SubjectService{
       .get(_appClient.generatePaginationUrl("$subjectController/$getSubjectsByExamIdEndPoint/$examId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Subject.fromJson(e)).toList());
+
+  Future<Subject> getSubjectById(int subjectId)
+    => _appClient
+      .get("$subjectController/$getSubjectByIdEndpoint/$subjectId")
+      .then((json) => Subject.fromJson(json));
 }

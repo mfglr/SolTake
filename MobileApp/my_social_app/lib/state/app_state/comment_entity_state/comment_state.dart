@@ -72,7 +72,8 @@ class CommentState{
       repliesVisibility: newRepliesVisibility ?? repliesVisibility
     );
 
-  CommentState getNextPageLikes() => _optional(newLikes: likes.startLoadingNext());
+  CommentState startLoadingNextLikes() => _optional(newLikes: likes.startLoadingNext());
+  CommentState stopLoadingNextLikes() => _optional(newLikes: likes.stopLoadingNext());
   CommentState addNextPageLikes(Iterable<int> ids) => _optional(newLikes: likes.addNextPage(ids));
   CommentState like(int likeId) =>
     _optional(
@@ -92,8 +93,9 @@ class CommentState{
       newLikes: likes.addInOrder(likeId)
     );
  
-  CommentState getNextPageReplies() => _optional(newReplies: replies.startLoadingNext());
-  CommentState addNextPageReplies(Iterable<int> replyIds) => _optional(newReplies: replies.addNextPage(replyIds));
+  CommentState startLoadingNextReplies() => _optional(newReplies: replies.startLoadingNext());
+  CommentState stopLoadingNextReplies() => _optional(newReplies: replies.stopLoadingNext());
+  CommentState addNextReplies(Iterable<int> replyIds) => _optional(newReplies: replies.addNextPage(replyIds));
   CommentState addReply(int replyId) =>
     _optional(
       newReplies: replies.prependOne(replyId),

@@ -6,8 +6,10 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 class CommentEntityState extends EntityState<CommentState>{
   const CommentEntityState({required super.entities});
 
-  CommentEntityState getNextPageLikes(int commentId)
-    => CommentEntityState(entities: updateOne(entities[commentId]?.getNextPageLikes()));
+  CommentEntityState startLoadingNextLikes(int commentId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.startLoadingNextLikes()));
+  CommentEntityState stopLoadingNextLikes(int commentId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.stopLoadingNextLikes()));
   CommentEntityState addNextPageLikes(int commentId, Iterable<int> likes)
     => CommentEntityState(entities: updateOne(entities[commentId]?.addNextPageLikes(likes)));
   CommentEntityState like(int commentId, int likeId)
@@ -17,14 +19,16 @@ class CommentEntityState extends EntityState<CommentState>{
   CommentEntityState addNewLike(int commentId, int likeId)
     => CommentEntityState(entities: updateOne(entities[commentId]?.addNewLike(likeId)));
 
-  CommentEntityState getNextPageReplies(int commentId)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.getNextPageReplies()));
-  CommentEntityState addNextPageReplies(int commentId,Iterable<int> replyIds)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.addNextPageReplies(replyIds)));
+  CommentEntityState startLoadingNextReplies(int commentId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.startLoadingNextReplies()));
+  CommentEntityState stopLoadingNextReplies(int commentId)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.stopLoadingNextReplies()));
+  CommentEntityState addNextReplies(int commentId,Iterable<int> replyIds)
+    => CommentEntityState(entities: updateOne(entities[commentId]?.addNextReplies(replyIds)));
   CommentEntityState addReply(int commentId, int replyId)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.addReply(replyId)));
+    => CommentEntityState(entities: updateOne(entities[commentId]?.addReply(replyId)));
   CommentEntityState removeReply(int commentId, int replyId)
-    => CommentEntityState(entities: updateOne(entities[commentId]!.removeReply(replyId)));
+    => CommentEntityState(entities: updateOne(entities[commentId]?.removeReply(replyId)));
   CommentEntityState addNewReply(int commentId, int replyId)
     => CommentEntityState(entities: updateOne(entities[commentId]?.addNewReply(replyId)));
 

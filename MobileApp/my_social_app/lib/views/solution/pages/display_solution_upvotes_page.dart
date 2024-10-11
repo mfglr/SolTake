@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -34,7 +35,7 @@ class DisplaySolutionUpvotesPage extends StatelessWidget {
             ),
           ),
           body: StoreConnector<AppState,Iterable<UserState>>(
-            onInit: (store) => store.dispatch(GetNextPageSolutionUpvotesIfNoPageAction(solutionId: solutionId)),
+            onInit: (store) => getNextPageIfNoPage(store,solution.upvotes,NextSolutionUpvotesAction(solutionId: solutionId)),
             converter: (store) => store.state.selectSolutionUpvotes(solutionId),
             builder:(context,users) => UserItemsWidget(
               users: users,
@@ -48,7 +49,7 @@ class DisplaySolutionUpvotesPage extends StatelessWidget {
               ),
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageSolutionUpvotesIfReadyAction(solutionId: solutionId));
+                getNextPageIfReady(store,solution.upvotes,NextSolutionUpvotesAction(solutionId: solutionId));
               },
             ),
           ),

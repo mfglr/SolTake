@@ -9,8 +9,8 @@ namespace MySocailApp.Application.Queries.UserAggregate.SearchUsers
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IAppUserQueryRepository _repository = repository;
 
-        public async Task<List<AppUserResponseDto>> Handle(SearchUserDto request, CancellationToken cancellationToken)
-            => await _repository
+        public Task<List<AppUserResponseDto>> Handle(SearchUserDto request, CancellationToken cancellationToken)
+            => _repository
                 .SearchUserAsync(
                     request.Key,
                     _accessTokenReader.GetRequiredAccountId(),

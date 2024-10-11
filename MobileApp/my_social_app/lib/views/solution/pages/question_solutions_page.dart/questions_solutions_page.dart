@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -56,7 +57,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
 
   Widget _displayAllSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
-      onInit: (store) => store.dispatch(GetNextPageQuestionSolutionsIfNoPageAction(questionId: widget.questionId)),
+      onInit: (store) => getNextPageIfNoPage(store,question.solutions,NextQuestionSolutionsAction(questionId: question.id)),
       converter: (store) => store.state.selectQuestionSolutions(widget.questionId),
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
@@ -75,7 +76,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
             ),
         onScrollBottom: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(GetNextPageQuestionSolutionsIfReadyAction(questionId: widget.questionId));
+          getNextPageIfReady(store,question.solutions,NextQuestionSolutionsAction(questionId: question.id));
         },
       )
     );
@@ -83,7 +84,11 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
 
   Widget _displayAllCorrectSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
-      onInit: (store) => store.dispatch(GetNextPageQuestionCorrectSolutionsIfNoPageAction(questionId: widget.questionId)),
+      onInit: (store) => getNextPageIfNoPage(
+        store,
+        question.correctSolutions,
+        NextQuestionCorrectSolutionsAction(questionId: question.id)
+      ),
       converter: (store) => store.state.selectQuestionCorrectSolutions(widget.questionId),
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
@@ -104,7 +109,11 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
             ),
         onScrollBottom: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(GetNextPageQuestionCorrectSolutionsIfReadyAction(questionId: widget.questionId));
+          getNextPageIfReady(
+            store,
+            question.correctSolutions,
+            NextQuestionCorrectSolutionsAction(questionId: question.id)
+          );
         },
       )
     );
@@ -112,7 +121,11 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
 
   Widget _displayPendingSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
-      onInit: (store) => store.dispatch(GetNextPageQuestionPendingSolutionsIfNoPageAction(questionId: widget.questionId)),
+      onInit: (store) => getNextPageIfNoPage(
+        store,
+        question.pendingSolutions,
+        NextQuestionPendingSolutionsAction(questionId: question.id)
+      ),
       converter: (store) => store.state.selectQuestionPendingSolutions(widget.questionId),
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
@@ -133,7 +146,11 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
             ),
         onScrollBottom: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(GetNextPageQuestionPendingSolutionsIfReadyAction(questionId: widget.questionId));
+          getNextPageIfReady(
+            store,
+            question.pendingSolutions,
+            NextQuestionPendingSolutionsAction(questionId: question.id)
+          );
         },
       )
     );
@@ -141,7 +158,11 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
 
   Widget _displayIncorrectSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
-      onInit: (store) => store.dispatch(GetNextPageQuestionIncorrectSolutionsIfNoPageAction(questionId: widget.questionId)),
+      onInit: (store) => getNextPageIfNoPage(
+        store,
+        question.incorrectSolutions,
+        NextQuestionIncorrectSolutionsAction(questionId: question.id),
+      ),
       converter: (store) => store.state.selectQuestionIncorrectSolutions(widget.questionId),
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
@@ -162,7 +183,11 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
             ),
         onScrollBottom: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(GetNextPageQuestionIncorrectSolutionsIfReadyAction(questionId: widget.questionId));
+          getNextPageIfReady(
+            store,
+            question.incorrectSolutions,
+            NextQuestionIncorrectSolutionsAction(questionId: question.id),
+          );
         },
       )
     );

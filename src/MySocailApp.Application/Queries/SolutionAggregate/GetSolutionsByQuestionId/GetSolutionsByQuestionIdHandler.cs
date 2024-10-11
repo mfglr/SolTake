@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionsByQuesti
                 .GetSolutionsByQuestionIdAsync(
                     _accessTokenReader.GetRequiredAccountId(),
                     request,
-                    request.QuestionId, 
+                    request.QuestionId,
                     cancellationToken
                 );
     }

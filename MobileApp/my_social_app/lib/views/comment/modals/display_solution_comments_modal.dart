@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
@@ -87,7 +88,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
                 parentId: widget.parentId,
                 onScrollBottom: (){
                   final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(GetNextPageSolutionCommentsIfReadyAction(solutionId: widget.solutionId));
+                  getNextPageIfReady(store,pagination,NextSolutionCommentsAction(solutionId: widget.solutionId));
                 },
               )
             ),
@@ -123,14 +124,18 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
               
               if(comment == null){
                 return StoreConnector<AppState,Iterable<CommentState>>(
-                  onInit: (store) => store.dispatch(GetNextPageSolutionCommentsIfNoPageAction(solutionId: widget.solutionId)),
+                  onInit: (store) => getNextPageIfNoPage(
+                    store,
+                    solution.comments,
+                    NextSolutionCommentsAction(solutionId: widget.solutionId)
+                  ),
                   converter: (store) => store.state.getSolutionComments(widget.solutionId),
                   builder:(context,comments) => _buildModal(comments,solution.comments)
                 );
               }
               
               return StoreConnector<AppState,Iterable<CommentState>>(
-                onInit: (store) => store.dispatch(GetNextPageSolutionCommentsIfNoPageAction(solutionId: widget.solutionId)),
+                onInit: (store) => getNextPageIfNoPage(store,solution.comments,NextSolutionCommentsAction(solutionId: widget.solutionId)),
                 converter: (store) => store.state.getFormatedSolutionComments(widget.parentId!, widget.solutionId),
                 builder:(context,comments) => _buildModal(comments,solution.comments)
               );
@@ -139,7 +144,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
           );
         }
         return StoreConnector<AppState,Iterable<CommentState>>(
-          onInit: (store) => store.dispatch(GetNextPageSolutionCommentsIfNoPageAction(solutionId: widget.solutionId)),
+          onInit: (store) => getNextPageIfNoPage(store,solution.comments,NextSolutionCommentsAction(solutionId: widget.solutionId)),
           converter: (store) => store.state.getSolutionComments(widget.solutionId),
           builder:(context,comments) => _buildModal(comments,solution.comments)
         );

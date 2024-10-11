@@ -40,13 +40,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => GetListAsync(accountId, page, x => x.AppUserId == userId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetTopicQuestionsAsync(int topicId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Topics.Any(x => x.TopicId == topicId) && !x.IsRemoved, cancellationToken);
+            => GetListAsync(accountId, page, x => x.Topics.Any(x => x.TopicId == topicId) && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.SubjectId == subjectId && !x.IsRemoved, cancellationToken);
+            => GetListAsync(accountId, page, x => x.SubjectId == subjectId && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.ExamId == examId && !x.IsRemoved, cancellationToken);
+            => GetListAsync(accountId, page, x => x.ExamId == examId && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
             => GetListAsync(

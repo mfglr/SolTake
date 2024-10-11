@@ -2,48 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 
 @immutable
-class GetFirstPageSearchingUsersIfNoPageAction extends AppAction{
-  const GetFirstPageSearchingUsersIfNoPageAction();
+class FirstSearchingUsersAction extends AppAction{
+  const FirstSearchingUsersAction();
 }
 @immutable
-class GetFirstPageSearchingUsersAction extends AppAction{
-  const GetFirstPageSearchingUsersAction();
-}
-@immutable
-class AddFirstPageSearchingUsersAction extends AppAction{
+class FirstSearchingUsersSuccessAction extends AppAction{
   final Iterable<int> userIds;
-  const AddFirstPageSearchingUsersAction({required this.userIds});
+  const FirstSearchingUsersSuccessAction({required this.userIds});
 }
 @immutable
-class GetNextPageSearchingUsersIfReadyAction extends AppAction{
-  const GetNextPageSearchingUsersIfReadyAction();
-}
-@immutable
-class GetNextPageSearchingUsersAction extends AppAction{
-  const GetNextPageSearchingUsersAction();
-}
-@immutable
-class AddNextPageSearchingUsersAction extends AppAction{
-  final Iterable<int> userIds;
-  const AddNextPageSearchingUsersAction({required this.userIds});
+class FirstSearchingUsersFailedAction extends AppAction{
+  const FirstSearchingUsersFailedAction();
 }
 
 @immutable
-class GetNextPageSearchedUsersIfNoPageAction extends AppAction{
-  const GetNextPageSearchedUsersIfNoPageAction();
+class NextSearchingUsersAction extends AppAction{
+  const NextSearchingUsersAction();
 }
 @immutable
-class GetNextPageSearchedUsersIfReadyAction extends AppAction{
-  const GetNextPageSearchedUsersIfReadyAction();
+class NextSearchingUsersSuccessAction extends AppAction{
+  final Iterable<int> userIds;
+  const NextSearchingUsersSuccessAction({required this.userIds});
 }
 @immutable
-class GetNextPageSearchedUsersAction extends AppAction{
-  const GetNextPageSearchedUsersAction();
+class NextSearhcingUsersFailedAction extends AppAction{
+  const NextSearhcingUsersFailedAction();
+}
+
+@immutable
+class NextSearchedUsersAction extends AppAction{
+  const NextSearchedUsersAction();
 }
 @immutable
-class AddNextPageSearchedUsersAction extends AppAction{
+class NextSearchedUsersSuccessAction extends AppAction{
   final Iterable<int> searchIds;
-  const AddNextPageSearchedUsersAction({required this.searchIds});
+  const NextSearchedUsersSuccessAction({required this.searchIds});
+}
+@immutable
+class NextSearchedUsersFailedAction extends AppAction{
+  const NextSearchedUsersFailedAction();
 }
 @immutable
 class AddSearchedUserAction extends AppAction{
@@ -68,30 +65,31 @@ class RemoveSearcedUserSuccessAction extends AppAction{
 }
 
 @immutable
-class GetFirstPageSearhingQuestionsIfNoPageAction extends AppAction{
-  const GetFirstPageSearhingQuestionsIfNoPageAction();
+class FirstSearchingQuestionsAction extends AppAction{
+  const FirstSearchingQuestionsAction();
 }
 @immutable
-class GetFirstPageSearchingQuestionsAction extends AppAction{
-  const GetFirstPageSearchingQuestionsAction();
-}
-@immutable
-class AddFirstPageSearchingQuestionsAction extends AppAction{
+class FirstSearchingQuestionsSuccessAction extends AppAction{
   final Iterable<int> questionIds;
-  const AddFirstPageSearchingQuestionsAction({required this.questionIds});
+  const FirstSearchingQuestionsSuccessAction({required this.questionIds});
 }
 @immutable
-class GetNextPageSearchingQuestionsIfReadyAction extends AppAction{
-  const GetNextPageSearchingQuestionsIfReadyAction();
+class FirstSearchingQuestionsFailedAction extends AppAction{
+  const FirstSearchingQuestionsFailedAction();
+}
+
+@immutable
+class NextSearchingQuestionsAction extends AppAction{
+  const NextSearchingQuestionsAction();
 }
 @immutable
-class GetNextPageSearchingQuestionsAction extends AppAction{
-  const GetNextPageSearchingQuestionsAction();
-}
-@immutable
-class AddNextPageSearchingQuestionsAction extends AppAction{
+class NextSearchingQuestionsSuccessAction extends AppAction{
   final Iterable<int> questionIds;
-  const AddNextPageSearchingQuestionsAction({required this.questionIds});
+  const NextSearchingQuestionsSuccessAction({required this.questionIds});
+}
+@immutable
+class NextSearchingQuestionsFailedAction extends AppAction{
+  const NextSearchingQuestionsFailedAction();
 }
 
 @immutable

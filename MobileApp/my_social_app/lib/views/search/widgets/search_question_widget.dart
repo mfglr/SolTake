@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
@@ -48,12 +49,12 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                       onChanged: (value){
                         setState(() {
                           final store = StoreProvider.of<AppState>(context,listen: false);
-                          final examId = exams.firstWhere((exam) => exam.shortName == value).id;
-                          if(examId == state.examId) return;
+                          final exam = exams.firstWhere((exam) => exam.shortName == value);
+                          if(exam.id == state.examId) return;
 
-                          store.dispatch(ChangeSearchExamIdAction(examId: examId));
-                          store.dispatch(GetNextPageExamSubjectsIfNoPageAction(examId: examId));
-                          store.dispatch(const GetFirstPageSearchingQuestionsAction());
+                          store.dispatch(ChangeSearchExamIdAction(examId: exam.id));
+                          getNextPageIfNoPage(store, exam.subjects, NextExamSubjectsAction(examId: exam.id));
+                          store.dispatch(const FirstSearchingQuestionsAction());
                         });
                       },
                     ),
@@ -64,12 +65,9 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   child: StoreConnector<AppState,Iterable<SubjectState>>(
-                    converter: (store){
-                      if(state.examId == null) return [];
-                      return store.state.selectExamSubjects(state.examId!);
-                    },
+                    converter: (store) =>store.state.selectExamSubjects(state.examId),
                     builder: (context,subjects) => DropdownSearch<String>(
-                      enabled: state.examId != null,
+                      enabled: subjects.isNotEmpty,
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.search_question_widget_select_subject
@@ -78,15 +76,12 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                       selectedItem: subjects.where((subject) => subject.id == state.subjectId).firstOrNull?.name,
                       items: subjects.map((e) => e.name).toList(),
                       onChanged: (value){
-                        setState(() {
-                          final subjectId = subjects.firstWhere((exam) => exam.name == value).id;
-                          final store = StoreProvider.of<AppState>(context,listen: false);
-                          if(subjectId == state.subjectId) return;
-
-                          store.dispatch(ChangeSearchSubjectIdAction(subjectId: subjectId));
-                          store.dispatch(GetNextPageSubjectTopicsIfNoPageAction(subjectId: subjectId));
-                          store.dispatch(const GetFirstPageSearchingQuestionsAction());
-                        });
+                        final subject = subjects.firstWhere((subject) => subject.name == value);
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        if(subject.id == state.subjectId) return;
+                        store.dispatch(ChangeSearchSubjectIdAction(subjectId: subject.id));
+                        getNextPageIfNoPage(store, subject.topics, NextSubjectTopicsAction(subjectId: subject.id));
+                        store.dispatch(const FirstSearchingQuestionsAction());
                       },
                     ),
                   ),
@@ -97,12 +92,9 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
           Container(
             margin: const EdgeInsets.all(5),
             child: StoreConnector<AppState,Iterable<TopicState>>(
-              converter: (store){
-                if(state.subjectId == null) return [];
-                return store.state.selectSubjectTopics(state.subjectId!);
-              },
+              converter: (store) => store.state.selectSubjectTopics(state.subjectId),
               builder: (context,topics) => DropdownSearch<String>(
-                enabled: state.subjectId != null,
+                enabled: topics.isNotEmpty,
                 dropdownDecoratorProps: DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
                     labelText: AppLocalizations.of(context)!.search_question_widget_select_topic
@@ -115,9 +107,8 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                     final topicId = topics.firstWhere((exam) => exam.name == value).id;
                     final store = StoreProvider.of<AppState>(context,listen: false);
                     if(topicId == store.state.searchState.topicId) return;
-                    
                     store.dispatch(ChangeSearchTopicIdAction(topicId: topicId));
-                    store.dispatch(const GetFirstPageSearchingQuestionsAction());
+                    store.dispatch(const FirstSearchingQuestionsAction());
                   });
                 },
               ),
@@ -125,25 +116,19 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
           ),
           Expanded(
             child: StoreConnector<AppState,Iterable<QuestionState>>(
-              onInit: (store) => store.dispatch(const GetFirstPageSearhingQuestionsIfNoPageAction()),
+              onInit: (store) => getNextPageIfNoPage(store,state.questions, const FirstSearchingQuestionsAction()),
               converter: (store) => store.state.selectSearchQuestions,
               builder: (context,questions) => QuestionAbstractItemsWidget(
                 questions: questions,
-                onTap: (questionId){
-                  Navigator
-                    .of(context)
-                    .push(
-                      MaterialPageRoute(builder: (context) => DisplaySearchQuestionsPage(
-                        firstDisplayedQuestionId: questionId
-                      ))
-                    );
-                },
+                onTap: (questionId) => Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (context) => DisplaySearchQuestionsPage(firstDisplayedQuestionId: questionId))),
                 pagination: state.questions,
                 onScrollBottom: (){
                   final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(const GetNextPageSearchingQuestionsIfReadyAction());
+                  getNextPageIfReady(store, state.questions, const NextSearchingQuestionsAction());
                 }
-              ), 
+              ),
             ),
           )
         ],

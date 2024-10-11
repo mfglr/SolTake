@@ -20,13 +20,11 @@ class CreateVideoSolutionAction extends AppAction{
   final XFile video;
   const CreateVideoSolutionAction({required this.questionId, required this.content, required this.video});
 }
-
 @immutable
 class LoadSolutionAction extends AppAction{
   final int solutionId;
   const LoadSolutionAction({required this.solutionId});
 }
-
 @immutable
 class AddSolutionAction extends AppAction{
   final SolutionState solution;
@@ -46,29 +44,6 @@ class RemoveSolutionAction extends AppAction{
 class RemoveSolutionSuccessAction extends AppAction{
   final int solutionId;
   const RemoveSolutionSuccessAction({required this.solutionId});
-}
-
-//upvotes
-@immutable
-class GetNextPageSolutionUpvotesIfNoPageAction extends AppAction{
-  final int solutionId;
-  const GetNextPageSolutionUpvotesIfNoPageAction({required this.solutionId});
-}
-@immutable
-class GetNextPageSolutionUpvotesIfReadyAction extends AppAction{
-  final int solutionId;
-  const GetNextPageSolutionUpvotesIfReadyAction({required this.solutionId});
-}
-@immutable
-class GetNextPageSolutionUpvotesAction extends AppAction{
-  final int solutionId;
-  const GetNextPageSolutionUpvotesAction({required this.solutionId});
-}
-@immutable
-class AddNextPageSolutionUpvatesAction extends AppAction{
-  final int solutionId;
-  final Iterable<int> voteIds;
-  const AddNextPageSolutionUpvatesAction({required this.solutionId, required this.voteIds});
 }
 @immutable
 class MakeSolutionUpvoteAction extends AppAction{
@@ -104,29 +79,6 @@ class AddNewSolutionUpvoteAction extends AppAction{
   final int voteId;
   const AddNewSolutionUpvoteAction({required this.solutionId, required this.voteId});
 }
-
-
-@immutable
-class GetNextPageSolutionDownvotesIfNoPageAction extends AppAction{
-  final int solutionId;
-  const GetNextPageSolutionDownvotesIfNoPageAction({required this.solutionId});
-}
-@immutable
-class GetNextPageSolutionDownvotesIfReadyAction extends AppAction{
-  final int solutionId;
-  const GetNextPageSolutionDownvotesIfReadyAction({required this.solutionId});
-}
-@immutable
-class GetNextPageSolutionDownvotesAction extends AppAction{
-  final int solutionId;
-  const GetNextPageSolutionDownvotesAction({required this.solutionId});
-}
-@immutable
-class AddNextPageSolutionDownvotesAction extends AppAction{
-  final int solutionId;
-  final Iterable<int> voteIds;
-  const AddNextPageSolutionDownvotesAction({required this.solutionId, required this.voteIds});
-}
 @immutable
 class MakeSolutionDownvoteAction extends AppAction{
   final int solutionId;
@@ -161,27 +113,59 @@ class AddNewSolutionDownvoteAction extends AppAction{
   const AddNewSolutionDownvoteAction({required this.solutionId, required this.voteId});
 }
 
+//upvotes
 @immutable
-class GetNextPageSolutionCommentsIfNoPageAction extends AppAction{
+class NextSolutionUpvotesAction extends AppAction{
   final int solutionId;
-  const GetNextPageSolutionCommentsIfNoPageAction({required this.solutionId});
+  const NextSolutionUpvotesAction({required this.solutionId});
 }
 @immutable
-class GetNextPageSolutionCommentsIfReadyAction extends AppAction{
+class NextSolutionUpvotesSuccessAction extends AppAction{
   final int solutionId;
-  const GetNextPageSolutionCommentsIfReadyAction({required this.solutionId});
+  final Iterable<int> voteIds;
+  const NextSolutionUpvotesSuccessAction({required this.solutionId, required this.voteIds});
 }
 @immutable
-class GetNextPageSolutionCommentsAction extends AppAction{
+class NextSolutionUpvotesFailedAction extends AppAction{
   final int solutionId;
-  const GetNextPageSolutionCommentsAction({required this.solutionId});
+  const NextSolutionUpvotesFailedAction({required this.solutionId});
+}
+
+//downvotes
+@immutable
+class NextSolutionDownvotesAction extends AppAction{
+  final int solutionId;
+  const NextSolutionDownvotesAction({required this.solutionId});
 }
 @immutable
-class AddNextPageSolutionCommentsAction extends AppAction{
+class NextSolutionDownvotesSuccessAction extends AppAction{
+  final int solutionId;
+  final Iterable<int> voteIds;
+  const NextSolutionDownvotesSuccessAction({required this.solutionId, required this.voteIds});
+}
+@immutable
+class NextSolutionDownvotesFailedAction extends AppAction{
+  final int solutionId;
+  const NextSolutionDownvotesFailedAction({required this.solutionId});
+}
+
+@immutable
+class NextSolutionCommentsAction extends AppAction{
+  final int solutionId;
+  const NextSolutionCommentsAction({required this.solutionId});
+}
+@immutable
+class NextSolutionCommentsSuccessAction extends AppAction{
   final int solutionId;
   final Iterable<int> commentsIds;
-  const AddNextPageSolutionCommentsAction({required this.solutionId, required this.commentsIds});
+  const NextSolutionCommentsSuccessAction({required this.solutionId, required this.commentsIds});
 }
+@immutable
+class NextSolutionCommentsFailedAction extends AppAction{
+  final int solutionId;
+  const NextSolutionCommentsFailedAction({required this.solutionId});
+}
+
 @immutable
 class AddSolutionCommentAction extends AppAction{
   final int solutionId;

@@ -7,10 +7,13 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 class SolutionEntityState extends EntityState<SolutionState>{
   const SolutionEntityState({required super.entities});
 
-  SolutionEntityState startLoadinNextUpvotes(int solutionId)
+  SolutionEntityState startLoadingNextUpvotes(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingNextUpvotes()));
-  SolutionEntityState addNextPageUpvotes(int solutionId, Iterable<int> voteIds)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextPageUpvotes(voteIds)));
+  SolutionEntityState addNextUpvotes(int solutionId, Iterable<int> voteIds)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextUpvotes(voteIds)));
+  SolutionEntityState stopLoadingNextUpvotes(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.stopLoadingNextUpvotes()));
+
   SolutionEntityState makeUpvote(int solutionId,int upvoteId,int downvoteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeUpvote(upvoteId,downvoteId)));
   SolutionEntityState removeUpvote(int solutionId,int voteId)
@@ -21,7 +24,10 @@ class SolutionEntityState extends EntityState<SolutionState>{
   SolutionEntityState starLoadingNextDownvotes(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingNextDownvotes()));
   SolutionEntityState addNextPageDownvotes(int solutionId,Iterable<int> voteIds)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextPageDownvotes(voteIds)));
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextDownvotes(voteIds)));
+  SolutionEntityState stopLoadingNextDowvotes(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.stopLoadinNextDownvotes()));
+
   SolutionEntityState makeDownvote(int solutionId,int upvoteId,int downvoteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.makeDownvote(upvoteId,downvoteId)));
   SolutionEntityState removeDownvote(int solutionId,int voteId)
@@ -29,10 +35,13 @@ class SolutionEntityState extends EntityState<SolutionState>{
   SolutionEntityState addNewDownvote(int solutionId,int voteId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewDownvote(voteId)));
 
-  SolutionEntityState getNextPageComments(int solutionId)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.getNextPageComments()));
+  SolutionEntityState startLoadingNextComments(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingNextComments()));
   SolutionEntityState addNextPageComments(int solutionId, Iterable<int> commentIds)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextPageComments(commentIds)));
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNextComments(commentIds)));
+  SolutionEntityState stopLoadingNextComments(int solutionId)
+    => SolutionEntityState(entities: updateOne(entities[solutionId]?.stopLoadingNextComments()));
+
   SolutionEntityState addComment(int solutionId, int commentId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.addComment(commentId)));
   SolutionEntityState removeComment(int solutionId,int commentId)

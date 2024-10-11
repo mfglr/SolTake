@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/models/user.dart';
-import 'package:my_social_app/state/app_state/search_state/user_search_state.dart';
+import 'package:my_social_app/state/app_state/user_search_state/user_search_state.dart';
 part 'user_search.g.dart';
 
 @immutable

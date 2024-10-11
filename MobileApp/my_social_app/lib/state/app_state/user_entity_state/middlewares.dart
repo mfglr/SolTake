@@ -51,7 +51,84 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
   }
   next(action);
 }
+void followMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is FollowUserAction){
+    final currentUserId = store.state.accountState!.id;
+    UserService()
+      .follow(action.followedId)
+      .then((follow){
+        store.dispatch(AddFollowAction(follow: follow.toFollowState()));
+        store.dispatch(FollowUserSuccessAction(currentUserId: currentUserId, followedId: action.followedId, followId: follow.id));
+      });
+  }
+  next(action);
+}
+void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UnfollowUserAction){
+    final currentUserId = store.state.accountState!.id;
+    UserService()
+      .unfollow(action.followedId)
+      .then((_){
+        final followId = store.state.followEntityState.select(currentUserId, action.followedId)?.id ?? 0;
+        store.dispatch(RemoveFollowAction(followId: followId));
+        store.dispatch(UnfollowUserSuccessAction(currentUserId: currentUserId, followedId: action.followedId, followId: followId));
+      });
+  }
+  next(action);
+}
+void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveFollowerAction){
+    final followerId = action.followerId;
+    final currentUserId = store.state.accountState!.id;
+    UserService()
+      .removeFollower(action.followerId)
+      .then((_){
+        final followId = store.state.followEntityState.select(followerId, currentUserId)?.id ?? 0;
+        store.dispatch(RemoveFollowAction(followId: followId));
+        store.dispatch(RemoveFollowerSuccessAction(currentUserId: currentUserId,followerId: followerId,followId: followId));
+      });
+  }
+  next(action);
+}
 
+void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateUserNameAction){
+    final accountId = store.state.accountState!.id;
+    AccountService()
+      .updateUserName(action.userName)
+      .then((_){
+        store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));
+        ToastCreator.displaySuccess(userNameUpdatedNotificationContent[getLanguageCode(store)]!);
+      });
+  }
+  next(action);
+}
+void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateNameAction){
+    final accountId = store.state.accountState!.id;
+    UserService()
+      .updateName(action.name)
+      .then((_){
+        store.dispatch(UpdateNameSuccessAction(userId: accountId, name: action.name));
+        ToastCreator.displaySuccess(nameUpdatedNotificationContent[getLanguageCode(store)]!);
+      });
+  }
+  next(action);
+}
+void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateBiographyAction){
+    final accountId = store.state.accountState!.id;
+    UserService()
+      .updateBiography(action.biography)
+      .then((_){
+        store.dispatch(UpdateBiographySuccessAction(userId: accountId, biography: action.biography));
+        ToastCreator.displaySuccess(biographyUpdatedNotificationContent[getLanguageCode(store)]!);
+      });
+  }
+  next(action);
+}
+
+//followers
 void getNextPageUserFollowersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowersIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.followers;
@@ -85,6 +162,7 @@ void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatc
   next(action);
 }
 
+//not followeds
 void getNextPageUserNotFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserNotFollowedsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.notFolloweds;
@@ -118,6 +196,7 @@ void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDisp
   next(action);
 }
 
+//followeds
 void getNextPageUserFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserFollowedsIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
@@ -152,6 +231,7 @@ void getNextPageUserFollowedsMiddleware(Store<AppState> store,action,NextDispatc
   next(action);
 }
 
+//user messages
 void getNextPageUserMessageIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserMessagesIfNoPageAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.messages;
@@ -221,6 +301,7 @@ void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatch
   }
   next(action);
 }
+
 //solved questions
 void getNextPageUserSolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserSolvedQuestionsIfNoPageAction){
@@ -256,6 +337,7 @@ void getNextPageUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextD
   }
   next(action);
 }
+
 //unsolved questions
 void getNextPageUserUnsolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserUnsolvedQuestionsIfNoPageAction){
@@ -397,79 +479,3 @@ void getNextPageUserConvesationsMiddleware(Store<AppState> store,action,NextDisp
   next(action);
 }
 
-void followMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is FollowUserAction){
-    final currentUserId = store.state.accountState!.id;
-    UserService()
-      .follow(action.followedId)
-      .then((follow){
-        store.dispatch(AddFollowAction(follow: follow.toFollowState()));
-        store.dispatch(FollowUserSuccessAction(currentUserId: currentUserId, followedId: action.followedId, followId: follow.id));
-      });
-  }
-  next(action);
-}
-void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UnfollowUserAction){
-    final currentUserId = store.state.accountState!.id;
-    UserService()
-      .unfollow(action.followedId)
-      .then((_){
-        final followId = store.state.followEntityState.select(currentUserId, action.followedId)?.id ?? 0;
-        store.dispatch(RemoveFollowAction(followId: followId));
-        store.dispatch(UnfollowUserSuccessAction(currentUserId: currentUserId, followedId: action.followedId, followId: followId));
-      });
-  }
-  next(action);
-}
-void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is RemoveFollowerAction){
-    final followerId = action.followerId;
-    final currentUserId = store.state.accountState!.id;
-    UserService()
-      .removeFollower(action.followerId)
-      .then((_){
-        final followId = store.state.followEntityState.select(followerId, currentUserId)?.id ?? 0;
-        store.dispatch(RemoveFollowAction(followId: followId));
-        store.dispatch(RemoveFollowerSuccessAction(currentUserId: currentUserId,followerId: followerId,followId: followId));
-      });
-  }
-  next(action);
-}
-
-void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UpdateUserNameAction){
-    final accountId = store.state.accountState!.id;
-    AccountService()
-      .updateUserName(action.userName)
-      .then((_){
-        store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));
-        ToastCreator.displaySuccess(userNameUpdatedNotificationContent[getLanguageCode(store)]!);
-      });
-  }
-  next(action);
-}
-void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UpdateNameAction){
-    final accountId = store.state.accountState!.id;
-    UserService()
-      .updateName(action.name)
-      .then((_){
-        store.dispatch(UpdateNameSuccessAction(userId: accountId, name: action.name));
-        ToastCreator.displaySuccess(nameUpdatedNotificationContent[getLanguageCode(store)]!);
-      });
-  }
-  next(action);
-}
-void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UpdateBiographyAction){
-    final accountId = store.state.accountState!.id;
-    UserService()
-      .updateBiography(action.biography)
-      .then((_){
-        store.dispatch(UpdateBiographySuccessAction(userId: accountId, biography: action.biography));
-        ToastCreator.displaySuccess(biographyUpdatedNotificationContent[getLanguageCode(store)]!);
-      });
-  }
-  next(action);
-}

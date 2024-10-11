@@ -1,3 +1,4 @@
+import 'package:my_social_app/services/exam_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/subject_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
@@ -9,83 +10,70 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
-void getNextPageOfExamQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageExamQuestionsIfNoPageAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageExamQuestionsAction(examId: action.examId));
+void loadExamMiddleare(Store<AppState> store,action,NextDispatcher next){
+  if(action is LoadExamAction){
+    if(store.state.examEntityState.entities[action.examId] == null){
+      ExamService()
+        .getExamById(action.examId)
+        .then((exam) => store.dispatch(AddExamAction(exam: exam.toExamState())));
     }
   }
   next(action);
 }
-void getNextPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageExamQuestionsIfReadyAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageExamQuestionsAction(examId: action.examId));
-    }
-  }
-  next(action);
-}
-void getNextPageExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageExamQuestionsAction){
+
+void nextExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextExamQuestionsAction){
     final pagination = store.state.examEntityState.entities[action.examId]!.questions;
     QuestionService()
       .getByExamId(action.examId,pagination.next)
       .then((questions){
-        store.dispatch(AddNextPageExamQuestionsAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
+        store.dispatch(NextExamQuestionsSuccessAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      })
+      .catchError((e){
+        store.dispatch(NextExamQuestionsFailedAction(examId: action.examId));
+        throw e;
       });
   }
   next(action);
 }
-void getPrevPageExamQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetPrevPageExamQuestionsIfReadyAction){
-    final pagination = store.state.exams;
-    if(pagination.isReadyForPrevPage){
-      store.dispatch(GetPrevPageExamQuestionsAction(examId: action.examId));
-    }
-  }
-  next(action);
-}
-void getPrevPageExamQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetPrevPageExamQuestionsAction){
+void prevExamQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is PrevExamQuestionsAction){
     final pagination = store.state.examEntityState.entities[action.examId]!.questions;
     QuestionService()
       .getByExamId(action.examId, pagination.prev)
       .then((questions){
-        store.dispatch(AddPrevPageExamQuestionsAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
+        store.dispatch(PrevExamQuestionsSuccessAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      })
+      .catchError((e){
+        store.dispatch(PrevExamQuestionsFailedAction(examId: action.examId));
+        throw e;
       });
   }
   next(action);
 }
 
-void getNextPageExamSubjectsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageExamSubjectsIfNoPageAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.subjects;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageExamSubjectsAction(examId: action.examId));
-    }
-  }
-  next(action);
-}
-void getNextPageExamSubjectsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageExamSubjectsAction){
+void nextExamSubjectsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextExamSubjectsAction){
     final pagination = store.state.examEntityState.entities[action.examId]!.subjects;
     SubjectService()
       .getByExamId(action.examId,pagination.next)
       .then((subjects){
         store.dispatch(AddSubjectsAction(subjects: subjects.map((e) => e.toSubjectState())));
-        store.dispatch(AddNextPageExamSubjectsAction(examId: action.examId,subjectIds: subjects.map((e) => e.id)));
+        store.dispatch(NextExamSubjectsSuccessAction(examId: action.examId,subjectIds: subjects.map((e) => e.id)));
+      })
+      .catchError((e){
+        store.dispatch(NextExamSubjectsFailedAction(examId: action.examId));
+        throw e;
       });
   }
   next(action);

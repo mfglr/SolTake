@@ -3,6 +3,11 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 
 @immutable
+class LoadSubjectAction extends AppAction{
+  final int subjectId;
+  const LoadSubjectAction({required this.subjectId});
+}
+@immutable
 class AddSubjectAction extends AppAction{
   final SubjectState subject;
   const AddSubjectAction({required this.subject});
@@ -14,57 +19,52 @@ class AddSubjectsAction extends AppAction{
 }
 
 @immutable
-class GetNextPageSubjectTopicsIfNoPageAction extends AppAction{
+class NextSubjectTopicsAction extends AppAction{
   final int subjectId;
-  const GetNextPageSubjectTopicsIfNoPageAction({required this.subjectId});
+  const NextSubjectTopicsAction({required this.subjectId});
 }
 @immutable
-class GetNextPageSubjectTopicsAction extends AppAction{
-  final int subjectId;
-  const GetNextPageSubjectTopicsAction({required this.subjectId});
-}
-@immutable
-class AddNextPageSubjectTopicsAction extends AppAction{
+class NextSubjectTopicsSuccessAction extends AppAction{
   final int subjectId;
   final Iterable<int> topicIds;
-  const AddNextPageSubjectTopicsAction({required this.subjectId, required this.topicIds});
+  const NextSubjectTopicsSuccessAction({required this.subjectId, required this.topicIds});
+}
+@immutable
+class NextSubjectTopicsFailedAction extends AppAction{
+  final int subjectId;
+  const NextSubjectTopicsFailedAction({required this.subjectId});
 }
 
 @immutable
-class GetNextPageSubjectQuestionsIfNoPageAction extends AppAction{
+class NextSubjectQuestionsAction extends AppAction{
   final int subjectId;
-  const GetNextPageSubjectQuestionsIfNoPageAction({required this.subjectId});
+  const NextSubjectQuestionsAction({required this.subjectId});
 }
 @immutable
-class GetNextPageSubjectQuestionsIfReadyAction extends AppAction{
-  final int subjectId;
-  const GetNextPageSubjectQuestionsIfReadyAction({required this.subjectId});
-}
-@immutable
-class GetNextPageSubjectQuestionsAction extends AppAction{
-  final int subjectId;
-  const GetNextPageSubjectQuestionsAction({required this.subjectId});
-}
-@immutable
-class AddNextPageSubjectQuestionsAction extends AppAction{
+class NextSubjectQuestionsSuccessAction extends AppAction{
   final int subjectId;
   final Iterable<int> questions;
-  const AddNextPageSubjectQuestionsAction({required this.subjectId, required this.questions});
+  const NextSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
+}
+@immutable
+class NextSubjectQuestionsFailedAction extends AppAction{
+  final int subjectId;
+  const NextSubjectQuestionsFailedAction({required this.subjectId});
 }
 
 @immutable
-class GetPrevPageSubjectQuestionsIfReadyAction extends AppAction{
+class PrevSubjectQuestionsAction extends AppAction{
   final int subjectId;
-  const GetPrevPageSubjectQuestionsIfReadyAction({required this.subjectId});
+  const PrevSubjectQuestionsAction({required this.subjectId});
 }
 @immutable
-class GetPrevPageSubjectQuestionsAction extends AppAction{
-  final int subjectId;
-  const GetPrevPageSubjectQuestionsAction({required this.subjectId});
-}
-@immutable
-class AddPrevPageSubjectQuestionsAction extends AppAction{
+class PrevSubjectQuestionsSuccessAction extends AppAction{
   final int subjectId;
   final Iterable<int> questionIds;
-  const AddPrevPageSubjectQuestionsAction({required this.subjectId, required this.questionIds});
+  const PrevSubjectQuestionsSuccessAction({required this.subjectId, required this.questionIds});
+}
+@immutable
+class PrevSubjectQuestionsFailedAction extends AppAction{
+  final int subjectId;
+  const PrevSubjectQuestionsFailedAction({required this.subjectId});
 }

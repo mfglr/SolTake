@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -33,7 +34,11 @@ class DisplayVideoSolutionsPage extends StatelessWidget {
             ),
           ),
           body: StoreConnector<AppState,Iterable<SolutionState>>(
-            onInit: (store) => store.dispatch(GetNextPageQuestionVideoSolutionsIfNoPageAction(questionId: questionId)),
+            onInit: (store) => getNextPageIfNoPage(
+              store,
+              question.videoSolutions,
+              NextQuestionVideoSolutionsAction(questionId: questionId)
+            ),
             converter: (store) => store.state.selectQuestionVideoSolutions(questionId),
             builder: (context,solutions){
               if(question.videoSolutions.ids.isEmpty && question.videoSolutions.isLast){
@@ -41,13 +46,16 @@ class DisplayVideoSolutionsPage extends StatelessWidget {
                   text: AppLocalizations.of(context)!.display_video_solutions_page_no_solutions
                 );
               }
-              
               return SolutionItemsWidget(
                 solutions: solutions,
                 pagination: question.videoSolutions,
                 onScrollBottom: (){
                   final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(GetNextPageQuestionVideoSolutionsIfReadyAction(questionId: questionId));
+                  getNextPageIfReady(
+                    store,
+                    question.videoSolutions,
+                    NextQuestionVideoSolutionsAction(questionId: questionId)
+                  );
                 },
               );
             }

@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/search_state/actions.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -9,6 +11,7 @@ import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/remove_searched_user_button.dart';
 import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SearchUsersWidget extends StatefulWidget {
   const SearchUsersWidget({super.key});
@@ -19,6 +22,8 @@ class SearchUsersWidget extends StatefulWidget {
 
 class _SearchUsersWidgetState extends State<SearchUsersWidget> {
   late final TextEditingController _searchTextController;
+  late BehaviorSubject<String> _keyStream; 
+  late StreamSubscription<String> _keyConsumer; 
 
   @override
   void initState() {
@@ -26,17 +31,31 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
     
     final store = StoreProvider.of<AppState>(context,listen: false);
     _searchTextController.text = store.state.searchState.key;
-
-    if(store.state.searchState.key == ""){
-      store.dispatch(const GetNextPageSearchedUsersIfNoPageAction());
-    }
-
+    _keyStream = BehaviorSubject();
+    _keyStream.add(store.state.searchState.key);
+    
+    _keyConsumer = _keyStream.stream
+      .debounceTime(const Duration(milliseconds: 500))
+      .map((key) => key.trim())
+      .distinct()
+      .listen((key){
+        if(mounted){
+          final store = StoreProvider.of<AppState>(context,listen: false);
+          store.dispatch(ChangeSearchKeyAction(key: key.trim()));
+          if(key == ""){
+            getNextPageIfNoPage(store, store.state.searchState.searchedUsers, const NextSearchedUsersAction());
+          }else{
+            store.dispatch(const FirstSearchingUsersAction());
+          }
+        }
+      });
     super.initState();
   }
 
   @override
   void dispose() {
-    _searchTextController.clear();
+    _searchTextController.dispose();
+    _keyConsumer.cancel();
     super.dispose();
   }
 
@@ -63,15 +82,7 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
               converter: (store) => store.state.searchState.key,
               builder: (context, key) => TextField(
                 controller: _searchTextController,
-                onChanged: (key){
-                  final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(ChangeSearchKeyAction(key: key.trim()));
-                  if(key == ""){
-                    store.dispatch(const GetNextPageSearchedUsersIfNoPageAction());
-                  }else{
-                    store.dispatch(const GetFirstPageSearchingUsersAction());
-                  }
-                },
+                onChanged: (key) =>_keyStream.add(key),
                 style: const TextStyle(
                   fontSize: 14,
                 ),
@@ -84,9 +95,9 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
                   suffixIcon: key != "" ? IconButton(
                     onPressed: (){
                       _searchTextController.clear();
+                      _keyStream.add("");
                       final store = StoreProvider.of<AppState>(context,listen: false);
                       store.dispatch(const ClearKeyAction());
-                      store.dispatch(const GetNextPageSearchedUsersIfNoPageAction());
                     },
                     icon: const Icon(Icons.clear),
                   ) : null,
@@ -114,10 +125,10 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
                   onScrollBottom: (){
                     final store = StoreProvider.of<AppState>(context, listen: false);
                     if(state.key != ""){
-                      store.dispatch(const GetNextPageSearchingUsersIfReadyAction());
+                      getNextPageIfReady(store, state.users, const NextSearchingUsersAction());
                     }
                     else{
-                      store.dispatch(const GetNextPageSearchedUsersIfReadyAction());
+                      getNextPageIfReady(store, state.searchedUsers, const NextSearchedUsersAction());
                     }
                   },
                 ),

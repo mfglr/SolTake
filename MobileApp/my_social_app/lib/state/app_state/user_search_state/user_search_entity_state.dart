@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/app_state/user_search_state/user_search_state.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
-import 'package:my_social_app/state/app_state/search_state/user_search_state.dart';
 
 @immutable
 class UserSearchEntityState extends EntityState<UserSearchState>{

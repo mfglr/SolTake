@@ -63,6 +63,7 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
             ),
             itemCount: widget.questions.length,
             itemBuilder: (context,index) => QuestionAbstractItemWidget(
+              key: ValueKey(widget.questions.elementAt(index)),
               question: widget.questions.elementAt(index),
               onTap: widget.onTap,
             )

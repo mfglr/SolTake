@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -34,7 +35,11 @@ class DisplayQuestionLikesPage extends StatelessWidget {
             ),
           ),
           body: StoreConnector<AppState,Iterable<UserState>>(
-            onInit: (store) => store.dispatch(GetNextPageQuestionLikesIfNoPageAction(questionId: questionId)),
+            onInit: (store) => getNextPageIfNoPage(
+              store,
+              question.likes,
+              NextQuestionLikesAction(questionId: questionId)
+            ),
             converter: (store) => store.state.selectQuestionLikes(questionId),
             builder:(context,users) => UserItemsWidget(
               users: users,
@@ -48,7 +53,11 @@ class DisplayQuestionLikesPage extends StatelessWidget {
               ),
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageQuestionLikesIfReadyAction(questionId: questionId));
+                getNextPageIfReady(
+                  store,
+                  question.likes,
+                  NextQuestionLikesAction(questionId: questionId)
+                );
               }
             ),
           ),

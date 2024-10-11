@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_item_widget.dart';
 
 class UserItemsWidget extends StatefulWidget {
@@ -56,22 +55,17 @@ class _UserItemsWidgetState extends State<UserItemsWidget> {
           ...List.generate(
             widget.users.length,
             (index) => Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                child: UserItemWidget(
-                  user: widget.users.elementAt(index),
-                  rigthButtonBuilder: widget.rigthButtonBuilder,
-                  onPressed: widget.onPressed,
-                )
+              margin: const EdgeInsets.only(bottom: 8),
+              child: UserItemWidget(
+                key: ValueKey(widget.users.elementAt(index).id),
+                user: widget.users.elementAt(index),
+                rigthButtonBuilder: widget.rigthButtonBuilder,
+                onPressed: widget.onPressed,
               )
+            )
           ),
-          Builder(
-            builder: (context){
-              if(widget.pagination.loadingNext){
-                return const LoadingCircleWidget(strokeWidth: 3);
-              }
-              return const SpaceSavingWidget();
-            } 
-          )
+          if(widget.pagination.loadingNext)
+            const LoadingCircleWidget(strokeWidth: 3)
         ]
       ),
     );

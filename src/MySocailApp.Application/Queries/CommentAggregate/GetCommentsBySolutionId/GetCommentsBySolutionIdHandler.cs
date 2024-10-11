@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsBySolution
                 .GetCommentsBySolutionIdAsync(
                     _accessTokenReader.GetRequiredAccountId(),
                     request,
-                    request.SolutionId,                    
+                    request.SolutionId,
                     cancellationToken
                 );
     }

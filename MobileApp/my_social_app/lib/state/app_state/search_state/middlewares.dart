@@ -14,136 +14,97 @@ import 'package:my_social_app/state/app_state/user_search_state/actions.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 import 'package:redux/redux.dart';
 
-void getFirstPageSearchingUsersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetFirstPageSearchingUsersIfNoPageAction){
-    final key = store.state.searchState.key;
-    if(key != ""){
-      final pagination = store.state.searchState.users;
-      if(!pagination.isLast && !pagination.hasAtLeastOnePage){
-        store.dispatch(const GetFirstPageSearchingUsersAction());
-      }
-    }
-  }
-  next(action);
-}
-void getFirstPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetFirstPageSearchingUsersAction){
+void firstSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is FirstSearchingUsersAction){
     final key = store.state.searchState.key;
     UserService()
       .search(key, Page.init(usersPerPage, true))
       .then((users){
-        store.dispatch(AddFirstPageSearchingUsersAction(userIds: users.map((e) => e.id)));
+        store.dispatch(FirstSearchingUsersSuccessAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
         store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      })
+      .catchError((e){
+        store.dispatch(const FirstSearchingUsersFailedAction());
+        throw e;
       });
   }
   next(action);
 }
-void getNextPageSearchingUsersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchingUsersIfReadyAction){
-    final pagination = store.state.searchState.users;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(const GetNextPageSearchingUsersAction());
-    }
-  }
-  next(action);
-}
-void getNextPageSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchingUsersAction){
+void nextSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextSearchingUsersAction){
     final key = store.state.searchState.key;
     final pagination = store.state.searchState.users;
     UserService()
       .search(key, pagination.next)
       .then((users){
-        store.dispatch(AddNextPageSearchingUsersAction(userIds: users.map((e) => e.id)));
+        store.dispatch(NextSearchingUsersSuccessAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
         store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
+      })
+      .catchError((e){
+        store.dispatch(const NextSearhcingUsersFailedAction());
+        throw e;
       });
   }
   next(action);
 }
 
-
-void getFirstPageSearchingQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetFirstPageSearhingQuestionsIfNoPageAction){
-    final pagination = store.state.searchState.questions;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(const GetFirstPageSearchingQuestionsAction());
-    }
-  }
-  next(action);
-}
-void getFirstPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetFirstPageSearchingQuestionsAction){
+void firstSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is FirstSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
       .searchQuestions(state.examId, state.subjectId, state.topicId, Page.init(questionsPerPage, true))
       .then((questions){
-        store.dispatch(AddFirstPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
+        store.dispatch(FirstSearchingQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      })
+      .catchError((e){
+        store.dispatch(const FirstSearchingQuestionsFailedAction());
+        throw e;
       });
   }
   next(action);
 }
-void getNextPageSearchingQuestionsIfReadyMiddleare(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchingQuestionsIfReadyAction){
-
-    final pagination = store.state.searchState.questions;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(const GetNextPageSearchingQuestionsAction());
-    }
-  }
-  next(action);
-}
-void getNextPageSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchingQuestionsAction){
+void nextSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
       .searchQuestions(state.examId, state.subjectId, state.topicId, state.questions.next)
       .then((questions){
-        store.dispatch(AddNextPageSearchingQuestionsAction(questionIds: questions.map((e) => e.id)));
+        store.dispatch(NextSearchingQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      })
+      .catchError((e){
+        store.dispatch(const NextSearchingQuestionsFailedAction());
+        throw e;
       });
   }
   next(action);
 }
 
-void getNextPageSearchedUsersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchedUsersIfNoPageAction){
-    final pagination = store.state.searchState.searchedUsers;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(const GetNextPageSearchedUsersAction());
-    }
-  }
-  next(action);
-}
-void getNextPageSearchedUsersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchedUsersIfNoPageAction){
-    final pagination = store.state.searchState.searchedUsers;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(const GetNextPageSearchedUsersAction());
-    }
-  }
-  next(action);
-}
-void getNextPageSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageSearchedUsersAction){
+void nextSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextSearchedUsersAction){
     final pagination = store.state.searchState.searchedUsers;
     UserService()
       .getSearcheds(pagination.next)
       .then((searchs){
-        store.dispatch(AddNextPageSearchedUsersAction(searchIds: searchs.map((e) => e.id)));
+        store.dispatch(NextSearchedUsersSuccessAction(searchIds: searchs.map((e) => e.id)));
         store.dispatch(AddUserSearchsAction(searchs: searchs.map((e) => e.toUserSearchState())));
         store.dispatch(AddUsersAction(users: searchs.map((e) => e.searched!.toUserState())));
         store.dispatch(AddUserImagesAction(images: searchs.map((e) => UserImageState.init(e.searchedId))));
+      })
+      .catchError((e){
+        store.dispatch(const NextSearchedUsersFailedAction());
+        throw e;
       });
   }
   next(action);

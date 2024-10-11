@@ -18,6 +18,11 @@ class AddCommentAction extends AppAction{
   const AddCommentAction({required this.comment});
 }
 @immutable
+class AddCommentsAction extends AppAction{
+  final Iterable<CommentState> comments;
+  const AddCommentsAction({required this.comments});
+}
+@immutable
 class RemoveCommentAction extends AppAction{
   final CommentState comment;
   const RemoveCommentAction({required this.comment});
@@ -27,33 +32,23 @@ class RemoveCommentSuccessAction extends AppAction{
   final int commentId;
   const RemoveCommentSuccessAction({required this.commentId});
 }
-@immutable
-class AddCommentsAction extends AppAction{
-  final Iterable<CommentState> comments;
-  const AddCommentsAction({required this.comments});
-}
 
 
 @immutable
-class GetNextPageCommentLikesIfNoPageAction extends AppAction{
+class NextCommentLikesAction extends AppAction{
   final int commentId;
-  const GetNextPageCommentLikesIfNoPageAction({required this.commentId});
+  const NextCommentLikesAction({required this.commentId});
 }
 @immutable
-class GetNextPageCommentLikesIfReadyAction extends AppAction{
-  final int commentId;
-  const GetNextPageCommentLikesIfReadyAction({required this.commentId});
-}
-@immutable
-class GetNextPageCommentLikesAction extends AppAction{
-  final int commentId;
-  const GetNextPageCommentLikesAction({required this.commentId});
-}
-@immutable
-class AddNextPageCommentLikesAction extends AppAction{
+class NextCommentLikesSuccessAction extends AppAction{
   final int commentId;
   final Iterable<int> likeIds;
-  const AddNextPageCommentLikesAction({required this.commentId, required this.likeIds});
+  const NextCommentLikesSuccessAction({required this.commentId, required this.likeIds});
+}
+@immutable
+class NextCommentLikesFailedAction extends AppAction{
+  final int commentId;
+  const NextCommentLikesFailedAction({required this.commentId});
 }
 @immutable
 class LikeCommentAction extends AppAction{
@@ -93,25 +88,20 @@ class ChangeRepliesVisibilityAction extends AppAction{
 
 
 @immutable
-class GetNextPageCommentRepliesIfNoPageAction extends AppAction{
+class NextCommentRepliesAction extends AppAction{
   final int commentId;
-  const GetNextPageCommentRepliesIfNoPageAction({required this.commentId});
+  const NextCommentRepliesAction({required this.commentId});
 }
 @immutable
-class GetNextPageCommentRepliesIfReadyAction extends AppAction{
-  final int commentId;
-  const GetNextPageCommentRepliesIfReadyAction({required this.commentId});
-}
-@immutable
-class GetNextPageCommentRepliesAction extends AppAction{
-  final int commentId;
-  const GetNextPageCommentRepliesAction({required this.commentId});
-}
-@immutable
-class AddPrevPageCommentRepliesAction extends AppAction{
+class NextCommentRepliesSuccessAction extends AppAction{
   final int commentId;
   final Iterable<int> replyIds;
-  const AddPrevPageCommentRepliesAction({required this.commentId, required this.replyIds});
+  const NextCommentRepliesSuccessAction({required this.commentId, required this.replyIds});
+}
+@immutable
+class NextCommentRepliesFailedAction extends AppAction{
+  final int commentId;
+  const NextCommentRepliesFailedAction({required this.commentId});
 }
 @immutable
 class AddCommentReplyAction extends AppAction{

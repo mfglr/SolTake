@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 
 class DisplayRepliesButton extends StatelessWidget {
   final CommentState comment;
@@ -11,7 +13,8 @@ class DisplayRepliesButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
-        store.dispatch(GetNextPageCommentRepliesIfNoPageAction(commentId: comment.id));
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        getNextPageIfNoPage(store,comment.replies,NextCommentRepliesAction(commentId: comment.id));
         store.dispatch(ChangeRepliesVisibilityAction(commentId: comment.id, visibility: true));
       },
       style: ButtonStyle(

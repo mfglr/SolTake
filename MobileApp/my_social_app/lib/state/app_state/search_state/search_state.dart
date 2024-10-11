@@ -22,7 +22,7 @@ class SearchState{
     required this.searchedUsers
   });
   
-  SearchState startLoadingUsers()
+  SearchState startLoadingNextUsers()
     => SearchState(
         key: key,
         examId: examId,
@@ -32,7 +32,17 @@ class SearchState{
         users: users.startLoadingNext(),
         searchedUsers: searchedUsers
       );
-  SearchState addFirstPageUsers(Iterable<int> ids)
+  SearchState stopLoadingNextUsers()
+    => SearchState(
+        key: key,
+        examId: examId,
+        subjectId: subjectId,
+        topicId: topicId,
+        questions: questions,
+        users: users.stopLoadingNext(),
+        searchedUsers: searchedUsers
+      );
+  SearchState addFirstUsers(Iterable<int> ids)
     => SearchState(
         key: key,
         examId: examId,
@@ -42,7 +52,7 @@ class SearchState{
         users: users.addfirstPage(ids),
         searchedUsers: searchedUsers
       );
-  SearchState addNextPageUsers(Iterable<int> ids)
+  SearchState addNextUsers(Iterable<int> ids)
     => SearchState(
         key: key,
         examId: examId,
@@ -63,6 +73,17 @@ class SearchState{
         questions: questions,
         users: users,
         searchedUsers: searchedUsers.startLoadingNext()
+      );
+  SearchState stopLodingSearchedUsers()
+    => SearchState(
+        key: key,
+        examId: examId,
+        subjectId:
+        subjectId,
+        topicId: topicId,
+        questions: questions,
+        users: users,
+        searchedUsers: searchedUsers.stopLoadingNext()
       );
   SearchState addNextPageSearchedUsers(Iterable<int> searchIds)
     => SearchState(
@@ -95,7 +116,7 @@ class SearchState{
         searchedUsers: searchedUsers.removeOne(searchId)
       );
 
-  SearchState startLoadingQuestions()
+  SearchState startLoadingNextQuestions()
     => SearchState(
         key: key,
         examId: examId,
@@ -105,7 +126,17 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers
       );
-  SearchState addFirstPageQuestions(Iterable<int> questionIds)
+  SearchState stopLoadingNextQuestions()
+    => SearchState(
+        key: key,
+        examId: examId,
+        subjectId: subjectId,
+        topicId: topicId,
+        questions: questions.stopLoadingNext(),
+        users: users,
+        searchedUsers: searchedUsers
+      );
+  SearchState addFirstQuestions(Iterable<int> questionIds)
     => SearchState(
         key: key,
         examId: examId,
@@ -115,7 +146,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers
       );
-  SearchState addNextPageQuestions(Iterable<int> questionIds)
+  SearchState addNextQuestions(Iterable<int> questionIds)
     => SearchState(
         key: key,
         examId: examId,

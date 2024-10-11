@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes
                 .GetQuestionLikesAsync(
                     request.QuestionId,
                     _accessTokenReader.GetRequiredAccountId(),
-                    request,cancellationToken
+                    request, cancellationToken
                 );
     }
 }

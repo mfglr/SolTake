@@ -7,15 +7,19 @@ class ExamEntityState extends EntityState<ExamState>{
   
   const ExamEntityState({required super.entities});
 
-  ExamEntityState getNextPageQuestions(int examId)
-    => ExamEntityState(entities: updateOne(entities[examId]?.getNextPageQuestions()));
-  ExamEntityState addNextPageQuestions(int examId, Iterable<int> questionIds)
-    => ExamEntityState(entities: updateOne(entities[examId]?.addNextPageQuestions(questionIds)));
+  ExamEntityState startLoadingNextQuestions(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]?.startLoadingNextQuestions()));
+  ExamEntityState stopLoadingNextQuestions(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]?.stopLoadingNextQuestions()));
+  ExamEntityState addNextQuestions(int examId, Iterable<int> questionIds)
+    => ExamEntityState(entities: updateOne(entities[examId]?.addNextQuestions(questionIds)));
 
-  ExamEntityState getPrevPageQuestions(int examId)
-    => ExamEntityState(entities: updateOne(entities[examId]?.getPrevPageQuestions()));
+  ExamEntityState startLoadingPrevQuestions(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]?.startLoadingPrevQuestions()));
+  ExamEntityState stopLoadingPrevQuestions(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]?.stopLoadingPrevQuestions()));
   ExamEntityState addPrevPageQuestions(int examId,Iterable<int> questionIds)
-    => ExamEntityState(entities: updateOne(entities[examId]?.addPrevPageQuestions(questionIds)));
+    => ExamEntityState(entities: updateOne(entities[examId]?.addPrevQuestions(questionIds)));
 
   ExamEntityState getAllExams()
     => ExamEntityState(entities: entities);
@@ -26,9 +30,11 @@ class ExamEntityState extends EntityState<ExamState>{
   ExamEntityState addExams(Iterable<ExamState> exams)
     => ExamEntityState(entities: appendMany(exams));
 
-  ExamEntityState getNextPageSubjects(int examId)
-    => ExamEntityState(entities: updateOne(entities[examId]!.startLoadingNextSubjects()));
-  ExamEntityState addNextPageSubjects(int examId,Iterable<int> ids)
-    => ExamEntityState(entities: updateOne(entities[examId]!.addNextPageSubjects(ids)));
+  ExamEntityState startLoadingNextSubjects(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]?.startLoadingNextSubjects()));
+  ExamEntityState stopLoadingNextSubjects(int examId)
+    => ExamEntityState(entities: updateOne(entities[examId]?.stopLoadingNextSubjects()));
+  ExamEntityState addNextSubjects(int examId,Iterable<int> ids)
+    => ExamEntityState(entities: updateOne(entities[examId]?.addNextSubjects(ids)));
 }
 

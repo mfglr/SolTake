@@ -1,6 +1,7 @@
  import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
@@ -91,7 +92,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                 parentId: widget.parentId,
                 onScrollBottom: (){
                   final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(GetNextPageQuestionCommentsIfReadyAction(questionId: widget.questionId));
+                  getNextPageIfReady(store, pagination, NextQuestionCommentsAction(questionId: widget.questionId));
                 },
               )
             ),
@@ -127,14 +128,22 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
               
               if(parent == null){
                 return StoreConnector<AppState,Iterable<CommentState>>(
-                  onInit: (store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
+                  onInit: (store) => getNextPageIfNoPage(
+                    store,
+                    question.comments,
+                    NextQuestionCommentsAction(questionId: widget.questionId)
+                  ),
                   converter: (store) => store.state.getQuestionComments(widget.questionId),
                   builder:(context,comments) => _buildModal(comments,question.comments)
                 );
               }
 
               return StoreConnector<AppState,Iterable<CommentState>>(
-                onInit: (store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
+                onInit: (store) => getNextPageIfNoPage(
+                  store,
+                  question.comments,
+                  NextQuestionCommentsAction(questionId: widget.questionId)
+                ),
                 converter: (store) => store.state.getFormatedQuestionComments(widget.parentId!, widget.questionId),
                 builder:(context,comments) => _buildModal(comments,question.comments)
               );
@@ -143,7 +152,11 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
           );
         }
         return StoreConnector<AppState,Iterable<CommentState>>(
-          onInit: (store) => store.dispatch(GetNextPageQuestionCommentsIfNoPageAction(questionId: widget.questionId)),
+          onInit: (store) => getNextPageIfNoPage(
+            store,
+            question.comments,
+            NextQuestionCommentsAction(questionId: widget.questionId)
+          ),
           converter: (store) => store.state.getQuestionComments(widget.questionId),
           builder:(context,comments) => _buildModal(comments,question.comments)
         );

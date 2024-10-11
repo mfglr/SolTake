@@ -2,26 +2,40 @@ import 'package:my_social_app/state/app_state/search_state/actions.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:redux/redux.dart';
 
-SearchState getFirstPageUserReducer(SearchState prev, GetFirstPageSearchingUsersAction action)
-  => prev.startLoadingUsers();
-SearchState addFirstPageUserReducer(SearchState prev,AddFirstPageSearchingUsersAction action)
-  => prev.addFirstPageUsers(action.userIds);
-SearchState addNextPageUsersReducer(SearchState prev,AddNextPageSearchingUsersAction action)
-  => prev.addNextPageUsers(action.userIds);
+SearchState firstUsersReducer(SearchState prev, FirstSearchingUsersAction action)
+  => prev.startLoadingNextUsers();
+SearchState firstSearchingUsersSuccessReducer(SearchState prev,FirstSearchingUsersSuccessAction action)
+  => prev.addFirstUsers(action.userIds);
+SearchState firstSerchingUsersFailedReducer(SearchState prev,FirstSearchingUsersFailedAction action)
+  => prev.stopLoadingNextUsers();
 
-SearchState getFirstPageQuestionsReducer(SearchState prev,GetFirstPageSearchingQuestionsAction action)
-  => prev.startLoadingQuestions();
-SearchState addFirstPageQuestionsReducer(SearchState prev,AddFirstPageSearchingQuestionsAction action)
-  => prev.addFirstPageQuestions(action.questionIds);
-SearchState getNextPageQuestionsReducer(SearchState prev,GetNextPageSearchingQuestionsAction action)
-  => prev.startLoadingQuestions();
-SearchState addNextPageQuestionsReducer(SearchState prev,AddNextPageSearchingQuestionsAction action)
-  => prev.addNextPageQuestions(action.questionIds);
+SearchState nextUsersReducer(SearchState prev, NextSearchingUsersAction action)
+  => prev.startLoadingNextUsers();
+SearchState nextUsersSuccessReducer(SearchState prev,NextSearchingUsersSuccessAction action)
+  => prev.addNextUsers(action.userIds);
+SearchState nextUsersFailedReducer(SearchState prev,NextSearhcingUsersFailedAction action)
+  => prev.stopLoadingNextUsers();
 
-SearchState getNextPageSearchedUserReducer(SearchState prev,GetNextPageSearchedUsersAction action)
+SearchState firstQuestionsReducer(SearchState prev,FirstSearchingQuestionsAction action)
+  => prev.startLoadingNextQuestions();
+SearchState firstQuestionsSuccessReducer(SearchState prev,FirstSearchingQuestionsSuccessAction action)
+  => prev.addFirstQuestions(action.questionIds);
+SearchState firstQuestionsFailedReducer(SearchState prev, FirstSearchingQuestionsFailedAction action)
+  => prev.stopLoadingNextQuestions();
+
+SearchState nextQuestionsReducer(SearchState prev,NextSearchingQuestionsAction action)
+  => prev.startLoadingNextQuestions();
+SearchState nextQuestionsSuccessReducer(SearchState prev,NextSearchingQuestionsSuccessAction action)
+  => prev.addNextQuestions(action.questionIds);
+SearchState nextQuestionsFailedReducer(SearchState prev,NextSearchingQuestionsFailedAction action)
+  => prev.stopLoadingNextQuestions();
+
+SearchState nextSearchedUserReducer(SearchState prev,NextSearchedUsersAction action)
   => prev.startLodingSearchedUsers();
-SearchState addNextPageSearchedUserReducer(SearchState prev,AddNextPageSearchedUsersAction action)
+SearchState nextSearchedUserSuccessReducer(SearchState prev,NextSearchedUsersSuccessAction action)
   => prev.addNextPageSearchedUsers(action.searchIds);
+SearchState nextSearchedUserFailedReducer(SearchState prev,NextSearchedUsersFailedAction action)
+  => prev.stopLodingSearchedUsers();
 SearchState addSearchedUserReducer(SearchState prev,AddSearchedUserSuccessAction action)
   => prev.addSearchedUser(action.addedOne,action.removedOne);
 SearchState removeSearchedUserReducer(SearchState prev,RemoveSearcedUserSuccessAction action)
@@ -39,17 +53,25 @@ SearchState clearKeyReducer(SearchState prev,ClearKeyAction action)
   => prev.clearKey();
 
 Reducer<SearchState> searchStateReducers = combineReducers<SearchState>([
-  TypedReducer<SearchState,GetFirstPageSearchingUsersAction>(getFirstPageUserReducer).call,
-  TypedReducer<SearchState,AddFirstPageSearchingUsersAction>(addFirstPageUserReducer).call,
-  TypedReducer<SearchState,AddNextPageSearchingUsersAction>(addNextPageUsersReducer).call,
+  TypedReducer<SearchState,FirstSearchingUsersAction>(firstUsersReducer).call,
+  TypedReducer<SearchState,FirstSearchingUsersSuccessAction>(firstSearchingUsersSuccessReducer).call,
+  TypedReducer<SearchState,FirstSearchingUsersFailedAction>(firstSerchingUsersFailedReducer).call,
 
-  TypedReducer<SearchState,GetFirstPageSearchingQuestionsAction>(getFirstPageQuestionsReducer).call,
-  TypedReducer<SearchState,AddFirstPageSearchingQuestionsAction>(addFirstPageQuestionsReducer).call,
-  TypedReducer<SearchState,GetNextPageSearchingQuestionsAction>(getNextPageQuestionsReducer).call,
-  TypedReducer<SearchState,AddNextPageSearchingQuestionsAction>(addNextPageQuestionsReducer).call,
+  TypedReducer<SearchState,NextSearchingUsersAction>(nextUsersReducer).call,
+  TypedReducer<SearchState,NextSearchingUsersSuccessAction>(nextUsersSuccessReducer).call,
+  TypedReducer<SearchState,NextSearhcingUsersFailedAction>(nextUsersFailedReducer).call,
 
-  TypedReducer<SearchState,GetNextPageSearchedUsersAction>(getNextPageSearchedUserReducer).call,
-  TypedReducer<SearchState,AddNextPageSearchedUsersAction>(addNextPageSearchedUserReducer).call,
+  TypedReducer<SearchState,FirstSearchingQuestionsAction>(firstQuestionsReducer).call,
+  TypedReducer<SearchState,FirstSearchingQuestionsSuccessAction>(firstQuestionsSuccessReducer).call,
+  TypedReducer<SearchState,FirstSearchingQuestionsFailedAction>(firstQuestionsFailedReducer).call,
+
+  TypedReducer<SearchState,NextSearchingQuestionsAction>(nextQuestionsReducer).call,
+  TypedReducer<SearchState,NextSearchingQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
+  TypedReducer<SearchState,NextSearchingQuestionsFailedAction>(nextQuestionsFailedReducer).call,
+
+  TypedReducer<SearchState,NextSearchedUsersAction>(nextSearchedUserReducer).call,
+  TypedReducer<SearchState,NextSearchedUsersSuccessAction>(nextSearchedUserSuccessReducer).call,
+  TypedReducer<SearchState,NextSearchedUsersFailedAction>(nextSearchedUserFailedReducer).call,
   TypedReducer<SearchState,AddSearchedUserSuccessAction>(addSearchedUserReducer).call,
   TypedReducer<SearchState,RemoveSearcedUserSuccessAction>(removeSearchedUserReducer).call,
 

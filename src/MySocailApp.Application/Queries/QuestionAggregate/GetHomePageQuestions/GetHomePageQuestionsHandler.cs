@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
         public Task<List<QuestionResponseDto>> Handle(GetHomePageQuestionsDto request, CancellationToken cancellationToken)
-             => _repository.GetHomePageQuestionsAsync(
+            => _repository.GetHomePageQuestionsAsync(
                      _accessTokenReader.GetRequiredAccountId(),
                      request,
                      cancellationToken

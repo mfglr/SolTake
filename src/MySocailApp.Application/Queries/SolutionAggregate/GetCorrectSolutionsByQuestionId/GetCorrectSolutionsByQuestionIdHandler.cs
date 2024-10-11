@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetCorrectSolutionsB
         private readonly ISolutionQueryRepository _solutionReadRepsository = solutionReadRepsository;
 
         public Task<List<SolutionResponseDto>> Handle(GetCorrectSolutionsByQuestionIdDto request, CancellationToken cancellationToken)
-            => _solutionReadRepsository.GetCorrectSolutionsByQuestionId(
+            =>_solutionReadRepsository.GetCorrectSolutionsByQuestionId(
                     _accessTokenReader.GetRequiredAccountId(),
                     request,
                     request.QuestionId,

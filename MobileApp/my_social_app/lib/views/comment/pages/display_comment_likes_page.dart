@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -34,7 +35,11 @@ class DisplayCommentLikesPage extends StatelessWidget {
             ),
           ),
           body: StoreConnector<AppState,Iterable<UserState>>(
-            onInit: (store) => store.dispatch(GetNextPageCommentLikesIfNoPageAction(commentId: commentId)),
+            onInit: (store) => getNextPageIfNoPage(
+              store,
+              comment.likes,
+              NextCommentLikesAction(commentId: commentId)
+            ),
             converter: (store) => store.state.selectCommentLikes(commentId),
             builder: (context,users) => UserItemsWidget(
               users: users,
@@ -48,7 +53,11 @@ class DisplayCommentLikesPage extends StatelessWidget {
               ),
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageCommentLikesIfReadyAction(commentId: commentId));
+                getNextPageIfReady(
+                  store,
+                  comment.likes,
+                  NextCommentLikesAction(commentId: commentId)
+                );
               }
             ),
           ),

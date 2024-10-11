@@ -17,7 +17,7 @@ class ExamState{
     required this.questions
   });
 
-  ExamState getNextPageQuestions()
+  ExamState startLoadingNextQuestions()
     => ExamState(
         id: id,
         shortName: shortName,
@@ -25,7 +25,15 @@ class ExamState{
         subjects: subjects,
         questions: questions.startLoadingNext()
       );
-  ExamState addNextPageQuestions(Iterable<int> questionIds)
+  ExamState stopLoadingNextQuestions()
+    => ExamState(
+        id: id,
+        shortName: shortName,
+        fullName: fullName,
+        subjects: subjects,
+        questions: questions.stopLoadingNext()
+      );
+  ExamState addNextQuestions(Iterable<int> questionIds)
     => ExamState(
         id: id,
         shortName: shortName,
@@ -34,7 +42,7 @@ class ExamState{
         questions: questions.addNextPage(questionIds)
       );
 
-  ExamState getPrevPageQuestions()
+  ExamState startLoadingPrevQuestions()
     => ExamState(
         id: id,
         shortName: shortName,
@@ -42,7 +50,15 @@ class ExamState{
         subjects: subjects,
         questions: questions.startLoadingPrev()
       );
-  ExamState addPrevPageQuestions(Iterable<int> questionIds)
+  ExamState stopLoadingPrevQuestions()
+    => ExamState(
+        id: id,
+        shortName: shortName,
+        fullName: fullName,
+        subjects: subjects,
+        questions: questions.stopLoadingPrev()
+      );
+  ExamState addPrevQuestions(Iterable<int> questionIds)
     => ExamState(
         id: id,
         shortName: shortName,
@@ -59,13 +75,20 @@ class ExamState{
       subjects: subjects.startLoadingNext(),
       questions: questions
     );
-  
-  ExamState addNextPageSubjects(Iterable<int> ids)
+  ExamState stopLoadingNextSubjects()
     => ExamState(
         id: id,
         shortName: shortName,
         fullName: fullName,
-        subjects: subjects.addNextPage(ids),
+        subjects: subjects.stopLoadingNext(),
+        questions: questions
+      );
+  ExamState addNextSubjects(Iterable<int> subjectIds)
+    => ExamState(
+        id: id,
+        shortName: shortName,
+        fullName: fullName,
+        subjects: subjects.addNextPage(subjectIds),
         questions: questions
       );
 }

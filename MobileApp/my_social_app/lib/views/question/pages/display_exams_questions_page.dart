@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -30,18 +31,20 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
         body: RefreshIndicator(
           onRefresh: (){
             final store = StoreProvider.of<AppState>(context,listen: false);
-            store.dispatch(GetPrevPageExamQuestionsIfReadyAction(examId: examId));
-            return store.onChange.map((state) => state.examEntityState.entities[examId]!.questions).firstWhere((x) => !x.loadingPrev);
+            getPrevPageIfReady(store, exam.questions, PrevExamQuestionsAction(examId: examId));
+            return store.onChange
+              .map((state) => state.examEntityState.entities[examId]!.questions)
+              .firstWhere((x) => !x.loadingPrev);
           },
           child: StoreConnector<AppState,Iterable<QuestionState>>(
-            onInit: (store) => store.dispatch(GetNextPageExamQuestionsIfNoPageAction(examId: examId)),
+            onInit: (store) => getNextPageIfNoPage(store,exam.questions,NextExamQuestionsAction(examId: examId)),
             converter: (store) => store.state.selectExamQuestions(examId),
             builder: (context,questions) => QuestionItemsWidget(
               questions: questions.toList(),
               pagination: exam.questions,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageExamQuestionsIfReadyAction(examId: examId));
+                getNextPageIfReady(store,exam.questions,NextExamQuestionsAction(examId: examId));
               },
             ),
           ),

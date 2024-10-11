@@ -17,7 +17,7 @@ class SubjectState{
     required this.questions
   });
 
-  SubjectState getNextPageQuestions()
+  SubjectState startLoadingNextQuestions()
     => SubjectState(
         id: id,
         examId: examId,
@@ -33,8 +33,16 @@ class SubjectState{
         topics: topics,
         questions: questions.addNextPage(ids)
       );
+  SubjectState stopLoadingNextQuestions()
+    => SubjectState(
+        id: id,
+        examId: examId,
+        name: name,
+        topics: topics,
+        questions: questions.stopLoadingNext()
+      );
 
-  SubjectState getPrevPageQuestions()
+  SubjectState startLoadingPrevQuestions()
     => SubjectState(
         id: id,
         examId: examId,
@@ -42,7 +50,7 @@ class SubjectState{
         topics: topics,
         questions: questions.startLoadingPrev()
       );
-  SubjectState addPrevPageQuestions(Iterable<int> questionIds)
+  SubjectState addPrevQuestions(Iterable<int> questionIds)
     => SubjectState(
         id: id,
         examId: examId,
@@ -50,8 +58,16 @@ class SubjectState{
         topics: topics,
         questions: questions.addPrevPage(questionIds)
       );
-
-  SubjectState startloading()
+  SubjectState stopLoadingPrevQuestions()
+    => SubjectState(
+        id: id,
+        examId: examId,
+        name: name,
+        topics: topics,
+        questions: questions.stopLoadingPrev()
+      );
+      
+  SubjectState startloadingNextTopics()
     => SubjectState(
         id: id,
         examId: examId,
@@ -59,13 +75,20 @@ class SubjectState{
         topics: topics.startLoadingNext(),
         questions: questions
       );
-
-  SubjectState adNextPageTopics(Iterable<int> ids)
+  SubjectState addNextTopics(Iterable<int> ids)
     => SubjectState(
         id: id,
         examId: examId,
         name: name,
         topics: topics.appendLastPage(ids),
+        questions: questions
+      );
+  SubjectState stopLoadingNextTopics()
+    => SubjectState(
+        id: id,
+        examId: examId,
+        name: name,
+        topics: topics.stopLoadingNext(),
         questions: questions
       );
 }

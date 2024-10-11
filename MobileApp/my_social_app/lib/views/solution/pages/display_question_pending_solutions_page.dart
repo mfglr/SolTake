@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -39,7 +40,11 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
             ),
           ),
           body: StoreConnector<AppState,Iterable<SolutionState>>(
-            onInit: (store) => store.dispatch(GetNextPageQuestionPendingSolutionsIfNoPageAction(questionId: question.id)),
+            onInit: (store) => getNextPageIfNoPage(
+              store,
+              question.pendingSolutions,
+              NextQuestionPendingSolutionsAction(questionId: question.id)
+            ),
             converter: (store) => store.state.selectQuestionPendingSolutions(question.id),
             builder:(context,solutions) => Builder(
               builder: (context) {
@@ -54,7 +59,11 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
                   solutionId: solutionId,
                   onScrollBottom: (){
                     final store = StoreProvider.of<AppState>(context,listen: false);
-                    store.dispatch(GetNextPageQuestionPendingSolutionsIfReadyAction(questionId: question.id));
+                    getNextPageIfReady(
+                      store,
+                      question.pendingSolutions,
+                      NextQuestionPendingSolutionsAction(questionId: question.id)
+                    );
                   },
                 );
               }

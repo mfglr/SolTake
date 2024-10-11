@@ -21,7 +21,6 @@ class LoadingCircleWidget extends StatelessWidget {
             width: diameter ?? 30,
             child: CircularProgressIndicator(
               strokeWidth: strokeWidth ?? 4,
-              
             ),
           ),
         ],

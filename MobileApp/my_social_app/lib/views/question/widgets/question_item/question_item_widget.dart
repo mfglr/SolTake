@@ -79,9 +79,9 @@ class QuestionItemWidget extends StatelessWidget {
                     Text(
                       timeago.format(question.createdAt,locale: "en_short")
                     ),
+                    SaveQuestionButton(question: question),
                     if(question.isOwner)
                       QuestionItemPopupMenu(question: question),
-                    SaveQuestionButton(question: question),
                   ],
                 )
               ],
@@ -112,7 +112,8 @@ class QuestionItemWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    DisplayVideoSolutionsButton(question: question),
+                    if(question.numberOfVideoSolutions > 0)
+                      DisplayVideoSolutionsButton(question: question),
                     DisplaySolutionsButton(question: question)
                   ],
                 )

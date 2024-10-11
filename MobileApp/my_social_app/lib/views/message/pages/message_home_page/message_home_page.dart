@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/actions.dart';
+import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
@@ -73,43 +75,49 @@ class _MessageHomePageState extends State<MessageHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: 
-          _selectedConversations.isEmpty
-            ? AppTitle(
-              title: AppLocalizations.of(context)!.messages_home_page_title
-            ) 
-            : Text(_selectedConversations.length.toString())
-        ,
-        actions: _selectedConversations.isEmpty 
-          ? null
-          :  [
-            CancelDeletionOfConversationsButton(clearConverations: _clearSelectedConversations),
-            DeleteConversationsButton(deleteConversations: _deleteConversations)
-          ]
-      ),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        onPressed: () => 
-          Navigator
-            .of(context)
-            .push(
-              MaterialPageRoute(builder: (context) => const CreateConversationPage())
-            ),
-        child: const Icon(Icons.add),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(5),
-        child: StoreConnector<AppState,Iterable<MessageState>>(
-          onInit: (store) => store.dispatch(const GetNextPageConversationsIfNoPageAction()),
-          converter: (store) => store.state.selectConversations,
-          builder: (context,messages) => ConversationItems(
-            messages: messages,
-            onLongPress: (conversationId) => _onLongPress(conversationId),
-            onPress: _onPress,
-            isSelected: (conversationId) => _selectedConversations.any((e) => e == conversationId),
-          )
+    return StoreConnector<AppState,MessageHomePageState>(
+      converter: (store) => store.state.messageHomePageState,
+      builder:(context,state) => Scaffold(
+        appBar: AppBar(
+          title: 
+            _selectedConversations.isEmpty
+              ? AppTitle(
+                title: AppLocalizations.of(context)!.messages_home_page_title
+              ) 
+              : Text(_selectedConversations.length.toString())
+          ,
+          actions: _selectedConversations.isEmpty 
+            ? null
+            :  [
+              CancelDeletionOfConversationsButton(clearConverations: _clearSelectedConversations),
+              DeleteConversationsButton(deleteConversations: _deleteConversations)
+            ]
+        ),
+        floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
+          onPressed: () => 
+            Navigator
+              .of(context)
+              .push(MaterialPageRoute(builder: (context) => const CreateConversationPage())),
+          child: const Icon(Icons.add),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(5),
+          child: StoreConnector<AppState,Iterable<MessageState>>(
+            onInit: (store) => getNextPageIfNoPage(store,state.conversations,const NextConversationsAction()),
+            converter: (store) => store.state.selectConversations,
+            builder: (context,messages) => ConversationItems(
+              messages: messages,
+              onLongPress: (conversationId) => _onLongPress(conversationId),
+              onPress: _onPress,
+              isSelected: (conversationId) => _selectedConversations.any((e) => e == conversationId),
+              pagination: state.conversations,
+              onScrollBottom: (){
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                getNextPageIfReady(store, state.conversations, const NextConversationsAction());
+              },
+            )
+          ),
         ),
       ),
     );

@@ -125,6 +125,8 @@ class QuestionState{
   
   QuestionState startLodingNextLikes() =>
     _optional(newLikes: likes.startLoadingNext());
+  QuestionState stopLoadingNextLikes() =>
+    _optional(newLikes: likes.stopLoadingNext());
   QuestionState addNextPageLikes(Iterable<int> likeIds) =>
     _optional(newLikes: likes.addNextPage(likeIds));
   QuestionState like(int likeId) => 
@@ -161,8 +163,10 @@ class QuestionState{
 
   QuestionState startLoadingNextSolutions() => 
     _optional(newSolutions: solutions.startLoadingNext());
-  QuestionState addNextPageSolutions(Iterable<int> solutionIds) => 
+  QuestionState addNextSolutions(Iterable<int> solutionIds) => 
     _optional(newSolutions: solutions.addNextPage(solutionIds));
+  QuestionState stopLoadingNextSolutions() =>
+    _optional(newSolutions: solutions.stopLoadingNext());
   QuestionState createNewSolution(int solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
@@ -221,19 +225,27 @@ class QuestionState{
     _optional(newCorrectSolutions: correctSolutions.startLoadingNext());
   QuestionState addNextPageCorrectSolutions(Iterable<int> solutionIds) =>
     _optional(newCorrectSolutions: correctSolutions.addNextPage(solutionIds));
- 
+  QuestionState stopLoadingNextCorrectSolutions() =>
+    _optional(newCorrectSolutions: correctSolutions.stopLoadingNext());
+
   QuestionState startLoadingNextPendingSolutions() =>
     _optional(newPendingSolutions: pendingSolutions.startLoadingNext());
-  QuestionState addNextPagePedingSolutions(Iterable<int> solutionIds) =>
+  QuestionState addNextPedingSolutions(Iterable<int> solutionIds) =>
     _optional(newPendingSolutions: pendingSolutions.addNextPage(solutionIds));
+  QuestionState stopLoadingNextPendingSolutions() =>
+    _optional(newPendingSolutions: pendingSolutions.stopLoadingNext());
 
   QuestionState startLoadinNextIncorrectSolutions() =>
     _optional(newIncorrectSolutions: incorrectSolutions.startLoadingNext());
-  QuestionState addNextPageIncorrectSolutions(Iterable<int> solutionIds) =>
+  QuestionState stopLoadingNextIncorrectSolutions() =>
+    _optional(newIncorrectSolutions: incorrectSolutions.stopLoadingNext());
+  QuestionState addNextIncorrectSolutions(Iterable<int> solutionIds) =>
     _optional(newIncorrectSolutions: incorrectSolutions.addNextPage(solutionIds));
  
   QuestionState startLoadingNextVideoSolutions() =>
     _optional(newVideoSolutions: videoSolutions.startLoadingNext());
+  QuestionState stopLodingNextVideoSolutions() =>
+    _optional(newVideoSolutions: videoSolutions.stopLoadingNext());
   QuestionState addNextPageVideoSolutions(Iterable<int> solutionIds) =>
     _optional(newVideoSolutions: videoSolutions.addNextPage(solutionIds));
   QuestionState addVideoSolution(int solutionId) =>
@@ -243,6 +255,8 @@ class QuestionState{
 
   QuestionState startLoadingNextComments() =>
     _optional(newComments: comments.startLoadingNext());
+  QuestionState stopLoadingNextComments() =>
+    _optional(newComments: comments.stopLoadingNext()); 
   QuestionState addNextPageComments(Iterable<int> commentIds) => 
     _optional(newComments: comments.addNextPage(commentIds));
   QuestionState addComment(int commentId) => 

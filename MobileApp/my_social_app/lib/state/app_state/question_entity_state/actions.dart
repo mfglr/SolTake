@@ -77,26 +77,22 @@ class AddNewQuestionLikeAction extends AppAction{
   const AddNewQuestionLikeAction({required this.questionId, required this.likeId});
 }
 
+
 @immutable
-class GetNextPageQuestionLikesIfNoPageAction extends AppAction{
+class NextQuestionLikesAction extends AppAction{
   final int questionId;
-  const GetNextPageQuestionLikesIfNoPageAction({required this.questionId});
+  const NextQuestionLikesAction({required this.questionId});
 }
 @immutable
-class GetNextPageQuestionLikesIfReadyAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionLikesIfReadyAction({required this.questionId});
-}
-@immutable
-class GetNextPageQuestionLikesAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionLikesAction({required this.questionId});
-}
-@immutable
-class AddNextPageQuestionLikesAction extends AppAction{
+class NextQuestionLikesSuccessAction extends AppAction{
   final int questionId;
   final Iterable<int> likeIds;
-  const AddNextPageQuestionLikesAction({required this.questionId, required this.likeIds});
+  const NextQuestionLikesSuccessAction({required this.questionId, required this.likeIds});
+}
+@immutable
+class NextQuestionLikesFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionLikesFailedAction({required this.questionId});
 }
 
 @immutable
@@ -112,27 +108,24 @@ class MarkQuestionSolutionAsIncorrectAction extends AppAction{
   const MarkQuestionSolutionAsIncorrectAction({required this.questionId,required this.solutionId});
 }
 
+
 @immutable
-class GetNextPageQuestionSolutionsIfNoPageAction extends AppAction{
+class NextQuestionSolutionsAction extends AppAction{
   final int questionId;
-  const GetNextPageQuestionSolutionsIfNoPageAction({required this.questionId});
+  const NextQuestionSolutionsAction({required this.questionId});
 }
 @immutable
-class GetNextPageQuestionSolutionsIfReadyAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionSolutionsIfReadyAction({required this.questionId});
-}
-@immutable
-class GetNextPageQuestionSolutionsAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionSolutionsAction({required this.questionId});
-}
-@immutable
-class AddNextPageQuestionSolutionsAction extends AppAction{
+class NextQuestionSolutionsSuccessAction extends AppAction{
   final int questionId;
   final Iterable<int> solutionIds;
-  const AddNextPageQuestionSolutionsAction({required this.questionId, required this.solutionIds});
+  const NextQuestionSolutionsSuccessAction({required this.questionId, required this.solutionIds});
 }
+@immutable
+class NextQuestionSolutionsFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionSolutionsFailedAction({required this.questionId});
+}
+
 @immutable
 class CreateNewQuestionSolutionAction extends AppAction{
   final SolutionState solution;
@@ -156,25 +149,20 @@ class RemoveQuestionSolutionAction extends AppAction{
 }
 
 @immutable
-class GetNextPageQuestionCorrectSolutionsIfNoPageAction extends AppAction{
+class NextQuestionCorrectSolutionsAction extends AppAction{
   final int questionId;
-  const GetNextPageQuestionCorrectSolutionsIfNoPageAction({required this.questionId});
+  const NextQuestionCorrectSolutionsAction({required this.questionId});
 }
 @immutable
-class GetNextPageQuestionCorrectSolutionsIfReadyAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionCorrectSolutionsIfReadyAction({required this.questionId});
-}
-@immutable
-class GetNextPageQuestionCorrectSolutionsAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionCorrectSolutionsAction({required this.questionId});
-}
-@immutable
-class AddNextPageQuestionCorrectSolutionsAction extends AppAction{
+class NextQuestionCorrectSolutionsSuccessAction extends AppAction{
   final int questionId;
   final Iterable<int> solutionIds;
-  const AddNextPageQuestionCorrectSolutionsAction({required this.questionId, required this.solutionIds});
+  const NextQuestionCorrectSolutionsSuccessAction({required this.questionId, required this.solutionIds});
+}
+@immutable
+class NextQuestionCorrectSolutionsFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionCorrectSolutionsFailedAction({required this.questionId});
 }
 @immutable
 class RemoveCorrectSolutionAction extends AppAction{
@@ -184,69 +172,54 @@ class RemoveCorrectSolutionAction extends AppAction{
 }
 
 @immutable
-class GetNextPageQuestionPendingSolutionsIfNoPageAction extends AppAction{
+class NextQuestionPendingSolutionsAction extends AppAction{
   final int questionId;
-  const GetNextPageQuestionPendingSolutionsIfNoPageAction({required this.questionId});
+  const NextQuestionPendingSolutionsAction({required this.questionId});
 }
 @immutable
-class GetNextPageQuestionPendingSolutionsIfReadyAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionPendingSolutionsIfReadyAction({required this.questionId});
-}
-@immutable
-class GetNextPageQuestionPendingSolutionsAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionPendingSolutionsAction({required this.questionId});
-}
-@immutable
-class AddNextPageQuestionPendingSolutionsAction extends AppAction{
+class NextQuestionPendingSolutionsSuccessAction extends AppAction{
   final int questionId;
   final Iterable<int> solutionIds;
-  const AddNextPageQuestionPendingSolutionsAction({required this.questionId, required this.solutionIds});
+  const NextQuestionPendingSolutionsSuccessAction({required this.questionId, required this.solutionIds});
+}
+@immutable
+class NextQuestionPendingSolutionsFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionPendingSolutionsFailedAction({required this.questionId});
 }
 
 @immutable
-class GetNextPageQuestionIncorrectSolutionsIfNoPageAction extends AppAction{
+class NextQuestionIncorrectSolutionsAction extends AppAction{
   final int questionId;
-  const GetNextPageQuestionIncorrectSolutionsIfNoPageAction({required this.questionId});
+  const NextQuestionIncorrectSolutionsAction({required this.questionId});
 }
 @immutable
-class GetNextPageQuestionIncorrectSolutionsIfReadyAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionIncorrectSolutionsIfReadyAction({required this.questionId});
-}
-@immutable
-class GetNextPageQuestionIncorrectSolutionsAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionIncorrectSolutionsAction({required this.questionId});
-}
-@immutable
-class AddNextPageQuestionIncorrectSolutionsAction extends AppAction{
+class NextQuestionIncorrectSolutionsSuccessAction extends AppAction{
   final int questionId;
   final Iterable<int> solutionIds;
-  const AddNextPageQuestionIncorrectSolutionsAction({required this.questionId, required this.solutionIds});
+  const NextQuestionIncorrectSolutionsSuccessAction({required this.questionId, required this.solutionIds});
+}
+@immutable
+class NextQuestionIncorrectSolutionsFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionIncorrectSolutionsFailedAction({required this.questionId});
 }
 
 @immutable
-class GetNextPageQuestionVideoSolutionsIfNoPageAction extends AppAction{
+class NextQuestionVideoSolutionsAction extends AppAction{
   final int questionId;
-  const GetNextPageQuestionVideoSolutionsIfNoPageAction({required this.questionId});
+  const NextQuestionVideoSolutionsAction({required this.questionId});
 }
 @immutable
-class GetNextPageQuestionVideoSolutionsIfReadyAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionVideoSolutionsIfReadyAction({required this.questionId});
-}
-@immutable
-class GetNextPageQuestionVideoSolutionsAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionVideoSolutionsAction({required this.questionId});
-}
-@immutable
-class AddNextPageQuestionVideoSolutionsAction extends AppAction{
+class NextQuestionVideoSolutionsSuccessAction extends AppAction{
   final int questionId;
   final Iterable<int> solutionIds;
-  const AddNextPageQuestionVideoSolutionsAction({required this.questionId, required this.solutionIds});
+  const NextQuestionVideoSolutionsSuccessAction({required this.questionId, required this.solutionIds});
+}
+@immutable
+class NextQuestionVideoSolutionsFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionVideoSolutionsFailedAction({required this.questionId});
 }
 @immutable
 class AddQuestionVideoSolutionAction extends AppAction{
@@ -261,26 +234,22 @@ class RemoveQuestionVideoSolutionAction extends AppAction{
   const RemoveQuestionVideoSolutionAction({required this.questionId, required this.solutionId});
 }
 
+
 @immutable
-class GetNextPageQuestionCommentsIfNoPageAction extends AppAction{
+class NextQuestionCommentsAction extends AppAction{
   final int questionId;
-  const GetNextPageQuestionCommentsIfNoPageAction({required this.questionId});
+  const NextQuestionCommentsAction({required this.questionId});
 }
 @immutable
-class GetNextPageQuestionCommentsIfReadyAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionCommentsIfReadyAction({required this.questionId});
-}
-@immutable
-class GetNextPageQuestionCommentsAction extends AppAction{
-  final int questionId;
-  const GetNextPageQuestionCommentsAction({required this.questionId});
-}
-@immutable
-class AddNextPageQuestionCommentsAction extends AppAction{
+class NexQuestionCommentsSuccessAction extends AppAction{
   final int questionId;
   final Iterable<int> commentIds;
-  const AddNextPageQuestionCommentsAction({required this.questionId,required this.commentIds});
+  const NexQuestionCommentsSuccessAction({required this.questionId,required this.commentIds});
+}
+@immutable
+class NextQuestionCommentsFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionCommentsFailedAction({required this.questionId});
 }
 @immutable
 class AddQuestionCommentAction extends AppAction{
