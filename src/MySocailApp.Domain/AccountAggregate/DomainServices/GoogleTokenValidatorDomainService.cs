@@ -13,7 +13,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             HttpResponseMessage response = await client.GetAsync(url, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
-                throw new GoogkeTokenNotValidException();
+                throw new GoogleTokenNotValidException();
 
             string responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
             var json = JObject.Parse(responseBody);

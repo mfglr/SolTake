@@ -34,7 +34,6 @@ class DisplaySolutionUpvotesButton extends StatelessWidget {
           decoration: TextDecoration.underline
         ),
       ),
-              
     );
   }
 }

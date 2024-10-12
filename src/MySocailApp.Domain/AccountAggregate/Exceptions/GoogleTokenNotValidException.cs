@@ -4,7 +4,7 @@ using System.Net;
 
 namespace MySocailApp.Domain.AccountAggregate.Exceptions
 {
-    public class GoogkeTokenNotValidException : AppException
+    public class GoogleTokenNotValidException : AppException
     {
         private readonly static string _messageEn = "The token is not valid!";
         private readonly static string _messageTr = "Anahtar geçerli değil!";
@@ -14,6 +14,6 @@ namespace MySocailApp.Domain.AccountAggregate.Exceptions
             { Languages.TR, _messageTr }
         };
         public override string GetErrorMessage(string culture) => _messages[culture];
-        public GoogkeTokenNotValidException() : base((int)HttpStatusCode.BadRequest) { }
+        public GoogleTokenNotValidException() : base((int)HttpStatusCode.BadRequest) { }
     }
 }
