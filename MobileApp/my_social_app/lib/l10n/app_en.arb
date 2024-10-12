@@ -1,5 +1,8 @@
 {
     "unexpected_exception": "Something went wrong! Please try again.",
+    "votes": "votes",
+    "vote": "vote",
+
 
     "aprove_terms_of_use_page_title": "Terms of Use",
     "aprove_privacy_policy_page_title": "Privacy Policy",

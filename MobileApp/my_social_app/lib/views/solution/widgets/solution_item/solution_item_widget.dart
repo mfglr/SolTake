@@ -108,12 +108,14 @@ class SolutionItemWidget extends StatelessWidget {
                 Row(
                   children: [
                     UpvoteButton(solution: solution),
-                    DisplaySolutionUpvotesButton(solution: solution),
+                    if(solution.numberOfUpvotes > 0)
+                      DisplaySolutionUpvotesButton(solution: solution),
                     Container(
                       margin: const EdgeInsets.only(left: 12),
                       child: DownvoteButton(solution: solution)
                     ),
-                    DisplaySolutionDownvotesButton(solution: solution),
+                    if(solution.numberOfDownvotes > 0)
+                      DisplaySolutionDownvotesButton(solution: solution),
                     Container(
                       margin: const EdgeInsets.only(left: 12),
                       child: SolutionCommentButton(solution: solution),

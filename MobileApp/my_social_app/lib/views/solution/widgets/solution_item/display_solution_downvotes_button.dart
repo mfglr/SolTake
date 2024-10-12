@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_downvotes_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySolutionDownvotesButton extends StatelessWidget {
   final SolutionState solution;
@@ -27,7 +28,12 @@ class DisplaySolutionDownvotesButton extends StatelessWidget {
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: Text(solution.numberOfDownvotes.toString())
+      child: Text(
+        "${solution.numberOfDownvotes.toString()} ${solution.numberOfDownvotes == 1 ? AppLocalizations.of(context)!.vote : AppLocalizations.of(context)!.votes}",
+        style: const TextStyle(
+          decoration: TextDecoration.underline
+        ),
+      )
     );
   }
 }

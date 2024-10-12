@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_upvotes_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySolutionUpvotesButton extends StatelessWidget {
   final SolutionState solution;
@@ -27,7 +28,13 @@ class DisplaySolutionUpvotesButton extends StatelessWidget {
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: Text(solution.numberOfUpvotes.toString())
+      child: Text(
+        "${solution.numberOfUpvotes.toString()} ${solution.numberOfUpvotes == 1 ? AppLocalizations.of(context)!.vote : AppLocalizations.of(context)!.votes}",
+        style: const TextStyle(
+          decoration: TextDecoration.underline
+        ),
+      ),
+              
     );
   }
 }

@@ -1,5 +1,7 @@
 {
     "unexpected_exception": "Bir şeyler yanlış gitt! Lütfen daha sonra tekrar deneyin!",
+    "votes": "oy",
+    "vote": "oy",
 
     "aprove_terms_of_use_page_title": "Kullanıcı Sözleşmesi",
     "aprove_privacy_policy_page_title": "Gizlilik Sözleşmesi",
