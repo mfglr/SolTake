@@ -29,26 +29,34 @@ UserEntityState nextSolvedQuestionsFailedReducer(UserEntityState prev, NextUserS
   => prev.stopLoadingNextSolvedQuestions(action.userId);
 
 //unsolved questions
-UserEntityState getNextPageUnsolvedQuestionsReducer(UserEntityState prev, GetNextPageUserUnsolvedQuestionsAction action)
-  => prev.getNextPageUnsolvedQuestions(action.userId);
-UserEntityState addNextPageUnsolvedQuestionsReducer(UserEntityState prev, AddNextPageUserUnsolvedQuestionsAction action)
-  => prev.addNextPageUnsolvedQuestions(action.userId, action.questionIds);
+UserEntityState nextUnsolvedQuestionsReducer(UserEntityState prev, NextUserUnsolvedQuestionsAction action)
+  => prev.startLoadingNextUnsolvedQuestions(action.userId);
+UserEntityState nextUnsolvedQuestionsSuccessReducer(UserEntityState prev, NextUserUnsolvedQuestionsSuccessAction action)
+  => prev.addNextUnsolvedQuestions(action.userId, action.questionIds);
+UserEntityState nextUnsolvedQuestionsFailedReducer(UserEntityState prev, NextUserUnsolvedQuestionsFailedAction action)
+  => prev.stopLoadingNextUnsolvedQuestions(action.userId);
 
 //saved questions
-UserEntityState getNextPageSavedQuestionsReducer(UserEntityState prev,GetNextPageUserSavedQuestionsAction action)
-  => prev.getNextPageSavedQuestions(action.userId);
-UserEntityState addNextPageSavedQuestionsReducer(UserEntityState prev,AddNextPageUserSavedQuestionsAction action)
+UserEntityState nextSavedQuestionsReducer(UserEntityState prev,NextUserSavedQuestionsAction action)
+  => prev.startLoadingNextSavedQuestions(action.userId);
+UserEntityState nextSavedQuestionsSuccessReducer(UserEntityState prev,NextUserSavedQuestionsSuccessAction action)
   => prev.addNextPageSavedQuestions(action.userId,action.savedIds);
+UserEntityState nextSavedQuestionsFailedReducer(UserEntityState prev,NextUserSavedQuestionsFailedAction action)
+  => prev.stopLoadingNextSavedQuestions(action.userId);
+
 UserEntityState addSavedQuestionReducer(UserEntityState prev,AddUserSavedQuestionAction action)
   => prev.addSavedQuestion(action.userId,action.saveId);
 UserEntityState removeSavedQuestionReducer(UserEntityState prev,RemoveUserSavedQuestionAction action)
   => prev.removeSavedQuestion(action.userId,action.saveId);
 
 //saved solutions
-UserEntityState getNextPageSavedSolutionsReducer(UserEntityState prev, GetNextPageUserSavedSolutionsAction action)
-  => prev.getNextPageSavedSolutions(action.userId);
-UserEntityState addNextPageSavedSolutionsReducer(UserEntityState prev, AddNextPageUserSavedSolutionsAction action)
-  => prev.addNextPageSavedSolutions(action.userId,action.savedIds);
+UserEntityState nextSavedSolutionsReducer(UserEntityState prev, NextUserSavedSolutionsAction action)
+  => prev.startLoadingSavedSolutions(action.userId);
+UserEntityState nextSavedSolutionsSuccessReducer(UserEntityState prev, NextUserSavedSolutionsSuccessAction action)
+  => prev.addNextPageSolutions(action.userId,action.savedIds);
+UserEntityState nextSavedSolutionsFailedReducer(UserEntityState prev, NextUserSavedSolutionsFailedAction action)
+  => prev.stopLoadingSavedSolution(action.userId);
+
 UserEntityState addSavedSolutionReducer(UserEntityState prev, AddUserSavedSolutionAction action)
   => prev.addSavedSolution(action.userId, action.saveId);
 UserEntityState removeSavedSolutionReducer(UserEntityState prev, RemoveUserSavedSolutionAction action)
@@ -105,10 +113,13 @@ UserEntityState removeMessagesReducer(UserEntityState prev,RemoveUserMessagesAct
   => prev.removeMessages(action.userId, action.messageIds);
 
 //conversations
-UserEntityState getNextPageConversationReducer(UserEntityState prev,GetNextPageUserConversationAction action)
-  => prev.getNextPageConversations(action.userId);
-UserEntityState addNextPageConversationReducer(UserEntityState prev,AddNextPageUserConversationsAction action)
-  => prev.addNextPageConversations(action.userId,action.ids);
+UserEntityState nextConversationsReducer(UserEntityState prev,NextUserConversationsAction action)
+  => prev.startLoadingNextConversations(action.userId);
+UserEntityState nextConversationsSuccessReducer(UserEntityState prev,NextUserConversationsSuccessAction action)
+  => prev.addNextConversations(action.userId,action.ids);
+UserEntityState nextConversationsFailedRedcer(UserEntityState prev,NextUserConversationsFailedAction action)
+ => prev.stopLoadingNextConversations(action.userId);
+
 UserEntityState addConversationReducer(UserEntityState prev, AddUserConversationAction action)
   => prev.addConversation(action.userId,action.id);
 UserEntityState addConversationInOrderReducer(UserEntityState prev,AddUserConversationInOrderAction action)
@@ -148,18 +159,23 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,NextUserSolvedQuestionsFailedAction>(nextSolvedQuestionsFailedReducer).call,
 
   //unsolved questions
-  TypedReducer<UserEntityState,GetNextPageUserUnsolvedQuestionsAction>(getNextPageUnsolvedQuestionsReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserUnsolvedQuestionsAction>(addNextPageUnsolvedQuestionsReducer).call,
+  TypedReducer<UserEntityState,NextUserUnsolvedQuestionsAction>(nextUnsolvedQuestionsReducer).call,
+  TypedReducer<UserEntityState,NextUserUnsolvedQuestionsSuccessAction>(nextUnsolvedQuestionsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserUnsolvedQuestionsFailedAction>(nextUnsolvedQuestionsFailedReducer).call,
 
   //saved questions
-  TypedReducer<UserEntityState,GetNextPageUserSavedQuestionsAction>(getNextPageSavedQuestionsReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserSavedQuestionsAction>(addNextPageSavedQuestionsReducer).call,
+  TypedReducer<UserEntityState,NextUserSavedQuestionsAction>(nextSavedQuestionsReducer).call,
+  TypedReducer<UserEntityState,NextUserSavedQuestionsSuccessAction>(nextSavedQuestionsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserSavedQuestionsFailedAction>(nextSavedQuestionsFailedReducer).call,
+
   TypedReducer<UserEntityState,AddUserSavedQuestionAction>(addSavedQuestionReducer).call,
   TypedReducer<UserEntityState,RemoveUserSavedQuestionAction>(removeSavedQuestionReducer).call,
 
   //saved solutions
-  TypedReducer<UserEntityState,GetNextPageUserSavedSolutionsAction>(getNextPageSavedSolutionsReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserSavedSolutionsAction>(addNextPageSavedSolutionsReducer).call,
+  TypedReducer<UserEntityState,NextUserSavedSolutionsAction>(nextSavedSolutionsReducer).call,
+  TypedReducer<UserEntityState,NextUserSavedSolutionsSuccessAction>(nextSavedSolutionsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserSavedSolutionsFailedAction>(nextSavedSolutionsFailedReducer).call,
+
   TypedReducer<UserEntityState,AddUserSavedSolutionAction>(addSavedSolutionReducer).call,
   TypedReducer<UserEntityState,RemoveUserSavedSolutionAction>(removeSavedSolutionReducer).call,
 
@@ -195,8 +211,10 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,RemoveUserMessagesAction>(removeMessagesReducer).call,
 
   //conversations
-  TypedReducer<UserEntityState,GetNextPageUserConversationAction>(getNextPageConversationReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserConversationsAction>(addNextPageConversationReducer).call,
+  TypedReducer<UserEntityState,NextUserConversationsAction>(nextConversationsReducer).call,
+  TypedReducer<UserEntityState,NextUserConversationsSuccessAction>(nextConversationsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserConversationsFailedAction>(nextConversationsFailedRedcer).call,
+
   TypedReducer<UserEntityState,AddUserConversationAction>(addConversationReducer).call,
   TypedReducer<UserEntityState,AddUserConversationInOrderAction>(addConversationInOrderReducer).call,
   TypedReducer<UserEntityState,RemoveUserConversationAction>(removeConversationReducer).call,

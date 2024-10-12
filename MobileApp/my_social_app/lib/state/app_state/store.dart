@@ -90,10 +90,7 @@ final store = Store(
   ),
   middleware: [
     //exams middlewares
-    getNextPageExamsIfNoPageMiddleware,
-    getNextPageExamsIfReadyMiddleware,
-    getNextPageExamsMidleware,
-    //
+    nextExamsMidleware,
 
     //Comment entity state middleware
     getNextPageCommentLikesMiddleware,
@@ -133,26 +130,14 @@ final store = Store(
     nextUserMessagesMiddleware,
     nextUserQuestionsMiddleware,
     nextUserSolvedQuestionsMiddleware,
+    nextUserUnsolvedQuestionsMiddleware,
+    nextUserSavedQuestionsMiddleware,
+    nextUserSavedSolutionsMiddleware,
+    nextUserConvesationsMiddleware,
 
     getNextPageUserNotFollowedsIfNoPageMiddleware,
     getNextPageUserNotFollowedsIfReadyMiddleware,
     getNextPageUserNotFollowedsMiddleware,
-
-    getNextPageUserUnsolvedQuestionsIfNoPageMiddleware,
-    getNextPageUserUnsolvedQuestionsIfReadyMiddleware,
-    getNextPageUserUnsolvedQuestionsMiddleware,
-
-    getNextPageUserSavedQuestionsIfNoPageMiddleware,
-    getNextPageUserSavedQuestionsIfReadyMiddleware,
-    getNextPageUserSavedQuestionsMiddleware,
-
-    getNextPageUserSavedSolutionsIfNoPageMiddleaware,
-    getNextPageUserSavedSolutionsIfReadyMiddleaware,
-    getNextPageUserSavedSolutionsMiddleware,
-    
-    getNextPageUserConversationsMiddlewareIfNoPageAction,
-    getNextPageUserConversationsMiddlewareIfReadyAction,
-    getNextPageUserConvesationsMiddleware,
 
     updateUserNameMiddleware,
     updateNameMiddleware,

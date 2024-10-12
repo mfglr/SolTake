@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -31,7 +32,7 @@ class DisplayAbstractSavedSolutionsPage extends StatelessWidget {
         builder: (context,user){
           if(user == null) return const LoadingWidget();
           return StoreConnector<AppState,Iterable<SolutionState>>(
-            onInit: (store) => store.dispatch(GetNextPageUserSavedSolutionsIfNoPageAction(userId: store.state.accountState!.id)),
+            onInit: (store) => getNextPageIfNoPage(store,user.savedSolutions,NextUserSavedSolutionsAction(userId: user.id)),
             converter: (store) => store.state.selectUserSavedSolutions(store.state.accountState!.id),
             builder: (context,solutions) => SolutionAbstractItems(
               noItems: NoSolutions(text: AppLocalizations.of(context)!.display_abstract_saved_solutions_page_no_solutions_content),
@@ -43,7 +44,7 @@ class DisplayAbstractSavedSolutionsPage extends StatelessWidget {
                   .push(MaterialPageRoute(builder: (context) => DisplaySavedSolutionsPage(solutionId: solutionId))),
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageUserSavedSolutionsIfReadyAction(userId: user.id));
+                getNextPageIfReady(store, user.savedSolutions, NextUserSavedSolutionsAction(userId: user.id));
               },
             ),
           );

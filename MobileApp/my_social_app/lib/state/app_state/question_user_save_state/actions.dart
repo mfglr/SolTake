@@ -7,13 +7,11 @@ class AddQuestionUserSavesAction extends AppAction{
   final Iterable<QuestionUserSaveState> saves;
   const AddQuestionUserSavesAction({required this.saves});
 }
-
 @immutable
 class AddQuestionUserSaveAction extends AppAction{
   final QuestionUserSaveState save;
   const AddQuestionUserSaveAction({required this.save});
 }
-
 @immutable
 class RemoveQuestionUserSaveAction extends AppAction{
   final int saveId;

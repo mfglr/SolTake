@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -34,7 +35,7 @@ class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
           ),
         ),
         body: StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => store.dispatch(GetNextPageUserUnsolvedQuestionsIfNoPageAction(userId: userId)),
+          onInit: (store) => getNextPageIfNoPage(store, user.unsolvedQuestions,NextUserUnsolvedQuestionsAction(userId: user.id)),
           converter: (store) => store.state.selectUserUnsolvedQuestions(userId),
           builder: (context,questions) => QuestionItemsWidget(
             firstDisplayedQuestionId: firstDisplayedQuestionId,
@@ -42,7 +43,7 @@ class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
             pagination: user.unsolvedQuestions,
             onScrollBottom: (){
               final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(GetNextPageUserUnsolvedQuestionsIfReadyAction(userId: user.id));
+              getNextPageIfReady(store, user.unsolvedQuestions,NextUserUnsolvedQuestionsAction(userId: user.id));
             },
           ),
         ),

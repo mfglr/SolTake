@@ -218,15 +218,13 @@ class UserState{
     _optional(newSolvedQuestions: solvedQuestions.addNextPage(ids));
 
   //unsolved questions
-  UserState getNextPageUnsolvedQuestions() =>
-    _optional(
-      newUnsolvedQuestions: unsolvedQuestions.startLoadingNext()
-    );
-  UserState addNextPageUnsolvedQuestions(Iterable<int> ids) =>
-    _optional(
-      newUnsolvedQuestions: unsolvedQuestions.addNextPage(ids)
-    );
-  
+  UserState startLoadingNextUnsolvedQuestions() =>
+    _optional(newUnsolvedQuestions: unsolvedQuestions.startLoadingNext());
+  UserState addNextUnsolvedQuestions(Iterable<int> ids) =>
+    _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(ids));
+  UserState stopLoadingNextUnsolvedQuestion() =>
+    _optional(newUnsolvedQuestions: unsolvedQuestions.stopLoadingNext());
+
   UserState markQuestionAsSolved(int id) =>
     _optional(
       newSolvedQuestions: solvedQuestions.ids.any((e) => e == id) ? solvedQuestions : solvedQuestions.addInOrder(id),
@@ -239,14 +237,24 @@ class UserState{
     );
   
   //saved questions
-  UserState getNextPageSavedQuestions() => _optional(newSavedQuestions: savedQuestions.startLoadingNext());
-  UserState addNextPageSavedQuestions(Iterable<int> saveIds) => _optional(newSavedQuestions: savedQuestions.addNextPage(saveIds));
+  UserState startLoadingNextSavedQuestions() => 
+    _optional(newSavedQuestions: savedQuestions.startLoadingNext());
+  UserState addNextSavedQuestions(Iterable<int> saveIds) => 
+    _optional(newSavedQuestions: savedQuestions.addNextPage(saveIds));
+  UserState stopLoadingNextSavedQuestions() =>
+    _optional(newSavedQuestions: savedQuestions.stopLoadingNext());
+    
   UserState addSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.prependOne(saveId));
   UserState removeSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.removeOne(saveId));
 
   //saved solutions
-  UserState getNextPageSavedSolutions() => _optional(newSavedSolutions: savedSolutions.startLoadingNext());
-  UserState addNextPageSavedSolutions(Iterable<int> saveIds) => _optional(newSavedSolutions: savedSolutions.addNextPage(saveIds));
+  UserState startLoadingSavedSolutions() =>
+    _optional(newSavedSolutions: savedSolutions.startLoadingNext());
+  UserState addNextSavedSolutions(Iterable<int> saveIds) =>
+    _optional(newSavedSolutions: savedSolutions.addNextPage(saveIds));
+  UserState stopLoadingSavedSolutions() =>
+    _optional(newSavedSolutions: savedSolutions.stopLoadingNext());
+
   UserState addSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(saveId));
   UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
 
@@ -266,10 +274,13 @@ class UserState{
     _optional(newMessages: messages.removeMany(messageIds));
 
   //converations
-  UserState getNextPageConversations() =>
+  UserState startLoadingNextConversations() =>
     _optional(newConversations: conversations.startLoadingNext());
-  UserState addNextPageConversations(Iterable<int> ids) =>
+  UserState addNextConversations(Iterable<int> ids) =>
     _optional(newConversations: conversations.addNextPage(ids));
+  UserState stopLoadingNextConversations() =>
+    _optional(newConversations: conversations.stopLoadingNext());
+
   UserState addConversation(int id) =>
     _optional(newConversations: conversations.prependOne(id));
   UserState addConversationInOrder(int id) =>

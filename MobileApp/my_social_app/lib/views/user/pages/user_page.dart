@@ -108,7 +108,7 @@ class _UserPageState extends State<UserPage> {
 
   Widget _getUnsolvedQuestionsGrid(UserState user){
     return StoreConnector<AppState,Iterable<QuestionState>>(
-      onInit: (store) => store.dispatch(GetNextPageUserUnsolvedQuestionsIfNoPageAction(userId: user.id)),
+      onInit: (store) => getNextPageIfNoPage(store, user.unsolvedQuestions,NextUserUnsolvedQuestionsAction(userId: user.id)),
       converter: (store) => store.state.selectUserUnsolvedQuestions(user.id),
       builder: (context, questions) => QuestionAbstractItemsWidget(
         questions: questions,
@@ -125,7 +125,7 @@ class _UserPageState extends State<UserPage> {
         },
         onScrollBottom: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(GetNextPageUserUnsolvedQuestionsIfReadyAction(userId: user.id));
+          getNextPageIfReady(store, user.unsolvedQuestions,NextUserUnsolvedQuestionsAction(userId: user.id));
         },
       )
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectExamPage extends StatefulWidget {
   const SelectExamPage({super.key});
-
   @override
   State<SelectExamPage> createState() => _SelectExamPageState();
 }
@@ -25,7 +25,7 @@ class _SelectExamPageState extends State<SelectExamPage> {
     _onScrollBottom = (){
       if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(const GetNextPageExamsIfReadyAction());
+        getNextPageIfReady(store,store.state.exams,const NextExamsAction());
       }
     };
     _scrollController.addListener(_onScrollBottom);
@@ -48,14 +48,14 @@ class _SelectExamPageState extends State<SelectExamPage> {
           title: AppLocalizations.of(context)!.select_exam_page_title
         ),
       ),
-      body: StoreConnector<AppState,Pagination>(
-        converter: (store) => store.state.exams,
-        builder: (context,pagination){
-          if(pagination.loadingNext) return const LoadingWidget();
-          return StoreConnector<AppState,Iterable<ExamState>>(
-            onInit: (store) => store.dispatch(const GetNextPageExamsIfNoPageAction()),
-            converter: (store) => store.state.selectExams,
-            builder:(context,exams) => GridView.count(
+      body: StoreConnector<AppState,Iterable<ExamState>>(
+        onInit: (store) => getNextPageIfNoPage(store,store.state.exams,const NextExamsAction()),
+        converter: (store) => store.state.selectExams,
+        builder:(context,exams) => StoreConnector<AppState,Pagination>(
+          converter: (store) => store.state.exams,
+          builder: (context,pagination){
+            if(pagination.loadingNext) return const LoadingWidget();
+            return GridView.count(
               crossAxisCount: 2,
               children: List<Widget>.generate(
                 exams.length,
@@ -63,9 +63,9 @@ class _SelectExamPageState extends State<SelectExamPage> {
                   exam: exams.elementAt(index)
                 )
               )
-            )
-          );
-        }
+            );
+          }
+        )
       ),
     );
   }

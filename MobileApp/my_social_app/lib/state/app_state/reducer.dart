@@ -31,18 +31,20 @@ import 'package:redux/redux.dart';
 
 String? changeAccessTokenReducer(String? oldState,Action action)
   => action is ChangeAccessTokenAction ? action.accessToken : oldState;
-
 bool appSuccessfullyInitReducer(bool oldState,Action action)
   => action is ApplicationSuccessfullyInitAction ? true : oldState;
 
 //exams reducers//
-Pagination getNextPageExamsReducer(Pagination prev,GetNextPageExamsAction action)
+Pagination nextExamsReducer(Pagination prev,NextExamsAction action)
   => prev.startLoadingNext();
-Pagination addNextPageExamsReducer(Pagination prev,AddNextPageExamsAction action)
+Pagination nextExamsSuccessReducer(Pagination prev,NextExamsSuccessAction action)
   => prev.addNextPage(action.examIds);
+Pagination nextExamsFailedReducer(Pagination prev,NextExamsFailedAction action)
+  => prev.stopLoadingNext();
 Reducer<Pagination> examsReducers = combineReducers<Pagination>([
-  TypedReducer<Pagination,GetNextPageExamsAction>(getNextPageExamsReducer).call,
-  TypedReducer<Pagination,AddNextPageExamsAction>(addNextPageExamsReducer).call,
+  TypedReducer<Pagination,NextExamsAction>(nextExamsReducer).call,
+  TypedReducer<Pagination,NextExamsSuccessAction>(nextExamsSuccessReducer).call,
+  TypedReducer<Pagination,NextExamsFailedAction>(nextExamsFailedReducer).call,
 ]);
 //exams reducers//
 

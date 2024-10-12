@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -32,7 +33,7 @@ class DisplaySavedSolutionsPage extends StatelessWidget {
         builder: (context,user){
           if(user == null) return const LoadingView();
           return StoreConnector<AppState,Iterable<SolutionState>>(
-            onInit: (store) => store.dispatch(GetNextPageUserSavedSolutionsIfNoPageAction(userId: store.state.accountState!.id)),
+            onInit: (store) => getNextPageIfNoPage(store,user.savedSolutions,NextUserSavedSolutionsAction(userId: user.id)),
             converter: (store) => store.state.selectUserSavedSolutions(store.state.accountState!.id),
             builder: (context,solutions) => SolutionItemsWidget(
               pagination: user.savedSolutions,
@@ -40,7 +41,7 @@ class DisplaySavedSolutionsPage extends StatelessWidget {
               solutionId: solutionId,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageUserSavedSolutionsIfReadyAction(userId: store.state.accountState!.id));
+                getNextPageIfReady(store, user.savedSolutions, NextUserSavedSolutionsAction(userId: user.id));
               }
             ),
           );

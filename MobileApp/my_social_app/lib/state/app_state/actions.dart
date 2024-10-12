@@ -27,20 +27,16 @@ class ApplicationSuccessfullyInitAction extends AppAction{
 
 //exams//
 @immutable
-class GetNextPageExamsIfNoPageAction extends AppAction{
-  const GetNextPageExamsIfNoPageAction();
+class NextExamsAction extends AppAction{
+  const NextExamsAction();
 }
 @immutable
-class GetNextPageExamsIfReadyAction extends AppAction{
-  const GetNextPageExamsIfReadyAction();
-}
-@immutable
-class GetNextPageExamsAction extends AppAction{
-  const GetNextPageExamsAction();
-}
-@immutable
-class AddNextPageExamsAction extends AppAction{
+class NextExamsSuccessAction extends AppAction{
   final Iterable<int> examIds;
-  const AddNextPageExamsAction({required this.examIds});
+  const NextExamsSuccessAction({required this.examIds});
+}
+@immutable
+class NextExamsFailedAction extends AppAction{
+  const NextExamsFailedAction();
 }
 //exams//

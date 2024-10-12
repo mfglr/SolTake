@@ -35,7 +35,6 @@ void removeCurrentUserImageMiddleware(Store<AppState> store,action,NextDispatche
   }
   next(action);
 }
-
 void loadUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadUserImageAction){
     final userImageState = store.state.userImageEntityState.entities[action.userId]!;

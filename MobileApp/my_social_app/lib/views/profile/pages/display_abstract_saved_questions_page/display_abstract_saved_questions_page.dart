@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -27,7 +28,7 @@ class DisplayAbstractSavedQuestionsPage extends StatelessWidget {
         builder: (context,user){
           if(user == null) return const LoadingWidget();
           return StoreConnector<AppState,Iterable<QuestionState>>(
-            onInit: (store) => store.dispatch(GetNextPageUserSavedQuestionsIfNoPageAction(userId: user.id)),
+            onInit: (store) => getNextPageIfNoPage(store,user.savedQuestions,NextUserSavedQuestionsAction(userId: user.id)),
             converter: (store) => store.state.selectUserSavedQuestions(user.id),
             builder: (context,questions) => QuestionAbstractItemsWidget(
               questions: questions,
@@ -35,14 +36,10 @@ class DisplayAbstractSavedQuestionsPage extends StatelessWidget {
               onTap: (questionId) =>
                 Navigator
                   .of(context)
-                  .push(
-                    MaterialPageRoute(
-                      builder: (context) => DisplaySavedQuestionsPage(questionId: questionId)
-                    )
-                  ),
+                  .push(MaterialPageRoute(builder: (context) => DisplaySavedQuestionsPage(questionId: questionId))),
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageUserSavedQuestionsIfReadyAction(userId: user.id));
+                getNextPageIfReady(store, user.savedQuestions, NextUserSavedQuestionsAction(userId: user.id));
               },
             ),
           );

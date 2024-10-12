@@ -36,7 +36,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   child: StoreConnector<AppState,Iterable<ExamState>>(
-                    onInit: (store) => store.dispatch(const GetNextPageExamsIfNoPageAction()),
+                    onInit: (store) => getNextPageIfNoPage(store,store.state.exams,const NextExamsAction()),
                     converter: (store) => store.state.examEntityState.entities.values,
                     builder:(context,exams) => DropdownSearch<String>(
                       selectedItem: exams.where((x) => x.id == state.examId).firstOrNull?.shortName,
