@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
+using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.AccountAggregate.Entities;
@@ -16,7 +17,7 @@ using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountDeletedDomainEventConsumers
 {
-    public class DeleteAccount(IAppUserWriteRepository userWriteRepository, IQuestionWriteRepository questionWriteRepository, ISolutionWriteRepository solutionWriteRepository, ICommentWriteRepository commentWriteRepository, IMessageWriteRepository messageWriteRepository, UserManager<Account> userManager, IImageService blobService, INotificationWriteRepository notificationWriteRepository) : IDomainEventConsumer<AccountDeletedDomainEvent>
+    public class DeleteAccount(IAppUserWriteRepository userWriteRepository, IQuestionWriteRepository questionWriteRepository, ISolutionWriteRepository solutionWriteRepository, ICommentWriteRepository commentWriteRepository, IMessageWriteRepository messageWriteRepository, UserManager<Account> userManager, IImageService blobService, INotificationWriteRepository notificationWriteRepository, IVideoService videoService) : IDomainEventConsumer<AccountDeletedDomainEvent>
     {
         private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
@@ -26,6 +27,7 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountD
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly UserManager<Account> _userManager = userManager;
         private readonly IImageService _blobService = blobService;
+        private readonly IVideoService _videoService = videoService;
 
         private void DeleteComment(Comment comment)
         {
@@ -40,6 +42,8 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.AccountD
                 DeleteComment(comment);
             _solutionWriteRepository.Delete(solution);
             _blobService.DeleteRange(ContainerName.SolutionImages, solution.Images.Select(x => x.BlobName));
+            if (solution.Video != null)
+                _videoService.Delete(ContainerName.SolutionVideos, solution.Video.BlobName);
         }
 
         private void DeleteQuestion(Question question)

@@ -300,7 +300,6 @@ void nextUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher 
   next(action);
 }
 
-
 //not followeds
 void getNextPageUserNotFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetNextPageUserNotFollowedsIfNoPageAction){

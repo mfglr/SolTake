@@ -34,9 +34,12 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
   final Map<int,VideoPlayerController> _videoControllers = {};
 
   void _playController(int solutionId){
-    _videoControllers[solutionId]!
-      .play()
-      .then((_){ setState((){}); });
+    if(context.mounted){
+      _videoControllers[solutionId]!
+        .play()
+        .then((_){ setState((){}); });
+    }
+    
 
     _videoControllers.forEach((key,value){
       if(key != solutionId && value.value.isPlaying){
@@ -48,13 +51,15 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
   void _setController(int solutionId){
     final controller = VideoPlayerController
       .networkUrl(AppClient().generateUri("$solutionController/$getSolutionVideoEndpoint/$solutionId"));
-      controller
+      if(context.mounted){
+        controller
         .initialize()
         .then((_){
           _videoControllers[solutionId] = controller;
           _playController(solutionId);
         });
-        
+      }
+      
   }
 
   void _play(int solutionId){
