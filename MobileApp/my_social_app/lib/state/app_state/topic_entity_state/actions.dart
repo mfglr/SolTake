@@ -15,40 +15,35 @@ class AddTopicsListAction extends AppAction{
 }
 
 @immutable
-class GetNextPageTopicQuestionsIfReadyAction extends AppAction{
+class NextTopicQuestionsAction extends AppAction{
   final int topicId;
-  const GetNextPageTopicQuestionsIfReadyAction({required this.topicId});
+  const NextTopicQuestionsAction({required this.topicId});
 }
 @immutable
-class GetNextPageTopicQuestionsIfNoPageAction extends AppAction{
-  final int topicId;
-  const GetNextPageTopicQuestionsIfNoPageAction({required this.topicId});
-}
-@immutable
-class GetNextPageTopicQuestionsAction extends AppAction{
-  final int topicId;
-  const GetNextPageTopicQuestionsAction({required this.topicId});
-}
-@immutable
-class AddNextPageTopicQuestionsAction extends AppAction{
+class NextTopicQuestionsSuccessAction extends AppAction{
   final int topicId;
   final List<int> questionIds;
-  const AddNextPageTopicQuestionsAction({required this.topicId, required this.questionIds});
+  const NextTopicQuestionsSuccessAction({required this.topicId, required this.questionIds});
+}
+@immutable
+class NextTopicQuestionFailedAction extends AppAction{
+  final int topicId;
+  const NextTopicQuestionFailedAction({required this.topicId});
 }
 
 @immutable
-class GetPrevPageTopicQuestionsIfReadyAction extends AppAction{
+class PrevTopicQuestionsAction extends AppAction{
   final int topicId;
-  const GetPrevPageTopicQuestionsIfReadyAction({required this.topicId});
+  const PrevTopicQuestionsAction({required this.topicId});
 }
 @immutable
-class GetPrevPageTopicQuestionsAction extends AppAction{
-  final int topicId;
-  const GetPrevPageTopicQuestionsAction({required this.topicId});
-}
-@immutable
-class AddPrevPageTopicQuestionsAction extends AppAction{
+class PrevTopicQuestionsSuccessAction extends AppAction{
   final int topicId;
   final Iterable<int> questionIds;
-  const AddPrevPageTopicQuestionsAction({required this.topicId, required this.questionIds});
+  const PrevTopicQuestionsSuccessAction({required this.topicId, required this.questionIds});
+}
+@immutable
+class PrevTopicQuestionsFailedAction extends AppAction{
+  final int topicId;
+  const PrevTopicQuestionsFailedAction({required this.topicId});
 }

@@ -13,26 +13,38 @@ class TopicState{
     required this.questions
   });
 
-  TopicState getNextPageQuestions()
+  TopicState startLoadingNextQuestions()
     => TopicState(
         id: id,
         name: name,
         questions: questions.startLoadingNext(),
       );
-  TopicState addNextPageQuestions(Iterable<int> quesionIds)
+  TopicState stopLoadingNextQuestions()
+    => TopicState(
+      id: id,
+      name: name,
+      questions: questions.stopLoadingNext()
+    );
+  TopicState addNextQuestions(Iterable<int> quesionIds)
     => TopicState(
         id: id,
         name: name,
         questions: questions.addNextPage(quesionIds),
       );
 
-  TopicState getPrevPageQuestions()
+  TopicState startLoadingPrevQuestions()
     => TopicState(
         id: id,
         name: name,
         questions: questions.startLoadingPrev()
       );
-  TopicState addPrevPageQuestions(Iterable<int> questionIds)
+  TopicState stopLoadingPrevQuestions()
+    => TopicState(
+        id: id,
+        name: name,
+        questions: questions.stopLoadingPrev()
+      );
+  TopicState addPrevQuestions(Iterable<int> questionIds)
     => TopicState(
         id: id,
         name: name,

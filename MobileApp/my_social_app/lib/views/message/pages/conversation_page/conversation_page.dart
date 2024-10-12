@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
@@ -180,7 +181,7 @@ class _ConversationPageState extends State<ConversationPage>{
                 children: [
                   Expanded(
                     child: StoreConnector<AppState,Iterable<MessageState>>(
-                      onInit: (store) => store.dispatch(GetNextPageUserMessagesIfNoPageAction(userId: widget.userId)),
+                      onInit: (store) => getNextPageIfNoPage(store,user.messages,NextUserMessagesAction(userId: widget.userId)),
                       converter: (store) => store.state.selectUserMessages(widget.userId),
                       builder: (context,messages){
                         return MessageItems(
@@ -191,7 +192,7 @@ class _ConversationPageState extends State<ConversationPage>{
                           scrollController: _scrollController,
                           onScrollTop: (){
                             final store = StoreProvider.of<AppState>(context,listen: false);
-                            store.dispatch(GetNextPageUserMessagesIfReadyAction(userId: widget.userId));
+                            getNextPageIfReady(store,user.messages,NextUserMessagesAction(userId: widget.userId));
                           },
                           onPressedMessageItem: _onPressed,
                           onLongPressedMessageItem: _onLongPressed,

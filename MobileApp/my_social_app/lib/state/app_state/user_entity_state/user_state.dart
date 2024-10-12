@@ -107,14 +107,13 @@ class UserState{
   );
   
   //followers
-  UserState getNextPageFollowers() => 
-    _optional(
-      newFollowers: followers.startLoadingNext()
-    );
-  UserState addNextPageFollowers(Iterable<int> followIds) => 
-    _optional(
-      newFollowers: followers.addNextPage(followIds)
-    );
+  UserState startLoadingNextFollowers() => 
+    _optional(newFollowers: followers.startLoadingNext());
+  UserState addNextFollowers(Iterable<int> followIds) => 
+    _optional(newFollowers: followers.addNextPage(followIds));
+  UserState stopLoadingNextFollowers() =>
+    _optional(newFollowers: followers.stopLoadingNext());
+
   UserState addFollower(int followId) => 
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
@@ -139,14 +138,13 @@ class UserState{
     );
 
   //followeds
-  UserState getNextPageFolloweds() =>
-    _optional(
-      newFolloweds: followeds.startLoadingNext()
-    );
-  UserState addNextPageFolloweds(Iterable<int> ids) =>
-    _optional(
-      newFolloweds: followeds.addNextPage(ids)
-    );
+  UserState startLoadingNextFolloweds() =>
+    _optional(newFolloweds: followeds.startLoadingNext());
+  UserState addNextFolloweds(Iterable<int> ids) =>
+    _optional(newFolloweds: followeds.addNextPage(ids));
+  UserState stopLoadingNextFolloweds() =>
+    _optional(newFolloweds: followeds.stopLoadingNext());
+    
   UserState addFollowed(int followId)
     => _optional(
         newNumberOfFolloweds: numberOfFolloweds + 1,
@@ -190,14 +188,13 @@ class UserState{
     );
 
   //questions
-  UserState getNextPageQuestions() =>
-    _optional(
-      newQuestions: questions.startLoadingNext()
-    );
+  UserState startLoadingNextQuestions() =>
+    _optional(newQuestions: questions.startLoadingNext());
+  UserState stopLoadingNextQuestion() =>
+    _optional(newQuestions: questions.stopLoadingNext());
   UserState addNextPageQuestions(Iterable<int> ids) =>
-    _optional(
-      newQuestions: questions.addNextPage(ids)
-    );
+    _optional(newQuestions: questions.addNextPage(ids));
+
   UserState addNewQuestion(int id) =>
     _optional(
       newNumberOfQuestions: numberOfQuestions + 1,
@@ -213,14 +210,12 @@ class UserState{
     );
   
   //solved questions
-  UserState getNextPageSolvedQuestions() =>
-    _optional(
-      newSolvedQuestions: solvedQuestions.startLoadingNext()
-    );
-  UserState addNextPageSolvedQuestions(Iterable<int> ids) =>
-    _optional(
-      newSolvedQuestions: solvedQuestions.addNextPage(ids)
-    );
+  UserState startLoadingNextSolvedQuestions() =>
+    _optional(newSolvedQuestions: solvedQuestions.startLoadingNext());
+  UserState stopLoadingNextSolvedQuestions() =>
+    _optional(newSolvedQuestions: solvedQuestions.stopLoadingNext());
+  UserState addNextSolvedQuestions(Iterable<int> ids) =>
+    _optional(newSolvedQuestions: solvedQuestions.addNextPage(ids));
 
   //unsolved questions
   UserState getNextPageUnsolvedQuestions() =>
@@ -256,10 +251,13 @@ class UserState{
   UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
 
   //messages
-  UserState nextPageMessages() =>
+  UserState startLoadingNextMessages() =>
     _optional(newMessages: messages.startLoadingNext());
-  UserState addNextPageMessages(Iterable<int> messageIds) =>
+  UserState addNextMessages(Iterable<int> messageIds) =>
     _optional(newMessages: messages.addNextPage(messageIds));
+  UserState stopLoadingNextMessages() =>
+    _optional(newMessages: messages.stopLoadingNext());
+
   UserState addMessage(int messageId) =>
     _optional(newMessages: messages.prependOne(messageId));
   UserState removeMessage(int messageId) =>

@@ -33,16 +33,20 @@ class UserEntityState extends EntityState<UserState>{
     ]));
 
   //followers
-  UserEntityState getNextPageFollowers(int userId)
-    => UserEntityState(entities: updateOne(entities[userId]?.getNextPageFollowers()));
+  UserEntityState startLoadingNextFollowers(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.startLoadingNextFollowers()));
   UserEntityState addNextPageFollowers(int userId, Iterable<int> followIds)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFollowers(followIds)));
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextFollowers(followIds)));
+  UserEntityState stopLoadingNextFollowers(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.stopLoadingNextFollowers()));
 
   //foloweds
-  UserEntityState getNextPageFolloweds(int userId)
-    => UserEntityState(entities: updateOne(entities[userId]?.getNextPageFolloweds()));
+  UserEntityState startLoadingNextFolloweds(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.startLoadingNextFolloweds()));
   UserEntityState addNextPageFolloweds(int userId, Iterable<int> ids)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageFolloweds(ids)));
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextFolloweds(ids)));
+  UserEntityState stopLoadingNextFolloweds(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.stopLoadingNextFolloweds()));
 
   //not followeds
   UserEntityState getNextPageNotFolloweds(int userId)
@@ -61,20 +65,25 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(entities: updateOne(entities[userId]?.markQuestionAsUnsolved(id)));
 
   //questions
-  UserEntityState getNextPageQuestions(int userId)
-    => UserEntityState(entities: updateOne(entities[userId]?.getNextPageQuestions()));
-  UserEntityState addNextPageQuestions(int userId, Iterable<int> ids)
+  UserEntityState startLoadingNextQuestions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.startLoadingNextQuestions()));
+  UserEntityState stopLoadingNextQuestions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.stopLoadingNextQuestion()));
+  UserEntityState addNextQuestions(int userId, Iterable<int> ids)
     => UserEntityState(entities: updateOne(entities[userId]?.addNextPageQuestions(ids)));
+
   UserEntityState addNewQuestion(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.addNewQuestion(id)));
   UserEntityState removeQuestion(int userId,int questionId)
     => UserEntityState(entities: updateOne(entities[userId]?.removeQuestion(questionId)));
 
   //solved questions
-  UserEntityState getNextPageSolvedQuestions(int userId)
-    => UserEntityState(entities: updateOne(entities[userId]?.getNextPageSolvedQuestions()));
-  UserEntityState addNextPageSolvedQuestions(int userId, Iterable<int> ids)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageSolvedQuestions(ids)));
+  UserEntityState startLoadingNextSolvedQuestions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.startLoadingNextSolvedQuestions()));
+  UserEntityState stopLoadingNextSolvedQuestions(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.stopLoadingNextSolvedQuestions()));
+  UserEntityState addNextSolvedQuestions(int userId, Iterable<int> ids)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextSolvedQuestions(ids)));
   
   //unsolved questions
   UserEntityState getNextPageUnsolvedQuestions(int userId)
@@ -103,10 +112,13 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(entities: updateOne(entities[userId]?.removeSavedSolution(saveId)));
 
   //messages
-  UserEntityState getNextPageMessages(int userId)
-    => UserEntityState(entities: updateOne(entities[userId]?.nextPageMessages()));
-  UserEntityState addNextPageMessages(int userId,Iterable<int> messageIds)
-    => UserEntityState(entities: updateOne(entities[userId]?.addNextPageMessages(messageIds)));
+  UserEntityState startLoadingNextMessages(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.startLoadingNextMessages()));
+  UserEntityState addNextMessages(int userId,Iterable<int> messageIds)
+    => UserEntityState(entities: updateOne(entities[userId]?.addNextMessages(messageIds)));
+  UserEntityState stopLoadingNextMessages(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.stopLoadingNextMessages()));
+
   UserEntityState addMessage(int userId,int messageId)
     => UserEntityState(entities: updateOne(entities[userId]?.addMessage(messageId)));
   UserEntityState removeMessage(int userId,int messageId)

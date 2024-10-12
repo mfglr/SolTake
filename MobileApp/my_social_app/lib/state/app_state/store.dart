@@ -128,29 +128,15 @@ final store = Store(
     unfollowMiddleware,
     removeFollowerMiddleware,
 
-    getNextPageUserFollowersIfNoPageMiddleware,
-    getNextPageUserFollowersIfReadyMiddleware,
-    getNextPageUserFollowersMiddleware,
-
-    getNextPageUserFollowedsIfNoPageMiddleware,
-    getNextPageUserFollowedsIfReadyMiddleware,
-    getNextPageUserFollowedsMiddleware,
+    nextUserFollowersMiddleware,
+    nextUserFollowedsMiddleware,
+    nextUserMessagesMiddleware,
+    nextUserQuestionsMiddleware,
+    nextUserSolvedQuestionsMiddleware,
 
     getNextPageUserNotFollowedsIfNoPageMiddleware,
     getNextPageUserNotFollowedsIfReadyMiddleware,
     getNextPageUserNotFollowedsMiddleware,
-
-    getNextPageUserMessageIfNoPageMiddleware,
-    getNextPageUserMessageIfReadyMiddleware,
-    getNextPageUserMessagesMiddleware,
-
-    getNextPageUserQuestionsIfNoPageMiddleware,
-    getNextPageUserQuestionsIfReadyMiddleware,
-    nextPageOfUserQuestionsMiddleware,
-
-    getNextPageUserSolvedQuestionsIfNoPageMiddleware,
-    getNextPageUserSolvedQuestionsIfReadyMiddleware,
-    getNextPageUserSolvedQuestionsMiddleware,
 
     getNextPageUserUnsolvedQuestionsIfNoPageMiddleware,
     getNextPageUserUnsolvedQuestionsIfReadyMiddleware,
@@ -203,11 +189,8 @@ final store = Store(
     nextSubjectTopicsMiddleware,
 
     //Topic start
-    getNextPageTopicQuestionsMiddleware,
-    getNextPageTopicQuestionsIfNoPageMiddleware,
-    getNextPageTopicQuestionsIfReadyMiddeware,
-    getPrevPageTopicQuestionsIfReadyMiddleware,
-    getPrevPageTopicQuestionsMiddleware,
+    nextTopicQuestionsMiddleware,
+    prevTopicQuestionsMiddleware,
     //Topic end
 
     // Questions entity state

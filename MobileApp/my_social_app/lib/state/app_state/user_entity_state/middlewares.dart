@@ -128,35 +128,97 @@ void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-//followers
-void getNextPageUserFollowersIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserFollowersIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageUserFollowersAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserFollowersIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserFollowersIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followers;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageUserFollowersAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserFollowersAction){
+void nextUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextUserFollowersAction){
     final pagination = store.state.userEntityState.entities[action.userId]!.followers;
     UserService()
       .getFollowersById(action.userId, pagination.next)
       .then((follows){
-        store.dispatch(AddNextPageUserFollowersAction(userId: action.userId,followIds: follows.map((e) => e.id)));
+        store.dispatch(NextUserFollowersSuccessAction(userId: action.userId,followIds: follows.map((e) => e.id)));
         store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
         store.dispatch(AddUsersAction(users: follows.map((e) => e.follower!.toUserState())));
         store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.followerId))));
+      })
+      .catchError((e){
+        store.dispatch(NextUserFollowersFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void nextUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextUserFollowedsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
+    UserService()
+      .getFollowedsById(action.userId,pagination.next)
+      .then((follows){
+        store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followIds: follows.map((e) => e.id)));
+        store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
+        store.dispatch(AddUsersAction(users: follows.map((e) => e.followed!.toUserState())));
+        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.followed!.id))));
+      })
+      .catchError((e){
+        store.dispatch(NextuserFollowedsFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void nextUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextUserMessagesAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
+    MessageService()
+      .getMessagesByUserId(action.userId, pagination.next)
+      .then((messages){
+        store.dispatch(NextUserMessagesSuccessAction(userId: action.userId,messageIds: messages.map((message) => message.id)));
+        store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
+        store.dispatch(AddMessageImagesListAction(list: messages.map(
+          (e) => List.generate(e.numberOfImages, (index) => MessageImageState.init(e.id, index)))
+        ));
+      })
+      .catchError((e){
+        store.dispatch(NextUserMessagesFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void nextUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextUserQuestionsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.questions;
+    QuestionService()
+      .getByUserId(action.userId,pagination.next)
+      .then((questions){
+        store.dispatch(NextUserQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      })
+      .catchError((e){
+        store.dispatch(NextUserQuestionsFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void nextUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextUserSolvedQuestionsAction){
+    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
+    QuestionService()
+      .getSolvedQuestionsByUserId(action.userId, pagination.next)
+      .then((questions){
+        store.dispatch(NextUserSolvedQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((question) => question.id)));
+        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
+        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
+        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+      })
+      .catchError((e){
+        store.dispatch(NextUserSolvedQuestionsFailedAction(userId: action.userId));
+        throw e;
       });
   }
   next(action);
@@ -191,148 +253,6 @@ void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDisp
         store.dispatch(AddNextPageUserNotFollowedsAction(userId: action.userId,userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
         store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
-      });
-  }
-  next(action);
-}
-
-//followeds
-void getNextPageUserFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserFollowedsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageUserFollowedsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserFollowedsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserFollowedsIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageUserFollowedsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserFollowedsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.followeds;
-    UserService()
-      .getFollowedsById(action.userId,pagination.next)
-      .then((follows){
-        store.dispatch(AddNextPageUserFollowedsAction(userId: action.userId,followIds: follows.map((e) => e.id)));
-        store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
-        store.dispatch(AddUsersAction(users: follows.map((e) => e.followed!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.followed!.id))));
-      }
-    );
-  }
-  next(action);
-}
-
-//user messages
-void getNextPageUserMessageIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserMessagesIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserMessageIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserMessagesIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageUserMessagesAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserMessagesAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.messages;
-    MessageService()
-      .getMessagesByUserId(action.userId, pagination.next)
-      .then((messages){
-        store.dispatch(AddNextPageUserMessagesAction(userId: action.userId,messageIds: messages.map((message) => message.id)));
-        store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
-        store.dispatch(AddMessageImagesListAction(list: messages.map(
-          (e) => List.generate(e.numberOfImages, (index) => MessageImageState.init(e.id, index)))
-        ));
-      });
-  }
-  next(action);
-}
-
-//questions
-void getNextPageUserQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserQuestionsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.questions;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageUserQuestionsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserQuestionsIfReadyAction){
-   final pagination = store.state.userEntityState.entities[action.userId]!.questions;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageUserQuestionsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void nextPageOfUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserQuestionsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.questions;
-    QuestionService()
-      .getByUserId(action.userId,pagination.next)
-      .then((questions){
-        store.dispatch(AddNextPageUserQuestionsAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
-        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
-        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
-      });
-  }
-  next(action);
-}
-
-//solved questions
-void getNextPageUserSolvedQuestionsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserSolvedQuestionsIfNoPageAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageUserSolvedQuestionsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserSolvedQuestionsIfReadyMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserSolvedQuestionsIfReadyAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageUserSolvedQuestionsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserSolvedQuestionsAction){
-    final pagination = store.state.userEntityState.entities[action.userId]!.solvedQuestions;
-    QuestionService()
-      .getSolvedQuestionsByUserId(action.userId, pagination.next)
-      .then((questions){
-        store.dispatch(AddNextPageUserSolvedQuestionsAction(userId: action.userId,questionIds: questions.map((question) => question.id)));
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
-        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
-        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
       });
   }
   next(action);

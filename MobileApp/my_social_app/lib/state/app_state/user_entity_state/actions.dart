@@ -23,6 +23,20 @@ class AddUsersAction extends AppAction{
   const AddUsersAction({required this.users});
 }
 
+@immutable
+class MarkUserQuestionAsSolvedAction extends AppAction{
+  final int userId;
+  final int questionId;
+  const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
+}
+@immutable
+class MarkUserQuestionAsUnsolvedAction extends AppAction{
+  final int userId;
+  final int questionId;
+  const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
+}
+
+
 
 @immutable
 class AddNewFollowerAction extends AppAction{
@@ -81,49 +95,42 @@ class RemoveFollowerSuccessAction extends AppAction{
   const RemoveFollowerSuccessAction({required this.currentUserId, required this.followerId, required this.followId});
 }
 
+//followers
 @immutable
-class GetNextPageUserFollowersIfNoPageAction extends AppAction{
+class NextUserFollowersAction extends AppAction{
   final int userId;
-  const GetNextPageUserFollowersIfNoPageAction({required this.userId});
+  const NextUserFollowersAction({required this.userId});
 }
 @immutable
-class GetNextPageUserFollowersIfReadyAction extends AppAction{
-  final int userId;
-  const GetNextPageUserFollowersIfReadyAction({required this.userId});
-}
-@immutable
-class GetNextPageUserFollowersAction extends AppAction{
-  final int userId;
-  const GetNextPageUserFollowersAction({required this.userId});
-}
-@immutable
-class AddNextPageUserFollowersAction extends AppAction{
+class NextUserFollowersSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> followIds;
-  const AddNextPageUserFollowersAction({required this.userId, required this.followIds});
+  const NextUserFollowersSuccessAction({required this.userId, required this.followIds});
+}
+@immutable
+class NextUserFollowersFailedAction extends AppAction{
+  final int userId;
+  const NextUserFollowersFailedAction({required this.userId});
 }
 
+//followeds
 @immutable
-class GetNextPageUserFollowedsIfNoPageAction extends AppAction{
+class NextUserFollowedsAction extends AppAction{
   final int userId;
-  const GetNextPageUserFollowedsIfNoPageAction({required this.userId});
+  const NextUserFollowedsAction({required this.userId});
 }
 @immutable
-class GetNextPageUserFollowedsIfReadyAction extends AppAction{
-  final int userId;
-  const GetNextPageUserFollowedsIfReadyAction({required this.userId});
-}
-@immutable
-class GetNextPageUserFollowedsAction extends AppAction{
-  final int userId;
-  const GetNextPageUserFollowedsAction({required this.userId});
-}
-@immutable
-class AddNextPageUserFollowedsAction extends AppAction{
+class NextUserFollowedsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> followIds;
-  const AddNextPageUserFollowedsAction({required this.userId, required this.followIds});
+  const NextUserFollowedsSuccessAction({required this.userId, required this.followIds});
 }
+@immutable
+class NextuserFollowedsFailedAction extends AppAction{
+  final int userId;
+  const NextuserFollowedsFailedAction({required this.userId});
+}
+
 
 @immutable
 class GetNextPageUserNotFollowedsIfNoPageAction extends AppAction{
@@ -160,39 +167,23 @@ class AddUserNotFollowedAction extends AppAction{
 }
 
 @immutable
-class MarkUserQuestionAsSolvedAction extends AppAction{
+class NextUserQuestionsAction extends AppAction{
   final int userId;
-  final int questionId;
-  const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
+  const NextUserQuestionsAction({required this.userId});
 }
 @immutable
-class MarkUserQuestionAsUnsolvedAction extends AppAction{
-  final int userId;
-  final int questionId;
-  const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
-}
-
-@immutable
-class GetNextPageUserQuestionsIfNoPageAction extends AppAction{
-  final int userId;
-  const GetNextPageUserQuestionsIfNoPageAction({required this.userId});
-}
-@immutable
-class GetNextPageUserQuestionsIfReadyAction extends AppAction{
-  final int userId;
-  const GetNextPageUserQuestionsIfReadyAction({required this.userId});
-}
-@immutable
-class GetNextPageUserQuestionsAction extends AppAction{
-  final int userId;
-  const GetNextPageUserQuestionsAction({required this.userId});
-}
-@immutable
-class AddNextPageUserQuestionsAction extends AppAction{
+class NextUserQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
-  const AddNextPageUserQuestionsAction({required this.userId,required this.questionIds});
+  const NextUserQuestionsSuccessAction({required this.userId,required this.questionIds});
 }
+@immutable
+class NextUserQuestionsFailedAction extends AppAction{
+  final int userId;
+  const NextUserQuestionsFailedAction({required this.userId});
+}
+
+
 @immutable
 class AddNewUserQuestionAction extends AppAction{
   final int userId;
@@ -206,27 +197,21 @@ class RemoveUserQuestionAction extends AppAction{
   const RemoveUserQuestionAction({required this.userId, required this.questionId});
 }
 
-
 @immutable
-class GetNextPageUserSolvedQuestionsIfNoPageAction extends AppAction{
+class NextUserSolvedQuestionsAction extends AppAction{
   final int userId;
-  const GetNextPageUserSolvedQuestionsIfNoPageAction({required this.userId});
+  const NextUserSolvedQuestionsAction({required this.userId});
 }
 @immutable
-class GetNextPageUserSolvedQuestionsIfReadyAction extends AppAction{
-  final int userId;
-  const GetNextPageUserSolvedQuestionsIfReadyAction({required this.userId});
-}
-@immutable
-class GetNextPageUserSolvedQuestionsAction extends AppAction{
-  final int userId;
-  const GetNextPageUserSolvedQuestionsAction({required this.userId});
-}
-@immutable
-class AddNextPageUserSolvedQuestionsAction extends AppAction{
+class NextUserSolvedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
-  const AddNextPageUserSolvedQuestionsAction({required this.userId, required this.questionIds});
+  const NextUserSolvedQuestionsSuccessAction({required this.userId, required this.questionIds});
+}
+@immutable
+class NextUserSolvedQuestionsFailedAction extends AppAction{
+  final int userId;
+  const NextUserSolvedQuestionsFailedAction({required this.userId});
 }
 
 @immutable
@@ -320,26 +305,22 @@ class RemoveUserSavedSolutionAction extends AppAction{
 }
 
 @immutable
-class GetNextPageUserMessagesIfNoPageAction extends AppAction{
+class NextUserMessagesAction extends AppAction{
   final int userId;
-  const GetNextPageUserMessagesIfNoPageAction({required this.userId});
+  const NextUserMessagesAction({required this.userId});
 }
 @immutable
-class GetNextPageUserMessagesIfReadyAction extends AppAction{
-  final int userId;
-  const GetNextPageUserMessagesIfReadyAction({required this.userId});
-}
-@immutable
-class GetNextPageUserMessagesAction extends AppAction{
-  final int userId;
-  const GetNextPageUserMessagesAction({required this.userId});
-}
-@immutable
-class AddNextPageUserMessagesAction extends AppAction{
+class NextUserMessagesSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> messageIds;
-  const AddNextPageUserMessagesAction({required this.userId, required this.messageIds});
+  const NextUserMessagesSuccessAction({required this.userId, required this.messageIds});
 }
+@immutable
+class NextUserMessagesFailedAction extends AppAction{
+  final int userId;
+  const NextUserMessagesFailedAction({required this.userId});
+}
+
 @immutable
 class AddUserMessageAction extends AppAction{
   final int userId;
@@ -361,7 +342,6 @@ class RemoveUserMessagesAction extends AppAction{
   final Iterable<int> messageIds;
   const RemoveUserMessagesAction({required this.userId, required this.messageIds});
 }
-
 
 @immutable
 class GetNextPageUserConversationIfNoPageAction extends AppAction{
@@ -402,7 +382,6 @@ class RemoveUserConversationAction extends AppAction{
   final int id;
   const RemoveUserConversationAction({required this.userId, required this.id});
 }
-
 
 @immutable
 class ChangeProfileImageStatusAction extends AppAction{

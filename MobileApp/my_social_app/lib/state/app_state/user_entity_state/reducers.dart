@@ -8,20 +8,25 @@ UserEntityState markQuestionAsUnsolvedReducer(UserEntityState prev,MarkUserQuest
   => prev.markQuestionAsUnsolved(action.userId, action.questionId);
 
 //questions
-UserEntityState getNextPageQuestionsReducer(UserEntityState prev,GetNextPageUserQuestionsAction action)
-  => prev.getNextPageQuestions(action.userId);
-UserEntityState addNextPageQuestionsReducer(UserEntityState prev,AddNextPageUserQuestionsAction action)
-  => prev.addNextPageQuestions(action.userId,action.questionIds);
+UserEntityState nextQuestionsReducer(UserEntityState prev,NextUserQuestionsAction action)
+  => prev.startLoadingNextQuestions(action.userId);
+UserEntityState nextQuestionsSuccessReducer(UserEntityState prev,NextUserQuestionsSuccessAction action)
+  => prev.addNextQuestions(action.userId,action.questionIds);
+UserEntityState nextQuestionFailedReducer(UserEntityState prev,NextUserQuestionsFailedAction action)
+  => prev.stopLoadingNextQuestions(action.userId);
+
 UserEntityState addNewQuestionReducer(UserEntityState prev, AddNewUserQuestionAction action)
   => prev.addNewQuestion(action.userId, action.questionId);
 UserEntityState removeQuestionReducer(UserEntityState prev, RemoveUserQuestionAction action)
   => prev.removeQuestion(action.userId,action.questionId);
 
 //solved questions
-UserEntityState getNextPageSolvedQuestionsReducer(UserEntityState prev, GetNextPageUserSolvedQuestionsAction action) 
-  => prev.getNextPageSolvedQuestions(action.userId);
-UserEntityState addNextPageSolvedQuestionsReducer(UserEntityState prev, AddNextPageUserSolvedQuestionsAction action)
-  => prev.addNextPageSolvedQuestions(action.userId,action.questionIds);
+UserEntityState nextSolvedQuestionsReducer(UserEntityState prev, NextUserSolvedQuestionsAction action) 
+  => prev.startLoadingNextSolvedQuestions(action.userId);
+UserEntityState nextSolvedQuestionsSuccessReducer(UserEntityState prev, NextUserSolvedQuestionsSuccessAction action)
+  => prev.addNextSolvedQuestions(action.userId,action.questionIds);
+UserEntityState nextSolvedQuestionsFailedReducer(UserEntityState prev, NextUserSolvedQuestionsFailedAction action)
+  => prev.stopLoadingNextSolvedQuestions(action.userId);
 
 //unsolved questions
 UserEntityState getNextPageUnsolvedQuestionsReducer(UserEntityState prev, GetNextPageUserUnsolvedQuestionsAction action)
@@ -49,15 +54,22 @@ UserEntityState addSavedSolutionReducer(UserEntityState prev, AddUserSavedSoluti
 UserEntityState removeSavedSolutionReducer(UserEntityState prev, RemoveUserSavedSolutionAction action)
   => prev.removeSavedSolution(action.userId, action.saveId);
 
-//follows
-UserEntityState getNextPageFollowers(UserEntityState prev,GetNextPageUserFollowersAction action)
-  => prev.getNextPageFollowers(action.userId);
-UserEntityState addNextPageFollowers(UserEntityState prev,AddNextPageUserFollowersAction action)
+//followers
+UserEntityState nextFollowersReducer(UserEntityState prev,NextUserFollowersAction action)
+  => prev.startLoadingNextFollowers(action.userId);
+UserEntityState nextFollowersSuccessReducer(UserEntityState prev,NextUserFollowersSuccessAction action)
   => prev.addNextPageFollowers(action.userId,action.followIds);
-UserEntityState getNextPageFollowedsReducer(UserEntityState prev,GetNextPageUserFollowedsAction action)
-  => prev.getNextPageFolloweds(action.userId);
-UserEntityState addNextPageFollowedsReducer(UserEntityState prev,AddNextPageUserFollowedsAction action)
+UserEntityState nextFollowersFailedReducer(UserEntityState prev,NextUserFollowersFailedAction action)
+  => prev.stopLoadingNextFollowers(action.userId);
+
+//followeds
+UserEntityState nextFollowedsReducer(UserEntityState prev,NextUserFollowedsAction action)
+  => prev.startLoadingNextFolloweds(action.userId);
+UserEntityState nextFollowedsSuccessReducer(UserEntityState prev,NextUserFollowedsSuccessAction action)
   => prev.addNextPageFolloweds(action.userId,action.followIds);
+UserEntityState nextFollowedsFailedReducer(UserEntityState prev,NextuserFollowedsFailedAction action)
+  => prev.stopLoadingNextFolloweds(action.userId);
+
 UserEntityState followReducer(UserEntityState prev,FollowUserSuccessAction action)
   => prev.follow(action.currentUserId, action.followedId, action.followId);
 UserEntityState unfollowReducer(UserEntityState prev,UnfollowUserSuccessAction action)
@@ -78,12 +90,15 @@ UserEntityState removeNotFollowedReducer(UserEntityState prev,RemoveUserNotFollo
   => prev.removeNotFollowed(action.userId,action.notFollowedId);
 
 //messages
+UserEntityState nextMessagesReducer(UserEntityState prev,NextUserMessagesAction action)
+  => prev.startLoadingNextMessages(action.userId);
+UserEntityState nextMessagesSuccessReducer(UserEntityState prev,NextUserMessagesSuccessAction action)
+  => prev.addNextMessages(action.userId, action.messageIds);
+UserEntityState nextMessagesFailedReducer(UserEntityState prev,NextUserMessagesFailedAction action)
+  => prev.stopLoadingNextMessages(action.userId);
+
 UserEntityState addMessageReducer(UserEntityState prev,AddUserMessageAction action)
   => prev.addMessage(action.userId, action.messageId);
-UserEntityState getNextPageMessagesReducer(UserEntityState prev,GetNextPageUserMessagesAction action)
-  => prev.getNextPageMessages(action.userId);
-UserEntityState addNextPageMessagesReducer(UserEntityState prev,AddNextPageUserMessagesAction action)
-  => prev.addNextPageMessages(action.userId, action.messageIds);
 UserEntityState removeMessageReducer(UserEntityState prev,RemoveUserMessageAction action)
   => prev.removeMessage(action.userId, action.messageId);
 UserEntityState removeMessagesReducer(UserEntityState prev,RemoveUserMessagesAction action)
@@ -119,16 +134,18 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   //
   TypedReducer<UserEntityState,MarkUserQuestionAsSolvedAction>(markQuestionAsSolvedReducer).call,
   TypedReducer<UserEntityState,MarkUserQuestionAsUnsolvedAction>(markQuestionAsUnsolvedReducer).call,
-  
-  //questions
-  TypedReducer<UserEntityState,GetNextPageUserQuestionsAction>(getNextPageQuestionsReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserQuestionsAction>(addNextPageQuestionsReducer).call,
   TypedReducer<UserEntityState,AddNewUserQuestionAction>(addNewQuestionReducer).call,
   TypedReducer<UserEntityState,RemoveUserQuestionAction>(removeQuestionReducer).call,
 
+  //questions
+  TypedReducer<UserEntityState,NextUserQuestionsAction>(nextQuestionsReducer).call,
+  TypedReducer<UserEntityState,NextUserQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserQuestionsFailedAction>(nextQuestionFailedReducer).call,
+
   //solved questions
-  TypedReducer<UserEntityState,GetNextPageUserSolvedQuestionsAction>(getNextPageSolvedQuestionsReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserSolvedQuestionsAction>(addNextPageSolvedQuestionsReducer).call,
+  TypedReducer<UserEntityState,NextUserSolvedQuestionsAction>(nextSolvedQuestionsReducer).call,
+  TypedReducer<UserEntityState,NextUserSolvedQuestionsSuccessAction>(nextSolvedQuestionsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserSolvedQuestionsFailedAction>(nextSolvedQuestionsFailedReducer).call,
 
   //unsolved questions
   TypedReducer<UserEntityState,GetNextPageUserUnsolvedQuestionsAction>(getNextPageUnsolvedQuestionsReducer).call,
@@ -146,11 +163,16 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,AddUserSavedSolutionAction>(addSavedSolutionReducer).call,
   TypedReducer<UserEntityState,RemoveUserSavedSolutionAction>(removeSavedSolutionReducer).call,
 
-  //follow
-  TypedReducer<UserEntityState,GetNextPageUserFollowersAction>(getNextPageFollowers).call,
-  TypedReducer<UserEntityState,AddNextPageUserFollowersAction>(addNextPageFollowers).call,
-  TypedReducer<UserEntityState,GetNextPageUserFollowedsAction>(getNextPageFollowedsReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserFollowedsAction>(addNextPageFollowedsReducer).call,
+  //followers
+  TypedReducer<UserEntityState,NextUserFollowersAction>(nextFollowersReducer).call,
+  TypedReducer<UserEntityState,NextUserFollowersSuccessAction>(nextFollowersSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserFollowersFailedAction>(nextFollowersFailedReducer).call,
+
+  //followeds
+  TypedReducer<UserEntityState,NextUserFollowedsAction>(nextFollowedsReducer).call,
+  TypedReducer<UserEntityState,NextUserFollowedsSuccessAction>(nextFollowedsSuccessReducer).call,
+  TypedReducer<UserEntityState,NextuserFollowedsFailedAction>(nextFollowedsFailedReducer).call,
+  
   TypedReducer<UserEntityState,FollowUserSuccessAction>(followReducer).call,
   TypedReducer<UserEntityState,UnfollowUserSuccessAction>(unfollowReducer).call,
   TypedReducer<UserEntityState,RemoveFollowerSuccessAction>(removeFollowerReducer).call,
@@ -163,9 +185,12 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,AddUserNotFollowedAction>(addNotFollowedReducer).call,
 
   //messages
+  TypedReducer<UserEntityState,NextUserMessagesAction>(nextMessagesReducer).call,
+  TypedReducer<UserEntityState,NextUserMessagesSuccessAction>(nextMessagesSuccessReducer).call,
+  TypedReducer<UserEntityState,NextUserMessagesFailedAction>(nextMessagesFailedReducer).call,
+
   TypedReducer<UserEntityState,AddUserMessageAction>(addMessageReducer).call,
-  TypedReducer<UserEntityState,GetNextPageUserMessagesAction>(getNextPageMessagesReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserMessagesAction>(addNextPageMessagesReducer).call,
+  
   TypedReducer<UserEntityState,RemoveUserMessageAction>(removeMessageReducer).call,
   TypedReducer<UserEntityState,RemoveUserMessagesAction>(removeMessagesReducer).call,
 

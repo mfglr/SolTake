@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -51,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _getQuestionsGrid(UserState user){
     return StoreConnector<AppState,Iterable<QuestionState>>(
-      onInit: (store) => store.dispatch(GetNextPageUserQuestionsIfNoPageAction(userId: user.id)),
+      onInit: (store) => getNextPageIfNoPage(store,user.questions,NextUserQuestionsAction(userId: user.id)),
       converter: (store) => store.state.selectUserQuestions(user.id),
       builder: (context, questions) => QuestionAbstractItemsWidget(
         questions: questions,
@@ -68,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
         onScrollBottom: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(GetNextPageUserQuestionsIfReadyAction(userId: user.id));
+          getNextPageIfReady(store, user.questions, NextUserQuestionsAction(userId: user.id));
         },
       )
     );
@@ -76,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _getSolvedQuestionsGrid(UserState user){
     return StoreConnector<AppState,Iterable<QuestionState>>(
-      onInit: (store) => store.dispatch(GetNextPageUserSolvedQuestionsIfNoPageAction(userId: user.id)),
+      onInit: (store) => getNextPageIfNoPage(store,user.solvedQuestions,NextUserSolvedQuestionsAction(userId: user.id)),
       converter: (store) => store.state.selectUserSolvedQuestions(user.id),
       builder: (context, questions) => QuestionAbstractItemsWidget(
         questions: questions,
@@ -93,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
         onScrollBottom: (){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(GetNextPageUserSolvedQuestionsIfReadyAction(userId: user.id));
+          getNextPageIfReady(store, user.solvedQuestions, NextUserSolvedQuestionsAction(userId: user.id));
         },
       )
     );

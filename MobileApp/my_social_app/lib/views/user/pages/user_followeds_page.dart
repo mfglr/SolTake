@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -28,7 +29,7 @@ class UserFollowedsPage extends StatelessWidget {
           ),
         ),
         body: StoreConnector<AppState,Iterable<UserState>>(
-          onInit: (store) => store.dispatch(GetNextPageUserFollowedsIfNoPageAction(userId: userId)),
+          onInit: (store) => getNextPageIfNoPage(store,profileUser.followeds,NextUserFollowedsAction(userId: userId)),
           converter: (store) => store.state.selectFolloweds(userId),
           builder: (context,users) => Padding(
             padding: const EdgeInsets.all(8),
@@ -52,7 +53,7 @@ class UserFollowedsPage extends StatelessWidget {
                   ),
                   onScrollBottom: (){
                     final store = StoreProvider.of<AppState>(context, listen: false);
-                    store.dispatch(GetNextPageUserFollowedsIfReadyAction(userId: userId));
+                    getNextPageIfReady(store,profileUser.followeds,NextUserFollowedsAction(userId: userId));
                   },
                 );
               }

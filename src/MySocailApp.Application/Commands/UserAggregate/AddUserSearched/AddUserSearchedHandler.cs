@@ -21,7 +21,6 @@ namespace MySocailApp.Application.Commands.UserAggregate.AddUserSearched
                 throw new UserNotFoundException();
             var search = user.AddSearched(request.SearchedId);
             await _unitOfWork.CommitAsync(cancellationToken);
-
             return _mapper.Map<AddUserSearchedCommandResponseDto>(search);
         }
     }

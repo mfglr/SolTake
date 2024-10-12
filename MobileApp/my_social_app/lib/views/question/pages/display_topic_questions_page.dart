@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
@@ -30,18 +31,18 @@ class DisplayTopicQuestionsPage extends StatelessWidget {
         body: RefreshIndicator(
           onRefresh: (){
             final store = StoreProvider.of<AppState>(context,listen: false);
-            store.dispatch(GetPrevPageTopicQuestionsIfReadyAction(topicId: topicId));
+            getPrevPageIfReady(store, topic.questions,PrevTopicQuestionsAction(topicId: topicId));
             return store.onChange.firstWhere((state) => !state.topicEntityState.entities[topicId]!.questions.loadingPrev);
           },
           child: StoreConnector<AppState,Iterable<QuestionState>>(
-            onInit: (store) => store.dispatch(GetNextPageTopicQuestionsIfNoPageAction(topicId: topicId)),
+            onInit: (store) => getNextPageIfNoPage(store,topic.questions,NextTopicQuestionsAction(topicId: topicId)),
             converter: (store) => store.state.selectTopicQuestions(topicId),
             builder: (context,questions) => QuestionItemsWidget(
               questions: questions.toList(),
               pagination: topic.questions,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(GetNextPageTopicQuestionsIfReadyAction(topicId: topicId));
+                getNextPageIfReady(store,topic.questions,NextTopicQuestionsAction(topicId: topicId));
               },
             ),
           ),

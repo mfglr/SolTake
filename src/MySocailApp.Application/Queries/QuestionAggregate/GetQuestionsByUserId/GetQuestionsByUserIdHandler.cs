@@ -11,7 +11,8 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestions
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
         public Task<List<QuestionResponseDto>> Handle(GetQuestionsByUserIdDto request, CancellationToken cancellationToken)
-            => _repository.GetUserQuestionsAsync(
+            => _repository
+                .GetUserQuestionsAsync(
                     request.UserId,
                     _accessTokenReader.GetRequiredAccountId(),
                     request,

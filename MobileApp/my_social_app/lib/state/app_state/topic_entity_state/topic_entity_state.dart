@@ -6,15 +6,19 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 class TopicEntityState extends EntityState<TopicState>{
   const TopicEntityState({required super.entities});
  
-  TopicEntityState getNextPageQuestions(int topicId)
-    => TopicEntityState(entities: updateOne(entities[topicId]!.getNextPageQuestions()));
-  TopicEntityState addNextPageQuestions(int topicId,Iterable<int> questionIds)
-    => TopicEntityState(entities: updateOne(entities[topicId]!.addNextPageQuestions(questionIds)));
+  TopicEntityState startLoadingNextQuestions(int topicId)
+    => TopicEntityState(entities: updateOne(entities[topicId]?.startLoadingNextQuestions()));
+  TopicEntityState addNextQuestions(int topicId,Iterable<int> questionIds)
+    => TopicEntityState(entities: updateOne(entities[topicId]?.addNextQuestions(questionIds)));
+  TopicEntityState stopLoadingNextQuestions(int topicId)
+    => TopicEntityState(entities: updateOne(entities[topicId]?.stopLoadingNextQuestions()));
 
-  TopicEntityState getPrevPageQuestions(int topicId)
-    => TopicEntityState(entities: updateOne(entities[topicId]?.getPrevPageQuestions()));
+  TopicEntityState startLoadingPrevQuestions(int topicId)
+    => TopicEntityState(entities: updateOne(entities[topicId]?.startLoadingPrevQuestions()));
   TopicEntityState addPrevPageQuestions(int topicId,Iterable<int> questionIds)
-    => TopicEntityState(entities: updateOne(entities[topicId]?.addPrevPageQuestions(questionIds)));
+    => TopicEntityState(entities: updateOne(entities[topicId]?.addPrevQuestions(questionIds)));
+  TopicEntityState stopLoadingPrevQuestions(int topicId)
+    => TopicEntityState(entities: updateOne(entities[topicId]?.stopLoadingPrevQuestions()));
 
   TopicEntityState addTopics(Iterable<TopicState> topics)
     => TopicEntityState(entities: appendMany(topics));
