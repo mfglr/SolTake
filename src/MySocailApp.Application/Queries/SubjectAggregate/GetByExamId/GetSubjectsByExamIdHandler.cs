@@ -8,6 +8,6 @@ namespace MySocailApp.Application.Queries.SubjectAggregate.GetByExamId
         private readonly ISubjectQueryRepository _repository = repository;
 
         public Task<List<SubjectResponseDto>> Handle(GetSubjectsByExamIdDto request, CancellationToken cancellationToken)
-            => _repository.GetExamSubjectsAsync(request.ExamId, request, cancellationToken);
+            => _repository.GetExamSubjectsAsync(request.ExamId, request.Offset, request.Take, cancellationToken);
     }
 }

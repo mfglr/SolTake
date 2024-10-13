@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
@@ -61,28 +62,23 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 cancellationToken
             );
 
-        public Task<List<QuestionResponseDto>> GetQuestionsThatHasSolutionVideoAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
-            => GetListAsync(
-                accountId,
-                page,
-                x =>
-                    (examId == null || x.Exam.Id == examId) &&
-                    (subjectId == null || x.Subject.Id == subjectId) &&
-                    (topicId == null || x.Topic.Id == topicId) &&
-                    x.Solutions.Any(x => x.Video != null) &&
-                    !x.IsRemoved &&
-                    x.AppUserId != accountId,
-                cancellationToken
-            );
-
-
         public Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
             => GetListAsync(accountId, page, x => x.AppUserId == userId && x.Solutions.Any(x => x.State == SolutionState.Correct) && !x.IsRemoved, cancellationToken);
-        
+        //=> _context.Questions
+        //    .AsNoTracking()
+        //    .Where(x => x.AppUserId == userId)
+        //    .Join(_context.Users, q => q.AppUserId, a => a.Id, (q, a) => new { q, a })
+        //    .LeftJoin(_context.Solutions, j => j.q.Id, s => s.QuestionId, (j, s) => new { j, s })
+        //    .Where(x => x.s.State == SolutionState.Correct)
+        //    .OrderByDescending(x => x.j.q.Id)
+        //    .Take(page.Take)
+        //    .Select(x => new QuestionResponseDto())
+        //    .ToListAsync(cancellationToken);
+
+
+
+
         public Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
            => GetListAsync(accountId, page, x => x.AppUserId == userId && !x.Solutions.Any(x => x.State == SolutionState.Correct) && !x.IsRemoved, cancellationToken);
-        
-        public Task<List<QuestionResponseDto>> GetFollowedsQuestionsAsync(int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.AppUser.Followers.Any(x => x.FollowerId == accountId) && !x.IsRemoved, cancellationToken);
     }
 }

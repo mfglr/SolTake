@@ -8,6 +8,6 @@ namespace MySocailApp.Application.Queries.TopicAggregate.GetBySubjectId
         private readonly ITopicQueryRepository _topicQueryRepository = topicQueryRepository;
 
         public Task<List<TopicResponseDto>> Handle(GetTopicsBySubjectIdDto request, CancellationToken cancellationToken)
-            => _topicQueryRepository.GetSubjectTopicsAsync(request.SubjectId, request, cancellationToken);
+            => _topicQueryRepository.GetSubjectTopicsAsync(request.SubjectId, request.Offset, request.Take, cancellationToken);
     }
 }
