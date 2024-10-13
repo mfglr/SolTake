@@ -39,7 +39,10 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<SolutionUserSave> SolutionUserSaves { get; private set; }
 
         public DbSet<Exam> Exams { get; private set; }
+        
         public DbSet<Subject> Subjects { get; private set; }
+        public DbSet<SubjectTopic> SubjectTopics { get; private set; }
+
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<Notification> Notifications { get; private set; }
         
