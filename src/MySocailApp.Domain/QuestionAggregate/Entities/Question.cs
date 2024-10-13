@@ -1,56 +1,51 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
-    public class Question() : Entity, IAggregateRoot
+    public class Question : Entity, IAggregateRoot
     {
         public readonly static int MaxTopicCountPerQuestion = 3;
         public readonly static int MaxImageCountPerQuestion = 3;
 
-        public int ExamId { get; private set; }
-        public int SubjectId { get; private set; }
         public int AppUserId { get; private set; }
+        public QuestionExam Exam { get; private set; }
+        public QuestionSubject Subject { get; private set; }
+        public QuestionTopic Topic { get; private set; }
         public QuestionContent Content { get; private set; }
 
         private readonly List<QuestionImage> _images = [];
         public IReadOnlyCollection<QuestionImage> Images => _images;
         public bool HasBlobName(string blobName) => _images.Any(x => x.BlobName == blobName);
 
-        private readonly List<QuestionTopic> _topics = [];
-        public IReadOnlyCollection<QuestionTopic> Topics => _topics;
-        internal void AddNewTopics(IEnumerable<int> topics)
-        {
-            if (topics.Count() > MaxTopicCountPerQuestion)
-                throw new TooManyTopicsException();
-            _topics.Clear();
-            _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(topicId)));
-        }
+        private Question() { }
 
-        internal void Create(int appUserId, QuestionContent content, int examId, int subjectId, IEnumerable<int> topics, IEnumerable<QuestionImage> images)
+        public Question(int userId, QuestionContent content, IEnumerable<QuestionImage> images)
         {
-            if (topics.Count() > MaxTopicCountPerQuestion)
-                throw new TooManyTopicsException();
             if (!images.Any())
                 throw new QuestionImageIsRequiredException();
             if (images.Count() > MaxImageCountPerQuestion)
                 throw new TooManyQuestionImagesException();
 
-            AppUserId = appUserId;
+            AppUserId = userId;
             Content = content;
-            ExamId = examId;
-            SubjectId = subjectId;
-            CreatedAt = DateTime.UtcNow;
-            _topics.AddRange(topics.Select(topicId => QuestionTopic.Create(topicId)));
             _images.AddRange(images);
+        }
+
+
+        internal void Create(QuestionExam exam, QuestionSubject subject, QuestionTopic topic)
+        {
+            Exam = exam;
+            Subject = subject;
+            Topic = topic;
+            CreatedAt = DateTime.UtcNow;
+            AddDomainEvent(new QuestionCreatedDomainEvent(this));
         }
 
         public bool IsRemoved { get; private set; }
@@ -105,8 +100,6 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         }
 
         // Readonly navigator properties
-        public Exam Exam { get; } = null!;
-        public Subject Subject { get; } = null!;
         public AppUser AppUser { get; } = null!;
         public IReadOnlyList<Solution> Solutions { get; } = null!;
         public IReadOnlyCollection<Comment> Comments { get; } = null!;

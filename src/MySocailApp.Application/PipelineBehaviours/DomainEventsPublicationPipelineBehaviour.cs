@@ -11,7 +11,7 @@ namespace MySocailApp.Application.PipelineBehaviours
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var response = await next();
-            await _publisher.PublishDomainEvents(cancellationToken);
+            _publisher.PublishDomainEvents(cancellationToken);
             return response;
         }
     }

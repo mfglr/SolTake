@@ -13,7 +13,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
 
             builder
                 .HasMany(x => x.Images)
-                .WithOne(x => x.Solution)
+                .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);
 

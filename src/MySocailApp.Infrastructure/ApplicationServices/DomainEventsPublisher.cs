@@ -10,7 +10,7 @@ namespace MySocailApp.Infrastructure.ApplicationServices
         private readonly IPublisher _publisher = publisher;
         private readonly AppDbContext _context = context;
 
-        public async Task PublishDomainEvents(CancellationToken cancellationToken)
+        public void PublishDomainEvents(CancellationToken cancellationToken)
         {
             var containers = _context
                 .ChangeTracker
@@ -21,7 +21,7 @@ namespace MySocailApp.Infrastructure.ApplicationServices
 
             foreach (var continer in containers)
                 foreach (var @event in continer.Events)
-                    await _publisher.Publish(@event, cancellationToken);
+                    _publisher.Publish(@event, cancellationToken);
         }
     }
 }

@@ -9,7 +9,15 @@ namespace MySocailApp.Infrastructure.SubjectAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<Subject?> GetByIdAsync(int id, CancellationToken cancellationToken) =>
-            await _context.Subjects.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        public Task<Subject?> GetByIdAsync(int subjectId, CancellationToken cancellationToken) =>
+            _context.Subjects
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == subjectId, cancellationToken);
+
+        public Task<Subject?> GetSubjectWithTopicByIdAsync(int subjectId, int topicId, CancellationToken cancellationToken) =>
+            _context.Subjects
+                .AsNoTracking()
+                .Include(x => x.Topics.Where(x => x.TopicId == topicId))
+                .FirstOrDefaultAsync(x => x.Id == subjectId, cancellationToken);
     }
 }

@@ -40,22 +40,22 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => GetListAsync(accountId, page, x => x.AppUserId == userId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetTopicQuestionsAsync(int topicId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Topics.Any(x => x.TopicId == topicId) && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
+            => GetListAsync(accountId, page, x => x.Topic.Id == topicId && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.SubjectId == subjectId && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
+            => GetListAsync(accountId, page, x => x.Subject.Id == subjectId && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.ExamId == examId && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
+            => GetListAsync(accountId, page, x => x.Exam.Id == examId && x.AppUserId != accountId && !x.IsRemoved, cancellationToken);
         
         public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
             => GetListAsync(
                 accountId,
                 page,
                 x =>
-                    (examId == null || x.ExamId == examId) &&
-                    (subjectId == null || x.SubjectId == subjectId) &&
-                    (topicId == null || x.Topics.Any(x => x.TopicId == topicId)) &&
+                    (examId == null || x.Exam.Id == examId) &&
+                    (subjectId == null || x.Subject.Id == subjectId) &&
+                    (topicId == null || x.Topic.Id == topicId) &&
                     !x.IsRemoved &&
                     x.AppUserId != accountId,
                 cancellationToken
@@ -66,9 +66,9 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 accountId,
                 page,
                 x =>
-                    (examId == null || x.ExamId == examId) &&
-                    (subjectId == null || x.SubjectId == subjectId) &&
-                    (topicId == null || x.Topics.Any(x => x.TopicId == topicId)) &&
+                    (examId == null || x.Exam.Id == examId) &&
+                    (subjectId == null || x.Subject.Id == subjectId) &&
+                    (topicId == null || x.Topic.Id == topicId) &&
                     x.Solutions.Any(x => x.Video != null) &&
                     !x.IsRemoved &&
                     x.AppUserId != accountId,

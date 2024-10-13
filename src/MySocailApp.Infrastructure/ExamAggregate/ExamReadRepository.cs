@@ -9,10 +9,15 @@ namespace MySocailApp.Infrastructure.ExamAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<Exam?> GetByIdAsync(int id, CancellationToken cancellationToken) =>
-            await _context.Exams.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        public async Task<List<Exam>> GetAllAsync(CancellationToken cancellationToken)
-            => await _context.Exams.AsNoTracking().ToListAsync(cancellationToken);
+        public Task<Exam?> GetByIdAsync(int id, CancellationToken cancellationToken) =>
+            _context.Exams
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public Task<List<Exam>> GetAllAsync(CancellationToken cancellationToken)
+            => _context.Exams.AsNoTracking().ToListAsync(cancellationToken);
+        public Task<bool> Exist(int id, CancellationToken cancellationToken)
+            => _context.Exams.AnyAsync(x => x.Id == id, cancellationToken);
     }
 
 }

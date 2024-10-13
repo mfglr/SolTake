@@ -6,5 +6,6 @@ namespace MySocailApp.Domain.ExamAggregate.Interfaces
     {
         Task<Exam?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<List<Exam>> GetAllAsync(CancellationToken cancellationToken);
+        Task<bool> Exist(int id, CancellationToken cancellationToken);
     }
 }

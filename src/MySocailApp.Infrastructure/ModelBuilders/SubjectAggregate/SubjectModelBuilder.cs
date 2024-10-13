@@ -8,16 +8,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SubjectAggregate
     {
         public void Configure(EntityTypeBuilder<Subject> builder)
         {
-            builder
-                .HasMany(x => x.Topics)
-                .WithOne(x => x.Subject)
-                .HasForeignKey(x => x.SubjectId);
-
-            builder
-                .HasMany(x => x.Quesitons)
-                .WithOne(x => x.Subject)
-                .HasForeignKey(x => x.SubjectId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

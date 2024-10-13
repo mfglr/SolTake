@@ -25,10 +25,10 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
             var accountId = _accessTokenReader.GetRequiredAccountId();
 
             var images = (await _blobService.UploadAsync(ContainerName.QuestionImages, request.Images, cancellationToken)).Select(x => QuestionImage.Create(x.BlobName, x.Dimention.Height,x.Dimention.Width));
-            
-            var question = new Question();
+
             var content = new QuestionContent(request.Content ?? "");
-            await _questionCreator.CreateAsync(question, accountId, content, request.ExamId, request.SubjectId, request.TopicIds, images,cancellationToken);
+            var question = new Question(accountId, content,images);
+            await _questionCreator.CreateAsync(question, request.ExamId, request.SubjectId, request.TopicId, cancellationToken);
             await _repository.CreateAsync(question, cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);

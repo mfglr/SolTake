@@ -2,6 +2,6 @@
 {
     public interface IDomainEventsPublisher
     {
-        Task PublishDomainEvents(CancellationToken cancellationToken);
+        void PublishDomainEvents(CancellationToken cancellationToken);
     }
 }

@@ -8,16 +8,13 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
     {
         public void Configure(EntityTypeBuilder<Question> builder)
         {
+            builder.OwnsOne(x => x.Exam);
+            builder.OwnsOne(x => x.Subject);
+            builder.OwnsOne(x => x.Topic);
             builder.OwnsOne(x => x.Content);
 
             builder
                 .HasMany(x => x.Images)
-                .WithOne(x => x.Question)
-                .HasForeignKey(x => x.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Topics)
                 .WithOne(x => x.Question)
                 .HasForeignKey(x => x.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);

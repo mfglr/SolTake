@@ -40,14 +40,11 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         ),
                         new SubjectResponseDto(
                             x.Question.Subject.Id,
-                            x.Question.Subject.ExamId,
                             x.Question.Subject.Name
                         ),
-                        x.Question.Topics.Select(
-                            t => new TopicResponseDto(
-                                t.Topic.Id,
-                                t.Topic.Name
-                            )
+                        new TopicResponseDto(
+                            x.Question.Topic.Id,
+                            x.Question.Topic.Name
                         ),
                         x.Question.Images.Select(
                             i => new QuestionImageResponseDto(

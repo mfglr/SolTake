@@ -1,16 +1,17 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Domain.ExamAggregate.Entitities
 {
-    public class Exam(string shortName, string fullName) : IHasId, IAggregateRoot
+    public class Exam : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
-        public string ShortName { get; private set; } = shortName;
-        public string FullName { get; private set; } = fullName;
+        public string ShortName { get; private set; }
+        public string FullName { get; private set; }
 
-        public IReadOnlyCollection<Subject> Subjects { get; } = null!;
-        public IReadOnlyCollection<Question> Quesitons { get; } = null!;
+        private Exam(string shortName, string fullName)
+        {
+            ShortName = shortName;
+            FullName = fullName;
+        }
+        public static Exam Create(string shortName, string fullName) => new(shortName, fullName) { CreatedAt = DateTime.UtcNow };
     }
 }

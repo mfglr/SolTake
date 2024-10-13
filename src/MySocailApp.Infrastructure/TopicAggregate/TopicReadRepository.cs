@@ -9,10 +9,14 @@ namespace MySocailApp.Infrastructure.TopicAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<List<Topic>> GetByTopicIds(IEnumerable<int> ids, CancellationToken cancellationToken)
-            => await _context.Topics
+        public Task<Topic?> GetTopicById(int topicId, CancellationToken cancellationToken)
+            => _context.Topics
                 .AsNoTracking()
-                .Include(x => x.Subjects)
+                .FirstOrDefaultAsync(x => x.Id == topicId, cancellationToken);
+
+        public Task<List<Topic>> GetByTopicIds(IEnumerable<int> ids, CancellationToken cancellationToken)
+            => _context.Topics
+                .AsNoTracking()
                 .Where(x => ids.Contains(x.Id))
                 .ToListAsync(cancellationToken);
     }

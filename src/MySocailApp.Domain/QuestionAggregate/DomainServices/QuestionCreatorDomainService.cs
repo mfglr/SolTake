@@ -2,7 +2,6 @@
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SubjectAggregate.Exceptions;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
@@ -15,27 +14,30 @@ namespace MySocailApp.Domain.QuestionAggregate.DomainServices
         private readonly ISubjectReadRepository _subjectRepository = subjectRepository;
         private readonly ITopicReadRepository _topicRepository = topicRepository;
 
-        public async Task CreateAsync(Question question, int userId, QuestionContent content, int examId, int subjectId, IEnumerable<int> topicIds, IEnumerable<QuestionImage> images, CancellationToken cancellationToken)
+        public async Task CreateAsync(Question question, int examId, int subjectId, int topicId, CancellationToken cancellationToken)
         {
             var exam =
                 await _examRepository.GetByIdAsync(examId, cancellationToken) ??
                 throw new ExamNotFoundException();
-            
             var subject =
-                await _subjectRepository.GetByIdAsync(subjectId, cancellationToken) ??
+                await _subjectRepository.GetSubjectWithTopicByIdAsync(subjectId, topicId, cancellationToken) ??
                 throw new SubjectNotFoundException();
+            var topic =
+                await _topicRepository.GetTopicById(topicId, cancellationToken) ??
+                throw new TopicNotFoundException();
             
             if (examId != subject.ExamId)
                 throw new SubjectIsNotIncludedInExamException();
-
-            var topics = await _topicRepository.GetByTopicIds(topicIds, cancellationToken);
-            if (topics.Count != topicIds.Count())
-                throw new TopicNotFoundException();
             
-            if(topics.Any(x => !x.Subjects.Any(x => x.SubjectId == subjectId)))
+            if (subject.Topics.Count == 0)
                 throw new TopicIsNotIncludedInSubjectException();
-
-            question.Create(userId, content, examId, subjectId, topicIds, images);
+            
+            question
+                .Create(
+                    new(exam.Id, exam.ShortName, exam.FullName),
+                    new(subject.Id, subject.Name),
+                    new(topic.Id, topic.Name)
+                );
         }
     }
 }

@@ -12,15 +12,11 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         private SolutionImage() { }
 
         public static SolutionImage Create(string blobName, float height, float width)
-            =>
-            new ()
-            {
+            => new () {
                 BlobName = blobName,
                 Height = height,
                 Width = width,
                 CreatedAt = DateTime.UtcNow
             };
-
-        public Solution Solution { get; } = null!;
     }
 }
