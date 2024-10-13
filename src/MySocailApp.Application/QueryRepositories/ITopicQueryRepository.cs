@@ -5,6 +5,6 @@ namespace MySocailApp.Application.QueryRepositories
 {
     public interface ITopicQueryRepository
     {
-        Task<List<TopicResponseDto>> GetSubjectTopicsAsync(int subjectId,IPage page,CancellationToken cancellationToken);
+        Task<List<TopicResponseDto>> GetSubjectTopicsAsync(int subjectId, int offset, int take, CancellationToken cancellationToken);
     }
 }

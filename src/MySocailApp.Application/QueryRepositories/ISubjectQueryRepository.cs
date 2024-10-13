@@ -5,6 +5,6 @@ namespace MySocailApp.Application.QueryRepositories
 {
     public interface ISubjectQueryRepository
     {
-        Task<List<SubjectResponseDto>> GetExamSubjectsAsync(int examId, IPage page, CancellationToken cancellationToken);
+        Task<List<SubjectResponseDto>> GetExamSubjectsAsync(int examId, int take, int offset, CancellationToken cancellationToken);
     }
 }

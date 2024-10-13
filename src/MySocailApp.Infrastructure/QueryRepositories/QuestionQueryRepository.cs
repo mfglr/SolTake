@@ -19,7 +19,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.Questions
                 .AsNoTracking()
                 .Where(predicate)
-                .ToQuestionResponseDto(accountId)
+                .ToQuestionResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         private Task<List<QuestionResponseDto>> GetListAsync(int accountId, IPage page, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(predicate)
                 .ToPage(page)
-                .ToQuestionResponseDto(accountId)
+                .ToQuestionResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<QuestionResponseDto?> GetQuestionByIdAsync(int id, int accountId, CancellationToken cancellationToken)
