@@ -9,7 +9,6 @@ using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Interfaces;
@@ -192,8 +191,7 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddScoped<ICommentReadRepository, CommentReadRepository>()
                 .AddScoped<ICommentWriteRepository, CommentWriteRepository>()
-                .AddScoped<CommentCreatorDomainService>()
-                .AddSingleton<IUserNameReader,UserNameReader>();
+                .AddScoped<CommentCreatorDomainService>();
         
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
             => services

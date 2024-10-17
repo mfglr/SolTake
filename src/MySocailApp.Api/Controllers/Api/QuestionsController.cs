@@ -11,7 +11,6 @@ using MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.UnsaveQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
-using MySocailApp.Application.Queries.QuestionAggregate.GetFollowedsQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
@@ -19,7 +18,6 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
-using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsThatHaveVideoSolutions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSavedQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
@@ -39,8 +37,8 @@ namespace MySocailApp.Api.Controllers.Api
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<QuestionResponseDto> Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] string? topicIds, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
-            => await _mediator.Send(new CreateQuestionDto(content, examId, subjectId, topicIds, images), cancellationToken);
+        public async Task<QuestionResponseDto> Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] int? topicId, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
+            => await _mediator.Send(new CreateQuestionDto(examId, subjectId, topicId, content, images), cancellationToken);
 
         [HttpDelete("{questionId}")]
         public async Task Delete(int questionId, CancellationToken cancellationToken)
@@ -108,17 +106,9 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetUnsolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
-
-        [HttpGet]
-        public async Task<List<QuestionResponseDto>> GetFollowedsQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetFollowedsQuestionsDto(offset, take, isDescending), cancellationToken);
-
+      
         [HttpGet]
         public async Task<List<QuestionUserSaveResponseDto>> GetSavedQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSavedQuestionsDto(offset, take, isDescending), cancellationToken);
-
-        [HttpPost]
-        public async Task<List<QuestionResponseDto>> GetQuestionsThatHaveVideoSolution(GetQuestionsThatHaveVideoSolutionsDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
     }
 }

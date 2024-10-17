@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LogOut
         {
             var accountId = _tokenReader.GetRequiredAccountId();
             var account = 
-                await _userManager.Users.FirstOrDefaultAsync( x => x.Id == accountId && !x.IsRemoved, cancellationToken) ?? 
+                await _userManager.Users.FirstOrDefaultAsync( x => x.Id == accountId, cancellationToken) ?? 
                 throw new AccountNotFoundException();
 
             var result = await _userManager.UpdateSecurityStampAsync(account);

@@ -1,22 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.Extentions;
 using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.AccountAggregate.EmailVerificationTokenUpdatedDomainEventConsumers
 {
-    public class SendEmailConfirmationMail(IEmailService emailService, IHttpContextAccessor contextAccessor) : IDomainEventConsumer<EmailVerificationTokenUpdatedDomainEvent>
+    public class SendEmailConfirmationMail(IServiceProvider serviceProvider) : IDomainEventConsumer<EmailVerificationTokenUpdatedDomainEvent>
     {
-        private readonly IEmailService _emailService = emailService;
-        private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task Handle(EmailVerificationTokenUpdatedDomainEvent notification, CancellationToken cancellationToken)
         {
+            using var scope = _serviceProvider.CreateScope();
+            var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
+
             var verificationToken = notification.Account.VerificationTokens.OrderByDescending(x => x.Id).First();
-            await _emailService
+            await emailService
                 .SendEmailConfirmationByTokenMail(
-                    _contextAccessor.HttpContext.GetLanguage(),
+                    notification.Account.Language,
                     verificationToken.Token,
                     notification.Account.UserName!,
                     notification.Account.Email!,

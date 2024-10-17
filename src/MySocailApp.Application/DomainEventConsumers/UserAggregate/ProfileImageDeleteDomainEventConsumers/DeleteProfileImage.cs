@@ -5,13 +5,13 @@ using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserAggregate.ProfileImageDeleteDomainEventConsumers
 {
-    public class DeleteProfileImage(IImageService blobService) : IDomainEventConsumer<ProfileImageDeletedDomainEvent>
+    public class DeleteProfileImage(IImageService imageService) : IDomainEventConsumer<ProfileImageDeletedDomainEvent>
     {
-        private readonly IImageService _blobService = blobService;
+        private readonly IImageService _imageService = imageService;
 
         public Task Handle(ProfileImageDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            _blobService.Delete(ContainerName.UserImages, notification.Image.BlobName);
+            _imageService.Delete(ContainerName.UserImages, notification.Image.BlobName);
             return Task.CompletedTask;
         }
     }

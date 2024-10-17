@@ -8,15 +8,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.TopicAggreagate
     {
         public void Configure(EntityTypeBuilder<Topic> builder)
         {
-            builder
-                .HasMany(x => x.Questions)
-                .WithOne(x => x.Topic)
-                .HasForeignKey(x => x.TopicId);
-
-            builder
-                .HasMany(x => x.Subjects)
-                .WithOne(x => x.Topic)
-                .HasForeignKey(x => x.TopicId);
         }
     }
 }

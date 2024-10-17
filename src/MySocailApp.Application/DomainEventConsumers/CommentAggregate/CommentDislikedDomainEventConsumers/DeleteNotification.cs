@@ -5,17 +5,17 @@ using MySocailApp.Domain.NotificationAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.CommentAggregate.CommentDislikedDomainEventConsumers
 {
-    public class DeleteNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<CommentDislikedDomainEvent>
+    public class DeleteNotification(INotificationWriteRepository notficationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<CommentDislikedDomainEvent>
     {
-        private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
+        private readonly INotificationWriteRepository _notficationWriteRepository = notficationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(CommentDislikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = await _notificationWriteRepository.GetCommentLikedNotificationAsync(notification.Comment.Id, notification.Comment.AppUserId, cancellationToken);
+            var n = await _notficationWriteRepository.GetCommentLikedNotificationAsync(notification.Comment.Id, notification.Comment.AppUserId, cancellationToken);
             if (n == null) return;
 
-            _notificationWriteRepository.Delete(n);
+            _notficationWriteRepository.Delete(n);
             await _unitOfWork.CommitAsync(cancellationToken);
 
         }

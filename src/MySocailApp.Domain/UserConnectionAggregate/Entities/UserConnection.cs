@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 
 namespace MySocailApp.Domain.UserConnectionAggregate.Entities
 {
@@ -15,9 +14,10 @@ namespace MySocailApp.Domain.UserConnectionAggregate.Entities
             IsConnected = true;
             ConnectionId = connectionId;
         }
-        public void Disconnect() => IsConnected = false;
-
-        //readonly navigator properties
-        public AppUser AppUser { get; } = null!;
+        public void Disconnect()
+        {
+            IsConnected = false;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

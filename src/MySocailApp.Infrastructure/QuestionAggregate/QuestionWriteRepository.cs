@@ -14,42 +14,49 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 
         public void Delete(Question question)
             => _context.Questions.Remove(question);
+        public void DeleteRange(IEnumerable<Question> questions)
+            => _context.Questions.RemoveRange(questions);
 
-        public async Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
-            => await _context.Questions.FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved);
+        public Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
+            => _context.Questions.FirstOrDefaultAsync(x => x.Id == id);
 
         public Task<Question?> GetQuestionWithImagesAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
                 .Include(x => x.Images)
-                .FirstOrDefaultAsync(x => x.Id == questionId && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
         public Task<Question?> GetQuestionWithSaveAsync(int questionId, int saverId, CancellationToken cancellationToken)
             => _context.Questions
                 .Include(x => x.Savers.Where(x => x.AppUserId == saverId))
-                .FirstOrDefaultAsync(x => x.Id == questionId && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
         public async Task<Question?> GetWithLikeByIdAsync(int id,int userId,CancellationToken cancellationToken)
             => await _context.Questions
                 .Include(x => x.Likes.Where(x => x.AppUserId == userId))
                 .Include(x => x.LikeNotifications.Where(x => x.AppUserId == userId))
-                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public Task<Question?> GetQuestionWithAllAsync(int questionId, CancellationToken cancellationToken)
+        public Task<Question?> GetQuestionAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
-                .Include(x => x.Notifications)
                 .Include(x => x.Images)
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Children)
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Children)
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Images)
                 .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
+
+        public Task<List<Question>> GetUserQuestionsAsync(int userId, CancellationToken cancellationToken)
+            => _context.Questions
+                .Include(x => x.Images)
+                .Where(x => x.AppUserId == userId)
+                .ToListAsync(cancellationToken);
+
+        public Task<List<Question>> GetQuestionsSavedByUserId(int userId, CancellationToken cancellationToken)
+            => _context.Questions
+                .Include(x => x.Savers.Where(x => x.AppUserId == userId))
+                .Where(x => x.Savers.Any(x => x.AppUserId == userId))
+                .ToListAsync(cancellationToken);
+
+        public Task<List<Question>> GetQuestionsLikedByUserId(int userId, CancellationToken cancellationToken)
+            => _context.Questions
+                .Include(x => x.Likes.Where(x => x.AppUserId == userId))
+                .Where (x => x.Likes.Any(x => x.AppUserId == userId))
+                .ToListAsync(cancellationToken);
     }
 }

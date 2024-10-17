@@ -16,7 +16,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.QuestionUserSaves
                 .Where(x => x.AppUserId == userId)
                 .ToPage(page)
-                .ToQuestionUserSaveResponseDto(accountId)
+                .ToQuestionUserSaveResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

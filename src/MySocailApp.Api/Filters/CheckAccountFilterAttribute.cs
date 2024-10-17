@@ -16,7 +16,7 @@ namespace MySocailApp.Api.Filters
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
             var account = 
-                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId && !x.IsRemoved) ?? 
+                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId) ?? 
                 throw new AccountNotFoundException();
             await next();
         }

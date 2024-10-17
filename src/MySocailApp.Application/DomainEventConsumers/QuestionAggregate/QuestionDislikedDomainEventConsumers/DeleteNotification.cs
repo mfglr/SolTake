@@ -1,22 +1,26 @@
-﻿using MySocailApp.Application.ApplicationServices;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionAggregate.QuestionDislikedDomainEventConsumers
 {
-    public class DeleteNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<QuestionDislikedDomainEvent>
+    public class DeleteNotification(IServiceProvider serviceProvider) : IDomainEventConsumer<QuestionDislikedDomainEvent>
     {
-        private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task Handle(QuestionDislikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = await _notificationWriteRepository.GetQuestionLikedNotificationAsync(notification.Question.Id, notification.Question.AppUserId, cancellationToken);
+            var scope = _serviceProvider.CreateScope();
+            var notificationWriteRepository = scope.ServiceProvider.GetRequiredService<INotificationWriteRepository>();
+            var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+            var n = await notificationWriteRepository.GetQuestionLikedNotificationAsync(notification.Question.Id, notification.Question.AppUserId, cancellationToken);
             if (n == null) return;
 
-            _notificationWriteRepository.Delete(n);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            notificationWriteRepository.Delete(n);
+            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

@@ -15,6 +15,13 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.VerificationTokens)
-                .FirstOrDefaultAsync(x => x.Id == accountId && !x.IsRemoved,cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == accountId,cancellationToken);
+
+        public Task<List<int>> GetAccountIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
+            => _context.Users
+                .AsNoTracking()
+                .Where(x => userNames.Select(x => x.ToLower()).Contains(x.UserName))
+                .Select(x => x.Id)
+                .ToListAsync(cancellationToken);
     }
 }

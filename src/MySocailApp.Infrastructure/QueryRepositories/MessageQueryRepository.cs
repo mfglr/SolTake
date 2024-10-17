@@ -16,7 +16,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.Messages
                 .AsNoTracking()
                 .Where(x => x.Id == messageId)
-                .ToMessageResponseDto(accountId)
+                .ToMessageResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<MessageResponseDto>> GetMessagesByUserIdAsync(int accountId, int userId, IPage page, CancellationToken cancellationToken)
@@ -31,7 +31,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                         !x.Removers.Any(x => x.AppUserId == accountId)
                 )
                 .ToPage(page)
-                .ToMessageResponseDto(accountId)
+                .ToMessageResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<MessageResponseDto>> GetConversationsAsync(int accountId, IPage page, CancellationToken cancellationToken)
@@ -48,7 +48,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                         x.Viewers.Count == 0 &&
                         !x.Removers.Any(x => x.AppUserId == accountId)
                 )
-                .ToMessageResponseDto(accountId)
+                .ToMessageResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

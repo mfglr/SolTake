@@ -13,12 +13,5 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             => await _context.AppUsers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        
-        public async Task<List<int>> GetIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
-            => await _context.AppUsers
-                .AsNoTracking()
-                .Where(x => userNames.Contains(x.Account.UserName))
-                .Select(x => x.Id)
-                .ToListAsync(cancellationToken);
     }
 }

@@ -15,39 +15,39 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<CommentResponseDto?> GetByIdAsync(int accountId, int commentId, CancellationToken cancellationToken)
             => _context.Comments
                 .AsNoTracking()
-                .Where(x => x.Id == commentId && !x.IsRemoved)
-                .ToCommentResponseDto(accountId)
+                .Where(x => x.Id == commentId)
+                .ToCommentResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<CommentResponseDto>> GetByIdsAsync(int accountId, IEnumerable<int> ids, CancellationToken cancellationToken)
             => _context.Comments
                 .AsNoTracking()
-                .Where(x => ids.Any(id => x.Id == id) && !x.IsRemoved)
-                .ToCommentResponseDto(accountId)
+                .Where(x => ids.Any(id => x.Id == id))
+                .ToCommentResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<CommentResponseDto>> GetCommentsByQuestionIdAsync(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && !x.IsRemoved)
+                .Where(x => x.QuestionId == questionId)
                 .ToPage(page)
-                .ToCommentResponseDto(accountId)
+                .ToCommentResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<CommentResponseDto>> GetCommentsByParentIdAsync(int accountId, IPage page, int parentId, CancellationToken cancellationToken)
             => _context.Comments
                 .AsNoTracking()
-                .Where(x => x.ParentId == parentId && !x.IsRemoved)
+                .Where(x => x.ParentId == parentId)
                 .ToPage(page)
-                .ToCommentResponseDto(accountId)
+                .ToCommentResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public async Task<List<CommentResponseDto>> GetCommentsBySolutionIdAsync(int accountId, IPage page, int solutionId, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .Where(x => x.SolutionId == solutionId && !x.IsRemoved)
+                .Where(x => x.SolutionId == solutionId)
                 .ToPage(page)
-                .ToCommentResponseDto(accountId)
+                .ToCommentResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

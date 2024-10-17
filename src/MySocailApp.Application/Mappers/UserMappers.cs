@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Commands.UserAggregate.AddUserSearched;
+using MySocailApp.Application.Commands.UserAggregate.AddUserSearcher;
 using MySocailApp.Application.Commands.UserAggregate.Follow;
 using MySocailApp.Domain.AppUserAggregate.Entities;
 
@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Mappers
         public UserMappers()
         {
             CreateMap<Follow, FollowCommandResponseDto>();
-            CreateMap<UserSearch, AddUserSearchedCommandResponseDto>();
+            CreateMap<UserSearch, AddUserSearcherCommandResponseDto>();
         }
     }
 }

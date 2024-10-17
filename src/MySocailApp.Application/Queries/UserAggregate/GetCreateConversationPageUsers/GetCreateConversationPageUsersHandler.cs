@@ -13,7 +13,6 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetCreateConversationPag
             => _appUserQueryRepository
                 .GetCreateConversationPageUsersAsync(
                     _accessTokenReader.GetRequiredAccountId(),
-                    _accessTokenReader.GetRequiredAccountId(),
                     request,
                     cancellationToken
                 );

@@ -1,5 +1,6 @@
 ﻿using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.QuestionAggregate.Interfaces;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 
@@ -20,6 +21,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 throw new PermissionDeniedToChangeStateOfSolution();
 
             solution.MarkAsCorrect();
+            solution.AddDomainEvent(new SolutionMarkedAsCorrectDomainEvent(question,solution));
         }
 
         public async Task MarkAsIncorrectAsync(Solution solution, int markerId, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 throw new PermissionDeniedToChangeStateOfSolution();
 
             solution.MarkAsIncorrect();
+            solution.AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(question, solution));
         }
     }
 }

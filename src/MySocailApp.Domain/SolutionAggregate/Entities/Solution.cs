@@ -1,7 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
@@ -11,53 +8,48 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
     public class Solution : Entity, IAggregateRoot
     {
+        private Solution() { }
+
         public int QuestionId { get; private set; }
         public int AppUserId { get; private set; }
         public SolutionContent Content { get; private set; } = null!;
+        public SolutionVideo? Video { get; private set; }
+        public bool HasVideo { get; private set; }
         private readonly List<SolutionImage> _images = [];
         public IReadOnlyCollection<SolutionImage> Images => _images;
-        public SolutionVideo? Video { get; private set; }
 
-        private Solution() { }
-
-        public Solution(SolutionContent content, IEnumerable<SolutionImage> images)
+        public Solution(int questionId, int userId, SolutionContent content, IEnumerable<SolutionImage> images)
         {
             if ((content == null || content.Value.Trim() == "") && !images.Any())
                 throw new SolutionContentRequiredException();
             if (images.Count() > 3)
                 throw new TooManySolutionImageException();
-            
+
             ArgumentNullException.ThrowIfNull(content);
 
+            QuestionId = questionId;
+            AppUserId = userId;
             Content = content;
             _images.AddRange(images);
             State = SolutionState.Pending;
         }
-
-        public Solution(SolutionContent content,SolutionVideo video)
+        public Solution(int questionId, int userId, SolutionContent content,SolutionVideo video)
         {
             ArgumentNullException.ThrowIfNull(content);
             ArgumentNullException.ThrowIfNull(video);
 
+            QuestionId = questionId;
+            AppUserId = userId;
             Content = content;
             Video = video;
             _images.Add(SolutionImage.Create(video.FrameBlobName,video.FrameHeight,video.FrameWidth));
             State = SolutionState.Pending;
         }
 
-        internal void Create(int questionId, int appUserId)
+        internal void Create()
         {
-            QuestionId = questionId;
-            AppUserId = appUserId;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new SolutionCreatedDomainEvent(this));
-        }
-
-        public bool IsRemoved { get; private set; }
-        public void Remove()
-        {
-            IsRemoved = true;
-            AddDomainEvent(new SolutionDeletedDomainEvent(this));
+            HasVideo = Video != null;
         }
 
         private readonly List<SolutionUserVote> _votes = [];
@@ -122,6 +114,12 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             _votes.RemoveAt(index);
             AddDomainEvent(new SolutionDownvoteRemovedDomainEvent(this));
         }
+        public void DeleteVote(int voterId)
+        {
+            int index = _votes.FindIndex(x => x.AppUserId == voterId);
+            if (index == -1) return;
+            _votes.RemoveAt(index);
+        }
 
         public SolutionState State { get; private set; }
         internal void MarkAsCorrect()
@@ -131,7 +129,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
             State = SolutionState.Correct;
             UpdatedAt = DateTime.UtcNow;
-            AddDomainEvent(new SolutionMarkedAsCorrectDomainEvent(this));
         }
         internal void MarkAsIncorrect()
         {
@@ -139,7 +136,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                 throw new InvalidStateTransitionException();
             State = SolutionState.Incorrect;
             UpdatedAt = DateTime.UtcNow;
-            AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(this));
         }
 
         private readonly List<SolutionUserSave> _savers = [];
@@ -158,11 +154,5 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             if (index == -1) return;
             _savers.RemoveAt(index);
         }
-
-        //Readonly navigator properties
-        public Question Question { get; } = null!;
-        public AppUser AppUser { get; } = null!;
-        public IReadOnlyList<Comment> Comments { get; } = null!;
-        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
     }
 }

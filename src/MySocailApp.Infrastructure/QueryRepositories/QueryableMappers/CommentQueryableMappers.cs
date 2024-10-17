@@ -1,28 +1,32 @@
 ﻿using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class CommentQueryableMappers
     {
-        public static IQueryable<CommentResponseDto> ToCommentResponseDto(this IQueryable<Comment> query, int accountId)
+        public static IQueryable<CommentResponseDto> ToCommentResponseDto(this IQueryable<Comment> query, AppDbContext context, int accountId)
             => query
-                .Select(
-                    x => new CommentResponseDto(
-                        x.Id,
-                        x.CreatedAt,
-                        x.UpdatedAt,
-                        x.AppUser.Account.UserName!,
-                        x.AppUserId,
-                        x.IsEdited,
-                        x.Content.Value,
-                        x.Likes.Any(x => x.AppUserId == accountId),
-                        x.Likes.Count,
-                        x.Children.Count,
-                        x.AppUserId == accountId,
-                        x.QuestionId,
-                        x.SolutionId,
-                        x.ParentId
+                .Join(
+                    context.Users,
+                    comment => comment.AppUserId,
+                    account => account.Id,
+                    (comment, account) => new CommentResponseDto(
+                        comment.Id,
+                        comment.CreatedAt,
+                        comment.UpdatedAt,
+                        account.UserName!,
+                        comment.AppUserId,
+                        comment.IsEdited,
+                        comment.Content.Value,
+                        comment.Likes.Any(l => l.AppUserId == accountId),
+                        comment.Likes.Count,
+                        context.Comments.Count(c => c.ParentId == comment.Id),
+                        comment.AppUserId == accountId,
+                        comment.QuestionId,
+                        comment.SolutionId,
+                        comment.ParentId
                     )
                 );
     }

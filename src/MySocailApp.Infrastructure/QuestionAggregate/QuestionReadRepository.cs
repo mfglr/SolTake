@@ -16,13 +16,13 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
             => await _context
                 .Questions
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == questionId && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
         public async Task<Question?> GetQuestionWithImagesById(int id, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()
                 .Include(x => x.Images)
-                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

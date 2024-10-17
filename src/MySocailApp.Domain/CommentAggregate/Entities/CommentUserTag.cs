@@ -1,24 +1,15 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.Entities
 {
-    public class CommentUserTag : Entity
+    public class CommentUserTag : IHasId
     {
+        public int Id { get; private set; }
+        public DateTime CreatedAt { get; private set; }
         public int CommentId { get; private set; }
         public int AppUserId { get; private set; }
 
-        private CommentUserTag(int commentId, int appUserId)
-        {
-            CommentId = commentId;
-            AppUserId = appUserId;
-        }
-
-        public static CommentUserTag Create(int commentId, int appUserId)
-             => new (commentId, appUserId) { CreatedAt = DateTime.UtcNow };
-
-        //readonly navigator properties
-        public Comment Comment { get; } = null!;
-        public AppUser AppUser { get; } = null!;
+        private CommentUserTag(int appUserId) => AppUserId = appUserId;
+        public static CommentUserTag Create(int appUserId) => new (appUserId) { CreatedAt = DateTime.UtcNow };
     }
 }

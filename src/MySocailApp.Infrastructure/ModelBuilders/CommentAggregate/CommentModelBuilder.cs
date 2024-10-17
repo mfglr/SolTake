@@ -10,41 +10,28 @@ namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
         {
             builder.OwnsOne(x => x.Content);
 
+            builder.HasIndex(x => x.QuestionId);
+            builder.HasIndex(x => x.SolutionId);
+            builder.HasIndex(x => x.ParentId);
+            builder.HasIndex(x => x.RepliedId);
+
             builder
                 .HasMany(x => x.Likes)
-                .WithOne(x => x.Comment)
+                .WithOne()
                 .HasForeignKey(x => x.CommentId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.LikeNotifications)
-                .WithOne(x => x.Comment)
+                .WithOne()
                 .HasForeignKey(x => x.CommentId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Tags)
-                .WithOne(x => x.Comment)
+                .WithOne()
                 .HasForeignKey(x => x.CommentId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Replies)
-                .WithOne(x => x.Replied)
-                .HasForeignKey(x => x.RepliedId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.Children)
-                .WithOne(x => x.Parent)
-                .HasForeignKey(x => x.ParentId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.Notifications)
-                .WithOne(x => x.Comment)
-                .HasForeignKey(x => x.CommentId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

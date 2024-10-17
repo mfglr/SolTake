@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
@@ -10,8 +9,5 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
         private SolutionUserSave(int appUserId) => AppUserId = appUserId;
         public static SolutionUserSave Create(int appUserId) => new (appUserId) { CreatedAt = DateTime.UtcNow };
-
-        public Solution Solution { get; } = null!;
-        public AppUser AppUser { get; } = null!;
     }
 }

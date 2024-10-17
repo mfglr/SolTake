@@ -1,38 +1,54 @@
 ﻿using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class SolutionUserSaveQueryableMappers
     {
-        public static IQueryable<SolutionUserSaveResponseDto> ToSolutionUserSaveResponseDto(this IQueryable<SolutionUserSave> query, int accountId)
+        public static IQueryable<SolutionUserSaveResponseDto> ToSolutionUserSaveResponseDto(this IQueryable<SolutionUserSave> query, AppDbContext context, int accountId)
             => query
-                .Select(
-                    x => new SolutionUserSaveResponseDto(
-                        x.Id,
-                        x.CreatedAt,
-                        x.SolutionId,
-                        x.AppUserId,
+                .Join(
+                    context.Users,
+                    sus => sus.AppUserId,
+                    account => account.Id,
+                    (sus, account) => new { sus, account.UserName }
+                )
+                .Join(
+                    context.Solutions,
+                    join0 => join0.sus.SolutionId,
+                    solution => solution.Id,
+                    (join0, solution) => new { join0, solution }
+                )
+                .Join(
+                    context.Questions,
+                    join1 => join1.solution.QuestionId,
+                    question => question.Id,
+                    (join1, question) => new SolutionUserSaveResponseDto(
+                        join1.join0.sus.Id,
+                        join1.join0.sus.CreatedAt,
+                        join1.join0.sus.SolutionId,
+                        join1.join0.sus.AppUserId,
                         new(
-                            x.Solution.Id,
-                            x.Solution.CreatedAt,
-                            x.Solution.UpdatedAt,
-                            x.Solution.QuestionId,
-                            x.Solution.AppUser.Account.UserName!,
-                            x.Solution.AppUserId,
-                            x.Solution.Content.Value,
-                            x.Solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Upvote),
-                            x.Solution.Votes.Count(v => v.Type == SolutionVoteType.Upvote),
-                            x.Solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Downvote),
-                            x.Solution.Votes.Count(v => v.Type == SolutionVoteType.Downvote),
-                            x.Solution.Comments.Count,
-                            x.Solution.State,
-                            x.Solution.AppUserId == accountId,
-                            x.Solution.Savers.Any(s => s.AppUserId == accountId),
-                            x.Solution.Video != null,
-                            x.Solution.Question.AppUserId == accountId,
-                            x.Solution.Images.Select(
+                            join1.solution.Id,
+                            join1.solution.CreatedAt,
+                            join1.solution.UpdatedAt,
+                            join1.solution.QuestionId,
+                            join1.join0.UserName!,
+                            join1.solution.AppUserId,
+                            join1.solution.Content.Value,
+                            join1.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Upvote),
+                            join1.solution.Votes.Count(v => v.Type == SolutionVoteType.Upvote),
+                            join1.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Downvote),
+                            join1.solution.Votes.Count(v => v.Type == SolutionVoteType.Downvote),
+                            context.Comments.Count(c => c.SolutionId == join1.solution.Id),
+                            join1.solution.State,
+                            join1.solution.AppUserId == accountId,
+                            join1.solution.Savers.Any(s => s.AppUserId == accountId),
+                            join1.solution.HasVideo,
+                            question.AppUserId == accountId,
+                            join1.solution.Images.Select(
                                 i => new SolutionImageResponseDto(
                                     i.Id,
                                     i.SolutionId,
@@ -44,5 +60,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         )
                     )
                 );
+
+
+
     }
 }

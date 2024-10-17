@@ -10,14 +10,9 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SubjectAggregate
         {
             builder
                 .HasMany(x => x.Topics)
-                .WithOne(x => x.Subject)
-                .HasForeignKey(x => x.SubjectId);
-
-            builder
-                .HasMany(x => x.Quesitons)
-                .WithOne(x => x.Subject)
+                .WithOne()
                 .HasForeignKey(x => x.SubjectId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

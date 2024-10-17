@@ -1,44 +1,31 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.SignalR;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Application.Hubs;
-using MySocailApp.Application.Queries.NotificationAggregate;
-using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
+using MySocailApp.Domain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionAggregate.QuestionLikedDomainEventConumers
 {
-    public class CreateNotification(INotificationWriteRepository notificationRepository, IUnitOfWork unitOfWork, IHubContext<NotificationHub> notificationHub, IMapper mapper, INotificationConnectionReadRepository notificationConnectionReadRepository, IQuestionUserLikeQueryRepository questionUserLikeQueryRepository) : IDomainEventConsumer<QuestionLikedDomainEvent>
+    public class CreateNotification(IServiceProvider serviceProvider) : IDomainEventConsumer<QuestionLikedDomainEvent>
     {
-        private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
-        private readonly INotificationConnectionReadRepository _notificationConnectionReadRepository = notificationConnectionReadRepository;
-        private readonly IQuestionUserLikeQueryRepository _questionUserLikeQueryRepository = questionUserLikeQueryRepository;
-
-        private readonly IMapper _mapper = mapper;
-        private readonly INotificationWriteRepository _notificationRepository = notificationRepository;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task Handle(QuestionLikedDomainEvent notification, CancellationToken cancellationToken)
         {
+            var scope = _serviceProvider.CreateScope();
+            var notificationWriteRepository = scope.ServiceProvider.GetRequiredService<INotificationWriteRepository>();
+            var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+            var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+
             var question = notification.Question;
             var n = Notification.QuestionLikedNotification(question.AppUserId, question.Id, notification.Like.AppUserId);
-            await _notificationRepository.CreateAsync(n, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            await notificationWriteRepository.CreateAsync(n, cancellationToken);
+            await unitOfWork.CommitAsync(cancellationToken);
 
-            var connection = await _notificationConnectionReadRepository.GetByIdAsync(question.AppUserId, cancellationToken);
-            if (connection == null || !connection.IsConnected) return;
-            await _notificationHub.Clients
-                .Client(connection.ConnectionId!)
-                .SendAsync(
-                    "getQuestionLikedNotification",
-                    _mapper.Map<NotificationResponseDto>(n),
-                    await _questionUserLikeQueryRepository.GetQuestionLikeAsync(question.AppUserId, notification.Like.Id, cancellationToken),
-                    cancellationToken
-                );
+            publisher.Publish(new QuestionLikedNotificationCreatedDomainEvent(n, notification.Like.Id));
         }
     }
 }

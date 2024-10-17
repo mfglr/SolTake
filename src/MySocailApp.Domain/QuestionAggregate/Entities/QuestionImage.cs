@@ -18,8 +18,5 @@
 
         public static QuestionImage Create(string blobName, float height, float width)
             => new(blobName, height, width) { CreatedAt = DateTime.UtcNow };
-
-        //readonly navigator properties
-        public Question Question { get; } = null!;
     }
 }

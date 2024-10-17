@@ -49,10 +49,16 @@ namespace MySocailApp.Infrastructure.MessageAggregate
                 .Where(x => messageIds.Any(messageId => x.Id == messageId))
                 .ToListAsync(cancellationToken);
 
-        public async Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken)
-            => await _context.Messages
+        public Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken)
+            => _context.Messages
                 .Include(x => x.Images)
                 .Include(x => x.Removers)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public Task<List<Message>> GetUserMessages(int userId, CancellationToken cancellationToken)
+            => _context.Messages
+                .Include(x => x.Images)
+                .Where(x => x.SenderId == userId || x.ReceiverId == userId)
+                .ToListAsync(cancellationToken);
     }
 }

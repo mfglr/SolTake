@@ -1,6 +1,4 @@
-﻿using MySocailApp.Domain.AppUserAggregate.Entities;
-
-namespace MySocailApp.Domain.MessageAggregate.Entities
+﻿namespace MySocailApp.Domain.MessageAggregate.Entities
 {
     public class MessageUserRemove
     {
@@ -8,10 +6,6 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         public int AppUserId { get; private set; }
 
         private MessageUserRemove() { }
-
         public MessageUserRemove(int userId) => AppUserId = userId;
-
-        public Message Message { get; } = null!;
-        public AppUser AppUser { get; } = null!;
     }
 }

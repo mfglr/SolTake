@@ -1,27 +1,41 @@
 ﻿using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.ValueObjects;
+using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class MessageQueryableMappers
     {
-        public static IQueryable<MessageResponseDto> ToMessageResponseDto(this IQueryable<Message> query,int accountId)
+        public static IQueryable<MessageResponseDto> ToMessageResponseDto(this IQueryable<Message> query, AppDbContext context, int accountId)
             => query
-                .Select(
-                    x => new MessageResponseDto(
-                        x.Id,
-                        x.CreatedAt,
-                        x.UpdatedAt,
-                        x.SenderId == accountId,
-                        x.SenderId == accountId ? x.Receiver.Account.UserName! : x.Sender.Account.UserName!,
-                        x.SenderId == accountId ? x.ReceiverId : x.SenderId,
-                        x.SenderId,
-                        x.ReceiverId,
-                        x.IsEdited,
-                        x.Content,
-                        x.Viewers.Count != 0 ? MessageState.Viewed : x.Receivers.Count != 0 ? MessageState.Reached : MessageState.Created,
-                        x.Images.Count
+                .Join(
+                    context.Users,
+                    message => message.ReceiverId,
+                    account => account.Id,
+                    (message,account) => new { message, ReceiverUserName = account.UserName! }
+                )
+                .Join(
+                    context.Users,
+                    join => join.message.SenderId,
+                    account => account.Id,
+                    (join,account) => new MessageResponseDto(
+                        join.message.Id,
+                        join.message.CreatedAt,
+                        join.message.UpdatedAt,
+                        join.message.SenderId == accountId,
+                        join.message.SenderId == accountId ? join.ReceiverUserName : account.UserName!,
+                        join.message.SenderId == accountId ? join.message.ReceiverId : join.message.SenderId,
+                        join.message.SenderId,
+                        join.message.ReceiverId,
+                        join.message.IsEdited,
+                        join.message.Content,
+                        join.message.Viewers.Count != 0
+                            ? MessageState.Viewed 
+                            : join.message.Receivers.Count != 0 
+                                ? MessageState.Reached 
+                                : MessageState.Created,
+                        join.message.Images.Count
                     )
                 );
     }

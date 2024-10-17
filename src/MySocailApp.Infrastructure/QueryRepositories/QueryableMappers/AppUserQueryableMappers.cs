@@ -1,61 +1,31 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class AppUserQueryableMappers
     {
-        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<QuestionUserLike> queryable, int accountId)
-            => queryable
-                .Select(x => new AppUserResponseDto(
-                    x.AppUser.Id,
-                    x.AppUser.CreatedAt,
-                    x.AppUser.UpdatedAt,
-                    x.AppUser.Account.UserName!,
-                    x.AppUser.Name,
-                    x.AppUser.Biography.Value,
-                    x.AppUser.HasImage,
-                    x.AppUser.Questions.Count,
-                    x.AppUser.Followers.Count,
-                    x.AppUser.Followeds.Count,
-                    x.AppUser.Followeds.Any(f => f.FollowedId == accountId),
-                    x.AppUser.Followers.Any(f => f.FollowerId == accountId)
-                ));
-
-        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<AppUser> query, int accountId)
+        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<AppUser> query, AppDbContext context, int accountId)
             => query
-                .Select(x => new AppUserResponseDto(
-                    x.Id,
-                    x.CreatedAt,
-                    x.UpdatedAt,
-                    x.Account.UserName!,
-                    x.Name,
-                    x.Biography.Value,
-                    x.HasImage,
-                    x.Questions.Count,
-                    x.Followers.Count,
-                    x.Followeds.Count,
-                    x.Followeds.Any(x => x.FollowedId == accountId),
-                    x.Followers.Any(x => x.FollowerId == accountId)
-                ));
-
-        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<UserSearch> queryable, int accountId)
-            => queryable
-                .Select(x => new AppUserResponseDto(
-                    x.Searched.Id,
-                    x.Searched.CreatedAt,
-                    x.Searched.UpdatedAt,
-                    x.Searched.Account.UserName!,
-                    x.Searched.Name,
-                    x.Searched.Biography.Value,
-                    x.Searched.HasImage,
-                    x.Searched.Questions.Count,
-                    x.Searched.Followers.Count,
-                    x.Searched.Followeds.Count,
-                    x.Searched.Followeds.Any(x => x.FollowedId == accountId),
-                    x.Searched.Followers.Any(x => x.FollowerId == accountId)
-                ));
-
+                .Join(
+                    context.Users,
+                    user => user.Id,
+                    account => account.Id,
+                    (user,account) => new AppUserResponseDto(
+                        user.Id,
+                        user.CreatedAt,
+                        user.UpdatedAt,
+                        account.UserName!,
+                        user.Name,
+                        user.Biography.Value,
+                        user.HasImage,
+                        context.Questions.Count(x => x.AppUserId == x.Id),
+                        context.Follows.Count(x => x.FollowedId == user.Id),
+                        context.Follows.Count(x => x.FollowerId == user.Id),
+                        context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),
+                        context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id)
+                    )
+                );
     }
 }

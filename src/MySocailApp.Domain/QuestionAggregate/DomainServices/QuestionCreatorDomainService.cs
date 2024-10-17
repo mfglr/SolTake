@@ -2,40 +2,49 @@
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SubjectAggregate.Exceptions;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
+using MySocailApp.Domain.TopicAggregate.Entities;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
 
 namespace MySocailApp.Domain.QuestionAggregate.DomainServices
 {
-    public class QuestionCreatorDomainService(IExamReadRepository examRepository, ISubjectReadRepository subjectRepository, ITopicReadRepository topicRepository)
+    public class QuestionCreatorDomainService(IExamReadRepository examReadRepository, ISubjectReadRepository subjectReadRepository, ITopicReadRepository topicReadRepository)
     {
-        private readonly IExamReadRepository _examRepository = examRepository;
-        private readonly ISubjectReadRepository _subjectRepository = subjectRepository;
-        private readonly ITopicReadRepository _topicRepository = topicRepository;
+        private readonly IExamReadRepository _examReadRepository = examReadRepository;
+        private readonly ISubjectReadRepository _subjectReadRepository = subjectReadRepository;
+        private readonly ITopicReadRepository _topicReadRepository = topicReadRepository;
 
-        public async Task CreateAsync(Question question, int userId, QuestionContent content, int examId, int subjectId, IEnumerable<int> topicIds, IEnumerable<QuestionImage> images, CancellationToken cancellationToken)
+        public async Task CreateAsync(Question question, int examId, int subjectId, int? topicId, CancellationToken cancellationToken)
         {
-            var exam =
-                await _examRepository.GetByIdAsync(examId, cancellationToken) ??
-                throw new ExamNotFoundException();
-            
             var subject =
-                await _subjectRepository.GetByIdAsync(subjectId, cancellationToken) ??
+                await _subjectReadRepository.GetByIdAsync(subjectId, cancellationToken) ??
                 throw new SubjectNotFoundException();
-            
+
             if (examId != subject.ExamId)
                 throw new SubjectIsNotIncludedInExamException();
 
-            var topics = await _topicRepository.GetByTopicIds(topicIds, cancellationToken);
-            if (topics.Count != topicIds.Count())
-                throw new TopicNotFoundException();
-            
-            if(topics.Any(x => !x.Subjects.Any(x => x.SubjectId == subjectId)))
-                throw new TopicIsNotIncludedInSubjectException();
+            var exam =
+                await _examReadRepository.GetByIdAsync(examId, cancellationToken) ??
+                throw new ExamNotFoundException();
 
-            question.Create(userId, content, examId, subjectId, topicIds, images);
+            Topic? topic = null;
+            if(topicId != null)
+            {
+                if (!subject.Topics.Any(x => x.TopicId == (int)topicId))
+                    throw new TopicIsNotIncludedInSubjectException();
+
+                topic = 
+                    await _topicReadRepository.GetTopicById((int)topicId, cancellationToken) ??
+                    throw new TopicNotFoundException();
+            }
+
+            question
+                .Create(
+                    new (examId,exam.ShortName,exam.FullName),
+                    new (subjectId, subject.Name),
+                    topic != null ? new (topic.Id,topic.Name) : null
+                );
         }
     }
 }

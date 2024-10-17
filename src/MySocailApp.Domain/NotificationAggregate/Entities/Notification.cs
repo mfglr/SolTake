@@ -1,9 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.ValueObjects;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.NotificationAggregate.Entities
 {
@@ -18,9 +14,9 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
         public int? CommentId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
-        
+
         public void MarkAsViewed() => IsViewed = true;
-        
+
         private Notification(NotificationType type) => Type = type;
 
         public static Notification QuestionCommentCreatedNotification(int ownerId, int userId, int commentId, int questionId)
@@ -32,7 +28,7 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 QuestionId = questionId,
                 CreatedAt = DateTime.UtcNow,
             };
-        
+
         public static Notification SolutionCommentCreatedNotification(int ownerId, int userId, int commentId, int solutionId, int questionId)
             => new(NotificationType.SolutionCommentCreatedNotification)
             {
@@ -67,18 +63,19 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
             };
 
         public static Notification CommentLikedNotification(int ownerId, int? questionId, int? solutionId, int? parentId, int commentId, int likerId)
-            => new(NotificationType.CommentLikedNotification)
-            {
-                OwnerId = ownerId,
-                QuestionId = questionId,
-                SolutionId = solutionId,
-                ParentId = parentId,
-                CommentId = commentId,
-                AppUserId = likerId,
-                CreatedAt = DateTime.UtcNow,
-            };
+            => new (NotificationType.CommentLikedNotification)
+               {
+                   OwnerId = ownerId,
+                   QuestionId = questionId,
+                   SolutionId = solutionId,
+                   ParentId = parentId,
+                   CommentId = commentId,
+                   AppUserId = likerId,
+                   CreatedAt = DateTime.UtcNow,
+               };
+            
 
-        public static Notification SolutionCreatedNotification(int ownerId,int questionId,int solutionId, int userId)
+        public static Notification SolutionCreatedNotification(int ownerId, int questionId, int solutionId, int userId)
             => new(NotificationType.SolutionCreatedNotification)
             {
                 OwnerId = ownerId,
@@ -88,7 +85,7 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification UserTaggedToCommentNotification(int ownerId, int userId, int commentId, int? questionId,int? solutionId,int? parentId)
+        public static Notification UserTaggedToCommentNotification(int ownerId, int userId, int commentId, int? questionId, int? solutionId, int? parentId)
             => new(NotificationType.UserTaggedCommentNotification)
             {
                 OwnerId = ownerId,
@@ -149,7 +146,7 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
             };
 
         public static Notification SolutionWasDownvotedNotification(int ownerId, int userId, int questionId, int solutionId)
-            => new(NotificationType.SolutionWasDownvotedNotification)
+            => new (NotificationType.SolutionWasDownvotedNotification)
             {
                 OwnerId = ownerId,
                 AppUserId = userId,
@@ -157,11 +154,5 @@ namespace MySocailApp.Domain.NotificationAggregate.Entities
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow
             };
-
-        public AppUser Owner { get; } = null!;
-        public AppUser AppUser { get; } = null!;
-        public Comment? Comment { get; }
-        public Solution? Solution { get; }
-        public Question? Question { get; }
     }
 }

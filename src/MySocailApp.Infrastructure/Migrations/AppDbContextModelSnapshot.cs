@@ -236,13 +236,11 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsThirdPartyAuthenticated")
                         .HasColumnType("bit");
 
                     b.Property<string>("Language")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -386,9 +384,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<bool>("HasImage")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -424,8 +419,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FollowedId");
-
-                    b.HasIndex("FollowerId");
 
                     b.ToTable("Follows");
                 });
@@ -463,14 +456,9 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<int>("SearcherId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SearchedId");
-
-                    b.HasIndex("SearcherId");
 
                     b.ToTable("UserSearchs");
                 });
@@ -492,9 +480,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
@@ -511,8 +496,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("ParentId");
 
@@ -555,12 +538,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("CommentId");
 
@@ -584,12 +562,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("CommentId");
 
@@ -670,10 +643,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -828,7 +797,11 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
+                    b.HasIndex("ParentId");
+
                     b.HasIndex("QuestionId");
+
+                    b.HasIndex("RepliedId");
 
                     b.HasIndex("SolutionId");
 
@@ -838,7 +811,10 @@ namespace MySocailApp.Infrastructure.Migrations
             modelBuilder.Entity("MySocailApp.Domain.NotificationConnectionAggregate.Entities.NotificationConnection", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConnectionId")
                         .HasColumnType("nvarchar(max)");
@@ -902,25 +878,13 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ExamId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SubjectId")
+                    b.Property<int>("State")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("ExamId");
-
-                    b.HasIndex("SubjectId");
 
                     b.ToTable("Questions");
                 });
@@ -969,35 +933,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionLikeNotification");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionTopic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TopicId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("TopicId");
-
-                    b.ToTable("QuestionTopic");
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
                 {
                     b.Property<int>("Id")
@@ -1015,12 +950,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("QuestionId");
 
@@ -1049,8 +979,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionUserSaves");
@@ -1070,7 +998,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsRemoved")
+                    b.Property<bool>("HasVideo")
                         .HasColumnType("bit");
 
                     b.Property<int>("QuestionId")
@@ -1083,10 +1011,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Solutions");
                 });
@@ -1147,8 +1071,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("SolutionId");
 
                     b.ToTable("SolutionUserSaves");
@@ -1179,9 +1101,9 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("SolutionId");
+
+                    b.HasIndex("AppUserId", "Type");
 
                     b.ToTable("SolutionUserVotes");
                 });
@@ -1215,8 +1137,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ExamId");
 
                     b.ToTable("Subjects");
 
@@ -1449,9 +1369,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("SubjectId", "TopicId");
 
-                    b.HasIndex("TopicId");
-
-                    b.ToTable("SubjectTopic");
+                    b.ToTable("SubjectTopics");
 
                     b.HasData(
                         new
@@ -10750,7 +10668,10 @@ namespace MySocailApp.Infrastructure.Migrations
             modelBuilder.Entity("MySocailApp.Domain.UserConnectionAggregate.Entities.UserConnection", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConnectionId")
                         .HasColumnType("nvarchar(max)");
@@ -10849,12 +10770,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", "Account")
-                        .WithOne("AppUser")
-                        .HasForeignKey("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.OwnsOne("MySocailApp.Domain.AppUserAggregate.ValueObjects.Biography", "Biography", b1 =>
                         {
                             b1.Property<int>("AppUserId")
@@ -10892,8 +10807,6 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("AppUserId");
                         });
 
-                    b.Navigation("Account");
-
                     b.Navigation("Biography")
                         .IsRequired();
 
@@ -10902,21 +10815,11 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.Follow", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Followed")
+                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", null)
                         .WithMany("Followers")
                         .HasForeignKey("FollowedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Follower")
-                        .WithMany("Followeds")
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Followed");
-
-                    b.Navigation("Follower");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.UserFollowNotification", b =>
@@ -10930,51 +10833,15 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.UserSearch", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Searched")
+                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", null)
                         .WithMany("Searchers")
                         .HasForeignKey("SearchedId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Searcher")
-                        .WithMany("Searcheds")
-                        .HasForeignKey("SearcherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Searched");
-
-                    b.Navigation("Searcher");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.Comment", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("Comments")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
-                        .WithMany("Comments")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", "Replied")
-                        .WithMany("Replies")
-                        .HasForeignKey("RepliedId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", "Solution")
-                        .WithMany("Comments")
-                        .HasForeignKey("SolutionId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.OwnsOne("MySocailApp.Domain.CommentAggregate.ValueObjects.CommentContent", "Content", b1 =>
                         {
                             b1.Property<int>("CommentId")
@@ -10992,203 +10859,75 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("CommentId");
                         });
 
-                    b.Navigation("AppUser");
-
                     b.Navigation("Content")
                         .IsRequired();
-
-                    b.Navigation("Parent");
-
-                    b.Navigation("Question");
-
-                    b.Navigation("Replied");
-
-                    b.Navigation("Solution");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentLikeNotification", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", "Comment")
+                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", null)
                         .WithMany("LikeNotifications")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Comment");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLike", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("CommentsLiked")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", "Comment")
+                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", null)
                         .WithMany("Likes")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Comment");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserTag", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("CommentsTagged")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", "Comment")
+                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", null)
                         .WithMany("Tags")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Comment");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.Message", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Receiver")
-                        .WithMany("MessagesReceived")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Sender")
-                        .WithMany("Messages")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageImage", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", "Message")
+                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
                         .WithMany("Images")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserReceive", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", "Message")
+                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
                         .WithMany("Receivers")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserRemove", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", "Message")
+                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
                         .WithMany("Removers")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserView", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", "Message")
+                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
                         .WithMany("Viewers")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Message");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.NotificationAggregate.Entities.Notification", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("NotificationsOutgoing")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", "Comment")
-                        .WithMany("Notifications")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "Owner")
-                        .WithMany("NotificationsIncoming")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
-                        .WithMany("Notifications")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", "Solution")
-                        .WithMany("Notifications")
-                        .HasForeignKey("SolutionId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Comment");
-
-                    b.Navigation("Owner");
-
-                    b.Navigation("Question");
-
-                    b.Navigation("Solution");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.NotificationConnectionAggregate.Entities.NotificationConnection", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithOne("NotificationConnection")
-                        .HasForeignKey("MySocailApp.Domain.NotificationConnectionAggregate.Entities.NotificationConnection", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.Question", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("Questions")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.ExamAggregate.Entitities.Exam", "Exam")
-                        .WithMany("Quesitons")
-                        .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.SubjectAggregate.Entities.Subject", "Subject")
-                        .WithMany("Quesitons")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionContent", "Content", b1 =>
                         {
                             b1.Property<int>("QuestionId")
@@ -11206,109 +10945,120 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("QuestionId");
                         });
 
-                    b.Navigation("AppUser");
+                    b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionExam", "Exam", b1 =>
+                        {
+                            b1.Property<int>("QuestionId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("FullName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("Id")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("ShortName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("QuestionId");
+
+                            b1.ToTable("Questions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuestionId");
+                        });
+
+                    b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionSubject", "Subject", b1 =>
+                        {
+                            b1.Property<int>("QuestionId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Id")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("QuestionId");
+
+                            b1.ToTable("Questions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuestionId");
+                        });
+
+                    b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionTopic", "Topic", b1 =>
+                        {
+                            b1.Property<int>("QuestionId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Id")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("QuestionId");
+
+                            b1.ToTable("Questions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuestionId");
+                        });
 
                     b.Navigation("Content")
                         .IsRequired();
 
-                    b.Navigation("Exam");
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionImage", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
-                        .WithMany("Images")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.Navigation("Exam")
                         .IsRequired();
 
-                    b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionLikeNotification", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
-                        .WithMany("LikeNotifications")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.Navigation("Subject")
                         .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionTopic", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
-                        .WithMany("Topics")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.TopicAggregate.Entities.Topic", "Topic")
-                        .WithMany("Questions")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
 
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionImage", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("QuestionsLiked")
-                        .HasForeignKey("AppUserId")
+                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
+                        .WithMany("Images")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionLikeNotification", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
+                        .WithMany("LikeNotifications")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
                         .WithMany("Likes")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserSave", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("QuestionsSaved")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
+                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
                         .WithMany("Savers")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.Solution", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("Solutions")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", "Question")
-                        .WithMany("Solutions")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionContent", "Content", b1 =>
                         {
                             b1.Property<int>("SolutionId")
@@ -11359,122 +11109,59 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("SolutionId");
                         });
 
-                    b.Navigation("AppUser");
-
                     b.Navigation("Content")
                         .IsRequired();
-
-                    b.Navigation("Question");
 
                     b.Navigation("Video");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionImage", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", "Solution")
+                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", null)
                         .WithMany("Images")
                         .HasForeignKey("SolutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Solution");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserSave", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("SolutionsSaved")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", "Solution")
+                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", null)
                         .WithMany("Savers")
                         .HasForeignKey("SolutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Solution");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVote", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithMany("Votes")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", "Solution")
+                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", null)
                         .WithMany("Votes")
                         .HasForeignKey("SolutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Solution");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionVoteNotification", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", "Solution")
+                    b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", null)
                         .WithMany("VoteNotifications")
                         .HasForeignKey("SolutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Solution");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.Subject", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.ExamAggregate.Entitities.Exam", "Exam")
-                        .WithMany("Subjects")
-                        .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Exam");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.SubjectTopic", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.SubjectAggregate.Entities.Subject", "Subject")
+                    b.HasOne("MySocailApp.Domain.SubjectAggregate.Entities.Subject", null)
                         .WithMany("Topics")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.TopicAggregate.Entities.Topic", "Topic")
-                        .WithMany("Subjects")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-
-                    b.Navigation("Topic");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.UserConnectionAggregate.Entities.UserConnection", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", "AppUser")
-                        .WithOne("UserConnection")
-                        .HasForeignKey("MySocailApp.Domain.UserConnectionAggregate.Entities.UserConnection", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.Account", b =>
                 {
-                    b.Navigation("AppUser")
-                        .IsRequired();
-
                     b.Navigation("PrivacyPolicies");
 
                     b.Navigation("TermsOfUses");
@@ -11484,69 +11171,20 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("CommentsLiked");
-
-                    b.Navigation("CommentsTagged");
-
-                    b.Navigation("Followeds");
-
                     b.Navigation("Followers");
-
-                    b.Navigation("Messages");
-
-                    b.Navigation("MessagesReceived");
-
-                    b.Navigation("NotificationConnection")
-                        .IsRequired();
-
-                    b.Navigation("NotificationsIncoming");
-
-                    b.Navigation("NotificationsOutgoing");
-
-                    b.Navigation("Questions");
-
-                    b.Navigation("QuestionsLiked");
-
-                    b.Navigation("QuestionsSaved");
-
-                    b.Navigation("Searcheds");
 
                     b.Navigation("Searchers");
 
-                    b.Navigation("Solutions");
-
-                    b.Navigation("SolutionsSaved");
-
-                    b.Navigation("UserConnection")
-                        .IsRequired();
-
                     b.Navigation("UserFollowNotifications");
-
-                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.Comment", b =>
                 {
-                    b.Navigation("Children");
-
                     b.Navigation("LikeNotifications");
 
                     b.Navigation("Likes");
 
-                    b.Navigation("Notifications");
-
-                    b.Navigation("Replies");
-
                     b.Navigation("Tags");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.ExamAggregate.Entitities.Exam", b =>
-                {
-                    b.Navigation("Quesitons");
-
-                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.Message", b =>
@@ -11562,30 +11200,18 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.Question", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Images");
 
                     b.Navigation("LikeNotifications");
 
                     b.Navigation("Likes");
 
-                    b.Navigation("Notifications");
-
                     b.Navigation("Savers");
-
-                    b.Navigation("Solutions");
-
-                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.Solution", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Images");
-
-                    b.Navigation("Notifications");
 
                     b.Navigation("Savers");
 
@@ -11596,16 +11222,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.Subject", b =>
                 {
-                    b.Navigation("Quesitons");
-
                     b.Navigation("Topics");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.TopicAggregate.Entities.Topic", b =>
-                {
-                    b.Navigation("Questions");
-
-                    b.Navigation("Subjects");
                 });
 #pragma warning restore 612, 618
         }

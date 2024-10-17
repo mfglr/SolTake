@@ -14,7 +14,5 @@ namespace MySocailApp.Application.QueryRepositories
         Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page,int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken);
-        Task<List<QuestionResponseDto>> GetFollowedsQuestionsAsync(int accountId,IPage page, CancellationToken cancellationToken);
-        Task<List<QuestionResponseDto>> GetQuestionsThatHasSolutionVideoAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken);
     }
 }

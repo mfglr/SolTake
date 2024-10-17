@@ -13,7 +13,7 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
 
-        public Account(string? email, bool isThirdPartyAuthenticated)
+        public Account(string? email, bool isThirdPartyAuthenticated, string language)
         {
             if (!isThirdPartyAuthenticated)
             {
@@ -22,7 +22,8 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
                 if (!ValueObjects.Email.IsValid(email))
                     throw new InvalidEmailException();
             }
-            
+
+            Language = language;
             Email = email;
             IsThirdPartyAuthenticated = isThirdPartyAuthenticated;
             EmailConfirmed = isThirdPartyAuthenticated;
@@ -58,13 +59,6 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             AddDomainEvent(new EmailVerificationTokenUpdatedDomainEvent(this));
         }
 
-        public bool IsRemoved { get; private set; }
-        internal void Remove()
-        {
-            IsRemoved = true;
-            AddDomainEvent(new AccountDeletedDomainEvent(this));
-        }
-
         //Email verfication Tokens
         public readonly List<VerificationToken> _verificationTokens = [];
         public IReadOnlyCollection<VerificationToken> VerificationTokens => _verificationTokens;
@@ -77,7 +71,6 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
                 if (DateTime.UtcNow <= tenthTokenFromTheStart.CreatedAt.AddHours(1))
                     throw new TooManyGeneratedVerificationTokenException();
             }
-
             var token = sortedTokens.First();
             if (token.IsVerified)
                 throw new EmailAlreadyConfirmedException();
@@ -90,7 +83,7 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             verificationToken.Verify(token);
         }
 
-        public string? Language { get; private set; }
+        public string Language { get; private set; }
         public void UpdateLanguage(string cultere)
         {
             var lang = Languages.GetLanguage(cultere);
@@ -134,8 +127,5 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         public IReadOnlyList<IDomainEvent> Events => _events;
         public void AddDomainEvent(IDomainEvent domainEvent) => _events.Add(domainEvent);
         public void ClearEvents() => _events.Clear();
-        
-        //readonly navigator properties
-        public AppUser AppUser { get; } = null!;
     }
 }

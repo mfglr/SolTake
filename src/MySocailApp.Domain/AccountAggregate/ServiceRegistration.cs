@@ -9,7 +9,6 @@ namespace MySocailApp.Domain.AccountAggregate
         => services
             .AddScoped<AccountCreatorByThirdPartyDomainService>()
             .AddScoped<AccountCreatorDomainService>()
-            .AddScoped<AccountRemoverDomainService>()
             .AddScoped<EmailUpdaterDomainService>()
             .AddScoped<EmailVerifierDomainService>()
             .AddScoped<FaceBookTokenValidatorDomainService>()

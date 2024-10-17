@@ -13,39 +13,27 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
 
             builder
                 .HasMany(x => x.Images)
-                .WithOne(x => x.Solution)
+                .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Votes)
-                .WithOne(x => x.Solution)
+                .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.VoteNotifications)
-                .WithOne(x => x.Solution)
+                .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Savers)
-                .WithOne(x => x.Solution)
+                .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Comments)
-                .WithOne(x => x.Solution)
-                .HasForeignKey(x => x.SolutionId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .HasMany(x => x.Notifications)
-                .WithOne(x => x.Solution)
-                .HasForeignKey(x => x.SolutionId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

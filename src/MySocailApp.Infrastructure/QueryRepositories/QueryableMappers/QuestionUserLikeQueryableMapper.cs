@@ -1,34 +1,46 @@
 ﻿using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class QuestionUserLikeQueryableMapper
     {
-        public static IQueryable<QuestionUserLikeResponseDto> ToQuestionUserLikeResponseDto(this IQueryable<QuestionUserLike> query, int accountId)
+        public static IQueryable<QuestionUserLikeResponseDto> ToQuestionUserLikeResponseDto(this IQueryable<QuestionUserLike> query, AppDbContext context, int accountId)
             => query
-                .Select(
-                    x => new QuestionUserLikeResponseDto(
-                        x.Id,
-                        x.CreatedAt,
-                        x.QuestionId,
-                        x.AppUserId,
+                .Join(
+                    context.Users,
+                    qul => qul.AppUserId,
+                    account => account.Id,
+                    (qul, account) => new { qul, account.UserName }
+                )
+                .Join(
+                    context.AppUsers,
+                    join => join.qul.AppUserId,
+                    user => user.Id,
+                    (join, user) => new QuestionUserLikeResponseDto(
+                        join.qul.Id,
+                        join.qul.CreatedAt,
+                        join.qul.QuestionId,
+                        join.qul.AppUserId,
                         new AppUserResponseDto(
-                            x.AppUser.Id,
-                            x.AppUser.CreatedAt,
-                            x.AppUser.UpdatedAt,
-                            x.AppUser.Account.UserName!,
-                            x.AppUser.Name,
-                            x.AppUser.Biography.Value,
-                            x.AppUser.HasImage,
-                            x.AppUser.Questions.Count,
-                            x.AppUser.Followers.Count,
-                            x.AppUser.Followeds.Count,
-                            x.AppUser.Followeds.Any(x => x.FollowedId == accountId),
-                            x.AppUser.Followers.Any(x => x.FollowerId == accountId)
+                            user.Id,
+                            user.CreatedAt,
+                            user.UpdatedAt,
+                            join.UserName!,
+                            user.Name,
+                            user.Biography.Value,
+                            user.HasImage,
+                            context.Questions.Count(q => q.AppUserId == user.Id),
+                            context.Follows.Count(f => f.FollowedId == user.Id),
+                            context.Follows.Count(f => f.FollowerId == user.Id),
+                            context.Follows.Any(f => f.FollowerId == user.Id && f.FollowedId == accountId),
+                            context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == user.Id)
                         )
                     )
                 );
+
+
     }
 }

@@ -16,48 +16,48 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<SolutionResponseDto?> GetByIdAsync(int accountId, int solutionId, CancellationToken cancellationToken)
             => _context.Solutions
                 .AsNoTracking()
-                .Where(x => x.Id == solutionId && !x.IsRemoved)
-                .ToSolutionResponseDto(accountId)
+                .Where(x => x.Id == solutionId)
+                .ToSolutionResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetSolutionsByQuestionIdAsync(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => _context.Solutions
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && !x.IsRemoved)
+                .Where(x => x.QuestionId == questionId)
                 .ToPage(page)
-                .ToSolutionResponseDto(accountId)
+                .ToSolutionResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetCorrectSolutionsByQuestionId(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => _context.Solutions
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Correct && !x.IsRemoved)
+                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Correct)
                 .ToPage(page)
-                .ToSolutionResponseDto(accountId)
+                .ToSolutionResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetPendingSolutionsByQuestionId(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
            => _context.Solutions
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Pending && !x.IsRemoved)
+                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Pending)
                 .ToPage(page)
-                .ToSolutionResponseDto(accountId)
+                .ToSolutionResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => _context.Solutions
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Incorrect && !x.IsRemoved)
+                .Where(x => x.QuestionId == questionId && x.State == SolutionState.Incorrect)
                 .ToPage(page)
-                .ToSolutionResponseDto(accountId)
+                .ToSolutionResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionResponseDto>> GetVideoSolutions(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => _context.Solutions
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && x.Video != null && !x.IsRemoved)
+                .Where(x => x.QuestionId == questionId && x.Video != null)
                 .ToPage(page)
-                .ToSolutionResponseDto(accountId)
+                .ToSolutionResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

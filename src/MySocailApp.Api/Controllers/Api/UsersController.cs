@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.UserAggregate.AddUserSearched;
+using MySocailApp.Application.Commands.UserAggregate.AddUserSearcher;
 using MySocailApp.Application.Commands.UserAggregate.Follow;
 using MySocailApp.Application.Commands.UserAggregate.RemoveFollower;
 using MySocailApp.Application.Commands.UserAggregate.RemoveUserImage;
-using MySocailApp.Application.Commands.UserAggregate.RemoveUserSearched;
+using MySocailApp.Application.Commands.UserAggregate.RemoveUserSearcher;
 using MySocailApp.Application.Commands.UserAggregate.Unfollow;
 using MySocailApp.Application.Commands.UserAggregate.UpdateBiography;
 using MySocailApp.Application.Commands.UserAggregate.UpdateName;
@@ -65,12 +65,12 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<AddUserSearchedCommandResponseDto> AddSearched(AddUserSearchedDto request, CancellationToken cancellationToken)
+        public async Task<AddUserSearcherCommandResponseDto> AddSearcher(AddUserSearcherDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpDelete("{searchedId}")]
-        public async Task RemoveSearched(int searchedId, CancellationToken cancellationToken)
-            => await _mediator.Send(new RemoveUserSearchedDto(searchedId), cancellationToken);
+        public async Task RemoveSearcher(int searchedId, CancellationToken cancellationToken)
+            => await _mediator.Send(new RemoveUserSearcherDto(searchedId), cancellationToken);
 
         //Queries
         [HttpGet("{id}")]

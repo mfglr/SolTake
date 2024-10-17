@@ -19,19 +19,43 @@ namespace MySocailApp.Infrastructure.CommentAggregate
             => _context.Comments.RemoveRange(comments);
 
         public Task<Comment?> GetAsync(int commentId, CancellationToken cancellationToken)
-            => _context.Comments.FirstOrDefaultAsync(x => x.Id == commentId && !x.IsRemoved, cancellationToken);
+            => _context.Comments.FirstOrDefaultAsync(x => x.Id == commentId, cancellationToken);
 
-        public async Task<Comment?> GetWithLikeByIdAsync(int id, int userId, CancellationToken cancellationToken)
-            => await _context.Comments
+        public Task<Comment?> GetWithLikeByIdAsync(int id, int userId, CancellationToken cancellationToken)
+            => _context.Comments
                 .Include(x => x.Likes.Where(x => x.AppUserId == userId))
                 .Include(x => x.LikeNotifications.Where(x => x.AppUserId == userId))
-                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
-
-        public async Task<Comment?> GetCommentWithAllByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context.Comments
-                .Include(x => x.Notifications)
-                .Include(x => x.Replies)
-                .Include(x => x.Children)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+
+
+        public Task<Comment?> GetCommentAsync(int commentId, CancellationToken cancellationToken)
+            => _context.Comments.FirstOrDefaultAsync(x => x.Id == commentId, cancellationToken);
+        public Task<List<Comment>> GetUserCommentsAsync(int userId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Where(x => x.AppUserId == userId)
+                .ToListAsync(cancellationToken);
+        public Task<List<Comment>> GetQuestionCommentsAsync(int questionId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Where(x => x.QuestionId == questionId)
+                .ToListAsync(cancellationToken);
+        public Task<List<Comment>> GetSolutionCommentsAsync(int solutionId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Where(x => x.SolutionId == solutionId)
+                .ToListAsync(cancellationToken);
+        public Task<List<Comment>> GetChildrenAsync(int commentId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Where(x => x.ParentId == commentId)
+                .ToListAsync(cancellationToken);
+        public Task<List<Comment>> GetRepliesAsync(int commentId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Where(x => x.RepliedId == commentId)
+                .ToListAsync(cancellationToken);
+
+        public Task<List<Comment>> GetCommentsLikedByUserId(int userId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Include(x => x.Likes.Where(x => x.AppUserId == userId))
+                .Where(x => x.Likes.Any(x => x.AppUserId == userId))
+                .ToListAsync(cancellationToken);
     }
 }

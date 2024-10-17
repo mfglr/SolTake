@@ -1,14 +1,10 @@
-﻿using MySocailApp.Domain.AppUserAggregate.Entities;
-
-namespace MySocailApp.Domain.NotificationConnectionAggregate.Entities
+﻿namespace MySocailApp.Domain.NotificationConnectionAggregate.Entities
 {
-    public class NotificationConnection
+    public class NotificationConnection(int id)
     {
-        public int Id { get; private set; }
+        public int Id { get; private set; } = id;
         public bool IsConnected { get; private set; }
         public string? ConnectionId { get; private set; }
-
-        public NotificationConnection(int id) => Id = id;
 
         public void Connect(string connectionId)
         {
@@ -16,7 +12,5 @@ namespace MySocailApp.Domain.NotificationConnectionAggregate.Entities
             IsConnected = true;
         }
         public void Disconnect() => IsConnected = false;
-
-        public AppUser AppUser { get; } = null!;
     }
 }

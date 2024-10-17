@@ -16,7 +16,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.CommentUserLikes
                 .AsNoTracking()
                 .Where(x => x.Id == likeId)
-                .ToCommentUserLikeResponseDto(accountId)
+                .ToCommentUserLikeResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<CommentUserLikeResponseDto>> GetLikesAsync(int commentId, int accountId, IPage page, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.CommentId == commentId)
                 .ToPage(page)
-                .ToCommentUserLikeResponseDto(accountId)
+                .ToCommentUserLikeResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
 

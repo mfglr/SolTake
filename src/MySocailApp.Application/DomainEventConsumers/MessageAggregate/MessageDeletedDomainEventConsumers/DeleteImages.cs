@@ -5,13 +5,12 @@ using MySocailApp.Domain.MessageAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageAggregate.MessageDeletedDomainEventConsumers
 {
-    public class DeleteImages(IImageService blobService) : IDomainEventConsumer<MessageDeletedDomainEvent>
+    public class DeleteImages(IImageService imageService) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {
-        private readonly IImageService _blobService = blobService;
-
+        private readonly IImageService _imageService = imageService;
         public Task Handle(MessageDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            _blobService.DeleteRange(ContainerName.MesssageImages, notification.message.Images.Select(x => x.BlobName));
+            _imageService.DeleteRange(ContainerName.MesssageImages, notification.message.Images.Select(x => x.BlobName));
             return Task.CompletedTask;
         }
     }

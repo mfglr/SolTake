@@ -17,7 +17,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.SearcherId == userId)
                 .ToPage(page)
-                .ToUserSearchedResponseDto(accuntId)
+                .ToUserSearchedResponseDto(_context, accuntId)
                 .ToListAsync(cancellationToken);
     }
 }

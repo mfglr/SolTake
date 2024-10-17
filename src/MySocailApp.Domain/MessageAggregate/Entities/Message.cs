@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.DomainEvents;
 using MySocailApp.Domain.MessageAggregate.Exceptions;
 
@@ -55,7 +54,7 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
             _viewers.Add(MessageUserView.Create(viewerId));
             AddDomainEvent(new MessageMarkedAsViewedDomainEvent(this));
         }
-        public int State => _viewers.Any() ? 2 : _receivers.Any() ? 1 : 0;
+        public int State => _viewers.Count != 0 ? 2 : _receivers.Count != 0 ? 1 : 0;
 
         private readonly List<MessageUserRemove> _removers = [];
         public IReadOnlyList<MessageUserRemove> Removers => _removers;
@@ -69,9 +68,5 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
 
             _removers.Add(new MessageUserRemove(removerId));
         }
-
-        //readonly navigators
-        public AppUser Sender { get; } = null!;
-        public AppUser Receiver { get; } = null!;
     }
 }

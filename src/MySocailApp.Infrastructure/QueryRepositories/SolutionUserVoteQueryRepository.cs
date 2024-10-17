@@ -18,7 +18,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.SolutionId == solutionId && x.Type == SolutionVoteType.Upvote)
                 .ToPage(page)
-                .ToSolutionUserVoteDto(accountId)
+                .ToSolutionUserVoteDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<SolutionUserVoteResponseDto>> GetSolutionDownvotes(int accountId, IPage page, int solutionId, CancellationToken cancellationToken)
@@ -26,14 +26,14 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.SolutionId == solutionId && x.Type == SolutionVoteType.Downvote)
                 .ToPage(page)
-                .ToSolutionUserVoteDto(accountId)
+                .ToSolutionUserVoteDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         public async Task<SolutionUserVoteResponseDto?> GetSolutionVote(int accountId, int voteId, CancellationToken cancellationToken)
             => await _context.SolutionUserVotes
                 .AsNoTracking()
                 .Where(x => x.Id == voteId)
-                .ToSolutionUserVoteDto(accountId)
+                .ToSolutionUserVoteDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
     }
 }

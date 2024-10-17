@@ -17,7 +17,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.AppUserId == userId)
                 .ToPage(page)
-                .ToSolutionUserSaveResponseDto(accountId)
+                .ToSolutionUserSaveResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

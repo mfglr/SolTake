@@ -22,18 +22,20 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 
         public async Task<QuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
         {
-            var accountId = _accessTokenReader.GetRequiredAccountId();
+            //upload question images
+            var images = (await _blobService.UploadAsync(ContainerName.QuestionImages, request.Images, cancellationToken)).Select(x => QuestionImage.Create(x.BlobName, x.Dimention.Height, x.Dimention.Width));
 
-            var images = (await _blobService.UploadAsync(ContainerName.QuestionImages, request.Images, cancellationToken)).Select(x => QuestionImage.Create(x.BlobName, x.Dimention.Height,x.Dimention.Width));
-            
-            var question = new Question();
+            var userId = _accessTokenReader.GetRequiredAccountId();
             var content = new QuestionContent(request.Content ?? "");
-            await _questionCreator.CreateAsync(question, accountId, content, request.ExamId, request.SubjectId, request.TopicIds, images,cancellationToken);
+
+            var question = new Question(userId,content,images);
+            await _questionCreator.CreateAsync(question, request.ExamId, request.SubjectId, request.TopicId, cancellationToken);
+            
             await _repository.CreateAsync(question, cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return (await _questionQueryRepository.GetQuestionByIdAsync(question.Id,accountId,cancellationToken))!;
+            return (await _questionQueryRepository.GetQuestionByIdAsync(question.Id, userId, cancellationToken))!;
         }
     }
 }

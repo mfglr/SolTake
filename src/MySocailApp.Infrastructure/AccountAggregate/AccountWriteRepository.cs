@@ -14,20 +14,20 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.VerificationTokens)
-                .FirstOrDefaultAsync(x => x.Id == accountId && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == accountId, cancellationToken);
 
         public Task<Account?> GetAccountByEmailAsync(string email, CancellationToken cancellationToken)
             => _context.Users
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.VerificationTokens)
-                .FirstOrDefaultAsync(x => x.Email == email && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
 
         public Task<Account?> GetAccountByUserNameAsync(string userName, CancellationToken cancellationToken)
             => _context.Users
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.VerificationTokens)
-                .FirstOrDefaultAsync(x => x.UserName == userName && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.UserName == userName, cancellationToken);
     }
 }

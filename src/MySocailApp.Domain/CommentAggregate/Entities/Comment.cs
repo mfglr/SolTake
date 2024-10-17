@@ -1,48 +1,46 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentAggregate.Entities
 {
     public class Comment : Entity, IAggregateRoot
     {
+        private Comment() { }
+
         public int AppUserId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
+        public int? ParentId { get; private set; }
+        public int? RepliedId { get; private set; }
+        public bool IsEdited { get; private set; }
+        public CommentContent Content { get; private set; } = null!;
         public readonly List<CommentUserTag> _tags = [];
         public IReadOnlyCollection<CommentUserTag> Tags => _tags;
 
-        public bool IsEdited { get; private set; }
-        public CommentContent Content { get; private set; } = null!;
-
-        private void Create(int appUserId, CommentContent content, IEnumerable<int> idsOfUsersTagged)
+        public Comment(int userId,CommentContent content,IEnumerable<int> idsOfUsersTagged)
         {
-            AppUserId = appUserId;
+            AppUserId = userId;
             Content = content;
-            UpdatedAt = CreatedAt = DateTime.UtcNow;
-            _tags.AddRange(idsOfUsersTagged.Select(x => CommentUserTag.Create(Id, x)));
+            _tags.AddRange(idsOfUsersTagged.Select(CommentUserTag.Create));
         }
 
-        internal void CreateQuestionComment(int appUserId, CommentContent content, IEnumerable<int> idsOfUsersTagged, int questionId)
+        internal void CreateQuestionComment(int questionId)
         {
-            Create(appUserId,content,idsOfUsersTagged);
             QuestionId = questionId;
+            UpdatedAt = CreatedAt = DateTime.UtcNow;
         }
-        internal void CreateSolutionComment(int appUserId, CommentContent content, IEnumerable<int> idsOfUsersTagged, int solutionId)
+        internal void CreateSolutionComment(int solutionId)
         {
-            Create(appUserId, content, idsOfUsersTagged);
             SolutionId = solutionId;
+            UpdatedAt = CreatedAt = DateTime.UtcNow;
         }
-        internal void CreateReplyComment(int appUserId,CommentContent content,IEnumerable<int> idsOfUsersTagged,int parentId,int repliedId)
+        internal void CreateReplyComment(int parentId,int repliedId)
         {
-            Create(appUserId, content, idsOfUsersTagged);
             ParentId = parentId;
             RepliedId = repliedId;
+            UpdatedAt = CreatedAt = DateTime.UtcNow;
         }
 
         public void Update(CommentContent content)
@@ -52,27 +50,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public bool IsRemoved { get; private set; }
-        public void Remove()
-        {
-            IsRemoved = true;
-            AddDomainEvent(new CommentDeletedDomainEvent(Id));
-        }
-        public void SetRepliedIdsAsNull()
-        {
-            foreach (var reply in _replies)
-                reply.RepliedId = null;
-        }
-
-        public int? RepliedId { get; private set; }
-        public Comment? Replied { get; }
-        private readonly List<Comment> _replies = [];
-        public IReadOnlyCollection<Comment> Replies => _replies;
-
-        public int? ParentId { get; private set; }
-        public Comment? Parent { get; }
-        private readonly List<Comment> _children = [];
-        public IReadOnlyCollection<Comment> Children => _children;
+        public void SetRepliedIdNull() => RepliedId = null;
 
         private readonly List<CommentUserLike> _likes = [];
         public IReadOnlyCollection<CommentUserLike> Likes => _likes;
@@ -99,11 +77,11 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             _likes.RemoveAt(index);
             AddDomainEvent(new CommentDislikedDomainEvent(this));
         }
-
-        //readonly navigators
-        public AppUser AppUser { get; } = null!;
-        public Question? Question { get; }
-        public Solution? Solution { get; }
-        public IReadOnlyCollection<Notification> Notifications { get; } = null!;
+        public void DeleteLike(int userId)
+        {
+            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            if(index == -1) return;
+            _likes.RemoveAt(index);
+        }
     }
 }

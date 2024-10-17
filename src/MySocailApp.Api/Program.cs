@@ -5,6 +5,7 @@ using MySocailApp.Application;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Domain.AccountAggregate;
 using MySocailApp.Infrastructure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = int.MaxValue);
@@ -14,8 +15,6 @@ builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = int.MaxValue;
 });
-
-
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
@@ -29,6 +28,7 @@ builder.Services
     .AddInfrastructureServices()
     .AddAccountDomainServices();
 
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 var app = builder.Build();
 app.InitializeDb();

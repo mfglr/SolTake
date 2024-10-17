@@ -14,9 +14,5 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         }
 
         public static Follow Create(int followerId, int followedId) => new (followerId, followedId){CreatedAt = DateTime.UtcNow};
-
-        //readonly navigators;
-        public AppUser Follower { get; } = null!;
-        public AppUser Followed { get; } = null!;
     }
 }

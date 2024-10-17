@@ -11,21 +11,21 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
         private readonly AppDbContext _context = context;
 
         public async Task<bool> Exist(int id, CancellationToken cancellationToken)
-            => await _context.Solutions.AnyAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+            => await _context.Solutions.AnyAsync(x => x.Id == id, cancellationToken);
 
         public async Task<Solution?> GetAsync(int id, CancellationToken cancellationToken)
             => await _context.Solutions
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<Solution?> GetSolutionWithImagesByIdAsync(int id,CancellationToken cancellationToken)
             => await _context.Solutions
                 .AsNoTracking()
                 .Include(x => x.Images)
-                .FirstOrDefaultAsync(x => x.Id == id && !x.IsRemoved, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken)
             => await _context.Solutions
-                .CountAsync(x => x.QuestionId == questionId && x.State == SolutionState.Correct && !x.IsRemoved, cancellationToken);
+                .CountAsync(x => x.QuestionId == questionId && x.State == SolutionState.Correct, cancellationToken);
     }
 }

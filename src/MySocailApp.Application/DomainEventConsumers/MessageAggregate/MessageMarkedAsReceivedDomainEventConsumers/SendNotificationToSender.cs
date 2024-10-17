@@ -7,15 +7,15 @@ using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageAggregate.MessageMarkedAsReceivedDomainEventConsumers
 {
-    public class SendNotificationToSender(IHubContext<MessageHub> messageHub, IUserConnectionReadRepository repository, IMessageQueryRepository messageQueryRepository) : IDomainEventConsumer<MessageMarkedAsReceivedDomainEvent>
+    public class SendNotificationToSender(IHubContext<MessageHub> messageHub, IUserConnectionReadRepository userConnectionReadRepository, IMessageQueryRepository messageQueryRepository) : IDomainEventConsumer<MessageMarkedAsReceivedDomainEvent>
     {
         private readonly IHubContext<MessageHub> _messageHub = messageHub;
-        private readonly IUserConnectionReadRepository _repository = repository;
+        private readonly IUserConnectionReadRepository _userConnectionReadRepository = userConnectionReadRepository;
         private readonly IMessageQueryRepository _messageQueryRepository = messageQueryRepository;
 
         public async Task Handle(MessageMarkedAsReceivedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var sender = await _repository.GetById(notification.Message.SenderId, cancellationToken);
+            var sender = await _userConnectionReadRepository.GetById(notification.Message.SenderId, cancellationToken);
             if (sender != null && sender.IsConnected)
             {
                 var message = await _messageQueryRepository.GetMessageByIdAsync(notification.Message.SenderId, notification.Message.Id, cancellationToken);

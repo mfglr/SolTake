@@ -1,34 +1,47 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class UserSearchQueryableMapper
     {
-        public static IQueryable<UserSearchResponseDto> ToUserSearchedResponseDto(this IQueryable<UserSearch> query, int accountId)
+        public static IQueryable<UserSearchResponseDto> ToUserSearchedResponseDto(this IQueryable<UserSearch> query, AppDbContext context, int accountId)
             => query
-                .Select(
-                    x => new UserSearchResponseDto(
-                        x.Id,
-                        x.SearcherId,
-                        x.SearchedId,
-                        x.CreatedAt,
+                .Join(
+                    context.Users,
+                    us => us.SearchedId,
+                    account => account.Id,
+                    (us, account) => new { us, account.UserName }
+                )
+                .Join(
+                    context.AppUsers,
+                    join => join.us.SearchedId,
+                    user => user.Id,
+                    (join, user) => new UserSearchResponseDto(
+                        join.us.Id,
+                        join.us.SearcherId,
+                        join.us.SearchedId,
+                        join.us.CreatedAt,
                         null,
                         new AppUserResponseDto(
-                            x.Searched.Id,
-                            x.Searched.CreatedAt,
-                            x.Searched.UpdatedAt,
-                            x.Searched.Account.UserName!,
-                            x.Searched.Name,
-                            x.Searched.Biography.Value,
-                            x.Searched.HasImage,
-                            x.Searched.Questions.Count,
-                            x.Searched.Followers.Count,
-                            x.Searched.Followeds.Count,
-                            x.Searched.Followeds.Any(x => x.FollowedId == accountId),
-                            x.Searched.Followers.Any(x => x.FollowerId == accountId)
+                            user.Id,
+                            user.CreatedAt,
+                            user.UpdatedAt,
+                            join.UserName!,
+                            user.Name,
+                            user.Biography.Value,
+                            user.HasImage,
+                            context.Questions.Count(q => q.AppUserId == user.Id),
+                            context.Follows.Count(f => f.FollowedId == user.Id),
+                            context.Follows.Count(f => f.FollowerId == user.Id),
+                            context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),
+                            context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id)
                         )
                     )
                 );
+
+
+
     }
 }

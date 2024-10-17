@@ -8,7 +8,5 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         public string BlobName { get; private set; } = blobName;
         public float Height { get; private set; } = height;
         public float Width { get; private set; } = width;
-
-        public Message Message { get; } = null!;
     }
 }

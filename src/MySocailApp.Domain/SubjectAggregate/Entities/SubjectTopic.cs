@@ -1,13 +1,10 @@
-﻿using MySocailApp.Domain.TopicAggregate.Entities;
-
-namespace MySocailApp.Domain.SubjectAggregate.Entities
+﻿namespace MySocailApp.Domain.SubjectAggregate.Entities
 {
-    public class SubjectTopic(int subjectId, int topicId)
+    public class SubjectTopic
     {
-        public int SubjectId { get; private set; } = subjectId;
-        public int TopicId { get; private set; } = topicId;
+        public int SubjectId { get; private set; }
+        public int TopicId { get; private set; }
 
-        public Subject Subject { get; } = null!;
-        public Topic Topic { get; } = null!;
+        internal SubjectTopic(int topicId) => TopicId = topicId;
     }
 }

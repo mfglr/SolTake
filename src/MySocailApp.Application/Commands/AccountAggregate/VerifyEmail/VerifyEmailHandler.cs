@@ -14,7 +14,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.VerifyEmail
         public async Task Handle(VerifyEmailDto request, CancellationToken cancellationToken)
         {
             var account =
-                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == int.Parse(request.Id) && !x.IsRemoved, cancellationToken) ??
+                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == int.Parse(request.Id), cancellationToken) ??
                 throw new AccountNotFoundException();
             await _userManager.ConfirmEmailByEncodedTokenAsync(account, request.Token);
         }

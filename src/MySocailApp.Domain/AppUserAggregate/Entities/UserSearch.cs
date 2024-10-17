@@ -2,15 +2,14 @@
 
 namespace MySocailApp.Domain.AppUserAggregate.Entities
 {
-    public class UserSearch : Entity
+    public class UserSearch : IHasId
     {
+        public int Id { get; private set; }
+        public DateTime CreatedAt { get; private set; }
         public int SearcherId { get; private set; }
         public int SearchedId { get; private set; }
 
-        private UserSearch(int searchedId) => SearchedId = searchedId;
-        public static UserSearch Create(int searchedId) => new (searchedId){ CreatedAt = DateTime.UtcNow };
-
-        public AppUser Searcher { get; } = null!;
-        public AppUser Searched { get; } = null!;
+        private UserSearch(int searcherId) => SearcherId = searcherId;
+        public static UserSearch Create(int searcherId) => new (searcherId) { CreatedAt = DateTime.UtcNow };
     }
 }

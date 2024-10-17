@@ -24,10 +24,12 @@ namespace MySocailApp.Application.Extentions
 
         public static string GetLanguage(this HttpContext? context)
         {
-            if (context == null) return Languages.EN;
+            if (context == null) return Languages.DefaultLanguage;
             var culture = context!.Request.Headers.AcceptLanguage.FirstOrDefault();
             return Languages.GetLanguage(culture);
         }
+
+        
 
         public static async Task WriteAppExceptionAsync(this HttpContext? context, string culture, AppException ex)
         {

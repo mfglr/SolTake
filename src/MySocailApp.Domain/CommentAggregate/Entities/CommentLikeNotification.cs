@@ -6,8 +6,5 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
     {
         public int CommentId { get; private set; }
         public int AppUserId { get; private set; } = appUserId;
-
-        public Comment Comment { get; } = null!;
-        public AppUser AppUser { get; } = null!;
     }
 }

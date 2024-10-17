@@ -13,11 +13,7 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             => await _context.AppUsers.AddAsync(user, cancellationToken);
 
         public void Delete(AppUser user)
-        {
-            _context.Follows.RemoveRange(user.Followeds);
-            _context.UserSearchs.RemoveRange(user.Searchers);
-            _context.AppUsers.Remove(user);
-        }
+            => _context.AppUsers.Remove(user);
 
         public Task<AppUser> GetByIdAsync(int id, CancellationToken cancellationToken)
             => _context.AppUsers.FirstAsync(x => x.Id == id, cancellationToken);
@@ -28,64 +24,9 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
                 .Include(x => x.UserFollowNotifications.Where(x => x.FollowerId == followerId))
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public Task<AppUser?> GetWithSearchedByIdAsync(int id, int searchedId, CancellationToken cancellationToken)
+        public Task<AppUser?> GetWithSearcherByIdAsync(int id, int searcherId, CancellationToken cancellationToken)
             => _context.AppUsers
-                .Include(x => x.Searcheds.Where(x => x.SearchedId == searchedId))
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-
-        public Task<AppUser?> GetWithAllAsync(int id, CancellationToken cancellationToken)
-            => _context
-                .AppUsers
-
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Images)
-                
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-                
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Children)
-
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Solutions)
-                .ThenInclude(x => x.Images)
-
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Replied)
-
-                .Include(x => x.Questions)
-                .ThenInclude(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Children)
-                
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Images)
-
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-
-                .Include(x => x.Solutions)
-                .ThenInclude(x => x.Comments)
-                .ThenInclude(x => x.Children)
-
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Replies)
-
-                .Include(x => x.Comments)
-                .ThenInclude(x => x.Children)
-                
-                .Include(x => x.NotificationsIncoming)
-                .Include(x => x.NotificationsOutgoing)
-                .Include(x => x.Account)
-                .Include(x => x.MessagesReceived)
-                .Include(x => x.Searchers)
-                .Include(x => x.Followeds)
-
+                .Include(x => x.Searchers.Where(x => x.SearcherId == searcherId))
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

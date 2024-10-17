@@ -9,6 +9,6 @@ namespace MySocailApp.Application.QueryRepositories
         Task<AppUserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken);
         Task<List<AppUserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken);
         Task<List<AppUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken);
-        Task<List<AppUserResponseDto>> GetCreateConversationPageUsersAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken);
+        Task<List<AppUserResponseDto>> GetCreateConversationPageUsersAsync(int accountId, IPage page, CancellationToken cancellationToken);
     }
 }

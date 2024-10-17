@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
     {
         public void Configure(EntityTypeBuilder<SolutionVoteNotification> builder)
         {
-            builder.HasKey(x => new { x.SolutionId,x.AppUserId } );
+            builder.HasKey(x => new { x.SolutionId, x.AppUserId } );
         }
     }
 }

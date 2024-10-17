@@ -20,7 +20,5 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
                 Width = width,
                 CreatedAt = DateTime.UtcNow
             };
-
-        public Solution Solution { get; } = null!;
     }
 }
