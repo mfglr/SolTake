@@ -14,9 +14,11 @@ Notification _$NotificationFromJson(Map<String, dynamic> json) => Notification(
       type: (json['type'] as num).toInt(),
       parentId: (json['parentId'] as num?)?.toInt(),
       commentId: (json['commentId'] as num?)?.toInt(),
+      commentContent: json['commentContent'] as String?,
       repliedId: (json['repliedId'] as num?)?.toInt(),
       questionId: (json['questionId'] as num?)?.toInt(),
       appUserId: (json['appUserId'] as num).toInt(),
+      userName: json['userName'] as String,
       solutionId: (json['solutionId'] as num?)?.toInt(),
     );
 
@@ -26,11 +28,13 @@ Map<String, dynamic> _$NotificationToJson(Notification instance) =>
       'createdAt': instance.createdAt.toIso8601String(),
       'ownerId': instance.ownerId,
       'appUserId': instance.appUserId,
+      'userName': instance.userName,
       'isViewed': instance.isViewed,
       'type': instance.type,
       'parentId': instance.parentId,
       'repliedId': instance.repliedId,
       'commentId': instance.commentId,
+      'commentContent': instance.commentContent,
       'solutionId': instance.solutionId,
       'questionId': instance.questionId,
     };

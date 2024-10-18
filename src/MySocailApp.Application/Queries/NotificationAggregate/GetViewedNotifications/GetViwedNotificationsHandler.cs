@@ -1,21 +1,15 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.NotificationAggregate.GetViewedNotifications
 {
-    public class GetViwedNotificationsHandler(INotificationReadRepository repository, IMapper mapper, IAccessTokenReader tokenReader) : IRequestHandler<GetViewedNotificationsDto, List<NotificationResponseDto>>
+    public class GetViwedNotificationsHandler(INotificationQueryRepository repository, IAccessTokenReader tokenReader) : IRequestHandler<GetViewedNotificationsDto, List<NotificationResponseDto>>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly INotificationReadRepository _repository = repository;
-        private readonly IMapper _mapper = mapper;
+        private readonly INotificationQueryRepository _repository = repository;
 
-        public async Task<List<NotificationResponseDto>> Handle(GetViewedNotificationsDto request, CancellationToken cancellationToken)
-        {
-            var ownerId = _tokenReader.GetRequiredAccountId();
-            var notifications = await _repository.GetViewedNotificationsByOwnerId(ownerId, request, cancellationToken);
-            return _mapper.Map<List<NotificationResponseDto>>(notifications);
-        }
+        public Task<List<NotificationResponseDto>> Handle(GetViewedNotificationsDto request, CancellationToken cancellationToken)
+            => _repository.GetNotificationsViewedByOwnerId(_tokenReader.GetRequiredAccountId(), request, cancellationToken);
     }
 }

@@ -6,6 +6,6 @@ void handleErrors(Object error){
     ToastCreator.displayError(error.message);
   }
   else{
-    // ToastCreator.displayError(error.toString());
+    ToastCreator.displayError(error.toString());
   }
 }

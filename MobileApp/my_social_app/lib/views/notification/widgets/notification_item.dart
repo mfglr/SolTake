@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
@@ -61,15 +57,8 @@ class NotificationItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StoreConnector<AppState,UserState?>(
-                    onInit: (store) => store.dispatch(LoadUserAction(userId: notification.appUserId)),
-                    converter: (store) => store.state.userEntityState.entities[notification.appUserId],
-                    builder:(context,user){
-                      if(user == null) return const SpaceSavingWidget();
-                      return Text(
-                        "${user.userName}. $content ${timeago.format(notification.createdAt,locale: 'en_short')}",
-                      );
-                    }
+                  Text(
+                    "${notification.userName}. $content ${timeago.format(notification.createdAt,locale: 'en_short')}",
                   ),
                   Builder(
                     builder: (context) {
