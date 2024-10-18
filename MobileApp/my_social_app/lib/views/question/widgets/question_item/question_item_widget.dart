@@ -41,7 +41,7 @@ class QuestionItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () => 
+                  onPressed: () =>
                     Navigator
                       .of(context)
                       .push(
@@ -140,13 +140,11 @@ class QuestionItemWidget extends StatelessWidget {
                   converter: (store) => store.state.subjectEntityState.entities[question.subjectId]!,
                   builder: (context,subject) => SubjectTagItem(subject: subject,)
                 ),
-                ...List.generate(
-                  question.topics.length,
-                  (index) => StoreConnector<AppState,TopicState>(
-                    converter: (store) => store.state.topicEntityState.entities[question.topics.elementAt(index)]!,
+                if(question.topicId != null)
+                  StoreConnector<AppState,TopicState>(
+                    converter: (store) => store.state.topicEntityState.entities[question.topicId]!,
                     builder: (context,topic) => TopicTagItem(topic: topic),
-                  )
-                ),
+                  ),
               ]
             ),
           ),

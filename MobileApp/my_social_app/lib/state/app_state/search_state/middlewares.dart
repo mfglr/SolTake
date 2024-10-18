@@ -61,7 +61,8 @@ void firstSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatch
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
+        store.dispatch(AddTopicsAction(topics: topics));
       })
       .catchError((e){
         store.dispatch(const FirstSearchingQuestionsFailedAction());
@@ -81,7 +82,8 @@ void nextSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatche
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
+        store.dispatch(AddTopicsAction(topics: topics));
       })
       .catchError((e){
         store.dispatch(const NextSearchingQuestionsFailedAction());

@@ -18,7 +18,7 @@ class QuestionState{
   final String content;
   final int examId;
   final int subjectId;
-  final Iterable<int> topics;
+  final int? topicId;
   final Iterable<QuestionImageState> images;
   final bool isLiked;
   final bool isSaved;
@@ -46,7 +46,7 @@ class QuestionState{
     required this.content,
     required this.examId,
     required this.subjectId,
-    required this.topics,
+    required this.topicId,
     required this.images,
     required this.isLiked,
     required this.isSaved,
@@ -71,7 +71,7 @@ class QuestionState{
     String? newContent,
     int? newExamId,
     int? newSubjectId,
-    Iterable<int>? newTopics,
+    int? newTopicId,
     Iterable<QuestionImageState>? newImages,
     bool? newIsLiked,
     bool? newIsSaved,
@@ -98,7 +98,7 @@ class QuestionState{
       content: newContent ?? content,
       examId: newExamId ?? examId,
       subjectId: newSubjectId ?? subjectId,
-      topics: newTopics ?? topics,
+      topicId: newTopicId ?? topicId,
       images: newImages ?? images,
       isLiked: newIsLiked ?? isLiked,
       isSaved: newIsSaved ?? isSaved,

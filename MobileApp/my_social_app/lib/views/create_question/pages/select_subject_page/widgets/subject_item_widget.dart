@@ -26,7 +26,7 @@ class SubjectItemWidget extends StatelessWidget {
                     .of(context)
                     .pop((
                       subjectId: subject.id,
-                      topicIds: value.topicIds,
+                      topicId: value.topicId,
                       content: value.content,
                       images: value.images
                     ));

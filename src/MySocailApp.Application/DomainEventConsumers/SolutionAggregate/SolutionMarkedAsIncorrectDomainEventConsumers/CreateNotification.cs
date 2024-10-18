@@ -1,15 +1,18 @@
-﻿using MySocailApp.Application.ApplicationServices;
+﻿using MediatR;
+using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Core;
+using MySocailApp.Domain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionAggregate.SolutionMarkedAsIncorrectDomainEventConsumers
 {
-    public class CreateNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<SolutionMarkedAsIncorrectDomainEvent>
+    public class CreateNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<SolutionMarkedAsIncorrectDomainEvent>
     {
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IPublisher _publisher = publisher;
 
         public async Task Handle(SolutionMarkedAsIncorrectDomainEvent notification, CancellationToken cancellationToken)
         {
@@ -19,6 +22,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionAggregate.Solutio
             var n = Notification.SolutionMarkedAsIncorrectNotification(solution.AppUserId, question.AppUserId, question.Id, solution.Id);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
+            await _publisher.Publish(new SolutionMarkedAsIncorrectNotificationCreatedDomainEvent(n));
         }
     }
 }

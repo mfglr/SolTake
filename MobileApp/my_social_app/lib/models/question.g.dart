@@ -15,9 +15,9 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       appUserId: (json['appUserId'] as num).toInt(),
       userName: json['userName'] as String,
       content: json['content'] as String,
-      topics: (json['topics'] as List<dynamic>)
-          .map((e) => Topic.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      topic: json['topic'] == null
+          ? null
+          : Topic.fromJson(json['topic'] as Map<String, dynamic>),
       exam: Exam.fromJson(json['exam'] as Map<String, dynamic>),
       subject: Subject.fromJson(json['subject'] as Map<String, dynamic>),
       images: (json['images'] as List<dynamic>)
@@ -46,7 +46,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'content': instance.content,
       'exam': instance.exam,
       'subject': instance.subject,
-      'topics': instance.topics,
+      'topic': instance.topic,
       'images': instance.images,
       'isLiked': instance.isLiked,
       'isSaved': instance.isSaved,

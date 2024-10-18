@@ -24,7 +24,7 @@ class ExamItemWidget extends StatelessWidget {
                     .pop((
                       examId: exam.id,
                       subjectId: value.subjectId,
-                      topicIds: value.topicIds,
+                      topicId: value.topicId,
                       content: value.content,
                       images: value.images
                     ));

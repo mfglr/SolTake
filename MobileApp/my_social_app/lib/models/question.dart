@@ -22,7 +22,7 @@ class Question{
   final String content;
   final Exam exam;
   final Subject subject;
-  final List<Topic> topics;
+  final Topic? topic;
   final List<QuestionImage> images;
   final bool isLiked;
   final bool isSaved;
@@ -31,7 +31,6 @@ class Question{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final int numberOfComments;
-  
 
   const Question({
     required this.id,
@@ -40,7 +39,7 @@ class Question{
     required this.appUserId,
     required this.userName,
     required this.content,
-    required this.topics,
+    required this.topic,
     required this.exam,
     required this.subject,
     required this.images,
@@ -68,7 +67,7 @@ class Question{
     content: content,
     examId: exam.id,
     subjectId: subject.id,
-    topics: topics.map((e) => e.id),
+    topicId: topic?.id,
     images: images.map((e) => e.toQuestionImageState()),
     isLiked: isLiked,
     isSaved: isSaved,

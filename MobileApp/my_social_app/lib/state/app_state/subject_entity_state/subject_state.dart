@@ -4,14 +4,12 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 @immutable
 class SubjectState{
   final int id;
-  final int examId;
   final String name;
   final Pagination topics;
   final Pagination questions;
   
   const SubjectState({
     required this.id,
-    required this.examId,
     required this.name,
     required this.topics,
     required this.questions
@@ -20,7 +18,6 @@ class SubjectState{
   SubjectState startLoadingNextQuestions()
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics,
         questions: questions.startLoadingNext()
@@ -28,7 +25,6 @@ class SubjectState{
   SubjectState addNextPageQuestions(Iterable<int> ids)
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics,
         questions: questions.addNextPage(ids)
@@ -36,7 +32,6 @@ class SubjectState{
   SubjectState stopLoadingNextQuestions()
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics,
         questions: questions.stopLoadingNext()
@@ -45,7 +40,6 @@ class SubjectState{
   SubjectState startLoadingPrevQuestions()
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics,
         questions: questions.startLoadingPrev()
@@ -53,7 +47,6 @@ class SubjectState{
   SubjectState addPrevQuestions(Iterable<int> questionIds)
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics,
         questions: questions.addPrevPage(questionIds)
@@ -61,7 +54,6 @@ class SubjectState{
   SubjectState stopLoadingPrevQuestions()
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics,
         questions: questions.stopLoadingPrev()
@@ -70,7 +62,6 @@ class SubjectState{
   SubjectState startloadingNextTopics()
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics.startLoadingNext(),
         questions: questions
@@ -78,7 +69,6 @@ class SubjectState{
   SubjectState addNextTopics(Iterable<int> ids)
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics.appendLastPage(ids),
         questions: questions
@@ -86,7 +76,6 @@ class SubjectState{
   SubjectState stopLoadingNextTopics()
     => SubjectState(
         id: id,
-        examId: examId,
         name: name,
         topics: topics.stopLoadingNext(),
         questions: questions

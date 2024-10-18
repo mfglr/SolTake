@@ -10,10 +10,11 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         internal AppUser(int id) : base(id) { }
         internal void Create()
         {
+            Name = "";
+            Biography = new Biography("");
             HasImage = false;
             CreatedAt = DateTime.UtcNow;
         }
-
         public bool HasImage { get; private set; }
         public ProfileImage? Image { get; private set; }
         public void UpdateImage(ProfileImage image)
@@ -30,15 +31,13 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             HasImage = false;
             Image = null;
         }
-
-        public string? Name { get; private set; }
+        public string Name { get; private set; }
         public void UpdateName(string name)
         {
             Name = name ?? throw new NameRequiredException();
             UpdatedAt = DateTime.UtcNow;
         }
-
-        public Biography? Biography { get; private set; }
+        public Biography Biography { get; private set; }
         public void UpdateBiography(Biography biography)
         {
             ArgumentNullException.ThrowIfNull(biography);

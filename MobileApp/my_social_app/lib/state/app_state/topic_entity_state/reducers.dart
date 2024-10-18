@@ -1,4 +1,3 @@
-import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
 import 'package:redux/redux.dart';
@@ -17,10 +16,10 @@ TopicEntityState prevQuestionsSuccessReducer(TopicEntityState prev,PrevTopicQues
 TopicEntityState prevQuestionsFailedReducer(TopicEntityState prev,PrevTopicQuestionsFailedAction action)
   => prev.stopLoadingPrevQuestions(action.topicId);
 
-TopicEntityState addTopicsReducer(TopicEntityState prev,Action action)
-  => action is AddTopicsAction ? prev.addTopics(action.topics) : prev;
-TopicEntityState addTopicsListsReducer(TopicEntityState prev,Action action)
-  => action is AddTopicsListAction ? prev.addLists(action.lists) : prev;
+TopicEntityState addTopicsReducer(TopicEntityState prev,AddTopicsAction action)
+  => prev.addTopics(action.topics);
+TopicEntityState addTopicsListsReducer(TopicEntityState prev,AddTopicsListAction action)
+  => prev.addLists(action.lists);
 
 Reducer<TopicEntityState> topicEntityStateReducers = combineReducers<TopicEntityState>([
   TypedReducer<TopicEntityState,NextTopicQuestionsAction>(nextQuestionsReducer).call,

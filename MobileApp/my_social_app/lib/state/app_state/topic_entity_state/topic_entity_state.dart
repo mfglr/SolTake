@@ -20,6 +20,8 @@ class TopicEntityState extends EntityState<TopicState>{
   TopicEntityState stopLoadingPrevQuestions(int topicId)
     => TopicEntityState(entities: updateOne(entities[topicId]?.stopLoadingPrevQuestions()));
 
+  TopicEntityState addTopic(TopicState topic)
+    => TopicEntityState(entities: appendOne(topic));
   TopicEntityState addTopics(Iterable<TopicState> topics)
     => TopicEntityState(entities: appendMany(topics));
   TopicEntityState addLists(Iterable<Iterable<TopicState>> lists)

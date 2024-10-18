@@ -9,14 +9,14 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 class CreateQuestionAction extends AppAction{
   final int examId;
   final int subjectId;
-  final Iterable<int> topicIds;
+  final int? topicId;
   final String content;
   final Iterable<XFile> images;
 
   const CreateQuestionAction({
     required this.examId,
     required this.subjectId,
-    required this.topicIds,
+    required this.topicId,
     required this.content,
     required this.images
   });

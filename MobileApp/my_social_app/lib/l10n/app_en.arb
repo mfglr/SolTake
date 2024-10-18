@@ -98,8 +98,8 @@
     
     "select_subject_page_title": "Select a subject",
     
-    "select_topics_page_title": "Select topics",
-    "select_topics_page_label": "Select topics",
+    "select_topics_page_title": "Select topic",
+    "select_topics_page_label": "Select topic",
     "select_topics_page_about_question": "Type somethings about the question...",
     "select_topics_page_topic_error_message": "You can't select up to 3 topics per question",
     "select_topics_page_add_images_button": "Add Images",

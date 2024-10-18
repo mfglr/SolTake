@@ -14,7 +14,7 @@ void startCreatingQuestion(BuildContext context){
         store.dispatch(CreateQuestionAction(
           examId: value.examId,
           subjectId: value.subjectId,
-          topicIds: value.topicIds,
+          topicId: value.topicId,
           content: value.content,
           images: value.images
         ));

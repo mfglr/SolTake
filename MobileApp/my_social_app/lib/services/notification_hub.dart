@@ -187,6 +187,7 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddFollowAction(follow: followState));
       store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
+      store.dispatch(AddUserAction(user: follow.follower!.toUserState()));
     }
   );
   //SolutionMarkAsIncorrectNotification

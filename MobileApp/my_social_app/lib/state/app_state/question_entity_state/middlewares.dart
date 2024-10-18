@@ -23,7 +23,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageCode(store)]!);
     QuestionService()
-      .createQuestion(action.images,action.examId,action.subjectId,action.topicIds,action.content)
+      .createQuestion(action.images,action.examId,action.subjectId,action.topicId,action.content)
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
         store.dispatch(AddNewUserQuestionAction(userId: store.state.accountState!.id,questionId: question.id));
@@ -42,7 +42,9 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
           store.dispatch(AddUserImageAction(image: UserImageState.init(question.appUserId)));
           store.dispatch(AddExamAction(exam: question.exam.toExamState()));
           store.dispatch(AddSubjectAction(subject: question.subject.toSubjectState()));
-          store.dispatch(AddTopicsAction(topics: question.topics.map((e) => e.toTopicState())));
+          if(question.topic != null){
+            store.dispatch(AddTopicAction(topic: question.topic!.toTopicState()));
+          }
         });
     }
   }

@@ -96,8 +96,8 @@
 
     "select_exam_page_title": "Bir sınav seç",
     "select_subject_page_title": "Bir ders seç",
-    "select_topics_page_title": "Konuları seç",
-    "select_topics_page_label": "Konulari seç",
+    "select_topics_page_title": "Konu seç",
+    "select_topics_page_label": "Konu seç",
     "select_topics_page_about_question": "Soru hakkında bir şeyler yaz...",
     "select_topics_page_topic_error_message": "Bir soru için en fazla 3 konu ekleyebilirsin!",
     "select_topics_page_add_images_button": "Resim ekle",

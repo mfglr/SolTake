@@ -28,7 +28,8 @@ void nextSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher 
         store.dispatch(NextSubjectQuestionsSuccessAction(subjectId: action.subjectId,questions: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
-        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
+        store.dispatch(AddTopicsAction(topics: topics));
       })
       .catchError((e){
         store.dispatch(NextSubjectQuestionsFailedAction(subjectId: action.subjectId));
@@ -46,7 +47,8 @@ void prevSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher 
         store.dispatch(PrevSubjectQuestionsSuccessAction(subjectId: action.subjectId, questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
-        store.dispatch(AddTopicsListAction(lists: questions.map((e) => e.topics.map((e) => e.toTopicState()))));
+        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
+        store.dispatch(AddTopicsAction(topics: topics));
       })
       .catchError((e){
         store.dispatch(PrevSubjectQuestionsFailedAction(subjectId: action.subjectId));

@@ -4,6 +4,11 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 
 
 @immutable
+class AddTopicAction extends AppAction{
+  final TopicState topic;
+  const AddTopicAction({required this.topic});
+}
+@immutable
 class AddTopicsAction extends AppAction{
   final Iterable<TopicState> topics;
   const AddTopicsAction({required this.topics});

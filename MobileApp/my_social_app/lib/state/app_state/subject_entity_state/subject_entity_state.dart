@@ -31,7 +31,4 @@ class SubjectEntityState extends EntityState<SubjectState>{
     => SubjectEntityState(entities: updateOne(entities[subjectId]?.addPrevQuestions(questionIds)));
   SubjectEntityState stopLoadingPrevQuestions(int subjectId)
     => SubjectEntityState(entities: updateOne(entities[subjectId]?.stopLoadingPrevQuestions()));
-
-  Iterable<SubjectState> getSubjectsByExamId(int? examId)
-    => entities.values.where((x) => x.examId == examId);
 }
