@@ -19,4 +19,8 @@
     <ProjectReference Include="..\MySocailApp.Domain\MySocailApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DomainEventConsumers\QuestionAggregate\QuestionMarkedAsSolvedDomainEventConsumers\" />
+  </ItemGroup>
+
 </Project>

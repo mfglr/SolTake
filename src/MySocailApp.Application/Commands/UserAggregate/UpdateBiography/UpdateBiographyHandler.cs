@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.UpdateBiography
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
             var user = await _userWriteRepository.GetByIdAsync(accountId, cancellationToken);
-            user.Biography = new Biography(request.Biography);
+            user.UpdateBiography(new Biography(request.Biography));
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

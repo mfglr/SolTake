@@ -17,16 +17,16 @@ namespace MySocailApp.Domain.QuestionAggregate.DomainServices
 
         public async Task CreateAsync(Question question, int examId, int subjectId, int? topicId, CancellationToken cancellationToken)
         {
+            var exam =
+               await _examReadRepository.GetByIdAsync(examId, cancellationToken) ??
+               throw new ExamNotFoundException();
+
             var subject =
                 await _subjectReadRepository.GetByIdAsync(subjectId, cancellationToken) ??
                 throw new SubjectNotFoundException();
 
             if (examId != subject.ExamId)
                 throw new SubjectIsNotIncludedInExamException();
-
-            var exam =
-                await _examReadRepository.GetByIdAsync(examId, cancellationToken) ??
-                throw new ExamNotFoundException();
 
             Topic? topic = null;
             if(topicId != null)

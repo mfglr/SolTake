@@ -10,8 +10,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         internal AppUser(int id) : base(id) { }
         internal void Create()
         {
-            Name = "";
-            Biography = new Biography("");
+            HasImage = false;
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -19,7 +18,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
         public ProfileImage? Image { get; private set; }
         public void UpdateImage(ProfileImage image)
         {
-            if(Image != null) AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
+            if (Image != null) AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
             HasImage = true;
             Image = image;
         }
@@ -32,13 +31,20 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             Image = null;
         }
 
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
         public void UpdateName(string name)
         {
             Name = name ?? throw new NameRequiredException();
             UpdatedAt = DateTime.UtcNow;
         }
-        public Biography Biography { get; set; }
+
+        public Biography? Biography { get; private set; }
+        public void UpdateBiography(Biography biography)
+        {
+            ArgumentNullException.ThrowIfNull(biography);
+            Biography = biography;
+            UpdatedAt = DateTime.UtcNow;
+        }
 
         //following
         private readonly List<Follow> _followers = [];

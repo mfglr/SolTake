@@ -3,7 +3,7 @@ using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extetions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
@@ -61,9 +61,22 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             );
 
         public Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.AppUserId == userId && x.State == QuestionState.Solved, cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                q => 
+                    q.AppUserId == userId && 
+                    _context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserIdAsync(int accountId, IPage page, int userId, CancellationToken cancellationToken)
-           => GetListAsync(accountId, page, x => x.AppUserId == userId && x.State == QuestionState.Unsolved, cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                q => q.AppUserId == userId &&
+                !_context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
+                cancellationToken
+            );
     }
 }

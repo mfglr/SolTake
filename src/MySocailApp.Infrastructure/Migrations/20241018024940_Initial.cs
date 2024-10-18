@@ -21,8 +21,8 @@ namespace MySocailApp.Infrastructure.Migrations
                     HasImage = table.Column<bool>(type: "bit", nullable: false),
                     Image_BlobName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image_CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Biography_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Biography_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -154,8 +154,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "NotificationConnections",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     IsConnected = table.Column<bool>(type: "bit", nullable: false),
                     ConnectionId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -218,7 +217,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     Topic_Id = table.Column<int>(type: "int", nullable: true),
                     Topic_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -299,8 +297,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "UserConnections",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     ConnectionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsConnected = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),

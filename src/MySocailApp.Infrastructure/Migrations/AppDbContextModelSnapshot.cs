@@ -385,7 +385,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -811,10 +810,7 @@ namespace MySocailApp.Infrastructure.Migrations
             modelBuilder.Entity("MySocailApp.Domain.NotificationConnectionAggregate.Entities.NotificationConnection", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConnectionId")
                         .HasColumnType("nvarchar(max)");
@@ -877,9 +873,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -10668,10 +10661,7 @@ namespace MySocailApp.Infrastructure.Migrations
             modelBuilder.Entity("MySocailApp.Domain.UserConnectionAggregate.Entities.UserConnection", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConnectionId")
                         .HasColumnType("nvarchar(max)");
@@ -10807,8 +10797,7 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("AppUserId");
                         });
 
-                    b.Navigation("Biography")
-                        .IsRequired();
+                    b.Navigation("Biography");
 
                     b.Navigation("Image");
                 });

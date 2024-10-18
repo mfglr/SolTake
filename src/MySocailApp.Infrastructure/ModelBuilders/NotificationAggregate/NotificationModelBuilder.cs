@@ -15,6 +15,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.NotificationAggregate
             builder.HasIndex(x => x.CommentId);
             builder.HasIndex(x => x.ParentId);
             builder.HasIndex(x => x.RepliedId);
+
         }
     }
 }

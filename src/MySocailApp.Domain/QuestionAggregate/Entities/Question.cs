@@ -12,8 +12,8 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public readonly static int MaxImageCountPerQuestion = 3;
 
         public int AppUserId { get; private set; }
-        public QuestionExam Exam { get; private set; }
-        public QuestionSubject Subject { get; private set; }
+        public QuestionExam Exam { get; private set; } = null!;
+        public QuestionSubject Subject { get; private set; } = null!;
         public QuestionTopic? Topic { get; private set; }
         public QuestionContent Content { get; private set; }
         private readonly List<QuestionImage> _images = [];
@@ -36,17 +36,10 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             Subject = subject;
             Topic = topic;
             CreatedAt = DateTime.UtcNow;
-            State = QuestionState.Unsolved;
             AddDomainEvent(new QuestionCreatedDomainEvent(this));
         }
 
-        public QuestionState State { get; private set; }
-        public void MarkAsSolved()
-        {
-            State = QuestionState.Solved;
-            UpdatedAt = DateTime.UtcNow;   
-        }
-
+        //likes
         private readonly List<QuestionUserLike> _likes = [];
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
         private readonly List<QuestionLikeNotification> _likeNotifications = [];

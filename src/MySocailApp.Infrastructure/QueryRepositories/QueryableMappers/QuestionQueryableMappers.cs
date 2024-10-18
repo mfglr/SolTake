@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Application.Queries.TopicAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
@@ -18,7 +18,9 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         question.Id,
                         question.CreatedAt,
                         question.UpdatedAt,
-                        question.State,
+                        context.Solutions.Any(s => s.QuestionId == question.Id && s.State == SolutionState.Correct)
+                                ? QuestionState.Solved
+                                : QuestionState.Unsolved,
                         question.AppUserId == accountId,
                         question.AppUserId,
                         account.UserName!,
@@ -43,7 +45,6 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             )
                         )
                     )
-
                 );
     }
 }

@@ -4,17 +4,17 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.QuestionAggregate.QuestionMarkedAsSolvedDomainEventConsumers
+namespace MySocailApp.Application.DomainEventConsumers.SolutionAggregate.SolutionMarkedAsCorrectDomainEventConsumers
 {
-    public class CreateQuestionSolvedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<QuestionMarkedAsSolvedDomainEvent>
+    public class CreateQuestionSolvedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<SolutionMarkedAsCorrectDomainEvent>
     {
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IPublisher _publisher = publisher;
 
-        public async Task Handle(QuestionMarkedAsSolvedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(SolutionMarkedAsCorrectDomainEvent notification, CancellationToken cancellationToken)
         {
             var solution = notification.Solution;
             var question = notification.Question;
