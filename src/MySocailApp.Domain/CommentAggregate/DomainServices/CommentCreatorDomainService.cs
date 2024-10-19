@@ -1,8 +1,8 @@
-﻿using MySocailApp.Domain.CommentAggregate.DomainServices.InternalDomainServices;
+﻿using MySocailApp.Domain.CommentAggregate.Abstracts;
+using MySocailApp.Domain.CommentAggregate.DomainServices.InternalDomainServices;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
-using MySocailApp.Domain.CommentAggregate.Interfaces;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Domain.CommentAggregate.DomainServices

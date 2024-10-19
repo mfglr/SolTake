@@ -16,6 +16,10 @@ AccountState? approveTermsOfUseReducer(AccountState? prev,ApproveTermsOfUseSucce
 AccountState? approvePrivacyPolicyReducer(AccountState? prev, ApprovePrivacyPolicySuccessAction action)
   => prev?.approvePrivacyPolicy();
 
+AccountState? accountDeleteReducer(AccountState? prev,DeleteAccountAction action)
+  => prev?.startAccountDeletion();
+AccountState? deleteAccountFailedReducer(AccountState? prev,DeleteAccountFailedAction action)
+  => prev?.stopAccountDeletion();
 
 final Reducer<AccountState?> accoutStateReducers = combineReducers<AccountState?>([
   TypedReducer<AccountState?,UpdateAccountStateAction>(updateAccountStateReducer).call,
@@ -23,4 +27,6 @@ final Reducer<AccountState?> accoutStateReducers = combineReducers<AccountState?
   TypedReducer<AccountState?,ConfirmEmailByTokenSuccessAction>(confirmEmailReducer).call,
   TypedReducer<AccountState?,ApprovePrivacyPolicySuccessAction>(approvePrivacyPolicyReducer).call,
   TypedReducer<AccountState?,ApproveTermsOfUseSuccessAction>(approveTermsOfUseReducer).call,
+  TypedReducer<AccountState?,DeleteAccountAction>(accountDeleteReducer).call,
+  TypedReducer<AccountState?,DeleteAccountFailedAction>(deleteAccountFailedReducer).call,
 ]);

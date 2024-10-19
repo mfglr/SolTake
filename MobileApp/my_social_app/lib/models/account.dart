@@ -50,6 +50,7 @@ class Account{
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
-        refreshToken: refreshToken
+        refreshToken: refreshToken,
+        accountDeletionStart: false
       );
 }

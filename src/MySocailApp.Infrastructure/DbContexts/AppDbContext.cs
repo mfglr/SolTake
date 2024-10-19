@@ -26,17 +26,22 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<AppUser> AppUsers { get; private set; }
         public DbSet<UserSearch> UserSearchs { get; private set; }
         public DbSet<Follow> Follows { get; private set; }
+        public DbSet<UserFollowNotification> UserFollowNotifications { get; private set; }
 
         public DbSet<Question> Questions { get; private set; }
         public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
         public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
-
-        public DbSet<Comment> Comments { get; private set; }
-        public DbSet<CommentUserLike> CommentUserLikes { get; private set; }
+        public DbSet<QuestionUserLikeNotification> QuestionUserLikeNotifications { get; private set; }
 
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<SolutionUserVote> SolutionUserVotes { get; private set; }
         public DbSet<SolutionUserSave> SolutionUserSaves { get; private set; }
+        public DbSet<SolutionUserVoteNotification> SolutionUserVoteNotifications { get; private set; }
+
+        public DbSet<Comment> Comments { get; private set; }
+        public DbSet<CommentUserLike> CommentUserLikes { get; private set; }
+        public DbSet<CommentUserLikeNotification> CommentUserLikeNotifications { get; private set; }
+        public DbSet<CommentUserTag> CommentUserTags { get; private set; }
 
         public DbSet<Exam> Exams { get; private set; }
 

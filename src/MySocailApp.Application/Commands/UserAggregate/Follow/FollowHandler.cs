@@ -2,8 +2,8 @@
 using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Queries.UserAggregate;
+using MySocailApp.Domain.AppUserAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.UserAggregate.Follow
 {

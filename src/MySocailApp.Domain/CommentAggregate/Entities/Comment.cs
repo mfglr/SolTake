@@ -54,8 +54,8 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 
         private readonly List<CommentUserLike> _likes = [];
         public IReadOnlyCollection<CommentUserLike> Likes => _likes;
-        private readonly List<CommentLikeNotification> _likeNotifications = [];
-        public IReadOnlyCollection<CommentLikeNotification> LikeNotifications => _likeNotifications;
+        private readonly List<CommentUserLikeNotification> _likeNotifications = [];
+        public IReadOnlyCollection<CommentUserLikeNotification> LikeNotifications => _likeNotifications;
         public CommentUserLike Like(int likerId)
         {
             if (_likes.Any(x => x.AppUserId == likerId))
@@ -65,7 +65,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
             _likes.Add(like);
             if (likerId != AppUserId && !LikeNotifications.Any(x => x.AppUserId == likerId))
             {
-                _likeNotifications.Add(new CommentLikeNotification(likerId));
+                _likeNotifications.Add(new CommentUserLikeNotification(likerId));
                 AddDomainEvent(new CommentLikedDomainEvent(this, like));
             }
             return like;

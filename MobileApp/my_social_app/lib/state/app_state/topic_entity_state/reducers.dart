@@ -16,6 +16,8 @@ TopicEntityState prevQuestionsSuccessReducer(TopicEntityState prev,PrevTopicQues
 TopicEntityState prevQuestionsFailedReducer(TopicEntityState prev,PrevTopicQuestionsFailedAction action)
   => prev.stopLoadingPrevQuestions(action.topicId);
 
+TopicEntityState addTopicReducer(TopicEntityState prev,AddTopicAction action)
+  => prev.addTopic(action.topic);
 TopicEntityState addTopicsReducer(TopicEntityState prev,AddTopicsAction action)
   => prev.addTopics(action.topics);
 TopicEntityState addTopicsListsReducer(TopicEntityState prev,AddTopicsListAction action)
@@ -30,6 +32,7 @@ Reducer<TopicEntityState> topicEntityStateReducers = combineReducers<TopicEntity
   TypedReducer<TopicEntityState,PrevTopicQuestionsSuccessAction>(prevQuestionsSuccessReducer).call,
   TypedReducer<TopicEntityState,PrevTopicQuestionsFailedAction>(prevQuestionsFailedReducer).call,
 
+  TypedReducer<TopicEntityState,AddTopicAction>(addTopicReducer).call,
   TypedReducer<TopicEntityState,AddTopicsAction>(addTopicsReducer).call,
   TypedReducer<TopicEntityState,AddTopicsListAction>(addTopicsListsReducer).call,
 ]);

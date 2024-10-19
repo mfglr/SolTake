@@ -19,7 +19,7 @@ class CommentLikedNotificationItem extends StatelessWidget {
         Icons.favorite,
         color: Colors.red,
       ),
-      bottomContent: NotificationBottomTextContent(content: notification.commentContent!),
+      bottomContent: NotificationBottomTextContent(content: notification.commentContent ?? ""),
       onPressed: (){
         if(notification.parentId != null){
           if(notification.questionId != null){

@@ -42,8 +42,8 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         //likes
         private readonly List<QuestionUserLike> _likes = [];
         public IReadOnlyList<QuestionUserLike> Likes => _likes;
-        private readonly List<QuestionLikeNotification> _likeNotifications = [];
-        public IReadOnlyList<QuestionLikeNotification> LikeNotifications => _likeNotifications;
+        private readonly List<QuestionUserLikeNotification> _likeNotifications = [];
+        public IReadOnlyList<QuestionUserLikeNotification> LikeNotifications => _likeNotifications;
         public QuestionUserLike Like(int likerId)
         {
             if (_likes.Any(x => x.AppUserId == likerId))
@@ -53,7 +53,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
             _likes.Add(like);
             if (likerId != AppUserId && !_likeNotifications.Any(x => x.AppUserId == likerId))
             {
-                _likeNotifications.Add(new QuestionLikeNotification(likerId));
+                _likeNotifications.Add(new QuestionUserLikeNotification(likerId));
                 AddDomainEvent(new QuestionLikedDomainEvent(this, like));
             }
             return like;
@@ -61,8 +61,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public void Dislike(int userId)
         {
             var index = _likes.FindIndex(x => x.AppUserId == userId);
-            if (index == -1)
-                return;
+            if (index == -1) return;
             _likes.RemoveAt(index);
             AddDomainEvent(new QuestionDislikedDomainEvent(this));
         }

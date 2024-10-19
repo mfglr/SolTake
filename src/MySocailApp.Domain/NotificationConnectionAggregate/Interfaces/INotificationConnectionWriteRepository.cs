@@ -6,5 +6,6 @@ namespace MySocailApp.Domain.NotificationConnectionAggregate.Interfaces
     {
         Task CreateAsync(NotificationConnection notificationConnection,CancellationToken cancellationToken);
         Task<NotificationConnection?> GetByIdAsync(int id, CancellationToken cancellationToken);
+        void Delete(NotificationConnection notificationConnection);
     }
 }

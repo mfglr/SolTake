@@ -6,5 +6,6 @@ namespace MySocailApp.Domain.UserConnectionAggregate.Interfaces
     {
         Task CreateAsync(UserConnection userConnection, CancellationToken cancellationToken);
         Task<UserConnection?> GetByIdAsync(int id, CancellationToken cancellationToken);
+        void Delete(UserConnection userConnection);
     }
 }

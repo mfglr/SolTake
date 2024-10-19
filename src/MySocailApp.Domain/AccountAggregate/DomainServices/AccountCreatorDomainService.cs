@@ -7,8 +7,8 @@ using MySocailApp.Domain.AccountAggregate.DomainServices.InternalDomainServices;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 using MySocailApp.Domain.AccountAggregate.ValueObjects;
+using MySocailApp.Domain.AppUserAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Domain.PrivacyPolicyAggregate.Interfaces;
 using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
 

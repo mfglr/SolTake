@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
@@ -45,7 +44,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             _images.Add(SolutionImage.Create(video.FrameBlobName,video.FrameHeight,video.FrameWidth));
             State = SolutionState.Pending;
         }
-
         internal void Create()
         {
             UpdatedAt = CreatedAt = DateTime.UtcNow;
@@ -54,8 +52,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
-        private readonly List<SolutionVoteNotification> _voteNotifications = [];
-        public IReadOnlyCollection<SolutionVoteNotification> VoteNotifications => _voteNotifications;
+        private readonly List<SolutionUserVoteNotification> _voteNotifications = [];
+        public IReadOnlyCollection<SolutionUserVoteNotification> VoteNotifications => _voteNotifications;
         public SolutionUserVote MakeUpvote(int voterId)
         {
             var index = _votes.FindIndex(x => x.AppUserId == voterId);
@@ -72,7 +70,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
             if(AppUserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
             {
-                _voteNotifications.Add(new SolutionVoteNotification(voterId));
+                _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
                 AddDomainEvent(new SolutionWasUpvotedDomainEvent(this, vote));
             }
             return vote;
@@ -93,7 +91,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
             if(AppUserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
             {
-                _voteNotifications.Add(new SolutionVoteNotification(voterId));
+                _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
                 AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, vote));
             }
             return vote;

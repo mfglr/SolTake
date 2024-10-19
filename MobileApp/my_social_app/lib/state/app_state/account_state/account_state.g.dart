@@ -20,6 +20,7 @@ AccountState _$AccountStateFromJson(Map<String, dynamic> json) => AccountState(
       refreshToken: json['refreshToken'] as String,
       isPrivacyPolicyApproved: json['isPrivacyPolicyApproved'] as bool,
       isTermsOfUseApproved: json['isTermsOfUseApproved'] as bool,
+      accountDeletionStart: json['accountDeletionStart'] as bool,
     );
 
 Map<String, dynamic> _$AccountStateToJson(AccountState instance) =>
@@ -35,4 +36,5 @@ Map<String, dynamic> _$AccountStateToJson(AccountState instance) =>
       'isTermsOfUseApproved': instance.isTermsOfUseApproved,
       'language': instance.language,
       'refreshToken': instance.refreshToken,
+      'accountDeletionStart': instance.accountDeletionStart,
     };

@@ -2,8 +2,8 @@
 using MediatR;
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.Queries.CommentAggregate;
+using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
-using MySocailApp.Domain.CommentAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.CommentAggregate.LikeComment
 {

@@ -17,7 +17,7 @@ class SolutionCommentCreatedNotificationItem extends StatelessWidget {
     return NotificationItem(
       notification: notification,
       content: AppLocalizations.of(context)!.solution_comment_created_notification_item_content,
-      bottomContent: NotificationBottomTextContent(content: notification.commentContent!),
+      bottomContent: NotificationBottomTextContent(content: notification.commentContent ?? ""),
       icon: const Icon(
         Icons.comment,
         color: Colors.blue,

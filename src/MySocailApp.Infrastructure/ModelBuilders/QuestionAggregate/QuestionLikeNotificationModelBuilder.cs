@@ -4,9 +4,9 @@ using MySocailApp.Domain.QuestionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
 {
-    public class QuestionLikeNotificationModelBuilder : IEntityTypeConfiguration<QuestionLikeNotification>
+    public class QuestionLikeNotificationModelBuilder : IEntityTypeConfiguration<QuestionUserLikeNotification>
     {
-        public void Configure(EntityTypeBuilder<QuestionLikeNotification> builder)
+        public void Configure(EntityTypeBuilder<QuestionUserLikeNotification> builder)
         {
             builder.HasKey(x => new { x.QuestionId, x.AppUserId });
         }

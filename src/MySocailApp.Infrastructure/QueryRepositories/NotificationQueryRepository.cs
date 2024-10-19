@@ -23,6 +23,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.Notifications
                 .AsNoTracking()
                 .Where(x => x.OwnerId == ownerId && !x.IsViewed)
+                .OrderByDescending(x => x.Id)
                 .ToNotificationResponseDto(_context)
                 .ToListAsync(cancellationToken);
 

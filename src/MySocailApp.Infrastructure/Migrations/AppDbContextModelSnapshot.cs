@@ -436,7 +436,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("AppUserId", "FollowerId");
 
-                    b.ToTable("UserFollowNotification");
+                    b.ToTable("UserFollowNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.UserSearch", b =>
@@ -508,19 +508,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentLikeNotification", b =>
-                {
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CommentId", "AppUserId");
-
-                    b.ToTable("CommentLikeNotification");
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLike", b =>
                 {
                     b.Property<int>("Id")
@@ -545,6 +532,19 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("CommentUserLikes");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLikeNotification", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentId", "AppUserId");
+
+                    b.ToTable("CommentUserLikeNotifications");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserTag", b =>
                 {
                     b.Property<int>("Id")
@@ -566,7 +566,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("CommentUserTag");
+                    b.ToTable("CommentUserTags");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.ExamAggregate.Entitities.Exam", b =>
@@ -914,19 +914,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionImage");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionLikeNotification", b =>
-                {
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("QuestionId", "AppUserId");
-
-                    b.ToTable("QuestionLikeNotification");
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
                 {
                     b.Property<int>("Id")
@@ -949,6 +936,19 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionUserLikes");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
+                {
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuestionId", "AppUserId");
+
+                    b.ToTable("QuestionUserLikeNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserSave", b =>
@@ -1102,7 +1102,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("SolutionUserVotes");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionVoteNotification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVoteNotification", b =>
                 {
                     b.Property<int>("SolutionId")
                         .HasColumnType("int");
@@ -1112,7 +1112,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("SolutionId", "AppUserId");
 
-                    b.ToTable("SolutionVoteNotification");
+                    b.ToTable("SolutionUserVoteNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.Subject", b =>
@@ -10854,19 +10854,19 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentLikeNotification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLike", b =>
                 {
                     b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", null)
-                        .WithMany("LikeNotifications")
+                        .WithMany("Likes")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLike", b =>
+            modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLikeNotification", b =>
                 {
                     b.HasOne("MySocailApp.Domain.CommentAggregate.Entities.Comment", null)
-                        .WithMany("Likes")
+                        .WithMany("LikeNotifications")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -11021,19 +11021,19 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionLikeNotification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
                 {
                     b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
-                        .WithMany("LikeNotifications")
+                        .WithMany("Likes")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
                 {
                     b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
-                        .WithMany("Likes")
+                        .WithMany("LikeNotifications")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -11133,7 +11133,7 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionVoteNotification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVoteNotification", b =>
                 {
                     b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", null)
                         .WithMany("VoteNotifications")

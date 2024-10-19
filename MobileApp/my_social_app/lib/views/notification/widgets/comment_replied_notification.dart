@@ -22,7 +22,7 @@ class CommentRepliedNotification extends StatelessWidget {
         Icons.reply,
         color: Colors.green,
       ),
-      bottomContent: NotificationBottomTextContent(content: notification.commentContent!),
+      bottomContent: NotificationBottomTextContent(content: notification.commentContent ?? ""),
       onPressed: (){
         if(notification.questionId != null){
           Navigator

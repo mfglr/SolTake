@@ -20,16 +20,10 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public Task<List<Notification>> GetByIds(List<int> ids, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
 
-
-
         public Task<List<Notification>> GetNotificationsByRepliedIdOrCommentId(int id, CancellationToken cancellationToken)
-            => _context.Notifications
-                .Where(x => x.RepliedId == id || x.CommentId == id)
-                .ToListAsync(cancellationToken);
+            => _context.Notifications.Where(x => x.RepliedId == id || x.CommentId == id).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetNotificationsByRepliedId(int repliedId, CancellationToken cancellationToken)
-            => _context.Notifications
-                .Where(x => x.RepliedId == repliedId)
-                .ToListAsync(cancellationToken);
+            => _context.Notifications.Where(x => x.RepliedId == repliedId).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetCommentNoificationsAsync(int commentId, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => x.CommentId == commentId).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetSolutionNotificationsAsync(int solutionId, CancellationToken cancellationToken)

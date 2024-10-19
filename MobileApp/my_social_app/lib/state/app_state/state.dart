@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';

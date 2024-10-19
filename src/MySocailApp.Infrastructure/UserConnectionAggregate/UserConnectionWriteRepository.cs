@@ -11,6 +11,9 @@ namespace MySocailApp.Infrastructure.UserConnectionAggregate
         public async Task CreateAsync(UserConnection userConnection, CancellationToken cancellationToken)
             => await _context.UserConnections.AddAsync(userConnection, cancellationToken);
 
+        public void Delete(UserConnection userConnection)
+            => _context.UserConnections.Remove(userConnection);
+
         public async Task<UserConnection?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => await _context.UserConnections.FindAsync(id, cancellationToken);
     }

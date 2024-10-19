@@ -60,16 +60,20 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
                 .Include(x => x.Images)
                 .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
 
-        public Task<List<Solution>> GetSolutionsSavedByUserId(int userId, CancellationToken cancellationToken)
-            => _context.Solutions
-                .Include(x => x.Savers.Where(x => x.AppUserId == userId))
-                .Where(x => x.Savers.Any(x => x.AppUserId == userId))
-                .ToListAsync(cancellationToken);
-
-        public Task<List<Solution>> GetSolutionsVotedByUserId(int userId, CancellationToken cancellationToken)
-            => _context.Solutions
-                .Include(x => x.Votes.Where(x => x.AppUserId == userId))
-                .Where(x => x.Votes.Any(x => x.AppUserId == userId))
-                .ToListAsync(cancellationToken);
+        public async Task DeleteSolutionUserSavesByUserId(int userId, CancellationToken cancellation)
+        {
+            var saves = await _context.SolutionUserSaves.Where(x => x.AppUserId == userId).ToListAsync(cancellation);
+            _context.SolutionUserSaves.RemoveRange(saves);
+        }
+        public async Task DeleteSolutionUserVotesByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var votes = await _context.SolutionUserVotes.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            _context.SolutionUserVotes.RemoveRange(votes);
+        }
+        public async Task DeleteSolutionUserVoteNotificationsByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var notifications = await _context.SolutionUserVoteNotifications.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            _context.SolutionUserVoteNotifications.RemoveRange(notifications);
+        }
     }
 }

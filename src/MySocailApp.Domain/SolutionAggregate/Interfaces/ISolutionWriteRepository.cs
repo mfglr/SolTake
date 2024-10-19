@@ -17,7 +17,9 @@ namespace MySocailApp.Domain.SolutionAggregate.Interfaces
         Task<Solution?> GetSolutionAsync(int solutionId, CancellationToken cancellationToken);
         Task<List<Solution>> GetUserSolutionsAsync(int userId, CancellationToken cancellationToken);
         Task<List<Solution>> GetQuestionSolutionsAsync(int userId, CancellationToken cancellationToken);
-        Task<List<Solution>> GetSolutionsSavedByUserId(int userId, CancellationToken cancellationToken);
-        Task<List<Solution>> GetSolutionsVotedByUserId(int userId, CancellationToken cancellationToken);
+
+        Task DeleteSolutionUserSavesByUserId(int userId,CancellationToken cancellation);
+        Task DeleteSolutionUserVotesByUserId(int userId,CancellationToken cancellationToken);
+        Task DeleteSolutionUserVoteNotificationsByUserId(int userId, CancellationToken cancellationToken);
     }
 }

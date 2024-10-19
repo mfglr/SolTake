@@ -19,7 +19,7 @@ class QuestionCommentCreatedNotificationItem extends StatelessWidget {
         color: Colors.blue,
       ),
       content: AppLocalizations.of(context)!.question_comment_created_notification_item_content,
-      bottomContent: NotificationBottomTextContent(content: notification.commentContent!),
+      bottomContent: NotificationBottomTextContent(content: notification.commentContent ?? ""),
       onPressed: (){
         Navigator
           .of(context)

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
+using MySocailApp.Domain.AppUserAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateBiography

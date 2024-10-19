@@ -28,7 +28,6 @@ void _clearSession(Store<AppState> store){
   store.dispatch(const ClearStateAction());
 }
 
-
 void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateAccountAction){
     AccountService()
@@ -186,7 +185,11 @@ void deleteAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DeleteAccountAction){
     AccountService()
       .delete()
-      .then((_) => _clearSession(store));
+      .then((_) => _clearSession(store))
+      .catchError((e){
+        store.dispatch(const DeleteAccountFailedAction());
+        throw e;
+      });
   }
   next(action);
 }

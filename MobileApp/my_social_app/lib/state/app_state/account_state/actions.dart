@@ -61,6 +61,10 @@ class LogOutAction extends AppAction{
 class DeleteAccountAction extends AppAction{
   const DeleteAccountAction();
 }
+@immutable
+class DeleteAccountFailedAction extends AppAction{
+  const DeleteAccountFailedAction();
+}
 
 @immutable
 class CreateAccountAction extends AppAction{

@@ -2,7 +2,7 @@
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
+using MySocailApp.Domain.AppUserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
 {

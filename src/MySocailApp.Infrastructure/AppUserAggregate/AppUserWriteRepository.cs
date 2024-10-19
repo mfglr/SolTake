@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Domain.AppUserAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate.Entities;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.AppUserAggregate
@@ -28,5 +28,25 @@ namespace MySocailApp.Infrastructure.AppUserAggregate
             => _context.AppUsers
                 .Include(x => x.Searchers.Where(x => x.SearcherId == searcherId))
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public async Task DeleteFollowsByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var follows = await _context.Follows.Where(x => x.FollowerId == userId).ToListAsync(cancellationToken);
+            _context.Follows.RemoveRange(follows);
+        }
+        
+        public async Task DeleteFollowNotificationsByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var notifications = await _context.UserFollowNotifications.Where(x => x.FollowerId == userId).ToListAsync(cancellationToken);
+            _context.UserFollowNotifications.RemoveRange(notifications);
+        }
+
+        public async Task DeleteUserSerchsByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var searchs = await _context.UserSearchs.Where(x => x.SearcherId == userId).ToListAsync(cancellationToken);
+            _context.UserSearchs.RemoveRange(searchs);
+        }
+
+     
     }
 }

@@ -4,9 +4,9 @@ using MySocailApp.Domain.CommentAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
 {
-    public class CommentLikeNotificationModelBuilder : IEntityTypeConfiguration<CommentLikeNotification>
+    public class CommentLikeNotificationModelBuilder : IEntityTypeConfiguration<CommentUserLikeNotification>
     {
-        public void Configure(EntityTypeBuilder<CommentLikeNotification> builder)
+        public void Configure(EntityTypeBuilder<CommentUserLikeNotification> builder)
         {
             builder.HasKey(x => new {x.CommentId,x.AppUserId});
         }

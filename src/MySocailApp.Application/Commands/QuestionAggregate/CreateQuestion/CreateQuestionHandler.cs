@@ -4,9 +4,9 @@ using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.QueryRepositories;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion

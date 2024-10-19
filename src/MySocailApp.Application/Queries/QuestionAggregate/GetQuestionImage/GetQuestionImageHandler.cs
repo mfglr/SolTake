@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
 {

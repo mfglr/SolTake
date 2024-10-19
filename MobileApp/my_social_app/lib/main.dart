@@ -112,6 +112,7 @@ class MainView extends StatelessWidget {
           if(!account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
           if(!account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
           if(!account!.isThirdPartyAuthenticated && !account!.emailConfirmed) return const VerifyEmailPage();
+          if(account!.accountDeletionStart) return const ApplicationLoadingPage();
           return const RootView();
         }
         return const ApplicationLoadingPage();

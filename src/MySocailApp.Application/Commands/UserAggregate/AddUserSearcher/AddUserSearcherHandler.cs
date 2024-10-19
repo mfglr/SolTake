@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Domain.AppUserAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate.Exceptions;
-using MySocailApp.Domain.AppUserAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.UserAggregate.AddUserSearcher
 {

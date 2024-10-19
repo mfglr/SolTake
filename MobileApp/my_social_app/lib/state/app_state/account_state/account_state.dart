@@ -16,6 +16,7 @@ class AccountState{
   final bool isTermsOfUseApproved;
   final String? language;
   final String refreshToken;
+  final bool accountDeletionStart;
 
   const AccountState({
     required this.id,
@@ -29,6 +30,7 @@ class AccountState{
     required this.refreshToken,
     required this.isPrivacyPolicyApproved,
     required this.isTermsOfUseApproved,
+    required this.accountDeletionStart
   });
   
 
@@ -47,7 +49,8 @@ class AccountState{
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
-        refreshToken: refreshToken
+        refreshToken: refreshToken,
+        accountDeletionStart: accountDeletionStart
       );
 
   AccountState updateLanguage(String language)
@@ -62,7 +65,8 @@ class AccountState{
         isTermsOfUseApproved: isTermsOfUseApproved,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         language: language,
-        refreshToken: refreshToken
+        refreshToken: refreshToken,
+        accountDeletionStart: accountDeletionStart
       );
 
   AccountState approvePrivacyPolicy()
@@ -78,7 +82,7 @@ class AccountState{
         isPrivacyPolicyApproved: true,
         language: language,
         refreshToken: refreshToken,
-        
+        accountDeletionStart: accountDeletionStart        
       );
   AccountState approveTermsOfUse()
     => AccountState(
@@ -93,6 +97,36 @@ class AccountState{
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         language: language,
         refreshToken: refreshToken,
-        
+        accountDeletionStart: accountDeletionStart
+      );
+  AccountState startAccountDeletion()
+    => AccountState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        email: email,
+        userName: userName,
+        emailConfirmed: emailConfirmed,
+        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        language: language,
+        refreshToken: refreshToken,
+        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
+        isTermsOfUseApproved: isTermsOfUseApproved,
+        accountDeletionStart: true
+      );
+  AccountState stopAccountDeletion()
+    => AccountState(
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        email: email,
+        userName: userName,
+        emailConfirmed: emailConfirmed,
+        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        language: language,
+        refreshToken: refreshToken,
+        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
+        isTermsOfUseApproved: isTermsOfUseApproved,
+        accountDeletionStart: false
       );
 }

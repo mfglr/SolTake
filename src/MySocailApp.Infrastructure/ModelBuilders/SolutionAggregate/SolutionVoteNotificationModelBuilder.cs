@@ -4,9 +4,9 @@ using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
 {
-    public class SolutionVoteNotificationModelBuilder : IEntityTypeConfiguration<SolutionVoteNotification>
+    public class SolutionVoteNotificationModelBuilder : IEntityTypeConfiguration<SolutionUserVoteNotification>
     {
-        public void Configure(EntityTypeBuilder<SolutionVoteNotification> builder)
+        public void Configure(EntityTypeBuilder<SolutionUserVoteNotification> builder)
         {
             builder.HasKey(x => new { x.SolutionId, x.AppUserId } );
         }

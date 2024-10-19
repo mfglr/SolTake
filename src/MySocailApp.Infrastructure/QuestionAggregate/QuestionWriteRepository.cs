@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
+using System.Runtime.InteropServices;
 
 namespace MySocailApp.Infrastructure.QuestionAggregate
 {
@@ -47,16 +48,20 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Where(x => x.AppUserId == userId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<Question>> GetQuestionsSavedByUserId(int userId, CancellationToken cancellationToken)
-            => _context.Questions
-                .Include(x => x.Savers.Where(x => x.AppUserId == userId))
-                .Where(x => x.Savers.Any(x => x.AppUserId == userId))
-                .ToListAsync(cancellationToken);
-
-        public Task<List<Question>> GetQuestionsLikedByUserId(int userId, CancellationToken cancellationToken)
-            => _context.Questions
-                .Include(x => x.Likes.Where(x => x.AppUserId == userId))
-                .Where (x => x.Likes.Any(x => x.AppUserId == userId))
-                .ToListAsync(cancellationToken);
+        public async Task DeleteQuestionUserLikesByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var likes = await _context.QuestionUserLikes.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            _context.QuestionUserLikes.RemoveRange(likes);
+        }
+        public async Task DeleteQuestionUserLikesNotificationsByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var likeNotifications = await _context.QuestionUserLikeNotifications.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            _context.QuestionUserLikeNotifications.RemoveRange(likeNotifications);
+        }
+        public async Task DeleteQuestionUserSavesByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var saves = await _context.QuestionUserSaves.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            _context.RemoveRange(saves);
+        }
     }
 }

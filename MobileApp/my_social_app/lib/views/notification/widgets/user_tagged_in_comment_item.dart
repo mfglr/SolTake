@@ -18,7 +18,7 @@ class UserTaggedInCommentItem extends StatelessWidget {
         Icons.tag,
         color: Colors.orange,
       ),
-      bottomContent: NotificationBottomTextContent(content: notification.commentContent!),
+      bottomContent: NotificationBottomTextContent(content: notification.commentContent ?? ""),
       onPressed: (){
         if(notification.parentId != null){
           if(notification.questionId != null){

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
-using MySocailApp.Domain.QuestionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion
 {
