@@ -15,5 +15,5 @@ const updateUserImageEndpoint = "UpdateImage";
 const removeUserImageEndpoint = "RemoveImage";
 const updateNameEndpoint = "UpdateName";
 const updateBiographyEndpoint = "UpdateBiography";
-const addUserSearchedEndpoint = "AddSearched";
-const removeUserSearchedEndpoint = "RemoveSearched";
+const addUserSearcherEndpoint = "AddSearcher";
+const removeUserSearcherEndpoint = "RemoveSearched";

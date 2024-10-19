@@ -115,7 +115,7 @@ void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next)
   if(action is AddSearchedUserAction){
     final int searcherId = store.state.accountState!.id;
     UserService()
-      .addSearched(action.userId)
+      .addSearcher(action.userId)
       .then((search){
         final searchId = store.state.userSearchEntityState.select(searcherId, action.userId)?.id ?? 0;
         store.dispatch(RemoveUserSearchAction(searchId: searchId));
@@ -129,7 +129,7 @@ void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next)
 void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveSearchedUserAction){
     UserService()
-      .removeSearched(action.searchedId)
+      .removeSearcher(action.searchedId)
       .then((_){
         final accountId = store.state.accountState!.id;
         final searchId = store.state.userSearchEntityState.select(accountId, action.searchedId)?.id ?? 0;

@@ -22,8 +22,30 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<AppUserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken)
             => _context.AppUsers
                 .AsNoTracking()
-                .ToUserResponseDto(_context, accountId)
-                .FirstOrDefaultAsync(x => x.UserName == userName,cancellationToken);
+                .Join(
+                    _context.Users,
+                    user => user.Id,
+                    account => account.Id,
+                    (user, account) => new { user, account.UserName }
+                )
+                .Where(join => join.UserName!.ToLower().Contains(userName.ToLower()))
+                .Select(
+                    x => new AppUserResponseDto(
+                        x.user.Id,
+                        x.user.CreatedAt,
+                        x.user.UpdatedAt,
+                        x.UserName!,
+                        x.user.Name,
+                        x.user.Biography.Value,
+                        x.user.HasImage,
+                        _context.Questions.Count(q => q.AppUserId == x.user.Id),
+                        _context.Follows.Count(f => f.FollowedId == x.user.Id),
+                        _context.Follows.Count(f => f.FollowerId == x.user.Id),
+                        _context.Follows.Any(f => f.FollowerId == x.user.Id && f.FollowedId == accountId),
+                        _context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == x.user.Id)
+                    )
+                )
+                .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<AppUserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.AppUsers
@@ -51,16 +73,39 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<AppUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.AppUsers
                 .AsNoTracking()
-                .ToUserResponseDto(_context, accountId)
-                .Where(
-                    x => 
-                        (
-                            x.Name != null && 
-                            x.Name.ToLower().Contains(key.ToLower())
-                        ) || 
-                        x.UserName!.ToLower().Contains(key.ToLower())
+                .Join(
+                    _context.Users,
+                    user => user.Id,
+                    account => account.Id,
+                    (user, account) => new { user, account.UserName }
                 )
-                .ToPage(page)
+                .Where(
+                     join =>
+                        (
+                            join.user.Name != null &&
+                            join.user.Name.ToLower().Contains(key.ToLower())
+                        ) ||
+                        join.UserName!.ToLower().Contains(key.ToLower())
+                )
+                .Where(x => x.user.Id < page.Offset)
+                .OrderByDescending(x => x.user.Id)
+                .Take(page.Take)
+                .Select(
+                    x => new AppUserResponseDto(
+                        x.user.Id,
+                        x.user.CreatedAt,
+                        x.user.UpdatedAt,
+                        x.UserName!,
+                        x.user.Name,
+                        x.user.Biography.Value,
+                        x.user.HasImage,
+                        _context.Questions.Count(q => q.AppUserId == x.user.Id),
+                        _context.Follows.Count(f => f.FollowedId == x.user.Id),
+                        _context.Follows.Count(f => f.FollowerId == x.user.Id),
+                        _context.Follows.Any(f => f.FollowerId == x.user.Id && f.FollowedId == accountId),
+                        _context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == x.user.Id)
+                    )
+                )
                 .ToListAsync(cancellationToken);
     }
 }

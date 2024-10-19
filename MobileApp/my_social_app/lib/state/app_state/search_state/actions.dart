@@ -42,6 +42,7 @@ class NextSearchedUsersSuccessAction extends AppAction{
 class NextSearchedUsersFailedAction extends AppAction{
   const NextSearchedUsersFailedAction();
 }
+
 @immutable
 class AddSearchedUserAction extends AppAction{
   final int userId;

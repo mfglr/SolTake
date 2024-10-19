@@ -44,11 +44,11 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(request,cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<MessageResponseDto>> GetMessagesByUserId(int userId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetMessagesByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<MessageResponseDto>> GetConversations([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<MessageResponseDto>> GetConversations([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetConversationsDto(offset, take, isDescending), cancellationToken);
 
         [HttpGet]

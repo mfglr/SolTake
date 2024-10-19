@@ -36,7 +36,8 @@ SearchState nextSearchedUserSuccessReducer(SearchState prev,NextSearchedUsersSuc
   => prev.addNextPageSearchedUsers(action.searchIds);
 SearchState nextSearchedUserFailedReducer(SearchState prev,NextSearchedUsersFailedAction action)
   => prev.stopLodingSearchedUsers();
-SearchState addSearchedUserReducer(SearchState prev,AddSearchedUserSuccessAction action)
+
+SearchState addSearcherReducer(SearchState prev,AddSearchedUserSuccessAction action)
   => prev.addSearchedUser(action.addedOne,action.removedOne);
 SearchState removeSearchedUserReducer(SearchState prev,RemoveSearcedUserSuccessAction action)
   => prev.removeSearchedUser(action.searchId);
@@ -72,7 +73,8 @@ Reducer<SearchState> searchStateReducers = combineReducers<SearchState>([
   TypedReducer<SearchState,NextSearchedUsersAction>(nextSearchedUserReducer).call,
   TypedReducer<SearchState,NextSearchedUsersSuccessAction>(nextSearchedUserSuccessReducer).call,
   TypedReducer<SearchState,NextSearchedUsersFailedAction>(nextSearchedUserFailedReducer).call,
-  TypedReducer<SearchState,AddSearchedUserSuccessAction>(addSearchedUserReducer).call,
+  
+  TypedReducer<SearchState,AddSearchedUserSuccessAction>(addSearcherReducer).call,
   TypedReducer<SearchState,RemoveSearcedUserSuccessAction>(removeSearchedUserReducer).call,
 
   TypedReducer<SearchState,ChangeSearchKeyAction>(changeKeyReducer).call,

@@ -80,16 +80,16 @@ class UserService{
     _appClient
       .delete("$userController/$removeFollowerEndPoint/$followerId");
     
-  Future<UserSearch> addSearched(int searchedId) => 
+  Future<UserSearch> addSearcher(int searchedId) => 
     _appClient
       .post(
-        "$userController/$addUserSearchedEndpoint",
+        "$userController/$addUserSearcherEndpoint",
         body: { 'searchedId': searchedId }
       )
       .then((json) => UserSearch.fromJson(json));
 
-  Future<void> removeSearched(int searchedId) => 
-    _appClient.delete("$userController/$removeUserSearchedEndpoint/$searchedId");
+  Future<void> removeSearcher(int searchedId) => 
+    _appClient.delete("$userController/$removeUserSearcherEndpoint/$searchedId");
 
   Future<User> getById(int id) => 
     _appClient

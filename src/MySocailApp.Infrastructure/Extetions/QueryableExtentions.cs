@@ -8,11 +8,11 @@ namespace MySocailApp.Infrastructure.Extetions
         {
             if (page.IsDescending)
                 return query
-                    .Where(x => page.Offset == null || x.Id < page.Offset)
+                    .Where(x => x.Id < page.Offset)
                     .OrderByDescending(x => x.Id)
                     .Take(page.Take);
             return query
-                .Where(x => page.Offset == null || x.Id > page.Offset)
+                .Where(x => x.Id > page.Offset)
                 .OrderBy(x => x.Id)
                 .Take(page.Take);
         }
