@@ -31,31 +31,17 @@ void getUnviewedNotificationMiddleware(Store<AppState> store,action,NextDispatch
   next(action);
 }
 
-void getNextPageNotificationsIfNoPageMiddeware(Store<AppState> store,action, NextDispatcher next){
-  if(action is GetNextPageNotificationsIfNoPageAction){
-    final pagination = store.state.notificationEntityState.pagination;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(const GetNextPageNotificationsAction());
-    }
-  }
-  next(action);
-}
-void getNextPageNotificationsIfReadyActionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageNotificationsIfReadyAction){
-    final pagination = store.state.notificationEntityState.pagination;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(const GetNextPageNotificationsAction());
-    }
-  }
-  next(action);
-}
 void getNextPageNotificationsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageNotificationsAction){
+  if(action is NextNotificationsAction){
     NotificationService()
       .getNotifications(store.state.notificationEntityState.pagination.next)
       .then((notifications){
-        store.dispatch(AddNextPageNotificationsAction(notifications: notifications.map((e) => e.toNotificationState())));
+        store.dispatch(NextNotificationsSuccessAction(notifications: notifications.map((e) => e.toNotificationState())));
         store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.appUserId))));
+      })
+      .catchError((e){
+        store.dispatch(const NextNotificationsFailedAction());
+        throw e;
       });
   }
   next(action);

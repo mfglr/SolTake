@@ -56,10 +56,10 @@ class EntityPagination<T extends dynamic>{
       isDescending: isDescending
     );
 
-  bool get hasAtLeastOnePage => entities.values.length >= recordsPerPage;
+  bool get hasAtLeastOnePage => entities.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loadingNext;
+  bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
-
 
   EntityPagination<T> prependOne(T entity)
     => _optinal(newEntities: entities.prependOne(entity));
@@ -81,6 +81,8 @@ class EntityPagination<T extends dynamic>{
 
   EntityPagination<T> startLoadingNext()
     => _optinal(newLoadingNext: true);
+  EntityPagination<T> stopLoadingNext()
+    => _optinal(newLoadingNext: false);
   EntityPagination<T> addNextPage(Iterable<T> entities)
     => _optinal(
       newIsLast: entities.length < recordsPerPage,

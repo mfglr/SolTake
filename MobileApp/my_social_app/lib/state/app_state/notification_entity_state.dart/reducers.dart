@@ -2,10 +2,12 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/act
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:redux/redux.dart';
 
-NotificationEntityState startLoadingNextReducer(NotificationEntityState prev,GetNextPageNotificationsAction action)
+NotificationEntityState nextNotificationsReducer(NotificationEntityState prev,NextNotificationsAction action)
   => prev.startLoadingNext();
-NotificationEntityState addNextPageReducer(NotificationEntityState prev,AddNextPageNotificationsAction action)
+NotificationEntityState nextNotificationsSuccessReducer(NotificationEntityState prev,NextNotificationsSuccessAction action)
   => prev.addNextPage(action.notifications);
+NotificationEntityState nextNotificationsFailedReducer(NotificationEntityState prev, NextNotificationsFailedAction action)
+  => prev.stopLoadingNext();
 
 NotificationEntityState addUnviewedNotificationsReducer(NotificationEntityState prev,AddUnviewedNotificationsAction action)
   => prev.prependNotifications(action.notifications);
@@ -17,8 +19,10 @@ NotificationEntityState markNotificationsAsViewedReducer(NotificationEntityState
   => prev.markAsViewed(action.ids);
 
 Reducer<NotificationEntityState> notificationEntityStateReducers = combineReducers<NotificationEntityState>([
-  TypedReducer<NotificationEntityState,GetNextPageNotificationsAction>(startLoadingNextReducer).call,
-  TypedReducer<NotificationEntityState,AddNextPageNotificationsAction>(addNextPageReducer).call,
+  TypedReducer<NotificationEntityState,NextNotificationsAction>(nextNotificationsReducer).call,
+  TypedReducer<NotificationEntityState,NextNotificationsSuccessAction>(nextNotificationsSuccessReducer).call,
+  TypedReducer<NotificationEntityState,NextNotificationsFailedAction>(nextNotificationsFailedReducer).call,
+
   TypedReducer<NotificationEntityState,AddUnviewedNotificationsAction>(addUnviewedNotificationsReducer).call,
   TypedReducer<NotificationEntityState,PrependNotificationAction>(prependNotificationReducer).call,
   TypedReducer<NotificationEntityState,MarkNotificationsAsViewedSuccessAction>(markNotificationsAsViewedReducer).call,

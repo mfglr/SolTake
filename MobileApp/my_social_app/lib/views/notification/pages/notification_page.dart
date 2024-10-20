@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -25,7 +26,11 @@ class _NotificationPageState extends State<NotificationPage> {
     _onScrollBottom = (){
       if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(const GetNextPageNotificationsIfReadyAction());
+        getNextEntitiesIfReady(
+          store,
+          store.state.notificationEntityState.pagination,
+          const NextNotificationsAction()
+        );
       }
     };
     _scrollController.addListener(_onScrollBottom);
@@ -53,7 +58,11 @@ class _NotificationPageState extends State<NotificationPage> {
         ),
       ),
       body: StoreConnector<AppState,NotificationEntityState>(
-        onInit: (store) => store.dispatch(const GetNextPageNotificationsIfNoPageAction()),
+        onInit: (store) => getNextEntitiesIfNoPage(
+          store,
+          store.state.notificationEntityState.pagination,
+          const NextNotificationsAction()
+        ),
         converter: (store) => store.state.notificationEntityState,
         builder: (context,state) => SingleChildScrollView(
           controller: _scrollController,

@@ -3,21 +3,17 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 
 @immutable
-class GetNextPageNotificationsIfNoPageAction extends AppAction{
-  const GetNextPageNotificationsIfNoPageAction();
-}
-@immutable 
-class GetNextPageNotificationsIfReadyAction extends AppAction{
-  const GetNextPageNotificationsIfReadyAction();
+class NextNotificationsAction extends AppAction {
+  const NextNotificationsAction();
 }
 @immutable
-class GetNextPageNotificationsAction extends AppAction {
-  const GetNextPageNotificationsAction();
-}
-@immutable
-class AddNextPageNotificationsAction extends AppAction{
+class NextNotificationsSuccessAction extends AppAction{
   final Iterable<NotificationState> notifications;
-  const AddNextPageNotificationsAction({required this.notifications});
+  const NextNotificationsSuccessAction({required this.notifications});
+}
+@immutable
+class NextNotificationsFailedAction extends AppAction{
+  const NextNotificationsFailedAction();
 }
 
 @immutable

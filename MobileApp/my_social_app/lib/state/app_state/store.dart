@@ -219,8 +219,6 @@ final store = Store(
     //notifications start
     markNotificationsAsViewedMiddleware,
     getUnviewedNotificationMiddleware,
-    getNextPageNotificationsIfNoPageMiddeware,
-    getNextPageNotificationsIfReadyActionMiddleware,
     getNextPageNotificationsMiddleware,
 
     //conversations

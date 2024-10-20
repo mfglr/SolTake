@@ -12,6 +12,8 @@ class NotificationEntityState{
 
   NotificationEntityState startLoadingNext()
     => NotificationEntityState(pagination: pagination.startLoadingNext());
+  NotificationEntityState stopLoadingNext()
+    => NotificationEntityState(pagination: pagination.stopLoadingNext());
   NotificationEntityState addNextPage(Iterable<NotificationState> notifications)
     => NotificationEntityState(pagination: pagination.addNextPage(notifications));
 

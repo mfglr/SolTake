@@ -17,7 +17,7 @@ class _ExtendableContentState extends State<ExtendableContent> {
   bool _isExtended = false;
 
   String _formatContent(String content) =>
-    content.length <= widget.numberOfExtention ? content : "${content.substring(1,widget.numberOfExtention - 3)}...";
+    content.length <= widget.numberOfExtention ? content : "${content.substring(0,widget.numberOfExtention - 3)}...";
 
   @override
   Widget build(BuildContext context) {
