@@ -4,9 +4,9 @@ using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Application.QueryRepositories;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution

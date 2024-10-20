@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 
-namespace MySocailApp.Domain.SolutionAggregate.Interfaces
+namespace MySocailApp.Domain.SolutionAggregate.Abstracts
 {
     public interface ISolutionWriteRepository
     {
@@ -18,8 +18,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Interfaces
         Task<List<Solution>> GetUserSolutionsAsync(int userId, CancellationToken cancellationToken);
         Task<List<Solution>> GetQuestionSolutionsAsync(int userId, CancellationToken cancellationToken);
 
-        Task DeleteSolutionUserSavesByUserId(int userId,CancellationToken cancellation);
-        Task DeleteSolutionUserVotesByUserId(int userId,CancellationToken cancellationToken);
+        Task DeleteSolutionUserSavesByUserId(int userId, CancellationToken cancellation);
+        Task DeleteSolutionUserVotesByUserId(int userId, CancellationToken cancellationToken);
         Task DeleteSolutionUserVoteNotificationsByUserId(int userId, CancellationToken cancellationToken);
     }
 }

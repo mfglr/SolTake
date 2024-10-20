@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Domain.CommentAggregate.DomainServices.InternalDomainServices
 {

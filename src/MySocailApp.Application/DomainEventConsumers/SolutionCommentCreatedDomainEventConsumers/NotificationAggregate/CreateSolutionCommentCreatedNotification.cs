@@ -5,7 +5,7 @@ using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.SolutionAggregate.Interfaces;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionCommentCreatedDomainEventConsumers.NotificationAggregate
 {

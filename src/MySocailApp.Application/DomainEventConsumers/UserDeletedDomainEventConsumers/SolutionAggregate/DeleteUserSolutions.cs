@@ -2,8 +2,8 @@
 using MySocailApp.Application.ApplicationServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.AppUserAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.SolutionAggregate
 {

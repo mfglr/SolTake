@@ -6,15 +6,14 @@ using MySocailApp.Domain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 {
-    public class SolutionStateMarker(IQuestionWriteRepository questionWriteRepository, IQuestionReadRepository questionReadRepository)
+    public class SolutionStateMarker(IQuestionReadRepository questionReadRepository)
     {
-        private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
 
         public async Task MarkAsCorrectAsync(Solution solution, int markerId, CancellationToken cancellationToken)
         {
             var question =
-                await _questionWriteRepository.GetByIdAsync(solution.QuestionId, cancellationToken) ??
+                await _questionReadRepository.GetAsync(solution.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
             if (markerId != question.AppUserId)

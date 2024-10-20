@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.ApplicationServices.BlobService.Objects;
 using MySocailApp.Application.ApplicationServices.BlobService.VideoServices;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionVideo
 {
