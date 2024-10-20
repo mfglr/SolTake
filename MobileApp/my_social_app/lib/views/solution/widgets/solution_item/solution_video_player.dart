@@ -41,6 +41,7 @@ class _SolutionVideoPlayerState extends State<SolutionVideoPlayer> {
           onTap: () => widget.play(widget.solution.id),
           image: widget.solution.images.first.image,
           status: widget.solution.images.first.state,
+          width: MediaQuery.of(context).size.width,
           aspectRatio: widget.solution.images.first.width / widget.solution.images.first.height,
           centerWidget: Container(
             decoration: const BoxDecoration(

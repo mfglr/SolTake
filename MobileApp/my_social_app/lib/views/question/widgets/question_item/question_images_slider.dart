@@ -93,8 +93,10 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
               (imageState) => DisplayImageWidget(
                 image: imageState.image,
                 status: imageState.state,
+                width: MediaQuery.of(context).size.width,
                 aspectRatio: _getMinAspectRatio(context, widget.question.images),
-              )).toList(),
+              )
+            ).toList(),
             options: CarouselOptions(
               autoPlay: false,
               viewportFraction: 1,

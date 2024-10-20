@@ -40,6 +40,7 @@ class _SolutionAbstractItemWidgetState extends State<SolutionAbstractItemWidget>
           return DisplayImageWidget(
             onTap: () => widget.onTap(widget.solution.id),
             image: image.image,
+            width: 0,
             status: image.state,
             aspectRatio: 1,
             stackFit: StackFit.expand,

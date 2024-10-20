@@ -36,6 +36,7 @@ class _QuestionAbstractItemWidgetState extends State<QuestionAbstractItemWidget>
         onTap: widget.onTap != null ? (){ widget.onTap!(widget.question.id); } : null,
         image: widget.question.images.first.image,
         status: widget.question.images.first.state,
+        width: 0,
         aspectRatio: 1,
         stackFit: StackFit.expand,
         boxFit: BoxFit.cover,
