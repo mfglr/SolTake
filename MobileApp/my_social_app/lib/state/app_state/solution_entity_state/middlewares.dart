@@ -19,6 +19,7 @@ import 'package:redux/redux.dart';
 
 void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
+    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
     SolutionService()
       .create(action.content, action.questionId, action.images)
       .then((solution){
