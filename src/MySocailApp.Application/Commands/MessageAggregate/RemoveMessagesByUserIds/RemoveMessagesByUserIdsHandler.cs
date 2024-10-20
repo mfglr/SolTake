@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 

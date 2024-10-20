@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using MySocailApp.Application.ApplicationServices.BlobService.ImageServices;
-using MySocailApp.Application.ApplicationServices.BlobService.Objects;
+using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
+using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 

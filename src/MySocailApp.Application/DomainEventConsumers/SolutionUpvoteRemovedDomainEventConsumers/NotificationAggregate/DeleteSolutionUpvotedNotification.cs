@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.ApplicationServices;
+﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;

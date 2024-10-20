@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;

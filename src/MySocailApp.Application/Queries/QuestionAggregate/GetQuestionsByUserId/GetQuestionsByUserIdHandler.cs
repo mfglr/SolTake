@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.QueryRepositories;
 

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId

@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using MySocailApp.Application.ApplicationServices.BlobService.Objects;
-using MySocailApp.Application.ApplicationServices.BlobService.TextService;
+using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using MySocailApp.Application.InfrastructureServices.BlobService.TextService;
 using MySocailApp.Core;
 using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
 

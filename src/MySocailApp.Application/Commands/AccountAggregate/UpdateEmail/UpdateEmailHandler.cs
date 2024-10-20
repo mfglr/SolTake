@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Application.ApplicationServices;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
