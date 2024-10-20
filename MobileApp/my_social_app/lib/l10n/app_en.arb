@@ -275,7 +275,7 @@
     "delete_conversations_button": "delete",
     "cancel_deletion_of_conversations_button": "cancel",
 
-    "take_video_page_duration_exception": "The duration of the video must be shorter than 60 seconds",
+    "take_video_page_duration_exception": "The duration of the video must be shorter than 180 seconds",
 
     "create_video_solution_page_title": "Create Video Solution",
     "create_video_solution_page_new_video_content": "New Video",

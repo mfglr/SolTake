@@ -273,7 +273,7 @@
     "delete_conversations_button": "sil",
     "cancel_deletion_of_conversations_button": "iptal",
 
-    "take_video_page_duration_exception": "Videonun süresi 60 saniyeden az olmalıdır!",
+    "take_video_page_duration_exception": "Videonun süresi 180 saniyeden az olmalıdır!",
 
     "create_video_solution_page_title": "Video Çözüm Oluştur",
     "create_video_solution_page_new_video_content": "Yeni Video",
