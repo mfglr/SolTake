@@ -6,6 +6,8 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
 {
     public class Message : Entity, IAggregateRoot
     {
+        public readonly static int MaxNumberOfMessageImage = 2;
+
         public bool IsEdited { get; private set; }
         public int SenderId { get; private set; }
         public int ReceiverId { get; private set; }
@@ -18,6 +20,10 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         {
             if (string.IsNullOrEmpty(content) && (images == null || !images.Any()))
                 throw new ContentRequiredException();
+
+            if (images != null && images.Count() > MaxNumberOfMessageImage)
+                throw new TooManyMessageImagesException();
+
             SenderId = senderId;
             Content = content;
             if (images != null)

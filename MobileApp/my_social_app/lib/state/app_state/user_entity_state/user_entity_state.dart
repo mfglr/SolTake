@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
@@ -157,4 +158,9 @@ class UserEntityState extends EntityState<UserState>{
     => UserEntityState(entities: updateOne(entities[userId]?.updateName(name)));
   UserEntityState updateBiography(int userId,String biography)
     => UserEntityState(entities: updateOne(entities[userId]?.updateBiography(biography)));
+
+  UserEntityState addMessageToCache(int userId, MessageState message)
+    => UserEntityState(entities: updateOne(entities[userId]?.addMessageToCache(message)));
+  UserEntityState removeMessageToCache(int userId, MessageState message)
+    => UserEntityState(entities: updateOne(entities[userId]?.removeMessageToCache(message)));
 }

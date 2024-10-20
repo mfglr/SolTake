@@ -9,6 +9,24 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
+// MessageState _createMessageState(int receiverId, String? content, Iterable<XFile> images,AccountState account){
+//   return MessageState(
+//     id: 0,
+//     createdAt: DateTime.now(),
+//     updatedAt: null,
+//     isOwner: true,
+//     userName: account.userName ,
+//     conversationId: receiverId,
+//     senderId: account.id,
+//     receiverId: receiverId,
+//     isEdited: false,
+//     content: content,
+//     state: MessageStatus.created,
+//     numberOfImages: images.length
+//   );
+// }
+
+
 void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateMessageAction){
     MessageHub()

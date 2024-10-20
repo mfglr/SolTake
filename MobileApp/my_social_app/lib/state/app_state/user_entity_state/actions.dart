@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
 @immutable
@@ -404,4 +405,17 @@ class UpdateBiographySuccessAction extends AppAction{
   final int userId;
   final String biography;
   const UpdateBiographySuccessAction({required this.userId, required this.biography});
+}
+
+@immutable
+class AddMessageToCacheAction extends AppAction{
+  final int userId;
+  final MessageState message;
+  const AddMessageToCacheAction({required this.userId, required this.message});
+}
+@immutable
+class RemoveMessageToCacheAction extends AppAction{
+  final int userId;
+  final MessageState message;
+  const RemoveMessageToCacheAction({required this.userId, required this.message});
 }

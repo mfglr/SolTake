@@ -141,6 +141,11 @@ UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction a
 UserEntityState updateBiographyReducer(UserEntityState prev, UpdateBiographySuccessAction action)
   => prev.updateBiography(action.userId, action.biography);
 
+UserEntityState addMessageToCacheReducer(UserEntityState prev, AddMessageToCacheAction action)
+  => prev.addMessageToCache(action.userId,action.message);
+UserEntityState removeMessageToCacheReducer(UserEntityState prev, RemoveMessageToCacheAction action)
+  => prev.removeMessageToCache(action.userId,action.message);
+
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   //
   TypedReducer<UserEntityState,MarkUserQuestionAsSolvedAction>(markQuestionAsSolvedReducer).call,
@@ -226,4 +231,7 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
   TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
   TypedReducer<UserEntityState,UpdateBiographySuccessAction>(updateBiographyReducer).call,
+
+  TypedReducer<UserEntityState,AddMessageToCacheAction>(addMessageToCacheReducer).call,
+  TypedReducer<UserEntityState,RemoveMessageToCacheAction>(removeMessageToCacheReducer).call,
 ]);

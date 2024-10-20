@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
 @immutable
@@ -25,6 +26,7 @@ class UserState{
   final Pagination savedSolutions;
   final Pagination messages;
   final Pagination conversations;
+  final Iterable<MessageState> messagesCache;
 
   String formatName(int count){
     final r = (name == "" ? userName : name);
@@ -58,6 +60,7 @@ class UserState{
     required this.messages,
     required this.notFolloweds,
     required this.conversations,
+    required this.messagesCache
   });
 
   UserState _optional({
@@ -81,6 +84,7 @@ class UserState{
     Pagination? newMessages,
     Pagination? newNotFolloweds,
     Pagination? newConversations,
+    Iterable<MessageState>? newMessagesCache,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -103,7 +107,8 @@ class UserState{
     savedSolutions: newSavedSolutions ?? savedSolutions,
     messages: newMessages ?? messages,
     notFolloweds: newNotFolloweds ?? notFolloweds,
-    conversations: newConversations ?? conversations
+    conversations: newConversations ?? conversations,
+    messagesCache: newMessagesCache ?? messagesCache
   );
   
   //followers
@@ -296,4 +301,9 @@ class UserState{
     _optional(newName: name);
   UserState updateBiography(String biography) =>
     _optional(newBiography: biography);
+
+  UserState addMessageToCache(MessageState message) =>
+    _optional(newMessagesCache: [...messagesCache,message]);
+  UserState removeMessageToCache(MessageState message) =>
+    _optional(newMessagesCache: messagesCache.where((e) => e != message));
 }
