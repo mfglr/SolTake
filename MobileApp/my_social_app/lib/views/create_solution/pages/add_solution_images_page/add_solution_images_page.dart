@@ -4,9 +4,9 @@ import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_content_page/add_solution_content_page.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/widgets/no_solution_image_widget.dart';
-import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/widgets/solution_carousel_slider_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/app_image_slider/app_image_slider.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 
 class AddSolutionImagesPage extends StatefulWidget {
@@ -75,7 +75,7 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
               .of(context)
               .push(MaterialPageRoute(builder: (context) => AddSolutionContentPage(multiMedya: _images)))
               .then((content){
-                if(content == null) return;
+                if(content == null && !context.mounted) return;
                 Navigator.of(context).pop((images: _images,content: content as String));
               }),
           child: Row(
@@ -102,7 +102,7 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
               child: NoSolutionImageWidget(addImage: _addImage,)
             );
           }
-          return SolutionCarouselSliderWidget(
+          return AppImageSlider(
             images: _images,
             removeImage: (image) => setState(() { _images = _images.where((e) => e != image); }),
           );

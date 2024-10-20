@@ -53,9 +53,9 @@ class _MessageTextFieldState extends State<MessageTextField> {
               hintStyle: const TextStyle(
                 color: Colors.grey
               ),
+              
               prefixIcon: IconButton(
                 onPressed: (){
-                  _messageContentController.clear();
                   Navigator
                     .of(context)
                     .pushNamed(takeImageRoute)
@@ -76,7 +76,6 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
               suffixIcon: IconButton(
                 onPressed: (){
-                  _messageContentController.clear();
                   ImagePicker()
                     .pickMultiImage(imageQuality: 100)
                     .then(
@@ -87,7 +86,6 @@ class _MessageTextFieldState extends State<MessageTextField> {
                       }
                     );
                 },
-
                 icon: const Icon(
                   Icons.photo_library_outlined,
                   size: 18,

@@ -5,8 +5,8 @@ import 'package:my_social_app/state/app_state/message_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/message/pages/create_message_images_page/widgets/message_text_field.dart';
-import 'package:my_social_app/views/message/pages/create_message_images_page/widgets/carousel_slider_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/app_image_slider/app_image_slider.dart';
 
 class CreateMessageImagesPage extends StatefulWidget {
   final Iterable<XFile> images;
@@ -58,7 +58,7 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
         children:[
           
           Expanded(
-            child: CarouselSliderWidget(
+            child: AppImageSlider(
               images: _images,
               removeImage: _removeImage
             ),

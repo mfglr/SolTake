@@ -1,31 +1,31 @@
-import 'dart:io';
-import 'package:camera/camera.dart';
+import 'dart:typed_data';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
-import 'package:my_social_app/views/shared/app_image_slider/clear_upload_button.dart';
+import 'package:my_social_app/views/shared/loading_widget.dart';
 
-class CarouselSliderWidget extends StatefulWidget {
-  final Iterable<XFile> images;
-  final void Function(XFile image) removeImage;
-  
-
-  const CarouselSliderWidget({
+class AppImageSliderFromMemory extends StatefulWidget {
+  final Iterable<Uint8List?> images;
+  final int activeIndex;
+  const AppImageSliderFromMemory({
     super.key,
     required this.images,
-    required this.removeImage
+    required this.activeIndex,
   });
 
   @override
-  State<CarouselSliderWidget> createState() => _CarouselSliderWidgetState();
+  State<AppImageSliderFromMemory> createState() => _AppImageSliderFromMemoryState();
 }
 
-class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
+class _AppImageSliderFromMemoryState extends State<AppImageSliderFromMemory> {
   final CarouselSliderController _controller = CarouselSliderController();
   int _index = 0;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _controller.jumpToPage(widget.activeIndex);
+    });
     super.initState();
   }
 
@@ -39,18 +39,14 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
           items: widget.images.map((image) => Center(
             child: Stack(
               children: [
-                Image.file(
-                  File(image.path),
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: ClearUploadButton(
-                    onPressed: () => widget.removeImage(image)
-                  ) 
-                )
+                if(image != null)
+                  Image.memory(
+                    image,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
+                  )
+                else
+                  const LoadingWidget(),
               ],
             )
           )).toList(),

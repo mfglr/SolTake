@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/shared/clear_upload_button/clear_upload_button.dart';
+import 'package:my_social_app/views/shared/app_image_slider/clear_upload_button.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 import 'package:video_player/video_player.dart';
 

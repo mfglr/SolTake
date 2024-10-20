@@ -15,6 +15,7 @@ class ClearUploadButton extends StatelessWidget {
         padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        backgroundColor: WidgetStateProperty.all(Colors.black.withOpacity(0.7))
       ),
       child: const Icon(
         Icons.close,

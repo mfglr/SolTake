@@ -4,9 +4,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
-import 'package:my_social_app/views/create_question/pages/add_question_image_page/widgets/carousel_slider_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/app_image_slider/app_image_slider.dart';
 
 class AddQuestionImagesPage extends StatefulWidget {
   const AddQuestionImagesPage({super.key});
@@ -89,7 +89,7 @@ class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
       body: Builder(
         builder: (context){
           if(_images.isNotEmpty){
-            return CarouselSliderWidget(
+            return AppImageSlider(
               images: _images,
               removeImage: (image) => setState(() { _images = _images.where((e) => e != image); }),
             );

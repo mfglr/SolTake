@@ -5,22 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
 import 'package:my_social_app/views/shared/app_image_slider/clear_upload_button.dart';
 
-class CarouselSliderWidget extends StatefulWidget {
+class AppImageSlider extends StatefulWidget {
   final Iterable<XFile> images;
   final void Function(XFile image) removeImage;
-  
+  final bool displayRemoveImageButton;
 
-  const CarouselSliderWidget({
+  const AppImageSlider({
     super.key,
     required this.images,
-    required this.removeImage
+    required this.removeImage,
+    this.displayRemoveImageButton = true
   });
 
   @override
-  State<CarouselSliderWidget> createState() => _CarouselSliderWidgetState();
+  State<AppImageSlider> createState() => _AppImageSliderState();
 }
 
-class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
+class _AppImageSliderState extends State<AppImageSlider> {
   final CarouselSliderController _controller = CarouselSliderController();
   int _index = 0;
 
@@ -44,15 +45,16 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
                 ),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: ClearUploadButton(
-                    onPressed: () => widget.removeImage(image)
-                  ) 
-                )
+                if(widget.displayRemoveImageButton)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: ClearUploadButton(
+                      onPressed: () => widget.removeImage(image)
+                    ) 
+                  )
               ],
-            )
+            ),
           )).toList(),
           options: CarouselOptions(
             autoPlay: false,
