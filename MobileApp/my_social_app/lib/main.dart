@@ -16,7 +16,6 @@ import 'package:my_social_app/views/account/approve_privacy_policy_page/approve_
 import 'package:my_social_app/views/account/approve_terms_of_use_page/approve_terms_of_use_page.dart';
 import 'package:my_social_app/views/account/register_page/register_page.dart';
 import 'package:my_social_app/views/account/login_page/login_page.dart';
-import 'package:my_social_app/views/message/pages/take_message_image_page.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/verify_email_page.dart/verify_email_page.dart';
 import 'package:my_social_app/views/take_image_page/take_image_page.dart';
@@ -76,7 +75,6 @@ Future<void> main() async {
           ),
           home: MainView(account: account),
           routes: {
-            takeMessageImageRoute: (context) => TakeMessageImagePage(camera: cameras.first),
             takeImageRoute: (context) => TakeImagePage(camera: cameras.first),
             takeVideoRoute: (context) => TakeVieoPage(camera: cameras.first)
           },

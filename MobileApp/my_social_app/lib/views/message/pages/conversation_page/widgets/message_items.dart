@@ -60,6 +60,7 @@ class _MessageItemsState extends State<MessageItems> {
           SizedBox(
             width: MediaQuery.of(context).size.width * 3 / 4,
             child: MessageItem(
+              key: ValueKey(message.id),
               selectedMessageIds: widget.selectedMessageIds,
               onPressedMesssageItem: widget.onPressedMessageItem,
               onLongPressedMessageItem: widget.onLongPressedMessageItem,

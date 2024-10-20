@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/actionDispathcers.dart';
-import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/actions.dart';
@@ -45,7 +44,6 @@ class _MessageHomePageState extends State<MessageHomePage> {
         .of(context)
         .push(MaterialPageRoute(builder: (context) => ConversationPage(userId: conversationId)));
       final store = StoreProvider.of<AppState>(context,listen: false);
-      store.dispatch(ChangeReceiverIdAction(receiverId: conversationId));
       store.dispatch(MarkComingMessagesAsViewedAction(userId: conversationId));
     }
   }

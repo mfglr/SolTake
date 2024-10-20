@@ -12,7 +12,7 @@ class CirclePaginationWidget extends StatelessWidget {
     super.key,
     required this.numberOfCircles,
     required this.changeActiveIndex,
-    this.activeIndex = 0,
+    required this.activeIndex,
     this.activeColor = Colors.blue,
     this.passiveColor = Colors.grey,
     this.diameter = 6

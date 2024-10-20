@@ -9,6 +9,33 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
+void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateMessageAction){
+    MessageHub()
+      .createMessage(action.receiverId, action.content)
+      .then((message){
+        store.dispatch(AddMessageAction(message: message.toMessageState()));
+        store.dispatch(AddUserMessageAction(userId: action.receiverId,messageId: message.id));
+      });
+  }
+  next(action);
+}
+
+void createMessageWithImagesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateMessageWithImagesAction){
+    MessageService()
+      .createMessage(action.receiverId, action.content, action.images)
+      .then((message){
+        store.dispatch(AddMessageAction(message: message.toMessageState()));
+        store.dispatch(AddMessageImagesAction(images: List.generate(
+          message.numberOfImages, (index) => MessageImageState.init(message.id, index))
+        ));
+        store.dispatch(AddUserMessageAction(userId: action.receiverId,messageId: message.id));
+      });
+  }
+  next(action);
+}
+
 void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadMessageAction){
     if(store.state.messageEntityState.entities[action.messageId] == null){

@@ -6,6 +6,9 @@ void handleErrors(Object error){
     ToastCreator.displayError(error.message);
   }
   else{
-    ToastCreator.displayError(error.toString());
+    const isProduction = bool.fromEnvironment('dart.vm.product');
+    if(!isProduction){
+      ToastCreator.displayError(error.toString());
+    }
   }
 }

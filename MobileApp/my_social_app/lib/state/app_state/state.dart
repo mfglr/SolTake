@@ -3,7 +3,6 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
-import 'package:my_social_app/state/app_state/create_message_state/create_message_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
@@ -62,7 +61,6 @@ class AppState{
   final MessageEntityState messageEntityState;
   final MessageImageEntityState messageImageEntityState;
   final MessageHomePageState messageHomePageState;
-  final CreateMessageState createMessageState;
   final UserSearchEntityState userSearchEntityState;
   final QuestionEntityState questionEntityState;
   final QuestionUserLikeEntityState questionUserLikeEntityState;
@@ -92,7 +90,6 @@ class AppState{
     required this.messageEntityState,
     required this.messageImageEntityState,
     required this.messageHomePageState,
-    required this.createMessageState,
     required this.userSearchEntityState,
     required this.followEntityState,
     required this.questionEntityState,
@@ -127,7 +124,6 @@ class AppState{
     messageEntityState: const MessageEntityState(entities: {}),
     messageImageEntityState: const MessageImageEntityState(entities: {}),
     messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
-    createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),

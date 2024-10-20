@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/actionDispathcers.dart';
 import 'package:my_social_app/services/message_hub.dart';
-import 'package:my_social_app/state/app_state/create_message_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_text_field.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/message/widgets/message_field.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_items.dart';
 import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -63,7 +62,6 @@ class _ConversationPageState extends State<ConversationPage>{
   @override
   void initState() {
     final store = StoreProvider.of<AppState>(context,listen: false);
-    store.dispatch(ChangeReceiverIdAction(receiverId: widget.userId));
 
     _onScrollBottom = (){
       if(_scrollController.position.pixels == 0){
@@ -134,7 +132,6 @@ class _ConversationPageState extends State<ConversationPage>{
                         child: const Icon(Icons.cancel)
                       ),
                       Text(AppLocalizations.of(context)!.conversation_page_delete_cancel_button)
-                      
                     ],
                   )
                 ),
@@ -149,7 +146,7 @@ class _ConversationPageState extends State<ConversationPage>{
                         AppLocalizations.of(context)!.show_app_dialog_delete_button
                       )
                       .then((value){
-                        if(value){
+                        if(value && context.mounted){
                           final store = StoreProvider.of<AppState>(context,listen: false);
                           store.dispatch(RemoveMessagesAction(userId: widget.userId, messageIds: _selectedIds));
                           _clearAllSelectedIds();
@@ -203,10 +200,10 @@ class _ConversationPageState extends State<ConversationPage>{
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(5,5,5,20),
-                    child: MessageField(
+                    child: MessageTextField(
                       hintText: AppLocalizations.of(context)!.conversation_page_message_field_hint_text,
-                      type: MessageFieldType.forConversation,
                       scrollController: _scrollController,
+                      receiverId: widget.userId,
                     ),
                   ),
                 ],

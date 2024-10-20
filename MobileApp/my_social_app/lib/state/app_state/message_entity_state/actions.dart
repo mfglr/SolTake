@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+
+@immutable
+class CreateMessageAction extends AppAction{
+  final int receiverId;
+  final String content;
+  const CreateMessageAction({required this.receiverId, required this.content});
+}
+
+@immutable
+class CreateMessageWithImagesAction extends AppAction{
+  final int receiverId;
+  final String? content;
+  final Iterable<XFile> images;
+  const CreateMessageWithImagesAction({required this.receiverId, required this.content, required this.images});
+}
+
 
 @immutable
 class LoadMessageAction extends AppAction{

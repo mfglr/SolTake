@@ -157,6 +157,8 @@
 
     "messages_home_page_title": "Mesajlar",
 
+    "create_message_images_page_image_count_error": "Bir mesaja 2' den fazla resim yükleyemezsiniz.",
+
     "conversation_item": "Resim ...",
 
     "create_message_images_page_message_field_hint_text": "Mesaj ...",

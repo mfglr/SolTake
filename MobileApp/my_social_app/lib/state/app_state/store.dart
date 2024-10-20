@@ -5,8 +5,6 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_entit
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/create_message_state/create_message_state.dart';
-import 'package:my_social_app/state/app_state/create_message_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
@@ -76,7 +74,6 @@ final store = Store(
     messageEntityState: const MessageEntityState(entities: {}),
     messageImageEntityState: const MessageImageEntityState(entities: {}),
     messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
-    createMessageState: const CreateMessageState(content: null, images: [], receiverId: null),
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
@@ -142,7 +139,6 @@ final store = Store(
     updateUserNameMiddleware,
     updateNameMiddleware,
     updateBiographyMidleware,
-    //user end
 
     //user image start
     loadUserImageMiddleware,
@@ -210,11 +206,9 @@ final store = Store(
     unsaveSolutionMiddleware,
     makeSolutionDownvoteMiddleware,
     removeSolutionDownvoteMiddleware,
-
     nextSolutionUpvotesMiddleware,
     nextSolutionDownvotesMiddleware,
     nextSolutionCommentsMiddleware,
-    //solution end
 
     //comments entity state
     createCommentMiddleware,
@@ -228,19 +222,17 @@ final store = Store(
     getNextPageNotificationsIfNoPageMiddeware,
     getNextPageNotificationsIfReadyActionMiddleware,
     getNextPageNotificationsMiddleware,
-    //notifications end
 
-    //conversations start
+    //conversations
     nextConversationsMiddleware,
-    //conversations end
 
     //message
+    createMessageWithImagesMiddleware,
+    createMessageMiddleware,
     markComingMessageAsReceivedMiddleware,
     markComingMessageAsViewedMiddleware,
     markComingMessagesAsReceivedMiddleware,
     markComingMessagesAsViewedMiddleware,
-    createMessageWithImagesMiddleware,
-    createMessageMiddleware,
     getUnviewedMessagesMiddleware,
     loadMessageMiddleware,
     removeMessageMiddleware,
@@ -249,11 +241,9 @@ final store = Store(
 
     //message image
     loadMessageImageMiddleware,
-
-
+    
     //policyState
     loadPrivacyPolicyMiddleware,
     loadTermsOfUseMiddleware,
-
   ]
 );

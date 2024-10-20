@@ -3,7 +3,6 @@
     "votes": "votes",
     "vote": "vote",
 
-
     "aprove_terms_of_use_page_title": "Terms of Use",
     "aprove_privacy_policy_page_title": "Privacy Policy",
     "aprove_privacy_policy_page_checkbox_label": "I have read and accept the privacy policy.",
@@ -159,6 +158,8 @@
     "conversation_page_delete_dialog_content": "Are you sure you want to delete your messages?",
 
     "messages_home_page_title": "Messages",
+
+    "create_message_images_page_image_count_error": "You cannot upload more than 2 images in a message.",
 
     "conversation_item": "Image ...",
 
