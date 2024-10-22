@@ -7,6 +7,7 @@ class MessageTextField extends StatefulWidget {
   final int receiverId;
   final void Function(Iterable<XFile> images) addImages;
   final void Function(String? content) createMessage;
+  final bool Function() validateNumberOfImages;
 
   const MessageTextField({
     super.key,
@@ -14,6 +15,7 @@ class MessageTextField extends StatefulWidget {
     required this.receiverId,
     required this.addImages,
     required this.createMessage,
+    required this.validateNumberOfImages
   });
 
   @override
@@ -56,6 +58,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
               
               prefixIcon: IconButton(
                 onPressed: (){
+                  if(!widget.validateNumberOfImages()) return;
                   Navigator
                     .of(context)
                     .pushNamed(takeImageRoute)
@@ -76,6 +79,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
               suffixIcon: IconButton(
                 onPressed: (){
+                  if(!widget.validateNumberOfImages()) return;
                   ImagePicker()
                     .pickMultiImage(imageQuality: 100)
                     .then(

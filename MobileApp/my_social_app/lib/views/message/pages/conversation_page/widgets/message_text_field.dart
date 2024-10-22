@@ -25,7 +25,6 @@ class MessageTextField extends StatefulWidget {
 class _MessageTextFieldState extends State<MessageTextField> {
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _messageContentController = TextEditingController();
-  String? _content;
 
   @override
   void dispose() {
@@ -47,7 +46,8 @@ class _MessageTextFieldState extends State<MessageTextField> {
             style: const TextStyle(
               fontSize: 14,
             ),
-            
+            onChanged: (value) => setState(() {}),
+
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(28.0)),
               hintText: widget.hintText,
@@ -83,6 +83,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
               suffixIcon: IconButton(
                 onPressed: (){
+                  _messageContentController.text = "";
                   _messageContentController.clear();
                   ImagePicker()
                     .pickMultiImage(imageQuality: 100)
@@ -109,12 +110,11 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   size: 18,
                 )
               ),
-            ),
-            onChanged: (value) => setState(() { _content = value; }),
+            )
           ),
         ),
         IconButton(
-          onPressed: _content == null 
+          onPressed: _messageContentController.text == ""
             ? null 
             : (){
                 widget.scrollController!.animateTo(
@@ -122,10 +122,9 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.linear
                 );
-                _messageContentController.clear();
-
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(CreateMessageAction(receiverId: widget.receiverId,content: _content!));
+                store.dispatch(CreateMessageAction(receiverId: widget.receiverId,content: _messageContentController.text));
+                _messageContentController.clear();
               },
           icon: const Icon(
             Icons.send,

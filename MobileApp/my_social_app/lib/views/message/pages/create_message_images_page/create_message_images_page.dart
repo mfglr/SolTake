@@ -23,6 +23,14 @@ class CreateMessageImagesPage extends StatefulWidget {
 
 class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
   late Iterable<XFile> _images;
+
+  bool _validateNumberOfImages(){
+    if(_images.length >= 2){
+      ToastCreator.displayError(AppLocalizations.of(context)!.create_message_images_page_image_count_error);
+      return false;
+    }
+    return true;
+  }
   
   void _addImages(Iterable<XFile> images){
     if(_images.length + images.length > 2){
@@ -71,6 +79,7 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
               receiverId: widget.receiverId,
               addImages: _addImages,
               createMessage: _createMessage,
+              validateNumberOfImages: _validateNumberOfImages,
             ),
           )
           
