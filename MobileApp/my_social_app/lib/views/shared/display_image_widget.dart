@@ -32,37 +32,41 @@ class DisplayImageWidget extends StatefulWidget {
 class _DisplayImageWidgetState extends State<DisplayImageWidget> {
   @override
   Widget build(BuildContext context) {
-    return  Builder(
-      builder: (context){
-        switch(widget.status){
-          case ImageStatus.done:
-            return GestureDetector(
-              onTap: widget.onTap,
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                fit: widget.stackFit,
-                children: [
-                  Image.memory(
-                    widget.image!,
-                    fit: widget.boxFit,
-                    width: widget.width,
-                    height: widget.width / widget.aspectRatio,
-                  ),
-                  if(widget.centerWidget != null)
-                    Positioned(
-                      child: widget.centerWidget!
-                    )
-                ],
-              ),
-            );
-          case ImageStatus.started:
-            return const LoadingWidget();
-          case ImageStatus.notStarted:
-            return const LoadingWidget();
-          case ImageStatus.notFound:
-            return const ImageNotFoundWidget();
+    return  SizedBox(
+      width: widget.width,
+      height: widget.width / widget.aspectRatio,
+      child: Builder(
+        builder: (context){
+          switch(widget.status){
+            case ImageStatus.done:
+              return GestureDetector(
+                onTap: widget.onTap,
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  fit: widget.stackFit,
+                  children: [
+                    Image.memory(
+                      widget.image!,
+                      fit: widget.boxFit,
+                      width: widget.width,
+                      height: widget.width / widget.aspectRatio,
+                    ),
+                    if(widget.centerWidget != null)
+                      Positioned(
+                        child: widget.centerWidget!
+                      )
+                  ],
+                ),
+              );
+            case ImageStatus.started:
+              return const LoadingWidget();
+            case ImageStatus.notStarted:
+              return const LoadingWidget();
+            case ImageStatus.notFound:
+              return const ImageNotFoundWidget();
+          }
         }
-      }
+      ),
     );
   }
 }

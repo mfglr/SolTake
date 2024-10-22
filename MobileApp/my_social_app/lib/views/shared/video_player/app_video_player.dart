@@ -146,9 +146,10 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
           ],
         ),
       ) 
-      : AspectRatio(
-        aspectRatio: widget.aspectRatio,
-        child: const LoadingWidget()
-      );
+      : SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.width / widget.aspectRatio,
+          child: const LoadingWidget()
+        );
   }
 }
