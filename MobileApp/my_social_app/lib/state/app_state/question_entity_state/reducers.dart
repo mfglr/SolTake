@@ -1,5 +1,6 @@
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
 //questions
@@ -40,12 +41,14 @@ QuestionEntityState nextSolutionsFailedReducer(QuestionEntityState prev,NextQues
   => prev.stopLoadingNextSolutions(action.questionId);
 
 //uploading solutions
-QuestionEntityState startUploadingSolutionReducer(QuestionEntityState prev, StartUploadingSolutionAction action)
+QuestionEntityState startUploadingSolutionReducer(QuestionEntityState prev, CreateSolutionAction action)
   => prev.startUploadingSolution(action.id, action.questionId, action.content, action.images);
-QuestionEntityState startUploadingVideoSolutionReducer(QuestionEntityState prev, StartUploadingVideoSolutionAction action)
+QuestionEntityState startUploadingVideoSolutionReducer(QuestionEntityState prev, CreateVideoSolutionAction action)
   => prev.startUplodingVideoSolution(action.id, action.questionId, action.content, action.video);
-QuestionEntityState changeRateReducer(QuestionEntityState prev, ChangeRateAction action)
-  => prev.changeRate(action.state,action.rate);
+QuestionEntityState changeUploadingSolutionRate(QuestionEntityState prev, ChangeUploadingSolutionRateAction action)
+  => prev.changeUploadingSolutionRate(action.state,action.rate);
+QuestionEntityState changeUploadingSolutionStatus(QuestionEntityState prev, ChangeUploadingSolutionStatusAction action)
+  => prev.changeUploadingSolutionStatus(action.state,action.status);
 QuestionEntityState removeUploadedSolutionReducer(QuestionEntityState prev,RemoveUploadedSolutionAction action)
   => prev.removeUploadedSolution(action.state);
 
@@ -137,12 +140,11 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,
 
   //uploading solutions
-  TypedReducer<QuestionEntityState,StartUploadingSolutionAction>(startUploadingSolutionReducer).call,
-  TypedReducer<QuestionEntityState,StartUploadingVideoSolutionAction>(startUploadingVideoSolutionReducer).call,
-  TypedReducer<QuestionEntityState,ChangeRateAction>(changeRateReducer).call,
+  TypedReducer<QuestionEntityState,CreateSolutionAction>(startUploadingSolutionReducer).call,
+  TypedReducer<QuestionEntityState,CreateVideoSolutionAction>(startUploadingVideoSolutionReducer).call,
+  TypedReducer<QuestionEntityState,ChangeUploadingSolutionRateAction>(changeUploadingSolutionRate).call,
+  TypedReducer<QuestionEntityState,ChangeUploadingSolutionStatusAction>(changeUploadingSolutionStatus).call,
   TypedReducer<QuestionEntityState,RemoveUploadedSolutionAction>(removeUploadedSolutionReducer).call,
-  
- 
 
   //solutions
   TypedReducer<QuestionEntityState,NextQuestionSolutionsAction>(nextSolutionsReducer).call,

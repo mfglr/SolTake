@@ -6,6 +6,7 @@ import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutioon_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/solution_user_save_entity_state/actions.dart';
@@ -21,14 +22,29 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
     ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
     SolutionService()
-      .create(action.content, action.questionId, action.images)
+      .create(
+        action.questionId,
+        action.content,
+        action.images,
+        (rate){
+          final uploadingsolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
+          store.dispatch(ChangeUploadingSolutionRateAction(state: uploadingsolution, rate: rate));
+        }
+      )
       .then((solution){
         final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
+        
         final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-        store.dispatch(RemoveUploadedSolutionAction(state: uploadingSolution));
+        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingSolutioonStatus.success));
+        
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
+      })
+      .catchError((e){
+        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
+        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingSolutioonStatus.failed));
+        throw e;
       });
   }
   next(action);
@@ -44,14 +60,14 @@ void createVideoSolutionMiddleware(Store<AppState> store,action,NextDispatcher n
         action.video,
         (rate) {
           final uploadingsolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-          store.dispatch(ChangeRateAction(state: uploadingsolution, rate: rate));
+          store.dispatch(ChangeUploadingSolutionRateAction(state: uploadingsolution, rate: rate));
         }
       )
       .then((solution){
         final solutionState = solution.toSolutionState();
 
         final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-        store.dispatch(RemoveUploadedSolutionAction(state: uploadingSolution));
+        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingSolutioonStatus.success));
 
         store.dispatch(AddSolutionAction(solution: solutionState));
         store.dispatch(CreateNewQuestionVideoSolutionAction(solution: solutionState));
@@ -60,7 +76,7 @@ void createVideoSolutionMiddleware(Store<AppState> store,action,NextDispatcher n
       })
       .catchError((e){
         final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-        store.dispatch(RemoveUploadedSolutionAction(state: uploadingSolution));
+        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingSolutioonStatus.failed));
         throw e;
       });
   }

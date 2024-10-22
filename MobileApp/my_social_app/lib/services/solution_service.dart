@@ -32,50 +32,59 @@ class SolutionService{
     return completer.future;
   }
 
-
-  Future<MultipartRequest> _createSolutionRequest(String? content,int questionId, Iterable<XFile>? images) async {
-    MultipartRequest request = MultipartRequest(
+  Future<HttpClientRequest> _createSolutionRequest(int questionId, String? content, Iterable<XFile>? images, void Function(double) callback) async {
+    MultipartRequest multiPartRequest = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
     );
-    request.headers.addAll(_appClient.getHeader());
+    multiPartRequest.fields["questionId"] = questionId.toString();
+    if(content != null) multiPartRequest.fields["content"] = content;
     if(images != null){
       for(final image in images){
-        request.files.add(await MultipartFile.fromPath("images",image.path));
+        multiPartRequest.files.add(await MultipartFile.fromPath("images",image.path));
       }
     }
-    request.fields["questionId"] = questionId.toString();
-    if(content != null) request.fields["content"] = content;  
-    return request;
-  }
-  Future<Solution> create(String? content,int questionId, Iterable<XFile>? images) =>
-    _createSolutionRequest(content, questionId, images)
-      .then((request) => request.send())
-      .then((response) async {
-        if(response.statusCode >= 400){
-          if(response.statusCode == 401){
-            return await _appClient
-              .loginByRefreshToken()
-              .then((_) => _createSolutionRequest(content, questionId, images))
-              .then((request) => request.send());
-          }
-          var message = utf8.decode(await response.stream.toBytes());
-          throw BackendException(message: message, statusCode: response.statusCode);
-        }
-        return response;
-      })
-      .then(
-        (response) => response.stream
-          .toBytes()
-          .then((bytes) => utf8.decode(bytes))
-          .then((data){
-            if(response.statusCode > 400){
-              throw BackendException(message: data,statusCode: response.statusCode);
-            }
-            return Solution.fromJson(jsonDecode(data));
-          })
-      );
+    var stream = multiPartRequest.finalize();
+    var length = multiPartRequest.contentLength;
 
+    var r = await HttpClient().postUrl(_appClient.generateUri("$solutionController/$createSolutionEndpoint"));
+    r.headers.set(HttpHeaders.contentTypeHeader, multiPartRequest.headers[HttpHeaders.contentTypeHeader]!);
+    r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
+    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
+
+    var byteCount = 0;
+    await r.addStream(
+      stream.transform(
+        StreamTransformer.fromHandlers(
+          handleData: (data,sink){
+            sink.add(data);
+            byteCount += data.length;
+            callback(byteCount / length);
+          }
+        )  
+      )
+    );
+    return r;
+  }
+  Future<Solution> create(int questionId, String? content, Iterable<XFile>? images, void Function(double) callback) async {
+    var request = await _createSolutionRequest(questionId,content,images,callback);
+    var response = await request.close();
+    var data = await _readResponse(response);
+    
+    if(response.statusCode >= 400){
+      if(response.statusCode != 401){
+        throw BackendException(message: data,statusCode: response.statusCode);
+      }
+      await _appClient.loginByRefreshToken();
+      request = await _createSolutionRequest(questionId,content,images,callback);
+      response = await request.close();
+      data = await _readResponse(response);
+      if(response.statusCode >= 400){
+        throw BackendException(message: data,statusCode: response.statusCode);
+      }
+    }
+    return Solution.fromJson(jsonDecode(data));
+  }
 
   Future<HttpClientRequest> _createVideoSolutionRequest(int questionId, String? content, XFile video,  void Function(double) callback) async {
     MultipartRequest multiPartRequest = MultipartRequest(
@@ -108,13 +117,12 @@ class SolutionService{
     );
     return r;
   }
-
   Future<Solution> createVideoSolution(int questionId, String? content, XFile video, void Function(double) callback) async {
     var request = await _createVideoSolutionRequest(questionId,content,video,callback);
     var response = await request.close();
     var data = await _readResponse(response);
     
-    if(response.statusCode > 400){
+    if(response.statusCode >= 400){
       if(response.statusCode != 401){
         throw BackendException(message: data,statusCode: response.statusCode);
       }
@@ -122,7 +130,7 @@ class SolutionService{
       request = await _createVideoSolutionRequest(questionId,content,video,callback);
       response = await request.close();
       data = await _readResponse(response);
-      if(response.statusCode > 400){
+      if(response.statusCode >= 400){
         throw BackendException(message: data,statusCode: response.statusCode);
       }
     }

@@ -17,7 +17,7 @@ import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/solution/widgets/uploading_solution/uploading_solution_abstract_item/uploading_solution_abstract_items.dart';
+import 'package:my_social_app/views/solution/widgets/uploading_solution_abstract_item/uploading_solution_abstract_items.dart';
 import 'package:badges/badges.dart' as badges;
 
 

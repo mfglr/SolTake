@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutioon_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
@@ -308,26 +309,16 @@ class UnsaveQuestionSuccessAction extends AppAction{
 }
 
 @immutable
-class StartUploadingVideoSolutionAction extends AppAction{
-  final String id;
-  final int questionId;
-  final String? content;
-  final XFile video;
-  const StartUploadingVideoSolutionAction({required this.id, required this.questionId, required this.content, required this.video});
-}
-@immutable
-class StartUploadingSolutionAction extends AppAction{
-  final String id;
-  final int questionId;
-  final String? content;
-  final Iterable<XFile> images;
-  const StartUploadingSolutionAction({required this.id, required this.questionId, required this.content, required this.images});
-}
-@immutable
-class ChangeRateAction extends AppAction{
+class ChangeUploadingSolutionRateAction extends AppAction{
   final UploadingSolutionState state;
   final double rate;
-  const ChangeRateAction({required this.state, required this.rate});
+  const ChangeUploadingSolutionRateAction({required this.state, required this.rate});
+}
+@immutable
+class ChangeUploadingSolutionStatusAction extends AppAction{
+  final UploadingSolutionState state;
+  final UploadingSolutioonStatus status;
+  const ChangeUploadingSolutionStatusAction({required this.state, required this.status});
 }
 @immutable
 class RemoveUploadedSolutionAction extends AppAction{

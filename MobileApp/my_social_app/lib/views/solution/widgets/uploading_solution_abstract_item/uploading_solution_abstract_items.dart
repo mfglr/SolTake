@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
-import 'package:my_social_app/views/solution/widgets/uploading_solution/uploading_solution_abstract_item/uploading_solution_abstract_item.dart';
+import 'package:my_social_app/views/solution/widgets/uploading_solution_abstract_item/uploading_solution_abstract_item.dart';
 
 class UploadingSolutionAbstractItems extends StatelessWidget {
   final Iterable<UploadingSolutionState> solutions;

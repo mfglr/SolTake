@@ -1,8 +1,6 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_images_page/add_solution_images_page.dart';
@@ -19,9 +17,18 @@ class CreateSolutionSpeedDial extends StatelessWidget {
     required this.pageController
   });
 
-  void _changePage(){
-    pageController
-      .animateToPage(4, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+  void _createSolution(BuildContext context, value){
+    final id = const Uuid().v4();
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(CreateSolutionAction(id: id, questionId: questionId, content: value.content, images: value.images));
+    pageController.animateToPage(4, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+  }
+
+  void _createVideoSolution(BuildContext context, value){
+    final id = const Uuid().v4();
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(CreateVideoSolutionAction(id:id, questionId: questionId, content: value.content, video: value.video));
+    pageController.animateToPage(4, duration: const Duration(milliseconds: 300), curve: Curves.linear);
   }
 
   @override
@@ -41,41 +48,30 @@ class CreateSolutionSpeedDial extends StatelessWidget {
           child: const Icon(Icons.photo),
           shape: const CircleBorder(),
           backgroundColor: Colors.green,
-          onTap: () async {
-            final store = StoreProvider.of<AppState>(context,listen: false);
-            final value = await Navigator
+          onTap: () => 
+            Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => const AddSolutionImagesPage()));
-
-            if(value != null){
-              var images = value.images as Iterable<XFile>;
-              final id = const Uuid().v4();
-              store.dispatch(CreateSolutionAction(id: id, questionId: questionId, content: value.content, images: images));
-              store.dispatch(StartUploadingSolutionAction(id:id, questionId: questionId,content: value.content,images: images));
-              _changePage();
-            }
-
-          }
+              .push(MaterialPageRoute(builder: (context) => const AddSolutionImagesPage()))
+              .then((value){
+                if(value != null && context.mounted){
+                  _createSolution(context,value);
+                }
+              })
         ),
         SpeedDialChild(
           child: const Icon(Icons.video_library),
           shape: const CircleBorder(),
           label: AppLocalizations.of(context)!.create_question_speed_dial_video_solution_label,
           backgroundColor: Colors.blue,
-          onTap: () async{
-            final value = await Navigator
+          onTap: () =>
+            Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => const CreateVideoSolutionPage()));
-            if(value != null){
-              if(context.mounted){
-                final id = const Uuid().v4();
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                store.dispatch(StartUploadingVideoSolutionAction(id:id, questionId: questionId, content: value.content, video: value.video));
-                store.dispatch(CreateVideoSolutionAction(id: id, questionId: questionId, content: value.content, video: value.video));
-                _changePage();
-              }
-            }
-          }
+              .push(MaterialPageRoute(builder: (context) => const CreateVideoSolutionPage()))
+              .then((value){
+                if(value != null && context.mounted){
+                  _createVideoSolution(context, value);
+                }
+              })
         )
       ],
     );

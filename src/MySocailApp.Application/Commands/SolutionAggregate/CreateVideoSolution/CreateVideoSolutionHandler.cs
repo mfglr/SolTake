@@ -33,9 +33,12 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateVideoSolution
 
             await _solutionCreator.CreateAsync(solution, cancellationToken);
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
+
             await _unitOfWork.CommitAsync(cancellationToken);
 
             return (await _solutionQueryRepository.GetByIdAsync(userId, solution.Id, cancellationToken))!;
+
+
         }
     }
 }
