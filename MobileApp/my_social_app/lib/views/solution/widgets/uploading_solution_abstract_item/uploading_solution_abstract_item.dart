@@ -51,95 +51,99 @@ class _UploadingSolutionAbstractItemState extends State<UploadingSolutionAbstrac
             child: VideoPlayer(_controller!)
           ),
         Positioned(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if(widget.solution.status == UploadingSolutioonStatus.loading)
-                if(widget.solution.rate >= 1)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 4),
-                        child: Text(
-                          AppLocalizations.of(context)!.uploading_solution_abstract_item,
-                          style: const TextStyle(
-                            color: Colors.white
-                          ),
-                        ),
-                      ),
-                      LoadingAnimationWidget.horizontalRotatingDots(
-                        color: Colors.white,
-                        size: 12,
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 5),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 5,
-                          backgroundColor: Colors.blue,
-                          valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-                          value: widget.solution.rate,
-                        ),
-                      ),
-                      Text(
-                        "${(widget.solution.rate * 100).toStringAsFixed(2)}%",
-                        style: const TextStyle(
-                          color: Colors.white
-                        ),
-                      )
-                    ],
-                  )
-              else
-                if(widget.solution.status == UploadingSolutioonStatus.success)
-                  const Icon(
-                    Icons.done,
-                    color: Colors.green,
-                    size: 64,
-                  )
-                else
-                  TextButton(
-                    onPressed: (){
-                      final store = StoreProvider.of<AppState>(context,listen: false);
-                      if(widget.solution.video != null){
-                        store.dispatch(CreateVideoSolutionAction(
-                          id: widget.solution.id,
-                          questionId: widget.solution.questionId,
-                          content: widget.solution.content,
-                          video: widget.solution.video!
-                        ));
-                      }
-                      else{
-                        store.dispatch(CreateSolutionAction(
-                          id: widget.solution.id,
-                          questionId: widget.solution.questionId,
-                          content: widget.solution.content,
-                          images: widget.solution.images!
-                        ));
-                      }
-                    },
-                    child: Column(
+          child: Container(
+            color: Colors.black.withOpacity(0.6),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if(widget.solution.status == UploadingSolutioonStatus.loading)
+                  if(widget.solution.rate >= 1)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.cancel,
-                          color: Colors.red,
-                          size: 64,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.uploading_solution_abstract_item_failed_content,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white
+                        Container(
+                          margin: const EdgeInsets.only(right: 4),
+                          child: Text(
+                            AppLocalizations.of(context)!.uploading_solution_abstract_item,
+                            style: const TextStyle(
+                              color: Colors.white
+                            ),
                           ),
+                        ),
+                        LoadingAnimationWidget.horizontalRotatingDots(
+                          color: Colors.white,
+                          size: 12,
                         ),
                       ],
                     )
-                  )
-            ],
+                  else
+                    Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 5),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 5,
+                            backgroundColor: Colors.blue,
+                            valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                            value: widget.solution.rate,
+                          ),
+                        ),
+                        Text(
+                          "${(widget.solution.rate * 100).toStringAsFixed(2)}%",
+                          style: const TextStyle(
+                            color: Colors.white
+                          ),
+                        )
+                      ],
+                    )
+                else
+                  if(widget.solution.status == UploadingSolutioonStatus.success)
+                    const Icon(
+                      Icons.done,
+                      color: Colors.green,
+                      size: 64,
+                    )
+                  else
+                    TextButton(
+                      onPressed: (){
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        if(widget.solution.video != null){
+                          store.dispatch(CreateVideoSolutionAction(
+                            id: widget.solution.id,
+                            questionId: widget.solution.questionId,
+                            content: widget.solution.content,
+                            video: widget.solution.video!
+                          ));
+                        }
+                        else{
+                          store.dispatch(CreateSolutionAction(
+                            id: widget.solution.id,
+                            questionId: widget.solution.questionId,
+                            content: widget.solution.content,
+                            images: widget.solution.images!
+                          ));
+                        }
+                      },
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                            size: 64,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.uploading_solution_abstract_item_failed_content,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                        ],
+                      )
+                    )
+              ],
+            ),
           )
         )
       ],
