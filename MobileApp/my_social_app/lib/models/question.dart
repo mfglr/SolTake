@@ -5,6 +5,7 @@ import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/question_image.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 part 'question.g.dart';
@@ -83,6 +84,7 @@ class Question{
     correctSolutions: Pagination.init(solutionsPerPage,true),
     pendingSolutions: Pagination.init(solutionsPerPage,true),
     incorrectSolutions: Pagination.init(solutionsPerPage,true),
-    videoSolutions: Pagination.init(solutionsPerPage,true)
+    videoSolutions: Pagination.init(solutionsPerPage,true),
+    uploadingSolutions: const UploadingSolutionsState(solutions: []),
   );
 }

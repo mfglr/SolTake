@@ -17,8 +17,12 @@ import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/solution/widgets/uploading_solution/uploading_solution_abstract_item/uploading_solution_abstract_items.dart';
+import 'package:badges/badges.dart' as badges;
 
-const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close];
+
+
+const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];
 
 class QuestionsSolutionsPage extends StatefulWidget {
   final int questionId;
@@ -54,6 +58,11 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
     super.dispose();
   }
 
+  Widget _displayUploadigSolutions(QuestionState question){
+    return UploadingSolutionAbstractItems(
+      solutions: question.uploadingSolutions.solutions
+    );
+  }
 
   Widget _displayAllSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
@@ -82,7 +91,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
     );
   }
 
-  Widget _displayAllCorrectSolutions(QuestionState question){
+  Widget _displayCorrectSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
       onInit: (store) => getNextPageIfNoPage(
         store,
@@ -130,7 +139,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.pendingSolutions,
-         noItems: NoSolutions(
+        noItems: NoSolutions(
           text: AppLocalizations.of(context)!.display_question_solutions_page_no_pending_solutions
         ),
         onTap: (solutionId) =>
@@ -193,6 +202,22 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
     );
   }
   
+  Widget _labelBuilder(QuestionState question,bool isActive,index){
+    final numberOfUploadingSolutions = question.uploadingSolutions.length;
+    if(index == 4 && numberOfUploadingSolutions > 0){
+      return badges.Badge(
+        badgeContent: Text(numberOfUploadingSolutions.toString()),
+        child: Icon(
+          icons[4],
+          color: isActive ? Colors.black : Colors.grey
+        ),
+      );
+    }
+    return Icon(
+      icons[index],
+      color: isActive ? Colors.black : Colors.grey,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -213,14 +238,16 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
             ),
           ),
           floatingActionButton: 
-            !question.isOwner ? CreateSolutionSpeedDial(questionId: question.id) : null,
+            !question.isOwner 
+              ? CreateSolutionSpeedDial(
+                  questionId: question.id,
+                  pageController: _pageController,
+                ) 
+              : null,
           body: Column(
             children: [
               LabelPaginationWidget(
-                labelBuilder: (isActive,index) => Icon(
-                  icons[index],
-                  color: isActive ? Colors.black : Colors.grey,
-                ),
+                labelBuilder: (isActive,index) => _labelBuilder(question,isActive,index),
                 page: _page,
                 labelCount: icons.length,
                 width: MediaQuery.of(context).size.width,
@@ -232,9 +259,10 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
                   controller: _pageController,
                   children: [
                     _displayAllSolutions(question),
-                    _displayAllCorrectSolutions(question),
+                    _displayCorrectSolutions(question),
                     _displayPendingSolutions(question),
                     _displayIncorrectSolutions(question),
+                    _displayUploadigSolutions(question)
                   ],
                 ),
               )

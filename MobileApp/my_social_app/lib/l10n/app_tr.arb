@@ -280,5 +280,7 @@
     "create_video_solution_page_content1": "Video Çek",
     "create_video_solution_page_content2": "Çözümünü video çekerek anlat!",
     "create_video_solution_page_no_video_error": "İlerleyebilmek için bir video yüklemelisin!",
-    "create_video_solution_page_contiune_button_content": "Devam Et"
+    "create_video_solution_page_contiune_button_content": "Devam Et",
+
+    "uploading_solution_abstract_item": "İşleniyor"
 }

@@ -26,21 +26,42 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
+        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
+        store.dispatch(RemoveUploadedSolutionAction(state: uploadingSolution));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
       });
   }
   next(action);
 }
+
 void createVideoSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
    if(action is CreateVideoSolutionAction){
     ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
     SolutionService()
-      .createVideoSolution(action.questionId,action.content, action.video)
+      .createVideoSolution(
+        action.questionId,
+        action.content,
+        action.video,
+        (rate) {
+          final uploadingsolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
+          store.dispatch(ChangeRateAction(state: uploadingsolution, rate: rate));
+        }
+      )
       .then((solution){
         final solutionState = solution.toSolutionState();
-        store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
+
+        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
+        store.dispatch(RemoveUploadedSolutionAction(state: uploadingSolution));
+
+        store.dispatch(AddSolutionAction(solution: solutionState));
         store.dispatch(CreateNewQuestionVideoSolutionAction(solution: solutionState));
+
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
+      })
+      .catchError((e){
+        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
+        store.dispatch(RemoveUploadedSolutionAction(state: uploadingSolution));
+        throw e;
       });
   }
   next(action);

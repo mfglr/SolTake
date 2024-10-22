@@ -282,6 +282,8 @@
     "create_video_solution_page_content1": "Record a Video",
     "create_video_solution_page_content2": "Explain your solution by recording a video.",
     "create_video_solution_page_no_video_error": "You need to upload a video in order to proceed.",
-    "create_video_solution_page_contiune_button_content": "Continue"
+    "create_video_solution_page_contiune_button_content": "Continue",
+
+    "uploading_solution_abstract_item": "Processing"
 
 }

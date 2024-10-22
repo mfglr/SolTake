@@ -39,6 +39,16 @@ QuestionEntityState nextSolutionsSuccessReducer(QuestionEntityState prev,NextQue
 QuestionEntityState nextSolutionsFailedReducer(QuestionEntityState prev,NextQuestionSolutionsFailedAction action)
   => prev.stopLoadingNextSolutions(action.questionId);
 
+//uploading solutions
+QuestionEntityState startUploadingSolutionReducer(QuestionEntityState prev, StartUploadingSolutionAction action)
+  => prev.startUploadingSolution(action.id, action.questionId, action.content, action.images);
+QuestionEntityState startUploadingVideoSolutionReducer(QuestionEntityState prev, StartUploadingVideoSolutionAction action)
+  => prev.startUplodingVideoSolution(action.id, action.questionId, action.content, action.video);
+QuestionEntityState changeRateReducer(QuestionEntityState prev, ChangeRateAction action)
+  => prev.changeRate(action.state,action.rate);
+QuestionEntityState removeUploadedSolutionReducer(QuestionEntityState prev,RemoveUploadedSolutionAction action)
+  => prev.removeUploadedSolution(action.state);
+
 QuestionEntityState createNewSolutionReducer(QuestionEntityState prev,CreateNewQuestionSolutionAction action)
   => prev.createNewSolution(action.solution);
 QuestionEntityState createNewVideoSolutionReducer(QuestionEntityState prev,CreateNewQuestionVideoSolutionAction action)
@@ -125,16 +135,19 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   //
   TypedReducer<QuestionEntityState,MarkQuestionSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
   TypedReducer<QuestionEntityState,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,
+
+  //uploading solutions
+  TypedReducer<QuestionEntityState,StartUploadingSolutionAction>(startUploadingSolutionReducer).call,
+  TypedReducer<QuestionEntityState,StartUploadingVideoSolutionAction>(startUploadingVideoSolutionReducer).call,
+  TypedReducer<QuestionEntityState,ChangeRateAction>(changeRateReducer).call,
+  TypedReducer<QuestionEntityState,RemoveUploadedSolutionAction>(removeUploadedSolutionReducer).call,
   
+ 
+
   //solutions
   TypedReducer<QuestionEntityState,NextQuestionSolutionsAction>(nextSolutionsReducer).call,
   TypedReducer<QuestionEntityState,NextQuestionSolutionsSuccessAction>(nextSolutionsSuccessReducer).call,
   TypedReducer<QuestionEntityState,NextQuestionSolutionsFailedAction>(nextSolutionsFailedReducer).call,
-
-  TypedReducer<QuestionEntityState,CreateNewQuestionSolutionAction>(createNewSolutionReducer).call,
-  TypedReducer<QuestionEntityState,CreateNewQuestionVideoSolutionAction>(createNewVideoSolutionReducer).call,
-  TypedReducer<QuestionEntityState,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
-  TypedReducer<QuestionEntityState,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
 
   //correct solutions
   TypedReducer<QuestionEntityState,NextQuestionCorrectSolutionsAction>(nextCorrectSolutionsReducer).call,
@@ -157,6 +170,11 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,NextQuestionVideoSolutionsFailedAction>(nextVideoSolutionsFailedReducer).call,
   TypedReducer<QuestionEntityState,AddQuestionVideoSolutionAction>(addVideoSolutionReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionVideoSolutionAction>(removeVideoSolutionReducer).call,
+
+  TypedReducer<QuestionEntityState,CreateNewQuestionSolutionAction>(createNewSolutionReducer).call,
+  TypedReducer<QuestionEntityState,CreateNewQuestionVideoSolutionAction>(createNewVideoSolutionReducer).call,
+  TypedReducer<QuestionEntityState,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
+  TypedReducer<QuestionEntityState,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
 
   //comments
   TypedReducer<QuestionEntityState,NextQuestionCommentsAction>(nextPageCommentsReducer).call,

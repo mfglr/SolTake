@@ -41,7 +41,7 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
     Timer.periodic(
       const Duration(seconds: 1),
       (timer){
-        if(timer.tick == 180 && mounted){
+        if(timer.tick >= 180 && mounted){
           _controller
             .stopVideoRecording()
             .then((file){
@@ -62,9 +62,11 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
   }
 
   void _onStartButtonPressed(){
-    _controller
-      .startVideoRecording()
-      .then((_){ _startTimer(); });
+    if(!_controller.value.isRecordingVideo){
+      _controller
+        .startVideoRecording()
+        .then((_){ _startTimer(); });
+    }
   }
 
   void _onStopButtonPressed(){

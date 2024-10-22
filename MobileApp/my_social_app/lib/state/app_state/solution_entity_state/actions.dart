@@ -8,17 +8,19 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 
 @immutable
 class CreateSolutionAction extends AppAction{
+  final String id;
   final int questionId;
   final String? content;
   final Iterable<XFile> images;
-  const CreateSolutionAction({required this.questionId, required this.content, required this.images});
+  const CreateSolutionAction({required this.id, required this.questionId, required this.content, required this.images});
 }
 @immutable
 class CreateVideoSolutionAction extends AppAction{
+  final String id;
   final int questionId;
   final String? content;
   final XFile video;
-  const CreateVideoSolutionAction({required this.questionId, required this.content, required this.video});
+  const CreateVideoSolutionAction({required this.id, required this.questionId, required this.content, required this.video});
 }
 @immutable
 class LoadSolutionAction extends AppAction{
