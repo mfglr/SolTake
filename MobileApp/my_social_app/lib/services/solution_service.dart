@@ -72,16 +72,7 @@ class SolutionService{
     var data = await _readResponse(response);
     
     if(response.statusCode >= 400){
-      if(response.statusCode != 401){
-        throw BackendException(message: data,statusCode: response.statusCode);
-      }
-      await _appClient.loginByRefreshToken();
-      request = await _createSolutionRequest(questionId,content,images,callback);
-      response = await request.close();
-      data = await _readResponse(response);
-      if(response.statusCode >= 400){
-        throw BackendException(message: data,statusCode: response.statusCode);
-      }
+      throw BackendException(message: data,statusCode: response.statusCode);
     }
     return Solution.fromJson(jsonDecode(data));
   }
@@ -123,16 +114,7 @@ class SolutionService{
     var data = await _readResponse(response);
     
     if(response.statusCode >= 400){
-      if(response.statusCode != 401){
-        throw BackendException(message: data,statusCode: response.statusCode);
-      }
-      await _appClient.loginByRefreshToken();
-      request = await _createVideoSolutionRequest(questionId,content,video,callback);
-      response = await request.close();
-      data = await _readResponse(response);
-      if(response.statusCode >= 400){
-        throw BackendException(message: data,statusCode: response.statusCode);
-      }
+      throw BackendException(message: data,statusCode: response.statusCode);
     }
     return Solution.fromJson(jsonDecode(data));
   }

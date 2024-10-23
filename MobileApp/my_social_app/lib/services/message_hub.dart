@@ -19,12 +19,14 @@ class MessageHub{
   late final PublishSubject<MessageState> receivedMessages;
   late final StreamSubscription<HubConnectionState> _stateConsumer;
 
-  MessageHub._(Store<AppState> store){
+  MessageHub._(Store<AppState> store,PublishSubject<MessageState>? rMs){
     _hubConnection =
       HubConnectionBuilder()
         .withUrl("${dotenv.env['API_URL']}/message?access_token=${store.state.accessToken}")
+        .withAutomaticReconnect()
         .build();
-    receivedMessages = PublishSubject<MessageState>();
+
+    receivedMessages = rMs ?? PublishSubject<MessageState>();
     
     _stateConsumer = _hubConnection.stateStream
       .distinct()
@@ -41,8 +43,11 @@ class MessageHub{
       _singleton!._off();
       await _singleton!._stateConsumer.cancel();
       await _singleton!._hubConnection.stop();
+      _singleton = MessageHub._(store,_singleton!.receivedMessages);
     }
-    _singleton = MessageHub._(store);
+    else{
+      _singleton = MessageHub._(store,null);
+    }
     await _singleton!._hubConnection.start();
     _singleton!._on(store);
   }

@@ -3,79 +3,32 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
-import 'package:my_social_app/constants/account_endpoints.dart';
-import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
-import 'package:my_social_app/models/account.dart';
-import 'package:my_social_app/services/account_storage.dart';
-import 'package:my_social_app/state/app_state/account_state/actions.dart';
-import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
 class AppClient{
   static final _apiUrl = "${dotenv.env['API_URL']}/api";
-  final AccountStorage _accountStorage;
 
-  const AppClient._(this._accountStorage);
-  static final AppClient _singleton = AppClient._(AccountStorage());
+  const AppClient._();
+  static const AppClient _singleton = AppClient._();
   factory AppClient() => _singleton;
 
-  Map<String,String> getHeader() =>
+  Map<String,String> _getHeader() =>
     {
       "Authorization": "Bearer ${store.state.accessToken}",
       "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode
     };
 
   Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
-
-  BaseRequest _cloneRequest(Request request){
-    var r = Request(request.method, request.url);
-    r.headers.addAll(request.headers);
-    r.headers.addAll(getHeader());
-    if (request.bodyBytes.isNotEmpty) {
-      r.bodyBytes = request.bodyBytes;
-    }
-    return r;
-  }
-
-  Future<void> loginByRefreshToken() async {
-    final account = store.state.accountState!;
-    final url = Uri.parse("$_apiUrl/$accountController/$loginByRefreshTokenEndPoint");
-    final Request request = Request("POST", url);
-    request.headers.addAll({'Content-Type': 'application/json; charset=UTF-8'});
-    request.body = jsonEncode({ 'id': account.id.toString(), 'token': account.refreshToken });
-
-    final response = await request.send();
-    final data = utf8.decode(await response.stream.toBytes());
-    
-    if(response.statusCode >= 400){
-      throw BackendException(message: data,statusCode: response.statusCode);
-    }
-    
-    var newAccount = Account.fromJson(jsonDecode(data));
-    var newAccountState = newAccount.toAccountState();
-    store.dispatch(UpdateAccountStateAction(payload: newAccountState));
-    store.dispatch(ChangeAccessTokenAction(accessToken: newAccount.accessToken));
-    _accountStorage.set(newAccountState);
-  }
-
-  Future<StreamedResponse> send(Request request, {Map<String, String>? headers}) async {
-    request.headers.addAll(getHeader());
+  
+  Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
+    request.headers.addAll(_getHeader());
     if(headers != null) request.headers.addAll(headers);
-
+    
     var response = await request.send();
     if(response.statusCode >= 400){
-      switch(response.statusCode){
-        case 401:
-          await loginByRefreshToken();
-          response = await _cloneRequest(request).send();
-          if(response.statusCode >= 400){
-            throw BackendException(message: utf8.decode(await response.stream.toBytes()),statusCode: response.statusCode);
-          }
-        default:
-          throw BackendException(message: utf8.decode(await response.stream.toBytes()),statusCode: response.statusCode);
-      }
+      throw BackendException(message: utf8.decode(await response.stream.toBytes()),statusCode: response.statusCode);
     }
     return response;
   }

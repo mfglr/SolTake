@@ -23,7 +23,7 @@ class RootView extends StatefulWidget {
 class _RootViewState extends State<RootView> {
   int currentPageIndex = 0;
   late StreamSubscription<String?> _accessTokenConsumer;
-  
+
   @override
   void initState() {
     final store = StoreProvider.of<AppState>(context,listen: false);

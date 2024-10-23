@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
-import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/models/user_search.dart';
@@ -18,40 +16,16 @@ class UserService{
   static final UserService _singleton = UserService._(AppClient());
   factory UserService() => _singleton;
 
-  Future<MultipartRequest> _createImageRequest(XFile file) async{
+  Future<MultipartRequest> _createUpdateImageRequest(XFile file) async{
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
-    request.headers.addAll(_appClient.getHeader());
     request.files.add(await MultipartFile.fromPath("file",file.path));
     return request;
   }
-  Future<void> updateImage(XFile file) =>
-    _createImageRequest(file)
-      .then((request) => request.send())
-      .then((response) async {
-        if(response.statusCode >= 400){
-          if(response.statusCode == 401){
-            return await _appClient
-              .loginByRefreshToken()
-              .then((_) => _createImageRequest(file))
-              .then((request) => request.send());
-          }
-          var message = utf8.decode(await response.stream.toBytes());
-          throw BackendException(message: message, statusCode: response.statusCode);
-        }
-        return response;
-      })
-      .then(
-        (response) => response.stream
-          .toBytes()
-          .then((bytes) => utf8.decode(bytes))
-          .then((data){
-            if(response.statusCode > 400){
-              throw BackendException(message: data,statusCode: response.statusCode);
-            }
-          })
-      );
-
+  Future<void> updateImage(XFile file) => 
+    _createUpdateImageRequest(file)
+      .then((request) => _appClient.send(request));
+  
   Future<Uint8List> removeImage() => 
     _appClient
       .getBytes("$userController/$removeUserImageEndpoint");
@@ -61,15 +35,12 @@ class UserService{
       .put("$userController/$updateNameEndpoint",body: {'name' : name});
   
   Future<void> updateBiography(String biography) =>
-    _appClient
+     _appClient
       .put("$userController/$updateBiographyEndpoint",body: {'biography': biography});
   
   Future<Follow> follow(int followedId) => 
     _appClient
-      .post(
-        "$userController/$followEndPoint",
-        body: { 'followedId': followedId }
-      )
+      .post("$userController/$followEndPoint", body: { 'followedId': followedId })
       .then((json) => Follow.fromJson(json));
 
   Future<void> unfollow(int followedId) => 
@@ -82,14 +53,10 @@ class UserService{
     
   Future<UserSearch> addSearcher(int searchedId) => 
     _appClient
-      .post(
-        "$userController/$addUserSearcherEndpoint",
-        body: { 'searchedId': searchedId }
-      )
+      .post("$userController/$addUserSearcherEndpoint", body: { 'searchedId': searchedId })
       .then((json) => UserSearch.fromJson(json));
 
-  Future<void> removeSearcher(int searchedId) => 
-    _appClient.delete("$userController/$removeUserSearcherEndpoint/$searchedId");
+  Future<void> removeSearcher(int searchedId) => _appClient.delete("$userController/$removeUserSearcherEndpoint/$searchedId");
 
   Future<User> getById(int id) => 
     _appClient

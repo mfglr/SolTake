@@ -49,12 +49,18 @@ Future<void> main() async {
     handleErrors(error);
     return true;
   };
-  
+
   runApp(
     StoreProvider(
       store: store,
       child: StoreConnector<AppState,AccountState?>(
-        onInit: (store) => store.dispatch(const LoginByRefreshToken()),
+        onInit: (store){
+          store.dispatch(const LoginByRefreshToken());
+          Timer.periodic(
+            Duration(minutes:  int.parse(dotenv.env['accessTokenDuration']!)),
+            (timer) => store.dispatch(const LoginByRefreshToken())
+          );
+        },
         converter: (store) => store.state.accountState,
         builder: (context,account) => MaterialApp(
           title: 'SolTake', 
