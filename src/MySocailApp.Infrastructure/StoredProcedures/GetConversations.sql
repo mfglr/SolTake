@@ -7,12 +7,12 @@ CREATE PROCEDURE sp_get_conversations
 AS BEGIN
 
 	SELECT TOP(@take) 
-		[all].[Id],[accounts].UserName, [all].[ConversationId], [all].[Content], [all].[CreatedAt], [all].[IsEdited], 
+		[all].[Id],[accounts].UserName, [all].[ConversationId], [all].[Content_Content], [all].[CreatedAt], [all].[IsEdited], 
 		[all].[UpdatedAt], [all].[SenderId], [all].[ReceiverId], [all].[State],[all].[NumberOfImages], [all].[IsOwner]
 	FROM
 	(
 		SELECT
-			[pM].[Id], [pM].[ConversationId], [pM].[Content], [pM].[CreatedAt], [pM].[IsEdited], [pM].[UpdatedAt], [pM].[SenderId], [pM].[ReceiverId], [pM].[row],
+			[pM].[Id], [pM].[ConversationId], [pM].[Content_Content], [pM].[CreatedAt], [pM].[IsEdited], [pM].[UpdatedAt], [pM].[SenderId], [pM].[ReceiverId], [pM].[row],
 			CASE WHEN [pM].SenderId = @accountId THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS [IsOwner],
 			CASE WHEN EXISTS (SELECT 1 FROM [MessageUserView] WHERE [messageId] = [pM].[Id])
 				THEN 2

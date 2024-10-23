@@ -5,7 +5,7 @@
 namespace MySocailApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class createGetConversationsStoredProcedure : Migration
+    public partial class CreateGetConversationsStoredProcedure : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

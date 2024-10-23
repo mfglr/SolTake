@@ -29,7 +29,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.message.SenderId,
                         join.message.ReceiverId,
                         join.message.IsEdited,
-                        join.message.Content,
+                        join.message.Content.Value,
                         join.message.Viewers.Count != 0
                             ? MessageState.Viewed 
                             : join.message.Receivers.Count != 0 

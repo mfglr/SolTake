@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.MessageAggregate.DomainEvents;
 using MySocailApp.Domain.MessageAggregate.Exceptions;
+using MySocailApp.Domain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.MessageAggregate.Entities
 {
@@ -11,29 +12,30 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
         public bool IsEdited { get; private set; }
         public int SenderId { get; private set; }
         public int ReceiverId { get; private set; }
-        public string? Content { get; private set; }
+        public MessageContent? Content { get; private set; }
         private readonly List<MessageImage> _images = [];
         public IReadOnlyList<MessageImage> Images => _images;
 
         private Message() { }
-        public Message(int senderId,string? content, IEnumerable<MessageImage>? images)
+        public Message(int senderId, int receiverId, MessageContent? content, IEnumerable<MessageImage>? images)
         {
-            if (string.IsNullOrEmpty(content) && (images == null || !images.Any()))
-                throw new ContentRequiredException();
+            if (SenderId == receiverId)
+                throw new SelfMessagingException();
+
+            if (content == null && (images == null || !images.Any()))
+                throw new MessageContentRequiredException();
 
             if (images != null && images.Count() > MaxNumberOfMessageImage)
                 throw new TooManyMessageImagesException();
 
             SenderId = senderId;
+            ReceiverId = receiverId;
             Content = content;
             if (images != null)
                 _images.AddRange(images);
         }
-        public void Create(int receiverId)
+        public void Create()
         {
-            if (SenderId == receiverId)
-                throw new SelfMessagingException();
-            ReceiverId = receiverId;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new MessageCreatedDomainEvent(this));
         }

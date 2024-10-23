@@ -6,6 +6,7 @@ using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageAggregate.Entities;
+using MySocailApp.Domain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
 {
@@ -25,9 +26,11 @@ namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
                 var images = await _blobService.UploadAsync(ContainerName.MesssageImages, request.Images, cancellationToken);
                 messageImages = images.Select(x => new MessageImage(x.BlobName, x.Dimention.Height, x.Dimention.Width));
             }
+            
             var senderId = _tokenReader.GetRequiredAccountId();
-            var message = new Message(senderId, request.Content, messageImages);
-            await _messageCreator.CreateAsync(message, request.ReceiverId, cancellationToken);
+            var content = request.Content != null ? new MessageContent(request.Content) : null;
+            var message = new Message(senderId, request.ReceiverId, content, messageImages);
+            await _messageCreator.CreateAsync(message,cancellationToken);
             
             await _unitOfWork.CommitAsync(cancellationToken);
 

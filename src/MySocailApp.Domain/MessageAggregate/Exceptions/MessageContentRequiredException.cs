@@ -4,7 +4,7 @@ using System.Net;
 
 namespace MySocailApp.Domain.MessageAggregate.Exceptions
 {
-    public class ContentRequiredException : AppException
+    public class MessageContentRequiredException : AppException
     {
         private readonly static string _messageEn = "A message can't be empty! A content or an image is required!";
         private readonly static string _messageTr = "Mesajin boş olamaz. İçerik ya da resim eklemelisin!";
@@ -14,7 +14,7 @@ namespace MySocailApp.Domain.MessageAggregate.Exceptions
         };
         public override string GetErrorMessage(string culture) => _messages[culture];
 
-        public ContentRequiredException() : base((int)HttpStatusCode.BadRequest) { }
+        public MessageContentRequiredException() : base((int)HttpStatusCode.BadRequest) { }
 
     }
 }

@@ -12,11 +12,11 @@ namespace MySocailApp.Domain.MessageAggregate.DomainServices
         private readonly UserManager<Account> _userManager = userManager;
         private readonly IMessageWriteRepository _messageWriteRepository = messageWriteRepository;
 
-        public async Task CreateAsync(Message message, int receiverId, CancellationToken cancellationToken)
+        public async Task CreateAsync(Message message,CancellationToken cancellationToken)
         {
-            if (!await _userManager.Users.AnyAsync(x => x.Id == receiverId))
+            if (!await _userManager.Users.AnyAsync(x => x.Id == message.ReceiverId))
                 throw new ReceiverNotFoundException();
-            message.Create(receiverId);
+            message.Create();
             await _messageWriteRepository.CreateAsync(message, cancellationToken);
         }
     }

@@ -624,9 +624,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -10879,6 +10876,29 @@ namespace MySocailApp.Infrastructure.Migrations
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.Message", b =>
+                {
+                    b.OwnsOne("MySocailApp.Domain.MessageAggregate.ValueObjects.MessageContent", "Content", b1 =>
+                        {
+                            b1.Property<int>("MessageId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Content");
+
+                            b1.HasKey("MessageId");
+
+                            b1.ToTable("Messages");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MessageId");
+                        });
+
+                    b.Navigation("Content");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageImage", b =>
