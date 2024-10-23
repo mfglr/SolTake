@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/shared/app_image_slider/clear_upload_button.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
@@ -6,6 +7,7 @@ import 'package:video_player/video_player.dart';
 
 class SolutionCreationVideoPlayer extends StatefulWidget {
   final VideoPlayerController controller;
+  final CameraLensDirection direction;
   final bool displayVolumeOffButton;
   final bool displayDuration;
   final void Function() play;
@@ -15,6 +17,7 @@ class SolutionCreationVideoPlayer extends StatefulWidget {
   const SolutionCreationVideoPlayer({
     super.key,
     required this.controller,
+    required this.direction,
     required this.play,
     required this.pause,
     this.displayVolumeOffButton = true,
@@ -63,7 +66,7 @@ class _SolutionCreationVideoPlayerState extends State<SolutionCreationVideoPlaye
           alignment: AlignmentDirectional.center,
           children: [
             RotatedBox(
-              quarterTurns: 1,
+              quarterTurns: widget.direction == CameraLensDirection.back ? 1 : 3,
               child: VideoPlayer(widget.controller)
             ),
             if(widget.displayVolumeOffButton)

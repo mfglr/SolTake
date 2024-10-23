@@ -1,9 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
+import 'dart:math' as math;
 
 class TakeImagePage extends StatefulWidget {
-  final CameraDescription camera;
-  const TakeImagePage({super.key,required this.camera});
+  final List<CameraDescription> cameras;
+  const TakeImagePage({super.key,required this.cameras});
 
   @override
   State<TakeImagePage> createState() => _TakeImagePageState();
@@ -12,11 +14,27 @@ class TakeImagePage extends StatefulWidget {
 class _TakeImagePageState extends State<TakeImagePage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  
+  CameraLensDirection _direction = CameraLensDirection.back;
+
+  void _setCamera(CameraLensDirection lensDirection){
+    final cameraDescription = widget.cameras.where((e) => e.lensDirection == lensDirection).firstOrNull;
+    if(cameraDescription == null){
+      ToastCreator.displayError("Camera is not available!");
+      return;
+    }
+    _controller = CameraController(cameraDescription, ResolutionPreset.medium);
+    _initializeControllerFuture = _controller.initialize();
+    setState(() {});
+  }
+
+  _changeCameraDirection(){
+    _direction = _direction == CameraLensDirection.back ? CameraLensDirection.front : CameraLensDirection.back;
+    _setCamera(_direction);
+  }
+
   @override
   void initState() {
-    _controller = CameraController(widget.camera,ResolutionPreset.medium);
-    _initializeControllerFuture = _controller.initialize();
+    _setCamera(_direction);
     super.initState();
   }
 
@@ -37,30 +55,10 @@ class _TakeImagePageState extends State<TakeImagePage> {
             return Center(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: CameraPreview(
-                  _controller,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Icon(
-                                Icons.arrow_back,
-                                size: 35,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationY(_direction == CameraLensDirection.front ? math.pi : 0),
+                  child: CameraPreview(_controller),
                 ),
               ),
             );
@@ -71,15 +69,51 @@ class _TakeImagePageState extends State<TakeImagePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         margin: const EdgeInsets.only(bottom: 15),
-        child: FloatingActionButton(
-          shape: const CircleBorder(),
-          child: const Icon(Icons.photo_camera),
-          onPressed: () async {
-            await _initializeControllerFuture;
-            final image = await _controller.takePicture();
-            if (!context.mounted) return;
-            return Navigator.of(context).pop(image);
-          },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black.withOpacity(0.6),
+              ),
+              child: IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(
+                  Icons.close_outlined,
+                  size: 25,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+
+            FloatingActionButton(
+              shape: const CircleBorder(),
+              child: const Icon(Icons.photo_camera),
+              onPressed: () async {
+                await _initializeControllerFuture;
+                final image = await _controller.takePicture();
+                if (!context.mounted) return;
+                return Navigator.of(context).pop(image);
+              },
+            ),
+
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black.withOpacity(0.6),
+              ),
+              child: IconButton(
+                onPressed: () => _changeCameraDirection(),
+                icon: const Icon(
+                  Icons.change_circle_outlined,
+                  color: Colors.white,
+                  size: 25,
+                )
+              ),
+            ),
+          ],
         ),
       ),
     );

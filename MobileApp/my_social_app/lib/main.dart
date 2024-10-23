@@ -81,8 +81,8 @@ Future<void> main() async {
           ),
           home: MainView(account: account),
           routes: {
-            takeImageRoute: (context) => TakeImagePage(camera: cameras.first),
-            takeVideoRoute: (context) => TakeVieoPage(camera: cameras.first)
+            takeImageRoute: (context) => TakeImagePage(cameras: cameras),
+            takeVideoRoute: (context) => TakeVieoPage(cameras: cameras)
           },
         ),
       )

@@ -6,12 +6,13 @@ import 'package:my_social_app/views/shared/loading_widget.dart';
 import 'package:my_social_app/views/take_video_page/widgets/start_video_button.dart';
 import 'package:my_social_app/views/take_video_page/widgets/stop_video_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:math' as math;
 
 class TakeVieoPage extends StatefulWidget {
-  final CameraDescription camera;
+  final List<CameraDescription> cameras;
   const TakeVieoPage({
     super.key,
-    required this.camera
+    required this.cameras
   });
 
   @override
@@ -23,11 +24,27 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
   late CameraController _controller;
   Future<void>? _initializeControllerFuture;
   int _duration = 0;
+  CameraLensDirection _direction = CameraLensDirection.back;
+
+  void _setCamera(CameraLensDirection lensDirection){
+    final cameraDescription = widget.cameras.where((e) => e.lensDirection == lensDirection).firstOrNull;
+    if(cameraDescription == null){
+      ToastCreator.displayError("Camera is not available!");
+      return;
+    }
+    _controller = CameraController(cameraDescription, ResolutionPreset.medium);
+    _initializeControllerFuture = _controller.initialize();
+    setState(() {});
+  }
+
+  _changeCameraDirection(){
+    _direction = _direction == CameraLensDirection.back ? CameraLensDirection.front : CameraLensDirection.back;
+    _setCamera(_direction);
+  }
 
   @override
   void initState() {
-    _controller = CameraController(widget.camera,ResolutionPreset.medium);
-    _initializeControllerFuture = _controller.initialize();
+    _setCamera(_direction);
     super.initState();
   }
 
@@ -41,13 +58,13 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
     Timer.periodic(
       const Duration(seconds: 1),
       (timer){
-        if(timer.tick >= 180 && mounted){
+        if(timer.tick >= 120 && mounted){
           _controller
             .stopVideoRecording()
             .then((file){
               if(mounted){
                 ToastCreator.displayError(AppLocalizations.of(context)!.take_video_page_duration_exception);
-                Navigator.of(context).pop(file);
+                Navigator.of(context).pop((file: file,direction: _direction ));
               }
             });
           timer.cancel();
@@ -74,7 +91,7 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
       .stopVideoRecording()
       .then((file){
         if(mounted){
-          Navigator.of(context).pop(file);
+          Navigator.of(context).pop((file: file,direction: _direction ));
         }
       });
   }
@@ -87,61 +104,91 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
         future: _initializeControllerFuture,
         builder: (context, snapshot){
           if(snapshot.connectionState != ConnectionState.done) return const LoadingWidget();
-          return Stack(
-            children: [
-              Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: CameraPreview(
-                    _controller,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Icon(
-                                  Icons.arrow_back,
-                                  size: 35,
+          return Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.rotationY(_direction == CameraLensDirection.front ? math.pi : 0),
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    CameraPreview(_controller),
+                    if(_controller.value.isRecordingVideo)
+                      Positioned(
+                        top: 30,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
+                            shape: BoxShape.circle
+                          ),
+                          child: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(_direction == CameraLensDirection.front ? math.pi : 0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Text(
+                                _duration.toString(),
+                                style: const TextStyle(
                                   color: Colors.white,
+                                  fontSize: 15
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        )
+                      )
+                  ],
                 ),
               ),
-              if(_controller.value.isRecordingVideo)
-                Positioned(
-                  top: 30,
-                  left: 30,
-                  child: Text(
-                    _duration.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15
-                    ),
-                  )
-                )
-            ],
+            ),
           );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         margin: const EdgeInsets.only(bottom: 15),
-        child: _controller.value.isRecordingVideo
-          ? StopVideoButton(onPressed: _onStopButtonPressed,) 
-          : StartVideoButton(onPressed: _onStartButtonPressed,)
-      ),
+        child: _controller.value.isRecordingVideo 
+          ? StopVideoButton(onPressed: _onStopButtonPressed)
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                  child: IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(
+                      Icons.close_outlined,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+
+                StartVideoButton(onPressed: _onStartButtonPressed),
+
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                  child: IconButton(
+                    onPressed: () => _changeCameraDirection(),
+                    icon: const Icon(
+                      Icons.change_circle_outlined,
+                      color: Colors.white,
+                      size: 25,
+                    )
+                  ),
+                ),
+                
+              ],
+            ),
+      )
     );
   }
 }

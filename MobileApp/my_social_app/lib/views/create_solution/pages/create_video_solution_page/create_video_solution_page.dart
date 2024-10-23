@@ -20,7 +20,8 @@ class CreateVideoSolutionPage extends StatefulWidget {
 class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
   VideoPlayerController? _controller;
   XFile? _video;
-  
+  CameraLensDirection? _direction;
+
   void _initController(File file){
     _controller = VideoPlayerController.file(file);
     _controller!
@@ -33,9 +34,14 @@ class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
       .of(context)
       .pushNamed(takeVideoRoute)
       .then((value){
-        setState(() { _video = (value as XFile?);});
+        final file = (value as dynamic).file;
+        final direction = (value as dynamic).direction;
+        setState(() { 
+          _video = file;
+          _direction = direction;
+        });
         if(value != null){
-          _initController(File((value as XFile).path));
+          _initController(File(file.path));
         }
       });
   }
@@ -113,6 +119,7 @@ class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
             }
             return SolutionCreationVideoPlayer(
               controller: _controller!,
+              direction: _direction!,
               onDeleted: () => setState(() { _video = null; }),
               play: (){
                 _controller!
