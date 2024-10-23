@@ -203,9 +203,12 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
   }
   
   Widget _labelBuilder(QuestionState question,bool isActive,index){
-    final numberOfUploadingSolutions = question.uploadingSolutions.length;
+    final numberOfUploadingSolutions = question.uploadingSolutions.numberOfLoadingStatus;
     if(index == 4 && numberOfUploadingSolutions > 0){
       return badges.Badge(
+        badgeStyle: const badges.BadgeStyle(
+          badgeColor: Colors.green
+        ),
         badgeContent: Text(numberOfUploadingSolutions.toString()),
         child: Icon(
           icons[4],

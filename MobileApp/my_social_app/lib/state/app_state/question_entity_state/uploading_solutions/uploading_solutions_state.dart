@@ -69,4 +69,5 @@ class UploadingSolutionsState {
   UploadingSolutionState get(String id) => solutions.firstWhere((e) => e.id == id);
   bool get isEmpty => solutions.isEmpty;
   int get length => solutions.length;
+  int get numberOfLoadingStatus => solutions.where((e) => e.status == UploadingSolutioonStatus.loading).length;
 }
