@@ -14,7 +14,7 @@ class AppClient{
   static const AppClient _singleton = AppClient._();
   factory AppClient() => _singleton;
 
-  Map<String,String> _getHeader() =>
+  Map<String,String> getHeader() =>
     {
       "Authorization": "Bearer ${store.state.accessToken}",
       "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode
@@ -23,7 +23,7 @@ class AppClient{
   Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
   
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
-    request.headers.addAll(_getHeader());
+    request.headers.addAll(getHeader());
     if(headers != null) request.headers.addAll(headers);
     
     var response = await request.send();

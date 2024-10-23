@@ -50,7 +50,11 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
 
   void _setController(int solutionId){
     final controller = VideoPlayerController
-      .networkUrl(AppClient().generateUri("$solutionController/$getSolutionVideoEndpoint/$solutionId"));
+      .networkUrl(
+        AppClient().generateUri("$solutionController/$getSolutionVideoEndpoint/$solutionId"),
+        httpHeaders: AppClient().getHeader()
+      );
+      
       if(context.mounted){
         controller
         .initialize()
