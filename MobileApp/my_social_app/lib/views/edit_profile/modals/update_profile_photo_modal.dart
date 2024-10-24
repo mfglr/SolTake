@@ -7,11 +7,24 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
+import 'package:my_social_app/views/edit_profile/modals/uploading_user_image_modal.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateProfilePhotoModal extends StatelessWidget {
   const UpdateProfilePhotoModal({super.key});
+
+  void _showUplodingUserImageModal(BuildContext context,){
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true,
+      builder: (context) => StoreConnector<AppState,UserState>(
+        converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id]!,
+        builder:(context,user) => UploadingUserImageModal(state: user.uploadingImage!)
+      )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +68,14 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                   .of(context)
                                   .pushNamed(takeImageRoute)
                                   .then((image){
-                                    if(image != null){
+                                    if(image != null && context.mounted){
                                       final store = StoreProvider.of<AppState>(context,listen: false);
-                                      store.dispatch(UpdateCurrentUserImageAction(file: image as XFile));
+                                      store.dispatch(UpdateUserImageAction(
+                                        userId: store.state.accountState!.id,
+                                        file: image as XFile
+                                      ));
                                       Navigator.of(context).pop();
+                                      _showUplodingUserImageModal(context);
                                     }
                                   }),
                               child: Column(
@@ -77,10 +94,14 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                 ImagePicker()
                                   .pickImage(source: ImageSource.gallery)
                                   .then((image){
-                                    if(image != null){
+                                    if(image != null && context.mounted){
                                       final store = StoreProvider.of<AppState>(context,listen: false);
-                                      store.dispatch(UpdateCurrentUserImageAction(file: image));
+                                      store.dispatch(UpdateUserImageAction(
+                                        userId: store.state.accountState!.id,
+                                        file: image
+                                      ));
                                       Navigator.of(context).pop();
+                                      _showUplodingUserImageModal(context);
                                     }
                                   });
                               },

@@ -283,5 +283,8 @@
     "create_video_solution_page_contiune_button_content": "Devam Et",
 
     "uploading_solution_abstract_item": "İşleniyor",
-    "uploading_solution_abstract_item_failed_content":"Başarısız! Tekrar denemek için tıklayınız."
+    "uploading_solution_abstract_item_failed_content":"Başarısız! Tekrar denemek için tıklayınız.",
+
+    "uploading_circle_processing": "İşleniyor",
+    "uploading_circle_failed_content": "Başarısız! Tekrar denemek için tıklayınız."
 }

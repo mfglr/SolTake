@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/image_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutioon_status.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class QuestionState{
@@ -293,7 +293,7 @@ class QuestionState{
     => _optional(newUploadingSolutions: uploadingSolutions.addSolution(id, questionId, content, images));
   QuestionState changeUploadingSolutionRate(UploadingSolutionState state, double rate)
     => _optional(newUploadingSolutions: uploadingSolutions.changeRate(state, rate));
-  QuestionState changeUploadingSolutionStatus(UploadingSolutionState state,UploadingSolutioonStatus status)
+  QuestionState changeUploadingSolutionStatus(UploadingSolutionState state,UploadingFileStatus status)
     => _optional(newUploadingSolutions: uploadingSolutions.changeStatus(state, status));
   QuestionState removeUploadedSolution(UploadingSolutionState state)
     => _optional(newUploadingSolutions: uploadingSolutions.removeSolution(state));

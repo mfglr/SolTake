@@ -6,18 +6,26 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 import 'package:redux/redux.dart';
 
 void updateCurrentUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UpdateCurrentUserImageAction){
-    final accountId = store.state.accountState!.id;
+  if(action is UpdateUserImageAction){
     UserService()
-      .updateImage(action.file)
-      .then((_)=> action.file.readAsBytes())
+      .updateImage(
+        action.file,
+        (rate){ store.dispatch(ChangeUploadingUserImageRateAction(userId: action.userId, rate: rate)); }
+      )
+      .then((_) => action.file.readAsBytes())
       .then((image){
-        store.dispatch(LoadUserImageSuccessAction(userId: accountId, image: image));
-        store.dispatch(ChangeProfileImageStatusAction(userId: accountId,value: true));
+        store.dispatch(LoadUserImageSuccessAction(userId: action.userId, image: image));
+        store.dispatch(ChangeProfileImageStatusAction(userId: action.userId,value: true));
+        store.dispatch(ChangeUploadingUserImageStatusAction(userId: action.userId, status: UploadingFileStatus.success));
         ToastCreator.displaySuccess(userPhotoUpdatedNotificationContent[getLanguageCode(store)]!);
+      })
+      .catchError((e){
+        store.dispatch(ChangeUploadingUserImageStatusAction(userId: action.userId, status: UploadingFileStatus.failed));
+        throw e;
       });
   }
   next(action);

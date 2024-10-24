@@ -1,5 +1,6 @@
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
+import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
 UserEntityState markQuestionAsSolvedReducer(UserEntityState prev,MarkUserQuestionAsSolvedAction action)
@@ -141,10 +142,12 @@ UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction a
 UserEntityState updateBiographyReducer(UserEntityState prev, UpdateBiographySuccessAction action)
   => prev.updateBiography(action.userId, action.biography);
 
-UserEntityState addMessageToCacheReducer(UserEntityState prev, AddMessageToCacheAction action)
-  => prev.addMessageToCache(action.userId,action.message);
-UserEntityState removeMessageToCacheReducer(UserEntityState prev, RemoveMessageToCacheAction action)
-  => prev.removeMessageToCache(action.userId,action.message);
+UserEntityState addUploadingImageReducer(UserEntityState prev,UpdateUserImageAction action)
+  => prev.addUploadingImage(action.userId, action.file);
+UserEntityState changeUploadingImageStatusReducer(UserEntityState prev,ChangeUploadingUserImageStatusAction action)
+  => prev.changeUploadingImageStatus(action.userId, action.status);
+UserEntityState changeUploadingImageRateReducer(UserEntityState prev,ChangeUploadingUserImageRateAction action)
+  => prev.changeUploadingImageRate(action.userId, action.rate);
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   //
@@ -232,6 +235,7 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
   TypedReducer<UserEntityState,UpdateBiographySuccessAction>(updateBiographyReducer).call,
 
-  TypedReducer<UserEntityState,AddMessageToCacheAction>(addMessageToCacheReducer).call,
-  TypedReducer<UserEntityState,RemoveMessageToCacheAction>(removeMessageToCacheReducer).call,
+  TypedReducer<UserEntityState,UpdateUserImageAction>(addUploadingImageReducer).call,
+  TypedReducer<UserEntityState,ChangeUploadingUserImageStatusAction>(changeUploadingImageStatusReducer).call,
+  TypedReducer<UserEntityState,ChangeUploadingUserImageRateAction>(changeUploadingImageRateReducer).call,
 ]);

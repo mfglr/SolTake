@@ -2,10 +2,10 @@ import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutioon_status.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class QuestionEntityState extends EntityState<QuestionState>{
@@ -116,7 +116,7 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]?.startUploadingSolution(id, questionId, content, images)));
   QuestionEntityState changeUploadingSolutionRate(UploadingSolutionState state, double rate)
     => QuestionEntityState(entities: updateOne(entities[state.questionId]?.changeUploadingSolutionRate(state, rate)));
-  QuestionEntityState changeUploadingSolutionStatus(UploadingSolutionState state, UploadingSolutioonStatus status)
+  QuestionEntityState changeUploadingSolutionStatus(UploadingSolutionState state, UploadingFileStatus status)
     => QuestionEntityState(entities: updateOne(entities[state.questionId]?.changeUploadingSolutionStatus(state, status)));
   QuestionEntityState removeUploadedSolution(UploadingSolutionState state)
     => QuestionEntityState(entities: updateOne(entities[state.questionId]?.removeUploadedSolution(state)));

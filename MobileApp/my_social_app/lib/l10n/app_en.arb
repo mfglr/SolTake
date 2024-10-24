@@ -285,6 +285,9 @@
     "create_video_solution_page_contiune_button_content": "Continue",
 
     "uploading_solution_abstract_item": "Processing",
-    "uploading_solution_abstract_item_failed_content":"Failed! Click to try again."
+    "uploading_solution_abstract_item_failed_content":"Failed! Click to try again.",
+
+    "uploading_circle_processing": "Processing",
+    "uploading_circle_failed_content": "Failed! Click to try again."
 
 }

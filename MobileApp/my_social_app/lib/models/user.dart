@@ -67,6 +67,6 @@ class User{
         notFolloweds: Pagination.init(usersPerPage,true),
         messages: Pagination.init(messagesPerPage,true),
         conversations: Pagination.init(usersPerPage, true),
-        messagesCache: const []
+        uploadingImage: null
       );
 }

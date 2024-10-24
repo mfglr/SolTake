@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutioon_status.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class UploadingSolutionState{
@@ -10,7 +10,7 @@ class UploadingSolutionState{
   final XFile? video;
   final Iterable<XFile>? images;
   final double rate;
-  final UploadingSolutioonStatus status;
+  final UploadingFileStatus status;
 
   const UploadingSolutionState({
     required this.id,
@@ -30,9 +30,9 @@ class UploadingSolutionState{
         images: images,
         video: video,
         rate: rate,
-        status: UploadingSolutioonStatus.loading
+        status: UploadingFileStatus.loading
       );
-  UploadingSolutionState changeStatus(UploadingSolutioonStatus status)
+  UploadingSolutionState changeStatus(UploadingFileStatus status)
     => UploadingSolutionState(
         id: id,
         questionId: questionId,

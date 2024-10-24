@@ -1,12 +1,18 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
 class UserService{
@@ -16,15 +22,49 @@ class UserService{
   static final UserService _singleton = UserService._(AppClient());
   factory UserService() => _singleton;
 
-  Future<MultipartRequest> _createUpdateImageRequest(XFile file) async{
+  Future<String> _readResponse(HttpClientResponse response) {
+    final completer = Completer<String>();
+    final contents = StringBuffer();
+    response.transform(utf8.decoder).listen((data) {
+      contents.write(data);
+    }, onDone: () => completer.complete(contents.toString()));
+    return completer.future;
+  }
+
+  Future<HttpClientRequest> _createUpdateImageRequest(XFile file, void Function(double) callback) async{
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
     request.files.add(await MultipartFile.fromPath("file",file.path));
-    return request;
+
+    var stream = request.finalize();
+    var length = request.contentLength;
+
+    var r = await HttpClient().postUrl(_appClient.generateUri(url));
+    r.headers.set(HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);
+    r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
+    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
+
+    var byteCount = 0;
+    await r.addStream(
+      stream.transform(
+        StreamTransformer.fromHandlers(
+          handleData: (data,sink){
+            sink.add(data);
+            byteCount += data.length;
+            callback(byteCount / length);
+          }
+        )  
+      )
+    );
+    return r;
   }
-  Future<void> updateImage(XFile file) => 
-    _createUpdateImageRequest(file)
-      .then((request) => _appClient.send(request));
+  Future<void> updateImage(XFile file,void Function(double) callback) async {
+    var request = await _createUpdateImageRequest(file,callback);
+    var response = await request.close();
+    if(response.statusCode >= 400){
+      throw BackendException(message: await _readResponse(response), statusCode: response.statusCode);
+    }
+  }
   
   Future<Uint8List> removeImage() => 
     _appClient

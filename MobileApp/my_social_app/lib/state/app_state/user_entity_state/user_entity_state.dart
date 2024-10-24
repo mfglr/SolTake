@@ -1,7 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class UserEntityState extends EntityState<UserState>{
@@ -159,8 +160,10 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState updateBiography(int userId,String biography)
     => UserEntityState(entities: updateOne(entities[userId]?.updateBiography(biography)));
 
-  UserEntityState addMessageToCache(int userId, MessageState message)
-    => UserEntityState(entities: updateOne(entities[userId]?.addMessageToCache(message)));
-  UserEntityState removeMessageToCache(int userId, MessageState message)
-    => UserEntityState(entities: updateOne(entities[userId]?.removeMessageToCache(message)));
+  UserEntityState addUploadingImage(int userId,XFile file)
+    => UserEntityState(entities: updateOne(entities[userId]?.addUploadingImage(file)));
+  UserEntityState changeUploadingImageStatus(int userId,UploadingFileStatus status)
+    => UserEntityState(entities: updateOne(entities[userId]?.changeUploadingImageStatus(status)));
+  UserEntityState changeUploadingImageRate(int userId,double rate)
+    => UserEntityState(entities: updateOne(entities[userId]?.changeUploadingImageRate(rate)));
 }

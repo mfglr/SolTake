@@ -6,9 +6,10 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/user_image
 
 
 @immutable
-class UpdateCurrentUserImageAction extends AppAction{
+class UpdateUserImageAction extends AppAction{
+  final int userId;
   final XFile file;
-  const UpdateCurrentUserImageAction({required this.file});
+  const UpdateUserImageAction({required this.userId, required this.file});
 }
 
 @immutable

@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/uploading_user_image_state/uploading_user_image_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class UserState{
@@ -26,7 +28,7 @@ class UserState{
   final Pagination savedSolutions;
   final Pagination messages;
   final Pagination conversations;
-  final Iterable<MessageState> messagesCache;
+  final UploadingUserImageState? uploadingImage;
 
   String formatName(int count){
     final r = (name == "" ? userName : name);
@@ -60,7 +62,7 @@ class UserState{
     required this.messages,
     required this.notFolloweds,
     required this.conversations,
-    required this.messagesCache
+    required this.uploadingImage
   });
 
   UserState _optional({
@@ -84,7 +86,7 @@ class UserState{
     Pagination? newMessages,
     Pagination? newNotFolloweds,
     Pagination? newConversations,
-    Iterable<MessageState>? newMessagesCache,
+    UploadingUserImageState? newUploadingImage,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -108,7 +110,7 @@ class UserState{
     messages: newMessages ?? messages,
     notFolloweds: newNotFolloweds ?? notFolloweds,
     conversations: newConversations ?? conversations,
-    messagesCache: newMessagesCache ?? messagesCache
+    uploadingImage: newUploadingImage ?? uploadingImage
   );
   
   //followers
@@ -302,8 +304,10 @@ class UserState{
   UserState updateBiography(String biography) =>
     _optional(newBiography: biography);
 
-  UserState addMessageToCache(MessageState message) =>
-    _optional(newMessagesCache: [...messagesCache,message]);
-  UserState removeMessageToCache(MessageState message) =>
-    _optional(newMessagesCache: messagesCache.where((e) => e != message));
+  UserState addUploadingImage(XFile file)
+    => _optional(newUploadingImage: UploadingUserImageState(file: file, status: UploadingFileStatus.loading, rate: 0));
+  UserState changeUploadingImageStatus(UploadingFileStatus status)
+    => _optional(newUploadingImage: uploadingImage?.changeStatus(status));
+  UserState changeUploadingImageRate(double rate)
+    => _optional(newUploadingImage: uploadingImage?.changeRate(rate));
 }

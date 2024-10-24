@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class LoadUserAction extends AppAction{
@@ -408,14 +408,14 @@ class UpdateBiographySuccessAction extends AppAction{
 }
 
 @immutable
-class AddMessageToCacheAction extends AppAction{
+class ChangeUploadingUserImageStatusAction extends AppAction{
   final int userId;
-  final MessageState message;
-  const AddMessageToCacheAction({required this.userId, required this.message});
+  final UploadingFileStatus status;
+  const ChangeUploadingUserImageStatusAction({required this.userId, required this.status});
 }
 @immutable
-class RemoveMessageToCacheAction extends AppAction{
+class ChangeUploadingUserImageRateAction extends AppAction{
   final int userId;
-  final MessageState message;
-  const RemoveMessageToCacheAction({required this.userId, required this.message});
+  final double rate;
+  const ChangeUploadingUserImageRateAction({required this.userId, required this.rate});
 }

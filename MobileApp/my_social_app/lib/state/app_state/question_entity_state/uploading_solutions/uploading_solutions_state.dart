@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutioon_status.dart';
+import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 class UploadingSolutionsState {
   final Iterable<UploadingSolutionState> solutions;
@@ -20,7 +20,7 @@ class UploadingSolutionsState {
                 images: null,
                 video: video,
                 rate: 0,
-                status: UploadingSolutioonStatus.loading,
+                status: UploadingFileStatus.loading,
               )
             ]
       );
@@ -40,7 +40,7 @@ class UploadingSolutionsState {
                 images: images,
                 video: null,
                 rate: 0,
-                status: UploadingSolutioonStatus.loading,
+                status: UploadingFileStatus.loading,
               )
             ]
       );
@@ -54,7 +54,7 @@ class UploadingSolutionsState {
         ]
       );
 
-  UploadingSolutionsState changeStatus(UploadingSolutionState state,UploadingSolutioonStatus status)
+  UploadingSolutionsState changeStatus(UploadingSolutionState state,UploadingFileStatus status)
     => UploadingSolutionsState(
         solutions: [
           ...solutions.takeWhile((e) => e != state),
@@ -69,5 +69,5 @@ class UploadingSolutionsState {
   UploadingSolutionState get(String id) => solutions.firstWhere((e) => e.id == id);
   bool get isEmpty => solutions.isEmpty;
   int get length => solutions.length;
-  int get numberOfLoadingStatus => solutions.where((e) => e.status == UploadingSolutioonStatus.loading).length;
+  int get numberOfLoadingStatus => solutions.where((e) => e.status == UploadingFileStatus.loading).length;
 }
