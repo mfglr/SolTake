@@ -54,7 +54,7 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
 
   @override
   void initState() {
-    _images = widget.images;
+    _images = widget.images.take(2);
     super.initState();
   }
 
