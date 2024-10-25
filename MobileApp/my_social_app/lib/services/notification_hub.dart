@@ -18,8 +18,6 @@ import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
@@ -94,7 +92,6 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddNewQuestionCommentAction(questionId: comment.questionId!, commentId: comment.id));
       store.dispatch(AddCommentAction(comment: comment));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
     }
   );
   //SolutionCommentCreatedNotification
@@ -109,7 +106,6 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddNewSolutionCommentAction(solutionId: comment.solutionId!, commentId: comment.id));
       store.dispatch(AddCommentAction(comment: comment));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
     }
   );
   //CommentRepliedNotification
@@ -123,7 +119,6 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddNewCommentReplyAction(commentId: comment.parentId!,replyId: comment.id));
       store.dispatch(AddCommentAction(comment: comment));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
     }
   );
   //QuestionLikedNotification
@@ -140,7 +135,6 @@ class NotificationHub{
       store.dispatch(AddQuestionUserLikeAction(like: likeState));
       store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, likeId: like.id));
       store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
     }
   );
   //CommentLikedNotification
@@ -155,7 +149,6 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddCommentUserLikeAction(like: like.toCommentUserLikeState()));
       store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(like.appUserId)));
       store.dispatch(AddNewCommentLikeAction(commentId: notification.commentId!, likeId:like.id));
     }
   );
@@ -171,7 +164,6 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
       store.dispatch(AddSolutionAction(solution: solution));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
     }
   );
   //UserFollowedNotification
@@ -244,7 +236,6 @@ class NotificationHub{
         store.dispatch(AddSolutionUserVoteAction(vote: voteState));
         store.dispatch(AddNewSolutionUpvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
         store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
       }
     );
   //SolutionWasDownvotedNotification
@@ -262,7 +253,6 @@ class NotificationHub{
         store.dispatch(AddSolutionUserVoteAction(vote: voteState));
         store.dispatch(AddNewSolutionDownvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
         store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(vote.appUserId)));
       }
     );
   //UserTagInCommentNotification
@@ -277,7 +267,6 @@ class NotificationHub{
 
         store.dispatch(PrependNotificationAction(notification: notification));
         store.dispatch(AddCommentAction(comment: comment));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
         if(comment.questionId != null){
           store.dispatch(AddNewQuestionCommentAction(questionId: comment.questionId!, commentId: comment.id));
         }

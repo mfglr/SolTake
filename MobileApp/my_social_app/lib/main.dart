@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
@@ -50,17 +51,23 @@ Future<void> main() async {
     return true;
   };
 
-  runApp(
-    StoreProvider(
+  runApp(AppView(cameras: cameras));
+}
+
+
+class AppView extends StatelessWidget {
+  final List<CameraDescription> cameras;
+  const AppView({
+    super.key,
+    required this.cameras
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreProvider(
       store: store,
       child: StoreConnector<AppState,AccountState?>(
-        onInit: (store){
-          store.dispatch(const LoginByRefreshToken());
-          Timer.periodic(
-            Duration(minutes:  int.parse(dotenv.env['accessTokenDuration']!)),
-            (timer) => store.dispatch(const LoginByRefreshToken())
-          );
-        },
+        onInit: (store) => store.dispatch(const LoginByRefreshToken()),
         converter: (store) => store.state.accountState,
         builder: (context,account) => MaterialApp(
           title: 'SolTake', 
@@ -85,12 +92,12 @@ Future<void> main() async {
             takeVideoRoute: (context) => TakeVieoPage(cameras: cameras)
           },
         ),
-      )
-    )
-  );
+      ),
+    );
+  }
 }
 
-class MainView extends StatelessWidget {
+class MainView extends StatefulWidget {
   final AccountState? account;
   const MainView({
     super.key,
@@ -98,12 +105,37 @@ class MainView extends StatelessWidget {
   });
 
   @override
+  State<MainView> createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
+   late final Timer _timer;
+  @override
+  void initState() {
+    _timer = Timer.periodic(
+      Duration(minutes: int.parse(dotenv.env['accessTokenDuration']!)),
+      (timer){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        store.dispatch(const LoginByRefreshToken());
+      }
+    );
+    DefaultCacheManager().emptyCache();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,bool>(
       converter: (store) => store.state.isInitialized,
       builder: (context, isInitialized){
         if(isInitialized){
-          if(account == null){
+          if(widget.account == null){
             return StoreConnector<AppState,ActiveLoginPage>(
               converter: (store) => store.state.loginState.activeLoginPage,
               builder: (context,activeLoginPage){
@@ -113,10 +145,10 @@ class MainView extends StatelessWidget {
               },
             );
           }
-          if(!account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
-          if(!account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
-          if(!account!.isThirdPartyAuthenticated && !account!.emailConfirmed) return const VerifyEmailPage();
-          if(account!.accountDeletionStart) return const ApplicationLoadingPage();
+          if(!widget.account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
+          if(!widget.account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
+          if(!widget.account!.isThirdPartyAuthenticated && !widget.account!.emailConfirmed) return const VerifyEmailPage();
+          if(widget.account!.accountDeletionStart) return const ApplicationLoadingPage();
           return const RootView();
         }
         return const ApplicationLoadingPage();

@@ -1,11 +1,8 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/image_status.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
+import 'package:my_social_app/services/user_service.dart';
 
-class UserImageWidget extends StatelessWidget {
+class UserImageWidget extends StatefulWidget {
   final int userId;
   final double diameter;
   final void Function()? onPressed;
@@ -17,25 +14,35 @@ class UserImageWidget extends StatelessWidget {
     this.onPressed
   });
 
-  Widget _generateImage(UserImageState userImage){
+  @override
+  State<UserImageWidget> createState() => _UserImageWidgetState();
+}
+
+class _UserImageWidgetState extends State<UserImageWidget> {
+  Uint8List? _image;
+
+  @override
+  void initState() {
+    UserService()
+      .getUserImage(widget.userId)
+      .then((file) => file.readAsBytes())
+      .then((bytes) => setState(() => _image = bytes));
+    super.initState();
+  }
+
+  Widget _generateImage(){
     return Container(
-      width: diameter,
-      height: diameter,
+      width: widget.diameter,
+      height: widget.diameter,
       clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle
-      ),
+      decoration: const BoxDecoration(shape: BoxShape.circle),
       child: Builder(
         builder: (context) {
-          if(userImage.state != ImageStatus.done){
-            return Container(
-              color: const Color.fromRGBO(226, 226, 226, 1),
-            );
-          }
+          if(_image == null) return Container(color: const Color.fromRGBO(226, 226, 226, 1));
           return Image.memory(
-            userImage.image!,
-            width: diameter,
-            height: diameter,
+            _image!,
+            width: widget.diameter,
+            height: widget.diameter,
             fit: BoxFit.cover,
           );
         }
@@ -45,16 +52,10 @@ class UserImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,UserImageState>(
-      onInit: (store) => store.dispatch(LoadUserImageAction(userId: userId)),
-      converter: (store) => store.state.userImageEntityState.entities[userId]!,
-      builder:(context,userImage){
-        if(onPressed == null) return _generateImage(userImage);
-        return IconButton(
-          onPressed: onPressed,
-          icon: _generateImage(userImage)
-        );
-      }
+    if(widget.onPressed == null) return _generateImage();
+    return IconButton(
+      onPressed: widget.onPressed,
+      icon: _generateImage()
     );
   }
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:camera/camera.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
@@ -14,6 +15,7 @@ import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/pagination/page.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class UserService{
   final AppClient _appClient;
@@ -107,10 +109,21 @@ class UserService{
     _appClient
       .get("$userController/$getUserByUserNameEndpoint/$userName")
       .then((json) => User.fromJson(json));
-  
-  Future<Uint8List> getImageById(int id) => 
-    _appClient
-      .getBytes("$userController/$gerUserImageByIdEndPoint/$id");
+
+  Future<File> getUserImage(int userId){
+    var url = _appClient.generateUrl("$userController/$getUserImageByIdEndPoint/$userId");
+    return DefaultCacheManager()
+      .getSingleFile(url,headers: _appClient.getHeader())
+      .catchError((e){
+        if(e is HttpExceptionWithStatus && e.statusCode == HttpStatus.notFound){
+          return rootBundle
+            .load("assets/images/no_profile_image.png")
+            .then((bytedata) => bytedata.buffer.asUint8List())
+            .then((bytes) => DefaultCacheManager().putFile(url, bytes));
+        }
+        throw e;
+      });
+  }
   
   Future<Iterable<Follow>> getFollowersById(int id, Page page) =>
     _appClient

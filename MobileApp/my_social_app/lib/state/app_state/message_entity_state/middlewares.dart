@@ -5,8 +5,6 @@ import 'package:my_social_app/state/app_state/message_image_entity_state/actions
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 // MessageState _createMessageState(int receiverId, String? content, Iterable<XFile> images,AccountState account){
@@ -64,7 +62,6 @@ void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
           store.dispatch(AddMessageImagesAction(images: List.generate(
             message.numberOfImages, (index) => MessageImageState.init(message.id, index)
           )));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(message.conversationId)));
         });
     }
   }
@@ -126,7 +123,6 @@ void getUnviewedMessagesMiddleware(Store<AppState> store,action,NextDispatcher n
         store.dispatch(AddMessageImagesListAction(list: messages.map(
           (e) => List.generate(e.numberOfImages, (index) => MessageImageState.init(e.id, index)))
         ));
-        store.dispatch(AddUserImagesAction(images: messages.map((e) => UserImageState.init(e.conversationId))));
         store.dispatch(const MarkComingMessagesAsReceivedAction());
       });
   }

@@ -7,7 +7,7 @@ namespace MySocailApp.Application.InfrastructureServices.BlobService.ImageServic
     {
         Task<AppImage> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken);
         Task<List<AppImage>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken);
-        Task<byte[]> ReadAsync(string containerName, string blobName);
+        Task<byte[]> ReadAsync(string containerName, string blobName, CancellationToken cancellationToken);
         void Delete(string containerName, string blobName);
         void DeleteRange(string containerName, IEnumerable<string> blobNames);
     }

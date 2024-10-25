@@ -6,7 +6,6 @@ import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/views/edit_profile/modals/uploading_user_image_modal.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -121,7 +120,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                       onPressed: 
                         user.hasImage ? (){
                           final store = StoreProvider.of<AppState>(context,listen: false);
-                          store.dispatch(const RemoveCurrentUserImageAction());
+                          store.dispatch(RemoveUserImageAction(userId: store.state.accountState!.id));
                           Navigator.of(context).pop();
                         } : null,
                       child: Column(

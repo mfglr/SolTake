@@ -14,6 +14,6 @@ namespace MySocailApp.Domain.AppUserAggregate.Exceptions
         };
         public override string GetErrorMessage(string culture) => _messages[culture];
 
-        public UserImageIsNotAvailableException() : base((int)HttpStatusCode.BadRequest){}
+        public UserImageIsNotAvailableException() : base((int)HttpStatusCode.NotFound){}
     }
 }

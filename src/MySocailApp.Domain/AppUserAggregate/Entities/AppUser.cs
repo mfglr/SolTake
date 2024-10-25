@@ -15,6 +15,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             HasImage = false;
             CreatedAt = DateTime.UtcNow;
         }
+        
         public bool HasImage { get; private set; }
         public ProfileImage? Image { get; private set; }
         public void UpdateImage(ProfileImage image)
@@ -31,6 +32,7 @@ namespace MySocailApp.Domain.AppUserAggregate.Entities
             HasImage = false;
             Image = null;
         }
+
         public string Name { get; private set; }
         public void UpdateName(string name)
         {

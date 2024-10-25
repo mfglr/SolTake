@@ -1,6 +1,6 @@
 const getUserByIdEndPoint = "GetById";
 const getUserByUserNameEndpoint = "GetByUserName";
-const gerUserImageByIdEndPoint = "GetImageById";
+const getUserImageByIdEndPoint = "GetImageById";
 const getFollowersByIdEndPoint = "GetFollowersById";
 const getFollowedsByIdEndPoint = "GetFollowedsById";
 const getNotFollowedsEndpoint = "GetNotFolloweds";

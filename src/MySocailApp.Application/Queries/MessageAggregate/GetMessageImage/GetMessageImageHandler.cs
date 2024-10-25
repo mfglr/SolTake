@@ -28,7 +28,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
                 throw new MessageImageNotFoundException();
 
             var image = message.Images[request.Index];
-            return await _blobService.ReadAsync(ContainerName.MesssageImages, image.BlobName);
+            return await _blobService.ReadAsync(ContainerName.MesssageImages, image.BlobName, cancellationToken);
         }
     }
 }

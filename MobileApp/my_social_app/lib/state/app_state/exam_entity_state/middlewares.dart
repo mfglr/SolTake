@@ -6,8 +6,6 @@ import 'package:my_social_app/state/app_state/question_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 void loadExamMiddleare(Store<AppState> store,action,NextDispatcher next){
@@ -29,7 +27,6 @@ void nextExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher ne
       .then((questions){
         store.dispatch(NextExamQuestionsSuccessAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -50,7 +47,6 @@ void prevExamQuestionsMiddleware(Store<AppState> store,action,NextDispatcher nex
       .then((questions){
         store.dispatch(PrevExamQuestionsSuccessAction(examId: action.examId,questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());

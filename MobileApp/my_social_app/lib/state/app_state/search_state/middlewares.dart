@@ -8,8 +8,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/actions.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 import 'package:redux/redux.dart';
@@ -22,7 +20,6 @@ void firstSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher n
       .then((users){
         store.dispatch(FirstSearchingUsersSuccessAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
       })
       .catchError((e){
         store.dispatch(const FirstSearchingUsersFailedAction());
@@ -40,7 +37,6 @@ void nextSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher ne
       .then((users){
         store.dispatch(NextSearchingUsersSuccessAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
       })
       .catchError((e){
         store.dispatch(const NextSearhcingUsersFailedAction());
@@ -58,7 +54,6 @@ void firstSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatch
       .then((questions){
         store.dispatch(FirstSearchingQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -79,7 +74,6 @@ void nextSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatche
       .then((questions){
         store.dispatch(NextSearchingQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -102,7 +96,6 @@ void nextSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher nex
         store.dispatch(NextSearchedUsersSuccessAction(searchIds: searchs.map((e) => e.id)));
         store.dispatch(AddUserSearchsAction(searchs: searchs.map((e) => e.toUserSearchState())));
         store.dispatch(AddUsersAction(users: searchs.map((e) => e.searched!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: searchs.map((e) => UserImageState.init(e.searchedId))));
       })
       .catchError((e){
         store.dispatch(const NextSearchedUsersFailedAction());

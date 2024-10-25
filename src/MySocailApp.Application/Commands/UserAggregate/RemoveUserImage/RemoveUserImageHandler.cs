@@ -20,7 +20,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
             user.RemoveImage();
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return await _blobService.ReadAsync(ContainerName.UserImages, DefaultBlobNames.NoProfileImage);
+            return await _blobService.ReadAsync(ContainerName.UserImages, DefaultBlobNames.NoProfileImage,cancellationToken);
         }
     }
 }

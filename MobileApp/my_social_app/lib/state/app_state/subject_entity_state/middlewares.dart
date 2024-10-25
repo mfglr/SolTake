@@ -5,8 +5,6 @@ import 'package:my_social_app/state/app_state/question_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 void loadSubjectMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -27,7 +25,6 @@ void nextSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher 
       .then((questions){
         store.dispatch(NextSubjectQuestionsSuccessAction(subjectId: action.subjectId,questions: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
         store.dispatch(AddTopicsAction(topics: topics));
       })
@@ -46,7 +43,6 @@ void prevSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher 
       .then((questions){
         store.dispatch(PrevSubjectQuestionsSuccessAction(subjectId: action.subjectId, questionIds: questions.map((x) => x.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
         store.dispatch(AddTopicsAction(topics: topics));
       })

@@ -1,6 +1,5 @@
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
 UserEntityState markQuestionAsSolvedReducer(UserEntityState prev,MarkUserQuestionAsSolvedAction action)
@@ -133,8 +132,6 @@ UserEntityState loadUserReducer(UserEntityState prev,AddUserAction action)
 UserEntityState addUsersReducer(UserEntityState prev,AddUsersAction action)
   => prev.addUsers(action.users);
 
-UserEntityState changeProfileImageStatusReducer(UserEntityState prev,ChangeProfileImageStatusAction action)
-  => prev.changeProfileImageStatus(action.userId,action.value);
 UserEntityState updateUserNameReducer(UserEntityState prev,UpdateUserNameSuccessAction action)
   => prev.updateUserName(action.userId, action.userName);
 UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction action)
@@ -142,12 +139,19 @@ UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction a
 UserEntityState updateBiographyReducer(UserEntityState prev, UpdateBiographySuccessAction action)
   => prev.updateBiography(action.userId, action.biography);
 
+//update image
 UserEntityState addUploadingImageReducer(UserEntityState prev,UpdateUserImageAction action)
   => prev.addUploadingImage(action.userId, action.file);
-UserEntityState changeUploadingImageStatusReducer(UserEntityState prev,ChangeUploadingUserImageStatusAction action)
-  => prev.changeUploadingImageStatus(action.userId, action.status);
-UserEntityState changeUploadingImageRateReducer(UserEntityState prev,ChangeUploadingUserImageRateAction action)
+UserEntityState updateImageSuccessReducer(UserEntityState prev,UpadateUserImageSuccessAction action)
+  => prev.upadateImage(action.userId);
+UserEntityState updateImageFailedReducer(UserEntityState prev,UpdateUserImageFailedAction action)
+  => prev.markUploadingImageAsFailed(action.userId);
+UserEntityState changeUploadingImageRateReducer(UserEntityState prev,ChangeUserImageRateAction action)
   => prev.changeUploadingImageRate(action.userId, action.rate);
+
+//remove image
+UserEntityState removeImageReducer(UserEntityState prev,RemoveUserImageAction action)
+  => prev.removeImage(action.userId);
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   //
@@ -230,12 +234,16 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,AddUserAction>(loadUserReducer).call,
   TypedReducer<UserEntityState,AddUsersAction>(addUsersReducer).call,
 
-  TypedReducer<UserEntityState,ChangeProfileImageStatusAction>(changeProfileImageStatusReducer).call,
   TypedReducer<UserEntityState,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
   TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
   TypedReducer<UserEntityState,UpdateBiographySuccessAction>(updateBiographyReducer).call,
 
+  //update image
   TypedReducer<UserEntityState,UpdateUserImageAction>(addUploadingImageReducer).call,
-  TypedReducer<UserEntityState,ChangeUploadingUserImageStatusAction>(changeUploadingImageStatusReducer).call,
-  TypedReducer<UserEntityState,ChangeUploadingUserImageRateAction>(changeUploadingImageRateReducer).call,
+  TypedReducer<UserEntityState,UpadateUserImageSuccessAction>(updateImageSuccessReducer).call,
+  TypedReducer<UserEntityState,UpdateUserImageFailedAction>(updateImageFailedReducer).call,
+  TypedReducer<UserEntityState,ChangeUserImageRateAction>(changeUploadingImageRateReducer).call,
+
+  //remove image
+  TypedReducer<UserEntityState,RemoveUserImageAction>(removeImageReducer).call,
 ]);

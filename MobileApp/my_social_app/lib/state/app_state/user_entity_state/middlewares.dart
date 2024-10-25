@@ -1,7 +1,11 @@
 import 'package:collection/collection.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/account_service.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
@@ -19,10 +23,42 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
+
+void updateUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UpdateUserImageAction){
+    UserService()
+      .updateImage(action.file,(rate) => store.dispatch(ChangeUserImageRateAction(userId: action.userId, rate: rate)))
+      .then((_) => action.file.readAsBytes())
+      .then((image){
+        final url = "$userController/$getUserImageByIdEndPoint/${action.userId}";
+        DefaultCacheManager().putFile(AppClient().generateUrl(url),image);
+        store.dispatch(UpadateUserImageSuccessAction(userId: action.userId,file: action.file));
+        ToastCreator.displaySuccess(userPhotoUpdatedNotificationContent[getLanguageCode(store)]!);
+      })
+      .catchError((e){
+        store.dispatch(UpdateUserImageFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void removeCurrentUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveUserImageAction){
+    final accountId = store.state.accountState!.id;
+    UserService()
+      .removeImage()
+      .then((image){
+        final url = "$userController/$getUserImageByIdEndPoint/${action.userId}";
+        DefaultCacheManager().removeFile(AppClient().generateUrl(url));
+        store.dispatch(RemoveUserImageSuccessAction(userId: accountId));
+        ToastCreator.displaySuccess(userPhotoRemoveNotificationContent[getLanguageCode(store)]!);
+      });
+  }
+  next(action);
+}
+
 
 void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadUserAction){
@@ -31,7 +67,6 @@ void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
         .getById(action.userId)
         .then((user){
           store.dispatch(AddUserAction(user: user.toUserState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(user.id)));
         });
     }
   }
@@ -45,7 +80,6 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
         .getByUserName(action.userName)
         .then((user){
           store.dispatch(AddUserAction(user: user.toUserState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(user.id)));
         });
     }
   }
@@ -137,7 +171,6 @@ void nextUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher nex
         store.dispatch(NextUserFollowersSuccessAction(userId: action.userId,followIds: follows.map((e) => e.id)));
         store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
         store.dispatch(AddUsersAction(users: follows.map((e) => e.follower!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.followerId))));
       })
       .catchError((e){
         store.dispatch(NextUserFollowersFailedAction(userId: action.userId));
@@ -155,7 +188,6 @@ void nextUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher nex
         store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followIds: follows.map((e) => e.id)));
         store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
         store.dispatch(AddUsersAction(users: follows.map((e) => e.followed!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: follows.map((e) => UserImageState.init(e.followed!.id))));
       })
       .catchError((e){
         store.dispatch(NextuserFollowedsFailedAction(userId: action.userId));
@@ -191,7 +223,6 @@ void nextUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher nex
       .then((questions){
         store.dispatch(NextUserQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -212,7 +243,6 @@ void nextUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatch
       .then((questions){
         store.dispatch(NextUserSolvedQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((question) => question.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -233,7 +263,6 @@ void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispat
       .then((questions){
         store.dispatch(NextUserUnsolvedQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -255,7 +284,6 @@ void nextUserSavedQuestionsMiddleware(Store<AppState> store,action,NextDispatche
         store.dispatch(NextUserSavedQuestionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
         store.dispatch(AddQuestionUserSavesAction(saves: saves.map((e) => e.toQuestionUserSaveState())));
         store.dispatch(AddQuestionsAction(questions: saves.map((e) => e.question!.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(AddExamsAction(exams: saves.map((e) => e.question!.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: saves.map((e) => e.question!.subject.toSubjectState())));
         var topics = saves.map((e) => e.question!.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -276,7 +304,6 @@ void nextUserSavedSolutionsMiddleware(Store<AppState> store,action,NextDispatche
       .then((saves){
         store.dispatch(AddSolutionUserSavesAction(saves: saves.map((e) => e.toSolutionUserSaveState())));
         store.dispatch(AddSolutionsAction(solutions: saves.map((e) => e.solution!.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(NextUserSavedSolutionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
       })
       .catchError((e){
@@ -294,7 +321,6 @@ void nextUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher 
       .then((users){
         store.dispatch(NextUserConversationsSuccessAction(userId: store.state.accountState!.id, ids: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
       })
       .catchError((e){
         store.dispatch(NextUserConversationsFailedAction(userId: action.userId));
@@ -332,7 +358,6 @@ void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDisp
       .then((users){
         store.dispatch(AddNextPageUserNotFollowedsAction(userId: action.userId,userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
-        store.dispatch(AddUserImagesAction(images: users.map((e) => UserImageState.init(e.id))));
       });
   }
   next(action);

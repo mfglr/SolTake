@@ -304,10 +304,20 @@ class UserState{
   UserState updateBiography(String biography) =>
     _optional(newBiography: biography);
 
+  //update image
   UserState addUploadingImage(XFile file)
     => _optional(newUploadingImage: UploadingUserImageState(file: file, status: UploadingFileStatus.loading, rate: 0));
-  UserState changeUploadingImageStatus(UploadingFileStatus status)
-    => _optional(newUploadingImage: uploadingImage?.changeStatus(status));
   UserState changeUploadingImageRate(double rate)
     => _optional(newUploadingImage: uploadingImage?.changeRate(rate));
+  UserState markUploadingImageAsFailed()
+    => _optional(newUploadingImage: uploadingImage?.changeStatus(UploadingFileStatus.failed));
+  UserState updateImage()
+    => _optional(
+      newHasImage: true,
+      newUploadingImage: uploadingImage?.changeStatus(UploadingFileStatus.success)
+    );
+  
+  //remove image
+  UserState removeImage() => _optional(newHasImage: false);
+
 }

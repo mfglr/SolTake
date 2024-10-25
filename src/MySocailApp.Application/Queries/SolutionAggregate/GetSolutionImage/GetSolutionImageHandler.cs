@@ -21,7 +21,7 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage
                 solution.Images.FirstOrDefault(x => x.Id == request.SolutionImageId) ??
                 throw new SolutionImageIsNotFoundException();
 
-            return await _blobService.ReadAsync(ContainerName.SolutionImages, image.BlobName);
+            return await _blobService.ReadAsync(ContainerName.SolutionImages, image.BlobName, cancellationToken);
         }
     }
 }

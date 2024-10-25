@@ -1,7 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class LoadUserAction extends AppAction{
@@ -368,12 +368,6 @@ class RemoveUserConversationAction extends AppAction{
 }
 
 @immutable
-class ChangeProfileImageStatusAction extends AppAction{
-  final int userId;
-  final bool value;
-  const ChangeProfileImageStatusAction({required this.userId, required this.value});
-}
-@immutable
 class UpdateUserNameAction extends AppAction{
   final String userName;
   const UpdateUserNameAction({required this.userName});
@@ -407,15 +401,39 @@ class UpdateBiographySuccessAction extends AppAction{
   const UpdateBiographySuccessAction({required this.userId, required this.biography});
 }
 
+//update user image
 @immutable
-class ChangeUploadingUserImageStatusAction extends AppAction{
+class UpdateUserImageAction extends AppAction{
   final int userId;
-  final UploadingFileStatus status;
-  const ChangeUploadingUserImageStatusAction({required this.userId, required this.status});
+  final XFile file;
+  const UpdateUserImageAction({required this.userId, required this.file});
 }
 @immutable
-class ChangeUploadingUserImageRateAction extends AppAction{
+class UpadateUserImageSuccessAction extends AppAction{
+  final int userId;
+  final XFile file;
+  const UpadateUserImageSuccessAction({required this.userId, required this.file});
+}
+@immutable
+class UpdateUserImageFailedAction extends AppAction{
+  final int userId;
+  const UpdateUserImageFailedAction({required this.userId});
+}
+@immutable
+class ChangeUserImageRateAction extends AppAction{
   final int userId;
   final double rate;
-  const ChangeUploadingUserImageRateAction({required this.userId, required this.rate});
+  const ChangeUserImageRateAction({required this.userId, required this.rate});
+}
+
+//remove user image
+@immutable
+class RemoveUserImageAction extends AppAction{
+  final int userId;
+  const RemoveUserImageAction({required this.userId});
+}
+@immutable
+class RemoveUserImageSuccessAction extends AppAction{
+  final int userId;
+  const RemoveUserImageSuccessAction({required this.userId});
 }

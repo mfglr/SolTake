@@ -20,6 +20,7 @@ class AppClient{
       "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode
     };
 
+  String generateUrl(String url) => "$_apiUrl/$url";
   Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
   
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {

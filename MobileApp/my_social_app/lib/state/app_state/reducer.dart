@@ -23,7 +23,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:redux/redux.dart';
@@ -55,7 +54,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   accountState: accoutStateReducers(prev.accountState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
-  userImageEntityState: userImageEntityStateReducers(prev.userImageEntityState,action),
   searchState: searchStateReducers(prev.searchState,action),
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),

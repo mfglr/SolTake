@@ -6,8 +6,6 @@ import 'package:my_social_app/state/app_state/question_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -17,7 +15,6 @@ void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
         .getById(action.commentId)
         .then((comment){
           store.dispatch(AddCommentAction(comment: comment.toCommentState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(comment.appUserId)));
         });
     }
   }
@@ -31,7 +28,6 @@ void loadCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
         .getByIds(ids)
         .then((comments){
           store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
-          store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(e.appUserId))));
         });
     }
   }
@@ -46,7 +42,6 @@ void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatch
       .then((likes){
         store.dispatch(AddCommentUserLikesAction(likes: likes.map((e) => e.toCommentUserLikeState())));
         store.dispatch(AddUsersAction(users: likes.map((e) => e.appUser!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: likes.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(NextCommentLikesSuccessAction(commentId: action.commentId,likeIds: likes.map((e) => e.id)));
       });
   }
@@ -85,7 +80,6 @@ void nextCommentRepliesMiddleware(Store<AppState> store,action,NextDispatcher ne
       .then((replies){
         store.dispatch(NextCommentRepliesSuccessAction(commentId: action.commentId,replyIds: replies.map((e) => e.id)));
         store.dispatch(AddCommentsAction(comments: replies.map((e) => e.toCommentState())));
-        store.dispatch(AddUserImagesAction(images: replies.map((e) => UserImageState.init(e.appUserId))));
       })
       .catchError((e){
         store.dispatch(NextCommentRepliesFailedAction(commentId: action.commentId));

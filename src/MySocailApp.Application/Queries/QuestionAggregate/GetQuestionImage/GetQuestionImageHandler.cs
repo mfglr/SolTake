@@ -21,7 +21,7 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
                 question.Images.FirstOrDefault(x => x.Id == request.QuestionImageId) ??
                 throw new QuestionImageNotFoundException();
 
-            return await _blobService.ReadAsync(ContainerName.QuestionImages, image.BlobName);
+            return await _blobService.ReadAsync(ContainerName.QuestionImages, image.BlobName, cancellationToken);
         }
     }
 }

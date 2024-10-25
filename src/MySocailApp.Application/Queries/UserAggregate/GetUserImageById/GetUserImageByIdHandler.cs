@@ -13,13 +13,13 @@ namespace MySocailApp.Application.Queries.UserAggregate.GetUserImageById
 
         public async Task<byte[]> Handle(GetUserImageById request, CancellationToken cancellationToken)
         {
-            var user =
-                await _repository.GetAsync(request.UserId, cancellationToken) ??
+            var user = 
+                await _repository.GetAsync(request.UserId, cancellationToken) ?? 
                 throw new UserNotFoundException();
 
-            if(user.Image != null)
-                return await _blobService.ReadAsync(ContainerName.UserImages, user.Image.BlobName);
-            return await _blobService.ReadAsync(ContainerName.UserImages, DefaultBlobNames.NoProfileImage);
+            if(user.Image == null) throw new UserImageIsNotAvailableException();
+
+            return await _blobService.ReadAsync(ContainerName.UserImages, user.Image.BlobName, cancellationToken);
         }
     }
 }

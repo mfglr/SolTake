@@ -8,8 +8,6 @@ import 'package:my_social_app/state/app_state/message_image_entity_state/actions
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:signalr_netcore/signalr_client.dart';
@@ -74,7 +72,6 @@ class MessageHub{
           message.numberOfImages, (index) => MessageImageState.init(message.id, index))
         ));
         store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(message.senderId)));
         store.dispatch(MarkComingMessageAsReceivedAction(messageId: message.id));
       }
     );
@@ -89,8 +86,6 @@ class MessageHub{
           message.numberOfImages, (index) => MessageImageState.init(message.id, index))
         ));
         store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(message.senderId)));
-        
       },
     );
 
@@ -104,7 +99,6 @@ class MessageHub{
           message.numberOfImages, (index) => MessageImageState.init(message.id, index))
         ));
         store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
-        store.dispatch(AddUserImageAction(image: UserImageState.init(message.senderId)));
       }
     );
   }

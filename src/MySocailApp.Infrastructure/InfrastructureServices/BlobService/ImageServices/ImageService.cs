@@ -44,12 +44,16 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.ImageSer
             return images;
         }
 
-        public async Task<byte[]> ReadAsync(string containerName, string blobName)
+        public async Task<byte[]> ReadAsync(string containerName, string blobName, CancellationToken cancellationToken)
         {
+            var path = _pathFinder.GetPath(RootName.Image, containerName, blobName);
+
+            if (!File.Exists(path))
+                throw new ImageNotFoundException();
+
             using var stream = File.OpenRead(_pathFinder.GetPath(RootName.Image, containerName, blobName));
-            var bytes = await stream.ToByteArrayAsync();
+            var bytes = await stream.ToByteArrayAsync(cancellationToken);
             stream.Close();
-            stream.Dispose();
             return bytes;
         }
 
