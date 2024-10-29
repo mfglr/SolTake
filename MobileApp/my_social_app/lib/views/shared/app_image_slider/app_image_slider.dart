@@ -47,8 +47,8 @@ class _AppImageSliderState extends State<AppImageSlider> {
                 ),
                 if(widget.displayRemoveImageButton)
                   Positioned(
-                    right: 0,
-                    top: 0,
+                    right: 15,
+                    top: 15,
                     child: ClearUploadButton(
                       onPressed: () => widget.removeImage(image)
                     ) 
