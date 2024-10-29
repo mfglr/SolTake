@@ -113,7 +113,6 @@
 
     "add_solution_images_page_error": "You can't upload up to 3 images per a solution!",
     "add_solution_images_page_title":  "Create a Solution",
-    "add_solution_images_page_add_photo_button": "Add a Photo",
     "add_solution_images_page_continue_button": "Continue",
 
     "add_solution_content_page_text_field": "Type somethings about your solution...",
