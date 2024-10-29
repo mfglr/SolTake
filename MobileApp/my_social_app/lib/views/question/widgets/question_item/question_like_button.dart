@@ -26,7 +26,7 @@ class QuestionLikeButton extends StatelessWidget {
       icon: Builder(
         builder: (context) {
           if(question.isLiked) return const Icon(Icons.favorite,color: Colors.red);
-          return const Icon(Icons.favorite_outline);
+          return const Icon(Icons.favorite_outline,color: Colors.red,);
         }
       )
     );

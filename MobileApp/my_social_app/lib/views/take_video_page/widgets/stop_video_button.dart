@@ -18,9 +18,12 @@ class StopVideoButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 10,
-              height: 10,
-              color: Colors.red,
+              width: 20,
+              height: 20,
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.all(Radius.elliptical(5, 5))
+              ),
             )
           ],
         ),

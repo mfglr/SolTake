@@ -17,6 +17,7 @@ class UpvoteButton extends StatelessWidget {
         }
         store.dispatch(MakeSolutionUpvoteAction(solutionId: solution.id));
       },
+      color: Colors.green,
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),

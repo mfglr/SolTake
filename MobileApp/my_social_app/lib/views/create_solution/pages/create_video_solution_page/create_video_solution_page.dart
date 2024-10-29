@@ -34,15 +34,14 @@ class _DisplayVideoSolutionPageState extends State<CreateVideoSolutionPage> {
       .of(context)
       .pushNamed(takeVideoRoute)
       .then((value){
+        if(value == null) return;
         final file = (value as dynamic).file;
         final direction = (value as dynamic).direction;
         setState(() { 
           _video = file;
           _direction = direction;
         });
-        if(value != null){
-          _initController(File(file.path));
-        }
+        _initController(File(file.path));
       });
   }
   @override

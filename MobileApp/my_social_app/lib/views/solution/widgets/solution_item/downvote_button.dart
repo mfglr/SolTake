@@ -9,7 +9,7 @@ class DownvoteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return IconButton(
       onPressed: (){
         if(solution.isDownvoted){
           store.dispatch(RemoveSolutionDownvoteAction(solutionId: solution.id));
@@ -17,12 +17,13 @@ class DownvoteButton extends StatelessWidget {
           store.dispatch(MakeSolutionDownvoteAction(solutionId: solution.id));
         }
       },
+      color: Colors.red,
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: Builder(
+      icon: Builder(
         builder: (context) {
           if(solution.isDownvoted) return const Icon(Icons.thumb_down);
           return const Icon(Icons.thumb_down_outlined);
