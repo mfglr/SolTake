@@ -215,6 +215,8 @@
     "display_question_solutions_page_title": "Sorunun Çözümleri",
 
     "create_question_speed_dial_video_solution_label": "Video Çözüm Oluştur",
+    "create_question_speed_dial_image_solution_label": "Resim Yükle",
+
 
     "no_solutions_widget_conten1": "Henüz Çözüm Yok!!!😢",
     "no_solutions_widget_conten2": "Endişelenme! Sorun Yakında Çözülecektir.🤞",

@@ -45,9 +45,10 @@ class CreateSolutionSpeedDial extends StatelessWidget {
       animationDuration: const Duration(milliseconds: 200),
       children: [
         SpeedDialChild(
-          child: const Icon(Icons.photo),
+          child: const Icon(Icons.photo_camera),
           shape: const CircleBorder(),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.blue,
+          label: AppLocalizations.of(context)!.create_question_speed_dial_image_solution_label,
           onTap: () => 
             Navigator
               .of(context)
@@ -59,10 +60,10 @@ class CreateSolutionSpeedDial extends StatelessWidget {
               })
         ),
         SpeedDialChild(
-          child: const Icon(Icons.video_library),
+          child: const Icon(Icons.videocam),
           shape: const CircleBorder(),
           label: AppLocalizations.of(context)!.create_question_speed_dial_video_solution_label,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.red,
           onTap: () =>
             Navigator
               .of(context)
