@@ -39,7 +39,7 @@ class _SolutionAbstractItemWidgetState extends State<SolutionAbstractItemWidget>
           if(image == null) return const NoSolutionImage();
           return DisplayImageWidget(
             onTap: () => widget.onTap(widget.solution.id),
-            image: image.image,
+            image: image.data,
             width: 0,
             status: image.state,
             aspectRatio: 1,

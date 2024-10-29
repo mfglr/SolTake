@@ -1,23 +1,20 @@
 import 'dart:typed_data';
-import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/app_state/image_state/image_state.dart';
+import 'package:my_social_app/state/app_state/image_state/image_status.dart';
 
-class SolutionImageState{
+class SolutionImageState extends ImageState{
   final int id;
   final int solutionId;
   final String blobName;
-  final double height;
-  final double width;
-  final ImageStatus state;
-  final Uint8List? image;
 
   const SolutionImageState({
     required this.id,
+    required super.height,
+    required super.width,
+    required super.state,
+    required super.data,
     required this.solutionId,
     required this.blobName,
-    required this.height,
-    required this.width,
-    required this.state,
-    required this.image,
   });
 
   SolutionImageState startLoading(){
@@ -29,11 +26,11 @@ class SolutionImageState{
       height: height,
       width: width,
       state: ImageStatus.started,
-      image: image
+      data: data
     );
   }
 
-  SolutionImageState load(Uint8List image)
+  SolutionImageState load(Uint8List data)
     => SolutionImageState(
         id: id,
         solutionId: solutionId,
@@ -41,6 +38,6 @@ class SolutionImageState{
         height: height,
         width: width,
         state: ImageStatus.done,
-        image: image
+        data: data
       );
 }

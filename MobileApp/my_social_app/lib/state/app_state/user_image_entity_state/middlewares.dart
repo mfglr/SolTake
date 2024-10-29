@@ -1,7 +1,7 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/user_service.dart';
-import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/app_state/image_state/image_status.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/app_state/image_state/image_status.dart';
 import 'package:my_social_app/views/shared/image_not_found_widget.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
@@ -13,6 +13,7 @@ class DisplayImageWidget extends StatefulWidget {
   final double aspectRatio;
   final void Function()? onTap;
   final Widget? centerWidget;
+
   const DisplayImageWidget({
     super.key,
     required this.image,

@@ -1,5 +1,5 @@
 import 'package:my_social_app/services/message_service.dart';
-import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/app_state/image_state/image_status.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';

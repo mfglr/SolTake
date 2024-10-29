@@ -1,25 +1,22 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/image_status.dart';
+import 'package:my_social_app/state/app_state/image_state/image_state.dart';
+import 'package:my_social_app/state/app_state/image_state/image_status.dart';
 
 @immutable
-class QuestionImageState{
+class QuestionImageState extends ImageState{
   final int id;
   final int questionId;
-  final double height;
-  final double width;
   final String? blobName;
-  final ImageStatus state;
-  final Uint8List? image;
 
   const QuestionImageState({
     required this.id,
     required this.questionId,
-    required this.height,
-    required this.width,
+    required super.height,
+    required super.width,
     required this.blobName,
-    required this.state,
-    required this.image,
+    required super.state,
+    required super.data,
   });
   
   QuestionImageState startLoding(){
@@ -31,11 +28,11 @@ class QuestionImageState{
       width: width,
       blobName: blobName,
       state: ImageStatus.started,
-      image: image,
+      data: data,
     );
   }
 
-  QuestionImageState load(Uint8List image)
+  QuestionImageState load(Uint8List data)
     => QuestionImageState(
         id: id,
         questionId: questionId,
@@ -43,7 +40,7 @@ class QuestionImageState{
         width: width,
         blobName: blobName,
         state: ImageStatus.done,
-        image: image,
+        data: data,
       );
 
   QuestionImageState notFound()
@@ -54,6 +51,6 @@ class QuestionImageState{
         width: width,
         blobName: blobName,
         state: ImageStatus.notFound,
-        image: image
+        data: data
       );
 }

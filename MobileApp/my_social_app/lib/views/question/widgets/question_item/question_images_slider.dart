@@ -91,7 +91,7 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
             carouselController: _carouselController,
             items: widget.question.images.map(
               (imageState) => DisplayImageWidget(
-                image: imageState.image,
+                image: imageState.data,
                 status: imageState.state,
                 width: MediaQuery.of(context).size.width,
                 aspectRatio: _getMinAspectRatio(context, widget.question.images),
