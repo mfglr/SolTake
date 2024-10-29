@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocialApp.Api.Tests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocialApp.Domain.Tests", "tests\MySocialApp.Domain.Tests\MySocialApp.Domain.Tests.csproj", "{5F41F823-861F-4498-B656-19D17FFBEE1E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QuestionWriteService", "QuestionWriteService", "{F5A0B759-60ED-4AA4-8383-9D6B9B5935BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionWriteService.Domain", "src\QuestionWriteService\QuestionWriteService.Domain\QuestionWriteService.Domain.csproj", "{FC5B876E-9BE5-445A-BD97-65F25085996F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +59,10 @@ Global
 		{5F41F823-861F-4498-B656-19D17FFBEE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F41F823-861F-4498-B656-19D17FFBEE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F41F823-861F-4498-B656-19D17FFBEE1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC5B876E-9BE5-445A-BD97-65F25085996F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC5B876E-9BE5-445A-BD97-65F25085996F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC5B876E-9BE5-445A-BD97-65F25085996F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC5B876E-9BE5-445A-BD97-65F25085996F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,8 @@ Global
 		{01FF46B3-917F-4024-A0A2-9675A5D8141D} = {B83AB36D-BC57-4C95-AACC-4E01E62DFAD0}
 		{2FD91580-16F9-43F5-B4A8-7D8B2AC160B8} = {3E6ADAD9-5BD2-4E72-A6AA-1795977BF5BF}
 		{5F41F823-861F-4498-B656-19D17FFBEE1E} = {3E6ADAD9-5BD2-4E72-A6AA-1795977BF5BF}
+		{F5A0B759-60ED-4AA4-8383-9D6B9B5935BE} = {B83AB36D-BC57-4C95-AACC-4E01E62DFAD0}
+		{FC5B876E-9BE5-445A-BD97-65F25085996F} = {F5A0B759-60ED-4AA4-8383-9D6B9B5935BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8969C35B-B269-4743-A52C-E9B360391B5D}
