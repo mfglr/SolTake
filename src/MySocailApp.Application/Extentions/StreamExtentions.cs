@@ -8,5 +8,5 @@
             await stream.ReadAsync(bytes, 0, bytes.Length);
             return bytes;
         }
-    }
 }
+    }
