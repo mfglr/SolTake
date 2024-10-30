@@ -1,4 +1,6 @@
-﻿namespace QuestionWriteService.Domain.ValuObjects
+﻿using QuestionWriteService.Domain.Exceptions;
+
+namespace QuestionWriteService.Domain.ValuObjects
 {
     public class QuestionContent
     {

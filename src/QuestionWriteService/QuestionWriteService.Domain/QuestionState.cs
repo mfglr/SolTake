@@ -1,4 +1,5 @@
-﻿using QuestionWriteService.Domain.ValuObjects;
+﻿using QuestionWriteService.Domain.Exceptions;
+using QuestionWriteService.Domain.ValuObjects;
 
 namespace QuestionWriteService.Domain
 {
@@ -17,14 +18,12 @@ namespace QuestionWriteService.Domain
         public int NumberOfSolutions { get; private set; }
         public int NumberOfCorrectSolutions { get; private set; }
         public int NumberOfComments { get; private set; }
-        public int NumberOfLikes => Likers.Count();
+        public int NumberOfLikes { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
         private readonly List<QuestionTopic> _topics = [];
         private readonly List<QuestionImage> _images = [];
-        private readonly List<UserId> _likers = [];
-        private readonly List<UserId> _savers = [];
 
         public QuestionState(UserId userId, QuestionExam exam, QuestionSubject subject, IEnumerable<QuestionTopic>? topics, QuestionContent content, IEnumerable<QuestionImage> images)
         {
@@ -32,7 +31,7 @@ namespace QuestionWriteService.Domain
             if (!images.Any())
                 throw new QuestionImageRequiredException();
             if (images.Count() > MaxImageCountPerQuestion)
-                throw new TooManyQuestionImagesException();
+                throw new QuestionImagesCountExceededException();
 
             UserId = userId;
             Exam = exam;
@@ -45,38 +44,46 @@ namespace QuestionWriteService.Domain
         }
         public void Create() => CreatedAt = UpdatedAt = DateTime.UtcNow;
 
-        public bool Like(UserId userId)
+        private readonly List<UserId> _likers = [];
+        public void Like(UserId userId)
         {
-            if (Likers.Any(x => x == userId)) return false;
+            if (Likers.Any(x => x == userId))
+                throw new QuestionAlreadyLikedException();
             _likers.Add(userId);
-            return true;
+            NumberOfLikes++;
         }
-        public bool Dislike(UserId userId)
+        public void Dislike(UserId userId)
         {
             var index = _likers.FindIndex(x => x == userId);
-            if (index == -1) return false;
+            if (index == -1)
+                throw new NoQuestionLikeException();
             _likers.RemoveAt(index);
-            return true;
+            NumberOfLikes--;
         }
-
-        public bool Save(UserId userId)
+        
+        private readonly List<UserId> _savers = [];
+        public void Save(UserId userId)
         {
-            if (Savers.Any(x => x == userId)) return false;
+            if (Savers.Any(x => x == userId))
+                throw new QuestionAlreadySavedException();
             _savers.Add(userId);
-            return true;
         }
-        public bool Unsave(UserId userId) {
+        public void Unsave(UserId userId) {
             var index = _savers.FindIndex(x => x == userId);
-            if (index == -1) return false;
+            if (index == -1)
+                throw new NoQuestionSaveException();
             _savers.RemoveAt(index);
-            return true;
         }
 
-        public void IncreaseNumberOfComments() => ++NumberOfComments;
-        public void DecreaseNumberOfComments() => --NumberOfComments;
-        public void IncreaseNumberOfSolutions() => ++NumberOfSolutions;
-        public void DecreaseNumberOfSolutions() => --NumberOfSolutions;
-        public void IncreaseNumberOfIncorrectSolutions() => ++NumberOfCorrectSolutions;
-        public void DecreaseNumberOfIncorrectSolutions() => --NumberOfCorrectSolutions;
+        public void CreateComment() => ++NumberOfComments;
+        public void DeleteComment() => --NumberOfComments;
+
+        public void CreateSolution() => ++NumberOfSolutions;
+        public void DeleteNotCorrectSolution() => --NumberOfSolutions;
+        public void DeleteCorrectSolution()
+        {
+            --NumberOfSolutions;
+            --NumberOfCorrectSolutions;
+        }
     }
 }

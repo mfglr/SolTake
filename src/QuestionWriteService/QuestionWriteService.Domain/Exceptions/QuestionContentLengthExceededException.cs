@@ -1,6 +1,6 @@
 ﻿using QuestionWriteService.Domain.ValuObjects;
 
-namespace QuestionWriteService.Domain
+namespace QuestionWriteService.Domain.Exceptions
 {
     public class QuestionContentLengthExceededException : Exception
     {

@@ -1,4 +1,4 @@
-﻿namespace QuestionWriteService.Domain
+﻿namespace QuestionWriteService.Domain.Exceptions
 {
     public class QuestionImagesCountExceededException : Exception
     {
