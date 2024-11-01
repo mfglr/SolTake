@@ -7,8 +7,11 @@ namespace BlobService.Infastructure.InternalServices
         private readonly List<string> _filesCreated = [];
         private readonly List<string> _filesDeleted = [];
 
-        public void AddFileCreated(string path) => _filesCreated.Add(path);
-        public void AddFileDeleted(string path) => _filesDeleted.Add(path);
+        public void Create(string path) => _filesCreated.Add(path);
+        public void Delete(string path)
+        {
+            _filesDeleted.Add(path);
+        }
 
         public void Commit()
         {

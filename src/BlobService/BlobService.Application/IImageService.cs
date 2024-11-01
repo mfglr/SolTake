@@ -10,5 +10,7 @@ namespace BlobService.Application
         Task<byte[]> ReadAsync(string containerName, string blobName, CancellationToken cancellationToken);
         void Delete(string containerName, string blobName);
         void DeleteRange(string containerName, IEnumerable<string> blobNames);
+
+        Task<AppImage> UpdateUserImageAsync(Guid userId, IFormFile file, CancellationToken cancellationToken);
     }
 }

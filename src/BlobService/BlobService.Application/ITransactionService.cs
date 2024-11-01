@@ -2,8 +2,8 @@
 {
     public interface ITransactionService
     {
-        void AddFileCreated(string path);
-        void AddFileDeleted(string path);
+        void Create(string path);
+        void Delete(string path);
         void Commit();
         void Rollback();
     }

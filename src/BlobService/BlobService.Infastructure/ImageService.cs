@@ -13,18 +13,17 @@ namespace BlobService.Infastructure
 
         public async Task<AppImage> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
+            //generate blobName
+            string blobName = BlobNameGenerator.Generate(RootName.Image, containerName);
+            var path = PathFinder.GetPath(RootName.Image, containerName, blobName);
+            _transactionService.Create(path);
+
             //load image
             using var stream = file.OpenReadStream();
             using var image = await Image.LoadAsync(stream, cancellationToken);
 
-            //generate blobName
-            string blobName = BlobNameGenerator.Generate(RootName.Image, containerName);
-            var path = PathFinder.GetPath(RootName.Image, containerName, blobName);
-            _transactionService.AddFileCreated(path);
-
             //transform image
             ImageTransformer.Transform(image);
-
             //calculate dimention
             Dimention dimention = DimentionCalculator.Calculate(image);
 
@@ -71,6 +70,38 @@ namespace BlobService.Infastructure
                 if (File.Exists(path))
                     File.Delete(path);
             }
+        }
+
+        public async Task<AppImage> UpdateUserImageAsync(Guid userId, IFormFile file, CancellationToken cancellationToken)
+        {
+            //generate path
+            string blobName = userId.ToString();
+            var path = PathFinder.GetPath(RootName.Image, ContainerName.UserImages, blobName);
+            _transactionService.Create(path);
+
+            if (File.Exists(path))
+                File.Move(path,);
+
+            using var stream = file.OpenReadStream();
+
+            //load image
+            using var image = await Image.LoadAsync(stream, cancellationToken);
+            
+            //transform image
+            ImageTransformer.Transform(image);
+            
+            //save image
+            JpegEncoder options;
+            if (stream.Length > 1048576)
+                options = new JpegEncoder { Quality = 25 };
+            else
+                options = new JpegEncoder { Quality = 100 };
+            await image.SaveAsync(path, options, cancellationToken);
+
+            //calculate dimention
+            Dimention dimention = DimentionCalculator.Calculate(image);
+
+            return new AppImage(ContainerName.UserImages, blobName, dimention);
         }
     }
 }
