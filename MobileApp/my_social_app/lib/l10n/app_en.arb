@@ -166,11 +166,10 @@
 
     "comment_liked_notification_item_content": "Your comment has been liked.",
     "comment_replied_notification_content": "Your comment has been replied.",
-    
     "question_comment_created_notification_item_content": "Your question has been commented.",
     "question_liked_notification_item_content": "Your question has been liked.",
     "question_solved_notification_item_content": "YAY!!!🥳 Your question has been solved. Click to display the solution.",
-    "solution_comment_created_notification_item_content": "Your solution has been commented",
+    "solution_comment_created_notification_item_content": "Your solution has been commented.",
     "solution_created_notification_item_content": "A solution has been created for your question.😊👊 Click to check the solution.",
     "solution_marked_as_correct_notification_item_context": "Your solution has been marked as correct.👏👏👏",
     "solution_marked_as_incorrect_notification_imte_content": "Your solution has been marked as incorrect!😓",

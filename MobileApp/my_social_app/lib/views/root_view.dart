@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/notifications/app_notifications.dart';
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -26,6 +27,8 @@ class _RootViewState extends State<RootView> {
 
   @override
   void initState() {
+    initNotifications(context);
+
     final store = StoreProvider.of<AppState>(context,listen: false);
 
     _accessTokenConsumer = store.onChange
@@ -34,7 +37,9 @@ class _RootViewState extends State<RootView> {
       .listen((token){
         if(token != null){
           MessageHub.init(store);
-          NotificationHub.init(store);
+          if(mounted){
+            NotificationHub.init(context);
+          }
         }
         else{
           MessageHub.close();
