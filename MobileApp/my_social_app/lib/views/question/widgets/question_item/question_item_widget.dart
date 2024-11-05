@@ -62,6 +62,7 @@ class QuestionItemWidget extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(right: 5),
                         child: UserImageWidget(
+                          key: ValueKey(question.appUserId),
                           userId: question.appUserId,
                           diameter: 45
                         ),

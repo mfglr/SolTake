@@ -253,9 +253,9 @@ void nextUserSavedQuestionsMiddleware(Store<AppState> store,action,NextDispatche
       .getSavedQuestions(pagination.next)
       .then((saves){
         store.dispatch(NextUserSavedQuestionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
-        store.dispatch(AddQuestionUserSavesAction(saves: saves.map((e) => e.toQuestionUserSaveState())));
+        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.question!.appUserId))));
         store.dispatch(AddQuestionsAction(questions: saves.map((e) => e.question!.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddQuestionUserSavesAction(saves: saves.map((e) => e.toQuestionUserSaveState())));
         store.dispatch(AddExamsAction(exams: saves.map((e) => e.question!.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: saves.map((e) => e.question!.subject.toSubjectState())));
         var topics = saves.map((e) => e.question!.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -276,7 +276,7 @@ void nextUserSavedSolutionsMiddleware(Store<AppState> store,action,NextDispatche
       .then((saves){
         store.dispatch(AddSolutionUserSavesAction(saves: saves.map((e) => e.toSolutionUserSaveState())));
         store.dispatch(AddSolutionsAction(solutions: saves.map((e) => e.solution!.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.solution!.appUserId))));
         store.dispatch(NextUserSavedSolutionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
       })
       .catchError((e){

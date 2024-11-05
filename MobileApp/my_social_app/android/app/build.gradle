@@ -37,11 +37,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
     }
 
     defaultConfig {
-        multiDexEnabled true
         applicationId = "com.soltake"
         minSdkVersion 21
         targetSdkVersion 33
@@ -80,8 +78,6 @@ flutter {
     source = "../.."
 }
 
-
 dependencies {
     implementation 'com.facebook.android:facebook-login:latest.release'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }
