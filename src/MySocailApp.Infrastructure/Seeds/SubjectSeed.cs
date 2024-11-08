@@ -47,7 +47,11 @@ namespace MySocailApp.Infrastructure.Seeds
                 new { Id = 304, ExamId = 4, Name = "KPSS - Tarih" },
                 new { Id = 305, ExamId = 4, Name = "KPSS - Coğrafya" },
                 new { Id = 306, ExamId = 4, Name = "KPSS - Vatandaşlık" },
-                new { Id = 307, ExamId = 4, Name = "KPSS - Güncel Bilgiler" }
+                new { Id = 307, ExamId = 4, Name = "KPSS - Güncel Bilgiler" },
+
+                new { Id = 401, ExamId = 5, Name = "DGS - Matematik" },
+                new { Id = 402, ExamId = 5, Name = "DGS - Türkçe" },
+                new { Id = 403, ExamId = 5, Name = "DGS - Geometri" }
             );
         }
     }
