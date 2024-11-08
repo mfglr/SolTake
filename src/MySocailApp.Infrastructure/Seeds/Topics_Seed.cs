@@ -714,7 +714,342 @@ namespace MySocailApp.Infrastructure.Seeds
                         new { Id = 18002, Name = "Uluslararası Örgüt Ve Kuruluşlar" },
                         new { Id = 18003, Name = "Kpss Güncel Bilgiler" },
                         new { Id = 18004, Name = "Türkiye’ye Vize Uygulamayan Ülkeler" },
-                        new { Id = 18005, Name = "Unesco’nun Dünya Mirası Listesindeki Doğal Ve Kültürel Varlıklarımız" }
+                        new { Id = 18005, Name = "Unesco’nun Dünya Mirası Listesindeki Doğal Ve Kültürel Varlıklarımız" },
+
+                        //Suneung-Suhak-수학
+                        new { Id = 19001, Name = "이차곡선" }, //ikinci dereceden eğri
+                        new { Id = 19002, Name = "포물선" }, //prabol
+                        new { Id = 19003, Name = "타원" }, //elips
+                        new { Id = 19004, Name = "쌍곡선" }, //hiperbol
+                        new { Id = 19005, Name = "이차곡선과직선의위치관계" }, //İkinci dereceden eğri ile düz çizgi arasındaki konumsal ilişki
+                        new { Id = 19006, Name = "평면벡터" }, //Düzlem Vektörü
+                        new { Id = 19007, Name = "벡터의연산" }, //Vektör işlemleri
+                        new { Id = 19008, Name = "벡터의뜻" }, //Vektörün anlamı
+                        new { Id = 19009, Name = "벡터의덧셈과뺄셈" }, //Vektörlerin toplanması ve çıkarılması
+                        new { Id = 19010, Name = "벡터의실수배" }, //Vektörün Skaler Çarpımı
+                        new { Id = 19011, Name = "평면벡터의성분과내적" }, //Düzlem Vektörlerinin Bileşenleri ve İç Çarpımı
+                        new { Id = 19012, Name = "위치벡터와평면벡터의성분" }, //Konum vektörü ve düzlem vektörünün bileşenleri
+                        new { Id = 19013, Name = "평면벡터의내적" }, //Düzlem Vektörlerinin İç Çarpımı
+                        new { Id = 19014, Name = "원의방정식" }, //Dairenin Denklemi
+                        new { Id = 19015, Name = "공간도형과 공간좌표" }, //Uzaysal geometri ve uzaysal koordinatlar
+                        new { Id = 19016, Name = "직선, 평면의위치관계" }, //Doğru ve Düzlemin Konum İlişkisi
+                        new { Id = 19017, Name = "삼수선의정리" }, //Üç Doğrunun Kesişme Kuralı
+                        new { Id = 19018, Name = "정사영" }, //Ortodogonal Yansıma
+                        new { Id = 19019, Name = "공간좌표" }, //Uzay Koordinatları
+                        new { Id = 19020, Name = "좌표공간에서의점의좌표" }, //Koordinat Uzayında Bir Noktanın Koordinatları
+                        new { Id = 19021, Name = "두점사이의거리" }, //İki Nokta Arasındaki Mesafe
+                        new { Id = 19022, Name = "선분의내분점과외분점" }, //Doğrunun İç Bölgesi ve Dış Bölgesi
+                        new { Id = 19023, Name = "구의방정식" }, //Kürenin Denklemi
+                        new { Id = 19024, Name = "경우의 수" }, //Durum sayisi
+                        new { Id = 19025, Name = "순열" }, //permutasyon
+                        new { Id = 19026, Name = "조합" }, //kombinasyon
+                        new { Id = 19027, Name = "이항정리" }, //Binom
+                        new { Id = 19028, Name = "확률" }, //olasilik
+                        new { Id = 19029, Name = "조건부확률" }, //kosullu olasilik
+                        new { Id = 19030, Name = "사건의 독립과 종속" }, //olaylarin bagimsizligi ve bagimliligi
+                        new { Id = 19031, Name = "확률의 덧셈정리" }, //Olasılıkların Toplama Kuralı
+                        new { Id = 19032, Name = "통계" }, //istatistik
+                        new { Id = 19033, Name = "확률분포" }, //olasilik dagilimi
+                        new { Id = 19034, Name = "확률변수와 확률분포" }, //rasgele degiskenler ve olasilik dagilimi
+                        new { Id = 19035, Name = "이산확률변수의 기댓값과 표준편차" }, //Ayrık bir rastgele değişkenin beklenen değeri ve standart sapması
+                        new { Id = 19036, Name = "이항분포" }, //binom dağılımı
+                        new { Id = 19037, Name = "정규분포" }, //normal dağılım
+                        new { Id = 19038, Name = "통계적 추정" }, //Istatistiksel Tahmin
+                        new { Id = 19039, Name = "모집단과 표본" }, //Nüfus ve Örneklem
+                        new { Id = 19040, Name = "모평균과 표본평균" }, //Nüfus ortalaması ve örnek ortalaması
+                        new { Id = 19041, Name = "모평균의 추정" }, //Nüfus ortalamasının tahmini
+                        new { Id = 19042, Name = "확률의 뜻" }, //olasılık anlamı
+                        new { Id = 19043, Name = "수열의 극한" }, //bir dizinin limiti
+                        new { Id = 19044, Name = "수열의 수렴과 발산" }, //Dizinin yakınsaması ve ıraksaması
+                        new { Id = 19045, Name = "극한값의 계산" }, //Ekstrem değerlerin hesaplanması
+                        new { Id = 19046, Name = "등비수열의 극한" }, //Geometrik Dizinin Limiti
+                        new { Id = 19047, Name = "급수" }, //seri
+                        new { Id = 19048, Name = "등비급수" }, //Geometrik seri
+                        new { Id = 19049, Name = "지수함수와 로그함수의 극한" }, //Üstel ve logaritmik fonksiyonların limitleri
+                        new { Id = 19050, Name = "삼각함수의 덧셈정리" }, //trigonometrik fonksiyonların toplam formülleri
+                        new { Id = 19051, Name = "삼각함수의 극한" }, //Trigonometrik Fonksiyonların Limitleri
+                        new { Id = 19052, Name = "수열" }, //dizi
+                        new { Id = 19053, Name = "등차수열" }, //aritmetik dizi
+                        new { Id = 19054, Name = "등비수열" }, //geometrik dizi
+                        new { Id = 19055, Name = "수열의 합" }, //dizilerin toplami
+                        new { Id = 19056, Name = "수학적 귀납법" }, //matematiksel tumevarim
+                        new { Id = 19057, Name = "수열의 귀납적 정의" }, //Bir dizinin endüktif tanımı
+                        new { Id = 19058, Name = "함수의 극한과 연속" }, //Fonksiyonun Limiti ve Sürekliliği
+                        new { Id = 19059, Name = "함수의 극한" }, //bir fonksiyonun limiti
+                        new { Id = 19060, Name = "함수의 극한에 대한 성질" }, //Fonksiyonun Limitiyle İlgili Özellikler
+                        new { Id = 19061, Name = "함수의 연속" }, // Fonksiyonun Sürekliliği
+                        new { Id = 19062, Name = "연속함수의 성질" }, //Sürekli fonksiyonların özellikleri
+                        new { Id = 19063, Name = "미분" }, //Turev
+                        new { Id = 19064, Name = "미분계수와 도함수" }, //Türev Katsayısı ve Türev Fonksiyonu
+                        new { Id = 19065, Name = "미분가능성과 연속성" }, //Türevlenebilirlik ve süreklilik
+                        new { Id = 19066, Name = "도함수의 활용" }, //Türev Fonksiyonunun Uygulamaları
+                        new { Id = 19067, Name = "도함수의 활용 - 접선의 방정식" }, //Teğet Doğrunun Denklemi
+                        new { Id = 19068, Name = "도함수의 활용 - 평균값 정리" }, //Ortalama deger teoremi
+                        new { Id = 19069, Name = "도함수의 활용 - 함수의 증가와 감소, 극대와 극소" }, //Fonksiyonların arttırılması ve azaltılması, maksimum ve minimum
+                        new { Id = 19070, Name = "도함수의 활용 - 함수의 그래프와 그 활용" }, //Fonksiyon grafikleri ve kullanımları
+                        new { Id = 19071, Name = "도함수의 활용 - 속도와 가속도" }, //hiz ve ivme
+                        new { Id = 19072, Name = "도함수의 - 방정식과 부등식에의 활용" }, //Denklemlerde ve eşitsizliklerde kullanım
+                        new { Id = 19073, Name = "함수의 몫의 미분법" }, //Bir fonksiyonun bölümünün türevi
+                        new { Id = 19074, Name = "합성함수의 미분법" }, //bileşke fonksiyonun türev kuralı
+                        new { Id = 19075, Name = "음함수와 역함수의 미분법" }, //Örtülü ve ters fonksiyonların türevi
+                        new { Id = 19076, Name = "매개변수로 나타낸 함수의 미분법" }, //Parametre olarak ifade edilen fonksiyonların türevi
+                        new { Id = 19077, Name = "이계도함수" }, //ikinci dereceden turev
+                        new { Id = 19078, Name = "사인함수와 코사인함수의 미분" }, //Sinüs ve kosinüs fonksiyonlarının türevleri
+                        new { Id = 19079, Name = "지수함수와 로그함수의 미분" }, //Üstel ve logaritmik fonksiyonların türevleri
+                        new { Id = 19080, Name = "적분" }, //Integral
+                        new { Id = 19081, Name = "부정적분" }, //belirsiz integral
+                        new { Id = 19082, Name = "부정적분의 계산" }, //Belirsiz İntegralin Hesaplanması
+                        new { Id = 19083, Name = "적분법" }, //integresyon yontemleri
+                        new { Id = 19084, Name = "적분법 - 치환적분법" }, //değişken değiştirme yöntemi
+                        new { Id = 19085, Name = "적분법 - 부분적분법" }, //kısmi entegrasyon yöntemi
+                        new { Id = 19086, Name = "정적분의 활용" }, //Belirli integrallerin uygulanmasi
+                        new { Id = 19087, Name = "정적분의 활용 - 넓이" }, //alan
+                        new { Id = 19088, Name = "정적분의 활용 - 부피" }, //hacim
+                        new { Id = 19089, Name = "정적분의 활용 - 속도와 거리" }, //hız ve mesafe
+                        new { Id = 19090, Name = "지수함수와 로그함수" }, //Üstel ve logaritmik fonksiyonlar
+                        new { Id = 19091, Name = "거듭제곱과 거듭제곱근" }, //karekök, küpkök
+                        new { Id = 19092, Name = "지수의 확장과 지수법칙" }, //üslerin genişletilmesi ve üs kuralları
+                        new { Id = 19093, Name = "지수함수와 로그함수의 활용" }, //Üstel ve logaritmik fonksiyonların kullanımı
+                        new { Id = 19094, Name = "지수함수의 뜻과 그래프" }, //Üstel fonksiyonun anlamı ve grafiği
+                        new { Id = 19095, Name = "로그함수의 뜻과 그래프" }, //Logaritmik fonksiyonun anlamı ve grafiği
+                        new { Id = 19096, Name = "삼각함수" }, //Trigonometri
+                        new { Id = 19097, Name = "일반각과 호도법" }, //genel acilar ve aci yonetimi
+                        new { Id = 19098, Name = "삼각함수의 그래프" }, //trigonometrik fonksiyonların grafiği
+                        new { Id = 19099, Name = "사인법칙과 코사인법칙" }, //Sinüs Kanunu ve Kosinüs Kanunu
+                        new { Id = 19100, Name = "다항식" }, //polinom
+                        new { Id = 19101, Name = "다항식의 연산" }, //polinom uzerinde islemler.
+                        new { Id = 19102, Name = "나머지정리" }, //polinomlarda kalanlar teoremi
+                        new { Id = 19103, Name = "인수분해" }, //çarpanlara ayırma.
+                        new { Id = 19104, Name = "방정식과 부등식" }, // denklemler ve esitsizlikler.
+                        new { Id = 19105, Name = "복소수" }, //Karmaşık sayılar.
+                        new { Id = 19106, Name = "이차방정식" }, //ikinci dereceden denklemler
+                        new { Id = 19107, Name = "삼차방정식과 사차방정식" }, // Kübik ve dördüncü dereceden denklemler
+                        new { Id = 19108, Name = "연립이차방정식" }, //Eşzamanlı ikinci dereceden denklemler
+                        new { Id = 19109, Name = "절댓값을 포함한 일차부등식" }, //Mutlak değerleri içeren doğrusal eşitsizlikler
+                        new { Id = 19110, Name = "이차부등식" }, //İkinci dereceden eşitsizlik
+                        new { Id = 19111, Name = "도형의 방정식" }, //geometrik sekillerin denklemleri
+                        new { Id = 19112, Name = "평면좌표" }, //düzlem koordinatları
+                        new { Id = 19113, Name = "두 점 사이의 거리" }, //iki nokta arasındaki mesafe
+                        new { Id = 19114, Name = "선분의 내분과 외분" }, //Bir çizgi bölümünün iç ve dış bölümü
+                        new { Id = 19115, Name = "직선의 방정식" }, //düz bir çizginin denklemi
+                        new { Id = 19116, Name = "두 직선의 평행과 수직" }, //İki düz çizgiye paralel ve dik
+                        new { Id = 19117, Name = "점과 직선 사이의 거리" }, //nokta ve çizgi arasındaki mesafe
+                        new { Id = 19118, Name = "도형의 이동" }, //şekillerin hareketi
+                        new { Id = 19119, Name = "도형의 이동 - 평행이동" }, //paralel hareket
+                        new { Id = 19120, Name = "도형의 이동 - 대칭이동" }, //simetrik hareket
+                        new { Id = 19121, Name = "집합" }, //kümeler
+                        new { Id = 19122, Name = "집합 사이의 포함 관계" }, //Kümeler arasındaki çevreleme ilişkiler
+                        new { Id = 19123, Name = "집합의 연산" }, //kume islemleri
+                        new { Id = 19124, Name = "명제" }, //onermeler
+                        new { Id = 19125, Name = "명제와 조건" }, //önerme ve koşul
+                        new { Id = 19126, Name = "명제 사이의 관계" }, //önermeler arasındaki ilişkiler
+                        new { Id = 19127, Name = "명제의 증명" }, //önermenin kanıtı
+                        new { Id = 19128, Name = "함수와 그래프" }, //Fonksiyonlar ve Grafikler
+                        new { Id = 19129, Name = "합성함수" }, //bileşik fonksiyon
+                        new { Id = 19130, Name = "역함수" }, //ters fonksiyon
+                        new { Id = 19131, Name = "유리함수와 무리함수" }, //Rasyonel ve irrasyonel fonksiyonlar
+                        new { Id = 19132, Name = "유리함수와 그 그래프" }, //Rasyonel fonksiyonlar ve grafikleri
+                        new { Id = 19133, Name = "무리함수와 그 그래프" }, //İrrasyonel fonksiyonlar ve grafikleri
+
+                        //Suneung Gug-eo 국어
+                        new { Id = 20001, Name = "문법" }, //dil biligisi
+                        new { Id = 20002, Name = "단어의 종류 (명사, 동사, 형용사 등)" }, //Kelime türleri (isim, fiil, sıfat vb.)
+                        new { Id = 20003, Name = "문장 구조와 문장 유형" }, //Cümle yapısı ve cümle türleri
+                        new { Id = 20004, Name = "동사 활용과 시제" }, //Fiil çekimleri ve zamanlar
+                        new { Id = 20005, Name = "조사와 접속사" }, //Ekler ve bağlaçlar
+                        new { Id = 20006, Name = "어휘 구조와 의미 관계" }, //Sözcük yapısı ve anlam ilişkileri
+                        new { Id = 20007, Name = "읽기" }, //Okuma Anlama
+                        new { Id = 20008, Name = "정보성 글 (기사, 에세이, 설명문)" }, //Bilgilendirici metinler (makaleler, denemeler, açıklayıcı metinler)
+                        new { Id = 20009, Name = "서사형 글 (이야기, 소설 발췌문)" }, //Anlatı türündeki metinler (öyküler, romanlardan kesitler)
+                        new { Id = 20010, Name = "시와 서정적 글" }, //Şiir ve lirik metinler
+                        new { Id = 20011, Name = "중심 생각, 부가 생각, 중심 생각을 지지하는 세부 사항 찾기" }, //Ana fikir, yan fikir, ana düşünceyi destekleyen detayları bulma
+                        new { Id = 20012, Name = "작가의 목적과 글의 맥락" }, //Yazarın amacı ve metnin bağlamı
+                        new { Id = 20013, Name = "쓰기" }, //Yazma
+                        new { Id = 20014, Name = "생각 개발 및 구성" }, //Fikir geliştirme ve organizasyon
+                        new { Id = 20015, Name = "다양한 글 유형 (기사, 에세이, 설명문, 이야기)" }, //Farklı yazı türleri (makale, deneme, açıklama, anlatı)
+                        new { Id = 20016, Name = "명확하고 효과적인 문장 구조)" }, //Net ve etkili cümle yapıları
+                        new { Id = 20017, Name = "논리적 사고와 주장 개발" }, //Mantıksal düşünme ve argüman geliştirme
+                        new { Id = 20018, Name = "주제에 맞는 언어 사용" }, //Konuya uygun dil kullanımı
+                        new { Id = 20019, Name = "문학" }, //Edebiyat
+                        new { Id = 20020, Name = "한국 문학의 주요 유형 (시, 단편 소설, 소설, 연극)" }, //Kore edebiyatının ana türleri (şiir, kısa hikaye, roman, tiyatro)
+                        new { Id = 20021, Name = "고전 문학 (고전 문학): 조선 시대의 시와 민담" }, //Klasik Kore edebiyatı (고전 문학 / Gojon Munhak): Joseon dönemi şiirleri, halk masalları
+                        new { Id = 20022, Name = "현대 문학: 20세기 이후의 한국 시, 소설, 연극" }, //Modern Kore edebiyatı: 20. yüzyıl sonrası Kore şiiri, romanları ve oyunlar
+                        new { Id = 20023, Name = "문학적 기법과 표현 방식" }, //Edebi teknikler ve anlatım biçimleri
+                        new { Id = 20024, Name = "문학 작품에서의 주제, 모티프 및 인물 분석" }, //Edebi eserlerde tema, motif ve karakter analizi
+                        new { Id = 20025, Name = "화법" }, //Konuşma ve Dinleme
+                        new { Id = 20026, Name = "효과적인 화법 기술과 연설" }, //Etkili konuşma teknikleri ve hitabet
+                        new { Id = 20027, Name = "듣기 및 이해 능력" }, //Dinleme ve anlama becerileri
+                        new { Id = 20028, Name = "대중 앞에서의 연설" }, //Topluluk önünde konuşma
+                        new { Id = 20029, Name = "설득력 있는 연설과 토론" }, //İkna edici konuşmalar ve tartışmalar
+                        new { Id = 20030, Name = "올바른 발음과 강세 사용" }, //Doğru telaffuz ve vurgu kullanımı
+                        new { Id = 20031, Name = "한자" }, //Hanja / Çin Karakterleri
+                        new { Id = 20032, Name = "한자 문자와 그 의미" }, //Hanja karakterleri ve anlamları
+                        new { Id = 20033, Name = "한국어에서 사용되는 일반적인 한자 어휘와 그 기원" }, //Korecede kullanılan yaygın Hanja sözcükleri ve kökenleri
+                        new { Id = 20034, Name = "어휘력을 향상시키기 위한 한자 활용" }, //Kelime bilgisi geliştirme için Hanja kullanımı
+                        new { Id = 20035, Name = "한자가 한국어에 미친 영향" }, //Hanja'nın Kore dili üzerindeki etkisi
+
+                        //Suneung English 영어
+                        new { Id = 30001, Name = "독해" },//Okuma Anlama
+                        new { Id = 30002, Name = "문법" },// Dil Bilgisi
+                        new { Id = 30003, Name = "어휘 및 표현" },//Kelimeler ve İfade Bilgisi
+                        new { Id = 30004, Name = "듣기" },//Dinleme
+                        new { Id = 30005, Name = "완성형 문제" },//Tamamlama Soruları
+                        new { Id = 30006, Name = "비판적 사고" },//Eleştirel Düşünme
+
+                        //Suneung Hangugsa 한국사
+                        new { Id = 40001, Name = "고대 국가의 형성과 발전" },//Antik Krallıkların Kuruluşu ve Gelişimi
+                        new { Id = 40002, Name = "고조선: 한국의 가장 오래된 고대 국가." },//고조선 (Gojoseon): Kore’nin bilinen en eski krallığı.
+                        new { Id = 40003, Name = "부여, 옥저, 동예, 삼한: 한반도의 고대 부족과 국가들." },//부여, 옥저, 동예, 삼한 (Buyeo, Okjeo, Dongye, Samhan): Kore Yarımadası'nda antik kabileler ve devletler.
+                        new { Id = 40004, Name = "삼국 시대: 고구려, 백제, 신라의 성장." },//삼국 시대 (Üç Krallık Dönemi): Goguryeo, Baekje ve Silla krallıklarının yükselişi.
+                        new { Id = 40005, Name = "가야: 삼국 시대의 소국 연맹." },//가야 (Gaya Konfederasyonu): Üç Krallık dönemindeki küçük devlet konfederasyonu.
+                        new { Id = 40006, Name = "통일신라와 발해" },//Birleşik Silla ve Balhae Dönemi
+                        new { Id = 40007, Name = "신라가 다른 국가들을 통일하여 한반도를 통합한 과정." },//Silla’nın diğer krallıkları fethederek Kore Yarımadası’nı birleştirmesi.
+                        new { Id = 40008, Name = "발해: 고구려 멸망 후 북쪽에 세워진 국가." },//발해 (Balhae): Goguryeo’nun yıkılmasından sonra kuzeyde kurulan devlet.
+                        new { Id = 40009, Name = "통일신라 시대의 문화, 예술, 불교 발전." },//Birleşik Silla döneminde kültür, sanat ve Budizmin gelişimi.
+                        new { Id = 40010, Name = "고려 시대" },//Goryeo Dönemi
+                        new { Id = 40011, Name = "고려의 설립과 통치 체제." },//Goryeo Krallığı’nın kuruluşu ve yönetim sistemi.
+                        new { Id = 40012, Name = "몽골 침입과 고려의 몽골 제국에 대한 종속 과정." },//Moğol istilaları ve Goryeo'nun Moğol İmparatorluğu’na bağlılık süreci.
+                        new { Id = 40013, Name = "팔만대장경과 같은 중요한 문화재의 제작." },//팔만 대장경 (Tripitaka Koreana) gibi önemli kültürel eserlerin geliştirilmesi.
+                        new { Id = 40014, Name = "불교가 국교로 강력히 자리 잡음." },//Budizm’in devlet destekli din olarak güçlenmesi.
+                        new { Id = 40015, Name = "조선 시대" },//Joseon Dönemi
+                        new { Id = 40016, Name = "조선의 설립과 유교 체제 도입." },//Joseon Krallığı’nın kuruluşu ve Konfüçyüsçü sistemin benimsenmesi.
+                        new { Id = 40017, Name = "세종대왕과 한글 창제." },//세종대왕 (Kral Sejong) ve Hangıl alfabesinin icadı.
+                        new { Id = 40018, Name = "일본의 침략: 임진왜란 (1592년 일본 침입)." },//Japon saldırıları: 임진왜란 (Imjin Savaşı - Japonya'nın 1592’deki istilası).
+                        new { Id = 40019, Name = "병자호란과 조선의 청나라에 대한 종속 과정." },//병자호란 (Byeongja Horan - Mançu istilası) ve Joseon'un Qing Hanedanlığı'na bağlılık süreci.
+                        new { Id = 40020, Name = "조선 시대의 사회적 계층, 유교 교육, 과학." },//Joseon dönemindeki toplumsal sınıflar, Konfüçyüsçü eğitim ve bilim.
+                        new { Id = 40021, Name = "개화기와 대한제국" },//Açılma Dönemi ve Kore İmparatorluğu
+                        new { Id = 40022, Name = "조선의 개방 과정." },//Joseon’un dış dünyaya açılma süreci.
+                        new { Id = 40023, Name = "갑신정변과 근대화 노력." },//갑신정변 (Gapsin Darbesi) ve modernleşme çabaları.
+                        new { Id = 40024, Name = "대한제국의 선포와 독립 노력." },//Kore İmparatorluğu'nun (대한제국) ilanı ve bağımsızlık çabaları.
+                        new { Id = 40025, Name = "일본의 영향력 증대." },//Japonya'nın Kore üzerindeki etkisinin artması.
+                        new { Id = 40026, Name = "일제강점기" },//Japon Sömürge Dönemi
+                        new { Id = 40027, Name = "**한일병합조약 (1910년)**으로 시작된 식민 지배." },//한일병합조약 (1910 Kore-Japonya İlhak Anlaşması) ile başlayan sömürge dönemi.
+                        new { Id = 40028, Name = "한국인의 독립 운동과 3.1 운동과 같은 저항 운동." },//Kore halkının bağımsızlık hareketleri ve 3.1 운동 (1 Mart Hareketi) gibi direnişler.
+                        new { Id = 40029, Name = "일제의 경제적, 문화적 억압." },//Japon yönetimi altında ekonomik ve kültürel baskılar.
+                        new { Id = 40030, Name = "독립 운동의 발전과 디아스포라." },//Kore’de bağımsızlık hareketlerinin gelişmesi ve diaspora.
+                        new { Id = 40031, Name = "광복과 대한민국의 수립" },//Kurtuluş ve Güney Kore’nin Kuruluşu
+                        new { Id = 40032, Name = "제2차 세계 대전 후 일본 패배로 인한 한국의 광복." },//II. Dünya Savaşı sonrasında Japonya’nın yenilgisiyle Kore’nin kurtuluşu.
+                        new { Id = 40033, Name = "한반도가 38선으로 분단됨." },//Kore Yarımadası’nın 38. paralelden ikiye bölünmesi.
+                        new { Id = 40034, Name = "1948년 대한민국과 조선민주주의인민공화국 수립." },//1948’de Güney Kore’nin (대한민국) ve Kuzey Kore’nin (조선민주주의인민공화국) kurulması.
+                        new { Id = 40035, Name = "한국전쟁 (1950-1953)과 분단 고착화." },//Kore Savaşı (1950-1953) ve bölünmenin pekişmesi.
+                        new { Id = 40036, Name = "현대사" },//Modern Kore Tarihi
+                        new { Id = 40037, Name = "대한민국의 경제 발전과 산업화 과정." },//Güney Kore’de ekonomik kalkınma ve sanayileşme dönemi.
+                        new { Id = 40038, Name = "군사 쿠데타와 민주화 운동: 4.19 혁명, 5.18 광주 민주화 운동." },//Askeri darbeler ve demokrasi hareketleri: 4.19 혁명 (19 Nisan Devrimi), 5.18 광주 민주화 운동 (Gwangju Demokrasi Hareketi).
+                        new { Id = 40039, Name = "대한민국의 민주화 과정." },//Güney Kore’nin demokratikleşme süreci.
+                        new { Id = 40040, Name = "남북한 관계, 핵 문제, 한국의 국제 관계." },//Kuzey-Güney Kore ilişkileri, nükleer silah sorunu ve Kore’nin uluslararası ilişkileri.
+
+                        //Suneung Life & Ethics 삶과 윤리
+                        new { Id = 50001, Name = "윤리 이론 및 기본 개념" },//Etik Teoriler ve Temel Kavramlar
+                        new { Id = 50002, Name = "공리주의" },//Faydacılık
+                        new { Id = 50003, Name = "의무론" },//Deontoloji
+                        new { Id = 50004, Name = "덕 윤리" },//Erdem Etiği
+                        new { Id = 50005, Name = "권리와 정의" },//Haklar ve Adalet
+                        new { Id = 50006, Name = "개인 윤리와 인격 개발" },//Kişisel Ahlak ve Karakter Gelişimi
+                        new { Id = 50007, Name = "책임과 의무" },//Sorumluluk ve Görev
+                        new { Id = 50008, Name = "정직과 공정성" },//Dürüstlük ve Adalet
+                        new { Id = 50009, Name = "자기 훈련과 인내" },//Özdisiplin ve Sabı
+                        new { Id = 50010, Name = "도덕적 딜레마" },//Ahlaki İkilemler
+                        new { Id = 50011, Name = "사회적 윤리" },//Toplumsal Etik
+                        new { Id = 50012, Name = "가족과 공동체 관계" },//Aile ve Topluluk İlişkileri
+                        new { Id = 50013, Name = "환경 윤리" },//Çevresel Etik
+                        new { Id = 50014, Name = "사회 정의와 인권" },//Sosyal Adalet ve İnsan Hakları
+                        new { Id = 50015, Name = "소셜 미디어와 디지털 윤리" },//Sosyal Medya ve Dijital Etik
+                        new { Id = 50016, Name = "세계적 윤리 문제" },//Küresel Etik Sorunlar
+                        new { Id = 50017, Name = "평화와 전쟁 윤리" },//Barış ve Savaş Etiği
+                        new { Id = 50018, Name = "이주자와 난민" },//Göçmenler ve Mülteciler
+                        new { Id = 50019, Name = "세계적 빈곤과 불평등" },//Küresel Yoksulluk ve Eşitsizlik
+                        new { Id = 50020, Name = "기후 변화와 미래 세대" },//İklim Değişikliği ve Gelecek Nesiller
+                        new { Id = 50021, Name = "과학과 기술 윤리" },//Bilim ve Teknoloji Etiği
+                        new { Id = 50022, Name = "생명공학 및 유전 공학" },//Biyoteknoloji ve Genetik Mühendislik
+                        new { Id = 50023, Name = "인공지능과 자동화" },//Yapay Zeka ve Otomasyon
+                        new { Id = 50024, Name = "의료 윤리" },//Tıp Etiği
+                        new { Id = 50025, Name = "정보 기술 윤리" },//Bilgi Teknolojisi Etiği
+                        new { Id = 50026, Name = "인간 관계에서의 윤리" },//İnsan İlişkilerinde Etik
+                        new { Id = 50027, Name = "우정과 사랑" },//Arkadaşlık ve Sevgi
+                        new { Id = 50028, Name = "갈등 해결" },//Çatışma Çözümü
+                        new { Id = 50029, Name = "공감과 관용" },//Empati ve Hoşgörü
+                        new { Id = 50030, Name = "용서와 이해" },//Bağışlayıcılık ve Anlayış
+
+                        //Suneung  Ethics & Thoughts 윤리와 사상
+                        new { Id = 60001, Name = "고대와 현대 윤리 이론" },//Antik ve Modern Etik Teorileri
+                        new { Id = 60002, Name = "고대 그리스 철학" },//Antik Yunan Felsefesi
+                        new { Id = 60003, Name = "근대 윤리 사상" },//Modern Etik Düşünceler
+                        new { Id = 60004, Name = "현대 윤리 이론" },//Çağdaş Etik Teorileri
+                        new { Id = 60005, Name = "동양의 윤리 사상" },//Doğu Etiği
+                        new { Id = 60006, Name = "동양 철학의 주요 사상" },//Doğu Felsefesinin Temel Düşünceleri
+                        new { Id = 60007, Name = "유교 사상" },//Konfüçyüsçülük
+                        new { Id = 60008, Name = "불교 사상" },//Budist Düşünceler
+                        new { Id = 60009, Name = "도교 사상" },//Taoizm
+                        new { Id = 60010, Name = "한국 전통 사상" },//Kore Geleneksel Düşüncesi
+                        new { Id = 60011, Name = "서양 철학의 주요 사상" },//Batı Felsefesinin Temel Düşünceleri
+                        new { Id = 60012, Name = "실재론과 형이상학" },//Gerçekçilik ve Metafizik
+                        new { Id = 60013, Name = "인식론" },//Bilgi Felsefesi
+                        new { Id = 60014, Name = "정치 철학" },//Siyaset Felsefesi
+                        new { Id = 60015, Name = "실존주의" },//Varoluşçuluk
+                        new { Id = 60016, Name = "윤리적 딜레마와 현대적 윤리 문제" },//Etik İkilemler ve Güncel Etik Sorunlar
+                        new { Id = 60017, Name = "생명 윤리" },//Yaşam Etiği
+                        new { Id = 60018, Name = "환경 윤리" },//Çevre Etiği
+                        new { Id = 60019, Name = "디지털 윤리" },//Dijital Etik
+                        new { Id = 60020, Name = "사회 정의와 평등" },//Toplumsal Adalet ve Eşitlik
+                        new { Id = 60021, Name = "자아와 도덕적 성장" },//Benlik ve Ahlaki Gelişim
+                        new { Id = 60022, Name = "도덕적 자아의 형성" },//Ahlaki Benliğin Gelişimi
+                        new { Id = 60023, Name = "도덕적 판단과 가치관" },//Ahlaki Yargı ve Değerler
+                        new { Id = 60024, Name = "인간의 행복과 삶의 의미" },//İnsan Mutluluğu ve Yaşamın Anlamı
+                        new { Id = 60025, Name = "사회와 윤리" },//Toplum ve Etik
+                        new { Id = 60026, Name = "사회 계약과 도덕적 책임" },//Toplum Sözleşmesi ve Ahlaki Sorumluluk
+                        new { Id = 60027, Name = "공동체 윤리" },//Topluluk Etiği
+                        new { Id = 60028, Name = "정의와 평화" },//Adalet ve Barış
+                        new { Id = 60029, Name = "사회적 공정성과 복지" },//Toplumsal Eşitlik ve Refah
+                        new { Id = 60030, Name = "과학과 기술의 윤리적 측면" },//Bilim ve Teknolojinin Etik Boyutları
+                        new { Id = 60031, Name = "생명공학과 유전공학" },//Biyoteknoloji ve Genetik Mühendisliği
+                        new { Id = 60032, Name = "인공지능과 로봇 윤리" },//Yapay Zeka ve Robot Etiği
+                        new { Id = 60033, Name = "의료 윤리" },//Tıp Etiği
+                        new { Id = 60034, Name = "세계 윤리와 인류애" },//Küresel Etik ve İnsanlık Sevgisi
+                        new { Id = 60035, Name = "세계적 연대와 상호 의존" },//Küresel Dayanışma ve Karşılıklı Bağımlılık
+                        new { Id = 60036, Name = "인권과 정의" },//İnsan Hakları ve Adalet
+                        new { Id = 60037, Name = "평화와 갈등 해결" },//Barış ve Çatışma Çözümü
+                        new { Id = 60038, Name = "빈곤과 불평등" },//Yoksulluk ve Eşitsizlik
+
+                        //Suneung Korean Geography 한국 지리
+                        new { Id = 70001, Name = "대한민국의 지형" },//Güney Kore'nin Fiziki Coğrafyası
+                        new { Id = 70002, Name = "산과 계곡" },//Dağlar ve Vadiler
+                        new { Id = 70003, Name = "강과 호수" },//Nehirler ve Göller
+                        new { Id = 70004, Name = "해안선과 섬" },//Kıyı Şeridi ve Adalar
+                        new { Id = 70005, Name = "토양 구조" },//Toprak Yapısı
+                        new { Id = 70006, Name = "기후와 날씨" },//İklim ve Hava Durumu
+                        new { Id = 70007, Name = "계절적 기후 특성" },//Mevsimlik İklim Özellikleri
+                        new { Id = 70008, Name = "몬순 영향" },//Muson Etkisi
+                        new { Id = 70009, Name = "자연재해" },//Doğal Afetler
+                        new { Id = 70010, Name = "기후 변화" },//Küresel İklim Değişikliği
+                        new { Id = 70011, Name = "인구와 인구 통계" },//Nüfus ve Demografi
+                        new { Id = 70012, Name = "인구 분포" },//Nüfus Dağılımı
+                        new { Id = 70013, Name = "이동과 이주" },//Göç ve Yer Değiştirme
+                        new { Id = 70014, Name = "고령화와 출산율" },//Yaşlanma ve Doğurganlık Oranları
+                        new { Id = 70015, Name = "인구 정책" },//Nüfus Politikaları
+                        new { Id = 70016, Name = "경제 지리와 자원" },//Ekonomik Coğrafya ve Doğal Kaynaklar
+                        new { Id = 70017, Name = "자원" },//Doğal Kaynaklar
+                        new { Id = 70018, Name = "농업 및 산업 지역" },//Tarım ve Endüstri Bölgeleri
+                        new { Id = 70019, Name = "에너지 자원" },//Enerji Kaynakları
+                        new { Id = 70020, Name = "국제 무역과 수출" },//Küresel Ticaret ve İhracat
+                        new { Id = 70021, Name = "지역 지리" },//Bölgesel Coğrafya
+                        new { Id = 70022, Name = "지역 특성" },//Bölgesel Özellikler
+                        new { Id = 70023, Name = "대도시 및 대도시권" },//Büyük Şehirler ve Metropoller
+                        new { Id = 70024, Name = "관광지" },//Turistik Bölgeler
+                        new { Id = 70025, Name = "환경과 자연 보호" },//Çevre ve Doğal Koruma
+                        new { Id = 70026, Name = "환경 문제" },//Çevresel Sorunlar
+                        new { Id = 70027, Name = "자연 보호 구역" },//Doğal Koruma Alanları
+                        new { Id = 70028, Name = "폐기물 관리 및 재활용" },//Atık Yönetimi ve Geri Dönüşüm
+                        new { Id = 70029, Name = "지속 가능한 개발" },//Sürdürülebilir Kalkınma
+                        new { Id = 70030, Name = "교통 및 인프라" },//Ulaşım ve Altyapı
+                        new { Id = 70031, Name = "도로와 철도망" },//Karayolu ve Demiryolu Ağı
+                        new { Id = 70032, Name = "항만과 공항" },//Limanlar ve Havaalanları
+                        new { Id = 70033, Name = "도시 내 교통" },//Şehir İçi Ulaşım
+                        new { Id = 70034, Name = "교통의 기술적 발전" },//Ulaşımda Teknolojik Gelişmeler
+                        new { Id = 70035, Name = "한반도의 지리적 및 정치적 중요성" },//Kore Yarımadası'nın Coğrafi ve Siyasi Önemi
+                        new { Id = 70036, Name = "지리적 위치와 전략적 중요성" },//Coğrafi Konum ve Stratejik Önemi
+                        new { Id = 70037, Name = "북한과의 관계" },//Kuzey Kore ile İlişkiler
+                        new { Id = 70038, Name = "군사 지역과 보안 정책" },//Askeri Alanlar ve Güvenlik Politikaları
+
                     ]
                 );
         }
