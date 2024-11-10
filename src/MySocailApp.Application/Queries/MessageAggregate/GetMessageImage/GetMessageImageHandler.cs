@@ -1,19 +1,20 @@
 ﻿using MediatR;
+using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
+using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Domain.MessageAggregate.Exceptions;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
 {
-    public class GetMessageImageHandler(IMessageReadRepository messageReadRepository, IImageService blobService, IAccessTokenReader accessTokenReader) : IRequestHandler<GetMessageImageDto, byte[]>
+    public class GetMessageImageHandler(IMessageReadRepository messageReadRepository, IBlobService blobService, IAccessTokenReader accessTokenReader) : IRequestHandler<GetMessageImageDto, Stream>
     {
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IMessageReadRepository _messageReadRepository = messageReadRepository;
-        private readonly IImageService _blobService = blobService;
+        private readonly IBlobService _blobService = blobService;
 
-        public async Task<byte[]> Handle(GetMessageImageDto request, CancellationToken cancellationToken)
+        public async Task<Stream> Handle(GetMessageImageDto request, CancellationToken cancellationToken)
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
             
@@ -28,7 +29,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
                 throw new MessageImageNotFoundException();
 
             var image = message.Images[request.Index];
-            return await _blobService.ReadAsync(ContainerName.MesssageImages, image.BlobName);
+            return await _blobService.ReadAsync(ContainerName.MesssageImages, image.BlobName, cancellationToken);
         }
     }
 }

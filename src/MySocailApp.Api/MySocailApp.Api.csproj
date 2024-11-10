@@ -41,27 +41,26 @@
     <None Update="MailMessages\EmailConfirmation.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Policies\PrivacyPolicies\privacy_policy_version1_en.html">
+    <None Update="Blobs\Policies\PrivacyPolicies\privacy_policy_version1_en.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Policies\PrivacyPolicies\privacy_policy_version1_tr.html">
+    <None Update="Blobs\Policies\PrivacyPolicies\privacy_policy_version1_tr.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Policies\TermsOfUses\terms_of_use_version1_en.html">
+    <None Update="Blobs\Policies\TermsOfUses\terms_of_use_version1_en.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Policies\TermsOfUses\terms_of_use_version1_tr.html">
+    <None Update="Blobs\Policies\TermsOfUses\terms_of_use_version1_tr.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\MessageImages\" />
-    <Folder Include="Images\QuestionImages\" />
-    <Folder Include="Images\SolutionImages\" />
-    <Folder Include="Images\SolutionImages\" />
-    <Folder Include="Images\SolutionImages\" />
-    <Folder Include="Videos\SolutionVideos\" />
+    <Folder Include="Blobs\MessageImages\" />
+    <Folder Include="Blobs\QuestionImages\" />
+    <Folder Include="Blobs\SolutionImages\" />
+    <Folder Include="Blobs\SolutionVideos\" />
+    <Folder Include="Temp\" />
   </ItemGroup>
 
   <ItemGroup>

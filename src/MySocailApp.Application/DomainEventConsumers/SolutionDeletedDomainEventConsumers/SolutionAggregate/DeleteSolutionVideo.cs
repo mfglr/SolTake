@@ -1,19 +1,18 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Application.InfrastructureServices.BlobService.VideoServices;
+﻿using MySocailApp.Application.InfrastructureServices.BlobService;
+using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionDeletedDomainEventConsumers.SolutionAggregate
 {
-    public class DeleteSolutionVideo(IVideoService videoService) : IDomainEventConsumer<SolutionDeletedDomainEvent>
+    public class DeleteSolutionVideo(IBlobService blobService) : IDomainEventConsumer<SolutionDeletedDomainEvent>
     {
-        private readonly IVideoService _videoService = videoService;
+        private readonly IBlobService _blobService = blobService;
 
-        public Task Handle(SolutionDeletedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(SolutionDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
             if (notification.Solution.HasVideo)
-                _videoService.Delete(ContainerName.SolutionVideos, notification.Solution.Video!.BlobName);
-            return Task.CompletedTask;
+                await _blobService.DeleteAsync(ContainerName.SolutionVideos, notification.Solution.Video!.BlobName, cancellationToken);
         }
     }
 }

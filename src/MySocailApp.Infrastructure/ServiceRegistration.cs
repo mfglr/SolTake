@@ -4,9 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
-using MySocailApp.Application.InfrastructureServices.BlobService.TextService;
-using MySocailApp.Application.InfrastructureServices.BlobService.VideoServices;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate.Abstracts;
@@ -33,9 +30,7 @@ using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.InfrastructureServices;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.ImageServices;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.TextServices;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.VideoServices;
+using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using MySocailApp.Infrastructure.InfrastructureServices.Email;
 using MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using MySocailApp.Infrastructure.MessageAggregate;
@@ -104,16 +99,19 @@ namespace MySocailApp.Infrastructure
         }
         private static IServiceCollection AddBlobService(this IServiceCollection services)
             => services
-                .AddScoped<IBlobNameGenerator,BlobNameGenerator>()
-                .AddScoped<IPathFinder,PathFinder>()
-                .AddScoped<IDimentionCalculator, DimentionCalculator>()
-                .AddScoped<IPathsContainer, PathsContainer>()
-                .AddScoped<IImageService,ImageService>()
-                .AddScoped<IFrameCatcher, FrameCatcher>()
-                .AddScoped<ITextService,TextService>()
-                .AddScoped<IVideoFastStartConverter, VideoFastStartConverter>()
-                .AddScoped<IVideoDurationCalculator, VideoDurationCalculator>()
-                .AddScoped<IVideoService,VideoService>();
+                .AddScoped<UniqNameGenerator>()
+                .AddScoped<DimentionCalculator>()
+                .AddScoped<FrameCatcher>()
+                .AddScoped<VideoDurationCalculator>()
+                .AddScoped<ImageTransformer>()
+                .AddScoped<PathFinder>()
+                .AddScoped<VideoFastStartConverter>()
+                .AddScoped<TempDirectoryService>()
+                .AddScoped<IBlobService, LocalBlobService>()
+                .AddScoped<IImageService, ImageService>()
+                .AddScoped<ITextService, TextService>()
+                .AddScoped<IVideoService, VideoService>();
+
 
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {

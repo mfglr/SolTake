@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace MySocailApp.Application.InfrastructureServices.BlobService.TextService
+namespace MySocailApp.Application.InfrastructureServices.BlobService
 {
     public interface ITextService
     {

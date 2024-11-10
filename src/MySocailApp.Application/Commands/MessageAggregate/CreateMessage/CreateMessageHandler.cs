@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
+using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.QueryRepositories;

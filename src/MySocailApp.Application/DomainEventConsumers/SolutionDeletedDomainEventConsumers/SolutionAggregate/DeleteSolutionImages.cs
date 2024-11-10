@@ -1,18 +1,18 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
+﻿using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionDeletedDomainEventConsumers.SolutionAggregate
 {
-    public class DeleteSolutionImages(IImageService imageService) : IDomainEventConsumer<SolutionDeletedDomainEvent>
+    public class DeleteSolutionImages(IBlobService blobService) : IDomainEventConsumer<SolutionDeletedDomainEvent>
     {
-        private readonly IImageService _imageService = imageService;
+        private readonly IBlobService _blobService = blobService;
 
-        public Task Handle(SolutionDeletedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(SolutionDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            _imageService.DeleteRange(ContainerName.SolutionImages, notification.Solution.Images.Select(x => x.BlobName));
-            return Task.CompletedTask;
+            foreach(var image in notification.Solution.Images)
+                await _blobService.DeleteAsync(ContainerName.SolutionImages, image.BlobName, cancellationToken);
         }
     }
 }
