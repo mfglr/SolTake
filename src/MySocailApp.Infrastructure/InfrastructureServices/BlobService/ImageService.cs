@@ -4,16 +4,13 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Formats.Webp;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
-    public class ImageService(IBlobService blobService, UniqNameGenerator blobNameGenerator,ImageTransformer imageTransformer, DimentionCalculator dimentionCalculator, TempDirectoryService tempDirectoryService) : IImageService
+    public class ImageService(IBlobService blobService, UniqNameGenerator blobNameGenerator,DimentionCalculator dimentionCalculator, TempDirectoryService tempDirectoryService) : IImageService
     {
         private readonly IBlobService _blobService = blobService;
-        private readonly UniqNameGenerator _blobNameGenerator = blobNameGenerator;
-        private readonly ImageTransformer _imageTransformer = imageTransformer;
+        private readonly UniqNameGenerator _uniqNameGenerator = blobNameGenerator;
         private readonly DimentionCalculator _dimentionCalculator = dimentionCalculator;
         private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
 
@@ -22,20 +19,16 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             //get stream
             using var stream = file.OpenReadStream();
 
-            //load image
-            using var image = await Image.LoadAsync(stream, cancellationToken);
-
-            //transform image
-            _imageTransformer.Transform(image);
-
             //calculate dimention
-            Dimention dimention = _dimentionCalculator.Calculate(image);
+            Dimention dimention = await _dimentionCalculator.CalculateAsync(stream, cancellationToken);
 
             //save image to temp directory
-            string blobName = _blobNameGenerator.Generate();
+            stream.Position = 0;
+            var blobName = _uniqNameGenerator.Generate();
             var path = _tempDirectoryService.GetBlobPath(blobName);
+            var image = await Image.LoadAsync(stream, cancellationToken);
             await image.SaveAsWebpAsync(path, new() { Quality = 25 }, cancellationToken);
-
+            
             //save image to the blob container
             using var imageStream = File.OpenRead(path);
             await _blobService.UploadAsync(imageStream, containerName, blobName, cancellationToken);

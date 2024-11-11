@@ -41,7 +41,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             AppUserId = userId;
             Content = content;
             Video = video;
-            _images.Add(SolutionImage.Create(video.FrameBlobName,video.FrameHeight,video.FrameWidth));
             State = SolutionState.Pending;
         }
         internal void Create()

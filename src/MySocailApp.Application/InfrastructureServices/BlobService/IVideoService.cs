@@ -5,6 +5,6 @@ namespace MySocailApp.Application.InfrastructureServices.BlobService
 {
     public interface IVideoService
     {
-        Task<AppVideo> SaveAsync(IFormFile file, string containerNameOfVideo, string containerNameOfFrame, CancellationToken cancellationToken);
+        Task<AppVideo> SaveAsync(IFormFile file, string containerNameOfVideo, CancellationToken cancellationToken);
     }
 }

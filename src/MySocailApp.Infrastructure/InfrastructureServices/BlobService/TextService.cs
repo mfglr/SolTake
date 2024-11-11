@@ -28,8 +28,5 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 blobNames.Add(await UploadAsync(file, containerName, cancellationToken));
             return blobNames;
         }
-
-        public Stream Read(string containerName, string blobName)
-            => File.OpenRead(_pathFinder.GetPath(containerName, blobName));
     }
 }

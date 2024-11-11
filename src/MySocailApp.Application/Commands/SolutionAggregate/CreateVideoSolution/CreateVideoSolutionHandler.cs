@@ -28,11 +28,11 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateVideoSolution
             try
             {
                 //upload video
-                appVideo = await _videoService.SaveAsync(request.File, ContainerName.SolutionVideos, ContainerName.SolutionImages, cancellationToken);
+                appVideo = await _videoService.SaveAsync(request.File, ContainerName.SolutionVideos, cancellationToken);
 
                 //create solution
                 var userId = _accessTokenReader.GetRequiredAccountId();
-                var video = new SolutionVideo(appVideo.BlobName, appVideo.Duration, appVideo.Length, appVideo.Frame.BlobName, appVideo.Frame.Dimention.Height, appVideo.Frame.Dimention.Width);
+                var video = new SolutionVideo(appVideo.BlobName, appVideo.Duration, appVideo.Length);
                 var content = new SolutionContent(request.Content ?? "");
                 var solution = new Solution(request.QuestionId, userId, content, video);
                 await _solutionCreator.CreateAsync(solution, cancellationToken);

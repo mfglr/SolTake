@@ -7,13 +7,15 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Internal
         private readonly UniqNameGenerator _blobNameGenerator = blobNameGenerator;
         private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
 
-        public async Task<string> Convert(string inputPath, CancellationToken cancellationToken)
+        public async Task<string> Convert(string path, CancellationToken cancellationToken)
         {
             var outputBlobName = _blobNameGenerator.Generate("mp4");
             var outputPath = _tempDirectoryService.GetBlobPath(outputBlobName);
             
             FFmpeg.SetExecutablesPath("FFmpeg");
-            var conversation = FFmpeg.Conversions.New().AddParameter($"-i \"{inputPath}\" -c:v libx264 -c:a aac -movflags +faststart \"{outputPath}\"");
+            var conversation = FFmpeg.Conversions
+                .New()
+                .AddParameter($"-i \"{path}\" -c:v libx264 -c:a aac -movflags +faststart \"{outputPath}\"");
             await conversation.Start(cancellationToken);
 
             return outputPath;

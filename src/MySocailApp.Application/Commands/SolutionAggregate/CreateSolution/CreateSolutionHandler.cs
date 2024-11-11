@@ -23,7 +23,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
 
         public async Task<SolutionResponseDto> Handle(CreateSolutionDto request, CancellationToken cancellationToken)
         {
-            List<AppImage>? appImages = null;
+            List<AppImage> appImages = [];
             try
             {
                 //uploading images
@@ -44,9 +44,8 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
             }
             catch (Exception)
             {
-                if (appImages != null)
-                    foreach (var appImage in appImages)
-                        await _blobService.DeleteAsync(appImage.ContainerName, appImage.BlobName, cancellationToken);
+                foreach (var appImage in appImages)
+                    await _blobService.DeleteAsync(appImage.ContainerName, appImage.BlobName, cancellationToken);
                 throw;
             }
         }

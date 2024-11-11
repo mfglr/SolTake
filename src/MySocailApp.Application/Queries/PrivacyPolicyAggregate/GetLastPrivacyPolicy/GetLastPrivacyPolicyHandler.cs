@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using MySocailApp.Core.Exceptions;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
@@ -21,6 +22,9 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Internal
         {
             var blobName = _uniqNameGenerator.Generate();
             var path = GetBlobPath(blobName);
+
+            if (File.Exists(path))
+                throw new ServerSideException();
 
             using var fileStream = File.Create(path);
             await stream.CopyToAsync(fileStream);

@@ -103,7 +103,6 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<DimentionCalculator>()
                 .AddScoped<FrameCatcher>()
                 .AddScoped<VideoDurationCalculator>()
-                .AddScoped<ImageTransformer>()
                 .AddScoped<PathFinder>()
                 .AddScoped<VideoFastStartConverter>()
                 .AddScoped<TempDirectoryService>()
