@@ -2,7 +2,6 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
-using MySocailApp.Domain.AppUserAggregate.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySocailApp.Domain.AccountAggregate.Entities
@@ -59,7 +58,19 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             AddDomainEvent(new EmailVerificationTokenUpdatedDomainEvent(this));
         }
 
+        public string Language { get; private set; }
+        public void UpdateLanguage(string cultere)
+        {
+            var lang = Languages.GetLanguage(cultere);
+            if (!Languages.IsValidLanguageCode(lang))
+                throw new InvalidLanguageException();
+
+            Language = lang;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
         //Email verfication Tokens
+        public bool IsEmailVerified => IsThirdPartyAuthenticated || VerificationTokens.OrderBy(x => x.Id).Last().IsVerified;
         public readonly List<VerificationToken> _verificationTokens = [];
         public IReadOnlyCollection<VerificationToken> VerificationTokens => _verificationTokens;
         public void UpdateEmailVerificationToken()
@@ -77,42 +88,35 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
             _verificationTokens.Add(VerificationToken.Create());
             AddDomainEvent(new EmailVerificationTokenUpdatedDomainEvent(this));
         }
-        internal void VerifyEmailByToken(string token)
+        public void VerifyEmailByToken(string token)
         {
-            var verificationToken = _verificationTokens.OrderByDescending(x => x.Id).First();
+            var verificationToken = _verificationTokens.OrderBy(x => x.Id).Last();
             verificationToken.Verify(token);
         }
 
-        public string Language { get; private set; }
-        public void UpdateLanguage(string cultere)
-        {
-            var lang = Languages.GetLanguage(cultere);
-            if (!Languages.IsValidLanguageCode(lang))
-                throw new InvalidLanguageException();
-
-            Language = lang;
-            UpdatedAt = DateTime.UtcNow;
-        }
-
         //privacyPolicies
+        public AccountPrivacyPolicy PrivacyPolicy => PrivacyPolicies.OrderBy(x => x.PolicyId).Last();
+        public bool IsPrivacyPolicyApproved => PrivacyPolicy.IsApproved;
         public readonly List<AccountPrivacyPolicy> _privacyPolicies = [];
         public IReadOnlyCollection<AccountPrivacyPolicy> PrivacyPolicies => _privacyPolicies;
         internal void AddPolicy(int policyId) => _privacyPolicies.Add(AccountPrivacyPolicy.Create(policyId));
         public void ApprovePrivacyPolicy()
         {
-            var policy = _privacyPolicies.OrderByDescending(x => x.PolicyId).FirstOrDefault(x => !x.IsApproved);
-            if (policy == null) return;
+            var policy = PrivacyPolicy;
+            if (policy.IsApproved) return;
             policy.Approve();
         }
 
-        //termsOfUse
+        //termsOfUses
+        public AccountTermsOfUse TermsOfUse => TermsOfUses.OrderBy(x => x.TermsOfUseId).Last();
+        public bool IsTersmOfUseApproved => TermsOfUse.IsApproved;
         public readonly List<AccountTermsOfUse> _termsOfUses = [];
         public IReadOnlyCollection<AccountTermsOfUse> TermsOfUses => _termsOfUses;
         internal void AddTermOfUse(int termsOfUseId) => _termsOfUses.Add(AccountTermsOfUse.Create(termsOfUseId));
         public void ApproveTermsOfUse()
         {
-            var termsOfUse = _termsOfUses.OrderByDescending(x => x.TermsOfUseId).FirstOrDefault(x => !x.IsApproved);
-            if (termsOfUse == null) return;
+            var termsOfUse = TermsOfUse;
+            if (termsOfUse.IsApproved) return;
             termsOfUse.Approve();
         }
 

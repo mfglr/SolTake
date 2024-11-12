@@ -25,8 +25,9 @@ using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
 
 namespace MySocailApp.Api.Controllers.Api
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("api/[controller]/[action]")]
+    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     public class AccountsController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
@@ -108,8 +109,6 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         public async Task VerifyEmailByToken(VerifyEmailByTokenDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 

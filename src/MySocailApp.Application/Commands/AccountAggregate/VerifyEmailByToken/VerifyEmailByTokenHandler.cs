@@ -1,24 +1,26 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
 using MySocailApp.Domain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.VerifyEmailByToken
 {
-    public class VerifyEmailByTokenHandler(IAccessTokenReader tokenReader, EmailVerifierDomainService emailVerifier, IAccountWriteRepository accountWriteRepository) : IRequestHandler<VerifyEmailByTokenDto>
+    public class VerifyEmailByTokenHandler(IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<VerifyEmailByTokenDto>
     {
-        private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly EmailVerifierDomainService _emailVerifier = emailVerifier;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(VerifyEmailByTokenDto request, CancellationToken cancellationToken)
         {
-            var accountId = _tokenReader.GetRequiredAccountId();
-            var account =
-                await _accountWriteRepository.GetAccountAsync(accountId, cancellationToken) ??
-                throw new AccountNotFoundException();
-            await _emailVerifier.VerifyAsync(account, request.Token);
+            try
+            {
+                _accountAccessor.Account.VerifyEmailByToken(request.Token);
+            }
+            catch (InvalidVerificationTokenException)
+            {
+                await _unitOfWork.CommitAsync(cancellationToken);
+                throw;
+            }
+            await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

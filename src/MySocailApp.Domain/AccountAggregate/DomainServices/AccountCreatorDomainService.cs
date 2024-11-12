@@ -59,7 +59,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             await transaction.CommitAsync(cancellationToken);
 
             //update token
-            await TokenUpdaterDomainService.UpdateAsync(account, _userManager, _tokenProviderOptions);
+            await TokenUpdaterDomainService.UpdateAsync(_tokenProviderOptions, _userManager, account);
         }
     }
 }

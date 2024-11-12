@@ -17,6 +17,7 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 using MySocailApp.Domain.TermsOfUseAggregate;
 using MySocailApp.Domain.TopicAggregate.Entities;
 using MySocailApp.Domain.UserConnectionAggregate.Entities;
+using MySocailApp.Domain.VersionAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
@@ -60,6 +61,8 @@ namespace MySocailApp.Infrastructure.DbContexts
 
         public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
         public DbSet<TermsOfUse> TermsOfUses { get; private set; }
+
+        public DbSet<Domain.VersionAggregate.Entities.Version> Versions { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

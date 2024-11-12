@@ -17,9 +17,10 @@ using MySocailApp.Application.Queries.CommentAggregate.GetCommentsBySolutionId;
 
 namespace MySocailApp.Api.Controllers.Api
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]
     [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AccountAggregate.Configurations;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.PrivacyPolicyAggregate.Interfaces;
@@ -13,21 +12,18 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices.InternalDomainServi
         {
             //update Policy
             var lastPrivacyPolicy = await policyReadRepository.GetLastPolicyAsync(cancellationToken);
-            var lastAccountPrivacyPolicy = account.PrivacyPolicies.OrderByDescending(x => x.PolicyId).First();
-            if (lastPrivacyPolicy.Id != lastAccountPrivacyPolicy.PolicyId)
+            if (lastPrivacyPolicy.Id != account.PrivacyPolicy.PolicyId)
                 account.AddPolicy(lastPrivacyPolicy.Id);
 
             //update TermsOfUse
             var lastTermsOfUse = await termsOfUserReadRepository.GetLastTermsOfUseAsync(cancellationToken);
-            var lastAccountTermsOfUse = account.TermsOfUses.OrderByDescending(x => x.TermsOfUseId).First();
-            if(lastTermsOfUse.Id != lastAccountTermsOfUse.TermsOfUseId)
+            if(lastTermsOfUse.Id != account.TermsOfUse.TermsOfUseId)
                 account.AddTermOfUse(lastTermsOfUse.Id);
 
             //update security stamp to revoke previous refresh token.
-            var result = await userManager.UpdateSecurityStampAsync(account);
-            if (!result.Succeeded) throw new ServerSideException();
+            await userManager.UpdateSecurityStampAsync(account);
 
-            await TokenUpdaterDomainService.UpdateAsync(account, userManager, tokenProviderOptions);
+            await TokenUpdaterDomainService.UpdateAsync(tokenProviderOptions, userManager, account);
         }
     }
 }

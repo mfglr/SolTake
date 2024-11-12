@@ -17,7 +17,7 @@ namespace MySocailApp.Domain.AccountAggregate.Entities
         public string TokenHash { get; private set; }
         public DateTime ExpirationAt { get; private set; }
         public int NumberOfFailedAttemps { get; private set; }
-
+        
         private VerificationToken() { }
 
         private static string ComputeSha512Hash(string rawData)

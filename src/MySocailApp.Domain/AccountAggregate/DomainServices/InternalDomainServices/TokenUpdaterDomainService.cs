@@ -6,11 +6,10 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices.InternalDomainServi
 {
     internal static class TokenUpdaterDomainService
     {
-        public static async Task UpdateAsync(Account account, UserManager<Account> userManager, ITokenProviderOptions tokenProviderOptions)
+        public static async Task UpdateAsync(ITokenProviderOptions tokenProviderOptions, UserManager<Account> userManager, Account account)
         {
-            var roles = await userManager.GetRolesAsync(account);
-            account.AccessToken = AccessTokenGeneratorDomainService.Generate(account.Id, roles, tokenProviderOptions);
-            account.RefreshToken = RefreshTokenGeneratorDomainService.Generate(account.Id, account.SecurityStamp!, tokenProviderOptions);
+            account.AccessToken = await AccessTokenGeneratorDomainService.GenerateAsync(tokenProviderOptions, userManager, account);
+            account.RefreshToken = RefreshTokenGeneratorDomainService.Generate(tokenProviderOptions, account);
         }
     }
 }

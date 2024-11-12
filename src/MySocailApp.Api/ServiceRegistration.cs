@@ -32,6 +32,7 @@ namespace MySocailApp.Api
         public static IServiceCollection AddFilters(this IServiceCollection services)
         {
             return services
+                .AddScoped<CheckVersionFiltterAttribute>()
                 .AddScoped<CheckAccountFilterAttribute>()
                 .AddScoped<CheckPrivacyPolicyApprovalFilterAttribute>()
                 .AddScoped<CheckTermsOfUseApprovalFilterAttribute>()

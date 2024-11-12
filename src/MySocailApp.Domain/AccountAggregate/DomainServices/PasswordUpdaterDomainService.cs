@@ -23,7 +23,7 @@ namespace MySocailApp.Domain.AccountAggregate.DomainServices
             if (!result.Succeeded) throw new ServerSideException();
 
             //update token
-            await TokenUpdaterDomainService.UpdateAsync(account, _userManager, _tokenProviderOptions);
+            await TokenUpdaterDomainService.UpdateAsync(_tokenProviderOptions, _userManager, account);
         }
     }
 }

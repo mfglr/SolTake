@@ -35,30 +35,5 @@ namespace MySocailApp.Application.Hubs
             => await _mediator.Send(request);
         public async Task MarkMessagesAsViewed(MarkMessagesAsViewedDto request)
             => await _mediator.Send(request);
-
-        //public async Task<IAppResponseDto> GetNewMessages(GetNewMessagesDto request)
-        //{
-        //    return await _sender.Send(request);
-        //}
-        //public async Task<IAppResponseDto> GetMessages(GetMessagesDto request)
-        //{
-        //    return await _sender.Send(request);
-        //}
-        //public async Task<IAppResponseDto> CreateMessage(CreateMessageDto request)
-        //{
-        //    return await _sender.Send(request);
-        //}
-        //public async Task<IAppResponseDto> MarkMessageAsReceived(MarkMessageAsReceivedDto request)
-        //{
-        //    return await _sender.Send(request);
-        //}
-        //public async Task MarkMessageAsViewed(MarkMessageAsViewedDto request)
-        //{
-        //    await _sender.Send(request);
-        //}
-        //public async Task SendUserWrittingNotification(Guid userId)
-        //{
-        //    await _sender.Send(new SendUserWrittingNotificationDto() { UserId = userId });
-        //}
     }
 }

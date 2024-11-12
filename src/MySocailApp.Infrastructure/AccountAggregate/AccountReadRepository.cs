@@ -23,5 +23,17 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Where(x => userNames.Select(x => x.ToLower()).Contains(x.UserName))
                 .Select(x => x.Id)
                 .ToListAsync(cancellationToken);
+
+        public Task<bool> IsEmailVerified(int accountId, CancellationToken cancellationToken)
+            => _context.Users
+                .AnyAsync(
+                    x => 
+                        x.Id == accountId &&
+                        (
+                            x.IsThirdPartyAuthenticated ||
+                            x.VerificationTokens.OrderByDescending(x => x.Id).First().IsVerified
+                        ),
+                    cancellationToken
+                );
     }
 }

@@ -6,5 +6,6 @@ namespace MySocailApp.Domain.AccountAggregate.Abstracts
     {
         Task<Account?> GetAccountAsync(int accountId, CancellationToken cancellationToken);
         Task<List<int>> GetAccountIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken);
+        Task<bool> IsEmailVerified(int accountId, CancellationToken cancellationToken);
     }
 }

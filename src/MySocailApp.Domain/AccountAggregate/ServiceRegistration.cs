@@ -6,18 +6,17 @@ namespace MySocailApp.Domain.AccountAggregate
     public static class ServiceRegistration
     {
         public static IServiceCollection AddAccountDomainServices(this IServiceCollection services)
-        => services
-            .AddScoped<AccountCreatorByThirdPartyDomainService>()
-            .AddScoped<AccountCreatorDomainService>()
-            .AddScoped<EmailUpdaterDomainService>()
-            .AddScoped<EmailVerifierDomainService>()
-            .AddScoped<FaceBookTokenValidatorDomainService>()
-            .AddScoped<GoogleTokenValidatorDomainService>()
-            .AddScoped<PasswordAuthenticatorDomainService>()
-            .AddScoped<PasswordUpdaterDomainService>()
-            .AddScoped<RefreshTokenAuthenticatorDomainService>()
-            .AddScoped<ThirdPartyAuthenticatorDomainService>()
-            .AddScoped<UserNameUpdaterDomainService>()
-            .AddScoped<UserNameUpdaterDomainService>();
+            => services
+                .AddScoped<AccountCreatorByThirdPartyDomainService>()
+                .AddScoped<AccountCreatorDomainService>()
+                .AddScoped<EmailUpdaterDomainService>()
+                .AddScoped<FaceBookTokenValidatorDomainService>()
+                .AddScoped<GoogleTokenValidatorDomainService>()
+                .AddScoped<PasswordAuthenticatorDomainService>()
+                .AddScoped<PasswordUpdaterDomainService>()
+                .AddScoped<RefreshTokenAuthenticatorDomainService>()
+                .AddScoped<ThirdPartyAuthenticatorDomainService>()
+                .AddScoped<UserNameUpdaterDomainService>()
+                .AddScoped<UserNameUpdaterDomainService>();
     }
 }
