@@ -1,6 +1,7 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/account_service.dart';
@@ -58,7 +59,7 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
               store.dispatch(const ApplicationSuccessfullyInitAction());
             })
             .catchError((error){
-              _clearSession(store);
+              if(!(error is BackendException && error.statusCode == 426)) _clearSession(store);
               store.dispatch(const ApplicationSuccessfullyInitAction());
               throw error;
             });

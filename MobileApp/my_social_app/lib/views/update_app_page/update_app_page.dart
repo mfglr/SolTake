@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final urlMarket = Uri.parse('market://details?id=com.whatsapp&hl=tr');
-final urlBrowser = Uri.parse('https://play.google.com/store/apps/details?id=com.whatsapp&hl=tr');
+final urlMarket = Uri.parse('market://details?id=com.soltake');
+final urlBrowser = Uri.parse('https://play.google.com/store/apps/details?id=com.soltake');
 
 class UpdateAppPage extends StatelessWidget {
   const UpdateAppPage({super.key});

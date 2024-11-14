@@ -19,7 +19,7 @@ class AppClient{
     {
       "Authorization": "Bearer ${store.state.accessToken}",
       "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode,
-      "User-Agent": packageInfo.version
+      "Client-Version": packageInfo.version
     };
 
   Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
