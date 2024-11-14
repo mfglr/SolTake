@@ -28,7 +28,6 @@ namespace MySocailApp.Api
                 .AddSingleton<IApplicationSettings>(applicationSettings)
                 .AddSingleton<IFaceBookSettings>(faceBookSettings);
         }
-
         public static IServiceCollection AddFilters(this IServiceCollection services)
         {
             return services
@@ -38,7 +37,6 @@ namespace MySocailApp.Api
                 .AddScoped<CheckTermsOfUseApprovalFilterAttribute>()
                 .AddScoped<CheckEmailConfirmationFilterAttribute>();
         }
-
         public static IServiceCollection AddJWT(this IServiceCollection services)
         {
             var tokenProviderOptions = services.BuildServiceProvider().GetRequiredService<ITokenProviderOptions>()!;

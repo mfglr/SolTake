@@ -19,7 +19,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public readonly List<CommentUserTag> _tags = [];
         public IReadOnlyCollection<CommentUserTag> Tags => _tags;
 
-        public Comment(int userId,CommentContent content,IEnumerable<int> idsOfUsersTagged)
+        public Comment(int userId, CommentContent content, IEnumerable<int> idsOfUsersTagged)
         {
             AppUserId = userId;
             Content = content;

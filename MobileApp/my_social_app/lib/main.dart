@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/global_error_handling.dart';
+import 'package:my_social_app/services/app_version_service.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
@@ -22,6 +23,8 @@ import 'package:my_social_app/views/take_image_page/take_image_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/take_video_page/take_vieo_page.dart';
+import 'package:my_social_app/views/update_app_page/update_app_page.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 Future loadEnvironmentVariables() async {
@@ -34,11 +37,16 @@ void addTimeAgo(){
   timeago.setLocaleMessages('tr', timeago.TrShortMessages());
 }
 
+late final PackageInfo packageInfo;
+
 Future<void> main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
+  packageInfo = await PackageInfo.fromPlatform();
   final List<CameraDescription> cameras = await availableCameras();
+  
   await loadEnvironmentVariables();
+  
   addTimeAgo();
 
   FlutterError.onError = (error) {
@@ -90,7 +98,7 @@ Future<void> main() async {
   );
 }
 
-class MainView extends StatelessWidget {
+class MainView extends StatefulWidget {
   final AccountState? account;
   const MainView({
     super.key,
@@ -98,26 +106,47 @@ class MainView extends StatelessWidget {
   });
 
   @override
+  State<MainView> createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
+  late final Future<bool> _isUpgradeRequired;
+  @override
+  void initState() {
+    super.initState();
+    _isUpgradeRequired = AppVersionService().isUpgradeRequired(packageInfo.version);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,bool>(
-      converter: (store) => store.state.isInitialized,
-      builder: (context, isInitialized){
-        if(isInitialized){
-          if(account == null){
-            return StoreConnector<AppState,ActiveLoginPage>(
-              converter: (store) => store.state.loginState.activeLoginPage,
-              builder: (context,activeLoginPage){
-                if(activeLoginPage == ActiveLoginPage.appLodingPage) return const ApplicationLoadingPage();
-                if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
-                return const RegisterPage();
-              },
-            );
-          }
-          if(!account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
-          if(!account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
-          if(!account!.isThirdPartyAuthenticated && !account!.emailConfirmed) return const VerifyEmailPage();
-          if(account!.accountDeletionStart) return const ApplicationLoadingPage();
-          return const RootView();
+    return FutureBuilder<bool>(
+      future: _isUpgradeRequired,
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.data!) return const UpdateAppPage();
+          return StoreConnector<AppState,bool>(
+            converter: (store) => store.state.isInitialized,
+            builder: (context, isInitialized){
+              if(isInitialized){
+                if(widget.account == null){
+                  return StoreConnector<AppState,ActiveLoginPage>(
+                    converter: (store) => store.state.loginState.activeLoginPage,
+                    builder: (context,activeLoginPage){
+                      if(activeLoginPage == ActiveLoginPage.appLodingPage) return const ApplicationLoadingPage();
+                      if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
+                      return const RegisterPage();
+                    },
+                  );
+                }
+                if(!widget.account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
+                if(!widget.account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
+                if(!widget.account!.isThirdPartyAuthenticated && !widget.account!.emailConfirmed) return const VerifyEmailPage();
+                if(widget.account!.accountDeletionStart) return const ApplicationLoadingPage();
+                return const RootView();
+              }
+              return const ApplicationLoadingPage();
+            }
+          );
         }
         return const ApplicationLoadingPage();
       }

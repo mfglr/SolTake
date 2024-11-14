@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.Exceptions;
-using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.AppVersionAggregate.Abstracts;
+using MySocailApp.Domain.AppVersionAggregate.ValuObjects;
 
 namespace MySocailApp.Api.Filters
 {
-    public class CheckVersionFiltterAttribute(IHttpContextAccessor contextAccessor, IVersionCacheService versionCachService) : ActionFilterAttribute
+    public class CheckVersionFiltterAttribute(IHttpContextAccessor contextAccessor, IAppVersionCacheService versionCachService) : ActionFilterAttribute
     {
         private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
-        private readonly IVersionCacheService _versionCachService = versionCachService;
+        private readonly IAppVersionCacheService _versionCachService = versionCachService;
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var currentVersion = _versionCachService.Version;
+            var versionCode = _contextAccessor.HttpContext!.Request.Headers.UserAgent.FirstOrDefault();
 
-            var versionCodeString = _contextAccessor.HttpContext!.Request.Headers.UserAgent.FirstOrDefault();
-            var versionCode = versionCodeString != null ? int.Parse(versionCodeString) : 1;
-
-            if (currentVersion.IsUpgradeRequired && versionCode < currentVersion.Code)
+            if (versionCode == null || currentVersion.UpgradeRequired(new VersionCode(versionCode)))
                 throw new UpgradeRequiredException();
 
             await next();

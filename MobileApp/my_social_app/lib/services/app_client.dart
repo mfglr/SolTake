@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
+import 'package:my_social_app/main.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
@@ -17,7 +18,8 @@ class AppClient{
   Map<String,String> getHeader() =>
     {
       "Authorization": "Bearer ${store.state.accessToken}",
-      "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode
+      "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode,
+      "User-Agent": packageInfo.version
     };
 
   Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");

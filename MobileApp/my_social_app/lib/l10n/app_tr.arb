@@ -286,5 +286,8 @@
     "uploading_solution_abstract_item_failed_content":"Başarısız! Tekrar denemek için tıklayınız.",
 
     "uploading_circle_processing": "İşleniyor",
-    "uploading_circle_failed_content": "Başarısız! Tekrar denemek için tıklayınız."
+    "uploading_circle_failed_content": "Başarısız! Tekrar denemek için tıklayınız.",
+
+    "update_page_app_button_content": "Uygulamayı Güncelle",
+    "update_page_app_content": "Yeni sürüm mevcut. Uygulamayı kullanmaya devam edebilmek için güncellemelisiniz!"
 }

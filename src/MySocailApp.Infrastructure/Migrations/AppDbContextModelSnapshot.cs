@@ -463,6 +463,25 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("UserSearchs");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.AppVersionAggregate.Entities.AppVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUpgradeRequired")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppVersions");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -11677,128 +11696,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("UserConnections");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.VersionAggregate.Entities.Version", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsUpgradeRequired")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Versions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = 1,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = 2,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = 3,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Code = 4,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Code = 5,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Code = 6,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Code = 7,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Code = 8,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Code = 9,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Code = 10,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Code = 11,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Code = 12,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Code = 13,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Code = 14,
-                            CreatedAt = new DateTime(2024, 11, 12, 7, 36, 19, 815, DateTimeKind.Unspecified).AddTicks(6688),
-                            IsUpgradeRequired = true
-                        });
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -11946,6 +11843,29 @@ namespace MySocailApp.Infrastructure.Migrations
                         .WithMany("Searchers")
                         .HasForeignKey("SearchedId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AppVersionAggregate.Entities.AppVersion", b =>
+                {
+                    b.OwnsOne("MySocailApp.Domain.AppVersionAggregate.ValuObjects.VersionCode", "Code", b1 =>
+                        {
+                            b1.Property<int>("AppVersionId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("AppVersionId");
+
+                            b1.ToTable("AppVersions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AppVersionId");
+                        });
+
+                    b.Navigation("Code")
                         .IsRequired();
                 });
 

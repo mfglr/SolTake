@@ -1,8 +1,8 @@
 ﻿namespace MySocailApp.Domain.CommentAggregate.DomainServices
 {
-    public static class UserNamesReaderDomainService
+    public class UserNamesReaderDomainService
     {
-        public static List<string> GetUserNames(string content)
+        public List<string> GetUserNames(string content)
         {
             List<string> userNames = [];
 

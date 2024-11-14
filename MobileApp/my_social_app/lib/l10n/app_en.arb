@@ -287,6 +287,9 @@
     "uploading_solution_abstract_item_failed_content":"Failed! Click to try again.",
 
     "uploading_circle_processing": "Processing",
-    "uploading_circle_failed_content": "Failed! Click to try again."
+    "uploading_circle_failed_content": "Failed! Click to try again.",
+
+    "update_page_app_button_content": "Update App",
+    "update_page_app_content": "A new version available. You need to update the app to continue using it!"
 
 }

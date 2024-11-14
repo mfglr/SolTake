@@ -10,25 +10,22 @@ using MySocailApp.Application.InfrastructureServices.BlobService.VideoServices;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.AppUserAggregate.Abstracts;
+using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.Abstracts;
-using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
-using MySocailApp.Domain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
 using MySocailApp.Domain.PrivacyPolicyAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
 using MySocailApp.Domain.TopicAggregate.Interfaces;
 using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
-using MySocailApp.Domain.VersionAggregate.Abstracts;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.AppUserAggregate;
+using MySocailApp.Infrastructure.AppVersionAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
@@ -50,7 +47,6 @@ using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TermsOfUseAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
 using MySocailApp.Infrastructure.UserConnectionAggregate;
-using MySocailApp.Infrastructure.VersionAggregate;
 using System.Net;
 using System.Net.Mail;
 
@@ -76,23 +72,16 @@ namespace MySocailApp.Infrastructure
                 .AddTermsOfUseAggregate()
                 .AddUserConnectionAggregate()
                 .AddNotificationConnectionAggregate()
-                .AddVersionAggregate();
+                .AddAppVersionAggregate();
 
         private static IServiceCollection AddServices(this IServiceCollection services)
-        {
-            using var context = services.BuildServiceProvider().GetRequiredService<AppDbContext>();
-            var versionCacheService = new VersionCacheService();
-            var versions = context.Versions.AsNoTracking().ToList();
-            versionCacheService.Init(versions);
-
-            return services
+            => services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddScoped<IAccountAccessor, AccountAccessor>()
-                .AddSingleton<IVersionCacheService>(versionCacheService)
                 .AddEmailService()
                 .AddBlobService()
                 .AddQueryRepositories();
-        }
+        
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
             var emailServiceSettings = services.BuildServiceProvider().GetRequiredService<IEmailServiceSettings>()!;
@@ -153,72 +142,87 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ITopicQueryRepository, TopicQueryRepository>()
                 .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
                 .AddScoped<ISolutionUserSaveQueryRepository, SolutionUserSaveQueryRepository>()
-                .AddScoped<INotificationQueryRepository, NotificationQueryRepository>()
-                .AddScoped<IVersionQueryRepository, VersionQueryRepository>();
+                .AddScoped<INotificationQueryRepository, NotificationQueryRepository>();
         
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IAccountReadRepository, AccountReadRepository>()
                 .AddScoped<IAccountWriteRepository, AccountWriteRepository>()
                 .AddScoped<ITransactionCreator, TransactionCreator>();
+
         private static IServiceCollection AddPrivacyPolicyAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IPrivacyPolicyReadRepository, PolicyReadRepository>()
                 .AddScoped<IPrivacyPolicyWriteRepository, PolicyWriteRepository>();
+        
         private static IServiceCollection AddTermsOfUseAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ITermsOfUseReadRepository, TermsOfUseReadRepository>()
                 .AddScoped<ITermsOfUseWriteRepository, TermsOfUseWriteRepository>();
+        
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IAppUserWriteRepository, AppUserWriteRepository>()
                 .AddScoped<IAppUserReadRepository, AppUserReadRepository>();
+        
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
-                .AddScoped<IQuestionReadRepository, QuestionReadRepository>()
-                .AddScoped<QuestionCreatorDomainService>();
+                .AddScoped<IQuestionReadRepository, QuestionReadRepository>();
+
         private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
-                .AddScoped<ISolutionReadRepository, SolutionReadRepository>()
-                .AddScoped<SolutionStateMarker>()
-                .AddScoped<SolutionCreatorDomainService>();
+                .AddScoped<ISolutionReadRepository, SolutionReadRepository>();
+
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IExamReadRepository, ExamReadRepository>();
+
         private static IServiceCollection AddSubjectAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ISubjectReadRepository, SubjectReadRepository>();
+
         private static IServiceCollection AddTopicAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ITopicReadRepository, TopicReadRepository>();
+
         private static IServiceCollection AddCommentAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ICommentReadRepository, CommentReadRepository>()
-                .AddScoped<ICommentWriteRepository, CommentWriteRepository>()
-                .AddScoped<CommentCreatorDomainService>();
+                .AddScoped<ICommentWriteRepository, CommentWriteRepository>();
+
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
             => services
                 .AddScoped<INotificationWriteRepository, NotificationWriteRepository>()
                 .AddScoped<INotificationReadRepository, NotificationReadRepository>();
+        
         private static IServiceCollection AddMessageAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
-                .AddScoped<IMessageReadRepository, MessageReadRepository>()
-                .AddScoped<MessageRemoverDomainService>()
-                .AddScoped<MessageCreaterDomainService>();
+                .AddScoped<IMessageReadRepository, MessageReadRepository>();
+
         private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IUserConnectionWriteRepository, UserConnectionWriteRepository>()
                 .AddScoped<IUserConnectionReadRepository, UserConnectionReadRepository>();
+
         private static IServiceCollection AddNotificationConnectionAggregate(this IServiceCollection services)
             => services
                 .AddScoped<INotificationConnectionReadRepository, NotificationConnectionReadRepository>()
                 .AddScoped<INotificationConnectionWriteRepository, NotificationConnectionWriteRepository>();
-        private static IServiceCollection AddVersionAggregate(this IServiceCollection services)
-            => services
-                    .AddScoped<IVersionReadRepository, VersionReadRepository>()
-                    .AddScoped<IVersionWriteRepository, VersionWriteRepository>();
+
+        private static IServiceCollection AddAppVersionAggregate(this IServiceCollection services)
+        {
+            using var context = services.BuildServiceProvider().GetRequiredService<AppDbContext>();
+            var versionCacheService = new AppVersionCacheService();
+            var versions = context.AppVersions.AsNoTracking().ToList();
+            versionCacheService.Init(versions);
+
+            return services
+                    .AddScoped<IAppVersionReadRepository, AppVersionReadRepository>()
+                    .AddScoped<IAppVersionWriteRepository, AppVersionWriteRepository>()
+                    .AddSingleton<IAppVersionCacheService>(versionCacheService);
+        }
     }
 }

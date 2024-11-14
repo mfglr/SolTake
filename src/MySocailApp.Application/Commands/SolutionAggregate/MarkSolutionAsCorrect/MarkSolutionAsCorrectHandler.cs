@@ -6,11 +6,11 @@ using MySocailApp.Domain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsCorrect
 {
-    public class MarkSolutionAsCorrectHandler(ISolutionWriteRepository solutionWriteRepository, SolutionStateMarker solutionStateMarker, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<MarkSolutionAsCorrectDto>
+    public class MarkSolutionAsCorrectHandler(ISolutionWriteRepository solutionWriteRepository, SolutionStateMarkerDomainService solutionStateMarker, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<MarkSolutionAsCorrectDto>
     {
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
-        private readonly SolutionStateMarker _solutionStateMarker = solutionStateMarker;
+        private readonly SolutionStateMarkerDomainService _solutionStateMarker = solutionStateMarker;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(MarkSolutionAsCorrectDto request, CancellationToken cancellationToken)

@@ -4,6 +4,11 @@ using MySocailApp.Api.Middlewares;
 using MySocailApp.Application;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AppVersionAggregate;
+using MySocailApp.Domain.CommentAggregate;
+using MySocailApp.Domain.MessageAggregate;
+using MySocailApp.Domain.QuestionAggregate;
+using MySocailApp.Domain.SolutionAggregate;
 using MySocailApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +30,12 @@ builder.Services
     .AddHttpContextAccessor()
     .AddApplicationServices()
     .AddInfrastructureServices()
-    .AddAccountDomainServices();
+    .AddAccountDomainServices()
+    .AddAppVersionDomainServices()
+    .AddCommentDomainServices()
+    .AddMessageDomainServices()
+    .AddQuestionDomainServices()
+    .AddSolutionDomainServices();
 
 var app = builder.Build();
 app.InitializeDb();

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.AppVersionAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.MessageAggregate.Entities;
@@ -17,7 +18,6 @@ using MySocailApp.Domain.SubjectAggregate.Entities;
 using MySocailApp.Domain.TermsOfUseAggregate;
 using MySocailApp.Domain.TopicAggregate.Entities;
 using MySocailApp.Domain.UserConnectionAggregate.Entities;
-using MySocailApp.Domain.VersionAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
@@ -62,7 +62,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
         public DbSet<TermsOfUse> TermsOfUses { get; private set; }
 
-        public DbSet<Domain.VersionAggregate.Entities.Version> Versions { get; private set; }
+        public DbSet<AppVersion> AppVersions { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
