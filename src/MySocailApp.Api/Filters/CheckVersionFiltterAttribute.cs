@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.Exceptions;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
+using MySocailApp.Domain.AppVersionAggregate.Exceptions;
 using MySocailApp.Domain.AppVersionAggregate.ValuObjects;
 
 namespace MySocailApp.Api.Filters
@@ -14,8 +15,11 @@ namespace MySocailApp.Api.Filters
         {
             var currentVersion = _versionCachService.Version;
             var versionCode = _contextAccessor.HttpContext!.Request.Headers.UserAgent.FirstOrDefault();
-
-            if (versionCode == null || currentVersion.UpgradeRequired(new VersionCode(versionCode)))
+            
+            if (versionCode == null)
+                throw new InvalidVersionCodeException();
+            
+            if (currentVersion.UpgradeRequired(new VersionCode(versionCode)))
                 throw new UpgradeRequiredException();
 
             await next();
