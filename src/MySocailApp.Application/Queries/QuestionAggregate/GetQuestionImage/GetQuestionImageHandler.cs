@@ -1,17 +1,17 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
+using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 
 namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
 {
-    public class GetQuestionImageHandler(IQuestionReadRepository repository, IImageService blobService) : IRequestHandler<GetQuestionImageDto, byte[]>
+    public class GetQuestionImageHandler(IQuestionReadRepository repository, IBlobService blobService) : IRequestHandler<GetQuestionImageDto, Stream>
     {
         private readonly IQuestionReadRepository _repository = repository;
-        private readonly IImageService _blobService = blobService;
+        private readonly IBlobService _blobService = blobService;
 
-        public async Task<byte[]> Handle(GetQuestionImageDto request, CancellationToken cancellationToken)
+        public async Task<Stream> Handle(GetQuestionImageDto request, CancellationToken cancellationToken)
         {
             var question =
                 await _repository.GetQuestionWithImagesById(request.QuestionId, cancellationToken) ??
@@ -21,7 +21,8 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
                 question.Images.FirstOrDefault(x => x.Id == request.QuestionImageId) ??
                 throw new QuestionImageNotFoundException();
 
-            return await _blobService.ReadAsync(ContainerName.QuestionImages, image.BlobName);
+            var stream = await _blobService.ReadAsync(ContainerName.QuestionImages, image.BlobName, cancellationToken);
+            return stream;
         }
     }
 }

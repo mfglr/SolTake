@@ -1,15 +1,21 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
+﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using SixLabors.ImageSharp.Processing;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.ImageServices
+namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
-    public class DimentionCalculator : IDimentionCalculator
+    public class DimentionCalculator
     {
-        private void TransformImage(SixLabors.ImageSharp.Image image, ushort orentation)
+
+        private void Transform(Image image)
         {
-            switch (orentation)
+            var profile = image.Metadata.ExifProfile;
+            if (profile == null || !profile.TryGetValue(ExifTag.Orientation, out var orientation))
+                return;
+
+            switch (orientation.Value)
             {
                 case 2:
                     image.Mutate(x => x.Flip(FlipMode.Horizontal));
@@ -35,14 +41,11 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.ImageSer
             }
         }
 
-        public Dimention Calculate(Stream stream)
+        public async Task<Dimention> CalculateAsync(IFormFile file,CancellationToken cancellationToken)
         {
-            using var image = SixLabors.ImageSharp.Image.Load(stream);
-            var profile = image.Metadata.ExifProfile;
-
-            if (profile != null && profile.TryGetValue(ExifTag.Orientation, out var value))
-                TransformImage(image, value.Value);
-
+            using var stream = file.OpenReadStream();
+            using var image = await Image.LoadAsync(stream, cancellationToken);
+            Transform(image);
             return new(image.Height, image.Width);
         }
     }

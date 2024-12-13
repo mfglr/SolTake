@@ -1,14 +1,14 @@
 ﻿using MediatR;
+using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Application.InfrastructureServices.BlobService.TextService;
 using MySocailApp.Core;
 using MySocailApp.Domain.PrivacyPolicyAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.PrivacyPolicyAggregate.GetLastPrivacyPolicy
 {
-    public class GetLastPrivacyPolicyHandler(ITextService textService, IPrivacyPolicyReadRepository privacyPolicyReadRepository) : IRequestHandler<GetLastPrivacyPolicyDto, Stream>
+    public class GetLastPrivacyPolicyHandler(IBlobService blobService, IPrivacyPolicyReadRepository privacyPolicyReadRepository) : IRequestHandler<GetLastPrivacyPolicyDto, Stream>
     {
-        private readonly ITextService _textService = textService;
+        private readonly IBlobService _blobServicee = blobService;
         private readonly IPrivacyPolicyReadRepository _privacyPolicyReadRepository = privacyPolicyReadRepository;
 
         public async Task<Stream> Handle(GetLastPrivacyPolicyDto request, CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace MySocailApp.Application.Queries.PrivacyPolicyAggregate.GetLastPrivacyP
                 blobName = policy.BlobNameTr;
             else
                 blobName = policy.BlobNameEn;
-            return _textService.Read(ContainerName.PrivacyPolicies, blobName);
+            return await _blobServicee.ReadAsync(ContainerName.PrivacyPolicies, blobName, cancellationToken);
         }
     }
 }

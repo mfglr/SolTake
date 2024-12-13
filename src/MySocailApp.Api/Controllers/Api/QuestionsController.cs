@@ -63,10 +63,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpGet("{questionId}/{questionImageId}")]
         public async Task<FileResult> GetImage(int questionId, int questionImageId, CancellationToken cancellationToken)
-           => File(
-               await _mediator.Send(new GetQuestionImageDto(questionId, questionImageId), cancellationToken),
-               "application/octet-stream"
-            );
+            => File(await _mediator.Send(new GetQuestionImageDto(questionId, questionImageId), cancellationToken), "application/octet-stream");
 
         [HttpGet("{id}")]
         public async Task<QuestionResponseDto> GetQuestionById(int id, CancellationToken cancellationToken)

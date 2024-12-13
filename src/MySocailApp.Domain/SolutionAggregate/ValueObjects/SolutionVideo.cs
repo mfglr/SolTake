@@ -11,11 +11,8 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
         public string BlobName { get; private set; }
         public double Duration { get; private set; }
         public long Length { get; private set; }
-        public string FrameBlobName { get; private set; }
-        public float FrameHeight { get; private set; }
-        public float FrameWidth { get; private set; }
 
-        public SolutionVideo(string blobName, double duration, long length, string frameBlobName, float frameHeight, float frameWidth)
+        public SolutionVideo(string blobName, double duration, long length)
         {
             if (duration > MaxDuration + 2)
                 throw new SolutionVideoDurationException();
@@ -25,9 +22,6 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
 
             BlobName = blobName;
             Duration = duration;
-            FrameBlobName = frameBlobName;
-            FrameHeight = frameHeight;
-            FrameWidth = frameWidth;
             Length = length;
         }
 

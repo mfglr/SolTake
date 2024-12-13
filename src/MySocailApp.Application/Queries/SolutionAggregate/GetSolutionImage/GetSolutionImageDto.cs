@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage
 {
-    public record GetSolutionImageDto(int SolutionId,int SolutionImageId) : IRequest<byte[]>;
+    public record GetSolutionImageDto(int SolutionId,int SolutionImageId) : IRequest<Stream>;
 }
