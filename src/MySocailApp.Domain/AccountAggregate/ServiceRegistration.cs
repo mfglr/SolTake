@@ -17,6 +17,7 @@ namespace MySocailApp.Domain.AccountAggregate
                 .AddScoped<RefreshTokenAuthenticatorDomainService>()
                 .AddScoped<ThirdPartyAuthenticatorDomainService>()
                 .AddScoped<UserNameUpdaterDomainService>()
-                .AddScoped<UserNameUpdaterDomainService>();
+                .AddScoped<UserNameUpdaterDomainService>()
+                .AddScoped<PasswordResetterDomainService>();
     }
 }

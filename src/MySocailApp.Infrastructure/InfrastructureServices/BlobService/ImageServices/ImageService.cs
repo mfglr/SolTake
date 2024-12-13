@@ -4,7 +4,7 @@ using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.ImageServices;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Formats.Webp;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.ImageServices
 {
@@ -23,14 +23,9 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.ImageSer
             stream.Position = 0;
 
             var path = _pathFinder.GetPath(RootName.Image, containerName, blobName);
-            JpegEncoder options;
-            if (stream.Length > 1048576)
-                options = new JpegEncoder { Quality = 25 };
-            else
-                options = new JpegEncoder { Quality = 100 };
 
             using var t = await Image.LoadAsync(stream, cancellationToken);
-            await t.SaveAsync(path, options, cancellationToken);
+            await t.SaveAsync(path, new WebpEncoder { Quality = 25 }, cancellationToken);
             _pathContainer.Add(path);
 
             return new AppImage(containerName, blobName, dimention);

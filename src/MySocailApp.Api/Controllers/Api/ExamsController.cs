@@ -12,7 +12,7 @@ namespace MySocailApp.Api.Controllers.Api
     [ApiController]
     [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
+    [ServiceFilter(typeof(CheckVersionFilterAttribute))]
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]
     [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]

@@ -1,0 +1,15 @@
+﻿@using MySocailApp.Application.Commands.AccountAggregate.ResetPassword
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+@model ResetPasswordDto
+
+<form asp-controller="Account" asp-action="ResetPassword" method="post">
+    <input type="hidden" asp-for="Token" value="@Model.Token" />
+    <input type="hidden" asp-for="Email" value="@Model.Email" />
+    <label> Password: <input asp-for="Password" /> </label> <br/>
+    <label> Password: <input asp-for="PasswordConfirm" /> </label> <br />
+    <button type="submit">ResetPassword</button>
+</form>

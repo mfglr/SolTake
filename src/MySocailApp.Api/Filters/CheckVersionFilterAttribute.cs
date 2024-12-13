@@ -5,7 +5,7 @@ using MySocailApp.Domain.AppVersionAggregate.ValuObjects;
 
 namespace MySocailApp.Api.Filters
 {
-    public class CheckVersionFiltterAttribute(IHttpContextAccessor contextAccessor, IAppVersionCacheService versionCachService) : ActionFilterAttribute
+    public class CheckVersionFilterAttribute(IHttpContextAccessor contextAccessor, IAppVersionCacheService versionCachService) : ActionFilterAttribute
     {
         private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
         private readonly IAppVersionCacheService _versionCachService = versionCachService;
