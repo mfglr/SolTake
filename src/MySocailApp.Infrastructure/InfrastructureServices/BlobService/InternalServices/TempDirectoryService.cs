@@ -3,10 +3,10 @@ using MySocailApp.Core.Exceptions;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
-    public class TempDirectoryService(IHttpContextAccessor contextAccessor, UniqNameGenerator blobNameGenerator)
+    public class TempDirectoryService(IHttpContextAccessor contextAccessor, UniqNameGenerator uniqNameGenerator)
     {
         private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
-        private readonly UniqNameGenerator _uniqNameGenerator = blobNameGenerator;
+        private readonly UniqNameGenerator _uniqNameGenerator = uniqNameGenerator;
         
         public string TempDirectoryPath => $"Temp/{_contextAccessor.HttpContext!.TraceIdentifier}";
         public string GetBlobPath(string blobName) => $"{TempDirectoryPath}/{blobName}";

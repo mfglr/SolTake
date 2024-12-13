@@ -1,8 +1,8 @@
 ﻿using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Core.Exceptions;
+using MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
+namespace MySocailApp.Infrastructure.InfrastructureServices
 {
     public class LocalBlobService(PathFinder pathFinder) : IBlobService
     {
@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
         {
             var path = _pathFinder.GetPath(containerName, blobName);
             if (File.Exists(path))
-                throw new ServerSideException();
+                throw new BlobNameExistException();
 
             using var fileStream = File.OpenWrite(path);
             await stream.CopyToAsync(fileStream, cancellationToken);
@@ -23,7 +23,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
         {
             var path = _pathFinder.GetPath(containerName, blobName);
             if (File.Exists(path))
-                throw new ServerSideException();
+                throw new BlobNameExistException();
 
             using var fileStream = File.OpenWrite(path);
             await fileStream.WriteAsync(bytes, cancellationToken);
@@ -43,5 +43,8 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             var stream = (Stream)File.OpenRead(path);
             return Task.FromResult(stream);
         }
+
+        public Task<bool> Exist(string containerName, string blobName, CancellationToken cancellationToken)
+            => Task.FromResult(File.Exists(_pathFinder.GetPath(containerName, blobName)));
     }
 }

@@ -60,12 +60,7 @@
     <Folder Include="Blobs\QuestionImages\" />
     <Folder Include="Blobs\SolutionImages\" />
     <Folder Include="Blobs\SolutionVideos\" />
-    <Folder Include="Images\MessageImages\" />
-    <Folder Include="Images\ProfileImages\" />
-    <Folder Include="Images\SolutionImages\" />
-    <Folder Include="Images\QuestionImages\" />
     <Folder Include="Temp\" />
-    <Folder Include="Videos\SolutionVideos\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -32,7 +32,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             _images.AddRange(images);
             State = SolutionState.Pending;
         }
-        public Solution(int questionId, int userId, SolutionContent content,SolutionVideo video)
+        public Solution(int questionId, int userId, SolutionContent content, SolutionVideo video)
         {
             ArgumentNullException.ThrowIfNull(content);
             ArgumentNullException.ThrowIfNull(video);

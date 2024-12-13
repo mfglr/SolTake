@@ -1,4 +1,5 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+﻿using Microsoft.AspNetCore.Http;
+using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using SixLabors.ImageSharp.Processing;
@@ -40,16 +41,10 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Internal
             }
         }
 
-        public async Task<Dimention> CalculateAsync(Stream stream,CancellationToken cancellationToken)
+        public async Task<Dimention> CalculateAsync(IFormFile file,CancellationToken cancellationToken)
         {
+            using var stream = file.OpenReadStream();
             using var image = await Image.LoadAsync(stream, cancellationToken);
-            Transform(image);
-            return new(image.Height, image.Width);
-        }
-
-        public async Task<Dimention> CalculateAsync(string path, CancellationToken cancellationToken)
-        {
-            using var image = await Image.LoadAsync(path, cancellationToken);
             Transform(image);
             return new(image.Height, image.Width);
         }

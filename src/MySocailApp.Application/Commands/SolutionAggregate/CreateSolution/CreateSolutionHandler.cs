@@ -29,10 +29,10 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
                 //uploading images
                 appImages = await _imageService.UploadAsync(ContainerName.SolutionImages, request.Images, cancellationToken);
 
-                //create solution 
-                var images = appImages.Select(x => SolutionImage.Create(x.BlobName, x.Dimention.Height, x.Dimention.Width));
+                //create solution
                 var userId = _tokenReader.GetRequiredAccountId();
                 var content = new SolutionContent(request.Content ?? "");
+                var images = appImages.Select(x => SolutionImage.Create(x.BlobName, x.Dimention.Height, x.Dimention.Width));
                 var solution = new Solution(request.QuestionId, userId, content, images);
                 await _solutionCreator.CreateAsync(solution, cancellationToken);
                 await _solutionWriteRepository.CreateAsync(solution, cancellationToken);

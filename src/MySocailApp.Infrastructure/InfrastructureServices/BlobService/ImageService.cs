@@ -16,29 +16,29 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 
         private async Task<AppImage> InternalUploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
-            //get stream
-            using var stream = file.OpenReadStream();
-
             //calculate dimention
-            Dimention dimention = await _dimentionCalculator.CalculateAsync(stream, cancellationToken);
+            Dimention dimention = await _dimentionCalculator.CalculateAsync(file, cancellationToken);
 
-            //save image to temp directory
-            stream.Position = 0;
+            //generate uniq blob name;
             var blobName = _uniqNameGenerator.Generate();
             var path = _tempDirectoryService.GetBlobPath(blobName);
+
+            //save image to temp directory
+            using var stream = file.OpenReadStream();
             var image = await Image.LoadAsync(stream, cancellationToken);
             await image.SaveAsWebpAsync(path, new() { Quality = 25 }, cancellationToken);
             
             //save image to the blob container
             using var imageStream = File.OpenRead(path);
             await _blobService.UploadAsync(imageStream, containerName, blobName, cancellationToken);
+            imageStream.Close();
 
             return new AppImage(containerName, blobName, dimention);
         }
 
         public async Task<AppImage> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
-            if (file.Length == 0)
+            if (file.Length <= 0 || file.Length > 52428800)
                 throw new ImageLengthException();
 
             _tempDirectoryService.Create();
@@ -57,13 +57,13 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 
         public async Task<List<AppImage>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
         {
-            if (files.Any(x => x.Length == 0))
+            if (files.Any(file => file.Length <= 0 || file.Length > 52428800))
                 throw new ImageLengthException();
 
-            List<AppImage> images = [];
             _tempDirectoryService.Create();
             try
             {
+                List<AppImage> images = [];
                 foreach (var file in files)
                     images.Add(await InternalUploadAsync(containerName, file, cancellationToken));
                 _tempDirectoryService.Delete();

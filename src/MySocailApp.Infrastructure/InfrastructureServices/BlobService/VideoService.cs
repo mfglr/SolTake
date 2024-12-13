@@ -25,11 +25,11 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             if (stream.Length <= 0 || stream.Length > MaxVideoLength)
                 throw new VideoLengthException();
 
+            //create a temp directory for this scope
+            _tempDirectoryService.Create();
+            
             try
             {
-                //create a temp directory for this scope
-                _tempDirectoryService.Create();
-
                 //add stream to temp directory
                 var input = await _tempDirectoryService.AddFile(stream);
 
@@ -39,7 +39,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 //convert video to fast start;
                 var output = await _videoFastStartConverter.Convert(input, cancellationToken);
 
-                //upload fastStartVideo
+                //upload fastStartVideo to blob container
                 var blobName = _blobNameGenerator.Generate();
                 using var fastStartVideo = File.OpenRead(output);
                 await _blobService.UploadAsync(fastStartVideo, containerName, blobName, cancellationToken);
