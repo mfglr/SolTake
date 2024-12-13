@@ -15,6 +15,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFac
             { "en", _subjectEn }
         };
 
+
         private readonly static string _content1Tr = "Merhaba {userName}! SolTake.com' a hoşgeldin!";
         private readonly static string _content1En = "Hi {userName}! Welcom to SolTake.com!";
         private readonly static Dictionary<string, string> _content1s = new()

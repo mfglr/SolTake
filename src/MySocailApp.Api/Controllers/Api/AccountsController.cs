@@ -13,7 +13,6 @@ using MySocailApp.Application.Commands.AccountAggregate.LoginByGoogle;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByPassword;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken;
 using MySocailApp.Application.Commands.AccountAggregate.LogOut;
-using MySocailApp.Application.Commands.AccountAggregate.ResetPassword;
 using MySocailApp.Application.Commands.AccountAggregate.SendEmailConfirmationMail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmailVerificationToken;
@@ -28,7 +27,7 @@ namespace MySocailApp.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    [ServiceFilter(typeof(CheckVersionFilterAttribute))]
+    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     public class AccountsController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
@@ -53,9 +52,6 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task<AccountDto> LoginByGoogle(LoginByGoogleDto request, CancellationToken cancelToken)
             => await _mediator.Send(request, cancelToken);
 
-        [HttpPost]
-        public async Task ResetPassword(ResetPasswordDto request, CancellationToken cancellationToken)
-            => await _mediator.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

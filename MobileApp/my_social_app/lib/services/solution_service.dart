@@ -22,6 +22,7 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
+
   Future<String> _readResponse(HttpClientResponse response) {
     final completer = Completer<String>();
     final contents = StringBuffer();
@@ -65,7 +66,6 @@ class SolutionService{
     );
     return r;
   }
-  
   Future<Solution> create(int questionId, String? content, Iterable<XFile>? images, void Function(double) callback) async {
     var request = await _createSolutionRequest(questionId,content,images,callback);
     var response = await request.close();

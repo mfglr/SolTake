@@ -10,7 +10,7 @@ namespace MySocailApp.Api.Controllers.Api
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckVersionFilterAttribute))]
+    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]
     public class PrivacyPoliciesController(IMediator mediator) : ControllerBase
     {

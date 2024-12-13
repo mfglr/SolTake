@@ -1,16 +1,15 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AccountAggregate.Entities;
 using MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using System.Net.Mail;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.Email
 {
-    public class EmailService(MailMessageFactory messageFactory, SmtpClient smtpClient, EmailConfirmationMailMessageFactory emailConfirmationMailMessageFactory, ResetPasswordMailMessgeFactory resetPasswordMailMessageFactory) : IEmailService
+    public class EmailService(MailMessageFactory messageFactory, SmtpClient smtpClient, EmailConfirmationMailMessageFactory emailConfirmationMailMessageFactory) : IEmailService
     {
+
         private readonly MailMessageFactory _messageFactory = messageFactory;
         private readonly EmailConfirmationMailMessageFactory _emailConfirmationMailMessageFactory = emailConfirmationMailMessageFactory;
-        private readonly ResetPasswordMailMessgeFactory _resetPasswordMailMessageFactory = resetPasswordMailMessageFactory;
 
         private readonly SmtpClient _smtpClient = smtpClient;
 
@@ -28,7 +27,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.Email
                 .SendMailAsync(
                     await _emailConfirmationMailMessageFactory
                         .Create(
-                            language ?? Languages.DefaultLanguage,
+                            language ?? Languages.EN,
                             token,
                             userName,
                             email,
@@ -36,22 +35,6 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.Email
                         ),
                     cancellationToken
                 );
-        }
-
-        public async Task SendPasswordResetMail(string token, Account account, CancellationToken cancellationToken)
-        {
-            //var mailMessage = await _resetPasswordMailMessageFactory
-            //    .Create(
-            //        account.Language,
-            //        token,
-            //        account.
-
-            //    );
-        }
-
-        public Task SendPasswordResetMail(string? language, string token, string email, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
     }
 }
