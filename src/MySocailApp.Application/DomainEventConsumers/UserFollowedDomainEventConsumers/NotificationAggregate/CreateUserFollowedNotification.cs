@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserFollowedDomainEventConsumers.NotificationAggregate
 {

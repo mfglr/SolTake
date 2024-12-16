@@ -5,23 +5,23 @@ using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.PrivacyPolicyAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.RoleAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate.Abstracts;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 using MySocailApp.Domain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
-using MySocailApp.Domain.PrivacyPolicyAggregate.Interfaces;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
-using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
-using MySocailApp.Domain.TopicAggregate.Interfaces;
+using MySocailApp.Domain.TopicAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 using MySocailApp.Infrastructure.AccountAggregate;
-using MySocailApp.Infrastructure.AppUserAggregate;
 using MySocailApp.Infrastructure.AppVersionAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
@@ -37,10 +37,12 @@ using MySocailApp.Infrastructure.NotificationConnectionAggregate;
 using MySocailApp.Infrastructure.PrivacyPolicyAggreagate;
 using MySocailApp.Infrastructure.QueryRepositories;
 using MySocailApp.Infrastructure.QuestionAggregate;
+using MySocailApp.Infrastructure.RoleAggregate;
 using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TermsOfUseAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
+using MySocailApp.Infrastructure.UserAggregate;
 using MySocailApp.Infrastructure.UserConnectionAggregate;
 using System.Net;
 using System.Net.Mail;
@@ -66,6 +68,7 @@ namespace MySocailApp.Infrastructure
                 .AddPrivacyPolicyAggregate()
                 .AddTermsOfUseAggregate()
                 .AddUserConnectionAggregate()
+                .AddRoleAggregate()
                 .AddNotificationConnectionAggregate()
                 .AddAppVersionAggregate();
 
@@ -95,8 +98,8 @@ namespace MySocailApp.Infrastructure
                         };
                     }
                 )
-                .AddScoped<MailMessageFactory>()
-                .AddScoped<EmailConfirmationMailMessageFactory>()
+                .AddScoped<EmailVerificationMailMessageFactory>()
+                .AddScoped<ResetPasswordMailMessgeFactory>()
                 .AddScoped<IEmailService, EmailService>();
         }
         private static IServiceCollection AddBlobService(this IServiceCollection services)
@@ -144,8 +147,7 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IAccountReadRepository, AccountReadRepository>()
-                .AddScoped<IAccountWriteRepository, AccountWriteRepository>()
-                .AddScoped<ITransactionCreator, TransactionCreator>();
+                .AddScoped<IAccountWriteRepository, AccountWriteRepository>();
 
         private static IServiceCollection AddPrivacyPolicyAggregate(this IServiceCollection services)
             => services
@@ -159,8 +161,8 @@ namespace MySocailApp.Infrastructure
         
         private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
             => services
-                .AddScoped<IAppUserWriteRepository, AppUserWriteRepository>()
-                .AddScoped<IAppUserReadRepository, AppUserReadRepository>();
+                .AddScoped<IUserWriteRepository, UserWriteRepository>()
+                .AddScoped<IUserReadRepository, UserReadRepository>();
         
         private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
             => services
@@ -208,6 +210,10 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddScoped<INotificationConnectionReadRepository, NotificationConnectionReadRepository>()
                 .AddScoped<INotificationConnectionWriteRepository, NotificationConnectionWriteRepository>();
+
+        private static IServiceCollection AddRoleAggregate(this IServiceCollection services)
+            => services
+                .AddScoped<IRoleReadRepository, RoleReadRepository>();
 
         private static IServiceCollection AddAppVersionAggregate(this IServiceCollection services)
         {

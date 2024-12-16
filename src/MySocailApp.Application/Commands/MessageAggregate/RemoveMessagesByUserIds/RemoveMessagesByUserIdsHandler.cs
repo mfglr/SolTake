@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.MessageAggregate.RemoveMessagesByUser
             var messages = await _messageWriteRepository.GetMessagesWithRemoverByUserIds(request.UserIds, accountId, cancellationToken);
 
             foreach (var message in messages)
-                await _messageRemover.RemoveAsync(message, accountId);
+                await _messageRemover.RemoveAsync(message, accountId, cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }

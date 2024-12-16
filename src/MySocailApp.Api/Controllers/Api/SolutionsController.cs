@@ -34,7 +34,7 @@ namespace MySocailApp.Api.Controllers.Api
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]
     [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
+    [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class SolutionsController(IMediator mediator) : ControllerBase

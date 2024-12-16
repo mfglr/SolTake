@@ -23,7 +23,7 @@ namespace MySocailApp.Api.Controllers.Api
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]
     [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckEmailConfirmationFilterAttribute))]
+    [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
     public class MessagesController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;

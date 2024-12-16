@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserSearcher
 {
-    public class RemoveUserSearcherHandler(IAppUserWriteRepository userWriteRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<RemoveUserSearcherDto>
+    public class RemoveUserSearcherHandler(IUserWriteRepository userWriteRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<RemoveUserSearcherDto>
     {
-        private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 

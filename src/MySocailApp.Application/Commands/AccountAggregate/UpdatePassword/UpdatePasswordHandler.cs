@@ -1,28 +1,22 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdatePassword
 {
-    public class UpdatePasswordHandler(IAccessTokenReader tokenReader, IMapper mapper, PasswordUpdaterDomainService passwordUpdaterDomainService,IAccountWriteRepository accountWriteRepository) : IRequestHandler<UpdatePasswordDto, AccountDto>
+    public class UpdatePasswordHandler(IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<UpdatePasswordDto>
     {
-        private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IMapper _mapper = mapper;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
-        private readonly PasswordUpdaterDomainService _passwordUpdaterDomainService = passwordUpdaterDomainService;
+        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<AccountDto> Handle(UpdatePasswordDto request, CancellationToken cancellationToken)
+        public async Task Handle(UpdatePasswordDto request, CancellationToken cancellationToken)
         {
-            var accountId = _tokenReader.GetRequiredAccountId();
-            var account =
-                await _accountWriteRepository.GetAccountAsync(accountId, cancellationToken) ??
-                throw new AccountNotFoundException();
-
-            await _passwordUpdaterDomainService.UpdateAsync(account, request.CurrentPassword, request.NewPassword, request.NewPasswordConfirmation);
-            return _mapper.Map<AccountDto>(account);
+            var account = _accountAccessor.Account;
+            var currentPassword = new Password(request.CurrentPassword);
+            var newPassword = new Password(request.NewPassword);
+            var newPasswordConfirm = new Password(request.NewPasswordConfirmation);
+            account.UpdatePassword(currentPassword, newPassword, newPasswordConfirm);
+            await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

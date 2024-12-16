@@ -10,7 +10,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<SolutionUserSaveResponseDto> ToSolutionUserSaveResponseDto(this IQueryable<SolutionUserSave> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     sus => sus.AppUserId,
                     account => account.Id,
                     (sus, account) => new { sus, account.UserName }
@@ -35,7 +35,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             join1.solution.CreatedAt,
                             join1.solution.UpdatedAt,
                             join1.solution.QuestionId,
-                            join1.join0.UserName!,
+                            join1.join0.UserName.Value,
                             join1.solution.AppUserId,
                             join1.solution.Content.Value,
                             join1.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Upvote),

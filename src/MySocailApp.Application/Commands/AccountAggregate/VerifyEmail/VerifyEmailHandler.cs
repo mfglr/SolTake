@@ -1,20 +1,26 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.VerifyEmail
 {
-    public class VerifyEmailHandler(UserManager<Account> userManager, IAccountAccessor accountAccessor) : IRequestHandler<VerifyEmailDto>
+    public class VerifyEmailHandler(IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<VerifyEmailDto>
     {
-        private readonly UserManager<Account> _userManager = userManager;
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(VerifyEmailDto request, CancellationToken cancellationToken)
         {
-            var account = _accountAccessor.Account;
-            await _userManager.ConfirmEmailByEncodedTokenAsync(account, request.Token);
+            try
+            {
+                _accountAccessor.Account.VerifyEmail(request.Token);
+            }
+            catch (InvalidTokenException)
+            {
+                await _unitOfWork.CommitAsync(cancellationToken);
+                throw;
+            }
+            await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

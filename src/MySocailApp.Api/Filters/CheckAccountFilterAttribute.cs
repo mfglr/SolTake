@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Api.Filters
 {
@@ -13,11 +13,9 @@ namespace MySocailApp.Api.Filters
 
         public async override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            var accountId = _accessTokenReader.GetRequiredAccountId();
             _accountAccessor.Account = 
-                await _accountWriteRepository.GetAccountAsync(
-                    _accessTokenReader.GetRequiredAccountId(),
-                    CancellationToken.None
-                ) ??
+                await _accountWriteRepository.GetAccountAsync(accountId,CancellationToken.None) ??
                 throw new AccountNotFoundException();
 
             await next();

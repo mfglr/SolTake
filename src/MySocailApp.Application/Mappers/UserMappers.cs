@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Commands.UserAggregate.AddUserSearcher;
 using MySocailApp.Application.Commands.UserAggregate.Follow;
-using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {

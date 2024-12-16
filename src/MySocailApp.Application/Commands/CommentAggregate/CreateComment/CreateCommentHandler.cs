@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Entities;

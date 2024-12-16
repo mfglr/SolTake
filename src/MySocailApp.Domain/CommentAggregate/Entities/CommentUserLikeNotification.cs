@@ -1,6 +1,4 @@
-﻿using MySocailApp.Domain.AppUserAggregate.Entities;
-
-namespace MySocailApp.Domain.CommentAggregate.Entities
+﻿namespace MySocailApp.Domain.CommentAggregate.Entities
 {
     public class CommentUserLikeNotification(int appUserId)
     {

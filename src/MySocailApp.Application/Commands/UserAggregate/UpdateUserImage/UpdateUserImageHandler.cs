@@ -2,15 +2,15 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.ValueObjects;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateUserImage
 {
-    public class UpdateUserImageHandler(IAppUserWriteRepository appUserRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IImageService imageService) : IRequestHandler<UpdateUserImageDto>
+    public class UpdateUserImageHandler(IUserWriteRepository appUserRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IImageService imageService) : IRequestHandler<UpdateUserImageDto>
     {
         private readonly IImageService _imageService = imageService;
-        private readonly IAppUserWriteRepository _appUserRepository = appUserRepository;
+        private readonly IUserWriteRepository _appUserRepository = appUserRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 

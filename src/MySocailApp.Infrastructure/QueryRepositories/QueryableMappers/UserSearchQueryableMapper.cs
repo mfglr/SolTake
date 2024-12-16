@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -9,13 +9,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<UserSearchResponseDto> ToUserSearchedResponseDto(this IQueryable<UserSearch> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     us => us.SearchedId,
                     account => account.Id,
                     (us, account) => new { us, account.UserName }
                 )
                 .Join(
-                    context.AppUsers,
+                    context.Users,
                     join => join.us.SearchedId,
                     user => user.Id,
                     (join, user) => new UserSearchResponseDto(
@@ -28,7 +28,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName!,
+                            join.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             user.HasImage,

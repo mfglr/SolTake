@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountDomain.AccountAggregate;
 using MySocailApp.Domain.AppVersionAggregate;
 using MySocailApp.Domain.CommentAggregate;
 using MySocailApp.Domain.MessageAggregate;

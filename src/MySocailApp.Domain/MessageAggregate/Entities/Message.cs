@@ -71,10 +71,10 @@ namespace MySocailApp.Domain.MessageAggregate.Entities
             if (removerId != ReceiverId && removerId != SenderId)
                 throw new PermissionDeniedToRemoveMessageException();
             
-            if (_removers.Any(x => x.AppUserId == removerId))
+            if (_removers.Any(x => x.UserId == removerId))
                 return;
 
-            _removers.Add(new MessageUserRemove(removerId));
+            _removers.Add(new(removerId));
         }
     }
 }

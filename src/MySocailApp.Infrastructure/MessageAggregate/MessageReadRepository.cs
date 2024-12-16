@@ -13,6 +13,6 @@ namespace MySocailApp.Infrastructure.MessageAggregate
             => _context.Messages
                 .AsNoTracking()
                 .Include(x => x.Images)
-                .FirstOrDefaultAsync(x => x.Id == id && !x.Removers.Any(x => x.AppUserId == accountId), cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id && !x.Removers.Any(x => x.UserId == accountId), cancellationToken);
     }
 }

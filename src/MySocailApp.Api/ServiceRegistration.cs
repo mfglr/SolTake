@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
-using MySocailApp.Domain.AccountAggregate.Configurations;
-using MySocailApp.Domain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Configurations;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -35,7 +35,7 @@ namespace MySocailApp.Api
                 .AddScoped<CheckAccountFilterAttribute>()
                 .AddScoped<CheckPrivacyPolicyApprovalFilterAttribute>()
                 .AddScoped<CheckTermsOfUseApprovalFilterAttribute>()
-                .AddScoped<CheckEmailConfirmationFilterAttribute>();
+                .AddScoped<CheckEmailVerificationFilterAttribute>();
         }
         public static IServiceCollection AddJWT(this IServiceCollection services)
         {
@@ -77,28 +77,6 @@ namespace MySocailApp.Api
                         ClockSkew = TimeSpan.Zero
                     };
                 });
-            return services;
-        }
-        public static IServiceCollection AddIdentity(this IServiceCollection services)
-        {
-            services
-                .AddIdentity<Account, IdentityRole<int>>(
-                    opt =>
-                    {
-                        opt.Password.RequireNonAlphanumeric = false;
-                        opt.Password.RequireUppercase = false;
-                        opt.Password.RequireLowercase = false;
-                        opt.Password.RequireDigit = false;
-                        opt.Password.RequiredLength = 6;
-
-                        opt.User.AllowedUserNameCharacters = "0123456789abcdefghijklmnopqrstuvwxyz_.";
-
-                        opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
-                        opt.Lockout.MaxFailedAccessAttempts = 5;
-                    }
-                )
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
             return services;
         }
         public static void InitializeDb(this WebApplication app)

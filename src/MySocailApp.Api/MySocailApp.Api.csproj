@@ -35,10 +35,10 @@
     <None Update="FFmpeg\ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MailMessages\EmailConfirmationByToken.html">
+    <None Update="MailMessages\EmailVerification_en.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="MailMessages\EmailConfirmation.html">
+    <None Update="MailMessages\EmailVerification_tr.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Blobs\PrivacyPolicies\privacy_policy_version1_en.html">
@@ -51,6 +51,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Blobs\TermsOfUses\terms_of_use_version1_tr.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MailMessages\ResetPassword_en.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MailMessages\ResetPassword_tr.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

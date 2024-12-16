@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MySocailApp.Domain.AccountDomain.RoleAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.Seeds
 {
-    public class RoleSeed : IEntityTypeConfiguration<IdentityRole<int>>
+    public class RoleSeed : IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<IdentityRole<int>> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasData(
-                new { Id = 1, Name = "user", NormalizedName = "USER" },
-                new { Id = 2, Name = "admin", NormalizedName = "ADMIN" }
+                new { Id = 1, Name = "user" },
+                new { Id = 2, Name = "admin" }
             );
         }
     }

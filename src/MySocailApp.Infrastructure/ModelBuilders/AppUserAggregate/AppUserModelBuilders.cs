@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
 {
-    public class UserModelBuilder : IEntityTypeConfiguration<AppUser>
+    public class UserModelBuilder : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<AppUser> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.Property(e => e.Id).ValueGeneratedNever();
             builder.OwnsOne(x => x.Image);

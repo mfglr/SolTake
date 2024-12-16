@@ -22,153 +22,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "user",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        });
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
             modelBuilder.Entity("MySocailApp.Application.Queries.MessageAggregate.MessageResponseDto", b =>
                 {
                     b.Property<string>("Content")
@@ -211,7 +64,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("MessageResponseDtos");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.Account", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -219,80 +72,22 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsThirdPartyAuthenticated")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Language")
+                    b.Property<string>("SecurityStamp")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.AccountPrivacyPolicy", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.AccountPrivacyPolicy", b =>
                 {
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
@@ -314,7 +109,20 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("AccountPrivacyPolicy");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.AccountTermsOfUse", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.AccountRole", b =>
+                {
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AccountId", "RoleId");
+
+                    b.ToTable("AccountRole");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.AccountTermsOfUse", b =>
                 {
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
@@ -336,7 +144,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("AccountTermsOfUse");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.VerificationToken", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.EmailVerificationToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -353,15 +161,15 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("ExpirationAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte[]>("Hash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
 
                     b.Property<int>("NumberOfFailedAttemps")
                         .HasColumnType("int");
-
-                    b.Property<string>("TokenHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("VerifiedAt")
                         .HasColumnType("datetime2");
@@ -370,33 +178,107 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("VerificationToken");
+                    b.ToTable("EmailVerificationToken");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.PasswordResetToken", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("HasImage")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("ExpirationAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Hash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("NumberOfFailedAttemps")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("PasswordResetToken");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.PrivacyPolicyAggregate.PrivacyPolicy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdminId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BlobNameEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobNameTr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PrivacyPolicies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AdminId = 1,
+                            BlobNameEn = "privacy_policy_version1_en.html",
+                            BlobNameTr = "privacy_policy_version1_tr.html",
+                            CreatedAt = new DateTime(2024, 10, 7, 18, 59, 45, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.RoleAggregate.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.ToTable("AppUsers");
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "user"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "admin"
+                        });
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.Follow", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.TermsOfUseAggregate.TermsOfUse", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -404,63 +286,33 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AdminId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BlobNameEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobNameTr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FollowedId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FollowedId");
+                    b.ToTable("TermsOfUses");
 
-                    b.ToTable("Follows");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.UserFollowNotification", b =>
-                {
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("AppUserId", "FollowerId");
-
-                    b.ToTable("UserFollowNotifications");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.UserSearch", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SearchedId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SearcherId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SearchedId");
-
-                    b.ToTable("UserSearchs");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AdminId = 1,
+                            BlobNameEn = "terms_of_use_version1_en.html",
+                            BlobNameTr = "terms_of_use_version1_tr.html",
+                            CreatedAt = new DateTime(2024, 10, 7, 18, 59, 45, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AppVersionAggregate.Entities.AppVersion", b =>
@@ -735,10 +587,10 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<int>("MessageId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AppUserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("MessageId", "AppUserId");
+                    b.HasKey("MessageId", "UserId");
 
                     b.ToTable("MessageUserRemove");
                 });
@@ -844,43 +696,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NotificationConnections");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.PrivacyPolicyAggregate.PrivacyPolicy", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AdminId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BlobNameEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BlobNameTr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PrivacyPolicies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AdminId = 1,
-                            BlobNameEn = "privacy_policy_version1_en.html",
-                            BlobNameTr = "privacy_policy_version1_tr.html",
-                            CreatedAt = new DateTime(2024, 10, 7, 18, 59, 45, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.Question", b =>
@@ -8338,43 +8153,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.TermsOfUseAggregate.TermsOfUse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AdminId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BlobNameEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BlobNameTr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TermsOfUses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AdminId = 1,
-                            BlobNameEn = "terms_of_use_version1_en.html",
-                            BlobNameTr = "terms_of_use_version1_tr.html",
-                            CreatedAt = new DateTime(2024, 10, 7, 18, 59, 45, 0, DateTimeKind.Unspecified)
-                        });
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.TopicAggregate.Entities.Topic", b =>
                 {
                     b.Property<int>("Id")
@@ -11674,6 +11452,96 @@ namespace MySocailApp.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.Follow", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FollowedId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FollowedId");
+
+                    b.ToTable("Follows");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasImage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.UserFollowNotification", b =>
+                {
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AppUserId", "FollowerId");
+
+                    b.ToTable("UserFollowNotifications");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.UserSearch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SearchedId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SearcherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SearchedId");
+
+                    b.ToTable("UserSearchs");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.UserConnectionAggregate.Entities.UserConnection", b =>
                 {
                     b.Property<int>("Id")
@@ -11696,152 +11564,155 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("UserConnections");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.AccountPrivacyPolicy", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", null)
-                        .WithMany("PrivacyPolicies")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.AccountTermsOfUse", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", null)
-                        .WithMany("TermsOfUses")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.VerificationToken", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.AccountAggregate.Entities.Account", null)
-                        .WithMany("VerificationTokens")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", b =>
-                {
-                    b.OwnsOne("MySocailApp.Domain.AppUserAggregate.ValueObjects.Biography", "Biography", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects.Email", "Email", b1 =>
                         {
-                            b1.Property<int>("AppUserId")
+                            b1.Property<int>("AccountId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.HasKey("AccountId");
+
+                            b1.HasIndex("Value");
+
+                            b1.ToTable("Accounts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AccountId");
+                        });
+
+                    b.OwnsOne("MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects.GoogleAccount", "GoogleAccount", b1 =>
+                        {
+                            b1.Property<int>("AccountId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("UserId")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.HasKey("AccountId");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("Accounts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AccountId");
+                        });
+
+                    b.OwnsOne("MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects.Language", "Language", b1 =>
+                        {
+                            b1.Property<int>("AccountId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("AppUserId");
+                            b1.HasKey("AccountId");
 
-                            b1.ToTable("AppUsers");
+                            b1.ToTable("Accounts");
 
                             b1.WithOwner()
-                                .HasForeignKey("AppUserId");
+                                .HasForeignKey("AccountId");
                         });
 
-                    b.OwnsOne("MySocailApp.Domain.AppUserAggregate.ValueObjects.ProfileImage", "Image", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects.Password", "Password", b1 =>
                         {
-                            b1.Property<int>("AppUserId")
+                            b1.Property<int>("AccountId")
                                 .HasColumnType("int");
 
-                            b1.Property<string>("BlobName")
+                            b1.Property<byte[]>("Hash")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("varbinary(max)");
 
-                            b1.Property<DateTime>("CreatedAt")
-                                .HasColumnType("datetime2");
+                            b1.HasKey("AccountId");
 
-                            b1.HasKey("AppUserId");
-
-                            b1.ToTable("AppUsers");
+                            b1.ToTable("Accounts");
 
                             b1.WithOwner()
-                                .HasForeignKey("AppUserId");
+                                .HasForeignKey("AccountId");
                         });
 
-                    b.Navigation("Biography")
+                    b.OwnsOne("MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects.UserName", "UserName", b1 =>
+                        {
+                            b1.Property<int>("AccountId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.HasKey("AccountId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
+
+                            b1.ToTable("Accounts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AccountId");
+                        });
+
+                    b.Navigation("Email")
                         .IsRequired();
 
-                    b.Navigation("Image");
+                    b.Navigation("GoogleAccount");
+
+                    b.Navigation("Language")
+                        .IsRequired();
+
+                    b.Navigation("Password");
+
+                    b.Navigation("UserName")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.Follow", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.AccountPrivacyPolicy", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("FollowedId")
+                    b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
+                        .WithMany("PrivacyPolicies")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.UserFollowNotification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.AccountRole", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", null)
-                        .WithMany("UserFollowNotifications")
-                        .HasForeignKey("AppUserId")
+                    b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.UserSearch", b =>
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.AccountTermsOfUse", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", null)
-                        .WithMany("Searchers")
-                        .HasForeignKey("SearchedId")
+                    b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
+                        .WithMany("TermsOfUses")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.EmailVerificationToken", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
+                        .WithMany("VerificationTokens")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.PasswordResetToken", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
+                        .WithMany("PasswordResestTokens")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -12140,16 +12011,6 @@ namespace MySocailApp.Infrastructure.Migrations
                             b1.Property<double>("Duration")
                                 .HasColumnType("float");
 
-                            b1.Property<string>("FrameBlobName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<float>("FrameHeight")
-                                .HasColumnType("real");
-
-                            b1.Property<float>("FrameWidth")
-                                .HasColumnType("real");
-
                             b1.Property<long>("Length")
                                 .HasColumnType("bigint");
 
@@ -12212,22 +12073,89 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.AccountAggregate.Entities.Account", b =>
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.Follow", b =>
                 {
+                    b.HasOne("MySocailApp.Domain.UserAggregate.Entities.User", null)
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.User", b =>
+                {
+                    b.OwnsOne("MySocailApp.Domain.UserAggregate.ValueObjects.Biography", "Biography", b1 =>
+                        {
+                            b1.Property<int>("UserId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("MySocailApp.Domain.UserAggregate.ValueObjects.ProfileImage", "Image", b1 =>
+                        {
+                            b1.Property<int>("UserId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("BlobName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Biography")
+                        .IsRequired();
+
+                    b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.UserFollowNotification", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.UserAggregate.Entities.User", null)
+                        .WithMany("UserFollowNotifications")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.UserSearch", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.UserAggregate.Entities.User", null)
+                        .WithMany("Searchers")
+                        .HasForeignKey("SearchedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", b =>
+                {
+                    b.Navigation("PasswordResestTokens");
+
                     b.Navigation("PrivacyPolicies");
+
+                    b.Navigation("Roles");
 
                     b.Navigation("TermsOfUses");
 
                     b.Navigation("VerificationTokens");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.AppUserAggregate.Entities.AppUser", b =>
-                {
-                    b.Navigation("Followers");
-
-                    b.Navigation("Searchers");
-
-                    b.Navigation("UserFollowNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.Comment", b =>
@@ -12275,6 +12203,15 @@ namespace MySocailApp.Infrastructure.Migrations
             modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.Subject", b =>
                 {
                     b.Navigation("Topics");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.User", b =>
+                {
+                    b.Navigation("Followers");
+
+                    b.Navigation("Searchers");
+
+                    b.Navigation("UserFollowNotifications");
                 });
 #pragma warning restore 612, 618
         }

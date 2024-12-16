@@ -22,14 +22,11 @@ namespace MySocailApp.Application.Extentions
                 throw new NotAuthorizedException();
         }
 
-        public static string GetLanguage(this HttpContext? context)
+        public static string? GetLanguage(this HttpContext? context)
         {
-            if (context == null) return Languages.DefaultLanguage;
-            var culture = context!.Request.Headers.AcceptLanguage.FirstOrDefault();
-            return Languages.GetLanguage(culture);
+            ThrowExceptionIfContextIsNull(context);
+            return context!.Request.Headers.AcceptLanguage.FirstOrDefault();
         }
-
-        
 
         public static async Task WriteAppExceptionAsync(this HttpContext? context, string culture, AppException ex)
         {

@@ -1,22 +1,22 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class AppUserQueryableMappers
     {
-        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<AppUser> query, AppDbContext context, int accountId)
+        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<User> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     user => user.Id,
                     account => account.Id,
                     (user,account) => new AppUserResponseDto(
                         user.Id,
                         user.CreatedAt,
                         user.UpdatedAt,
-                        account.UserName!,
+                        account.UserName.Value,
                         user.Name,
                         user.Biography.Value,
                         user.HasImage,

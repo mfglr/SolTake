@@ -3,7 +3,7 @@ using MySocailApp.Api;
 using MySocailApp.Api.Middlewares;
 using MySocailApp.Application;
 using MySocailApp.Application.Hubs;
-using MySocailApp.Domain.AccountAggregate;
+using MySocailApp.Domain.AccountDomain.AccountAggregate;
 using MySocailApp.Domain.AppVersionAggregate;
 using MySocailApp.Domain.CommentAggregate;
 using MySocailApp.Domain.MessageAggregate;
@@ -26,7 +26,6 @@ builder.Services
     .AddConfigurations()
     .AddFilters()
     .AddJWT()
-    .AddIdentity()
     .AddHttpContextAccessor()
     .AddApplicationServices()
     .AddInfrastructureServices()

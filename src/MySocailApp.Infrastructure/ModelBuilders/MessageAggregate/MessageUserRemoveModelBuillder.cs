@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
     {
         public void Configure(EntityTypeBuilder<MessageUserRemove> builder)
         {
-            builder.HasKey(x => new {x.MessageId,x.AppUserId});
+            builder.HasKey(x => new {x.MessageId,x.UserId});
         }
     }
 }

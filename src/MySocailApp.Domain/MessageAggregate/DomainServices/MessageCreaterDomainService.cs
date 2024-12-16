@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.AccountAggregate.Entities;
+﻿using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageAggregate.Exceptions;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Domain.MessageAggregate.DomainServices
 {
-    public class MessageCreaterDomainService(UserManager<Account> userManager, IMessageWriteRepository messageWriteRepository)
+    public class MessageCreaterDomainService(IMessageWriteRepository messageWriteRepository, IAccountReadRepository accountReadRepository)
     {
-        private readonly UserManager<Account> _userManager = userManager;
         private readonly IMessageWriteRepository _messageWriteRepository = messageWriteRepository;
+        private readonly IAccountReadRepository _accountReadRepository = accountReadRepository;
 
-        public async Task CreateAsync(Message message,CancellationToken cancellationToken)
+        public async Task CreateAsync(Message message, CancellationToken cancellationToken)
         {
-            if (!await _userManager.Users.AnyAsync(x => x.Id == message.ReceiverId))
+            if (!await _accountReadRepository.Exist(message.ReceiverId,cancellationToken))
                 throw new ReceiverNotFoundException();
             message.Create();
             await _messageWriteRepository.CreateAsync(message, cancellationToken);

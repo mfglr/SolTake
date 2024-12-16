@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetUserImageById
 {
-    public class GetUserImageByIdHandler(IAppUserReadRepository repository, IBlobService blobService) : IRequestHandler<GetUserImageById, Stream>
+    public class GetUserImageByIdHandler(IUserReadRepository repository, IBlobService blobService) : IRequestHandler<GetUserImageById, Stream>
     {
-        private readonly IAppUserReadRepository _repository = repository;
+        private readonly IUserReadRepository _repository = repository;
         private readonly IBlobService _blobService = blobService;
 
         public async Task<Stream> Handle(GetUserImageById request, CancellationToken cancellationToken)

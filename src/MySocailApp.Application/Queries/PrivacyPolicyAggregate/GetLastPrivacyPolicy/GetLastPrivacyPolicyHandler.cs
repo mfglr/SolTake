@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.PrivacyPolicyAggregate.Interfaces;
+using MySocailApp.Domain.AccountDomain.PrivacyPolicyAggregate.Abstracts;
 
 namespace MySocailApp.Application.Queries.PrivacyPolicyAggregate.GetLastPrivacyPolicy
 {
@@ -13,7 +13,7 @@ namespace MySocailApp.Application.Queries.PrivacyPolicyAggregate.GetLastPrivacyP
 
         public async Task<Stream> Handle(GetLastPrivacyPolicyDto request, CancellationToken cancellationToken)
         {
-            var language = Languages.GetLanguage(request.Language);
+            var language = ""; //var language = Languages.GetLanguage(request.Language);
             var policy = await _privacyPolicyReadRepository.GetLastPolicyAsync(cancellationToken);
             string blobName;
             if (language == Languages.TR)

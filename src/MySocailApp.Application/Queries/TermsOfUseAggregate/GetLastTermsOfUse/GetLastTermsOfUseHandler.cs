@@ -2,7 +2,8 @@
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
+using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate.Abstracts;
 
 namespace MySocailApp.Application.Queries.TermsOfUseAggregate.GetLastTermsOfUse
 {
@@ -13,10 +14,10 @@ namespace MySocailApp.Application.Queries.TermsOfUseAggregate.GetLastTermsOfUse
 
         public async Task<Stream> Handle(GetLastTermsOfUseDto request, CancellationToken cancellationToken)
         {
-            var language = Languages.GetLanguage(request.Language);
+            var language = new Language(request.Language);
             var termsOfUse = await _termsOfUserReadRepository.GetLastTermsOfUseAsync(cancellationToken);
             string blobName;
-            if (language == Languages.TR)
+            if (language.Value == Languages.TR)
                 blobName = termsOfUse.BlobNameTr;
             else
                 blobName = termsOfUse.BlobNameEn;

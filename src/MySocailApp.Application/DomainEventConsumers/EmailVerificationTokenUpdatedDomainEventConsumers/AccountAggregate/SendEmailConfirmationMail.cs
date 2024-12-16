@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AccountAggregate.DomainEvents;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.EmailVerificationTokenUpdatedDomainEventConsumers.AccountAggregate
 {
@@ -10,15 +10,8 @@ namespace MySocailApp.Application.DomainEventConsumers.EmailVerificationTokenUpd
 
         public async Task Handle(EmailVerificationTokenUpdatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var verificationToken = notification.Account.VerificationTokens.OrderByDescending(x => x.Id).First();
-            await _emailService
-                .SendEmailConfirmationByTokenMail(
-                    notification.Account.Language,
-                    verificationToken.Token,
-                    notification.Account.UserName!,
-                    notification.Account.Email!,
-                    cancellationToken
-                );
+            var a = notification.Account;
+            await _emailService.SendEmailVerificationMail(a.Language.Value, a.VerificationToken.Value,a.UserName.Value,a.Email.Value,cancellationToken);
         }
     }
 }

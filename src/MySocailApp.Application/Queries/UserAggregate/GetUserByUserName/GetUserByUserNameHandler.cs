@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetUserByUserName
 {

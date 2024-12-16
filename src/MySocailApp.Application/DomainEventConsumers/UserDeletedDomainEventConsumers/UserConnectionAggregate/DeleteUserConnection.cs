@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.DomainEvents;
+using MySocailApp.Domain.UserAggregate.DomainEvents;
 using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserConnectionAggregate

@@ -10,7 +10,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
     {
         public static IQueryable<QuestionUserSaveResponseDto> ToQuestionUserSaveResponseDto(this IQueryable<QuestionUserSave> query, AppDbContext context, int accountId) =>
             query
-                .Join(context.Users, qus => qus.AppUserId, account => account.Id, (qus, account) => new { qus, account.UserName })
+                .Join(context.Accounts, qus => qus.AppUserId, account => account.Id, (qus, account) => new { qus, account.UserName })
                 .Join(
                     context.Questions,
                     join => join.qus.QuestionId,
@@ -29,7 +29,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 : QuestionState.Unsolved,
                             question.AppUserId == accountId,
                             question.AppUserId,
-                            join.UserName!,
+                            join.UserName.Value,
                             question.Content.Value,
                             question.Likes.Any(x => x.AppUserId == accountId),
                             question.Savers.Any(x => x.AppUserId == accountId),

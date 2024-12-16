@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.ValueObjects;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateBiography
 {
-    public class UpdateBiographyHandler(IAppUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<UpdateBiographyDto>
+    public class UpdateBiographyHandler(IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<UpdateBiographyDto>
     {
-        private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 

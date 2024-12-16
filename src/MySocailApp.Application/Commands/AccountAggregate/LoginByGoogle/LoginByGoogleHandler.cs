@@ -1,35 +1,45 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.Extentions;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AccountAggregate.ValueObjects;
+using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByGoogle
 {
-    public class LoginByGoogleHandler(GoogleTokenValidatorDomainService googleTokenReader, IMapper mapper, ThirdPartyAuthenticatorDomainService thirdPartyAuthenticator, UserManager<Account> userManager, AccountCreatorByThirdPartyDomainService accountCreator, IHttpContextAccessor httpContextAccessor) : IRequestHandler<LoginByGoogleDto, AccountDto>
+    public class LoginByGoogleHandler(GoogleTokenValidatorDomainService googleTokenReader, IMapper mapper, IHttpContextAccessor httpContextAccessor, IAccountWriteRepository accountWriteRepository, AccountCreatorDomainService accountCreatorDomainService, AuthenticatorDomainService authenticatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByGoogleDto, AccountDto>
     {
         private readonly GoogleTokenValidatorDomainService _googleTokenReader = googleTokenReader;
-        private readonly ThirdPartyAuthenticatorDomainService _thirdPartyAuthenticator = thirdPartyAuthenticator;
-        private readonly AccountCreatorByThirdPartyDomainService _accountCreator = accountCreator;
-        private readonly UserManager<Account> _userManager = userManager;
+        private readonly AccountCreatorDomainService _accountCreatorDomainService = accountCreatorDomainService;
+        private readonly AuthenticatorDomainService _authenticatorDomainService = authenticatorDomainService;
+        private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
+        private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;
         private readonly IMapper _mapper = mapper;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
 
         public async Task<AccountDto> Handle(LoginByGoogleDto request, CancellationToken cancellationToken)
         {
-            var googleUser = await _googleTokenReader.ValidateAsync(request.AccessToken, cancellationToken);
-            var account = await _userManager.FindByLoginAsync(LoginProvider.Google, googleUser.UserId);
+            var googleAccount = await _googleTokenReader.ValidateAsync(request.AccessToken, cancellationToken);
+            var account = await _accountWriteRepository.GetAccountByGoogleAccount(googleAccount, cancellationToken);
 
             if (account != null)
-                await _thirdPartyAuthenticator.LoginAsync(account, cancellationToken);
+                await _authenticatorDomainService.LoginAsync(account, cancellationToken);
             else
             {
-                account = new Account(googleUser.Email, true, _httpContextAccessor.HttpContext.GetLanguage());
-                await _accountCreator.CreateAsync(account, LoginProvider.Google, googleUser.UserId, cancellationToken);
+                var language = new Language(_httpContextAccessor.HttpContext.GetLanguage());
+                account = new Account(googleAccount, language);
+                await _accountCreatorDomainService.CreateAsync(account, cancellationToken);
             }
+
+            await _unitOfWork.CommitAsync(cancellationToken);
+
+            await _accessTokenSetterDomainService.SetAsync(account, cancellationToken);
+            _refreshTokenSetterDomainService.Set(account);
 
             return _mapper.Map<AccountDto>(account);
         }

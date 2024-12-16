@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.Follow
 {
-    public class FollowHandler(IAppUserWriteRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<FollowDto, FollowCommandResponseDto>
+    public class FollowHandler(IUserWriteRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<FollowDto, FollowCommandResponseDto>
     {
-        private readonly IAppUserWriteRepository _userRepository = userRepository;
+        private readonly IUserWriteRepository _userRepository = userRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;

@@ -9,14 +9,14 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<CommentResponseDto> ToCommentResponseDto(this IQueryable<Comment> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     comment => comment.AppUserId,
                     account => account.Id,
                     (comment, account) => new CommentResponseDto(
                         comment.Id,
                         comment.CreatedAt,
                         comment.UpdatedAt,
-                        account.UserName!,
+                        account.UserName.Value,
                         comment.AppUserId,
                         comment.IsEdited,
                         comment.Content.Value,

@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices
 {

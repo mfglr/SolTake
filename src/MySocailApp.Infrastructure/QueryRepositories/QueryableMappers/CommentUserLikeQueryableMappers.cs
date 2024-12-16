@@ -10,13 +10,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<CommentUserLikeResponseDto> ToCommentUserLikeResponseDto(this IQueryable<CommentUserLike> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     cul => cul.AppUserId,
                     account => account.Id,
                     (cul,account) => new { cul.Id, cul.CreatedAt, cul.CommentId, cul.AppUserId, account.UserName }
                 )
                 .Join(
-                    context.AppUsers,
+                    context.Users,
                     join => join.AppUserId,
                     user => user.Id,
                     (join,user) => new CommentUserLikeResponseDto(
@@ -28,7 +28,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName!,
+                            join.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             user.HasImage,

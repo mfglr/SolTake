@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AccountAggregate.DomainEvents;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.DomainEvents;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainEvents;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.AccountDeletedDomainEventConsumers.UserAggregate
 {
-    public class DeleteUser(IAppUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<AccountDeletedDomainEvent>
+    public class DeleteUser(IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<AccountDeletedDomainEvent>
     {
-        private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IPublisher _publisher = publisher;
 

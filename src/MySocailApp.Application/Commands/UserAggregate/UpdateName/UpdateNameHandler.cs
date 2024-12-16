@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdateName
 {
-    public class UpdateNameHandler(IAppUserWriteRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<UpdateNameDto>
+    public class UpdateNameHandler(IUserWriteRepository userRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<UpdateNameDto>
     {
-        private readonly IAppUserWriteRepository _userRepository = userRepository;
+        private readonly IUserWriteRepository _userRepository = userRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 

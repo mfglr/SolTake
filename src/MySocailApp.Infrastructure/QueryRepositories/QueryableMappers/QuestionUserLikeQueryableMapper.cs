@@ -10,13 +10,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<QuestionUserLikeResponseDto> ToQuestionUserLikeResponseDto(this IQueryable<QuestionUserLike> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     qul => qul.AppUserId,
                     account => account.Id,
                     (qul, account) => new { qul, account.UserName }
                 )
                 .Join(
-                    context.AppUsers,
+                    context.Users,
                     join => join.qul.AppUserId,
                     user => user.Id,
                     (join, user) => new QuestionUserLikeResponseDto(
@@ -28,7 +28,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName!,
+                            join.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             user.HasImage,

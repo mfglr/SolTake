@@ -1,40 +1,26 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Core;
 using MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using System.Net.Mail;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.Email
 {
-    public class EmailService(MailMessageFactory messageFactory, SmtpClient smtpClient, EmailConfirmationMailMessageFactory emailConfirmationMailMessageFactory) : IEmailService
+    public class EmailService(SmtpClient smtpClient, EmailVerificationMailMessageFactory emailVerificationMailMessageFactory, ResetPasswordMailMessgeFactory resetPasswordMailMessgeFactory) : IEmailService
     {
-
-        private readonly MailMessageFactory _messageFactory = messageFactory;
-        private readonly EmailConfirmationMailMessageFactory _emailConfirmationMailMessageFactory = emailConfirmationMailMessageFactory;
+        private readonly EmailVerificationMailMessageFactory _emailVerificationMailMessageFactory = emailVerificationMailMessageFactory;
+        private readonly ResetPasswordMailMessgeFactory _resetPasswordMailMessgeFactory = resetPasswordMailMessgeFactory;
 
         private readonly SmtpClient _smtpClient = smtpClient;
 
-        public async Task SendEmailConfirmationMail(
-            string token, int id, string userName, string email, CancellationToken cancellationToken = default
-        )
+        public async Task SendEmailVerificationMail(string language, string token, string userName, string email, CancellationToken cancellationToken)
         {
-            var mailMessagge = await _messageFactory.CreateEmailConfirmationMailMessageAsync(token, id, userName, email, cancellationToken);
-            await _smtpClient.SendMailAsync(mailMessagge, cancellationToken);
+            var mailMessage = await _emailVerificationMailMessageFactory.Create(language, token, userName, email, cancellationToken);
+            await _smtpClient.SendMailAsync(mailMessage, cancellationToken);
         }
 
-        public async Task SendEmailConfirmationByTokenMail(string? language, string token, string userName, string email, CancellationToken cancellationToken)
+        public async Task SendResetPasswordMailMessage(string language, string token, string userName, string email, CancellationToken cancellationToken)
         {
-            await _smtpClient
-                .SendMailAsync(
-                    await _emailConfirmationMailMessageFactory
-                        .Create(
-                            language ?? Languages.EN,
-                            token,
-                            userName,
-                            email,
-                            cancellationToken
-                        ),
-                    cancellationToken
-                );
+            var mailMessage = await _resetPasswordMailMessgeFactory.Create(language,token, userName, email, cancellationToken);
+            await _smtpClient.SendMailAsync(mailMessage, cancellationToken);
         }
     }
 }

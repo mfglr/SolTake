@@ -4,8 +4,8 @@ using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SubjectAggregate.Exceptions;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
+using MySocailApp.Domain.TopicAggregate.Abstracts;
 using MySocailApp.Domain.TopicAggregate.Entities;
-using MySocailApp.Domain.TopicAggregate.Interfaces;
 
 namespace MySocailApp.Domain.QuestionAggregate.DomainServices
 {

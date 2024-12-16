@@ -1,28 +1,19 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmail
 {
-    public class UpdateEmailHandler(IMapper mapper, IAccessTokenReader tokenReader, EmailUpdaterDomainService emailUpdater, IAccountWriteRepository accountWriteRepository) : IRequestHandler<UpdateEmailDto, AccountDto>
+    public class UpdateEmailHandler(EmailUpdaterDomainService emailUpdater, IUnitOfWork unitOfWork, IAccountAccessor accountAccessor) : IRequestHandler<UpdateEmailDto>
     {
         private readonly EmailUpdaterDomainService _emailUpdater = emailUpdater;
-        private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IMapper _mapper = mapper;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IAccountAccessor _accountAccessor = accountAccessor;
 
-        public async Task<AccountDto> Handle(UpdateEmailDto request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateEmailDto request, CancellationToken cancellationToken)
         {
-            var accountId = _tokenReader.GetRequiredAccountId();
-            var account =
-                await _accountWriteRepository.GetAccountAsync(accountId, cancellationToken) ??
-                throw new AccountNotFoundException();
-
-            await _emailUpdater.UpdateAsync(account, request.Email);
-            return _mapper.Map<AccountDto>(account);
+            await _emailUpdater.UpdateAsync(_accountAccessor.Account, request.Email, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

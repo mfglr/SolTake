@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -9,13 +9,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<FollowResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     follow => follow.FollowerId,
                     account => account.Id,
                     (follow, account) => new { follow, account.UserName }
                 )
                 .Join(
-                    context.AppUsers,
+                    context.Users,
                     join => join.follow.FollowerId,
                     user => user.Id,
                     (join, user) => new FollowResponseDto(
@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName!,
+                            join.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             user.HasImage,
@@ -43,13 +43,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<FollowResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     follow => follow.FollowedId,
                     account => account.Id,
                     (follow, account) => new { follow, account.UserName }
                 )
                 .Join(
-                    context.AppUsers,
+                    context.Users,
                     join => join.follow.FollowedId,
                     user => user.Id,
                     (join,user) => new FollowResponseDto(
@@ -62,7 +62,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName!,
+                            join.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             user.HasImage,

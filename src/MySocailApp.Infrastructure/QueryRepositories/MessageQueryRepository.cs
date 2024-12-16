@@ -28,7 +28,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                             (x.ReceiverId == userId && x.SenderId == accountId) || 
                             (x.SenderId == userId && x.ReceiverId == accountId)
                         ) &&
-                        !x.Removers.Any(x => x.AppUserId == accountId)
+                        !x.Removers.Any(x => x.UserId == accountId)
                 )
                 .ToPage(page)
                 .ToMessageResponseDto(_context, accountId)
@@ -46,7 +46,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                     x => 
                         x.ReceiverId == accountId && 
                         x.Viewers.Count == 0 &&
-                        !x.Removers.Any(x => x.AppUserId == accountId)
+                        !x.Removers.Any(x => x.UserId == accountId)
                 )
                 .ToMessageResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);

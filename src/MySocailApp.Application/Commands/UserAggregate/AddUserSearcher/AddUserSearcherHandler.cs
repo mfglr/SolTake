@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AppUserAggregate.Abstracts;
-using MySocailApp.Domain.AppUserAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.AddUserSearcher
 {
-    public class AddUserSearcherHandler(IAppUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IMapper mapper) : IRequestHandler<AddUserSearcherDto, AddUserSearcherCommandResponseDto>
+    public class AddUserSearcherHandler(IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IMapper mapper) : IRequestHandler<AddUserSearcherDto, AddUserSearcherCommandResponseDto>
     {
-        private readonly IAppUserWriteRepository _userWriteRepository = userWriteRepository;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IMapper _mapper = mapper;

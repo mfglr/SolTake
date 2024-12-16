@@ -1,28 +1,23 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.DomainEvents;
-using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.DeleteAccount
 {
-    public class DeleteAccountHandler(UserManager<Account> userManager, IAccessTokenReader tokenReader, IPublisher publisher) : IRequestHandler<DeleteAccountDto>
+    public class DeleteAccountHandler(IPublisher publisher, IAccountAccessor accountAccessor, IAccountWriteRepository accountWriteRepository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteAccountDto>
     {
-        private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly UserManager<Account> _userManager = userManager;
         private readonly IPublisher _publisher = publisher;
+        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(DeleteAccountDto request, CancellationToken cancellationToken)
         {
-            var accountId = _tokenReader.GetRequiredAccountId();
-            var account =
-                await _userManager.FindByIdAsync(accountId.ToString()) ??
-                throw new AccountNotFoundException();
-
-            await _userManager.DeleteAsync(account);
-
-            await _publisher.Publish(new AccountDeletedDomainEvent(account));
+            _accountWriteRepository.Delete(_accountAccessor.Account);
+            await _unitOfWork.CommitAsync(cancellationToken);
+            
+            await _publisher.Publish(new AccountDeletedDomainEvent(_accountAccessor.Account), cancellationToken);
         }
     }
 }

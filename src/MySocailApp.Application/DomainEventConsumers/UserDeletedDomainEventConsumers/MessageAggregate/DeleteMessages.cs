@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AppUserAggregate.DomainEvents;
 using MySocailApp.Domain.MessageAggregate.DomainEvents;
 using MySocailApp.Domain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.MessageAggregate
 {

@@ -1,30 +1,34 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Application.Queries.MessageAggregate;
-using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AppUserAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.PrivacyPolicyAggregate;
+using MySocailApp.Domain.AccountDomain.RoleAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate;
 using MySocailApp.Domain.AppVersionAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
 using MySocailApp.Domain.MessageAggregate.Entities;
 using MySocailApp.Domain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
-using MySocailApp.Domain.PrivacyPolicyAggregate;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
-using MySocailApp.Domain.TermsOfUseAggregate;
 using MySocailApp.Domain.TopicAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Domain.UserConnectionAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<Account,IdentityRole<int>,int>(options)
+    public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
-        public DbSet<AppUser> AppUsers { get; private set; }
+        public DbSet<Account> Accounts { get; private set; }
+        public DbSet<Role> Roles { get; private set; }
+        public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
+        public DbSet<TermsOfUse> TermsOfUses { get; private set; }
+
+        public DbSet<User> Users { get; private set; }
         public DbSet<UserSearch> UserSearchs { get; private set; }
         public DbSet<Follow> Follows { get; private set; }
         public DbSet<UserFollowNotification> UserFollowNotifications { get; private set; }
@@ -58,9 +62,6 @@ namespace MySocailApp.Infrastructure.DbContexts
 
         public DbSet<Message> Messages { get; private set; }
         public DbSet<MessageResponseDto> MessageResponseDtos { get; private set; }
-
-        public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
-        public DbSet<TermsOfUse> TermsOfUses { get; private set; }
 
         public DbSet<AppVersion> AppVersions { get; private set; }
 

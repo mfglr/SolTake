@@ -1,28 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountAggregate.Entities;
-using MySocailApp.Domain.AccountAggregate.Exceptions;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
 {
-    public class UpdateUserNamehandler(IAccessTokenReader tokenReader, UserNameUpdaterDomainService accountManager, UserManager<Account> userManager) : IRequestHandler<UpdateUserNameDto>
+    public class UpdateUserNamehandler(UserNameUpdaterDomainService userNameUpdater, IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<UpdateUserNameDto>
     {
-        private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly UserManager<Account> _userManager = userManager;
-        private readonly UserNameUpdaterDomainService _accountManager = accountManager;
+        private readonly UserNameUpdaterDomainService _userNameUpdater = userNameUpdater;
+        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(UpdateUserNameDto request, CancellationToken cancellationToken)
         {
-            var accountId = _tokenReader.GetRequiredAccountId();
-            var account =
-                await _userManager.Users.FirstOrDefaultAsync(x => x.Id == accountId, cancellationToken) ??
-                throw new AccountNotFoundException();
-
-            await _accountManager.UpdateAsync(account, request.UserName);
+            var userName = new UserName(request.UserName);
+            await _userNameUpdater.UpdateAsync(_accountAccessor.Account, userName,  cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

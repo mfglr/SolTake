@@ -1,16 +1,18 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
-using MySocailApp.Domain.AccountAggregate.Entities;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.UserAggregate.IsUserNameExist
 {
-    public class IsUserNameExistHandler(UserManager<Account> userManager) : IRequestHandler<IsUserNameExistDto, bool>
+    public class IsUserNameExistHandler(IAccountReadRepository accountReadRepository) : IRequestHandler<IsUserNameExistDto, bool>
     {
-        private readonly UserManager<Account> _userManager = userManager;
+        private readonly IAccountReadRepository _accountReadRepository = accountReadRepository;
 
-        public Task<bool> Handle(IsUserNameExistDto request, CancellationToken cancellationToken)
-            => _userManager.Users.AnyAsync(x => x.UserName!.ToLower() == request.UserName.ToLower(),cancellationToken);
+        public async Task<bool> Handle(IsUserNameExistDto request, CancellationToken cancellationToken)
+        {
+            var userName = new UserName(request.UserName);
+            return await _accountReadRepository.UserNameExist(userName, cancellationToken);
+        }
     }
 }

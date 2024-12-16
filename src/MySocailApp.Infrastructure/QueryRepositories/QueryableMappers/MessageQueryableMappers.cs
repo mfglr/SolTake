@@ -10,13 +10,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<MessageResponseDto> ToMessageResponseDto(this IQueryable<Message> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     message => message.ReceiverId,
                     account => account.Id,
-                    (message,account) => new { message, ReceiverUserName = account.UserName! }
+                    (message,account) => new { message, ReceiverUserName = account.UserName }
                 )
                 .Join(
-                    context.Users,
+                    context.Accounts,
                     join => join.message.SenderId,
                     account => account.Id,
                     (join,account) => new MessageResponseDto(
@@ -24,7 +24,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.message.CreatedAt,
                         join.message.UpdatedAt,
                         join.message.SenderId == accountId,
-                        join.message.SenderId == accountId ? join.ReceiverUserName : account.UserName!,
+                        join.message.SenderId == accountId ? join.ReceiverUserName.Value : account.UserName.Value,
                         join.message.SenderId == accountId ? join.message.ReceiverId : join.message.SenderId,
                         join.message.SenderId,
                         join.message.ReceiverId,

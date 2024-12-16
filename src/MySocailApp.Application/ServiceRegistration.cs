@@ -14,7 +14,7 @@ namespace MySocailApp.Application
             return services
                 .AddAutoMapper(assembly)
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(DomainEventsPublicationPipelineBehaviour<,>));
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(AppPipelineBehaviour<,>));
         }
     }
 }

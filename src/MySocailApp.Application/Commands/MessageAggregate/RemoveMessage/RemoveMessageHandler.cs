@@ -20,7 +20,7 @@ namespace MySocailApp.Application.Commands.MessageAggregate.RemoveMessage
                 throw new MessageNotFoundException();
             
             var removerId = _accessTokenReader.GetRequiredAccountId();
-            await _messageRemover.RemoveAsync(message, removerId);
+            await _messageRemover.RemoveAsync(message, removerId,cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }
