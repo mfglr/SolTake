@@ -1,5 +1,5 @@
 enum ActiveAccountPage {
   loginPage,
   registerPage,
-  appLodingPage
+  appLodingPage,
 }

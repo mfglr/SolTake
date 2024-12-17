@@ -12,7 +12,7 @@ AccountState _$AccountStateFromJson(Map<String, dynamic> json) => AccountState(
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      email: json['email'] as String?,
+      email: json['email'] as String,
       userName: json['userName'] as String,
       isEmailVerified: json['isEmailVerified'] as bool,
       language: json['language'] as String,

@@ -12,13 +12,13 @@ import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/account/application_loading_page/application_loading_page.dart';
-import 'package:my_social_app/views/account/approve_privacy_policy_page/approve_privacy_policy_page.dart';
-import 'package:my_social_app/views/account/approve_terms_of_use_page/approve_terms_of_use_page.dart';
-import 'package:my_social_app/views/account/register_page/register_page.dart';
-import 'package:my_social_app/views/account/login_page/login_page.dart';
+import 'package:my_social_app/views/account/pages/application_loading_page.dart';
+import 'package:my_social_app/views/account/pages/approve_privacy_policy_page.dart';
+import 'package:my_social_app/views/account/pages/approve_terms_of_use_page.dart';
+import 'package:my_social_app/views/account/pages/register_page.dart';
+import 'package:my_social_app/views/account/pages/login_page.dart';
 import 'package:my_social_app/views/root_view.dart';
-import 'package:my_social_app/views/account/verify_email_page.dart/verify_email_page.dart';
+import 'package:my_social_app/views/account/pages/verify_email_page.dart';
 import 'package:my_social_app/views/take_image_page/take_image_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -131,9 +131,9 @@ class _MainViewState extends State<MainView> {
                 if(widget.account == null){
                   return StoreConnector<AppState,ActiveAccountPage>(
                     converter: (store) => store.state.activeAccountPage,
-                    builder: (context,activeLoginPage){
-                      if(activeLoginPage == ActiveAccountPage.appLodingPage) return const ApplicationLoadingPage();
-                      if(activeLoginPage == ActiveAccountPage.loginPage) return const LoginPage();
+                    builder: (context,activeAccountPage){
+                      if(activeAccountPage == ActiveAccountPage.appLodingPage) return const ApplicationLoadingPage();
+                      if(activeAccountPage == ActiveAccountPage.loginPage) return const LoginPage();
                       return const RegisterPage();
                     },
                   );

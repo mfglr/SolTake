@@ -5,6 +5,8 @@ import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/views/account/pages/generate_password_reset_token_page.dart';
+import 'package:my_social_app/views/account/widgets/email_form_field.dart';
 
 
 class LoginForm extends StatefulWidget {
@@ -42,23 +44,7 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           Container(
             padding: const EdgeInsets.only(bottom: 8),
-            child: TextFormField(
-              controller: _emailOrUserName,
-              keyboardType: TextInputType.emailAddress,
-              enableSuggestions: false,
-              autocorrect: false,
-              style: const TextStyle(
-                fontSize: 13
-              ),
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.login_form_email,
-                border: const OutlineInputBorder(),
-              ),
-              validator: (value){
-                if (value == null || value.isEmpty) return AppLocalizations.of(context)!.login_form_email_required_error;
-                return null;
-              },
-            ),
+            child: EmailFormField(controller: _emailOrUserName,isUserName: true)
           ),
       
           Container(
@@ -80,13 +66,20 @@ class _LoginFormState extends State<LoginForm> {
                 )
               ),
               validator: (value){
-                if(value == null || value.isEmpty) return AppLocalizations.of(context)!.login_form_password_required_error;
-                if(value.length < 6) return AppLocalizations.of(context)!.login_form_password_length_error;
+                if(value == null || value.isEmpty) return AppLocalizations.of(context)!.password_required_validation;
+                if(value.length < 6) return AppLocalizations.of(context)!.password_length_validation;
                 return null;
               },
             ),
           ),
           
+          TextButton(
+            onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const GeneratePasswordResetTokenPage()));
+            },
+            child: Text(AppLocalizations.of(context)!.login_form_forgot_password)
+          ),
+
           OutlinedButton(
             onPressed: (){
               if (_formKey.currentState!.validate()) {

@@ -3,17 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-
-const _validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-String _removeInvalidChracters(String value){
-  String r = "";
-  for(int i = 0; i < value.length; i++){
-    if(_validCharacters.contains(value[i])){
-      r += value[i];
-    }
-  }
-  return r;
-}
+import 'package:my_social_app/views/account/widgets/token_form_field.dart';
 
 class VerifyEmailForm extends StatefulWidget {
   const VerifyEmailForm({super.key});
@@ -52,26 +42,7 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
             )
           ),
           
-          TextFormField(
-            enableSuggestions: false,
-            autocorrect: false,
-            controller: _token,
-            style: const TextStyle(
-              fontSize: 13
-            ),
-            maxLength: 6,
-            onChanged: (value) => _token.text = _removeInvalidChracters(value).toUpperCase(),
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              hintText: AppLocalizations.of(context)!.verify_email_form_code
-            ),
-            validator: (value){
-              if(value == null || value.isEmpty) return "Token is required!";
-              if(value.length != 6) return "Token must be 6 characters long!";
-              return null;
-            },
-          ),
+          TokenFormField(controller: _token),
           
           OutlinedButton(
             onPressed: () {

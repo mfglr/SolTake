@@ -3,7 +3,7 @@ import 'package:my_social_app/constants/account_endpoints.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/views/account/login_page/widgets/google_login_button.dart';
+import 'package:my_social_app/views/account/widgets/google_login_button.dart';
 
 class AccountService {
   final AppClient _appClient;
@@ -41,7 +41,21 @@ class AccountService {
         body: { 'emailOrUserName':emailOrUserName, 'password':password }
       )
       .then((json) => Account.fromJson(json));
+
+  Future resetPassword(String email, String token, String password, String passwordConfirm) =>
+    _appClient
+      .put(
+        "$accountController/$resetPasswordEndpoint",
+        body: { 'email': email, 'token': token, 'password': password, 'passwordConfirm': passwordConfirm }
+      );
   
+  Future generateResetPasswordToken(String email) =>
+    _appClient
+      .put(
+        "$accountController/$generateResetPasswordTokenEndpoint",
+        body: { 'email':email, }
+      );
+
   Future<Account> loginByFaceBook(String accessToken) =>
     _appClient
       .post(

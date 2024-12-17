@@ -8,7 +8,7 @@ class AccountState{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
-  final String? email;
+  final String email;
   final String userName;
   final bool isEmailVerified;
   final bool isPrivacyPolicyApproved;
