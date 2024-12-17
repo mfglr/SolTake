@@ -7,7 +7,7 @@ CREATE PROCEDURE sp_get_conversations
 AS BEGIN
 
 	SELECT TOP(@take) 
-		[all].[Id],[accounts].UserName, [all].[ConversationId], [all].[Content_Content], [all].[CreatedAt], [all].[IsEdited], 
+		[all].[Id],[accounts].UserName_Value as UserName, [all].[ConversationId], [all].[Content_Content], [all].[CreatedAt], [all].[IsEdited], 
 		[all].[UpdatedAt], [all].[SenderId], [all].[ReceiverId], [all].[State],[all].[NumberOfImages], [all].[IsOwner]
 	FROM
 	(
@@ -29,12 +29,12 @@ AS BEGIN
 						NOT EXISTS (
 							SELECT 1
 								FROM [MessageUserRemove] AS [mUR]
-								WHERE [messages].[Id] = [mUR].[MessageId] AND [mUR].[AppUserId] = @accountId
+								WHERE [messages].[Id] = [mUR].[MessageId] AND [mUR].UserId = @accountId
 						)
 			) AS [fM]
 		) AS [pM]
 	) AS [all]
-	JOIN AspNetUsers AS [accounts] ON [accounts].[Id] = [all].[ConversationId]
+	JOIN Accounts AS [accounts] ON [accounts].[Id] = [all].[ConversationId]
 	WHERE ([all].[SenderId] = @accountId OR [all].[State] = 2) AND [all].[row] <= 1 AND (@offset IS NULL OR [all].Id < @offset)
 	ORDER BY [all].Id DESC
 

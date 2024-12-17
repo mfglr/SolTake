@@ -1,3 +1,4 @@
+import 'package:my_social_app/state/app_state/access_token_state/reducers.dart';
 import 'package:my_social_app/state/app_state/account_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/reducers.dart';
@@ -28,8 +29,6 @@ import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:redux/redux.dart';
 
-String? changeAccessTokenReducer(String? oldState,Action action)
-  => action is ChangeAccessTokenAction ? action.accessToken : oldState;
 bool appSuccessfullyInitReducer(bool oldState,Action action)
   => action is ApplicationSuccessfullyInitAction ? true : oldState;
 
