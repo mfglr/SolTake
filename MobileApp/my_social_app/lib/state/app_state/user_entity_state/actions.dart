@@ -3,47 +3,49 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
-@immutable
-class UserEntityAction extends AppAction{
-  const UserEntityAction();
-}
+// @immutable
+// class UserEntityStateAction extends AppAction{
+//   const UserEntityStateAction();
+// }
 
 @immutable
-class LoadUserAction extends UserEntityAction{
+class LoadUserAction extends AppAction{
   final int userId;
   const LoadUserAction({required this.userId});
 }
 @immutable
-class LoadUserByUserNameAction extends UserEntityAction{
+class LoadUserByUserNameAction extends AppAction{
   final String userName;
   const LoadUserByUserNameAction({required this.userName});
 }
 @immutable
-class AddUserAction extends UserEntityAction{
+class AddUserAction extends AppAction{
   final UserState user;
   const AddUserAction({required this.user});
 }
 @immutable
-class AddUsersAction extends UserEntityAction{
+class AddUsersAction extends AppAction{
   final Iterable<UserState> users;
   const AddUsersAction({required this.users});
 }
 
 @immutable
-class MarkUserQuestionAsSolvedAction extends UserEntityAction{
+class MarkUserQuestionAsSolvedAction extends AppAction{
   final int userId;
   final int questionId;
   const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
 }
 @immutable
-class MarkUserQuestionAsUnsolvedAction extends UserEntityAction{
+class MarkUserQuestionAsUnsolvedAction extends AppAction{
   final int userId;
   final int questionId;
   const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
 }
 
+
+
 @immutable
-class AddNewFollowerAction extends UserEntityAction{
+class AddNewFollowerAction extends AppAction{
   final int curentUserId;
   final int followerId;
   final int followId;
@@ -55,12 +57,12 @@ class AddNewFollowerAction extends UserEntityAction{
 }
 
 @immutable
-class FollowUserAction extends UserEntityAction{
+class FollowUserAction extends AppAction{
   final int followedId;
   const FollowUserAction({required this.followedId});
 }
 @immutable
-class FollowUserSuccessAction extends UserEntityAction{
+class FollowUserSuccessAction extends AppAction{
   final int currentUserId;
   final int followedId;
   final int followId;
@@ -71,12 +73,12 @@ class FollowUserSuccessAction extends UserEntityAction{
   });
 }
 @immutable
-class UnfollowUserAction extends UserEntityAction{
+class UnfollowUserAction extends AppAction{
   final int followedId;
   const UnfollowUserAction({required this.followedId});
 }
 @immutable
-class UnfollowUserSuccessAction extends UserEntityAction{
+class UnfollowUserSuccessAction extends AppAction{
   final int currentUserId;
   final int followedId;
   final int followId;
@@ -87,12 +89,12 @@ class UnfollowUserSuccessAction extends UserEntityAction{
   });
 }
 @immutable
-class RemoveFollowerAction extends UserEntityAction{
+class RemoveFollowerAction extends AppAction{
   final int followerId;
   const RemoveFollowerAction({required this.followerId});
 }
 @immutable
-class RemoveFollowerSuccessAction extends UserEntityAction{
+class RemoveFollowerSuccessAction extends AppAction{
   final int currentUserId;
   final int followerId;
   final int followId;
@@ -101,225 +103,225 @@ class RemoveFollowerSuccessAction extends UserEntityAction{
 
 //followers
 @immutable
-class NextUserFollowersAction extends UserEntityAction{
+class NextUserFollowersAction extends AppAction{
   final int userId;
   const NextUserFollowersAction({required this.userId});
 }
 @immutable
-class NextUserFollowersSuccessAction extends UserEntityAction{
+class NextUserFollowersSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> followIds;
   const NextUserFollowersSuccessAction({required this.userId, required this.followIds});
 }
 @immutable
-class NextUserFollowersFailedAction extends UserEntityAction{
+class NextUserFollowersFailedAction extends AppAction{
   final int userId;
   const NextUserFollowersFailedAction({required this.userId});
 }
 
 //followeds
 @immutable
-class NextUserFollowedsAction extends UserEntityAction{
+class NextUserFollowedsAction extends AppAction{
   final int userId;
   const NextUserFollowedsAction({required this.userId});
 }
 @immutable
-class NextUserFollowedsSuccessAction extends UserEntityAction{
+class NextUserFollowedsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> followIds;
   const NextUserFollowedsSuccessAction({required this.userId, required this.followIds});
 }
 @immutable
-class NextuserFollowedsFailedAction extends UserEntityAction{
+class NextuserFollowedsFailedAction extends AppAction{
   final int userId;
   const NextuserFollowedsFailedAction({required this.userId});
 }
 
 
 @immutable
-class GetNextPageUserNotFollowedsIfNoPageAction extends UserEntityAction{
+class GetNextPageUserNotFollowedsIfNoPageAction extends AppAction{
   final int userId;
   const GetNextPageUserNotFollowedsIfNoPageAction({required this.userId});
 }
 @immutable
-class GetNextPageUserNotFollowedsIfReadyAction extends UserEntityAction{
+class GetNextPageUserNotFollowedsIfReadyAction extends AppAction{
   final int userId;
   const GetNextPageUserNotFollowedsIfReadyAction({required this.userId});
 }
 @immutable
-class GetNextPageUserNotFollowedsAction extends UserEntityAction{
+class GetNextPageUserNotFollowedsAction extends AppAction{
   final int userId;
   const GetNextPageUserNotFollowedsAction({required this.userId});
 }
 @immutable
-class AddNextPageUserNotFollowedsAction extends UserEntityAction{
+class AddNextPageUserNotFollowedsAction extends AppAction{
   final int userId;
   final Iterable<int> userIds;
   const AddNextPageUserNotFollowedsAction({required this.userId, required this.userIds});
 }
 @immutable
-class RemoveUserNotFollowedAction extends UserEntityAction{
+class RemoveUserNotFollowedAction extends AppAction{
   final int userId;
   final int notFollowedId;
   const RemoveUserNotFollowedAction({required this.userId, required this.notFollowedId});
 }
 @immutable
-class AddUserNotFollowedAction extends UserEntityAction{
+class AddUserNotFollowedAction extends AppAction{
   final int userId;
   final int notFollowedId;
   const AddUserNotFollowedAction({required this.userId, required this.notFollowedId});
 }
 
 @immutable
-class NextUserQuestionsAction extends UserEntityAction{
+class NextUserQuestionsAction extends AppAction{
   final int userId;
   const NextUserQuestionsAction({required this.userId});
 }
 @immutable
-class NextUserQuestionsSuccessAction extends UserEntityAction{
+class NextUserQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
   const NextUserQuestionsSuccessAction({required this.userId,required this.questionIds});
 }
 @immutable
-class NextUserQuestionsFailedAction extends UserEntityAction{
+class NextUserQuestionsFailedAction extends AppAction{
   final int userId;
   const NextUserQuestionsFailedAction({required this.userId});
 }
 
 
 @immutable
-class AddNewUserQuestionAction extends UserEntityAction{
+class AddNewUserQuestionAction extends AppAction{
   final int userId;
   final int questionId;
   const AddNewUserQuestionAction({required this.userId,required this.questionId});
 }
 @immutable
-class RemoveUserQuestionAction extends UserEntityAction{
+class RemoveUserQuestionAction extends AppAction{
   final int userId;
   final int questionId;
   const RemoveUserQuestionAction({required this.userId, required this.questionId});
 }
 
 @immutable
-class NextUserSolvedQuestionsAction extends UserEntityAction{
+class NextUserSolvedQuestionsAction extends AppAction{
   final int userId;
   const NextUserSolvedQuestionsAction({required this.userId});
 }
 @immutable
-class NextUserSolvedQuestionsSuccessAction extends UserEntityAction{
+class NextUserSolvedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
   const NextUserSolvedQuestionsSuccessAction({required this.userId, required this.questionIds});
 }
 @immutable
-class NextUserSolvedQuestionsFailedAction extends UserEntityAction{
+class NextUserSolvedQuestionsFailedAction extends AppAction{
   final int userId;
   const NextUserSolvedQuestionsFailedAction({required this.userId});
 }
 
 @immutable
-class NextUserUnsolvedQuestionsAction extends UserEntityAction{
+class NextUserUnsolvedQuestionsAction extends AppAction{
   final int userId;
   const NextUserUnsolvedQuestionsAction({required this.userId});
 }
 @immutable
-class NextUserUnsolvedQuestionsSuccessAction extends UserEntityAction{
+class NextUserUnsolvedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> questionIds;
   const NextUserUnsolvedQuestionsSuccessAction({required this.userId, required this.questionIds});
 }
 @immutable
-class NextUserUnsolvedQuestionsFailedAction extends UserEntityAction{
+class NextUserUnsolvedQuestionsFailedAction extends AppAction{
   final int userId;
   const NextUserUnsolvedQuestionsFailedAction({required this.userId});
 }
 
 @immutable
-class NextUserSavedQuestionsAction extends UserEntityAction{
+class NextUserSavedQuestionsAction extends AppAction{
   final int userId;
   const NextUserSavedQuestionsAction({required this.userId});
 }
 @immutable
-class NextUserSavedQuestionsSuccessAction extends UserEntityAction{
+class NextUserSavedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> savedIds;
   const NextUserSavedQuestionsSuccessAction({required this.userId, required this.savedIds});
 }
 @immutable
-class NextUserSavedQuestionsFailedAction extends UserEntityAction{
+class NextUserSavedQuestionsFailedAction extends AppAction{
   final int userId;
   const NextUserSavedQuestionsFailedAction({required this.userId});
 }
 
 @immutable
-class AddUserSavedQuestionAction extends UserEntityAction{
+class AddUserSavedQuestionAction extends AppAction{
   final int userId;
   final int saveId;
   const AddUserSavedQuestionAction({required this.userId, required this.saveId});
 }
 @immutable
-class RemoveUserSavedQuestionAction extends UserEntityAction{
+class RemoveUserSavedQuestionAction extends AppAction{
   final int userId;
   final int saveId;
   const RemoveUserSavedQuestionAction({required this.userId,required this.saveId});
 }
 
 @immutable
-class NextUserSavedSolutionsAction extends UserEntityAction{
+class NextUserSavedSolutionsAction extends AppAction{
   final int userId;
   const NextUserSavedSolutionsAction({required this.userId});
 }
 @immutable
-class NextUserSavedSolutionsSuccessAction extends UserEntityAction{
+class NextUserSavedSolutionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> savedIds;
   const NextUserSavedSolutionsSuccessAction({required this.userId, required this.savedIds});
 }
 @immutable
-class NextUserSavedSolutionsFailedAction extends UserEntityAction{
+class NextUserSavedSolutionsFailedAction extends AppAction{
   final int userId;
   const NextUserSavedSolutionsFailedAction({required this.userId});
 }
 
 @immutable
-class AddUserSavedSolutionAction extends UserEntityAction{
+class AddUserSavedSolutionAction extends AppAction{
   final int userId;
   final int saveId;
   const AddUserSavedSolutionAction({required this.userId, required this.saveId});
 }
 @immutable
-class RemoveUserSavedSolutionAction extends UserEntityAction{
+class RemoveUserSavedSolutionAction extends AppAction{
   final int userId;
   final int saveId;
   const RemoveUserSavedSolutionAction({required this.userId, required this.saveId});
 }
 
 @immutable
-class NextUserMessagesAction extends UserEntityAction{
+class NextUserMessagesAction extends AppAction{
   final int userId;
   const NextUserMessagesAction({required this.userId});
 }
 @immutable
-class NextUserMessagesSuccessAction extends UserEntityAction{
+class NextUserMessagesSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> messageIds;
   const NextUserMessagesSuccessAction({required this.userId, required this.messageIds});
 }
 @immutable
-class NextUserMessagesFailedAction extends UserEntityAction{
+class NextUserMessagesFailedAction extends AppAction{
   final int userId;
   const NextUserMessagesFailedAction({required this.userId});
 }
 
 @immutable
-class AddUserMessageAction extends UserEntityAction{
+class AddUserMessageAction extends AppAction{
   final int userId;
   final int messageId;
   const AddUserMessageAction({required this.userId, required this.messageId});
 }
 @immutable
-class RemoveUserMessageAction extends UserEntityAction{
+class RemoveUserMessageAction extends AppAction{
   final int userId;
   final int messageId;
   const RemoveUserMessageAction({
@@ -328,96 +330,96 @@ class RemoveUserMessageAction extends UserEntityAction{
   });
 }
 @immutable
-class RemoveUserMessagesAction extends UserEntityAction{
+class RemoveUserMessagesAction extends AppAction{
   final int userId;
   final Iterable<int> messageIds;
   const RemoveUserMessagesAction({required this.userId, required this.messageIds});
 }
 
 @immutable
-class NextUserConversationsAction extends UserEntityAction{
+class NextUserConversationsAction extends AppAction{
   final int userId;
   const NextUserConversationsAction({required this.userId});
 }
 @immutable
-class NextUserConversationsSuccessAction extends UserEntityAction{
+class NextUserConversationsSuccessAction extends AppAction{
   final int userId;
   final Iterable<int> ids;
   const NextUserConversationsSuccessAction({required this.userId,required this.ids});
 }
 @immutable
-class NextUserConversationsFailedAction extends UserEntityAction{
+class NextUserConversationsFailedAction extends AppAction{
   final int userId;
   const NextUserConversationsFailedAction({required this.userId});
 }
 
 @immutable
-class AddUserConversationAction extends UserEntityAction{
+class AddUserConversationAction extends AppAction{
   final int userId;
   final int id;
   const AddUserConversationAction({required this.userId, required this.id});
 }
 @immutable
-class AddUserConversationInOrderAction extends UserEntityAction{
+class AddUserConversationInOrderAction extends AppAction{
   final int userId;
   final int id;
   const AddUserConversationInOrderAction({required this.userId, required this.id});
 }
 @immutable
-class RemoveUserConversationAction extends UserEntityAction{
+class RemoveUserConversationAction extends AppAction{
   final int userId;
   final int id;
   const RemoveUserConversationAction({required this.userId, required this.id});
 }
 
 @immutable
-class ChangeProfileImageStatusAction extends UserEntityAction{
+class ChangeProfileImageStatusAction extends AppAction{
   final int userId;
   final bool value;
   const ChangeProfileImageStatusAction({required this.userId, required this.value});
 }
 @immutable
-class UpdateUserNameAction extends UserEntityAction{
+class UpdateUserNameAction extends AppAction{
   final String userName;
   const UpdateUserNameAction({required this.userName});
 }
 @immutable
-class UpdateUserNameSuccessAction extends UserEntityAction{
+class UpdateUserNameSuccessAction extends AppAction{
   final int userId;
   final String userName;
   const UpdateUserNameSuccessAction({required this.userId,required this.userName});
 }
 @immutable
-class UpdateNameAction extends UserEntityAction{
+class UpdateNameAction extends AppAction{
   final String name;
   const UpdateNameAction({required this.name});
 }
 @immutable
-class UpdateNameSuccessAction extends UserEntityAction{
+class UpdateNameSuccessAction extends AppAction{
   final int userId;
   final String name;
   const UpdateNameSuccessAction({required this.userId, required this.name});
 }
 @immutable
-class UpdateBiographyAction extends UserEntityAction{
+class UpdateBiographyAction extends AppAction{
   final String biography;
   const UpdateBiographyAction({required this.biography});
 }
 @immutable
-class UpdateBiographySuccessAction extends UserEntityAction{
+class UpdateBiographySuccessAction extends AppAction{
   final int userId;
   final String biography;
   const UpdateBiographySuccessAction({required this.userId, required this.biography});
 }
 
 @immutable
-class ChangeUploadingUserImageStatusAction extends UserEntityAction{
+class ChangeUploadingUserImageStatusAction extends AppAction{
   final int userId;
   final UploadingFileStatus status;
   const ChangeUploadingUserImageStatusAction({required this.userId, required this.status});
 }
 @immutable
-class ChangeUploadingUserImageRateAction extends UserEntityAction{
+class ChangeUploadingUserImageRateAction extends AppAction{
   final int userId;
   final double rate;
   const ChangeUploadingUserImageRateAction({required this.userId, required this.rate});

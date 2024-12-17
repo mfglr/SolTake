@@ -11,6 +11,7 @@ import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
@@ -84,6 +85,7 @@ final store = Store(
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
+    loginState: LoginState(activeLoginPage: ActiveLoginPage.loginPage, language: PlatformDispatcher.instance.locale.languageCode)
   ),
   middleware: [
     //exams middlewares

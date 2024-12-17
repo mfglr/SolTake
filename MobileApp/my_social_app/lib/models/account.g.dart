@@ -15,7 +15,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       email: json['email'] as String,
       userName: json['userName'] as String,
       isEmailVerified: json['isEmailVerified'] as bool,
-      language: json['language'] as String,
+      language: json['language'] as String?,
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
       isPrivacyPolicyApproved: json['isPrivacyPolicyApproved'] as bool,

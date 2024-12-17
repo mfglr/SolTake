@@ -14,7 +14,7 @@ class Account{
   final bool isEmailVerified;
   final bool isPrivacyPolicyApproved;
   final bool isTermsOfUseApproved;
-  final String language;
+  final String? language;
   final String accessToken;
   final String refreshToken;
   
