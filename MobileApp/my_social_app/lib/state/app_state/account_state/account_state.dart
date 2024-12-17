@@ -10,11 +10,10 @@ class AccountState{
   final DateTime? updatedAt;
   final String? email;
   final String userName;
-  final bool emailConfirmed;
-  final bool isThirdPartyAuthenticated;
+  final bool isEmailVerified;
   final bool isPrivacyPolicyApproved;
   final bool isTermsOfUseApproved;
-  final String? language;
+  final String language;
   final String refreshToken;
   final bool accountDeletionStart;
 
@@ -24,8 +23,7 @@ class AccountState{
     required this.updatedAt,
     required this.email,
     required this.userName,
-    required this.emailConfirmed,
-    required this.isThirdPartyAuthenticated,
+    required this.isEmailVerified,
     required this.language,
     required this.refreshToken,
     required this.isPrivacyPolicyApproved,
@@ -44,8 +42,7 @@ class AccountState{
         updatedAt: updatedAt,
         email: email,
         userName: userName,
-        emailConfirmed: true,
-        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isEmailVerified: true,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
@@ -60,8 +57,7 @@ class AccountState{
         updatedAt: updatedAt,
         email: email,
         userName: userName,
-        emailConfirmed: emailConfirmed,
-        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isEmailVerified: isEmailVerified,
         isTermsOfUseApproved: isTermsOfUseApproved,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         language: language,
@@ -76,8 +72,7 @@ class AccountState{
         updatedAt: updatedAt,
         email: email,
         userName: userName,
-        emailConfirmed: emailConfirmed,
-        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isEmailVerified: isEmailVerified,
         isTermsOfUseApproved: isTermsOfUseApproved,
         isPrivacyPolicyApproved: true,
         language: language,
@@ -91,8 +86,7 @@ class AccountState{
         updatedAt: updatedAt,
         email: email,
         userName: userName,
-        emailConfirmed: emailConfirmed,
-        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isEmailVerified: isEmailVerified,
         isTermsOfUseApproved: true,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         language: language,
@@ -106,8 +100,7 @@ class AccountState{
         updatedAt: updatedAt,
         email: email,
         userName: userName,
-        emailConfirmed: emailConfirmed,
-        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isEmailVerified: isEmailVerified,
         language: language,
         refreshToken: refreshToken,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
@@ -121,8 +114,7 @@ class AccountState{
         updatedAt: updatedAt,
         email: email,
         userName: userName,
-        emailConfirmed: emailConfirmed,
-        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isEmailVerified: isEmailVerified,
         language: language,
         refreshToken: refreshToken,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,

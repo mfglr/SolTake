@@ -12,8 +12,8 @@ using MySocailApp.Infrastructure.DbContexts;
 namespace MySocailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241216170713_AccountDomain")]
-    partial class AccountDomain
+    [Migration("20241217122116_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,30 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("AccountTermsOfUse");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Block", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlockedId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlockerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlockedId");
+
+                    b.ToTable("Block");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.EmailVerificationToken", b =>
                 {
                     b.Property<int>("Id")
@@ -207,10 +231,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<int>("NumberOfFailedAttemps")
                         .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -11706,6 +11726,15 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Block", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
+                        .WithMany("Blockers")
+                        .HasForeignKey("BlockedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.EmailVerificationToken", b =>
                 {
                     b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
@@ -12154,6 +12183,8 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", b =>
                 {
+                    b.Navigation("Blockers");
+
                     b.Navigation("PasswordResestTokens");
 
                     b.Navigation("PrivacyPolicies");

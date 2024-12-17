@@ -58,8 +58,6 @@ Future<void> main() async {
     return true;
   };
 
-  
-
   runApp(
     StoreProvider(
       store: store,
@@ -142,7 +140,7 @@ class _MainViewState extends State<MainView> {
                 }
                 if(!widget.account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
                 if(!widget.account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
-                if(!widget.account!.isThirdPartyAuthenticated && !widget.account!.emailConfirmed) return const VerifyEmailPage();
+                if(!widget.account!.isEmailVerified) return const VerifyEmailPage();
                 if(widget.account!.accountDeletionStart) return const ApplicationLoadingPage();
                 return const RootView();
               }

@@ -11,11 +11,10 @@ class Account{
   final DateTime? updatedAt;
   final String? email;
   final String userName;
-  final bool emailConfirmed;
-  final bool isThirdPartyAuthenticated;
+  final bool isEmailVerified;
   final bool isPrivacyPolicyApproved;
   final bool isTermsOfUseApproved;
-  final String? language;
+  final String language;
   final String accessToken;
   final String refreshToken;
   
@@ -25,8 +24,7 @@ class Account{
     required this.updatedAt,
     required this.email,
     required this.userName,
-    required this.emailConfirmed,
-    required this.isThirdPartyAuthenticated,
+    required this.isEmailVerified,
     required this.language,
     required this.accessToken,
     required this.refreshToken,
@@ -45,8 +43,7 @@ class Account{
         updatedAt: updatedAt,
         email: email,
         userName: userName,
-        emailConfirmed: emailConfirmed,
-        isThirdPartyAuthenticated: isThirdPartyAuthenticated,
+        isEmailVerified: isEmailVerified,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
