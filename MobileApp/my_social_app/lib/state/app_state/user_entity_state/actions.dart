@@ -3,6 +3,11 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
+// @immutable
+// class UserEntityStateAction extends AppAction{
+//   const UserEntityStateAction();
+// }
+
 @immutable
 class LoadUserAction extends AppAction{
   final int userId;

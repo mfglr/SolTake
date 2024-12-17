@@ -15,8 +15,7 @@ namespace MySocailApp.Application.Mappers
                 .ForMember(dest => dest.Language, x => x.MapFrom(src => src.Language != null ? src.Language.Value : null))
                 .ForMember(dest => dest.IsEmailVerified, x => x.MapFrom(src => src.IsEmailVerified))
                 .ForMember(dest => dest.IsPrivacyPolicyApproved, x => x.MapFrom(src => src.IsPrivacyPolicyApproved))
-                .ForMember(dest => dest.IsTermsOfUseApproved, x => x.MapFrom(src => src.IsTersmOfUseApproved))
-                .ForMember(dest => dest.IsGoogleAuthenticated, x => x.MapFrom(src => src.GoogleAccount != null));
+                .ForMember(dest => dest.IsTermsOfUseApproved, x => x.MapFrom(src => src.IsTersmOfUseApproved));
 
             CreateMap<Block,BlockCommandResponseDto>();
         }

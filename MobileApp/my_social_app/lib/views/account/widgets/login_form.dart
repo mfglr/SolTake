@@ -87,6 +87,13 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           
+          TextButton(
+            onPressed: (){
+              final store = StoreProvider.of<AppState>(context,listen: false);
+            },
+            child: const Text("Sifremi unuttum")
+          ),
+
           OutlinedButton(
             onPressed: (){
               if (_formKey.currentState!.validate()) {

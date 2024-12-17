@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
@@ -51,6 +52,7 @@ import 'package:redux/redux.dart';
 final store = Store(
   reducers,
   initialState: AppState(
+    activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     accountState: null,
     isInitialized: false,

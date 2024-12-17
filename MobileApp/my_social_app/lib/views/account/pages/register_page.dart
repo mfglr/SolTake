@@ -3,7 +3,7 @@ import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/account/register_page/widgets.dart/register_form.dart';
+import 'package:my_social_app/views/account/widgets/register_form.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

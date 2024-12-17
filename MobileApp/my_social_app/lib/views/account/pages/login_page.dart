@@ -4,10 +4,10 @@ import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/account/login_page/widgets/facebook_login_button.dart';
-import 'package:my_social_app/views/account/login_page/widgets/login_form.dart';
-import 'package:my_social_app/views/account/login_page/widgets/google_login_button.dart';
-import 'package:my_social_app/views/account/login_page/widgets/login_page_diveder.dart';
+import 'package:my_social_app/views/account/widgets/facebook_login_button.dart';
+import 'package:my_social_app/views/account/widgets/login_form.dart';
+import 'package:my_social_app/views/account/widgets/google_login_button.dart';
+import 'package:my_social_app/views/account/widgets/login_page_diveder.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

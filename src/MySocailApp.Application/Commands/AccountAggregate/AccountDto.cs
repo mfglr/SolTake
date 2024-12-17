@@ -13,7 +13,6 @@
         public string RefreshToken { get; private set; } = null!;
         public bool IsPrivacyPolicyApproved { get; private set; }
         public bool IsTermsOfUseApproved { get; private set; }
-        public bool IsGoogleAuthenticated { get; private set; }
 
         private AccountDto() { }
     }
