@@ -1,77 +1,52 @@
-import 'package:my_social_app/state/app_state/account_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/active_account_page.dart';
-import 'package:my_social_app/state/app_state/comment_user_like_state/reducer.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/reducers.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/follow_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/home_page_state/reducers.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/login_state/reducer.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
-import 'package:my_social_app/state/app_state/message_home_page_state/reducers.dart';
-import 'package:my_social_app/state/app_state/message_image_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
-import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/question_user_like_state/reducer.dart';
-import 'package:my_social_app/state/app_state/question_user_save_state/reducers.dart';
-import 'package:my_social_app/state/app_state/search_state/reducers.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/solution_user_save_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
 import 'package:redux/redux.dart';
 
-String? changeAccessTokenReducer(String? prev,AppAction action) 
-  => action is ChangeAccessTokenAction ? action.accessToken : prev;
-bool appSuccessfullyInitReducer(bool prev, AppAction action) 
-  => action is ApplicationSuccessfullyInitAction ? true : prev;
-ActiveAccountPage changeActiveAccountPageReducer(ActiveAccountPage prev, AppAction action)
-  => action is ChangeActiveAccountPageAction ? action.activeAccountPage : prev;
-AppState nextExamsReducer(AppState prev,NextExamsAction action) => prev.startLoadingNextExams();
-AppState nextExamsSuccessReducer(AppState prev,NextExamsSuccessAction action) => prev.addNextExams(action.examIds);
-AppState nextExamsFailedReducer(AppState prev,NextExamsFailedAction action) => prev.stopLoadingNextExams();
-AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
-
-
-AppState appReducer(AppState prev,AppAction action) => AppState(
-  accessToken: changeAccessTokenReducer(prev.accessToken,action),
-  accountState: accoutStateReducers(prev.accountState,action),
-  isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
-  userEntityState: userEntityStateReducers(prev.userEntityState, action),
-  userImageEntityState: userImageEntityStateReducers(prev.userImageEntityState,action),
-  searchState: searchStateReducers(prev.searchState,action),
-  examEntityState: examEntityStateReducers(prev.examEntityState,action),
-  subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
-  topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),
-  solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
-  homePageState: homePageReducers(prev.homePageState,action),
-  commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
-  commentUserLikeEntityState: commentUserLikeEntityReducers(prev.commentUserLikeEntityState,action),
-  createCommentState: createCommentStateReducers(prev.createCommentState,action),
-  notificationEntityState: notificationEntityStateReducers(prev.notificationEntityState,action),
-  messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
-  messageImageEntityState: messageImageEntityReducers(prev.messageImageEntityState,action),
-  messageHomePageState: messageHomePageReducers(prev.messageHomePageState,action),
-  userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
-  followEntityState: followEntityReducers(prev.followEntityState,action),
-  questionEntityState: questionsReducer(prev.questionEntityState,action),
-  questionUserLikeEntityState: questionUserLikeEntityReducers(prev.questionUserLikeEntityState,action),
-  questionUserSaveEntityState: questionUserSaveEntityReducers(prev.questionUserSaveEntityState,action),
-  solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
-  solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
-  exams: examsReducers(prev.exams,action),
-  policyState: policyReducers(prev.policyState,action),
-  loginState: loginReducers(prev.loginState,action),
-);
+AppState clearStateReducer(AppState prev,ClearStateAction action) =>
+  prev.clear();
 
 Reducer<AppState> reducers = combineReducers<AppState>([
-  TypedReducer<AppState,ClearStateAction>(clearStateReducer).call,
-  TypedReducer<AppState,AppAction>(appReducer).call,
+  TypedReducer<AppState,ApplicationSuccessfullyInitAction>((p,a) => p.optional(newIsInitialized: true)).call,
+  TypedReducer<AppState,ChangeActiveAccountPageAction>((p,a) => p.optional(newActiveAccountPage: a.payload)).call,
+  TypedReducer<AppState,ChangeAccessTokenAction>((p,a) => p.optional(newAccessToken: a.payload)).call,
+  TypedReducer<AppState,ChangeAccountStateAction>((p,a) => p.optional(newAccountState: a.payload)).call,
+  TypedReducer(AppState,)
+
+  TypedReducer<AppState,UpdateExamsAction>((p,a) => p.optional(newExams: a.payload)).call,
+  TypedReducer<AppState,ClearStateAction>((p,a) => p.clear()).call,
 ]);
+
+// AppState appReducer(AppState prev,AppAction action) => AppState(
+//   accessToken: changeAccessTokenReducer(prev.accessToken,action),
+//   accountState: accoutStateReducers(prev.accountState,action),
+//   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
+//   userEntityState: userEntityStateReducers(prev.userEntityState, action),
+//   userImageEntityState: userImageEntityStateReducers(prev.userImageEntityState,action),
+//   searchState: searchStateReducers(prev.searchState,action),
+//   examEntityState: examEntityStateReducers(prev.examEntityState,action),
+//   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
+//   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),
+//   solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
+//   homePageState: homePageReducers(prev.homePageState,action),
+//   commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
+//   commentUserLikeEntityState: commentUserLikeEntityReducers(prev.commentUserLikeEntityState,action),
+//   createCommentState: createCommentStateReducers(prev.createCommentState,action),
+//   notificationEntityState: notificationEntityStateReducers(prev.notificationEntityState,action),
+//   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
+//   messageImageEntityState: messageImageEntityReducers(prev.messageImageEntityState,action),
+//   messageHomePageState: messageHomePageReducers(prev.messageHomePageState,action),
+//   userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
+//   followEntityState: followEntityReducers(prev.followEntityState,action),
+//   questionEntityState: questionsReducer(prev.questionEntityState,action),
+//   questionUserLikeEntityState: questionUserLikeEntityReducers(prev.questionUserLikeEntityState,action),
+//   questionUserSaveEntityState: questionUserSaveEntityReducers(prev.questionUserSaveEntityState,action),
+//   solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
+//   solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
+//   exams: examsReducers(prev.exams,action),
+//   policyState: policyReducers(prev.policyState,action),
+// );
+
+// Reducer<AppState> reducers = combineReducers<AppState>([
+//   TypedReducer<AppState,ClearStateAction>(clearStateReducer).call,
+//   TypedReducer<AppState,AppAction>(appReducer).call,
+// ]);

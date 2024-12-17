@@ -10,7 +10,6 @@ import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
@@ -69,7 +68,6 @@ class AppState{
   final QuestionUserSaveEntityState questionUserSaveEntityState;
   final Pagination exams;
   final PolicyState policyState;
-  final LoginState loginState;
 
   const AppState({
     required this.activeAccountPage,
@@ -100,11 +98,10 @@ class AppState{
     required this.questionUserSaveEntityState,
     required this.exams,
     required this.policyState,
-    required this.loginState,
   });
 
 
-  AppState _optional({
+  AppState optional({
     bool? newIsInitialized,
     ActiveAccountPage? newActiveAccountPage,
     String? newAccessToken,
@@ -133,7 +130,6 @@ class AppState{
     QuestionUserSaveEntityState? newQuestionUserSaveEntityState,
     Pagination? newExams,
     PolicyState? newPolicyState,
-    LoginState? newLoginState,
   }) => AppState(
     isInitialized: newIsInitialized ?? isInitialized,
     activeAccountPage: newActiveAccountPage ?? activeAccountPage,
@@ -163,15 +159,11 @@ class AppState{
     questionUserSaveEntityState: newQuestionUserSaveEntityState ?? questionUserSaveEntityState,
     exams: newExams ?? exams,
     policyState: newPolicyState ?? policyState,
-    loginState: newLoginState ?? loginState
   );
   
-  AppState changeActiveAccountPage(ActiveAccountPage activeAccountPage) => _optional(newActiveAccountPage: activeAccountPage);
-  AppState changeAccessToken(String? accessToken) => _optional(newAccessToken: accessToken);
-  AppState init() => _optional(newIsInitialized: true);
-  AppState startLoadingNextExams() => _optional(newExams: exams.startLoadingNext());
-  AppState addNextExams(Iterable<int> ids) => _optional(newExams: exams.addNextPage(ids));
-  AppState stopLoadingNextExams() => _optional(newExams: exams.stopLoadingNext()); 
+  AppState startLoadingNextExams() => optional(newExams: exams.startLoadingNext());
+  AppState addNextExams(Iterable<int> ids) => optional(newExams: exams.addNextPage(ids));
+  AppState stopLoadingNextExams() => optional(newExams: exams.stopLoadingNext()); 
   AppState clear() => AppState(
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
@@ -206,7 +198,6 @@ class AppState{
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    loginState: LoginState(activeLoginPage: ActiveLoginPage.loginPage, language: PlatformDispatcher.instance.locale.languageCode)
   );
   
 
@@ -324,7 +315,7 @@ class AppState{
     => subjectEntityState.entities[subjectId]?.topics.ids.map((e) => topicEntityState.entities[e]!) ?? [];
 
   //select privacy policy
-  String? get selectPrivacyPolicy => policyState.privacyPolicies[loginState.language];
+  String? get selectPrivacyPolicy => policyState.privacyPolicies[accountState?.language];
   //select terms of use
-  String? get selectTermsOfUse => policyState.termOfUses[loginState.language];
+  String? get selectTermsOfUse => policyState.termOfUses[accountState?.language];
 }

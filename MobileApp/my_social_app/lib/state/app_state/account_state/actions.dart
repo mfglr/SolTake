@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-
-@immutable
-class UpdateAccountStateAction extends AppAction{
-  final AccountState? payload;
-  const UpdateAccountStateAction({required this.payload});
-}
 
 @immutable
 class LoginByRefreshToken extends AppAction{

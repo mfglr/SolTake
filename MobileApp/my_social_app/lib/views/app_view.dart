@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/main.dart';
 import 'package:my_social_app/services/app_version_service.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/app_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/account/pages/application_loading_page.dart';
 import 'package:my_social_app/views/account/pages/approve_privacy_policy_page.dart';
@@ -45,11 +45,11 @@ class _AppViewState extends State<AppView> {
             builder: (context, isInitialized){
               if(isInitialized){
                 if(widget.account == null){
-                  return StoreConnector<AppState,ActiveLoginPage>(
-                    converter: (store) => store.state.loginState.activeLoginPage,
+                  return StoreConnector<AppState,ActiveAccountPage>(
+                    converter: (store) => store.state.activeAccountPage,
                     builder: (context,activeLoginPage){
-                      if(activeLoginPage == ActiveLoginPage.appLodingPage) return const ApplicationLoadingPage();
-                      if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
+                      if(activeLoginPage == ActiveAccountPage.appLodingPage) return const ApplicationLoadingPage();
+                      if(activeLoginPage == ActiveAccountPage.loginPage) return const LoginPage();
                       return const RegisterPage();
                     },
                   );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page.dart';
+import 'package:my_social_app/state/pagination/pagination.dart';
 
 
 @immutable
@@ -7,14 +9,16 @@ class AppAction{
   const AppAction();
 }
 
-@immutable
-class ClearStateAction{
-  const ClearStateAction();
-}
+
 
 class ChangeAccessTokenAction extends AppAction{
-  final String? accessToken;
-  const ChangeAccessTokenAction({required this.accessToken});
+  final String? payload;
+  const ChangeAccessTokenAction({required this.payload});
+}
+
+class ChangeAccountStateAction extends AppAction{
+  final AccountState? payload;
+  const ChangeAccountStateAction({required this.payload});
 }
 
 @immutable
@@ -24,22 +28,23 @@ class ApplicationSuccessfullyInitAction extends AppAction{
 
 @immutable
 class ChangeActiveAccountPageAction extends AppAction{
-  final ActiveAccountPage activeAccountPage;
-  const ChangeActiveAccountPageAction({required this.activeAccountPage});
+  final ActiveAccountPage payload;
+  const ChangeActiveAccountPageAction({required this.payload});
 }
 
-//exams//
 @immutable
 class NextExamsAction extends AppAction{
   const NextExamsAction();
 }
 @immutable
-class NextExamsSuccessAction extends AppAction{
-  final Iterable<int> examIds;
-  const NextExamsSuccessAction({required this.examIds});
+class UpdateExamsAction extends AppAction{
+  final Pagination payload;
+  const UpdateExamsAction({required this.payload});
 }
+
+
+
 @immutable
-class NextExamsFailedAction extends AppAction{
-  const NextExamsFailedAction();
+class ClearStateAction extends AppAction{
+  const ClearStateAction();
 }
-//exams//
