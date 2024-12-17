@@ -147,27 +147,6 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Block",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BlockerId = table.Column<int>(type: "int", nullable: false),
-                    BlockedId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Block", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Block_Accounts_BlockedId",
-                        column: x => x.BlockedId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EmailVerificationToken",
                 columns: table => new
                 {
@@ -200,6 +179,7 @@ namespace MySocailApp.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     ExpirationAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NumberOfFailedAttemps = table.Column<int>(type: "int", nullable: false)
@@ -239,11 +219,6 @@ namespace MySocailApp.Infrastructure.Migrations
                 table: "Accounts",
                 column: "UserName_Value",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Block_BlockedId",
-                table: "Block",
-                column: "BlockedId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailVerificationToken_AccountId",
@@ -321,9 +296,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccountRole");
-
-            migrationBuilder.DropTable(
-                name: "Block");
 
             migrationBuilder.DropTable(
                 name: "EmailVerificationToken");

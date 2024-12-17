@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
-import 'package:my_social_app/state/app_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
@@ -42,7 +41,6 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 @immutable
 class AppState{
   final bool isInitialized;
-  final ActiveAccountPage activeAccountPage;
   final String? accessToken;
   final AccountState? accountState;
   final UserEntityState userEntityState;
@@ -72,7 +70,6 @@ class AppState{
   final LoginState loginState;
 
   const AppState({
-    required this.activeAccountPage,
     required this.accessToken,
     required this.accountState,
     required this.isInitialized,
@@ -103,77 +100,7 @@ class AppState{
     required this.loginState,
   });
 
-
-  AppState _optional({
-    bool? newIsInitialized,
-    ActiveAccountPage? newActiveAccountPage,
-    String? newAccessToken,
-    AccountState? newAccountState,
-    UserEntityState? newUserEntityState,
-    FollowEntityState? newFollowEntityState,
-    UserImageEntityState? newUserImageEntityState,
-    SearchState? newSearchState,
-    ExamEntityState? newExamEntityState,
-    SubjectEntityState? newSubjectEntityState,
-    TopicEntityState? newTopicEntityState,
-    SolutionEntityState? newSolutionEntityState,
-    SolutionUserVoteEntityState? newSolutionUserVoteEntityState,
-    SolutionUserSaveEntityState? newSolutionUserSaveEntityState,
-    HomePageState? newHomePageState,
-    CommentEntityState? newCommentEntityState,
-    CommentUserLikeEntityState? newCommentUserLikeEntityState,
-    CreateCommentState? newCreateCommentState,
-    NotificationEntityState? newNotificationEntityState,
-    MessageEntityState? newMessageEntityState,
-    MessageImageEntityState? newMessageImageEntityState,
-    MessageHomePageState? newMessageHomePageState,
-    UserSearchEntityState? newUserSearchEntityState,
-    QuestionEntityState? newQuestionEntityState,
-    QuestionUserLikeEntityState? newQuestionUserLikeEntityState,
-    QuestionUserSaveEntityState? newQuestionUserSaveEntityState,
-    Pagination? newExams,
-    PolicyState? newPolicyState,
-    LoginState? newLoginState,
-  }) => AppState(
-    isInitialized: newIsInitialized ?? isInitialized,
-    activeAccountPage: newActiveAccountPage ?? activeAccountPage,
-    accessToken: newAccessToken ?? accessToken,
-    accountState: newAccountState ?? accountState,
-    userEntityState: newUserEntityState ?? userEntityState,
-    followEntityState: newFollowEntityState ?? followEntityState,
-    userImageEntityState: newUserImageEntityState ?? userImageEntityState,
-    searchState: newSearchState ?? searchState,
-    examEntityState: newExamEntityState ?? examEntityState,
-    subjectEntityState: newSubjectEntityState ?? subjectEntityState,
-    topicEntityState: newTopicEntityState ?? topicEntityState,
-    solutionEntityState: newSolutionEntityState ?? solutionEntityState,
-    solutionUserVoteEntityState: newSolutionUserVoteEntityState ?? solutionUserVoteEntityState,
-    solutionUserSaveEntityState: newSolutionUserSaveEntityState ?? solutionUserSaveEntityState,
-    homePageState: newHomePageState ?? homePageState,
-    commentEntityState: newCommentEntityState ?? commentEntityState,
-    commentUserLikeEntityState: newCommentUserLikeEntityState ?? commentUserLikeEntityState,
-    createCommentState: newCreateCommentState ?? createCommentState,
-    notificationEntityState: newNotificationEntityState ?? notificationEntityState,
-    messageEntityState: newMessageEntityState ?? messageEntityState,
-    messageImageEntityState: newMessageImageEntityState ?? messageImageEntityState,
-    messageHomePageState: newMessageHomePageState ?? messageHomePageState,
-    userSearchEntityState: newUserSearchEntityState ?? userSearchEntityState,
-    questionEntityState: newQuestionEntityState ?? questionEntityState,
-    questionUserLikeEntityState: newQuestionUserLikeEntityState ?? questionUserLikeEntityState,
-    questionUserSaveEntityState: newQuestionUserSaveEntityState ?? questionUserSaveEntityState,
-    exams: newExams ?? exams,
-    policyState: newPolicyState ?? policyState,
-    loginState: newLoginState ?? loginState
-  );
-  
-  AppState changeActiveAccountPage(ActiveAccountPage activeAccountPage) => _optional(newActiveAccountPage: activeAccountPage);
-  AppState changeAccessToken(String? accessToken) => _optional(newAccessToken: accessToken);
-  AppState init() => _optional(newIsInitialized: true);
-  AppState startLoadingNextExams() => _optional(newExams: exams.startLoadingNext());
-  AppState addNextExams(Iterable<int> ids) => _optional(newExams: exams.addNextPage(ids));
-  AppState stopLoadingNextExams() => _optional(newExams: exams.stopLoadingNext()); 
   AppState clear() => AppState(
-    activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     accountState: null,
     isInitialized: true,
@@ -208,8 +135,6 @@ class AppState{
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     loginState: LoginState(activeLoginPage: ActiveLoginPage.loginPage, language: PlatformDispatcher.instance.locale.languageCode)
   );
-  
-
 
   //select messages
   Iterable<MessageState> get selectConversations => messageEntityState.selectConversations;

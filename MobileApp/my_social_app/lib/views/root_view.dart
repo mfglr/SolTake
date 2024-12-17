@@ -7,7 +7,7 @@ import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/account/pages/application_loading_page.dart';
+import 'package:my_social_app/views/account/application_loading_page/application_loading_page.dart';
 import 'package:my_social_app/views/shared/icon_with_badge.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';

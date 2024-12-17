@@ -3,7 +3,7 @@ import 'package:my_social_app/constants/account_endpoints.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/views/account/widgets/google_login_button.dart';
+import 'package:my_social_app/views/account/login_page/widgets/google_login_button.dart';
 
 class AccountService {
   final AppClient _appClient;
@@ -32,13 +32,6 @@ class AccountService {
       .put(
         "$accountController/$verifyEmailByTokenEntPoint",
         body: { 'token': token }
-      );
-      
-  Future<void> generateResetPasswordToken(String email) =>
-    _appClient
-      .put(
-        "$accountController/$verifyEmailByTokenEntPoint",
-        body: { 'email' : email}
       );
 
   Future<Account> loginByPassword(String emailOrUserName, String password) =>

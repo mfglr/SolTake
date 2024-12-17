@@ -30,8 +30,7 @@ class AppClient{
     
     var response = await request.send();
     if(response.statusCode >= 400){
-      var message = utf8.decode(await response.stream.toBytes());
-      throw BackendException(message: message,statusCode: response.statusCode);
+      throw BackendException(message: utf8.decode(await response.stream.toBytes()),statusCode: response.statusCode);
     }
     return response;
   }
@@ -51,6 +50,9 @@ class AppClient{
 
   Future<Uint8List> getBytes(String url) =>
     send(Request("GET", generateUri(url))).then((response) => response.stream.toBytes());
+
+  Future<Uint8List> getRangeBytes(String url, int offset, int count) =>
+    send(Request("GET",generateUri("$url?offset=$offset&count=$count"))).then((response) => response.stream.toBytes());
 
   Future<dynamic> post(String url, { Map<String,Object?>? body }) async {
     final Request request = Request("POST", generateUri(url));

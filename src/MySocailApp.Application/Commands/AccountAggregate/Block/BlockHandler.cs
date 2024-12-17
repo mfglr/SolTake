@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.Block
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IMapper _mapper = mapper;
+        private IMapper _mapper = mapper;
 
         public async Task<BlockCommandResponseDto> Handle(BlockDto request, CancellationToken cancellationToken)
         {

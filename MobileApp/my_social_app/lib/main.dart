@@ -6,15 +6,24 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/global_error_handling.dart';
+import 'package:my_social_app/services/app_version_service.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/app_view.dart';
+import 'package:my_social_app/views/account/application_loading_page/application_loading_page.dart';
+import 'package:my_social_app/views/account/approve_privacy_policy_page/approve_privacy_policy_page.dart';
+import 'package:my_social_app/views/account/approve_terms_of_use_page/approve_terms_of_use_page.dart';
+import 'package:my_social_app/views/account/register_page/register_page.dart';
+import 'package:my_social_app/views/account/login_page/login_page.dart';
+import 'package:my_social_app/views/root_view.dart';
+import 'package:my_social_app/views/account/verify_email_page.dart/verify_email_page.dart';
 import 'package:my_social_app/views/take_image_page/take_image_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/take_video_page/take_vieo_page.dart';
+import 'package:my_social_app/views/update_app_page/update_app_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -49,6 +58,8 @@ Future<void> main() async {
     return true;
   };
 
+  
+
   runApp(
     StoreProvider(
       store: store,
@@ -62,7 +73,7 @@ Future<void> main() async {
         },
         converter: (store) => store.state.accountState,
         builder: (context,account) => MaterialApp(
-          title: 'SolTake',
+          title: 'SolTake', 
           locale: Locale(account?.language ?? PlatformDispatcher.instance.locale.languageCode),
           supportedLocales: const [
             Locale('en'),
@@ -78,7 +89,7 @@ Future<void> main() async {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: AppView(account: account),
+          home: MainView(account: account),
           routes: {
             takeImageRoute: (context) => TakeImagePage(cameras: cameras),
             takeVideoRoute: (context) => TakeVieoPage(cameras: cameras)
@@ -89,3 +100,58 @@ Future<void> main() async {
   );
 }
 
+class MainView extends StatefulWidget {
+  final AccountState? account;
+  const MainView({
+    super.key,
+    required this.account,
+  });
+
+  @override
+  State<MainView> createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
+  late final Future<bool> _isUpgradeRequired;
+  @override
+  void initState() {
+    super.initState();
+    _isUpgradeRequired = AppVersionService().isUpgradeRequired(packageInfo.version);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _isUpgradeRequired,
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.data!) return const UpdateAppPage();
+          return StoreConnector<AppState,bool>(
+            converter: (store) => store.state.isInitialized,
+            builder: (context, isInitialized){
+              if(isInitialized){
+                if(widget.account == null){
+                  return StoreConnector<AppState,ActiveLoginPage>(
+                    converter: (store) => store.state.loginState.activeLoginPage,
+                    builder: (context,activeLoginPage){
+                      if(activeLoginPage == ActiveLoginPage.appLodingPage) return const ApplicationLoadingPage();
+                      if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
+                      return const RegisterPage();
+                    },
+                  );
+                }
+                if(!widget.account!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
+                if(!widget.account!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
+                if(!widget.account!.isThirdPartyAuthenticated && !widget.account!.emailConfirmed) return const VerifyEmailPage();
+                if(widget.account!.accountDeletionStart) return const ApplicationLoadingPage();
+                return const RootView();
+              }
+              return const ApplicationLoadingPage();
+            }
+          );
+        }
+        return const ApplicationLoadingPage();
+      }
+    );
+  }
+}

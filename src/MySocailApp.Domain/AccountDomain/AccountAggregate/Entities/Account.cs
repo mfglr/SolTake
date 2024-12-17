@@ -126,7 +126,9 @@ namespace MySocailApp.Domain.AccountDomain.AccountAggregate.Entities
             if (!password.CompareValue(passwordConfirm))
                 throw new PassowordAndPasswordConfirmationNotMatchException();
 
-            var passworResetToken = PasswordResetToken ?? throw new InvalidTokenException();
+            var passworResetToken = PasswordResetToken;
+            if (passworResetToken == null)
+                throw new InvalidTokenException();
             passworResetToken.Check(token);
             
             Password = password;

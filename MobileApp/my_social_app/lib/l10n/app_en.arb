@@ -290,8 +290,6 @@
     "uploading_circle_failed_content": "Failed! Click to try again.",
 
     "update_page_app_button_content": "Update App",
-    "update_page_app_content": "A new version available. You need to update the app to continue using it!",
-
-    "generate_token_form_email_required_error": "Email is required!"
+    "update_page_app_content": "A new version available. You need to update the app to continue using it!"
 
 }

@@ -12,9 +12,10 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      email: json['email'] as String,
+      email: json['email'] as String?,
       userName: json['userName'] as String,
-      isEmailVerified: json['isEmailVerified'] as bool,
+      emailConfirmed: json['emailConfirmed'] as bool,
+      isThirdPartyAuthenticated: json['isThirdPartyAuthenticated'] as bool,
       language: json['language'] as String?,
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
@@ -28,7 +29,8 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'email': instance.email,
       'userName': instance.userName,
-      'isEmailVerified': instance.isEmailVerified,
+      'emailConfirmed': instance.emailConfirmed,
+      'isThirdPartyAuthenticated': instance.isThirdPartyAuthenticated,
       'isPrivacyPolicyApproved': instance.isPrivacyPolicyApproved,
       'isTermsOfUseApproved': instance.isTermsOfUseApproved,
       'language': instance.language,
