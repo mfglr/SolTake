@@ -183,6 +183,24 @@ namespace MySocailApp.Domain.AccountDomain.AccountAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
+        //blocking
+        public readonly List<Block> _blockers = [];
+        public IReadOnlyCollection<Block> Blockers => _blockers;
+        public Block Block(int blockerId)
+        {
+            if (_blockers.Any(x => x.BlockerId == blockerId))
+                throw new AccountIsAlreadyBlockedException();
+            var block = Entities.Block.Create(blockerId);
+            _blockers.Add(block);
+            return block;
+        }
+        public void Unblock(int blockerId)
+        {
+            var index = _blockers.FindIndex(x => x.BlockerId == blockerId);
+            if (index == -1) return;
+            _blockers.RemoveAt(index);
+        }
+
         //Tokens
         [NotMapped]
         public string AccessToken { get; internal set; } = null!;

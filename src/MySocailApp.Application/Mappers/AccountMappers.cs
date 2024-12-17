@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Commands.AccountAggregate;
+using MySocailApp.Application.Commands.AccountAggregate.Block;
 using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
@@ -16,6 +17,8 @@ namespace MySocailApp.Application.Mappers
                 .ForMember(dest => dest.IsPrivacyPolicyApproved, x => x.MapFrom(src => src.IsPrivacyPolicyApproved))
                 .ForMember(dest => dest.IsTermsOfUseApproved, x => x.MapFrom(src => src.IsTersmOfUseApproved))
                 .ForMember(dest => dest.IsGoogleAuthenticated, x => x.MapFrom(src => src.GoogleAccount != null));
+
+            CreateMap<Block,BlockCommandResponseDto>();
         }
     }
 }

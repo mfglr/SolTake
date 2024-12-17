@@ -15,6 +15,7 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.Roles)
+                .Include(x => x.Blockers)
                 .Include(x => x.VerificationTokens)
                 .Include(x => x.PasswordResestTokens)
                 .FirstOrDefaultAsync(x => x.Id == accountId, cancellationToken);
@@ -24,6 +25,7 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.Roles)
+                .Include(x => x.Blockers)
                 .Include(x => x.VerificationTokens)
                 .Include(x => x.PasswordResestTokens)
                 .FirstOrDefaultAsync(x => x.Email.Value == email.Value, cancellationToken);
@@ -33,6 +35,7 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.Roles)
+                .Include(x => x.Blockers)
                 .Include(x => x.VerificationTokens)
                 .Include(x => x.PasswordResestTokens)
                 .FirstOrDefaultAsync(x => x.UserName.Value == userName.Value, cancellationToken);
@@ -42,6 +45,7 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.Roles)
+                .Include(x => x.Blockers)
                 .Include(x => x.VerificationTokens)
                 .Include(x => x.PasswordResestTokens)
                 .FirstOrDefaultAsync(x => x.GoogleAccount.UserId == googleAccount.UserId, cancellationToken);

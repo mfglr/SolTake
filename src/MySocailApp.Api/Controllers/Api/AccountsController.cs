@@ -6,6 +6,7 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.AccountAggregate;
 using MySocailApp.Application.Commands.AccountAggregate.ApprovePrivacyPolicy;
 using MySocailApp.Application.Commands.AccountAggregate.ApproveTermsOfUse;
+using MySocailApp.Application.Commands.AccountAggregate.Block;
 using MySocailApp.Application.Commands.AccountAggregate.CreateAccount;
 using MySocailApp.Application.Commands.AccountAggregate.DeleteAccount;
 using MySocailApp.Application.Commands.AccountAggregate.GenerateResetPasswordToken;
@@ -15,6 +16,7 @@ using MySocailApp.Application.Commands.AccountAggregate.LoginByPassword;
 using MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken;
 using MySocailApp.Application.Commands.AccountAggregate.LogOut;
 using MySocailApp.Application.Commands.AccountAggregate.ResetPassword;
+using MySocailApp.Application.Commands.AccountAggregate.Unblock;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmail;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateEmailVerificationToken;
 using MySocailApp.Application.Commands.AccountAggregate.UpdateLanguage;
@@ -67,7 +69,7 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
@@ -75,7 +77,7 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task UpdateEmail(UpdateEmailDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
@@ -100,7 +102,25 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
         public async Task UpdateLanguage(UpdateLanguageDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request,cancellationToken);
-       
+
+        [HttpPost]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        public async Task<BlockCommandResponseDto> Block(BlockDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
+        [HttpPut]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        public async Task Unblock(UnblockDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
+
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckAccountFilterAttribute))]

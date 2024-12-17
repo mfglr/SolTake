@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySocailApp.Infrastructure.DbContexts;
 
@@ -11,9 +12,11 @@ using MySocailApp.Infrastructure.DbContexts;
 namespace MySocailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241217052909_CreateBlockTable")]
+    partial class CreateBlockTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,6 +155,9 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BlockedId")
                         .HasColumnType("int");
 
@@ -163,7 +169,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BlockedId");
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Block");
                 });
@@ -11727,9 +11733,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 {
                     b.HasOne("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", null)
                         .WithMany("Blockers")
-                        .HasForeignKey("BlockedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.EmailVerificationToken", b =>

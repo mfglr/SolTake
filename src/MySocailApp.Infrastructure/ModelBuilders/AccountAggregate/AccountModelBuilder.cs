@@ -23,6 +23,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AccountAggregate
 
 
             builder
+                .HasMany(x => x.Blockers)
+                .WithOne()
+                .HasForeignKey(x => x.BlockedId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
                 .HasMany(x => x.PrivacyPolicies)
                 .WithOne()
                 .HasForeignKey(x => x.AccountId)
