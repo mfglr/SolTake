@@ -2,9 +2,11 @@ import 'package:my_social_app/state/app_state/access_token_state/reducers.dart';
 import 'package:my_social_app/state/app_state/account_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/reducers.dart';
+import 'package:my_social_app/state/app_state/application_init_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/reducer.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/exam_state/reducers.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/home_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
@@ -26,25 +28,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:redux/redux.dart';
-
-bool appSuccessfullyInitReducer(bool oldState,Action action)
-  => action is ApplicationSuccessfullyInitAction ? true : oldState;
-
-//exams reducers//
-Pagination nextExamsReducer(Pagination prev,NextExamsAction action)
-  => prev.startLoadingNext();
-Pagination nextExamsSuccessReducer(Pagination prev,NextExamsSuccessAction action)
-  => prev.addNextPage(action.examIds);
-Pagination nextExamsFailedReducer(Pagination prev,NextExamsFailedAction action)
-  => prev.stopLoadingNext();
-Reducer<Pagination> examsReducers = combineReducers<Pagination>([
-  TypedReducer<Pagination,NextExamsAction>(nextExamsReducer).call,
-  TypedReducer<Pagination,NextExamsSuccessAction>(nextExamsSuccessReducer).call,
-  TypedReducer<Pagination,NextExamsFailedAction>(nextExamsFailedReducer).call,
-]);
-//exams reducers//
 
 
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
