@@ -1,6 +1,6 @@
 const String createEndPoint = "create";
 const String updateEmailVerificationTokenEndPoint = "UpdateEmailVerificationToken";
-const String verifyEmailByTokenEntPoint = "VerifyEmailByToken";
+const String verifyEmailEntPoint = "VerifyEmail";
 const String loginByPasswordEndPoint = "LoginByPassword";
 const String loginByFaceBookEndpoint = "LoginByFaceBook";
 const String loginByGoogleEndpoint = "LoginByGoogle";

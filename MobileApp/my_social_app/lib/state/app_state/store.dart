@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
@@ -10,7 +10,6 @@ import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/home_page_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
@@ -51,6 +50,7 @@ import 'package:redux/redux.dart';
 final store = Store(
   reducers,
   initialState: AppState(
+    activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     accountState: null,
     isInitialized: false,
@@ -82,8 +82,7 @@ final store = Store(
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
-    policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    loginState: LoginState(activeLoginPage: ActiveLoginPage.loginPage, language: PlatformDispatcher.instance.locale.languageCode)
+    policyState: const PolicyState(privacyPolicies: {}, termOfUses: {})
   ),
   middleware: [
     //exams middlewares

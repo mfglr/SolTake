@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
-import 'package:my_social_app/state/app_state/login_state/actions.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 
 
@@ -92,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
               if (_formKey.currentState!.validate()) {
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 store.dispatch(LoginByPasswordAction(emailOrPassword: _emailOrUserName.text, password: _password.text));
-                store.dispatch(const ChangeActiveLoginPageAction(activeLoginPage: ActiveLoginPage.appLodingPage));
+                store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.appLodingPage));
               }
             },
             child: Row(

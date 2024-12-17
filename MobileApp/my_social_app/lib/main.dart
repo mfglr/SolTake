@@ -9,7 +9,7 @@ import 'package:my_social_app/global_error_handling.dart';
 import 'package:my_social_app/services/app_version_service.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/account/application_loading_page/application_loading_page.dart';
@@ -129,11 +129,11 @@ class _MainViewState extends State<MainView> {
             builder: (context, isInitialized){
               if(isInitialized){
                 if(widget.account == null){
-                  return StoreConnector<AppState,ActiveLoginPage>(
-                    converter: (store) => store.state.loginState.activeLoginPage,
+                  return StoreConnector<AppState,ActiveAccountPage>(
+                    converter: (store) => store.state.activeAccountPage,
                     builder: (context,activeLoginPage){
-                      if(activeLoginPage == ActiveLoginPage.appLodingPage) return const ApplicationLoadingPage();
-                      if(activeLoginPage == ActiveLoginPage.loginPage) return const LoginPage();
+                      if(activeLoginPage == ActiveAccountPage.appLodingPage) return const ApplicationLoadingPage();
+                      if(activeLoginPage == ActiveAccountPage.loginPage) return const LoginPage();
                       return const RegisterPage();
                     },
                   );

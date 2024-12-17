@@ -27,10 +27,10 @@ class AccountService {
   Future<void> updateEmailVerificationToken() =>
     _appClient.put("$accountController/$updateEmailVerificationTokenEndPoint");
 
-  Future<void> verifyEmailByToken(String token) =>
+  Future<void> verifyEmail(String token) =>
     _appClient
       .put(
-        "$accountController/$verifyEmailByTokenEntPoint",
+        "$accountController/$verifyEmailEntPoint",
         body: { 'token': token }
       );
 

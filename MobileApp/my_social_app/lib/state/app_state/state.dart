@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
@@ -9,7 +10,6 @@ import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_
 import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
@@ -41,6 +41,7 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 @immutable
 class AppState{
   final bool isInitialized;
+  final ActiveAccountPage activeAccountPage;
   final String? accessToken;
   final AccountState? accountState;
   final UserEntityState userEntityState;
@@ -67,9 +68,9 @@ class AppState{
   final QuestionUserSaveEntityState questionUserSaveEntityState;
   final Pagination exams;
   final PolicyState policyState;
-  final LoginState loginState;
 
   const AppState({
+    required this.activeAccountPage,
     required this.accessToken,
     required this.accountState,
     required this.isInitialized,
@@ -97,10 +98,10 @@ class AppState{
     required this.questionUserSaveEntityState,
     required this.exams,
     required this.policyState,
-    required this.loginState,
   });
 
   AppState clear() => AppState(
+    activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     accountState: null,
     isInitialized: true,
@@ -133,7 +134,6 @@ class AppState{
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    loginState: LoginState(activeLoginPage: ActiveLoginPage.loginPage, language: PlatformDispatcher.instance.locale.languageCode)
   );
 
   //select messages
@@ -249,7 +249,7 @@ class AppState{
     => subjectEntityState.entities[subjectId]?.topics.ids.map((e) => topicEntityState.entities[e]!) ?? [];
 
   //select privacy policy
-  String? get selectPrivacyPolicy => policyState.privacyPolicies[loginState.language];
+  String? get selectPrivacyPolicy => policyState.privacyPolicies[accountState?.language];
   //select terms of use
-  String? get selectTermsOfUse => policyState.termOfUses[loginState.language];
+  String? get selectTermsOfUse => policyState.termOfUses[accountState?.language];
 }

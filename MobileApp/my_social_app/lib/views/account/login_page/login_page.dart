@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/login_state/actions.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/account/login_page/widgets/facebook_login_button.dart';
@@ -44,11 +44,6 @@ class LoginPage extends StatelessWidget {
               ],
             ),
 
-            // const Padding(
-            //   padding: EdgeInsets.only(left: 48,right: 48, top:20, bottom: 20),
-            //   child: LoginPageDiveder()
-            // ),
-
             Container(
               padding: const EdgeInsets.only(top: 5),
               child: Column(
@@ -56,7 +51,7 @@ class LoginPage extends StatelessWidget {
                   OutlinedButton(
                     onPressed: () {
                       final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(const ChangeActiveLoginPageAction(activeLoginPage: ActiveLoginPage.registerPage));
+                      store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

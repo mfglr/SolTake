@@ -1,12 +1,12 @@
 import 'package:my_social_app/state/app_state/account_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/app_state/active_account_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/reducer.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/home_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/login_state/reducer.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_image_entity_state/reducers.dart';
@@ -51,6 +51,7 @@ Reducer<Pagination> examsReducers = combineReducers<Pagination>([
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
+  activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
   accountState: accoutStateReducers(prev.accountState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
@@ -78,7 +79,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
   exams: examsReducers(prev.exams,action),
   policyState: policyReducers(prev.policyState,action),
-  loginState: loginReducers(prev.loginState,action),
 );
 
 Reducer<AppState> reducers = combineReducers<AppState>([
