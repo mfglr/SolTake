@@ -20,7 +20,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion
                 await _questionWriteRepository.GetQuestionWithImagesAsync(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (question.AppUserId != accountId)
+            if (question.UserId != accountId)
                 throw new PermissionDeniedToDeleteQuestionException();
             _questionWriteRepository.Delete(question);
             await _unitOfWork.CommitAsync(cancellationToken);

@@ -1,6 +1,6 @@
 ﻿namespace MySocailApp.Core
 {
-    public enum MedyaType
+    public enum MediaType
     {
         Image = 0,
         Video = 1,

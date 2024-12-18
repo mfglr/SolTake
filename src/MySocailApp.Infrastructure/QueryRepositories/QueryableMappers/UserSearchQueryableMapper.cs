@@ -32,7 +32,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             user.Name,
                             user.Biography.Value,
                             user.HasImage,
-                            context.Questions.Count(q => q.AppUserId == user.Id),
+                            context.Questions.Count(q => q.UserId == user.Id),
                             context.Follows.Count(f => f.FollowedId == user.Id),
                             context.Follows.Count(f => f.FollowerId == user.Id),
                             context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),

@@ -34,19 +34,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => GetFirstAsync(accountId, x => x.Id == id, cancellationToken);
 
         public Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.AppUserId != accountId, cancellationToken);
+            => GetListAsync(accountId, page, x => x.UserId != accountId, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetUserQuestionsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.AppUserId == userId, cancellationToken);
+            => GetListAsync(accountId, page, x => x.UserId == userId, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetTopicQuestionsAsync(int topicId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Topic.Id == topicId && x.AppUserId != accountId, cancellationToken);
+            => GetListAsync(accountId, page, x => x.Topic.Id == topicId && x.UserId != accountId, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Subject.Id == subjectId && x.AppUserId != accountId, cancellationToken);
+            => GetListAsync(accountId, page, x => x.Subject.Id == subjectId && x.UserId != accountId, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Exam.Id == examId && x.AppUserId != accountId, cancellationToken);
+            => GetListAsync(accountId, page, x => x.Exam.Id == examId && x.UserId != accountId, cancellationToken);
         
         public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
             => GetListAsync(
@@ -56,7 +56,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                     (examId == null || x.Exam.Id == examId) &&
                     (subjectId == null || x.Subject.Id == subjectId) &&
                     (topicId == null || x.Topic.Id == topicId) &&
-                    x.AppUserId != accountId,
+                    x.UserId != accountId,
                 cancellationToken
             );
 
@@ -65,7 +65,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 accountId,
                 page,
                 q => 
-                    q.AppUserId == userId && 
+                    q.UserId == userId && 
                     _context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
                 cancellationToken
             );
@@ -74,7 +74,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => GetListAsync(
                 accountId,
                 page,
-                q => q.AppUserId == userId &&
+                q => q.UserId == userId &&
                 !_context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
                 cancellationToken
             );

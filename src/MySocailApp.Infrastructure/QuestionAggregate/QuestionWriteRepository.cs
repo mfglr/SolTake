@@ -2,7 +2,6 @@
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
-using System.Runtime.InteropServices;
 
 namespace MySocailApp.Infrastructure.QuestionAggregate
 {
@@ -23,7 +22,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 
         public Task<Question?> GetQuestionWithImagesAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
         public Task<Question?> GetQuestionWithSaveAsync(int questionId, int saverId, CancellationToken cancellationToken)
@@ -39,13 +38,13 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 
         public Task<Question?> GetQuestionAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
         public Task<List<Question>> GetUserQuestionsAsync(int userId, CancellationToken cancellationToken)
             => _context.Questions
-                .Include(x => x.Images)
-                .Where(x => x.AppUserId == userId)
+                .Include(x => x.Medias)
+                .Where(x => x.UserId == userId)
                 .ToListAsync(cancellationToken);
 
         public async Task DeleteQuestionUserLikesByUserId(int userId, CancellationToken cancellationToken)

@@ -6,8 +6,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Exceptions
 {
     public class SolutionContentRequiredException : AppException
     {
-        private readonly static string _messageEn = "You must upload images or a video or type something about questions!";
-        private readonly static string _messageTr = "Çözüme hakkında bir şeyler yazmalı ya da resim veya video yüklemelisin!";
+        private readonly static string _messageEn = "You must upload content related to the solution!";
+        private readonly static string _messageTr = "Çözümle ilgili içerik yüklemelisin!";
         private readonly static Dictionary<string, string> _messages = new() {
             { Languages.EN, _messageEn },
             { Languages.TR, _messageTr }

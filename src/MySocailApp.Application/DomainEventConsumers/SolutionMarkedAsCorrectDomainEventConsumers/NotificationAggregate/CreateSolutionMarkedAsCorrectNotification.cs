@@ -19,7 +19,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsCorrectDo
             var solution = notification.Solution;
             var question = notification.Question;
 
-            var n = Notification.SolutionMarkedAsCorrectNotification(solution.AppUserId, question.AppUserId, solution.QuestionId, solution.Id);
+            var n = Notification.SolutionMarkedAsCorrectNotification(solution.AppUserId, question.UserId, solution.QuestionId, solution.Id);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

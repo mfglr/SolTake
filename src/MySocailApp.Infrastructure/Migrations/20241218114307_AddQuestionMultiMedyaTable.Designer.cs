@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySocailApp.Infrastructure.DbContexts;
 
@@ -11,9 +12,11 @@ using MySocailApp.Infrastructure.DbContexts;
 namespace MySocailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241218114307_AddQuestionMultiMedyaTable")]
+    partial class AddQuestionMultiMedyaTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -876,7 +879,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("Solutions");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionMultimedia", b =>
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -888,20 +891,17 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Duration")
-                        .HasColumnType("float");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Height")
                         .HasColumnType("float");
 
-                    b.Property<int>("MediaType")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("SolutionId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Width")
                         .HasColumnType("float");
@@ -910,7 +910,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("SolutionId");
 
-                    b.ToTable("SolutionMultimedia");
+                    b.ToTable("SolutionImage");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserSave", b =>
@@ -12069,10 +12069,10 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionMultimedia", b =>
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionImage", b =>
                 {
                     b.HasOne("MySocailApp.Domain.SolutionAggregate.Entities.Solution", null)
-                        .WithMany("Medias")
+                        .WithMany("Images")
                         .HasForeignKey("SolutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -12234,7 +12234,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.Solution", b =>
                 {
-                    b.Navigation("Medias");
+                    b.Navigation("Images");
 
                     b.Navigation("Savers");
 

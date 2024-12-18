@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Blobs\QuestionImages\**" />
+    <Content Remove="Blobs\QuestionImages\**" />
+    <EmbeddedResource Remove="Blobs\QuestionImages\**" />
+    <None Remove="Blobs\QuestionImages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="appsettings.production.json" />
   </ItemGroup>
 
@@ -63,9 +70,8 @@
 
   <ItemGroup>
     <Folder Include="Blobs\MessageImages\" />
-    <Folder Include="Blobs\QuestionImages\" />
-    <Folder Include="Blobs\SolutionImages\" />
-    <Folder Include="Blobs\SolutionVideos\" />
+    <Folder Include="Blobs\QuestionMedias\" />
+    <Folder Include="Blobs\SolutionMedias\" />
     <Folder Include="Temp\" />
   </ItemGroup>
 

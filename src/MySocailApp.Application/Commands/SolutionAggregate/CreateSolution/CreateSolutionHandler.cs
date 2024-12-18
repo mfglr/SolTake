@@ -11,29 +11,28 @@ using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
 {
-    public class CreateSolutionHandler(SolutionCreatorDomainService solutionCreator, IUnitOfWork unitOfWork, IAccessTokenReader tokenReader, IImageService imageService, ISolutionQueryRepository solutionQueryRepository, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService) : IRequestHandler<CreateSolutionDto, SolutionResponseDto>
+    public class CreateSolutionHandler(SolutionCreatorDomainService solutionCreator, IUnitOfWork unitOfWork, IAccessTokenReader tokenReader, ISolutionQueryRepository solutionQueryRepository, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, IMultimedyaService multimediaService) : IRequestHandler<CreateSolutionDto, SolutionResponseDto>
     {
         private readonly SolutionCreatorDomainService _solutionCreator = solutionCreator;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IImageService _imageService = imageService;
         private readonly IBlobService _blobService = blobService;
+        private readonly IMultimedyaService _multimediaService = multimediaService;
         private readonly ISolutionQueryRepository _solutionQueryRepository = solutionQueryRepository;
 
         public async Task<SolutionResponseDto> Handle(CreateSolutionDto request, CancellationToken cancellationToken)
         {
-            List<AppImage> appImages = [];
+            IEnumerable<SolutionMultimedia> medias = [];
             try
             {
                 //uploading images
-                appImages = await _imageService.UploadAsync(ContainerName.SolutionImages, request.Images, cancellationToken);
+                medias = (await _multimediaService.UploadAsync(ContainerName.SolutionMedias, request.Images, cancellationToken)).Select(x => new SolutionMultimedia(x));
 
                 //create solution
                 var userId = _tokenReader.GetRequiredAccountId();
                 var content = new SolutionContent(request.Content ?? "");
-                var images = appImages.Select(x => SolutionImage.Create(x.BlobName, x.Dimention.Height, x.Dimention.Width));
-                var solution = new Solution(request.QuestionId, userId, content, images);
+                var solution = new Solution(request.QuestionId, userId, content, medias);
                 await _solutionCreator.CreateAsync(solution, cancellationToken);
                 await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
 
@@ -44,8 +43,8 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
             }
             catch (Exception)
             {
-                foreach (var appImage in appImages)
-                    await _blobService.DeleteAsync(appImage.ContainerName, appImage.BlobName, cancellationToken);
+                foreach (var media in medias)
+                    await _blobService.DeleteAsync(ContainerName.SolutionMedias, media.BlobName, cancellationToken);
                 throw;
             }
         }

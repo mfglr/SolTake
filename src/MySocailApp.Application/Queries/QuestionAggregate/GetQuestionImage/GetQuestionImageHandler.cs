@@ -18,10 +18,10 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage
                 throw new QuestionNotFoundException();
 
             var image = 
-                question.Images.FirstOrDefault(x => x.Id == request.QuestionImageId) ??
+                question.Medias.FirstOrDefault(x => x.Id == request.QuestionImageId) ??
                 throw new QuestionImageNotFoundException();
 
-            var stream = await _blobService.ReadAsync(ContainerName.QuestionImages, image.BlobName, cancellationToken);
+            var stream = await _blobService.ReadAsync(ContainerName.QuestionMedias, image.BlobName, cancellationToken);
             return stream;
         }
     }

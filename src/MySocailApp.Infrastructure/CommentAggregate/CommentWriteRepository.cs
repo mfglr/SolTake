@@ -52,7 +52,7 @@ namespace MySocailApp.Infrastructure.CommentAggregate
         }
         public async Task RemoveCommentUserTagsByUserId(int userId, CancellationToken cancellationToken)
         {
-            var tags = await _context.CommentUserTags.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            var tags = await _context.CommentUserTags.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
             _context.CommentUserTags.RemoveRange(tags);
         }
     }

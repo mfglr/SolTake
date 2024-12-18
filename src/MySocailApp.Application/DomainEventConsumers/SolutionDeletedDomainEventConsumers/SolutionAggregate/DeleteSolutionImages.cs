@@ -11,8 +11,8 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionDeletedDomainEven
 
         public async Task Handle(SolutionDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            foreach(var image in notification.Solution.Images)
-                await _blobService.DeleteAsync(ContainerName.SolutionImages, image.BlobName, cancellationToken);
+            foreach(var media in notification.Solution.Medias)
+                await _blobService.DeleteAsync(ContainerName.SolutionMedias, media.BlobName, cancellationToken);
         }
     }
 }

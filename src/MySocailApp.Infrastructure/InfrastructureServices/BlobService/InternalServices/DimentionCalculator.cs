@@ -8,7 +8,6 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Internal
 {
     public class DimentionCalculator
     {
-
         private void Transform(Image image)
         {
             var profile = image.Metadata.ExifProfile;

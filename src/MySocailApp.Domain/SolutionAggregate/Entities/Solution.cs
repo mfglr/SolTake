@@ -14,22 +14,22 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public SolutionContent Content { get; private set; } = null!;
         public SolutionVideo? Video { get; private set; }
         public bool HasVideo { get; private set; }
-        private readonly List<SolutionImage> _images = [];
-        public IReadOnlyCollection<SolutionImage> Images => _images;
+        private readonly List<SolutionMultimedia> _medias = [];
+        public IReadOnlyCollection<SolutionMultimedia> Medias => _medias;
 
-        public Solution(int questionId, int userId, SolutionContent content, IEnumerable<SolutionImage> images)
+        public Solution(int questionId, int userId, SolutionContent content, IEnumerable<SolutionMultimedia> medias)
         {
-            if ((content == null || content.Value.Trim() == "") && !images.Any())
+            if ((content == null || content.Value.Trim() == "") && !medias.Any())
                 throw new SolutionContentRequiredException();
-            if (images.Count() > 3)
-                throw new TooManySolutionImageException();
+            if (medias.Count() > 3)
+                throw new TooManySolutionMediaException();
 
             ArgumentNullException.ThrowIfNull(content);
 
             QuestionId = questionId;
             AppUserId = userId;
             Content = content;
-            _images.AddRange(images);
+            _medias.AddRange(medias);
             State = SolutionState.Pending;
         }
         public Solution(int questionId, int userId, SolutionContent content, SolutionVideo video)

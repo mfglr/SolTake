@@ -21,7 +21,7 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
         public async Task<Solution?> GetSolutionWithImagesByIdAsync(int id,CancellationToken cancellationToken)
             => await _context.Solutions
                 .AsNoTracking()
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public async Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken)

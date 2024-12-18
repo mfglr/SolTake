@@ -108,13 +108,15 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<DimentionCalculator>()
                 .AddScoped<FrameCatcher>()
                 .AddScoped<VideoDurationCalculator>()
+                .AddScoped<VideoDimentionCalculator>()
                 .AddScoped<PathFinder>()
                 .AddScoped<VideoFastStartConverter>()
                 .AddScoped<TempDirectoryService>()
                 .AddScoped<IBlobService, LocalBlobService>()
                 .AddScoped<IImageService, ImageService>()
                 .AddScoped<ITextService, TextService>()
-                .AddScoped<IVideoService, VideoService>();
+                .AddScoped<IVideoService, VideoService>()
+                .AddScoped<IMultimedyaService,MultiMediaService>();
 
 
         private static IServiceCollection AddDbContext(this IServiceCollection services)

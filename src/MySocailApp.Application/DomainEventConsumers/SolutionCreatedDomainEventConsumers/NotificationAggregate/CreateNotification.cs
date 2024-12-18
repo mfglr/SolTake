@@ -19,7 +19,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCreatedDomainEven
             var solution = notification.Solution;
             var question = notification.Question;
 
-            var n = Notification.SolutionCreatedNotification(question.AppUserId, question.Id, solution.Id, solution.AppUserId);
+            var n = Notification.SolutionCreatedNotification(question.UserId, question.Id, solution.Id, solution.AppUserId);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
             await _publisher.Publish(new SolutionNotificationCreatedDomainEvent(n), cancellationToken);

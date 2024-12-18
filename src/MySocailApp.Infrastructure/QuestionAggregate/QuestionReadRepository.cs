@@ -22,7 +22,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
             => await _context
                 .Questions
                 .AsNoTracking()
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

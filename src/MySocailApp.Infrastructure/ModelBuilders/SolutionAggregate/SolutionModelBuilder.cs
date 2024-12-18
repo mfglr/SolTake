@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
             builder.OwnsOne(x => x.Video);
 
             builder
-                .HasMany(x => x.Images)
+                .HasMany(x => x.Medias)
                 .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);

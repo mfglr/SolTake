@@ -38,8 +38,8 @@ namespace MySocailApp.Api.Controllers.Api
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<QuestionResponseDto> Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] int? topicId, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
-            => await _mediator.Send(new CreateQuestionDto(examId, subjectId, topicId, content, images), cancellationToken);
+        public async Task<QuestionResponseDto> Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] int? topicId, [FromForm] IFormFileCollection medias, CancellationToken cancellationToken)
+            => await _mediator.Send(new CreateQuestionDto(examId, subjectId, topicId, content, medias), cancellationToken);
 
         [HttpDelete("{questionId}")]
         public async Task Delete(int questionId, CancellationToken cancellationToken)

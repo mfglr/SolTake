@@ -19,7 +19,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsIncorrect
             var solution = notification.Solution;
             var question = notification.Question;
 
-            var n = Notification.SolutionMarkedAsIncorrectNotification(solution.AppUserId, question.AppUserId, question.Id, solution.Id);
+            var n = Notification.SolutionMarkedAsIncorrectNotification(solution.AppUserId, question.UserId, question.Id, solution.Id);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
             await _publisher.Publish(new SolutionMarkedAsIncorrectNotificationCreatedDomainEvent(n));

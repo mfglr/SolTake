@@ -47,14 +47,17 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             join1.solution.AppUserId == accountId,
                             join1.solution.Savers.Any(s => s.AppUserId == accountId),
                             join1.solution.HasVideo,
-                            question.AppUserId == accountId,
-                            join1.solution.Images.Select(
-                                i => new SolutionImageResponseDto(
+                            question.UserId == accountId,
+                            join1.solution.Medias.Select(
+                                i => new SolutionMediaResponseDto(
                                     i.Id,
                                     i.SolutionId,
                                     i.BlobName,
+                                    i.Size,
                                     i.Height,
-                                    i.Width
+                                    i.Width,
+                                    i.Duration,
+                                    i.MediaType
                                 )
                             )
                         )

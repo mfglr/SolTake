@@ -17,7 +17,7 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventC
         public async Task Handle(QuestionLikedDomainEvent notification, CancellationToken cancellationToken)
         {
             var question = notification.Question;
-            var n = Notification.QuestionLikedNotification(question.AppUserId, question.Id, notification.Like.AppUserId);
+            var n = Notification.QuestionLikedNotification(question.UserId, question.Id, notification.Like.AppUserId);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

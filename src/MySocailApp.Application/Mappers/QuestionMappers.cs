@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Mappers
         public QuestionMappers()
         {
             CreateMap<QuestionUserLike, QuestionUserLikeResponseDto>();
-            CreateMap<QuestionImage, QuestionImageResponseDto>();
+            CreateMap<QuestionMultimedia, QuestionMultimediaResponseDto>();
             CreateMap<QuestionUserLike, LikeQuestionCommandResponseDto>();
             CreateMap<QuestionUserSave, SaveQuestionCommandResponseDto>();
         }

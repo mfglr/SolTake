@@ -18,10 +18,10 @@ namespace MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage
                 throw new SolutionNotFoundException();
             
             var image = 
-                solution.Images.FirstOrDefault(x => x.Id == request.SolutionImageId) ??
+                solution.Medias.FirstOrDefault(x => x.Id == request.SolutionImageId) ??
                 throw new SolutionImageIsNotFoundException();
 
-            return await _blobService.ReadAsync(ContainerName.SolutionImages, image.BlobName, cancellationToken);
+            return await _blobService.ReadAsync(ContainerName.SolutionMedias, image.BlobName, cancellationToken);
         }
     }
 }

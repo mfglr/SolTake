@@ -35,7 +35,7 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
 
         public Task<Solution?> GetWithImagesByIdAsync(int id, CancellationToken cancellationToken)
             => _context.Solutions
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public Task<Solution?> GetWithSaverByIdAsync(int solutionId, int saverId, CancellationToken cancellationToken)
@@ -45,19 +45,19 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
         
         public Task<List<Solution>> GetUserSolutionsAsync(int userId, CancellationToken cancellationToken)
             => _context.Solutions
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .Where(x => x.AppUserId == userId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<Solution>> GetQuestionSolutionsAsync(int questionId, CancellationToken cancellationToken)
             => _context.Solutions
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .Where(x => x.QuestionId == questionId)
                 .ToListAsync(cancellationToken);
 
         public Task<Solution?> GetSolutionAsync(int solutionId, CancellationToken cancellationToken)
             => _context.Solutions
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
 
         public async Task DeleteSolutionUserSavesByUserId(int userId, CancellationToken cancellation)

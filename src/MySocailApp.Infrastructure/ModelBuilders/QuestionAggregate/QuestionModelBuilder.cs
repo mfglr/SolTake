@@ -15,7 +15,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
 
 
             builder
-                .HasMany(x => x.Images)
+                .HasMany(x => x.Medias)
                 .WithOne()
                 .HasForeignKey(x => x.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);

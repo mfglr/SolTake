@@ -27,8 +27,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             context.Solutions.Any(s => s.QuestionId == question.Id && s.State == SolutionState.Correct) 
                                 ? QuestionState.Solved
                                 : QuestionState.Unsolved,
-                            question.AppUserId == accountId,
-                            question.AppUserId,
+                            question.UserId == accountId,
+                            question.UserId,
                             join.UserName.Value,
                             question.Content.Value,
                             question.Likes.Any(x => x.AppUserId == accountId),
@@ -41,7 +41,18 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             question.Exam,
                             question.Subject,
                             question.Topic,
-                            question.Images.Select(i => new QuestionImageResponseDto(i.Id, i.QuestionId, i.BlobName, i.Height, i.Width))
+                            question.Medias.Select(
+                                i => new QuestionMultimediaResponseDto(
+                                    i.Id,
+                                    i.QuestionId,
+                                    i.BlobName,
+                                    i.Size,
+                                    i.Height,
+                                    i.Width,
+                                    i.Duration,
+                                    i.MediaType
+                                )
+                            )
                         )
                     )
                 );

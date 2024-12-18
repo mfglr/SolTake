@@ -17,13 +17,13 @@ class QuestionService{
   static final QuestionService _singleton = QuestionService._(AppClient());
   factory QuestionService() => _singleton;
 
-  Future<MultipartRequest> _createQuestionRequest(Iterable<XFile> images,int examId,int subjectId,int? topicId,String? content) async{
+  Future<MultipartRequest> _createQuestionRequest(Iterable<XFile> medias,int examId,int subjectId,int? topicId,String? content) async{
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")
     );
-    for(final image in images){
-      request.files.add(await MultipartFile.fromPath("images",image.path));
+    for(final media in medias){
+      request.files.add(await MultipartFile.fromPath("meidas", media.path));
     }
     if(topicId != null) request.fields["topicId"] = topicId.toString();
     request.fields["examId"] = examId.toString();
