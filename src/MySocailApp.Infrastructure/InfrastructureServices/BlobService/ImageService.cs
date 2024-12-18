@@ -66,6 +66,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 List<AppImage> images = [];
                 foreach (var file in files)
                     images.Add(await InternalUploadAsync(containerName, file, cancellationToken));
+
                 _tempDirectoryService.Delete();
                 return images;
             }

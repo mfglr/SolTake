@@ -43,6 +43,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 var blobName = _blobNameGenerator.Generate();
                 using var fastStartVideo = File.OpenRead(output);
                 await _blobService.UploadAsync(fastStartVideo, containerName, blobName, cancellationToken);
+                fastStartVideo.Close();
 
                 //delete the temp directory created
                 _tempDirectoryService.Delete();
