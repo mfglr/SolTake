@@ -16,7 +16,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 await _questionRepository.GetAsync(solution.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (question.AppUserId == solution.AppUserId)
+            if (question.UserId == solution.AppUserId)
                 throw new PermessionDeniedToSolveYourQuestionException();
 
             solution.Create();

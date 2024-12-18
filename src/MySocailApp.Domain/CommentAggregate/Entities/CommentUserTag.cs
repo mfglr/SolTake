@@ -7,9 +7,9 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public int CommentId { get; private set; }
-        public int AppUserId { get; private set; }
+        public int UserId { get; private set; }
 
-        private CommentUserTag(int appUserId) => AppUserId = appUserId;
-        public static CommentUserTag Create(int appUserId) => new (appUserId) { CreatedAt = DateTime.UtcNow };
+        private CommentUserTag(int userId) => UserId = userId;
+        public static CommentUserTag Create(int userId) => new (userId) { CreatedAt = DateTime.UtcNow };
     }
 }

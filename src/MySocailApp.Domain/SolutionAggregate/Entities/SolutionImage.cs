@@ -6,12 +6,12 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
     {
         public int SolutionId { get; private set; }
         public string BlobName { get; private set; } = null!;
-        public float Height { get; private set; }
-        public float Width { get; private set; }
+        public double Height { get; private set; }
+        public double Width { get; private set; }
 
         private SolutionImage() { }
 
-        public static SolutionImage Create(string blobName, float height, float width)
+        public static SolutionImage Create(string blobName, double height, double width)
             =>
             new ()
             {

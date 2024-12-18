@@ -11,25 +11,26 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public readonly static int MaxTopicCountPerQuestion = 3;
         public readonly static int MaxImageCountPerQuestion = 3;
 
-        public int AppUserId { get; private set; }
+        public int UserId { get; private set; }
         public QuestionExam Exam { get; private set; } = null!;
         public QuestionSubject Subject { get; private set; } = null!;
         public QuestionTopic? Topic { get; private set; }
-        public QuestionContent Content { get; private set; }
-        private readonly List<QuestionImage> _images = [];
-        public IReadOnlyCollection<QuestionImage> Images => _images;
+        public QuestionContent? Content { get; private set; }
+        private readonly List<QuestionMultimedya> _medias = [];
+        public IReadOnlyCollection<QuestionMultimedya> Medias => _medias;
 
-        public Question(int userId, QuestionContent content, IEnumerable<QuestionImage> images)
+        public Question(int userId, QuestionContent content, IEnumerable<QuestionMultimedya> medias)
         {
-            if (!images.Any())
+            if (!medias.Any())
                 throw new QuestionImageIsRequiredException();
-            if (images.Count() > MaxImageCountPerQuestion)
+            if (medias.Count() > MaxImageCountPerQuestion)
                 throw new TooManyQuestionImagesException();
 
-            AppUserId = userId;
+            UserId = userId;
             Content = content;
-            _images.AddRange(images);
+            _medias.AddRange(medias);
         }
+
         internal void Create(QuestionExam exam, QuestionSubject subject, QuestionTopic? topic)
         {
             Exam = exam;
@@ -51,7 +52,7 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
             var like = QuestionUserLike.Create(likerId);
             _likes.Add(like);
-            if (likerId != AppUserId && !_likeNotifications.Any(x => x.AppUserId == likerId))
+            if (likerId != UserId && !_likeNotifications.Any(x => x.AppUserId == likerId))
             {
                 _likeNotifications.Add(new QuestionUserLikeNotification(likerId));
                 AddDomainEvent(new QuestionLikedDomainEvent(this, like));

@@ -1,4 +1,4 @@
 ﻿namespace MySocailApp.Application.InfrastructureServices.BlobService.Objects
 {
-    public record Dimention(float Height, float Width);
+    public record Dimention(double Height, double Width);
 }

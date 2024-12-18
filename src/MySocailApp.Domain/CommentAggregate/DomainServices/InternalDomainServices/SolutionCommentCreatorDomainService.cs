@@ -19,8 +19,8 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices.InternalDomainServi
                 comment.AddDomainEvent(new SolutionCommentCreatedDomainEvent(solution, comment));
 
             foreach (var tag in comment.Tags)
-                if (tag.AppUserId != comment.AppUserId && tag.AppUserId != solution.AppUserId)
-                    comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, tag.AppUserId));
+                if (tag.UserId != comment.AppUserId && tag.UserId != solution.AppUserId)
+                    comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, tag.UserId));
         }
     }
 }

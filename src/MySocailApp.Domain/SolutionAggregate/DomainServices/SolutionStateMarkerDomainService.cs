@@ -16,7 +16,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 await _questionReadRepository.GetAsync(solution.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (markerId != question.AppUserId)
+            if (markerId != question.UserId)
                 throw new PermissionDeniedToChangeStateOfSolution();
 
             solution.MarkAsCorrect();
@@ -29,7 +29,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 await _questionReadRepository.GetAsync(solution.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (markerId != question.AppUserId)
+            if (markerId != question.UserId)
                 throw new PermissionDeniedToChangeStateOfSolution();
 
             solution.MarkAsIncorrect();

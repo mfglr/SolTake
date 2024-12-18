@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
     public class VideoService(IBlobService blobService, VideoFastStartConverter videoFastStartConverter, FrameCatcher frameCatcher, VideoDurationCalculator videoDurationCalculator, TempDirectoryService tempDirectoryService, UniqNameGenerator blobNameGenerator) : IVideoService
     {
-        public readonly static int MaxVideoDuration = 120;
+        public readonly static int MaxVideoDuration = 300;
         public readonly static long MaxVideoLenghtMB = 150;
         public readonly static long MaxVideoLength = 157286400;//150 mb
 
@@ -35,6 +35,8 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 
                 //calculate duration of the video
                 var duration = _videoDurationCalculator.Calculate(input);
+                if (duration > MaxVideoDuration)
+                    throw new VideoDurationException();
 
                 //convert video to fast start;
                 var output = await _videoFastStartConverter.Convert(input, cancellationToken);
