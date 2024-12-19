@@ -1,11 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/enums/multimedia_type.dart';
-import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/multimedia_state/multimedia_state.dart';
-import 'package:my_social_app/views/multimedia_slider/multimedia_image_player.dart';
-import 'package:my_social_app/views/multimedia_slider/multimedia_video_player.dart';
-import 'package:video_player/video_player.dart';
+import 'package:my_social_app/views/shared/multimedia_slider/multimedia_image_player.dart';
+import 'package:my_social_app/views/shared/multimedia_slider/multimedia_video_player.dart';
 
 class MultimediaSlider extends StatefulWidget {
   final Iterable<MultimediaState> medias;
@@ -20,23 +18,6 @@ class MultimediaSlider extends StatefulWidget {
 
 class _MultimediaSliderState extends State<MultimediaSlider> {
   final CarouselSliderController _controller = CarouselSliderController();
-  // late final Iterable<VideoPlayerController> _controllers;
-  // final AppClient _appClient = AppClient();
-
-  // @override
-  // void initState() {
-  //   _controllers = widget.medias
-  //     .where((media) => media.multimediaType == MultimediaType.video)
-  //     .map((media){
-  //       var url = _appClient.generateUri("blobs/${media.containerName}/${media.blobName}");
-  //       var controller = VideoPlayerController.networkUrl(url, httpHeaders: _appClient.getHeader());
-  //       controller.setLooping(true);
-  //       return controller;
-  //     });
-
-  //   super.initState();
-  // }
-
   double _calculateHeight(){
     double minAspectRatio = double.maxFinite;
     for(var media in widget.medias){

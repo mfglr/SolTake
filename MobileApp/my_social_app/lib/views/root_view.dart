@@ -11,12 +11,13 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/account/pages/application_loading_page.dart';
-import 'package:my_social_app/views/multimedia_slider/multimedia_slider.dart';
+import 'package:my_social_app/views/shared/multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/views/shared/icon_with_badge.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
 import 'package:my_social_app/views/search/pages/search_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page.dart';
+import 'package:my_social_app/views/shared/video_page_slider/video_page_slider.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 const medias = [
@@ -105,7 +106,10 @@ class _RootViewState extends State<RootView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: const MultimediaSlider(medias: medias));
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: const VideoPageSlider(videos: medias)
+    );
     return StoreConnector<AppState,UserState?>(
       onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
       converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],

@@ -71,6 +71,7 @@ dependencies:
   package_info_plus:
   url_launcher:
   flutter_cache_manager: ^3.4.1
+  audio_video_progress_bar: ^2.0.3
   
 dev_dependencies:
   flutter_test:

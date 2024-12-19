@@ -5,10 +5,11 @@ import 'package:video_player/video_player.dart';
 
 class MultimediaVideoPlayer extends StatefulWidget {
   final MultimediaState state;
-  // final VideoPlayerController controler;
+  final bool autoPlay;
   const MultimediaVideoPlayer({
     super.key,
     required this.state,
+    this.autoPlay = false
   });
 
   @override
@@ -34,7 +35,13 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
     _controller = VideoPlayerController.networkUrl(_url, httpHeaders: _appClient.getHeader());
     _controller.setLooping(true);
     _controller.addListener(_setRemainingDuration);
-    _controller.initialize();
+    _controller
+      .initialize()
+      .then((_){
+        if(widget.autoPlay){
+          _controller.play().then((_) => setState(() {}));
+        }
+      });
     super.initState();
   }
 
