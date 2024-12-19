@@ -4,7 +4,7 @@ import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/image_state/image_status.dart';
+import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -98,7 +98,7 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionImageAction){
     final image = store.state.solutionEntityState.entities[action.solutionId]!.images.elementAt(action.index);
-    if(image.state == ImageStatus.notStarted){
+    if(image.state == MultimediaStatus.notStarted){
       SolutionService()
         .getSolutionImage(action.solutionId,image.id)
         .then((image) => store.dispatch(

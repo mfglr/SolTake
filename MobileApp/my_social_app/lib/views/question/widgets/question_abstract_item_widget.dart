@@ -34,8 +34,8 @@ class _QuestionAbstractItemWidgetState extends State<QuestionAbstractItemWidget>
       padding: const EdgeInsets.all(1.0),
       child: DisplayImageWidget(
         onTap: widget.onTap != null ? (){ widget.onTap!(widget.question.id); } : null,
-        image: widget.question.images.first.data,
-        status: widget.question.images.first.state,
+        image: widget.question.medias.first.data,
+        status: widget.question.medias.first.state,
         width: 0,
         aspectRatio: 1,
         stackFit: StackFit.expand,

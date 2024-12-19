@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/models/solution_image.dart';
+import 'package:my_social_app/models/solution_multimedia.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 part 'solution.g.dart';
@@ -24,7 +24,7 @@ class Solution{
   final int numberOfUpvotes;
   final bool isDownvoted;
   final int numberOfDownvotes;
-  final Iterable<SolutionImage> images;
+  final Iterable<SolutionMultimedia> medias;
   final int numberOfComments;
   final int state;
 
@@ -43,7 +43,7 @@ class Solution{
     required this.numberOfUpvotes,
     required this.isDownvoted,
     required this.numberOfDownvotes,
-    required this.images,
+    required this.medias,
     required this.numberOfComments,
     required this.state
   });
@@ -64,7 +64,7 @@ class Solution{
       hasVideo: hasVideo,
       userName: userName,
       content: content,
-      images: images.map((e) => e.toSolutionImageState()),
+      images: medias.map((e) => e.toSolutionImageState()),
       numberOfComments: numberOfComments,
       comments: Pagination.init(commentsPerPage,true),
       isUpvoted: isUpvoted,

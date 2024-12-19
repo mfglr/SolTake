@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/image_state/image_status.dart';
+import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
@@ -27,7 +27,7 @@ class UserImageWidget extends StatelessWidget {
       ),
       child: Builder(
         builder: (context) {
-          if(userImage.state != ImageStatus.done){
+          if(userImage.state != MultimediaStatus.done){
             return Container(
               color: const Color.fromRGBO(226, 226, 226, 1),
             );

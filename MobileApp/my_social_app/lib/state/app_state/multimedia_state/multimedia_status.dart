@@ -1,5 +1,5 @@
 
-enum ImageStatus{
+enum MultimediaStatus{
   notStarted,
   started,
   done,

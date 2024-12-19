@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_multimedia_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
@@ -30,7 +30,7 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
     curve: Curves.fastOutSlowIn,
   );
 
-  double _getMinAspectRatio(BuildContext context,Iterable<QuestionImageState> images){
+  double _getMinAspectRatio(BuildContext context,Iterable<QuestionMultimediaState> images){
     var min = images.first.width / images.first.height;
     for(final image in images){
       var aspectRatio = (image.width / image.height);
@@ -89,18 +89,18 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
         children: [
           CarouselSlider(
             carouselController: _carouselController,
-            items: widget.question.images.map(
+            items: widget.question.medias.map(
               (imageState) => DisplayImageWidget(
                 image: imageState.data,
                 status: imageState.state,
                 width: MediaQuery.of(context).size.width,
-                aspectRatio: _getMinAspectRatio(context, widget.question.images),
+                aspectRatio: _getMinAspectRatio(context, widget.question.medias),
               )
             ).toList(),
             options: CarouselOptions(
               autoPlay: false,
               viewportFraction: 1,
-              height: MediaQuery.of(context).size.width / _getMinAspectRatio(context, widget.question.images),
+              height: MediaQuery.of(context).size.width / _getMinAspectRatio(context, widget.question.medias),
               enableInfiniteScroll: false,
               onPageChanged: (index, reason){
                 final store = StoreProvider.of<AppState>(context,listen: false);
@@ -109,7 +109,7 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
               },
             ),
           ),
-          if(widget.question.images.length > 1)
+          if(widget.question.medias.length > 1)
             Positioned(
               bottom: 15,
               child: SizedBox(
@@ -118,7 +118,7 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CirclePaginationWidget(
-                      numberOfCircles: widget.question.images.length,
+                      numberOfCircles: widget.question.medias.length,
                       changeActiveIndex: _changeIndex,
                       activeIndex: _index,
                     ),

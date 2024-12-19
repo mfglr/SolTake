@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/exam.dart';
-import 'package:my_social_app/models/question_image.dart';
+import 'package:my_social_app/models/question_multimedia.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
@@ -24,7 +24,7 @@ class Question{
   final Exam exam;
   final Subject subject;
   final Topic? topic;
-  final List<QuestionImage> images;
+  final List<QuestionMultimedia> medias;
   final bool isLiked;
   final bool isSaved;
   final int numberOfLikes;
@@ -43,7 +43,7 @@ class Question{
     required this.topic,
     required this.exam,
     required this.subject,
-    required this.images,
+    required this.medias,
     required this.isLiked,
     required this.isSaved,
     required this.numberOfLikes,
@@ -69,7 +69,7 @@ class Question{
     examId: exam.id,
     subjectId: subject.id,
     topicId: topic?.id,
-    images: images.map((e) => e.toQuestionImageState()),
+    medias: medias.map((e) => e.toQuestionMultimediaState()),
     isLiked: isLiked,
     isSaved: isSaved,
     isOwner: isOwner,

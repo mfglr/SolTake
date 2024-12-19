@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
-import 'package:my_social_app/state/app_state/image_state/image_status.dart';
+import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 
 class MessageImageState{
   final int messageId;
   final int index;
   final Uint8List? image;
-  final ImageStatus status;
+  final MultimediaStatus status;
 
   static String generateId(int messageId,int index) => "${messageId.toString()}-${index.toString()}";
   String get id => generateId(messageId,index);
@@ -23,16 +23,16 @@ class MessageImageState{
         messageId: messageId,
         index: index,
         image: null,
-        status: ImageStatus.notStarted
+        status: MultimediaStatus.notStarted
       );
 
   MessageImageState startLoading(){
-    if(status != ImageStatus.notStarted) return this;
+    if(status != MultimediaStatus.notStarted) return this;
     return MessageImageState(
       messageId: messageId,
       index: index,
       image: image,
-      status: ImageStatus.started
+      status: MultimediaStatus.started
     );
   }
 
@@ -41,6 +41,6 @@ class MessageImageState{
         messageId: messageId,
         index: index,
         image: image,
-        status: ImageStatus.done
+        status: MultimediaStatus.done
       );
 }

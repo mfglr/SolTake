@@ -36,7 +36,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             await _blobService.UploadAsync(imageStream, containerName, blobName, cancellationToken);
             
             //reuturn multimedya
-            var medya = Multimedia.CreateImage(blobName, imageStream.Length, dimention.Height, dimention.Width);
+            var medya = Multimedia.CreateImage(containerName, blobName, imageStream.Length, dimention.Height, dimention.Width);
             imageStream.Close();
             return medya;
         }
@@ -62,7 +62,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             await _blobService.UploadAsync(fastStartVideo, containerName, blobName, cancellationToken);
 
             //reuturn multimedya
-            var multiMedya = Multimedia.CreateVideo(blobName, fastStartVideo.Length, dimention.Height, dimention.Width, duration);
+            var multiMedya = Multimedia.CreateVideo(containerName, blobName, fastStartVideo.Length, dimention.Height, dimention.Width, duration);
             fastStartVideo.Close();
             return multiMedya;
         }

@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/image_state/image_status.dart';
+import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_image_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_multimedia_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -23,7 +23,7 @@ class QuestionState{
   final int examId;
   final int subjectId;
   final int? topicId;
-  final Iterable<QuestionImageState> images;
+  final Iterable<QuestionMultimediaState> medias;
   final bool isLiked;
   final bool isSaved;
   final bool isOwner;
@@ -52,7 +52,7 @@ class QuestionState{
     required this.examId,
     required this.subjectId,
     required this.topicId,
-    required this.images,
+    required this.medias,
     required this.isLiked,
     required this.isSaved,
     required this.isOwner,
@@ -78,7 +78,7 @@ class QuestionState{
     int? newExamId,
     int? newSubjectId,
     int? newTopicId,
-    Iterable<QuestionImageState>? newImages,
+    Iterable<QuestionMultimediaState>? newMedias,
     bool? newIsLiked,
     bool? newIsSaved,
     int? newNumberOfLikes,
@@ -106,7 +106,7 @@ class QuestionState{
       examId: newExamId ?? examId,
       subjectId: newSubjectId ?? subjectId,
       topicId: newTopicId ?? topicId,
-      images: newImages ?? images,
+      medias: newMedias ?? medias,
       isLiked: newIsLiked ?? isLiked,
       isSaved: newIsSaved ?? isSaved,
       isOwner: isOwner,
@@ -275,11 +275,11 @@ class QuestionState{
     _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.addInOrder(commentId));
 
   QuestionState startLoadingImage(int index){
-    if(images.elementAt(index).state != ImageStatus.notStarted) return this;
-    return _optional( newImages: [...images.take(index),images.elementAt(index).startLoding(),...images.skip(index + 1)] );
+    if(medias.elementAt(index).state != MultimediaStatus.notStarted) return this;
+    return _optional( newMedias: [...medias.take(index),medias.elementAt(index).startLoding(),...medias.skip(index + 1)] );
   }
   QuestionState loadImage(int index,Uint8List image) => 
-    _optional(newImages: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)]);
+    _optional(newMedias: [...medias.take(index),medias.elementAt(index).load(image),...medias.skip(index + 1)]);
 
   QuestionState markAsSolved() =>
     _optional(newState: QuestionStatus.solved);

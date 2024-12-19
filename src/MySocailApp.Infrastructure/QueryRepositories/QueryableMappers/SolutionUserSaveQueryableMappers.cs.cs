@@ -57,7 +57,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                     i.Height,
                                     i.Width,
                                     i.Duration,
-                                    i.MediaType
+                                    i.MultimediaType
                                 )
                             )
                         )

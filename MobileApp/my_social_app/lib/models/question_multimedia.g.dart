@@ -1,0 +1,40 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'question_multimedia.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+QuestionMultimedia _$QuestionMultimediaFromJson(Map<String, dynamic> json) =>
+    QuestionMultimedia(
+      id: (json['id'] as num).toInt(),
+      questionId: (json['questionId'] as num).toInt(),
+      containerName: json['containerName'] as String,
+      blobName: json['blobName'] as String,
+      size: (json['size'] as num).toInt(),
+      height: (json['height'] as num).toDouble(),
+      width: (json['width'] as num).toDouble(),
+      duration: (json['duration'] as num).toDouble(),
+      multimediaType:
+          $enumDecode(_$MultimediaTypeEnumMap, json['multimediaType']),
+    );
+
+Map<String, dynamic> _$QuestionMultimediaToJson(QuestionMultimedia instance) =>
+    <String, dynamic>{
+      'containerName': instance.containerName,
+      'blobName': instance.blobName,
+      'size': instance.size,
+      'height': instance.height,
+      'width': instance.width,
+      'duration': instance.duration,
+      'multimediaType': _$MultimediaTypeEnumMap[instance.multimediaType]!,
+      'id': instance.id,
+      'questionId': instance.questionId,
+    };
+
+const _$MultimediaTypeEnumMap = {
+  MultimediaType.image: 'image',
+  MultimediaType.video: 'video',
+  MultimediaType.audio: 'audio',
+};

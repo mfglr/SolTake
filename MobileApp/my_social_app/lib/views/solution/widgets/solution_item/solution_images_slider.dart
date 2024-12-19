@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_image_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_multimedia_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
 import 'package:my_social_app/views/shared/display_image_widget.dart';
@@ -31,10 +31,10 @@ class _SolutionImagesSliderState extends State<SolutionImagesSlider> {
     setState(() { _index = index; });
   }
 
-  double _getMinAspectRatio(BuildContext context,Iterable<SolutionImageState> images){
-    var min = images.first.width / images.first.height;
-    for(final image in images){
-      var aspectRatio = (image.width / image.height);
+  double _getMinAspectRatio(BuildContext context,Iterable<SolutionMultimediaState> medias){
+    var min = medias.first.width / medias.first.height;
+    for(final media in medias){
+      var aspectRatio = (media.width / media.height);
       if( aspectRatio < min ){
         min = aspectRatio;
       }

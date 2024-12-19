@@ -23,8 +23,8 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
       numberOfUpvotes: (json['numberOfUpvotes'] as num).toInt(),
       isDownvoted: json['isDownvoted'] as bool,
       numberOfDownvotes: (json['numberOfDownvotes'] as num).toInt(),
-      images: (json['images'] as List<dynamic>)
-          .map((e) => SolutionImage.fromJson(e as Map<String, dynamic>)),
+      medias: (json['medias'] as List<dynamic>)
+          .map((e) => SolutionMultimedia.fromJson(e as Map<String, dynamic>)),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
       state: (json['state'] as num).toInt(),
     );
@@ -44,7 +44,7 @@ Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
       'numberOfUpvotes': instance.numberOfUpvotes,
       'isDownvoted': instance.isDownvoted,
       'numberOfDownvotes': instance.numberOfDownvotes,
-      'images': instance.images.toList(),
+      'medias': instance.medias.toList(),
       'numberOfComments': instance.numberOfComments,
       'state': instance.state,
     };

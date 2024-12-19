@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/image_state/image_status.dart';
+import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/views/shared/image_not_found_widget.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class DisplayImageWidget extends StatefulWidget {
   final Uint8List? image;
-  final ImageStatus status;
+  final MultimediaStatus status;
   final double width;
   final BoxFit boxFit;
   final StackFit stackFit;
@@ -39,7 +39,7 @@ class _DisplayImageWidgetState extends State<DisplayImageWidget> {
       child: Builder(
         builder: (context){
           switch(widget.status){
-            case ImageStatus.done:
+            case MultimediaStatus.done:
               return GestureDetector(
                 onTap: widget.onTap,
                 child: Stack(
@@ -59,11 +59,11 @@ class _DisplayImageWidgetState extends State<DisplayImageWidget> {
                   ],
                 ),
               );
-            case ImageStatus.started:
+            case MultimediaStatus.started:
               return const LoadingWidget();
-            case ImageStatus.notStarted:
+            case MultimediaStatus.notStarted:
               return const LoadingWidget();
-            case ImageStatus.notFound:
+            case MultimediaStatus.notFound:
               return const ImageNotFoundWidget();
           }
         }

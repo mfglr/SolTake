@@ -20,8 +20,8 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
           : Topic.fromJson(json['topic'] as Map<String, dynamic>),
       exam: Exam.fromJson(json['exam'] as Map<String, dynamic>),
       subject: Subject.fromJson(json['subject'] as Map<String, dynamic>),
-      images: (json['images'] as List<dynamic>)
-          .map((e) => QuestionImage.fromJson(e as Map<String, dynamic>))
+      medias: (json['medias'] as List<dynamic>)
+          .map((e) => QuestionMultimedia.fromJson(e as Map<String, dynamic>))
           .toList(),
       isLiked: json['isLiked'] as bool,
       isSaved: json['isSaved'] as bool,
@@ -47,7 +47,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'exam': instance.exam,
       'subject': instance.subject,
       'topic': instance.topic,
-      'images': instance.images,
+      'medias': instance.medias,
       'isLiked': instance.isLiked,
       'isSaved': instance.isSaved,
       'numberOfLikes': instance.numberOfLikes,
