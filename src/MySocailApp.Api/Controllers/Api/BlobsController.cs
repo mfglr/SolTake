@@ -5,7 +5,7 @@ namespace MySocailApp.Api.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlobController(IBlobService blobService) : ControllerBase
+    public class BlobsController(IBlobService blobService) : ControllerBase
     {
         private readonly IBlobService _blobService = blobService;
 

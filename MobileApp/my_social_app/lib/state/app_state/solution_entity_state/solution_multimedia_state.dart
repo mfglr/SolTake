@@ -16,12 +16,12 @@ class SolutionMultimediaState extends MultimediaState{
     required super.width,
     required super.duration,
     required super.multimediaType,
-    required super.state,
+    required super.status,
     required super.data,
   });
 
   SolutionMultimediaState startLoading(){
-    if(state != MultimediaStatus.notStarted) return this;
+    if(status != MultimediaStatus.notStarted) return this;
     return SolutionMultimediaState(
       id: id,
       solutionId: solutionId,
@@ -32,7 +32,7 @@ class SolutionMultimediaState extends MultimediaState{
       width: width,
       duration: duration,
       multimediaType: multimediaType,
-      state: MultimediaStatus.started,
+      status: MultimediaStatus.started,
       data: data
     );
   }
@@ -48,7 +48,7 @@ class SolutionMultimediaState extends MultimediaState{
         width: width,
         duration: duration,
         multimediaType: multimediaType,
-        state: MultimediaStatus.done,
+        status: MultimediaStatus.done,
         data: data
       );
 }

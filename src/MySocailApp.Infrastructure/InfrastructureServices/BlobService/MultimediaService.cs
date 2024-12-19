@@ -7,12 +7,12 @@ using SixLabors.ImageSharp;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
-    public class MultiMediaService(TempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoFastStartConverter videoFastStartConvertor, VideoDurationCalculator videoDurationCalculator) : IMultimedyaService
+    public class MultiMediaService(TempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoManipulatorConverter videoManipulatorConverter, VideoDurationCalculator videoDurationCalculator) : IMultimedyaService
     {
         private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
         private readonly DimentionCalculator _dimentionCalculator = dimentionCalculator;
         private readonly VideoDimentionCalculator _videoDimentionCalculator = videoDimentionCalculator;
-        private readonly VideoFastStartConverter _videoFastStartConvertor = videoFastStartConvertor;
+        private readonly VideoManipulatorConverter _videoManipulatorConverter = videoManipulatorConverter;
         private readonly VideoDurationCalculator _videoDurationCalculator = videoDurationCalculator;
         private readonly UniqNameGenerator _uniqNameGenerator = uniqNameGenerator;
         private readonly IBlobService _blobService = blobService;
@@ -47,23 +47,23 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             //add stream to temp directory
             var input = await _tempDirectoryService.AddFile(stream);
 
+            //manipulate video;
+            var output = await _videoManipulatorConverter.Convert(input, cancellationToken);
+
             //calculate video dimention
-            var dimention = _videoDimentionCalculator.Calculate(input);
+            var dimention = _videoDimentionCalculator.Calculate(output);
 
             //calculate duration of the video
-            var duration = _videoDurationCalculator.Calculate(input);
+            var duration = _videoDurationCalculator.Calculate(output);
 
-            //convert video to fast start;
-            var output = await _videoFastStartConvertor.Convert(input, cancellationToken);
-
-            //upload fastStartVideo to blob container
+            //upload video manipulated to the blob container
             var blobName = _uniqNameGenerator.Generate();
-            using var fastStartVideo = File.OpenRead(output);
-            await _blobService.UploadAsync(fastStartVideo, containerName, blobName, cancellationToken);
+            using var manipulatedVideo = File.OpenRead(output);
+            await _blobService.UploadAsync(manipulatedVideo, containerName, blobName, cancellationToken);
 
             //reuturn multimedya
-            var multiMedya = Multimedia.CreateVideo(containerName, blobName, fastStartVideo.Length, dimention.Height, dimention.Width, duration);
-            fastStartVideo.Close();
+            var multiMedya = Multimedia.CreateVideo(containerName, blobName, manipulatedVideo.Length, dimention.Height, dimention.Width, duration);
+            manipulatedVideo.Close();
             return multiMedya;
         }
 

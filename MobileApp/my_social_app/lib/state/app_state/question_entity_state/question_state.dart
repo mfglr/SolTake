@@ -275,7 +275,7 @@ class QuestionState{
     _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.addInOrder(commentId));
 
   QuestionState startLoadingImage(int index){
-    if(medias.elementAt(index).state != MultimediaStatus.notStarted) return this;
+    if(medias.elementAt(index).status != MultimediaStatus.notStarted) return this;
     return _optional( newMedias: [...medias.take(index),medias.elementAt(index).startLoding(),...medias.skip(index + 1)] );
   }
   QuestionState loadImage(int index,Uint8List image) => 

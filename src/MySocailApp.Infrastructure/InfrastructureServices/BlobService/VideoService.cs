@@ -6,7 +6,7 @@ using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServ
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
-    public class VideoService(IBlobService blobService, VideoFastStartConverter videoFastStartConverter, FrameCatcher frameCatcher, VideoDurationCalculator videoDurationCalculator, TempDirectoryService tempDirectoryService, UniqNameGenerator blobNameGenerator) : IVideoService
+    public class VideoService(IBlobService blobService, VideoManipulatorConverter videoFastStartConverter, VideoDurationCalculator videoDurationCalculator, TempDirectoryService tempDirectoryService, UniqNameGenerator blobNameGenerator) : IVideoService
     {
         public readonly static int MaxVideoDuration = 300;
         public readonly static long MaxVideoLenghtMB = 150;
@@ -14,7 +14,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 
         private readonly IBlobService _blobService = blobService;
         private readonly UniqNameGenerator _blobNameGenerator = blobNameGenerator;
-        private readonly VideoFastStartConverter _videoFastStartConverter = videoFastStartConverter;
+        private readonly VideoManipulatorConverter _videoFastStartConverter = videoFastStartConverter;
         private readonly VideoDurationCalculator _videoDurationCalculator = videoDurationCalculator;
         private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
 

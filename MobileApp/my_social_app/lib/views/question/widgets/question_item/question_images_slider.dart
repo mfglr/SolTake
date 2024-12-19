@@ -92,7 +92,7 @@ class _QuestionImagesSliderState extends State<QuestionImagesSlider> with Ticker
             items: widget.question.medias.map(
               (imageState) => DisplayImageWidget(
                 image: imageState.data,
-                status: imageState.state,
+                status: imageState.status,
                 width: MediaQuery.of(context).size.width,
                 aspectRatio: _getMinAspectRatio(context, widget.question.medias),
               )

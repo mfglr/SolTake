@@ -2,7 +2,7 @@
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
-    public class VideoFastStartConverter(UniqNameGenerator blobNameGenerator,TempDirectoryService tempDirectoryService)
+    public class VideoManipulatorConverter(UniqNameGenerator blobNameGenerator,TempDirectoryService tempDirectoryService)
     {
         private readonly UniqNameGenerator _blobNameGenerator = blobNameGenerator;
         private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
@@ -15,7 +15,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Internal
             FFmpeg.SetExecutablesPath("FFmpeg");
             var conversation = FFmpeg.Conversions
                 .New()
-                .AddParameter($"-i \"{path}\" -c:v libx264 -c:a aac -movflags +faststart \"{outputPath}\"");
+                .AddParameter($"-i \"{path}\" -vf scale=-1:854 -c:v libx265 -crf 28 -movflags +faststart -c:a aac -b:a 128k -r 30 -preset medium \"{outputPath}\"");
             await conversation.Start(cancellationToken);
 
             return outputPath;

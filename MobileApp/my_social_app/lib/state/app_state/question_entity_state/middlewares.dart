@@ -92,7 +92,7 @@ void unsaveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
 void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadQuestionImageAction){
     final image = store.state.questionEntityState.entities[action.questionId]!.medias.elementAt(action.index);
-    if(image.state == MultimediaStatus.notStarted){
+    if(image.status == MultimediaStatus.notStarted){
       QuestionService()
         .getQuestionImage(action.questionId, image.id)
         .then((image) => store.dispatch(

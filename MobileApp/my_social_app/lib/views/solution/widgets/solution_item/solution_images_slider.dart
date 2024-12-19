@@ -60,7 +60,7 @@ class _SolutionImagesSliderState extends State<SolutionImagesSlider> {
           items: widget.solution.images.map(
             (imageState) => DisplayImageWidget(
               image: imageState.data,
-              status: imageState.state,
+              status: imageState.status,
               width: MediaQuery.of(context).size.width,
               aspectRatio: aspectRatio,
             )

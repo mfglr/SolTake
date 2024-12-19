@@ -39,7 +39,7 @@ class SolutionMultimedia extends Multimedia{
       width: width,
       duration: duration,
       multimediaType: multimediaType,
-      state: MultimediaStatus.notStarted,
+      status: MultimediaStatus.notStarted,
       data: null,
     );
 }

@@ -36,5 +36,4 @@ Map<String, dynamic> _$SolutionMultimediaToJson(SolutionMultimedia instance) =>
 const _$MultimediaTypeEnumMap = {
   MultimediaType.image: 'image',
   MultimediaType.video: 'video',
-  MultimediaType.audio: 'audio',
 };

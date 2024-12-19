@@ -9,7 +9,7 @@ import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
 class AppClient{
-  static final _apiUrl = "${dotenv.env['API_URL']}/api";
+  static final apiUrl = "${dotenv.env['API_URL']}/api";
 
   const AppClient._();
   static const AppClient _singleton = AppClient._();
@@ -22,7 +22,7 @@ class AppClient{
       "Client-Version": packageInfo.version
     };
 
-  Uri generateUri(String url) => Uri.parse("$_apiUrl/$url");
+  Uri generateUri(String url) => Uri.parse("$apiUrl/$url");
   
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
     request.headers.addAll(getHeader());

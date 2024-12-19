@@ -10,7 +10,7 @@ abstract class MultimediaState {
   final double width;
   final double duration;
   final MultimediaType multimediaType;
-  final MultimediaStatus state;
+  final MultimediaStatus status;
   final Uint8List? data;
   
   const MultimediaState({
@@ -21,7 +21,7 @@ abstract class MultimediaState {
     required this.width,
     required this.duration,
     required this.multimediaType,
-    required this.state,
+    required this.status,
     required this.data
   });
 }

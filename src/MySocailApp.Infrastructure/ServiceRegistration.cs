@@ -110,7 +110,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<VideoDurationCalculator>()
                 .AddScoped<VideoDimentionCalculator>()
                 .AddScoped<PathFinder>()
-                .AddScoped<VideoFastStartConverter>()
+                .AddScoped<VideoManipulatorConverter>()
                 .AddScoped<TempDirectoryService>()
                 .AddScoped<IBlobService, LocalBlobService>()
                 .AddScoped<IImageService, ImageService>()

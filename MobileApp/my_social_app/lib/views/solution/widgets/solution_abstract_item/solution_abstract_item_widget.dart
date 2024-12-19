@@ -42,7 +42,7 @@ class _SolutionAbstractItemWidgetState extends State<SolutionAbstractItemWidget>
             return DisplayImageWidget(
               image: image.data,
               width: 0,
-              status: image.state,
+              status: image.status,
               aspectRatio: 1,
               stackFit: StackFit.expand,
               boxFit: BoxFit.cover,

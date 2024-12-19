@@ -98,7 +98,7 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionImageAction){
     final image = store.state.solutionEntityState.entities[action.solutionId]!.images.elementAt(action.index);
-    if(image.state == MultimediaStatus.notStarted){
+    if(image.status == MultimediaStatus.notStarted){
       SolutionService()
         .getSolutionImage(action.solutionId,image.id)
         .then((image) => store.dispatch(

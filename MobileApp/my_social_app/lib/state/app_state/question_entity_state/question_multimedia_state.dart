@@ -18,12 +18,12 @@ class QuestionMultimediaState extends MultimediaState{
     required super.width,
     required super.duration,
     required super.multimediaType,
-    required super.state,
+    required super.status,
     required super.data,
   });
   
   QuestionMultimediaState startLoding(){
-    if(state != MultimediaStatus.notStarted) return this;
+    if(status != MultimediaStatus.notStarted) return this;
     return QuestionMultimediaState(
       id: id,
       questionId: questionId,
@@ -34,7 +34,7 @@ class QuestionMultimediaState extends MultimediaState{
       width: width,
       duration: duration,
       multimediaType: multimediaType,
-      state: MultimediaStatus.started,
+      status: MultimediaStatus.started,
       data: data,
     );
   }
@@ -50,7 +50,7 @@ class QuestionMultimediaState extends MultimediaState{
         width: width,
         duration: duration,
         multimediaType: multimediaType,
-        state: MultimediaStatus.done,
+        status: MultimediaStatus.done,
         data: data,
       );
 
@@ -65,7 +65,7 @@ class QuestionMultimediaState extends MultimediaState{
         width: width,
         duration: duration,
         multimediaType: multimediaType,
-        state: MultimediaStatus.notFound,
+        status: MultimediaStatus.notFound,
         data: data
       );
 }
