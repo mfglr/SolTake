@@ -41,6 +41,7 @@ class _VideoProgressBarState extends State<VideoProgressBar> {
       timeLabelLocation: TimeLabelLocation.none,
       onDragUpdate: seekTo,
       onDragStart: seekTo,
+      thumbRadius: 0,
       progress: widget.controller.value.position,
       buffered: widget.controller.value.buffered.lastOrNull?.end,
       total: widget.duration,

@@ -32,6 +32,7 @@ class _VideoPlayButtonState extends State<VideoPlayButton> {
       icon: Icon(
         widget.controller.value.isPlaying ? Icons.pause_circle_outline_sharp : Icons.play_circle_outline_sharp,
         color: Colors.deepPurple[300],
+        size: 30,
       )
     );
   }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion;
+using MySocailApp.Application.Commands.QuestionAggregate.CreateVideoQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
@@ -38,8 +39,12 @@ namespace MySocailApp.Api.Controllers.Api
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<QuestionResponseDto> Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] int? topicId, [FromForm] IFormFileCollection medias, CancellationToken cancellationToken)
+        public async Task<CreateQuestionResponseDto> Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] int? topicId, [FromForm] IFormFileCollection medias, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateQuestionDto(examId, subjectId, topicId, content, medias), cancellationToken);
+
+        [HttpPost]
+        public async Task<CreateVideoQuestionResponseDto> CreateVideoQuestion([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] int? topicId, [FromForm] IFormFile video, CancellationToken cancellationToken)
+            => await _mediator.Send(new CreateVideoQuestionDto(examId, subjectId, topicId, content, video), cancellationToken);
 
         [HttpDelete("{questionId}")]
         public async Task Delete(int questionId, CancellationToken cancellationToken)

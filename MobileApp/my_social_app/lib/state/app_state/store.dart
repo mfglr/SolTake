@@ -82,7 +82,8 @@ final store = Store(
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
-    policyState: const PolicyState(privacyPolicies: {}, termOfUses: {})
+    policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
+    videoQuestions: Pagination.init(questionsPerPage, true)
   ),
   middleware: [
     //exams middlewares

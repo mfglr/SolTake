@@ -67,6 +67,29 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             return multiMedya;
         }
 
+        public async Task<Multimedia?> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        {
+            _tempDirectoryService.Create();
+            try
+            {
+                Multimedia? media = null;
+                if (file.ContentType.StartsWith("image"))
+                    media = await UploadImageAsync(containerName, file, cancellationToken);
+                if (file.ContentType.StartsWith("video"))
+                    media = await UploadVideoAsync(containerName, file, cancellationToken);
+                
+                _tempDirectoryService.Delete();
+
+                return media;
+            }
+            catch (Exception)
+            {
+                _tempDirectoryService.Delete();
+                throw;
+            }
+        }
+
+
         public async Task<List<Multimedia>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
         {
             List<Multimedia> medias = [];
@@ -91,5 +114,6 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             }
         }
 
+       
     }
 }

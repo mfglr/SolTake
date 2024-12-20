@@ -17,19 +17,34 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
         public QuestionTopic? Topic { get; private set; }
         public QuestionContent? Content { get; private set; }
         private readonly List<QuestionMultimedia> _medias = [];
-        public IReadOnlyCollection<QuestionMultimedia> Medias => _medias;
+        public IReadOnlyList<QuestionMultimedia> Medias => _medias;
 
-        public Question(int userId, QuestionContent content, IEnumerable<QuestionMultimedia> medias)
+        public Question(int userId, QuestionContent? content, IEnumerable<QuestionMultimedia> images)
         {
-            if (!medias.Any())
-                throw new QuestionImageIsRequiredException();
-            if (medias.Count() > MaxImageCountPerQuestion)
+            if (!images.Any() && content == null)
+                throw new QuesitonContentRequiredException();
+
+            if (images.Any(x => x.MultimediaType != MultimediaType.Image))
+                throw new NotImageMediaException();
+
+            if (images.Count() > MaxImageCountPerQuestion)
                 throw new TooManyQuestionImagesException();
 
             UserId = userId;
             Content = content;
-            _medias.AddRange(medias);
+            _medias.AddRange(images);
         }
+
+        public Question(int userId, QuestionContent? content, QuestionMultimedia? video)
+        {
+            if (video.MultimediaType != MultimediaType.Video)
+                throw new NotVideoMediaException();
+
+            UserId = userId;
+            Content = content;
+            _medias.Add(video);
+        }
+
 
         internal void Create(QuestionExam exam, QuestionSubject subject, QuestionTopic? topic)
         {

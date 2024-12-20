@@ -39,6 +39,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             i => new QuestionMultimediaResponseDto(
                                 i.Id,
                                 i.QuestionId,
+                                i.ContainerName,
                                 i.BlobName,
                                 i.Size,
                                 i.Height,

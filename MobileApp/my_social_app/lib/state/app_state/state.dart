@@ -68,6 +68,7 @@ class AppState{
   final QuestionUserSaveEntityState questionUserSaveEntityState;
   final Pagination exams;
   final PolicyState policyState;
+  final Pagination videoQuestions;
 
   const AppState({
     required this.activeAccountPage,
@@ -98,6 +99,7 @@ class AppState{
     required this.questionUserSaveEntityState,
     required this.exams,
     required this.policyState,
+    required this.videoQuestions
   });
 
   AppState clear() => AppState(
@@ -134,6 +136,7 @@ class AppState{
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
+    videoQuestions: Pagination.init(questionsPerPage, true)
   );
 
   //select messages

@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.Extentions;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core.Exceptions;
 using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
-
 
 namespace MySocailApp.Api.Middlewares
 {
@@ -9,9 +9,9 @@ namespace MySocailApp.Api.Middlewares
     {
         private readonly RequestDelegate _next = next;
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IAccountAccessor accountAccessor)
         {
-            var languge = new Language(context.GetLanguage());
+            var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
             try
             {
                 await _next(context);
