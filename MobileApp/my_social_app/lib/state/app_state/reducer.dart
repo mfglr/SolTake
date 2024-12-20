@@ -28,6 +28,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
+import 'package:my_social_app/state/app_state/video_questions_state/reducers.dart';
 import 'package:redux/redux.dart';
 
 
@@ -62,6 +63,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
   exams: examsReducers(prev.exams,action),
   policyState: policyReducers(prev.policyState,action),
+  videoQuestions: videoQuestionsReducers(prev.videoQuestions, action)
 );
 
 Reducer<AppState> reducers = combineReducers<AppState>([

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 
-class QuestionLikeButton extends StatelessWidget {
+class LikeButton extends StatelessWidget {
   final QuestionState question;
-  const QuestionLikeButton({super.key,required this.question});
+  const LikeButton({
+    super.key,
+    required this.question,
+  });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
         if(question.isLiked){
           store.dispatch(DislikeQuestionAction(questionId: question.id));
         }
@@ -25,8 +30,18 @@ class QuestionLikeButton extends StatelessWidget {
       ),
       icon: Builder(
         builder: (context) {
-          if(question.isLiked) return const Icon(Icons.favorite,color: Colors.red);
-          return const Icon(Icons.favorite_outline,color: Colors.red,);
+          if(question.isLiked){
+            return const Icon(
+              Icons.favorite,
+              color: Colors.red,
+              size: 35
+            );
+          }
+          return const Icon(
+            Icons.favorite_outline,
+            color: Colors.white,
+            size: 35,
+          );
         }
       )
     );

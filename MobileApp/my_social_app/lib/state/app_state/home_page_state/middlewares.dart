@@ -17,7 +17,7 @@ void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
       .then((questions){
         store.dispatch(NextHomeQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.userId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -38,7 +38,7 @@ void getPrevPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
       .then((questions){
         store.dispatch(PrevHomeQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.userId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());

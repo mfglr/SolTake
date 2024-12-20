@@ -131,6 +131,11 @@ class QuestionService{
       .then((json) => json as List)
       .then((list) => list.map((e) => QuestionUserSave.fromJson(e)));
 
+  Future<Iterable<Question>> getVideoQuestions(Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$questionController/$getVideoQuestionsEndpoint", page))
+      .then((json) => json as List)
+      .then((list) => list.map((e) => Question.fromJson(e)));
 
   Future<Iterable<Question>> searchQuestions(int? examId,int? subjectId,int? topicId,Page page) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";

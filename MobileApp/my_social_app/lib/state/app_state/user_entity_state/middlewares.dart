@@ -191,7 +191,7 @@ void nextUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher nex
       .then((questions){
         store.dispatch(NextUserQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.userId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -212,7 +212,7 @@ void nextUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatch
       .then((questions){
         store.dispatch(NextUserSolvedQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((question) => question.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.userId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -233,7 +233,7 @@ void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispat
       .then((questions){
         store.dispatch(NextUserUnsolvedQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: questions.map((e) => UserImageState.init(e.userId))));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
         var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
@@ -253,7 +253,7 @@ void nextUserSavedQuestionsMiddleware(Store<AppState> store,action,NextDispatche
       .getSavedQuestions(pagination.next)
       .then((saves){
         store.dispatch(NextUserSavedQuestionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
-        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.question!.appUserId))));
+        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.question!.userId))));
         store.dispatch(AddQuestionsAction(questions: saves.map((e) => e.question!.toQuestionState())));
         store.dispatch(AddQuestionUserSavesAction(saves: saves.map((e) => e.toQuestionUserSaveState())));
         store.dispatch(AddExamsAction(exams: saves.map((e) => e.question!.exam.toExamState())));

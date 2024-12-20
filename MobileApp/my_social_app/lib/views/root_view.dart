@@ -8,6 +8,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/account/pages/application_loading_page.dart';
+import 'package:my_social_app/views/display_video_questions/display_video_questions.dart';
 import 'package:my_social_app/views/shared/icon_with_badge.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
@@ -72,6 +73,12 @@ class _RootViewState extends State<RootView> {
                 icon: Icon(Icons.home_outlined),
                 label: '',
               ),
+
+              const NavigationDestination(
+                selectedIcon: Icon(Icons.video_library),
+                icon: Icon(Icons.video_library_outlined),
+                label: '',
+              ),
               
               const NavigationDestination(
                 selectedIcon: Icon(Icons.search),
@@ -109,6 +116,7 @@ class _RootViewState extends State<RootView> {
           ),
           body: [
             const HomePage(),
+            const DisplayVideoQuestions(),
             const SearchPage(),
             const MessageHomePage(),
             const ProfilePage()

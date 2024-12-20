@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/enums/multimedia_type.dart';
 import 'package:my_social_app/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_multimedia_state.dart';

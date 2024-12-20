@@ -17,3 +17,4 @@ const getSolvedQuestionsByUserIdEndpoint = "GetSolvedQuestionsByUserId";
 const getUnsolvedQuestionsByUserIdEndpoint = "GetUnsolvedQuestionsByUserId";
 const getQuestionLikesEndpoint = "GetQuestionLikes";
 const getSavedQuestionsEndpoint = "GetSavedQuestions";
+const getVideoQuestionsEndpoint = "GetVideoQuestions";

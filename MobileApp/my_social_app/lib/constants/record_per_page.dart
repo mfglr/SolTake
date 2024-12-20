@@ -8,3 +8,4 @@ const questionsPerPage = 12;
 const subjectsPerPage = 200;
 const topicsPerPage = 200;
 const examsPerPage = 20;
+const questionVideosPerPage = 10;

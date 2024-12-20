@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class ExtendableContent extends StatefulWidget {
   final String content;
   final int numberOfExtention;
+  final TextStyle? textStyle;
   const ExtendableContent({
     super.key,
     required this.content,
-    required this.numberOfExtention
+    required this.numberOfExtention,
+    this.textStyle
   });
 
   @override
@@ -30,8 +32,21 @@ class _ExtendableContentState extends State<ExtendableContent> {
       ),
       child: Builder(
         builder: (context){
-          if(_isExtended) return Text(widget.content);
-          return Text(_formatContent(widget.content));
+          if(_isExtended){
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 1 / 5,
+              child: SingleChildScrollView(
+                child: Text(
+                  widget.content,
+                  style: widget.textStyle,
+                ),
+              ),
+            );
+          }
+          return Text(
+            _formatContent(widget.content),
+            style: widget.textStyle,
+          );
         },
       )
     );

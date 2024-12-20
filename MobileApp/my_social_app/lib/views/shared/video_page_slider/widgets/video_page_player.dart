@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/multimedia_state/multimedia_state.dart';
-import 'package:my_social_app/views/shared/video_page_slider/video_play_button.dart';
-import 'package:my_social_app/views/shared/video_page_slider/video_progress_bar.dart';
+import 'package:my_social_app/views/shared/video_page_slider/widgets/video_play_button.dart';
+import 'package:my_social_app/views/shared/video_page_slider/widgets/video_progress_bar.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPagePlayer extends StatefulWidget {
   final MultimediaState state;
+  final Widget? child;
+  final void Function()? onDoubleTap;
   const VideoPagePlayer({
     super.key,
     required this.state,
+    this.child,
+    this.onDoubleTap
   });
 
   @override
@@ -17,7 +21,6 @@ class VideoPagePlayer extends StatefulWidget {
 }
 
 class _VideoPagePlayerState extends State<VideoPagePlayer> {
-  
   late final VideoPlayerController _controller;
   late final Uri _url;
   final AppClient _appClient = AppClient();
@@ -78,6 +81,7 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _isVolumeOpen ? volumeOff : volumeUp,
+      onDoubleTap: widget.onDoubleTap,
       child: Stack(
         alignment: AlignmentDirectional.center,
         fit: StackFit.loose,
@@ -87,18 +91,27 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
             child: VideoPlayer(_controller)
           ),
           Positioned(
-            bottom: 15,
+            bottom: 5,
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.95,
-              child: Row(
+              child: Column(
                 children: [
-                  Expanded(
-                    child: VideoProgressBar(
-                      controller: _controller,
-                      duration: Duration(seconds: widget.state.duration.round())
-                    ),
+                  if(widget.child != null)
+                    widget.child!,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: VideoProgressBar(
+                          controller: _controller,
+                          duration: Duration(seconds: widget.state.duration.round())
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 4),
+                        child: VideoPlayButton(controller: _controller)
+                      )
+                    ],
                   ),
-                  VideoPlayButton(controller: _controller)
                 ],
               ),
             ),
@@ -117,7 +130,7 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
                   color: Colors.white,
                 ),
               ),
-            )
+            ),
         ],
       ),
     );

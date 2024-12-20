@@ -17,9 +17,9 @@ class QuestionState{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int state;
-  final int appUserId;
+  final int userId;
   final String userName;
-  final String content;
+  final String? content;
   final int examId;
   final int subjectId;
   final int? topicId;
@@ -46,7 +46,7 @@ class QuestionState{
     required this.createdAt,
     required this.updatedAt,
     required this.state,
-    required this.appUserId,
+    required this.userId,
     required this.userName,
     required this.content,
     required this.examId,
@@ -100,7 +100,7 @@ class QuestionState{
       createdAt: createdAt,
       updatedAt: updatedAt,
       state: newState ?? state,
-      appUserId: appUserId,
+      userId: userId,
       userName: newUserName ?? userName,
       content: newContent ?? content,
       examId: newExamId ?? examId,
@@ -127,8 +127,8 @@ class QuestionState{
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
   String? formatContent(int count){
-    if(content == "") return null;
-    return content.length <= count ? content : "${content.substring(0,count - 3)}...";
+    if(content == null) return null;
+    return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
   }
   
   QuestionState startLodingNextLikes() =>

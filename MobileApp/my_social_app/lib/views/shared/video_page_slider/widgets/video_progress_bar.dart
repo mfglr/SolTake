@@ -39,6 +39,9 @@ class _VideoProgressBarState extends State<VideoProgressBar> {
   Widget build(BuildContext context) {
     return ProgressBar(
       timeLabelLocation: TimeLabelLocation.none,
+      progressBarColor: Colors.white,
+      bufferedBarColor: Colors.black.withOpacity(0.5),
+      baseBarColor: Colors.black.withOpacity(0.3),
       onDragUpdate: seekTo,
       onDragStart: seekTo,
       thumbRadius: 0,

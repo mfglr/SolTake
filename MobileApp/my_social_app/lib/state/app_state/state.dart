@@ -136,7 +136,7 @@ class AppState{
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    videoQuestions: Pagination.init(questionsPerPage, true)
+    videoQuestions: Pagination.init(questionVideosPerPage, true)
   );
 
   //select messages
@@ -255,4 +255,7 @@ class AppState{
   String? get selectPrivacyPolicy => policyState.privacyPolicies[accountState?.language];
   //select terms of use
   String? get selectTermsOfUse => policyState.termOfUses[accountState?.language];
+
+  //select video questions
+  Iterable<QuestionState> get selectVideoQuestions => videoQuestions.ids.map((id) => questionEntityState.entities[id]!);
 }

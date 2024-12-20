@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:my_social_app/enums/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 
 abstract class MultimediaState {
@@ -9,7 +8,7 @@ abstract class MultimediaState {
   final double height;
   final double width;
   final double duration;
-  final MultimediaType multimediaType;
+  final int multimediaType;
   final MultimediaStatus status;
   final Uint8List? data;
   

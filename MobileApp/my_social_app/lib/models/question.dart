@@ -18,9 +18,9 @@ class Question{
   final DateTime? updatedAt;
   final bool isOwner;
   final int state;
-  final int appUserId;
+  final int userId;
   final String userName;
-  final String content;
+  final String? content;
   final Exam exam;
   final Subject subject;
   final Topic? topic;
@@ -37,7 +37,7 @@ class Question{
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.appUserId,
+    required this.userId,
     required this.userName,
     required this.content,
     required this.topic,
@@ -63,7 +63,7 @@ class Question{
     createdAt: createdAt,
     updatedAt: updatedAt,
     state: state,
-    appUserId: appUserId,
+    userId: userId,
     userName: userName,
     content: content,
     examId: exam.id,

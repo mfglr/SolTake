@@ -29,9 +29,14 @@ class _VideoPlayButtonState extends State<VideoPlayButton> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: widget.controller.value.isPlaying ? pause : play,
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       icon: Icon(
         widget.controller.value.isPlaying ? Icons.pause_circle_outline_sharp : Icons.play_circle_outline_sharp,
-        color: Colors.deepPurple[300],
+        color: Colors.white,
         size: 30,
       )
     );

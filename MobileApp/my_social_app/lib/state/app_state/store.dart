@@ -43,6 +43,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_entity_stat
 import 'package:my_social_app/state/app_state/user_image_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
+import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:redux/redux.dart';
@@ -83,7 +84,7 @@ final store = Store(
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    videoQuestions: Pagination.init(questionsPerPage, true)
+    videoQuestions: Pagination.init(questionVideosPerPage, true)
   ),
   middleware: [
     //exams middlewares
@@ -243,5 +244,8 @@ final store = Store(
     //policyState
     loadPrivacyPolicyMiddleware,
     loadTermsOfUseMiddleware,
+
+    //video questions
+    nextVideoQuestionsMiddleware,
   ]
 );

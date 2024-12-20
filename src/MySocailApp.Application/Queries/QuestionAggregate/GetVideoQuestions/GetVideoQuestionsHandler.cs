@@ -9,8 +9,11 @@ namespace MySocailApp.Application.Queries.QuestionAggregate.GetVideoQuestions
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly IQuestionQueryRepository _questionQueryRepository = questionQueryRepository;
 
-        public Task<List<QuestionResponseDto>> Handle(GetVideoQuestionsDto request, CancellationToken cancellationToken)
-            => _questionQueryRepository.GetVideoQuestionsAsync(_accountAccessor.Account.Id, request, cancellationToken);
+        public async Task<List<QuestionResponseDto>> Handle(GetVideoQuestionsDto request, CancellationToken cancellationToken)
+        {
+            var videos = await _questionQueryRepository.GetVideoQuestionsAsync(_accountAccessor.Account.Id, request, cancellationToken);
+            return videos;
+        }
 
     }
 }

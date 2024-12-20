@@ -10,7 +10,7 @@ namespace MySocailApp.Domain.QuestionAggregate.ValueObjects
         public QuestionContent(string value)
         {
             ArgumentNullException.ThrowIfNull(value);
-            if (value.Length >= MaxSoluiontContentLength)
+            if (value.Length > MaxSoluiontContentLength)
                 throw new QuestionContentLengthExceededException();
             Value = value;
         }

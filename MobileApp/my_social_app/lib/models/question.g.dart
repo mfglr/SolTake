@@ -12,9 +12,9 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      appUserId: (json['appUserId'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
       userName: json['userName'] as String,
-      content: json['content'] as String,
+      content: json['content'] as String?,
       topic: json['topic'] == null
           ? null
           : Topic.fromJson(json['topic'] as Map<String, dynamic>),
@@ -41,7 +41,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'isOwner': instance.isOwner,
       'state': instance.state,
-      'appUserId': instance.appUserId,
+      'userId': instance.userId,
       'userName': instance.userName,
       'content': instance.content,
       'exam': instance.exam,

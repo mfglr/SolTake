@@ -1,5 +1,3 @@
-import 'package:my_social_app/enums/multimedia_type.dart';
-
 class Multimedia {
   final String containerName;
   final String blobName;
@@ -7,7 +5,7 @@ class Multimedia {
   final double height;
   final double width;
   final double duration;
-  final MultimediaType multimediaType;
+  final int multimediaType;
 
   const Multimedia({
     required this.containerName,

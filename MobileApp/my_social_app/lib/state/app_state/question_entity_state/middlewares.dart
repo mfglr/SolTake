@@ -39,7 +39,7 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
         .getById(action.questionId)
         .then((question){
           store.dispatch(AddQuestionAction(value: question.toQuestionState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(question.appUserId)));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(question.userId)));
           store.dispatch(AddExamAction(exam: question.exam.toExamState()));
           store.dispatch(AddSubjectAction(subject: question.subject.toSubjectState()));
           if(question.topic != null){

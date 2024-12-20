@@ -117,7 +117,7 @@ void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         if(question != null){
           store.dispatch(RemoveQuestionSolutionAction(solution: action.solution));
           if(action.solution.state == SolutionStatus.correct && question.numberOfCorrectSolutions <= 1){
-            store.dispatch(MarkUserQuestionAsUnsolvedAction(userId: question.appUserId, questionId: action.solution.questionId));
+            store.dispatch(MarkUserQuestionAsUnsolvedAction(userId: question.userId, questionId: action.solution.questionId));
           }
         }
         store.dispatch(RemoveSolutionSuccessAction(solutionId: action.solution.id));
