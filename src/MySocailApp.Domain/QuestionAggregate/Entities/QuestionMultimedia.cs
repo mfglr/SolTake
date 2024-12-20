@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.QuestionAggregate.Excpetions;
 
 namespace MySocailApp.Domain.QuestionAggregate.Entities
 {
@@ -18,6 +19,9 @@ namespace MySocailApp.Domain.QuestionAggregate.Entities
 
         public QuestionMultimedia(Multimedia media)
         {
+            if (media.MultimediaType == MultimediaType.Video && media.Duration > 300)
+                throw new QuestionVideoDurationException();
+
             ContainerName = media.ContainerName;
             BlobName = media.BlobName;
             Size = media.Size;

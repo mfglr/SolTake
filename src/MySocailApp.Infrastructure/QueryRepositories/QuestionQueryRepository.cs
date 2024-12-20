@@ -47,7 +47,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int accountId, IPage page, CancellationToken cancellationToken)
             => GetListAsync(accountId, page, x => x.Exam.Id == examId && x.UserId != accountId, cancellationToken);
-        
+
+        public Task<List<QuestionResponseDto>> GetVideoQuestionsAsync(int accountId, IPage page, CancellationToken cancellationToken)
+            => GetListAsync(accountId, page, x => x.Medias.Any(x => x.MultimediaType == MultimediaType.Video), cancellationToken);
+
         public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
             => GetListAsync(
                 accountId,

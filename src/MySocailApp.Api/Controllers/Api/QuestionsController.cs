@@ -22,6 +22,7 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByTopicId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSavedQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
+using MySocailApp.Application.Queries.QuestionAggregate.GetVideoQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions;
 
 namespace MySocailApp.Api.Controllers.Api
@@ -29,8 +30,8 @@ namespace MySocailApp.Api.Controllers.Api
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -109,7 +110,11 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _mediator.Send(new GetUnsolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
-      
+
+        [HttpGet]
+        public async Task<List<QuestionResponseDto>> GetVideoQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _mediator.Send(new GetVideoQuestionsDto(offset, take, isDescending),cancellationToken);
+
         [HttpGet]
         public async Task<List<QuestionUserSaveResponseDto>> GetSavedQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSavedQuestionsDto(offset, take, isDescending), cancellationToken);

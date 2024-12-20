@@ -11,17 +11,18 @@ namespace MySocailApp.Api.Middlewares
 
         public async Task InvokeAsync(HttpContext context, IAccountAccessor accountAccessor)
         {
-            var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
             try
             {
                 await _next(context);
             }
             catch (AppException ex)
             {
+                var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
                 await context.WriteAppExceptionAsync(languge.Value, ex);
             }
             catch (Exception ex)
             {
+                var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
                 await context.WriteAppExceptionAsync(languge.Value, new ServerSideException());
             }
         }
