@@ -79,7 +79,6 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                     media = await UploadVideoAsync(containerName, file, cancellationToken);
                 
                 _tempDirectoryService.Delete();
-
                 return media;
             }
             catch (Exception)

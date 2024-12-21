@@ -33,8 +33,10 @@ class _ExtendableContentState extends State<ExtendableContent> {
       child: Builder(
         builder: (context){
           if(_isExtended){
-            return SizedBox(
-              height: MediaQuery.of(context).size.height * 1 / 5,
+            return ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 1 / 5
+              ),
               child: SingleChildScrollView(
                 child: Text(
                   widget.content,

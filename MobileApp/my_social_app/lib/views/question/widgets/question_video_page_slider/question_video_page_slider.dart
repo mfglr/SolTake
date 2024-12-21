@@ -101,6 +101,7 @@ class _QuestionVideoPageSliderState extends State<QuestionVideoPageSlider> with 
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(right: 8),
