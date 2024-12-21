@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+using MySocailApp.Core;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
@@ -31,7 +32,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         context.Comments.Count(c => c.QuestionId == question.Id),
                         context.Solutions.Count(solution => solution.QuestionId == question.Id),
                         context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.State == SolutionState.Correct),
-                        context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.HasVideo),
+                        context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.Medias.Any(x => x.MultimediaType == MultimediaType.Video)),
                         question.Exam,
                         question.Subject,
                         question.Topic,
@@ -41,6 +42,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 i.QuestionId,
                                 i.ContainerName,
                                 i.BlobName,
+                                i.BlobNameOfFrame,
                                 i.Size,
                                 i.Height,
                                 i.Width,

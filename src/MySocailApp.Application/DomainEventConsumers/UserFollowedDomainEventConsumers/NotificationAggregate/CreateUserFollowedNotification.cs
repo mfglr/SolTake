@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserFollowedDomainEventConsumers.NotificationAggregate
@@ -19,7 +19,7 @@ namespace MySocailApp.Application.DomainEventConsumers.UserFollowedDomainEventCo
             var n = Notification.UserFollowedNotification(notification.Follow.FollowerId, notification.Follow.FollowedId);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
-            await _publisher.Publish(new UserFollowedNotificationCreatedDomainEvent(n, notification.Follow));
+            await _publisher.Publish(new UserFollowedNotificationCreatedDomainEvent(n, notification.Follow), cancellationToken);
         }
     }
 }

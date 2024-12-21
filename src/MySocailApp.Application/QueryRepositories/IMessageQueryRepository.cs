@@ -1,6 +1,5 @@
 ﻿using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Core;
-using MySocailApp.Domain.MessageAggregate.Entities;
 
 namespace MySocailApp.Application.QueryRepositories
 {

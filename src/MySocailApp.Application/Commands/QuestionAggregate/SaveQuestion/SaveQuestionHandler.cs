@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion
 {

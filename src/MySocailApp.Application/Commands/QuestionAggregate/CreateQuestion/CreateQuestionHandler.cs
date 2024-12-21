@@ -2,21 +2,21 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionAggregate.DomainServices;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainServices;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
-    public class CreateQuestionHandler(IUnitOfWork unitOfWork, IQuestionWriteRepository repository, QuestionCreatorDomainService questionCreator, IBlobService blobService, IMultimedyaService multimedyaService, IAccountAccessor accountAccessor) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
+    public class CreateQuestionHandler(IUnitOfWork unitOfWork, IQuestionWriteRepository repository, QuestionCreatorDomainService questionCreator, IBlobService blobService, IMultimediaService multimedyaService, IAccountAccessor accountAccessor) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
     {
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly QuestionCreatorDomainService _questionCreator = questionCreator;
         private readonly IQuestionWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IBlobService _blobService = blobService;
-        private readonly IMultimedyaService _multimedyaService = multimedyaService;
+        private readonly IMultimediaService _multimedyaService = multimedyaService;
 
         public async Task<CreateQuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
         {

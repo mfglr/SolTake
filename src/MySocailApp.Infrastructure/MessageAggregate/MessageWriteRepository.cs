@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.MessageAggregate
@@ -33,7 +33,7 @@ namespace MySocailApp.Infrastructure.MessageAggregate
 
         public Task<List<Message>> GetMessagesWithRemoverByUserIds(List<int> userIds, int accountId, CancellationToken cancellationToken)
             => _context.Messages
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .Include(x => x.Removers)
                 .Where(
                     x => 
@@ -44,20 +44,20 @@ namespace MySocailApp.Infrastructure.MessageAggregate
 
         public Task<List<Message>> GetMessagesWithRemovers(IEnumerable<int> messageIds,CancellationToken cancellationToken)
             => _context.Messages
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .Include(x => x.Removers)
                 .Where(x => messageIds.Any(messageId => x.Id == messageId))
                 .ToListAsync(cancellationToken);
 
         public Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken)
             => _context.Messages
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .Include(x => x.Removers)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         public Task<List<Message>> GetUserMessages(int userId, CancellationToken cancellationToken)
             => _context.Messages
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .Where(x => x.SenderId == userId || x.ReceiverId == userId)
                 .ToListAsync(cancellationToken);
     }

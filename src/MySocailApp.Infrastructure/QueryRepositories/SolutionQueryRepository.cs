@@ -55,7 +55,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<SolutionResponseDto>> GetVideoSolutions(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => _context.Solutions
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId && x.Video != null)
+                .Where(x => x.QuestionId == questionId && x.Medias.Any(x => x.MultimediaType == MultimediaType.Video))
                 .ToPage(page)
                 .ToSolutionResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);

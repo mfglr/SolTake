@@ -1,5 +1,5 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionAggregate.Excpetions;
+﻿using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
@@ -16,7 +16,7 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
                 await _questionRepository.GetAsync(solution.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (question.UserId == solution.AppUserId)
+            if (question.UserId == solution.UserId)
                 throw new PermessionDeniedToSolveYourQuestionException();
 
             solution.Create();

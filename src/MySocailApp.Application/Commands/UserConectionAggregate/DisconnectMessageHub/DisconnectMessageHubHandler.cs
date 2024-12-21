@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.UserConectionAggregate.DisconnectMessageHub
 {
-    public class DisconnectMessageHubHandler(IAccessTokenReader tokenReader, IUnitOfWork unitOfWork, IUserConnectionWriteRepository repository) : IRequestHandler<DisconnectMessageHubDto>
+    public class DisconnectMessageHubHandler(IAccessTokenReader tokenReader, IUnitOfWork unitOfWork, IMessageConnectionWriteRepository repository) : IRequestHandler<DisconnectMessageHubDto>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IUserConnectionWriteRepository _repository = repository;
+        private readonly IMessageConnectionWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(DisconnectMessageHubDto request, CancellationToken cancellationToken)

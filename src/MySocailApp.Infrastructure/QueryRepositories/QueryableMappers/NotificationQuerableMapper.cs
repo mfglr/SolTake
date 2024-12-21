@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.NotificationAggregate;
-using MySocailApp.Domain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

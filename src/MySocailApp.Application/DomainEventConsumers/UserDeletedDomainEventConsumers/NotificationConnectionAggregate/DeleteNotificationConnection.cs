@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.NotificationConnectionAggregate

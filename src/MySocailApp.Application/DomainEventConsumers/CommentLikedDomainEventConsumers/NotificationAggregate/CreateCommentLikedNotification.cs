@@ -4,9 +4,9 @@ using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventConsumers.NotificationAggregate
 {

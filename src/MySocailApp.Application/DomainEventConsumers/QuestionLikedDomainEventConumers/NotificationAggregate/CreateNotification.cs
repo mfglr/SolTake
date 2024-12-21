@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventConumers.NotificationAggregate
 {

@@ -3,19 +3,19 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionAggregate.DomainServices;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainServices;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateVideoQuestion
 {
-    public class CreateVideoQuestionHandler(IUnitOfWork unitOfWork, IBlobService blobService, IMultimedyaService multimediaService, IQuestionWriteRepository questionWriteRepository, QuestionCreatorDomainService questionCreatorDomainService, IAccountAccessor accountAccessor) : IRequestHandler<CreateVideoQuestionDto, CreateVideoQuestionResponseDto>
+    public class CreateVideoQuestionHandler(IUnitOfWork unitOfWork, IBlobService blobService, IMultimediaService multimediaService, IQuestionWriteRepository questionWriteRepository, QuestionCreatorDomainService questionCreatorDomainService, IAccountAccessor accountAccessor) : IRequestHandler<CreateVideoQuestionDto, CreateVideoQuestionResponseDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IBlobService _blobService = blobService;
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
-        private readonly IMultimedyaService _multimediaService = multimediaService;
+        private readonly IMultimediaService _multimediaService = multimediaService;
         private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
         private readonly QuestionCreatorDomainService _questionCreatorDomainService = questionCreatorDomainService;
 

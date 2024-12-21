@@ -2,15 +2,15 @@
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
-using MySocailApp.Domain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageAggregate.MessageCreatedDomainEventConsumers
 {
-    public class SendMessageToReceiver(IHubContext<MessageHub> messageHub, IUserConnectionReadRepository userConnectionReadRepository, IMessageQueryRepository messageQueryRepository) : IDomainEventConsumer<MessageCreatedDomainEvent>
+    public class SendMessageToReceiver(IHubContext<MessageHub> messageHub, IMessageConnectionReadRepository userConnectionReadRepository, IMessageQueryRepository messageQueryRepository) : IDomainEventConsumer<MessageCreatedDomainEvent>
     {
         private readonly IHubContext<MessageHub> _messageHub = messageHub;
-        private readonly IUserConnectionReadRepository _userConnectionReadRepository = userConnectionReadRepository;
+        private readonly IMessageConnectionReadRepository _userConnectionReadRepository = userConnectionReadRepository;
         private readonly IMessageQueryRepository _messageQueryRepository = messageQueryRepository;
 
         public async Task Handle(MessageCreatedDomainEvent notification, CancellationToken cancellationToken)

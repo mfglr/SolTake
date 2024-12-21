@@ -2,9 +2,9 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionCommentCreatedDomainEventConsumers.NotificationAggregate
@@ -22,7 +22,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCommentCreatedDom
             var solution = await _solutionReadRepository.GetAsync((int)comment.SolutionId!, cancellationToken);
             if (solution == null) return;
 
-            var n = Notification.SolutionCommentCreatedNotification(solution.AppUserId, comment.AppUserId, comment.Id, solution.Id, solution.QuestionId);
+            var n = Notification.SolutionCommentCreatedNotification(solution.UserId, comment.AppUserId, comment.Id, solution.Id, solution.QuestionId);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

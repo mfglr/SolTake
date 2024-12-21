@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
@@ -10,44 +11,40 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         private Solution() { }
 
         public int QuestionId { get; private set; }
-        public int AppUserId { get; private set; }
-        public SolutionContent Content { get; private set; } = null!;
-        public SolutionVideo? Video { get; private set; }
-        public bool HasVideo { get; private set; }
+        public int UserId { get; private set; }
+        public SolutionContent? Content { get; private set; } = null!;
         private readonly List<SolutionMultimedia> _medias = [];
         public IReadOnlyCollection<SolutionMultimedia> Medias => _medias;
 
-        public Solution(int questionId, int userId, SolutionContent content, IEnumerable<SolutionMultimedia> medias)
+        public Solution(int questionId, int userId, SolutionContent? content, IEnumerable<SolutionMultimedia> medias)
         {
-            if ((content == null || content.Value.Trim() == "") && !medias.Any())
+            if (medias.Any(x => x.MultimediaType != MultimediaType.Image))
+                throw new NotSolutionImageMediaException();
+
+            if (content == null && !medias.Any())
                 throw new SolutionContentRequiredException();
+            
             if (medias.Count() > 3)
                 throw new TooManySolutionMediaException();
 
-            ArgumentNullException.ThrowIfNull(content);
-
-            QuestionId = questionId;
-            AppUserId = userId;
-            Content = content;
             _medias.AddRange(medias);
-            State = SolutionState.Pending;
-        }
-        public Solution(int questionId, int userId, SolutionContent content, SolutionVideo video)
-        {
-            ArgumentNullException.ThrowIfNull(content);
-            ArgumentNullException.ThrowIfNull(video);
-
             QuestionId = questionId;
-            AppUserId = userId;
+            UserId = userId;
             Content = content;
-            Video = video;
             State = SolutionState.Pending;
         }
-        internal void Create()
+        public Solution(int questionId, int userId, SolutionContent? content, SolutionMultimedia video)
         {
-            UpdatedAt = CreatedAt = DateTime.UtcNow;
-            HasVideo = Video != null;
+            if (video.MultimediaType != MultimediaType.Video)
+                throw new NotSolutionVideoMediaException();
+
+            _medias.Add(video);
+            QuestionId = questionId;
+            UserId = userId;
+            Content = content;
+            State = SolutionState.Pending;
         }
+        internal void Create() => UpdatedAt = CreatedAt = DateTime.UtcNow;
 
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
@@ -67,7 +64,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             var vote = SolutionUserVote.GenerateUpvote(voterId);
             _votes.Add(vote);
 
-            if(AppUserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
+            if(UserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
             {
                 _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
                 AddDomainEvent(new SolutionWasUpvotedDomainEvent(this, vote));
@@ -88,7 +85,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             var vote = SolutionUserVote.GenerateDownvote(voterId);
             _votes.Add(vote);
 
-            if(AppUserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
+            if(UserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
             {
                 _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
                 AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, vote));

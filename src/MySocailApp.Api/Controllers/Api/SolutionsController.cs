@@ -22,10 +22,8 @@ using MySocailApp.Application.Queries.SolutionAggregate.GetQuestionSolutionsThat
 using MySocailApp.Application.Queries.SolutionAggregate.GetSavedSolutions;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionDownvotes;
-using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionImage;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionUpvotes;
-using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionVideo;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -42,11 +40,11 @@ namespace MySocailApp.Api.Controllers.Api
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<SolutionResponseDto> Create([FromForm] string? content, [FromForm] int questionId, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
+        public async Task<CreateSolutionResponseDto> Create([FromForm] string? content, [FromForm] int questionId, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateSolutionDto(content, questionId, images), cancellationToken);
 
         [HttpPost]
-        public async Task<SolutionResponseDto> CreateVideoSolution([FromForm] string? content, [FromForm] int questionId, [FromForm] IFormFile file, CancellationToken cancellationToken)
+        public async Task<CreateVideoSolutionResponseDto> CreateVideoSolution([FromForm] string? content, [FromForm] int questionId, [FromForm] IFormFile file, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateVideoSolutionDto(questionId, file, content), cancellationToken);
 
         [HttpDelete("{solutionId}")]
@@ -84,20 +82,6 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpDelete("{solutionId}")]
         public async Task Unsave(int solutionId, CancellationToken cancellationToken)
             => await _mediator.Send(new UnsaveSolutionDto(solutionId),cancellationToken);
-
-        [HttpGet("{solutionId}/{solutionImageId}")]
-        public async Task<FileResult> GetSolutionImage(int solutionId, int solutionImageId, CancellationToken cancellationToken)
-             => File(
-               await _mediator.Send(new GetSolutionImageDto(solutionId, solutionImageId), cancellationToken),
-               "application/octet-stream"
-            );
-
-        [HttpGet("{solutionId}")]
-        public async Task<FileResult> GetSolutionVideo(int solutionId, CancellationToken cancellationToken)
-            => File(
-                await _mediator.Send(new GetSolutionVideoDto(solutionId),cancellationToken),
-                "application/octet-stream"
-            );
 
         [HttpGet("{id}")]
         public async Task<SolutionResponseDto> GetSolutionById(int id, CancellationToken cancellationToken)

@@ -11,7 +11,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
             => query
                 .Join(
                     context.Accounts,
-                    solution => solution.AppUserId,
+                    solution => solution.UserId,
                     account => account.Id,
                     (solution, account) => new { solution, account.UserName }
                 )
@@ -25,7 +25,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.solution.UpdatedAt,
                         join.solution.QuestionId,
                         join.UserName.Value,
-                        join.solution.AppUserId,
+                        join.solution.UserId,
                         join.solution.Content.Value,
                         join.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Upvote),
                         join.solution.Votes.Count(v => v.Type == SolutionVoteType.Upvote),
@@ -33,14 +33,14 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.solution.Votes.Count(v => v.Type == SolutionVoteType.Downvote),
                         context.Comments.Count(c => c.SolutionId == join.solution.Id),
                         join.solution.State,
-                        join.solution.AppUserId == accountId,
+                        join.solution.UserId == accountId,
                         join.solution.Savers.Any(x => x.AppUserId == accountId),
-                        join.solution.HasVideo,
                         question.UserId == accountId,
                         join.solution.Medias.Select(
                             i => new SolutionMediaResponseDto(
                                 i.Id,
                                 i.SolutionId,
+                                i.ContainerName,
                                 i.BlobName,
                                 i.Size,
                                 i.Height,

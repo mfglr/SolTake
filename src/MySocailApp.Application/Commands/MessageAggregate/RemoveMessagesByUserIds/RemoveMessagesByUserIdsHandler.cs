@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageAggregate.DomainServices;
-using MySocailApp.Domain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainServices;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.RemoveMessagesByUserIds
 {

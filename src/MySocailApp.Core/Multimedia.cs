@@ -4,6 +4,7 @@
     {
         public string ContainerName { get; private set; }
         public string BlobName { get; private set; }
+        public string? BlobNameOfFrame { get; private set; }
         public long Size { get; private set; }
         public double Height { get; private set; }
         public double Width { get; private set; }
@@ -20,10 +21,11 @@
             Duration = 0;
         }
 
-        private Multimedia(string containerName, string blobName, long size, double height, double width, double duration)
+        private Multimedia(string containerName, string blobName, string blobNameOfFrame, long size, double height, double width, double duration)
         {
             ContainerName = containerName;
             BlobName = blobName;
+            BlobNameOfFrame = blobNameOfFrame;
             Size = size;
             Height = height;
             Width = width;
@@ -43,8 +45,8 @@
         public static Multimedia CreateImage(string containerName, string blobName, long size, double height, double width)
             => new(containerName, blobName, size, height, width) { MultimediaType = MultimediaType.Image};
 
-        public static Multimedia CreateVideo(string containerName, string blobName, long size, double height, double width, double duration)
-            => new(containerName, blobName, size, height, width, duration) { MultimediaType = MultimediaType.Video };
+        public static Multimedia CreateVideo(string containerName, string blobName, string blobNameOfFrame, long size, double height, double width, double duration)
+            => new(containerName, blobName, blobNameOfFrame, size, height, width, duration) { MultimediaType = MultimediaType.Video };
 
         public static Multimedia CreateAudio(string containerName, string blobName, long size, double duration)
             => new(containerName, blobName, size, duration) { MultimediaType = MultimediaType.Audio };

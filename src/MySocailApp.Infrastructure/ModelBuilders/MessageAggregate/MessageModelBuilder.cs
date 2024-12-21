@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.MessageAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
 {
@@ -17,7 +17,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
             );
 
             builder
-                .HasMany(x => x.Images)
+                .HasMany(x => x.Medias)
                 .WithOne()
                 .HasForeignKey(x => x.MessageId)
                 .OnDelete(DeleteBehavior.Cascade);

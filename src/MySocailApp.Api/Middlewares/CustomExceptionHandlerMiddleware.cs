@@ -25,6 +25,6 @@ namespace MySocailApp.Api.Middlewares
                 var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
                 await context.WriteAppExceptionAsync(languge.Value, new ServerSideException());
             }
-        }
+        }   
     }
 }

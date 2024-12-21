@@ -7,16 +7,16 @@ using MySocailApp.Domain.AccountDomain.RoleAggregate.Entities;
 using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate;
 using MySocailApp.Domain.AppVersionAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
-using MySocailApp.Domain.ExamAggregate.Entitities;
-using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SubjectAggregate.Entities;
-using MySocailApp.Domain.TopicAggregate.Entities;
 using MySocailApp.Domain.UserAggregate.Entities;
-using MySocailApp.Domain.UserConnectionAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
@@ -56,11 +56,10 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Topic> Topics { get; private set; }
 
         public DbSet<Notification> Notifications { get; private set; }
-        
-        public DbSet<UserConnection> UserConnections { get; private set; }
         public DbSet<NotificationConnection> NotificationConnections { get; private set; }
 
         public DbSet<Message> Messages { get; private set; }
+        public DbSet<MessageConnection> MessageConnections { get; private set; }
         public DbSet<MessageResponseDto> MessageResponseDtos { get; private set; }
 
         public DbSet<AppVersion> AppVersions { get; private set; }

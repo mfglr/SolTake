@@ -46,7 +46,7 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
         public Task<List<Solution>> GetUserSolutionsAsync(int userId, CancellationToken cancellationToken)
             => _context.Solutions
                 .Include(x => x.Medias)
-                .Where(x => x.AppUserId == userId)
+                .Where(x => x.UserId == userId)
                 .ToListAsync(cancellationToken);
 
         public Task<List<Solution>> GetQuestionSolutionsAsync(int questionId, CancellationToken cancellationToken)

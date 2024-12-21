@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
@@ -30,6 +30,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
                     x.QuestionId,
                     x.ContainerName,
                     x.BlobName,
+                    x.BlobNameOfFrame,
                     x.Size,
                     x.Height,
                     x.Width,

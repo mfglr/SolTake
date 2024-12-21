@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.SubjectAggregate.Entities;
-using MySocailApp.Domain.SubjectAggregate.Interfaces;
+using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SubjectAggregate

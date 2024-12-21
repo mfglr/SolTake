@@ -464,60 +464,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("CommentUserTags");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.ExamAggregate.Entitities.Exam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Exams");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FullName = "Temel Yeterlilik Testi",
-                            ShortName = "TYT"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FullName = "Alan Yeterlilik Testi",
-                            ShortName = "AYT"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FullName = "Liselere Geçiş Sistemi",
-                            ShortName = "LGS"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FullName = "Kamu Personeli Seçme Sınavı",
-                            ShortName = "KPSS"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FullName = "Dikey Geçiş Sınavı",
-                            ShortName = "DGS"
-                        });
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.Message", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -545,7 +492,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageImage", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageMultimedia", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -557,8 +504,12 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ContainerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Duration")
+                        .HasColumnType("float");
 
                     b.Property<double>("Height")
                         .HasColumnType("float");
@@ -566,8 +517,11 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<int>("MessageId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("MultimediaType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
 
                     b.Property<double>("Width")
                         .HasColumnType("float");
@@ -576,10 +530,10 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("MessageImage");
+                    b.ToTable("MessageMultimedia");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserReceive", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserReceive", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -606,7 +560,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("MessageUserReceive");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserRemove", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserRemove", b =>
                 {
                     b.Property<int>("MessageId")
                         .HasColumnType("int");
@@ -619,7 +573,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("MessageUserRemove");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserView", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserView", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -646,7 +600,29 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("MessageUserView");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.NotificationAggregate.Entities.Notification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities.MessageConnection", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsConnected")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageConnections");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities.Notification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -706,7 +682,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.NotificationConnectionAggregate.Entities.NotificationConnection", b =>
+            modelBuilder.Entity("MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities.NotificationConnection", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -722,7 +698,60 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("NotificationConnections");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.Question", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities.Exam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exams");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FullName = "Temel Yeterlilik Testi",
+                            ShortName = "TYT"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FullName = "Alan Yeterlilik Testi",
+                            ShortName = "AYT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FullName = "Liselere Geçiş Sistemi",
+                            ShortName = "LGS"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FullName = "Kamu Personeli Seçme Sınavı",
+                            ShortName = "KPSS"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FullName = "Dikey Geçiş Sınavı",
+                            ShortName = "DGS"
+                        });
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -744,7 +773,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionMultimedia", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionMultimedia", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -754,6 +783,9 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<string>("BlobName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobNameOfFrame")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContainerName")
@@ -785,7 +817,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionMultimedia");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLike", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -809,7 +841,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionUserLikes");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
                 {
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
@@ -822,7 +854,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionUserLikeNotifications");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserSave", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserSave", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -849,151 +881,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionUserSaves");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.Solution", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("HasVideo")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Solutions");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionMultimedia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BlobName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContainerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Duration")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
-
-                    b.Property<int>("MultimediaType")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("SolutionId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Width")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SolutionId");
-
-                    b.ToTable("SolutionMultimedia");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserSave", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SolutionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SolutionId");
-
-                    b.ToTable("SolutionUserSaves");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SolutionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SolutionId");
-
-                    b.HasIndex("AppUserId", "Type");
-
-                    b.ToTable("SolutionUserVotes");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVoteNotification", b =>
-                {
-                    b.Property<int>("SolutionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SolutionId", "AppUserId");
-
-                    b.ToTable("SolutionUserVoteNotifications");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.Subject", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities.Subject", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1249,7 +1137,7 @@ namespace MySocailApp.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.SubjectTopic", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities.SubjectTopic", b =>
                 {
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -8194,7 +8082,7 @@ namespace MySocailApp.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.TopicAggregate.Entities.Topic", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities.Topic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -11493,6 +11381,150 @@ namespace MySocailApp.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.Solution", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Solutions");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionMultimedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BlobName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobNameOfFrame")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContainerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Duration")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<int>("MultimediaType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("SolutionId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SolutionId");
+
+                    b.ToTable("SolutionMultimedia");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserSave", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SolutionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SolutionId");
+
+                    b.ToTable("SolutionUserSaves");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SolutionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SolutionId");
+
+                    b.HasIndex("AppUserId", "Type");
+
+                    b.ToTable("SolutionUserVotes");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVoteNotification", b =>
+                {
+                    b.Property<int>("SolutionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SolutionId", "AppUserId");
+
+                    b.ToTable("SolutionUserVoteNotifications");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.Follow", b =>
                 {
                     b.Property<int>("Id")
@@ -11581,28 +11613,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasIndex("SearchedId");
 
                     b.ToTable("UserSearchs");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.UserConnectionAggregate.Entities.UserConnection", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConnectionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsConnected")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserConnections");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", b =>
@@ -11840,9 +11850,9 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.Message", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", b =>
                 {
-                    b.OwnsOne("MySocailApp.Domain.MessageAggregate.ValueObjects.MessageContent", "Content", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects.MessageContent", "Content", b1 =>
                         {
                             b1.Property<int>("MessageId")
                                 .HasColumnType("int");
@@ -11863,45 +11873,45 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Content");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageImage", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageMultimedia", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
-                        .WithMany("Images")
+                    b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
+                        .WithMany("Medias")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserReceive", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserReceive", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
+                    b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
                         .WithMany("Receivers")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserRemove", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserRemove", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
+                    b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
                         .WithMany("Removers")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.MessageUserView", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserView", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.MessageAggregate.Entities.Message", null)
+                    b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
                         .WithMany("Viewers")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.Question", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", b =>
                 {
-                    b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionContent", "Content", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects.QuestionContent", "Content", b1 =>
                         {
                             b1.Property<int>("QuestionId")
                                 .HasColumnType("int");
@@ -11918,7 +11928,7 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("QuestionId");
                         });
 
-                    b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionExam", "Exam", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects.QuestionExam", "Exam", b1 =>
                         {
                             b1.Property<int>("QuestionId")
                                 .HasColumnType("int");
@@ -11942,7 +11952,7 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("QuestionId");
                         });
 
-                    b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionSubject", "Subject", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects.QuestionSubject", "Subject", b1 =>
                         {
                             b1.Property<int>("QuestionId")
                                 .HasColumnType("int");
@@ -11962,7 +11972,7 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("QuestionId");
                         });
 
-                    b.OwnsOne("MySocailApp.Domain.QuestionAggregate.ValueObjects.QuestionTopic", "Topic", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects.QuestionTopic", "Topic", b1 =>
                         {
                             b1.Property<int>("QuestionId")
                                 .HasColumnType("int");
@@ -11993,38 +12003,47 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionMultimedia", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionMultimedia", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
+                    b.HasOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", null)
                         .WithMany("Medias")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLike", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLike", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
+                    b.HasOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", null)
                         .WithMany("Likes")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
+                    b.HasOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", null)
                         .WithMany("LikeNotifications")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.QuestionUserSave", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserSave", b =>
                 {
-                    b.HasOne("MySocailApp.Domain.QuestionAggregate.Entities.Question", null)
+                    b.HasOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", null)
                         .WithMany("Savers")
                         .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities.SubjectTopic", b =>
+                {
+                    b.HasOne("MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities.Subject", null)
+                        .WithMany("Topics")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -12048,33 +12067,7 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("SolutionId");
                         });
 
-                    b.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionVideo", "Video", b1 =>
-                        {
-                            b1.Property<int>("SolutionId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("BlobName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<double>("Duration")
-                                .HasColumnType("float");
-
-                            b1.Property<long>("Length")
-                                .HasColumnType("bigint");
-
-                            b1.HasKey("SolutionId");
-
-                            b1.ToTable("Solutions");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SolutionId");
-                        });
-
-                    b.Navigation("Content")
-                        .IsRequired();
-
-                    b.Navigation("Video");
+                    b.Navigation("Content");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionMultimedia", b =>
@@ -12113,15 +12106,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.SubjectTopic", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.SubjectAggregate.Entities.Subject", null)
-                        .WithMany("Topics")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.Follow", b =>
                 {
                     b.HasOne("MySocailApp.Domain.UserAggregate.Entities.User", null)
@@ -12133,14 +12117,36 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.User", b =>
                 {
-                    b.OwnsOne("MySocailApp.Domain.UserAggregate.ValueObjects.Biography", "Biography", b1 =>
+                    b.OwnsOne("MySocailApp.Core.Multimedia", "Image", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("int");
 
-                            b1.Property<string>("Value")
+                            b1.Property<string>("BlobName")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("BlobNameOfFrame")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("ContainerName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<double>("Duration")
+                                .HasColumnType("float");
+
+                            b1.Property<double>("Height")
+                                .HasColumnType("float");
+
+                            b1.Property<int>("MultimediaType")
+                                .HasColumnType("int");
+
+                            b1.Property<long>("Size")
+                                .HasColumnType("bigint");
+
+                            b1.Property<double>("Width")
+                                .HasColumnType("float");
 
                             b1.HasKey("UserId");
 
@@ -12150,17 +12156,14 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("MySocailApp.Domain.UserAggregate.ValueObjects.ProfileImage", "Image", b1 =>
+                    b.OwnsOne("MySocailApp.Domain.UserAggregate.ValueObjects.Biography", "Biography", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("int");
 
-                            b1.Property<string>("BlobName")
+                            b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime>("CreatedAt")
-                                .HasColumnType("datetime2");
 
                             b1.HasKey("UserId");
 
@@ -12218,9 +12221,9 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Tags");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageAggregate.Entities.Message", b =>
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", b =>
                 {
-                    b.Navigation("Images");
+                    b.Navigation("Medias");
 
                     b.Navigation("Receivers");
 
@@ -12229,7 +12232,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Viewers");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionAggregate.Entities.Question", b =>
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", b =>
                 {
                     b.Navigation("LikeNotifications");
 
@@ -12238,6 +12241,11 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Medias");
 
                     b.Navigation("Savers");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities.Subject", b =>
+                {
+                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.Solution", b =>
@@ -12249,11 +12257,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("VoteNotifications");
 
                     b.Navigation("Votes");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.SubjectAggregate.Entities.Subject", b =>
-                {
-                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.User", b =>

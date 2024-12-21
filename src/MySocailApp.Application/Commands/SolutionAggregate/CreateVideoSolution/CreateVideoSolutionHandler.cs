@@ -2,8 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Application.Queries.SolutionAggregate;
-using MySocailApp.Application.QueryRepositories;
+using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
@@ -11,29 +10,27 @@ using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateVideoSolution
 {
-    public class CreateVideoSolutionHandler(ISolutionQueryRepository solutionQueryRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IVideoService videoService, SolutionCreatorDomainService solutionCreator, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService) : IRequestHandler<CreateVideoSolutionDto, SolutionResponseDto>
+    public class CreateVideoSolutionHandler(IUnitOfWork unitOfWork,SolutionCreatorDomainService solutionCreator, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, IMultimediaService multimediaService, IAccountAccessor accountAccessor) : IRequestHandler<CreateVideoSolutionDto, CreateVideoSolutionResponseDto>
     {
-        private readonly IVideoService _videoService = videoService;
+        private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly IBlobService _blobService = blobService;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
-        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
-        private readonly ISolutionQueryRepository _solutionQueryRepository = solutionQueryRepository;
         private readonly SolutionCreatorDomainService _solutionCreator = solutionCreator;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IMultimediaService _multimediaService = multimediaService;
 
-        public async Task<SolutionResponseDto> Handle(CreateVideoSolutionDto request, CancellationToken cancellationToken)
+        public async Task<CreateVideoSolutionResponseDto> Handle(CreateVideoSolutionDto request, CancellationToken cancellationToken)
         {
-
-            AppVideo? appVideo = null;
+            Multimedia? media = null;
             try
             {
                 //upload video
-                appVideo = await _videoService.SaveAsync(request.File, ContainerName.SolutionVideos, cancellationToken);
+                media = await _multimediaService.UploadAsync(ContainerName.SolutionMedias, request.File, cancellationToken);
 
                 //create solution
-                var userId = _accessTokenReader.GetRequiredAccountId();
-                var video = new SolutionVideo(appVideo.BlobName, appVideo.Duration, appVideo.Length);
-                var content = new SolutionContent(request.Content ?? "");
+                var video = new SolutionMultimedia(media);
+                var userId = _accountAccessor.Account.Id;
+                var content = request.Content != null ? new SolutionContent(request.Content) : null;
                 var solution = new Solution(request.QuestionId, userId, content, video);
                 await _solutionCreator.CreateAsync(solution, cancellationToken);
                 await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
@@ -41,12 +38,12 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateVideoSolution
                 //commit changes
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                return (await _solutionQueryRepository.GetByIdAsync(userId, solution.Id, cancellationToken))!;
+                return new (solution, _accountAccessor.Account);
             }
             catch (Exception)
             {
-                if(appVideo != null)
-                    await _blobService.DeleteAsync(ContainerName.SolutionVideos,appVideo.BlobName,cancellationToken);
+                if (media != null)
+                    await _blobService.DeleteAsync(ContainerName.SolutionMedias, media.BlobName, cancellationToken);
                 throw;
             }
         }

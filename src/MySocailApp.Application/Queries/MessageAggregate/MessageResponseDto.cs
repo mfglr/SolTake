@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.MessageAggregate.ValueObjects;
+﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.MessageAggregate
 {

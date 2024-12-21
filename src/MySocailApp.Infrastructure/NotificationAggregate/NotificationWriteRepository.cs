@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.NotificationAggregate.ValueObjects;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.NotificationAggregate

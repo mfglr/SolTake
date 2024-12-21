@@ -12,10 +12,10 @@ import 'package:my_social_app/views/question/widgets/question_item/widgets/quest
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/save_question_button.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
+import 'package:my_social_app/views/shared/multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_comment_button_widget.dart';
-import 'package:my_social_app/views/question/widgets/question_item/widgets/question_images_slider.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_like_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/subject_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/topic_tag_item.dart';
@@ -88,9 +88,9 @@ class QuestionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          QuestionImagesSlider(
+          MultimediaSlider(
             key: ValueKey(question.id),
-            question: question,
+            medias: question.medias,
           ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15),

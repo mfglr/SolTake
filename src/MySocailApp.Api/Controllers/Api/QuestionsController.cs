@@ -14,7 +14,6 @@ using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
-using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionImage;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionLikes;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsByExamId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionsBySubjectId;
@@ -66,10 +65,6 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpDelete("{questionId}")]
         public async Task UnsaveQuestion(int questionId, CancellationToken cancellationToken)
             => await _mediator.Send(new UnsaveQuestionDto(questionId), cancellationToken);
-
-        [HttpGet("{questionId}/{questionImageId}")]
-        public async Task<FileResult> GetImage(int questionId, int questionImageId, CancellationToken cancellationToken)
-            => File(await _mediator.Send(new GetQuestionImageDto(questionId, questionImageId), cancellationToken), "application/octet-stream");
 
         [HttpGet("{id}")]
         public async Task<QuestionResponseDto> GetQuestionById(int id, CancellationToken cancellationToken)

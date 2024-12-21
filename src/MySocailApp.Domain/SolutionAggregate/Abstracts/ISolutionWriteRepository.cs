@@ -1,5 +1,4 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+﻿using MySocailApp.Domain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.SolutionAggregate.Abstracts
 {

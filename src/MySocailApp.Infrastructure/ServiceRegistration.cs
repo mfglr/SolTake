@@ -11,16 +11,16 @@ using MySocailApp.Domain.AccountDomain.RoleAggregate.Abstracts;
 using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate.Abstracts;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.Abstracts;
-using MySocailApp.Domain.ExamAggregate.Interfaces;
-using MySocailApp.Domain.MessageAggregate.Interfaces;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
+using MySocailApp.Domain.QuestionDomain.ExamAggregate.Interfaces;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Interfaces;
+using MySocailApp.Domain.QuestionDomain.TopicAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SubjectAggregate.Interfaces;
-using MySocailApp.Domain.TopicAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.AppVersionAggregate;
 using MySocailApp.Infrastructure.CommentAggregate;
@@ -113,10 +113,8 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<VideoManipulatorConverter>()
                 .AddScoped<TempDirectoryService>()
                 .AddScoped<IBlobService, LocalBlobService>()
-                .AddScoped<IImageService, ImageService>()
                 .AddScoped<ITextService, TextService>()
-                .AddScoped<IVideoService, VideoService>()
-                .AddScoped<IMultimedyaService,MultiMediaService>();
+                .AddScoped<IMultimediaService,MultiMediaService>();
 
 
         private static IServiceCollection AddDbContext(this IServiceCollection services)
@@ -205,8 +203,8 @@ namespace MySocailApp.Infrastructure
 
         private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
             => services
-                .AddScoped<IUserConnectionWriteRepository, UserConnectionWriteRepository>()
-                .AddScoped<IUserConnectionReadRepository, UserConnectionReadRepository>();
+                .AddScoped<IMessageConnectionWriteRepository, UserConnectionWriteRepository>()
+                .AddScoped<IMessageConnectionReadRepository, UserConnectionReadRepository>();
 
         private static IServiceCollection AddNotificationConnectionAggregate(this IServiceCollection services)
             => services

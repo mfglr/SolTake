@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionUpvotedDomainEventConsumers.NotificationAggregate
@@ -16,7 +16,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionUpvotedDomainEven
 
         public async Task Handle(SolutionWasUpvotedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = Notification.SolutionWasUpvotedNotification(notification.Solution.AppUserId, notification.Vote.AppUserId, notification.Solution.QuestionId, notification.Solution.Id);
+            var n = Notification.SolutionWasUpvotedNotification(notification.Solution.UserId, notification.Vote.AppUserId, notification.Solution.QuestionId, notification.Solution.Id);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

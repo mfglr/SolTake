@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.NotificationAggregate.ValueObjects;
+﻿using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.NotificationAggregate
 {

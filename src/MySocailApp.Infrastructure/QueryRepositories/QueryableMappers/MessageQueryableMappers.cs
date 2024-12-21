@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.Queries.MessageAggregate;
-using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.MessageAggregate.ValueObjects;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -35,7 +35,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             : join.message.Receivers.Count != 0 
                                 ? MessageState.Reached 
                                 : MessageState.Created,
-                        join.message.Images.Count
+                        join.message.Medias.Count
                     )
                 );
     }

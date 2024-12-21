@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.CommentDeletedDomainEventConsumers.NotificationAggregate
 {

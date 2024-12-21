@@ -2,7 +2,7 @@
 using MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion;
 using MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion;
 using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {

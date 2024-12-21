@@ -17,8 +17,8 @@ namespace MySocailApp.Domain.UserAggregate.Entities
 
         //profile image
         public bool HasImage { get; private set; }
-        public ProfileImage? Image { get; private set; }
-        public void UpdateImage(ProfileImage image)
+        public Multimedia? Image { get; private set; }
+        public void UpdateImage(Multimedia image)
         {
             if (Image != null) AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
             HasImage = true;

@@ -1,13 +1,13 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
-using MySocailApp.Domain.UserConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserConnectionAggregate
 {
-    public class DeleteUserConnection(IUserConnectionWriteRepository userConnectionWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserDeletedDomainEvent>
+    public class DeleteUserConnection(IMessageConnectionWriteRepository userConnectionWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserDeletedDomainEvent>
     {
-        private readonly IUserConnectionWriteRepository _userConnectionWriteRepository = userConnectionWriteRepository;
+        private readonly IMessageConnectionWriteRepository _userConnectionWriteRepository = userConnectionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(UserDeletedDomainEvent notification, CancellationToken cancellationToken)

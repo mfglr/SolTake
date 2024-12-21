@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.NotificationAggregate.MarkAsViewedNotifications
 {

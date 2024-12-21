@@ -2,12 +2,13 @@
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
+using MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using SixLabors.ImageSharp;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
-    public class MultiMediaService(TempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoManipulatorConverter videoManipulatorConverter, VideoDurationCalculator videoDurationCalculator) : IMultimedyaService
+    public class MultiMediaService(TempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoManipulatorConverter videoManipulatorConverter, VideoDurationCalculator videoDurationCalculator, FrameCatcher frameCatcher) : IMultimediaService
     {
         private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
         private readonly DimentionCalculator _dimentionCalculator = dimentionCalculator;
@@ -15,6 +16,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
         private readonly VideoManipulatorConverter _videoManipulatorConverter = videoManipulatorConverter;
         private readonly VideoDurationCalculator _videoDurationCalculator = videoDurationCalculator;
         private readonly UniqNameGenerator _uniqNameGenerator = uniqNameGenerator;
+        private readonly FrameCatcher _frameCatcher = frameCatcher;
         private readonly IBlobService _blobService = blobService;
 
         private async Task<Multimedia> UploadImageAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
@@ -34,7 +36,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             //save image to the blob container
             using var imageStream = File.OpenRead(path);
             await _blobService.UploadAsync(imageStream, containerName, blobName, cancellationToken);
-            
+
             //reuturn multimedya
             var medya = Multimedia.CreateImage(containerName, blobName, imageStream.Length, dimention.Height, dimention.Width);
             imageStream.Close();
@@ -56,28 +58,34 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             //calculate duration of the video
             var duration = _videoDurationCalculator.Calculate(output);
 
-            //upload video manipulated to the blob container
+            //save the first frame of the video
+            var blobNameOfFrame = await _frameCatcher.SaveFrameAsync(output, containerName, cancellationToken);
+
+            //upload the video manipulated to the blob container
             var blobName = _uniqNameGenerator.Generate();
             using var manipulatedVideo = File.OpenRead(output);
             await _blobService.UploadAsync(manipulatedVideo, containerName, blobName, cancellationToken);
 
             //reuturn multimedya
-            var multiMedya = Multimedia.CreateVideo(containerName, blobName, manipulatedVideo.Length, dimention.Height, dimention.Width, duration);
+            var multiMedya = Multimedia.CreateVideo(containerName, blobName, blobNameOfFrame, manipulatedVideo.Length, dimention.Height, dimention.Width, duration);
             manipulatedVideo.Close();
             return multiMedya;
         }
 
-        public async Task<Multimedia?> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        public async Task<Multimedia> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
             _tempDirectoryService.Create();
             try
             {
                 Multimedia? media = null;
+
                 if (file.ContentType.StartsWith("image"))
                     media = await UploadImageAsync(containerName, file, cancellationToken);
-                if (file.ContentType.StartsWith("video"))
+                else if (file.ContentType.StartsWith("video"))
                     media = await UploadVideoAsync(containerName, file, cancellationToken);
-                
+                else
+                    throw new InvalidMultimediaTypeException();
+
                 _tempDirectoryService.Delete();
                 return media;
             }
@@ -87,7 +95,6 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 throw;
             }
         }
-
 
         public async Task<List<Multimedia>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken)
         {
@@ -112,7 +119,5 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 throw;
             }
         }
-
-       
     }
 }

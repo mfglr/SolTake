@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.MessageAggregate.DomainEvents;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageAggregate.MessageDeletedDomainEventConsumers
 {
@@ -10,7 +10,7 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageAggregate.MessageD
         private readonly IBlobService _blobService = blobService;
         public async Task Handle(MessageDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            foreach (var image in notification.message.Images)
+            foreach (var image in notification.message.Medias)
                 await _blobService.DeleteAsync(ContainerName.MesssageImages, image.BlobName, cancellationToken);
         }
     }

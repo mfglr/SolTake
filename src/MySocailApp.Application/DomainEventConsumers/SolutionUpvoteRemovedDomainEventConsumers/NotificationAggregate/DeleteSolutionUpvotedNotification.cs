@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionUpvoteRemovedDomainEventConsumers.NotificationAggregate
@@ -12,7 +12,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionUpvoteRemovedDoma
 
         public async Task Handle(SolutionUpvoteRemovedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = await _notificationWriteRepository.GetSolutionWasUpvotedNotificationAsync(notification.Solution.Id, notification.Solution.AppUserId, cancellationToken);
+            var n = await _notificationWriteRepository.GetSolutionWasUpvotedNotificationAsync(notification.Solution.Id, notification.Solution.UserId, cancellationToken);
             if (n == null) return;
 
             _notificationWriteRepository.Delete(n);

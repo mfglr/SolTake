@@ -2,8 +2,8 @@
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
-using MySocailApp.Domain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.DomainEventConsumers.NotificationAggregate.SolutionCommentNotificationCreatedDomainEventConsumers
 {

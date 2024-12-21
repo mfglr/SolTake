@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.MessageAggregate.Exceptions;
-using MySocailApp.Domain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
 {
@@ -25,10 +24,10 @@ namespace MySocailApp.Application.Queries.MessageAggregate.GetMessageImage
             if (accountId != message.SenderId && accountId != message.ReceiverId)
                 throw new PermissionDeniedToAccessMessageImage();
             
-            if(request.Index < 0 || request.Index >= message.Images.Count)
+            if(request.Index < 0 || request.Index >= message.Medias.Count)
                 throw new MessageImageNotFoundException();
 
-            var image = message.Images[request.Index];
+            var image = message.Medias[request.Index];
             return await _blobService.ReadAsync(ContainerName.MesssageImages, image.BlobName, cancellationToken);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.NotificationConnectionAggregate.Entities;
-using MySocailApp.Domain.NotificationConnectionAggregate.Interfaces;
+using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.NotificationConnectionAggregate.ConnectNotificationHub
 {

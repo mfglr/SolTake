@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion
 {

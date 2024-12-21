@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.MessageAggregate.Entities;
-using MySocailApp.Domain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.MessageAggregate
@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.MessageAggregate
         public Task<Message?> GetMessageWithImagesAsync(int accountId, int id, CancellationToken cancellationToken)
             => _context.Messages
                 .AsNoTracking()
-                .Include(x => x.Images)
+                .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == id && !x.Removers.Any(x => x.UserId == accountId), cancellationToken);
     }
 }
