@@ -1,7 +1,6 @@
-import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
+import 'package:my_social_app/enums/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
@@ -216,11 +215,11 @@ class QuestionState{
           ? incorrectSolutions.removeOne(solution.id)
           : incorrectSolutions,
       newNumberOfVideoSolutions: 
-        solution.hasVideo
+        solution.medias.any((e) => e.multimediaType == MultimediaType.video)
           ? numberOfVideoSolutions - 1
           : numberOfVideoSolutions,
       newVideoSolutions:
-        solution.hasVideo
+        solution.medias.any((e) => e.multimediaType == MultimediaType.video)
           ? videoSolutions.removeOne(solution.id)
           : videoSolutions,
       newState: 
@@ -273,13 +272,6 @@ class QuestionState{
     _optional(newNumberOfComments: numberOfComments - 1,newComments: comments.removeOne(commentId));
   QuestionState addNewComment(int commentId) =>
     _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.addInOrder(commentId));
-
-  QuestionState startLoadingImage(int index){
-    if(medias.elementAt(index).status != MultimediaStatus.notStarted) return this;
-    return _optional( newMedias: [...medias.take(index),medias.elementAt(index).startLoding(),...medias.skip(index + 1)] );
-  }
-  QuestionState loadImage(int index,Uint8List image) => 
-    _optional(newMedias: [...medias.take(index),medias.elementAt(index).load(image),...medias.skip(index + 1)]);
 
   QuestionState markAsSolved() =>
     _optional(newState: QuestionStatus.solved);

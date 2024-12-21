@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -185,20 +184,6 @@ class AddNewSolutionCommentAction extends AppAction{
   final int solutionId;
   final int commentId;
   const AddNewSolutionCommentAction({required this.solutionId, required this.commentId});
-}
-
-@immutable
-class LoadSolutionImageAction extends AppAction{
-  final int solutionId;
-  final int index;
-  const LoadSolutionImageAction({required this.solutionId, required this.index});
-}
-@immutable
-class LoadSolutionImageSuccessAction extends AppAction{
-  final int solutionId;
-  final int index;
-  final Uint8List image;
-  const LoadSolutionImageSuccessAction({required this.solutionId, required this.index, required this.image});
 }
 
 @immutable

@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -48,11 +47,6 @@ class SolutionEntityState extends EntityState<SolutionState>{
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.removeComment(commentId)));
   SolutionEntityState addNewComment(int solutionId,int commentId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.addNewComment(commentId)));
-
-  SolutionEntityState startLoadingImage(int solutionId,int index)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.startLoadingImage(index)));
-  SolutionEntityState loadImage(int solutionId,int index,Uint8List image)
-    => SolutionEntityState(entities: updateOne(entities[solutionId]?.loadImage(index, image)));
 
   SolutionEntityState markAsCorrect(int solutionId)
     => SolutionEntityState(entities: updateOne(entities[solutionId]?.markAsCorrect()));

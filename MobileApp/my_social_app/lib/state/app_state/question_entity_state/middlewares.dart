@@ -5,7 +5,6 @@ import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_save_state/actions.dart';
@@ -89,19 +88,7 @@ void unsaveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-void loadQuestionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadQuestionImageAction){
-    final image = store.state.questionEntityState.entities[action.questionId]!.medias.elementAt(action.index);
-    if(image.status == MultimediaStatus.notStarted){
-      QuestionService()
-        .getQuestionImage(action.questionId, image.id)
-        .then((image) => store.dispatch(
-            LoadQuestionImageSuccessAction(questionId: action.questionId, index: action.index,image: image)
-        ));
-    }
-  }
-  next(action);
-}
+
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){
     QuestionService()

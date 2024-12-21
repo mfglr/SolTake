@@ -51,11 +51,6 @@ SolutionEntityState removeCommentReducer(SolutionEntityState prev,RemoveSolution
 SolutionEntityState addNewCommentReducer(SolutionEntityState prev,AddNewSolutionCommentAction action)
   => prev.addNewComment(action.solutionId,action.commentId);
 
-SolutionEntityState startLoadingImageReducer(SolutionEntityState prev,LoadSolutionImageAction action)
-  => prev.startLoadingImage(action.solutionId, action.index);
-SolutionEntityState loadImageReducer(SolutionEntityState prev,LoadSolutionImageSuccessAction action)
-  => prev.loadImage(action.solutionId, action.index, action.image);
-
 SolutionEntityState markAsCorrectReducer(SolutionEntityState prev, MarkSolutionAsCorrectSuccessAction action)
   => prev.markAsCorrect(action.solutionId);
 SolutionEntityState markAsIncorrectReducer(SolutionEntityState prev, MarkSolutionAsIncorrectSuccessAction action)
@@ -92,9 +87,6 @@ Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<Solut
   TypedReducer<SolutionEntityState,AddSolutionCommentAction>(addCommentReducer).call,
   TypedReducer<SolutionEntityState,RemoveSolutionCommentAction>(removeCommentReducer).call,
   TypedReducer<SolutionEntityState,AddNewSolutionCommentAction>(addNewCommentReducer).call,
-
-  TypedReducer<SolutionEntityState,LoadSolutionImageAction>(startLoadingImageReducer).call,
-  TypedReducer<SolutionEntityState,LoadSolutionImageSuccessAction>(loadImageReducer).call,
 
   TypedReducer<SolutionEntityState,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
   TypedReducer<SolutionEntityState,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,

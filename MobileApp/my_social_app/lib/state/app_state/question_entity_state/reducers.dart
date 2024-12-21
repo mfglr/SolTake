@@ -111,12 +111,6 @@ QuestionEntityState removeCommentReducer(QuestionEntityState prev,RemoveQuestion
 QuestionEntityState addNewCommentReducer(QuestionEntityState prev,AddNewQuestionCommentAction action)
   => prev.addNewComment(action.questionId,action.commentId);
 
-//images
-QuestionEntityState startLoadingImageReducer(QuestionEntityState prev,LoadQuestionImageAction action)
-  => prev.startLoadingImage(action.questionId, action.index);
-QuestionEntityState loadImageReducer(QuestionEntityState prev,LoadQuestionImageSuccessAction action)
-  => prev.loadImage(action.questionId, action.index, action.image);
-
 QuestionEntityState saveReducer(QuestionEntityState prev,SaveQuestionSuccessAction action)
   => prev.save(action.questionId);
 QuestionEntityState unsaveReducer(QuestionEntityState prev,UnsaveQuestionSuccessAction action)
@@ -185,10 +179,6 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
   TypedReducer<QuestionEntityState,AddQuestionCommentAction>(addCommentReducer).call,
   TypedReducer<QuestionEntityState,RemoveQuestionCommentAction>(removeCommentReducer).call,
   TypedReducer<QuestionEntityState,AddNewQuestionCommentAction>(addNewCommentReducer).call,
-
-  //images
-  TypedReducer<QuestionEntityState,LoadQuestionImageAction>(startLoadingImageReducer).call,
-  TypedReducer<QuestionEntityState,LoadQuestionImageSuccessAction>(loadImageReducer).call,
   
   TypedReducer<QuestionEntityState,SaveQuestionSuccessAction>(saveReducer).call,
   TypedReducer<QuestionEntityState,UnsaveQuestionSuccessAction>(unsaveReducer).call

@@ -4,7 +4,6 @@ import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -95,19 +94,7 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-void loadSolutionImageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadSolutionImageAction){
-    final image = store.state.solutionEntityState.entities[action.solutionId]!.images.elementAt(action.index);
-    if(image.status == MultimediaStatus.notStarted){
-      SolutionService()
-        .getSolutionImage(action.solutionId,image.id)
-        .then((image) => store.dispatch(
-          LoadSolutionImageSuccessAction(solutionId: action.solutionId,index: action.index,image: image)
-        ));
-    }
-  }
-  next(action);
-}
+
 void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveSolutionAction){
     final question = store.state.questionEntityState.entities[action.solution.questionId];

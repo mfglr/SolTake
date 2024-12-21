@@ -6,7 +6,6 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 part 'solution.g.dart';
 
-
 @immutable
 @JsonSerializable()
 class Solution{
@@ -17,7 +16,6 @@ class Solution{
   final int appUserId;
   final bool isOwner;
   final bool isSaved;
-  final bool hasVideo;
   final String userName;
   final String? content;
   final bool isUpvoted;
@@ -36,7 +34,6 @@ class Solution{
     required this.appUserId,
     required this.isOwner,
     required this.isSaved,
-    required this.hasVideo,
     required this.userName,
     required this.content,
     required this.isUpvoted,
@@ -61,10 +58,9 @@ class Solution{
       appUserId: appUserId,
       isOwner: isOwner,
       isSaved: isSaved,
-      hasVideo: hasVideo,
       userName: userName,
       content: content,
-      images: medias.map((e) => e.toSolutionImageState()),
+      medias: medias.map((e) => e.toSolutionImageState()),
       numberOfComments: numberOfComments,
       comments: Pagination.init(commentsPerPage,true),
       isUpvoted: isUpvoted,

@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
+import 'package:my_social_app/views/shared/multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_downvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_upvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/save_solution_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_comment_button.dart';
-import 'package:my_social_app/views/solution/widgets/no_solution_image.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/solution_video_player.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/solution_images_slider.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:video_player/video_player.dart';
 
 class SolutionItemWidget extends StatelessWidget {
   final SolutionState solution;
-  final VideoPlayerController? controller;
-  final void Function(int solutionId)? play;
-  final void Function(int solutionId)? pause;
 
   const SolutionItemWidget({
     super.key,
     required this.solution,
-    this.play,
-    this.pause,
-    this.controller,
   });
 
   @override
@@ -86,20 +77,7 @@ class SolutionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          
-          if(solution.hasVideo)
-            SolutionVideoPlayer(
-              solution: solution,
-              controller: controller,
-              play: play!,
-              pause: pause!,
-            )
-          else
-            if(solution.images.isNotEmpty)
-              SolutionImagesSlider(solution: solution)
-            else
-              const NoSolutionImage(),
-
+          MultimediaSlider(medias: solution.medias),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(

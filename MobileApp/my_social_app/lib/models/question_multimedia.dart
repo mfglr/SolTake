@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_multimedia_state.dart';
 part 'question_multimedia.g.dart';
 
@@ -16,6 +15,7 @@ class QuestionMultimedia extends Multimedia{
     required this.questionId,
     required super.containerName,
     required super.blobName,
+    required super.blobNameOfFrame,
     required super.size,
     required super.height,
     required super.width,
@@ -32,12 +32,11 @@ class QuestionMultimedia extends Multimedia{
         questionId: questionId,
         containerName: containerName,
         blobName: blobName,
+        blobNameOfFrame: blobNameOfFrame,
         size: size,
         height: height,
         width: width,
         duration: duration,
         multimediaType: multimediaType,
-        status: MultimediaStatus.notStarted,
-        data: null,
       );
 }

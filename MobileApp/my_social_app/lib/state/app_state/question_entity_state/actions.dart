@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -272,20 +271,6 @@ class AddNewQuestionCommentAction extends AppAction{
   const AddNewQuestionCommentAction({required this.questionId, required this.commentId});
 }
 
-
-@immutable
-class LoadQuestionImageAction extends AppAction{
-  final int questionId;
-  final int index;
-  const LoadQuestionImageAction({required this.questionId, required this.index});
-}
-@immutable
-class LoadQuestionImageSuccessAction extends AppAction{
-  final int questionId;
-  final int index;
-  final Uint8List image;
-  const LoadQuestionImageSuccessAction({required this.questionId, required this.index,required this.image});
-}
 
 @immutable
 class SaveQuestionAction extends AppAction{

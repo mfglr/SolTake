@@ -9,14 +9,14 @@ class QuestionAbstractItemsWidget extends StatefulWidget {
   final Iterable<QuestionState> questions;
   final Pagination pagination;
   final Function onScrollBottom;
-  final void Function(int questionId)? onTap;
+  final void Function(int questionId) onTap;
 
   const QuestionAbstractItemsWidget({
     super.key,
     required this.questions,
     required this.pagination,
     required this.onScrollBottom,
-    this.onTap
+    required this.onTap
   });
 
   @override

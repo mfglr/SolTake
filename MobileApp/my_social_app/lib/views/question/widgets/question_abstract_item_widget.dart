@@ -1,45 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/shared/display_image_widget.dart';
+import 'package:my_social_app/views/shared/image_grid/image_grid.dart';
 
-class QuestionAbstractItemWidget extends StatefulWidget {
+class QuestionAbstractItemWidget extends StatelessWidget {
   final QuestionState question;
-  final void Function(int questionId)? onTap;
+  final void Function(int questionId) onTap;
   
   const QuestionAbstractItemWidget({
     super.key,
     required this.question,
-    this.onTap
+    required this.onTap
   });
-
-  @override
-  State<QuestionAbstractItemWidget> createState() => _QuestionAbstractItemWidgetState();
-}
-
-class _QuestionAbstractItemWidgetState extends State<QuestionAbstractItemWidget> {
-  @override
-  void initState() {
-    final store = StoreProvider.of<AppState>(context,listen: false);
-    store.dispatch(LoadQuestionImageAction(questionId: widget.question.id, index: 0));
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      key: ValueKey(widget.question.id),
+      key: ValueKey(question.id),
       padding: const EdgeInsets.all(1.0),
-      child: DisplayImageWidget(
-        onTap: widget.onTap != null ? (){ widget.onTap!(widget.question.id); } : null,
-        image: widget.question.medias.first.data,
-        status: widget.question.medias.first.status,
-        width: 0,
-        aspectRatio: 1,
-        stackFit: StackFit.expand,
-        boxFit: BoxFit.cover,
+      child: ImageGrid(
+        state: question.medias.first,
+        onTap: () => onTap(question.id),
       ),
     );
   }

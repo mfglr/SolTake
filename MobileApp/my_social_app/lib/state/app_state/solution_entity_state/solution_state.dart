@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_multimedia_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -11,7 +10,6 @@ class SolutionState{
   final int appUserId;
   final bool isOwner;
   final bool isSaved;
-  final bool hasVideo;
   final String userName;
   final String? content;
   final bool isUpvoted;
@@ -21,7 +19,7 @@ class SolutionState{
   final Pagination downvotes;
   final int numberOfDownvotes;
   final int state;
-  final Iterable<SolutionMultimediaState> images;
+  final Iterable<SolutionMultimediaState> medias;
   final int numberOfComments;
   final Pagination comments;
 
@@ -33,14 +31,13 @@ class SolutionState{
     required this.appUserId,
     required this.isOwner,
     required this.isSaved,
-    required this.hasVideo,
     required this.userName,
     required this.content,
     required this.isUpvoted,
     required this.numberOfUpvotes,
     required this.isDownvoted,
     required this.numberOfDownvotes,
-    required this.images,
+    required this.medias,
     required this.numberOfComments,
     required this.comments,
     required this.state,
@@ -60,7 +57,7 @@ class SolutionState{
     bool? newIsDownvoted,
     int? newNumberOfDownvotes,
     Pagination? newComments,
-    Iterable<SolutionMultimediaState>? newImages,
+    Iterable<SolutionMultimediaState>? newMedias,
     int? newNumberOfComments,
     int? newState,
     Pagination? newUpvotes,
@@ -74,14 +71,13 @@ class SolutionState{
         appUserId: appUserId,
         isOwner: isOwner,
         isSaved: newIsSaved ?? isSaved,
-        hasVideo: hasVideo,
         userName: newUserName ?? userName,
         content: newContent ?? content,
         isUpvoted: newIsUpvoted ?? isUpvoted,
         numberOfUpvotes: newNumberOfUpvotes ?? numberOfUpvotes,
         isDownvoted: newIsDownvoted ?? isDownvoted,
         numberOfDownvotes: newNumberOfDownvotes ?? numberOfDownvotes,
-        images: newImages ?? images,
+        medias: newMedias ?? medias,
         numberOfComments: newNumberOfComments ?? numberOfComments,
         comments: newComments ?? comments,
         state: newState ?? state,
@@ -169,15 +165,6 @@ class SolutionState{
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.addInOrder(commentId)
     );
-
-  SolutionState startLoadingImage(int index)
-    => _optinal(
-      newImages: [...images.take(index),images.elementAt(index).startLoading(),...images.skip(index + 1)],
-    );
-  SolutionState loadImage(int index,Uint8List image)
-    => _optinal(
-        newImages: [...images.take(index),images.elementAt(index).load(image),...images.skip(index + 1)],
-      );
 
   SolutionState markAsCorrect()
     => _optinal(newState: SolutionStatus.correct);

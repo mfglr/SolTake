@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
@@ -96,11 +95,6 @@ class QuestionEntityState extends EntityState<QuestionState>{
     => QuestionEntityState(entities: updateOne(entities[questionId]?.removeComment(commentId)));
   QuestionEntityState addNewComment(int questionId,int commentId)
     => QuestionEntityState(entities: updateOne(entities[questionId]?.addNewComment(commentId)));
-
-  QuestionEntityState startLoadingImage(int questionId,int index)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.startLoadingImage(index)));
-  QuestionEntityState loadImage(int questionId,int index,Uint8List image)
-    => QuestionEntityState(entities: updateOne(entities[questionId]!.loadImage(index, image)));
 
   QuestionEntityState markAsSolved(int questionid)
     => QuestionEntityState(entities: entities[questionid] != null ? updateOne(entities[questionid]!.markAsSolved()) : entities);
