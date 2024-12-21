@@ -22,14 +22,17 @@ class SubjectItemWidget extends StatelessWidget {
                 .push(MaterialPageRoute(builder: (context) => SelectTopicPage(subjectId: subject.id)))
                 .then((value){
                   if(value == null) return;
-                  Navigator
-                    .of(context)
-                    .pop((
-                      subjectId: subject.id,
-                      topicId: value.topicId,
-                      content: value.content,
-                      images: value.images
-                    ));
+                  if(context.mounted){
+                    Navigator
+                      .of(context)
+                      .pop((
+                        subjectId: subject.id,
+                        topicId: value.topicId,
+                        content: value.content,
+                        medias: value.medias
+                      ));
+                  }
+                  
                 })
             ,
             style: ButtonStyle(

@@ -94,11 +94,16 @@
     "select_topics_page_about_question": "Type somethings about the question...",
     "select_topics_page_topic_error_message": "You can't select up to 3 topics per question",
     "select_topics_page_add_images_button": "Add Images",
+    "select_topics_page_add_video_button": "Add Video",
+
 
     "add_question_images_page_error_message": "You can upload up to 3 images per a question!",
-    "add_question_images_page_title": "Upload images",
+    "add_question_images_page_title": "Upload Images",
     "add_question_image_page_label": "Upload images to make your question more visible to other users.",
     "add_question_image_page_create_question_button": "Create Question",
+
+    "add_question_video_page_title": "Upload Video",
+    "add_question_video_page_label": "Upload video to make your question more visible to other users.",
 
     "no_solution_image_widget_label": "Upload an image to make your solution stand out more.",
     "no_solution_image_widget_add_photo_button": "Add a photo",

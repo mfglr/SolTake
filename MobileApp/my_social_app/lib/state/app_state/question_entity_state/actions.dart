@@ -1,5 +1,5 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
@@ -12,14 +12,14 @@ class CreateQuestionAction extends AppAction{
   final int subjectId;
   final int? topicId;
   final String content;
-  final Iterable<XFile> images;
+  final Iterable<AppFile> medias;
 
   const CreateQuestionAction({
     required this.examId,
     required this.subjectId,
     required this.topicId,
     required this.content,
-    required this.images
+    required this.medias
   });
 }
 

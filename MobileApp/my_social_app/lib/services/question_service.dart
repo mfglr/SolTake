@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
+import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/models/question_user_save.dart';
@@ -17,13 +17,13 @@ class QuestionService{
   static final QuestionService _singleton = QuestionService._(AppClient());
   factory QuestionService() => _singleton;
 
-  Future<MultipartRequest> _createQuestionRequest(Iterable<XFile> medias,int examId,int subjectId,int? topicId,String? content) async{
+  Future<MultipartRequest> _createQuestionRequest(Iterable<AppFile> medias,int examId,int subjectId,int? topicId,String? content) async{
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")
     );
     for(final media in medias){
-      request.files.add(await MultipartFile.fromPath("medias", media.path));
+      request.files.add(await MultipartFile.fromPath("medias", media.file.path, filename: media.type));
     }
     if(topicId != null) request.fields["topicId"] = topicId.toString();
     request.fields["examId"] = examId.toString();
@@ -32,8 +32,8 @@ class QuestionService{
     return request;
   }
 
-  Future<Question> createQuestion(Iterable<XFile> images,int examId,int subjectId,int? topicId,String? content) =>
-    _createQuestionRequest(images,examId,subjectId,topicId,content)
+  Future<Question> createQuestion(Iterable<AppFile> medias,int examId,int subjectId,int? topicId,String? content) =>
+    _createQuestionRequest(medias,examId,subjectId,topicId,content)
       .then((request) => _appClient.send(request))
       .then((response) => response.stream.toBytes())
       .then((bytes) => utf8.decode(bytes))

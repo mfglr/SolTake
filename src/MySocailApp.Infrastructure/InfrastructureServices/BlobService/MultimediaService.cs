@@ -105,9 +105,9 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             {
                 foreach (var file in files)
                 {
-                    if (file.ContentType.StartsWith("image"))
+                    if (file.FileName.StartsWith("image"))
                         medias.Add(await UploadImageAsync(containerName, file, cancellationToken));
-                    if (file.ContentType.StartsWith("video"))
+                    if (file.FileName.StartsWith("video"))
                         medias.Add(await UploadVideoAsync(containerName, file, cancellationToken));
                 }
                 _tempDirectoryService.Delete();

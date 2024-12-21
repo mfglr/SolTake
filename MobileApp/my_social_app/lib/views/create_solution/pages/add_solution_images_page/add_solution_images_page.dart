@@ -105,23 +105,23 @@ class _AddSolutionImagesPageState extends State<AddSolutionImagesPage> {
           )
         ),
       ),
-      body: Builder(
-        builder: (context) {
-          if(_images.isEmpty){
-            return Padding(
-              padding: const EdgeInsets.all(8),
-              child: NoSolutionImageWidget(
-                takeImage: _takeImage,
-                takeImages: _takeImages,
-              )
-            );
-          }
-          return AppImageSlider(
-            images: _images,
-            removeImage: (image) => setState(() { _images = _images.where((e) => e != image); }),
-          );
-        }
-      ),
+      // body: Builder(
+      //   builder: (context) {
+      //     if(_images.isEmpty){
+      //       return Padding(
+      //         padding: const EdgeInsets.all(8),
+      //         child: NoSolutionImageWidget(
+      //           takeImage: _takeImage,
+      //           takeImages: _takeImages,
+      //         )
+      //       );
+      //     }
+      //     return AppImageSlider(
+      //       images: _images,
+      //       removeImage: (image) => setState(() { _images = _images.where((e) => e != image); }),
+      //     );
+      //   }
+      // ),
       floatingActionButton: _images.isNotEmpty 
         ? TakeMultimedyaSpeedDial(
           takeImages: _takeImages,

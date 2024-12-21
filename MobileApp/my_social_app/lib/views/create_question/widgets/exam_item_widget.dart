@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/views/create_question/pages/select_subject_page/select_subject_page.dart';
+import 'package:my_social_app/views/create_question/pages/select_subject_page.dart';
 
 class ExamItemWidget extends StatelessWidget {
   final ExamState exam;
@@ -19,15 +19,17 @@ class ExamItemWidget extends StatelessWidget {
                 .push(MaterialPageRoute(builder: (context) => SelectSubjectPage(examId: exam.id)))
                 .then((value){
                   if(value == null) return;
-                  Navigator
-                    .of(context)
-                    .pop((
-                      examId: exam.id,
-                      subjectId: value.subjectId,
-                      topicId: value.topicId,
-                      content: value.content,
-                      images: value.images
-                    ));
+                  if(context.mounted){
+                    Navigator
+                      .of(context)
+                      .pop((
+                        examId: exam.id,
+                        subjectId: value.subjectId,
+                        topicId: value.topicId,
+                        content: value.content,
+                        medias: value.medias
+                      ));
+                  }
                 }),
             child: Column(
               children: [

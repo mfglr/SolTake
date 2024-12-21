@@ -36,12 +36,11 @@ class QuestionItemPopupMenu extends StatelessWidget {
                 AppLocalizations.of(context)!.show_app_dialog_delete_button
               )
               .then((response){
-                if(response){
+                if(response && context.mounted){
                   final store = StoreProvider.of<AppState>(context,listen: false);
                   store.dispatch(DeleteQuestionAction(questionId: question.id));
                 }
               });
-          default:
             return;
         }
       },

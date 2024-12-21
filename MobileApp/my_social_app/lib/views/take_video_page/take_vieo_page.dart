@@ -65,7 +65,7 @@ class _TakeVieoPageState extends State<TakeVieoPage> {
       ToastCreator.displayError("Camera is not available!");
       return;
     }
-    _controller = CameraController(cameraDescription, ResolutionPreset.medium);
+    _controller = CameraController(cameraDescription, ResolutionPreset.max);
     _initializeControllerFuture = _controller.initialize();
     setState(() {});
   }

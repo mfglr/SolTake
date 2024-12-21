@@ -22,7 +22,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageCode(store)]!);
     QuestionService()
-      .createQuestion(action.images,action.examId,action.subjectId,action.topicId,action.content)
+      .createQuestion(action.medias,action.examId,action.subjectId,action.topicId,action.content)
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
         store.dispatch(AddNewUserQuestionAction(userId: store.state.accountState!.id,questionId: question.id));

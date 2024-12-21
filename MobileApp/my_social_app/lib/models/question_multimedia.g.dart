@@ -12,7 +12,7 @@ QuestionMultimedia _$QuestionMultimediaFromJson(Map<String, dynamic> json) =>
       questionId: (json['questionId'] as num).toInt(),
       containerName: json['containerName'] as String,
       blobName: json['blobName'] as String,
-      blobNameOfFrame: json['blobNameOfFrame'] as String,
+      blobNameOfFrame: json['blobNameOfFrame'] as String?,
       size: (json['size'] as num).toInt(),
       height: (json['height'] as num).toDouble(),
       width: (json['width'] as num).toDouble(),

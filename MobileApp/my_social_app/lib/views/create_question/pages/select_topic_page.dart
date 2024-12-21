@@ -8,7 +8,8 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
-import 'package:my_social_app/views/create_question/pages/add_question_image_page/add_question_images_page.dart';
+import 'package:my_social_app/views/create_question/pages/add_question_images_page.dart';
+import 'package:my_social_app/views/create_question/pages/add_question_video_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -91,7 +92,31 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                   ),
                 ),
                 OutlinedButton(
-                  onPressed: (){
+                  onPressed: () =>
+                    Navigator
+                      .of(context)
+                      .push(MaterialPageRoute(builder: (context) => const AddQuestionVideoPage()))
+                      .then((value){
+                        if(value == null) return;
+                        if(context.mounted){
+                          Navigator
+                            .of(context)
+                            .pop((content: _content, topicId: _topicId, medias: value.medias));
+                        }
+                      }),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        child: Text(AppLocalizations.of(context)!.select_topics_page_add_video_button),
+                      ),
+                      const Icon(Icons.video_collection)
+                    ],
+                  ),
+                ),
+                OutlinedButton(
+                  onPressed: () =>
                     Navigator
                       .of(context)
                       .push(MaterialPageRoute(builder: (context) => const AddQuestionImagesPage()))
@@ -100,10 +125,10 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                         if(context.mounted){
                           Navigator
                             .of(context)
-                            .pop((content: _content,topicId: _topicId,images: value));
+                            .pop((content: _content, topicId: _topicId, medias: value));
                         }
-                      });
-                  },
+                      })
+                  ,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,7 +18,7 @@ class AddQuestionImagesPage extends StatefulWidget {
 }
 
 class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
-  Iterable<XFile> _images = [];
+  Iterable<AppFile> _images = [];
 
   void _takeImage(){
     if(_images.length >= 3){
@@ -29,7 +30,7 @@ class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
       .pushNamed(takeImageRoute)
       .then((image){
         if(image != null){
-          setState(() { _images = [..._images, image as XFile]; });
+          setState(() { _images = [..._images, AppFile.image(image as XFile)]; });
         }
       });
   }
@@ -47,11 +48,11 @@ class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
             ToastCreator.displayError(AppLocalizations.of(context)!.add_question_images_page_error_message);
             final count = 3 - _images.length;
             final newImages = images.whereIndexed((i,e) => i < count);
-            setState(() { _images = [..._images,...newImages]; });
+            setState(() { _images = [..._images,...newImages.map((e) => AppFile.image(e))]; });
           }
         }
         else{
-          setState(() { _images = [..._images,...images]; });
+          setState(() { _images = [..._images,...images.map((e) => AppFile.image(e))]; });
         }
       });
   }

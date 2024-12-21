@@ -38,7 +38,6 @@ class SolutionPopupMenu extends StatelessWidget {
               final store = StoreProvider.of<AppState>(context,listen: false);
               store.dispatch(RemoveSolutionAction(solution: solution));
             }
-          default:
             return;
         }
       },

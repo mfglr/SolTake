@@ -9,7 +9,7 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
     {
         private Question() { }
         public readonly static int MaxTopicCountPerQuestion = 3;
-        public readonly static int MaxImageCountPerQuestion = 3;
+        public readonly static int MaxMediaCountPerQuestion = 3;
 
         public int UserId { get; private set; }
         public QuestionExam Exam { get; private set; } = null!;
@@ -19,32 +19,18 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         private readonly List<QuestionMultimedia> _medias = [];
         public IReadOnlyList<QuestionMultimedia> Medias => _medias;
 
-        public Question(int userId, QuestionContent? content, IEnumerable<QuestionMultimedia> images)
+        public Question(int userId, QuestionContent? content, IEnumerable<QuestionMultimedia> medias)
         {
-            if (!images.Any() && content == null)
+            if (!medias.Any() && content == null)
                 throw new QuesitonContentRequiredException();
 
-            if (images.Any(x => x.MultimediaType != MultimediaType.Image))
-                throw new NotQuestionImageMediaException();
-
-            if (images.Count() > MaxImageCountPerQuestion)
-                throw new TooManyQuestionImagesException();
+            if (medias.Count() > MaxMediaCountPerQuestion)
+                throw new TooManyQuestionMediasException();
 
             UserId = userId;
             Content = content;
-            _medias.AddRange(images);
+            _medias.AddRange(medias);
         }
-
-        public Question(int userId, QuestionContent? content, QuestionMultimedia? video)
-        {
-            if (video.MultimediaType != MultimediaType.Video)
-                throw new NotQuestionVideoMediaException();
-
-            UserId = userId;
-            Content = content;
-            _medias.Add(video);
-        }
-
 
         internal void Create(QuestionExam exam, QuestionSubject subject, QuestionTopic? topic)
         {

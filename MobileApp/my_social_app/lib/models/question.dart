@@ -16,8 +16,8 @@ class Question{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
-  final bool isOwner;
   final int state;
+  final bool isOwner;
   final int userId;
   final String userName;
   final String? content;

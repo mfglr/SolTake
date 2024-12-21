@@ -93,11 +93,17 @@
     "select_topics_page_about_question": "Soru hakkında bir şeyler yaz...",
     "select_topics_page_topic_error_message": "Bir soru için en fazla 3 konu ekleyebilirsin!",
     "select_topics_page_add_images_button": "Resim ekle",
+    "select_topics_page_add_video_button": "Video ekle",
+
 
     "add_question_images_page_error_message": "Bir soru için en fazla 3 resim yükleyebilirsiniz.",
     "add_question_images_page_title": "Resim Yükle",
     "add_question_image_page_label": "Sorunuzun daha çok dikkat çekebilmesi için resim yükleyiniz.",
     "add_question_image_page_create_question_button": "Soruyu oluştur",
+
+    "add_question_video_page_title": "Video Yükle",
+    "add_question_video_page_label": "Sorunuzun daha çok dikkat çekebilmesi için video yükleyiniz.",
+
 
     "no_solution_image_widget_label": "Çözümünüzün daha çok dikkat çekmesi için resim yükleyin.",
     "no_solution_image_widget_add_photo_button": "Resim ekleyin.",

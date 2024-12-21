@@ -65,12 +65,12 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
       body: Column(
         children:[
           
-          Expanded(
-            child: AppImageSlider(
-              images: _images,
-              removeImage: _removeImage
-            ),
-          ),
+          // Expanded(
+          //   child: AppImageSlider(
+          //     images: _images,
+          //     removeImage: _removeImage
+          //   ),
+          // ),
           
           Padding(
             padding: const EdgeInsets.only(left: 8,right: 8,bottom: 15),

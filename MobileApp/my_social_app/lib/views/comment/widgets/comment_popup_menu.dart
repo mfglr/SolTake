@@ -39,7 +39,6 @@ class CommentPopupMenu extends StatelessWidget {
               final store = StoreProvider.of<AppState>(context,listen: false);
               store.dispatch(RemoveCommentAction(comment: comment));
             }
-          default:
             return;
         }
       },

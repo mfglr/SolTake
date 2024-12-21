@@ -51,7 +51,7 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
             autoPlay: false,
             enableInfiniteScroll: false,
             height: _calculateHeight(),
-            viewportFraction: 1,
+            viewportFraction: 0.999,
             onPageChanged: (index,reason) => setState(() { _index = index; }),
           )
         ),

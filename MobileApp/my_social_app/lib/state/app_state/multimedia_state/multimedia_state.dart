@@ -1,7 +1,7 @@
 abstract class MultimediaState {
   final String containerName;
   final String blobName;
-  final String blobNameOfFrame;
+  final String? blobNameOfFrame;
   final int size;
   final double height;
   final double width;
