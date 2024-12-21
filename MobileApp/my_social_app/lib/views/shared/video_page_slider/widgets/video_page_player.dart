@@ -126,7 +126,7 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
                 padding: const EdgeInsets.all(16.0),
                 child: Icon(
                   _isVolumeOpen ? Icons.volume_up_sharp : Icons.volume_off_sharp,
-                  size: 65,
+                  size: 40,
                   color: Colors.white,
                 ),
               ),
