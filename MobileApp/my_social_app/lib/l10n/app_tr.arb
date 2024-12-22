@@ -307,6 +307,8 @@
     "email_invalid_validation": "Email geçersiz!",
 
     "reset_password_form_button_content": "Şifreyi Güncelle",
-    "reset_password_form_success_content": "Şifre başarılı bir şekilde güncellendi."
+    "reset_password_form_success_content": "Şifre başarılı bir şekilde güncellendi.",
 
+    "take_video_speed_dial_gallery": "Galeri",
+    "take_video_speed_dial_camera": "Kamera"
 }

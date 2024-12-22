@@ -5,10 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/create_question/widgets/take_media_speed_dial.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/shared/app_image_slider/app_image_slider.dart';
-import 'package:my_social_app/views/shared/take_multimedya_speed_dial/take_multimedya_speed_dial.dart';
 
 class AddQuestionImagesPage extends StatefulWidget {
   const AddQuestionImagesPage({super.key});
@@ -20,7 +20,7 @@ class AddQuestionImagesPage extends StatefulWidget {
 class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
   Iterable<AppFile> _images = [];
 
-  void _takeImage(){
+  void _takeImageFromCamera(){
     if(_images.length >= 3){
       ToastCreator.displayError(AppLocalizations.of(context)!.add_question_images_page_error_message);
       return;
@@ -35,7 +35,7 @@ class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
       });
   }
 
-  void _takeImages(){
+  void _takeImagesFromGallery(){
     if(_images.length >= 3){
       ToastCreator.displayError(AppLocalizations.of(context)!.add_question_images_page_error_message);
       return;
@@ -87,11 +87,10 @@ class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
                     textAlign: TextAlign.center,
                     style: const TextStyle( fontSize: 20),
                   ),
-                  TakeMultimedyaSpeedDial(
+                  TakeMediaSpeedDial(
                     direction: SpeedDialDirection.down,
-                    takeImage: _takeImage,
-                    takeImages: _takeImages,
-                    takeVideo: null,
+                    takeFromGallery: _takeImagesFromGallery,
+                    takeFromCamera: _takeImageFromCamera,
                   )
                 ],
               ),
@@ -101,12 +100,11 @@ class _AddQuestionImagesPageState extends State<AddQuestionImagesPage> {
       ),
       floatingActionButtonLocation: _images.isNotEmpty ? FloatingActionButtonLocation.endFloat : null,
       floatingActionButton: _images.isNotEmpty 
-        ? TakeMultimedyaSpeedDial(
-          direction: SpeedDialDirection.left,
-          takeImage: _takeImage,
-          takeImages: _takeImages,
-          takeVideo: null,
-        ) 
+        ? TakeMediaSpeedDial(
+            direction: SpeedDialDirection.left,
+            takeFromGallery: _takeImagesFromGallery,
+            takeFromCamera: _takeImageFromCamera,
+          )
         : null,
       bottomNavigationBar: Padding(
         padding: const  EdgeInsets.all(15),

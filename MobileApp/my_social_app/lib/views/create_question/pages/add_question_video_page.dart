@@ -4,7 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/models/app_file.dart';
-import 'package:my_social_app/views/create_question/widgets/take_video_speed_dial.dart';
+import 'package:my_social_app/views/create_question/widgets/take_media_speed_dial.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:video_player/video_player.dart';
@@ -25,7 +25,7 @@ class _AddQuestionVideoPageState extends State<AddQuestionVideoPage> {
       .pickVideo(source: ImageSource.gallery)
       .then((video){
         if(video != null){
-          _video = AppFile(file: video, type: AppFileTypes.video);
+          _video = AppFile.video(video);
           _controller = VideoPlayerController.file(File(video.path));
           _controller!.initialize().then((_) => setState(() {}));
         }
@@ -38,7 +38,7 @@ class _AddQuestionVideoPageState extends State<AddQuestionVideoPage> {
       .pushNamed(takeVideoRoute)
       .then((value) => setState((){
         if(value != null){
-          _video = AppFile(file: (value as dynamic).file, type: AppFileTypes.video);
+          _video = AppFile.video((value as dynamic).file);
           _controller = VideoPlayerController.file(File(_video!.file.path));
           _controller!.initialize().then((_) => setState(() {}));
         }
@@ -84,10 +84,10 @@ class _AddQuestionVideoPageState extends State<AddQuestionVideoPage> {
                     textAlign: TextAlign.center,
                     style: const TextStyle( fontSize: 20),
                   ),
-                  TakeVideoSpeedDial(
+                  TakeMediaSpeedDial(
                     direction: SpeedDialDirection.down,
-                    takeVideoFromGallery: _takeVideoFromGallery,
-                    takeVideoFromCamera: _takeVideoFromCamera
+                    takeFromGallery: _takeVideoFromGallery,
+                    takeFromCamera: _takeVideoFromCamera
                   )
                 ],
               ),
@@ -97,10 +97,10 @@ class _AddQuestionVideoPageState extends State<AddQuestionVideoPage> {
       ),
       floatingActionButtonLocation: _video != null ? FloatingActionButtonLocation.endFloat : null,
       floatingActionButton: _video != null 
-        ? TakeVideoSpeedDial(
+        ? TakeMediaSpeedDial(
             direction: SpeedDialDirection.left,
-            takeVideoFromGallery: _takeVideoFromGallery,
-            takeVideoFromCamera: _takeVideoFromCamera
+            takeFromGallery: _takeVideoFromGallery,
+            takeFromCamera: _takeVideoFromCamera
           )
         : null,
       bottomNavigationBar: Padding(

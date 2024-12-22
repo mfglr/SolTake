@@ -307,5 +307,8 @@
     "email_invalid_validation": "Email is invalid!",
 
     "reset_password_form_button_content": "Update Password",
-    "reset_password_form_success_content": "Password updated successfully."
+    "reset_password_form_success_content": "Password updated successfully.",
+
+    "take_video_speed_dial_gallery": "Gallery",
+    "take_video_speed_dial_camera": "Camera"
 }

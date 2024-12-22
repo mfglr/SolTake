@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/enums/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/views/shared/image_grid/image_grid.dart';
 
@@ -18,8 +19,22 @@ class QuestionAbstractItemWidget extends StatelessWidget {
       key: ValueKey(question.id),
       padding: const EdgeInsets.all(1.0),
       child: ImageGrid(
-        state: question.medias.first,
+        state: question.medias.firstOrNull,
         onTap: () => onTap(question.id),
+        centerChild: 
+          question.medias.firstOrNull?.multimediaType == MultimediaType.video
+            ? Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withAlpha(128),
+                shape: BoxShape.circle
+              ),
+              child: const Icon(
+                Icons.play_arrow_rounded,
+                color: Colors.white,
+                size: 40,
+              ),
+            )
+            : null,
       ),
     );
   }

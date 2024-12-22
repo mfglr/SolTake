@@ -27,17 +27,19 @@ class AppClient{
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
     request.headers.addAll(getHeader());
     if(headers != null) request.headers.addAll(headers);
-    
     var response = await request.send();
     if(response.statusCode >= 400){
-      throw BackendException(message: utf8.decode(await response.stream.toBytes()),statusCode: response.statusCode);
+      throw BackendException(
+        message: utf8.decode(await response.stream.toBytes()),
+        statusCode: response.statusCode
+      );
     }
     return response;
   }
 
-  Future<StreamedResponse> sendJsonContent(Request request) async {
+  Future<StreamedResponse> sendJsonContent(Request request) {
     request.headers.addAll({'Content-Type': 'application/json; charset=UTF-8'});
-    return await send(request);
+    return send(request);
   }
 
   Future<dynamic> get(String url) async {

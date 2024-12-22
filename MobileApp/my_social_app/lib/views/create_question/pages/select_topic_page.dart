@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/question.dart';
 import 'package:my_social_app/helpers/action_dispathcers.dart';
+import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
@@ -101,7 +102,7 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                         if(context.mounted){
                           Navigator
                             .of(context)
-                            .pop((content: _content, topicId: _topicId, medias: value.medias));
+                            .pop((content: _content, topicId: _topicId, medias: value));
                         }
                       }),
                   child: Row(
@@ -140,6 +141,22 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                     ],
                   ),
                 ),
+                OutlinedButton(
+                  onPressed: () => 
+                    Navigator
+                      .of(context)
+                      .pop((content: _content,topicId: _topicId, medias: const Iterable<AppFile>.empty())),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        child: Text(AppLocalizations.of(context)!.add_question_image_page_create_question_button),
+                      ),
+                      const Icon(Icons.create)
+                    ],
+                  ),
+                )
               ],
             ),
           ),

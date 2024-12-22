@@ -23,7 +23,7 @@ class QuestionService{
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")
     );
     for(final media in medias){
-      request.files.add(await MultipartFile.fromPath("medias", media.file.path, filename: media.type));
+      request.files.add(await MultipartFile.fromPath("medias", media.file.path, contentType: media.contentType));
     }
     if(topicId != null) request.fields["topicId"] = topicId.toString();
     request.fields["examId"] = examId.toString();

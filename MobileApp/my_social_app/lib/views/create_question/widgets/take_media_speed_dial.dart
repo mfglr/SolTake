@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TakeVideoSpeedDial extends StatelessWidget {
+class TakeMediaSpeedDial extends StatelessWidget {
   final SpeedDialDirection direction;
-  final void Function() takeVideoFromGallery;
-  final void Function() takeVideoFromCamera;
-  const TakeVideoSpeedDial({
+  final void Function() takeFromGallery;
+  final void Function() takeFromCamera;
+  const TakeMediaSpeedDial({
     super.key,
     required this.direction,
-    required this.takeVideoFromGallery,
-    required this.takeVideoFromCamera
+    required this.takeFromGallery,
+    required this.takeFromCamera
   });
 
   @override
@@ -26,18 +27,18 @@ class TakeVideoSpeedDial extends StatelessWidget {
       animationDuration: const Duration(milliseconds: 200),
       children: [
         SpeedDialChild(
-          child: const Icon(Icons.video_file),
+          child: const Icon(Icons.image),
           shape: const CircleBorder(),
           backgroundColor: Colors.green,
-          label: "Gallery",
-          onTap: takeVideoFromGallery
+          label: AppLocalizations.of(context)!.take_video_speed_dial_gallery,
+          onTap: takeFromGallery
         ),
         SpeedDialChild(
           child: const Icon(Icons.photo_camera),
           shape: const CircleBorder(),
           backgroundColor: Colors.blue,
-          label: "Camera",
-          onTap: takeVideoFromCamera
+          label: AppLocalizations.of(context)!.take_video_speed_dial_camera,
+          onTap: takeFromCamera
         ),
       ],
     );
