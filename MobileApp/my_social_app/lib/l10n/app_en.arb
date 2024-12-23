@@ -93,17 +93,11 @@
     "select_topics_page_label": "Select topic",
     "select_topics_page_about_question": "Type somethings about the question...",
     "select_topics_page_topic_error_message": "You can't select up to 3 topics per question",
-    "select_topics_page_add_images_button": "Add Images",
-    "select_topics_page_add_video_button": "Add Video",
+    "select_topics_page_add_medias_button": "Add Medias",
 
-
-    "add_question_images_page_error_message": "You can upload up to 3 images per a question!",
-    "add_question_images_page_title": "Upload Images",
-    "add_question_image_page_label": "Upload images to make your question more visible to other users.",
-    "add_question_image_page_create_question_button": "Create Question",
-
-    "add_question_video_page_title": "Upload Video",
-    "add_question_video_page_label": "Upload video to make your question more visible to other users.",
+    "add_question_medias_page_title": "Upload Medias",
+    "add_question_medias_page_label": "Upload medias to make your question more visible to other users.",
+    "create_question_button_content": "Create Question",
 
     "no_solution_image_widget_label": "Upload an image to make your solution stand out more.",
     "no_solution_image_widget_add_photo_button": "Add a photo",
@@ -116,7 +110,9 @@
     "add_solution_content_page_title": "Type somethings",
     "add_solution_content_page_content_error": "You have to type a content or upload at least an image!",
     "add_solution_content_page_content_length_error": "The content is too long",
-    "add_solution_content_page_create_solution_button": "Create Solution",
+    "add_solution_medias_button_content": "Add Medias",
+    "create_solution_button_content": "Create Solution",
+
 
     "edit_user_field_widget_button_text": "Edit",
 
@@ -271,9 +267,9 @@
     "delete_conversations_button": "delete",
     "cancel_deletion_of_conversations_button": "cancel",
 
-    "take_video_page_duration_exception": "The duration of the video must be shorter than 120 seconds",
+    "take_video_page_duration_exception": "The duration of the video must be shorter than 5 minutes",
 
-    "create_video_solution_page_title": "Create Video Solution",
+    "create_video_solution_page_title": "Add Video",
     "create_video_solution_page_new_video_content": "New Video",
     "create_video_solution_page_content1": "Record a Video",
     "create_video_solution_page_content2": "Explain your solution by recording a video.",
@@ -310,5 +306,7 @@
     "reset_password_form_success_content": "Password updated successfully.",
 
     "take_video_speed_dial_gallery": "Gallery",
-    "take_video_speed_dial_camera": "Camera"
+    "take_video_speed_dial_camera": "Camera",
+
+    "create_solution_speed_dial_label": "Create Solution"
 }

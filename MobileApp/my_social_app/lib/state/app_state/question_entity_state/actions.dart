@@ -1,5 +1,5 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';

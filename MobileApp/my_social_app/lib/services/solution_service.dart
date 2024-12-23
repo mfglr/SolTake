@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:app_file/app_file.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
@@ -32,17 +34,15 @@ class SolutionService{
     return completer.future;
   }
 
-  Future<HttpClientRequest> _createSolutionRequest(int questionId, String? content, Iterable<XFile>? images, void Function(double) callback) async {
+  Future<HttpClientRequest> _createSolutionRequest(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
     MultipartRequest multiPartRequest = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
     );
     multiPartRequest.fields["questionId"] = questionId.toString();
     if(content != null) multiPartRequest.fields["content"] = content;
-    if(images != null){
-      for(final image in images){
-        multiPartRequest.files.add(await MultipartFile.fromPath("images",image.path));
-      }
+    for(final media in medias){
+      multiPartRequest.files.add(await MultipartFile.fromPath("images",media.file.path,contentType: MediaType.parse(media.contentType)));
     }
     var stream = multiPartRequest.finalize();
     var length = multiPartRequest.contentLength;
@@ -66,8 +66,8 @@ class SolutionService{
     );
     return r;
   }
-  Future<Solution> create(int questionId, String? content, Iterable<XFile>? images, void Function(double) callback) async {
-    var request = await _createSolutionRequest(questionId,content,images,callback);
+  Future<Solution> create(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
+    var request = await _createSolutionRequest(questionId,content,medias,callback);
     var response = await request.close();
     var data = await _readResponse(response);
     

@@ -8,15 +8,21 @@ using SixLabors.ImageSharp;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
-    public class MultiMediaService(TempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoManipulatorConverter videoManipulatorConverter, VideoDurationCalculator videoDurationCalculator, FrameCatcher frameCatcher) : IMultimediaService
+    public class MultiMediaService(TempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoManipulator videoManipulator, VideoDurationCalculator videoDurationCalculator, FrameCatcher frameCatcher, AudioDurationCalculator audioDurationCalculator, AudioManipulator audioManipulator) : IMultimediaService
     {
-        private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
+
         private readonly DimentionCalculator _dimentionCalculator = dimentionCalculator;
+
         private readonly VideoDimentionCalculator _videoDimentionCalculator = videoDimentionCalculator;
-        private readonly VideoManipulatorConverter _videoManipulatorConverter = videoManipulatorConverter;
+        private readonly VideoManipulator _videoManipulator = videoManipulator;
         private readonly VideoDurationCalculator _videoDurationCalculator = videoDurationCalculator;
-        private readonly UniqNameGenerator _uniqNameGenerator = uniqNameGenerator;
         private readonly FrameCatcher _frameCatcher = frameCatcher;
+
+        private readonly AudioDurationCalculator _audioDurationCalculator = audioDurationCalculator;
+        private readonly AudioManipulator _audioManipulator = audioManipulator;
+
+        private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
+        private readonly UniqNameGenerator _uniqNameGenerator = uniqNameGenerator;
         private readonly IBlobService _blobService = blobService;
 
         private async Task<Multimedia> UploadImageAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
@@ -50,7 +56,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             var input = await _tempDirectoryService.AddFile(stream);
 
             //manipulate video;
-            var output = await _videoManipulatorConverter.Convert(input, cancellationToken);
+            var output = await _videoManipulator.Manipulate(input, cancellationToken);
 
             //calculate video dimention
             var dimention = _videoDimentionCalculator.Calculate(output);
@@ -71,6 +77,29 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             manipulatedVideo.Close();
             return multiMedya;
         }
+        private async Task<Multimedia> UploadAudioAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        {
+            using var stream = file.OpenReadStream();
+
+            //add stream to temp directory
+            var input = await _tempDirectoryService.AddFile(stream);
+
+            //calculate audio duration
+            var duration = _audioDurationCalculator.Calculate(input);
+
+            //manipulate audio;
+            var output = await _audioManipulator.Manipulate(input, cancellationToken);
+
+            //upload the video manipulated to the blob container
+            var blobName = _uniqNameGenerator.Generate();
+            using var manipulatedAudio = File.OpenRead(output);
+            await _blobService.UploadAsync(manipulatedAudio, containerName, blobName, cancellationToken);
+
+            //reuturn multimedia
+            var multiMedya = Multimedia.CreateAudio(containerName, blobName, manipulatedAudio.Length, duration);
+            manipulatedAudio.Close();
+            return multiMedya;
+        }
 
         public async Task<Multimedia> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
         {
@@ -83,6 +112,8 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                     media = await UploadImageAsync(containerName, file, cancellationToken);
                 else if (file.ContentType.StartsWith("video"))
                     media = await UploadVideoAsync(containerName, file, cancellationToken);
+                else if (file.ContentType.StartsWith("audio"))
+                    media = await UploadAudioAsync(containerName, file, cancellationToken);
                 else
                     throw new InvalidMultimediaTypeException();
 
@@ -107,8 +138,12 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 {
                     if (file.ContentType.StartsWith("image"))
                         medias.Add(await UploadImageAsync(containerName, file, cancellationToken));
-                    if (file.ContentType.StartsWith("video"))
+                    else if (file.ContentType.StartsWith("video"))
                         medias.Add(await UploadVideoAsync(containerName, file, cancellationToken));
+                    else if (file.ContentType.StartsWith("audio"))
+                        medias.Add(await UploadAudioAsync(containerName, file, cancellationToken));
+                    else
+                        throw new InvalidMultimediaTypeException();
                 }
                 _tempDirectoryService.Delete();
                 return medias;

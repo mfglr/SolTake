@@ -2,12 +2,12 @@
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
-    public class VideoManipulatorConverter(UniqNameGenerator blobNameGenerator,TempDirectoryService tempDirectoryService)
+    public class VideoManipulator(UniqNameGenerator blobNameGenerator,TempDirectoryService tempDirectoryService)
     {
         private readonly UniqNameGenerator _blobNameGenerator = blobNameGenerator;
         private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
 
-        public async Task<string> Convert(string path, CancellationToken cancellationToken)
+        public async Task<string> Manipulate(string path, CancellationToken cancellationToken)
         {
             var outputBlobName = _blobNameGenerator.Generate("mp4");
             var outputPath = _tempDirectoryService.GetBlobPath(outputBlobName);

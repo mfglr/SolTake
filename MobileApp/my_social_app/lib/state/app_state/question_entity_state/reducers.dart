@@ -42,7 +42,7 @@ QuestionEntityState nextSolutionsFailedReducer(QuestionEntityState prev,NextQues
 
 //uploading solutions
 QuestionEntityState startUploadingSolutionReducer(QuestionEntityState prev, CreateSolutionAction action)
-  => prev.startUploadingSolution(action.id, action.questionId, action.content, action.images);
+  => prev.startUploadingSolution(action.id, action.questionId, action.content, action.medias);
 QuestionEntityState startUploadingVideoSolutionReducer(QuestionEntityState prev, CreateVideoSolutionAction action)
   => prev.startUplodingVideoSolution(action.id, action.questionId, action.content, action.video);
 QuestionEntityState changeUploadingSolutionRate(QuestionEntityState prev, ChangeUploadingSolutionRateAction action)

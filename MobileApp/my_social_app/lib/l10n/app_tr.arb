@@ -92,18 +92,11 @@
     "select_topics_page_label": "Konu seç",
     "select_topics_page_about_question": "Soru hakkında bir şeyler yaz...",
     "select_topics_page_topic_error_message": "Bir soru için en fazla 3 konu ekleyebilirsin!",
-    "select_topics_page_add_images_button": "Resim ekle",
-    "select_topics_page_add_video_button": "Video ekle",
+    "select_topics_page_add_medias_button": "Medya Ekle",
 
-
-    "add_question_images_page_error_message": "Bir soru için en fazla 3 resim yükleyebilirsiniz.",
-    "add_question_images_page_title": "Resim Yükle",
-    "add_question_image_page_label": "Sorunuzun daha çok dikkat çekebilmesi için resim yükleyiniz.",
-    "add_question_image_page_create_question_button": "Soruyu oluştur",
-
-    "add_question_video_page_title": "Video Yükle",
-    "add_question_video_page_label": "Sorunuzun daha çok dikkat çekebilmesi için video yükleyiniz.",
-
+    "add_question_medias_page_title": "Medya Yükle",
+    "add_question_medias_page_label": "Sorunuzun daha çok dikkat çekebilmesi için medya yükleyiniz.",
+    "create_question_button_content": "Soruyu Oluştur",
 
     "no_solution_image_widget_label": "Çözümünüzün daha çok dikkat çekmesi için resim yükleyin.",
     "no_solution_image_widget_add_photo_button": "Resim ekleyin.",
@@ -116,7 +109,9 @@
     "add_solution_content_page_title": "Bir şeyler yaz",
     "add_solution_content_page_content_error": "Çözüm hakkında bir şeyler yazmalı ya da en az bir resim yüklemelisin!",
     "add_solution_content_page_content_length_error": "İçerik çok uzun!",
-    "add_solution_content_page_create_solution_button": "Çözümü oluştur",
+    "add_solution_medias_button_content": "Medya Ekle",
+    "create_solution_button_content": "Çözümü oluştur",
+
 
     "edit_user_field_widget_button_text": "Düzenle",
     "edit_name_page_title": "İsmini Düzenle",
@@ -271,9 +266,9 @@
     "delete_conversations_button": "sil",
     "cancel_deletion_of_conversations_button": "iptal",
 
-    "take_video_page_duration_exception": "Videonun süresi 120 saniyeden az olmalıdır!",
+    "take_video_page_duration_exception": "Videonun süresi 5 dakikadan az olmalıdır!",
 
-    "create_video_solution_page_title": "Video Çözüm Oluştur",
+    "create_video_solution_page_title": "Video Ekle",
     "create_video_solution_page_new_video_content": "Yeni Video",
     "create_video_solution_page_content1": "Video Çek",
     "create_video_solution_page_content2": "Çözümünü video çekerek anlat!",
@@ -310,5 +305,7 @@
     "reset_password_form_success_content": "Şifre başarılı bir şekilde güncellendi.",
 
     "take_video_speed_dial_gallery": "Galeri",
-    "take_video_speed_dial_camera": "Kamera"
+    "take_video_speed_dial_camera": "Kamera",
+
+    "create_solution_speed_dial_label": "Çözüm Oluştur"
 }

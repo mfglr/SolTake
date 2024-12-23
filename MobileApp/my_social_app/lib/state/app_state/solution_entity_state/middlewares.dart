@@ -24,7 +24,7 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
       .create(
         action.questionId,
         action.content,
-        action.images,
+        action.medias,
         (rate){
           final uploadingsolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
           store.dispatch(ChangeUploadingSolutionRateAction(state: uploadingsolution, rate: rate));

@@ -1,3 +1,4 @@
+import 'package:app_file/app_file.dart';
 import 'package:camera/camera.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
@@ -17,7 +18,7 @@ class UploadingSolutionsState {
                 id: id,
                 questionId: questionId,
                 content: content,
-                images: null,
+                medias: const Iterable.empty(),// check this row
                 video: video,
                 rate: 0,
                 status: UploadingFileStatus.loading,
@@ -25,7 +26,7 @@ class UploadingSolutionsState {
             ]
       );
   
-  UploadingSolutionsState addSolution(String id, int questionId,String? content,Iterable<XFile> images)
+  UploadingSolutionsState addSolution(String id, int questionId,String? content,Iterable<AppFile> medias)
     => 
       UploadingSolutionsState(
         solutions: 
@@ -37,7 +38,7 @@ class UploadingSolutionsState {
                 id:id,
                 questionId: questionId,
                 content: content,
-                images: images,
+                medias: medias,
                 video: null,
                 rate: 0,
                 status: UploadingFileStatus.loading,

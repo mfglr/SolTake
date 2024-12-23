@@ -6,7 +6,7 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
 
-    public record CreateQuestionResponseDto(Question question,Account account)
+    public class CreateQuestionResponseDto(Question question, Account account)
     {
         public int Id { get; private set; } = question.Id;
         public DateTime CreatedAt { get; private set; } = question.CreatedAt;
@@ -39,6 +39,5 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
                     x.Duration,
                     x.MultimediaType
                 ));
-
     }
 }

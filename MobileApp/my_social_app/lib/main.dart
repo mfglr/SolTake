@@ -19,12 +19,11 @@ import 'package:my_social_app/views/account/pages/register_page.dart';
 import 'package:my_social_app/views/account/pages/login_page.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/account/pages/verify_email_page.dart';
-import 'package:my_social_app/views/take_image_page/take_image_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/take_video_page/take_vieo_page.dart';
 import 'package:my_social_app/views/update_app_page/update_app_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:take_media/pages/take_media_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 Future loadEnvironmentVariables() async {
@@ -89,8 +88,7 @@ Future<void> main() async {
           ),
           home: MainView(account: account),
           routes: {
-            takeImageRoute: (context) => TakeImagePage(cameras: cameras),
-            takeVideoRoute: (context) => TakeVieoPage(cameras: cameras)
+            takeMediaRoute: (context) => TakeMediaPage(cameras: cameras)
           },
         ),
       )

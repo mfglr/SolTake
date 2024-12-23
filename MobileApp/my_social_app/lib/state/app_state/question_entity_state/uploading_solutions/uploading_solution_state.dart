@@ -1,3 +1,4 @@
+import 'package:app_file/app_file.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
@@ -8,7 +9,7 @@ class UploadingSolutionState{
   final int questionId;
   final String? content;
   final XFile? video;
-  final Iterable<XFile>? images;
+  final Iterable<AppFile> medias;
   final double rate;
   final UploadingFileStatus status;
 
@@ -17,7 +18,7 @@ class UploadingSolutionState{
     required this.questionId,
     required this.content,
     required this.video,
-    required this.images,
+    required this.medias,
     required this.rate,
     required this.status,
   });
@@ -27,7 +28,7 @@ class UploadingSolutionState{
         id: id,
         questionId: questionId,
         content: content,
-        images: images,
+        medias: medias,
         video: video,
         rate: rate,
         status: UploadingFileStatus.loading
@@ -38,7 +39,7 @@ class UploadingSolutionState{
         questionId: questionId,
         content: content,
         video: video,
-        images: images,
+        medias: medias,
         rate: rate,
         status: status
       );

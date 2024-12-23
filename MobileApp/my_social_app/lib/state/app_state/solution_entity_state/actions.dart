@@ -1,3 +1,4 @@
+import 'package:app_file/app_file.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,8 +11,8 @@ class CreateSolutionAction extends AppAction{
   final String id;
   final int questionId;
   final String? content;
-  final Iterable<XFile> images;
-  const CreateSolutionAction({required this.id, required this.questionId, required this.content, required this.images});
+  final Iterable<AppFile> medias;
+  const CreateSolutionAction({required this.id, required this.questionId, required this.content, required this.medias});
 }
 @immutable
 class CreateVideoSolutionAction extends AppAction{

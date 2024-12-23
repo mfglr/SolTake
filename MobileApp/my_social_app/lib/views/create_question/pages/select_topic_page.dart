@@ -1,18 +1,17 @@
+import 'package:app_file/app_file.dart';
 import 'package:collection/collection.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/question.dart';
 import 'package:my_social_app/helpers/action_dispathcers.dart';
-import 'package:my_social_app/models/app_file.dart';
+import 'package:my_social_app/views/create_question/widgets/create_question_button.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
-import 'package:my_social_app/views/create_question/pages/add_question_images_page.dart';
-import 'package:my_social_app/views/create_question/pages/add_question_video_page.dart';
+import 'package:my_social_app/views/create_question/pages/add_question_medias_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
@@ -32,6 +31,11 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
   String _content = "";
   int? _topicId;
 
+  void _createQuestion() =>
+    Navigator
+      .of(context)
+      .pop((content: _content,topicId: _topicId, medias: const Iterable<AppFile>.empty()));
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,SubjectState?>(
@@ -42,7 +46,12 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: AppTitle(title: AppLocalizations.of(context)!.select_topics_page_title),
+            // title: AppTitle(title: AppLocalizations.of(context)!.select_topics_page_title),
+            actions: [
+              CreateQuestionButton(
+                onPressed: _createQuestion,
+              )
+            ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(15),
@@ -96,7 +105,7 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                   onPressed: () =>
                     Navigator
                       .of(context)
-                      .push(MaterialPageRoute(builder: (context) => const AddQuestionVideoPage()))
+                      .push(MaterialPageRoute(builder: (context) => const AddQuestionMediasPage()))
                       .then((value){
                         if(value == null) return;
                         if(context.mounted){
@@ -110,53 +119,14 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 4),
-                        child: Text(AppLocalizations.of(context)!.select_topics_page_add_video_button),
+                        child: Text(AppLocalizations.of(context)!.select_topics_page_add_medias_button),
                       ),
-                      const Icon(Icons.video_collection)
+                      const Icon(Icons.videocam),
+                      const Icon(Icons.photo),
+                      const Icon(Icons.spatial_audio_off_rounded)
                     ],
                   ),
                 ),
-                OutlinedButton(
-                  onPressed: () =>
-                    Navigator
-                      .of(context)
-                      .push(MaterialPageRoute(builder: (context) => const AddQuestionImagesPage()))
-                      .then((value){
-                        if(value == null) return;
-                        if(context.mounted){
-                          Navigator
-                            .of(context)
-                            .pop((content: _content, topicId: _topicId, medias: value));
-                        }
-                      })
-                  ,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 4),
-                        child: Text(AppLocalizations.of(context)!.select_topics_page_add_images_button),
-                      ),
-                      const Icon(Icons.photo)
-                    ],
-                  ),
-                ),
-                OutlinedButton(
-                  onPressed: () => 
-                    Navigator
-                      .of(context)
-                      .pop((content: _content,topicId: _topicId, medias: const Iterable<AppFile>.empty())),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 4),
-                        child: Text(AppLocalizations.of(context)!.add_question_image_page_create_question_button),
-                      ),
-                      const Icon(Icons.create)
-                    ],
-                  ),
-                )
               ],
             ),
           ),

@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'package:app_file/app_file.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
 import 'package:my_social_app/views/shared/app_image_slider/clear_upload_button.dart';
 

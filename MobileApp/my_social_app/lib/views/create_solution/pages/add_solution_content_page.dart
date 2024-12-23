@@ -1,17 +1,14 @@
-import 'package:camera/camera.dart';
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/question.dart';
 import 'package:my_social_app/constants/solution.dart';
-import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/create_solution/pages/add_solution_medias_page.dart';
+import 'package:my_social_app/views/create_solution/widgets/create_solution_button.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
 
 class AddSolutionContentPage extends StatefulWidget {
-  final Iterable<XFile> multiMedya;
   const AddSolutionContentPage({
     super.key,
-    required this.multiMedya
   });
 
   @override
@@ -33,7 +30,14 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: AppTitle(title: AppLocalizations.of(context)!.add_solution_content_page_title),
+        actions: [
+          CreateSolutionButton(
+            onPressed: () =>
+              Navigator
+                .of(context)
+                .pop((content: _contentController.text.trim(),medias: const Iterable<AppFile>.empty())),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -59,26 +63,29 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
               ),
             ),
             OutlinedButton(
-              onPressed: (){
-                final content = _contentController.text.trim();
-                if((content == "") && widget.multiMedya.isEmpty){
-                  ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_error);
-                  return;
-                }
-                if(content.length > questionContentMaxLenght){
-                  ToastCreator.displayError(AppLocalizations.of(context)!.add_solution_content_page_content_length_error);
-                  return;
-                }
-                Navigator.of(context).pop(content);
-              },
+              onPressed: () => 
+                Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (context) => const AddSolutionMediasPage()))
+                  .then((medias){
+                    if(medias == null) return;
+                    if(context.mounted){
+                      Navigator
+                        .of(context)
+                        .pop((content: _contentController.text.trim(), medias: medias));
+                    }
+                    
+                  }),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 5),
-                    child: Text(AppLocalizations.of(context)!.add_solution_content_page_create_solution_button),
+                    child: Text(AppLocalizations.of(context)!.add_solution_medias_button_content),
                   ),
-                  const Icon(Icons.create)
+                  const Icon(Icons.videocam),
+                  const Icon(Icons.photo),
+                  const Icon(Icons.spatial_audio_off),
                 ],
               )
             ),

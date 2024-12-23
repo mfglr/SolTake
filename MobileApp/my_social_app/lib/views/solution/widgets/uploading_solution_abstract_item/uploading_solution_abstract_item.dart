@@ -33,14 +33,14 @@ class _UploadingSolutionAbstractItemState extends State<UploadingSolutionAbstrac
 
   @override
   Widget build(BuildContext context) {
-    final firstImage = widget.solution.images?.firstOrNull;
+    final firstImage = widget.solution.medias.firstOrNull;
     return Stack(
       alignment: AlignmentDirectional.center,
       fit: StackFit.expand,
       children: [
         if(firstImage != null)
           Image.file(
-            File(firstImage.path),
+            File(firstImage.file.path),
             fit: BoxFit.cover,
           )
         else
@@ -67,7 +67,7 @@ class _UploadingSolutionAbstractItemState extends State<UploadingSolutionAbstrac
                   id: widget.solution.id,
                   questionId: widget.solution.questionId,
                   content: widget.solution.content,
-                  images: widget.solution.images!
+                  medias: widget.solution.medias
                 ));
               }
             }

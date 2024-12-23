@@ -1,3 +1,4 @@
+import 'package:app_file/app_file.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/enums/multimedia_type.dart';
@@ -281,8 +282,8 @@ class QuestionState{
 
   QuestionState startUploadingVideoSolution(String id, int questionId,String? content,XFile video)
     => _optional(newUploadingSolutions: uploadingSolutions.addVideoSolution(id,questionId, content, video));
-  QuestionState startUploadingSolution(String id, int questionId,String? content,Iterable<XFile> images)
-    => _optional(newUploadingSolutions: uploadingSolutions.addSolution(id, questionId, content, images));
+  QuestionState startUploadingSolution(String id, int questionId,String? content,Iterable<AppFile> medias)
+    => _optional(newUploadingSolutions: uploadingSolutions.addSolution(id, questionId, content, medias));
   QuestionState changeUploadingSolutionRate(UploadingSolutionState state, double rate)
     => _optional(newUploadingSolutions: uploadingSolutions.changeRate(state, rate));
   QuestionState changeUploadingSolutionStatus(UploadingSolutionState state,UploadingFileStatus status)

@@ -72,6 +72,17 @@ dependencies:
   url_launcher:
   flutter_cache_manager: ^3.4.1
   audio_video_progress_bar: ^2.0.3
+  http_parser: ^4.1.1
+  
+  #local packages
+  take_media:
+    path: ../packages/take_media
+  app_file:
+    path: ../packages/app_file
+  take_media_from_gallery:
+    path: ../packages/take_media_from_gallery
+  app_file_slider:
+    path: ../packages/app_file_slider
   
 dev_dependencies:
   flutter_test:

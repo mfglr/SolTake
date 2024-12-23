@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/views/solution/pages/question_solutions_page.dart/questions_solutions_page.dart';
+import 'package:my_social_app/views/solution/pages/questions_solutions_page.dart';
 
 class SolutionButton extends StatelessWidget {
   final QuestionState question;

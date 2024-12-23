@@ -104,14 +104,16 @@ namespace MySocailApp.Infrastructure
         }
         private static IServiceCollection AddBlobService(this IServiceCollection services)
             => services
+                .AddScoped<PathFinder>()
                 .AddScoped<UniqNameGenerator>()
+                .AddScoped<TempDirectoryService>()
                 .AddScoped<DimentionCalculator>()
                 .AddScoped<FrameCatcher>()
                 .AddScoped<VideoDurationCalculator>()
                 .AddScoped<VideoDimentionCalculator>()
-                .AddScoped<PathFinder>()
-                .AddScoped<VideoManipulatorConverter>()
-                .AddScoped<TempDirectoryService>()
+                .AddScoped<VideoManipulator>()
+                .AddScoped<AudioDurationCalculator>()
+                .AddScoped<AudioManipulator>()
                 .AddScoped<IBlobService, LocalBlobService>()
                 .AddScoped<ITextService, TextService>()
                 .AddScoped<IMultimediaService,MultiMediaService>();

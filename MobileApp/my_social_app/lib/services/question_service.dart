@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
-import 'package:my_social_app/models/app_file.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/models/question_user_save.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/pagination/page.dart';
+import 'package:http_parser/http_parser.dart';
 
 class QuestionService{
   final AppClient _appClient;
@@ -23,7 +24,7 @@ class QuestionService{
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")
     );
     for(final media in medias){
-      request.files.add(await MultipartFile.fromPath("medias", media.file.path, contentType: media.contentType));
+      request.files.add(await MultipartFile.fromPath("medias", media.file.path, contentType: MediaType.parse(media.contentType)));
     }
     if(topicId != null) request.fields["topicId"] = topicId.toString();
     request.fields["examId"] = examId.toString();
