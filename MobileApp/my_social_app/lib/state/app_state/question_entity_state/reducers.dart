@@ -43,8 +43,6 @@ QuestionEntityState nextSolutionsFailedReducer(QuestionEntityState prev,NextQues
 //uploading solutions
 QuestionEntityState startUploadingSolutionReducer(QuestionEntityState prev, CreateSolutionAction action)
   => prev.startUploadingSolution(action.id, action.questionId, action.content, action.medias);
-QuestionEntityState startUploadingVideoSolutionReducer(QuestionEntityState prev, CreateVideoSolutionAction action)
-  => prev.startUplodingVideoSolution(action.id, action.questionId, action.content, action.video);
 QuestionEntityState changeUploadingSolutionRate(QuestionEntityState prev, ChangeUploadingSolutionRateAction action)
   => prev.changeUploadingSolutionRate(action.state,action.rate);
 QuestionEntityState changeUploadingSolutionStatus(QuestionEntityState prev, ChangeUploadingSolutionStatusAction action)
@@ -135,7 +133,6 @@ Reducer<QuestionEntityState> questionsReducer = combineReducers<QuestionEntitySt
 
   //uploading solutions
   TypedReducer<QuestionEntityState,CreateSolutionAction>(startUploadingSolutionReducer).call,
-  TypedReducer<QuestionEntityState,CreateVideoSolutionAction>(startUploadingVideoSolutionReducer).call,
   TypedReducer<QuestionEntityState,ChangeUploadingSolutionRateAction>(changeUploadingSolutionRate).call,
   TypedReducer<QuestionEntityState,ChangeUploadingSolutionStatusAction>(changeUploadingSolutionStatus).call,
   TypedReducer<QuestionEntityState,RemoveUploadedSolutionAction>(removeUploadedSolutionReducer).call,

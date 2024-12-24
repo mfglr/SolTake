@@ -195,7 +195,7 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
       store.dispatch(AddSolutionAction(solution: solution));
-      store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
+      store.dispatch(AddUserImageAction(image: UserImageState.init(solution.userId)));
 
       showNotification(context, notification.id);
     }

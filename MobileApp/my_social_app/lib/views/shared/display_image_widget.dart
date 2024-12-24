@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
+import 'package:multimedia_state/multimedia_state.dart';
 import 'package:my_social_app/views/shared/image_not_found_widget.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
@@ -60,8 +60,6 @@ class _DisplayImageWidgetState extends State<DisplayImageWidget> {
                 ),
               );
             case MultimediaStatus.started:
-              return const LoadingWidget();
-            case MultimediaStatus.notStarted:
               return const LoadingWidget();
             case MultimediaStatus.notFound:
               return const ImageNotFoundWidget();

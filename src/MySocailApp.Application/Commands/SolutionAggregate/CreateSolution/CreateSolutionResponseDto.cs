@@ -29,6 +29,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
                     x.SolutionId,
                     x.ContainerName,
                     x.BlobName,
+                    x.BlobNameOfFrame,
                     x.Size,
                     x.Height,
                     x.Width,

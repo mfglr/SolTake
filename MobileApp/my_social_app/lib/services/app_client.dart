@@ -10,6 +10,7 @@ import 'package:my_social_app/state/pagination/page.dart';
 
 class AppClient{
   static final apiUrl = "${dotenv.env['API_URL']}/api";
+  static final blobService = "$apiUrl/blobs";
 
   const AppClient._();
   static const AppClient _singleton = AppClient._();

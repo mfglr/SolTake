@@ -13,7 +13,7 @@ class Solution{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int questionId;
-  final int appUserId;
+  final int userId;
   final bool isOwner;
   final bool isSaved;
   final String userName;
@@ -31,7 +31,7 @@ class Solution{
     required this.createdAt,
     required this.updatedAt,
     required this.questionId,
-    required this.appUserId,
+    required this.userId,
     required this.isOwner,
     required this.isSaved,
     required this.userName,
@@ -55,7 +55,7 @@ class Solution{
       updatedAt: updatedAt,
       state: state,
       questionId: questionId,
-      appUserId: appUserId,
+      userId: userId,
       isOwner: isOwner,
       isSaved: isSaved,
       userName: userName,

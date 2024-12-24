@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
+import 'package:multimedia_state/multimedia_state.dart';
 
 class MessageImageState{
   final int messageId;
@@ -23,11 +23,11 @@ class MessageImageState{
         messageId: messageId,
         index: index,
         image: null,
-        status: MultimediaStatus.notStarted
+        status: MultimediaStatus.started // check this row
       );
 
   MessageImageState startLoading(){
-    if(status != MultimediaStatus.notStarted) return this;
+    if(status != MultimediaStatus.started) return this;// check this row
     return MessageImageState(
       messageId: messageId,
       index: index,

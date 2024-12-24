@@ -194,7 +194,6 @@ final store = Store(
 
     //solution entity state
     createSolutionMiddleware,
-    createVideoSolutionMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
     makeSolutionUpvoteMiddleware,

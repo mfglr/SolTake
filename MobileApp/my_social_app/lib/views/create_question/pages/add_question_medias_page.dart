@@ -45,49 +45,56 @@ class _AddQuestionMediasPageState extends State<AddQuestionMediasPage> {
           CreateQuestionButton(onPressed: () => Navigator.of(context).pop(_medias))
         ],
       ),
-      body: Builder(
-        builder: (context){
-          if(_medias.isNotEmpty){
-            return AppFileSlider(medias: _medias);
-          }
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Row(
+      body: Stack(
+        children: [
+          Builder(
+            builder: (context){
+              if(_medias.isNotEmpty){
+                return AppFileSlider(
+                  medias: _medias,
+                  onRemoved: (media) => setState(() => _medias = _medias.where((e) => e != media)) 
+                );
+              }
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.videocam_outlined,
-                        size: 75,
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.videocam_outlined,
+                            size: 75,
+                          ),
+                          Icon(
+                            Icons.image_outlined,
+                            size: 75,
+                          ),
+                          Icon(
+                            Icons.spatial_audio_off_outlined,
+                            size: 75,
+                          ),
+                        ],
                       ),
-                      Icon(
-                        Icons.image_outlined,
-                        size: 75,
+                      Text(
+                        AppLocalizations.of(context)!.add_question_medias_page_label,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle( fontSize: 20),
                       ),
-                      Icon(
-                        Icons.spatial_audio_off_outlined,
-                        size: 75,
-                      ),
+                      TakeMediaSpeedDial(
+                        direction: SpeedDialDirection.down,
+                        takeFromGallery: _takeFromGallery,
+                        takeFromCamera: _takeFromCamera
+                      )
                     ],
                   ),
-                  Text(
-                    AppLocalizations.of(context)!.add_question_medias_page_label,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle( fontSize: 20),
-                  ),
-                  TakeMediaSpeedDial(
-                    direction: SpeedDialDirection.down,
-                    takeFromGallery: _takeFromGallery,
-                    takeFromCamera: _takeFromCamera
-                  )
-                ],
-              ),
-            ),
-          );
-        },
+                ),
+              );
+            },
+          ),
+        ],
       ),
       floatingActionButtonLocation: _medias.isNotEmpty ? FloatingActionButtonLocation.endFloat : null,
       floatingActionButton: _medias.isNotEmpty 

@@ -6,7 +6,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/message/pages/create_message_images_page/widgets/message_text_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/shared/app_image_slider/app_image_slider.dart';
 
 class CreateMessageImagesPage extends StatefulWidget {
   final Iterable<XFile> images;

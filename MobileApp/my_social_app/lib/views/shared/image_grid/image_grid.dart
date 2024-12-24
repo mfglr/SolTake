@@ -1,16 +1,15 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:my_social_app/enums/multimedia_type.dart';
+import 'package:multimedia_state/multimedia_state.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_state.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class ImageGrid extends StatefulWidget {
   final MultimediaState? state;
   final void Function()? onTap;
   final Widget? centerChild;
+
   const ImageGrid({
     super.key,
     required this.state,
@@ -25,7 +24,7 @@ class ImageGrid extends StatefulWidget {
 class _ImageGridState extends State<ImageGrid> {
   String? _url;
   Uint8List? _image;
-  MultimediaStatus _status = MultimediaStatus.notStarted;
+  late MultimediaStatus _status;
   
   @override
   void initState() {
@@ -36,16 +35,26 @@ class _ImageGridState extends State<ImageGrid> {
       else{
         _url = "${AppClient.apiUrl}/blobs/${widget.state!.containerName}/${widget.state!.blobName}";
       }
+      _status = MultimediaStatus.started;
       DefaultCacheManager()
         .getSingleFile(_url!)
         .then((file) => file.readAsBytes())
-        .then((list) => setState(() {
-          _image = list;
-          _status = MultimediaStatus.done;
-        }))
-        .catchError((_) => setState(() {
-          _status = MultimediaStatus.notFound;
-        }));
+        .then((list){
+          if(mounted){
+            setState(() {
+              _image = list;
+              _status = MultimediaStatus.done;
+            });
+          }
+        })
+        .catchError((e){
+          if(mounted){
+            setState(() {
+              _status = MultimediaStatus.notFound;
+              throw e;
+            });
+          }
+        });
     }
     
     super.initState();

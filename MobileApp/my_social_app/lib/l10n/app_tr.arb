@@ -268,12 +268,7 @@
 
     "take_video_page_duration_exception": "Videonun süresi 5 dakikadan az olmalıdır!",
 
-    "create_video_solution_page_title": "Video Ekle",
-    "create_video_solution_page_new_video_content": "Yeni Video",
-    "create_video_solution_page_content1": "Video Çek",
-    "create_video_solution_page_content2": "Çözümünü video çekerek anlat!",
-    "create_video_solution_page_no_video_error": "İlerleyebilmek için bir video yüklemelisin!",
-    "create_video_solution_page_contiune_button_content": "Devam Et",
+    "add_solution_medias_content":"Medya ekleyerek çözümünün daha çok dikkat çekmesini sağla.",
 
     "uploading_solution_abstract_item": "İşleniyor",
     "uploading_solution_abstract_item_failed_content":"Başarısız! Tekrar denemek için tıklayınız.",

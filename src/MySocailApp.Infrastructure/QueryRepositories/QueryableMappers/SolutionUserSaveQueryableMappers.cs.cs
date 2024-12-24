@@ -53,6 +53,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                     i.SolutionId,
                                     i.ContainerName,
                                     i.BlobName,
+                                    i.BlobNameOfFrame,
                                     i.Size,
                                     i.Height,
                                     i.Width,

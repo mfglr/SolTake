@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:multimedia_state/multimedia_state.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_state.dart';
 import 'package:my_social_app/views/shared/video_page_slider/widgets/video_play_button.dart';
 import 'package:my_social_app/views/shared/video_page_slider/widgets/video_progress_bar.dart';
 import 'package:video_player/video_player.dart';

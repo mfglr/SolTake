@@ -15,7 +15,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Internal
             FFmpeg.SetExecutablesPath("FFmpeg");
             var conversation = FFmpeg.Conversions
                 .New()
-                .AddParameter($"-i \"{path}\" -vf scale=-1:854 -c:v libx265 -crf 28 -movflags +faststart -c:a aac -b:a 128k -r 30 -preset medium \"{outputPath}\"");
+                .AddParameter($"-i \"{path}\" -vf scale=480:-2 -c:v libx265 -crf 28 -movflags +faststart -c:a libopus -r 30 -preset medium \"{outputPath}\"");
             await conversation.Start(cancellationToken);
 
             return outputPath;

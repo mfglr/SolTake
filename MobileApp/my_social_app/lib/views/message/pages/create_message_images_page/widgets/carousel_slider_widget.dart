@@ -3,7 +3,6 @@ import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/shared/circle_pagination_widget/circle_pagination_widget.dart';
-import 'package:my_social_app/views/shared/app_image_slider/clear_upload_button.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
   final Iterable<XFile> images;
@@ -44,13 +43,13 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
                 ),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: ClearUploadButton(
-                    onPressed: () => widget.removeImage(image)
-                  ) 
-                )
+                // Positioned(
+                //   right: 0,
+                //   top: 0,
+                //   child: ClearUploadButton(
+                //     onPressed: () => widget.removeImage(image)
+                //   ) 
+                // )
               ],
             )
           )).toList(),

@@ -49,38 +49,6 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void createVideoSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
-   if(action is CreateVideoSolutionAction){
-    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
-    SolutionService()
-      .createVideoSolution(
-        action.questionId,
-        action.content,
-        action.video,
-        (rate) {
-          final uploadingsolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-          store.dispatch(ChangeUploadingSolutionRateAction(state: uploadingsolution, rate: rate));
-        }
-      )
-      .then((solution){
-        final solutionState = solution.toSolutionState();
-
-        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingFileStatus.success));
-
-        store.dispatch(AddSolutionAction(solution: solutionState));
-        store.dispatch(CreateNewQuestionVideoSolutionAction(solution: solutionState));
-
-        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
-      })
-      .catchError((e){
-        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingFileStatus.failed));
-        throw e;
-      });
-  }
-  next(action);
-}
 void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionAction){
     if(store.state.solutionEntityState.entities[action.solutionId] == null){
@@ -88,7 +56,7 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         .getSolutionById(action.solutionId)
         .then((solution){
           store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(solution.appUserId)));
+          store.dispatch(AddUserImageAction(image: UserImageState.init(solution.userId)));
         });
     }
   }

@@ -13,7 +13,7 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
           ? null
           : DateTime.parse(json['updatedAt'] as String),
       questionId: (json['questionId'] as num).toInt(),
-      appUserId: (json['appUserId'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
       isOwner: json['isOwner'] as bool,
       isSaved: json['isSaved'] as bool,
       userName: json['userName'] as String,
@@ -33,7 +33,7 @@ Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'questionId': instance.questionId,
-      'appUserId': instance.appUserId,
+      'userId': instance.userId,
       'isOwner': instance.isOwner,
       'isSaved': instance.isSaved,
       'userName': instance.userName,

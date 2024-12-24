@@ -1,0 +1,1 @@
+const notFoundImageAsset = "assets/images/no_image.jpg";

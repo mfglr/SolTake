@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:multimedia_slider/multimedia_slider.dart';
+import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
-import 'package:my_social_app/views/shared/multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_downvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_upvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/downvote_button.dart';
@@ -41,7 +43,7 @@ class SolutionItemWidget extends StatelessWidget {
                       .push(
                         MaterialPageRoute(
                           builder: (context) => UserPage(
-                            userId: solution.appUserId,
+                            userId: solution.userId,
                             userName: null
                           )
                         )
@@ -55,7 +57,7 @@ class SolutionItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
-                        child: UserImageWidget( userId: solution.appUserId, diameter: 45),
+                        child: UserImageWidget( userId: solution.userId, diameter: 45),
                       ),
                       Text(solution.formatUserName(10))
                     ],
@@ -77,7 +79,12 @@ class SolutionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          MultimediaSlider(medias: solution.medias),
+          MultimediaSlider(
+            medias: solution.medias,
+            blobServiceUrl: AppClient.blobService,
+            notFoundImagePath: notFoundImageAsset,
+            headers: AppClient().getHeader(),
+          ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(

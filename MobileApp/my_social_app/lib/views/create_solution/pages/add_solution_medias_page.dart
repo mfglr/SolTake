@@ -52,34 +52,42 @@ class _AddSolutionMediasPageState extends State<AddSolutionMediasPage> {
       body: Center(
         child: Builder(
           builder: (context){
-            if(_medias.isNotEmpty) return AppFileSlider(medias: _medias);
+            if(_medias.isNotEmpty){
+              return AppFileSlider(
+                medias: _medias,
+                onRemoved: (media) => setState(() => _medias = _medias.where((e) => e != media))
+              );
+            }
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 15),
-                  child: const Icon(
-                    Icons.video_library_outlined,
-                    size: 45,
-                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.videocam_outlined,
+                        size: 75,
+                      ),
+                      Icon(
+                        Icons.image_outlined,
+                        size: 75,
+                      ),
+                      Icon(
+                        Icons.spatial_audio_off_outlined,
+                        size: 75,
+                      ),
+                    ],
+                  )
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 15),
                   child: Text(
-                    AppLocalizations.of(context)!.create_video_solution_page_content1,
+                    AppLocalizations.of(context)!.add_solution_medias_content,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 30,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 30),
-                  child: Text(
-                    AppLocalizations.of(context)!.create_video_solution_page_content2,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20
                     ),
                   ),
                 ),
@@ -93,17 +101,13 @@ class _AddSolutionMediasPageState extends State<AddSolutionMediasPage> {
           }
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: OutlinedButton(
-          onPressed: (){
-            Navigator
-              .of(context)
-              .pop(_medias);
-          },
-          child: Text(AppLocalizations.of(context)!.create_video_solution_page_contiune_button_content) 
-        ),
-      ),
+      floatingActionButton: _medias.isNotEmpty 
+        ? TakeMediaSpeedDial(
+            direction: SpeedDialDirection.left,
+            takeFromGallery: _takeMediaFromGallery,
+            takeFromCamera: _takeMediaFromCamera
+          )
+        : null,
     );
   }
 }

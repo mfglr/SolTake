@@ -1,7 +1,7 @@
+import 'package:multimedia_state/multimedia_state.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/user_service.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
@@ -46,7 +46,7 @@ void removeCurrentUserImageMiddleware(Store<AppState> store,action,NextDispatche
 void loadUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadUserImageAction){
     final userImageState = store.state.userImageEntityState.entities[action.userId]!;
-    if(userImageState.state == MultimediaStatus.notStarted){
+    if(userImageState.state == MultimediaStatus.started){//check this row
       UserService()
         .getImageById(action.userId)
         .then((image) => store.dispatch(LoadUserImageSuccessAction(userId: action.userId, image: image)));

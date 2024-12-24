@@ -4,12 +4,12 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:app_file/app_file.dart';
-import 'package:camera/camera.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
+import 'package:my_social_app/main.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/models/solution_user_save.dart';
 import 'package:my_social_app/models/solution_user_vote.dart';
@@ -51,6 +51,7 @@ class SolutionService{
     r.headers.set(HttpHeaders.contentTypeHeader, multiPartRequest.headers[HttpHeaders.contentTypeHeader]!);
     r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
     r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
+    r.headers.set("Client-Version", packageInfo.version);
 
     var byteCount = 0;
     await r.addStream(
@@ -68,48 +69,6 @@ class SolutionService{
   }
   Future<Solution> create(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
     var request = await _createSolutionRequest(questionId,content,medias,callback);
-    var response = await request.close();
-    var data = await _readResponse(response);
-    
-    if(response.statusCode >= 400){
-      throw BackendException(message: data,statusCode: response.statusCode);
-    }
-    return Solution.fromJson(jsonDecode(data));
-  }
-
-  Future<HttpClientRequest> _createVideoSolutionRequest(int questionId, String? content, XFile video,  void Function(double) callback) async {
-    MultipartRequest multiPartRequest = MultipartRequest(
-      "POST",
-      _appClient.generateUri("$solutionController/$createVideoSolutionEndpoint")
-    );
-    if(content != null) multiPartRequest.fields["content"] = content;
-    multiPartRequest.files.add(await MultipartFile.fromPath("file",video.path));
-    multiPartRequest.fields["questionId"] = questionId.toString();
-
-    var stream = multiPartRequest.finalize();
-    var length = multiPartRequest.contentLength;
-
-    var r = await HttpClient().postUrl(_appClient.generateUri("$solutionController/$createVideoSolutionEndpoint"));
-    r.headers.set(HttpHeaders.contentTypeHeader, multiPartRequest.headers[HttpHeaders.contentTypeHeader]!);
-    r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
-    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
-
-    var byteCount = 0;
-    await r.addStream(
-      stream.transform(
-        StreamTransformer.fromHandlers(
-          handleData: (data,sink){
-            sink.add(data);
-            byteCount += data.length;
-            callback(byteCount / length);
-          }
-        )  
-      )
-    );
-    return r;
-  }
-  Future<Solution> createVideoSolution(int questionId, String? content, XFile video, void Function(double) callback) async {
-    var request = await _createVideoSolutionRequest(questionId,content,video,callback);
     var response = await request.close();
     var data = await _readResponse(response);
     

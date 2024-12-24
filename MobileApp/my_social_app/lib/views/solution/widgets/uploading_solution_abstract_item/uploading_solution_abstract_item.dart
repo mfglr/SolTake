@@ -55,12 +55,12 @@ class _UploadingSolutionAbstractItemState extends State<UploadingSolutionAbstrac
             onfailed: (){
               final store = StoreProvider.of<AppState>(context,listen: false);
               if(widget.solution.video != null){
-                store.dispatch(CreateVideoSolutionAction(
-                  id: widget.solution.id,
-                  questionId: widget.solution.questionId,
-                  content: widget.solution.content,
-                  video: widget.solution.video!
-                ));
+                // store.dispatch(CreateVideoSolutionAction(
+                //   id: widget.solution.id,
+                //   questionId: widget.solution.questionId,
+                //   content: widget.solution.content,
+                //   video: widget.solution.video!
+                // ));
               }
               else{
                 store.dispatch(CreateSolutionAction(

@@ -140,7 +140,7 @@ void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatche
       .then((solutions){
         store.dispatch(NextQuestionSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.userId))));
       })
       .catchError((e){
         store.dispatch(NextQuestionSolutionsFailedAction(questionId: action.questionId));
@@ -157,7 +157,7 @@ void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextD
       .then((solutions){
         store.dispatch(NextQuestionCorrectSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.userId))));
       })
       .catchError((e){
         store.dispatch(NextQuestionCorrectSolutionsFailedAction(questionId: action.questionId));
@@ -174,7 +174,7 @@ void nextQuestionPendingSolutionsMiddleware(Store<AppState> store,action,NextDis
       .then((solutions){
         store.dispatch(NextQuestionPendingSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.userId))));
       })
       .catchError((e){
         store.dispatch(NextQuestionPendingSolutionsFailedAction(questionId: action.questionId));
@@ -191,7 +191,7 @@ void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store,action,NextD
       .then((solutions){
         store.dispatch(NextQuestionIncorrectSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.userId))));
       })
       .catchError((e){
         store.dispatch(NextQuestionIncorrectSolutionsFailedAction(questionId: action.questionId));
@@ -208,7 +208,7 @@ void nextQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispa
       .then((solutions){
         store.dispatch(NextQuestionVideoSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.appUserId))));
+        store.dispatch(AddUserImagesAction(images: solutions.map((e) => UserImageState.init(e.userId))));
       })
       .catchError((e){
         store.dispatch(NextQuestionVideoSolutionsFailedAction(questionId: action.questionId));

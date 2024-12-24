@@ -252,6 +252,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.5"
+  circles_pagination:
+    dependency: "direct main"
+    description:
+      path: "../packages/circles_pagination"
+      relative: true
+    source: path
+    version: "0.0.1"
   clock:
     dependency: transitive
     description:
@@ -348,6 +355,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.6"
+  duration_to_minutes:
+    dependency: "direct main"
+    description:
+      path: "../packages/duration_to_minutes"
+      relative: true
+    source: path
+    version: "0.0.1"
   email_validator:
     dependency: "direct main"
     description:
@@ -1000,6 +1014,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  multimedia_slider:
+    dependency: "direct main"
+    description:
+      path: "../packages/multimedia_slider"
+      relative: true
+    source: path
+    version: "0.0.1"
+  multimedia_state:
+    dependency: "direct main"
+    description:
+      path: "../packages/multimedia_state"
+      relative: true
+    source: path
+    version: "1.0.0"
   nested:
     dependency: transitive
     description:

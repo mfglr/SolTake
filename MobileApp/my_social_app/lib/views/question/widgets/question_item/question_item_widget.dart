@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:multimedia_slider/multimedia_slider.dart';
+import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -12,7 +15,6 @@ import 'package:my_social_app/views/question/widgets/question_item/widgets/quest
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/save_question_button.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
-import 'package:my_social_app/views/shared/multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_comment_button_widget.dart';
@@ -91,6 +93,9 @@ class QuestionItemWidget extends StatelessWidget {
           MultimediaSlider(
             key: ValueKey(question.id),
             medias: question.medias,
+            blobServiceUrl: AppClient.blobService,
+            headers: AppClient().getHeader(),
+            notFoundImagePath: notFoundImageAsset,
           ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15),

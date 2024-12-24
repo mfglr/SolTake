@@ -276,7 +276,7 @@ void nextUserSavedSolutionsMiddleware(Store<AppState> store,action,NextDispatche
       .then((saves){
         store.dispatch(AddSolutionUserSavesAction(saves: saves.map((e) => e.toSolutionUserSaveState())));
         store.dispatch(AddSolutionsAction(solutions: saves.map((e) => e.solution!.toSolutionState())));
-        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.solution!.appUserId))));
+        store.dispatch(AddUserImagesAction(images: saves.map((e) => UserImageState.init(e.solution!.userId))));
         store.dispatch(NextUserSavedSolutionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
       })
       .catchError((e){

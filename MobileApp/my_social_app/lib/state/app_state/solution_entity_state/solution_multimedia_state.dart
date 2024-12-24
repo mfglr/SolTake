@@ -1,4 +1,4 @@
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_state.dart';
+import 'package:multimedia_state/multimedia_state.dart';
 
 class SolutionMultimediaState extends MultimediaState{
   final int id;

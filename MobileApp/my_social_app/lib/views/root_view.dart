@@ -9,12 +9,12 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/account/pages/application_loading_page.dart';
 import 'package:my_social_app/views/display_video_questions/display_video_questions.dart';
-import 'package:my_social_app/views/shared/icon_with_badge.dart';
 import 'package:my_social_app/views/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
 import 'package:my_social_app/views/search/pages/search_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
+import 'package:badges/badges.dart' as badges;
 
 class RootView extends StatefulWidget {
   const RootView({super.key});
@@ -89,13 +89,15 @@ class _RootViewState extends State<RootView> {
               StoreConnector<AppState,int>(
                 converter: (store) => store.state.selectNumberOfComingMessages,
                 builder: (context,count) => NavigationDestination(
-                  selectedIcon: IconWithBadge(
-                    badgeCount: count,
-                    icon: Icons.message,
+                  selectedIcon: badges.Badge(
+                    showBadge: count > 0,
+                    badgeContent: Text(count.toString()),
+                    child: const Icon(Icons.message),
                   ),
-                  icon: IconWithBadge(
-                    badgeCount: count,
-                    icon: Icons.message_outlined,
+                  icon: badges.Badge(
+                    showBadge: count > 0,
+                    badgeContent: Text(count.toString()),
+                    child: const Icon(Icons.message_outlined),
                   ),
                   label: ''
                 ),

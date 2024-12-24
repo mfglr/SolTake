@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
@@ -18,9 +17,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
         public Solution(int questionId, int userId, SolutionContent? content, IEnumerable<SolutionMultimedia> medias)
         {
-            if (medias.Any(x => x.MultimediaType != MultimediaType.Image))
-                throw new NotSolutionImageMediaException();
-
             if (content == null && !medias.Any())
                 throw new SolutionContentRequiredException();
             
@@ -33,17 +29,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             Content = content;
             State = SolutionState.Pending;
         }
-        public Solution(int questionId, int userId, SolutionContent? content, SolutionMultimedia video)
-        {
-            if (video.MultimediaType != MultimediaType.Video)
-                throw new NotSolutionVideoMediaException();
-
-            _medias.Add(video);
-            QuestionId = questionId;
-            UserId = userId;
-            Content = content;
-            State = SolutionState.Pending;
-        }
+       
         internal void Create() => UpdatedAt = CreatedAt = DateTime.UtcNow;
 
         private readonly List<SolutionUserVote> _votes = [];

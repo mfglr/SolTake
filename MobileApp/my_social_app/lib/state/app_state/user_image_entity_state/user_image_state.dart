@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/multimedia_state/multimedia_status.dart';
+import 'package:multimedia_state/multimedia_state.dart';
 
 @immutable
 class UserImageState{
@@ -14,7 +14,7 @@ class UserImageState{
     required this.state
   });
 
-  factory UserImageState.init(int userId) => UserImageState(id: userId, image: null, state: MultimediaStatus.notStarted);
+  factory UserImageState.init(int userId) => UserImageState(id: userId, image: null, state: MultimediaStatus.started); //check this row
 
   UserImageState load(Uint8List image)
     => UserImageState(

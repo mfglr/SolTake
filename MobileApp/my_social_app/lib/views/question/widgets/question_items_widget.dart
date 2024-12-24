@@ -3,7 +3,6 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class QuestionItemsWidget extends StatefulWidget {
   final Pagination pagination;
@@ -68,14 +67,8 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
               child: QuestionItemWidget(question: widget.questions.elementAt(index))
             ),
           ),
-          Builder(
-            builder: (context){
-              if(widget.pagination.loadingNext){
-                return const LoadingCircleWidget(strokeWidth: 3);
-              }
-              return const SpaceSavingWidget();
-            } 
-          )
+          if(widget.pagination.loadingNext)
+            const LoadingCircleWidget(strokeWidth: 3)
         ]
       ),
     );
