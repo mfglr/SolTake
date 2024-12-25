@@ -82,7 +82,8 @@ class SolutionItemWidget extends StatelessWidget {
           MultimediaSlider(
             medias: solution.medias,
             blobServiceUrl: AppClient.blobService,
-            notFoundImagePath: notFoundImageAsset,
+            notFoundMediaPath: noMediaAssetPath,
+            noMediaPath: noMediaAssetPath,
             headers: AppClient().getHeader(),
           ),
           Padding(

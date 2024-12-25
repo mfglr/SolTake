@@ -1,1 +1,1 @@
-const notFoundImageAsset = "assets/images/no_image.jpg";
+const noMediaAssetPath = "assets/images/no_image.jpg";

@@ -76,21 +76,23 @@ dependencies:
   
   #local packages
   app_file:
-    path: ../packages/app_file
+    path: ../flutter_and_dart_packages/app_file
   multimedia_state:
-    path: ../packages/multimedia_state
+    path: ../flutter_and_dart_packages/multimedia_state
   multimedia_slider:
-    path: ../packages/multimedia_slider
+    path: ../flutter_and_dart_packages/multimedia_slider
   duration_to_minutes:
-    path: ../packages/duration_to_minutes
+    path: ../flutter_and_dart_packages/duration_to_minutes
   take_media:
-    path: ../packages/take_media
+    path: ../flutter_and_dart_packages/take_media
   circles_pagination:
-    path: ../packages/circles_pagination
+    path: ../flutter_and_dart_packages/circles_pagination
   take_media_from_gallery:
-    path: ../packages/take_media_from_gallery
+    path: ../flutter_and_dart_packages/take_media_from_gallery
   app_file_slider:
-    path: ../packages/app_file_slider
+    path: ../flutter_and_dart_packages/app_file_slider
+  multimedia_grid:
+    path: ../flutter_and_dart_packages/multimedia_grid
   
 dev_dependencies:
   flutter_test:

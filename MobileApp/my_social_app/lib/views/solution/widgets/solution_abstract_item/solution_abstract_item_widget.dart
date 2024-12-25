@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:multimedia_grid/multimedia_grid.dart';
+import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/views/shared/image_grid/image_grid.dart';
 
 class SolutionAbstractItemWidget extends StatelessWidget {
   final SolutionState solution;
@@ -16,13 +18,14 @@ class SolutionAbstractItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(1.0),
-      child: GestureDetector(
+      child: MultimediaGrid(
+        state: solution.medias.firstOrNull,
+        blobServiceUrl: AppClient.blobService,
+        noMediaPath: noMediaAssetPath,
+        notFoundMediaPath: noMediaAssetPath,
         onTap: () => onTap(solution.id),
-        child: ImageGrid(
-          state: solution.medias.firstOrNull,
-          onTap: () => onTap(solution.id),
-        )
-      ),
+        headers: AppClient().getHeader(),
+      )
     );
   }
 }

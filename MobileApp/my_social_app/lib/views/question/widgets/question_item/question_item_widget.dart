@@ -95,7 +95,8 @@ class QuestionItemWidget extends StatelessWidget {
             medias: question.medias,
             blobServiceUrl: AppClient.blobService,
             headers: AppClient().getHeader(),
-            notFoundImagePath: notFoundImageAsset,
+            notFoundMediaPath: noMediaAssetPath,
+            noMediaPath: noMediaAssetPath,
           ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15),

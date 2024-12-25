@@ -25,14 +25,14 @@ packages:
   app_file:
     dependency: "direct main"
     description:
-      path: "../packages/app_file"
+      path: "../flutter_and_dart_packages/app_file"
       relative: true
     source: path
     version: "1.0.0"
   app_file_slider:
     dependency: "direct main"
     description:
-      path: "../packages/app_file_slider"
+      path: "../flutter_and_dart_packages/app_file_slider"
       relative: true
     source: path
     version: "0.0.1"
@@ -255,7 +255,7 @@ packages:
   circles_pagination:
     dependency: "direct main"
     description:
-      path: "../packages/circles_pagination"
+      path: "../flutter_and_dart_packages/circles_pagination"
       relative: true
     source: path
     version: "0.0.1"
@@ -358,7 +358,7 @@ packages:
   duration_to_minutes:
     dependency: "direct main"
     description:
-      path: "../packages/duration_to_minutes"
+      path: "../flutter_and_dart_packages/duration_to_minutes"
       relative: true
     source: path
     version: "0.0.1"
@@ -1014,17 +1014,24 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  multimedia_grid:
+    dependency: "direct main"
+    description:
+      path: "../flutter_and_dart_packages/multimedia_grid"
+      relative: true
+    source: path
+    version: "0.0.1"
   multimedia_slider:
     dependency: "direct main"
     description:
-      path: "../packages/multimedia_slider"
+      path: "../flutter_and_dart_packages/multimedia_slider"
       relative: true
     source: path
     version: "0.0.1"
   multimedia_state:
     dependency: "direct main"
     description:
-      path: "../packages/multimedia_state"
+      path: "../flutter_and_dart_packages/multimedia_state"
       relative: true
     source: path
     version: "1.0.0"
@@ -1460,14 +1467,14 @@ packages:
   take_media:
     dependency: "direct main"
     description:
-      path: "../packages/take_media"
+      path: "../flutter_and_dart_packages/take_media"
       relative: true
     source: path
     version: "0.0.1"
   take_media_from_gallery:
     dependency: "direct main"
     description:
-      path: "../packages/take_media_from_gallery"
+      path: "../flutter_and_dart_packages/take_media_from_gallery"
       relative: true
     source: path
     version: "1.0.0"

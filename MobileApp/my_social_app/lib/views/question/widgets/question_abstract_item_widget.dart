@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia_grid/multimedia_grid.dart';
+import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/views/shared/image_grid/image_grid.dart';
 
 class QuestionAbstractItemWidget extends StatelessWidget {
   final QuestionState question;
@@ -18,24 +19,14 @@ class QuestionAbstractItemWidget extends StatelessWidget {
     return Padding(
       key: ValueKey(question.id),
       padding: const EdgeInsets.all(1.0),
-      child: ImageGrid(
+      child: MultimediaGrid(
         state: question.medias.firstOrNull,
+        blobServiceUrl: AppClient.blobService,
+        noMediaPath: noMediaAssetPath,
+        notFoundMediaPath: noMediaAssetPath,
+        headers: AppClient().getHeader(),
         onTap: () => onTap(question.id),
-        centerChild: 
-          question.medias.firstOrNull?.multimediaType == MultimediaType.video
-            ? Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withAlpha(128),
-                shape: BoxShape.circle
-              ),
-              child: const Icon(
-                Icons.play_arrow_rounded,
-                color: Colors.white,
-                size: 40,
-              ),
-            )
-            : null,
-      ),
+      )
     );
   }
 }

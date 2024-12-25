@@ -9,13 +9,15 @@ class MultimediaSlider extends StatefulWidget {
   final Iterable<MultimediaState> medias;
   final String blobServiceUrl;
   final Map<String,String>? headers;
-  final String notFoundImagePath;
+  final String notFoundMediaPath;
+  final String noMediaPath;
   
   const MultimediaSlider({
     super.key,
     required this.medias,
     required this.blobServiceUrl,
-    required this.notFoundImagePath,
+    required this.notFoundMediaPath,
+    required this.noMediaPath,
     this.headers
   });
 
@@ -40,6 +42,7 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
  
   @override
   Widget build(BuildContext context) {
+    if(widget.medias.isEmpty) return Image.asset(widget.noMediaPath);
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -56,7 +59,7 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
               }
               return MultimediaImagePlayer(
                 state: e,
-                notFoundImagePath: widget.notFoundImagePath,
+                notFoundImagePath: widget.notFoundMediaPath,
                 blobServiceUrl: widget.blobServiceUrl,
                 headers: widget.headers,
               );
