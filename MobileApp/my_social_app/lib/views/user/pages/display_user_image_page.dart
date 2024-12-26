@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia_status.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';

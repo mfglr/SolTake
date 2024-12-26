@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_images_grid_widget.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_medias_grid_widget.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_status_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -30,12 +27,8 @@ class _MessageItemState extends State<MessageItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        widget.onPressedMesssageItem(widget.message.id);
-      },
-      onLongPress: (){
-        widget.onLongPressedMessageItem(widget.message.id);
-      },
+      onTap: () => widget.onPressedMesssageItem(widget.message.id),
+      onLongPress: () => widget.onLongPressedMessageItem(widget.message.id),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -45,14 +38,11 @@ class _MessageItemState extends State<MessageItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if(widget.message.numberOfImages > 0)
-                StoreConnector<AppState,Iterable<MessageImageState>>(
-                  converter: (store) => store.state.messageImageEntityState.selectMessageImages(widget.message.id),
-                  builder:(context,images) => MessageImagesGridWidget(
-                    images: images,
-                    onSelectedMessageItem: widget.onPressedMesssageItem,
-                    selectedMessageIds: widget.selectedMessageIds,
-                  )
+              if(widget.message.medias.isNotEmpty)
+                MessageImagesGridWidget(
+                  message: widget.message,
+                  onSelectedMessageItem: widget.onPressedMesssageItem,
+                  selectedMessageIds: widget.selectedMessageIds,
                 ),
               if(widget.message.content != null)
                 Padding(

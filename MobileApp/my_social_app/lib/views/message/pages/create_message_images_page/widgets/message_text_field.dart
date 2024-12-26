@@ -1,11 +1,12 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
+import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
   final String hintText;
   final int receiverId;
-  final void Function(Iterable<XFile> images) addImages;
+  final void Function(Iterable<AppFile> images) addImages;
   final void Function(String? content) createMessage;
   final bool Function() validateNumberOfImages;
 
@@ -61,11 +62,11 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   if(!widget.validateNumberOfImages()) return;
                   Navigator
                     .of(context)
-                    .pushNamed(takeImageRoute)
+                    .pushNamed(takeMediaRoute)
                     .then(
-                      (image){
-                        if(image != null && context.mounted){
-                          widget.addImages([image as XFile]);
+                      (media){
+                        if(media != null && context.mounted){
+                          widget.addImages([media as AppFile]);
                         }
                       }
                     );
@@ -80,12 +81,12 @@ class _MessageTextFieldState extends State<MessageTextField> {
               suffixIcon: IconButton(
                 onPressed: (){
                   if(!widget.validateNumberOfImages()) return;
-                  ImagePicker()
-                    .pickMultiImage(imageQuality: 100)
+                  TakeMediaFromGalleryService()
+                    .getMedias()
                     .then(
-                      (images){
-                        if(images.isNotEmpty && context.mounted){
-                          widget.addImages(images);
+                      (medias){
+                        if(medias.isNotEmpty && context.mounted){
+                          widget.addImages(medias);
                         }
                       }
                     );

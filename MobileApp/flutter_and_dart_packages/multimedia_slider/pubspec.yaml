@@ -16,8 +16,8 @@ dependencies:
   carousel_slider: ^5.0.0
   
   #local packages
-  multimedia_state:
-    path: ../multimedia_state
+  multimedia:
+    path: ../multimedia
   circles_pagination:
     path: ../circles_pagination
   duration_to_minutes:

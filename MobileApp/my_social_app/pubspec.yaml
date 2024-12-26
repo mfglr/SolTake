@@ -77,8 +77,8 @@ dependencies:
   #local packages
   app_file:
     path: ../flutter_and_dart_packages/app_file
-  multimedia_state:
-    path: ../flutter_and_dart_packages/multimedia_state
+  multimedia:
+    path: ../flutter_and_dart_packages/multimedia
   multimedia_slider:
     path: ../flutter_and_dart_packages/multimedia_slider
   duration_to_minutes:

@@ -33,17 +33,26 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToPage(page)
                 .ToMessageResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
-
-        public Task<List<MessageResponseDto>> GetConversationsAsync(int accountId, IPage page, CancellationToken cancellationToken)
-            => _context.MessageResponseDtos
-                .FromSqlInterpolated($"exec sp_get_conversations {accountId},{page.Offset},{page.Take}")
-                .ToListAsync(cancellationToken);
+      
+        public async Task<IEnumerable<MessageResponseDto>> GetConversationsAsync(int accountId, CancellationToken cancellationToken)
+            => (await _context.Messages
+                .AsNoTracking()
+                .Where(
+                    x =>
+                        (x.SenderId == accountId || x.ReceiverId == accountId) &&
+                        !x.Removers.Any(x => x.UserId == accountId)
+                )
+                .ToMessageResponseDto(_context, accountId)
+                .ToListAsync(cancellationToken))
+                .GroupBy(x => x.ConversationId)
+                .OrderByDescending(x => x.OrderBy(x => x.Id).Last().Id)
+                .Select(x => x.OrderBy(x => x.Id).Last());
 
         public Task<List<MessageResponseDto>> GetUnviewedMessagesAsync(int accountId, CancellationToken cancellationToken)
             => _context.Messages
                 .AsNoTracking()
                 .Where(
-                    x => 
+                    x =>
                         x.ReceiverId == accountId && 
                         x.Viewers.Count == 0 &&
                         !x.Removers.Any(x => x.UserId == accountId)

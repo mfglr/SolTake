@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.MessageAggregate
 {
-    public record MessageMultimediaResponseDto(int Id, int MessageId, string ContainerName, string BlobName, long Size, double Height, double Width, double Duration, MultimediaType MultimediaType);
+    public record MessageMultimediaResponseDto(string ContainerName, string BlobName, string? BlobNameOfFrame, long Size, double Height, double Width, double Duration, MultimediaType MultimediaType);
 }

@@ -1,16 +1,16 @@
 import 'package:duration_to_minutes/duration_to_minutes.dart';
 import 'package:flutter/material.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:video_player/video_player.dart';
 
 class MultimediaVideoPlayer extends StatefulWidget {
-  final MultimediaState state;
+  final Multimedia media;
   final String blobServiceUrl;
   final Map<String,String>? headers;
   
   const MultimediaVideoPlayer({
     super.key,
-    required this.state,
+    required this.media,
     required this.blobServiceUrl,
     this.headers
   });
@@ -26,14 +26,14 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
 
   void _setRemainingDuration(){
     setState(() {
-      _remaningDuration = (widget.state.duration - _controller.value.position.inSeconds).round();
+      _remaningDuration = (widget.media.duration - _controller.value.position.inSeconds).round();
     });
   }
 
   @override
   void initState() {
-    _remaningDuration = widget.state.duration.round();
-    _url = Uri.parse("${widget.blobServiceUrl}/${widget.state.containerName}/${widget.state.blobName}");
+    _remaningDuration = widget.media.duration.round();
+    _url = Uri.parse("${widget.blobServiceUrl}/${widget.media.containerName}/${widget.media.blobName}");
      
     _controller = VideoPlayerController.networkUrl(_url, httpHeaders: widget.headers ?? const <String,String>{});
     _controller.addListener(_setRemainingDuration);
@@ -81,7 +81,7 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
         alignment: AlignmentDirectional.center,
         children: [
           AspectRatio(
-            aspectRatio: widget.state.width / widget.state.height,
+            aspectRatio: widget.media.aspectRatio,
             child: VideoPlayer(_controller)
           ),
           if(!_controller.value.isPlaying)

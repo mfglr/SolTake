@@ -1,10 +1,10 @@
-import 'package:camera/camera.dart';
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class UploadingUserImageState {
-  final XFile file;
+  final AppFile file;
   final UploadingFileStatus status;
   final double rate;
 

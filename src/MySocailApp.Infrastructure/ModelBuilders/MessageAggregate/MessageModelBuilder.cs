@@ -8,13 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
     {
         public void Configure(EntityTypeBuilder<Message> builder)
         {
-            builder.OwnsOne(
-                x => x.Content,
-                sa =>
-                {
-                    sa.Property(p => p.Value).HasColumnName("Content");
-                }
-            );
+            builder.OwnsOne(x => x.Content);
 
             builder
                 .HasMany(x => x.Medias)

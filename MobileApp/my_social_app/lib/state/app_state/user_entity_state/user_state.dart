@@ -1,4 +1,4 @@
-import 'package:camera/camera.dart';
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/uploading_user_image_state/uploading_user_image_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
@@ -304,7 +304,7 @@ class UserState{
   UserState updateBiography(String biography) =>
     _optional(newBiography: biography);
 
-  UserState addUploadingImage(XFile file)
+  UserState addUploadingImage(AppFile file)
     => _optional(newUploadingImage: UploadingUserImageState(file: file, status: UploadingFileStatus.loading, rate: 0));
   UserState changeUploadingImageStatus(UploadingFileStatus status)
     => _optional(newUploadingImage: uploadingImage?.changeStatus(status));

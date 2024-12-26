@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 
 @immutable
@@ -14,7 +15,7 @@ class MessageState{
   final bool isEdited;
   final String? content; 
   final int state;
-  final int numberOfImages;
+  final Iterable<Multimedia> medias;
 
   const MessageState({
     required this.id,
@@ -28,7 +29,7 @@ class MessageState{
     required this.isEdited,
     required this.content,
     required this.state,
-    required this.numberOfImages,
+    required this.medias
   });
 
   MessageState _optinal({
@@ -36,7 +37,6 @@ class MessageState{
     bool? newIsEdited,
     String? newContent,
     int? newState,
-    int? newNumberOfImages,
   })
     => MessageState(
         id: id,
@@ -50,7 +50,7 @@ class MessageState{
         isEdited: newIsEdited ?? isEdited,
         content: newContent ?? content,
         state: newState ?? state,
-        numberOfImages: newNumberOfImages ?? numberOfImages,
+        medias: medias
       );
   
   String? formatContent(int count){

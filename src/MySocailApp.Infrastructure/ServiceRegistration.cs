@@ -11,7 +11,7 @@ using MySocailApp.Domain.AccountDomain.RoleAggregate.Abstracts;
 using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate.Abstracts;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;

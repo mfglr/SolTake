@@ -23,7 +23,7 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
       isDownvoted: json['isDownvoted'] as bool,
       numberOfDownvotes: (json['numberOfDownvotes'] as num).toInt(),
       medias: (json['medias'] as List<dynamic>)
-          .map((e) => SolutionMultimedia.fromJson(e as Map<String, dynamic>)),
+          .map((e) => Multimedia.fromJson(e as Map<String, dynamic>)),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
       state: (json['state'] as num).toInt(),
     );

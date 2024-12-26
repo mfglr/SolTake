@@ -1,10 +1,11 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/pages/create_message_images_page/create_message_images_page.dart';
+import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
   final String hintText;
@@ -57,16 +58,16 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   _messageContentController.clear();
                   Navigator
                     .of(context)
-                    .pushNamed(takeImageRoute)
+                    .pushNamed(takeMediaRoute)
                     .then(
-                      (image){
-                        if(image != null && context.mounted){
+                      (media){
+                        if(media != null && context.mounted){
                           Navigator
                             .of(context)
                             .push(
                               MaterialPageRoute(
                                 builder: (context) => CreateMessageImagesPage(
-                                  images: [image as XFile],
+                                  medias: [media as AppFile],
                                   receiverId: widget.receiverId,
                                 )
                               )
@@ -85,17 +86,17 @@ class _MessageTextFieldState extends State<MessageTextField> {
                 onPressed: (){
                   _messageContentController.text = "";
                   _messageContentController.clear();
-                  ImagePicker()
-                    .pickMultiImage(imageQuality: 100)
+                  TakeMediaFromGalleryService()
+                    .getMedias()
                     .then(
-                      (images){
-                        if(images.isNotEmpty && context.mounted){
+                      (medias){
+                        if(medias.isNotEmpty && context.mounted){
                           Navigator
                             .of(context)
                             .push(
                               MaterialPageRoute(
                                 builder: (context) => CreateMessageImagesPage(
-                                  images: images,
+                                  medias: medias,
                                   receiverId: widget.receiverId,
                                 )
                               )

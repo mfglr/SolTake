@@ -4,8 +4,6 @@ import 'package:my_social_app/constants/message_functions.dart';
 import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/state/app_state/message_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
@@ -70,9 +68,6 @@ class MessageHub{
         receivedMessages.add(messageState);
 
         store.dispatch(AddMessageAction(message: messageState));
-        store.dispatch(AddMessageImagesAction(images: List.generate(
-          message.numberOfImages, (index) => MessageImageState.init(message.id, index))
-        ));
         store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
         store.dispatch(AddUserImageAction(image: UserImageState.init(message.senderId)));
         store.dispatch(MarkComingMessageAsReceivedAction(messageId: message.id));
@@ -85,9 +80,6 @@ class MessageHub{
         final message = Message.fromJson((list!.first as dynamic)).toMessageState();
         
         store.dispatch(MarkOutgoingMessageAsReceivedAction(message: message));
-        store.dispatch(AddMessageImagesAction(images: List.generate(
-          message.numberOfImages, (index) => MessageImageState.init(message.id, index))
-        ));
         store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
         store.dispatch(AddUserImageAction(image: UserImageState.init(message.senderId)));
         
@@ -100,9 +92,6 @@ class MessageHub{
         final message = Message.fromJson((list!.first as dynamic)).toMessageState();
 
         store.dispatch(MarkOutgoingMessageAsViewedAction(message: message));
-        store.dispatch(AddMessageImagesAction(images: List.generate(
-          message.numberOfImages, (index) => MessageImageState.init(message.id, index))
-        ));
         store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
         store.dispatch(AddUserImageAction(image: UserImageState.init(message.senderId)));
       }

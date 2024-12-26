@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/exam.dart';
-import 'package:my_social_app/models/question_multimedia.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
@@ -10,8 +10,8 @@ import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
-@JsonSerializable()
 @immutable
+@JsonSerializable()
 class Question{
   final int id;
   final DateTime createdAt;
@@ -24,7 +24,7 @@ class Question{
   final Exam exam;
   final Subject subject;
   final Topic? topic;
-  final List<QuestionMultimedia> medias;
+  final Iterable<Multimedia> medias;
   final bool isLiked;
   final bool isSaved;
   final int numberOfLikes;
@@ -69,7 +69,7 @@ class Question{
     examId: exam.id,
     subjectId: subject.id,
     topicId: topic?.id,
-    medias: medias.map((e) => e.toQuestionMultimediaState()),
+    medias: medias,
     isLiked: isLiked,
     isSaved: isSaved,
     isOwner: isOwner,

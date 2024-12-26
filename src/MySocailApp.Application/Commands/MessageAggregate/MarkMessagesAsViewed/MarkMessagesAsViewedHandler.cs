@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.MarkMessagesAsViewed
 {

@@ -1,17 +1,18 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia.dart';
+import 'package:multimedia/models/multimedia_status.dart';
 
 class MultimediaImagePlayer extends StatefulWidget {
   final String blobServiceUrl;
-  final MultimediaState state;
+  final Multimedia media;
   final String notFoundImagePath;
   final Map<String,String>? headers;
   
   const MultimediaImagePlayer({
     super.key,
-    required this.state,
+    required this.media,
     required this.blobServiceUrl,
     required this.notFoundImagePath,
     this.headers
@@ -29,7 +30,7 @@ class _MultimediaImagePlayerState extends State<MultimediaImagePlayer> {
   @override
   void initState() {
     _status = MultimediaStatus.started;
-    url = "${widget.blobServiceUrl}/${widget.state.containerName}/${widget.state.blobName}";
+    url = "${widget.blobServiceUrl}/${widget.media.containerName}/${widget.media.blobName}";
     
     DefaultCacheManager()
       .getSingleFile(url,headers: widget.headers)

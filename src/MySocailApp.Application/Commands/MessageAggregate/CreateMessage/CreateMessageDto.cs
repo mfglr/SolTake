@@ -4,5 +4,5 @@ using MySocailApp.Application.Queries.MessageAggregate;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.CreateMessage
 {
-    public record CreateMessageDto(int ReceiverId, string? Content, IFormFileCollection Images) : IRequest<MessageResponseDto>;
+    public record CreateMessageDto(int ReceiverId, string? Content, IFormFileCollection Medias) : IRequest<MessageResponseDto>;
 }

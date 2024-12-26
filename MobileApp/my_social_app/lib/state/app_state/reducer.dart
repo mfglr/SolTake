@@ -12,7 +12,6 @@ import 'package:my_social_app/state/app_state/home_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/reducers.dart';
-import 'package:my_social_app/state/app_state/message_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
@@ -52,7 +51,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   createCommentState: createCommentStateReducers(prev.createCommentState,action),
   notificationEntityState: notificationEntityStateReducers(prev.notificationEntityState,action),
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
-  messageImageEntityState: messageImageEntityReducers(prev.messageImageEntityState,action),
   messageHomePageState: messageHomePageReducers(prev.messageHomePageState,action),
   userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
   followEntityState: followEntityReducers(prev.followEntityState,action),

@@ -1,4 +1,4 @@
-import 'package:camera/camera.dart';
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -160,7 +160,7 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState updateBiography(int userId,String biography)
     => UserEntityState(entities: updateOne(entities[userId]?.updateBiography(biography)));
 
-  UserEntityState addUploadingImage(int userId,XFile file)
+  UserEntityState addUploadingImage(int userId,AppFile file)
     => UserEntityState(entities: updateOne(entities[userId]?.addUploadingImage(file)));
   UserEntityState changeUploadingImageStatus(int userId,UploadingFileStatus status)
     => UserEntityState(entities: updateOne(entities[userId]?.changeUploadingImageStatus(status)));

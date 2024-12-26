@@ -26,6 +26,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
   late Future<void> _initializeControllerFuture;
   bool _videoState = false;
   int _duration = 0;
+  late bool _isCameraDirectionChangeable;
  
   void _setCamera(CameraLensDirection lensDirection){
     final cameraDescription = widget.cameras.where((e) => e.lensDirection == lensDirection).firstOrNull;
@@ -91,6 +92,10 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
 
   @override
   void initState() {
+    _isCameraDirectionChangeable = 
+      ![CameraLensDirection.back,CameraLensDirection.front]
+        .any((cld) => !widget.cameras.any((cm) => cld == cm.lensDirection));
+
     _controller = CameraController(widget.cameras.first, ResolutionPreset.max);
     _initializeControllerFuture = _controller.initialize();
     super.initState();
@@ -171,7 +176,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
           if(!_controller.value.isRecordingVideo)
             const CameraCloseButton(),
           _getFloatActionButton(),
-          if(!_controller.value.isRecordingVideo)
+          if(!_controller.value.isRecordingVideo && _isCameraDirectionChangeable)
             ChangeCameraButton(onPressed: _changeCameraDirection,)
         ],
       )

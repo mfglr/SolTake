@@ -15,8 +15,8 @@ namespace MySocailApp.Application.Queries.MessageAggregate
         public bool IsEdited { get; private set; }
         public string? Content { get; private set; }
         public MessageState State { get; private set; }
-        public int NumberOfImages { get; private set; }
-        public MessageResponseDto(int id, DateTime createdAt, DateTime? updatedAt, bool isOwner, string userName, int conversationId, int senderId, int receiverId, bool isEdited, string? content, MessageState state, int numberOfImages)
+        public IEnumerable<MessageMultimediaResponseDto> Medias { get; private set; }
+        public MessageResponseDto(int id, DateTime createdAt, DateTime? updatedAt, bool isOwner, string userName, int conversationId, int senderId, int receiverId, bool isEdited, string? content, MessageState state, IEnumerable<MessageMultimediaResponseDto> medias)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -29,7 +29,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate
             IsEdited = isEdited;
             Content = content;
             State = state;
-            NumberOfImages = numberOfImages;
+            Medias = medias;
         }
 
         private MessageResponseDto() { }

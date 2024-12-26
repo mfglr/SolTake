@@ -11,31 +11,36 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
             => query
                 .Join(
                     context.Accounts,
-                    message => message.ReceiverId,
+                    message => message.SenderId == accountId ? message.ReceiverId : message.SenderId,
                     account => account.Id,
-                    (message,account) => new { message, ReceiverUserName = account.UserName }
-                )
-                .Join(
-                    context.Accounts,
-                    join => join.message.SenderId,
-                    account => account.Id,
-                    (join,account) => new MessageResponseDto(
-                        join.message.Id,
-                        join.message.CreatedAt,
-                        join.message.UpdatedAt,
-                        join.message.SenderId == accountId,
-                        join.message.SenderId == accountId ? join.ReceiverUserName.Value : account.UserName.Value,
-                        join.message.SenderId == accountId ? join.message.ReceiverId : join.message.SenderId,
-                        join.message.SenderId,
-                        join.message.ReceiverId,
-                        join.message.IsEdited,
-                        join.message.Content.Value,
-                        join.message.Viewers.Count != 0
-                            ? MessageState.Viewed 
-                            : join.message.Receivers.Count != 0 
-                                ? MessageState.Reached 
+                    (message, account) => new MessageResponseDto(
+                        message.Id,
+                        message.CreatedAt,
+                        message.UpdatedAt,
+                        message.SenderId == accountId,
+                        account.UserName.Value,
+                        account.Id,
+                        message.SenderId,
+                        message.ReceiverId,
+                        message.IsEdited,
+                        message.Content.Value,
+                        message.Viewers.Count != 0
+                            ? MessageState.Viewed
+                            : message.Receivers.Count != 0
+                                ? MessageState.Reached
                                 : MessageState.Created,
-                        join.message.Medias.Count
+                        message.Medias.Select(
+                            media => new MessageMultimediaResponseDto(
+                                media.ContainerName,
+                                media.BlobName,
+                                media.BlobNameOfFrame,
+                                media.Size,
+                                media.Height,
+                                media.Width,
+                                media.Duration,
+                                media.MultimediaType
+                            )
+                        )
                     )
                 );
     }

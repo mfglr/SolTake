@@ -1,11 +1,11 @@
 import 'package:app_file/app_file.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia.dart';
+import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_multimedia_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -23,7 +23,7 @@ class QuestionState{
   final int examId;
   final int subjectId;
   final int? topicId;
-  final Iterable<QuestionMultimediaState> medias;
+  final Iterable<Multimedia> medias;
   final bool isLiked;
   final bool isSaved;
   final bool isOwner;
@@ -78,7 +78,7 @@ class QuestionState{
     int? newExamId,
     int? newSubjectId,
     int? newTopicId,
-    Iterable<QuestionMultimediaState>? newMedias,
+    Iterable<Multimedia>? newMedias,
     bool? newIsLiked,
     bool? newIsSaved,
     int? newNumberOfLikes,

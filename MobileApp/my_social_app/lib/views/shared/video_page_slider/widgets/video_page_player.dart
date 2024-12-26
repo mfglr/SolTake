@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/views/shared/video_page_slider/widgets/video_play_button.dart';
 import 'package:my_social_app/views/shared/video_page_slider/widgets/video_progress_bar.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPagePlayer extends StatefulWidget {
-  final MultimediaState state;
+  final Multimedia state;
   final Widget? child;
   final void Function()? onDoubleTap;
   const VideoPagePlayer({

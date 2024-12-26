@@ -1,4 +1,5 @@
-import 'package:camera/camera.dart';
+import 'package:app_file/app_file.dart';
+import 'package:app_file_slider/app_file_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
@@ -8,11 +9,11 @@ import 'package:my_social_app/views/message/pages/create_message_images_page/wid
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateMessageImagesPage extends StatefulWidget {
-  final Iterable<XFile> images;
+  final Iterable<AppFile> medias;
   final int receiverId;
   const CreateMessageImagesPage({
     super.key,
-    required this.images,
+    required this.medias,
     required this.receiverId,
   });
 
@@ -21,39 +22,39 @@ class CreateMessageImagesPage extends StatefulWidget {
 }
 
 class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
-  late Iterable<XFile> _images;
+  late Iterable<AppFile> _medias;
 
   bool _validateNumberOfImages(){
-    if(_images.length >= 2){
+    if(_medias.length >= 2){
       ToastCreator.displayError(AppLocalizations.of(context)!.create_message_images_page_image_count_error);
       return false;
     }
     return true;
   }
   
-  void _addImages(Iterable<XFile> images){
-    if(_images.length + images.length > 2){
+  void _addImages(Iterable<AppFile> images){
+    if(_medias.length + images.length > 2){
       ToastCreator.displayError(AppLocalizations.of(context)!.create_message_images_page_image_count_error);
     }
-    setState(() { _images = [..._images,...images].take(2); });
+    setState(() { _medias = [..._medias,...images].take(2); });
   }
 
-  void _removeImage(XFile image){
-    setState((){ _images = _images.where((e) => e != image); });
-    if(_images.isEmpty){
+  void _removeImage(AppFile image){
+    setState((){ _medias = _medias.where((e) => e != image); });
+    if(_medias.isEmpty){
       Navigator.of(context).pop();
     }
   }
 
   void _createMessage(String? content){
     final store = StoreProvider.of<AppState>(context,listen: false);
-    store.dispatch(CreateMessageWithImagesAction(receiverId: widget.receiverId, content: content, images: _images));
+    store.dispatch(CreateMessageWithImagesAction(receiverId: widget.receiverId, content: content, images: _medias));
     Navigator.of(context).pop();
   }
 
   @override
   void initState() {
-    _images = widget.images.take(2);
+    _medias = widget.medias.take(2);
     super.initState();
   }
 
@@ -64,12 +65,12 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
       body: Column(
         children:[
           
-          // Expanded(
-          //   child: AppImageSlider(
-          //     images: _images,
-          //     removeImage: _removeImage
-          //   ),
-          // ),
+          Expanded(
+            child: AppFileSlider(
+              medias: _medias,
+              onRemoved: _removeImage
+            ),
+          ),
           
           Padding(
             padding: const EdgeInsets.only(left: 8,right: 8,bottom: 15),
@@ -81,7 +82,6 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
               validateNumberOfImages: _validateNumberOfImages,
             ),
           )
-          
         ]
       ),
     );

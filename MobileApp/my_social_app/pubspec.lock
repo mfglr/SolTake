@@ -1014,6 +1014,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  multimedia:
+    dependency: "direct main"
+    description:
+      path: "../flutter_and_dart_packages/multimedia"
+      relative: true
+    source: path
+    version: "0.0.1"
   multimedia_grid:
     dependency: "direct main"
     description:
@@ -1028,13 +1035,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  multimedia_state:
-    dependency: "direct main"
-    description:
-      path: "../flutter_and_dart_packages/multimedia_state"
-      relative: true
-    source: path
-    version: "1.0.0"
   nested:
     dependency: transitive
     description:

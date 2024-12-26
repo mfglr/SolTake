@@ -14,7 +14,6 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_entit
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
-import 'package:my_social_app/state/app_state/message_image_entity_state/message_image_entity_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
@@ -60,7 +59,6 @@ class AppState{
   final CreateCommentState createCommentState;
   final NotificationEntityState notificationEntityState;
   final MessageEntityState messageEntityState;
-  final MessageImageEntityState messageImageEntityState;
   final MessageHomePageState messageHomePageState;
   final UserSearchEntityState userSearchEntityState;
   final QuestionEntityState questionEntityState;
@@ -90,7 +88,6 @@ class AppState{
     required this.createCommentState,
     required this.notificationEntityState,
     required this.messageEntityState,
-    required this.messageImageEntityState,
     required this.messageHomePageState,
     required this.userSearchEntityState,
     required this.followEntityState,
@@ -125,7 +122,6 @@ class AppState{
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
     messageEntityState: const MessageEntityState(entities: {}),
-    messageImageEntityState: const MessageImageEntityState(entities: {}),
     messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),

@@ -1,4 +1,4 @@
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia_status.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/user_service.dart';
@@ -16,7 +16,7 @@ void updateCurrentUserImageMiddleware(Store<AppState> store,action,NextDispatche
         action.file,
         (rate){ store.dispatch(ChangeUploadingUserImageRateAction(userId: action.userId, rate: rate)); }
       )
-      .then((_) => action.file.readAsBytes())
+      .then((_) => action.file.file.readAsBytes())
       .then((image){
         store.dispatch(LoadUserImageSuccessAction(userId: action.userId, image: image));
         store.dispatch(ChangeProfileImageStatusAction(userId: action.userId,value: true));

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -41,7 +40,7 @@ class UploadingUserImageModal extends StatelessWidget {
               child: Image.file(
                 width: MediaQuery.of(context).size.width * 3 / 4,
                 height: MediaQuery.of(context).size.width * 3 / 4,
-                File(state.file.path),
+                File(state.file.file.path),
                 fit: BoxFit.cover,
               ),
             ),

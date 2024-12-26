@@ -13,26 +13,31 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         public int SenderId { get; private set; }
         public int ReceiverId { get; private set; }
         public MessageContent? Content { get; private set; }
+        
+        public int NumberOfMedias { get; private set; }
         private readonly List<MessageMultimedia> _medias = [];
         public IReadOnlyList<MessageMultimedia> Medias => _medias;
 
         private Message() { }
-        public Message(int senderId, int receiverId, MessageContent? content, IEnumerable<MessageMultimedia>? images)
+        public Message(int senderId, int receiverId, MessageContent? content, IEnumerable<MessageMultimedia>? medias)
         {
             if (SenderId == receiverId)
                 throw new SelfMessagingException();
 
-            if (content == null && (images == null || !images.Any()))
+            if (content == null && (medias == null || !medias.Any()))
                 throw new MessageContentRequiredException();
 
-            if (images != null && images.Count() > MaxNumberOfMessageImage)
-                throw new TooManyMessageImagesException();
+            if (medias != null && medias.Count() > MaxNumberOfMessageImage)
+                throw new TooManyMessageMediasException();
 
             SenderId = senderId;
             ReceiverId = receiverId;
             Content = content;
-            if (images != null)
-                _medias.AddRange(images);
+            if (medias != null)
+            {
+                NumberOfMedias = medias.Count();
+                _medias.AddRange(medias);
+            }
         }
         public void Create()
         {
@@ -48,7 +53,7 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         {
             if (receiverId != ReceiverId)
                 throw new PermissionDeniedToChangeStateOfMessageException();
-            if (_receivers.Any(x => x.AppUserId == receiverId))
+            if (_receivers.Any(x => x.UserId == receiverId))
                 throw new MessageAlreadyMarktedAsReceivedException();
             _receivers.Add(MessageUserReceive.Create(receiverId));
             AddDomainEvent(new MessageMarkedAsReceivedDomainEvent(this));
@@ -57,7 +62,7 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         {
             if (viewerId != ReceiverId)
                 throw new PermissionDeniedToChangeStateOfMessageException();
-            if (_viewers.Any(x => x.AppUserId == viewerId))
+            if (_viewers.Any(x => x.UserId == viewerId))
                 throw new MessageAlreadyMarkedAsViewedException();
             _viewers.Add(MessageUserView.Create(viewerId));
             AddDomainEvent(new MessageMarkedAsViewedDomainEvent(this));

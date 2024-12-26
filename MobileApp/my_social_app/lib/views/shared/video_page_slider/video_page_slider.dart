@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/views/shared/video_page_slider/widgets/video_page_player.dart';
 
 class VideoPageSlider extends StatefulWidget {
-  final Iterable<MultimediaState> videos;
+  final Iterable<Multimedia> videos;
   final Widget? child;
   final void Function() onNext;
   const VideoPageSlider({

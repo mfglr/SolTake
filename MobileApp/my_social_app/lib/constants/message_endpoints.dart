@@ -1,5 +1,5 @@
 const getMessagesByUserIdEndpoint = "GetMessagesByUserId";
 const getConversationsEndpoint = "GetConversations";
 const getUnviewedMessagesEndpoint = "GetUnviewedMessages";
-const getMessageImageEndpoint = "GetMessageImage";
+const getMessageMediaEndpoint = "GetMessageMedia";
 const getMessageByIdEndpoint = "GetMessageById";

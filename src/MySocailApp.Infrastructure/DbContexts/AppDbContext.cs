@@ -37,6 +37,10 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
         public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
         public DbSet<QuestionUserLikeNotification> QuestionUserLikeNotifications { get; private set; }
+        public DbSet<Exam> Exams { get; private set; }
+        public DbSet<Subject> Subjects { get; private set; }
+        public DbSet<SubjectTopic> SubjectTopics { get; private set; }
+        public DbSet<Topic> Topics { get; private set; }
 
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<SolutionUserVote> SolutionUserVotes { get; private set; }
@@ -48,19 +52,11 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<CommentUserLikeNotification> CommentUserLikeNotifications { get; private set; }
         public DbSet<CommentUserTag> CommentUserTags { get; private set; }
 
-        public DbSet<Exam> Exams { get; private set; }
-
-        public DbSet<Subject> Subjects { get; private set; }
-        public DbSet<SubjectTopic> SubjectTopics { get; private set; }
-
-        public DbSet<Topic> Topics { get; private set; }
-
         public DbSet<Notification> Notifications { get; private set; }
         public DbSet<NotificationConnection> NotificationConnections { get; private set; }
 
         public DbSet<Message> Messages { get; private set; }
         public DbSet<MessageConnection> MessageConnections { get; private set; }
-        public DbSet<MessageResponseDto> MessageResponseDtos { get; private set; }
 
         public DbSet<AppVersion> AppVersions { get; private set; }
 

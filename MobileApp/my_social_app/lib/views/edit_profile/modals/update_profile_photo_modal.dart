@@ -1,6 +1,6 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -10,6 +10,7 @@ import 'package:my_social_app/state/app_state/user_image_entity_state/actions.da
 import 'package:my_social_app/views/edit_profile/modals/uploading_user_image_modal.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class UpdateProfilePhotoModal extends StatelessWidget {
   const UpdateProfilePhotoModal({super.key});
@@ -72,7 +73,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                       final store = StoreProvider.of<AppState>(context,listen: false);
                                       store.dispatch(UpdateUserImageAction(
                                         userId: store.state.accountState!.id,
-                                        file: image as XFile
+                                        file: image as AppFile
                                       ));
                                       Navigator.of(context).pop();
                                       _showUplodingUserImageModal(context);
@@ -91,8 +92,8 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                 shape:WidgetStateProperty.all(const CircleBorder()) 
                               ),
                               onPressed: (){
-                                ImagePicker()
-                                  .pickImage(source: ImageSource.gallery)
+                                TakeMediaFromGalleryService()
+                                  .getImage()
                                   .then((image){
                                     if(image != null && context.mounted){
                                       final store = StoreProvider.of<AppState>(context,listen: false);

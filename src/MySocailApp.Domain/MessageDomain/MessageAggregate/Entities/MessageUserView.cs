@@ -5,9 +5,9 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
     public class MessageUserView : Entity
     {
         public int MessageId { get; private set; }
-        public int AppUserId { get; private set; }
+        public int UserId { get; private set; }
 
-        private MessageUserView(int appUserId) => AppUserId = appUserId;
-        public static MessageUserView Create(int appUserId) => new(appUserId) { CreatedAt = DateTime.UtcNow };
+        private MessageUserView(int userId) => UserId = userId;
+        public static MessageUserView Create(int userId) => new(userId) { CreatedAt = DateTime.UtcNow };
     }
 }

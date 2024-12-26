@@ -1,15 +1,18 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:multimedia_state/multimedia_state.dart';
+import 'package:multimedia/models/multimedia.dart';
+import 'package:multimedia/models/multimedia_status.dart';
+import 'package:multimedia/models/multimedia_type.dart';
 
 class MultimediaGrid extends StatefulWidget {
-  final MultimediaState? state;
+  final Multimedia? state;
   final String blobServiceUrl;
   final String noMediaPath;
   final String notFoundMediaPath;
   final void Function()? onTap;
   final Map<String,String>? headers;
+  final double aspectRatio;
 
   const MultimediaGrid({
     super.key,
@@ -18,7 +21,8 @@ class MultimediaGrid extends StatefulWidget {
     required this.noMediaPath,
     required this.notFoundMediaPath,
     this.onTap,
-    this.headers
+    this.headers,
+    this.aspectRatio = 1
   });
 
   @override
@@ -71,7 +75,7 @@ class _MultimediaGridState extends State<MultimediaGrid> {
         alignment: AlignmentDirectional.center,
         children: [
           AspectRatio(
-            aspectRatio: 1,
+            aspectRatio: widget.aspectRatio,
             child: Builder(
               builder: (context) {
                 if(widget.state == null) return Image.asset(widget.noMediaPath);

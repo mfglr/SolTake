@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 part 'message.g.dart';
 
-@JsonSerializable()
 @immutable
+@JsonSerializable()
 class Message{
   final int id;
   final DateTime createdAt;
@@ -17,7 +18,7 @@ class Message{
   final bool isEdited;
   final String? content; 
   final int state;
-  final int numberOfImages;
+  final Iterable<Multimedia> medias;
   
   const Message({
     required this.id,
@@ -31,7 +32,7 @@ class Message{
     required this.isEdited,
     required this.content,
     required this.state,
-    required this.numberOfImages
+    required this.medias
   });
 
 
@@ -51,6 +52,6 @@ class Message{
         isEdited: isEdited,
         content: content,
         state: state,
-        numberOfImages: numberOfImages,
+        medias: medias
       );
 }

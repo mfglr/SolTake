@@ -17,52 +17,10 @@ namespace MySocailApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("MySocailApp.Application.Queries.MessageAggregate.MessageResponseDto", b =>
-                {
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ConversationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsEdited")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOwner")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("NumberOfImages")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("MessageResponseDtos");
-                });
 
             modelBuilder.Entity("MySocailApp.Domain.AccountDomain.AccountAggregate.Entities.Account", b =>
                 {
@@ -478,6 +436,9 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
+                    b.Property<int>("NumberOfMedias")
+                        .HasColumnType("int");
+
                     b.Property<int>("ReceiverId")
                         .HasColumnType("int");
 
@@ -502,6 +463,9 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<string>("BlobName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobNameOfFrame")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContainerName")
@@ -541,9 +505,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -552,6 +513,9 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -581,9 +545,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -592,6 +553,9 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -11859,8 +11823,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Content");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("MessageId");
 

@@ -4,17 +4,16 @@ using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.MessageAggregate.GetConversations
 {
-    public class GetConversationsHandler(IMessageQueryRepository messageQueryRepository, IAccessTokenReader tokenReader) : IRequestHandler<GetConversationsDto, List<MessageResponseDto>>
+    public class GetConversationsHandler(IMessageQueryRepository messageQueryRepository, IAccessTokenReader tokenReader) : IRequestHandler<GetConversationsDto, IEnumerable<MessageResponseDto>>
     {
         private readonly IAccessTokenReader _tokenReader = tokenReader;
         private readonly IMessageQueryRepository _messageQueryRepository = messageQueryRepository;
 
-        public Task<List<MessageResponseDto>> Handle(GetConversationsDto request, CancellationToken cancellationToken)
-            => _messageQueryRepository
-                .GetConversationsAsync(
-                    _tokenReader.GetRequiredAccountId(),
-                    request,
-                    cancellationToken
-                );
+        public async Task<IEnumerable<MessageResponseDto>> Handle(GetConversationsDto request, CancellationToken cancellationToken)
+        {
+            var a = await _messageQueryRepository.GetConversationsAsync(_tokenReader.GetRequiredAccountId(),cancellationToken);
+
+            return a;
+        }
     }
 }

@@ -1,5 +1,5 @@
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_multimedia_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
 class SolutionState{
@@ -19,7 +19,7 @@ class SolutionState{
   final Pagination downvotes;
   final int numberOfDownvotes;
   final int state;
-  final Iterable<SolutionMultimediaState> medias;
+  final Iterable<Multimedia> medias;
   final int numberOfComments;
   final Pagination comments;
 
@@ -57,7 +57,7 @@ class SolutionState{
     bool? newIsDownvoted,
     int? newNumberOfDownvotes,
     Pagination? newComments,
-    Iterable<SolutionMultimediaState>? newMedias,
+    Iterable<Multimedia>? newMedias,
     int? newNumberOfComments,
     int? newState,
     Pagination? newUpvotes,

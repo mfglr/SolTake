@@ -30,9 +30,14 @@ namespace MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices
             };
 
             var result = await handler.ValidateTokenAsync(token, validationParameters);
-            var id = int.Parse((result.Claims.First(x => x.Key == ClaimTypes.NameIdentifier).Value as string)!);
+            var idString = result.Claims.First(x => x.Key == ClaimTypes.NameIdentifier).Value as string;
+            
+            if(!result.IsValid || idString == null)
+                throw new InvalidRefreshTokenException();
 
-            if (!result.IsValid || id != account.Id)
+            var id = int.Parse(idString);
+
+            if (id != account.Id)
                 throw new InvalidRefreshTokenException();
         }
     }

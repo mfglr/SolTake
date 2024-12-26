@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Interfaces;
 
 namespace MySocailApp.Application.Commands.MessageAggregate.RemoveMessage
 {

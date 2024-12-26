@@ -1,12 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:circles_pagination/circles_pagination.dart';
 import 'package:flutter/material.dart';
+import 'package:multimedia/models/multimedia.dart';
+import 'package:multimedia/models/multimedia_type.dart';
 import 'package:multimedia_slider/widgets/multimedia_image_player.dart';
 import 'package:multimedia_slider/widgets/multimedia_video_player.dart';
-import 'package:multimedia_state/multimedia_state.dart';
 
 class MultimediaSlider extends StatefulWidget {
-  final Iterable<MultimediaState> medias;
+  final Iterable<Multimedia> medias;
   final String blobServiceUrl;
   final Map<String,String>? headers;
   final String notFoundMediaPath;
@@ -49,16 +50,16 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
         CarouselSlider(
           carouselController: _controller,
           items: widget.medias
-            .map((e){
-              if(e.multimediaType == MultimediaType.video){
+            .map((media){
+              if(media.multimediaType == MultimediaType.video){
                 return MultimediaVideoPlayer(
-                  state: e,
+                  media: media,
                   blobServiceUrl: widget.blobServiceUrl,
                   headers: widget.headers,
                 );
               }
               return MultimediaImagePlayer(
-                state: e,
+                media: media,
                 notFoundImagePath: widget.notFoundMediaPath,
                 blobServiceUrl: widget.blobServiceUrl,
                 headers: widget.headers,

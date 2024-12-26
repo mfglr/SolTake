@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:camera/camera.dart';
+import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
@@ -31,10 +31,10 @@ class UserService{
     return completer.future;
   }
 
-  Future<HttpClientRequest> _createUpdateImageRequest(XFile file, void Function(double) callback) async{
+  Future<HttpClientRequest> _createUpdateImageRequest(AppFile file, void Function(double) callback) async{
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
-    request.files.add(await MultipartFile.fromPath("file",file.path));
+    request.files.add(await MultipartFile.fromPath("file",file.file.path));
 
     var stream = request.finalize();
     var length = request.contentLength;
@@ -58,7 +58,7 @@ class UserService{
     );
     return r;
   }
-  Future<void> updateImage(XFile file,void Function(double) callback) async {
+  Future<void> updateImage(AppFile file,void Function(double) callback) async {
     var request = await _createUpdateImageRequest(file,callback);
     var response = await request.close();
     if(response.statusCode >= 400){
