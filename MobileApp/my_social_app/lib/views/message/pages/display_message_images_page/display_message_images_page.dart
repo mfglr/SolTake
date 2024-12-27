@@ -46,7 +46,8 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                   medias: widget.message.medias,
                   blobServiceUrl: AppClient.blobService,
                   notFoundMediaPath: noMediaAssetPath,
-                  noMediaPath: noMediaAssetPath
+                  noMediaPath: noMediaAssetPath,
+                  activeIndex: widget.activeIndex,
                 ),
               ],
             ),
@@ -103,7 +104,6 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                   child: MessageContent(content: widget.message.content!)
                 )
               ),
-              
           ],
         ),
       ),

@@ -11,6 +11,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart'
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_text_field.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
+import 'package:my_social_app/views/message/pages/display_message_images_page/display_message_images_page.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
@@ -32,32 +33,36 @@ class _ConversationPageState extends State<ConversationPage>{
   late final void Function() _onScrollBottom;
 
   Iterable<int> _selectedIds = [];
-  void _onLongPressed(int messageId){
+  void _onLongPressed(MessageState message) 
+    => setState(() { _selectedIds = [..._selectedIds, message.id]; });
+
+  void _onPressed(MessageState message,{int activeIndex = 0}){
     if(_selectedIds.isEmpty){
-      setState(() { _selectedIds = [..._selectedIds, messageId]; });
+      Navigator
+        .of(context)
+        .push(
+          MaterialPageRoute(
+            builder: (context) => DisplayMessageImagesPage(
+              message: message,
+              activeIndex: activeIndex
+            )
+          )
+        );
     }
-  }
-  void _onPressed(int messageId){
-    if(_selectedIds.isNotEmpty){
-      if(_selectedIds.any((e) => e == messageId)){
-        setState(() { _selectedIds = _selectedIds.where((e) => e != messageId); });
+    else{
+      if(_selectedIds.any((e) => e == message.id)){
+        setState(() { _selectedIds = _selectedIds.where((e) => e != message.id); });
       }
       else{
-        setState(() { _selectedIds = [..._selectedIds, messageId]; });
+        setState(() { _selectedIds = [..._selectedIds, message.id]; });
       }
     }
   }
-  void _clearAllSelectedIds(){
-    setState(() { _selectedIds = []; });
-  }
+  void _clearAllSelectedIds() => setState(() { _selectedIds = []; });
 
   int _numberOfNewMessages = 0;
-  void _initNumberOfNewMessages(){
-    setState(() { _numberOfNewMessages = 0; });
-  }
-  void _increaseNumberOfNewMessages(){
-    setState(() { _numberOfNewMessages++; });
-  }
+  void _initNumberOfNewMessages() => setState(() { _numberOfNewMessages = 0; });
+  void _increaseNumberOfNewMessages() => setState(() { _numberOfNewMessages++; });
 
   @override
   void initState() {

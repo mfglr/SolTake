@@ -12,6 +12,7 @@ class MultimediaSlider extends StatefulWidget {
   final Map<String,String>? headers;
   final String notFoundMediaPath;
   final String noMediaPath;
+  final int activeIndex;
   
   const MultimediaSlider({
     super.key,
@@ -19,7 +20,8 @@ class MultimediaSlider extends StatefulWidget {
     required this.blobServiceUrl,
     required this.notFoundMediaPath,
     required this.noMediaPath,
-    this.headers
+    this.headers,
+    this.activeIndex = 0
   });
 
   @override
@@ -28,7 +30,16 @@ class MultimediaSlider extends StatefulWidget {
 
 class _MultimediaSliderState extends State<MultimediaSlider> {
   final CarouselSliderController _controller = CarouselSliderController();
-  int _index = 0;
+  late int _index;
+
+  @override
+  void initState() {
+    _index = widget.activeIndex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.jumpToPage(_index);  
+    });
+    super.initState();
+  }
 
   double _calculateHeight(){
     double minAspectRatio = double.maxFinite;

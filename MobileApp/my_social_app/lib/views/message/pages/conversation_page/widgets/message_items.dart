@@ -12,8 +12,8 @@ class MessageItems extends StatefulWidget {
   final ScrollController scrollController;
   final void Function() onScrollTop;
   final int? numberOfNewMessages;
-  final void Function(int messageId) onPressedMessageItem;
-  final void Function(int messageId) onLongPressedMessageItem;
+  final void Function(MessageState message,{int activeIndex}) onPressedMessageItem;
+  final void Function(MessageState message) onLongPressedMessageItem;
   final Iterable<int> selectedMessageIds;
 
   const MessageItems({
@@ -50,25 +50,27 @@ class _MessageItemsState extends State<MessageItems> {
  
 
   Widget _generateMessageItem(MessageState message) => 
-    Container(
-      color: widget.selectedMessageIds.any((e) => e == message.id) ? Colors.black.withOpacity(0.1) : null,
-      margin: EdgeInsets.only(bottom: widget.spaceBottom),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: message.isOwner ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 3 / 4,
-            child: MessageItem(
-              key: ValueKey(message.id),
-              selectedMessageIds: widget.selectedMessageIds,
-              onPressedMesssageItem: widget.onPressedMessageItem,
-              onLongPressedMessageItem: widget.onLongPressedMessageItem,
-              message: message,
+    GestureDetector(
+      onTap: () => widget.onPressedMessageItem(message),
+      onLongPress: () => widget.onLongPressedMessageItem(message),
+      child: Container(
+        color: widget.selectedMessageIds.any((e) => e == message.id) ? Colors.black.withAlpha(102) : null,
+        margin: EdgeInsets.only(bottom: widget.spaceBottom),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: message.isOwner ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 3.45 / 4,
+              child: MessageItem(
+                key: ValueKey(message.id),
+                onPressedMessageItem: widget.onPressedMessageItem,
+                message: message,
+              )
             )
-          )
-        ],
-      )
+          ],
+        )
+      ),
     );
 
   @override

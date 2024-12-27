@@ -5,9 +5,11 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
+import 'package:my_social_app/main.dart';
 import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/models/user_search.dart';
@@ -34,7 +36,7 @@ class UserService{
   Future<HttpClientRequest> _createUpdateImageRequest(AppFile file, void Function(double) callback) async{
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
-    request.files.add(await MultipartFile.fromPath("file",file.file.path));
+    request.files.add(await MultipartFile.fromPath("file",file.file.path,contentType: MediaType.parse(file.contentType)));
 
     var stream = request.finalize();
     var length = request.contentLength;
@@ -43,7 +45,8 @@ class UserService{
     r.headers.set(HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);
     r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
     r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
-
+    r.headers.set("Client-Version", packageInfo.version);
+    
     var byteCount = 0;
     await r.addStream(
       stream.transform(
