@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/views/solution/pages/display_video_solutions_page.dart';
+import 'package:my_social_app/views/solution/pages/display_question_video_solutions.dart';
 
 class DisplayVideoSolutionsButton extends StatelessWidget {
   final QuestionState question;
@@ -15,7 +15,7 @@ class DisplayVideoSolutionsButton extends StatelessWidget {
       onPressed: () =>
         Navigator
           .of(context)
-          .push(MaterialPageRoute(builder: (context) => DisplayVideoSolutionsPage(questionId: question.id))),
+          .push(MaterialPageRoute(builder: (context) => DisplayQuestionVideoSolutions(questionId: question.id))),
       style: ButtonStyle(
         padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),

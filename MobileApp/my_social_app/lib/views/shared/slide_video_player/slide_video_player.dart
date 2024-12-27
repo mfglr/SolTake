@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/views/shared/video_page_slider/widgets/video_play_button.dart';
-import 'package:my_social_app/views/shared/video_page_slider/widgets/video_progress_bar.dart';
+import 'package:my_social_app/views/shared/slide_video_player/video_play_button.dart';
+import 'package:my_social_app/views/shared/slide_video_player/video_progress_bar.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPagePlayer extends StatefulWidget {
-  final Multimedia state;
+class SlideVideoPlayer extends StatefulWidget {
+  final Multimedia media;
   final Widget? child;
-  final void Function()? onDoubleTap;
-  const VideoPagePlayer({
+  final String baseBlobUrl;
+  final Map<String,String>? headers;
+  const SlideVideoPlayer({
     super.key,
-    required this.state,
+    required this.media,
+    required this.baseBlobUrl,
+    this.headers,
     this.child,
-    this.onDoubleTap
   });
 
   @override
-  State<VideoPagePlayer> createState() => _VideoPagePlayerState();
+  State<SlideVideoPlayer> createState() => _SlideVideoPlayerState();
 }
 
-class _VideoPagePlayerState extends State<VideoPagePlayer> {
+class _SlideVideoPlayerState extends State<SlideVideoPlayer> {
   late final VideoPlayerController _controller;
   late final Uri _url;
-  final AppClient _appClient = AppClient();
 
   bool _displayVolumeState = false;
   bool _isVolumeOpen = true;
@@ -64,8 +64,8 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
 
   @override
   void initState() {
-    _url = _appClient.generateUri("blobs/${widget.state.containerName}/${widget.state.blobName}");
-    _controller = VideoPlayerController.networkUrl(_url, httpHeaders: _appClient.getHeader());
+    _url = Uri.parse("${widget.baseBlobUrl}/${widget.media.containerName}/${widget.media.blobName}");
+    _controller = VideoPlayerController.networkUrl(_url, httpHeaders: widget.headers ?? {});
     _controller.setLooping(true);
     _controller.initialize().then((_) => _controller.play().then((_) => setState(() {})));
     super.initState();
@@ -81,13 +81,12 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _isVolumeOpen ? volumeOff : volumeUp,
-      onDoubleTap: widget.onDoubleTap,
       child: Stack(
         alignment: AlignmentDirectional.center,
         fit: StackFit.loose,
         children: [
           AspectRatio(
-            aspectRatio: widget.state.width / widget.state.height,
+            aspectRatio: widget.media.width / widget.media.height,
             child: VideoPlayer(_controller)
           ),
           Positioned(
@@ -103,7 +102,7 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
                       Expanded(
                         child: VideoProgressBar(
                           controller: _controller,
-                          duration: Duration(seconds: widget.state.duration.round())
+                          duration: Duration(seconds: widget.media.duration.round())
                         ),
                       ),
                       Container(
@@ -119,7 +118,7 @@ class _VideoPagePlayerState extends State<VideoPagePlayer> {
           if(_displayVolumeState)
             Container(
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.4),
+                color: Colors.black.withAlpha(102),
                 shape: BoxShape.circle
               ),
               child: Padding(

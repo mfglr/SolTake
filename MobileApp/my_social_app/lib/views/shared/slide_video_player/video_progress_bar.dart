@@ -40,8 +40,8 @@ class _VideoProgressBarState extends State<VideoProgressBar> {
     return ProgressBar(
       timeLabelLocation: TimeLabelLocation.none,
       progressBarColor: Colors.white,
-      bufferedBarColor: Colors.black.withOpacity(0.5),
-      baseBarColor: Colors.black.withOpacity(0.3),
+      bufferedBarColor: Colors.black.withAlpha(128),
+      baseBarColor: Colors.black.withAlpha(77),
       onDragUpdate: seekTo,
       onDragStart: seekTo,
       thumbRadius: 0,
