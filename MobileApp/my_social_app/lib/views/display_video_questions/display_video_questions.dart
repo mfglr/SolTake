@@ -12,7 +12,7 @@ class DisplayVideoQuestions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.3),
+      backgroundColor: Colors.black.withAlpha(77),
       body: StoreConnector<AppState,Iterable<QuestionState>>(
         onInit: (store) => getNextPageIfNoPage(store,store.state.videoQuestions, const NextVideoQuestionsAction()),
         converter: (store) => store.state.selectVideoQuestions,

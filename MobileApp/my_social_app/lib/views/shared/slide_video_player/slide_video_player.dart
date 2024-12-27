@@ -83,17 +83,23 @@ class _SlideVideoPlayerState extends State<SlideVideoPlayer> {
       onTap: _isVolumeOpen ? volumeOff : volumeUp,
       child: Stack(
         alignment: AlignmentDirectional.center,
-        fit: StackFit.loose,
         children: [
-          AspectRatio(
-            aspectRatio: widget.media.width / widget.media.height,
-            child: VideoPlayer(_controller)
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              AspectRatio(
+                aspectRatio: widget.media.aspectRatio,
+                child: VideoPlayer(_controller)
+              ),
+            ],
           ),
           Positioned(
-            bottom: 5,
+            bottom: 15,
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.95,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   if(widget.child != null)
                     widget.child!,
