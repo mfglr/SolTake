@@ -33,7 +33,7 @@ Future loadEnvironmentVariables() async {
 
 void addTimeAgo(){
   timeago.setLocaleMessages('tr', timeago.TrMessages());
-  timeago.setLocaleMessages('tr', timeago.TrShortMessages());
+  timeago.setLocaleMessages('tr_short', timeago.TrShortMessages());
 }
 
 late final PackageInfo packageInfo;

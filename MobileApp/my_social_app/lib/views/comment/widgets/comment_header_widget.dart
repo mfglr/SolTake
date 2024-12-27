@@ -8,9 +8,9 @@ import 'package:my_social_app/views/comment/widgets/buttons/display_replies_butt
 import 'package:my_social_app/views/comment/widgets/buttons/hide_replies_button.dart';
 import 'package:my_social_app/views/comment/widgets/buttons/reply_comment_button.dart';
 import 'package:my_social_app/views/comment/widgets/comment_popup_menu.dart';
+import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class CommentHeaderWidget extends StatelessWidget {
   final CommentState comment;
@@ -101,15 +101,12 @@ class CommentHeaderWidget extends StatelessWidget {
                         
                       Container(
                         margin: const EdgeInsets.only(left: 5),
-                        child: Text(
-                          timeago.format(
-                            comment.createdAt,
-                            locale: 'en_short'
-                          ),
+                        child: AppDateWidget(
+                          dateTime: comment.createdAt,
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.bold
-                          ),
+                          )
                         ),
                       ),
         

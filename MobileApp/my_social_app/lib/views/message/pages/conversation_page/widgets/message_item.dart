@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_medias_grid_widget.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_status_widget.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:my_social_app/views/shared/app_date_widget.dart';
 
 class MessageItem extends StatefulWidget {
   final MessageState message;
@@ -55,8 +55,8 @@ class _MessageItemState extends State<MessageItem> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      timeago.format(widget.message.createdAt,locale: 'en_short'),
+                    AppDateWidget(
+                      dateTime: widget.message.createdAt,
                       style: const TextStyle(fontSize: 11),
                     ),
                     if(widget.message.isOwner)
