@@ -22,6 +22,7 @@ class SolutionState{
   final Iterable<Multimedia> medias;
   final int numberOfComments;
   final Pagination comments;
+  final bool doesBelongToQuestionOfCurrentUser;
 
   const SolutionState({
     required this.id,
@@ -42,7 +43,8 @@ class SolutionState{
     required this.comments,
     required this.state,
     required this.upvotes,
-    required this.downvotes
+    required this.downvotes,
+    required this.doesBelongToQuestionOfCurrentUser
   });
 
   String formatUserName(int count)
@@ -82,7 +84,8 @@ class SolutionState{
         comments: newComments ?? comments,
         state: newState ?? state,
         upvotes: newUpvotes ?? upvotes,
-        downvotes: newDownvotes ?? downvotes
+        downvotes: newDownvotes ?? downvotes,
+        doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser
       );
 
   SolutionState startLoadingNextUpvotes()

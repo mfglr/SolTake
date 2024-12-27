@@ -5,6 +5,7 @@ import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
+import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/solution_comment_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/upvote_button.dart';
@@ -105,7 +106,17 @@ class _SolutionVideoPageSliderState extends State<SolutionVideoPageSlider> {
                     ),
                   ),
                   Column(
+                    crossAxisAlignment: solution.doesBelongToQuestionOfCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.center,
                     children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SolutionStateWidget(solution: solution),
+                          ],
+                        ),
+                      ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         child: UpvoteButton(solution: solution),

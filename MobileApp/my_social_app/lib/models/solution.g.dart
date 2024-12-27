@@ -26,6 +26,8 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
           .map((e) => Multimedia.fromJson(e as Map<String, dynamic>)),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
       state: (json['state'] as num).toInt(),
+      doesBelongToQuestionOfCurrentUser:
+          json['doesBelongToQuestionOfCurrentUser'] as bool,
     );
 
 Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
@@ -45,4 +47,6 @@ Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
       'medias': instance.medias.toList(),
       'numberOfComments': instance.numberOfComments,
       'state': instance.state,
+      'doesBelongToQuestionOfCurrentUser':
+          instance.doesBelongToQuestionOfCurrentUser,
     };

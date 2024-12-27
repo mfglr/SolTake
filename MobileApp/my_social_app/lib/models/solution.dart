@@ -25,6 +25,7 @@ class Solution{
   final Iterable<Multimedia> medias;
   final int numberOfComments;
   final int state;
+  final bool doesBelongToQuestionOfCurrentUser;
 
   const Solution({
     required this.id,
@@ -42,7 +43,8 @@ class Solution{
     required this.numberOfDownvotes,
     required this.medias,
     required this.numberOfComments,
-    required this.state
+    required this.state,
+    required this.doesBelongToQuestionOfCurrentUser
   });
 
   factory Solution.fromJson(Map<String, dynamic> json) => _$SolutionFromJson(json);
@@ -62,6 +64,7 @@ class Solution{
       content: content,
       medias: medias,
       numberOfComments: numberOfComments,
+      doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
       comments: Pagination.init(commentsPerPage,true),
       isUpvoted: isUpvoted,
       numberOfUpvotes: numberOfUpvotes,

@@ -132,7 +132,7 @@ class AppState{
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    videoQuestions: Pagination.init(questionVideosPerPage, true)
+    videoQuestions: Pagination.init(questionsPerPage, true)
   );
 
   //select messages

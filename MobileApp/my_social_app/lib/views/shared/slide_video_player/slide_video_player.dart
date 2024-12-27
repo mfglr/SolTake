@@ -99,6 +99,7 @@ class _SlideVideoPlayerState extends State<SlideVideoPlayer> {
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.95,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if(widget.child != null)

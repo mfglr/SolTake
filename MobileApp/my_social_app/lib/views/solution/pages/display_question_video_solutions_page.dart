@@ -20,13 +20,17 @@ class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.white.withAlpha(153),
           body: StoreConnector<AppState,Iterable<SolutionState>>(
-            onInit: (store) => getNextPageIfNoPage(store,store.state.videoQuestions,NextQuestionVideoSolutionsAction(questionId: questionId)),
+            onInit: (store){
+              var pagination = store.state.questionEntityState.entities[questionId]!.videoSolutions;
+              getNextPageIfNoPage(store,pagination,NextQuestionVideoSolutionsAction(questionId: questionId));
+            },
             converter: (store) => store.state.selectQuestionVideoSolutions(questionId),
             builder: (context,solutions) => SolutionVideoPageSlider(
               solutions: solutions,
               onNext: (){
                 final store = StoreProvider.of<AppState>(context, listen: false);
-                getNextPageIfReady(store,store.state.videoQuestions,NextQuestionVideoSolutionsAction(questionId: questionId));
+                var pagination = store.state.questionEntityState.entities[questionId]!.videoSolutions;
+                getNextPageIfReady(store,pagination,NextQuestionVideoSolutionsAction(questionId: questionId));
               },
             )
           ),
