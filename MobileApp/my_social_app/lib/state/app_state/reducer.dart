@@ -24,6 +24,7 @@ import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/re
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
@@ -61,7 +62,8 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
   exams: examsReducers(prev.exams,action),
   policyState: policyReducers(prev.policyState,action),
-  videoQuestions: videoQuestionsReducers(prev.videoQuestions, action)
+  videoQuestions: videoQuestionsReducers(prev.videoQuestions, action),
+  uploadEntityState: uploadingEntityStateReducers(prev.uploadEntityState, action)
 );
 
 Reducer<AppState> reducers = combineReducers<AppState>([

@@ -10,24 +10,28 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/solution_user_save_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_solution_state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
-import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 import 'package:redux/redux.dart';
 
 void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
+    
     ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
+    store.dispatch(AddUploadStateAction(state: UploadSolutionState(action)));
+    
     SolutionService()
       .create(
         action.questionId,
         action.content,
         action.medias,
         (rate){
-          final uploadingsolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-          store.dispatch(ChangeUploadingSolutionRateAction(state: uploadingsolution, rate: rate));
+          store.dispatch(ChangeUploadRateAction(id: action.id, rate: rate));
         }
       )
       .then((solution){
@@ -35,14 +39,12 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
         
-        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingFileStatus.success));
+        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.success));
         
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
       })
       .catchError((e){
-        final uploadingSolution = store.state.questionEntityState.entities[action.questionId]!.uploadingSolutions.get(action.id);
-        store.dispatch(ChangeUploadingSolutionStatusAction(state: uploadingSolution,status: UploadingFileStatus.failed));
+        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
         throw e;
       });
   }

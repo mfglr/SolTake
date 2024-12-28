@@ -29,6 +29,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_entit
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
@@ -67,6 +68,7 @@ class AppState{
   final Pagination exams;
   final PolicyState policyState;
   final Pagination videoQuestions;
+  final UploadEntityState uploadEntityState;
 
   const AppState({
     required this.activeAccountPage,
@@ -96,7 +98,8 @@ class AppState{
     required this.questionUserSaveEntityState,
     required this.exams,
     required this.policyState,
-    required this.videoQuestions
+    required this.videoQuestions,
+    required this.uploadEntityState
   });
 
   AppState clear() => AppState(
@@ -132,7 +135,8 @@ class AppState{
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    videoQuestions: Pagination.init(questionsPerPage, true)
+    videoQuestions: Pagination.init(questionsPerPage, true),
+    uploadEntityState: UploadEntityState.init()
   );
 
   //select messages

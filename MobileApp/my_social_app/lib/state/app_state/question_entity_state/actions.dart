@@ -2,9 +2,7 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class CreateQuestionAction extends AppAction{
@@ -291,22 +289,4 @@ class UnsaveQuestionAction extends AppAction{
 class UnsaveQuestionSuccessAction extends AppAction{
   final int questionId;
   const UnsaveQuestionSuccessAction({required this.questionId});
-}
-
-@immutable
-class ChangeUploadingSolutionRateAction extends AppAction{
-  final UploadingSolutionState state;
-  final double rate;
-  const ChangeUploadingSolutionRateAction({required this.state, required this.rate});
-}
-@immutable
-class ChangeUploadingSolutionStatusAction extends AppAction{
-  final UploadingSolutionState state;
-  final UploadingFileStatus status;
-  const ChangeUploadingSolutionStatusAction({required this.state, required this.status});
-}
-@immutable
-class RemoveUploadedSolutionAction extends AppAction{
-  final UploadingSolutionState state;
-  const RemoveUploadedSolutionAction({required this.state});
 }

@@ -1,15 +1,10 @@
-import 'package:app_file/app_file.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solution_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/uploading_solutions/uploading_solutions_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
-import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
 class QuestionState{
@@ -39,7 +34,6 @@ class QuestionState{
   final Pagination pendingSolutions;
   final Pagination incorrectSolutions;
   final Pagination videoSolutions;
-  final UploadingSolutionsState uploadingSolutions;
 
   const QuestionState({
     required this.id,
@@ -68,7 +62,6 @@ class QuestionState{
     required this.pendingSolutions,
     required this.incorrectSolutions,
     required this.videoSolutions,
-    required this.uploadingSolutions
   });
 
   QuestionState _optional({
@@ -93,7 +86,6 @@ class QuestionState{
     Pagination? newPendingSolutions,
     Pagination? newIncorrectSolutions,
     Pagination? newVideoSolutions,
-    UploadingSolutionsState? newUploadingSolutions
   }) => 
     QuestionState(
       id: id,
@@ -122,7 +114,6 @@ class QuestionState{
       pendingSolutions: newPendingSolutions ?? pendingSolutions,
       incorrectSolutions: newIncorrectSolutions ?? incorrectSolutions,
       videoSolutions: newVideoSolutions ?? videoSolutions,
-      uploadingSolutions: newUploadingSolutions ?? uploadingSolutions
     );
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
@@ -280,14 +271,4 @@ class QuestionState{
   QuestionState save() => _optional(newIsSaved: true);
   QuestionState unsave() => _optional(newIsSaved: false);
 
-  QuestionState startUploadingVideoSolution(String id, int questionId,String? content,XFile video)
-    => _optional(newUploadingSolutions: uploadingSolutions.addVideoSolution(id,questionId, content, video));
-  QuestionState startUploadingSolution(String id, int questionId,String? content,Iterable<AppFile> medias)
-    => _optional(newUploadingSolutions: uploadingSolutions.addSolution(id, questionId, content, medias));
-  QuestionState changeUploadingSolutionRate(UploadingSolutionState state, double rate)
-    => _optional(newUploadingSolutions: uploadingSolutions.changeRate(state, rate));
-  QuestionState changeUploadingSolutionStatus(UploadingSolutionState state,UploadingFileStatus status)
-    => _optional(newUploadingSolutions: uploadingSolutions.changeStatus(state, status));
-  QuestionState removeUploadedSolution(UploadingSolutionState state)
-    => _optional(newUploadingSolutions: uploadingSolutions.removeSolution(state));
 }

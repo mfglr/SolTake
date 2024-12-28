@@ -18,13 +18,11 @@ import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/solution/widgets/uploading_solution_abstract_item/uploading_solution_abstract_items.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:uuid/uuid.dart';
 
 
 
-const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];
+const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close];
 
 class QuestionsSolutionsPage extends StatefulWidget {
   final int questionId;
@@ -58,12 +56,6 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
     _pageController.removeListener(_setPage);
     _pageController.dispose();
     super.dispose();
-  }
-
-  Widget _displayUploadigSolutions(QuestionState question){
-    return UploadingSolutionAbstractItems(
-      solutions: question.uploadingSolutions.solutions
-    );
   }
 
   Widget _displayAllSolutions(QuestionState question){
@@ -204,20 +196,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
     );
   }
   
-  Widget _labelBuilder(QuestionState question,bool isActive,index){
-    final numberOfUploadingSolutions = question.uploadingSolutions.numberOfLoadingStatus;
-    if(index == 4 && numberOfUploadingSolutions > 0){
-      return badges.Badge(
-        badgeStyle: const badges.BadgeStyle(
-          badgeColor: Colors.green
-        ),
-        badgeContent: Text(numberOfUploadingSolutions.toString()),
-        child: Icon(
-          icons[4],
-          color: isActive ? Colors.black : Colors.grey
-        ),
-      );
-    }
+  Widget _labelBuilder(QuestionState question,bool isActive, index){
     return Icon(
       icons[index],
       color: isActive ? Colors.black : Colors.grey,
@@ -283,7 +262,6 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
                     _displayCorrectSolutions(question),
                     _displayPendingSolutions(question),
                     _displayIncorrectSolutions(question),
-                    _displayUploadigSolutions(question)
                   ],
                 ),
               )

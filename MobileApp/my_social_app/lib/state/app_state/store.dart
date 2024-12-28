@@ -36,6 +36,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/middlewares.dart';
@@ -81,7 +82,8 @@ final store = Store(
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    videoQuestions: Pagination.init(questionsPerPage, true)
+    videoQuestions: Pagination.init(questionsPerPage, true),
+    uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
     //exams middlewares
