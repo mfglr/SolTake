@@ -302,5 +302,10 @@
     "take_video_speed_dial_gallery": "Galeri",
     "take_video_speed_dial_camera": "Kamera",
 
-    "create_solution_speed_dial_label": "Çözüm Oluştur"
+    "create_solution_speed_dial_label": "Çözüm Oluştur",
+
+    "upload_status_widget_uploading": "Yükleniyor",
+    "upload_status_widget_processing": "İşleniyor",
+    "upload_status_widget_uploading_success": "Yükleme başarılı",
+    "upload_status_widget_uploading_failed": "Başarısız Yükleme"
 }

@@ -9,14 +9,14 @@ import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
   final String hintText;
-  final ScrollController? scrollController;
+  final ScrollController scrollController;
   final int receiverId;
 
   const MessageTextField({
     super.key,
     required this.hintText,
     required this.receiverId,
-    this.scrollController
+    required this.scrollController
   });
 
   @override
@@ -69,6 +69,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                                 builder: (context) => CreateMessageImagesPage(
                                   medias: [media as AppFile],
                                   receiverId: widget.receiverId,
+                                  scrollController: widget.scrollController,
                                 )
                               )
                             );
@@ -98,6 +99,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                                 builder: (context) => CreateMessageImagesPage(
                                   medias: medias,
                                   receiverId: widget.receiverId,
+                                  scrollController: widget.scrollController,
                                 )
                               )
                             );
@@ -118,7 +120,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
           onPressed: _messageContentController.text == ""
             ? null 
             : (){
-                widget.scrollController!.animateTo(
+                widget.scrollController.animateTo(
                   0,
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.linear

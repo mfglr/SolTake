@@ -7,6 +7,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 {
     public class Solution : Entity, IAggregateRoot
     {
+        public static int MaxNumberOfMultimedia = 5;
+
         private Solution() { }
 
         public int QuestionId { get; private set; }
@@ -20,7 +22,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             if (content == null && !medias.Any())
                 throw new SolutionContentRequiredException();
             
-            if (medias.Count() > 3)
+            if (medias.Count() > MaxNumberOfMultimedia)
                 throw new TooManySolutionMediaException();
 
             _medias.AddRange(medias);

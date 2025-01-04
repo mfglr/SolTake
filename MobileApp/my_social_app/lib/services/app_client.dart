@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
@@ -36,6 +37,46 @@ class AppClient{
       );
     }
     return response;
+  }
+
+  Future<String> postStream(MultipartRequest request, void Function(double) callback) async {
+    var stream = request.finalize();
+    var length = request.contentLength;
+
+    var r = await HttpClient().postUrl(request.url);
+    r.headers.set(HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);
+    r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
+    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
+    r.headers.set("Client-Version", packageInfo.version);
+
+    var byteCount = 0;
+
+    await r.addStream(
+      stream.transform(
+        StreamTransformer.fromHandlers(
+          handleData: (data,sink){
+            sink.add(data);
+            byteCount += data.length;
+            callback(byteCount / length);
+          }
+        )  
+      )
+    );
+
+    var response = await r.close();
+
+    final completer = Completer<String>();
+    final contents = StringBuffer();
+    response.transform(utf8.decoder).listen((data) {
+      contents.write(data);
+    }, onDone: () => completer.complete(contents.toString()));
+    var data = await completer.future;
+    
+    if(response.statusCode >= 400){
+      throw BackendException(message: data,statusCode: response.statusCode);
+    }
+
+    return data;
   }
 
   Future<StreamedResponse> sendJsonContent(Request request) {

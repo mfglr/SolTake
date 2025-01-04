@@ -5,9 +5,11 @@ import 'package:video_player/video_player.dart';
 
 class UploadItemVideoPlayer extends StatefulWidget {
   final AppFile media;
+  final bool displayPlayIcon;
   const UploadItemVideoPlayer({
     super.key,
-    required this.media
+    required this.media,
+    this.displayPlayIcon = true
   });
 
   @override
@@ -29,16 +31,17 @@ class _UploadItemVideoPlayerState extends State<UploadItemVideoPlayer> {
       alignment: AlignmentDirectional.center,
       children: [
         VideoPlayer(_controller),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black.withAlpha(153),
-            shape: BoxShape.circle
-          ),
-          child: const Icon(
-            Icons.play_arrow_rounded,
-            color: Colors.white,
-          ),
-        )
+        if(widget.displayPlayIcon)
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withAlpha(153),
+              shape: BoxShape.circle
+            ),
+            child: const Icon(
+              Icons.play_arrow_rounded,
+              color: Colors.white,
+            ),
+          )
       ],
     );
   }

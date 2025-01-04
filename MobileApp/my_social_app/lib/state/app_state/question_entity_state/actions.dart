@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 
 @immutable
 class CreateQuestionAction extends AppAction{
+  final String id;
   final int examId;
   final int subjectId;
   final int? topicId;
@@ -13,6 +14,7 @@ class CreateQuestionAction extends AppAction{
   final Iterable<AppFile> medias;
 
   const CreateQuestionAction({
+    required this.id,
     required this.examId,
     required this.subjectId,
     required this.topicId,

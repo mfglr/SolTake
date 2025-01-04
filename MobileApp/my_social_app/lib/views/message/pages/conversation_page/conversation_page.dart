@@ -6,17 +6,20 @@ import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
+import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_item.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_text_field.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
 import 'package:my_social_app/views/message/pages/display_message_images_page/display_message_images_page.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_items.dart';
 import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,16 +31,20 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage>{
+  
   final ScrollController _scrollController = ScrollController();
   late final StreamSubscription<MessageState> _messageConsumer;
-  late final void Function() _onScrollBottom;
-
+  int _numberOfNewMessages = 0;
   Iterable<int> _selectedIds = [];
-  void _onLongPressed(MessageState message) 
-    => setState(() { _selectedIds = [..._selectedIds, message.id]; });
 
+  void _onLongPressed(MessageState message){
+    if(!_selectedIds.any((e) => e == message.id)){
+      setState(() { _selectedIds = [..._selectedIds, message.id]; });
+    }
+  }
   void _onPressed(MessageState message,{int activeIndex = 0}){
-    if(_selectedIds.isEmpty){
+    if(_selectedIds.isEmpty && message.medias.isEmpty) return;
+    if(_selectedIds.isEmpty && message.medias.isNotEmpty){
       Navigator
         .of(context)
         .push(
@@ -48,47 +55,75 @@ class _ConversationPageState extends State<ConversationPage>{
             )
           )
         );
+      return;
     }
-    else{
-      if(_selectedIds.any((e) => e == message.id)){
-        setState(() { _selectedIds = _selectedIds.where((e) => e != message.id); });
-      }
-      else{
-        setState(() { _selectedIds = [..._selectedIds, message.id]; });
+    if(_selectedIds.any((e) => e == message.id)){
+      setState(() { _selectedIds = _selectedIds.where((e) => e != message.id); });
+      return;
+    }
+    setState(() { _selectedIds = [..._selectedIds, message.id]; });
+  }
+  void _clearAllSelectedIds() => setState(() { _selectedIds = []; });
+  void _onScrollBottom(){
+    if(_scrollController.position.pixels == 0){
+      setState(() { _numberOfNewMessages = 0; });
+    }
+  }
+  void _onScrollTop(){
+    if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+      final store = StoreProvider.of<AppState>(context,listen: false);
+      var pagination = store.state.userEntityState.entities[widget.userId]!.messages;
+      getNextPageIfReady(store,pagination,NextUserMessagesAction(userId: widget.userId));
+    }
+  }
+  void _onMessageReceived(MessageState message){
+    if(message.senderId == widget.userId){
+      if(!mounted) return;
+      final store = StoreProvider.of<AppState>(context,listen: false);
+      store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
+      if(_scrollController.position.pixels != 0){
+        setState(() { _numberOfNewMessages++; });
       }
     }
   }
-  void _clearAllSelectedIds() => setState(() { _selectedIds = []; });
 
-  int _numberOfNewMessages = 0;
-  void _initNumberOfNewMessages() => setState(() { _numberOfNewMessages = 0; });
-  void _increaseNumberOfNewMessages() => setState(() { _numberOfNewMessages++; });
+  Widget _generateMessageItem(MessageState message){
+    return GestureDetector(
+      onTap: () => _onPressed(message),
+      onLongPress: () => _onLongPressed(message),
+      child: Container(
+        color: _selectedIds.any((e) => e == message.id) ? Colors.black.withAlpha(102) : null,
+        margin: const EdgeInsets.only(bottom: 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: message.isOwner ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 3.45 / 4,
+              child: MessageItem(
+                key: ValueKey(message.id),
+                onPressedMessageItem: _onPressed,
+                message: message,
+              )
+            )
+          ],
+        )
+      ),
+    );
+  }
 
   @override
   void initState() {
-    final store = StoreProvider.of<AppState>(context,listen: false);
-
-    _onScrollBottom = (){
-      if(_scrollController.position.pixels == 0){
-        _initNumberOfNewMessages();
-      }
-    };
     _scrollController.addListener(_onScrollBottom);
-    
-    _messageConsumer = MessageHub().receivedMessages.stream.listen((message){
-      if(message.senderId == widget.userId){
-        store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
-        if(_scrollController.position.pixels != 0){
-          _increaseNumberOfNewMessages();
-        }
-      }
-    });
+    _scrollController.addListener(_onScrollTop);
+    _messageConsumer = MessageHub().receivedMessages.stream.listen(_onMessageReceived);
     super.initState();
   }
 
   @override
   void dispose() {
     _scrollController.removeListener(_onScrollBottom);
+    _scrollController.removeListener(_onScrollTop);
     _scrollController.dispose();
     _messageConsumer.cancel();
     super.dispose();
@@ -186,19 +221,20 @@ class _ConversationPageState extends State<ConversationPage>{
                       onInit: (store) => getNextPageIfNoPage(store,user.messages,NextUserMessagesAction(userId: widget.userId)),
                       converter: (store) => store.state.selectUserMessages(widget.userId),
                       builder: (context,messages){
-                        return MessageItems(
-                          messages: messages,
-                          pagination: user.messages,
-                          spaceBottom: 10,
-                          numberOfNewMessages: _numberOfNewMessages,
-                          scrollController: _scrollController,
-                          onScrollTop: (){
-                            final store = StoreProvider.of<AppState>(context,listen: false);
-                            getNextPageIfReady(store,user.messages,NextUserMessagesAction(userId: widget.userId));
-                          },
-                          onPressedMessageItem: _onPressed,
-                          onLongPressedMessageItem: _onLongPressed,
-                          selectedMessageIds: _selectedIds,
+                        return SingleChildScrollView(
+                          controller: _scrollController,
+                          reverse: true,
+                          child: Column(
+                            children: [
+                              if(user.messages.loadingNext)
+                                const LoadingCircleWidget(strokeWidth: 3),
+                              ...messages.toList().reversed.map(_generateMessageItem),
+                              StoreConnector<AppState,Iterable<UploadState>>(
+                                converter: (store) => store.state.uploadEntityState.getUploadMessages(widget.userId),
+                                builder: (context,items) => UploadItems(items: items),
+                              )
+                            ]
+                          )
                         );
                       }
                     ),

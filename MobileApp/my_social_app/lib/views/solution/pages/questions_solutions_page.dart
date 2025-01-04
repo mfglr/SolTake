@@ -6,7 +6,9 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_content_page.dart';
+import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
@@ -22,7 +24,7 @@ import 'package:uuid/uuid.dart';
 
 
 
-const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close];
+const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];
 
 class QuestionsSolutionsPage extends StatefulWidget {
   final int questionId;
@@ -196,6 +198,13 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
     );
   }
   
+  Widget _displayUploads(QuestionState question){
+    return StoreConnector<AppState,Iterable<UploadState>>(
+      converter: (store) => store.state.uploadEntityState.getUploadSolutions(question.id),
+      builder: (context,items) => UploadItems(items: items),
+    );
+  }
+
   Widget _labelBuilder(QuestionState question,bool isActive, index){
     return Icon(
       icons[index],
@@ -240,6 +249,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
                           medias: value.medias
                         )
                       );
+                      _pageController.jumpToPage(4);
                     }),
                 child: const Icon(Icons.create),
               )
@@ -262,6 +272,7 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
                     _displayCorrectSolutions(question),
                     _displayPendingSolutions(question),
                     _displayIncorrectSolutions(question),
+                    _displayUploads(question)
                   ],
                 ),
               )

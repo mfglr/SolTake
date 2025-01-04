@@ -18,9 +18,7 @@ class UploadItems extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 10),
             child: Padding(
               padding: const EdgeInsets.all(1.0),
-              child: UploadItem(
-                state: item
-              ),
+              child: UploadItem(state: item),
             )
           ))
           .toList(),

@@ -6,6 +6,7 @@ import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 class MessageTextField extends StatefulWidget {
   final String hintText;
   final int receiverId;
+  final ScrollController scrollController;
   final void Function(Iterable<AppFile> images) addImages;
   final void Function(String? content) createMessage;
   final bool Function() validateNumberOfImages;
@@ -13,6 +14,7 @@ class MessageTextField extends StatefulWidget {
   const MessageTextField({
     super.key,
     required this.hintText,
+    required this.scrollController,
     required this.receiverId,
     required this.addImages,
     required this.createMessage,
@@ -105,6 +107,11 @@ class _MessageTextFieldState extends State<MessageTextField> {
           onPressed: (){
             _messageContentController.clear();
             widget.createMessage(_content);
+            widget.scrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.linear
+            );
           },
           icon: const Icon(
             Icons.send,

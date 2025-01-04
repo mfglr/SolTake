@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_question_state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_solution_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UploadStatusWidget extends StatelessWidget {
   final UploadState state;
@@ -8,6 +15,13 @@ class UploadStatusWidget extends StatelessWidget {
     super.key,
     required this.state
   });
+
+  Widget getCirclerLoading() => 
+    const SizedBox(
+      width: 15,
+      height: 15,
+      child: CircularProgressIndicator(),
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +31,10 @@ class UploadStatusWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 4),
-            child: const Text("Yükleniyor")
+            margin: const EdgeInsets.only(right: 5),
+            child: Text(AppLocalizations.of(context)!.upload_status_widget_uploading)
           ),
-          const CircularProgressIndicator(),
+          getCirclerLoading(),
         ],
       );
     }
@@ -30,10 +44,10 @@ class UploadStatusWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            margin: const EdgeInsets.only(right: 4),
-            child: const Text("İşleniyor")
+            margin: const EdgeInsets.only(right: 5),
+            child: Text(AppLocalizations.of(context)!.upload_status_widget_processing)
           ),
-          const CircularProgressIndicator(),
+          getCirclerLoading(),
         ],
       );
     }
@@ -44,7 +58,12 @@ class UploadStatusWidget extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 4),
-            child: const Text("Yükleme başarılı")
+            child: Text(
+              AppLocalizations.of(context)!.upload_status_widget_uploading_success,
+              style: const TextStyle(
+                color: Colors.green
+              ),
+            )
           ),
           const Icon(
             Icons.check,
@@ -54,14 +73,41 @@ class UploadStatusWidget extends StatelessWidget {
       );
     }
     return TextButton(
-      onPressed: (){},
+      onPressed: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        if(state is UploadSolutionState){
+          final uploadSolutionState = state as UploadSolutionState;
+          store.dispatch(CreateSolutionAction(
+            id: uploadSolutionState.id,
+            questionId: uploadSolutionState.questionId,
+            content: uploadSolutionState.content,
+            medias: uploadSolutionState.medias
+          ));
+        }
+        else if(state is UploadQuestionState){
+          final uploadSolutionState = state as UploadQuestionState;
+          store.dispatch(CreateQuestionAction(
+            id: uploadSolutionState.id,
+            medias: uploadSolutionState.medias,
+            content: uploadSolutionState.content,
+            examId: uploadSolutionState.examId,
+            subjectId: uploadSolutionState.subjectId,
+            topicId: uploadSolutionState.topicId
+          ));
+        }
+      },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             margin: const EdgeInsets.only(right: 4),
-            child: const Text("Başarısız yükleme")
+            child: Text(
+              AppLocalizations.of(context)!.upload_status_widget_uploading_failed,
+              style: const TextStyle(
+                color: Colors.red
+              ),
+            )
           ),
           const Icon(
             Icons.close,

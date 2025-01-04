@@ -23,23 +23,22 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
     
     ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
-    store.dispatch(AddUploadStateAction(state: UploadSolutionState(action)));
+    if(action.medias.isNotEmpty){
+      store.dispatch(ChangeUploadStateAction(state: UploadSolutionState(action)));
+    }
     
     SolutionService()
       .create(
         action.questionId,
         action.content,
         action.medias,
-        (rate){
-          store.dispatch(ChangeUploadRateAction(id: action.id, rate: rate));
-        }
+        (rate) => store.dispatch(ChangeUploadRateAction(id: action.id, rate: rate))
       )
       .then((solution){
         final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
-        
-        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.success));
+        store.dispatch(RemoveUploadStateAction(id: action.id));
         
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
       })

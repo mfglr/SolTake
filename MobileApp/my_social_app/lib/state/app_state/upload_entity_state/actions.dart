@@ -4,6 +4,12 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.d
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 
 @immutable
+class RemoveUploadStateAction extends AppAction{
+  final String id;
+  const RemoveUploadStateAction({required this.id});
+}
+
+@immutable
 class ChangeUploadRateAction extends AppAction{
   final double rate;
   final String id;
@@ -25,7 +31,7 @@ class ChangeUploadStatusAction extends AppAction{
 }
 
 @immutable
-class AddUploadStateAction extends AppAction{
+class ChangeUploadStateAction extends AppAction{
   final UploadState state;
-  const AddUploadStateAction({required this.state});
+  const ChangeUploadStateAction({required this.state});
 }

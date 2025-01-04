@@ -29,11 +29,9 @@ class MessageService{
     if(content != null) request.fields["content"] = content;
     return request;
   }
-  Future<Message> createMessage(int receiverId,String? content,Iterable<AppFile> medias) =>
+  Future<Message> createMessage(int receiverId,String? content,Iterable<AppFile> medias,void Function(double) callback) =>
     _createMessageRequest(receiverId,content,medias)
-      .then((request) => _appClient.send(request))
-      .then((response) => response.stream.toBytes())
-      .then((data) => utf8.decode(data))
+      .then((request) => _appClient.postStream(request,callback))
       .then((data) => Message.fromJson(jsonDecode(data)));
   
   Future<void> removeMessage(int messageId) =>

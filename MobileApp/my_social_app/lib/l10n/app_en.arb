@@ -304,5 +304,10 @@
     "take_video_speed_dial_gallery": "Gallery",
     "take_video_speed_dial_camera": "Camera",
 
-    "create_solution_speed_dial_label": "Create Solution"
+    "create_solution_speed_dial_label": "Create Solution",
+
+    "upload_status_widget_uploading": "Uploading",
+    "upload_status_widget_processing": "Processing",
+    "upload_status_widget_uploading_success": "Upload sucessful",
+    "upload_status_widget_uploading_failed": "Upload failed"
 }

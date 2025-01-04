@@ -9,7 +9,7 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
     {
         private Question() { }
         public readonly static int MaxTopicCountPerQuestion = 3;
-        public readonly static int MaxMediaCountPerQuestion = 3;
+        public readonly static int MaxMediaCountPerQuestion = 5;
 
         public int UserId { get; private set; }
         public QuestionExam Exam { get; private set; } = null!;

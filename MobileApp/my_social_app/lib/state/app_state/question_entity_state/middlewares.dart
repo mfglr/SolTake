@@ -12,6 +12,9 @@ import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_question_state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
@@ -21,12 +24,24 @@ import 'package:redux/redux.dart';
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageCode(store)]!);
+     if(action.medias.isNotEmpty){
+      store.dispatch(ChangeUploadStateAction(state: UploadQuestionState.init(action)));
+    }
+
     QuestionService()
-      .createQuestion(action.medias,action.examId,action.subjectId,action.topicId,action.content)
+      .createQuestion(
+        action.medias,action.examId,action.subjectId,action.topicId,action.content,
+        (rate) => store.dispatch(ChangeUploadRateAction(id: action.id,rate: rate))
+      )
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
         store.dispatch(AddNewUserQuestionAction(userId: store.state.accountState!.id,questionId: question.id));
+        store.dispatch(RemoveUploadStateAction(id: action.id));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageCode(store)]!);
+      })
+      .catchError((e){
+        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
+        throw e;
       });
   }
   next(action);

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
@@ -30,15 +31,15 @@ class QuestionService{
     request.fields["examId"] = examId.toString();
     request.fields["subjectId"] = subjectId.toString();
     if(content != null) request.fields["content"] = content;
+
     return request;
   }
 
-  Future<Question> createQuestion(Iterable<AppFile> medias,int examId,int subjectId,int? topicId,String? content) =>
-    _createQuestionRequest(medias,examId,subjectId,topicId,content)
-      .then((request) => _appClient.send(request))
-      .then((response) => response.stream.toBytes())
-      .then((bytes) => utf8.decode(bytes))
-      .then((json) => Question.fromJson(jsonDecode(json)));
+  Future<Question> createQuestion(Iterable<AppFile> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
+    var request = await _createQuestionRequest(medias,examId,subjectId,topicId,content);
+    var data = await _appClient.postStream(request, callback);
+    return Question.fromJson(jsonDecode(data));
+  }
 
   Future<void> delete(int questionId) =>
     _appClient

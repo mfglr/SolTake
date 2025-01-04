@@ -1,20 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
-import 'package:my_social_app/exceptions/backend_exception.dart';
-import 'package:my_social_app/main.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/models/solution_user_save.dart';
 import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
 class SolutionService{
@@ -24,17 +19,7 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-
-  Future<String> _readResponse(HttpClientResponse response) {
-    final completer = Completer<String>();
-    final contents = StringBuffer();
-    response.transform(utf8.decoder).listen((data) {
-      contents.write(data);
-    }, onDone: () => completer.complete(contents.toString()));
-    return completer.future;
-  }
-
-  Future<HttpClientRequest> _createSolutionRequest(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
+  Future<MultipartRequest> _createSolutionRequest(int questionId, String? content, Iterable<AppFile> medias) async {
     MultipartRequest multiPartRequest = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
@@ -42,39 +27,15 @@ class SolutionService{
     multiPartRequest.fields["questionId"] = questionId.toString();
     if(content != null) multiPartRequest.fields["content"] = content;
     for(final media in medias){
-      multiPartRequest.files.add(await MultipartFile.fromPath("images",media.file.path,contentType: MediaType.parse(media.contentType)));
+      var file = await MultipartFile.fromPath("images",media.file.path,contentType: MediaType.parse(media.contentType));
+      multiPartRequest.files.add(file);
     }
-    var stream = multiPartRequest.finalize();
-    var length = multiPartRequest.contentLength;
-
-    var r = await HttpClient().postUrl(_appClient.generateUri("$solutionController/$createSolutionEndpoint"));
-    r.headers.set(HttpHeaders.contentTypeHeader, multiPartRequest.headers[HttpHeaders.contentTypeHeader]!);
-    r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
-    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
-    r.headers.set("Client-Version", packageInfo.version);
-
-    var byteCount = 0;
-    await r.addStream(
-      stream.transform(
-        StreamTransformer.fromHandlers(
-          handleData: (data,sink){
-            sink.add(data);
-            byteCount += data.length;
-            callback(byteCount / length);
-          }
-        )  
-      )
-    );
-    return r;
+    return multiPartRequest;
   }
+ 
   Future<Solution> create(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
-    var request = await _createSolutionRequest(questionId,content,medias,callback);
-    var response = await request.close();
-    var data = await _readResponse(response);
-    
-    if(response.statusCode >= 400){
-      throw BackendException(message: data,statusCode: response.statusCode);
-    }
+    var request = await _createSolutionRequest(questionId,content,medias);
+    var data = await _appClient.postStream(request, callback);
     return Solution.fromJson(jsonDecode(data));
   }
 

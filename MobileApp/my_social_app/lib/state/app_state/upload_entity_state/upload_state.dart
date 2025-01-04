@@ -11,7 +11,7 @@ abstract class UploadState{
     required this.id,
     required this.medias,
     required this.rate,
-    required this.status
+    required this.status,
   });
 
   UploadState changeRate(double rate);
