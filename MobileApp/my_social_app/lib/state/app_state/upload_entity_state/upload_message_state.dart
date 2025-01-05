@@ -35,9 +35,9 @@ class UploadMessageState extends UploadState{
     userId: userId
   );
 
-  factory UploadMessageState.init(CreateMessageWithImagesAction action) => UploadMessageState._(
+  factory UploadMessageState.init(CreateMessageWithMediasAction action) => UploadMessageState._(
     id: action.id,
-    medias: action.images,
+    medias: action.medias,
     rate: 0,
     status: UploadStatus.loading,
     content: action.content,

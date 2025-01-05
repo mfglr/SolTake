@@ -11,16 +11,16 @@ class CreateMessageAction extends AppAction{
 }
 
 @immutable
-class CreateMessageWithImagesAction extends AppAction{
+class CreateMessageWithMediasAction extends AppAction{
   final String id;
   final int receiverId;
   final String? content;
-  final Iterable<AppFile> images;
-  const CreateMessageWithImagesAction({
+  final Iterable<AppFile> medias;
+  const CreateMessageWithMediasAction({
     required this.id,
     required this.receiverId,
     required this.content,
-    required this.images
+    required this.medias
   });
 }
 

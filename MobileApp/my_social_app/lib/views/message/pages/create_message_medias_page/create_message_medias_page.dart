@@ -5,16 +5,17 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
-import 'package:my_social_app/views/message/pages/create_message_images_page/widgets/message_text_field.dart';
+import 'package:my_social_app/views/message/pages/create_message_medias_page/constants.dart';
+import 'package:my_social_app/views/message/pages/create_message_medias_page/widgets/message_text_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 
-class CreateMessageImagesPage extends StatefulWidget {
+class CreateMessageMediasPage extends StatefulWidget {
   final Iterable<AppFile> medias;
   final int receiverId;
   final ScrollController scrollController;
 
-  const CreateMessageImagesPage({
+  const CreateMessageMediasPage({
     super.key,
     required this.medias,
     required this.receiverId,
@@ -22,29 +23,27 @@ class CreateMessageImagesPage extends StatefulWidget {
   });
 
   @override
-  State<CreateMessageImagesPage> createState() => _CreateMessageImagesPageState();
+  State<CreateMessageMediasPage> createState() => _CreateMessageMediasPageState();
 }
 
-class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
+class _CreateMessageMediasPageState extends State<CreateMessageMediasPage> {
   late Iterable<AppFile> _medias;
 
-  bool _validateNumberOfImages(){
-    if(_medias.length >= 2){
-      ToastCreator.displayError(AppLocalizations.of(context)!.create_message_images_page_image_count_error);
+  bool _validateNumberOfMedias(){
+    if(_medias.length >= numberOfMaxMessageMedia){
+      ToastCreator.displayError(AppLocalizations.of(context)!.create_message_images_page_media_count_error);
       return false;
     }
     return true;
   }
   
-  void _addImages(Iterable<AppFile> images){
-    if(_medias.length + images.length > 2){
-      ToastCreator.displayError(AppLocalizations.of(context)!.create_message_images_page_image_count_error);
-    }
-    setState(() { _medias = [..._medias,...images].take(2); });
+  void _addMedias(Iterable<AppFile> medias){
+    _validateNumberOfMedias();
+    setState(() { _medias = [..._medias,...medias].take(numberOfMaxMessageMedia); });
   }
 
-  void _removeImage(AppFile image){
-    setState((){ _medias = _medias.where((e) => e != image); });
+  void _removeMedia(AppFile media){
+    setState((){ _medias = _medias.where((e) => e != media); });
     if(_medias.isEmpty){
       Navigator.of(context).pop();
     }
@@ -52,18 +51,18 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
 
   void _createMessage(String? content){
     final store = StoreProvider.of<AppState>(context,listen: false);
-    store.dispatch(CreateMessageWithImagesAction(
+    store.dispatch(CreateMessageWithMediasAction(
       id: const Uuid().v4(),
       receiverId: widget.receiverId,
       content: content,
-      images: _medias
+      medias: _medias
     ));
     Navigator.of(context).pop();
   }
 
   @override
   void initState() {
-    _medias = widget.medias.take(2);
+    _medias = widget.medias.take(numberOfMaxMessageMedia);
     super.initState();
   }
 
@@ -77,7 +76,7 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
           Expanded(
             child: AppFileSlider(
               medias: _medias,
-              onRemoved: _removeImage
+              onRemoved: _removeMedia
             ),
           ),
           
@@ -87,9 +86,9 @@ class _CreateMessageImagesPageState extends State<CreateMessageImagesPage> {
               hintText: AppLocalizations.of(context)!.create_message_images_page_message_field_hint_text,
               scrollController: widget.scrollController,
               receiverId: widget.receiverId,
-              addImages: _addImages,
+              addMedias: _addMedias,
               createMessage: _createMessage,
-              validateNumberOfImages: _validateNumberOfImages,
+              validateNumberOfMedias: _validateNumberOfMedias,
             ),
           )
         ]

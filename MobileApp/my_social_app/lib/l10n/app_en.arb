@@ -151,7 +151,7 @@
 
     "messages_home_page_title": "Messages",
 
-    "create_message_images_page_image_count_error": "You cannot upload more than 2 images in a message.",
+    "create_message_images_page_media_count_error": "You cannot upload more than 5 media in a message.",
 
     "conversation_item": "Image ...",
 
@@ -309,5 +309,5 @@
     "upload_status_widget_uploading": "Uploading",
     "upload_status_widget_processing": "Processing",
     "upload_status_widget_uploading_success": "Upload sucessful",
-    "upload_status_widget_uploading_failed": "Upload failed"
+    "upload_status_widget_uploading_failed": "Upload failed! Click to try again."
 }

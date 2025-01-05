@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 
-class UserImageWidget extends StatelessWidget {
+class UserImageWidget extends StatefulWidget {
   final int userId;
   final double diameter;
   final void Function()? onPressed;
@@ -17,10 +17,24 @@ class UserImageWidget extends StatelessWidget {
     this.onPressed
   });
 
+  @override
+  State<UserImageWidget> createState() => _UserImageWidgetState();
+}
+
+class _UserImageWidgetState extends State<UserImageWidget> {
+
+  
+  @override
+  void initState() {
+
+
+    super.initState();
+  }
+
   Widget _generateImage(UserImageState userImage){
     return Container(
-      width: diameter,
-      height: diameter,
+      width: widget.diameter,
+      height: widget.diameter,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         shape: BoxShape.circle
@@ -34,8 +48,8 @@ class UserImageWidget extends StatelessWidget {
           }
           return Image.memory(
             userImage.image!,
-            width: diameter,
-            height: diameter,
+            width: widget.diameter,
+            height: widget.diameter,
             fit: BoxFit.cover,
           );
         }
@@ -46,12 +60,12 @@ class UserImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserImageState>(
-      onInit: (store) => store.dispatch(LoadUserImageAction(userId: userId)),
-      converter: (store) => store.state.userImageEntityState.entities[userId]!,
+      onInit: (store) => store.dispatch(LoadUserImageAction(userId: widget.userId)),
+      converter: (store) => store.state.userImageEntityState.entities[widget.userId]!,
       builder:(context,userImage){
-        if(onPressed == null) return _generateImage(userImage);
+        if(widget.onPressed == null) return _generateImage(userImage);
         return IconButton(
-          onPressed: onPressed,
+          onPressed: widget.onPressed,
           icon: _generateImage(userImage)
         );
       }

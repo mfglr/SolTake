@@ -1,8 +1,13 @@
 import 'package:app_file/app_file.dart';
 import 'package:app_file_slider/app_file_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:my_social_app/constants/routes.dart';
+import 'package:my_social_app/helpers/get_language_code.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/create_solution/constants.dart';
 import 'package:my_social_app/views/create_solution/widgets/create_solution_button.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/take_media_speed_dial.dart';
@@ -19,20 +24,38 @@ class AddSolutionMediasPage extends StatefulWidget {
 class _AddSolutionMediasPageState extends State<AddSolutionMediasPage> {
   Iterable<AppFile> _medias = [];
 
+  String _getNumberExceptionContent(){
+    final store = StoreProvider.of<AppState>(context, listen: false);
+    var languge = getLanguageCode(store);
+    return solutionMediaNumberException[languge]!;
+  }
+
+  bool _validateNumberOfMedias(){
+    if(_medias.length >= maxNumberOfSolutionMedia){
+      ToastCreator.displayError(_getNumberExceptionContent());
+      return false;
+    }
+    return true;
+  }
+
   void _takeMediaFromGallery(){
-    TakeMediaFromGalleryService()
-      .getMedias()
-      .then((medias) => setState(() { _medias = [..._medias, ...medias]; }));
+    if(_validateNumberOfMedias()){
+      TakeMediaFromGalleryService()
+        .getMedias()
+        .then((medias) => setState(() { _medias = [..._medias, ...medias].take(maxNumberOfSolutionMedia); }));
+    }
   }
 
   void _takeMediaFromCamera(){
-    Navigator
-      .of(context)
-      .pushNamed(takeMediaRoute)
-      .then((value){
-        if(value == null) return;
-        setState(() { _medias = [..._medias,value as AppFile];});
-      });
+    if(_validateNumberOfMedias()){
+      Navigator
+        .of(context)
+        .pushNamed(takeMediaRoute)
+        .then((value){
+          if(value == null) return;
+          setState(() { _medias = [..._medias,value as AppFile].take(maxNumberOfSolutionMedia);});
+        });
+    }
   }
 
   @override

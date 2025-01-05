@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
@@ -59,7 +58,6 @@ class SolutionService{
   Future<void> removeUpvote(int solutionId) =>
     _appClient
       .delete("$solutionController/$removeUpvoteEndpoint/$solutionId");
-
   
   Future<Iterable<SolutionUserVote>> getSolutionDownvotes(int solutionId,Page page) =>
     _appClient
@@ -145,13 +143,4 @@ class SolutionService{
       .get(_appClient.generatePaginationUrl("$solutionController/$getSavedSolutionsEndpoint", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => SolutionUserSave.fromJson(e)));
-
-  Future<Uint8List> getSolutionImage(int solutionId,int solutionImageId) =>
-    _appClient
-      .getBytes("$solutionController/$getSolutionImageEndPoint/$solutionId/$solutionImageId");
-  
-  Future<Uint8List> getSolutionVideo(int solutionId) =>
-    _appClient
-      .getBytes("$solutionController/$getSolutionVideoEndpoint/$solutionId");
-
 }

@@ -1,0 +1,1 @@
+const numberOfMaxMessageMedia = 5;

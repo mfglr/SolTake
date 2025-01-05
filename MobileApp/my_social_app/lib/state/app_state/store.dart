@@ -222,7 +222,7 @@ final store = Store(
     nextConversationsMiddleware,
 
     //message
-    createMessageWithImagesMiddleware,
+    createMessageWithMediasMiddleware,
     createMessageMiddleware,
     markComingMessageAsReceivedMiddleware,
     markComingMessageAsViewedMiddleware,

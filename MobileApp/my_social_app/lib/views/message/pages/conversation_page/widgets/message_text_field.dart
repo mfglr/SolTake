@@ -4,7 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/message/pages/create_message_images_page/create_message_images_page.dart';
+import 'package:my_social_app/views/message/pages/create_message_medias_page/create_message_medias_page.dart';
 import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
@@ -66,7 +66,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                             .of(context)
                             .push(
                               MaterialPageRoute(
-                                builder: (context) => CreateMessageImagesPage(
+                                builder: (context) => CreateMessageMediasPage(
                                   medias: [media as AppFile],
                                   receiverId: widget.receiverId,
                                   scrollController: widget.scrollController,
@@ -96,7 +96,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                             .of(context)
                             .push(
                               MaterialPageRoute(
-                                builder: (context) => CreateMessageImagesPage(
+                                builder: (context) => CreateMessageMediasPage(
                                   medias: medias,
                                   receiverId: widget.receiverId,
                                   scrollController: widget.scrollController,

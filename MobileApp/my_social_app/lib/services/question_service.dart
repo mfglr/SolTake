@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
@@ -69,16 +68,11 @@ class QuestionService{
     _appClient
       .delete("$questionController/$unsaveQuestionEndpoint/$questionId");
   
-
   Future<Question> getById(int questionId) =>
     _appClient
       .get("$questionController/$getQuestionByIdEndpoint/$questionId")
       .then((json) => Question.fromJson(json));
  
-  Future<Uint8List> getQuestionImage(int questionId,int questionImageId) =>
-    _appClient
-      .getBytes("$questionController/$getQuestionImageEndPoint/$questionId/$questionImageId");
-
   Future<Iterable<Question>> getHomePageQuestions(Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionController/$getHomePageQuestionsEndpoint",page))

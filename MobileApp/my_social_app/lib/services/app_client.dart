@@ -39,9 +39,9 @@ class AppClient{
     return response;
   }
 
-  Future<String> postStream(MultipartRequest request, void Function(double) callback) async {
+  Future<String> postStream(BaseRequest request, void Function(double) callback) async {
     var stream = request.finalize();
-    var length = request.contentLength;
+    var length = request.contentLength ?? 1;
 
     var r = await HttpClient().postUrl(request.url);
     r.headers.set(HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);

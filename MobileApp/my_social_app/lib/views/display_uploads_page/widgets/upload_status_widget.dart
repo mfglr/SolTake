@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_message_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_question_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_solution_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
@@ -95,19 +97,31 @@ class UploadStatusWidget extends StatelessWidget {
             topicId: uploadSolutionState.topicId
           ));
         }
+        else{
+          final uploadMessageState = state as UploadMessageState;
+          store.dispatch(CreateMessageWithMediasAction(
+            id: uploadMessageState.id,
+            receiverId: uploadMessageState.userId,
+            content: uploadMessageState.content,
+            medias: uploadMessageState.medias
+          ));
+        }
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            margin: const EdgeInsets.only(right: 4),
-            child: Text(
-              AppLocalizations.of(context)!.upload_status_widget_uploading_failed,
-              style: const TextStyle(
-                color: Colors.red
-              ),
-            )
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(right: 4),
+              child: Text(
+                AppLocalizations.of(context)!.upload_status_widget_uploading_failed,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.red
+                ),
+              )
+            ),
           ),
           const Icon(
             Icons.close,

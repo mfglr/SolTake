@@ -149,7 +149,7 @@
 
     "messages_home_page_title": "Mesajlar",
 
-    "create_message_images_page_image_count_error": "Bir mesaja 2' den fazla resim yükleyemezsiniz.",
+    "create_message_images_page_media_count_error": "Bir mesaja 5' den fazla medya yükleyemezsiniz.",
 
     "conversation_item": "Resim ...",
 
@@ -307,5 +307,5 @@
     "upload_status_widget_uploading": "Yükleniyor",
     "upload_status_widget_processing": "İşleniyor",
     "upload_status_widget_uploading_success": "Yükleme başarılı",
-    "upload_status_widget_uploading_failed": "Başarısız Yükleme"
+    "upload_status_widget_uploading_failed": "Başarısız Yükleme! Tekrar denemek için tıkla."
 }

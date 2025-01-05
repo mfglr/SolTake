@@ -7,7 +7,7 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
 {
     public class Message : Entity, IAggregateRoot
     {
-        public readonly static int MaxNumberOfMessageImage = 2;
+        public readonly static int MaxNumberOfMessageImage = 5;
 
         public bool IsEdited { get; private set; }
         public int SenderId { get; private set; }

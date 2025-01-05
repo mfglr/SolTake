@@ -22,14 +22,14 @@ void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void createMessageWithImagesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is CreateMessageWithImagesAction){
+void createMessageWithMediasMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateMessageWithMediasAction){
     store.dispatch(ChangeUploadStateAction(state: UploadMessageState.init(action)));
     MessageService()
       .createMessage(
         action.receiverId,
         action.content,
-        action.images,
+        action.medias,
         (rate) => store.dispatch(ChangeUploadRateAction(rate: rate, id: action.id))
       )
       .then((message){

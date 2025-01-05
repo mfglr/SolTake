@@ -1,6 +1,4 @@
 const getSolutionByIdEndpoint = "GetSolutionById";
-const getSolutionImageEndPoint = "GetSolutionImage";
-const getSolutionVideoEndpoint = "GetSolutionVideo";
 const getSolutionsByQuestionIdEndpoint = "GetSolutionsByQuestionId";
 const getCorrectSolutionsByQuestionIdEndpoint = "GetCorrectSolutionsByQuestionId";
 const getPendingSolutionsByQuestionIdEndpoint = "GetPendingSolutionsByQuestionId";

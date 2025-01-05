@@ -7,18 +7,18 @@ class MessageTextField extends StatefulWidget {
   final String hintText;
   final int receiverId;
   final ScrollController scrollController;
-  final void Function(Iterable<AppFile> images) addImages;
+  final void Function(Iterable<AppFile> images) addMedias;
   final void Function(String? content) createMessage;
-  final bool Function() validateNumberOfImages;
+  final bool Function() validateNumberOfMedias;
 
   const MessageTextField({
     super.key,
     required this.hintText,
     required this.scrollController,
     required this.receiverId,
-    required this.addImages,
+    required this.addMedias,
     required this.createMessage,
-    required this.validateNumberOfImages
+    required this.validateNumberOfMedias
   });
 
   @override
@@ -61,14 +61,14 @@ class _MessageTextFieldState extends State<MessageTextField> {
               
               prefixIcon: IconButton(
                 onPressed: (){
-                  if(!widget.validateNumberOfImages()) return;
+                  if(!widget.validateNumberOfMedias()) return;
                   Navigator
                     .of(context)
                     .pushNamed(takeMediaRoute)
                     .then(
                       (media){
                         if(media != null && context.mounted){
-                          widget.addImages([media as AppFile]);
+                          widget.addMedias([media as AppFile]);
                         }
                       }
                     );
@@ -82,13 +82,13 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
               suffixIcon: IconButton(
                 onPressed: (){
-                  if(!widget.validateNumberOfImages()) return;
+                  if(!widget.validateNumberOfMedias()) return;
                   TakeMediaFromGalleryService()
                     .getMedias()
                     .then(
                       (medias){
                         if(medias.isNotEmpty && context.mounted){
-                          widget.addImages(medias);
+                          widget.addMedias(medias);
                         }
                       }
                     );

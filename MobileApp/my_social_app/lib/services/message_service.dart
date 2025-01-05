@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
@@ -69,11 +68,7 @@ class MessageService{
       .get("$messageController/$getUnviewedMessagesEndpoint")
       .then((json) => json as List)
       .then((list) => list.map((item) => Message.fromJson(item)));
-
-  Future<Uint8List> getMessageMedia(int messageId,int index) => 
-    _appClient
-      .getBytes("$messageController/$getMessageMediaEndpoint/$messageId/$index");
-
+ 
   Future<Message> getMessageById(int messageId) =>
     _appClient
       .get("$messageController/$getMessageByIdEndpoint/$messageId")
