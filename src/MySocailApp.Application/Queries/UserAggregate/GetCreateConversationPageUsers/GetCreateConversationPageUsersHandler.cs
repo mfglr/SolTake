@@ -4,12 +4,12 @@ using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.UserAggregate.GetCreateConversationPageUsers
 {
-    public class GetCreateConversationPageUsersHandler(IAppUserQueryRepository appUserQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetCreateConversationPageUsersDto, List<AppUserResponseDto>>
+    public class GetCreateConversationPageUsersHandler(IAppUserQueryRepository appUserQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetCreateConversationPageUsersDto, List<UserResponseDto>>
     {
         private readonly IAppUserQueryRepository _appUserQueryRepository = appUserQueryRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
-        public Task<List<AppUserResponseDto>> Handle(GetCreateConversationPageUsersDto request, CancellationToken cancellationToken)
+        public Task<List<UserResponseDto>> Handle(GetCreateConversationPageUsersDto request, CancellationToken cancellationToken)
             => _appUserQueryRepository
                 .GetCreateConversationPageUsersAsync(
                     _accessTokenReader.GetRequiredAccountId(),

@@ -75,11 +75,11 @@ namespace MySocailApp.Api.Controllers.Api
 
         //Queries
         [HttpGet("{id}")]
-        public async Task<AppUserResponseDto> GetById(int id, CancellationToken cancellationToken)
+        public async Task<UserResponseDto> GetById(int id, CancellationToken cancellationToken)
             => await _mediator.Send(new GetUserByIdDto(id), cancellationToken);
 
         [HttpGet("{userName}")]
-        public async Task<AppUserResponseDto> GetByUserName(string userName, CancellationToken cancellationToken)
+        public async Task<UserResponseDto> GetByUserName(string userName, CancellationToken cancellationToken)
             => await _mediator.Send(new GetUserByUserNameDto(userName), cancellationToken);
 
         [HttpGet("{userId}")]
@@ -95,11 +95,11 @@ namespace MySocailApp.Api.Controllers.Api
             => _mediator.Send(new GetFollowedsByIdDto(id, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{id}")]
-        public async Task<List<AppUserResponseDto>> GetNotFolloweds(int id, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<UserResponseDto>> GetNotFolloweds(int id, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetNotFollowedsDto(id, offset, take, isDescending), cancellationToken);
 
         [HttpPost]
-        public async Task<List<AppUserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
+        public async Task<List<UserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpGet]
@@ -107,7 +107,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(new GetSearchedUsersDto(offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<AppUserResponseDto>> GetCreateConversationPageUsers([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<UserResponseDto>> GetCreateConversationPageUsers([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCreateConversationPageUsersDto(offset, take, isDescending), cancellationToken);
 
     }

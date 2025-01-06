@@ -6,10 +6,10 @@
         public DateTime CreatedAt { get; private set; }
         public int FollowerId { get; private set; }
         public int FollowedId { get; private set; }
-        public AppUserResponseDto? Follower { get; private set; }
-        public AppUserResponseDto? Followed { get; private set; }
+        public UserResponseDto? Follower { get; private set; }
+        public UserResponseDto? Followed { get; private set; }
 
-        public FollowResponseDto(int id, DateTime createdAt, int followerId, int followedId, AppUserResponseDto? follower, AppUserResponseDto? followed)
+        public FollowResponseDto(int id, DateTime createdAt, int followerId, int followedId, UserResponseDto? follower, UserResponseDto? followed)
         {
             Id = id;
             CreatedAt = createdAt;

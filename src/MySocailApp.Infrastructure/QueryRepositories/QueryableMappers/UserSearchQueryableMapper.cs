@@ -24,7 +24,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.us.SearchedId,
                         join.us.CreatedAt,
                         null,
-                        new AppUserResponseDto(
+                        new UserResponseDto(
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,

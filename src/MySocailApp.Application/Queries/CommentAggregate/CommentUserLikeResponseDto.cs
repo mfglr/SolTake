@@ -8,9 +8,9 @@ namespace MySocailApp.Application.Queries.CommentAggregate
         public DateTime CreatedAt { get; private set; }
         public int CommentId { get; private set; }
         public int AppUserId { get; private set; }
-        public AppUserResponseDto? AppUser { get; private set; }
+        public UserResponseDto? AppUser { get; private set; }
 
-        public CommentUserLikeResponseDto(int id, DateTime createdAt, int commentId, int appUserId, AppUserResponseDto? appUser)
+        public CommentUserLikeResponseDto(int id, DateTime createdAt, int commentId, int appUserId, UserResponseDto? appUser)
         {
             Id = id;
             CreatedAt = createdAt;

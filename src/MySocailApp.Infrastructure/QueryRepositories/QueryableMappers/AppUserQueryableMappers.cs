@@ -6,13 +6,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class AppUserQueryableMappers
     {
-        public static IQueryable<AppUserResponseDto> ToUserResponseDto(this IQueryable<User> query, AppDbContext context, int accountId)
+        public static IQueryable<UserResponseDto> ToUserResponseDto(this IQueryable<User> query, AppDbContext context, int accountId)
             => query
                 .Join(
                     context.Accounts,
                     user => user.Id,
                     account => account.Id,
-                    (user,account) => new AppUserResponseDto(
+                    (user,account) => new UserResponseDto(
                         user.Id,
                         user.CreatedAt,
                         user.UpdatedAt,

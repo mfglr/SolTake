@@ -12,14 +12,14 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public Task<AppUserResponseDto?> GetByIdAsync(int id, int accountId, CancellationToken cancellationToken)
+        public Task<UserResponseDto?> GetByIdAsync(int id, int accountId, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Where(x => x.Id == id)
                 .ToUserResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<AppUserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken)
+        public Task<UserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Join(
@@ -30,7 +30,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 )
                 .Where(join => join.UserName!.Value.ToLower().Contains(userName.ToLower()))
                 .Select(
-                    x => new AppUserResponseDto(
+                    x => new UserResponseDto(
                         x.user.Id,
                         x.user.CreatedAt,
                         x.user.UpdatedAt,
@@ -47,7 +47,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 )
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<List<AppUserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<UserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Where(x => x.Id != userId && !x.Followers.Any(x => x.FollowerId == userId))
@@ -55,7 +55,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToUserResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<AppUserResponseDto>> GetCreateConversationPageUsersAsync(int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<UserResponseDto>> GetCreateConversationPageUsersAsync(int accountId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Where(
@@ -70,7 +70,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToUserResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<AppUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<UserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Join(
@@ -91,7 +91,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .OrderByDescending(x => x.user.Id)
                 .Take(page.Take)
                 .Select(
-                    x => new AppUserResponseDto(
+                    x => new UserResponseDto(
                         x.user.Id,
                         x.user.CreatedAt,
                         x.user.UpdatedAt,
