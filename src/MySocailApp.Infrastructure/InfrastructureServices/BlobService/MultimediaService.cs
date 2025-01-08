@@ -25,14 +25,15 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
         private readonly UniqNameGenerator _uniqNameGenerator = uniqNameGenerator;
         private readonly IBlobService _blobService = blobService;
 
-        private async Task<Multimedia> UploadImageAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        private async Task<Multimedia> UploadImageAsync(string containerName, IFormFile file, CancellationToken cancellationToken, string? blobName = null)
         {
             //calculate dimention
             Dimention dimention = await _dimentionCalculator.CalculateAsync(file, cancellationToken);
 
-            //generate uniq blob name;
-            var blobName = _uniqNameGenerator.Generate();
-            var path = _tempDirectoryService.GetBlobPath(blobName);
+            //get temp directory path;
+            string path;
+            blobName ??= _uniqNameGenerator.Generate();//generate uniq blob name;
+            path = _tempDirectoryService.GetBlobPath(blobName);
 
             //save image to temp directory
             using var stream = file.OpenReadStream();
@@ -44,11 +45,11 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             await _blobService.UploadAsync(imageStream, containerName, blobName, cancellationToken);
 
             //reuturn multimedya
-            var medya = Multimedia.CreateImage(containerName, blobName, imageStream.Length, dimention.Height, dimention.Width);
+            var media = Multimedia.CreateImage(containerName, blobName, imageStream.Length, dimention.Height, dimention.Width);
             imageStream.Close();
-            return medya;
+            return media;
         }
-        private async Task<Multimedia> UploadVideoAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        private async Task<Multimedia> UploadVideoAsync(string containerName, IFormFile file, CancellationToken cancellationToken, string? blobName = null)
         {
             using var stream = file.OpenReadStream();
 
@@ -68,7 +69,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             var blobNameOfFrame = await _frameCatcher.SaveFrameAsync(output, containerName, cancellationToken);
 
             //upload the video manipulated to the blob container
-            var blobName = _uniqNameGenerator.Generate();
+            blobName ??= _uniqNameGenerator.Generate();//generate uniq blob name;
             using var manipulatedVideo = File.OpenRead(output);
             await _blobService.UploadAsync(manipulatedVideo, containerName, blobName, cancellationToken);
 
@@ -77,7 +78,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             manipulatedVideo.Close();
             return multiMedya;
         }
-        private async Task<Multimedia> UploadAudioAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        private async Task<Multimedia> UploadAudioAsync(string containerName, IFormFile file, CancellationToken cancellationToken,string? blobName = null)
         {
             using var stream = file.OpenReadStream();
 
@@ -91,7 +92,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             var output = await _audioManipulator.Manipulate(input, cancellationToken);
 
             //upload the video manipulated to the blob container
-            var blobName = _uniqNameGenerator.Generate();
+            blobName ??= _uniqNameGenerator.Generate();//generate uniq blob name;
             using var manipulatedAudio = File.OpenRead(output);
             await _blobService.UploadAsync(manipulatedAudio, containerName, blobName, cancellationToken);
 
@@ -101,7 +102,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
             return multiMedya;
         }
 
-        public async Task<Multimedia> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken)
+        public async Task<Multimedia> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken,string? blobName = null)
         {
             _tempDirectoryService.Create();
             try
@@ -109,11 +110,11 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 Multimedia? media = null;
 
                 if (file.ContentType.StartsWith("image"))
-                    media = await UploadImageAsync(containerName, file, cancellationToken);
+                    media = await UploadImageAsync(containerName, file, cancellationToken, blobName);
                 else if (file.ContentType.StartsWith("video"))
-                    media = await UploadVideoAsync(containerName, file, cancellationToken);
+                    media = await UploadVideoAsync(containerName, file, cancellationToken, blobName);
                 else if (file.ContentType.StartsWith("audio"))
-                    media = await UploadAudioAsync(containerName, file, cancellationToken);
+                    media = await UploadAudioAsync(containerName, file, cancellationToken, blobName);
                 else
                     throw new InvalidMultimediaTypeException();
 
@@ -153,6 +154,36 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 _tempDirectoryService.Delete();
                 throw;
             }
+        }
+
+        public async Task<Multimedia> UpdateAsync(string containerName, string blobName, IFormFile file, CancellationToken cancellationToken)
+        {
+            await _blobService.MoveAsync(blobName, containerName, ContainerName.Trash, cancellationToken);
+            
+            _tempDirectoryService.Create();
+            try
+            {
+                Multimedia? media = null;
+
+                if (file.ContentType.StartsWith("image"))
+                    media = await UploadImageAsync(containerName, file, cancellationToken, blobName);
+                else if (file.ContentType.StartsWith("video"))
+                    media = await UploadVideoAsync(containerName, file, cancellationToken, blobName);
+                else if (file.ContentType.StartsWith("audio"))
+                    media = await UploadAudioAsync(containerName, file, cancellationToken, blobName);
+                else
+                    throw new InvalidMultimediaTypeException();
+
+                _tempDirectoryService.Delete();
+                return media;
+            }
+            catch (Exception)
+            {
+                _tempDirectoryService.Delete();
+                await _blobService.MoveAsync(blobName, ContainerName.Trash, containerName, cancellationToken);
+                throw;
+            }
+
         }
     }
 }

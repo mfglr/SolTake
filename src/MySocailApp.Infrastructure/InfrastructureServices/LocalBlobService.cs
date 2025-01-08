@@ -46,5 +46,18 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
 
         public Task<bool> Exist(string containerName, string blobName, CancellationToken cancellationToken)
             => Task.FromResult(File.Exists(_pathFinder.GetPath(containerName, blobName)));
+
+        public Task MoveAsync(string blobName, string sourceContainerName, string destinationContainerName, CancellationToken cancellationToken)
+        {
+            var sourcePath = _pathFinder.GetPath(sourceContainerName, blobName);
+            var destinationPath = _pathFinder.GetPath(destinationContainerName, blobName);
+
+            if (!File.Exists(sourcePath))
+                return Task.CompletedTask;
+            
+            File.Move(sourcePath, destinationPath);
+
+            return Task.CompletedTask;
+        }
     }
 }

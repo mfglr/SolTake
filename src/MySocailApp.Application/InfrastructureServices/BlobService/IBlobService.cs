@@ -7,6 +7,6 @@
         Task<Stream> ReadAsync(string containerName, string blobName, CancellationToken cancellationToken);
         Task DeleteAsync(string containerName, string blobName, CancellationToken cancellationToken);
         Task<bool> Exist(string containerName, string blobName, CancellationToken cancellationToken);
-
+        Task MoveAsync(string blobName, string sourceContainerName, string destinationContainerName, CancellationToken cancellationToken);
     }
 }

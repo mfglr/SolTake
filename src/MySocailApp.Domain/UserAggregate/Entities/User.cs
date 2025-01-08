@@ -20,7 +20,8 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         public Multimedia? Image { get; private set; }
         public void UpdateImage(Multimedia image)
         {
-            if (Image != null) AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
+            if (Image != null)
+                AddDomainEvent(new ProfileImageDeletedDomainEvent(Id));
             HasImage = true;
             Image = image;
         }
@@ -28,7 +29,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         {
             if (Image == null)
                 throw new UserImageIsNotAvailableException();
-            AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
+            AddDomainEvent(new ProfileImageDeletedDomainEvent(Id));
             HasImage = false;
             Image = null;
         }
