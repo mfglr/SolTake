@@ -6,26 +6,13 @@ import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/views/edit_profile/modals/uploading_user_image_modal.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:take_media_from_gallery/take_media_from_gallery.dart';
+import 'package:uuid/uuid.dart';
 
 class UpdateProfilePhotoModal extends StatelessWidget {
   const UpdateProfilePhotoModal({super.key});
-
-  void _showUplodingUserImageModal(BuildContext context,){
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      isDismissible: true,
-      builder: (context) => StoreConnector<AppState,UserState>(
-        converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id]!,
-        builder:(context,user) => UploadingUserImageModal(state: user.uploadingImage!)
-      )
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +59,11 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                     if(image != null && context.mounted){
                                       final store = StoreProvider.of<AppState>(context,listen: false);
                                       store.dispatch(UpdateUserImageAction(
-                                        userId: store.state.accountState!.id,
-                                        file: image as AppFile
+                                        id: const Uuid().v4(),
+                                        userId: account.id,
+                                        image: image as AppFile
                                       ));
                                       Navigator.of(context).pop();
-                                      _showUplodingUserImageModal(context);
                                     }
                                   }),
                               child: Column(
@@ -98,11 +85,11 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                     if(image != null && context.mounted){
                                       final store = StoreProvider.of<AppState>(context,listen: false);
                                       store.dispatch(UpdateUserImageAction(
-                                        userId: store.state.accountState!.id,
-                                        file: image
+                                        id: const Uuid().v4(),
+                                        userId: account.id,
+                                        image: image
                                       ));
                                       Navigator.of(context).pop();
-                                      _showUplodingUserImageModal(context);
                                     }
                                   });
                               },
@@ -122,7 +109,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                       onPressed: 
                         user.hasImage ? (){
                           final store = StoreProvider.of<AppState>(context,listen: false);
-                          store.dispatch(const RemoveCurrentUserImageAction());
+                          store.dispatch(RemoveUserImageAction(userId: account.id));
                           Navigator.of(context).pop();
                         } : null,
                       child: Column(

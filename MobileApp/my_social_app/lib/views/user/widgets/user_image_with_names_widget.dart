@@ -33,7 +33,10 @@ class UserImageWithNamesWidget extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(right: marginRight),
-          child: UserImageWidget(userId: user.id,diameter: diameter),
+          child: UserImageWidget(
+            userId: user.id,
+            diameter: diameter
+          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

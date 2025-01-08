@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:multimedia/models/multimedia_status.dart';
+import 'package:multimedia_grid/circler_multimedia.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_user_image_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
-class UserImageWidget extends StatefulWidget {
+class UserImageWidget extends StatelessWidget {
   final int userId;
   final double diameter;
   final void Function()? onPressed;
@@ -18,57 +21,37 @@ class UserImageWidget extends StatefulWidget {
   });
 
   @override
-  State<UserImageWidget> createState() => _UserImageWidgetState();
-}
-
-class _UserImageWidgetState extends State<UserImageWidget> {
-
-  
-  @override
-  void initState() {
-
-
-    super.initState();
-  }
-
-  Widget _generateImage(UserImageState userImage){
-    return Container(
-      width: widget.diameter,
-      height: widget.diameter,
-      clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle
-      ),
-      child: Builder(
-        builder: (context) {
-          if(userImage.state != MultimediaStatus.done){
-            return Container(
-              color: const Color.fromRGBO(226, 226, 226, 1),
-            );
-          }
-          return Image.memory(
-            userImage.image!,
-            width: widget.diameter,
-            height: widget.diameter,
-            fit: BoxFit.cover,
-          );
-        }
-      )
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,UserImageState>(
-      onInit: (store) => store.dispatch(LoadUserImageAction(userId: widget.userId)),
-      converter: (store) => store.state.userImageEntityState.entities[widget.userId]!,
-      builder:(context,userImage){
-        if(widget.onPressed == null) return _generateImage(userImage);
-        return IconButton(
-          onPressed: widget.onPressed,
-          icon: _generateImage(userImage)
-        );
-      }
+    return StoreConnector<AppState,UploadUserImageState?>(
+      converter: (store) => store.state.uploadEntityState.entities.whereType<UploadUserImageState>().firstOrNull,
+      builder:(context,state) => state == null
+        ? CirclerMultimedia(
+            blobServiceUrl: AppClient.blobService,
+            diameter: diameter,
+            noMediaPath: "assets/images/no_profile_image.png",
+            notFoundMediaPath: "assets/images/no_profile_image.png",
+            state: UserState.multimedia(userId),
+            headers: AppClient().getHeader(),
+            onTap: onPressed,
+          )
+        : Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            ClipOval(
+              child: Image.file(
+                File(state.medias.first.file.path),
+                height: diameter,
+                width: diameter,
+                fit: BoxFit.cover,
+              ),
+            ),
+            CircularProgressIndicator(
+              value: state.rate,
+              color: Colors.green,
+              backgroundColor: Colors.white.withAlpha(153),
+            )
+          ],
+        )
     );
   }
 }

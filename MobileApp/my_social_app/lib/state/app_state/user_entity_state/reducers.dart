@@ -1,6 +1,5 @@
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
 UserEntityState markQuestionAsSolvedReducer(UserEntityState prev,MarkUserQuestionAsSolvedAction action)
@@ -141,13 +140,11 @@ UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction a
   => prev.updateName(action.userId, action.name);
 UserEntityState updateBiographyReducer(UserEntityState prev, UpdateBiographySuccessAction action)
   => prev.updateBiography(action.userId, action.biography);
+UserEntityState updateUserImageReducer(UserEntityState prev,UpdateUserImageSuccessAction action)
+  => prev.updateImage(action.userId);
+UserEntityState remvoeUserImageReducer(UserEntityState prev, RemoveUserImageSuccessAction action)
+  => prev.removeImage(action.userId);
 
-UserEntityState addUploadingImageReducer(UserEntityState prev,UpdateUserImageAction action)
-  => prev.addUploadingImage(action.userId, action.file);
-UserEntityState changeUploadingImageStatusReducer(UserEntityState prev,ChangeUploadingUserImageStatusAction action)
-  => prev.changeUploadingImageStatus(action.userId, action.status);
-UserEntityState changeUploadingImageRateReducer(UserEntityState prev,ChangeUploadingUserImageRateAction action)
-  => prev.changeUploadingImageRate(action.userId, action.rate);
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
   //
@@ -234,8 +231,6 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
   TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
   TypedReducer<UserEntityState,UpdateBiographySuccessAction>(updateBiographyReducer).call,
-
-  TypedReducer<UserEntityState,UpdateUserImageAction>(addUploadingImageReducer).call,
-  TypedReducer<UserEntityState,ChangeUploadingUserImageStatusAction>(changeUploadingImageStatusReducer).call,
-  TypedReducer<UserEntityState,ChangeUploadingUserImageRateAction>(changeUploadingImageRateReducer).call,
+  TypedReducer<UserEntityState,UpdateUserImageSuccessAction>(updateUserImageReducer).call,
+  TypedReducer<UserEntityState,RemoveUserImageSuccessAction>(remvoeUserImageReducer).call,
 ]);

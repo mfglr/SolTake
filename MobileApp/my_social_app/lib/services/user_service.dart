@@ -19,17 +19,21 @@ class UserService{
   static final UserService _singleton = UserService._(AppClient());
   factory UserService() => _singleton;
  
-  Future<void> updateImage(AppFile file, int userId, void Function(double) callback) async {
+  Future<void> updateImage(AppFile image, int userId, void Function(double) callback) async {
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
-    request.files.add(await MultipartFile.fromPath("file",file.file.path,contentType: MediaType.parse(file.contentType)));
-    _appClient.postStream(request, callback);
-    DefaultCacheManager().removeFile("ProfileImages/$userId");
+    request.files.add(await MultipartFile.fromPath(
+      "file",
+      image.file.path,contentType: MediaType.parse(image.contentType)
+    ));
+    await _appClient.postStream(request, callback);
+    await DefaultCacheManager().removeFile("${AppClient.blobService}/ProfileImages/$userId");
   }
   
-  Future<Uint8List> removeImage() => 
-    _appClient
-      .getBytes("$userController/$removeUserImageEndpoint");
+  Future<void> removeImage(int userId) async {
+    await _appClient.delete("$userController/$removeUserImageEndpoint");
+    await DefaultCacheManager().removeFile("${AppClient.blobService}/ProfileImages/$userId");
+  }
   
   Future<void> updateName(String name) => 
     _appClient

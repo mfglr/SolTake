@@ -32,7 +32,6 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
@@ -46,7 +45,6 @@ class AppState{
   final AccountState? accountState;
   final UserEntityState userEntityState;
   final FollowEntityState followEntityState;
-  final UserImageEntityState userImageEntityState;
   final SearchState searchState;
   final ExamEntityState examEntityState;
   final SubjectEntityState subjectEntityState;
@@ -76,7 +74,6 @@ class AppState{
     required this.accountState,
     required this.isInitialized,
     required this.userEntityState,
-    required this.userImageEntityState,
     required this.searchState,
     required this.examEntityState,
     required this.subjectEntityState,
@@ -108,7 +105,6 @@ class AppState{
     accountState: null,
     isInitialized: true,
     userEntityState: const UserEntityState(entities: {}),
-    userImageEntityState: const UserImageEntityState(entities: {}),
     searchState: SearchState(
       key: "",examId: null,subjectId: null,topicId: null,
       questions: Pagination.init(questionsPerPage,true),

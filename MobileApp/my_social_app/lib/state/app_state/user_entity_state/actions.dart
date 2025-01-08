@@ -1,3 +1,4 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -418,4 +419,29 @@ class ChangeUploadingUserImageRateAction extends AppAction{
   final int userId;
   final double rate;
   const ChangeUploadingUserImageRateAction({required this.userId, required this.rate});
+}
+
+@immutable
+class UpdateUserImageAction extends AppAction{
+  final String id;
+  final int userId;
+  final AppFile image;
+  const UpdateUserImageAction({required this.id, required this.userId, required this.image});
+}
+@immutable
+class UpdateUserImageSuccessAction extends AppAction{
+  final int userId;
+  const UpdateUserImageSuccessAction({required this.userId});
+}
+
+
+@immutable
+class RemoveUserImageAction extends AppAction{
+  final int userId;
+  const RemoveUserImageAction({required this.userId});
+}
+@immutable
+class RemoveUserImageSuccessAction extends AppAction{
+  final int userId;
+  const RemoveUserImageSuccessAction({required this.userId});
 }

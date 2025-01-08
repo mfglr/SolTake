@@ -74,20 +74,25 @@ class _CirclerMultimediaState extends State<CirclerMultimedia> {
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          Container(
-            width: widget.diameter,
-            height: widget.diameter,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle
-            ),
+          ClipOval(
             child: Builder(
               builder: (context) {
                 if(widget.state == null) return Image.asset(widget.noMediaPath);
                 if(_status == MultimediaStatus.notFound) return Image.asset(widget.notFoundMediaPath);
-                if(_status == MultimediaStatus.started) return  const Center( child: CircularProgressIndicator() );
+                if(_status == MultimediaStatus.started){
+                  return SizedBox(
+                    width: widget.diameter,
+                    height: widget.diameter,
+                    child: const Center(
+                      child: CircularProgressIndicator()
+                    ),
+                  );
+                }
                 return Image.memory(
                   _image!,
                   fit: BoxFit.cover,
+                  height: widget.diameter,
+                  width: widget.diameter,
                 );
               }
             )

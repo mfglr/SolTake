@@ -37,7 +37,10 @@ class ConversationItem extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
-                      child: UserImageWidget(userId: message.conversationId,diameter: 50),
+                      child: UserImageWidget(
+                        userId: message.conversationId,
+                        diameter: 50
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

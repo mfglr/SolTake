@@ -39,8 +39,6 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_st
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
@@ -55,7 +53,6 @@ final store = Store(
     accountState: null,
     isInitialized: false,
     userEntityState: const UserEntityState(entities: {}),
-    userImageEntityState: const UserImageEntityState(entities: {}),
     searchState: SearchState(
       key: "",examId: null,subjectId: null,topicId: null,
       questions: Pagination.init(questionsPerPage,true),
@@ -139,12 +136,8 @@ final store = Store(
     updateUserNameMiddleware,
     updateNameMiddleware,
     updateBiographyMidleware,
-
-    //user image start
-    loadUserImageMiddleware,
-    updateCurrentUserImageMiddleware,
-    removeCurrentUserImageMiddleware,
-    //user imgage end
+    updateUserImageMiddleware,
+    removeUserImageMiddleware,
 
     //search state
     firstSearchingUsersMiddleware,

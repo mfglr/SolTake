@@ -53,9 +53,9 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
              => await _mediator.Send(new UpdateUserImageDto(file), cancellationToken);
 
-        [HttpGet]
-        public async Task<FileContentResult> RemoveImage(CancellationToken cancellationToken)
-             => File(await _mediator.Send(new RemoveUserImageDto(), cancellationToken), "application/octet-stream");
+        [HttpDelete]
+        public async Task RemoveImage(CancellationToken cancellationToken)
+             => await _mediator.Send(new RemoveUserImageDto(), cancellationToken);
 
         [HttpPut]
         public async Task UpdateName(UpdateNameDto request, CancellationToken cancellationToken)

@@ -1,5 +1,4 @@
 import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
@@ -14,8 +13,6 @@ import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_solution_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
@@ -57,7 +54,6 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         .getSolutionById(action.solutionId)
         .then((solution){
           store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-          store.dispatch(AddUserImageAction(image: UserImageState.init(solution.userId)));
         });
     }
   }
@@ -195,7 +191,6 @@ void nextSolutionUpvotesMiddleware(Store<AppState> store,action,NextDispatcher n
       .then((votes){
         store.dispatch(AddSolutionUserVotesAction(votes: votes.map((e) => e.toSolutionUserVoteState())));
         store.dispatch(AddUsersAction(users: votes.map((e) => e.appUser!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: votes.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(NextSolutionUpvotesSuccessAction(solutionId: action.solutionId, voteIds: votes.map((e) => e.id)));
       })
       .catchError((e){
@@ -213,7 +208,6 @@ void nextSolutionDownvotesMiddleware(Store<AppState> store,action,NextDispatcher
       .then((votes){
         store.dispatch(AddSolutionUserVotesAction(votes: votes.map((e) => e.toSolutionUserVoteState())));
         store.dispatch(AddUsersAction(users: votes.map((e) => e.appUser!.toUserState())));
-        store.dispatch(AddUserImagesAction(images: votes.map((e) => UserImageState.init(e.appUserId))));
         store.dispatch(NextSolutionDownvotesSuccessAction(solutionId: action.solutionId, voteIds: votes.map((e) => e.id)));
       })
       .catchError((e){
@@ -230,7 +224,6 @@ void nextSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatcher 
       .getBySolutionId(action.solutionId,pagination.next)
       .then((comments){
         store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
-        store.dispatch(AddUserImagesAction(images: comments.map((e) => UserImageState.init(commentsPerPage))));
         store.dispatch(NextSolutionCommentsSuccessAction(solutionId: action.solutionId,commentsIds: comments.map((e) => e.id)));
       })
       .catchError((e){

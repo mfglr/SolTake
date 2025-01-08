@@ -1,8 +1,6 @@
 import 'package:my_social_app/services/notification_service.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_image_entity_state/user_image_state.dart';
 import 'package:redux/redux.dart';
 
 void markNotificationsAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -22,10 +20,7 @@ void getUnviewedNotificationMiddleware(Store<AppState> store,action,NextDispatch
     NotificationService()
       .getUnviewedNotifications()
       .then(
-        (notifications){
-          store.dispatch(AddUnviewedNotificationsAction(notifications: notifications.map((e) => e.toNotificationState())));
-          store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.appUserId))));
-        }
+        (notifications) => store.dispatch(AddUnviewedNotificationsAction(notifications: notifications.map((e) => e.toNotificationState())))
       );
   }
   next(action);
@@ -37,7 +32,6 @@ void getNextPageNotificationsMiddleware(Store<AppState> store,action,NextDispatc
       .getNotifications(store.state.notificationEntityState.pagination.next)
       .then((notifications){
         store.dispatch(NextNotificationsSuccessAction(notifications: notifications.map((e) => e.toNotificationState())));
-        store.dispatch(AddUserImagesAction(images: notifications.map((e) => UserImageState.init(e.appUserId))));
       })
       .catchError((e){
         store.dispatch(const NextNotificationsFailedAction());
