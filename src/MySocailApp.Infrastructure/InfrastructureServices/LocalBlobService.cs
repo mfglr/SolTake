@@ -40,6 +40,9 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
         public Task<Stream> ReadAsync(string containerName, string blobName, CancellationToken cancellationToken)
         {
             var path = _pathFinder.GetPath(containerName, blobName);
+            if (!File.Exists(path))
+                throw new BlobNotFoundException();
+
             var stream = (Stream)File.OpenRead(path);
             return Task.FromResult(stream);
         }
@@ -55,7 +58,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
             if (!File.Exists(sourcePath))
                 return Task.CompletedTask;
             
-            File.Move(sourcePath, destinationPath);
+            File.Move(sourcePath, destinationPath, true);
 
             return Task.CompletedTask;
         }

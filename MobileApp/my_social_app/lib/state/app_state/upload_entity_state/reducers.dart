@@ -11,6 +11,7 @@ UploadEntityState changeUploadStatusReducer(UploadEntityState prev,ChangeUploadS
 UploadEntityState changeUploadStateReducer(UploadEntityState prev,ChangeUploadStateAction action)
   => prev.changeState(action.state);
 
+
 Reducer<UploadEntityState> uploadingEntityStateReducers = combineReducers<UploadEntityState>([
   TypedReducer<UploadEntityState,RemoveUploadStateAction>(removeUploadStateReducer).call,
   TypedReducer<UploadEntityState,ChangeUploadRateAction>(changeUploadRateReducer).call,

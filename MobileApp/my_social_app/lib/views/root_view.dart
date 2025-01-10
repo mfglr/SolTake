@@ -13,7 +13,7 @@ import 'package:my_social_app/views/home_page/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
 import 'package:my_social_app/views/search/pages/search_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
+import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:badges/badges.dart' as badges;
 
 class RootView extends StatefulWidget {

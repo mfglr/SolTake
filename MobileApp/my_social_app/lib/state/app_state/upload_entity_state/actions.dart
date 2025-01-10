@@ -35,3 +35,8 @@ class ChangeUploadStateAction extends AppAction{
   final UploadState state;
   const ChangeUploadStateAction({required this.state});
 }
+
+@immutable
+class RefreshUploadEntityStateAction extends AppAction{
+  const RefreshUploadEntityStateAction();
+}

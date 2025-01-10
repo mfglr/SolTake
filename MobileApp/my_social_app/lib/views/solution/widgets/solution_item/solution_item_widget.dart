@@ -5,6 +5,7 @@ import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
+import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_downvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_upvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/downvote_button.dart';
@@ -14,7 +15,6 @@ import 'package:my_social_app/views/solution/widgets/solution_item/solution_popu
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class SolutionItemWidget extends StatelessWidget {
   final SolutionState solution;

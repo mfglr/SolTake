@@ -14,6 +14,6 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptio
         };
 
         public override string GetErrorMessage(string culture) => _messages[culture];
-        public BlobNotFoundException() : base((int)HttpStatusCode.BadRequest) { }
+        public BlobNotFoundException() : base((int)HttpStatusCode.NotFound) { }
     }
 }

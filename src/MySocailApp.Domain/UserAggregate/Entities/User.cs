@@ -21,7 +21,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         public void UpdateImage(Multimedia image)
         {
             if (Image != null)
-                AddDomainEvent(new ProfileImageDeletedDomainEvent(Id));
+                AddDomainEvent(new ProfileImageUpdatedDomainEvent(Id));
             HasImage = true;
             Image = image;
         }

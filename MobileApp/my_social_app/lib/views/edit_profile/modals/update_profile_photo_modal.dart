@@ -37,100 +37,67 @@ class UpdateProfilePhotoModal extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              style: ButtonStyle(
-                                shape:WidgetStateProperty.all(const CircleBorder()) 
-                              ),
-                              onPressed: () =>
-                                Navigator
-                                  .of(context)
-                                  .pushNamed(takeImageRoute)
-                                  .then((image){
-                                    if(image != null && context.mounted){
-                                      final store = StoreProvider.of<AppState>(context,listen: false);
-                                      store.dispatch(UpdateUserImageAction(
-                                        id: const Uuid().v4(),
-                                        userId: account.id,
-                                        image: image as AppFile
-                                      ));
-                                      Navigator.of(context).pop();
-                                    }
-                                  }),
-                              child: Column(
-                                children: [
-                                  const Icon(Icons.photo_camera),
-                                  Text(AppLocalizations.of(context)!.update_profile_photo_modal_camera)
-                                ],
-                              ),
-                              
-                            ),
-                            TextButton(
-                              style: ButtonStyle(
-                                shape:WidgetStateProperty.all(const CircleBorder()) 
-                              ),
-                              onPressed: (){
-                                TakeMediaFromGalleryService()
-                                  .getImage()
-                                  .then((image){
-                                    if(image != null && context.mounted){
-                                      final store = StoreProvider.of<AppState>(context,listen: false);
-                                      store.dispatch(UpdateUserImageAction(
-                                        id: const Uuid().v4(),
-                                        userId: account.id,
-                                        image: image
-                                      ));
-                                      Navigator.of(context).pop();
-                                    }
-                                  });
-                              },
-                              child: Column(
-                                children: [
-                                  const Icon(Icons.photo),
-                                  Text(AppLocalizations.of(context)!.update_profile_photo_modal_galeri)
-                                ],
-                              )
-                            )
-                            
-                          ],
+                        TextButton(
+                          style: ButtonStyle(
+                            shape:WidgetStateProperty.all(const CircleBorder()) 
+                          ),
+                          onPressed: () =>
+                            Navigator
+                              .of(context)
+                              .pushNamed(takeImageRoute)
+                              .then((image){
+                                if(image != null && context.mounted){
+                                  final store = StoreProvider.of<AppState>(context,listen: false);
+                                  store.dispatch(UpdateUserImageAction(
+                                    id: const Uuid().v4(),
+                                    userId: account.id,
+                                    image: image as AppFile
+                                  ));
+                                  Navigator.of(context).pop();
+                                }
+                              }),
+                          child: Column(
+                            children: [
+                              const Icon(Icons.photo_camera),
+                              Text(AppLocalizations.of(context)!.update_profile_photo_modal_camera)
+                            ],
+                          ),
+                          
                         ),
+                        TextButton(
+                          style: ButtonStyle(
+                            shape:WidgetStateProperty.all(const CircleBorder()) 
+                          ),
+                          onPressed: (){
+                            TakeMediaFromGalleryService()
+                              .getImage()
+                              .then((image){
+                                if(image != null && context.mounted){
+                                  final store = StoreProvider.of<AppState>(context,listen: false);
+                                  store.dispatch(UpdateUserImageAction(
+                                    id: const Uuid().v4(),
+                                    userId: account.id,
+                                    image: image
+                                  ));
+                                  Navigator.of(context).pop();
+                                }
+                              });
+                          },
+                          child: Column(
+                            children: [
+                              const Icon(Icons.photo),
+                              Text(AppLocalizations.of(context)!.update_profile_photo_modal_galeri)
+                            ],
+                          )
+                        )
                       ],
                     ),
-                    TextButton(
-                      onPressed: 
-                        user.hasImage ? (){
-                          final store = StoreProvider.of<AppState>(context,listen: false);
-                          store.dispatch(RemoveUserImageAction(userId: account.id));
-                          Navigator.of(context).pop();
-                        } : null,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.close,
-                            size: 40,
-                            color: user.hasImage ?Colors.red : Colors.red[100],
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.update_profile_phot_modal_remove_button,
-                            style: TextStyle(
-                              color: user.hasImage ?Colors.red : Colors.red[100],
-                            ),
-                          )
-                        ],
-                      )
-                    )
-                   
                   ],
                 ),
               ),

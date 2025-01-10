@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:multimedia_grid/circler_multimedia.dart';
@@ -35,23 +34,27 @@ class UserImageWidget extends StatelessWidget {
             onTap: onPressed,
           )
         : Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            ClipOval(
-              child: Image.file(
-                File(state.medias.first.file.path),
+            alignment: AlignmentDirectional.center,
+            children: [
+              ClipOval(
+                child: Image.file(
+                  File(state.medias.first.file.path),
+                  height: diameter,
+                  width: diameter,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(
                 height: diameter,
                 width: diameter,
-                fit: BoxFit.cover,
-              ),
-            ),
-            CircularProgressIndicator(
-              value: state.rate,
-              color: Colors.green,
-              backgroundColor: Colors.white.withAlpha(153),
-            )
-          ],
-        )
+                child: CircularProgressIndicator(
+                  value: state.rate,
+                  color: Colors.green,
+                  backgroundColor: Colors.white.withAlpha(153),
+                ),
+              )
+            ],
+          )
     );
   }
 }

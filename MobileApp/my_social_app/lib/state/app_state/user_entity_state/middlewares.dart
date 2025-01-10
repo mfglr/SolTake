@@ -344,7 +344,9 @@ void removeUserImageMiddleware(Store<AppState> store,action,NextDispatcher next)
   if(action is RemoveUserImageAction){
     UserService()
       .removeImage(action.userId)
-      .then((_) => store.dispatch(RemoveUserImageSuccessAction(userId: action.userId)));
+      .then((_){
+        store.dispatch(RemoveUserImageSuccessAction(userId: action.userId));
+      });
   }
   next(action);
 }

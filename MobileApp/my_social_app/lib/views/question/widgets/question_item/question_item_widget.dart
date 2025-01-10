@@ -16,13 +16,13 @@ import 'package:my_social_app/views/question/widgets/question_item/widgets/quest
 import 'package:my_social_app/views/question/widgets/question_item/widgets/save_question_button.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
+import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_comment_button_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_like_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/subject_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/topic_tag_item.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class QuestionItemWidget extends StatelessWidget {
   final QuestionState question;

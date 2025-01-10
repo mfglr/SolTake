@@ -5,12 +5,12 @@ import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
+import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/solution_comment_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 
 class SolutionVideoPageSlider extends StatefulWidget {
   final Iterable<SolutionState> solutions;

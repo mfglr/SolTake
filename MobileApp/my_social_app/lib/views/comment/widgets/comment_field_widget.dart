@@ -6,8 +6,8 @@ import 'package:my_social_app/state/app_state/create_comment_state/actions.dart'
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/user/widgets/user_image_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/user_image_widget.dart';
 
 class CommentFieldWidget extends StatelessWidget {
   final CreateCommentState state;

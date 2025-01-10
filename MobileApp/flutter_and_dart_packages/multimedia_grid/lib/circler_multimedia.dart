@@ -59,7 +59,6 @@ class _CirclerMultimediaState extends State<CirclerMultimedia> {
           if(mounted){
             setState(() {
               _status = MultimediaStatus.notFound;
-              throw e;
             });
           }
         });
@@ -78,7 +77,14 @@ class _CirclerMultimediaState extends State<CirclerMultimedia> {
             child: Builder(
               builder: (context) {
                 if(widget.state == null) return Image.asset(widget.noMediaPath);
-                if(_status == MultimediaStatus.notFound) return Image.asset(widget.notFoundMediaPath);
+                if(_status == MultimediaStatus.notFound){
+                  return Image.asset(
+                    widget.notFoundMediaPath,
+                    width: widget.diameter,
+                    height: widget.diameter,
+                    fit: BoxFit.cover,
+                  );
+                }
                 if(_status == MultimediaStatus.started){
                   return SizedBox(
                     width: widget.diameter,
