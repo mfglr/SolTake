@@ -48,16 +48,16 @@
     <None Update="MailMessages\EmailVerification_tr.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Blobs\PrivacyPolicies\privacy_policy_version1_en.html">
+    <None Update="Blobs\PrivacyPolicies\privacy_policy_en">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Blobs\PrivacyPolicies\privacy_policy_version1_tr.html">
+    <None Update="Blobs\PrivacyPolicies\privacy_policy_tr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Blobs\TermsOfUses\terms_of_use_version1_en.html">
+    <None Update="Blobs\TermsOfUses\terms_of_use_en">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Blobs\TermsOfUses\terms_of_use_version1_tr.html">
+    <None Update="Blobs\TermsOfUses\terms_of_use_tr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="MailMessages\ResetPassword_en.html">

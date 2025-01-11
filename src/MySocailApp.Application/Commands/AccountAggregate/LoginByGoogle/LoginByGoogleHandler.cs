@@ -34,6 +34,7 @@ namespace MySocailApp.Application.Commands.AccountAggregate.LoginByGoogle
                 var language = new Language(_httpContextAccessor.HttpContext.GetLanguage());
                 account = new Account(googleAccount, language);
                 await _accountCreatorDomainService.CreateAsync(account, cancellationToken);
+                await _accountWriteRepository.CreateAsync(account, cancellationToken);
             }
 
             await _unitOfWork.CommitAsync(cancellationToken);

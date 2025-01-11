@@ -13,8 +13,6 @@ using MySocailApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = int.MaxValue);
-// Add services to the container.
-
 builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = int.MaxValue;
@@ -34,10 +32,10 @@ builder.Services
     .AddCommentDomainServices()
     .AddMessageDomainServices()
     .AddQuestionDomainServices()
-    .AddSolutionDomainServices();
+    .AddSolutionDomainServices()
+    .InitializeDb();
 
 var app = builder.Build();
-app.InitializeDb();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();

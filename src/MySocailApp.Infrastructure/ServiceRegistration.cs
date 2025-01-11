@@ -69,8 +69,7 @@ namespace MySocailApp.Infrastructure
                 .AddTermsOfUseAggregate()
                 .AddUserConnectionAggregate()
                 .AddRoleAggregate()
-                .AddNotificationConnectionAggregate()
-                .AddAppVersionAggregate();
+                .AddNotificationConnectionAggregate();
 
         private static IServiceCollection AddServices(this IServiceCollection services)
             => services
@@ -216,18 +215,6 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddRoleAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IRoleReadRepository, RoleReadRepository>();
-
-        private static IServiceCollection AddAppVersionAggregate(this IServiceCollection services)
-        {
-            using var context = services.BuildServiceProvider().GetRequiredService<AppDbContext>();
-            var versionCacheService = new AppVersionCacheService();
-            var versions = context.AppVersions.AsNoTracking().ToList();
-            versionCacheService.Init(versions);
-
-            return services
-                    .AddScoped<IAppVersionReadRepository, AppVersionReadRepository>()
-                    .AddScoped<IAppVersionWriteRepository, AppVersionWriteRepository>()
-                    .AddSingleton<IAppVersionCacheService>(versionCacheService);
-        }
+       
     }
 }

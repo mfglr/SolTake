@@ -11,9 +11,9 @@ namespace MySocailApp.Core.Exceptions
             { Languages.EN, _messageEn },
             { Languages.TR, _messageTr }
         };
-        public override string GetErrorMessage(string culture) => _messages[culture];
+        public override string GetErrorMessage(string culture) => $"{_messages[culture]} {Message}";
 
-        public ServerSideException() : base((int)HttpStatusCode.InternalServerError){}
+        public ServerSideException(string? message = null) : base((int)HttpStatusCode.InternalServerError){}
 
     }
 }

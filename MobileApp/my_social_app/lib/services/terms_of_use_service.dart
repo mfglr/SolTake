@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:my_social_app/constants/container_names.dart';
 import 'package:my_social_app/constants/controllers.dart';
-import 'package:my_social_app/constants/terms_of_use_endpoints.dart';
 import 'package:my_social_app/services/app_client.dart';
 
+const _temsOfUse = "terms_of_use_";
 class TermsOfUseService {
   final AppClient _appClient;
 
@@ -12,6 +13,6 @@ class TermsOfUseService {
 
   Future<String> getLastTermsOfUse(String language) =>
     _appClient
-      .getBytes("$termsOfUseController/$getLastTermsOfUseEndpoint?language=$language")
+      .getBytes("$blobController/$tersmOfUses/$_temsOfUse$language")
       .then((response) => utf8.decode(response));
 }

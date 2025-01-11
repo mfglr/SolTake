@@ -13,13 +13,13 @@ namespace MySocailApp.Infrastructure.AppVersionAggregate
         public Task<List<AppVersion>> GetAllVersions(CancellationToken cancellationToken)
             => _context.AppVersions.ToListAsync(cancellationToken);
 
-        public Task<AppVersion> GetLastVersionAsync(CancellationToken cancellationToken)
-            => _context.AppVersions.OrderByDescending(x => x.Id).FirstAsync(cancellationToken);
+        public Task<AppVersion?> GetLastVersionAsync(CancellationToken cancellationToken)
+            => _context.AppVersions.OrderByDescending(x => x.Id).FirstOrDefaultAsync(cancellationToken);
 
         public async Task<bool> IsUpgradeRequiredAsync(VersionCode code, CancellationToken cancellationToken)
         {
             var latestVersion = await GetLastVersionAsync(cancellationToken);
-            return latestVersion.UpgradeRequired(code);
+            return latestVersion?.UpgradeRequired(code) ?? false;
         }
     }
 }

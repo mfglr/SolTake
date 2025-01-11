@@ -488,6 +488,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     MessageId = table.Column<int>(type: "int", nullable: false),
                     ContainerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BlobName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BlobNameOfFrame = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Size = table.Column<long>(type: "bigint", nullable: false),
                     Height = table.Column<double>(type: "float", nullable: false),
                     Width = table.Column<double>(type: "float", nullable: false),

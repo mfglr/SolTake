@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:my_social_app/constants/container_names.dart';
 import 'package:my_social_app/constants/controllers.dart';
-import 'package:my_social_app/constants/privacy_policy_endpoints.dart';
 import 'package:my_social_app/services/app_client.dart';
+
+const String _blobName = "privacy_policy_";
 
 class PrivacyPolicyService{
   final AppClient _appClient;
@@ -12,6 +14,6 @@ class PrivacyPolicyService{
 
   Future<String> getLastPrivacyPolicy(String language) =>
     _appClient
-      .getBytes("$privacyPolicyController/$getLastPolicyEnpoint?language=$language")
+      .getBytes("$blobController/$privacyPolicies/$_blobName$language")
       .then((response) => utf8.decode(response));
 }

@@ -9,7 +9,7 @@ namespace MySocailApp.Api.Middlewares
     {
         private readonly RequestDelegate _next = next;
 
-        public async Task InvokeAsync(HttpContext context, IAccountAccessor accountAccessor)
+        public async Task InvokeAsync(HttpContext context, IAccountAccessor accountAccessor, ILogger<CustomExceptionHandlerMiddleware> logger)
         {
             try
             {
@@ -23,8 +23,9 @@ namespace MySocailApp.Api.Middlewares
             catch (Exception ex)
             {
                 var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
-                await context.WriteAppExceptionAsync(languge.Value, new ServerSideException());
+                await context.WriteAppExceptionAsync(languge.Value, new ServerSideException(ex.InnerException?.Message ?? ex.Message));
+                logger.LogError(ex.Message);
             }
-        }   
+        }
     }
 }

@@ -4,7 +4,6 @@ import 'package:my_social_app/state/app_state/active_account_page_state/actions.
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/account/widgets/facebook_login_button.dart';
 import 'package:my_social_app/views/account/widgets/login_form.dart';
 import 'package:my_social_app/views/account/widgets/google_login_button.dart';
 import 'package:my_social_app/views/account/widgets/login_page_diveder.dart';
@@ -27,22 +26,7 @@ class LoginPage extends StatelessWidget {
               child: LoginPageDiveder()
             ),
 
-            const Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 2),
-                    child: GoogleLoginButton(),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 2.0),
-                    child: FacebookLoginButton(),
-                  ),
-                ),
-              ],
-            ),
+            const GoogleLoginButton(),
 
             Container(
               padding: const EdgeInsets.only(top: 5),

@@ -12,7 +12,7 @@ using MySocailApp.Infrastructure.DbContexts;
 namespace MySocailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241226184246_Initial")]
+    [Migration("20250110201236_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -466,6 +466,9 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.Property<string>("BlobName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobNameOfFrame")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContainerName")
