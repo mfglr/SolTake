@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+﻿using AccountDomain.Abstracts;
+using AccountDomain.Exceptions;
+using AutoMapper;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.Block
 {

@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AccountDomain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.AccountAggregate
 {

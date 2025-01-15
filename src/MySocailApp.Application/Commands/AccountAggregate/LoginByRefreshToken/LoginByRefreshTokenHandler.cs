@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+﻿using AccountDomain.Abstracts;
+using AccountDomain.DomainServices;
+using AccountDomain.Exceptions;
+using AutoMapper;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByRefreshToken
 {

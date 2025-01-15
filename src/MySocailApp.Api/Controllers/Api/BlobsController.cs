@@ -6,8 +6,8 @@ using MySocailApp.Application.InfrastructureServices.BlobService;
 
 namespace MySocailApp.Api.Controllers.Api
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     [ServiceFilter(typeof(CheckAccountFilterAttribute))]

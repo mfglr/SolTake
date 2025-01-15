@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AccountDomain.Entities;
+using AccountDomain.PrivacyPolicyAggregate;
+using AccountDomain.RoleAggregate.Entities;
+using AccountDomain.TermsOfUseAggregate;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using MySocailApp.Application.Queries.MessageAggregate;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
-using MySocailApp.Domain.AccountDomain.PrivacyPolicyAggregate;
-using MySocailApp.Domain.AccountDomain.RoleAggregate.Entities;
-using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate;
 using MySocailApp.Domain.AppVersionAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;

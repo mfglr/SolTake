@@ -35,8 +35,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
                 //commit changes
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                var a = new CreateQuestionResponseDto(question, _accountAccessor.Account);
-                return a;
+                return new(question, _accountAccessor.Account);
             }
             catch (Exception)
             {

@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AccountDomain.TermsOfUseAggregate;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate;
 
 namespace MySocailApp.Infrastructure.Seeds
 {
@@ -15,8 +15,8 @@ namespace MySocailApp.Infrastructure.Seeds
                         Id = 1,
                         CreatedAt = new DateTime(2024, 10, 7, 18, 59, 45),
                         AdminId = 1,
-                        BlobNameTr = "terms_of_use_version1_tr.html",
-                        BlobNameEn = "terms_of_use_version1_en.html",
+                        BlobNameTr = "terms_of_use_tr",
+                        BlobNameEn = "terms_of_use_en",
                     }
                 );
         }

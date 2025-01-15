@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AccountDomain.DomainServices;
+using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateEmail
 {

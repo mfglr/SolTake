@@ -1,5 +1,5 @@
-﻿using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
+﻿using AccountDomain.Entities;
+using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 

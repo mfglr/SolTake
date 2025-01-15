@@ -1,6 +1,6 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using AccountDomain.DomainEvents;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.EmailVerificationTokenUpdatedDomainEventConsumers.AccountAggregate
 {

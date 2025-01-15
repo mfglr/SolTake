@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AccountDomain.ValueObjects;
+using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateLanguage
 {

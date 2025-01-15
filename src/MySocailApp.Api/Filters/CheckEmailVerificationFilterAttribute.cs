@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using AccountDomain.Exceptions;
+using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Api.Filters
 {

@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using AccountDomain.DomainServices;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByFaceBook
 {

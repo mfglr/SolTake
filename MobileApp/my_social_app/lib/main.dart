@@ -40,7 +40,7 @@ void addTimeAgo(){
 late final PackageInfo packageInfo;
 
 Future<void> main() async {
-  
+    
   WidgetsFlutterBinding.ensureInitialized();
   packageInfo = await PackageInfo.fromPlatform();
   final List<CameraDescription> cameras = await availableCameras();

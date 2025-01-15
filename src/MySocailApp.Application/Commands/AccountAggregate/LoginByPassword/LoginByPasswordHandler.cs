@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using AccountDomain.Abstracts;
+using AccountDomain.DomainServices;
+using AccountDomain.Entities;
+using AccountDomain.Exceptions;
+using AccountDomain.ValueObjects;
+using AutoMapper;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.LoginByPassword
 {

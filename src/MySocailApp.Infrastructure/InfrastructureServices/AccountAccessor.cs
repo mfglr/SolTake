@@ -1,5 +1,5 @@
-﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
+﻿using AccountDomain.Entities;
+using MySocailApp.Application.InfrastructureServices;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices
 {

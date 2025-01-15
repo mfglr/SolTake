@@ -22,6 +22,7 @@ using MySocailApp.Application.Queries.UserAggregate.GetUserById;
 using MySocailApp.Application.Queries.UserAggregate.GetUserByUserName;
 using MySocailApp.Application.Queries.UserAggregate.GetUserImageById;
 using MySocailApp.Application.Queries.UserAggregate.SearchUsers;
+using MySocailApp.Core;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -50,7 +51,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(new RemoveFollowerDto(followerId), cancellationToken);
 
         [HttpPost]
-        public async Task UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
+        public async Task<Multimedia> UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
              => await _mediator.Send(new UpdateUserImageDto(file), cancellationToken);
 
         [HttpDelete]

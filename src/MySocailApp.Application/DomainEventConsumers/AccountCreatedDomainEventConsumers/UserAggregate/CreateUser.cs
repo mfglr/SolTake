@@ -1,6 +1,6 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using AccountDomain.DomainEvents;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.Entities;
 

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccountDomain\AccountDomain.csproj" />
     <ProjectReference Include="..\MySocailApp.Core\MySocailApp.Core.csproj" />
   </ItemGroup>
 

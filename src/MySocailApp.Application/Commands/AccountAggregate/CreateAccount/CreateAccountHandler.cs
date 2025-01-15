@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using AccountDomain.Abstracts;
+using AccountDomain.DomainServices;
+using AccountDomain.Entities;
+using AccountDomain.ValueObjects;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Entities;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.CreateAccount
 {

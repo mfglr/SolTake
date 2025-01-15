@@ -1,7 +1,7 @@
-﻿using MediatR;
+﻿using AccountDomain.DomainServices;
+using AccountDomain.ValueObjects;
+using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.UpdateUserName
 {

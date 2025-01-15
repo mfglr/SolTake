@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate;
-using MySocailApp.Domain.AccountDomain.TermsOfUseAggregate.Abstracts;
+﻿using AccountDomain.TermsOfUseAggregate;
+using AccountDomain.TermsOfUseAggregate.Abstracts;
+using Microsoft.EntityFrameworkCore;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.TermsOfUseAggregate

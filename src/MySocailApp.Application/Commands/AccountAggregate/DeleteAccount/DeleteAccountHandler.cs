@@ -1,7 +1,7 @@
-﻿using MediatR;
+﻿using AccountDomain.Abstracts;
+using AccountDomain.DomainEvents;
+using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.DeleteAccount
 {

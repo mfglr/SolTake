@@ -1,7 +1,7 @@
-﻿using MySocailApp.Application.Extentions;
+﻿using AccountDomain.ValueObjects;
+using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core.Exceptions;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Api.Middlewares
 {

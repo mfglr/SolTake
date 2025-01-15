@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AccountDomain.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Configurations;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Infrastructure.AppVersionAggregate;
 using MySocailApp.Infrastructure.DbContexts;

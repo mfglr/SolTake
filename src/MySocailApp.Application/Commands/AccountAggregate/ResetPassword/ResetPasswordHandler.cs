@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using AccountDomain.Abstracts;
+using AccountDomain.Exceptions;
+using AccountDomain.ValueObjects;
+using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.ResetPassword
 {

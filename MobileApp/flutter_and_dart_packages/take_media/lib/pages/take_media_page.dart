@@ -98,6 +98,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
 
     _controller = CameraController(widget.cameras.first, ResolutionPreset.max);
     _initializeControllerFuture = _controller.initialize();
+
     super.initState();
   }
 

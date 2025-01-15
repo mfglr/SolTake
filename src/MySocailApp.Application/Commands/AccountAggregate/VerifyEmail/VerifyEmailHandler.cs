@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AccountDomain.Exceptions;
+using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.AccountAggregate.VerifyEmail
 {

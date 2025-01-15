@@ -1,7 +1,7 @@
-﻿using MediatR;
+﻿using AccountDomain.DomainEvents;
+using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.AccountDomain.AccountAggregate.DomainEvents;
 using MySocailApp.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
 

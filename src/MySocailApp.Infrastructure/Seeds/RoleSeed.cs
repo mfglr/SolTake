@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AccountDomain.RoleAggregate.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.AccountDomain.RoleAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.Seeds
 {
