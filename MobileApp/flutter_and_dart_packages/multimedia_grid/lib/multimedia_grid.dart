@@ -45,7 +45,7 @@ class _MultimediaGridState extends State<MultimediaGrid> {
       }
       _status = MultimediaStatus.started;
       DefaultCacheManager()
-        .getSingleFile(_url!)
+        .getSingleFile(_url!,headers: widget.headers)
         .then((file) => file.readAsBytes())
         .then((list){
           if(mounted){
