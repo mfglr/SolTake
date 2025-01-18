@@ -1,8 +1,9 @@
 import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
-class SolutionState{
+class SolutionState implements Avatar{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
@@ -24,6 +25,12 @@ class SolutionState{
   final Pagination comments;
   final bool doesBelongToQuestionOfCurrentUser;
   final Multimedia? image;
+
+  @override
+  int get avatarId => id;
+
+  @override
+  Multimedia? get avatar => image;
 
   const SolutionState({
     required this.id,

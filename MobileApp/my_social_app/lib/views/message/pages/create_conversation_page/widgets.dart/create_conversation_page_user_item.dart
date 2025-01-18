@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 
 class CreateConversationPageUserItem extends StatelessWidget {
   final UserState user;
@@ -29,8 +29,8 @@ class CreateConversationPageUserItem extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 5),
-                    child: UserImageWidget(
-                      image: user.image,
+                    child: AppAvatar(
+                      avatar: user,
                       diameter: 50
                     ),
                   ),

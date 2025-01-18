@@ -3,9 +3,9 @@ import 'package:multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_downvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_upvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/downvote_button.dart';
@@ -57,8 +57,8 @@ class SolutionItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
-                        child: UserImageWidget(
-                          image: solution.image,
+                        child: AppAvatar(
+                          avatar: solution,
                           diameter: 45
                         ),
                       ),

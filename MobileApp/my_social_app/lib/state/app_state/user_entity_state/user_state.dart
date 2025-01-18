@@ -1,12 +1,13 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
 @immutable
-class UserState{
+class UserState implements Avatar{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
@@ -30,6 +31,11 @@ class UserState{
   final Pagination savedSolutions;
   final Pagination messages;
   final Pagination conversations;
+
+  @override
+  Multimedia? get avatar => image;
+  @override
+  int get avatarId => id;
 
   String formatName(int count){
     final r = (name == "" ? userName : name);

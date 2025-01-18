@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/models/avatar.dart';
 
 @immutable
-class NotificationState{
+class NotificationState implements Avatar{
   final int id;
   final int ownerId;
   final int appUserId;
@@ -17,6 +18,13 @@ class NotificationState{
   final int? questionId;
   final int? solutionId;
   final Multimedia? image;
+
+  @override
+  int get avatarId => id;
+
+  @override
+  Multimedia? get avatar => image;
+  
 
   const NotificationState({
     required this.id,

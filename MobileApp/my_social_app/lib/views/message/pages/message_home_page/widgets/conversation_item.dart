@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_status_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 
 class ConversationItem extends StatelessWidget {
   final MessageState message;
@@ -37,8 +37,8 @@ class ConversationItem extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
-                      child: UserImageWidget(
-                        image: message.image,
+                      child: AppAvatar(
+                        avatar: message,
                         diameter: 50
                       ),
                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 
 class UserImageWithNamesWidget extends StatelessWidget {
   final UserState user;
@@ -33,8 +33,8 @@ class UserImageWithNamesWidget extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(right: marginRight),
-          child: UserImageWidget(
-            image: user.image,
+          child: AppAvatar(
+            avatar: user,
             diameter: diameter
           ),
         ),

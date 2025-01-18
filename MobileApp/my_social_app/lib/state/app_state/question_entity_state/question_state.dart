@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
+import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
 @immutable
-class QuestionState{
+class QuestionState implements Avatar{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
@@ -35,6 +36,12 @@ class QuestionState{
   final Pagination pendingSolutions;
   final Pagination incorrectSolutions;
   final Pagination videoSolutions;
+
+  @override
+  int get avatarId => id;
+
+  @override
+  Multimedia? get avatar => image;
 
   const QuestionState({
     required this.id,

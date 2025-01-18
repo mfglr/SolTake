@@ -3,9 +3,9 @@ import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/solution_comment_button.dart';
@@ -73,8 +73,8 @@ class _SolutionVideoPageSliderState extends State<SolutionVideoPageSlider> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(right: 8),
-                                child: UserImageWidget(
-                                  image: solution.image,
+                                child: AppAvatar(
+                                  avatar: solution,
                                   diameter: 45
                                 ),
                               ),

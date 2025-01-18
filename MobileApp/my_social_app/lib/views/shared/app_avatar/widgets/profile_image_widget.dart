@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 
 class ProfileImageWidget extends StatelessWidget {
   final UserState user;

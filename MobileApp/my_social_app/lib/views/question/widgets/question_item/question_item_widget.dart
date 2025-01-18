@@ -14,9 +14,9 @@ import 'package:my_social_app/views/question/widgets/question_item/widgets/displ
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/save_question_button.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_comment_button_widget.dart';
@@ -63,9 +63,9 @@ class QuestionItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
-                        child: UserImageWidget(
+                        child: AppAvatar(
                           key: ValueKey(question.userId),
-                          image: question.image,
+                          avatar: question,
                           diameter: 45
                         ),
                       ),

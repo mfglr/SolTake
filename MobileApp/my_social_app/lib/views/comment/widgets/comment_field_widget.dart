@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 
 class CommentFieldWidget extends StatelessWidget {
   final CreateCommentState state;
@@ -47,8 +47,8 @@ class CommentFieldWidget extends StatelessWidget {
               margin: const EdgeInsets.only(right: 5),
               child: StoreConnector<AppState,UserState>(
                 converter: (store) => store.state.currentUser!,
-                builder:(context,user) => UserImageWidget(
-                  image: user.image,
+                builder:(context,user) => AppAvatar(
+                  avatar: user,
                   diameter: 40
                 )
               ),

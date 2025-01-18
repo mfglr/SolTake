@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/user/pages/display_user_image_page.dart';
 import 'package:my_social_app/views/user/pages/user_followeds_page.dart';
 import 'package:my_social_app/views/user/pages/user_followers_page.dart';
@@ -22,8 +22,8 @@ class UserInfoHeaderWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              UserImageWidget(
-                image: user.image,
+              AppAvatar(
+                avatar: user,
                 diameter: 80,
                 onPressed: () => Navigator
                   .of(context)

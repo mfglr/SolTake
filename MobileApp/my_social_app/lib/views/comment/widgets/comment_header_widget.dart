@@ -8,8 +8,8 @@ import 'package:my_social_app/views/comment/widgets/buttons/display_replies_butt
 import 'package:my_social_app/views/comment/widgets/buttons/hide_replies_button.dart';
 import 'package:my_social_app/views/comment/widgets/buttons/reply_comment_button.dart';
 import 'package:my_social_app/views/comment/widgets/comment_popup_menu.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 
 class CommentHeaderWidget extends StatelessWidget {
@@ -58,8 +58,8 @@ class CommentHeaderWidget extends StatelessWidget {
                   minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-                icon: UserImageWidget(
-                  image: comment.image, 
+                icon: AppAvatar(
+                  avatar: comment, 
                   diameter: diameter ?? 35
                 ),
               ),

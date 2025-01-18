@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 
 @immutable
-class MessageState{
+class MessageState implements Avatar{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
@@ -17,6 +18,12 @@ class MessageState{
   final int state;
   final Iterable<Multimedia> medias;
   final Multimedia? image;
+
+  @override
+  int get avatarId => id;
+
+  @override
+  Multimedia? get avatar => image;
 
   const MessageState({
     required this.id,

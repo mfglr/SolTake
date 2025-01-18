@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
-import 'package:my_social_app/views/shared/profile_image_widget.dart';
+import 'package:my_social_app/views/shared/app_avatar/widgets/profile_image_widget.dart';
 import 'package:my_social_app/views/user/pages/display_user_image_page.dart';
 import 'package:my_social_app/views/user/pages/user_followeds_page.dart';
 import 'package:my_social_app/views/user/pages/user_followers_page.dart';

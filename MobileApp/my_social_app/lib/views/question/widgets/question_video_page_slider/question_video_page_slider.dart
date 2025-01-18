@@ -7,12 +7,12 @@ import 'package:my_social_app/state/app_state/question_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/widgets/comment_button.dart';
+import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/count_text.dart';
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/widgets/like_button.dart';
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/widgets/solution_button.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 
 class QuestionVideoPageSlider extends StatefulWidget {
@@ -110,8 +110,8 @@ class _QuestionVideoPageSliderState extends State<QuestionVideoPageSlider> with 
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(right: 8),
-                                  child: UserImageWidget(
-                                    image: question.image,
+                                  child: AppAvatar(
+                                    avatar: question,
                                     diameter: 45
                                   ),
                                 ),

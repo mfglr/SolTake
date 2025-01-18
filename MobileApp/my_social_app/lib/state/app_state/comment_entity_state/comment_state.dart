@@ -1,7 +1,8 @@
 import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
-class CommentState{
+class CommentState implements Avatar{
   final int id;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -20,6 +21,12 @@ class CommentState{
   final Pagination replies;
   final bool repliesVisibility;
   final Multimedia? image;
+
+  @override
+  int get avatarId => id;
+
+  @override
+  Multimedia? get avatar => image;
 
   const CommentState({
     required this.id,
