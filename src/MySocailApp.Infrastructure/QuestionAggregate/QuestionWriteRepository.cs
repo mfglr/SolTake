@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
 
         public Task<Question?> GetQuestionWithSaveAsync(int questionId, int saverId, CancellationToken cancellationToken)
             => _context.Questions
-                .Include(x => x.Savers.Where(x => x.AppUserId == saverId))
+                .Include(x => x.Savers.Where(x => x.UserId == saverId))
                 .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
         public async Task<Question?> GetWithLikeByIdAsync(int id,int userId,CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
         }
         public async Task DeleteQuestionUserSavesByUserId(int userId, CancellationToken cancellationToken)
         {
-            var saves = await _context.QuestionUserSaves.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            var saves = await _context.QuestionUserSaves.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
             _context.RemoveRange(saves);
         }
     }

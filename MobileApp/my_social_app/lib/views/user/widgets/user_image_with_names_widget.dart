@@ -34,7 +34,7 @@ class UserImageWithNamesWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(right: marginRight),
           child: UserImageWidget(
-            userId: user.id,
+            image: user.image,
             diameter: diameter
           ),
         ),

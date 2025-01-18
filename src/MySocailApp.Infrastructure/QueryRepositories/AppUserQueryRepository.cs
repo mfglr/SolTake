@@ -37,12 +37,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                         x.UserName.Value,
                         x.user.Name,
                         x.user.Biography.Value,
-                        x.user.HasImage,
                         _context.Questions.Count(q => q.UserId == x.user.Id),
                         _context.Follows.Count(f => f.FollowedId == x.user.Id),
                         _context.Follows.Count(f => f.FollowerId == x.user.Id),
                         _context.Follows.Any(f => f.FollowerId == x.user.Id && f.FollowedId == accountId),
-                        _context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == x.user.Id)
+                        _context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == x.user.Id),
+                        x.user.Image
                     )
                 )
                 .FirstOrDefaultAsync(cancellationToken);
@@ -98,12 +98,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                         x.UserName.Value,
                         x.user.Name,
                         x.user.Biography.Value,
-                        x.user.HasImage,
                         _context.Questions.Count(q => q.UserId == x.user.Id),
                         _context.Follows.Count(f => f.FollowedId == x.user.Id),
                         _context.Follows.Count(f => f.FollowerId == x.user.Id),
                         _context.Follows.Any(f => f.FollowerId == x.user.Id && f.FollowedId == accountId),
-                        _context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == x.user.Id)
+                        _context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == x.user.Id),
+                        x.user.Image
                     )
                 )
                 .ToListAsync(cancellationToken);

@@ -11,7 +11,7 @@ namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventCon
 
         public async Task Handle(UserDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            if (notification.User.HasImage)
+            if (notification.User.Image != null)
                 await _blobService.DeleteAsync(ContainerName.ProfileImages, notification.User.Image!.BlobName, cancellationToken);
         }
     }

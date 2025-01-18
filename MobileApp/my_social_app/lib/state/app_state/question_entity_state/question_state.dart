@@ -27,6 +27,7 @@ class QuestionState{
   final int numberOfSolutions;
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
+  final Multimedia? image;
   final Pagination likes;
   final Pagination comments;
   final Pagination solutions;
@@ -55,6 +56,7 @@ class QuestionState{
     required this.numberOfSolutions,
     required this.numberOfCorrectSolutions,
     required this.numberOfVideoSolutions,
+    required this.image,
     required this.likes,
     required this.comments,
     required this.solutions,
@@ -79,6 +81,7 @@ class QuestionState{
     int? newNumberOfSolutions,
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
+    Multimedia? newImage,
     Pagination? newLikes,
     Pagination? newComments,
     Pagination? newSolutions,
@@ -114,6 +117,7 @@ class QuestionState{
       pendingSolutions: newPendingSolutions ?? pendingSolutions,
       incorrectSolutions: newIncorrectSolutions ?? incorrectSolutions,
       videoSolutions: newVideoSolutions ?? videoSolutions,
+      image: newImage ?? image
     );
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";

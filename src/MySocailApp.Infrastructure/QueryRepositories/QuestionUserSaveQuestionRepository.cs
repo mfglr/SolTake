@@ -15,7 +15,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<QuestionUserSaveResponseDto>> GetSavesAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.QuestionUserSaves
                 .AsNoTracking()
-                .Where(x => x.AppUserId == userId)
+                .Where(x => x.UserId == userId)
                 .ToPage(page)
                 .ToQuestionUserSaveResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);

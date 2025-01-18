@@ -1,4 +1,5 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.MessageAggregate
 {
@@ -16,7 +17,8 @@ namespace MySocailApp.Application.Queries.MessageAggregate
         public string? Content { get; private set; }
         public MessageState State { get; private set; }
         public IEnumerable<MessageMultimediaResponseDto> Medias { get; private set; }
-        public MessageResponseDto(int id, DateTime createdAt, DateTime? updatedAt, bool isOwner, string userName, int conversationId, int senderId, int receiverId, bool isEdited, string? content, MessageState state, IEnumerable<MessageMultimediaResponseDto> medias)
+        public Multimedia? Image { get; private set; }
+        public MessageResponseDto(int id, DateTime createdAt, DateTime? updatedAt, bool isOwner, string userName, int conversationId, int senderId, int receiverId, bool isEdited, string? content, MessageState state, IEnumerable<MessageMultimediaResponseDto> medias,Multimedia? image)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -30,6 +32,7 @@ namespace MySocailApp.Application.Queries.MessageAggregate
             Content = content;
             State = state;
             Medias = medias;
+            Image = image;
         }
 
         private MessageResponseDto() { }

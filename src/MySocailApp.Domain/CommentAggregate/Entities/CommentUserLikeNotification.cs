@@ -1,8 +1,8 @@
 ﻿namespace MySocailApp.Domain.CommentAggregate.Entities
 {
-    public class CommentUserLikeNotification(int appUserId)
+    public class CommentUserLikeNotification(int userId)
     {
         public int CommentId { get; private set; }
-        public int AppUserId { get; private set; } = appUserId;
+        public int UserId { get; private set; } = userId;
     }
 }

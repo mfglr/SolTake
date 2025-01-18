@@ -20,6 +20,9 @@ Notification _$NotificationFromJson(Map<String, dynamic> json) => Notification(
       appUserId: (json['appUserId'] as num).toInt(),
       userName: json['userName'] as String,
       solutionId: (json['solutionId'] as num?)?.toInt(),
+      image: json['image'] == null
+          ? null
+          : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$NotificationToJson(Notification instance) =>
@@ -37,4 +40,5 @@ Map<String, dynamic> _$NotificationToJson(Notification instance) =>
       'commentContent': instance.commentContent,
       'solutionId': instance.solutionId,
       'questionId': instance.questionId,
+      'image': instance.image,
     };

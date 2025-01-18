@@ -15,11 +15,11 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices.InternalDomainServi
 
             comment.CreateQuestionComment(question.Id);
 
-            if (question.UserId != comment.AppUserId)
+            if (question.UserId != comment.UserId)
                 comment.AddDomainEvent(new QuestionCommentCreatedDomainEvent(question, comment));
 
             foreach (var tag in comment.Tags)
-                if (tag.UserId != comment.AppUserId && tag.UserId != question.UserId)
+                if (tag.UserId != comment.UserId && tag.UserId != question.UserId)
                     comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, tag.UserId));
         }
     }

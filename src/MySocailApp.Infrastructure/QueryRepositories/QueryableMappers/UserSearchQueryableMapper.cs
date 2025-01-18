@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     context.Accounts,
                     us => us.SearchedId,
                     account => account.Id,
-                    (us, account) => new { us, account.UserName }
+                    (us, account) => new { us, UserName = account.UserName.Value }
                 )
                 .Join(
                     context.Users,
@@ -24,19 +24,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.us.SearchedId,
                         join.us.CreatedAt,
                         null,
-                        new UserResponseDto(
+                        new (
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName.Value,
+                            join.UserName,
                             user.Name,
                             user.Biography.Value,
-                            user.HasImage,
                             context.Questions.Count(q => q.UserId == user.Id),
                             context.Follows.Count(f => f.FollowedId == user.Id),
                             context.Follows.Count(f => f.FollowerId == user.Id),
                             context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),
-                            context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id)
+                            context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id),
+                            user.Image
                         )
                     )
                 );

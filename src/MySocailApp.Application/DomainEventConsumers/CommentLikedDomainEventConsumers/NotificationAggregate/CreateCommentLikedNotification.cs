@@ -29,12 +29,12 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
 
             var n = Notification
                 .CommentLikedNotification(
-                    notification.Comment.AppUserId,
+                    notification.Comment.UserId,
                     comment.QuestionId ?? parent?.QuestionId,
                     comment.SolutionId ?? parent?.SolutionId,
                     comment.ParentId,
                     comment.Id,
-                    notification.Like.AppUserId
+                    notification.Like.UserId
                 );
 
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);

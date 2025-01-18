@@ -11,26 +11,22 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         {
             Name = "";
             Biography = new Biography("");
-            HasImage = false;
             CreatedAt = DateTime.UtcNow;
         }
 
         //profile image
-        public bool HasImage { get; private set; }
         public Multimedia? Image { get; private set; }
         public void UpdateImage(Multimedia image)
         {
             if (Image != null)
-                AddDomainEvent(new ProfileImageUpdatedDomainEvent(Id));
-            HasImage = true;
+                AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
             Image = image;
         }
         public void RemoveImage()
         {
             if (Image == null)
                 throw new UserImageIsNotAvailableException();
-            AddDomainEvent(new ProfileImageDeletedDomainEvent(Id));
-            HasImage = false;
+            AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
             Image = null;
         }
 

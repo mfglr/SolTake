@@ -9,7 +9,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
     {
         private Comment() { }
 
-        public int AppUserId { get; private set; }
+        public int UserId { get; private set; }
         public int? QuestionId { get; private set; }
         public int? SolutionId { get; private set; }
         public int? ParentId { get; private set; }
@@ -21,7 +21,7 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
 
         public Comment(int userId, CommentContent content, IEnumerable<int> idsOfUsersTagged)
         {
-            AppUserId = userId;
+            UserId = userId;
             Content = content;
             _tags.AddRange(idsOfUsersTagged.Select(CommentUserTag.Create));
         }
@@ -58,12 +58,12 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         public IReadOnlyCollection<CommentUserLikeNotification> LikeNotifications => _likeNotifications;
         public CommentUserLike Like(int likerId)
         {
-            if (_likes.Any(x => x.AppUserId == likerId))
+            if (_likes.Any(x => x.UserId == likerId))
                 throw new CommentWasAlreadyLikedException();
 
             var like = CommentUserLike.Create(likerId);
             _likes.Add(like);
-            if (likerId != AppUserId && !LikeNotifications.Any(x => x.AppUserId == likerId))
+            if (likerId != UserId && !LikeNotifications.Any(x => x.UserId == likerId))
             {
                 _likeNotifications.Add(new CommentUserLikeNotification(likerId));
                 AddDomainEvent(new CommentLikedDomainEvent(this, like));
@@ -72,14 +72,14 @@ namespace MySocailApp.Domain.CommentAggregate.Entities
         }
         public void Dislike(int userId)
         {
-            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            var index = _likes.FindIndex(x => x.UserId == userId);
             if (index == -1) return;
             _likes.RemoveAt(index);
             AddDomainEvent(new CommentDislikedDomainEvent(this));
         }
         public void DeleteLike(int userId)
         {
-            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            var index = _likes.FindIndex(x => x.UserId == userId);
             if(index == -1) return;
             _likes.RemoveAt(index);
         }

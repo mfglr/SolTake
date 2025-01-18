@@ -23,7 +23,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               UserImageWidget(
-                userId: user.id,
+                image: user.image,
                 diameter: 80,
                 onPressed: () => Navigator
                   .of(context)

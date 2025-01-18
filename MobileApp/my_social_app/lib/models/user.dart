@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -14,7 +15,6 @@ class User{
   final String userName;
   final String name;
   final String biography;
-  final bool hasImage;
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;
@@ -22,10 +22,10 @@ class User{
   final bool isFollowed;
   final int? paginationKey;
   final DateTime? paginationDate;
+  final Multimedia? image;
 
   const User({
     required this.id,
-    required this.hasImage,
     required this.createdAt,
     required this.updatedAt,
     required this.userName,
@@ -37,7 +37,8 @@ class User{
     required this.isFollower,
     required this.isFollowed,
     required this.paginationKey,
-    required this.paginationDate
+    required this.paginationDate,
+    required this.image
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -51,12 +52,12 @@ class User{
         userName: userName,
         name: name,
         biography: biography,
-        hasImage: hasImage,
         numberOfQuestions: numberOfQuestions,
         numberOfFollowers: numberOfFollowers,
         numberOfFolloweds: numberOfFolloweds,
         isFollower: isFollower,
         isFollowed: isFollowed,
+        image: image,
         questions: Pagination.init(questionsPerPage,true),
         solvedQuestions: Pagination.init(questionsPerPage,true),
         unsolvedQuestions: Pagination.init(questionsPerPage,true),
@@ -67,5 +68,6 @@ class User{
         notFolloweds: Pagination.init(usersPerPage,true),
         messages: Pagination.init(messagesPerPage,true),
         conversations: Pagination.init(usersPerPage, true),
+        userImageState: null
       );
 }

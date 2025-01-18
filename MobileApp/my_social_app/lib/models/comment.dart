@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
@@ -23,6 +24,7 @@ class Comment{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
+  final Multimedia? image;
 
   const Comment({
     required this.id,
@@ -39,6 +41,7 @@ class Comment{
     required this.questionId,
     required this.solutionId,
     required this.parentId,
+    required this.image
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
@@ -63,6 +66,7 @@ class Comment{
       parentId: parentId,
       solutionId: solutionId,
       repliesVisibility: false,
+      image: image
     );
 
 }

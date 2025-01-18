@@ -10,16 +10,27 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
     {
         public static IQueryable<QuestionUserSaveResponseDto> ToQuestionUserSaveResponseDto(this IQueryable<QuestionUserSave> query, AppDbContext context, int accountId) =>
             query
-                .Join(context.Accounts, qus => qus.AppUserId, account => account.Id, (qus, account) => new { qus, account.UserName })
+                .Join(
+                    context.Accounts,
+                    qus => qus.UserId,
+                    account => account.Id,
+                    (qus, account) => new { qus, UserName = account.UserName.Value }
+                )
+                .Join(
+                    context.Users,
+                    join => join.qus.UserId,
+                    user => user.Id,
+                    (join, user) => new { join, user }
+                )
                 .Join(
                     context.Questions,
-                    join => join.qus.QuestionId,
+                    join1 => join1.join.qus.QuestionId,
                     question => question.Id,
-                    (join,question) => new QuestionUserSaveResponseDto(
-                        join.qus.Id,
-                        join.qus.CreatedAt,
-                        join.qus.QuestionId,
-                        join.qus.AppUserId,
+                    (join1, question) => new QuestionUserSaveResponseDto(
+                        join1.join.qus.Id,
+                        join1.join.qus.CreatedAt,
+                        join1.join.qus.QuestionId,
+                        join1.join.qus.UserId,
                         new QuestionResponseDto(
                             question.Id,
                             question.CreatedAt,
@@ -29,10 +40,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 : QuestionState.Unsolved,
                             question.UserId == accountId,
                             question.UserId,
-                            join.UserName.Value,
+                            join1.join.UserName,
                             question.Content.Value,
                             question.Likes.Any(x => x.AppUserId == accountId),
-                            question.Savers.Any(x => x.AppUserId == accountId),
+                            question.Savers.Any(x => x.UserId == accountId),
                             question.Likes.Count,
                             context.Comments.Count(c => c.QuestionId == question.Id),
                             context.Solutions.Count(solution => solution.QuestionId == question.Id),
@@ -54,7 +65,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                     i.Duration,
                                     i.MultimediaType
                                 )
-                            )
+                            ),
+                            join1.user.Image
                         )
                     )
                 );

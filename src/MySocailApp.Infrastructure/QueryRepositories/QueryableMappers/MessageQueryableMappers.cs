@@ -10,26 +10,32 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<MessageResponseDto> ToMessageResponseDto(this IQueryable<Message> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Accounts,
+                    context.Users,
                     message => message.SenderId == accountId ? message.ReceiverId : message.SenderId,
+                    user => user.Id,
+                    (message, user) => new { message, user }
+                )
+                .Join(
+                    context.Accounts,
+                    join => join.message.SenderId == accountId ? join.message.ReceiverId : join.message.SenderId,
                     account => account.Id,
-                    (message, account) => new MessageResponseDto(
-                        message.Id,
-                        message.CreatedAt,
-                        message.UpdatedAt,
-                        message.SenderId == accountId,
+                    (join, account) => new MessageResponseDto(
+                        join.message.Id,
+                        join.message.CreatedAt,
+                        join.message.UpdatedAt,
+                        join.message.SenderId == accountId,
                         account.UserName.Value,
                         account.Id,
-                        message.SenderId,
-                        message.ReceiverId,
-                        message.IsEdited,
-                        message.Content.Value,
-                        message.Viewers.Count != 0
+                        join.message.SenderId,
+                        join.message.ReceiverId,
+                        join.message.IsEdited,
+                        join.message.Content.Value,
+                        join.message.Viewers.Count != 0
                             ? MessageState.Viewed
-                            : message.Receivers.Count != 0
+                            : join.message.Receivers.Count != 0
                                 ? MessageState.Reached
                                 : MessageState.Created,
-                        message.Medias.Select(
+                        join.message.Medias.Select(
                             media => new MessageMultimediaResponseDto(
                                 media.ContainerName,
                                 media.BlobName,
@@ -40,7 +46,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 media.Duration,
                                 media.MultimediaType
                             )
-                        )
+                        ),
+                        join.user.Image
                     )
                 );
     }

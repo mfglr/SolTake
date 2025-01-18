@@ -1,8 +1,9 @@
-﻿using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.NotificationAggregate
 {
-    public class NotificationResponseDto(int id, DateTime createdAt, int ownerId, int appUserId, string userName, bool isViewed, NotificationType type, int? parentId, int? repliedId, int? commentId, string? commentContent, int? questionId, int? solutionId)
+    public class NotificationResponseDto(int id, DateTime createdAt, int ownerId, int appUserId, string userName, bool isViewed, NotificationType type, int? parentId, int? repliedId, int? commentId, string? commentContent, int? questionId, int? solutionId, Multimedia? image)
     {
         public int Id { get; private set; } = id;
         public DateTime CreatedAt { get; private set; } = createdAt;
@@ -17,5 +18,6 @@ namespace MySocailApp.Application.Queries.NotificationAggregate
         public string? CommentContent { get; private set; } = commentContent;
         public int? QuestionId { get; private set; } = questionId;
         public int? SolutionId { get; private set; } = solutionId;
+        public Multimedia? Image { get; private set; } = image;
     }
 }

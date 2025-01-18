@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 part 'notification.g.dart';
 
@@ -19,6 +20,7 @@ class Notification{
   final String? commentContent;
   final int? solutionId;
   final int? questionId;
+  final Multimedia? image;
 
   const Notification({
     required this.id,
@@ -34,6 +36,7 @@ class Notification{
     required this.appUserId,
     required this.userName,
     required this.solutionId,
+    required this.image
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);
@@ -54,5 +57,6 @@ class Notification{
         questionId: questionId,
         appUserId: appUserId,
         solutionId: solutionId,
+        image: image
       );
 }

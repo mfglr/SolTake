@@ -31,7 +31,7 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public Task<List<Notification>> GetQuestionNotificationsAsync(int questionId, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => x.QuestionId == questionId).ToListAsync(cancellationToken);
         public Task<List<Notification>> GetUserNotificaitons(int userId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.AppUserId == userId || x.OwnerId == userId).ToListAsync(cancellationToken);
+            => _context.Notifications.Where(x => x.UserId == userId || x.OwnerId == userId).ToListAsync(cancellationToken);
 
         public Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications
@@ -47,7 +47,7 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
                 .FirstOrDefaultAsync(x => x.QuestionId == questionId && x.OwnerId == ownerId && x.Type == NotificationType.QuestionLikedNotification,cancellationToken);
         public Task<Notification?> GetUserFollowedNotificationAsync(int userId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications
-                .FirstOrDefaultAsync(x => x.AppUserId == userId && x.OwnerId == ownerId && x.Type == NotificationType.UserFollowedNotification,cancellationToken);
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.OwnerId == ownerId && x.Type == NotificationType.UserFollowedNotification,cancellationToken);
 
         
     }

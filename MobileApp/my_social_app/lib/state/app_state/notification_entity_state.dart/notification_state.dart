@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multimedia/models/multimedia.dart';
 
 @immutable
 class NotificationState{
@@ -15,6 +16,7 @@ class NotificationState{
   final String? commentContent;
   final int? questionId;
   final int? solutionId;
+  final Multimedia? image;
 
   const NotificationState({
     required this.id,
@@ -30,6 +32,7 @@ class NotificationState{
     required this.userName,
     required this.commentContent,
     required this.solutionId,
+    required this.image
   });
 
   NotificationState markAsViewed()
@@ -47,5 +50,6 @@ class NotificationState{
         userName: userName,
         commentContent: commentContent,
         solutionId: solutionId,
+        image: image
       );
 }

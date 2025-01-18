@@ -136,7 +136,7 @@ final store = Store(
     updateUserNameMiddleware,
     updateNameMiddleware,
     updateBiographyMidleware,
-    updateUserImageMiddleware,
+    uploadUserImageMiddleware,
     removeUserImageMiddleware,
 
     //search state

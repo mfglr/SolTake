@@ -74,7 +74,7 @@ class _SolutionVideoPageSliderState extends State<SolutionVideoPageSlider> {
                               Container(
                                 margin: const EdgeInsets.only(right: 8),
                                 child: UserImageWidget(
-                                  userId: solution.userId,
+                                  image: solution.image,
                                   diameter: 45
                                 ),
                               ),

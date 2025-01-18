@@ -20,7 +20,7 @@ namespace MySocailApp.Application.Commands.CommentAggregate.DeleteComment
                 await _commentWriteRepository.GetAsync(request.CommentId, cancellationToken) ??
                 throw new CommentNotFoundException();
 
-            if (userId != comment.AppUserId)
+            if (userId != comment.UserId)
                 throw new PermissionDeniedToDeleteCommentException();
 
             _commentWriteRepository.Delete(comment);

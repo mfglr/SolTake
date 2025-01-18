@@ -8,7 +8,6 @@ part of 'user.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       id: (json['id'] as num).toInt(),
-      hasImage: json['hasImage'] as bool,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: json['updatedAt'] == null
           ? null
@@ -25,6 +24,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       paginationDate: json['paginationDate'] == null
           ? null
           : DateTime.parse(json['paginationDate'] as String),
+      image: json['image'] == null
+          ? null
+          : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -34,7 +36,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'userName': instance.userName,
       'name': instance.name,
       'biography': instance.biography,
-      'hasImage': instance.hasImage,
       'numberOfQuestions': instance.numberOfQuestions,
       'numberOfFollowers': instance.numberOfFollowers,
       'numberOfFolloweds': instance.numberOfFolloweds,
@@ -42,4 +43,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'isFollowed': instance.isFollowed,
       'paginationKey': instance.paginationKey,
       'paginationDate': instance.paginationDate?.toIso8601String(),
+      'image': instance.image,
     };

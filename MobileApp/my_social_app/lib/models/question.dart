@@ -31,6 +31,7 @@ class Question{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final int numberOfComments;
+  final Multimedia? image;
 
   const Question({
     required this.id,
@@ -52,6 +53,7 @@ class Question{
     required this.numberOfComments,
     required this.isOwner,
     required this.state,
+    required this.image
   });
 
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
@@ -77,6 +79,7 @@ class Question{
     numberOfSolutions: numberOfSolutions,
     numberOfCorrectSolutions: numberOfCorrectSolutions,
     numberOfVideoSolutions: numberOfVideoSolutions,
+    image: image,
     likes: Pagination.init(usersPerPage,true),
     comments: Pagination.init(commentsPerPage,true),
     solutions: Pagination.init(solutionsPerPage,true),

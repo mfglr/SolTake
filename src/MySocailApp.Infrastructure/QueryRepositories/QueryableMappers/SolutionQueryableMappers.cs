@@ -16,27 +16,33 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     (solution, account) => new { solution, account.UserName }
                 )
                 .Join(
+                    context.Users,
+                    join => join.solution.UserId,
+                    user => user.Id,
+                    (join,user) => new { join, user }
+                )
+                .Join(
                     context.Questions,
-                    join => join.solution.QuestionId,
+                    join1 => join1.join.solution.QuestionId,
                     question => question.Id,
-                    (join, question) => new SolutionResponseDto(
-                        join.solution.Id,
-                        join.solution.CreatedAt,
-                        join.solution.UpdatedAt,
-                        join.solution.QuestionId,
-                        join.UserName.Value,
-                        join.solution.UserId,
-                        join.solution.Content.Value,
-                        join.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Upvote),
-                        join.solution.Votes.Count(v => v.Type == SolutionVoteType.Upvote),
-                        join.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Downvote),
-                        join.solution.Votes.Count(v => v.Type == SolutionVoteType.Downvote),
-                        context.Comments.Count(c => c.SolutionId == join.solution.Id),
-                        join.solution.State,
-                        join.solution.UserId == accountId,
-                        join.solution.Savers.Any(x => x.AppUserId == accountId),
+                    (join1, question) => new SolutionResponseDto(
+                        join1.join.solution.Id,
+                        join1.join.solution.CreatedAt,
+                        join1.join.solution.UpdatedAt,
+                        join1.join.solution.QuestionId,
+                        join1.join.UserName.Value,
+                        join1.join.solution.UserId,
+                        join1.join.solution.Content.Value,
+                        join1.join.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Upvote),
+                        join1.join.solution.Votes.Count(v => v.Type == SolutionVoteType.Upvote),
+                        join1.join.solution.Votes.Any(v => v.AppUserId == accountId && v.Type == SolutionVoteType.Downvote),
+                        join1.join.solution.Votes.Count(v => v.Type == SolutionVoteType.Downvote),
+                        context.Comments.Count(c => c.SolutionId == join1.join.solution.Id),
+                        join1.join.solution.State,
+                        join1.join.solution.UserId == accountId,
+                        join1.join.solution.Savers.Any(x => x.UserId == accountId),
                         question.UserId == accountId,
-                        join.solution.Medias.Select(
+                        join1.join.solution.Medias.Select(
                             i => new SolutionMediaResponseDto(
                                 i.Id,
                                 i.SolutionId,
@@ -49,7 +55,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 i.Duration,
                                 i.MultimediaType
                             )
-                        )
+                        ),
+                        join1.user.Image
                     )
                 );
 

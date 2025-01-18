@@ -4,7 +4,7 @@ using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class AppUserQueryableMappers
+    public static class UserQueryableMappers
     {
         public static IQueryable<UserResponseDto> ToUserResponseDto(this IQueryable<User> query, AppDbContext context, int accountId)
             => query
@@ -19,12 +19,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         account.UserName.Value,
                         user.Name,
                         user.Biography.Value,
-                        user.HasImage,
                         context.Questions.Count(x => x.UserId == user.Id),
                         context.Follows.Count(x => x.FollowedId == user.Id),
                         context.Follows.Count(x => x.FollowerId == user.Id),
                         context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),
-                        context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id)
+                        context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id),
+                        user.Image
                     )
                 );
     }

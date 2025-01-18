@@ -49,7 +49,7 @@ class NotificationItem extends StatelessWidget {
                     badgeColor: Colors.transparent,
                   ),
                   child: UserImageWidget(
-                    userId: notification.appUserId,
+                    image: notification.image,
                     diameter: 45
                   ),
                 )

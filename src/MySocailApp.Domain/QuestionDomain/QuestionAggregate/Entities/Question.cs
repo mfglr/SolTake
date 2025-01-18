@@ -79,7 +79,7 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         public IReadOnlyList<QuestionUserSave> Savers => _savers;
         public QuestionUserSave Save(int appUserId)
         {
-            if (_savers.Any(x => x.AppUserId == appUserId))
+            if (_savers.Any(x => x.UserId == appUserId))
                 throw new QuestionAlreadySavedException();
             var save = QuestionUserSave.Create(appUserId);
             _savers.Add(save);
@@ -87,12 +87,12 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         }
         public void Unsave(int appUserId)
         {
-            var save = _savers.FirstOrDefault(x => x.AppUserId == appUserId) ?? throw new QuestionNotSavedException();
+            var save = _savers.FirstOrDefault(x => x.UserId == appUserId) ?? throw new QuestionNotSavedException();
             _savers.Remove(save);
         }
         public void DeleteSave(int appUserId)
         {
-            var index = _savers.FindIndex(x => x.AppUserId == appUserId);
+            var index = _savers.FindIndex(x => x.UserId == appUserId);
             if (index == -1) return;
             _savers.RemoveAt(index);
         }

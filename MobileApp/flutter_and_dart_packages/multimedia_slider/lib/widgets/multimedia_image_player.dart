@@ -6,8 +6,9 @@ import 'package:multimedia/models/multimedia_status.dart';
 
 class MultimediaImagePlayer extends StatefulWidget {
   final String blobServiceUrl;
-  final Multimedia media;
+  final Multimedia? media;
   final String notFoundImagePath;
+  final String noImagePath;
   final Map<String,String>? headers;
   
   const MultimediaImagePlayer({
@@ -15,6 +16,7 @@ class MultimediaImagePlayer extends StatefulWidget {
     required this.media,
     required this.blobServiceUrl,
     required this.notFoundImagePath,
+    required this.noImagePath,
     this.headers
   });
 
@@ -30,7 +32,7 @@ class _MultimediaImagePlayerState extends State<MultimediaImagePlayer> {
   @override
   void initState() {
     _status = MultimediaStatus.started;
-    url = "${widget.blobServiceUrl}/${widget.media.containerName}/${widget.media.blobName}";
+    url = "${widget.blobServiceUrl}/${widget.media?.containerName}/${widget.media?.blobName}";
     
     DefaultCacheManager()
       .getSingleFile(url,headers: widget.headers)
@@ -47,9 +49,18 @@ class _MultimediaImagePlayerState extends State<MultimediaImagePlayer> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context){
+        if(widget.media == null){
+          return Image.asset(
+            widget.noImagePath,
+            fit: BoxFit.contain
+          );
+        }
         if(_status == MultimediaStatus.done) return Image.memory(_image,fit: BoxFit.contain);
         if (_status == MultimediaStatus.started) return const Center(child: CircularProgressIndicator());
-        return Image.asset(widget.notFoundImagePath,fit: BoxFit.contain);
+        return Image.asset(
+          widget.notFoundImagePath,
+          fit: BoxFit.contain
+        );
       }
     );
   }

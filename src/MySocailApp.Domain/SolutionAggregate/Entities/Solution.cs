@@ -124,7 +124,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public IReadOnlyCollection<SolutionUserSave> Savers => _savers;
         public SolutionUserSave Save(int saverId)
         {
-            if (_savers.Any(x => x.AppUserId == saverId))
+            if (_savers.Any(x => x.UserId == saverId))
                 throw new SolutionAlreadySavedException();
             var save = SolutionUserSave.Create(saverId);
             _savers.Add(save);
@@ -132,7 +132,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         }
         public void Unsave(int saverId)
         {
-            var index = _savers.FindIndex(x => x.AppUserId == saverId);
+            var index = _savers.FindIndex(x => x.UserId == saverId);
             if (index == -1) return;
             _savers.RemoveAt(index);
         }

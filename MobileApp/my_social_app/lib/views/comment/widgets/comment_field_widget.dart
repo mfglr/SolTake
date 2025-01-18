@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/comment_font_size.dart';
-import 'package:my_social_app/state/app_state/account_state/account_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/user_image_widget.dart';
 
 class CommentFieldWidget extends StatelessWidget {
@@ -45,10 +45,10 @@ class CommentFieldWidget extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.only(right: 5),
-              child: StoreConnector<AppState,AccountState?>(
-                converter: (store) => store.state.accountState,
-                builder:(context,accountState) => UserImageWidget(
-                  userId: accountState!.id,
+              child: StoreConnector<AppState,UserState>(
+                converter: (store) => store.state.currentUser!,
+                builder:(context,user) => UserImageWidget(
+                  image: user.image,
                   diameter: 40
                 )
               ),

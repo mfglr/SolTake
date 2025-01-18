@@ -13,7 +13,7 @@ import 'package:my_social_app/views/home_page/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
 import 'package:my_social_app/views/search/pages/search_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/profile_image_widget.dart';
 import 'package:badges/badges.dart' as badges;
 
 class RootView extends StatefulWidget {
@@ -60,7 +60,7 @@ class _RootViewState extends State<RootView> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState?>(
       onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
-      converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],
+      converter: (store) => store.state.currentUser,
       builder: (context,user){
         if(user == null) return const ApplicationLoadingPage();
         return Scaffold(
@@ -104,12 +104,12 @@ class _RootViewState extends State<RootView> {
               ),
         
               NavigationDestination(
-                selectedIcon: UserImageWidget(
-                  userId: user.id,
+                selectedIcon: ProfileImageWidget(
+                  user: user,
                   diameter: 30
                 ),
-                icon: UserImageWidget(
-                  userId: user.id,
+                icon: ProfileImageWidget(
+                  user: user,
                   diameter: 30
                 ),
                 label: '',

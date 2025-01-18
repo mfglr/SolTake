@@ -23,6 +23,7 @@ class SolutionState{
   final int numberOfComments;
   final Pagination comments;
   final bool doesBelongToQuestionOfCurrentUser;
+  final Multimedia? image;
 
   const SolutionState({
     required this.id,
@@ -44,7 +45,8 @@ class SolutionState{
     required this.state,
     required this.upvotes,
     required this.downvotes,
-    required this.doesBelongToQuestionOfCurrentUser
+    required this.doesBelongToQuestionOfCurrentUser,
+    required this.image
   });
 
   String formatUserName(int count)
@@ -63,7 +65,8 @@ class SolutionState{
     int? newNumberOfComments,
     int? newState,
     Pagination? newUpvotes,
-    Pagination? newDownvotes
+    Pagination? newDownvotes,
+    Multimedia? newImage,
   })
     => SolutionState(
         id: id,
@@ -85,7 +88,8 @@ class SolutionState{
         state: newState ?? state,
         upvotes: newUpvotes ?? upvotes,
         downvotes: newDownvotes ?? downvotes,
-        doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser
+        doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
+        image: newImage ?? image
       );
 
   SolutionState startLoadingNextUpvotes()

@@ -22,6 +22,9 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       state: (json['state'] as num).toInt(),
       medias: (json['medias'] as List<dynamic>)
           .map((e) => Multimedia.fromJson(e as Map<String, dynamic>)),
+      image: json['image'] == null
+          ? null
+          : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
@@ -37,4 +40,5 @@ Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'content': instance.content,
       'state': instance.state,
       'medias': instance.medias.toList(),
+      'image': instance.image,
     };

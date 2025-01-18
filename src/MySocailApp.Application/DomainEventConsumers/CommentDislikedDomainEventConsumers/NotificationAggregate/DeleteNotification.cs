@@ -12,7 +12,7 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentDislikedDomainEven
 
         public async Task Handle(CommentDislikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = await _notficationWriteRepository.GetCommentLikedNotificationAsync(notification.Comment.Id, notification.Comment.AppUserId, cancellationToken);
+            var n = await _notficationWriteRepository.GetCommentLikedNotificationAsync(notification.Comment.Id, notification.Comment.UserId, cancellationToken);
             if (n == null) return;
 
             _notficationWriteRepository.Delete(n);

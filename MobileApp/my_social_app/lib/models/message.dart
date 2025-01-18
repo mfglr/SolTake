@@ -19,6 +19,7 @@ class Message{
   final String? content; 
   final int state;
   final Iterable<Multimedia> medias;
+  final Multimedia? image;
   
   const Message({
     required this.id,
@@ -32,7 +33,8 @@ class Message{
     required this.isEdited,
     required this.content,
     required this.state,
-    required this.medias
+    required this.medias,
+    required this.image
   });
 
 
@@ -52,6 +54,7 @@ class Message{
         isEdited: isEdited,
         content: content,
         state: state,
-        medias: medias
+        medias: medias,
+        image: image
       );
 }

@@ -1,6 +1,8 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:multimedia/models/multimedia_type.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
 @immutable
@@ -11,12 +13,13 @@ class UserState{
   final String userName;
   final String name;
   final String biography;
-  final bool hasImage;
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;
   final bool isFollower;
   final bool isFollowed;
+  final Multimedia? image;
+  final UserImageState? userImageState;
   final Pagination followers;
   final Pagination followeds;
   final Pagination notFolloweds;
@@ -42,7 +45,6 @@ class UserState{
     required this.createdAt,
     required this.updatedAt,
     required this.userName,
-    required this.hasImage,
     required this.name,
     required this.biography,
     required this.numberOfQuestions,
@@ -60,6 +62,8 @@ class UserState{
     required this.messages,
     required this.notFolloweds,
     required this.conversations,
+    required this.image,
+    required this.userImageState
   });
 
   UserState _optional({
@@ -67,7 +71,6 @@ class UserState{
     String? newUserName,
     String? newName,
     String? newBiography,
-    bool? newHasImage,
     int? newNumberOfQuestions,
     int? newNumberOfFollowers,
     int? newNumberOfFolloweds,
@@ -83,6 +86,8 @@ class UserState{
     Pagination? newMessages,
     Pagination? newNotFolloweds,
     Pagination? newConversations,
+    Multimedia? newImage,
+    UserImageState? newUserImageState
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -90,7 +95,6 @@ class UserState{
     userName: newUserName ?? userName,
     name: newName ?? name,
     biography: newBiography ?? biography,
-    hasImage: newHasImage ?? hasImage,
     numberOfQuestions: newNumberOfQuestions ?? numberOfQuestions,
     numberOfFollowers: newNumberOfFollowers ?? numberOfFollowers,
     numberOfFolloweds: newNumberOfFolloweds ?? numberOfFolloweds,
@@ -106,19 +110,10 @@ class UserState{
     messages: newMessages ?? messages,
     notFolloweds: newNotFolloweds ?? notFolloweds,
     conversations: newConversations ?? conversations,
+    image: newImage ?? image,
+    userImageState: newUserImageState ?? userImageState
   );
 
-  static Multimedia multimedia(int id) => Multimedia(
-    containerName: "ProfileImages",
-    blobName: id.toString(),
-    blobNameOfFrame: null,
-    size: 0,
-    height: 0,
-    width: 0,
-    duration: 0,
-    multimediaType: MultimediaType.image
-  );
-  
   //followers
   UserState startLoadingNextFollowers() => 
     _optional(newFollowers: followers.startLoadingNext());
@@ -301,16 +296,44 @@ class UserState{
   UserState removeConversation(int id) =>
     _optional(newConversations: conversations.removeOne(id));
 
-  UserState changeProfileImageStatus(bool value) =>
-    _optional(newHasImage: value);
   UserState updateUserName(String userName) =>
     _optional(newUserName: userName);
   UserState updateName(String name) =>
     _optional(newName: name);
   UserState updateBiography(String biography) =>
     _optional(newBiography: biography);
-  UserState updateImage() => 
-    _optional(newHasImage: true);
-  UserState removeImage() =>
-    _optional(newHasImage: false);
+
+  UserState uploadImage(AppFile image) =>
+    _optional(newUserImageState: UserImageState(image: image, rate: 0, status: UploadStatus.loading));
+  UserState uploadImageSuccess(Multimedia image) => 
+    _optional(newImage: image, newUserImageState: userImageState?.success());
+  UserState uploadImageFailed() =>
+    _optional(newUserImageState: userImageState?.failed());
+  UserState removeImage() => UserState(
+    id: id,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+    userName: userName,
+    name: name,
+    biography: biography,
+    numberOfQuestions: numberOfQuestions,
+    numberOfFollowers: numberOfFollowers,
+    numberOfFolloweds: numberOfFolloweds,
+    isFollower: isFollower,
+    isFollowed: isFollowed,
+    followers: followers,
+    followeds: followeds,
+    questions: questions,
+    solvedQuestions: solvedQuestions,
+    unsolvedQuestions: unsolvedQuestions,
+    savedQuestions: savedQuestions,
+    savedSolutions: savedSolutions,
+    messages: messages,
+    notFolloweds: notFolloweds,
+    conversations: conversations,
+    image: null,
+    userImageState: userImageState
+  );
+  UserState changeRate(rate)
+    => _optional(newUserImageState: userImageState?.changeRate(rate));
 }

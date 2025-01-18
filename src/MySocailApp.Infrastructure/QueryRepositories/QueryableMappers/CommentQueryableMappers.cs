@@ -9,24 +9,31 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<CommentResponseDto> ToCommentResponseDto(this IQueryable<Comment> query, AppDbContext context, int accountId)
             => query
                 .Join(
+                    context.Users,
+                    comment => comment.UserId,
+                    user => user.Id,
+                    (comment, user) => new { comment, user } 
+                )
+                .Join(
                     context.Accounts,
-                    comment => comment.AppUserId,
+                    join => join.comment.UserId,
                     account => account.Id,
-                    (comment, account) => new CommentResponseDto(
-                        comment.Id,
-                        comment.CreatedAt,
-                        comment.UpdatedAt,
+                    (join, account) => new CommentResponseDto(
+                        join.comment.Id,
+                        join.comment.CreatedAt,
+                        join.comment.UpdatedAt,
                         account.UserName.Value,
-                        comment.AppUserId,
-                        comment.IsEdited,
-                        comment.Content.Value,
-                        comment.Likes.Any(l => l.AppUserId == accountId),
-                        comment.Likes.Count,
-                        context.Comments.Count(c => c.ParentId == comment.Id),
-                        comment.AppUserId == accountId,
-                        comment.QuestionId,
-                        comment.SolutionId,
-                        comment.ParentId
+                        join.comment.UserId,
+                        join.comment.IsEdited,
+                        join.comment.Content.Value,
+                        join.comment.Likes.Any(l => l.UserId == accountId),
+                        join.comment.Likes.Count,
+                        context.Comments.Count(c => c.ParentId == join.comment.Id),
+                        join.comment.UserId == accountId,
+                        join.comment.QuestionId,
+                        join.comment.SolutionId,
+                        join.comment.ParentId,
+                        join.user.Image
                     )
                 );
     }

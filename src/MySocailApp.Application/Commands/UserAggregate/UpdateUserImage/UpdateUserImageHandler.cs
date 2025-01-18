@@ -26,7 +26,6 @@ namespace MySocailApp.Application.Commands.UserAggregate.UpdateUserImage
                 image = await _multiMediaService.UploadAsync(ContainerName.ProfileImages, request.File, cancellationToken);
                 user.UpdateImage(image);
                 await _unitOfWork.CommitAsync(cancellationToken);
-
                 return image;
             }
             catch (Exception)

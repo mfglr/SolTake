@@ -40,7 +40,7 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
 
         public Task<Solution?> GetWithSaverByIdAsync(int solutionId, int saverId, CancellationToken cancellationToken)
             => _context.Solutions
-                .Include(x => x.Savers.Where(x => x.AppUserId == saverId))
+                .Include(x => x.Savers.Where(x => x.UserId == saverId))
                 .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
         
         public Task<List<Solution>> GetUserSolutionsAsync(int userId, CancellationToken cancellationToken)
@@ -62,7 +62,7 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
 
         public async Task DeleteSolutionUserSavesByUserId(int userId, CancellationToken cancellation)
         {
-            var saves = await _context.SolutionUserSaves.Where(x => x.AppUserId == userId).ToListAsync(cancellation);
+            var saves = await _context.SolutionUserSaves.Where(x => x.UserId == userId).ToListAsync(cancellation);
             _context.SolutionUserSaves.RemoveRange(saves);
         }
         public async Task DeleteSolutionUserVotesByUserId(int userId, CancellationToken cancellationToken)

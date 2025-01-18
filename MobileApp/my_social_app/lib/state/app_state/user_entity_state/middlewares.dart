@@ -16,9 +16,6 @@ import 'package:my_social_app/state/app_state/solution_user_save_entity_state/ac
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_user_image_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
@@ -319,21 +316,17 @@ void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDisp
   next(action);
 }
 
-void updateUserImageMiddleware(Store<AppState> store, action, NextDispatcher next){
-  if(action is UpdateUserImageAction){
-    store.dispatch(ChangeUploadStateAction(state: UploadUserImageState.init(action)));
+void uploadUserImageMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is UploadUserImageAction){
     UserService()
       .updateImage(
         action.image,
         action.userId,
-        (rate) => store.dispatch(ChangeUploadRateAction(id: action.id,rate: rate))
+        (rate) => store.dispatch(ChangeUserImageRateAction(userId: action.userId, rate: rate))
       )
-      .then((_){
-        store.dispatch(RemoveUploadStateAction(id: action.id));
-        store.dispatch(UpdateUserImageSuccessAction(userId: action.userId));
-      })
+      .then((image) => store.dispatch(UploadUserImageSuccessAction(userId: action.userId, image: image)))
       .catchError((e){
-        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
+        store.dispatch(UploadUserImageFailedAction(userId: action.userId));
         throw e;
       });
   }
@@ -344,9 +337,7 @@ void removeUserImageMiddleware(Store<AppState> store,action,NextDispatcher next)
   if(action is RemoveUserImageAction){
     UserService()
       .removeImage(action.userId)
-      .then((_){
-        store.dispatch(RemoveUserImageSuccessAction(userId: action.userId));
-      });
+      .then((_) => store.dispatch(RemoveUserImageSuccessAction(userId: action.userId)));
   }
   next(action);
 }

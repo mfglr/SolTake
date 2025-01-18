@@ -16,6 +16,7 @@ class MessageState{
   final String? content; 
   final int state;
   final Iterable<Multimedia> medias;
+  final Multimedia? image;
 
   const MessageState({
     required this.id,
@@ -29,7 +30,8 @@ class MessageState{
     required this.isEdited,
     required this.content,
     required this.state,
-    required this.medias
+    required this.medias,
+    required this.image
   });
 
   MessageState _optinal({
@@ -37,6 +39,7 @@ class MessageState{
     bool? newIsEdited,
     String? newContent,
     int? newState,
+    Multimedia? newImage
   })
     => MessageState(
         id: id,
@@ -50,7 +53,8 @@ class MessageState{
         isEdited: newIsEdited ?? isEdited,
         content: newContent ?? content,
         state: newState ?? state,
-        medias: medias
+        medias: medias,
+        image: newImage ?? image
       );
   
   String? formatContent(int count){

@@ -50,9 +50,10 @@ class _DisplayUserImagePageState extends State<DisplayUserImagePage> {
                   child: Transform.scale(
                     scale: _scale,
                     child: MultimediaImagePlayer(
-                      media: UserState.multimedia(state.id),
+                      media: state.image,
                       blobServiceUrl: AppClient.blobService,
-                      notFoundImagePath: "assets/images/no_profile_image.png"
+                      notFoundImagePath: "assets/images/no_profile_image.png",
+                      noImagePath: "assets/images/no_profile_image.png",
                     ),
                   ),
                 ),

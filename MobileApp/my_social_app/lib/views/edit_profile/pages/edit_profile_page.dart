@@ -10,7 +10,7 @@ import 'package:my_social_app/views/edit_profile/pages/edit_user_name_page.dart'
 import 'package:my_social_app/views/edit_profile/widgets/edit_user_field_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/shared/user_image_widget.dart';
+import 'package:my_social_app/views/shared/profile_image_widget.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -44,7 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState>(
-      converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id]!,
+      converter: (store) => store.state.currentUser!,
       builder:(contex,user){
         return Scaffold(
           appBar: AppBar(
@@ -72,8 +72,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                UserImageWidget(
-                                  userId: user.id,
+                                ProfileImageWidget(
+                                  user: user,
                                   diameter: 100,
                                 ),
                                 IconButton(

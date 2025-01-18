@@ -57,7 +57,10 @@ class SolutionItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
-                        child: UserImageWidget( userId: solution.userId, diameter: 45),
+                        child: UserImageWidget(
+                          image: solution.image,
+                          diameter: 45
+                        ),
                       ),
                       Text(solution.formatUserName(10))
                     ],

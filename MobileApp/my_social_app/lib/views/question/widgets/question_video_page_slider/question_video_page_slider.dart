@@ -111,7 +111,7 @@ class _QuestionVideoPageSliderState extends State<QuestionVideoPageSlider> with 
                                 Container(
                                   margin: const EdgeInsets.only(right: 8),
                                   child: UserImageWidget(
-                                    userId: question.userId,
+                                    image: question.image,
                                     diameter: 45
                                   ),
                                 ),

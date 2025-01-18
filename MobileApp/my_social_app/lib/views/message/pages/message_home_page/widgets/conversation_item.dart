@@ -38,7 +38,7 @@ class ConversationItem extends StatelessWidget {
                     Container(
                       margin: const EdgeInsets.only(right: 5),
                       child: UserImageWidget(
-                        userId: message.conversationId,
+                        image: message.image,
                         diameter: 50
                       ),
                     ),

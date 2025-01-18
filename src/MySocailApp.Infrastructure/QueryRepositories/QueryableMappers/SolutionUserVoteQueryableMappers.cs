@@ -13,7 +13,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     context.Accounts,
                     suv => suv.AppUserId,
                     account => account.Id,
-                    (suv,account) => new {suv, account.UserName }
+                    (suv,account) => new { suv, account.UserName }
                 )
                 .Join(
                     context.Users,
@@ -32,12 +32,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             join.UserName.Value,
                             user.Name,
                             user.Biography.Value,
-                            user.HasImage,
                             context.Questions.Count(q => q.UserId == user.Id),
                             context.Follows.Count(f => f.FollowedId == user.Id),
                             context.Follows.Count(f => f.FollowerId == user.Id),
                             context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),
-                            context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id)
+                            context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id),
+                            user.Image
                         )
                     )
                 );

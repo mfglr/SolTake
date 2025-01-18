@@ -72,6 +72,7 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
               return MultimediaImagePlayer(
                 media: media,
                 notFoundImagePath: widget.notFoundMediaPath,
+                noImagePath: widget.noMediaPath,
                 blobServiceUrl: widget.blobServiceUrl,
                 headers: widget.headers,
               );

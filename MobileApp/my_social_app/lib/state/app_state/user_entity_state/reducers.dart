@@ -132,18 +132,23 @@ UserEntityState loadUserReducer(UserEntityState prev,AddUserAction action)
 UserEntityState addUsersReducer(UserEntityState prev,AddUsersAction action)
   => prev.addUsers(action.users);
 
-UserEntityState changeProfileImageStatusReducer(UserEntityState prev,ChangeProfileImageStatusAction action)
-  => prev.changeProfileImageStatus(action.userId,action.value);
 UserEntityState updateUserNameReducer(UserEntityState prev,UpdateUserNameSuccessAction action)
   => prev.updateUserName(action.userId, action.userName);
 UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction action)
   => prev.updateName(action.userId, action.name);
 UserEntityState updateBiographyReducer(UserEntityState prev, UpdateBiographySuccessAction action)
   => prev.updateBiography(action.userId, action.biography);
-UserEntityState updateUserImageReducer(UserEntityState prev,UpdateUserImageSuccessAction action)
-  => prev.updateImage(action.userId);
+
+UserEntityState uploadUserImageReducer(UserEntityState prev,UploadUserImageAction action)
+  => prev.uploadImage(action.userId,action.image);
+UserEntityState uploadUserImageSuccessReducer(UserEntityState prev,UploadUserImageSuccessAction action)
+  => prev.uploadImageSuccess(action.userId, action.image);
+UserEntityState uploadUserImageFailedReducer(UserEntityState prev,UploadUserImageFailedAction action)
+  => prev.uploadImageFailed(action.userId);
 UserEntityState remvoeUserImageReducer(UserEntityState prev, RemoveUserImageSuccessAction action)
   => prev.removeImage(action.userId);
+UserEntityState changeUserImageRateReducer(UserEntityState prev, ChangeUserImageRateAction action)
+  => prev.changeImageRate(action.userId,action.rate);
 
 
 Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
@@ -227,10 +232,13 @@ Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntitySta
   TypedReducer<UserEntityState,AddUserAction>(loadUserReducer).call,
   TypedReducer<UserEntityState,AddUsersAction>(addUsersReducer).call,
 
-  TypedReducer<UserEntityState,ChangeProfileImageStatusAction>(changeProfileImageStatusReducer).call,
   TypedReducer<UserEntityState,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
   TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
   TypedReducer<UserEntityState,UpdateBiographySuccessAction>(updateBiographyReducer).call,
-  TypedReducer<UserEntityState,UpdateUserImageSuccessAction>(updateUserImageReducer).call,
+
+  TypedReducer<UserEntityState,UploadUserImageAction>(uploadUserImageReducer).call,
+  TypedReducer<UserEntityState,UploadUserImageSuccessAction>(uploadUserImageSuccessReducer).call,
+  TypedReducer<UserEntityState,UploadUserImageFailedAction>(uploadUserImageFailedReducer).call,
   TypedReducer<UserEntityState,RemoveUserImageSuccessAction>(remvoeUserImageReducer).call,
+  TypedReducer<UserEntityState,ChangeUserImageRateAction>(changeUserImageRateReducer).call,
 ]);

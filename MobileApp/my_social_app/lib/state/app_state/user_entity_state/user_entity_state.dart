@@ -1,4 +1,6 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
@@ -149,16 +151,22 @@ class UserEntityState extends EntityState<UserState>{
   UserEntityState removeConversation(int userId,int id)
     => UserEntityState(entities: updateOne(entities[userId]?.removeConversation(id)));
 
-  UserEntityState changeProfileImageStatus(int userId,bool value)
-    => UserEntityState(entities: updateOne(entities[userId]?.changeProfileImageStatus(value)));
   UserEntityState updateUserName(int userId,String userName)
     => UserEntityState(entities: updateOne(entities[userId]?.updateUserName(userName)));
   UserEntityState updateName(int userId,String name)
     => UserEntityState(entities: updateOne(entities[userId]?.updateName(name)));
   UserEntityState updateBiography(int userId,String biography)
     => UserEntityState(entities: updateOne(entities[userId]?.updateBiography(biography)));
-  UserEntityState updateImage(int userId)
-    => UserEntityState(entities: updateOne(entities[userId]?.updateImage()));
+  
+  UserEntityState uploadImage(int userId, AppFile image)
+    => UserEntityState(entities: updateOne(entities[userId]?.uploadImage(image)));
+  UserEntityState uploadImageSuccess(int userId, Multimedia image)
+    => UserEntityState(entities: updateOne(entities[userId]?.uploadImageSuccess(image)));
+  UserEntityState uploadImageFailed(int userId)
+    => UserEntityState(entities: updateOne(entities[userId]?.uploadImageFailed()));
+
   UserEntityState removeImage(int userId)
     => UserEntityState(entities: updateOne(entities[userId]?.removeImage()));
+  UserEntityState changeImageRate(int userId,double rate)
+    => UserEntityState(entities: updateOne(entities[userId]?.changeRate(rate)));
 }

@@ -59,7 +59,7 @@ class CommentHeaderWidget extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 icon: UserImageWidget(
-                  userId: comment.appUserId, 
+                  image: comment.image, 
                   diameter: diameter ?? 35
                 ),
               ),

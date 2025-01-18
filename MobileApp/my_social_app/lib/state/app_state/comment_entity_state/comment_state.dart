@@ -1,3 +1,4 @@
+import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 
 class CommentState{
@@ -18,6 +19,7 @@ class CommentState{
   final Pagination likes;
   final Pagination replies;
   final bool repliesVisibility;
+  final Multimedia? image;
 
   const CommentState({
     required this.id,
@@ -37,6 +39,7 @@ class CommentState{
     required this.likes,
     required this.replies,
     required this.repliesVisibility,
+    required this.image
   });
 
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
@@ -51,7 +54,8 @@ class CommentState{
     int? newNumberOfReplies,
     Pagination? newLikes,
     Pagination? newReplies,
-    bool? newRepliesVisibility
+    bool? newRepliesVisibility,
+    Multimedia? newImage,
   }) => CommentState(
       id: id,
       createdAt: createdAt,
@@ -69,7 +73,8 @@ class CommentState{
       parentId: parentId,
       likes: newLikes ?? likes,
       replies: newReplies ?? replies,
-      repliesVisibility: newRepliesVisibility ?? repliesVisibility
+      repliesVisibility: newRepliesVisibility ?? repliesVisibility,
+      image: newImage ?? image
     );
 
   CommentState startLoadingNextLikes() => _optional(newLikes: likes.startLoadingNext());

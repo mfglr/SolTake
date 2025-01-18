@@ -22,7 +22,7 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCommentCreatedDom
             var solution = await _solutionReadRepository.GetAsync((int)comment.SolutionId!, cancellationToken);
             if (solution == null) return;
 
-            var n = Notification.SolutionCommentCreatedNotification(solution.UserId, comment.AppUserId, comment.Id, solution.Id, solution.QuestionId);
+            var n = Notification.SolutionCommentCreatedNotification(solution.UserId, comment.UserId, comment.Id, solution.Id, solution.QuestionId);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 

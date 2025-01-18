@@ -30,7 +30,7 @@ class CreateConversationPageUserItem extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(right: 5),
                     child: UserImageWidget(
-                      userId: user.id,
+                      image: user.image,
                       diameter: 50
                     ),
                   ),

@@ -9,7 +9,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.NotificationAggregate
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
             builder.HasIndex(x => x.OwnerId);
-            builder.HasIndex(x => x.AppUserId);
+            builder.HasIndex(x => x.UserId);
             builder.HasIndex(x => x.QuestionId);
             builder.HasIndex(x => x.SolutionId);
             builder.HasIndex(x => x.CommentId);

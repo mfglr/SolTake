@@ -9,13 +9,14 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<NotificationResponseDto> ToNotificationResponseDto(this IQueryable<Notification> query, AppDbContext context)
             =>
                 from n in query
-                join a in context.Accounts on n.AppUserId equals a.Id
+                join a in context.Accounts on n.UserId equals a.Id
+                join u in context.Users on n.UserId equals u.Id
                 join c in context.Comments on n.CommentId equals c.Id into cList from c in cList.DefaultIfEmpty()
                 select new NotificationResponseDto(
                      n.Id,
                      n.CreatedAt,
                      n.OwnerId,
-                     n.AppUserId,
+                     n.UserId,
                      a.UserName.Value,
                      n.IsViewed,
                      n.Type,
@@ -24,7 +25,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                      n.CommentId,
                      c.Content.Value,
                      n.QuestionId,
-                     n.SolutionId
+                     n.SolutionId,
+                     u.Image
                  );
     }
 }

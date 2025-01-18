@@ -10,7 +10,6 @@ class CirclerMultimedia extends StatefulWidget {
   final String blobServiceUrl;
   final String noMediaPath;
   final String notFoundMediaPath;
-  final void Function()? onTap;
   final Map<String,String>? headers;
   final double diameter;
 
@@ -21,7 +20,6 @@ class CirclerMultimedia extends StatefulWidget {
     required this.noMediaPath,
     required this.notFoundMediaPath,
     required this.diameter,
-    this.onTap,
     this.headers,
   });
 
@@ -30,93 +28,109 @@ class CirclerMultimedia extends StatefulWidget {
 }
 
 class _CirclerMultimediaState extends State<CirclerMultimedia> {
-  String? _url;
-  Uint8List? _image;
+  late String _url;
+  late Uint8List _image;
   late MultimediaStatus _status;
   
+  void _setImage(){
+    if(widget.state == null) return;
+    
+    if(widget.state!.multimediaType == MultimediaType.video){
+      _url = "${widget.blobServiceUrl}/${widget.state!.containerName}/${widget.state!.blobNameOfFrame}";
+    }
+    else{
+      _url = "${widget.blobServiceUrl}/${widget.state!.containerName}/${widget.state!.blobName}";
+    }
+    
+    setState(() { _status = MultimediaStatus.started; }); 
+
+    DefaultCacheManager()
+      .getSingleFile(_url,headers: widget.headers)
+      .then((file) => file.readAsBytes())
+      .then((list){
+        if(mounted){
+          setState(() {
+            _image = list;
+            _status = MultimediaStatus.done;
+          });
+        }
+      })
+      .catchError((e){
+        if(mounted){
+          setState(() { _status = MultimediaStatus.notFound; });
+        }
+      });
+  }
+
   @override
   void initState() {
-    if(widget.state != null){
-      if(widget.state!.multimediaType == MultimediaType.video){
-        _url = "${widget.blobServiceUrl}/${widget.state!.containerName}/${widget.state!.blobNameOfFrame}";
-      }
-      else{
-        _url = "${widget.blobServiceUrl}/${widget.state!.containerName}/${widget.state!.blobName}";
-      }
-      _status = MultimediaStatus.started;
-      DefaultCacheManager()
-        .getSingleFile(_url!)
-        .then((file) => file.readAsBytes())
-        .then((list){
-          if(mounted){
-            setState(() {
-              _image = list;
-              _status = MultimediaStatus.done;
-            });
-          }
-        })
-        .catchError((e){
-          if(mounted){
-            setState(() {
-              _status = MultimediaStatus.notFound;
-            });
-          }
-        });
-    }  
+    _setImage();
     super.initState();
   }
 
   @override
+  void didUpdateWidget (CirclerMultimedia oldWidget) {
+    if(oldWidget.state != widget.state){
+      _setImage();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          ClipOval(
-            child: Builder(
-              builder: (context) {
-                if(widget.state == null) return Image.asset(widget.noMediaPath);
-                if(_status == MultimediaStatus.notFound){
-                  return Image.asset(
-                    widget.notFoundMediaPath,
-                    width: widget.diameter,
-                    height: widget.diameter,
-                    fit: BoxFit.cover,
-                  );
-                }
-                if(_status == MultimediaStatus.started){
-                  return SizedBox(
-                    width: widget.diameter,
-                    height: widget.diameter,
-                    child: const Center(
-                      child: CircularProgressIndicator()
-                    ),
-                  );
-                }
-                return Image.memory(
-                  _image!,
-                  fit: BoxFit.cover,
-                  height: widget.diameter,
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        ClipOval(
+          child: Builder(
+            builder: (context) {
+              if(widget.state == null){
+                return Image.asset(
+                  widget.noMediaPath,
                   width: widget.diameter,
+                  height: widget.diameter,
+                  fit: BoxFit.cover,
                 );
               }
-            )
-          ),
-          if(widget.state != null && widget.state!.multimediaType == MultimediaType.video)
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withAlpha(153),
-                shape: BoxShape.circle
-              ),
-              child: const Icon(
-                Icons.play_arrow_rounded,
-                color: Colors.white,
-                size: 40,
-              ),
-            )
-        ],
-      ),
+              if(_status == MultimediaStatus.notFound){
+                return Image.asset(
+                  widget.notFoundMediaPath,
+                  width: widget.diameter,
+                  height: widget.diameter,
+                  fit: BoxFit.cover,
+                );
+              }
+              if(_status == MultimediaStatus.started){
+                return SizedBox(
+                  width: widget.diameter,
+                  height: widget.diameter,
+                  child: const Center(
+                    child: CircularProgressIndicator()
+                  ),
+                );
+              }
+              return Image.memory(
+                _image,
+                fit: BoxFit.cover,
+                height: widget.diameter,
+                width: widget.diameter,
+              );
+            }
+          )
+        ),
+        if(widget.state != null && widget.state!.multimediaType == MultimediaType.video)
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withAlpha(153),
+              shape: BoxShape.circle
+            ),
+            child: const Icon(
+              Icons.play_arrow_rounded,
+              color: Colors.white,
+              size: 40,
+            ),
+          )
+      ],
     );
   }
 }

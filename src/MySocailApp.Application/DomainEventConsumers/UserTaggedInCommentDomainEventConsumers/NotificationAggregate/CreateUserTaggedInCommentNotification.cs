@@ -29,7 +29,7 @@ namespace MySocailApp.Application.DomainEventConsumers.UserTaggedInCommentDomain
             var n = Notification
                 .UserTaggedToCommentNotification(
                     notification.UserId,
-                    notification.Comment.AppUserId,
+                    notification.Comment.UserId,
                     notification.Comment.Id,
                     comment.QuestionId ?? parent?.QuestionId,
                     comment.SolutionId ?? parent?.SolutionId,

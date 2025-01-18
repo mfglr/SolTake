@@ -6,7 +6,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
     public class Notification : Entity, IAggregateRoot
     {
         public int OwnerId { get; private set; }
-        public int AppUserId { get; private set; }
+        public int UserId { get; private set; }
         public bool IsViewed { get; private set; }
         public NotificationType Type { get; private set; }
         public int? ParentId { get; private set; }
@@ -23,7 +23,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.QuestionCommentCreatedNotification)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 CommentId = commentId,
                 QuestionId = questionId,
                 CreatedAt = DateTime.UtcNow,
@@ -33,7 +33,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.SolutionCommentCreatedNotification)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 CommentId = commentId,
                 SolutionId = solutionId,
                 QuestionId = questionId,
@@ -44,7 +44,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.CommentRepliedNotification)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 ParentId = parentId,
                 RepliedId = repliedId,
                 CommentId = commentId,
@@ -58,7 +58,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             {
                 OwnerId = ownerId,
                 QuestionId = questionId,
-                AppUserId = likerId,
+                UserId = likerId,
                 CreatedAt = DateTime.UtcNow,
             };
 
@@ -70,7 +70,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
                 SolutionId = solutionId,
                 ParentId = parentId,
                 CommentId = commentId,
-                AppUserId = likerId,
+                UserId = likerId,
                 CreatedAt = DateTime.UtcNow,
             };
 
@@ -81,7 +81,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
                 OwnerId = ownerId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
-                AppUserId = userId,
+                UserId = userId,
                 CreatedAt = DateTime.UtcNow,
             };
 
@@ -89,7 +89,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.UserTaggedCommentNotification)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
                 ParentId = parentId,
@@ -101,7 +101,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.UserFollowedNotification)
             {
                 OwnerId = followedId,
-                AppUserId = followerId,
+                UserId = followerId,
                 CreatedAt = DateTime.UtcNow,
             };
 
@@ -109,7 +109,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.SolutionMarkedAdIncorrect)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
@@ -119,7 +119,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.SolutionMarkedAsCorrect)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
@@ -129,7 +129,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.QuestionSolvedNotification)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow,
@@ -139,7 +139,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.SolutionWasUpvotedNotification)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow
@@ -149,7 +149,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             => new(NotificationType.SolutionWasDownvotedNotification)
             {
                 OwnerId = ownerId,
-                AppUserId = userId,
+                UserId = userId,
                 QuestionId = questionId,
                 SolutionId = solutionId,
                 CreatedAt = DateTime.UtcNow
