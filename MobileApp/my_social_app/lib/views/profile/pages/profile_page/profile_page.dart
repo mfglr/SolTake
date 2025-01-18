@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_info_card_widget.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_menu_button.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_solved_questions_page.dart';
@@ -14,7 +15,6 @@ import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
-import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -157,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Container(
                 padding: const EdgeInsets.all(5),
-                child: UserInfoCardWidget(user: user)
+                child: ProfileInfoCardWidget(user: user)
               ),
               LabelPaginationWidget(
                 labelCount: 3,
