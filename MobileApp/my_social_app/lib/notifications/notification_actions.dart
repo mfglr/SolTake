@@ -182,7 +182,7 @@ void _onUserFollowed(BuildContext context,NotificationState notification){
     .push(
       MaterialPageRoute(
         builder: (context) => UserPage(
-          userId: notification.appUserId
+          userId: notification.userId
         )
       )
     );

@@ -2,7 +2,7 @@
 {
     public class UserFollowNotification
     {
-        public int AppUserId { get; private set; }
+        public int UserId { get; private set; }
         public int FollowerId { get; private set; }
         public DateTime CreatedAt { get; private set; }
 

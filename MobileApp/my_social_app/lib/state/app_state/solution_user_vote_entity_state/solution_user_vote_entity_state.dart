@@ -15,5 +15,5 @@ class SolutionUserVoteEntityState extends EntityState<SolutionUserVoteState>{
     => SolutionUserVoteEntityState(entities: removeOne(id));
 
   SolutionUserVoteState? select(int solutionId,int userId)
-    => entities.values.firstWhereOrNull((e) => e.solutionId == solutionId && e.appUserId == userId);
+    => entities.values.firstWhereOrNull((e) => e.solutionId == solutionId && e.userId == userId);
 }

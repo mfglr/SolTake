@@ -167,19 +167,19 @@ class AppState{
       );
   Iterable<UserState> selectQuestionLikes(int questionId)
     => questionEntityState.entities[questionId]!.likes.ids.map(
-      (e) => userEntityState.entities[questionUserLikeEntityState.entities[e]!.appUserId]!
+      (e) => userEntityState.entities[questionUserLikeEntityState.entities[e]!.userId]!
     );
   Iterable<UserState> selectCommentLikes(int commentId)
     => commentEntityState.entities[commentId]!.likes.ids.map(
-      (e) => userEntityState.entities[commentUserLikeEntityState.entities[e]!.appUserId]!
+      (e) => userEntityState.entities[commentUserLikeEntityState.entities[e]!.userId]!
     );
   Iterable<UserState> selectSolutionUpvotes(int solutionId)
     => solutionEntityState.entities[solutionId]!.upvotes.ids.map(
-      (voteId) => userEntityState.entities[solutionUserVoteEntityState.entities[voteId]!.appUserId]!
+      (voteId) => userEntityState.entities[solutionUserVoteEntityState.entities[voteId]!.userId]!
     );
   Iterable<UserState> selectSolutionDownvotes(int solutionId)
     => solutionEntityState.entities[solutionId]!.downvotes.ids.map(
-      (voteId) => userEntityState.entities[solutionUserVoteEntityState.entities[voteId]!.appUserId]!
+      (voteId) => userEntityState.entities[solutionUserVoteEntityState.entities[voteId]!.userId]!
     );
   Iterable<UserState> selectUserConversations(int userId)
     => userEntityState.entities[userId]!.conversations.ids.map((id) => userEntityState.entities[id]!);

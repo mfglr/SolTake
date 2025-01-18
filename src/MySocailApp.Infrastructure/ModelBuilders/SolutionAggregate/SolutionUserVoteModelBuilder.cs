@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
     {
         public void Configure(EntityTypeBuilder<SolutionUserVote> builder)
         {
-            builder.HasIndex(x => new { x.AppUserId, x.Type });
+            builder.HasIndex(x => new { x.UserId, x.Type });
         }
     }
 }

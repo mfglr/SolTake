@@ -37,7 +37,7 @@ void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatch
       .getCommentLikes(action.commentId, pagination.next)
       .then((likes){
         store.dispatch(AddCommentUserLikesAction(likes: likes.map((e) => e.toCommentUserLikeState())));
-        store.dispatch(AddUsersAction(users: likes.map((e) => e.appUser!.toUserState())));
+        store.dispatch(AddUsersAction(users: likes.map((e) => e.user!.toUserState())));
         store.dispatch(NextCommentLikesSuccessAction(commentId: action.commentId,likeIds: likes.map((e) => e.id)));
       });
   }

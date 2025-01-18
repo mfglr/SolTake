@@ -48,7 +48,7 @@ class CommentHeaderWidget extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => UserPage(
-                        userId: comment.appUserId,
+                        userId: comment.userId,
                         userName: null,
                       )
                     )
@@ -77,7 +77,7 @@ class CommentHeaderWidget extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => UserPage(
-                                userId: comment.appUserId,
+                                userId: comment.userId,
                                 userName: null,
                               )
                             )

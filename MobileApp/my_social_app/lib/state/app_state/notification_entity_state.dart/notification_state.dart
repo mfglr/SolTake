@@ -6,7 +6,7 @@ import 'package:my_social_app/models/avatar.dart';
 class NotificationState implements Avatar{
   final int id;
   final int ownerId;
-  final int appUserId;
+  final int userId;
   final String userName;
   final DateTime createdAt;
   final bool isViewed;
@@ -20,7 +20,7 @@ class NotificationState implements Avatar{
   final Multimedia? image;
 
   @override
-  int get avatarId => id;
+  int get avatarId => userId;
 
   @override
   Multimedia? get avatar => image;
@@ -36,7 +36,7 @@ class NotificationState implements Avatar{
     required this.commentId,
     required this.repliedId,
     required this.questionId,
-    required this.appUserId,
+    required this.userId,
     required this.userName,
     required this.commentContent,
     required this.solutionId,
@@ -54,7 +54,7 @@ class NotificationState implements Avatar{
         commentId: commentId,
         repliedId: repliedId,
         questionId: questionId,
-        appUserId: appUserId,
+        userId: userId,
         userName: userName,
         commentContent: commentContent,
         solutionId: solutionId,

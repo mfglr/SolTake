@@ -5,12 +5,12 @@ class SolutionUserVoteState{
   final int id;
   final DateTime createdAt;
   final int solutionId;
-  final int appUserId;
+  final int userId;
 
   const SolutionUserVoteState({
     required this.id,
     required this.createdAt,
     required this.solutionId,
-    required this.appUserId
+    required this.userId
   });
 }

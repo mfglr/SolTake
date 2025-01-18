@@ -8,7 +8,7 @@ class CommentState implements Avatar{
   final DateTime updatedAt;
   final bool isOwner;
   final String userName;
-  final int appUserId;
+  final int userId;
   final bool isEdited;
   final String content;
   final bool isLiked;
@@ -23,7 +23,7 @@ class CommentState implements Avatar{
   final Multimedia? image;
 
   @override
-  int get avatarId => id;
+  int get avatarId => userId;
 
   @override
   Multimedia? get avatar => image;
@@ -34,7 +34,7 @@ class CommentState implements Avatar{
     required this.updatedAt,
     required this.isOwner,
     required this.userName,
-    required this.appUserId,
+    required this.userId,
     required this.isEdited,
     required this.content,
     required this.isLiked,
@@ -69,7 +69,7 @@ class CommentState implements Avatar{
       updatedAt: updatedAt,
       isOwner: isOwner,
       userName: newUserName ?? userName,
-      appUserId: appUserId,
+      userId: userId,
       isEdited: newIsEdited ?? isEdited,
       content: newContent ?? content,
       isLiked: newIsLiked ?? isLiked,

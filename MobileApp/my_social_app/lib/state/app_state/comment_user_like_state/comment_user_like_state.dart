@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class CommentUserLikeState{
   final int id;
   final int commentId;
-  final int appUserId;
+  final int userId;
   final DateTime createdAt;
   
   const CommentUserLikeState({
     required this.id,
     required this.commentId,
-    required this.appUserId,
+    required this.userId,
     required this.createdAt
   });
 }

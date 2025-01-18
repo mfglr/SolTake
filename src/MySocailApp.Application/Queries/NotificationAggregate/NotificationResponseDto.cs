@@ -3,12 +3,12 @@ using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.NotificationAggregate
 {
-    public class NotificationResponseDto(int id, DateTime createdAt, int ownerId, int appUserId, string userName, bool isViewed, NotificationType type, int? parentId, int? repliedId, int? commentId, string? commentContent, int? questionId, int? solutionId, Multimedia? image)
+    public class NotificationResponseDto(int id, DateTime createdAt, int ownerId, int userId, string userName, bool isViewed, NotificationType type, int? parentId, int? repliedId, int? commentId, string? commentContent, int? questionId, int? solutionId, Multimedia? image)
     {
         public int Id { get; private set; } = id;
         public DateTime CreatedAt { get; private set; } = createdAt;
         public int OwnerId { get; private set; } = ownerId;
-        public int AppUserId { get; private set; } = appUserId;
+        public int UserId { get; private set; } = userId;
         public string UserName { get; private set; } = userName;
         public bool IsViewed { get; private set; } = isViewed;
         public NotificationType Type { get; private set; } = type;

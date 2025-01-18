@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:multimedia/models/multimedia.dart';
@@ -24,19 +23,13 @@ class UserService{
   Future<Multimedia> updateImage(AppFile image, int userId, void Function(double) callback) async {
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
-    request.files.add(await MultipartFile.fromPath(
-      "file",
-      image.file.path,contentType: MediaType.parse(image.contentType)
-    ));
+    request.files.add(await MultipartFile.fromPath("file",image.file.path,contentType: MediaType.parse(image.contentType)));
     var data = await _appClient.postStream(request, callback);
-    await DefaultCacheManager().removeFile("${AppClient.blobService}/ProfileImages/$userId");
     return Multimedia.fromJson(jsonDecode(data));
   }
   
-  Future<void> removeImage(int userId) async {
-    await _appClient.delete("$userController/$removeUserImageEndpoint");
-    await DefaultCacheManager().removeFile("${AppClient.blobService}/ProfileImages/$userId");
-  }
+  Future<void> removeImage(int userId) =>
+    _appClient.delete("$userController/$removeUserImageEndpoint");
   
   Future<void> updateName(String name) => 
     _appClient

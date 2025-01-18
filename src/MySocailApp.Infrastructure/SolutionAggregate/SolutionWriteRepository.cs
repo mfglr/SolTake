@@ -20,13 +20,13 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
 
         public Task<Solution?> GetWithVoteByIdAsync(int solutionId, int voterId, CancellationToken cancellationToken)
             => _context.Solutions
-                .Include(x => x.Votes.Where(x => x.AppUserId == voterId))
+                .Include(x => x.Votes.Where(x => x.UserId == voterId))
                 .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
 
         public Task<Solution?> GetWithVoteAndVoteNotificationByIdAsync(int solutionId, int voterId, CancellationToken cancellationToken)
             => _context.Solutions
-                .Include(x => x.Votes.Where(x => x.AppUserId == voterId))
-                .Include(x => x.VoteNotifications.Where(x => x.AppUserId == voterId))
+                .Include(x => x.Votes.Where(x => x.UserId == voterId))
+                .Include(x => x.VoteNotifications.Where(x => x.UserId == voterId))
                 .FirstOrDefaultAsync(x => x.Id == solutionId, cancellationToken);
 
         public Task<Solution?> GetByIdAsync(int id, CancellationToken cancellationToken)
@@ -67,12 +67,12 @@ namespace MySocailApp.Infrastructure.SolutionAggregate
         }
         public async Task DeleteSolutionUserVotesByUserId(int userId, CancellationToken cancellationToken)
         {
-            var votes = await _context.SolutionUserVotes.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            var votes = await _context.SolutionUserVotes.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
             _context.SolutionUserVotes.RemoveRange(votes);
         }
         public async Task DeleteSolutionUserVoteNotificationsByUserId(int userId, CancellationToken cancellationToken)
         {
-            var notifications = await _context.SolutionUserVoteNotifications.Where(x => x.AppUserId == userId).ToListAsync(cancellationToken);
+            var notifications = await _context.SolutionUserVoteNotifications.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
             _context.SolutionUserVoteNotifications.RemoveRange(notifications);
         }
     }

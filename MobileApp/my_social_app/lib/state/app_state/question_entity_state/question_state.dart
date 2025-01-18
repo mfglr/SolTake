@@ -38,7 +38,7 @@ class QuestionState implements Avatar{
   final Pagination videoSolutions;
 
   @override
-  int get avatarId => id;
+  int get avatarId => userId;
 
   @override
   Multimedia? get avatar => image;

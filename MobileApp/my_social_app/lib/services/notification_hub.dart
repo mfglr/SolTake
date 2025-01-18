@@ -152,7 +152,7 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddQuestionUserLikeAction(like: likeState));
       store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, likeId: like.id));
-      store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
+      store.dispatch(AddUserAction(user: like.user!.toUserState()));
 
       showNotification(context, notification.id);
     }
@@ -169,7 +169,7 @@ class NotificationHub{
 
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddCommentUserLikeAction(like: like.toCommentUserLikeState()));
-      store.dispatch(AddUserAction(user: like.appUser!.toUserState()));
+      store.dispatch(AddUserAction(user: like.user!.toUserState()));
       store.dispatch(AddNewCommentLikeAction(commentId: notification.commentId!, likeId:like.id));
 
       showNotification(context, notification.id);
@@ -241,7 +241,7 @@ class NotificationHub{
         store.dispatch(PrependNotificationAction(notification: notification));
         store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: notification.solutionId!));
         store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
-        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.appUserId, questionId: notification.questionId!));
+        store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
 
         showNotification(context, notification.id);
       }

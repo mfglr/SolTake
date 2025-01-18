@@ -134,7 +134,7 @@ void nextQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher nex
       .then((likes){
         store.dispatch(NextQuestionLikesSuccessAction(questionId: action.questionId,likeIds: likes.map((e) => e.id)));
         store.dispatch(AddQuestionUserLikesAction(likes: likes.map((e) => e.toQuestionUserLikeState())));
-        store.dispatch(AddUsersAction(users: likes.map((user) => user.appUser!.toUserState())));
+        store.dispatch(AddUsersAction(users: likes.map((user) => user.user!.toUserState())));
       })
       .catchError((e){
         store.dispatch(NextQuestionLikesFailedAction(questionId: action.questionId));

@@ -13,5 +13,5 @@ class CommentUserLikeEntityState extends EntityState<CommentUserLikeState>{
     => CommentUserLikeEntityState(entities: removeOne(likeId));
 
   CommentUserLikeState? select(int commentId,int userId)
-    => entities.values.firstWhereOrNull((x) => x.commentId == commentId && x.appUserId == userId);
+    => entities.values.firstWhereOrNull((x) => x.commentId == commentId && x.userId == userId);
 }

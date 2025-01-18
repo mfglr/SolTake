@@ -10,18 +10,18 @@ QuestionUserLike _$QuestionUserLikeFromJson(Map<String, dynamic> json) =>
     QuestionUserLike(
       id: (json['id'] as num).toInt(),
       questionId: (json['questionId'] as num).toInt(),
-      appUserId: (json['appUserId'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
-      appUser: json['appUser'] == null
+      user: json['user'] == null
           ? null
-          : User.fromJson(json['appUser'] as Map<String, dynamic>),
+          : User.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$QuestionUserLikeToJson(QuestionUserLike instance) =>
     <String, dynamic>{
       'id': instance.id,
       'questionId': instance.questionId,
-      'appUserId': instance.appUserId,
+      'userId': instance.userId,
       'createdAt': instance.createdAt.toIso8601String(),
-      'appUser': instance.appUser,
+      'user': instance.user,
     };

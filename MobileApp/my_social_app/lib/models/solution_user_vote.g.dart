@@ -11,7 +11,7 @@ SolutionUserVote _$SolutionUserVoteFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
       solutionId: (json['solutionId'] as num).toInt(),
-      appUserId: (json['appUserId'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
       appUser: json['appUser'] == null
           ? null
           : User.fromJson(json['appUser'] as Map<String, dynamic>),
@@ -22,6 +22,6 @@ Map<String, dynamic> _$SolutionUserVoteToJson(SolutionUserVote instance) =>
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
       'solutionId': instance.solutionId,
-      'appUserId': instance.appUserId,
+      'userId': instance.userId,
       'appUser': instance.appUser,
     };

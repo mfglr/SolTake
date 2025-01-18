@@ -37,7 +37,7 @@ class NotificationItem extends StatelessWidget {
               child: TextButton(
                 onPressed: () => Navigator
                   .of(context)
-                  .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.appUserId))),
+                  .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.userId))),
                 style: ButtonStyle(
                   padding: WidgetStateProperty.all(EdgeInsets.zero),
                   minimumSize: WidgetStateProperty.all(const Size(0, 0)),

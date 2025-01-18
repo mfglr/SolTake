@@ -15,7 +15,7 @@ class Comment{
   final DateTime updatedAt;
   final bool isOwner;
   final String userName;
-  final int appUserId;
+  final int userId;
   final bool isEdited;
   final String content;
   final bool isLiked;
@@ -32,7 +32,7 @@ class Comment{
     required this.updatedAt,
     required this.isOwner,
     required this.userName,
-    required this.appUserId,
+    required this.userId,
     required this.isEdited,
     required this.content,
     required this.isLiked,
@@ -53,7 +53,7 @@ class Comment{
       createdAt: createdAt,
       updatedAt: updatedAt,
       isOwner: isOwner,
-      appUserId: appUserId,
+      userId: userId,
       userName: userName,
       questionId: questionId,
       isEdited: isEdited,

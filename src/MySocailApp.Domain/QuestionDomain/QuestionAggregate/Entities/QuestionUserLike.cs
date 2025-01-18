@@ -7,9 +7,9 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public int QuestionId { get; private set; }
-        public int AppUserId { get; private set; }
+        public int UserId { get; private set; }
 
-        private QuestionUserLike(int appUserId) => AppUserId = appUserId;
-        public static QuestionUserLike Create(int appUserId) => new(appUserId) { CreatedAt = DateTime.UtcNow };
+        private QuestionUserLike(int userId) => UserId = userId;
+        public static QuestionUserLike Create(int userId) => new(userId) { CreatedAt = DateTime.UtcNow };
     }
 }

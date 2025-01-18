@@ -10,7 +10,7 @@ class Notification{
   final int id;
   final DateTime createdAt;
   final int ownerId;
-  final int appUserId;
+  final int userId;
   final String userName;
   final bool isViewed;
   final int type;
@@ -33,7 +33,7 @@ class Notification{
     required this.commentContent,
     required this.repliedId,
     required this.questionId,
-    required this.appUserId,
+    required this.userId,
     required this.userName,
     required this.solutionId,
     required this.image
@@ -55,7 +55,7 @@ class Notification{
         commentContent: commentContent,
         repliedId: repliedId,
         questionId: questionId,
-        appUserId: appUserId,
+        userId: userId,
         solutionId: solutionId,
         image: image
       );

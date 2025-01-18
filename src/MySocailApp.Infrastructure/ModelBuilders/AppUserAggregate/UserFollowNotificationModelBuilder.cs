@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
     {
         public void Configure(EntityTypeBuilder<UserFollowNotification> builder)
         {
-            builder.HasKey(x => new { x.AppUserId, x.FollowerId });
+            builder.HasKey(x => new { x.UserId, x.FollowerId });
         }
     }
 }

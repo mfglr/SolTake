@@ -9,28 +9,26 @@ part 'question_user_like.g.dart';
 class QuestionUserLike{
   final int id;
   final int questionId;
-  final int appUserId;
+  final int userId;
   final DateTime createdAt;
-  final User? appUser;
+  final User? user;
   
   const QuestionUserLike({
     required this.id,
     required this.questionId,
-    required this.appUserId,
+    required this.userId,
     required this.createdAt,
-    required this.appUser
+    required this.user
   });
 
   factory QuestionUserLike.fromJson(Map<String, dynamic> json) => _$QuestionUserLikeFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionUserLikeToJson(this);
 
-
   QuestionUserLikeState toQuestionUserLikeState()
     => QuestionUserLikeState(
         id: id,
         questionId: questionId,
-        appUserId: appUserId,
+        userId: userId,
         createdAt: createdAt,
       );
-  
 }

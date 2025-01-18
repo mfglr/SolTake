@@ -9,16 +9,16 @@ part 'comment_user_like.g.dart';
 class CommentUserLike{
   final int id;
   final int commentId;
-  final int appUserId;
+  final int userId;
   final DateTime createdAt;
-  final User? appUser;
+  final User? user;
   
   const CommentUserLike({
     required this.id,
     required this.commentId,
-    required this.appUserId,
+    required this.userId,
     required this.createdAt,
-    required this.appUser
+    required this.user
   });
 
 
@@ -28,7 +28,7 @@ class CommentUserLike{
   CommentUserLikeState toCommentUserLikeState()
     => CommentUserLikeState(
         id: id,
-        appUserId: appUserId,
+        userId: userId,
         commentId: commentId,
         createdAt: createdAt,
       );

@@ -48,12 +48,12 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         public IReadOnlyList<QuestionUserLikeNotification> LikeNotifications => _likeNotifications;
         public QuestionUserLike Like(int likerId)
         {
-            if (_likes.Any(x => x.AppUserId == likerId))
+            if (_likes.Any(x => x.UserId == likerId))
                 throw new QuestionWasAlreadyLikedException();
 
             var like = QuestionUserLike.Create(likerId);
             _likes.Add(like);
-            if (likerId != UserId && !_likeNotifications.Any(x => x.AppUserId == likerId))
+            if (likerId != UserId && !_likeNotifications.Any(x => x.UserId == likerId))
             {
                 _likeNotifications.Add(new QuestionUserLikeNotification(likerId));
                 AddDomainEvent(new QuestionLikedDomainEvent(this, like));
@@ -62,14 +62,14 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         }
         public void Dislike(int userId)
         {
-            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            var index = _likes.FindIndex(x => x.UserId == userId);
             if (index == -1) return;
             _likes.RemoveAt(index);
             AddDomainEvent(new QuestionDislikedDomainEvent(this));
         }
         public void DeleteLike(int userId)
         {
-            var index = _likes.FindIndex(x => x.AppUserId == userId);
+            var index = _likes.FindIndex(x => x.UserId == userId);
             if (index == -1) return;
             _likes.RemoveAt(index);
         }
@@ -77,22 +77,22 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         //saving questions
         private readonly List<QuestionUserSave> _savers = [];
         public IReadOnlyList<QuestionUserSave> Savers => _savers;
-        public QuestionUserSave Save(int appUserId)
+        public QuestionUserSave Save(int userId)
         {
-            if (_savers.Any(x => x.UserId == appUserId))
+            if (_savers.Any(x => x.UserId == userId))
                 throw new QuestionAlreadySavedException();
-            var save = QuestionUserSave.Create(appUserId);
+            var save = QuestionUserSave.Create(userId);
             _savers.Add(save);
             return save;
         }
-        public void Unsave(int appUserId)
+        public void Unsave(int userId)
         {
-            var save = _savers.FirstOrDefault(x => x.UserId == appUserId) ?? throw new QuestionNotSavedException();
+            var save = _savers.FirstOrDefault(x => x.UserId == userId) ?? throw new QuestionNotSavedException();
             _savers.Remove(save);
         }
-        public void DeleteSave(int appUserId)
+        public void DeleteSave(int userId)
         {
-            var index = _savers.FindIndex(x => x.UserId == appUserId);
+            var index = _savers.FindIndex(x => x.UserId == userId);
             if (index == -1) return;
             _savers.RemoveAt(index);
         }

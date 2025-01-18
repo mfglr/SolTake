@@ -10,14 +10,14 @@ class SolutionUserVote{
   final int id;
   final DateTime createdAt;
   final int solutionId;
-  final int appUserId;
+  final int userId;
   final User? appUser;
 
   const SolutionUserVote({
     required this.id,
     required this.createdAt,
     required this.solutionId,
-    required this.appUserId,
+    required this.userId,
     required this.appUser
   });
 
@@ -30,7 +30,7 @@ class SolutionUserVote{
         id: id,
         createdAt: createdAt,
         solutionId: solutionId,
-        appUserId: appUserId
+        userId: userId
       );
 
 }

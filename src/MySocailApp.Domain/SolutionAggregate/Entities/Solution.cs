@@ -40,7 +40,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public IReadOnlyCollection<SolutionUserVoteNotification> VoteNotifications => _voteNotifications;
         public SolutionUserVote MakeUpvote(int voterId)
         {
-            var index = _votes.FindIndex(x => x.AppUserId == voterId);
+            var index = _votes.FindIndex(x => x.UserId == voterId);
             if (index != -1)
             {
                 if (_votes[index].Type == SolutionVoteType.Upvote)
@@ -52,7 +52,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             var vote = SolutionUserVote.GenerateUpvote(voterId);
             _votes.Add(vote);
 
-            if(UserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
+            if(UserId != voterId && !_voteNotifications.Any(x => x.UserId == voterId))
             {
                 _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
                 AddDomainEvent(new SolutionWasUpvotedDomainEvent(this, vote));
@@ -61,7 +61,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         }
         public SolutionUserVote MakeDownvote(int voterId)
         {
-            var index = _votes.FindIndex(x => x.AppUserId == voterId);
+            var index = _votes.FindIndex(x => x.UserId == voterId);
             if (index != -1)
             {
                 if (_votes[index].Type == SolutionVoteType.Downvote)
@@ -73,7 +73,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             var vote = SolutionUserVote.GenerateDownvote(voterId);
             _votes.Add(vote);
 
-            if(UserId != voterId && !_voteNotifications.Any(x => x.AppUserId == voterId))
+            if(UserId != voterId && !_voteNotifications.Any(x => x.UserId == voterId))
             {
                 _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
                 AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, vote));
@@ -82,7 +82,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         }
         public void RemoveUpvote(int voterId)
         {
-            int index = _votes.FindIndex(x => x.AppUserId == voterId);
+            int index = _votes.FindIndex(x => x.UserId == voterId);
             if (index == -1 || _votes[index].Type == SolutionVoteType.Downvote)
                 throw new VoteIsNotFoundException();
             _votes.RemoveAt(index);
@@ -90,7 +90,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         }
         public void RemoveDownvote(int voterId)
         {
-            int index = _votes.FindIndex(x => x.AppUserId == voterId);
+            int index = _votes.FindIndex(x => x.UserId == voterId);
             if(index == -1 || _votes[index].Type == SolutionVoteType.Upvote)
                 throw new VoteIsNotFoundException();
             _votes.RemoveAt(index);
@@ -98,7 +98,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         }
         public void DeleteVote(int voterId)
         {
-            int index = _votes.FindIndex(x => x.AppUserId == voterId);
+            int index = _votes.FindIndex(x => x.UserId == voterId);
             if (index == -1) return;
             _votes.RemoveAt(index);
         }

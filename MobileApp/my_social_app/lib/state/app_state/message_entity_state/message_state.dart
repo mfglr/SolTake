@@ -20,7 +20,7 @@ class MessageState implements Avatar{
   final Multimedia? image;
 
   @override
-  int get avatarId => id;
+  int get avatarId => conversationId;
 
   @override
   Multimedia? get avatar => image;

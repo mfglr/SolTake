@@ -11,19 +11,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
             => query
                 .Join(
                     context.Accounts,
-                    suv => suv.AppUserId,
+                    suv => suv.UserId,
                     account => account.Id,
                     (suv,account) => new { suv, account.UserName }
                 )
                 .Join(
                     context.Users,
-                    join => join.suv.AppUserId,
+                    join => join.suv.UserId,
                     user => user.Id,
                     (join,user) => new SolutionUserVoteResponseDto(
                         join.suv.Id,
                         join.suv.CreatedAt,
                         join.suv.SolutionId,
-                        join.suv.AppUserId,
+                        join.suv.UserId,
                         join.suv.Type,
                         new UserResponseDto(
                             user.Id,

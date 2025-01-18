@@ -27,7 +27,7 @@ class SolutionState implements Avatar{
   final Multimedia? image;
 
   @override
-  int get avatarId => id;
+  int get avatarId => userId;
 
   @override
   Multimedia? get avatar => image;

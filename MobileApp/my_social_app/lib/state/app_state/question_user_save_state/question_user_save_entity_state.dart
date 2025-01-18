@@ -13,5 +13,5 @@ class QuestionUserSaveEntityState extends EntityState<QuestionUserSaveState>{
     QuestionUserSaveEntityState(entities: removeOne(saveId));
 
   QuestionUserSaveState? select(int questionId, int saverId) =>
-    entities.values.firstWhereOrNull((e) => e.questionId == questionId && e.appUserId == saverId);
+    entities.values.firstWhereOrNull((e) => e.questionId == questionId && e.userId == saverId);
 }

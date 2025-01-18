@@ -27,7 +27,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AppUserAggregate
             builder
                 .HasMany(x => x.UserFollowNotifications)
                 .WithOne()
-                .HasForeignKey(x => x.AppUserId)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

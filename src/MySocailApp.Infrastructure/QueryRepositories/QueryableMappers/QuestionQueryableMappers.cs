@@ -32,7 +32,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.question.UserId,
                         account.UserName.Value,
                         join.question.Content.Value,
-                        join.question.Likes.Any(x => x.AppUserId == accountId),
+                        join.question.Likes.Any(x => x.UserId == accountId),
                         join.question.Savers.Any(x => x.UserId == accountId),
                         join.question.Likes.Count,
                         context.Comments.Count(c => c.QuestionId == join.question.Id),

@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
     {
         public void Configure(EntityTypeBuilder<QuestionUserLikeNotification> builder)
         {
-            builder.HasKey(x => new { x.QuestionId, x.AppUserId });
+            builder.HasKey(x => new { x.QuestionId, x.UserId });
         }
     }
 }

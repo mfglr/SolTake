@@ -10,14 +10,14 @@ class QuestionUserSave{
   final int id;
   final DateTime createdAt;
   final int questionId;
-  final int appUserId;
+  final int userId;
   final Question? question;
 
   const QuestionUserSave({
     required this.id,
     required this.createdAt,
     required this.questionId,
-    required this.appUserId,
+    required this.userId,
     required this.question
   });
 
@@ -29,6 +29,6 @@ class QuestionUserSave{
       id: id,
       createdAt: createdAt,
       questionId: questionId,
-      appUserId: appUserId
+      userId: userId
     );
 }
