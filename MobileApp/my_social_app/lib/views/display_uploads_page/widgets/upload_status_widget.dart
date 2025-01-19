@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
@@ -18,13 +19,6 @@ class UploadStatusWidget extends StatelessWidget {
     required this.state
   });
 
-  Widget getCirclerLoading() => 
-    const SizedBox(
-      width: 15,
-      height: 15,
-      child: CircularProgressIndicator(),
-    );
-
   @override
   Widget build(BuildContext context) {
     if(state.status == UploadStatus.loading && state.rate < 1){
@@ -36,7 +30,11 @@ class UploadStatusWidget extends StatelessWidget {
             margin: const EdgeInsets.only(right: 5),
             child: Text(AppLocalizations.of(context)!.upload_status_widget_uploading)
           ),
-          getCirclerLoading(),
+          const SizedBox(
+            width: 15,
+            height: 15,
+            child: CircularProgressIndicator(color: Colors.green,),
+          ),
         ],
       );
     }
@@ -49,7 +47,10 @@ class UploadStatusWidget extends StatelessWidget {
             margin: const EdgeInsets.only(right: 5),
             child: Text(AppLocalizations.of(context)!.upload_status_widget_processing)
           ),
-          getCirclerLoading(),
+          LoadingAnimationWidget.threeRotatingDots(
+            color: Colors.green,
+            size: 15
+          ),
         ],
       );
     }
