@@ -1,10 +1,10 @@
 import 'package:app_file/app_file.dart';
 import 'package:camera/camera.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:take_media/widgets.dart/camera_close_button.dart';
 import 'package:take_media/widgets.dart/change_camera_button.dart';
 import 'package:take_media/widgets.dart/take_photo_button.dart';
-
 
 class TakeImagePage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -19,7 +19,7 @@ class TakeImagePage extends StatefulWidget {
 
 class _TakeImagePageState extends State<TakeImagePage> {
   late CameraController _controller;
-  CameraLensDirection _direction = CameraLensDirection.back;
+  late CameraLensDirection _direction;
   late CameraDescription _description;
   late bool _isCameraDirectionChangeable;
 
@@ -31,19 +31,25 @@ class _TakeImagePageState extends State<TakeImagePage> {
 
   void _takePhoto() =>
     _controller
-        .takePicture()
-        .then((image){ if(mounted) Navigator.of(context).pop(AppFile.image(image)); });
+      .takePicture()
+      .then((image){ if(mounted) Navigator.of(context).pop(AppFile.image(image)); });
 
   @override
   void initState() {
-    _isCameraDirectionChangeable = 
+     _isCameraDirectionChangeable = 
       ![CameraLensDirection.back,CameraLensDirection.front]
         .any((cld) => !widget.cameras.any((cm) => cld == cm.lensDirection));
-    
-    _description = widget.cameras.where((e) => e.lensDirection == _direction).first;
 
-    _controller = CameraController(widget.cameras.first, ResolutionPreset.max);
+    var description = 
+      widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.back) ??
+      widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.front) ??
+      widget.cameras.first;
+
+    _direction = description.lensDirection;
+
+    _controller = CameraController(description, ResolutionPreset.max);
     _controller.initialize().then((_) => setState((){}));
+
     super.initState();
   }
 
