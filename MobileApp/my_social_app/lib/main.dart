@@ -23,8 +23,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/update_app_page/update_app_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:take_media/pages/take_image_page.dart';
 import 'package:take_media/pages/take_media_page.dart';
+import 'package:take_media/pages/take_image_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 Future loadEnvironmentVariables() async {
