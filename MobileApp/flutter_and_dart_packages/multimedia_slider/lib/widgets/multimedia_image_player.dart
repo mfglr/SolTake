@@ -49,12 +49,7 @@ class _MultimediaImagePlayerState extends State<MultimediaImagePlayer> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context){
-        if(widget.media == null){
-          return Image.asset(
-            widget.noImagePath,
-            fit: BoxFit.contain
-          );
-        }
+        if(widget.media == null) return Image.asset(widget.noImagePath,fit: BoxFit.contain);
         if(_status == MultimediaStatus.done) return Image.memory(_image,fit: BoxFit.contain);
         if (_status == MultimediaStatus.started) return const Center(child: CircularProgressIndicator());
         return Image.asset(

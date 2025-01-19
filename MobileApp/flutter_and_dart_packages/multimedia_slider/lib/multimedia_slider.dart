@@ -36,7 +36,7 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
   void initState() {
     _index = widget.activeIndex;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.jumpToPage(_index);  
+      _controller.jumpToPage(_index);
     });
     super.initState();
   }

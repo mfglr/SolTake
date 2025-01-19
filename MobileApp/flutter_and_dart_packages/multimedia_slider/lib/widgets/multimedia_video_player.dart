@@ -38,7 +38,7 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
     _controller = VideoPlayerController.networkUrl(_url, httpHeaders: widget.headers ?? const <String,String>{});
     _controller.addListener(_setRemainingDuration);
     _controller.setLooping(false);
-    _controller.initialize();
+    _controller.initialize().then((_) => setState((){}));
     super.initState();
   }
   

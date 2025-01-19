@@ -45,7 +45,7 @@ class _CirclerMultimediaState extends State<CirclerMultimedia> {
     setState(() { _status = MultimediaStatus.started; }); 
 
     DefaultCacheManager()
-      .getSingleFile(_url,headers: widget.headers)
+      .getSingleFile(_url, headers: widget.headers)
       .then((file) => file.readAsBytes())
       .then((list){
         if(mounted){

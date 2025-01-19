@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.4.1
+  collection:
   #local packages
   multimedia:
     path: ../multimedia
