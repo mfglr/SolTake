@@ -117,10 +117,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
                   Center(
                     child: AspectRatio(
                       aspectRatio: 1 / _controller.value.aspectRatio,
-                      child: RotatedBox(
-                        quarterTurns: _direction == CameraLensDirection.back ? -1 : 1,
-                        child: CameraPreview(_controller),
-                      ),
+                      child: CameraPreview(_controller),
                     )
                   ),
                   if(!_controller.value.isRecordingVideo) 

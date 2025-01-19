@@ -40,7 +40,7 @@ class _TakeImagePageState extends State<TakeImagePage> {
       ![CameraLensDirection.back,CameraLensDirection.front]
         .any((cld) => !widget.cameras.any((cm) => cld == cm.lensDirection));
 
-    var description = 
+    var description =
       widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.back) ??
       widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.front) ??
       widget.cameras.first;
@@ -67,10 +67,7 @@ class _TakeImagePageState extends State<TakeImagePage> {
         ? Center(
             child: AspectRatio(
               aspectRatio: 1 / _controller.value.aspectRatio,
-              child: RotatedBox(
-                  quarterTurns: _direction == CameraLensDirection.back ? -1 : 1,
-                  child: _controller.buildPreview(),
-                ),
+              child: _controller.buildPreview(),
             ),
           )
         : const Center(child: CircularProgressIndicator()),
