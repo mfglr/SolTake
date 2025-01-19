@@ -21,6 +21,7 @@ class MessageImagesGridWidget extends StatelessWidget {
         ? MultimediaGrid(
             state: message.medias.first,
             blobServiceUrl: AppClient.blobService,
+            headers: AppClient().getHeader(),
             noMediaPath: noMediaAssetPath,
             notFoundMediaPath: noMediaAssetPath,
             aspectRatio: message.medias.first.aspectRatio,
