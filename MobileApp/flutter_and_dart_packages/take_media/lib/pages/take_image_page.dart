@@ -22,6 +22,42 @@ class _TakeImagePageState extends State<TakeImagePage> {
   late CameraLensDirection _direction;
   late CameraDescription _description;
   late bool _isCameraDirectionChangeable;
+  double _x = 0;
+  double _y = 0;
+  Color _color = Colors.white;
+  bool _showFocusCircle = false;
+
+  void _focus(TapDownDetails details){
+
+    double fullWidth = MediaQuery.of(context).size.width;
+    double cameraHeight = fullWidth * _controller.value.aspectRatio;
+    
+    setState(() {
+      _x = details.localPosition.dx;
+      _y = details.localPosition.dy;
+      _showFocusCircle = true;
+      _color = Colors.white;
+    });
+    
+    _controller
+      .setFocusPoint(Offset(_x / fullWidth, _y / cameraHeight))
+      .then((_){
+        setState(() { _color = Colors.yellow; });
+        Future
+          .delayed(const Duration(milliseconds: 300))
+          .then((_){
+            if(mounted){
+              setState(() { _showFocusCircle = false; });
+            }
+          });
+      })
+      .catchError((_){
+        if(mounted){
+          setState(() { _showFocusCircle = false; });
+        }
+      });
+  }
+
 
   void _changeCameraDirection(){
     _direction = _direction == CameraLensDirection.back ? CameraLensDirection.front : CameraLensDirection.back;
@@ -65,11 +101,31 @@ class _TakeImagePageState extends State<TakeImagePage> {
       backgroundColor: Colors.black,
       body: _controller.value.isInitialized
         ? Center(
-            child: AspectRatio(
-              aspectRatio: 1 / _controller.value.aspectRatio,
-              child: _controller.buildPreview(),
+          child: GestureDetector(
+            onTapDown: _focus,
+            child: Stack(
+              children: [
+                CameraPreview(_controller),
+                if(_showFocusCircle)
+                  Positioned(
+                    top: _y - 30,
+                    left: _x - 30,
+                    child: Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: _color,
+                          width: 1.5
+                        )
+                      ),
+                    )
+                  )
+              ],
             ),
-          )
+          ),
+        )
         : const Center(child: CircularProgressIndicator()),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Row(

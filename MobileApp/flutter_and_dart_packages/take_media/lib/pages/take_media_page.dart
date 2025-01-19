@@ -27,7 +27,41 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
   int _duration = 0;
   late bool _isCameraDirectionChangeable;
   late CameraLensDirection _direction;
-  
+  double _x = 0;
+  double _y = 0;
+  Color _color = Colors.white;
+  bool _showFocusCircle = false;
+
+  void _focus(TapDownDetails details){
+
+    double fullWidth = MediaQuery.of(context).size.width;
+    double cameraHeight = fullWidth * _controller.value.aspectRatio;
+    
+    setState(() {
+      _x = details.localPosition.dx;
+      _y = details.localPosition.dy;
+      _showFocusCircle = true;
+      _color = Colors.white;
+    });
+    _controller
+      .setFocusPoint(Offset(_x / fullWidth, _y / cameraHeight))
+      .then((_){
+        setState(() { _color = Colors.yellow; });
+        Future
+          .delayed(const Duration(milliseconds: 300))
+          .then((_){
+            if(mounted){
+              setState(() { _showFocusCircle = false; });
+            }
+          });
+      })
+      .catchError((_){
+        if(mounted){
+          setState(() { _showFocusCircle = false; });
+        }
+      });
+  }
+
   void _changeCameraDirection(){
     _direction = _direction == CameraLensDirection.back ? CameraLensDirection.front : CameraLensDirection.back;
     final cameraDescription = widget.cameras.where((e) => e.lensDirection == _direction).first;
@@ -109,60 +143,80 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
       backgroundColor: Colors.black,
       body: _controller.value.isInitialized
         ? Stack(
-            alignment: AlignmentDirectional.topCenter,
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.centerStart,
-                children: [
-                  Center(
-                    child: AspectRatio(
-                      aspectRatio: 1 / _controller.value.aspectRatio,
-                      child: CameraPreview(_controller),
-                    )
-                  ),
-                  if(!_controller.value.isRecordingVideo) 
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
+          alignment: AlignmentDirectional.topCenter,
+          children: [
+            Stack(
+              alignment: AlignmentDirectional.centerStart,
+              children: [
+                Center(
+                  child: GestureDetector(
+                    onTapDown: _focus,
+                    child: Stack(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _videoState ? Colors.black.withAlpha(153) : Colors.blue
-                          ),
-                          margin: const EdgeInsets.all(5),
-                          child: IconButton(
-                            onPressed: () => setState(() => _videoState = false ),
-                            icon: const Icon(
-                              Icons.photo_camera,
-                              color: Colors.white,
+                        CameraPreview(_controller),
+                        if(_showFocusCircle)
+                          Positioned(
+                            top: _y - 30,
+                            left: _x - 30,
+                            child: Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: _color,
+                                  width: 1.5
+                                )
+                              ),
                             )
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: !_videoState ? Colors.black.withAlpha(153) : Colors.blue
-                          ),
-                          margin: const EdgeInsets.all(5),
-                          child: IconButton(
-                            onPressed: () => setState(() => _videoState = true ),
-                            icon: const Icon(
-                              Icons.video_camera_back,
-                              color: Colors.white,
-                            )
-                          ),
-                        )
+                          )
                       ],
-                    )
-                ],
+                    ),
+                  )
+                ),
+                if(!_controller.value.isRecordingVideo) 
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _videoState ? Colors.black.withAlpha(153) : Colors.blue
+                        ),
+                        margin: const EdgeInsets.all(5),
+                        child: IconButton(
+                          onPressed: () => setState(() => _videoState = false ),
+                          icon: const Icon(
+                            Icons.photo_camera,
+                            color: Colors.white,
+                          )
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: !_videoState ? Colors.black.withAlpha(153) : Colors.blue
+                        ),
+                        margin: const EdgeInsets.all(5),
+                        child: IconButton(
+                          onPressed: () => setState(() => _videoState = true ),
+                          icon: const Icon(
+                            Icons.video_camera_back,
+                            color: Colors.white,
+                          )
+                        ),
+                      )
+                    ],
+                  )
+              ],
+            ),
+            if(_controller.value.isRecordingVideo)
+              Container(
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 16),
+                child: VideoDurationDisplayer(duration: _duration)
               ),
-              if(_controller.value.isRecordingVideo)
-                Container(
-                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 16),
-                  child: VideoDurationDisplayer(duration: _duration)
-                )
-            ],
-          )
+          ],
+        )
         : const Center(child: CircularProgressIndicator()),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Row(
