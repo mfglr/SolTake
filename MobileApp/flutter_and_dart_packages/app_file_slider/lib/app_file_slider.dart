@@ -48,7 +48,7 @@ class _AppFileSliderState extends State<AppFileSlider> {
                   else { return Text("test"); } 
                 }),
                 Positioned(
-                  top: 15,
+                  top: MediaQuery.of(context).size.height / 16,
                   right: 5,
                   child: RemoveMediaButton(onPressed: () => widget.onRemoved(e)),
                 ),

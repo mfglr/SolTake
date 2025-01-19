@@ -24,7 +24,7 @@ class RemoveMediaButton extends StatelessWidget {
         icon: Icon(
           Icons.clear,
           color: Colors.white,
-          size: 15,
+          size: 30,
         )
       ),
     );
