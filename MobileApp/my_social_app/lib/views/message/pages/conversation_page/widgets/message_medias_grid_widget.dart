@@ -42,6 +42,7 @@ class MessageImagesGridWidget extends StatelessWidget {
               itemBuilder:(context, index) => MultimediaGrid(
                 state: message.medias.elementAt(index),
                 blobServiceUrl: AppClient.blobService,
+                headers: AppClient().getHeader(),
                 noMediaPath: noMediaAssetPath,
                 notFoundMediaPath: noMediaAssetPath,
                 onTap: () => onPressedMessageItem(message,activeIndex: index)
