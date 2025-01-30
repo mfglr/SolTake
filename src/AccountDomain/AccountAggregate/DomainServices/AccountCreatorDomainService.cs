@@ -1,9 +1,10 @@
-﻿using AccountDomain.Abstracts;
-using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using AccountDomain.AccountAggregate.Entities;
+using AccountDomain.AccountAggregate.Exceptions;
 using AccountDomain.PrivacyPolicyAggregate.Abstracts;
 using AccountDomain.TermsOfUseAggregate.Abstracts;
 
-namespace AccountDomain.DomainServices
+namespace AccountDomain.AccountAggregate.DomainServices
 {
     public class AccountCreatorDomainService(IPrivacyPolicyReadRepository policyReadRepository, ITermsOfUseReadRepository termsOfUserReadRepository, IAccountReadRepository accountReadRepository)
     {
@@ -11,7 +12,7 @@ namespace AccountDomain.DomainServices
         private readonly ITermsOfUseReadRepository _termsOfUserReadRepository = termsOfUserReadRepository;
         private readonly IAccountReadRepository _accountReadRepository = accountReadRepository;
 
-        public async Task CreateAsync(Entities.Account account, CancellationToken cancellationToken)
+        public async Task CreateAsync(Account account, CancellationToken cancellationToken)
         {
             if (account.Email != null && await _accountReadRepository.EmailExist(account.Email, cancellationToken))
                 throw new EmailIsAlreadyTakenException();

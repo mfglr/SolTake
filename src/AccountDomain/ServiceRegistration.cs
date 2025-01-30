@@ -1,4 +1,4 @@
-﻿using AccountDomain.DomainServices;
+﻿using AccountDomain.AccountAggregate.DomainServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AccountDomain

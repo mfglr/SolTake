@@ -1,7 +1,7 @@
-﻿using AccountDomain.DomainServices;
-using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.DomainServices;
+using AccountDomain.AccountAggregate.Exceptions;
 
-namespace AccountDomain.Entities
+namespace AccountDomain.AccountAggregate.Entities
 {
     public class EmailVerificationToken
     {
@@ -28,6 +28,14 @@ namespace AccountDomain.Entities
                 ExpirationAt = DateTime.UtcNow.AddMinutes(5),
                 NumberOfFailedAttemps = 0
             };
+        }
+
+        internal static EmailVerificationToken CreateVerifedToken()
+        {
+            var token = Create();
+            token.IsVerified = true;
+            token.VerifiedAt = DateTime.UtcNow;
+            return token;
         }
 
         private bool IsValid(string token)

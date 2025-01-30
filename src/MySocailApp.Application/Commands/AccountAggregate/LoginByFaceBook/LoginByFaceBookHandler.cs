@@ -1,4 +1,4 @@
-﻿using AccountDomain.DomainServices;
+﻿using AccountDomain.AccountAggregate.DomainServices;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;

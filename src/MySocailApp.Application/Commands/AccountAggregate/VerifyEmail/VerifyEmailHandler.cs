@@ -1,4 +1,4 @@
-﻿using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.Exceptions;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 

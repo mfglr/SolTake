@@ -1,6 +1,4 @@
-﻿using AccountDomain.PrivacyPolicyAggregate;
-
-namespace AccountDomain.PrivacyPolicyAggregate.Abstracts
+﻿namespace AccountDomain.PrivacyPolicyAggregate.Abstracts
 {
     public interface IPrivacyPolicyWriteRepository
     {

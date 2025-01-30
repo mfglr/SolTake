@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace AccountDomain.DomainServices
+namespace AccountDomain.AccountAggregate.DomainServices
 {
     public static class HashComputer
     {

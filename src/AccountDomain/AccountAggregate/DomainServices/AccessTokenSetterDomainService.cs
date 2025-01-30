@@ -1,4 +1,5 @@
-﻿using AccountDomain.Configurations;
+﻿using AccountDomain.AccountAggregate.Configurations;
+using AccountDomain.AccountAggregate.Entities;
 using AccountDomain.RoleAggregate.Abstracts;
 using AccountDomain.RoleAggregate.Entities;
 using Microsoft.IdentityModel.Tokens;
@@ -6,14 +7,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace AccountDomain.DomainServices
+namespace AccountDomain.AccountAggregate.DomainServices
 {
     public class AccessTokenSetterDomainService(ITokenProviderOptions tokenProviderOptions, IRoleReadRepository roleReadRepository)
     {
         private readonly ITokenProviderOptions _tokenProviderOptions = tokenProviderOptions;
         private readonly IRoleReadRepository _roleReadRepository = roleReadRepository;
 
-        private List<Claim> GetClaims(Entities.Account account, IEnumerable<Role> roles)
+        private List<Claim> GetClaims(Account account, IEnumerable<Role> roles)
         {
             var claims = new List<Claim>()
             {
@@ -27,7 +28,7 @@ namespace AccountDomain.DomainServices
             return claims;
         }
 
-        public async Task SetAsync(Entities.Account account, CancellationToken cancellationToken)
+        public async Task SetAsync(Account account, CancellationToken cancellationToken)
         {
             var roles = await _roleReadRepository.GetRolesByIdsAsync(account.Roles.Select(x => x.RoleId), cancellationToken);
 

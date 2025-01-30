@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Core.Exceptions;
 
-namespace AccountDomain.Exceptions
+namespace AccountDomain.AccountAggregate.Exceptions
 {
     public class InvalidPasswordException : AppException
     {

@@ -1,6 +1,7 @@
-﻿using MySocailApp.Core;
+﻿using AccountDomain.AccountAggregate.Entities;
+using MySocailApp.Core;
 
-namespace AccountDomain.DomainEvents
+namespace AccountDomain.AccountAggregate.DomainEvents
 {
-    public record PasswordResetTokenGeneratedDomainEvent(Entities.Account Account) : IDomainEvent;
+    public record PasswordResetTokenGeneratedDomainEvent(Account Account) : IDomainEvent;
 }

@@ -1,8 +1,8 @@
-﻿using AccountDomain.Configurations;
-using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.Configurations;
+using AccountDomain.AccountAggregate.Exceptions;
 using Newtonsoft.Json.Linq;
 
-namespace AccountDomain.DomainServices
+namespace AccountDomain.AccountAggregate.DomainServices
 {
     public class FaceBookTokenValidatorDomainService(IFaceBookSettings settings)
     {

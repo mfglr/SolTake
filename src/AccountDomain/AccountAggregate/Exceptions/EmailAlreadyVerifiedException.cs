@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace AccountDomain.Exceptions
+namespace AccountDomain.AccountAggregate.Exceptions
 {
     public class EmailAlreadyVerifiedException : AppException
     {

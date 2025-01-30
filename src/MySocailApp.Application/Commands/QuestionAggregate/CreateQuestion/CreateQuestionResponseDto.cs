@@ -1,4 +1,4 @@
-﻿using AccountDomain.Entities;
+﻿using AccountDomain.AccountAggregate.Entities;
 using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;

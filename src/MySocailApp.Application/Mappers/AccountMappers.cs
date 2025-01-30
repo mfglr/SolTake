@@ -1,4 +1,4 @@
-﻿using AccountDomain.Entities;
+﻿using AccountDomain.AccountAggregate.Entities;
 using AutoMapper;
 using MySocailApp.Application.Commands.AccountAggregate;
 using MySocailApp.Application.Commands.AccountAggregate.Block;

@@ -1,7 +1,7 @@
-﻿using AccountDomain.DomainServices;
-using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.DomainServices;
+using AccountDomain.AccountAggregate.Exceptions;
 
-namespace AccountDomain.ValueObjects
+namespace AccountDomain.AccountAggregate.ValueObjects
 {
     public class Password
     {

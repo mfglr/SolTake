@@ -1,7 +1,7 @@
-﻿using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.Exceptions;
 using System.Text.RegularExpressions;
 
-namespace AccountDomain.ValueObjects
+namespace AccountDomain.AccountAggregate.ValueObjects
 {
     public class Email
     {
@@ -23,5 +23,8 @@ namespace AccountDomain.ValueObjects
             while (Value[i] != '@') i++;
             return new($"{Value[..i].ToLower()}_{BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0).ToString()[..5]}");
         }
+
+
+        public static Email SystemEmail(UserName userName) => new($"{userName.Value}@system.com");
     }
 }

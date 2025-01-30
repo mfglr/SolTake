@@ -1,4 +1,4 @@
-﻿using AccountDomain.DomainServices;
+﻿using AccountDomain.AccountAggregate.DomainServices;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 

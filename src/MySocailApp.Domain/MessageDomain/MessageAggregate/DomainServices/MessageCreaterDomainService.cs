@@ -1,4 +1,4 @@
-﻿using AccountDomain.Abstracts;
+﻿using AccountDomain.AccountAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
 

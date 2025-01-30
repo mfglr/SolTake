@@ -1,17 +1,18 @@
-﻿using AccountDomain.Configurations;
-using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.Configurations;
+using AccountDomain.AccountAggregate.Entities;
+using AccountDomain.AccountAggregate.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace AccountDomain.DomainServices
+namespace AccountDomain.AccountAggregate.DomainServices
 {
     public class RefreshTokenValidatorDomainService(ITokenProviderOptions tokenProviderOptions)
     {
         private readonly ITokenProviderOptions _tokenProviderOptions = tokenProviderOptions;
 
-        public async Task ValidateAsync(Entities.Account account, string token)
+        public async Task ValidateAsync(Account account, string token)
         {
             var handler = new JwtSecurityTokenHandler();
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(account.SecurityStamp));

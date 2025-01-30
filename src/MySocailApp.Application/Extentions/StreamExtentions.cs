@@ -5,7 +5,7 @@
         public static async Task<byte[]> ToByteArrayAsync(this Stream stream)
         {
             var bytes = new byte[stream.Length];
-            await stream.ReadAsync(bytes, 0, bytes.Length);
+            await stream.ReadExactlyAsync(bytes);
             return bytes;
         }
     }

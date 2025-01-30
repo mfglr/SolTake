@@ -1,5 +1,5 @@
-﻿using AccountDomain.Abstracts;
-using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using AccountDomain.AccountAggregate.ValueObjects;
 using MediatR;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
 

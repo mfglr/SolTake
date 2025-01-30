@@ -1,4 +1,4 @@
-﻿using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.ValueObjects;
 using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core.Exceptions;

@@ -1,6 +1,6 @@
-﻿using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.Exceptions;
 
-namespace AccountDomain.ValueObjects
+namespace AccountDomain.AccountAggregate.ValueObjects
 {
     public class UserName
     {

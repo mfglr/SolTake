@@ -1,5 +1,5 @@
-﻿using AccountDomain.DomainServices;
-using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.DomainServices;
+using AccountDomain.AccountAggregate.ValueObjects;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 

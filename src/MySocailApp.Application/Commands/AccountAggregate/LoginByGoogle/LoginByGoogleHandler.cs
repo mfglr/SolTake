@@ -1,7 +1,7 @@
-﻿using AccountDomain.Abstracts;
-using AccountDomain.DomainServices;
-using AccountDomain.Entities;
-using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using AccountDomain.AccountAggregate.DomainServices;
+using AccountDomain.AccountAggregate.Entities;
+using AccountDomain.AccountAggregate.ValueObjects;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;

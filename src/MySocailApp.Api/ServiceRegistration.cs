@@ -1,4 +1,4 @@
-﻿using AccountDomain.Configurations;
+﻿using AccountDomain.AccountAggregate.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

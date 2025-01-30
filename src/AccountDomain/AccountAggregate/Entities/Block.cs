@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
 
-namespace AccountDomain.Entities
+namespace AccountDomain.AccountAggregate.Entities
 {
     public class Block : IHasId
     {

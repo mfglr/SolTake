@@ -1,4 +1,4 @@
-﻿using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.ValueObjects;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 

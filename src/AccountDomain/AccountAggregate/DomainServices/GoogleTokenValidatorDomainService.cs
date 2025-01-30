@@ -1,8 +1,8 @@
-﻿using AccountDomain.Exceptions;
-using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.Exceptions;
+using AccountDomain.AccountAggregate.ValueObjects;
 using Newtonsoft.Json.Linq;
 
-namespace AccountDomain.DomainServices
+namespace AccountDomain.AccountAggregate.DomainServices
 {
     public class GoogleTokenValidatorDomainService
     {

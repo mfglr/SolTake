@@ -1,4 +1,4 @@
-﻿namespace AccountDomain.Entities
+﻿namespace AccountDomain.AccountAggregate.Entities
 {
     public class AccountRole(int roleId)
     {

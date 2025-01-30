@@ -1,6 +1,7 @@
-﻿using MySocailApp.Core;
+﻿using AccountDomain.AccountAggregate.Entities;
+using MySocailApp.Core;
 
-namespace AccountDomain.DomainEvents
+namespace AccountDomain.AccountAggregate.DomainEvents
 {
-    public record EmailVerificationTokenUpdatedDomainEvent(Entities.Account Account) : IDomainEvent;
+    public record EmailVerificationTokenUpdatedDomainEvent(Account Account) : IDomainEvent;
 }

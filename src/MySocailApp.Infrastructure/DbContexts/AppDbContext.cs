@@ -1,4 +1,4 @@
-﻿using AccountDomain.Entities;
+﻿using AccountDomain.AccountAggregate.Entities;
 using AccountDomain.PrivacyPolicyAggregate;
 using AccountDomain.RoleAggregate.Entities;
 using AccountDomain.TermsOfUseAggregate;

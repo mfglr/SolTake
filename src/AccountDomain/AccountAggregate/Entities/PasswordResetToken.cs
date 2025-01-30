@@ -1,7 +1,7 @@
-﻿using AccountDomain.DomainServices;
-using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.DomainServices;
+using AccountDomain.AccountAggregate.Exceptions;
 
-namespace AccountDomain.Entities
+namespace AccountDomain.AccountAggregate.Entities
 {
     public class PasswordResetToken
     {

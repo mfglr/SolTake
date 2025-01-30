@@ -1,6 +1,6 @@
-﻿using AccountDomain.Abstracts;
-using AccountDomain.Exceptions;
-using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using AccountDomain.AccountAggregate.Exceptions;
+using AccountDomain.AccountAggregate.ValueObjects;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 

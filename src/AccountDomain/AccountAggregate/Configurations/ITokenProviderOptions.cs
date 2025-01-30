@@ -1,4 +1,4 @@
-﻿namespace AccountDomain.Configurations
+﻿namespace AccountDomain.AccountAggregate.Configurations
 {
     public interface ITokenProviderOptions
     {

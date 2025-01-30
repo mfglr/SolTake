@@ -1,4 +1,4 @@
-﻿using AccountDomain.Abstracts;
+﻿using AccountDomain.AccountAggregate.Abstracts;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.Queries.CommentAggregate;

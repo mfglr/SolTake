@@ -1,14 +1,15 @@
-﻿using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.Entities;
+using AccountDomain.AccountAggregate.ValueObjects;
 
-namespace AccountDomain.Abstracts
+namespace AccountDomain.AccountAggregate.Abstracts
 {
     public interface IAccountWriteRepository
     {
-        Task CreateAsync(Entities.Account account, CancellationToken cancellationToken);
-        void Delete(Entities.Account account);
-        Task<Entities.Account?> GetAccountAsync(int accountId, CancellationToken cancellationToken);
-        Task<Entities.Account?> GetAccountByEmailAsync(Email email, CancellationToken cancellationToken);
-        Task<Entities.Account?> GetAccountByUserNameAsync(UserName userName, CancellationToken cancellationToken);
-        Task<Entities.Account?> GetAccountByGoogleAccount(GoogleAccount googleAccount, CancellationToken cancellationToken);
+        Task CreateAsync(Account account, CancellationToken cancellationToken);
+        void Delete(Account account);
+        Task<Account?> GetAccountAsync(int accountId, CancellationToken cancellationToken);
+        Task<Account?> GetAccountByEmailAsync(Email email, CancellationToken cancellationToken);
+        Task<Account?> GetAccountByUserNameAsync(UserName userName, CancellationToken cancellationToken);
+        Task<Account?> GetAccountByGoogleAccount(GoogleAccount googleAccount, CancellationToken cancellationToken);
     }
 }

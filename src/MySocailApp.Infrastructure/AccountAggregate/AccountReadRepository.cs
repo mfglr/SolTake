@@ -1,6 +1,6 @@
-﻿using AccountDomain.Abstracts;
-using AccountDomain.Entities;
-using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using AccountDomain.AccountAggregate.Entities;
+using AccountDomain.AccountAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using MySocailApp.Infrastructure.DbContexts;
 

@@ -1,5 +1,5 @@
-﻿using AccountDomain.Abstracts;
-using AccountDomain.Exceptions;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using AccountDomain.AccountAggregate.Exceptions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.InfrastructureServices;
 

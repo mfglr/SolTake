@@ -1,4 +1,4 @@
-﻿using AccountDomain.DomainEvents;
+﻿using AccountDomain.AccountAggregate.DomainEvents;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.UserAggregate.Abstracts;

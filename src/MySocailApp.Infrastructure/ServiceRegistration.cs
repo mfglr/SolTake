@@ -1,4 +1,4 @@
-﻿using AccountDomain.Abstracts;
+﻿using AccountDomain.AccountAggregate.Abstracts;
 using AccountDomain.PrivacyPolicyAggregate.Abstracts;
 using AccountDomain.RoleAggregate.Abstracts;
 using AccountDomain.TermsOfUseAggregate.Abstracts;

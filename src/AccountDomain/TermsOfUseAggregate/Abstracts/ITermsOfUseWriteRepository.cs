@@ -1,6 +1,4 @@
-﻿using AccountDomain.TermsOfUseAggregate;
-
-namespace AccountDomain.TermsOfUseAggregate.Abstracts
+﻿namespace AccountDomain.TermsOfUseAggregate.Abstracts
 {
     public interface ITermsOfUseWriteRepository
     {

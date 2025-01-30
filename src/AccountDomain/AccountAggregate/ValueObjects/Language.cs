@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
 
-namespace AccountDomain.ValueObjects
+namespace AccountDomain.AccountAggregate.ValueObjects
 {
     public class Language
     {

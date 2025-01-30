@@ -1,16 +1,21 @@
-﻿using AccountDomain.DomainEvents;
-using AccountDomain.DomainServices;
-using AccountDomain.Exceptions;
-using AccountDomain.ValueObjects;
+﻿using AccountDomain.AccountAggregate.DomainEvents;
+using AccountDomain.AccountAggregate.DomainServices;
+using AccountDomain.AccountAggregate.Exceptions;
+using AccountDomain.AccountAggregate.ValueObjects;
 using MySocailApp.Core;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AccountDomain.Entities
+namespace AccountDomain.AccountAggregate.Entities
 {
     public class Account : Entity, IAggregateRoot
     {
+        public UserName UserName { get; private set; }
+        public Email? Email { get; private set; }
+        public Password? Password { get; private set; }
+        public Language Language { get; private set; }
         public GoogleAccount? GoogleAccount { get; private set; }
         public string SecurityStamp { get; private set; }
+        public AccountType AccountType { get; private set; }
 
         private readonly List<AccountRole> _roles = [];
         public IReadOnlyCollection<AccountRole> Roles => _roles;
@@ -23,6 +28,7 @@ namespace AccountDomain.Entities
             if (!password.CompareValue(passwordConfirm))
                 throw new PassowordAndPasswordConfirmationNotMatchException();
 
+            AccountType = AccountType.User;
             Password = password;
             Email = email;
             UserName = email.GenerateUserName();
@@ -32,12 +38,30 @@ namespace AccountDomain.Entities
         }
         public Account(GoogleAccount googleAccount, Language language)
         {
+            AccountType = AccountType.User;
             GoogleAccount = googleAccount;
             Email = new(googleAccount.Email);
             UserName = Email.GenerateUserName();
             Language = language;
             SecurityStamp = GenerateSecurityStamp();
         }
+
+        public static Account CreateAI(UserName userName)
+        {
+            var account = new Account()
+            {
+                AccountType = AccountType.AI,
+                UserName = userName,
+                Email = Email.SystemEmail(userName),
+                Language = new Language(Languages.DEFAULT),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            account._verificationTokens.Add(EmailVerificationToken.CreateVerifedToken());
+
+            return account;
+        }
+
 
         internal void Create(int policyId, int termsOfUseId)
         {
@@ -51,16 +75,12 @@ namespace AccountDomain.Entities
             AddDomainEvent(new AccountCreatedDominEvent(this));
         }
 
-        //userName
-        public UserName UserName { get; private set; }
         internal void UpdateUserName(UserName userName)
         {
             UserName = userName;
             UpdatedAt = DateTime.UtcNow;
         }
 
-        //email
-        public Email Email { get; private set; }
         internal void UpdateEmail(Email email)
         {
             _verificationTokens.Add(EmailVerificationToken.Create());
@@ -69,8 +89,6 @@ namespace AccountDomain.Entities
             AddDomainEvent(new EmailVerificationTokenUpdatedDomainEvent(this));
         }
 
-        //language
-        public Language Language { get; private set; }
         public void UpdateLanguage(Language language)
         {
             Language = language;
@@ -167,7 +185,6 @@ namespace AccountDomain.Entities
         public void Logout() => SecurityStamp = GenerateSecurityStamp();
 
         //password
-        public Password? Password { get; private set; }
         public bool CheckPassword(Password password) => Password != null && HashComputer.Check(password.Value, Password.Hash);
         public void UpdatePassword(Password currentPassword, Password newPassword, Password newPasswordConfirm)
         {

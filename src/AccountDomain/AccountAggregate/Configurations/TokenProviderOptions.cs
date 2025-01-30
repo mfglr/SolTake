@@ -1,4 +1,4 @@
-﻿namespace AccountDomain.Configurations
+﻿namespace AccountDomain.AccountAggregate.Configurations
 {
     public class TokenProviderOptions(string audience, string issuer, int accessTokenExpiration, int refreshTokenExpiration, string securityKey) : ITokenProviderOptions
     {

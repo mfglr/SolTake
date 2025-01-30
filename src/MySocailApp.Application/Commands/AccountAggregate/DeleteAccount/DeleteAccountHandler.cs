@@ -1,5 +1,5 @@
-﻿using AccountDomain.Abstracts;
-using AccountDomain.DomainEvents;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using AccountDomain.AccountAggregate.DomainEvents;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 
