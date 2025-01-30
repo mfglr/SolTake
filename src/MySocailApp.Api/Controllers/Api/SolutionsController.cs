@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.SolutionAggregate.CreateSolution;
+using MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI;
 using MySocailApp.Application.Commands.SolutionAggregate.DeleteSolution;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote;
 using MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote;
@@ -41,6 +42,10 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpPost]
         public async Task<CreateSolutionResponseDto> Create([FromForm] string? content, [FromForm] int questionId, [FromForm] IFormFileCollection images, CancellationToken cancellationToken)
             => await _mediator.Send(new CreateSolutionDto(content, questionId, images), cancellationToken);
+
+        [HttpPost]
+        public async Task<CreateSolutionResponseDto> CreateByIA(CreateSolutionByAIDto request, CancellationToken cancellationToken)
+            => await _mediator.Send(request, cancellationToken);
 
         [HttpDelete("{solutionId}")]
         public async Task Delete(int solutionId, CancellationToken cancellationToken)

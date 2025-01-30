@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.PipelineBehaviours;
 using System.Reflection;
 
@@ -14,7 +15,8 @@ namespace MySocailApp.Application
             return services
                 .AddAutoMapper(assembly)
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(AppPipelineBehaviour<,>));
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(AppPipelineBehaviour<,>))
+                .AddScoped<ChatGPT_Service>();
         }
     }
 }

@@ -1,16 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 
 namespace MySocailApp.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-    [ServiceFilter(typeof(CheckAccountFilterAttribute))]
     public class BlobsController(IBlobService blobService) : ControllerBase
     {
         private readonly IBlobService _blobService = blobService;
