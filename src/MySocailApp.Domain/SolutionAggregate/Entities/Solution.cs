@@ -17,15 +17,15 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         private readonly List<SolutionMultimedia> _medias = [];
         public IReadOnlyCollection<SolutionMultimedia> Medias => _medias;
 
-        public Solution(int questionId, int userId, SolutionContent? content, IEnumerable<SolutionMultimedia> medias)
+        public Solution(int questionId, int userId, SolutionContent? content = null, IEnumerable<SolutionMultimedia>? medias = null)
         {
-            if (content == null && !medias.Any())
+            if (content == null && (medias == null || !medias.Any()))
                 throw new SolutionContentRequiredException();
             
-            if (medias.Count() > MaxNumberOfMultimedia)
+            if (medias != null && medias.Count() > MaxNumberOfMultimedia)
                 throw new TooManySolutionMediaException();
 
-            _medias.AddRange(medias);
+            _medias.AddRange(medias ?? []);
             QuestionId = questionId;
             UserId = userId;
             Content = content;

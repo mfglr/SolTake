@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Application.Configurations;
+using MySocailApp.Application.InfrastructureServices.IAService.Exceptions;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
@@ -22,7 +23,12 @@ namespace MySocailApp.Application.InfrastructureServices.IAService
                     Converters = { new ChatGPT_ContentJsonConverter() }
                 }
             );
+
             var body = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                throw new ChatGPTException(body);
+
             return JsonConvert.DeserializeObject<ChatGBT_Response>(body)!;
         } 
     }

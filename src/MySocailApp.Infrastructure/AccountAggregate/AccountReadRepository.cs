@@ -2,6 +2,7 @@
 using AccountDomain.AccountAggregate.Entities;
 using AccountDomain.AccountAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.AccountAggregate
@@ -23,6 +24,14 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.VerificationTokens)
                 .FirstOrDefaultAsync(x => x.Id == accountId,cancellationToken);
+
+        public Task<Account?> GetAccountByUserName(UserName userName, CancellationToken cancellationToken)
+            => _context.Accounts
+                .AsNoTracking()
+                .Include(x => x.PrivacyPolicies)
+                .Include(x => x.TermsOfUses)
+                .Include(x => x.VerificationTokens)
+                .FirstOrDefaultAsync(x => x.UserName.Value == userName.Value, cancellationToken);
 
         public Task<List<int>> GetAccountIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
             => _context.Accounts

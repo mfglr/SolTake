@@ -96,7 +96,7 @@ namespace MySocailApp.Api
             versionCacheService.Init(versions);
 
             //add ai accounts if not exist
-            if(!context.Accounts.Any(x => x.UserName.Value == "gpt-4o"))
+            if(!context.Accounts.Any(x => x.UserName.Value == "gpt_4o"))
             {
                 var transaction = context.Database.BeginTransaction();
                 

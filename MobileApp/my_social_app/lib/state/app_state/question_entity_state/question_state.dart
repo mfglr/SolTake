@@ -29,6 +29,7 @@ class QuestionState implements Avatar{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final Multimedia? image;
+  final bool isSolveableByAi;
   final Pagination likes;
   final Pagination comments;
   final Pagination solutions;
@@ -64,6 +65,7 @@ class QuestionState implements Avatar{
     required this.numberOfCorrectSolutions,
     required this.numberOfVideoSolutions,
     required this.image,
+    required this.isSolveableByAi,
     required this.likes,
     required this.comments,
     required this.solutions,
@@ -124,7 +126,8 @@ class QuestionState implements Avatar{
       pendingSolutions: newPendingSolutions ?? pendingSolutions,
       incorrectSolutions: newIncorrectSolutions ?? incorrectSolutions,
       videoSolutions: newVideoSolutions ?? videoSolutions,
-      image: newImage ?? image
+      image: newImage ?? image,
+      isSolveableByAi: isSolveableByAi
     );
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
