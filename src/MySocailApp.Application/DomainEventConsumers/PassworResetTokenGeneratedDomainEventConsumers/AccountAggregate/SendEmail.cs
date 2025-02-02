@@ -18,7 +18,7 @@ namespace MySocailApp.Application.DomainEventConsumers.PassworResetTokenGenerate
                     a.Language.Value,
                     passwordResetToken.Value,
                     a.UserName.Value,
-                    a.Email.Value,
+                    a.Email!.Value,
                     cancellationToken
                 );
         }

@@ -10,15 +10,16 @@ namespace AccountDomain.AccountAggregate.Entities
     public class Account : Entity, IAggregateRoot
     {
         public UserName UserName { get; private set; }
-        public Email? Email { get; private set; }
+        public Email Email { get; private set; }
         public Password? Password { get; private set; }
         public Language Language { get; private set; }
         public GoogleAccount? GoogleAccount { get; private set; }
         public string SecurityStamp { get; private set; }
         public AccountType AccountType { get; private set; }
-
         private readonly List<AccountRole> _roles = [];
         public IReadOnlyCollection<AccountRole> Roles => _roles;
+
+        public bool IsSendableEmailVerificationMail => GoogleAccount == null && AccountType == AccountType.User;
 
         private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
@@ -46,22 +47,23 @@ namespace AccountDomain.AccountAggregate.Entities
             SecurityStamp = GenerateSecurityStamp();
         }
 
-        public static Account CreateAI(UserName userName)
+        public static Account CreatAI(UserName userName)
         {
             var account = new Account()
             {
-                AccountType = AccountType.AI,
                 UserName = userName,
-                Email = Email.SystemEmail(userName),
-                Language = new Language(Languages.DEFAULT),
+                Email = Email.AIEmail(userName),
+                Language = new(Languages.DEFAULT),
+                SecurityStamp = GenerateSecurityStamp(),
+                AccountType = AccountType.AI,
                 CreatedAt = DateTime.UtcNow
             };
-
-            account._verificationTokens.Add(EmailVerificationToken.CreateVerifedToken());
-
+            account.AddDomainEvent(new AccountCreatedDominEvent(account));
             return account;
         }
 
+        public static Account CreateChatGPT4O() => CreatAI(new("gpt_4o"));
+        public static Account CreateChatGPT4OMini() => CreatAI(new("gpt_4o_mini"));
 
         internal void Create(int policyId, int termsOfUseId)
         {
@@ -97,7 +99,7 @@ namespace AccountDomain.AccountAggregate.Entities
 
         //Email verfication Tokens
         public EmailVerificationToken VerificationToken => VerificationTokens.OrderBy(x => x.Id).Last();
-        public bool IsEmailVerified => GoogleAccount != null || VerificationToken.IsVerified;
+        public bool IsEmailVerified => AccountType == AccountType.AI || GoogleAccount != null || VerificationToken.IsVerified;
         private readonly List<EmailVerificationToken> _verificationTokens = [];
         public IReadOnlyCollection<EmailVerificationToken> VerificationTokens => _verificationTokens;
         public void UpdateEmailVerificationToken()

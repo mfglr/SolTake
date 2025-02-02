@@ -30,14 +30,6 @@ namespace AccountDomain.AccountAggregate.Entities
             };
         }
 
-        internal static EmailVerificationToken CreateVerifedToken()
-        {
-            var token = Create();
-            token.IsVerified = true;
-            token.VerifiedAt = DateTime.UtcNow;
-            return token;
-        }
-
         private bool IsValid(string token)
             => HashComputer.Check(token, Hash) && DateTime.UtcNow <= ExpirationAt && NumberOfFailedAttemps < 3;
 

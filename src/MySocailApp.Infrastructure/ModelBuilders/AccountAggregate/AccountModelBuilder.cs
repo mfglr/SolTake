@@ -10,8 +10,27 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AccountAggregate
         {
 
             builder.OwnsOne(x => x.Password,password => password.Ignore(x => x.Value));
-            builder.OwnsOne(x => x.UserName,userName => userName.HasIndex(x => x.Value).IsUnique());
-            builder.OwnsOne(x => x.Email, email => email.HasIndex(x => x.Value));
+            builder.OwnsOne(
+                x => x.UserName,
+                userName => {
+                    userName.HasIndex(x => x.Value).IsUnique();
+                    userName.Property(x => x.Value).HasColumnName("UserName_Value");
+                }
+            );
+            builder.OwnsOne(
+                x => x.Email,
+                email => {
+                    email.HasIndex(x => x.Value);
+                    email.Property(x => x.Value).HasColumnName("Email_Value");
+                }
+            );
+            builder.OwnsOne(
+                x => x.Language,
+                language =>
+                {
+                    language.Property(x => x.Value).HasColumnName("Language_Value");
+                }
+            );
             builder.OwnsOne(
                 x => x.GoogleAccount,
                 googleAccount => {
@@ -19,7 +38,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.AccountAggregate
                     googleAccount.Ignore(x => x.Email);
                 }
             );
-            builder.OwnsOne(x => x.Language);
 
 
             builder

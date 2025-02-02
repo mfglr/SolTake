@@ -12,7 +12,8 @@ namespace MySocailApp.Domain.AppVersionAggregate.DomainServices
         public void Create(AppVersion version)
         {
             var latestVersion = _appVersionCacheService.Version;
-            if (VersionCode.CompareTo(version.Code, latestVersion.Code) <= 0)
+
+            if (latestVersion != null && VersionCode.CompareTo(version.Code, latestVersion.Code) <= 0)
                 throw new InvalidVersionCodeException();
 
             version.Create();

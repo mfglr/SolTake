@@ -25,6 +25,6 @@ namespace AccountDomain.AccountAggregate.ValueObjects
         }
 
 
-        public static Email SystemEmail(UserName userName) => new($"{userName.Value}@system.com");
+        public static Email AIEmail(UserName userName) => new($"{userName.Value}@ai.com");
     }
 }

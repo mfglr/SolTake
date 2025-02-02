@@ -1,10 +1,12 @@
 ﻿using AccountDomain.AccountAggregate.Configurations;
+using AccountDomain.AccountAggregate.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.AppVersionAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,12 +23,14 @@ namespace MySocailApp.Api
             var emailServiceSettings = configuration.GetRequiredSection("EmailServiceSettings").Get<EmailServiceSettings>()!;
             var applicationSettings = configuration.GetRequiredSection("ApplicationSettings").Get<ApplicationSettings>()!;
             var faceBookSettings = configuration.GetRequiredSection("FaceBookSettings").Get<FaceBookSettings>()!;
+            var chatGptSettings = configuration.GetRequiredSection("ChatGPTSettings").Get<ChatGPTSettings>()!;
 
             return services
                 .AddSingleton<ITokenProviderOptions>(tokenProviderOptions)
                 .AddSingleton<IEmailServiceSettings>(emailServiceSettings)
                 .AddSingleton<IApplicationSettings>(applicationSettings)
-                .AddSingleton<IFaceBookSettings>(faceBookSettings);
+                .AddSingleton<IFaceBookSettings>(faceBookSettings)
+                .AddSingleton<IChatGPTSettings>(chatGptSettings);
         }
         public static IServiceCollection AddFilters(this IServiceCollection services)
         {
@@ -86,9 +90,29 @@ namespace MySocailApp.Api
             using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             context.Database.Migrate();
 
+            //initiliaze versionCacheService
             var versionCacheService = new AppVersionCacheService();
             var versions = context.AppVersions.AsNoTracking().ToList();
             versionCacheService.Init(versions);
+
+            //add ai accounts if not exist
+            if(!context.Accounts.Any(x => x.UserName.Value == "gpt-4o"))
+            {
+                var transaction = context.Database.BeginTransaction();
+                
+                IEnumerable<Account> ais = [Account.CreateChatGPT4O(), Account.CreateChatGPT4OMini()];
+                context.Accounts.AddRange(ais);
+                context.SaveChanges();
+                
+                var users = ais.Select(x => new User(x.Id)).ToList();
+                foreach (var user in users)
+                    user.Create();
+                
+                context.Users.AddRange(users);
+                context.SaveChanges();
+
+                transaction.Commit();
+            }
 
             return services
                 .AddScoped<IAppVersionReadRepository, AppVersionReadRepository>()

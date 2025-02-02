@@ -10,17 +10,18 @@ namespace MySocailApp.Application.DomainEventConsumers.AccountCreatedDomainEvent
 
         public async Task Handle(AccountCreatedDominEvent notification, CancellationToken cancellationToken)
         {
-            if (notification.Account.GoogleAccount != null) return;
-
-            var verificationToken = notification.Account.VerificationTokens.OrderByDescending(x => x.Id).First();
-            await _emailService
-                .SendEmailVerificationMail(
-                    notification.Account.Language.Value,
-                    verificationToken.Value,
-                    notification.Account.UserName.Value,
-                    notification.Account.Email.Value,
-                    cancellationToken
-                );
+            if (notification.Account.IsSendableEmailVerificationMail)
+            {
+                var verificationToken = notification.Account.VerificationTokens.OrderByDescending(x => x.Id).First();
+                await _emailService
+                    .SendEmailVerificationMail(
+                        notification.Account.Language.Value,
+                        verificationToken.Value,
+                        notification.Account.UserName.Value,
+                        notification.Account.Email.Value,
+                        cancellationToken
+                    );
+            }
         }
     }
 }

@@ -11,7 +11,15 @@ namespace MySocailApp.Application.DomainEventConsumers.EmailVerificationTokenUpd
         public async Task Handle(EmailVerificationTokenUpdatedDomainEvent notification, CancellationToken cancellationToken)
         {
             var a = notification.Account;
-            await _emailService.SendEmailVerificationMail(a.Language.Value, a.VerificationToken.Value,a.UserName.Value,a.Email.Value,cancellationToken);
+
+            if(a.Email != null)
+                await _emailService.SendEmailVerificationMail(
+                    a.Language.Value,
+                    a.VerificationToken.Value,
+                    a.UserName.Value,
+                    a.Email.Value,
+                    cancellationToken
+                );
         }
     }
 }
