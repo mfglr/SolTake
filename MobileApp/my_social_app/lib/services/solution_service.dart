@@ -38,6 +38,17 @@ class SolutionService{
     return Solution.fromJson(jsonDecode(data));
   }
 
+  Future<Solution> createByAi(int questionId, String model)
+    => _appClient
+        .post(
+          "$solutionController/$createSolutionByAiEndpoint",
+          body: {
+            'questionId': questionId,
+            'model': model
+          }
+        )
+        .then((json) => Solution.fromJson(json));
+
   Future<void> delete(int solutionId) => 
     _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");
 

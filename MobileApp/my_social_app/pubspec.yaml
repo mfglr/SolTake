@@ -68,6 +68,7 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   audio_video_progress_bar: ^2.0.3
   http_parser: ^4.1.1
+  font_awesome_flutter: ^10.8.0
   
   #local packages
   app_file:
@@ -124,6 +125,8 @@ flutter:
     - assets/images/google.png
     - assets/images/logo-bgremoved.png
     - assets/images/logo.png
+    - assets/images/gpt-4o.webp
+    - assets/images/gpt-4o-mini.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

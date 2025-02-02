@@ -31,6 +31,7 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) => Solution(
       image: json['image'] == null
           ? null
           : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
+      isCreatedByAi: json['isCreatedByAi'] as bool,
     );
 
 Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
@@ -53,4 +54,5 @@ Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
       'doesBelongToQuestionOfCurrentUser':
           instance.doesBelongToQuestionOfCurrentUser,
       'image': instance.image,
+      'isCreatedByAi': instance.isCreatedByAi,
     };

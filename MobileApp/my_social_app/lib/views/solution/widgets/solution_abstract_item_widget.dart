@@ -19,7 +19,7 @@ class SolutionAbstractItemWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: MultimediaGrid(
-        state: solution.medias.firstOrNull,
+        state: solution.isCreatedByAi ? solution.avatar! : solution.medias.firstOrNull,
         blobServiceUrl: AppClient.blobService,
         noMediaPath: noMediaAssetPath,
         notFoundMediaPath: noMediaAssetPath,

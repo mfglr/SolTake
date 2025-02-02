@@ -84,7 +84,7 @@ class SolutionItemWidget extends StatelessWidget {
             ),
           ),
           MultimediaSlider(
-            medias: solution.medias,
+            medias: solution.isCreatedByAi ? [solution.avatar!] : solution.medias,
             blobServiceUrl: AppClient.blobService,
             notFoundMediaPath: noMediaAssetPath,
             noMediaPath: noMediaAssetPath,

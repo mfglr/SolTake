@@ -1,1 +1,1 @@
-const validUserNameChracters = "0123456789abcdefghijklmnopqrstuvwxyz_.";
+const validUserNameChracters = "0123456789abcdefghijklmnopqrstuvwxyz_.-";

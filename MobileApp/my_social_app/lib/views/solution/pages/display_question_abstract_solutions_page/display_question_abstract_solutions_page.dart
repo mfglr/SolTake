@@ -3,15 +3,15 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
-import 'package:my_social_app/views/create_solution/pages/add_solution_content_page.dart';
 import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/widgets/create_solution_button.dart';
+import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/widgets/create_solution_by_ai_button.dart';
 import 'package:my_social_app/views/solution/pages/display_question_correct_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_incorrect_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_pending_solutions_page.dart';
@@ -20,24 +20,22 @@ import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:uuid/uuid.dart';
-
 
 
 const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];
 
-class QuestionsSolutionsPage extends StatefulWidget {
+class DisplayQuestionAbstractSolutionsPage extends StatefulWidget {
   final int questionId;
-  const QuestionsSolutionsPage({
+  const DisplayQuestionAbstractSolutionsPage({
     super.key,
     required this.questionId
   });
 
   @override
-  State<QuestionsSolutionsPage> createState() => _QuestionsSolutionsPageState();
+  State<DisplayQuestionAbstractSolutionsPage> createState() => _DisplayQuestionAbstractSolutionsPageState();
 }
 
-class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
+class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAbstractSolutionsPage> {
   final PageController _pageController = PageController();
   late final void Function() _setPage;
   double _page = 0;
@@ -230,30 +228,20 @@ class _QuestionsSolutionsPageState extends State<QuestionsSolutionsPage> {
               ),
             ),
           ),
-          floatingActionButton: 
-            !question.isOwner
-              ? FloatingActionButton(
-                shape: const CircleBorder(),
-                onPressed: () =>
-                  Navigator
-                    .of(context)
-                    .push(MaterialPageRoute(builder: (context) => const AddSolutionContentPage()))
-                    .then((value){
-                      if(value == null || !context.mounted) return;
-                      final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(
-                        CreateSolutionAction(
-                          id: const Uuid().v4(),
-                          questionId: question.id,
-                          content: value.content,
-                          medias: value.medias
-                        )
-                      );
-                      _pageController.jumpToPage(4);
-                    }),
-                child: const Icon(Icons.create),
-              )
-              : null,
+          floatingActionButton:
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                if(question.isSolveableByAi)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: CreateSolutionByAiButton(questionId: question.id)
+                  ),
+                if(!question.isOwner)
+                  CreateSolutionButton(questionId: question.id,pageController: _pageController),
+              ],
+            ),
           body: Column(
             children: [
               LabelPaginationWidget(

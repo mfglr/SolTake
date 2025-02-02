@@ -7,6 +7,7 @@ const getVideoSolutionsEndpoint = "GetVideoSolutions";
 const getSavedSolutionsEndpoint = "GetSavedSolutions";
 
 const createSolutionEndpoint = "Create";
+const createSolutionByAiEndpoint = "CreateByAI";
 const createVideoSolutionEndpoint = "CreateVideoSolution";
 const deleteSolutionEndpoint = "Delete";
 

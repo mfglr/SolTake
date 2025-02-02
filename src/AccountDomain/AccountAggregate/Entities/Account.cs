@@ -62,8 +62,8 @@ namespace AccountDomain.AccountAggregate.Entities
             return account;
         }
 
-        public static Account CreateChatGPT4O() => CreatAI(new("gpt_4o"));
-        public static Account CreateChatGPT4OMini() => CreatAI(new("gpt_4o_mini"));
+        public static Account CreateChatGPT4O() => CreatAI(new("gpt-4o"));
+        public static Account CreateChatGPT4OMini() => CreatAI(new("gpt-4o-mini"));
 
         internal void Create(int policyId, int termsOfUseId)
         {

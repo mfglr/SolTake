@@ -13,21 +13,23 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IApplicationSettings applicationSettings, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IAccountReadRepository accountReadRepository, IAccountAccessor accountAccessor) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService,IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IAccountReadRepository accountReadRepository, IAccountAccessor accountAccessor, IUserReadRepository userReadRepository, SolutionCreatorDomainService solutionCreatorDomainService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
-        private readonly IApplicationSettings _applicationSettings = applicationSettings;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccountReadRepository _accountReadRepository = accountReadRepository;
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
-
+        private readonly IUserReadRepository _userReadRepository = userReadRepository;
+        private readonly SolutionCreatorDomainService _solutionCreatorDomainService = solutionCreatorDomainService;
         private readonly static Dictionary<string, string> _prompts = new(){
             { Languages.EN, "Please solve the question in the image!" },
             { Languages.TR, "Resimdeki soruyu çözer misin?" },
@@ -39,23 +41,28 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
             var ai =
                 await _accountReadRepository.GetAccountByUserName(userName, cancellationToken) ??
                 throw new AccountNotFoundException();
+            
+            var user = (await _userReadRepository.GetAsync(ai.Id, cancellationToken))!;
 
             var question =
                 await _questionReadRepository.GetQuestionWithImagesById(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
+            
 
             if (!question.IsSolveableByAi)
                 throw new NotSolvableByAI();
 
+            //Have ChatGPT solve the question and get content
             var response = await _chatGPTService.SendAsync(CreateRequest(request.Model, question));
 
+            //create solution
             var content = new SolutionContent(response.Choices.First().Message.Content);
             var solution = new Solution(request.QuestionId, ai.Id, content: content);
-
+            await _solutionCreatorDomainService.CreateAsync(solution, cancellationToken);
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return new CreateSolutionResponseDto(solution, ai);
+            return new CreateSolutionResponseDto(solution, ai, user);
 
         }
 
@@ -88,7 +95,8 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
         }
 
         private string GetUrl(string ContainerName, string blobName)
-            => $"{_applicationSettings.BlobUrl}/{ContainerName}/{blobName}";
+            => "https://cdn1.ntv.com.tr/gorsel/KxDw7q07B0q6ggAHB0MtRQ.jpg?width=1000&mode=both&scale=both&v=1277035445000";
+        //=> $"{_applicationSettings.BlobUrl}/{ContainerName}/{blobName}";
 
     }
 }

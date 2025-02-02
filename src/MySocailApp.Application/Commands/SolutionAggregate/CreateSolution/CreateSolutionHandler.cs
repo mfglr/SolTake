@@ -7,10 +7,11 @@ using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
 {
-    public class CreateSolutionHandler(SolutionCreatorDomainService solutionCreator, IUnitOfWork unitOfWork, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, IMultimediaService multimediaService, IAccountAccessor accountAccessor) : IRequestHandler<CreateSolutionDto, CreateSolutionResponseDto>
+    public class CreateSolutionHandler(SolutionCreatorDomainService solutionCreator, IUnitOfWork unitOfWork, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, IMultimediaService multimediaService, IAccountAccessor accountAccessor, IUserReadRepository userReadRepository) : IRequestHandler<CreateSolutionDto, CreateSolutionResponseDto>
     {
         private readonly SolutionCreatorDomainService _solutionCreator = solutionCreator;
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
@@ -18,6 +19,8 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IBlobService _blobService = blobService;
         private readonly IMultimediaService _multimediaService = multimediaService;
+        private readonly IUserReadRepository _userReadRepository = userReadRepository;
+
 
         public async Task<CreateSolutionResponseDto> Handle(CreateSolutionDto request, CancellationToken cancellationToken)
         {
@@ -38,7 +41,9 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
                 //commit changes
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                return new(solution, _accountAccessor.Account);
+                var user = (await _userReadRepository.GetAsync(_accountAccessor.Account.Id, cancellationToken))!;
+
+                return new(solution, _accountAccessor.Account, user);
             }
             catch (Exception)
             {

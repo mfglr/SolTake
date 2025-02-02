@@ -1,11 +1,14 @@
 ﻿using AccountDomain.AccountAggregate.Entities;
+using AccountDomain.AccountAggregate.ValueObjects;
 using MySocailApp.Application.Queries.SolutionAggregate;
+using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
 {
-    public class CreateSolutionResponseDto(Solution solution, Account account)
+    public class CreateSolutionResponseDto(Solution solution, Account account, User user)
     {
         public int Id { get; private set; } = solution.Id;
         public DateTime CreatedAt { get; private set; } = solution.CreatedAt;
@@ -36,5 +39,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
                     x.Duration,
                     x.MultimediaType
                 ));
+        public Multimedia? Image { get; private set; } = user.Image;
+        public bool IsCreatedByAi { get; private set; } = account.AccountType == AccountType.AI;
     }
 }

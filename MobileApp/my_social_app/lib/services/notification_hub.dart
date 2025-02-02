@@ -188,7 +188,6 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
       store.dispatch(AddSolutionAction(solution: solution));
-
       showNotification(context, notification.id);
     }
   );

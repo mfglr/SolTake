@@ -307,5 +307,11 @@
     "upload_status_widget_uploading": "Yükleniyor",
     "upload_status_widget_processing": "İşleniyor",
     "upload_status_widget_uploading_success": "Yükleme başarılı",
-    "upload_status_widget_uploading_failed": "Başarısız Yükleme! Tekrar denemek için tıkla."
+    "upload_status_widget_uploading_failed": "Başarısız Yükleme! Tekrar denemek için tıkla.",
+
+    "create_solution_by_ai_button_label": "Yapay Zeka Çözsün!",
+
+    "ai_item_modal_title": "Emin misin?",
+    "ai_item_modal_content": "Yapay zeka sorular için doğru çözüm üretmeyi garanti etmez. Bunu kabul ediyor musun?",
+    "ai_item_modal_create_solution_button": "Kabul ediyorum"
 }

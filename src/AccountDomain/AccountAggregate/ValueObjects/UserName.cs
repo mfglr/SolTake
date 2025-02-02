@@ -4,7 +4,7 @@ namespace AccountDomain.AccountAggregate.ValueObjects
 {
     public class UserName
     {
-        private static readonly string _validCharacters = "0123456789abcdefghijklmnopqrstuvwxyz_.";
+        private static readonly string _validCharacters = "0123456789abcdefghijklmnopqrstuvwxyz_.-";
         public string Value { get; private set; }
 
         public UserName(string value)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/views/solution/pages/questions_solutions_page.dart';
+import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/display_question_abstract_solutions_page.dart';
 
 class DisplaySolutionsButton extends StatelessWidget {
   final QuestionState question;
@@ -14,7 +14,7 @@ class DisplaySolutionsButton extends StatelessWidget {
           .of(context)
           .push(
             MaterialPageRoute(
-              builder: (context) => QuestionsSolutionsPage(
+              builder: (context) => DisplayQuestionAbstractSolutionsPage(
                 questionId: question.id
               )
             )

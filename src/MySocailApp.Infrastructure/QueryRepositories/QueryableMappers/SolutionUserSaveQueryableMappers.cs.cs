@@ -1,4 +1,5 @@
-﻿using MySocailApp.Application.Queries.SolutionAggregate;
+﻿using AccountDomain.AccountAggregate.ValueObjects;
+using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
@@ -13,7 +14,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     context.Accounts,
                     sus => sus.UserId,
                     account => account.Id,
-                    (sus, account) => new { sus, UserName = account.UserName.Value }
+                    (sus, account) => new { sus, account }
                 )
                 .Join(
                     context.Users,
@@ -41,7 +42,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             join2.solution.CreatedAt,
                             join2.solution.UpdatedAt,
                             join2.solution.QuestionId,
-                            join2.join1.join.UserName,
+                            join2.join1.join.account.UserName.Value,
                             join2.solution.UserId,
                             join2.solution.Content.Value,
                             join2.solution.Votes.Any(v => v.UserId == accountId && v.Type == SolutionVoteType.Upvote),
@@ -67,7 +68,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                     i.MultimediaType
                                 )
                             ),
-                            join2.join1.user.Image
+                            join2.join1.user.Image,
+                            join2.join1.join.account.AccountType == AccountType.AI
                         )
                     )
                 );

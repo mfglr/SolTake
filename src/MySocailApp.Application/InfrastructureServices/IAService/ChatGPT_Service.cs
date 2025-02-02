@@ -24,12 +24,13 @@ namespace MySocailApp.Application.InfrastructureServices.IAService
                 }
             );
 
-            var body = await response.Content.ReadAsStringAsync();
+            var r = JsonConvert.DeserializeObject<ChatGBT_Response>(await response.Content.ReadAsStringAsync())!;
 
             if (!response.IsSuccessStatusCode)
-                throw new ChatGPTException(body);
+                throw new ChatGPTException(r.Error!.Message);
 
-            return JsonConvert.DeserializeObject<ChatGBT_Response>(body)!;
+            return r;
+
         } 
     }
 }

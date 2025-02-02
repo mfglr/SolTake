@@ -14,6 +14,13 @@ class CreateSolutionAction extends AppAction{
   const CreateSolutionAction({required this.id, required this.questionId, required this.content, required this.medias});
 }
 @immutable
+class CreateSolutionByAiAction extends AppAction{
+  final int questionId;
+  final String model;
+  const CreateSolutionByAiAction({required this.questionId, required this.model});
+}
+
+@immutable
 class LoadSolutionAction extends AppAction{
   final int solutionId;
   const LoadSolutionAction({required this.solutionId});

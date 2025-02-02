@@ -47,6 +47,22 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
+void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateSolutionByAiAction){
+    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
+    SolutionService()
+      .createByAi(action.questionId,action.model)
+      .then((solution){
+        final solutionState = solution.toSolutionState();
+        store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
+        store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
+        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
+      });
+  }
+  
+  next(action);
+}
+
 void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionAction){
     if(store.state.solutionEntityState.entities[action.solutionId] == null){
