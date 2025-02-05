@@ -71,7 +71,7 @@ class AiItem extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(right: 8),
                 child: Image.asset(
-                  "assets/images/$model.webp",
+                  "assets/images/$model.jpg",
                   height: MediaQuery.of(context).size.width / 4,
                   width: MediaQuery.of(context).size.width / 4,
                   fit: BoxFit.cover,

@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
+using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using MySocailApp.Application.InfrastructureServices.IAService.Objects;
+using MySocailApp.Core;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.AppVersionAggregate;
@@ -96,18 +99,40 @@ namespace MySocailApp.Api
             versionCacheService.Init(versions);
 
             //add ai accounts if not exist
-            if(!context.Accounts.Any(x => x.UserName.Value == "gpt-4o"))
+            if(!context.Accounts.Any(x => x.UserName.Value == ChatGPT_Models.GPT_4O))
             {
                 var transaction = context.Database.BeginTransaction();
                 
-                IEnumerable<Account> ais = [Account.CreateChatGPT4O(), Account.CreateChatGPT4OMini()];
+                IEnumerable<Account> ais = [
+                    Account.CreateChatGPT4O(),
+                    Account.CreateChatGPT4OMini(),
+                    //Account.CreateChatGPTO1(),
+                    //Account.CreateChatGPTO1Mini(),
+                    //Account.CreateChatGPTO3Mini()
+                ];
                 context.Accounts.AddRange(ais);
                 context.SaveChanges();
                 
-                var users = ais.Select(x => new User(x.Id)).ToList();
-                foreach (var user in users)
-                    user.Create();
-                
+                var users = ais
+                    .Select(
+                        x => {
+                            var user = new User(x.Id);
+                            user.Create();
+                            user.UpdateName(x.UserName.Value);
+                            user.UpdateImage(
+                                Multimedia.CreateImage(
+                                    ContainerName.ProfileImages,
+                                    $"{x.UserName.Value}.jpg",
+                                    42374,
+                                    900,
+                                    900
+                                )
+                            );
+                            return user;
+                        }
+                    )
+                    .ToList();
+
                 context.Users.AddRange(users);
                 context.SaveChanges();
 

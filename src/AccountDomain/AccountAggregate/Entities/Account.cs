@@ -47,7 +47,7 @@ namespace AccountDomain.AccountAggregate.Entities
             SecurityStamp = GenerateSecurityStamp();
         }
 
-        public static Account CreatAI(UserName userName)
+        public static Account CreateAI(UserName userName)
         {
             var account = new Account()
             {
@@ -62,8 +62,11 @@ namespace AccountDomain.AccountAggregate.Entities
             return account;
         }
 
-        public static Account CreateChatGPT4O() => CreatAI(new("gpt-4o"));
-        public static Account CreateChatGPT4OMini() => CreatAI(new("gpt-4o-mini"));
+        public static Account CreateChatGPT4O() => CreateAI(new("gpt-4o"));
+        public static Account CreateChatGPT4OMini() => CreateAI(new("gpt-4o-mini"));
+        public static Account CreateChatGPTO1() => CreateAI(new("o1"));
+        public static Account CreateChatGPTO1Mini() => CreateAI(new("o1-mini"));
+        public static Account CreateChatGPTO3Mini() => CreateAI(new("o3-mini"));
 
         internal void Create(int policyId, int termsOfUseId)
         {
