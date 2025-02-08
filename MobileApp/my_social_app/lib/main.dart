@@ -123,6 +123,7 @@ class _MainViewState extends State<MainView> {
       future: _isUpgradeRequired,
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.data == null) return const ApplicationLoadingPage();
           if(snapshot.data!) return const UpdateAppPage();
           return StoreConnector<AppState,bool>(
             converter: (store) => store.state.isInitialized,

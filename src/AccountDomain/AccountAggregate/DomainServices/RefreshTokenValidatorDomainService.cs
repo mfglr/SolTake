@@ -30,11 +30,12 @@ namespace AccountDomain.AccountAggregate.DomainServices
             };
 
             var result = await handler.ValidateTokenAsync(token, validationParameters);
-            var idString = result.Claims.First(x => x.Key == ClaimTypes.NameIdentifier).Value as string;
-
-            if (!result.IsValid || idString == null)
+            if (!result.IsValid)
                 throw new InvalidRefreshTokenException();
 
+            var idString = result.Claims.First(x => x.Key == ClaimTypes.NameIdentifier).Value as string;
+            if (idString == null)
+                throw new InvalidRefreshTokenException();
             var id = int.Parse(idString);
 
             if (id != account.Id)

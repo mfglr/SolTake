@@ -29,7 +29,9 @@ class AppClient{
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
     request.headers.addAll(getHeader());
     if(headers != null) request.headers.addAll(headers);
+   
     var response = await request.send();
+
     if(response.statusCode >= 400){
       throw BackendException(
         message: utf8.decode(await response.stream.toBytes()),
@@ -86,7 +88,9 @@ class AppClient{
 
   Future<dynamic> get(String url) async {
     final Request request = Request("GET", generateUri(url));
-    final response = await send(request);
+    final response = await 
+      send(request);
+      
     var decode = utf8.decode(await response.stream.toBytes());
     if(decode == '') return null;
     return jsonDecode(decode);

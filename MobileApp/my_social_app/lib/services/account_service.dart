@@ -3,6 +3,7 @@ import 'package:my_social_app/constants/account_endpoints.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/account/widgets/google_login_button.dart';
 
 class AccountService {
@@ -76,13 +77,20 @@ class AccountService {
         throw e;
       });
 
-  Future<Account> loginByReshtoken(int id,String token) =>
+  Future<Account> loginByRefreshtoken(int id,String token) =>
     _appClient
       .post(
         "$accountController/$loginByRefreshTokenEndPoint",
         body: { 'id': id.toString(),'token': token}
       )
-      .then((json) => Account.fromJson(json));
+      .then((json) => Account.fromJson(json))
+      .timeout(
+        const Duration(seconds: 5),
+        onTimeout: (){
+          ToastCreator.displayError("Service is not available");
+          return loginByRefreshtoken(id, token);
+        }
+      );
 
   Future<Account> updateEmail(String email) =>
     _appClient

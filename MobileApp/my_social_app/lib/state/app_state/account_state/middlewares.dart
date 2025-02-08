@@ -55,7 +55,7 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
       .then((prev){
         if(prev != null){
           AccountService()
-            .loginByReshtoken(prev.id, prev.refreshToken)
+            .loginByRefreshtoken(prev.id, prev.refreshToken)
             .then((account){
               _setAccount(store, account);
               store.dispatch(const ApplicationSuccessfullyInitAction());
