@@ -1,12 +1,11 @@
 ﻿using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices
 {
-    public class LocalBlobService(PathFinder pathFinder) : IBlobService
+    public class LocalBlobService(IPathFinder pathFinder) : IBlobService
     {
-        private readonly PathFinder _pathFinder = pathFinder;
+        private readonly IPathFinder _pathFinder = pathFinder;
 
         public async Task UploadAsync(Stream stream, string containerName, string blobName, CancellationToken cancellationToken)
         {

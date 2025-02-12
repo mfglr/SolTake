@@ -14,10 +14,19 @@ class CreateSolutionAction extends AppAction{
   const CreateSolutionAction({required this.id, required this.questionId, required this.content, required this.medias});
 }
 @immutable
-class CreateSolutionByAiAction extends AppAction{
-  final int questionId;
+class CreateSolutionByAIAction extends AppAction{
   final String model;
-  const CreateSolutionByAiAction({required this.questionId, required this.model});
+  final int questionId;
+  final String? blobName;
+  final double? position;
+  final String? prompt;
+  const CreateSolutionByAIAction({
+    required this.model,
+    required this.questionId,
+    required this.blobName,
+    required this.position,
+    required this.prompt
+  });
 }
 
 @immutable

@@ -27,7 +27,8 @@ class Solution{
   final int state;
   final bool doesBelongToQuestionOfCurrentUser;
   final Multimedia? image;
-  final bool isCreatedByAi;
+  final bool isCreatedByAI;
+  final String? aiModelName;
 
   const Solution({
     required this.id,
@@ -48,7 +49,8 @@ class Solution{
     required this.state,
     required this.doesBelongToQuestionOfCurrentUser,
     required this.image,
-    required this.isCreatedByAi
+    required this.isCreatedByAI,
+    required this.aiModelName
   });
 
   factory Solution.fromJson(Map<String, dynamic> json) => _$SolutionFromJson(json);
@@ -73,10 +75,11 @@ class Solution{
       isUpvoted: isUpvoted,
       numberOfUpvotes: numberOfUpvotes,
       image: image,
-      isCreatedByAi: isCreatedByAi,
+      isCreatedByAI: isCreatedByAI,
       upvotes: Pagination.init(usersPerPage, true),
       isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,
-      downvotes: Pagination.init(usersPerPage,true)
+      downvotes: Pagination.init(usersPerPage,true),
+      aiModelName: aiModelName
     );
 }

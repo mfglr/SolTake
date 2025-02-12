@@ -18,7 +18,7 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
-        public async Task<Question?> GetQuestionWithImagesById(int id, CancellationToken cancellationToken)
+        public async Task<Question?> GetQuestionWithMediasById(int id, CancellationToken cancellationToken)
             => await _context
                 .Questions
                 .AsNoTracking()

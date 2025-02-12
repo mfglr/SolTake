@@ -66,8 +66,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                     i.MultimediaType
                                 )
                             ),
-                            join1.user.Image,
-                            question.IsSolveableByAi
+                            join1.user.Image
                         )
                     )
                 );

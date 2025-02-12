@@ -11,3 +11,4 @@ const conversationController = "conversations";
 const messageController = "messages";
 const versionController = "Versions";
 const blobController = "Blobs";
+const frameCatcherController = "FrameCatcher";

@@ -1,6 +1,8 @@
-﻿namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
+﻿using MySocailApp.Application.InfrastructureServices.BlobService;
+
+namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
-    public class PathFinder
+    public class PathFinder : IPathFinder
     {
         public string GetContainerPath(string containerName) => $"Blobs/{containerName}";
         public string GetPath(string containerName, string blobName) => $"Blobs/{containerName}/{blobName}";

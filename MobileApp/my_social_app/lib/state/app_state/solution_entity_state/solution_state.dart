@@ -25,7 +25,8 @@ class SolutionState implements Avatar{
   final Pagination comments;
   final bool doesBelongToQuestionOfCurrentUser;
   final Multimedia? image;
-  final bool isCreatedByAi;
+  final bool isCreatedByAI;
+  final String? aiModelName;
 
   @override
   int get avatarId => userId;
@@ -55,7 +56,8 @@ class SolutionState implements Avatar{
     required this.downvotes,
     required this.doesBelongToQuestionOfCurrentUser,
     required this.image,
-    required this.isCreatedByAi
+    required this.isCreatedByAI,
+    required this.aiModelName
   });
 
   String formatUserName(int count)
@@ -99,7 +101,8 @@ class SolutionState implements Avatar{
         downvotes: newDownvotes ?? downvotes,
         doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
         image: newImage ?? image,
-        isCreatedByAi: isCreatedByAi
+        isCreatedByAI: isCreatedByAI,
+        aiModelName: aiModelName
       );
 
   SolutionState startLoadingNextUpvotes()

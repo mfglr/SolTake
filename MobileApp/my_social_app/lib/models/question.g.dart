@@ -35,7 +35,6 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       image: json['image'] == null
           ? null
           : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
-      isSolveableByAi: json['isSolveableByAi'] as bool,
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -59,5 +58,4 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'numberOfVideoSolutions': instance.numberOfVideoSolutions,
       'numberOfComments': instance.numberOfComments,
       'image': instance.image,
-      'isSolveableByAi': instance.isSolveableByAi,
     };

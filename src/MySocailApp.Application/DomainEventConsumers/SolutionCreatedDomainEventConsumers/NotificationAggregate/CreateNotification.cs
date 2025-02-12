@@ -16,10 +16,13 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCreatedDomainEven
 
         public async Task Handle(SolutionCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var solution = notification.Solution;
-            var question = notification.Question;
+            var n = Notification.SolutionCreatedNotification(
+                notification.Question.UserId,
+                notification.Solution.QuestionId,
+                notification.Solution.Id,
+                notification.Solution.UserId
+            );
 
-            var n = Notification.SolutionCreatedNotification(question.UserId, question.Id, solution.Id, solution.UserId);
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
             await _publisher.Publish(new SolutionNotificationCreatedDomainEvent(n), cancellationToken);

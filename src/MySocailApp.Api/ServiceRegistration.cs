@@ -98,47 +98,6 @@ namespace MySocailApp.Api
             var versions = context.AppVersions.AsNoTracking().ToList();
             versionCacheService.Init(versions);
 
-            //add ai accounts if not exist
-            if(!context.Accounts.Any(x => x.UserName.Value == ChatGPT_Models.GPT_4O))
-            {
-                var transaction = context.Database.BeginTransaction();
-                
-                IEnumerable<Account> ais = [
-                    Account.CreateChatGPT4O(),
-                    Account.CreateChatGPT4OMini(),
-                    //Account.CreateChatGPTO1(),
-                    //Account.CreateChatGPTO1Mini(),
-                    //Account.CreateChatGPTO3Mini()
-                ];
-                context.Accounts.AddRange(ais);
-                context.SaveChanges();
-                
-                var users = ais
-                    .Select(
-                        x => {
-                            var user = new User(x.Id);
-                            user.Create();
-                            user.UpdateName(x.UserName.Value);
-                            user.UpdateImage(
-                                Multimedia.CreateImage(
-                                    ContainerName.ProfileImages,
-                                    $"{x.UserName.Value}.jpg",
-                                    42374,
-                                    900,
-                                    900
-                                )
-                            );
-                            return user;
-                        }
-                    )
-                    .ToList();
-
-                context.Users.AddRange(users);
-                context.SaveChanges();
-
-                transaction.Commit();
-            }
-
             return services
                 .AddScoped<IAppVersionReadRepository, AppVersionReadRepository>()
                 .AddScoped<IAppVersionWriteRepository, AppVersionWriteRepository>()

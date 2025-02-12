@@ -70,10 +70,8 @@
 
   <ItemGroup>
     <Folder Include="Blobs\MessageMedias\" />
-    <Folder Include="Blobs\Trash\" />
-    <Folder Include="Blobs\QuestionMedias\" />
     <Folder Include="Blobs\SolutionMedias\" />
-    <Folder Include="Temp\" />
+    <Folder Include="Blobs\Temp\" />
   </ItemGroup>
 
   <ItemGroup>

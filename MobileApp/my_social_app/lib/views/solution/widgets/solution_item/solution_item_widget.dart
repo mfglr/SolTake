@@ -83,13 +83,16 @@ class SolutionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          MultimediaSlider(
-            medias: solution.isCreatedByAi ? [solution.avatar!] : solution.medias,
-            blobServiceUrl: AppClient.blobService,
-            notFoundMediaPath: noMediaAssetPath,
-            noMediaPath: noMediaAssetPath,
-            headers: AppClient().getHeader(),
-          ),
+          if(solution.isCreatedByAI)
+            Image.asset("assets/images/${solution.aiModelName!}.jpg")
+          else
+            MultimediaSlider(
+              medias: solution.medias,
+              blobServiceUrl: AppClient.blobService,
+              notFoundMediaPath: noMediaAssetPath,
+              noMediaPath: noMediaAssetPath,
+              headers: AppClient().getHeader(),
+            ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(

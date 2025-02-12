@@ -45,7 +45,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("AccountDomain.AccountAggregate.Entities.AccountPrivacyPolicy", b =>
@@ -67,7 +67,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("AccountId", "PolicyId");
 
-                    b.ToTable("AccountPrivacyPolicy", (string)null);
+                    b.ToTable("AccountPrivacyPolicy");
                 });
 
             modelBuilder.Entity("AccountDomain.AccountAggregate.Entities.AccountRole", b =>
@@ -80,7 +80,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("AccountId", "RoleId");
 
-                    b.ToTable("AccountRole", (string)null);
+                    b.ToTable("AccountRole");
                 });
 
             modelBuilder.Entity("AccountDomain.AccountAggregate.Entities.AccountTermsOfUse", b =>
@@ -102,7 +102,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("AccountId", "TermsOfUseId");
 
-                    b.ToTable("AccountTermsOfUse", (string)null);
+                    b.ToTable("AccountTermsOfUse");
                 });
 
             modelBuilder.Entity("AccountDomain.AccountAggregate.Entities.Block", b =>
@@ -126,7 +126,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("BlockedId");
 
-                    b.ToTable("Block", (string)null);
+                    b.ToTable("Block");
                 });
 
             modelBuilder.Entity("AccountDomain.AccountAggregate.Entities.EmailVerificationToken", b =>
@@ -163,7 +163,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("EmailVerificationToken", (string)null);
+                    b.ToTable("EmailVerificationToken");
                 });
 
             modelBuilder.Entity("AccountDomain.AccountAggregate.Entities.PasswordResetToken", b =>
@@ -194,7 +194,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("PasswordResetToken", (string)null);
+                    b.ToTable("PasswordResetToken");
                 });
 
             modelBuilder.Entity("AccountDomain.PrivacyPolicyAggregate.PrivacyPolicy", b =>
@@ -221,7 +221,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrivacyPolicies", (string)null);
+                    b.ToTable("PrivacyPolicies");
 
                     b.HasData(
                         new
@@ -248,7 +248,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -287,7 +287,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TermsOfUses", (string)null);
+                    b.ToTable("TermsOfUses");
 
                     b.HasData(
                         new
@@ -316,7 +316,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppVersions", (string)null);
+                    b.ToTable("AppVersions");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.Comment", b =>
@@ -361,7 +361,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("SolutionId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLike", b =>
@@ -385,7 +385,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("CommentUserLikes", (string)null);
+                    b.ToTable("CommentUserLikes");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserLikeNotification", b =>
@@ -398,7 +398,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("CommentId", "UserId");
 
-                    b.ToTable("CommentUserLikeNotifications", (string)null);
+                    b.ToTable("CommentUserLikeNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.CommentAggregate.Entities.CommentUserTag", b =>
@@ -422,7 +422,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("CommentUserTags", (string)null);
+                    b.ToTable("CommentUserTags");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", b =>
@@ -453,7 +453,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageMultimedia", b =>
@@ -497,7 +497,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("MessageMultimedia", (string)null);
+                    b.ToTable("MessageMultimedia");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserReceive", b =>
@@ -524,7 +524,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("MessageUserReceive", (string)null);
+                    b.ToTable("MessageUserReceive");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserRemove", b =>
@@ -537,7 +537,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("MessageId", "UserId");
 
-                    b.ToTable("MessageUserRemove", (string)null);
+                    b.ToTable("MessageUserRemove");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserView", b =>
@@ -564,7 +564,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("MessageUserView", (string)null);
+                    b.ToTable("MessageUserView");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities.MessageConnection", b =>
@@ -586,7 +586,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MessageConnections", (string)null);
+                    b.ToTable("MessageConnections");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities.Notification", b =>
@@ -646,7 +646,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities.NotificationConnection", b =>
@@ -662,7 +662,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NotificationConnections", (string)null);
+                    b.ToTable("NotificationConnections");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities.Exam", b =>
@@ -683,7 +683,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exams", (string)null);
+                    b.ToTable("Exams");
 
                     b.HasData(
                         new
@@ -737,7 +737,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Questions", (string)null);
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionMultimedia", b =>
@@ -781,7 +781,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionMultimedia", (string)null);
+                    b.ToTable("QuestionMultimedia");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLike", b =>
@@ -805,7 +805,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionUserLikes", (string)null);
+                    b.ToTable("QuestionUserLikes");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
@@ -818,7 +818,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("QuestionId", "UserId");
 
-                    b.ToTable("QuestionUserLikeNotifications", (string)null);
+                    b.ToTable("QuestionUserLikeNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserSave", b =>
@@ -845,7 +845,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionUserSaves", (string)null);
+                    b.ToTable("QuestionUserSaves");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities.Subject", b =>
@@ -865,7 +865,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subjects", (string)null);
+                    b.ToTable("Subjects");
 
                     b.HasData(
                         new
@@ -1114,7 +1114,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("SubjectId", "TopicId");
 
-                    b.ToTable("SubjectTopics", (string)null);
+                    b.ToTable("SubjectTopics");
 
                     b.HasData(
                         new
@@ -8063,7 +8063,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Topics", (string)null);
+                    b.ToTable("Topics");
 
                     b.HasData(
                         new
@@ -11359,6 +11359,9 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsCreatedByAI")
+                        .HasColumnType("bit");
+
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
@@ -11373,7 +11376,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Solutions", (string)null);
+                    b.ToTable("Solutions");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionMultimedia", b =>
@@ -11417,7 +11420,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("SolutionId");
 
-                    b.ToTable("SolutionMultimedia", (string)null);
+                    b.ToTable("SolutionMultimedia");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserSave", b =>
@@ -11444,7 +11447,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("SolutionId");
 
-                    b.ToTable("SolutionUserSaves", (string)null);
+                    b.ToTable("SolutionUserSaves");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVote", b =>
@@ -11476,7 +11479,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("UserId", "Type");
 
-                    b.ToTable("SolutionUserVotes", (string)null);
+                    b.ToTable("SolutionUserVotes");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionUserVoteNotification", b =>
@@ -11489,7 +11492,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("SolutionId", "UserId");
 
-                    b.ToTable("SolutionUserVoteNotifications", (string)null);
+                    b.ToTable("SolutionUserVoteNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.Follow", b =>
@@ -11516,7 +11519,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("FollowedId");
 
-                    b.ToTable("Follows", (string)null);
+                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.User", b =>
@@ -11536,7 +11539,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.UserFollowNotification", b =>
@@ -11552,7 +11555,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasKey("UserId", "FollowerId");
 
-                    b.ToTable("UserFollowNotifications", (string)null);
+                    b.ToTable("UserFollowNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.UserSearch", b =>
@@ -11576,7 +11579,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                     b.HasIndex("SearchedId");
 
-                    b.ToTable("UserSearchs", (string)null);
+                    b.ToTable("UserSearchs");
                 });
 
             modelBuilder.Entity("AccountDomain.AccountAggregate.Entities.Account", b =>
@@ -11588,13 +11591,14 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(450)");
+                                .HasColumnType("nvarchar(450)")
+                                .HasColumnName("Email_Value");
 
                             b1.HasKey("AccountId");
 
                             b1.HasIndex("Value");
 
-                            b1.ToTable("Accounts", (string)null);
+                            b1.ToTable("Accounts");
 
                             b1.WithOwner()
                                 .HasForeignKey("AccountId");
@@ -11613,7 +11617,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasIndex("UserId");
 
-                            b1.ToTable("Accounts", (string)null);
+                            b1.ToTable("Accounts");
 
                             b1.WithOwner()
                                 .HasForeignKey("AccountId");
@@ -11626,11 +11630,12 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Language_Value");
 
                             b1.HasKey("AccountId");
 
-                            b1.ToTable("Accounts", (string)null);
+                            b1.ToTable("Accounts");
 
                             b1.WithOwner()
                                 .HasForeignKey("AccountId");
@@ -11647,7 +11652,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("AccountId");
 
-                            b1.ToTable("Accounts", (string)null);
+                            b1.ToTable("Accounts");
 
                             b1.WithOwner()
                                 .HasForeignKey("AccountId");
@@ -11660,14 +11665,15 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(450)");
+                                .HasColumnType("nvarchar(450)")
+                                .HasColumnName("UserName_Value");
 
                             b1.HasKey("AccountId");
 
                             b1.HasIndex("Value")
                                 .IsUnique();
 
-                            b1.ToTable("Accounts", (string)null);
+                            b1.ToTable("Accounts");
 
                             b1.WithOwner()
                                 .HasForeignKey("AccountId");
@@ -11754,7 +11760,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("AppVersionId");
 
-                            b1.ToTable("AppVersions", (string)null);
+                            b1.ToTable("AppVersions");
 
                             b1.WithOwner()
                                 .HasForeignKey("AppVersionId");
@@ -11777,7 +11783,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("CommentId");
 
-                            b1.ToTable("Comments", (string)null);
+                            b1.ToTable("Comments");
 
                             b1.WithOwner()
                                 .HasForeignKey("CommentId");
@@ -11827,7 +11833,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("MessageId");
 
-                            b1.ToTable("Messages", (string)null);
+                            b1.ToTable("Messages");
 
                             b1.WithOwner()
                                 .HasForeignKey("MessageId");
@@ -11885,7 +11891,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("QuestionId");
 
-                            b1.ToTable("Questions", (string)null);
+                            b1.ToTable("Questions");
 
                             b1.WithOwner()
                                 .HasForeignKey("QuestionId");
@@ -11909,7 +11915,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("QuestionId");
 
-                            b1.ToTable("Questions", (string)null);
+                            b1.ToTable("Questions");
 
                             b1.WithOwner()
                                 .HasForeignKey("QuestionId");
@@ -11929,7 +11935,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("QuestionId");
 
-                            b1.ToTable("Questions", (string)null);
+                            b1.ToTable("Questions");
 
                             b1.WithOwner()
                                 .HasForeignKey("QuestionId");
@@ -11949,7 +11955,7 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("QuestionId");
 
-                            b1.ToTable("Questions", (string)null);
+                            b1.ToTable("Questions");
 
                             b1.WithOwner()
                                 .HasForeignKey("QuestionId");
@@ -12013,6 +12019,23 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.Solution", b =>
                 {
+                    b.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionAIModel", "Model", b1 =>
+                        {
+                            b1.Property<int>("SolutionId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("SolutionId");
+
+                            b1.ToTable("Solutions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SolutionId");
+                        });
+
                     b.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionContent", "Content", b1 =>
                         {
                             b1.Property<int>("SolutionId")
@@ -12024,13 +12047,15 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("SolutionId");
 
-                            b1.ToTable("Solutions", (string)null);
+                            b1.ToTable("Solutions");
 
                             b1.WithOwner()
                                 .HasForeignKey("SolutionId");
                         });
 
                     b.Navigation("Content");
+
+                    b.Navigation("Model");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.SolutionAggregate.Entities.SolutionMultimedia", b =>
@@ -12080,23 +12105,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.UserAggregate.Entities.User", b =>
                 {
-                    b.OwnsOne("MySocailApp.Domain.UserAggregate.ValueObjects.Biography", "Biography", b1 =>
-                        {
-                            b1.Property<int>("UserId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
                     b.OwnsOne("MySocailApp.Core.Multimedia", "Image", b1 =>
                         {
                             b1.Property<int>("UserId")
@@ -12130,7 +12138,24 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users", (string)null);
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("MySocailApp.Domain.UserAggregate.ValueObjects.Biography", "Biography", b1 =>
+                        {
+                            b1.Property<int>("UserId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

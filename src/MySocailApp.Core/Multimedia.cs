@@ -32,23 +32,10 @@
             Duration = duration;
         }
 
-        private Multimedia(string containerName, string blobName, long size, double duration)
-        {
-            ContainerName = containerName;
-            BlobName = blobName;
-            Size = size;
-            Height = 0;
-            Width = 0;
-            Duration = duration;
-        }
-
         public static Multimedia CreateImage(string containerName, string blobName, long size, double height, double width)
             => new(containerName, blobName, size, height, width) { MultimediaType = MultimediaType.Image};
 
         public static Multimedia CreateVideo(string containerName, string blobName, string blobNameOfFrame, long size, double height, double width, double duration)
             => new(containerName, blobName, blobNameOfFrame, size, height, width, duration) { MultimediaType = MultimediaType.Video };
-
-        public static Multimedia CreateAudio(string containerName, string blobName, long size, double duration)
-            => new(containerName, blobName, size, duration) { MultimediaType = MultimediaType.Audio };
     }
 }

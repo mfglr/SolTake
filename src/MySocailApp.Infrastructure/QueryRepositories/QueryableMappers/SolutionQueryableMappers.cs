@@ -58,7 +58,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             )
                         ),
                         join1.user.Image,
-                        join1.join.account.AccountType == AccountType.AI
+                        join1.join.solution.IsCreatedByAI,
+                        join1.join.solution.Model.Name
                     )
                 );
 

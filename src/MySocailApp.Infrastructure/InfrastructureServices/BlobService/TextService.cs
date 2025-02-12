@@ -4,10 +4,10 @@ using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServ
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {
-    public class TextService(UniqNameGenerator blobNameGenerator, PathFinder pathFinder) : ITextService
+    public class TextService(UniqNameGenerator blobNameGenerator, IPathFinder pathFinder) : ITextService
     {
         private readonly UniqNameGenerator _blobNameGenerator = blobNameGenerator;
-        private readonly PathFinder _pathFinder = pathFinder;
+        private readonly IPathFinder _pathFinder = pathFinder;
 
         public async Task<string> UploadAsync(IFormFile file, string containerName, CancellationToken cancellationToken)
         {

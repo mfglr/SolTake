@@ -18,8 +18,8 @@ import 'package:redux/redux.dart';
 
 void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
-    
     ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
+    
     if(action.medias.isNotEmpty){
       store.dispatch(ChangeUploadStateAction(state: UploadSolutionState(action)));
     }
@@ -48,10 +48,10 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 
 void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is CreateSolutionByAiAction){
+  if(action is CreateSolutionByAIAction){
     ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
     SolutionService()
-      .createByAi(action.questionId,action.model)
+      .createByAI(action.model,action.questionId,action.blobName,action.position,action.prompt)
       .then((solution){
         final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));

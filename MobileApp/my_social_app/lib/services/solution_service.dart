@@ -38,13 +38,16 @@ class SolutionService{
     return Solution.fromJson(jsonDecode(data));
   }
 
-  Future<Solution> createByAi(int questionId, String model)
+  Future<Solution> createByAI(String model,int questionId,String? blobName,double? duration,String? prompt)
     => _appClient
         .post(
           "$solutionController/$createSolutionByAiEndpoint",
           body: {
+            'model': model,
             'questionId': questionId,
-            'model': model
+            'blobName': blobName,
+            'duration': duration,
+            'prompt': prompt
           }
         )
         .then((json) => Solution.fromJson(json));

@@ -1,16 +1,13 @@
-﻿using AccountDomain.AccountAggregate.Abstracts;
-using AccountDomain.AccountAggregate.Exceptions;
-using AccountDomain.AccountAggregate.ValueObjects;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.Commands.SolutionAggregate.CreateSolution;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Application.InfrastructureServices.BlobService;
+using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Application.InfrastructureServices.IAService;
-using MySocailApp.Application.InfrastructureServices.IAService.Exceptions;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
@@ -20,83 +17,121 @@ using MySocailApp.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService,IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IAccountReadRepository accountReadRepository, IAccountAccessor accountAccessor, IUserReadRepository userReadRepository, SolutionCreatorDomainService solutionCreatorDomainService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IAccountAccessor accountAccessor, IUserReadRepository userReadRepository, SolutionCreatorDomainService solutionCreatorDomainService, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IApplicationSettings applicationSettings) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
+        private readonly IFrameCatcher _frameCatcher = frameCatcher;
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IAccountReadRepository _accountReadRepository = accountReadRepository;
         private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly IUserReadRepository _userReadRepository = userReadRepository;
         private readonly SolutionCreatorDomainService _solutionCreatorDomainService = solutionCreatorDomainService;
-        private readonly static Dictionary<string, string> _prompts = new(){
-            { Languages.EN, "Please solve the question in the image!" },
-            { Languages.TR, "Resimdeki soruyu çözer misin?" },
-        };
+        private readonly ITempDirectoryService _tempDirectoryService = tempDirectoryService;
+        private readonly IApplicationSettings _applicationSettings = applicationSettings;
 
         public async Task<CreateSolutionResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
         {
-            var userName = new UserName(request.Model);
-            var ai =
-                await _accountReadRepository.GetAccountByUserName(userName, cancellationToken) ??
-                throw new AccountNotFoundException();
-            
-            var user = (await _userReadRepository.GetAsync(ai.Id, cancellationToken))!;
 
+            var user = (await _userReadRepository.GetAsync(_accountAccessor.Account.Id, cancellationToken))!;
             var question =
-                await _questionReadRepository.GetQuestionWithImagesById(request.QuestionId, cancellationToken) ??
+                await _questionReadRepository.GetQuestionWithMediasById(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
-            
 
-            if (!question.IsSolveableByAi)
-                throw new NotSolvableByAI();
-
-            //Have ChatGPT solve the question and get content
-            var response = await _chatGPTService.SendAsync(CreateRequest(request.Model, question));
-
-            //create solution
-            var content = new SolutionContent(response.Choices.First().Message.Content);
-            var solution = new Solution(request.QuestionId, ai.Id, content: content);
-            await _solutionCreatorDomainService.CreateAsync(solution, cancellationToken);
-            await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
-
-            return new CreateSolutionResponseDto(solution, ai, user);
-
-        }
-
-        private ChatGPT_Request CreateRequest(string model, Question question)
-        {
+            ChatGBT_Response response;
             if (!question.Medias.Any())
-                return new(
-                    model,
+            {
+                var chatGptRequest = new ChatGPT_Request(
+                    request.Model,
                     [
-                       new(
+                        new(
                             ChatGPT_Roles.User,
-                            [ new ChatGPT_TextContent(question.Content!.Value) ]
-                       ),
+                            [
+                                new ChatGPT_TextContent(question.Content!.Value),
+                            ]
+                        ),
                     ]
                 );
-
-            return new(
-                model,
-                [
-                    new(
-                        ChatGPT_Roles.User,
+                response = await _chatGPTService.SendAsync(chatGptRequest);
+            }
+            else
+            {
+                var media =
+                question.Medias.FirstOrDefault(x => x.BlobName == request.BlobName) ??
+                throw new QuestionMediaNotFoundException();
+                if (media.MultimediaType == MultimediaType.Image)
+                {
+                    var chatGptRequest = new ChatGPT_Request(
+                        request.Model,
                         [
-                            new ChatGPT_TextContent(_prompts[_accountAccessor.Account.Language.Value]),
-                            new ChatGPT_ImageContent(new(GetUrl(question.Medias[0].ContainerName,question.Medias[0].BlobName),ChatGPT_ImageResolution.Low))
+                            new(
+                            ChatGPT_Roles.User,
+                            [
+                                new ChatGPT_TextContent(request.Prompt!),
+                                new ChatGPT_ImageContent(
+                                    new(
+                                        GetUrl(media.ContainerName,media.BlobName),
+                                        ChatGPT_ImageResolution.Low
+                                    )
+                                )
+                            ]
+                        ),
                         ]
-                    ),
-                ]
-            );
+                    );
+                    response = await _chatGPTService.SendAsync(chatGptRequest);
+                }
+                else
+                {
+                    response = await _tempDirectoryService
+                        .CreateTransactionAsync(
+                            async () =>
+                            {
+                                var frameBlobName = _frameCatcher.CatchFrame(
+                                    media.ContainerName,
+                                    media.BlobName,
+                                    (double)request.Duration!
+                                );
+
+                                var chatGptRequest = new ChatGPT_Request(
+                                    request.Model,
+                                    [
+                                        new(
+                                        ChatGPT_Roles.User,
+                                        [
+                                            new ChatGPT_TextContent(request.Prompt!),
+                                            new ChatGPT_ImageContent(
+                                                new(
+                                                    GetUrl(ContainerName.Temp,frameBlobName),
+                                                    ChatGPT_ImageResolution.Low
+                                                )
+                                            )
+                                        ]
+                                    ),
+                                    ]
+                                );
+                                return await _chatGPTService.SendAsync(chatGptRequest);
+                            }
+                        );
+                }
+            }
+
+
+            //create solution
+            var model = new SolutionAIModel(request.Model);
+            var content = new SolutionContent(response.Choices.First().Message.Content);
+            var solution = Solution.CreateByAI(request.QuestionId, _accountAccessor.Account.Id, content, model);
+            await _solutionCreatorDomainService.CreateAsync(solution, cancellationToken);
+            await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
+
+            //comit changes
+            await _unitOfWork.CommitAsync(cancellationToken);
+
+            return new CreateSolutionResponseDto(solution, _accountAccessor.Account, user);
 
         }
 
-        private string GetUrl(string ContainerName, string blobName)
-            => "https://cdn1.ntv.com.tr/gorsel/KxDw7q07B0q6ggAHB0MtRQ.jpg?width=1000&mode=both&scale=both&v=1277035445000";
-        //=> $"{_applicationSettings.BlobUrl}/{ContainerName}/{blobName}";
+        private string GetUrl(string containerName, string blobName)
+            => $"{_applicationSettings.BlobUrl}/{containerName}/{blobName}";
 
     }
 }

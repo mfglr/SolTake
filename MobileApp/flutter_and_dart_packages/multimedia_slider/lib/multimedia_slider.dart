@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:circles_pagination/circles_pagination.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
@@ -13,6 +14,7 @@ class MultimediaSlider extends StatefulWidget {
   final String notFoundMediaPath;
   final String noMediaPath;
   final int activeIndex;
+  final Widget Function(int index)? child;
   
   const MultimediaSlider({
     super.key,
@@ -21,7 +23,8 @@ class MultimediaSlider extends StatefulWidget {
     required this.notFoundMediaPath,
     required this.noMediaPath,
     this.headers,
-    this.activeIndex = 0
+    this.activeIndex = 0,
+    this.child
   });
 
   @override
@@ -61,22 +64,28 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
         CarouselSlider(
           carouselController: _controller,
           items: widget.medias
-            .map((media){
-              if(media.multimediaType == MultimediaType.video){
-                return MultimediaVideoPlayer(
-                  media: media,
-                  blobServiceUrl: widget.blobServiceUrl,
-                  headers: widget.headers,
-                );
-              }
-              return MultimediaImagePlayer(
-                media: media,
-                notFoundImagePath: widget.notFoundMediaPath,
-                noImagePath: widget.noMediaPath,
-                blobServiceUrl: widget.blobServiceUrl,
-                headers: widget.headers,
-              );
-            })
+            .mapIndexed((index,media) => Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Builder(builder: (context){
+                  if(media.multimediaType == MultimediaType.video){
+                    return MultimediaVideoPlayer(
+                      media: media,
+                      blobServiceUrl: widget.blobServiceUrl,
+                      headers: widget.headers,
+                    );
+                  }
+                  return MultimediaImagePlayer(
+                    media: media,
+                    notFoundImagePath: widget.notFoundMediaPath,
+                    noImagePath: widget.noMediaPath,
+                    blobServiceUrl: widget.blobServiceUrl,
+                    headers: widget.headers,
+                  );
+                }),
+                if(widget.child != null) widget.child!(index)
+              ],
+            ))
             .toList(),
           options: CarouselOptions(
             autoPlay: false,

@@ -39,6 +39,5 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
                     x.Duration,
                     x.MultimediaType
                 ));
-        public bool IsSolveableByAi { get; private set; } = question.IsSolveableByAi;
     }
 }

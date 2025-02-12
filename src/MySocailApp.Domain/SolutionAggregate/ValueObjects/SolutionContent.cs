@@ -1,6 +1,4 @@
-﻿using MySocailApp.Domain.SolutionAggregate.Exceptions;
-
-namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
+﻿namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
 {
     public class SolutionContent
     {

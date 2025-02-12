@@ -1,16 +1,19 @@
-﻿using Xabe.FFmpeg;
+﻿using MySocailApp.Application.InfrastructureServices.BlobService;
+using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using Xabe.FFmpeg;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
-    public class AudioManipulator(UniqNameGenerator blobNameGenerator, TempDirectoryService tempDirectoryService)
+    public class AudioManipulator(UniqNameGenerator blobNameGenerator, ITempDirectoryService tempDirectoryService, IPathFinder pathFinder)
     {
         private readonly UniqNameGenerator _blobNameGenerator = blobNameGenerator;
-        private readonly TempDirectoryService _tempDirectoryService = tempDirectoryService;
+        private readonly ITempDirectoryService _tempDirectoryService = tempDirectoryService;
+        private readonly IPathFinder _pathFinder = pathFinder;
 
         public async Task<string> Manipulate(string path, CancellationToken cancellationToken)
         {
             var outputBlobName = _blobNameGenerator.Generate("opus");
-            var outputPath = _tempDirectoryService.GetBlobPath(outputBlobName);
+            var outputPath = _pathFinder.GetPath(ContainerName.Temp, outputBlobName);
 
             FFmpeg.SetExecutablesPath("FFmpeg");
             var conversation = FFmpeg.Conversions
@@ -18,7 +21,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Internal
                 .AddParameter($"-i \"{path}\" -c:a libopus \"{outputPath}\"");
             await conversation.Start(cancellationToken);
 
-            return outputPath;
+            return outputBlobName;
         }
     }
 }

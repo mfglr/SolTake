@@ -233,13 +233,11 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                if(question.isSolveableByAi)
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: CreateSolutionByAiButton(questionId: question.id)
-                  ),
-                if(!question.isOwner)
-                  CreateSolutionButton(questionId: question.id,pageController: _pageController),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: CreateSolutionByAiButton(question: question)
+                ),
+                CreateSolutionButton(questionId: question.id,pageController: _pageController),
               ],
             ),
           body: Column(

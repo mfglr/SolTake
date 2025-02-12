@@ -1,5 +1,4 @@
 ﻿using AccountDomain.AccountAggregate.Entities;
-using AccountDomain.AccountAggregate.ValueObjects;
 using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.Entities;
@@ -40,6 +39,7 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
                     x.MultimediaType
                 ));
         public Multimedia? Image { get; private set; } = user.Image;
-        public bool IsCreatedByAi { get; private set; } = account.AccountType == AccountType.AI;
+        public bool IsCreatedByAI { get; private set; } = solution.IsCreatedByAI;
+        public string? AiModelName { get; private set; } = solution.Model?.Name;
     }
 }

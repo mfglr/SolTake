@@ -2,7 +2,6 @@
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 {
@@ -12,16 +11,14 @@ namespace MySocailApp.Domain.SolutionAggregate.DomainServices
 
         public async Task CreateAsync(Solution solution, CancellationToken cancellationToken)
         {
-            var question =
+            var question = 
                 await _questionRepository.GetAsync(solution.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (question.UserId == solution.UserId)
-                throw new PermessionDeniedToSolveYourQuestionException();
-
-            solution.Create();
-
-            solution.AddDomainEvent(new SolutionCreatedDomainEvent(question,solution));
+            if(question.UserId != solution.UserId)
+                solution.AddDomainEvent(new SolutionCreatedDomainEvent(question, solution));
+            else
+                solution.MarkAsCorrect();
         }
     }
 }

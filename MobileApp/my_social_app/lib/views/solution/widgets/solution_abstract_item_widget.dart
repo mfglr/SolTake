@@ -18,14 +18,19 @@ class SolutionAbstractItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(1.0),
-      child: MultimediaGrid(
-        state: solution.isCreatedByAi ? solution.avatar! : solution.medias.firstOrNull,
-        blobServiceUrl: AppClient.blobService,
-        noMediaPath: noMediaAssetPath,
-        notFoundMediaPath: noMediaAssetPath,
-        onTap: () => onTap(solution.id),
-        headers: AppClient().getHeader(),
-      )
+      child: solution.isCreatedByAI 
+        ? GestureDetector(
+            onTap: () => onTap(solution.id),
+            child: Image.asset("assets/images/${solution.aiModelName!}.jpg")
+          )
+        : MultimediaGrid(
+            state: solution.medias.firstOrNull,
+            blobServiceUrl: AppClient.blobService,
+            noMediaPath: noMediaAssetPath,
+            notFoundMediaPath: noMediaAssetPath,
+            onTap: () => onTap(solution.id),
+            headers: AppClient().getHeader(),
+          )
     );
   }
 }

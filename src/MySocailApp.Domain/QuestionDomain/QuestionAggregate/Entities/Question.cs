@@ -19,8 +19,6 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         private readonly List<QuestionMultimedia> _medias = [];
         public IReadOnlyList<QuestionMultimedia> Medias => _medias;
 
-        public bool IsSolveableByAi => _medias.Count == 0 || (_medias.Count == 1 && _medias[0].MultimediaType == MultimediaType.Image);
-
         public Question(int userId, QuestionContent? content, IEnumerable<QuestionMultimedia> medias)
         {
             if (!medias.Any() && content == null)

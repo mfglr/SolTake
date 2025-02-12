@@ -205,7 +205,9 @@ class AppState{
     );
   Iterable<QuestionState> get selectSearchQuestions
     => searchState.questions.ids.map((e) => questionEntityState.entities[e]!);
-  
+  QuestionState? selectQuestion(int questionId) => questionEntityState.entities[questionId];
+
+
   //SelectSolutions
   Iterable<SolutionState> selectQuestionSolutions(int questionId)
     => questionEntityState.entities[questionId]!.solutions.ids.map((e) => solutionEntityState.entities[e]!);

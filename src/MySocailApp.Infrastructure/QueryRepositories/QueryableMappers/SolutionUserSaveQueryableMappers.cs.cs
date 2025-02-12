@@ -1,5 +1,4 @@
-﻿using AccountDomain.AccountAggregate.ValueObjects;
-using MySocailApp.Application.Queries.SolutionAggregate;
+﻿using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
@@ -69,7 +68,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 )
                             ),
                             join2.join1.user.Image,
-                            join2.join1.join.account.AccountType == AccountType.AI
+                            join2.solution.IsCreatedByAI,
+                            join2.solution.Model.Name
                         )
                     )
                 );

@@ -12,10 +12,10 @@ namespace MySocailApp.Api.Filters
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var currentVersion = _versionCachService.Version;
+            var latestVersion = _versionCachService.Version;
             var versionCode = _contextAccessor.HttpContext!.Request.Headers.FirstOrDefault(x => x.Key.ToLower() == "client-version").Value.FirstOrDefault();
 
-            if (versionCode == null || (currentVersion != null && currentVersion.UpgradeRequired(new VersionCode(versionCode))))
+            if (versionCode == null || (latestVersion != null && latestVersion.UpgradeRequired(new VersionCode(versionCode))))
                 throw new UpgradeRequiredException();
 
             await next();

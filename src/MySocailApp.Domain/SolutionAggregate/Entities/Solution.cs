@@ -16,23 +16,43 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public SolutionContent? Content { get; private set; } = null!;
         private readonly List<SolutionMultimedia> _medias = [];
         public IReadOnlyCollection<SolutionMultimedia> Medias => _medias;
+        public bool IsCreatedByAI { get; private set; }
+        public SolutionAIModel? Model { get; private set; }
 
-        public Solution(int questionId, int userId, SolutionContent? content = null, IEnumerable<SolutionMultimedia>? medias = null)
+        public static Solution CreateByUser(int questionId, int userId, SolutionContent? content = null, IEnumerable<SolutionMultimedia>? medias = null)
         {
             if (content == null && (medias == null || !medias.Any()))
                 throw new SolutionContentRequiredException();
-            
             if (medias != null && medias.Count() > MaxNumberOfMultimedia)
                 throw new TooManySolutionMediaException();
 
-            _medias.AddRange(medias ?? []);
-            QuestionId = questionId;
-            UserId = userId;
-            Content = content;
-            State = SolutionState.Pending;
+            var solution = new Solution()
+            {
+                QuestionId = questionId,
+                UserId = userId,
+                Content = content,
+                State = SolutionState.Pending,
+                IsCreatedByAI = false,
+                CreatedAt = DateTime.UtcNow
+            };
+            solution._medias.AddRange(medias ?? []);
+            return solution;
         }
-       
-        internal void Create() => UpdatedAt = CreatedAt = DateTime.UtcNow;
+
+        public static Solution CreateByAI(int questionId,int userId,SolutionContent content,SolutionAIModel model)
+        {
+            var solution = new Solution()
+            {
+                QuestionId = questionId,
+                UserId = userId,
+                Content = content,
+                State = SolutionState.Pending,
+                IsCreatedByAI = true,
+                Model = model,
+                CreatedAt = DateTime.UtcNow
+            };
+            return solution;
+        }
 
         private readonly List<SolutionUserVote> _votes = [];
         public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
