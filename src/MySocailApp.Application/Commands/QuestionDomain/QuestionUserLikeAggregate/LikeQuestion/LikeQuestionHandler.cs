@@ -4,7 +4,7 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 
-namespace MySocailApp.Application.Commands.QuestionAggregate.LikeQuestion
+namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
 {
     public class LikeQuestionHandler(IAccessTokenReader tokenReader, IQuestionWriteRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<LikeQuestionDto, LikeQuestionCommandResponseDto>
     {

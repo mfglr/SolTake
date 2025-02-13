@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion
+﻿namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.SaveQuestion
 {
     public class SaveQuestionCommandResponseDto
     {

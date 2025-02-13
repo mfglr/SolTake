@@ -4,7 +4,7 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 
-namespace MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion
+namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
 {
     public class DeleteQuestionHandler(IQuestionWriteRepository questionWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IPublisher publisher) : IRequestHandler<DeleteQuestionDto>
     {

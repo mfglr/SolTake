@@ -3,7 +3,7 @@ using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
+namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion
 {
 
     public class CreateQuestionResponseDto(Question question, Account account)

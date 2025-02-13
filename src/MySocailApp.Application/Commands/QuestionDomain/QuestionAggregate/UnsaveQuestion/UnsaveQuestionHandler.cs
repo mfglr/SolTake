@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 
-namespace MySocailApp.Application.Commands.QuestionAggregate.UnsaveQuestion
+namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.UnsaveQuestion
 {
     public class UnsaveQuestionHandler(IQuestionWriteRepository questionWriteRepository, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<UnsaveQuestionDto>
     {

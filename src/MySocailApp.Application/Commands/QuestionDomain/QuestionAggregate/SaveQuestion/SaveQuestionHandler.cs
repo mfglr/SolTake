@@ -4,7 +4,7 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
 
-namespace MySocailApp.Application.Commands.QuestionAggregate.SaveQuestion
+namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.SaveQuestion
 {
     public class SaveQuestionHandler(IQuestionWriteRepository questionWriteRepositor, IMapper mapper, IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork) : IRequestHandler<SaveQuestionDto, SaveQuestionCommandResponseDto>
     {

@@ -7,7 +7,7 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
+namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion
 {
     public class CreateQuestionHandler(IUnitOfWork unitOfWork, IQuestionWriteRepository repository, QuestionCreatorDomainService questionCreator, IBlobService blobService, IMultimediaService multimedyaService, IAccountAccessor accountAccessor) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
     {

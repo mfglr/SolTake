@@ -3,7 +3,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
 
-namespace MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion
+namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
 {
     public class DeleteQuestionNotifications(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<QuestionDeletedDomainEvent>
     {
@@ -12,7 +12,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.DeleteQuestion
 
         public async Task Handle(QuestionDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var notifications = await _notificationWriteRepository.GetQuestionNotificationsAsync(notification.Question.Id,cancellationToken);
+            var notifications = await _notificationWriteRepository.GetQuestionNotificationsAsync(notification.Question.Id, cancellationToken);
             _notificationWriteRepository.DeleteRange(notifications);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
