@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.SaveQuestion;
-using MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion;
-using MySocailApp.Application.Queries.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
@@ -10,9 +9,7 @@ namespace MySocailApp.Application.Mappers
     {
         public QuestionMappers()
         {
-            CreateMap<QuestionUserLike, QuestionUserLikeResponseDto>();
             CreateMap<QuestionMultimedia, QuestionMultimediaResponseDto>();
-            CreateMap<QuestionUserLike, LikeQuestionCommandResponseDto>();
             CreateMap<QuestionUserSave, SaveQuestionCommandResponseDto>();
         }
     }

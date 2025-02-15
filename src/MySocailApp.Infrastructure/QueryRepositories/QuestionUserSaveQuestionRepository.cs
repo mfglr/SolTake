@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;

@@ -9,7 +9,6 @@ using MySocailApp.Application.Commands.QuestionAggregate.UnsaveQuestion;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.SaveQuestion;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion;
-using MySocailApp.Application.Queries.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionAggregate.Get;
 using MySocailApp.Application.Queries.QuestionAggregate.GetHomePageQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetQuestionById;
@@ -21,7 +20,8 @@ using MySocailApp.Application.Queries.QuestionAggregate.GetSavedQuestions;
 using MySocailApp.Application.Queries.QuestionAggregate.GetSolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetUnsolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionAggregate.GetVideoQuestions;
-using MySocailApp.Application.Queries.QuestionAggregate.SearchQuestions;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.SearchQuestions;
 
 namespace MySocailApp.Api.Controllers.Api
 {

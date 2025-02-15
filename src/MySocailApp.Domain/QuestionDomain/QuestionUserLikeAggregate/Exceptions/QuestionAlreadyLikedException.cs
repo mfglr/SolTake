@@ -16,6 +16,5 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Exceptions
         public override string GetErrorMessage(string culture) => _messages[culture];
 
         public QuestionAlreadyLikedException() : base((int)HttpStatusCode.BadRequest) { }
-
     }
 }

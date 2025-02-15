@@ -1,27 +1,36 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
 {
-    public class LikeQuestionHandler(IAccessTokenReader tokenReader, IQuestionWriteRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<LikeQuestionDto, LikeQuestionCommandResponseDto>
+    public class LikeQuestionHandler(IUnitOfWork unitOfWork, IAccountAccessor accountAccessor, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository, IUserReadRepository userReadRepository) : IRequestHandler<LikeQuestionDto, LikeQuestionCommandResponseDto>
     {
-        private readonly IAccessTokenReader _tokenReader = tokenReader;
-        private readonly IQuestionWriteRepository _repository = repository;
+        private readonly IQuestionUserLikeWriteRepository _questionUserLikeWriteRepository = questionUserLikeWriteRepository;
+        private readonly IUserReadRepository _userReadRepository = userReadRepository;
+        private readonly IAccountAccessor _accountAccessor = accountAccessor;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IMapper _mapper = mapper;
 
         public async Task<LikeQuestionCommandResponseDto> Handle(LikeQuestionDto request, CancellationToken cancellationToken)
         {
-            var userId = _tokenReader.GetRequiredAccountId();
-            var question =
-                await _repository.GetWithLikeByIdAsync(request.QuestionId, userId, cancellationToken) ??
-                throw new QuestionNotFoundException();
-            var like = question.Like(userId);
+            var like = await _questionUserLikeWriteRepository.GetAsync(request.QuestionId, _accountAccessor.Account.Id, cancellationToken);
+
+            if (like == null)
+            {
+                like = QuestionUserLike.Create(_accountAccessor.Account.Id);
+                await _questionUserLikeWriteRepository.CreateAsync(like, cancellationToken);
+            }
+            else
+            {
+                like.Like();
+            }
             await _unitOfWork.CommitAsync(cancellationToken);
-            return _mapper.Map<LikeQuestionCommandResponseDto>(like);
+
+            var user = await _userReadRepository.GetAsync(_accountAccessor.Account.Id, cancellationToken);
+
+            return new(like, _accountAccessor.Account,user!);
         }
     }
 }

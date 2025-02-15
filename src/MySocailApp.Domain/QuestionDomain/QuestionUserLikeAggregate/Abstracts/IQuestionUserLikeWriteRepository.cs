@@ -6,5 +6,6 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts
     {
         Task CreateAsync(QuestionUserLike like,CancellationToken cancellationToken);
         void Delete(QuestionUserLike like);
+        Task<QuestionUserLike?> GetAsync(int questionId,int userId,CancellationToken cancellationToken);
     }
 }

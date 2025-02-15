@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;
@@ -12,19 +12,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public Task<QuestionUserLikeResponseDto?> GetQuestionLikeAsync(int accountId, int likeId, CancellationToken cancellationToken)
+        public Task<QuestionUserLikeResponseDto?> GetQuestionLikeAsync(int likeId, CancellationToken cancellationToken)
             => _context.QuestionUserLikes
                 .AsNoTracking()
-                .Where(x => x.Id == likeId)
-                .ToQuestionUserLikeResponseDto(_context, accountId)
+                .Where(x => x.Id == likeId && x.IsLiked)
+                .ToQuestionUserLikeResponseDto(_context)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<List<QuestionUserLikeResponseDto>> GetQuestionLikesAsync(int questionId, int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<QuestionUserLikeResponseDto>> GetQuestionLikesAsync(int questionId, IPage page, CancellationToken cancellationToken)
             => _context.QuestionUserLikes
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId)
+                .Where(x => x.QuestionId == questionId && x.IsLiked)
                 .ToPage(page)
-                .ToQuestionUserLikeResponseDto(_context, accountId)
+                .ToQuestionUserLikeResponseDto(_context)
                 .ToListAsync(cancellationToken);
     }
 }

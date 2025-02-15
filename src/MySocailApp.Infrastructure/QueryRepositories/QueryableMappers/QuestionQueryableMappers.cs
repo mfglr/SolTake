@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.QuestionAggregate;
+﻿using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
@@ -32,9 +32,9 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.question.UserId,
                         account.UserName.Value,
                         join.question.Content.Value,
-                        join.question.Likes.Any(x => x.UserId == accountId),
+                        context.QuestionUserLikes.Any(x => x.QuestionId == join.question.Id && x.UserId == accountId),
                         join.question.Savers.Any(x => x.UserId == accountId),
-                        join.question.Likes.Count,
+                        context.QuestionUserLikes.Count(x => x.QuestionId == join.question.Id && x.IsLiked),
                         context.Comments.Count(c => c.QuestionId == join.question.Id),
                         context.Solutions.Count(solution => solution.QuestionId == join.question.Id),
                         context.Solutions.Count(solution => solution.QuestionId == join.question.Id && solution.State == SolutionState.Correct),
