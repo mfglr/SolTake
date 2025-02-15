@@ -11,14 +11,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  camera: ^0.11.0+2
   http_parser: ^4.1.1
+  collection: ^1.19.0
+  camera_android_camerax: ^0.6.13
+  camera: ^0.11.1
+  
   #local packages
   app_file:
     path: ../app_file
   duration_to_minutes:
     path: ../duration_to_minutes
-  collection: ^1.19.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:my_social_app/constants/account_endpoints.dart';
 import 'package:my_social_app/constants/controllers.dart';
+import 'package:my_social_app/constants/request_timeout.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
@@ -85,7 +86,7 @@ class AccountService {
       )
       .then((json) => Account.fromJson(json))
       .timeout(
-        const Duration(seconds: 5),
+        requestTimeout,
         onTimeout: (){
           ToastCreator.displayError("Service is not available");
           return loginByRefreshtoken(id, token);

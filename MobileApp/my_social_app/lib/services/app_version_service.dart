@@ -1,4 +1,5 @@
 import 'package:my_social_app/constants/controllers.dart';
+import 'package:my_social_app/constants/request_timeout.dart';
 import 'package:my_social_app/constants/version_endpoints.dart';
 import 'package:my_social_app/models/version.dart';
 import 'package:my_social_app/services/app_client.dart';
@@ -21,7 +22,7 @@ class AppVersionService{
       .get("$versionController/$isUpgradeRequiredEndpoint/$code")
       .then((response) => response as bool)
       .timeout(
-        const Duration(seconds: 5),
+        requestTimeout,
         onTimeout: (){
           ToastCreator.displayError("Service is not available");
           return isUpgradeRequired(code);
