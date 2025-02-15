@@ -1,14 +1,14 @@
-﻿using AccountDomain.AccountAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
+﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Domain.MessageDomain.MessageAggregate.DomainServices
 {
-    public class MessageRemoverDomainService(IMessageWriteRepository messageWriteRepository, IAccountWriteRepository accountWriteRepository)
+    public class MessageRemoverDomainService(IMessageWriteRepository messageWriteRepository, IUserWriteRepository userWriteRepository)
     {
         private readonly IMessageWriteRepository _messageWriteRepository = messageWriteRepository;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
 
         public async Task RemoveAsync(Message message, int removerId, CancellationToken cancellationToken)
         {
@@ -16,8 +16,8 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.DomainServices
             {
                 _messageWriteRepository.Delete(message);
 
-                var account = await _accountWriteRepository.GetAccountAsync(message.SenderId, cancellationToken); ;
-                account?.AddDomainEvent(new MessageDeletedDomainEvent(message));
+                var user = await _userWriteRepository.GetByIdAsync(message.SenderId, cancellationToken); ;
+                user?.AddDomainEvent(new MessageDeletedDomainEvent(message));
             }
             else
                 message.Remove(removerId);

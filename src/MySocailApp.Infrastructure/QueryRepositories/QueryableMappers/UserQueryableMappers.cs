@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -8,23 +8,20 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
     {
         public static IQueryable<UserResponseDto> ToUserResponseDto(this IQueryable<User> query, AppDbContext context, int accountId)
             => query
-                .Join(
-                    context.Accounts,
-                    user => user.Id,
-                    account => account.Id,
-                    (user,account) => new UserResponseDto(
-                        user.Id,
-                        user.CreatedAt,
-                        user.UpdatedAt,
-                        account.UserName.Value,
-                        user.Name,
-                        user.Biography.Value,
-                        context.Questions.Count(x => x.UserId == user.Id),
-                        context.Follows.Count(x => x.FollowedId == user.Id),
-                        context.Follows.Count(x => x.FollowerId == user.Id),
-                        context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),
-                        context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id),
-                        user.Image
+                .Select(
+                    x => new UserResponseDto(
+                        x.Id,
+                        x.CreatedAt,
+                        x.UpdatedAt,
+                        x.UserName.Value,
+                        x.Name,
+                        x.Biography.Value,
+                        context.Questions.Count(x => x.UserId == x.Id),
+                        context.Follows.Count(x => x.FollowedId == x.Id),
+                        context.Follows.Count(x => x.FollowerId == x.Id),
+                        context.Follows.Any(x => x.FollowerId == x.Id && x.FollowedId == accountId),
+                        context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == x.Id),
+                        x.Image
                     )
                 );
     }

@@ -1,17 +1,16 @@
-﻿using AccountDomain.AccountAggregate.Abstracts;
-using AccountDomain.AccountAggregate.DomainServices;
-using AccountDomain.AccountAggregate.Entities;
-using AccountDomain.AccountAggregate.ValueObjects;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.Commands.UserAggregate;
 using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.DomainServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.LoginByGoogle
 {
-    public class LoginByGoogleHandler(GoogleTokenValidatorDomainService googleTokenReader, IMapper mapper, IHttpContextAccessor httpContextAccessor, IAccountWriteRepository accountWriteRepository, AccountCreatorDomainService accountCreatorDomainService, AuthenticatorDomainService authenticatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByGoogleDto, AccountDto>
+    public class LoginByGoogleHandler(GoogleTokenValidatorDomainService googleTokenReader, IMapper mapper, IHttpContextAccessor httpContextAccessor, IUserWriteRepository userWriteRepository, AccountCreatorDomainService accountCreatorDomainService, AuthenticatorDomainService authenticatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByGoogleDto, AccountDto>
     {
         private readonly GoogleTokenValidatorDomainService _googleTokenReader = googleTokenReader;
         private readonly AccountCreatorDomainService _accountCreatorDomainService = accountCreatorDomainService;
@@ -21,21 +20,21 @@ namespace MySocailApp.Application.Commands.UserAggregate.LoginByGoogle
         private readonly IMapper _mapper = mapper;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
 
         public async Task<AccountDto> Handle(LoginByGoogleDto request, CancellationToken cancellationToken)
         {
             var googleAccount = await _googleTokenReader.ValidateAsync(request.AccessToken, cancellationToken);
-            var account = await _accountWriteRepository.GetAccountByGoogleAccount(googleAccount, cancellationToken);
+            var account = await _userWriteRepository.GetByGoogleAccount(googleAccount, cancellationToken);
 
             if (account != null)
                 await _authenticatorDomainService.LoginAsync(account, cancellationToken);
             else
             {
                 var language = new Language(_httpContextAccessor.HttpContext.GetLanguage());
-                account = new Account(googleAccount, language);
+                account = new User(googleAccount, language);
                 await _accountCreatorDomainService.CreateAsync(account, cancellationToken);
-                await _accountWriteRepository.CreateAsync(account, cancellationToken);
+                await _userWriteRepository.CreateAsync(account, cancellationToken);
             }
 
             await _unitOfWork.CommitAsync(cancellationToken);

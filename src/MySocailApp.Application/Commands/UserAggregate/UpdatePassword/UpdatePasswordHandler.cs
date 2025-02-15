@@ -1,17 +1,17 @@
-﻿using AccountDomain.AccountAggregate.ValueObjects;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.UpdatePassword
 {
-    public class UpdatePasswordHandler(IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<UpdatePasswordDto>
+    public class UpdatePasswordHandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<UpdatePasswordDto>
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(UpdatePasswordDto request, CancellationToken cancellationToken)
         {
-            var account = _accountAccessor.Account;
+            var account = _userAccessor.User;
             var currentPassword = new Password(request.CurrentPassword);
             var newPassword = new Password(request.NewPassword);
             var newPasswordConfirm = new Password(request.NewPasswordConfirmation);

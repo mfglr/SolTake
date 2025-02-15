@@ -23,7 +23,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.Users
                 .AsNoTracking()
                 .Join(
-                    _context.Accounts,
+                    _context.Users,
                     user => user.Id,
                     account => account.Id,
                     (user, account) => new { user, account.UserName }
@@ -73,39 +73,16 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<UserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
-                .Join(
-                    _context.Accounts,
-                    user => user.Id,
-                    account => account.Id,
-                    (user, account) => new { user, account.UserName }
-                )
                 .Where(
-                     join =>
+                     user =>
                         (
-                            join.user.Name != null &&
-                            join.user.Name.ToLower().Contains(key.ToLower())
+                            user.Name != null &&
+                            user.Name.ToLower().Contains(key.ToLower())
                         ) ||
-                        join.UserName.Value.ToLower().Contains(key.ToLower())
+                        user.UserName.Value.ToLower().Contains(key.ToLower())
                 )
-                .Where(x => x.user.Id < page.Offset)
-                .OrderByDescending(x => x.user.Id)
-                .Take(page.Take)
-                .Select(
-                    x => new UserResponseDto(
-                        x.user.Id,
-                        x.user.CreatedAt,
-                        x.user.UpdatedAt,
-                        x.UserName.Value,
-                        x.user.Name,
-                        x.user.Biography.Value,
-                        _context.Questions.Count(q => q.UserId == x.user.Id),
-                        _context.Follows.Count(f => f.FollowedId == x.user.Id),
-                        _context.Follows.Count(f => f.FollowerId == x.user.Id),
-                        _context.Follows.Any(f => f.FollowerId == x.user.Id && f.FollowedId == accountId),
-                        _context.Follows.Any(f => f.FollowerId == accountId && f.FollowedId == x.user.Id),
-                        x.user.Image
-                    )
-                )
+                .ToPage(page)
+                .ToUserResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
     }
 }

@@ -1,16 +1,16 @@
-﻿using AccountDomain.AccountAggregate.Exceptions;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Api.Filters
 {
-    public class CheckPrivacyPolicyApprovalFilterAttribute(IAccountAccessor accountAccessor) : ActionFilterAttribute
+    public class CheckPrivacyPolicyApprovalFilterAttribute(IUserAccessor userAccessor) : ActionFilterAttribute
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserAccessor _userAccessor = userAccessor;
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (!_accountAccessor.Account.IsPrivacyPolicyApproved)
+            if (!_userAccessor.User.IsPrivacyPolicyApproved)
                 throw new PolicyNotApprovedException();
             await next();
         }

@@ -1,6 +1,6 @@
-﻿using AccountDomain.RoleAggregate.Abstracts;
-using AccountDomain.RoleAggregate.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Domain.UserDomain.RoleAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.RoleAggregate

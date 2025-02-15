@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserImage
 {

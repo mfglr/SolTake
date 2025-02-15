@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.RemoveUserSearcher
 {

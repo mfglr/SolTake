@@ -3,14 +3,14 @@ using MySocailApp.Application.InfrastructureServices;
 
 namespace MySocailApp.Application.Commands.UserAggregate.ApprovePrivacyPolicy
 {
-    public class ApprovePrivacyPolicyHandler(IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<ApprovePrivacyPolicyDto>
+    public class ApprovePrivacyPolicyHandler(IUserAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<ApprovePrivacyPolicyDto>
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserAccessor _accountAccessor = accountAccessor;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(ApprovePrivacyPolicyDto request, CancellationToken cancellationToken)
         {
-            _accountAccessor.Account.ApprovePrivacyPolicy();
+            _accountAccessor.User.ApprovePrivacyPolicy();
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

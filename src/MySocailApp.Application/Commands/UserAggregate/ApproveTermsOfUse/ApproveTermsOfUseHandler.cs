@@ -3,14 +3,14 @@ using MySocailApp.Application.InfrastructureServices;
 
 namespace MySocailApp.Application.Commands.UserAggregate.ApproveTermsOfUse
 {
-    public class ApproveTermsOfUseHandler(IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<ApproveTermsOfUse>
+    public class ApproveTermsOfUseHandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<ApproveTermsOfUse>
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(ApproveTermsOfUse request, CancellationToken cancellationToken)
         {
-            _accountAccessor.Account.ApproveTermsOfUse();
+            _userAccessor.User.ApproveTermsOfUse();
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

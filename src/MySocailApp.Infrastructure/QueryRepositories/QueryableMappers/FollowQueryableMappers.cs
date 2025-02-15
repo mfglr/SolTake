@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -9,25 +9,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<FollowResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Accounts,
-                    follow => follow.FollowerId,
-                    account => account.Id,
-                    (follow, account) => new { follow, UserName = account.UserName.Value }
-                )
-                .Join(
                     context.Users,
-                    join => join.follow.FollowerId,
+                    follow => follow.FollowerId,
                     user => user.Id,
-                    (join, user) => new FollowResponseDto(
-                        join.follow.Id,
-                        join.follow.CreatedAt,
-                        join.follow.FollowerId,
-                        join.follow.FollowedId,
-                        new (
+                    (follow, user) => new FollowResponseDto(
+                        follow.Id,
+                        follow.CreatedAt,
+                        follow.FollowerId,
+                        follow.FollowedId,
+                        new(
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName,
+                            user.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             context.Questions.Count(question => question.Id == user.Id),
@@ -40,36 +34,31 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         null
                     )
                 );
-        public static IQueryable<FollowResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
+
+        public static IQueryable<FollowResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context, int userId)
             => query
                 .Join(
-                    context.Accounts,
-                    follow => follow.FollowedId,
-                    account => account.Id,
-                    (follow, account) => new { follow, UserName = account.UserName.Value }
-                )
-                .Join(
                     context.Users,
-                    join => join.follow.FollowedId,
+                    follow => follow.FollowedId,
                     user => user.Id,
-                    (join,user) => new FollowResponseDto(
-                        join.follow.Id,
-                        join.follow.CreatedAt,
-                        join.follow.FollowerId,
-                        join.follow.FollowedId,
+                    (follow, user) => new FollowResponseDto(
+                        follow.Id,
+                        follow.CreatedAt,
+                        follow.FollowerId,
+                        follow.FollowedId,
                         null,
                         new(
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName,
+                            user.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             context.Questions.Count(question => question.Id == user.Id),
                             context.Follows.Count(f => f.FollowedId == user.Id),
                             context.Follows.Count(f => f.FollowerId == user.Id),
-                            context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == accountId),
-                            context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == user.Id),
+                            context.Follows.Any(x => x.FollowerId == user.Id && x.FollowedId == userId),
+                            context.Follows.Any(x => x.FollowerId == userId && x.FollowedId == user.Id),
                             user.Image
                         )
                     )

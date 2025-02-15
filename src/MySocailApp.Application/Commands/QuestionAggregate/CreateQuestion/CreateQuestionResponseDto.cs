@@ -1,12 +1,13 @@
-﻿using AccountDomain.AccountAggregate.Entities;
-using MySocailApp.Application.Queries.QuestionAggregate;
+﻿using MySocailApp.Application.Queries.QuestionAggregate;
+using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
 
-    public class CreateQuestionResponseDto(Question question, Account account)
+    public class CreateQuestionResponseDto(Question question, User user)
     {
         public int Id { get; private set; } = question.Id;
         public DateTime CreatedAt { get; private set; } = question.CreatedAt;
@@ -14,7 +15,7 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
         public QuestionState State { get; private set; } = QuestionState.Unsolved;
         public bool IsOwner { get; private set; } = true;
         public int UserId { get; private set; } = question.UserId;
-        public string UserName { get; private set; } = account.UserName.Value;
+        public string UserName { get; private set; } = user.UserName.Value;
         public string? Content { get; private set; } = question.Content?.Value;
         public bool IsLiked { get; private set; } = false;
         public bool IsSaved { get; private set; } = false;
@@ -39,5 +40,6 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
                     x.Duration,
                     x.MultimediaType
                 ));
+        public Multimedia? Image { get; private set; } = user.Image;
     }
 }

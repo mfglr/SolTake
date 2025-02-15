@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocailApp.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocailApp.Api", "src\MySocailApp.Api\MySocailApp.Api.csproj", "{01FF46B3-917F-4024-A0A2-9675A5D8141D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountDomain", "src\AccountDomain\AccountDomain.csproj", "{004D42FB-72DC-4DB6-B6EB-1C4D912D58DD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{01FF46B3-917F-4024-A0A2-9675A5D8141D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01FF46B3-917F-4024-A0A2-9675A5D8141D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01FF46B3-917F-4024-A0A2-9675A5D8141D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{004D42FB-72DC-4DB6-B6EB-1C4D912D58DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{004D42FB-72DC-4DB6-B6EB-1C4D912D58DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{004D42FB-72DC-4DB6-B6EB-1C4D912D58DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{004D42FB-72DC-4DB6-B6EB-1C4D912D58DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,7 +51,6 @@ Global
 		{E394124D-1565-46AD-BF6A-50453D0A628A} = {B83AB36D-BC57-4C95-AACC-4E01E62DFAD0}
 		{EF124A30-E0B9-4C93-8148-741788E52897} = {B83AB36D-BC57-4C95-AACC-4E01E62DFAD0}
 		{01FF46B3-917F-4024-A0A2-9675A5D8141D} = {B83AB36D-BC57-4C95-AACC-4E01E62DFAD0}
-		{004D42FB-72DC-4DB6-B6EB-1C4D912D58DD} = {B83AB36D-BC57-4C95-AACC-4E01E62DFAD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8969C35B-B269-4743-A52C-E9B360391B5D}

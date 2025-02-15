@@ -1,19 +1,19 @@
-﻿using AccountDomain.AccountAggregate.Exceptions;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.VerifyEmail
 {
-    public class VerifyEmailHandler(IAccountAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<VerifyEmailDto>
+    public class VerifyEmailHandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<VerifyEmailDto>
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(VerifyEmailDto request, CancellationToken cancellationToken)
         {
             try
             {
-                _accountAccessor.Account.VerifyEmail(request.Token);
+                _userAccessor.User.VerifyEmail(request.Token);
             }
             catch (InvalidTokenException)
             {

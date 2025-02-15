@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.Follow
 {
@@ -19,6 +19,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.Follow
             var user =
                 await _userRepository.GetWithFollowerByIdAsync(request.FollowedId, followerId, cancellationToken) ??
                 throw new UserNotFoundException();
+
             var follow = user.Follow(followerId);
             await _unitOfWork.CommitAsync(cancellationToken);
             return _mapper.Map<FollowCommandResponseDto>(follow);

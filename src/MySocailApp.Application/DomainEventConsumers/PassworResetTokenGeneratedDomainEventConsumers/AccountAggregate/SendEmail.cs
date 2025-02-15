@@ -1,6 +1,6 @@
-﻿using AccountDomain.AccountAggregate.DomainEvents;
-using MySocailApp.Application.InfrastructureServices;
+﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
+using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.PassworResetTokenGeneratedDomainEventConsumers.AccountAggregate
 {
@@ -10,7 +10,7 @@ namespace MySocailApp.Application.DomainEventConsumers.PassworResetTokenGenerate
 
         public async Task Handle(PasswordResetTokenGeneratedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var a = notification.Account;
+            var a = notification.User;
             var passwordResetToken = a.PasswordResetToken;
             if (passwordResetToken == null) return;
             await _emailService

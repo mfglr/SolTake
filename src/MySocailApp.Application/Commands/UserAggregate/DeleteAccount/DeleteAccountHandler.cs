@@ -1,23 +1,23 @@
-﻿using AccountDomain.AccountAggregate.Abstracts;
-using AccountDomain.AccountAggregate.DomainEvents;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Commands.UserAggregate.DeleteAccount
 {
-    public class DeleteAccountHandler(IPublisher publisher, IAccountAccessor accountAccessor, IAccountWriteRepository accountWriteRepository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteAccountDto>
+    public class DeleteAccountHandler(IPublisher publisher, IUserAccessor userAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteAccountDto>
     {
         private readonly IPublisher _publisher = publisher;
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly IUserAccessor _userAccessor = userAccessor;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(DeleteAccountDto request, CancellationToken cancellationToken)
         {
-            _accountWriteRepository.Delete(_accountAccessor.Account);
+            _userWriteRepository.Delete(_userAccessor.User);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new AccountDeletedDomainEvent(_accountAccessor.Account), cancellationToken);
+            await _publisher.Publish(new UserDeletedDomainEvent(_userAccessor.User), cancellationToken);
         }
     }
 }

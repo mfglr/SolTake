@@ -1,19 +1,18 @@
-﻿using AccountDomain.AccountAggregate.Entities;
-using MySocailApp.Application.Queries.SolutionAggregate;
+﻿using MySocailApp.Application.Queries.SolutionAggregate;
 using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolution
 {
-    public class CreateSolutionResponseDto(Solution solution, Account account, User user)
+    public class CreateSolutionResponseDto(Solution solution, User user)
     {
         public int Id { get; private set; } = solution.Id;
         public DateTime CreatedAt { get; private set; } = solution.CreatedAt;
         public DateTime? UpdatedAt { get; private set; } = solution.UpdatedAt;
         public int QuestionId { get; private set; } = solution.QuestionId;
-        public string UserName { get; private set; } = account.UserName.Value;
+        public string UserName { get; private set; } = user.UserName.Value;
         public int UserId { get; private set; } = solution.UserId;
         public string? Content { get; private set; } = solution.Content?.Value;
         public bool IsUpvoted { get; private set; } = false;

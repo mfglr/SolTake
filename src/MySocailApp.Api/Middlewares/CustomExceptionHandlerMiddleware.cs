@@ -1,7 +1,7 @@
-﻿using AccountDomain.AccountAggregate.ValueObjects;
-using MySocailApp.Application.Extentions;
+﻿using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core.Exceptions;
+using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Api.Middlewares
 {
@@ -9,7 +9,7 @@ namespace MySocailApp.Api.Middlewares
     {
         private readonly RequestDelegate _next = next;
 
-        public async Task InvokeAsync(HttpContext context, IAccountAccessor accountAccessor)
+        public async Task InvokeAsync(HttpContext context, IUserAccessor userAccessor)
         {
             try
             {
@@ -17,12 +17,12 @@ namespace MySocailApp.Api.Middlewares
             }
             catch (AppException ex)
             {
-                var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
+                var languge = userAccessor.User?.Language ?? new Language(context.GetLanguage());
                 await context.WriteAppExceptionAsync(languge.Value, ex);
             }
             catch (Exception ex)
             {
-                var languge = accountAccessor.Account?.Language ?? new Language(context.GetLanguage());
+                var languge = userAccessor.User?.Language ?? new Language(context.GetLanguage());
                 await context.WriteAppExceptionAsync(languge.Value, new ServerSideException(ex.InnerException?.Message ?? ex.Message));
             }
         }

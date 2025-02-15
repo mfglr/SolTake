@@ -13,19 +13,18 @@ using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IAccountAccessor accountAccessor, IUserReadRepository userReadRepository, SolutionCreatorDomainService solutionCreatorDomainService, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IApplicationSettings applicationSettings) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IUserAccessor userAccessor, SolutionCreatorDomainService solutionCreatorDomainService, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IApplicationSettings applicationSettings) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IFrameCatcher _frameCatcher = frameCatcher;
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
-        private readonly IUserReadRepository _userReadRepository = userReadRepository;
+        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly SolutionCreatorDomainService _solutionCreatorDomainService = solutionCreatorDomainService;
         private readonly ITempDirectoryService _tempDirectoryService = tempDirectoryService;
         private readonly IApplicationSettings _applicationSettings = applicationSettings;
@@ -33,7 +32,6 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
         public async Task<CreateSolutionResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
         {
 
-            var user = (await _userReadRepository.GetAsync(_accountAccessor.Account.Id, cancellationToken))!;
             var question =
                 await _questionReadRepository.GetQuestionWithMediasById(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
@@ -119,14 +117,14 @@ namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
             //create solution
             var model = new SolutionAIModel(request.Model);
             var content = new SolutionContent(response.Choices.First().Message.Content);
-            var solution = Solution.CreateByAI(request.QuestionId, _accountAccessor.Account.Id, content, model);
+            var solution = Solution.CreateByAI(request.QuestionId, _userAccessor.User.Id, content, model);
             await _solutionCreatorDomainService.CreateAsync(solution, cancellationToken);
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
 
             //comit changes
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return new CreateSolutionResponseDto(solution, _accountAccessor.Account, user);
+            return new CreateSolutionResponseDto(solution, _userAccessor.User);
 
         }
 

@@ -1,15 +1,15 @@
-﻿using AccountDomain.AccountAggregate.Abstracts;
-using AccountDomain.AccountAggregate.Exceptions;
-using AccountDomain.AccountAggregate.ValueObjects;
-using MediatR;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
+using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.ResetPassword
 {
-    public class ResetPasswordHandler(IUnitOfWork unitOfWork, IAccountWriteRepository accountWriteRepository) : IRequestHandler<ResetPasswordDto>
+    public class ResetPasswordHandler(IUnitOfWork unitOfWork, IUserWriteRepository userWriteRepository) : IRequestHandler<ResetPasswordDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
 
         public async Task Handle(ResetPasswordDto request, CancellationToken cancellationToken)
         {
@@ -17,13 +17,13 @@ namespace MySocailApp.Application.Commands.UserAggregate.ResetPassword
             var password = new Password(request.Password);
             var passwordConfirm = new Password(request.PasswordConfirm);
 
-            var account =
-                await _accountWriteRepository.GetAccountByEmailAsync(email, cancellationToken) ??
-                throw new AccountNotFoundException();
+            var user =
+                await _userWriteRepository.GetByEmailAsync(email, cancellationToken) ??
+                throw new UserNotFoundException();
 
             try
             {
-                account.ResetPassword(request.Token, password, passwordConfirm);
+                user.ResetPassword(request.Token, password, passwordConfirm);
             }
             catch (InvalidTokenException)
             {

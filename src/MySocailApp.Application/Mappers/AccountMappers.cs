@@ -1,8 +1,7 @@
-﻿using AccountDomain.AccountAggregate.Entities;
-using AutoMapper;
+﻿using AutoMapper;
 using MySocailApp.Application.Commands.UserAggregate;
 using MySocailApp.Application.Commands.UserAggregate.Block;
-using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {

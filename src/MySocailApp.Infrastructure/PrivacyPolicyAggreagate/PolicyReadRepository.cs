@@ -1,6 +1,6 @@
-﻿using AccountDomain.PrivacyPolicyAggregate;
-using AccountDomain.PrivacyPolicyAggregate.Abstracts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
+using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.PrivacyPolicyAggreagate

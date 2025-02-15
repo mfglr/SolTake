@@ -7,35 +7,29 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class MessageQueryableMappers
     {
-        public static IQueryable<MessageResponseDto> ToMessageResponseDto(this IQueryable<Message> query, AppDbContext context, int accountId)
+        public static IQueryable<MessageResponseDto> ToMessageResponseDto(this IQueryable<Message> query, AppDbContext context, int userId)
             => query
                 .Join(
                     context.Users,
-                    message => message.SenderId == accountId ? message.ReceiverId : message.SenderId,
+                    message => message.SenderId == userId ? message.ReceiverId : message.SenderId,
                     user => user.Id,
-                    (message, user) => new { message, user }
-                )
-                .Join(
-                    context.Accounts,
-                    join => join.message.SenderId == accountId ? join.message.ReceiverId : join.message.SenderId,
-                    account => account.Id,
-                    (join, account) => new MessageResponseDto(
-                        join.message.Id,
-                        join.message.CreatedAt,
-                        join.message.UpdatedAt,
-                        join.message.SenderId == accountId,
-                        account.UserName.Value,
-                        account.Id,
-                        join.message.SenderId,
-                        join.message.ReceiverId,
-                        join.message.IsEdited,
-                        join.message.Content.Value,
-                        join.message.Viewers.Count != 0
+                    (message, user) => new MessageResponseDto(
+                        message.Id,
+                        message.CreatedAt,
+                        message.UpdatedAt,
+                        message.SenderId == userId,
+                        user.UserName.Value,
+                        user.Id,
+                        message.SenderId,
+                        message.ReceiverId,
+                        message.IsEdited,
+                        message.Content.Value,
+                        message.Viewers.Count != 0
                             ? MessageState.Viewed
-                            : join.message.Receivers.Count != 0
+                            : message.Receivers.Count != 0
                                 ? MessageState.Reached
                                 : MessageState.Created,
-                        join.message.Medias.Select(
+                        message.Medias.Select(
                             media => new MessageMultimediaResponseDto(
                                 media.ContainerName,
                                 media.BlobName,
@@ -47,7 +41,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 media.MultimediaType
                             )
                         ),
-                        join.user.Image
+                        user.Image
                     )
                 );
     }

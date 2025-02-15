@@ -1,8 +1,4 @@
-﻿using AccountDomain.AccountAggregate.Abstracts;
-using AccountDomain.PrivacyPolicyAggregate.Abstracts;
-using AccountDomain.RoleAggregate.Abstracts;
-using AccountDomain.TermsOfUseAggregate.Abstracts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
@@ -19,8 +15,10 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Infrastructure.AccountAggregate;
+using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.RoleAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.TermsOfUseAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
@@ -53,8 +51,7 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddDbContext()
                 .AddServices()
-                .AddAccountAggregate()
-                .AddAppUserAggregate()
+                .AddUserAggregate()
                 .AddQuestionAggregate()
                 .AddSolutionAggregate()
                 .AddExamAggregate()
@@ -72,7 +69,7 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddServices(this IServiceCollection services)
             => services
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
-                .AddScoped<IAccountAccessor, AccountAccessor>()
+                .AddScoped<IUserAccessor, UserAccessor>()
                 .AddEmailService()
                 .AddBlobService()
                 .AddQueryRepositories();
@@ -142,11 +139,6 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
                 .AddScoped<ISolutionUserSaveQueryRepository, SolutionUserSaveQueryRepository>()
                 .AddScoped<INotificationQueryRepository, NotificationQueryRepository>();
-        
-        private static IServiceCollection AddAccountAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<IAccountReadRepository, AccountReadRepository>()
-                .AddScoped<IAccountWriteRepository, AccountWriteRepository>();
 
         private static IServiceCollection AddPrivacyPolicyAggregate(this IServiceCollection services)
             => services
@@ -158,7 +150,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ITermsOfUseReadRepository, TermsOfUseReadRepository>()
                 .AddScoped<ITermsOfUseWriteRepository, TermsOfUseWriteRepository>();
         
-        private static IServiceCollection AddAppUserAggregate(this IServiceCollection services)
+        private static IServiceCollection AddUserAggregate(this IServiceCollection services)
             => services
                 .AddScoped<IUserWriteRepository, UserWriteRepository>()
                 .AddScoped<IUserReadRepository, UserReadRepository>();

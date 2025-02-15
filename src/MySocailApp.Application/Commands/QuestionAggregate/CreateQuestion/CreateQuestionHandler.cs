@@ -9,9 +9,9 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 {
-    public class CreateQuestionHandler(IUnitOfWork unitOfWork, IQuestionWriteRepository repository, QuestionCreatorDomainService questionCreator, IBlobService blobService, IMultimediaService multimedyaService, IAccountAccessor accountAccessor) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
+    public class CreateQuestionHandler(IUnitOfWork unitOfWork, IQuestionWriteRepository repository, QuestionCreatorDomainService questionCreator, IBlobService blobService, IMultimediaService multimedyaService, IUserAccessor userAccessor) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly QuestionCreatorDomainService _questionCreator = questionCreator;
         private readonly IQuestionWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -28,14 +28,14 @@ namespace MySocailApp.Application.Commands.QuestionAggregate.CreateQuestion
 
                 //create question
                 var content = request.Content != null ? new QuestionContent(request.Content) : null;
-                var question = new Question(_accountAccessor.Account.Id, content, questionMedias);
+                var question = new Question(_userAccessor.User.Id, content, questionMedias);
                 await _questionCreator.CreateAsync(question, request.ExamId, request.SubjectId, request.TopicId, cancellationToken);
                 await _repository.CreateAsync(question, cancellationToken);
 
                 //commit changes
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                return new(question, _accountAccessor.Account);
+                return new(question, _userAccessor.User);
             }
             catch (Exception)
             {

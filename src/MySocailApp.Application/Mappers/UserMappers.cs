@@ -1,10 +1,9 @@
-﻿using AccountDomain.AccountAggregate.Entities;
-using AutoMapper;
+﻿using AutoMapper;
 using MySocailApp.Application.Commands.UserAggregate;
 using MySocailApp.Application.Commands.UserAggregate.AddUserSearcher;
 using MySocailApp.Application.Commands.UserAggregate.Block;
 using MySocailApp.Application.Commands.UserAggregate.Follow;
-using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {

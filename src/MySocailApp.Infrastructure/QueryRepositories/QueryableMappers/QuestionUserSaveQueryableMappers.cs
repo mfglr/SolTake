@@ -11,26 +11,20 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<QuestionUserSaveResponseDto> ToQuestionUserSaveResponseDto(this IQueryable<QuestionUserSave> query, AppDbContext context, int accountId) =>
             query
                 .Join(
-                    context.Accounts,
-                    qus => qus.UserId,
-                    account => account.Id,
-                    (qus, account) => new { qus, UserName = account.UserName.Value }
-                )
-                .Join(
                     context.Users,
-                    join => join.qus.UserId,
+                    qus => qus.UserId,
                     user => user.Id,
-                    (join, user) => new { join, user }
+                    (qus, user) => new { qus, user }
                 )
                 .Join(
                     context.Questions,
-                    join1 => join1.join.qus.QuestionId,
+                    join => join.qus.QuestionId,
                     question => question.Id,
-                    (join1, question) => new QuestionUserSaveResponseDto(
-                        join1.join.qus.Id,
-                        join1.join.qus.CreatedAt,
-                        join1.join.qus.QuestionId,
-                        join1.join.qus.UserId,
+                    (join, question) => new QuestionUserSaveResponseDto(
+                        join.qus.Id,
+                        join.qus.CreatedAt,
+                        join.qus.QuestionId,
+                        join.qus.UserId,
                         new QuestionResponseDto(
                             question.Id,
                             question.CreatedAt,
@@ -40,7 +34,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 : QuestionState.Unsolved,
                             question.UserId == accountId,
                             question.UserId,
-                            join1.join.UserName,
+                            join.user.UserName.Value,
                             question.Content.Value,
                             question.Likes.Any(x => x.UserId == accountId),
                             question.Savers.Any(x => x.UserId == accountId),
@@ -66,7 +60,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                     i.MultimediaType
                                 )
                             ),
-                            join1.user.Image
+                            join.user.Image
                         )
                     )
                 );

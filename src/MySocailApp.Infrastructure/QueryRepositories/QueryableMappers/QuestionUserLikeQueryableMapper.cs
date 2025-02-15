@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
@@ -10,25 +9,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<QuestionUserLikeResponseDto> ToQuestionUserLikeResponseDto(this IQueryable<QuestionUserLike> query, AppDbContext context, int accountId)
             => query
                 .Join(
-                    context.Accounts,
-                    qul => qul.UserId,
-                    account => account.Id,
-                    (qul, account) => new { qul, UserName = account.UserName.Value }
-                )
-                .Join(
                     context.Users,
-                    join => join.qul.UserId,
+                    qul => qul.UserId,
                     user => user.Id,
-                    (join, user) => new QuestionUserLikeResponseDto(
-                        join.qul.Id,
-                        join.qul.CreatedAt,
-                        join.qul.QuestionId,
-                        join.qul.UserId,
-                        new UserResponseDto(
+                    (qul, user) => new QuestionUserLikeResponseDto(
+                        qul.Id,
+                        qul.CreatedAt,
+                        qul.QuestionId,
+                        qul.UserId,
+                        new (
                             user.Id,
                             user.CreatedAt,
                             user.UpdatedAt,
-                            join.UserName,
+                            user.UserName.Value,
                             user.Name,
                             user.Biography.Value,
                             context.Questions.Count(q => q.UserId == user.Id),

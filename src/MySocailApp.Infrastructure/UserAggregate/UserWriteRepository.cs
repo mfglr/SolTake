@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Entities;
-using MySocailApp.Infrastructure.AccountAggregate;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserAggregate
 {
-    public class UserWriteRepository(AppDbContext context) : AccountWriteRepository(context), IUserWriteRepository
+    public class UserWriteRepository(AppDbContext context) : IUserWriteRepository
     {
         private readonly AppDbContext _context = context;
 
@@ -15,8 +15,45 @@ namespace MySocailApp.Infrastructure.UserAggregate
 
         public void Delete(User user) => _context.Users.Remove(user);
 
-        public Task<User> GetByIdAsync(int id, CancellationToken cancellationToken)
-            => _context.Users.FirstAsync(x => x.Id == id, cancellationToken);
+        public Task<User?> GetByIdAsync(int accountId, CancellationToken cancellationToken)
+            => _context.Users
+                .Include(x => x.PrivacyPolicies)
+                .Include(x => x.TermsOfUses)
+                .Include(x => x.Roles)
+                .Include(x => x.Blockers)
+                .Include(x => x.VerificationTokens)
+                .Include(x => x.PasswordResestTokens)
+                .FirstOrDefaultAsync(x => x.Id == accountId, cancellationToken);
+
+        public Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken)
+            => _context.Users
+                .Include(x => x.PrivacyPolicies)
+                .Include(x => x.TermsOfUses)
+                .Include(x => x.Roles)
+                .Include(x => x.Blockers)
+                .Include(x => x.VerificationTokens)
+                .Include(x => x.PasswordResestTokens)
+                .FirstOrDefaultAsync(x => x.Email.Value == email.Value, cancellationToken);
+
+        public Task<User?> GetByUserNameAsync(UserName userName, CancellationToken cancellationToken)
+            => _context.Users
+                .Include(x => x.PrivacyPolicies)
+                .Include(x => x.TermsOfUses)
+                .Include(x => x.Roles)
+                .Include(x => x.Blockers)
+                .Include(x => x.VerificationTokens)
+                .Include(x => x.PasswordResestTokens)
+                .FirstOrDefaultAsync(x => x.UserName.Value == userName.Value, cancellationToken);
+
+        public Task<User?> GetByGoogleAccount(GoogleAccount googleAccount, CancellationToken cancellationToken)
+            => _context.Users
+                .Include(x => x.PrivacyPolicies)
+                .Include(x => x.TermsOfUses)
+                .Include(x => x.Roles)
+                .Include(x => x.Blockers)
+                .Include(x => x.VerificationTokens)
+                .Include(x => x.PasswordResestTokens)
+                .FirstOrDefaultAsync(x => x.GoogleAccount.UserId == googleAccount.UserId, cancellationToken);
 
         public Task<User?> GetWithFollowerByIdAsync(int id, int followerId, CancellationToken cancellationToken)
             => _context.Users
@@ -46,5 +83,7 @@ namespace MySocailApp.Infrastructure.UserAggregate
             var searchs = await _context.UserSearchs.Where(x => x.SearcherId == userId).ToListAsync(cancellationToken);
             _context.UserSearchs.RemoveRange(searchs);
         }
+
+        
     }
 }

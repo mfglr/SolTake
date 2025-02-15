@@ -1,6 +1,6 @@
-﻿using AccountDomain.PrivacyPolicyAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
 
 namespace MySocailApp.Infrastructure.Seeds
 {

@@ -1,6 +1,4 @@
-﻿using AccountDomain.AccountAggregate.Configurations;
-using AccountDomain.AccountAggregate.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
@@ -9,7 +7,7 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserAggregate.Configurations;
 using MySocailApp.Infrastructure.AppVersionAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,14 +23,12 @@ namespace MySocailApp.Api
             var tokenProviderOptions = configuration.GetRequiredSection("TokenProviderOptions").Get<TokenProviderOptions>()!;
             var emailServiceSettings = configuration.GetRequiredSection("EmailServiceSettings").Get<EmailServiceSettings>()!;
             var applicationSettings = configuration.GetRequiredSection("ApplicationSettings").Get<ApplicationSettings>()!;
-            var faceBookSettings = configuration.GetRequiredSection("FaceBookSettings").Get<FaceBookSettings>()!;
             var chatGptSettings = configuration.GetRequiredSection("ChatGPTSettings").Get<ChatGPTSettings>()!;
 
             return services
                 .AddSingleton<ITokenProviderOptions>(tokenProviderOptions)
                 .AddSingleton<IEmailServiceSettings>(emailServiceSettings)
                 .AddSingleton<IApplicationSettings>(applicationSettings)
-                .AddSingleton<IFaceBookSettings>(faceBookSettings)
                 .AddSingleton<IChatGPTSettings>(chatGptSettings);
         }
         public static IServiceCollection AddFilters(this IServiceCollection services)

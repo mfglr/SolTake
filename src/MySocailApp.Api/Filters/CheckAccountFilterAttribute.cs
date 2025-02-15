@@ -1,22 +1,22 @@
-﻿using AccountDomain.AccountAggregate.Abstracts;
-using AccountDomain.AccountAggregate.Exceptions;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Api.Filters
 {
-    public class CheckAccountFilterAttribute(IAccessTokenReader accessTokenReader, IAccountWriteRepository accountWriteRepository, IAccountAccessor accountAccessor) : ActionFilterAttribute
+    public class CheckAccountFilterAttribute(IAccessTokenReader accessTokenReader, IUserWriteRepository userWriteRepository, IUserAccessor userAccessor) : ActionFilterAttribute
     {
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
-        private readonly IAccountWriteRepository _accountWriteRepository = accountWriteRepository;
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
+        private readonly IUserAccessor _userAccessor = userAccessor;
 
         public async override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var accountId = _accessTokenReader.GetRequiredAccountId();
-            _accountAccessor.Account = 
-                await _accountWriteRepository.GetAccountAsync(accountId,CancellationToken.None) ??
-                throw new AccountNotFoundException();
+            _userAccessor.User = 
+                await _userWriteRepository.GetByIdAsync(accountId,CancellationToken.None) ??
+                throw new UserNotFoundException();
 
             await next();
         }

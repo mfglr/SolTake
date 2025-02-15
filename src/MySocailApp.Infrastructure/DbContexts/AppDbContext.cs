@@ -1,8 +1,4 @@
-﻿using AccountDomain.AccountAggregate.Entities;
-using AccountDomain.PrivacyPolicyAggregate;
-using AccountDomain.RoleAggregate.Entities;
-using AccountDomain.TermsOfUseAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AppVersionAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
@@ -15,7 +11,10 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
+using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
+using MySocailApp.Domain.UserDomain.TermsOfUseAggregate;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
