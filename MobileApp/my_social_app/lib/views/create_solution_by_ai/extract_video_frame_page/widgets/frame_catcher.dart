@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/create_prompt_page.dart';
-import 'package:my_social_app/views/create_solution_by_ai/select_video_frame_page/widgets/catch_frame_button.dart';
+import 'package:my_social_app/views/create_solution_by_ai/extract_video_frame_page/widgets/catch_frame_button/catch_frame_button.dart';
 import 'package:my_social_app/views/shared/slide_video_player/video_play_button.dart';
 import 'package:my_social_app/views/shared/slide_video_player/video_progress_bar.dart';
 import 'package:video_player/video_player.dart';

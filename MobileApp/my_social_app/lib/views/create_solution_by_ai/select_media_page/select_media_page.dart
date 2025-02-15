@@ -8,9 +8,11 @@ import 'package:my_social_app/state/app_state/question_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/create_prompt_page.dart';
-import 'package:my_social_app/views/create_solution_by_ai/select_video_frame_page/select_video_frame_page.dart';
+import 'package:my_social_app/views/create_solution_by_ai/extract_video_frame_page/extract_video_frame_page.dart';
+import 'package:my_social_app/views/create_solution_by_ai/select_media_page/select_media_page_texts.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class SelectMediaPage extends StatelessWidget {
@@ -31,7 +33,11 @@ class SelectMediaPage extends StatelessWidget {
           : Scaffold(
               appBar: AppBar(
                 leading: const AppBackButtonWidget(),
-                title: const AppTitle(title: "Select media"),
+                title: LanguageWidget(
+                  child: (lanaguage) => AppTitle(
+                    title: title[lanaguage]!
+                  )
+                ),
               ),
               body: Column(
                 children: [
@@ -45,7 +51,7 @@ class SelectMediaPage extends StatelessWidget {
                       if(media.multimediaType == MultimediaType.video){
                         Navigator
                           .of(context)
-                          .push(MaterialPageRoute(builder: (context) => SelectVideoFramePage(media: media)))
+                          .push(MaterialPageRoute(builder: (context) => ExtractVideoFramePage(media: media)))
                           .then((value){
                             if(value != null && context.mounted){
                               Navigator

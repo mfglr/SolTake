@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/views/create_solution_by_ai/extract_video_frame_page/widgets/catch_frame_button/catch_frame_button_texts.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 
 class CatchFrameButton extends StatelessWidget {
   final void Function() onPressed;
@@ -16,17 +18,19 @@ class CatchFrameButton extends StatelessWidget {
       ),
       child: TextButton(
         onPressed: onPressed,
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              "Catch Frame",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20
+            LanguageWidget(
+              child: (language) => Text(
+                buttonContent[language]!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20
+                ),
               ),
             ),
-            Icon(
+            const Icon(
               Icons.crop,
               color: Colors.white,
               size: 25,

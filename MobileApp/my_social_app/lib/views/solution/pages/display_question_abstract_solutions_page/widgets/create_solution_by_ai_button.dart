@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/create_solution_by_ai/display_models_page/display_models_page.dart';
+import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page.dart';
 
 class CreateSolutionByAiButton extends StatelessWidget {
   final QuestionState question;
@@ -80,7 +80,7 @@ class CreateSolutionByAiButton extends StatelessWidget {
                 if(value && context.mounted){
                   Navigator
                     .of(context)
-                    .push(MaterialPageRoute(builder: (context) => DisplayModelsPage(question: question)))
+                    .push(MaterialPageRoute(builder: (context) => SelectModelsPage(question: question)))
                     .then((value){
                       if(value != null && context.mounted){
                         final store = StoreProvider.of<AppState>(context,listen: false);
