@@ -22,12 +22,11 @@ namespace MySocailApp.Infrastructure.DbContexts
 {
     public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
-        public DbSet<Account> Accounts { get; private set; }
+        public DbSet<User> Users { get; private set; }
         public DbSet<Role> Roles { get; private set; }
         public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
         public DbSet<TermsOfUse> TermsOfUses { get; private set; }
 
-        public DbSet<User> Users { get; private set; }
         public DbSet<UserSearch> UserSearchs { get; private set; }
         public DbSet<Follow> Follows { get; private set; }
         public DbSet<UserFollowNotification> UserFollowNotifications { get; private set; }

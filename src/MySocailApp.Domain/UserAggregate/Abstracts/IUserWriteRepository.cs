@@ -1,8 +1,9 @@
-﻿using MySocailApp.Domain.UserAggregate.Entities;
+﻿using AccountDomain.AccountAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Domain.UserAggregate.Abstracts
 {
-    public interface IUserWriteRepository
+    public interface IUserWriteRepository : IAccountWriteRepository
     {
         Task CreateAsync(User user, CancellationToken cancellationToken);
         void Delete(User user);

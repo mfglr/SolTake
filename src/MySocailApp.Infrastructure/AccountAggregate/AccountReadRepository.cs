@@ -2,7 +2,6 @@
 using AccountDomain.AccountAggregate.Entities;
 using AccountDomain.AccountAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.AccountAggregate
@@ -12,21 +11,21 @@ namespace MySocailApp.Infrastructure.AccountAggregate
         private readonly AppDbContext _context = context;
 
         public Task<bool> EmailExist(Email email, CancellationToken cancellationToken)
-            => _context.Accounts.AnyAsync(x => x.Email.Value == email.Value, cancellationToken);
+            => _context.Users.AnyAsync(x => x.Email.Value == email.Value, cancellationToken);
 
         public Task<bool> Exist(int accountId, CancellationToken cancellationToken)
-            => _context.Accounts.AnyAsync(x => x.Id == accountId, cancellationToken);
+            => _context.Users.AnyAsync(x => x.Id == accountId, cancellationToken);
 
-        public Task<Account?> GetAccountAsync(int accountId, CancellationToken cancellationToken)
-            => _context.Accounts
+        public async Task<Account?> GetAccountAsync(int accountId, CancellationToken cancellationToken)
+            => await _context.Users
                 .AsNoTracking()
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
                 .Include(x => x.VerificationTokens)
                 .FirstOrDefaultAsync(x => x.Id == accountId,cancellationToken);
 
-        public Task<Account?> GetAccountByUserName(UserName userName, CancellationToken cancellationToken)
-            => _context.Accounts
+        public async Task<Account?> GetAccountByUserName(UserName userName, CancellationToken cancellationToken)
+            => await _context.Users
                 .AsNoTracking()
                 .Include(x => x.PrivacyPolicies)
                 .Include(x => x.TermsOfUses)
@@ -34,14 +33,14 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 .FirstOrDefaultAsync(x => x.UserName.Value == userName.Value, cancellationToken);
 
         public Task<List<int>> GetAccountIdsByUserNames(IEnumerable<string> userNames, CancellationToken cancellationToken)
-            => _context.Accounts
+            => _context.Users
                 .AsNoTracking()
                 .Where(x => userNames.Select(x => x.ToLower()).Contains(x.UserName.Value))
                 .Select(x => x.Id)
                 .ToListAsync(cancellationToken);
 
         public Task<bool> IsEmailVerified(int accountId, CancellationToken cancellationToken)
-            => _context.Accounts
+            => _context.Users
                 .AnyAsync(
                     x => 
                         x.Id == accountId &&
@@ -52,6 +51,6 @@ namespace MySocailApp.Infrastructure.AccountAggregate
                 );
 
         public Task<bool> UserNameExist(UserName userName, CancellationToken cancellationToken)
-            => _context.Accounts.AnyAsync(x => x.UserName.Value == userName.Value, cancellationToken);
+            => _context.Users.AnyAsync(x => x.UserName.Value == userName.Value, cancellationToken);
     }
 }

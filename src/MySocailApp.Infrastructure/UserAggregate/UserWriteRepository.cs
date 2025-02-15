@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Infrastructure.AccountAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserAggregate
 {
-    public class UserWriteRepository(AppDbContext context) : IUserWriteRepository
+    public class UserWriteRepository(AppDbContext context) : AccountWriteRepository(context), IUserWriteRepository
     {
         private readonly AppDbContext _context = context;
 

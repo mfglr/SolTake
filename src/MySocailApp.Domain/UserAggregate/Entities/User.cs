@@ -1,18 +1,20 @@
-﻿using MySocailApp.Core;
+﻿using AccountDomain.AccountAggregate.Entities;
+using AccountDomain.AccountAggregate.ValueObjects;
+using MySocailApp.Core;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
 using MySocailApp.Domain.UserAggregate.Exceptions;
 using MySocailApp.Domain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.UserAggregate.Entities
 {
-    public class User(int id) : Entity(id), IAggregateRoot
+    public class User : Account, IAggregateRoot
     {
-        public void Create()
-        {
-            Name = "";
-            Biography = new Biography("");
-            CreatedAt = DateTime.UtcNow;
-        }
+        
+        public User(Email email, Password password, Password passwordConfirm, Language language) :
+            base(email, password, passwordConfirm, language){}
+        
+        public User(GoogleAccount googleAccount, Language language) :
+            base(googleAccount, language) { }
 
         //profile image
         public Multimedia? Image { get; private set; }
@@ -30,16 +32,15 @@ namespace MySocailApp.Domain.UserAggregate.Entities
             Image = null;
         }
 
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
         public void UpdateName(string name)
         {
-            Name = name ?? throw new NameRequiredException();
+            Name = name;
             UpdatedAt = DateTime.UtcNow;
         }
-        public Biography Biography { get; private set; }
+        public Biography? Biography { get; private set; }
         public void UpdateBiography(Biography biography)
         {
-            ArgumentNullException.ThrowIfNull(biography);
             Biography = biography;
             UpdatedAt = DateTime.UtcNow;
         }

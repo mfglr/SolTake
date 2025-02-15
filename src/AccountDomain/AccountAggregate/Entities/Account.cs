@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AccountDomain.AccountAggregate.Entities
 {
-    public class Account : Entity, IAggregateRoot
+    public class Account : Entity
     {
         public UserName UserName { get; private set; }
         public Email Email { get; private set; }
@@ -15,21 +15,18 @@ namespace AccountDomain.AccountAggregate.Entities
         public Language Language { get; private set; }
         public GoogleAccount? GoogleAccount { get; private set; }
         public string SecurityStamp { get; private set; }
-        public AccountType AccountType { get; private set; }
         private readonly List<AccountRole> _roles = [];
         public IReadOnlyCollection<AccountRole> Roles => _roles;
 
-        public bool IsSendableEmailVerificationMail => GoogleAccount == null && AccountType == AccountType.User;
+        public bool IsSendableEmailVerificationMail => GoogleAccount == null;
 
         private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
-        private Account() { }
         public Account(Email email, Password password, Password passwordConfirm, Language language)
         {
             if (!password.CompareValue(passwordConfirm))
                 throw new PassowordAndPasswordConfirmationNotMatchException();
 
-            AccountType = AccountType.User;
             Password = password;
             Email = email;
             UserName = email.GenerateUserName();
@@ -39,34 +36,12 @@ namespace AccountDomain.AccountAggregate.Entities
         }
         public Account(GoogleAccount googleAccount, Language language)
         {
-            AccountType = AccountType.User;
             GoogleAccount = googleAccount;
             Email = new(googleAccount.Email);
             UserName = Email.GenerateUserName();
             Language = language;
             SecurityStamp = GenerateSecurityStamp();
         }
-
-        public static Account CreateAI(UserName userName)
-        {
-            var account = new Account()
-            {
-                UserName = userName,
-                Email = Email.AIEmail(userName),
-                Language = new(Languages.DEFAULT),
-                SecurityStamp = GenerateSecurityStamp(),
-                AccountType = AccountType.AI,
-                CreatedAt = DateTime.UtcNow
-            };
-            account.AddDomainEvent(new AccountCreatedDominEvent(account));
-            return account;
-        }
-
-        public static Account CreateChatGPT4O() => CreateAI(new("gpt-4o"));
-        public static Account CreateChatGPT4OMini() => CreateAI(new("gpt-4o-mini"));
-        public static Account CreateChatGPTO1() => CreateAI(new("o1"));
-        public static Account CreateChatGPTO1Mini() => CreateAI(new("o1-mini"));
-        public static Account CreateChatGPTO3Mini() => CreateAI(new("o3-mini"));
 
         internal void Create(int policyId, int termsOfUseId)
         {
@@ -102,7 +77,7 @@ namespace AccountDomain.AccountAggregate.Entities
 
         //Email verfication Tokens
         public EmailVerificationToken VerificationToken => VerificationTokens.OrderBy(x => x.Id).Last();
-        public bool IsEmailVerified => AccountType == AccountType.AI || GoogleAccount != null || VerificationToken.IsVerified;
+        public bool IsEmailVerified => GoogleAccount != null || VerificationToken.IsVerified;
         private readonly List<EmailVerificationToken> _verificationTokens = [];
         public IReadOnlyCollection<EmailVerificationToken> VerificationTokens => _verificationTokens;
         public void UpdateEmailVerificationToken()

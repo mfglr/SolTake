@@ -1,7 +1,8 @@
 ﻿using AccountDomain.AccountAggregate.Entities;
 using AutoMapper;
-using MySocailApp.Application.Commands.AccountAggregate;
-using MySocailApp.Application.Commands.AccountAggregate.Block;
+using MySocailApp.Application.Commands.UserAggregate;
+using MySocailApp.Application.Commands.UserAggregate.Block;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {
@@ -9,9 +10,8 @@ namespace MySocailApp.Application.Mappers
     {
         public AccountMappers()
         {
-            CreateMap<Account, AccountDto>()
+            CreateMap<User, AccountDto>()
                 .ForMember(dest => dest.Email, x => x.MapFrom(src => src.Email != null ? src.Email.Value : null))
-                .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.UserName != null ? src.UserName.Value : null))
                 .ForMember(dest => dest.Language, x => x.MapFrom(src => src.Language != null ? src.Language.Value : null))
                 .ForMember(dest => dest.IsEmailVerified, x => x.MapFrom(src => src.IsEmailVerified))
                 .ForMember(dest => dest.IsPrivacyPolicyApproved, x => x.MapFrom(src => src.IsPrivacyPolicyApproved))
