@@ -1,17 +1,1 @@
-const String createEndPoint = "create";
-const String updateEmailVerificationTokenEndPoint = "UpdateEmailVerificationToken";
-const String verifyEmailEntPoint = "VerifyEmail";
-const String loginByPasswordEndPoint = "LoginByPassword";
-const String resetPasswordEndpoint = "ResetPassword";
-const String generateResetPasswordTokenEndpoint = "GeneratePasswordResetToken";
-const String loginByFaceBookEndpoint = "LoginByFaceBook";
-const String loginByGoogleEndpoint = "LoginByGoogle";
-const String loginByRefreshTokenEndPoint = "loginByRefreshToken";
-const String updateEmailEndPoint = "UpdateEmail";
-const String updateUserNameEndPoint = "UpdateUserName";
-const String updateLanguageEndpoint = "UpdateLanguage";
-const String logOutEndPoint = "LogOut";
-const String approvePrivacyPolicyEndpoint = "ApprovePrivacyPolicy";
-const String approveTermsOfUseEndpoint = "ApproveTermsOfUse";
-const String deleteAccountEndpoint = "delete";
-const String isUserNameExistEndPoint = "IsUserNameExist";
+

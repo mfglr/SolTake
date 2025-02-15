@@ -40,7 +40,6 @@ class MarkUserQuestionAsUnsolvedAction extends AppAction{
 }
 
 
-
 @immutable
 class AddNewFollowerAction extends AppAction{
   final int curentUserId;

@@ -6,7 +6,7 @@ using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Domain.UserDomain.UserAggregate.DomainServices
 {
-    public class AccountCreatorDomainService(IPrivacyPolicyReadRepository policyReadRepository, ITermsOfUseReadRepository termsOfUserReadRepository, IUserReadRepository accountReadRepository)
+    public class UserCreatorDomainService(IPrivacyPolicyReadRepository policyReadRepository, ITermsOfUseReadRepository termsOfUserReadRepository, IUserReadRepository accountReadRepository)
     {
         private readonly IPrivacyPolicyReadRepository _policyReadRepository = policyReadRepository;
         private readonly ITermsOfUseReadRepository _termsOfUserReadRepository = termsOfUserReadRepository;

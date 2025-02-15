@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/services/account_service.dart';
+import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -16,7 +16,7 @@ class SendEmailVerificationMailButton extends StatelessWidget {
         ),
         OutlinedButton(
           onPressed: () => 
-            AccountService()
+            UserService()
             .updateEmailVerificationToken()
             .then((_){
               if(context.mounted){

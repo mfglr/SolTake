@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/services/account_service.dart';
+import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/account/widgets/password_and_password_confirm_form_field.dart';
 import 'package:my_social_app/views/account/widgets/token_form_field.dart';
@@ -57,7 +57,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           OutlinedButton(
             onPressed: (){
               if(_formKey.currentState!.validate()){
-                AccountService()
+                UserService()
                   .resetPassword(widget.email, _token.text, _password.text, _passwordConfirmation.text)
                   .then((_){
                     if(context.mounted){

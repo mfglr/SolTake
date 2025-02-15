@@ -10,10 +10,10 @@ using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.LoginByGoogle
 {
-    public class LoginByGoogleHandler(GoogleTokenValidatorDomainService googleTokenReader, IMapper mapper, IHttpContextAccessor httpContextAccessor, IUserWriteRepository userWriteRepository, AccountCreatorDomainService accountCreatorDomainService, AuthenticatorDomainService authenticatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByGoogleDto, AccountDto>
+    public class LoginByGoogleHandler(GoogleTokenValidatorDomainService googleTokenReader, IMapper mapper, IHttpContextAccessor httpContextAccessor, IUserWriteRepository userWriteRepository, UserCreatorDomainService accountCreatorDomainService, AuthenticatorDomainService authenticatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByGoogleDto, AccountDto>
     {
         private readonly GoogleTokenValidatorDomainService _googleTokenReader = googleTokenReader;
-        private readonly AccountCreatorDomainService _accountCreatorDomainService = accountCreatorDomainService;
+        private readonly UserCreatorDomainService _accountCreatorDomainService = accountCreatorDomainService;
         private readonly AuthenticatorDomainService _authenticatorDomainService = authenticatorDomainService;
         private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
         private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;

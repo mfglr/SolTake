@@ -224,7 +224,6 @@ namespace MySocailApp.Api.Controllers.Api
 
 
         //Accounts
-
         [HttpPost]
         public async Task<AccountDto> Create(CreateAccountDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);

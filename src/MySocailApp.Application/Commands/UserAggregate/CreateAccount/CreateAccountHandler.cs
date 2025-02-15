@@ -10,10 +10,10 @@ using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.CreateAccount
 {
-    public class CreateAccountHandler(IMapper mapper, AccountCreatorDomainService accountCreatorDomainService, IHttpContextAccessor contextAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService) : IRequestHandler<CreateAccountDto, AccountDto>
+    public class CreateAccountHandler(IMapper mapper, UserCreatorDomainService userCreatorDomainService, IHttpContextAccessor contextAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService) : IRequestHandler<CreateAccountDto, AccountDto>
     {
         private readonly IMapper _mapper = mapper;
-        private readonly AccountCreatorDomainService _accountCreatorDomainService = accountCreatorDomainService;
+        private readonly UserCreatorDomainService _userCreatorDomainService = userCreatorDomainService;
         private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
         private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;
         private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
@@ -28,7 +28,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.CreateAccount
             var language = new Language(_contextAccessor.HttpContext.GetLanguage());
 
             var user = new User(email, password, passwordConfirm, language);
-            await _accountCreatorDomainService.CreateAsync(user, cancellationToken);
+            await _userCreatorDomainService.CreateAsync(user, cancellationToken);
             await _userWriteRepository.CreateAsync(user, cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);

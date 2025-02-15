@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
@@ -84,7 +83,7 @@ void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
 void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateUserNameAction){
     final accountId = store.state.accountState!.id;
-    AccountService()
+    UserService()
       .updateUserName(action.userName)
       .then((_){
         store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));

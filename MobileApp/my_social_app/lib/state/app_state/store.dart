@@ -102,7 +102,6 @@ final store = Store(
     confirmEmailMiddleware,
     updateLanguageMiddleware,
     loginByPaswordMiddleware,
-    loginByFaceBookMiddleware,
     loginByGoogleMiddleware,
     createAccountMiddleware,
     deleteAccountMiddleware,

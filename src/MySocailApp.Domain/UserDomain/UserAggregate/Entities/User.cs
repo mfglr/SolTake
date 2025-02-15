@@ -45,6 +45,18 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             SecurityStamp = GenerateSecurityStamp();
         }
 
+        internal void Create(int policyId, int termsOfUseId)
+        {
+            if (GoogleAccount == null)
+                _verificationTokens.Add(EmailVerificationToken.Create());
+
+            _roles.Add(new(1));
+            _privacyPolicies.Add(UserPrivacyPolicy.Create(policyId));
+            _termsOfUses.Add(UserTermsOfUse.Create(termsOfUseId));
+            CreatedAt = DateTime.UtcNow;
+            AddDomainEvent(new UserCreatedDominEvent(this));
+        }
+
         //profile image
         public Multimedia? Image { get; private set; }
         public void UpdateImage(Multimedia image)
@@ -134,17 +146,7 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
 
         private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
-        internal void Create(int policyId, int termsOfUseId)
-        {
-            if (GoogleAccount == null)
-                _verificationTokens.Add(EmailVerificationToken.Create());
-
-            _roles.Add(new(1));
-            _privacyPolicies.Add(UserPrivacyPolicy.Create(policyId));
-            _termsOfUses.Add(UserTermsOfUse.Create(termsOfUseId));
-            CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new UserCreatedDominEvent(this));
-        }
+        
 
         internal void UpdateUserName(UserName userName)
         {

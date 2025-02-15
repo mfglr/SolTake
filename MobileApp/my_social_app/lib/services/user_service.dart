@@ -6,12 +6,16 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/controllers.dart';
+import 'package:my_social_app/constants/request_timeout.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
+import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/pagination/page.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
+import 'package:my_social_app/views/account/widgets/google_login_button.dart';
 
 class UserService{
   final AppClient _appClient;
@@ -20,6 +24,123 @@ class UserService{
   static final UserService _singleton = UserService._(AppClient());
   factory UserService() => _singleton;
  
+  Future<Account> create(String email, String password, String passwordConfirmation) =>
+    _appClient
+      .post(
+        "$userController/$createEndPoint",
+        body: {
+          'email':email,
+          'password':password,
+          "passwordConfirm":passwordConfirmation
+        }
+      )
+      .then((json) => Account.fromJson(json));
+  
+  Future<Account> loginByPassword(String emailOrUserName, String password) =>
+    _appClient
+      .post(
+        "$userController/$loginByPasswordEndPoint",
+        body: {
+          'emailOrUserName':emailOrUserName,
+          'password':password
+        }
+      )
+      .then((json) => Account.fromJson(json));
+  
+   Future<Account> loginByRefreshtoken(int id,String token) =>
+    _appClient
+      .post(
+        "$userController/$loginByRefreshTokenEndPoint",
+        body: { 'id': id.toString(),'token': token}
+      )
+      .then((json) => Account.fromJson(json))
+      .timeout(
+        requestTimeout,
+        onTimeout: (){
+          ToastCreator.displayError("Service is not available");
+          return loginByRefreshtoken(id, token);
+        }
+      );
+
+  Future<Account> loginByGoogle(String accessToken) =>
+    _appClient
+      .post(
+        "$userController/$loginByGoogleEndpoint",
+        body: { 'accessToken': accessToken }
+      )
+      .then((json) => Account.fromJson(json))
+      .catchError((e) async {
+        await googleSignIn.disconnect();
+        throw e;
+      });
+
+  Future<void> updateEmailVerificationToken() =>
+    _appClient.put("$userController/$updateEmailVerificationTokenEndPoint");
+
+  Future<void> verifyEmail(String token) =>
+    _appClient
+      .put(
+        "$userController/$verifyEmailEntPoint",
+        body: { 'token': token }
+      );
+
+  Future resetPassword(String email, String token, String password, String passwordConfirm) =>
+    _appClient
+      .put(
+        "$userController/$resetPasswordEndpoint",
+        body: { 'email': email, 'token': token, 'password': password, 'passwordConfirm': passwordConfirm }
+      );
+  
+  Future generateResetPasswordToken(String email) =>
+    _appClient
+      .put(
+        "$userController/$generateResetPasswordTokenEndpoint",
+        body: { 'email':email, }
+      );
+
+  Future<Account> updateEmail(String email) =>
+    _appClient
+      .post(
+        "$userController/$updateEmailEndPoint",
+        body: { 'email': email }
+      )
+      .then((json) => Account.fromJson(json));
+
+  Future<void> updateUserName(String userName) =>
+    _appClient
+      .put(
+        "$userController/$updateUserNameEndPoint",
+        body: { 'userName': userName }
+      );
+
+  Future<void> updateLanguage(String language) =>
+    _appClient
+      .put(
+        "$userController/$updateLanguageEndpoint",
+        body: {'language': language }
+      );
+  
+  Future<void> logOut() =>
+    _appClient
+      .put("$userController/$logOutEndPoint");
+
+  Future<void> delete() =>
+    _appClient
+      .delete("$userController/$deleteAccountEndpoint");
+
+  Future<bool> isUserNameExist(String userName) =>
+    _appClient
+      .get("$userController/$isUserNameExistEndPoint/$userName")
+      .then((response) => response as bool);
+
+  Future<void> approvePolicy() =>
+    _appClient
+      .put("$userController/$approvePrivacyPolicyEndpoint");
+
+  Future<void> approveTermsOfUse() =>
+    _appClient
+      .put("$userController/$approveTermsOfUseEndpoint");
+
   Future<Multimedia> updateImage(AppFile image, int userId, void Function(double) callback) async {
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));

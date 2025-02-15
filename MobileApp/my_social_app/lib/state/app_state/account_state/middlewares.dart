@@ -3,9 +3,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/account.dart';
-import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/account_storage.dart';
 import 'package:my_social_app/services/get_language.dart';
+import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/access_token_state/actions.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -33,7 +33,7 @@ void _clearSession(Store<AppState> store){
 
 void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateAccountAction){
-    AccountService()
+    UserService()
       .create(action.email, action.password, action.passwordConfirmation)
       .then((account){
         store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
@@ -54,7 +54,7 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
       .get()
       .then((prev){
         if(prev != null){
-          AccountService()
+          UserService()
             .loginByRefreshtoken(prev.id, prev.refreshToken)
             .then((account){
               _setAccount(store, account);
@@ -76,44 +76,11 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
 
 void loginByPaswordMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoginByPasswordAction){
-    AccountService()
+    UserService()
       .loginByPassword(action.emailOrPassword, action.password)
       .then((account){
         store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
         _setAccount(store, account);
-      })
-      .catchError((e){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
-        throw e;
-      });
-  }
-  next(action);
-}
-
-void loginByFaceBookMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoginByFaceBookAction){
-    FacebookAuth.instance
-      .login()
-      .then((value){
-        FacebookAuth.instance.accessToken
-          .then((value){
-            if(value == null){
-              FacebookAuth.instance.logOut();
-              ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
-              return; 
-            }
-            AccountService()
-              .loginByFaceBook(value.tokenString)
-              .then((account){
-                store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
-                _setAccount(store, account);
-              })
-              .catchError((e){
-                store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
-                FacebookAuth.instance.logOut();
-                throw e;
-              });
-          });
       })
       .catchError((e){
         store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
@@ -143,7 +110,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
               ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
               return;
             }
-            AccountService()
+            UserService()
               .loginByGoogle(accessToken)
               .then((account){
                 store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
@@ -167,7 +134,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is ConfirmEmailByTokenAction){
-    AccountService()
+    UserService()
       .verifyEmail(action.token)
       .then((_) => store.dispatch(const ConfirmEmailByTokenSuccessAction()));
   }
@@ -176,7 +143,7 @@ void confirmEmailMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void updateLanguageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateLanguageAction){
-    AccountService()
+    UserService()
       .updateLanguage(action.language)
       .then((_) => store.dispatch(UpdateLanguageSuccessAction(language: action.language)));
   }
@@ -185,7 +152,7 @@ void updateLanguageMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void deleteAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DeleteAccountAction){
-    AccountService()
+    UserService()
       .delete()
       .then((_) => _clearSession(store))
       .catchError((e){
@@ -198,7 +165,7 @@ void deleteAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void approvePrivacyPolicyMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is ApprovePrivacyPolicyAction){
-    AccountService()
+    UserService()
       .approvePolicy()
       .then((_) => store.dispatch(const ApprovePrivacyPolicySuccessAction()));
   }
@@ -207,7 +174,7 @@ void approvePrivacyPolicyMiddleware(Store<AppState> store,action,NextDispatcher 
 
 void approveTersmOfUseMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is ApproveTermsOfUseAction){
-    AccountService()
+    UserService()
       .approveTermsOfUse()
       .then((_) => store.dispatch(const ApproveTermsOfUseSuccessAction()));
   }
@@ -216,7 +183,7 @@ void approveTersmOfUseMiddleware(Store<AppState> store,action,NextDispatcher nex
 
 void logOutMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LogOutAction){
-    AccountService()
+    UserService()
       .logOut()
       .then((_) => _clearSession(store));
   }

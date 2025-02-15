@@ -21,11 +21,6 @@ class LoginByPasswordAction extends AppAction{
 }
 
 @immutable
-class LoginByFaceBookAction extends AppAction{
-  const LoginByFaceBookAction();
-}
-
-@immutable
 class LoginByGoogleAction extends AppAction{
   const LoginByGoogleAction();
 }
@@ -46,7 +41,6 @@ class ConfirmEmailByTokenAction extends AppAction{
   final String token;
   const ConfirmEmailByTokenAction({required this.token});
 }
-
 @immutable
 class ConfirmEmailByTokenSuccessAction extends AppAction{
   const ConfirmEmailByTokenSuccessAction();
