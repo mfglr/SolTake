@@ -1,6 +1,6 @@
 import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/comment_service.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
@@ -18,7 +18,7 @@ import 'package:redux/redux.dart';
 
 void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
-    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
+    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageByStore(store)]!);
     
     if(action.medias.isNotEmpty){
       store.dispatch(ChangeUploadStateAction(state: UploadSolutionState(action)));
@@ -37,7 +37,7 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
         store.dispatch(RemoveUploadStateAction(id: action.id));
         
-        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
+        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
       .catchError((e){
         store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
@@ -49,14 +49,14 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionByAIAction){
-    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageCode(store)]!);
+    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageByStore(store)]!);
     SolutionService()
       .createByAI(action.model,action.questionId,action.blobName,action.position,action.prompt)
       .then((solution){
         final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
         store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
-        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageCode(store)]!);
+        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
   

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/account_service.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
@@ -88,7 +88,7 @@ void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
       .updateUserName(action.userName)
       .then((_){
         store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));
-        ToastCreator.displaySuccess(userNameUpdatedNotificationContent[getLanguageCode(store)]!);
+        ToastCreator.displaySuccess(userNameUpdatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
   next(action);
@@ -100,7 +100,7 @@ void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
       .updateName(action.name)
       .then((_){
         store.dispatch(UpdateNameSuccessAction(userId: accountId, name: action.name));
-        ToastCreator.displaySuccess(nameUpdatedNotificationContent[getLanguageCode(store)]!);
+        ToastCreator.displaySuccess(nameUpdatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
   next(action);
@@ -112,7 +112,7 @@ void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
       .updateBiography(action.biography)
       .then((_){
         store.dispatch(UpdateBiographySuccessAction(userId: accountId, biography: action.biography));
-        ToastCreator.displaySuccess(biographyUpdatedNotificationContent[getLanguageCode(store)]!);
+        ToastCreator.displaySuccess(biographyUpdatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
   next(action);

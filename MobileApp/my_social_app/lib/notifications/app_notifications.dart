@@ -2,10 +2,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/notifications/notification_actions.dart';
 import 'package:my_social_app/notifications/notification_titles.dart';
 import 'package:my_social_app/notifications/notifications_bodies.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 
 const _channelId = 'soltake_channel_id';
@@ -43,8 +43,8 @@ Future<void> showNotification(BuildContext context, int notificationId) async {
   await _flutterLocalNotificationsPlugin
     .show(
       notificationId,
-      notificationTitles[notification.type]![getLanguageCode(store)],
-      notificationBodies[notification.type]![getLanguageCode(store)],
+      notificationTitles[notification.type]![getLanguage(context)],
+      notificationBodies[notification.type]![getLanguage(context)],
       _platformDetails,
     );
 }

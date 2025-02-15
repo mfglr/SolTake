@@ -1,6 +1,6 @@
 import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/services/comment_service.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
@@ -21,7 +21,7 @@ import 'package:redux/redux.dart';
 
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
-    ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageCode(store)]!);
+    ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
     if(action.medias.isNotEmpty){
       store.dispatch(ChangeUploadStateAction(state: UploadQuestionState.init(action)));
     }
@@ -35,7 +35,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
         store.dispatch(AddNewUserQuestionAction(userId: store.state.accountState!.id,questionId: question.id));
         store.dispatch(RemoveUploadStateAction(id: action.id));
-        ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageCode(store)]!);
+        ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
       .catchError((e){
         store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));

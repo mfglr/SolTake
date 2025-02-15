@@ -4,6 +4,7 @@ import 'package:multimedia/models/multimedia_type.dart';
 import 'package:multimedia_grid/multimedias_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -12,7 +13,6 @@ import 'package:my_social_app/views/create_solution_by_ai/extract_video_frame_pa
 import 'package:my_social_app/views/create_solution_by_ai/select_media_page/select_media_page_texts.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class SelectMediaPage extends StatelessWidget {
@@ -33,11 +33,7 @@ class SelectMediaPage extends StatelessWidget {
           : Scaffold(
               appBar: AppBar(
                 leading: const AppBackButtonWidget(),
-                title: LanguageWidget(
-                  child: (lanaguage) => AppTitle(
-                    title: title[lanaguage]!
-                  )
-                ),
+                title: AppTitle(title: title[getLanguage(context)]!)
               ),
               body: Column(
                 children: [

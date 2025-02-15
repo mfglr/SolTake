@@ -2,10 +2,10 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
-import 'package:my_social_app/helpers/get_language_code.dart';
 import 'package:my_social_app/models/account.dart';
 import 'package:my_social_app/services/account_service.dart';
 import 'package:my_social_app/services/account_storage.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/access_token_state/actions.dart';
 import 'package:my_social_app/state/app_state/account_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -98,9 +98,8 @@ void loginByFaceBookMiddleware(Store<AppState> store,action,NextDispatcher next)
         FacebookAuth.instance.accessToken
           .then((value){
             if(value == null){
-              store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
               FacebookAuth.instance.logOut();
-              ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageCode(store)]!);
+              ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
               return; 
             }
             AccountService()
@@ -132,7 +131,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
         if(value == null){
           store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
           _googleSignIn.disconnect();
-          ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageCode(store)]!);
+          ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
           return;
         }
         value.authentication
@@ -141,7 +140,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
             if(accessToken == null){
               store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
               _googleSignIn.disconnect();
-              ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageCode(store)]!);
+              ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
               return;
             }
             AccountService()
