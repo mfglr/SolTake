@@ -2,8 +2,9 @@
 {
     public class UserTermsOfUse
     {
-        public int AccountId { get; private set; }
+        public int UserId { get; private set; }
         public int TermsOfUseId { get; private set; }
+
         public DateTime CreatedAt { get; private set; }
         public bool IsApproved { get; private set; }
         public DateTime? ApprovedAt { get; private set; }

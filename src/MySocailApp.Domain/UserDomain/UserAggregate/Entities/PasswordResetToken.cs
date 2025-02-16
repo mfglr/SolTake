@@ -5,9 +5,11 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
 {
     public class PasswordResetToken
     {
+
+        public int UserId { get; private set; }
+
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public int AccountId { get; private set; }
         public string Value { get; private set; }//not mapped
         public byte[] Hash { get; private set; }
         public DateTime ExpirationAt { get; private set; }

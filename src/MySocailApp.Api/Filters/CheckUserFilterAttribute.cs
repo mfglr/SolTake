@@ -5,7 +5,7 @@ using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Api.Filters
 {
-    public class CheckAccountFilterAttribute(IAccessTokenReader accessTokenReader, IUserWriteRepository userWriteRepository, IUserAccessor userAccessor) : ActionFilterAttribute
+    public class CheckUserFilterAttribute(IAccessTokenReader accessTokenReader, IUserWriteRepository userWriteRepository, IUserAccessor userAccessor) : ActionFilterAttribute
     {
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;

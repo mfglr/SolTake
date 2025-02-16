@@ -5,9 +5,10 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
 {
     public class EmailVerificationToken
     {
+        public int UserId { get; private set; }
+
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public int AccountId { get; private set; }
         public DateTime? VerifiedAt { get; private set; }
         public bool IsVerified { get; private set; }
         public string Value { get; private set; }//not mapped

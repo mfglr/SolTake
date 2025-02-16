@@ -8,50 +8,53 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedNever();
+            builder.Ignore(x => x.AccessToken);
+            builder.Ignore(x => x.RefreshToken);
+
             builder.OwnsOne(x => x.Image);
+            builder.OwnsOne(x => x.Language);
             builder.OwnsOne(x => x.Biography);
             builder.OwnsOne(x => x.Password, password => password.Ignore(x => x.Value));
-            builder.OwnsOne(x => x.Language);
-            builder.OwnsOne(
-                x => x.UserName,
-                userName => userName.HasIndex(x => x.Value).IsUnique()
-            );
-            builder.OwnsOne(
-                x => x.Email,
-                email => email.HasIndex(x => x.Value)
-            );
+            builder.OwnsOne(x => x.Email, email => email.HasIndex(x => x.Value).IsUnique());
+            builder.OwnsOne(x => x.UserName, userName => userName.HasIndex(x => x.Value).IsUnique());
             builder.OwnsOne(
                 x => x.GoogleAccount,
                 googleAccount =>
                 {
-                    googleAccount.HasIndex(x => x.UserId);
+                    googleAccount.HasIndex(x => x.GoogleId);
                     googleAccount.Ignore(x => x.Email);
                 }
             );
 
             builder
-                .HasMany(x => x.Blockers)
-                .WithOne()
-                .HasForeignKey(x => x.BlockedId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
                 .HasMany(x => x.PrivacyPolicies)
                 .WithOne()
-                .HasForeignKey(x => x.AccountId)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.TermsOfUses)
                 .WithOne()
-                .HasForeignKey(x => x.AccountId)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.VerificationTokens)
                 .WithOne()
-                .HasForeignKey(x => x.AccountId)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasMany(x => x.Roles)
+                .WithOne()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder
+                .HasMany(x => x.Blockers)
+                .WithOne()
+                .HasForeignKey(x => x.BlockedId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder

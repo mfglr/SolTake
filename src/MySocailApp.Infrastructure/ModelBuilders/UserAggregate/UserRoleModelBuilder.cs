@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
-            builder.HasKey(x => new { x.AccountId, x.RoleId });
+            builder.HasKey(x => new { x.UserId, x.RoleId });
         }
     }
 }

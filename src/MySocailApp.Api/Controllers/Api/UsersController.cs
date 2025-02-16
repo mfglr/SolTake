@@ -8,8 +8,8 @@ using MySocailApp.Application.Commands.UserAggregate.AddUserSearcher;
 using MySocailApp.Application.Commands.UserAggregate.ApprovePrivacyPolicy;
 using MySocailApp.Application.Commands.UserAggregate.ApproveTermsOfUse;
 using MySocailApp.Application.Commands.UserAggregate.Block;
-using MySocailApp.Application.Commands.UserAggregate.CreateAccount;
-using MySocailApp.Application.Commands.UserAggregate.DeleteAccount;
+using MySocailApp.Application.Commands.UserAggregate.CreateUser;
+using MySocailApp.Application.Commands.UserAggregate.DeleteUser;
 using MySocailApp.Application.Commands.UserAggregate.Follow;
 using MySocailApp.Application.Commands.UserAggregate.GenerateResetPasswordToken;
 using MySocailApp.Application.Commands.UserAggregate.LoginByGoogle;
@@ -53,7 +53,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -63,7 +63,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -73,7 +73,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -83,7 +83,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -93,7 +93,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -103,7 +103,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -113,7 +113,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -123,7 +123,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -133,7 +133,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -144,7 +144,7 @@ namespace MySocailApp.Api.Controllers.Api
         //Queries
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -154,7 +154,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -164,7 +164,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -174,7 +174,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -184,7 +184,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -194,7 +194,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -204,7 +204,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -214,7 +214,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -225,30 +225,30 @@ namespace MySocailApp.Api.Controllers.Api
 
         //Accounts
         [HttpPost]
-        public async Task<AccountDto> Create(CreateAccountDto request, CancellationToken cancellationToken)
+        public async Task<LoginDto> Create(CreateUserDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<AccountDto> LoginByPassword(LoginByPasswordDto request, CancellationToken cancellationToken)
+        public async Task<LoginDto> LoginByPassword(LoginByPasswordDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<AccountDto> LoginByRefreshToken(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
+        public async Task<LoginDto> LoginByRefreshToken(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<AccountDto> LoginByGoogle(LoginByGoogleDto request, CancellationToken cancelToken)
+        public async Task<LoginDto> LoginByGoogle(LoginByGoogleDto request, CancellationToken cancelToken)
             => await _mediator.Send(request, cancelToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         public async Task LogOut(CancellationToken cancellationToken)
             => await _mediator.Send(new LogOutDto(), cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -257,7 +257,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         public async Task UpdateEmail(UpdateEmailDto request, CancellationToken cancellationToken)
@@ -265,7 +265,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -274,7 +274,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         public async Task UpdateEmailVerificationToken(CancellationToken cancellationToken)
@@ -282,7 +282,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -291,7 +291,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPost]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -300,7 +300,7 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
@@ -309,19 +309,19 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         public async Task VerifyEmail(VerifyEmailDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         public async Task ApprovePrivacyPolicy(CancellationToken cancellationToken)
             => await _mediator.Send(new ApprovePrivacyPolicyDto(), cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         public async Task ApproveTermsOfUse(CancellationToken cancellationToken)
             => await _mediator.Send(new ApproveTermsOfUse(), cancellationToken);
 
@@ -335,13 +335,13 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpDelete]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         public async Task Delete(CancellationToken cancellationToken)
-            => await _mediator.Send(new DeleteAccountDto(), cancellationToken);
+            => await _mediator.Send(new DeleteUserDto(), cancellationToken);
 
         [HttpGet("{userName}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+        [ServiceFilter(typeof(CheckUserFilterAttribute))]
         [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]

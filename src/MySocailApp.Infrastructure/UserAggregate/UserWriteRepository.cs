@@ -53,7 +53,7 @@ namespace MySocailApp.Infrastructure.UserAggregate
                 .Include(x => x.Blockers)
                 .Include(x => x.VerificationTokens)
                 .Include(x => x.PasswordResestTokens)
-                .FirstOrDefaultAsync(x => x.GoogleAccount.UserId == googleAccount.UserId, cancellationToken);
+                .FirstOrDefaultAsync(x => x.GoogleAccount.GoogleId == googleAccount.GoogleId, cancellationToken);
 
         public Task<User?> GetWithFollowerByIdAsync(int id, int followerId, CancellationToken cancellationToken)
             => _context.Users

@@ -8,7 +8,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
     {
         public void Configure(EntityTypeBuilder<UserPrivacyPolicy> builder)
         {
-            builder.HasKey(x => new { x.AccountId, x.PolicyId });
+            builder.HasKey(x => new { x.UserId, x.PravicyPolicyId });
         }
     }
 }

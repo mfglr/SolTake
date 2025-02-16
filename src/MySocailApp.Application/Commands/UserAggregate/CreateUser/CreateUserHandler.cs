@@ -8,11 +8,10 @@ using MySocailApp.Domain.UserDomain.UserAggregate.DomainServices;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.UserAggregate.CreateAccount
+namespace MySocailApp.Application.Commands.UserAggregate.CreateUser
 {
-    public class CreateAccountHandler(IMapper mapper, UserCreatorDomainService userCreatorDomainService, IHttpContextAccessor contextAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService) : IRequestHandler<CreateAccountDto, AccountDto>
+    public class CreateUserHandler(UserCreatorDomainService userCreatorDomainService, IHttpContextAccessor contextAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService) : IRequestHandler<CreateUserDto, LoginDto>
     {
-        private readonly IMapper _mapper = mapper;
         private readonly UserCreatorDomainService _userCreatorDomainService = userCreatorDomainService;
         private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
         private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;
@@ -20,7 +19,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.CreateAccount
         private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<AccountDto> Handle(CreateAccountDto request, CancellationToken cancellationToken)
+        public async Task<LoginDto> Handle(CreateUserDto request, CancellationToken cancellationToken)
         {
             var email = new Email(request.Email);
             var password = new Password(request.Password);
@@ -36,7 +35,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.CreateAccount
             await _accessTokenSetterDomainService.SetAsync(user, cancellationToken);
             _refreshTokenSetterDomainService.Set(user);
 
-            return _mapper.Map<AccountDto>(user);
+            return new(user);
         }
     }
 }

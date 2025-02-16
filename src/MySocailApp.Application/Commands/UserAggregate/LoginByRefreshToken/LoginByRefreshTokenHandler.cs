@@ -7,17 +7,16 @@ using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserAggregate.LoginByRefreshToken
 {
-    public class LoginByRefreshTokenHandler(IMapper mapper, IUserWriteRepository userWriteRepository, AuthenticatorDomainService authenticatorDomainService, RefreshTokenValidatorDomainService refreshTokenValidatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByRefreshTokenDto, AccountDto>
+    public class LoginByRefreshTokenHandler(IUserWriteRepository userWriteRepository, AuthenticatorDomainService authenticatorDomainService, RefreshTokenValidatorDomainService refreshTokenValidatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByRefreshTokenDto, LoginDto>
     {
         private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
-        private readonly IMapper _mapper = mapper;
         private readonly AuthenticatorDomainService _authenticatorDomainService = authenticatorDomainService;
         private readonly RefreshTokenValidatorDomainService _refreshTokenValidatorDomainService = refreshTokenValidatorDomainService;
         private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
         private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<AccountDto> Handle(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
+        public async Task<LoginDto> Handle(LoginByRefreshTokenDto request, CancellationToken cancellationToken)
         {
             var user =
                 await _userWriteRepository.GetByIdAsync(request.Id, cancellationToken) ??
@@ -31,7 +30,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.LoginByRefreshToken
             await _accessTokenSetterDomainService.SetAsync(user, cancellationToken);
             _refreshTokenSetterDomainService.Set(user);
 
-            return _mapper.Map<AccountDto>(user);
+            return new(user);
         }
     }
 }

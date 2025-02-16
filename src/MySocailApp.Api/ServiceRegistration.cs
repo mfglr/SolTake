@@ -35,7 +35,7 @@ namespace MySocailApp.Api
         {
             return services
                 .AddScoped<CheckVersionFiltterAttribute>()
-                .AddScoped<CheckAccountFilterAttribute>()
+                .AddScoped<CheckUserFilterAttribute>()
                 .AddScoped<CheckPrivacyPolicyApprovalFilterAttribute>()
                 .AddScoped<CheckTermsOfUseApprovalFilterAttribute>()
                 .AddScoped<CheckEmailVerificationFilterAttribute>();

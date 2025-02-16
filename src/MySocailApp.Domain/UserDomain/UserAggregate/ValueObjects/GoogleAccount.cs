@@ -5,14 +5,14 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects
 {
     public class GoogleAccount
     {
-        public string UserId { get; private set; }
+        public string GoogleId { get; private set; }
         public string Email { get; private set; }//not mapped
 
         private GoogleAccount() { }
 
-        public GoogleAccount(string userId, string email)
+        public GoogleAccount(string googleId, string email)
         {
-            UserId = userId ?? throw new ServerSideException();
+            GoogleId = googleId ?? throw new ServerSideException();
             Email = email ?? throw new EmailIsRequiredException();
         }
     }

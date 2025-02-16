@@ -14,26 +14,6 @@ namespace MySocailApp.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Accounts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GoogleAccount_UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName_Value = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Email_Value = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Language_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password_Hash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AppVersions",
                 columns: table => new
                 {
@@ -54,7 +34,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: true),
                     SolutionId = table.Column<int>(type: "int", nullable: true),
                     ParentId = table.Column<int>(type: "int", nullable: true),
@@ -137,7 +117,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OwnerId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     IsViewed = table.Column<bool>(type: "bit", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true),
@@ -214,6 +194,8 @@ namespace MySocailApp.Infrastructure.Migrations
                     QuestionId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Content_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsCreatedByAI = table.Column<bool>(type: "bit", nullable: false),
+                    Model_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     State = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -270,8 +252,14 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    HasImage = table.Column<bool>(type: "bit", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName_Value = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Email_Value = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Password_Hash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Language_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GoogleAccount_GoogleId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image_ContainerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image_BlobName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image_BlobNameOfFrame = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -280,8 +268,8 @@ namespace MySocailApp.Infrastructure.Migrations
                     Image_Width = table.Column<double>(type: "float", nullable: true),
                     Image_Duration = table.Column<double>(type: "float", nullable: true),
                     Image_MultimediaType = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Biography_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Biography_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -291,144 +279,15 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountPrivacyPolicy",
-                columns: table => new
-                {
-                    PolicyId = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
-                    ApprovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AccountPrivacyPolicy", x => new { x.AccountId, x.PolicyId });
-                    table.ForeignKey(
-                        name: "FK_AccountPrivacyPolicy_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AccountRole",
-                columns: table => new
-                {
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AccountRole", x => new { x.AccountId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AccountRole_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AccountTermsOfUse",
-                columns: table => new
-                {
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    TermsOfUseId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
-                    ApprovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AccountTermsOfUse", x => new { x.AccountId, x.TermsOfUseId });
-                    table.ForeignKey(
-                        name: "FK_AccountTermsOfUse_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Block",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BlockerId = table.Column<int>(type: "int", nullable: false),
-                    BlockedId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Block", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Block_Accounts_BlockedId",
-                        column: x => x.BlockedId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmailVerificationToken",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    VerifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsVerified = table.Column<bool>(type: "bit", nullable: false),
-                    Hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    ExpirationAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NumberOfFailedAttemps = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmailVerificationToken", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EmailVerificationToken_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PasswordResetToken",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    Hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    ExpirationAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NumberOfFailedAttemps = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PasswordResetToken", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PasswordResetToken_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CommentUserLikeNotifications",
                 columns: table => new
                 {
                     CommentId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommentUserLikeNotifications", x => new { x.CommentId, x.AppUserId });
+                    table.PrimaryKey("PK_CommentUserLikeNotifications", x => new { x.CommentId, x.UserId });
                     table.ForeignKey(
                         name: "FK_CommentUserLikeNotifications_Comments_CommentId",
                         column: x => x.CommentId,
@@ -445,7 +304,7 @@ namespace MySocailApp.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CommentId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -600,11 +459,11 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     QuestionId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionUserLikeNotifications", x => new { x.QuestionId, x.AppUserId });
+                    table.PrimaryKey("PK_QuestionUserLikeNotifications", x => new { x.QuestionId, x.UserId });
                     table.ForeignKey(
                         name: "FK_QuestionUserLikeNotifications_Questions_QuestionId",
                         column: x => x.QuestionId,
@@ -621,7 +480,7 @@ namespace MySocailApp.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -641,7 +500,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuestionId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -690,7 +549,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SolutionId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -710,11 +569,11 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     SolutionId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SolutionUserVoteNotifications", x => new { x.SolutionId, x.AppUserId });
+                    table.PrimaryKey("PK_SolutionUserVoteNotifications", x => new { x.SolutionId, x.UserId });
                     table.ForeignKey(
                         name: "FK_SolutionUserVoteNotifications_Solutions_SolutionId",
                         column: x => x.SolutionId,
@@ -730,7 +589,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SolutionId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -765,6 +624,52 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Block",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BlockerId = table.Column<int>(type: "int", nullable: false),
+                    BlockedId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Block", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Block_Users_BlockedId",
+                        column: x => x.BlockedId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmailVerificationToken",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VerifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsVerified = table.Column<bool>(type: "bit", nullable: false),
+                    Hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    ExpirationAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NumberOfFailedAttemps = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmailVerificationToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmailVerificationToken_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Follows",
                 columns: table => new
                 {
@@ -787,19 +692,81 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PasswordResetToken",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    ExpirationAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NumberOfFailedAttemps = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordResetToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PasswordResetToken_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserFollowNotifications",
                 columns: table => new
                 {
-                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     FollowerId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserFollowNotifications", x => new { x.AppUserId, x.FollowerId });
+                    table.PrimaryKey("PK_UserFollowNotifications", x => new { x.UserId, x.FollowerId });
                     table.ForeignKey(
-                        name: "FK_UserFollowNotifications_Users_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_UserFollowNotifications_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPrivacyPolicy",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    PravicyPolicyId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    ApprovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPrivacyPolicy", x => new { x.UserId, x.PravicyPolicyId });
+                    table.ForeignKey(
+                        name: "FK_UserPrivacyPolicy_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRole",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRole", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_UserRole_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -821,6 +788,27 @@ namespace MySocailApp.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_UserSearchs_Users_SearchedId",
                         column: x => x.SearchedId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserTermsOfUse",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TermsOfUseId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    ApprovedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserTermsOfUse", x => new { x.UserId, x.TermsOfUseId });
+                    table.ForeignKey(
+                        name: "FK_UserTermsOfUse_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -901,7 +889,7 @@ namespace MySocailApp.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "TermsOfUses",
                 columns: new[] { "Id", "AdminId", "BlobNameEn", "BlobNameTr", "CreatedAt" },
-                values: new object[] { 1, 1, "terms_of_use_version1_en.html", "terms_of_use_version1_tr.html", new DateTime(2024, 10, 7, 18, 59, 45, 0, DateTimeKind.Unspecified) });
+                values: new object[] { 1, 1, "terms_of_use_en", "terms_of_use_tr", new DateTime(2024, 10, 7, 18, 59, 45, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Topics",
@@ -2960,22 +2948,6 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_Email_Value",
-                table: "Accounts",
-                column: "Email_Value");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accounts_GoogleAccount_UserId",
-                table: "Accounts",
-                column: "GoogleAccount_UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accounts_UserName_Value",
-                table: "Accounts",
-                column: "UserName_Value",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Block_BlockedId",
                 table: "Block",
                 column: "BlockedId");
@@ -3011,9 +2983,9 @@ namespace MySocailApp.Infrastructure.Migrations
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmailVerificationToken_AccountId",
+                name: "IX_EmailVerificationToken_UserId",
                 table: "EmailVerificationToken",
-                column: "AccountId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Follows_FollowedId",
@@ -3034,11 +3006,6 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "IX_MessageUserView_MessageId",
                 table: "MessageUserView",
                 column: "MessageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_AppUserId",
-                table: "Notifications",
-                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_CommentId",
@@ -3071,9 +3038,14 @@ namespace MySocailApp.Infrastructure.Migrations
                 column: "SolutionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PasswordResetToken_AccountId",
+                name: "IX_Notifications_UserId",
+                table: "Notifications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordResetToken_UserId",
                 table: "PasswordResetToken",
-                column: "AccountId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionMultimedia_QuestionId",
@@ -3101,14 +3073,31 @@ namespace MySocailApp.Infrastructure.Migrations
                 column: "SolutionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SolutionUserVotes_AppUserId_Type",
-                table: "SolutionUserVotes",
-                columns: new[] { "AppUserId", "Type" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SolutionUserVotes_SolutionId",
                 table: "SolutionUserVotes",
                 column: "SolutionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SolutionUserVotes_UserId_Type",
+                table: "SolutionUserVotes",
+                columns: new[] { "UserId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email_Value",
+                table: "Users",
+                column: "Email_Value",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_GoogleAccount_GoogleId",
+                table: "Users",
+                column: "GoogleAccount_GoogleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserName_Value",
+                table: "Users",
+                column: "UserName_Value",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSearchs_SearchedId",
@@ -3119,15 +3108,6 @@ namespace MySocailApp.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AccountPrivacyPolicy");
-
-            migrationBuilder.DropTable(
-                name: "AccountRole");
-
-            migrationBuilder.DropTable(
-                name: "AccountTermsOfUse");
-
             migrationBuilder.DropTable(
                 name: "AppVersions");
 
@@ -3219,16 +3199,22 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "UserFollowNotifications");
 
             migrationBuilder.DropTable(
+                name: "UserPrivacyPolicy");
+
+            migrationBuilder.DropTable(
+                name: "UserRole");
+
+            migrationBuilder.DropTable(
                 name: "UserSearchs");
+
+            migrationBuilder.DropTable(
+                name: "UserTermsOfUse");
 
             migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Messages");
-
-            migrationBuilder.DropTable(
-                name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "Questions");

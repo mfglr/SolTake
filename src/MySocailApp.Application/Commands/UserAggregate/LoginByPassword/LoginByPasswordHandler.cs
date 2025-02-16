@@ -9,9 +9,8 @@ using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserAggregate.LoginByPassword
 {
-    public class LoginByPasswordHandler(IMapper mapper, AuthenticatorDomainService authenticatorDomainService, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService) : IRequestHandler<LoginByPasswordDto, AccountDto>
+    public class LoginByPasswordHandler(AuthenticatorDomainService authenticatorDomainService, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService) : IRequestHandler<LoginByPasswordDto, LoginDto>
     {
-        private readonly IMapper _mapper = mapper;
         private readonly AuthenticatorDomainService _authenticatorDomainService = authenticatorDomainService;
         private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
         private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;
@@ -19,7 +18,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.LoginByPassword
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
 
-        public async Task<AccountDto> Handle(LoginByPasswordDto request, CancellationToken cancellationToken)
+        public async Task<LoginDto> Handle(LoginByPasswordDto request, CancellationToken cancellationToken)
         {
             var password = new Password(request.Password);
             User user;
@@ -48,7 +47,7 @@ namespace MySocailApp.Application.Commands.UserAggregate.LoginByPassword
             await _accessTokenSetterDomainService.SetAsync(user, cancellationToken);
             _refreshTokenSetterDomainService.Set(user);
 
-            return _mapper.Map<AccountDto>(user);
+            return new(user);
         }
     }
 }

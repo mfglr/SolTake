@@ -29,7 +29,7 @@ namespace MySocailApp.Api.Controllers.Api
 {
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-    [ServiceFilter(typeof(CheckAccountFilterAttribute))]
+    [ServiceFilter(typeof(CheckUserFilterAttribute))]
     [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
     [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
