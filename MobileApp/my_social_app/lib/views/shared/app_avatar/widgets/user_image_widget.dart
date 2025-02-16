@@ -25,7 +25,6 @@ class UserImageWidget extends StatelessWidget {
         noMediaPath: "assets/images/no_profile_image.png",
         notFoundMediaPath: "assets/images/no_profile_image.png",
         state: image,
-        headers: AppClient().getHeader(),
       )
     );
   }

@@ -84,7 +84,6 @@ class _QuestionVideoPageSliderState extends State<QuestionVideoPageSlider> with 
               onDoubleTap: () => _handleDoubleTap(question),
               child: SlideVideoPlayer(
                 baseBlobUrl: AppClient.blobService,
-                headers: AppClient().getHeader(),
                 media: question.medias.firstWhere((e) => e.multimediaType == MultimediaType.video),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

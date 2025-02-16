@@ -92,7 +92,6 @@ class QuestionItemWidget extends StatelessWidget {
             key: ValueKey(question.id),
             medias: question.medias,
             blobServiceUrl: AppClient.blobService,
-            headers: AppClient().getHeader(),
             notFoundMediaPath: noMediaAssetPath,
             noMediaPath: noMediaAssetPath,
           ),

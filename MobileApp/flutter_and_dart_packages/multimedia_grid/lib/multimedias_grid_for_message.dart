@@ -8,7 +8,6 @@ class MultimediasGridForMessage extends StatelessWidget {
   final String noMediaPath;
   final String notFoundMediaPath;
   final void Function(int)? onTap;
-  final Map<String,String>? headers;
   
   const MultimediasGridForMessage({
     super.key,
@@ -17,7 +16,6 @@ class MultimediasGridForMessage extends StatelessWidget {
     required this.noMediaPath,
     required this.notFoundMediaPath,
     this.onTap,
-    this.headers
   });
 
   @override
@@ -30,7 +28,6 @@ class MultimediasGridForMessage extends StatelessWidget {
         noMediaPath: noMediaPath,
         notFoundMediaPath: notFoundMediaPath,
         aspectRatio: topFourMedias.first.aspectRatio,
-        headers: headers,
         onTap: onTap != null ? () => onTap!(0) : null,
       );
     }
@@ -55,7 +52,6 @@ class MultimediasGridForMessage extends StatelessWidget {
                   noMediaPath: noMediaPath,
                   notFoundMediaPath: notFoundMediaPath,
                   aspectRatio: 1,
-                  headers: headers,
                   onTap: onTap != null ? () => onTap!(index) : null,
                 ),
                 Container(
@@ -84,7 +80,6 @@ class MultimediasGridForMessage extends StatelessWidget {
             noMediaPath: noMediaPath,
             notFoundMediaPath: notFoundMediaPath,
             aspectRatio: 1,
-            headers: headers,
             onTap: onTap != null ? () => onTap!(index) : null,
           );
         }

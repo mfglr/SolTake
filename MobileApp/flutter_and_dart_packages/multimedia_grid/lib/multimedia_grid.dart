@@ -11,7 +11,6 @@ class MultimediaGrid extends StatefulWidget {
   final String noMediaPath;
   final String notFoundMediaPath;
   final void Function()? onTap;
-  final Map<String,String>? headers;
   final double aspectRatio;
 
   const MultimediaGrid({
@@ -21,7 +20,6 @@ class MultimediaGrid extends StatefulWidget {
     required this.noMediaPath,
     required this.notFoundMediaPath,
     this.onTap,
-    this.headers,
     this.aspectRatio = 1
   });
 
@@ -45,7 +43,7 @@ class _MultimediaGridState extends State<MultimediaGrid> {
       }
       _status = MultimediaStatus.started;
       DefaultCacheManager()
-        .getSingleFile(_url!,headers: widget.headers)
+        .getSingleFile(_url!)
         .then((file) => file.readAsBytes())
         .then((list){
           if(mounted){

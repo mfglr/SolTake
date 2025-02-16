@@ -45,7 +45,6 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                 MultimediaSlider(
                   medias: widget.message.medias,
                   blobServiceUrl: AppClient.blobService,
-                  headers: AppClient().getHeader(),
                   notFoundMediaPath: noMediaAssetPath,
                   noMediaPath: noMediaAssetPath,
                   activeIndex: widget.activeIndex,

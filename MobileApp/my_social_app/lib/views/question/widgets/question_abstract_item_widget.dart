@@ -24,7 +24,6 @@ class QuestionAbstractItemWidget extends StatelessWidget {
         blobServiceUrl: AppClient.blobService,
         noMediaPath: noMediaAssetPath,
         notFoundMediaPath: noMediaAssetPath,
-        headers: AppClient().getHeader(),
         onTap: () => onTap(question.id),
       )
     );

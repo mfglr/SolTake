@@ -35,7 +35,6 @@ class _MessageItemState extends State<MessageItem> {
               MultimediasGridForMessage(
                 medias: widget.message.medias,
                 blobServiceUrl: AppClient.blobService,
-                headers: AppClient().getHeader(),
                 noMediaPath: "assets/images/no_image.jpg",
                 notFoundMediaPath: "assets/images/no_image.jpg",
                 onTap: (index) => widget.onPressedMessageItem(widget.message,activeIndex: index),

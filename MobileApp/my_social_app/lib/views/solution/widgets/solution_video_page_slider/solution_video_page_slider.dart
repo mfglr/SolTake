@@ -47,7 +47,6 @@ class _SolutionVideoPageSliderState extends State<SolutionVideoPageSlider> {
           children: [
             SlideVideoPlayer(
               baseBlobUrl: AppClient.blobService,
-              headers: AppClient().getHeader(),
               media: solution.medias.firstWhere((e) => e.multimediaType == MultimediaType.video),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

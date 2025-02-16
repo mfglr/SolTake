@@ -13,7 +13,6 @@ import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/app_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:take_media/pages/take_media_page.dart';
 import 'package:take_media/pages/take_image_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -28,12 +27,9 @@ void addTimeAgo(){
   timeago.setLocaleMessages('tr_short', timeago.TrShortMessages());
 }
 
-late final PackageInfo packageInfo;
-
 Future<void> main() async {
     
   WidgetsFlutterBinding.ensureInitialized();
-  packageInfo = await PackageInfo.fromPlatform();
   final List<CameraDescription> cameras = await availableCameras();
   
   await loadEnvironmentVariables();

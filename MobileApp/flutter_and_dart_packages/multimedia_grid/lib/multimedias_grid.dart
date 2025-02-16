@@ -8,7 +8,6 @@ class MultimediasGrid extends StatelessWidget {
   final String noMediaPath;
   final String notFoundMediaPath;
   final void Function(int)? onTap;
-  final Map<String,String>? headers;
   
   const MultimediasGrid({
     super.key,
@@ -17,7 +16,6 @@ class MultimediasGrid extends StatelessWidget {
     required this.noMediaPath,
     required this.notFoundMediaPath,
     this.onTap,
-    this.headers
   });
 
   @override
@@ -37,7 +35,6 @@ class MultimediasGrid extends StatelessWidget {
         noMediaPath: noMediaPath,
         notFoundMediaPath: notFoundMediaPath,
         aspectRatio: 1,
-        headers: headers,
         onTap: onTap != null ? () => onTap!(index) : null,
       )
     );

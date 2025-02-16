@@ -29,7 +29,6 @@ class SolutionAbstractItemWidget extends StatelessWidget {
             noMediaPath: noMediaAssetPath,
             notFoundMediaPath: noMediaAssetPath,
             onTap: () => onTap(solution.id),
-            headers: AppClient().getHeader(),
           )
     );
   }

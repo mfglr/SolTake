@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
-import 'package:my_social_app/main.dart';
+import 'package:my_social_app/services/package_version_service.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 
@@ -17,17 +17,17 @@ class AppClient{
   static const AppClient _singleton = AppClient._();
   factory AppClient() => _singleton;
 
-  Map<String,String> getHeader() =>
+  Future<Map<String,String>> getHeader() async =>
     {
       "Authorization": "Bearer ${store.state.accessToken}",
       "Accept-Language": store.state.loginState?.language ?? PlatformDispatcher.instance.locale.languageCode,
-      "Client-Version": packageInfo.version
+      "Client-Version": await PackageVersionService().getVersion()
     };
 
   Uri generateUri(String url) => Uri.parse("$apiUrl/$url");
   
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
-    request.headers.addAll(getHeader());
+    request.headers.addAll(await getHeader());
     if(headers != null) request.headers.addAll(headers);
    
     var response = await request.send();
@@ -49,7 +49,7 @@ class AppClient{
     r.headers.set(HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);
     r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
     r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.loginState?.language ?? PlatformDispatcher.instance.locale.languageCode);
-    r.headers.set("Client-Version", packageInfo.version);
+    r.headers.set("Client-Version", await PackageVersionService().getVersion());
 
     var byteCount = 0;
 
