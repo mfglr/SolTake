@@ -2,12 +2,12 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
-import 'package:my_social_app/models/account.dart';
-import 'package:my_social_app/services/account_storage.dart';
+import 'package:my_social_app/models/login.dart';
+import 'package:my_social_app/services/login_storage.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/access_token_state/actions.dart';
-import 'package:my_social_app/state/app_state/account_state/actions.dart';
+import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
@@ -18,26 +18,26 @@ import 'package:redux/redux.dart';
 
 final _googleSignIn = GoogleSignIn();
 
-void _setAccount(Store<AppState> store,Account account){
-  final state = account.toAccountState();
-  AccountStorage().set(state);
-  store.dispatch(ChangeAccessTokenAction(accessToken: account.accessToken));
-  store.dispatch(UpdateAccountStateAction(payload: state));
+void _setAccount(Store<AppState> store,Login login){
+  final state = login.toLoginState();
+  LoginStorage().set(state);
+  store.dispatch(ChangeAccessTokenAction(accessToken: login.accessToken));
+  store.dispatch(UpdateLoginStateAction(payload: state));
 }
 void _clearSession(Store<AppState> store){
-  AccountStorage().remove();
+  LoginStorage().remove();
   _googleSignIn.disconnect();
   FacebookAuth.instance.logOut();
   store.dispatch(const ClearStateAction());
 }
 
-void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is CreateAccountAction){
+void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateUserAction){
     UserService()
       .create(action.email, action.password, action.passwordConfirmation)
-      .then((account){
+      .then((login){
         store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
-        _setAccount(store, account);
+        _setAccount(store, login);
       })
       .catchError((e){
         store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
@@ -50,7 +50,7 @@ void createAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoginByRefreshToken){
-    AccountStorage()
+    LoginStorage()
       .get()
       .then((prev){
         if(prev != null){
@@ -150,13 +150,13 @@ void updateLanguageMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void deleteAccountMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is DeleteAccountAction){
+void deleteUserMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is DeleteUserAction){
     UserService()
       .delete()
       .then((_) => _clearSession(store))
       .catchError((e){
-        store.dispatch(const DeleteAccountFailedAction());
+        store.dispatch(const DeleteUserFailedAction());
         throw e;
       });
   }

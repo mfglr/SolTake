@@ -23,7 +23,7 @@ class DisplayAbstractSavedQuestionsPage extends StatelessWidget {
         title: AppTitle(title: AppLocalizations.of(context)!.display_abstract_saved_questions_page_title),
       ),
       body: StoreConnector<AppState,UserState?>(
-        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
+        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
         converter: (store) => store.state.currentUser,
         builder: (context,user){
           if(user == null) return const LoadingWidget();

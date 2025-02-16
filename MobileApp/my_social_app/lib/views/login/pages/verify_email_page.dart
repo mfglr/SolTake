@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/account/widgets/logout_button.dart';
-import 'package:my_social_app/views/account/widgets/send_email_verification_mail_button.dart';
-import 'package:my_social_app/views/account/widgets/verify_email_form.dart';
+import 'package:my_social_app/views/login/widgets/logout_button.dart';
+import 'package:my_social_app/views/login/widgets/send_email_verification_mail_button.dart';
+import 'package:my_social_app/views/login/widgets/verify_email_form.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({super.key});

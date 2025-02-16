@@ -1,5 +1,5 @@
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/account_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
@@ -50,7 +50,7 @@ final store = Store(
   initialState: AppState(
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
-    accountState: null,
+    loginState: null,
     isInitialized: false,
     userEntityState: const UserEntityState(entities: {}),
     searchState: SearchState(
@@ -103,8 +103,8 @@ final store = Store(
     updateLanguageMiddleware,
     loginByPaswordMiddleware,
     loginByGoogleMiddleware,
-    createAccountMiddleware,
-    deleteAccountMiddleware,
+    createUserMiddleware,
+    deleteUserMiddleware,
     approvePrivacyPolicyMiddleware,
     approveTersmOfUseMiddleware,
     logOutMiddleware,

@@ -13,8 +13,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           ? null
           : DateTime.parse(json['updatedAt'] as String),
       userName: json['userName'] as String,
-      name: json['name'] as String,
-      biography: json['biography'] as String,
+      name: json['name'] as String?,
+      biography: json['biography'] as String?,
       numberOfQuestions: (json['numberOfQuestions'] as num).toInt(),
       numberOfFollowers: (json['numberOfFollowers'] as num).toInt(),
       numberOfFolloweds: (json['numberOfFolloweds'] as num).toInt(),

@@ -19,8 +19,8 @@ class _EditNamePageState extends State<EditNamePage> {
   late String _newName;
   @override
   void initState() {
-    _controller.text = widget.user.name;
-    _newName = widget.user.name;
+    _controller.text = widget.user.name ?? "";
+    _newName = widget.user.name ?? "";
     super.initState();
   }
 

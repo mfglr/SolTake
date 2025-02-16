@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'account_state.g.dart';
+part 'login_state.g.dart';
 
 @immutable
 @JsonSerializable()
-class AccountState{
+class LoginState{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String email;
-  final String userName;
   final bool isEmailVerified;
   final bool isPrivacyPolicyApproved;
   final bool isTermsOfUseApproved;
@@ -17,12 +16,11 @@ class AccountState{
   final String refreshToken;
   final bool accountDeletionStart;
 
-  const AccountState({
+  const LoginState({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
     required this.email,
-    required this.userName,
     required this.isEmailVerified,
     required this.language,
     required this.refreshToken,
@@ -32,16 +30,15 @@ class AccountState{
   });
   
 
-  factory AccountState.fromJson(Map<String, dynamic> json) => _$AccountStateFromJson(json);
-  Map<String, dynamic> toJson() => _$AccountStateToJson(this);
+  factory LoginState.fromJson(Map<String, dynamic> json) => _$LoginStateFromJson(json);
+  Map<String, dynamic> toJson() => _$LoginStateToJson(this);
 
-  AccountState confirmEmail()
-    => AccountState(
+  LoginState confirmEmail()
+    => LoginState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         email: email,
-        userName: userName,
         isEmailVerified: true,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         isTermsOfUseApproved: isTermsOfUseApproved,
@@ -50,13 +47,12 @@ class AccountState{
         accountDeletionStart: accountDeletionStart
       );
 
-  AccountState updateLanguage(String language)
-    => AccountState(
+  LoginState updateLanguage(String language)
+    => LoginState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         email: email,
-        userName: userName,
         isEmailVerified: isEmailVerified,
         isTermsOfUseApproved: isTermsOfUseApproved,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
@@ -65,13 +61,12 @@ class AccountState{
         accountDeletionStart: accountDeletionStart
       );
 
-  AccountState approvePrivacyPolicy()
-    => AccountState(
+  LoginState approvePrivacyPolicy()
+    => LoginState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         email: email,
-        userName: userName,
         isEmailVerified: isEmailVerified,
         isTermsOfUseApproved: isTermsOfUseApproved,
         isPrivacyPolicyApproved: true,
@@ -79,13 +74,12 @@ class AccountState{
         refreshToken: refreshToken,
         accountDeletionStart: accountDeletionStart        
       );
-  AccountState approveTermsOfUse()
-    => AccountState(
+  LoginState approveTermsOfUse()
+    => LoginState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         email: email,
-        userName: userName,
         isEmailVerified: isEmailVerified,
         isTermsOfUseApproved: true,
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
@@ -93,13 +87,12 @@ class AccountState{
         refreshToken: refreshToken,
         accountDeletionStart: accountDeletionStart
       );
-  AccountState startAccountDeletion()
-    => AccountState(
+  LoginState startAccountDeletion()
+    => LoginState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         email: email,
-        userName: userName,
         isEmailVerified: isEmailVerified,
         language: language,
         refreshToken: refreshToken,
@@ -107,13 +100,12 @@ class AccountState{
         isTermsOfUseApproved: isTermsOfUseApproved,
         accountDeletionStart: true
       );
-  AccountState stopAccountDeletion()
-    => AccountState(
+  LoginState stopAccountDeletion()
+    => LoginState(
         id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         email: email,
-        userName: userName,
         isEmailVerified: isEmailVerified,
         language: language,
         refreshToken: refreshToken,

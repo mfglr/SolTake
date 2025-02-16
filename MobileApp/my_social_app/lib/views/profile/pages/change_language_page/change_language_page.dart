@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/account_state/account_state.dart';
-import 'package:my_social_app/state/app_state/account_state/languages.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/models/languages.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/profile/pages/change_language_page/widgets/language_item.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
@@ -15,8 +15,8 @@ class ChangeLanguagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,AccountState>(
-      converter: (store) => store.state.accountState!,
+    return StoreConnector<AppState,LoginState>(
+      converter: (store) => store.state.loginState!,
       builder:(context,account) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),

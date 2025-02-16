@@ -1,5 +1,5 @@
 import 'package:my_social_app/state/app_state/access_token_state/reducers.dart';
-import 'package:my_social_app/state/app_state/account_state/reducers.dart';
+import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/application_init_state/reducers.dart';
@@ -36,7 +36,7 @@ AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear(
 AppState appReducer(AppState prev,AppAction action) => AppState(
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
-  accountState: accoutStateReducers(prev.accountState,action),
+  loginState: accoutStateReducers(prev.loginState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   searchState: searchStateReducers(prev.searchState,action),

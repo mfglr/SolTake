@@ -45,7 +45,7 @@ class UserFollowedsPage extends StatelessWidget {
                   users : users,
                   pagination: profileUser.followeds,
                   rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
-                    converter: (store) => store.state.accountState!.id,
+                    converter: (store) => store.state.loginState!.id,
                     builder: (context,accountId){
                       if(accountId != user.id) return FollowButtonWidget(user: user);
                       return const SpaceSavingWidget();

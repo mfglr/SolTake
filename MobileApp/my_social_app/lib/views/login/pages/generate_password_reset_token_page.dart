@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/account/widgets/generate_password_reset_token_form.dart';
+import 'package:my_social_app/views/login/widgets/generate_password_reset_token_form.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 
 class GeneratePasswordResetTokenPage extends StatelessWidget {

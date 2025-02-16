@@ -16,8 +16,8 @@ class CreateConversationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState?>(
-      onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
-      converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],
+      onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
+      converter: (store) => store.state.userEntityState.entities[store.state.loginState!.id],
       builder: (context,user){
         if(user == null) return const LoadingView();
          return Scaffold(
@@ -31,7 +31,7 @@ class CreateConversationPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: StoreConnector<AppState,Iterable<UserState>>(
               onInit: (store) => getNextPageIfNoPage(store,user.conversations, NextUserConversationsAction(userId: user.id)),
-              converter: (store) => store.state.selectUserConversations(store.state.accountState!.id),
+              converter: (store) => store.state.selectUserConversations(store.state.loginState!.id),
               builder: (context,users) => CreateConversationPageUserItems(
                 users: users,
                 pagination: user.conversations,

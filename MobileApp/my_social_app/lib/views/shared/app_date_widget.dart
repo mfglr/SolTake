@@ -15,7 +15,7 @@ class AppDateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,String>(
-      converter: (store) => store.state.accountState!.language,
+      converter: (store) => store.state.loginState!.language,
       builder: (contex,language) => Text(
         timeago.format(dateTime,locale: '${language}_short'),
         style: style,

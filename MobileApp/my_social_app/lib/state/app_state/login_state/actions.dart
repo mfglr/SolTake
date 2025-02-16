@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 
 @immutable
-class UpdateAccountStateAction extends AppAction{
-  final AccountState? payload;
-  const UpdateAccountStateAction({required this.payload});
+class UpdateLoginStateAction extends AppAction{
+  final LoginState? payload;
+  const UpdateLoginStateAction({required this.payload});
 }
 
 @immutable
@@ -52,20 +52,20 @@ class LogOutAction extends AppAction{
 }
 
 @immutable
-class DeleteAccountAction extends AppAction{
-  const DeleteAccountAction();
+class DeleteUserAction extends AppAction{
+  const DeleteUserAction();
 }
 @immutable
-class DeleteAccountFailedAction extends AppAction{
-  const DeleteAccountFailedAction();
+class DeleteUserFailedAction extends AppAction{
+  const DeleteUserFailedAction();
 }
 
 @immutable
-class CreateAccountAction extends AppAction{
+class CreateUserAction extends AppAction{
   final String email;
   final String password;
   final String passwordConfirmation;
-  const CreateAccountAction({required this.email, required this.password, required this.passwordConfirmation});
+  const CreateUserAction({required this.email, required this.password, required this.passwordConfirmation});
 }
 
 @immutable

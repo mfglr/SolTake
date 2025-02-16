@@ -28,7 +28,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final store = StoreProvider.of<AppState>(context, listen: false);
     final user = store.state.currentUser!;
     _userNameController.text = user.userName;
-    _nameController.text = user.name;
+    _nameController.text = user.name ?? "";
     super.initState();
   }
 
@@ -97,9 +97,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
-                              if(user.name != "")
+                              if(user.name != null)
                                 Text(
-                                  user.name,
+                                  user.name!,
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
@@ -131,7 +131,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         margin: const EdgeInsets.only(bottom: 15),
                         child: EditUserFieldWidget(
                           label: AppLocalizations.of(context)!.edit_profile_page_name_label,
-                          value: compressText(user.name, 15),
+                          value: compressText(user.name ?? "", 15),
                           onPressed: () => 
                             Navigator
                               .of(context)
@@ -142,7 +142,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         margin: const EdgeInsets.only(bottom: 15),
                         child: EditUserFieldWidget(
                           label: AppLocalizations.of(context)!.edit_profile_page_biography_label,
-                          value: compressText(user.biography, 20),
+                          value: compressText(user.biography ?? "", 20),
                           onPressed: () =>
                             Navigator
                               .of(context)

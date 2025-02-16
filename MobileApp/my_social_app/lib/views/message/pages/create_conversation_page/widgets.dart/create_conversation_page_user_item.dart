@@ -38,8 +38,8 @@ class CreateConversationPageUserItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(compressText(user.userName, 20)),
-                      if(user.biography != "")
-                        Text(compressText(user.biography, 50)),
+                      if(user.biography != null)
+                        Text(compressText(user.biography!, 50)),
                     ],
                   )
                 ],

@@ -4,9 +4,9 @@ import 'package:my_social_app/state/app_state/active_account_page_state/actions.
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/account/widgets/login_form.dart';
-import 'package:my_social_app/views/account/widgets/google_login_button.dart';
-import 'package:my_social_app/views/account/widgets/login_page_diveder.dart';
+import 'package:my_social_app/views/login/widgets/login_form.dart';
+import 'package:my_social_app/views/login/widgets/google_login_button.dart';
+import 'package:my_social_app/views/login/widgets/login_page_diveder.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

@@ -28,13 +28,13 @@ class DisplaySavedSolutionsPage extends StatelessWidget {
         ),
       ),
       body: StoreConnector<AppState,UserState?>(
-        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
+        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
         converter: (store) => store.state.currentUser,
         builder: (context,user){
           if(user == null) return const LoadingView();
           return StoreConnector<AppState,Iterable<SolutionState>>(
             onInit: (store) => getNextPageIfNoPage(store,user.savedSolutions,NextUserSavedSolutionsAction(userId: user.id)),
-            converter: (store) => store.state.selectUserSavedSolutions(store.state.accountState!.id),
+            converter: (store) => store.state.selectUserSavedSolutions(store.state.loginState!.id),
             builder: (context,solutions) => SolutionItemsWidget(
               pagination: user.savedSolutions,
               solutions: solutions,

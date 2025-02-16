@@ -60,7 +60,7 @@ class NotificationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StoreConnector<AppState,String>(
-                    converter: (store) => store.state.accountState!.language,
+                    converter: (store) => store.state.loginState!.language,
                     builder:(context,language) => Text(
                       "${notification.userName}. $content ${timeago.format(notification.createdAt,locale: '${language}_short')}",
                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
@@ -42,7 +42,7 @@ class AppState{
   final bool isInitialized;
   final ActiveAccountPage activeAccountPage;
   final String? accessToken;
-  final AccountState? accountState;
+  final LoginState? loginState;
   final UserEntityState userEntityState;
   final FollowEntityState followEntityState;
   final SearchState searchState;
@@ -71,7 +71,7 @@ class AppState{
   const AppState({
     required this.activeAccountPage,
     required this.accessToken,
-    required this.accountState,
+    required this.loginState,
     required this.isInitialized,
     required this.userEntityState,
     required this.searchState,
@@ -102,7 +102,7 @@ class AppState{
   AppState clear() => AppState(
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
-    accountState: null,
+    loginState: null,
     isInitialized: true,
     userEntityState: const UserEntityState(entities: {}),
     searchState: SearchState(
@@ -142,15 +142,15 @@ class AppState{
       .map((e) => messageEntityState.entities[e]!);
   Iterable<int> get selectIdsOfNewComingMessages
     => messageEntityState.entities.values
-        .where((e) => e.state == MessageStatus.created && e.senderId != accountState!.id)
+        .where((e) => e.state == MessageStatus.created && e.senderId != loginState!.id)
         .map((e) => e.id);
   int get selectNumberOfComingMessages
     => messageEntityState.entities.values
-        .where((e) => e.state != MessageStatus.viewed && e.senderId != accountState!.id)
+        .where((e) => e.state != MessageStatus.viewed && e.senderId != loginState!.id)
         .length;
 
   //select users
-  UserState? get currentUser => userEntityState.entities[accountState!.id];
+  UserState? get currentUser => userEntityState.entities[loginState!.id];
   Iterable<UserState> get searchedUsers 
     => searchState.users.ids.map((e) => userEntityState.entities[e]!);
   Iterable<UserState> selectNotFolloweds(int userId)
@@ -250,9 +250,9 @@ class AppState{
     => subjectEntityState.entities[subjectId]?.topics.ids.map((e) => topicEntityState.entities[e]!) ?? [];
 
   //select privacy policy
-  String? get selectPrivacyPolicy => policyState.privacyPolicies[accountState?.language];
+  String? get selectPrivacyPolicy => policyState.privacyPolicies[loginState?.language];
   //select terms of use
-  String? get selectTermsOfUse => policyState.termOfUses[accountState?.language];
+  String? get selectTermsOfUse => policyState.termOfUses[loginState?.language];
 
   //select video questions
   Iterable<QuestionState> get selectVideoQuestions => videoQuestions.ids.map((id) => questionEntityState.entities[id]!);

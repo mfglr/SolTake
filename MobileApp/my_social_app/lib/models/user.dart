@@ -13,8 +13,8 @@ class User{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;
-  final String name;
-  final String biography;
+  final String? name;
+  final String? biography;
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;

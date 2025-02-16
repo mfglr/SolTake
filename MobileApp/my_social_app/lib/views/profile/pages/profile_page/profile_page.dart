@@ -133,8 +133,8 @@ class _ProfilePageState extends State<ProfilePage> {
       AppLocalizations.of(context)!.user_page_label_unsolved,
     ];
     return StoreConnector<AppState, UserState?>(
-      onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
-      converter: (store) => store.state.userEntityState.entities[store.state.accountState!.id],
+      onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
+      converter: (store) => store.state.userEntityState.entities[store.state.loginState!.id],
       builder: (context, user){
         if(user == null) return const LoadingView();
         return Scaffold(

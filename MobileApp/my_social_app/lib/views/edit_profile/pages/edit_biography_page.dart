@@ -23,8 +23,8 @@ class _EditBiographyPageState extends State<EditBiographyPage> {
   late String _newBiography;
   @override
   void initState() {
-    _controller.text = widget.user.biography;
-    _newBiography = widget.user.biography;
+    _controller.text = widget.user.biography ?? "";
+    _newBiography = widget.user.biography ?? "";
     super.initState();
   }
 

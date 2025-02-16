@@ -42,7 +42,7 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
 }
 void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FollowUserAction){
-    final currentUserId = store.state.accountState!.id;
+    final currentUserId = store.state.loginState!.id;
     UserService()
       .follow(action.followedId)
       .then((follow){
@@ -54,7 +54,7 @@ void followMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UnfollowUserAction){
-    final currentUserId = store.state.accountState!.id;
+    final currentUserId = store.state.loginState!.id;
     UserService()
       .unfollow(action.followedId)
       .then((_){
@@ -68,7 +68,7 @@ void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
 void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveFollowerAction){
     final followerId = action.followerId;
-    final currentUserId = store.state.accountState!.id;
+    final currentUserId = store.state.loginState!.id;
     UserService()
       .removeFollower(action.followerId)
       .then((_){
@@ -82,7 +82,7 @@ void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateUserNameAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     UserService()
       .updateUserName(action.userName)
       .then((_){
@@ -94,7 +94,7 @@ void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateNameAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     UserService()
       .updateName(action.name)
       .then((_){
@@ -106,7 +106,7 @@ void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateBiographyAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     UserService()
       .updateBiography(action.biography)
       .then((_){
@@ -271,7 +271,7 @@ void nextUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher 
     UserService()
       .getCreateConversationPageUsers(pagination.next)
       .then((users){
-        store.dispatch(NextUserConversationsSuccessAction(userId: store.state.accountState!.id, ids: users.map((e) => e.id)));
+        store.dispatch(NextUserConversationsSuccessAction(userId: store.state.loginState!.id, ids: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
       })
       .catchError((e){
@@ -294,7 +294,7 @@ void getNextPageUserNotFollowedsIfNoPageMiddleware(Store<AppState> store,action,
 }
 void getNextPageUserNotFollowedsIfReadyMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is GetNextPageUserNotFollowedsIfReadyAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     final pagination = store.state.userEntityState.entities[accountId]!.notFolloweds;
     if(pagination.isReadyForNextPage){
       store.dispatch(GetNextPageUserNotFollowedsAction(userId: action.userId));

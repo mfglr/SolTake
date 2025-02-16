@@ -41,7 +41,7 @@ class DisplaySolutionUpvotesPage extends StatelessWidget {
               users: users,
               pagination: solution.upvotes,
               rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
-                converter: (store) => store.state.accountState!.id,
+                converter: (store) => store.state.loginState!.id,
                 builder: (context,accountId){
                   if(accountId == user.id) return const SpaceSavingWidget();
                   return FollowIconButtonWidget(user: user);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/account/widgets/reset_password_form.dart';
+import 'package:my_social_app/views/login/widgets/reset_password_form.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 
 class ResetPasswordPage extends StatelessWidget {

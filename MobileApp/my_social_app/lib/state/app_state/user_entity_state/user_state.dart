@@ -12,8 +12,8 @@ class UserState implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;
-  final String name;
-  final String biography;
+  final String? name;
+  final String? biography;
   final int numberOfQuestions;
   final int numberOfFollowers;
   final int numberOfFolloweds;
@@ -38,7 +38,7 @@ class UserState implements Avatar{
   int get avatarId => id;
 
   String formatName(int count){
-    final r = (name == "" ? userName : name);
+    final r = (name ?? userName);
     return r.length <= count ? r : "${r.substring(0,count)}...";
   }
 

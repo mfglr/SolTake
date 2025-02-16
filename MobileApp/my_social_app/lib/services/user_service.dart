@@ -8,14 +8,14 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/request_timeout.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
-import 'package:my_social_app/models/account.dart';
+import 'package:my_social_app/models/login.dart';
 import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/pagination/page.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
-import 'package:my_social_app/views/account/widgets/google_login_button.dart';
+import 'package:my_social_app/views/login/widgets/google_login_button.dart';
 
 class UserService{
   final AppClient _appClient;
@@ -24,7 +24,7 @@ class UserService{
   static final UserService _singleton = UserService._(AppClient());
   factory UserService() => _singleton;
  
-  Future<Account> create(String email, String password, String passwordConfirmation) =>
+  Future<Login> create(String email, String password, String passwordConfirmation) =>
     _appClient
       .post(
         "$userController/$createEndPoint",
@@ -34,9 +34,9 @@ class UserService{
           "passwordConfirm":passwordConfirmation
         }
       )
-      .then((json) => Account.fromJson(json));
+      .then((json) => Login.fromJson(json));
   
-  Future<Account> loginByPassword(String emailOrUserName, String password) =>
+  Future<Login> loginByPassword(String emailOrUserName, String password) =>
     _appClient
       .post(
         "$userController/$loginByPasswordEndPoint",
@@ -45,15 +45,15 @@ class UserService{
           'password':password
         }
       )
-      .then((json) => Account.fromJson(json));
+      .then((json) => Login.fromJson(json));
   
-   Future<Account> loginByRefreshtoken(int id,String token) =>
+   Future<Login> loginByRefreshtoken(int id,String token) =>
     _appClient
       .post(
         "$userController/$loginByRefreshTokenEndPoint",
         body: { 'id': id.toString(),'token': token}
       )
-      .then((json) => Account.fromJson(json))
+      .then((json) => Login.fromJson(json))
       .timeout(
         requestTimeout,
         onTimeout: (){
@@ -62,13 +62,13 @@ class UserService{
         }
       );
 
-  Future<Account> loginByGoogle(String accessToken) =>
+  Future<Login> loginByGoogle(String accessToken) =>
     _appClient
       .post(
         "$userController/$loginByGoogleEndpoint",
         body: { 'accessToken': accessToken }
       )
-      .then((json) => Account.fromJson(json))
+      .then((json) => Login.fromJson(json))
       .catchError((e) async {
         await googleSignIn.disconnect();
         throw e;
@@ -98,13 +98,13 @@ class UserService{
         body: { 'email':email, }
       );
 
-  Future<Account> updateEmail(String email) =>
+  Future<Login> updateEmail(String email) =>
     _appClient
       .post(
         "$userController/$updateEmailEndPoint",
         body: { 'email': email }
       )
-      .then((json) => Account.fromJson(json));
+      .then((json) => Login.fromJson(json));
 
   Future<void> updateUserName(String userName) =>
     _appClient

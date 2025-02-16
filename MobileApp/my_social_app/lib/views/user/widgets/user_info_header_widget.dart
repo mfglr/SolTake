@@ -135,7 +135,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
                   )
                 ],
               ),
-              if(user.biography != "")
+              if(user.biography != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Row(
@@ -143,7 +143,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          user.biography,
+                          user.biography!,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,

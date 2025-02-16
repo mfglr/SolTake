@@ -25,4 +25,8 @@
     <InternalsVisibleTo Include="MySocailApp.Infrastructure" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LoginAggregate\" />
+  </ItemGroup>
+
 </Project>

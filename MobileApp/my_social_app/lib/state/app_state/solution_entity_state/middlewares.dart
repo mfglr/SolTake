@@ -95,7 +95,7 @@ void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void markSolutionAsCorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MarkSolutionAsCorrectAction){
-    final currentUserId = store.state.accountState!.id;
+    final currentUserId = store.state.loginState!.id;
     SolutionService()
       .markAsCorrect(action.solutionId)
       .then((_){
@@ -119,7 +119,7 @@ void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatch
 }
 void saveSolutionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is SaveSolutionAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     SolutionService()
       .saveSolution(action.solutionId)
       .then((save){
@@ -132,7 +132,7 @@ void saveSolutionMiddleware(Store<AppState> store,action, NextDispatcher next){
 }
 void unsaveSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UnsaveSolutionAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     SolutionService()
       .unsaveSolution(action.solutionId)
       .then((save){
@@ -146,7 +146,7 @@ void unsaveSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void makeSolutionUpvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MakeSolutionUpvoteAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     SolutionService()
       .makeUpvote(action.solutionId)
       .then((upvote){
@@ -160,7 +160,7 @@ void makeSolutionUpvoteMiddleware(Store<AppState> store,action,NextDispatcher ne
 }
 void removeSolutionUpvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is RemoveSolutionUpvoteAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     SolutionService()
       .removeUpvote(action.solutionId)
       .then((_){
@@ -173,7 +173,7 @@ void removeSolutionUpvoteMiddleware(Store<AppState> store,action, NextDispatcher
 }
 void makeSolutionDownvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MakeSolutionDownvoteAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     SolutionService()
       .makeDownvote(action.solutionId)
       .then((downvote){
@@ -187,7 +187,7 @@ void makeSolutionDownvoteMiddleware(Store<AppState> store,action,NextDispatcher 
 }
 void removeSolutionDownvoteMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is RemoveSolutionDownvoteAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     SolutionService()
       .removeDownvote(action.solutionId)
       .then((_){

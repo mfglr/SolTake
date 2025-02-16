@@ -28,7 +28,7 @@ class DisplaySavedQuestionsPage extends StatelessWidget {
         ),
       ),
       body: StoreConnector<AppState,UserState?>(
-        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.accountState!.id)),
+        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
         converter: (store) => store.state.currentUser,
         builder: (context,user){
           if(user == null) return const LoadingWidget();

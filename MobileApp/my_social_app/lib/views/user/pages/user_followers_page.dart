@@ -46,7 +46,7 @@ class UserFollowersPage extends StatelessWidget {
                   users : users,
                   pagination: profileUser.followers,
                   rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
-                    converter: (store) => store.state.accountState!.id,
+                    converter: (store) => store.state.loginState!.id,
                     builder: (context,accountId){
                       if(accountId == profileUser.id) return RemoveFollowerButton(user: user);
                       if(accountId != user.id) return FollowButtonWidget(user: user);

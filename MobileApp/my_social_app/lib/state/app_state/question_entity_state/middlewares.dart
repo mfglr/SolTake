@@ -33,7 +33,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       )
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
-        store.dispatch(AddNewUserQuestionAction(userId: store.state.accountState!.id,questionId: question.id));
+        store.dispatch(AddNewUserQuestionAction(userId: store.state.loginState!.id,questionId: question.id));
         store.dispatch(RemoveUploadStateAction(id: action.id));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
@@ -63,7 +63,7 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 }
 void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DeleteQuestionAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     QuestionService()
       .delete(action.questionId)
       .then((_){
@@ -75,7 +75,7 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void saveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is SaveQuestionAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     QuestionService()
       .save(action.questionId)
       .then((save){
@@ -88,7 +88,7 @@ void saveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void unsaveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UnsaveQuestionAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     QuestionService()
       .unsave(action.questionId)
       .then((_){
@@ -114,7 +114,7 @@ void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 }
 void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is DislikeQuestionAction){
-    final accountId = store.state.accountState!.id;
+    final accountId = store.state.loginState!.id;
     QuestionService()
       .dislike(action.questionId)
       .then((_){

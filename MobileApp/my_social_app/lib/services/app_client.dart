@@ -20,7 +20,7 @@ class AppClient{
   Map<String,String> getHeader() =>
     {
       "Authorization": "Bearer ${store.state.accessToken}",
-      "Accept-Language": store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode,
+      "Accept-Language": store.state.loginState?.language ?? PlatformDispatcher.instance.locale.languageCode,
       "Client-Version": packageInfo.version
     };
 
@@ -48,7 +48,7 @@ class AppClient{
     var r = await HttpClient().postUrl(request.url);
     r.headers.set(HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);
     r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
-    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.accountState?.language ?? PlatformDispatcher.instance.locale.languageCode);
+    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.loginState?.language ?? PlatformDispatcher.instance.locale.languageCode);
     r.headers.set("Client-Version", packageInfo.version);
 
     var byteCount = 0;

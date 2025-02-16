@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
-import 'package:my_social_app/views/account/widgets/password_and_password_confirm_form_field.dart';
-import 'package:my_social_app/views/account/widgets/token_form_field.dart';
+import 'package:my_social_app/views/login/widgets/password_and_password_confirm_form_field.dart';
+import 'package:my_social_app/views/login/widgets/token_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResetPasswordForm extends StatefulWidget {

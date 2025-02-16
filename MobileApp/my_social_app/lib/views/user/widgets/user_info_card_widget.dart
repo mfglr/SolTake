@@ -1,6 +1,6 @@
  import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/account_state/account_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
@@ -20,8 +20,8 @@ class UserInfoCardWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           UserInfoHeaderWidget(user: user),
-          StoreConnector<AppState,AccountState?>(
-            converter: (store) => store.state.accountState,
+          StoreConnector<AppState,LoginState?>(
+            converter: (store) => store.state.loginState,
             builder: (context,accountState) {
               if(accountState!.id != user.id){
                 return Row(
