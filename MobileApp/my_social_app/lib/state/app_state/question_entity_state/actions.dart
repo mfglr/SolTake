@@ -2,6 +2,7 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
@@ -57,8 +58,11 @@ class DislikeQuestionAction extends AppAction{
 @immutable
 class DislikeQuestionSuccessAction extends AppAction{
   final int questionId;
-  final int likeId;
-  const DislikeQuestionSuccessAction({required this.questionId,required this.likeId});
+  final int userId;
+  const DislikeQuestionSuccessAction({
+    required this.questionId,
+    required this.userId
+  });
 }
 @immutable
 class LikeQuestionAction extends AppAction{
@@ -68,14 +72,14 @@ class LikeQuestionAction extends AppAction{
 @immutable
 class LikeQuestionSuccessAction extends AppAction{
   final int questionId;
-  final int likeId;
-  const LikeQuestionSuccessAction({required this.questionId,required this.likeId});
+  final QuestionUserLikeState questionUserLike;
+  const LikeQuestionSuccessAction({required this.questionId,required this.questionUserLike});
 }
 @immutable
 class AddNewQuestionLikeAction extends AppAction{
   final int questionId;
-  final int likeId;
-  const AddNewQuestionLikeAction({required this.questionId, required this.likeId});
+  final QuestionUserLikeState questionUserLike;
+  const AddNewQuestionLikeAction({required this.questionId, required this.questionUserLike});
 }
 
 
@@ -87,8 +91,8 @@ class NextQuestionLikesAction extends AppAction{
 @immutable
 class NextQuestionLikesSuccessAction extends AppAction{
   final int questionId;
-  final Iterable<int> likeIds;
-  const NextQuestionLikesSuccessAction({required this.questionId, required this.likeIds});
+  final Iterable<QuestionUserLikeState> questionUserLikes;
+  const NextQuestionLikesSuccessAction({required this.questionId, required this.questionUserLikes});
 }
 @immutable
 class NextQuestionLikesFailedAction extends AppAction{

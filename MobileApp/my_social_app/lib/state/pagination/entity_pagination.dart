@@ -61,15 +61,21 @@ class EntityPagination<T extends dynamic>{
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
 
-  EntityPagination<T> prependOne(T entity)
-    => _optinal(newEntities: entities.prependOne(entity));
-  EntityPagination<T> appendOne(T entity)
-    => _optinal(newEntities: entities.appendOne(entity));
+  EntityPagination<T> prependOne(T value)
+    => _optinal(newEntities: entities.prependOne(value));
+  EntityPagination<T> appendOne(T value)
+    => _optinal(newEntities: entities.appendOne(value));
+  EntityPagination<T> addInOrder(T value){
+    if(!isLast && (entities.isEmpty || value.id < entities.values.last.id)) return this;
+    return _optinal(newEntities: entities.addInOrder(value));
+  }
+  EntityPagination<T> where(bool Function(T) test)
+    => _optinal(newEntities: entities.where(test));
 
-  EntityPagination<T> prependMany(Iterable<T> entities)
-    => _optinal(newEntities: this.entities.prependMany(entities));
-  EntityPagination<T> appendMany(Iterable<T> entities)
-    => _optinal(newEntities: this.entities.appendMany(entities));
+  EntityPagination<T> prependMany(Iterable<T> values)
+    => _optinal(newEntities: entities.prependMany(values));
+  EntityPagination<T> appendMany(Iterable<T> values)
+    => _optinal(newEntities: entities.appendMany(values));
 
   EntityPagination<T> startLoadingPrev()
     => _optinal(newLoadingPrev: true);

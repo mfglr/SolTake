@@ -4,6 +4,7 @@ const examController = "exams";
 const subjectController = "subjects";
 const topicController = "topics";
 const questionController = "questions";
+const questionUserLikeController = "QuestionUserLikes";
 const solutionController = "solutions";
 const commentController = "comments";
 const notificationController = "notifications";

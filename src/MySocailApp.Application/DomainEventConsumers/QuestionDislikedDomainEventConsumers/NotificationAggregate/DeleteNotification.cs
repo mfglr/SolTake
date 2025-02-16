@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionDislikedDomainEventConsumers.NotificationAggregate
 {
@@ -12,11 +12,11 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionDislikedDomainEve
 
         public async Task Handle(QuestionDislikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = await _notificationWriteRepository.GetQuestionLikedNotificationAsync(notification.Question.Id, notification.Question.UserId, cancellationToken);
-            if (n == null) return;
+            //var n = await _notificationWriteRepository.GetQuestionLikedNotificationAsync(notification.Question.Id, notification.Question.UserId, cancellationToken);
+            //if (n == null) return;
 
-            _notificationWriteRepository.Delete(n);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //_notificationWriteRepository.Delete(n);
+            //await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

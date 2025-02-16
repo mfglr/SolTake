@@ -43,14 +43,6 @@ class QuestionService{
   Future<void> delete(int questionId) =>
     _appClient
       .delete("$questionController/$deleteQuestionEndpoint/$questionId");
-
-  Future<QuestionUserLike> like(int questionId) =>
-    _appClient
-      .post(
-        "$questionController/$likeQuestionEndpoint",
-        body: { "QuestionId": questionId }
-      )
-      .then((json) => QuestionUserLike.fromJson(json));
   
   Future<void> dislike(int questionId) =>
     _appClient

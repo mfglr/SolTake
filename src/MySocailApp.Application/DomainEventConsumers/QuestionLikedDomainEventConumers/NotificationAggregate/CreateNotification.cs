@@ -4,7 +4,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventConumers.NotificationAggregate
 {
@@ -16,12 +16,12 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventC
 
         public async Task Handle(QuestionLikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var question = notification.Question;
-            var n = Notification.QuestionLikedNotification(question.UserId, question.Id, notification.Like.UserId);
-            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //var like = notification.Question;
+            //var n = Notification.QuestionLikedNotification(question.UserId, question.Id, notification.Like.UserId);
+            //await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            //await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new QuestionLikedNotificationCreatedDomainEvent(n, notification.Like.Id));
+            //await _publisher.Publish(new QuestionLikedNotificationCreatedDomainEvent(n, notification.Like.Id));
         }
     }
 }

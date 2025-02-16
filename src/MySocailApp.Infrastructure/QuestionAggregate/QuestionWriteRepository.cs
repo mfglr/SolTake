@@ -30,12 +30,6 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
                 .Include(x => x.Savers.Where(x => x.UserId == saverId))
                 .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
-        public async Task<Question?> GetWithLikeByIdAsync(int id,int userId,CancellationToken cancellationToken)
-            => await _context.Questions
-                .Include(x => x.Likes.Where(x => x.UserId == userId))
-                .Include(x => x.LikeNotifications.Where(x => x.UserId == userId))
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-
         public Task<Question?> GetQuestionAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
                 .Include(x => x.Medias)
@@ -51,11 +45,6 @@ namespace MySocailApp.Infrastructure.QuestionAggregate
         {
             var likes = await _context.QuestionUserLikes.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
             _context.QuestionUserLikes.RemoveRange(likes);
-        }
-        public async Task DeleteQuestionUserLikesNotificationsByUserId(int userId, CancellationToken cancellationToken)
-        {
-            var likeNotifications = await _context.QuestionUserLikeNotifications.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
-            _context.QuestionUserLikeNotifications.RemoveRange(likeNotifications);
         }
         public async Task DeleteQuestionUserSavesByUserId(int userId, CancellationToken cancellationToken)
         {

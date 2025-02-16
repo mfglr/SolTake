@@ -2,11 +2,11 @@ import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
+import 'package:my_social_app/services/question_user_like_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_save_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -103,24 +103,28 @@ void unsaveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){
-    QuestionService()
+    QuestionUserLikeService()
       .like(action.questionId)
-      .then((like){
-        store.dispatch(LikeQuestionSuccessAction(questionId: action.questionId,likeId: like.id));
-        store.dispatch(AddQuestionUserLikeAction(like: like.toQuestionUserLikeState()));
-      });
+      .then((questionUserLike) =>
+        store.dispatch(
+          LikeQuestionSuccessAction(
+            questionId: action.questionId,
+            questionUserLike: questionUserLike.toQuestionUserLikeState()
+          )
+        )
+      );
   }
   next(action);
 }
 void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is DislikeQuestionAction){
-    final accountId = store.state.loginState!.id;
     QuestionService()
       .dislike(action.questionId)
       .then((_){
-        final likeId = store.state.questionUserLikeEntityState.select(action.questionId, accountId)?.id ?? 0;
-        store.dispatch(RemoveQuestionUserLikeAction(likeId: likeId));
-        store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,likeId: likeId));
+        store.dispatch(DislikeQuestionSuccessAction(
+          questionId: action.questionId,
+          userId: store.state.loginState!.id
+        ));
       });
   }
   next(action);
@@ -131,11 +135,14 @@ void nextQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher nex
     final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
     QuestionService()
       .getQuestionLikes(action.questionId, pagination.next)
-      .then((likes){
-        store.dispatch(NextQuestionLikesSuccessAction(questionId: action.questionId,likeIds: likes.map((e) => e.id)));
-        store.dispatch(AddQuestionUserLikesAction(likes: likes.map((e) => e.toQuestionUserLikeState())));
-        store.dispatch(AddUsersAction(users: likes.map((user) => user.user!.toUserState())));
-      })
+      .then(
+        (likes) => store.dispatch(
+          NextQuestionLikesSuccessAction(
+            questionId: action.questionId,
+            questionUserLikes: likes.map((e) => e.toQuestionUserLikeState())
+          )
+        )
+      )
       .catchError((e){
         store.dispatch(NextQuestionLikesFailedAction(questionId: action.questionId));
         throw e;

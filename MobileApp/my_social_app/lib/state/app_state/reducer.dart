@@ -15,7 +15,6 @@ import 'package:my_social_app/state/app_state/message_home_page_state/reducers.d
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/question_user_like_state/reducer.dart';
 import 'package:my_social_app/state/app_state/question_user_save_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
@@ -54,7 +53,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
   followEntityState: followEntityReducers(prev.followEntityState,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
-  questionUserLikeEntityState: questionUserLikeEntityReducers(prev.questionUserLikeEntityState,action),
   questionUserSaveEntityState: questionUserSaveEntityReducers(prev.questionUserSaveEntityState,action),
   solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
   solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),

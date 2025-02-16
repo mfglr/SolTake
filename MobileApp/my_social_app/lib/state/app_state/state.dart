@@ -18,7 +18,6 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_user_like_state/question_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_user_save_state/question_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
@@ -61,7 +60,6 @@ class AppState{
   final MessageHomePageState messageHomePageState;
   final UserSearchEntityState userSearchEntityState;
   final QuestionEntityState questionEntityState;
-  final QuestionUserLikeEntityState questionUserLikeEntityState;
   final QuestionUserSaveEntityState questionUserSaveEntityState;
   final Pagination exams;
   final PolicyState policyState;
@@ -91,7 +89,6 @@ class AppState{
     required this.userSearchEntityState,
     required this.followEntityState,
     required this.questionEntityState,
-    required this.questionUserLikeEntityState,
     required this.questionUserSaveEntityState,
     required this.exams,
     required this.policyState,
@@ -125,7 +122,6 @@ class AppState{
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),
     questionEntityState: const QuestionEntityState(entities: {}),
-    questionUserLikeEntityState: const QuestionUserLikeEntityState(entities: {}),
     questionUserSaveEntityState: const QuestionUserSaveEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
@@ -165,10 +161,6 @@ class AppState{
     => userEntityState.entities[userId]!.followeds.ids.map(
         (e) => userEntityState.entities[followEntityState.entities[e]!.followedId]!
       );
-  Iterable<UserState> selectQuestionLikes(int questionId)
-    => questionEntityState.entities[questionId]!.likes.ids.map(
-      (e) => userEntityState.entities[questionUserLikeEntityState.entities[e]!.userId]!
-    );
   Iterable<UserState> selectCommentLikes(int commentId)
     => commentEntityState.entities[commentId]!.likes.ids.map(
       (e) => userEntityState.entities[commentUserLikeEntityState.entities[e]!.userId]!

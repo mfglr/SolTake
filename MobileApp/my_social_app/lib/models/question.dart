@@ -5,6 +5,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
+import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 part 'question.g.dart';
@@ -80,7 +81,7 @@ class Question{
     numberOfCorrectSolutions: numberOfCorrectSolutions,
     numberOfVideoSolutions: numberOfVideoSolutions,
     image: image,
-    likes: Pagination.init(usersPerPage,true),
+    likes: EntityPagination.init(usersPerPage,true),
     comments: Pagination.init(commentsPerPage,true),
     solutions: Pagination.init(solutionsPerPage,true),
     correctSolutions: Pagination.init(solutionsPerPage,true),

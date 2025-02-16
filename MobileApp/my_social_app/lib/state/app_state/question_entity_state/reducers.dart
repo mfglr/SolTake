@@ -14,16 +14,16 @@ QuestionEntityState removeQuestionReducer(QuestionEntityState prev,DeleteQuestio
 QuestionEntityState nextLikesReducer(QuestionEntityState prev,NextQuestionLikesAction action)
   => prev.startLoadingNextLikes(action.questionId);
 QuestionEntityState nextLikesSuccessReducer(QuestionEntityState prev,NextQuestionLikesSuccessAction action)
-  => prev.addNextPageLikes(action.questionId, action.likeIds);
+  => prev.addNextPageLikes(action.questionId, action.questionUserLikes);
 QuestionEntityState nextLikesFailedReducer(QuestionEntityState prev, NextQuestionLikesFailedAction action)
   => prev.stopLoadingNextLikes(action.questionId);
 
 QuestionEntityState dislikeQuestionSuccessReducer(QuestionEntityState prev, DislikeQuestionSuccessAction action)
-  => prev.dislike(action.questionId,action.likeId);
+  => prev.dislike(action.questionId,action.userId);
 QuestionEntityState likeQuestionSuccessReducer(QuestionEntityState prev, LikeQuestionSuccessAction action)
-  => prev.like(action.questionId,action.likeId);
+  => prev.like(action.questionId,action.questionUserLike);
 QuestionEntityState addNewLikeReducer(QuestionEntityState prev,AddNewQuestionLikeAction action)
-  => prev.addNewLike(action.questionId, action.likeId);
+  => prev.addNewLike(action.questionId, action.questionUserLike);
 
 //
 QuestionEntityState markSolutionAsCorrectReducer(QuestionEntityState prev, MarkQuestionSolutionAsCorrectAction action)

@@ -5,16 +5,16 @@ using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.DislikeQuestion
 {
-    public class DislikeQuestionHandler(IUnitOfWork unitOfWork, IAccountAccessor accountAccessor, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository) : IRequestHandler<DislikeQuestionDto>
+    public class DislikeQuestionHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository) : IRequestHandler<DislikeQuestionDto>
     {
-        private readonly IAccountAccessor _accountAccessor = accountAccessor;
+        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IQuestionUserLikeWriteRepository _questionUserLikeWriteRepository = questionUserLikeWriteRepository;
 
         public async Task Handle(DislikeQuestionDto request, CancellationToken cancellationToken)
         {
             var like = 
-                await _questionUserLikeWriteRepository.GetAsync(request.QuestionId, _accountAccessor.Account.Id, cancellationToken) ??
+                await _questionUserLikeWriteRepository.GetAsync(request.QuestionId, _userAccessor.User.Id, cancellationToken) ??
                 throw new QuestionAlreadyDislikedException();
 
             like.Dislike();

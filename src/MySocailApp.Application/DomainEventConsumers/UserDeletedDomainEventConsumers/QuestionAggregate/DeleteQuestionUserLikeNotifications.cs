@@ -1,18 +1,18 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.QuestionAggregate
 {
-    public class DeleteQuestionUserLikeNotifications(IQuestionWriteRepository questionWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserDeletedDomainEvent>
+    public class DeleteQuestionUserLikeNotifications(IUnitOfWork unitOfWork, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {
-        private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
+        private readonly IQuestionUserLikeWriteRepository _questionUserLikeWriteRepository = questionUserLikeWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(UserDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            await _questionWriteRepository.DeleteQuestionUserLikesNotificationsByUserId(notification.User.Id, cancellationToken);
+            //_questionUserLikeWriteRepository.Delete(notification.User, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

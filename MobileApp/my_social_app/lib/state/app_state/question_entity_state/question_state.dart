@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/pagination/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -29,7 +31,7 @@ class QuestionState implements Avatar{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final Multimedia? image;
-  final Pagination likes;
+  final EntityPagination<QuestionUserLikeState> likes;
   final Pagination comments;
   final Pagination solutions;
   final Pagination correctSolutions;
@@ -89,7 +91,7 @@ class QuestionState implements Avatar{
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
     Multimedia? newImage,
-    Pagination? newLikes,
+    EntityPagination<QuestionUserLikeState>? newLikes,
     Pagination? newComments,
     Pagination? newSolutions,
     Pagination? newCorrectSolutions,
@@ -133,27 +135,27 @@ class QuestionState implements Avatar{
     return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
   }
   
-  QuestionState startLodingNextLikes() =>
+  QuestionState startLodingNextLikes() => 
     _optional(newLikes: likes.startLoadingNext());
   QuestionState stopLoadingNextLikes() =>
     _optional(newLikes: likes.stopLoadingNext());
-  QuestionState addNextPageLikes(Iterable<int> likeIds) =>
-    _optional(newLikes: likes.addNextPage(likeIds));
-  QuestionState like(int likeId) => 
+  QuestionState addNextPageLikes(Iterable<QuestionUserLikeState> questionUserLikes) =>
+    _optional(newLikes: likes.addNextPage(questionUserLikes));
+  QuestionState like(QuestionUserLikeState questionUserLike) => 
     _optional(
       newIsLiked: true,
-      newLikes: likes.prependOne(likeId),
+      newLikes: likes.prependOne(questionUserLike),
       newNumberOfLikes: numberOfLikes + 1
-    ); 
-  QuestionState dislike(int likeId) => 
+    );
+  QuestionState dislike(int userId) => 
     _optional(
       newIsLiked: false,
-      newLikes: likes.removeOne(likeId),
+      newLikes: likes.where((e) => e.userId != userId),
       newNumberOfLikes: numberOfLikes - 1
     ); 
-  QuestionState addNewLike(int likeId) =>
+  QuestionState addNewLike(QuestionUserLikeState like) =>
     _optional(
-      newLikes: likes.addInOrder(likeId),
+      newLikes: likes.addInOrder(like),
       newNumberOfLikes: numberOfLikes + 1
     );
 

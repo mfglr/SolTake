@@ -1,6 +1,5 @@
-﻿using MySocailApp.Application.Queries.QuestionAggregate;
-using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+﻿using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -12,15 +11,15 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                 .Join(
                     context.Users,
                     qul => qul.UserId,
-                    (join, user) => new QuestionUserLikeResponseDto(
-                        join.qul.Id,
-                        join.qul.LikedAt,
-                        join.qul.QuestionId,
-                        join.qul.UserId,
+                    user => user.Id,
+                    (qul, user) => new QuestionUserLikeResponseDto(
+                        qul.Id,
+                        qul.LikedAt,
+                        qul.QuestionId,
+                        qul.UserId,
                         user.Name,
-                        join.UserName,
+                        user.UserName.Value,
                         user.Image
-                    )
                     )
                 );
 

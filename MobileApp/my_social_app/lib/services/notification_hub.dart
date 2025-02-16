@@ -152,7 +152,6 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddQuestionUserLikeAction(like: likeState));
       store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, likeId: like.id));
-      store.dispatch(AddUserAction(user: like.user!.toUserState()));
 
       showNotification(context, notification.id);
     }

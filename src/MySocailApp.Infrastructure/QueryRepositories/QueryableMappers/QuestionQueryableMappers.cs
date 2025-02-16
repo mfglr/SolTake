@@ -9,7 +9,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class QuestionQueryableMappers
     {
-        public static IQueryable<QuestionResponseDto> ToQuestionResponseDto(this IQueryable<Question> query, AppDbContext context, int accountId)
+        public static IQueryable<QuestionResponseDto> ToQuestionResponseDto(this IQueryable<Question> query, AppDbContext context, int userId)
             => query
                 .Join(
                     context.Users,
@@ -22,13 +22,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         context.Solutions.Any(s => s.QuestionId == question.Id && s.State == SolutionState.Correct)
                             ? QuestionState.Solved
                             : QuestionState.Unsolved,
-                        question.UserId == accountId,
+                        question.UserId == userId,
                         question.UserId,
                         user.UserName.Value,
                         question.Content.Value,
-                        question.Likes.Any(x => x.UserId == accountId),
-                        question.Savers.Any(x => x.UserId == accountId),
-                        question.Likes.Count,
+                        context.QuestionUserLikes.Any(x => x.UserId == userId && x.QuestionId == question.Id),
+                        context.QuestionUserSaves.Any(x => x.UserId == userId && x.QuestionId == question.Id),
+                        context.QuestionUserLikes.Count(x => x.QuestionId == question.Id),
                         context.Comments.Count(c => c.QuestionId == question.Id),
                         context.Solutions.Count(solution => solution.QuestionId == question.Id),
                         context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.State == SolutionState.Correct),
