@@ -41,39 +41,6 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
             AddDomainEvent(new QuestionCreatedDomainEvent(this));
         }
 
-        //likes
-        private readonly List<QuestionUserLike> _likes = [];
-        public IReadOnlyList<QuestionUserLike> Likes => _likes;
-        private readonly List<QuestionUserLikeNotification> _likeNotifications = [];
-        public IReadOnlyList<QuestionUserLikeNotification> LikeNotifications => _likeNotifications;
-        public QuestionUserLike Like(int likerId)
-        {
-            if (_likes.Any(x => x.UserId == likerId))
-                throw new QuestionWasAlreadyLikedException();
-
-            var like = QuestionUserLike.Create(likerId);
-            _likes.Add(like);
-            if (likerId != UserId && !_likeNotifications.Any(x => x.UserId == likerId))
-            {
-                _likeNotifications.Add(new QuestionUserLikeNotification(likerId));
-                AddDomainEvent(new QuestionLikedDomainEvent(this, like));
-            }
-            return like;
-        }
-        public void Dislike(int userId)
-        {
-            var index = _likes.FindIndex(x => x.UserId == userId);
-            if (index == -1) return;
-            _likes.RemoveAt(index);
-            AddDomainEvent(new QuestionDislikedDomainEvent(this));
-        }
-        public void DeleteLike(int userId)
-        {
-            var index = _likes.FindIndex(x => x.UserId == userId);
-            if (index == -1) return;
-            _likes.RemoveAt(index);
-        }
-
         //saving questions
         private readonly List<QuestionUserSave> _savers = [];
         public IReadOnlyList<QuestionUserSave> Savers => _savers;

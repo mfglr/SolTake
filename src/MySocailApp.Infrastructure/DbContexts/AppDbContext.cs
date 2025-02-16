@@ -8,6 +8,7 @@ using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
@@ -31,13 +32,14 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<UserFollowNotification> UserFollowNotifications { get; private set; }
 
         public DbSet<Question> Questions { get; private set; }
-        public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
-        public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
-        public DbSet<QuestionUserLikeNotification> QuestionUserLikeNotifications { get; private set; }
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }
         public DbSet<SubjectTopic> SubjectTopics { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
+
+        public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
+        
+        public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
 
         public DbSet<Solution> Solutions { get; private set; }
         public DbSet<SolutionUserVote> SolutionUserVotes { get; private set; }

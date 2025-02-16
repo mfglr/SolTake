@@ -21,14 +21,14 @@ namespace MySocailApp.Application.DomainEventConsumers.NotificationAggregate.Que
             var connection = await _notificationConnectionReadRepository.GetByIdAsync(ownerId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
 
+            var like = await _questionUserLikeQueryRepository.GetQuestionLikeAsync(notification.LikeId, cancellationToken);
+            if (like == null) return;
+            
             var n = await _notificationQueryRepository.GetNotificationById(notification.Notification.Id, cancellationToken);
-
-            var question = await _questionUserLikeQueryRepository.GetQuestionLikeAsync(ownerId, notification.LikeId, cancellationToken);
-            if (question == null) return;
 
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)
-                .SendAsync("getQuestionLikedNotification",n,question,cancellationToken);
+                .SendAsync("getQuestionLikedNotification", n, like, cancellationToken);
         }
     }
 }

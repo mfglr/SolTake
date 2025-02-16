@@ -13,21 +13,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
             builder.OwnsOne(x => x.Topic);
             builder.OwnsOne(x => x.Content);
 
-
             builder
                 .HasMany(x => x.Medias)
-                .WithOne()
-                .HasForeignKey(x => x.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Likes)
-                .WithOne()
-                .HasForeignKey(x => x.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.LikeNotifications)
                 .WithOne()
                 .HasForeignKey(x => x.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
