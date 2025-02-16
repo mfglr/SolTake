@@ -20,12 +20,12 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
         private readonly List<UserRole> _roles = [];
         public IReadOnlyCollection<UserRole> Roles => _roles;
         public bool IsSendableEmailVerificationMail => GoogleAccount == null;
-
         public string AccessToken { get; internal set; } = null!; //not mapped
         public string RefreshToken { get; internal set; } = null!; //not mapped
 
-        private User() { }
+        private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
+        private User() { }
         public User(Email email, Password password, Password passwordConfirm, Language language)
         {
             if (!password.CompareValue(passwordConfirm))
@@ -45,6 +45,7 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             Language = language;
             SecurityStamp = GenerateSecurityStamp();
         }
+        
         internal void Create(int policyId, int termsOfUseId)
         {
             if (GoogleAccount == null)
@@ -70,7 +71,6 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
             Image = null;
         }
-
         public void UpdateName(string name)
         {
             Name = name;
@@ -79,6 +79,23 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
         public void UpdateBiography(Biography biography)
         {
             Biography = biography;
+            UpdatedAt = DateTime.UtcNow;
+        }
+        internal void UpdateUserName(UserName userName)
+        {
+            UserName = userName;
+            UpdatedAt = DateTime.UtcNow;
+        }
+        internal void UpdateEmail(Email email)
+        {
+            _verificationTokens.Add(EmailVerificationToken.Create());
+            Email = email;
+            UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new EmailVerificationTokenUpdatedDomainEvent(this));
+        }
+        public void UpdateLanguage(Language language)
+        {
+            Language = language;
             UpdatedAt = DateTime.UtcNow;
         }
 
@@ -138,28 +155,6 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             var index = _searchers.FindIndex(x => x.SearcherId == searcherId);
             if (index == -1) return;
             _searchers.RemoveAt(index);
-        }
-
-        private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
-
-        internal void UpdateUserName(UserName userName)
-        {
-            UserName = userName;
-            UpdatedAt = DateTime.UtcNow;
-        }
-
-        internal void UpdateEmail(Email email)
-        {
-            _verificationTokens.Add(EmailVerificationToken.Create());
-            Email = email;
-            UpdatedAt = DateTime.UtcNow;
-            AddDomainEvent(new EmailVerificationTokenUpdatedDomainEvent(this));
-        }
-
-        public void UpdateLanguage(Language language)
-        {
-            Language = language;
-            UpdatedAt = DateTime.UtcNow;
         }
 
         //Email verfication Tokens
