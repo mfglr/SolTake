@@ -3,7 +3,7 @@ using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QuestionUserLikeAggregate
+namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
 {
     public class QuestionUserLikeWriteRepository(AppDbContext context) : IQuestionUserLikeWriteRepository
     {

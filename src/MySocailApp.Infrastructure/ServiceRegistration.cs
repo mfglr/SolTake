@@ -32,7 +32,8 @@ using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.NotificationConnectionAggregate;
 using MySocailApp.Infrastructure.PrivacyPolicyAggreagate;
 using MySocailApp.Infrastructure.QueryRepositories;
-using MySocailApp.Infrastructure.QuestionAggregate;
+using MySocailApp.Infrastructure.QuestionDomain;
+using MySocailApp.Infrastructure.QuestionDomain.QuestionAggregate;
 using MySocailApp.Infrastructure.RoleAggregate;
 using MySocailApp.Infrastructure.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
@@ -51,8 +52,8 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddDbContext()
                 .AddServices()
+                .AddQuestionDomainInfrastructureServices()
                 .AddUserAggregate()
-                .AddQuestionAggregate()
                 .AddSolutionAggregate()
                 .AddExamAggregate()
                 .AddSubjectAggregate()
@@ -154,11 +155,6 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddScoped<IUserWriteRepository, UserWriteRepository>()
                 .AddScoped<IUserReadRepository, UserReadRepository>();
-        
-        private static IServiceCollection AddQuestionAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<IQuestionWriteRepository, QuestionWriteRepository>()
-                .AddScoped<IQuestionReadRepository, QuestionReadRepository>();
 
         private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
             => services

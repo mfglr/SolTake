@@ -3,21 +3,21 @@ using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QuestionAggregate
+namespace MySocailApp.Infrastructure.QuestionDomain.QuestionAggregate
 {
     public class QuestionWriteRepository(AppDbContext context) : IQuestionWriteRepository
     {
         private readonly AppDbContext _context = context;
 
         public async Task CreateAsync(Question question, CancellationToken cancellationToken)
-            => await _context.AddAsync(question,cancellationToken);
+            => await _context.AddAsync(question, cancellationToken);
 
         public void Delete(Question question)
             => _context.Questions.Remove(question);
         public void DeleteRange(IEnumerable<Question> questions)
             => _context.Questions.RemoveRange(questions);
 
-        public Task<Question?> GetByIdAsync(int id,CancellationToken cancellationToken)
+        public Task<Question?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => _context.Questions.FirstOrDefaultAsync(x => x.Id == id);
 
         public Task<Question?> GetQuestionWithImagesAsync(int questionId, CancellationToken cancellationToken)

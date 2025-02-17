@@ -6,8 +6,8 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Exceptions
 {
     public class QuestionAlreadyDislikedException : AppException
     {
-        private readonly static string _messageEn = "You have already removed the like from the question!";
-        private readonly static string _messageTr = "Sorudan beğeniyi zaten kaldırdın!";
+        private readonly static string _messageEn = "You have already removed the like from the question or never liked the question!";
+        private readonly static string _messageTr = "Sorudan beğeniyi zaten kaldırdın ya da soruyu hiç beğenmedin!";
 
         private readonly static Dictionary<string, string> _messages = new() {
             { Languages.EN, _messageEn },

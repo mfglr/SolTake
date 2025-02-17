@@ -14,7 +14,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     user => user.Id,
                     (qul, user) => new QuestionUserLikeResponseDto(
                         qul.Id,
-                        qul.LikedAt,
+                        qul.CreatedAt,
                         qul.QuestionId,
                         qul.UserId,
                         user.Name,

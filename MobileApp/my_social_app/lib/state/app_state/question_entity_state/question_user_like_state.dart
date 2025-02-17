@@ -4,7 +4,7 @@ import 'package:multimedia/models/multimedia.dart';
 @immutable
 class QuestionUserLikeState{
   final int id;
-  final DateTime likedAt;
+  final DateTime createdAt;
   final int questionId;
   final int userId;
   final String? name;
@@ -13,7 +13,7 @@ class QuestionUserLikeState{
   
   const QuestionUserLikeState({
     required this.id,
-    required this.likedAt,
+    required this.createdAt,
     required this.questionId,
     required this.userId,
     required this.name,

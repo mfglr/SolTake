@@ -7,7 +7,7 @@ namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggreg
     public class LikeQuestionCommandResponseDto(QuestionUserLike like, User user)
     {
         public int Id { get; private set; } = like.Id;
-        public DateTime LikedAt { get; private set; } = like.LikedAt;
+        public DateTime CreatedAt { get; private set; } = like.CreatedAt;
         public int QuestionId { get; private set; } = like.QuestionId;
         public int UserId { get; private set; } = like.UserId;
         public string? Name { get; private set; } = user.Name;

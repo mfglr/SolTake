@@ -173,6 +173,22 @@ namespace MySocailApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuestionUserLikes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionUserLikes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -448,45 +464,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     table.PrimaryKey("PK_QuestionMultimedia", x => x.Id);
                     table.ForeignKey(
                         name: "FK_QuestionMultimedia_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QuestionUserLikeNotifications",
-                columns: table => new
-                {
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QuestionUserLikeNotifications", x => new { x.QuestionId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_QuestionUserLikeNotifications_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QuestionUserLikes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QuestionUserLikes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_QuestionUserLikes_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
@@ -3053,11 +3030,6 @@ namespace MySocailApp.Infrastructure.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionUserLikes_QuestionId",
-                table: "QuestionUserLikes",
-                column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_QuestionUserSaves_QuestionId",
                 table: "QuestionUserSaves",
                 column: "QuestionId");
@@ -3161,9 +3133,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuestionMultimedia");
-
-            migrationBuilder.DropTable(
-                name: "QuestionUserLikeNotifications");
 
             migrationBuilder.DropTable(
                 name: "QuestionUserLikes");

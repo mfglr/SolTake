@@ -21,7 +21,7 @@ namespace MySocailApp.Application.DomainEventConsumers.NotificationAggregate.Que
             var connection = await _notificationConnectionReadRepository.GetByIdAsync(ownerId, cancellationToken);
             if (connection == null || !connection.IsConnected) return;
 
-            var like = await _questionUserLikeQueryRepository.GetQuestionLikeAsync(notification.LikeId, cancellationToken);
+            var like = await _questionUserLikeQueryRepository.GetLikeAsync(notification.LikeId, cancellationToken);
             if (like == null) return;
             
             var n = await _notificationQueryRepository.GetNotificationById(notification.Notification.Id, cancellationToken);

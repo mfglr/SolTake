@@ -5,7 +5,7 @@ namespace MySocailApp.Application.QueryRepositories
 {
     public interface IQuestionUserLikeQueryRepository
     {
-        Task<QuestionUserLikeResponseDto?> GetQuestionLikeAsync(int likeId, CancellationToken cancellationToken);
-        Task<List<QuestionUserLikeResponseDto>> GetQuestionLikesAsync(int questionId, IPage page, CancellationToken cancellationToken);
+        Task<QuestionUserLikeResponseDto?> GetLikeAsync(int likeId, CancellationToken cancellationToken);
+        Task<List<QuestionUserLikeResponseDto>> GetLikesAsync(int questionId, IPage page, CancellationToken cancellationToken);
     }
 }

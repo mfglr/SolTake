@@ -12,7 +12,7 @@ using MySocailApp.Infrastructure.DbContexts;
 namespace MySocailApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250216053213_Initial")]
+    [Migration("20250216181048_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -509,43 +509,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("QuestionMultimedia");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLike", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("QuestionUserLikes");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
-                {
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("QuestionId", "UserId");
-
-                    b.ToTable("QuestionUserLikeNotifications");
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserSave", b =>
                 {
                     b.Property<int>("Id")
@@ -571,6 +534,31 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionUserSaves");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities.QuestionUserLike", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionUserLikes");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities.Subject", b =>
@@ -11799,24 +11787,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLike", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", null)
-                        .WithMany("Likes")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserLikeNotification", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", null)
-                        .WithMany("LikeNotifications")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.QuestionUserSave", b =>
                 {
                     b.HasOne("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", null)
@@ -12184,10 +12154,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities.Question", b =>
                 {
-                    b.Navigation("LikeNotifications");
-
-                    b.Navigation("Likes");
-
                     b.Navigation("Medias");
 
                     b.Navigation("Savers");

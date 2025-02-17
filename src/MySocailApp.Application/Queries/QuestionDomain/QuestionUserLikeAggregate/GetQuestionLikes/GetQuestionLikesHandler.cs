@@ -8,6 +8,6 @@ namespace MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggrega
         private readonly IQuestionUserLikeQueryRepository _repository = repository;
 
         public Task<List<QuestionUserLikeResponseDto>> Handle(GetQuestionLikesDto request, CancellationToken cancellationToken)
-            => _repository.GetQuestionLikesAsync(request.QuestionId,request,cancellationToken);
+            => _repository.GetLikesAsync(request.QuestionId,request,cancellationToken);
     }
 }
