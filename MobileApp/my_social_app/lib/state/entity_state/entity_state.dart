@@ -70,9 +70,9 @@ class EntityState<T extends dynamic> {
     }
     return entities;
   }
-  Map<dynamic,T> where(bool Function(T) predicate){
+  Map<dynamic,T> where(bool Function(T) test){
     final Map<dynamic,T> entities = {};
-    final values = this.entities.values.where(predicate);
+    final values = this.entities.values.where(test);
     entities.addEntries(values.map((e) => MapEntry(e.id, e)));
     return entities;
   }

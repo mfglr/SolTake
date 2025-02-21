@@ -60,6 +60,8 @@ class EntityPagination<T extends dynamic>{
   bool get isReadyForNextPage => !isLast && !loadingNext;
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
+  
+  Iterable<T> toIterable() => entities.values;
 
   EntityPagination<T> prependOne(T value)
     => _optinal(newEntities: entities.prependOne(value));

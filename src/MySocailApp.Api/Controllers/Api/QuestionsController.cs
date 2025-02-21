@@ -19,8 +19,6 @@ using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetSolved
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetUnsolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetVideoQuestions;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.SearchQuestions;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate.GetQuestionLikes;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -83,10 +81,6 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserId(int userId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _sender.Send(new GetSolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
-
-        [HttpGet("{questionId}")]
-        public Task<List<QuestionUserLikeResponseDto>> GetQuestionLikes(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => _sender.Send(new GetQuestionLikesDto(questionId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{userId}")]
         public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)

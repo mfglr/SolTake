@@ -16,7 +16,6 @@ import 'package:my_social_app/state/app_state/comment_user_like_state/actions.da
 import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_user_like_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -147,11 +146,9 @@ class NotificationHub{
       
       final notification = notificationModel.Notification.fromJson((list[0] as dynamic)).toNotificationState();
       final like = QuestionUserLike.fromJson(list[1] as dynamic);
-      final likeState = like.toQuestionUserLikeState();
 
       store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddQuestionUserLikeAction(like: likeState));
-      store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, likeId: like.id));
+      store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, questionUserLike: like.toQuestionUserLikeState()));
 
       showNotification(context, notification.id);
     }

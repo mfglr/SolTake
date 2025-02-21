@@ -16,7 +16,7 @@ class DisplayQuestionLikesButton extends StatelessWidget {
       onPressed: () => 
         Navigator
           .of(context)
-          .push(MaterialPageRoute(builder:(context) => DisplayQuestionLikesPage(questionId: question.id))),
+          .push(MaterialPageRoute(builder:(context) => DisplayQuestionLikesPage(question: question))),
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),

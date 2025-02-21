@@ -35,18 +35,11 @@ extension MapExtentions<T extends dynamic> on Map<int,T>{
   }
 
 
-  Map<int,T> prependMany(Iterable<T> entities){
-    Map<int,T> r = {};
-    r.addEntries(entities.map((e) => MapEntry(e.id, e)));
-    r.addAll(this);
-    return r;
-  }
-  Map<int,T> appendMany(Iterable<T> entities){
-    Map<int,T> r = {};
-    r.addAll(this);
-    r.addEntries(entities.map((e) => MapEntry(e.id, e)));
-    return r;
-  }
+  Map<int,T> prependMany(Iterable<T> entities) =>
+    { for (var e in [...entities,...values]) e.id : e };
+  Map<int,T> appendMany(Iterable<T> entities) =>
+    { for (var e in [...values,...entities]) e.id : e };
+
   Map<int,T> updateMany(Iterable entities){
     Map<int,T> r = {};
     r.addAll(this);
