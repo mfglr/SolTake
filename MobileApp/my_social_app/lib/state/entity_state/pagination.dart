@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/pagination/page.dart' as pagination;
+import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/page.dart' as pagination;
 
 @immutable
-class Pagination{
+class Pagination<K extends Comparable<K>,V extends HasId<K>>{
   final bool isLast;
   final bool loadingNext;
   final bool loadingPrev;
   final int recordsPerPage;
   final bool isDescending;
-  final Iterable<int> ids;
+  final Iterable<V> values;
 
   const Pagination({
     required this.isLast,
@@ -16,7 +17,7 @@ class Pagination{
     required this.loadingPrev,
     required this.isDescending,
     required this.recordsPerPage,
-    required this.ids,
+    required this.values,
   });
 
   factory Pagination.init(int recordsPerPage,bool isDescending)
@@ -24,193 +25,187 @@ class Pagination{
         isLast: false,
         loadingNext: false,
         loadingPrev: false,
-        ids: const [],
+        values: const [],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
   
-  pagination.Page get prev => 
+  pagination.Page<K> get prev => 
     pagination.Page(
-      offset: ids.firstOrNull ?? 2147483647,
+      offset: values.firstOrNull?.id,
       take: recordsPerPage,
       isDescending: !isDescending
     );
 
-  pagination.Page get next =>
+  pagination.Page<K> get next =>
     pagination.Page(
-      offset: ids.lastOrNull ?? 2147483647,
+      offset: values.lastOrNull?.id,
       take: recordsPerPage,
       isDescending: isDescending
     );
 
-  bool get hasAtLeastOnePage => ids.length >= recordsPerPage;
+  bool get hasAtLeastOnePage => values.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loadingNext;
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
 
+  Iterable<V> merge(V value) => [value, ...values.where((e) => e.id.compareTo(value.id) != 0)];
 
-  Iterable<int> merge(int id) => [id, ...ids.where((e) => e != id)];
-
-  Pagination prependMany(Iterable<int> ids)
+  Pagination<K,V> prependMany(Iterable<V> values)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-        ids: [...ids, ...this.ids]
+        values: [...values, ...this.values]
       );
-  Pagination appendMany(Iterable<int> ids)
+  Pagination<K,V> appendMany(Iterable<V> values)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-        ids: [...this.ids,...ids]
+        values: [...this.values,...values]
       );
 
-  Pagination startLoadingNext()
+  Pagination<K,V> startLoadingNext()
     => Pagination(
         isLast: isLast,
         loadingNext: true,
         loadingPrev: loadingPrev,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-        ids: ids,
+        values: values,
       );
-  Pagination stopLoadingNext()
+  Pagination<K,V> stopLoadingNext()
     => Pagination(
         isLast: isLast,
         loadingNext: false,
         loadingPrev: loadingPrev,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-        ids: ids,
+        values: values,
       );
-  Pagination startLoadingPrev()
+  Pagination<K,V> addNextPage(Iterable<V> values)
+    => Pagination(
+        isLast: values.length < recordsPerPage,
+        loadingNext: false,
+        loadingPrev: loadingPrev,
+        values: [...this.values, ...values],
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+      );
+      
+  Pagination<K,V> startLoadingPrev()
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: true,
-        ids: ids,
+        values: values,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination stopLoadingPrev()
+  Pagination<K,V> stopLoadingPrev()
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: false,
-        ids: ids,
+        values: values,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination addNextPage(Iterable<int> ids)
-    => Pagination(
-        isLast: ids.length < recordsPerPage,
-        loadingNext: false,
-        loadingPrev: loadingPrev,
-        ids: [...this.ids, ...ids],
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-      );
-
-  Pagination addPrevPage(Iterable<int> ids)
+  Pagination<K,V> addPrevPage(Iterable<V> values)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: false,
-        ids: [...ids.toList().reversed, ...this.ids],
+        values: [...values.toList().reversed, ...this.values],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination prependOne(int id){
-    if(ids.any((e) => e == id)) return this;
+  
+  Pagination<K,V> prependOne(V value){
+    if(values.any((e) => e.id.compareTo(value.id) == 0)) return this;
     return Pagination(
       isLast: isLast,
       loadingNext: loadingNext,
       loadingPrev: loadingPrev,
-      ids: [id, ...ids],
+      values: [value, ...values],
       isDescending: isDescending,
       recordsPerPage: recordsPerPage,
     );
   }
-  Pagination appendOne(int id){
-    if(ids.any((e) => e == id)) return this;
+  Pagination<K,V> appendOne(V value){
+    if(values.any((e) => e.id.compareTo(value.id) == 0)) return this;
     return Pagination(
       isLast: isLast,
       loadingNext: loadingNext,
       loadingPrev: loadingPrev,
-      ids: [...ids, id],
+      values: [...values, value],
       isDescending: isDescending,
       recordsPerPage: recordsPerPage,
     );
   }
-  Pagination prependOneAndRemovePrev(int id)
+  Pagination<K,V> prependOneAndRemovePrev(V value)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
-        ids: [id, ...ids.where((e) => e != id)],
+        values: [value, ...values.where((e) => e.id.compareTo(value.id) != 0)],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination prependOneAndRemoveOne(int addedOne,int removedOne)
-    => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-        ids: [addedOne, ...ids.where((e) => e != removedOne)],
-      );
-  Pagination removeOne(int id)
-    => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        ids: ids.where((e) => e != id),
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-      );
-  Pagination removeMany(Iterable<int> ids)
+  Pagination<K,V> prependOneAndRemoveOne(V addedOne,K removedOne)
     => Pagination(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-        ids: this.ids.where((e) => !ids.any((id) => e == id))
+        values: [addedOne, ...values.where((e) => e.id != removedOne)],
       );
-  Pagination addfirstPage(Iterable<int> ids)
+  Pagination<K,V> addfirstPage(Iterable<V> values)
     => Pagination(
-        isLast: ids.length < recordsPerPage,
+        isLast: values.length < recordsPerPage,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: ids,
+        values: values,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination appendLastPage(Iterable<int> ids)
+  Pagination<K,V> appendLastPage(Iterable<V> values)
     => Pagination(
         isLast: true,
         loadingNext: false,
         loadingPrev: loadingPrev,
-        ids: [...this.ids, ...ids],
+        values: [...this.values, ...values],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  Pagination addInOrder(int id){
-    if(!isLast && (ids.isEmpty || id < ids.last)) return this;
+  Pagination<K,V> addInOrder(V value){
+    if(!isLast && (values.isEmpty || value.id.compareTo(values.last.id) < 0)) return this;
     return Pagination(
       isLast: isLast,
       loadingNext: loadingNext,
       loadingPrev: loadingPrev,
-      ids: [...ids.takeWhile((e) => e > id),id,...ids.skipWhile((e) => e > id)],
+      values: [
+        ...values.takeWhile((e) => e.id.compareTo(value.id) > 0),
+        value,
+        ...values.skipWhile((e) => e.id.compareTo(value.id) > 0)
+      ],
       isDescending: isDescending,
       recordsPerPage: recordsPerPage
     );
   }
-
+  Pagination<K,V> where(bool Function(V) test) =>
+    Pagination(
+      isLast: isLast,
+      loadingNext: loadingNext,
+      loadingPrev: loadingPrev,
+      isDescending: isDescending,
+      recordsPerPage: recordsPerPage,
+      values: values.where(test)
+    );
 }

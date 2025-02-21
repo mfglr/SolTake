@@ -183,8 +183,8 @@ class AddSolutionCommentAction extends AppAction{
 }
 @immutable
 class RemoveSolutionCommentAction extends AppAction{
-  final int solutionId;
-  final int commentId;
+  final num solutionId;
+  final num commentId;
   const RemoveSolutionCommentAction({required this.solutionId, required this.commentId});
 }
 @immutable

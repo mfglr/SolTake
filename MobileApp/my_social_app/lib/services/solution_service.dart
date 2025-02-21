@@ -9,7 +9,7 @@ import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/models/solution_user_save.dart';
 import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/pagination/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 
 class SolutionService{
   final AppClient _appClient;
@@ -122,31 +122,31 @@ class SolutionService{
       .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
       .then((response) => Solution.fromJson(response)); 
 
-  Future<Iterable<Solution>> getSolutionsByQuestionId(int questionId, Page page) =>
+  Future<Iterable<Solution>> getSolutionsByQuestionId(num questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getCorrectSolutionsByQuestionId(int questionId, Page page) =>
+  Future<Iterable<Solution>> getCorrectSolutionsByQuestionId(num questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getCorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getPendingSolutionsByQuestionId(int questionId, Page page) =>
+  Future<Iterable<Solution>> getPendingSolutionsByQuestionId(num questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getPendingSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getIncorrectSolutionsByQuestionId(int questionId, Page page) =>
+  Future<Iterable<Solution>> getIncorrectSolutionsByQuestionId(num questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getIncorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-    Future<Iterable<Solution>> getVideoSolutions(int questionId, Page page) =>
+    Future<Iterable<Solution>> getVideoSolutions(num questionId, Page page) =>
       _appClient
         .get(_appClient.generatePaginationUrl("$solutionController/$getVideoSolutionsEndpoint/$questionId",page))
         .then((response) => response as List)

@@ -1,9 +1,10 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/Id.dart';
+import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
-class CommentState implements Avatar{
-  final int id;
+class CommentState extends HasId<num> implements Avatar{
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isOwner;
@@ -17,19 +18,18 @@ class CommentState implements Avatar{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
-  final Pagination likes;
-  final Pagination replies;
+  final Pagination<num,Id<num>> likes;
+  final Pagination<num,Id<num>> replies;
   final bool repliesVisibility;
   final Multimedia? image;
 
   @override
   int get avatarId => userId;
-
   @override
   Multimedia? get avatar => image;
 
-  const CommentState({
-    required this.id,
+  CommentState({
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.isOwner,
@@ -50,7 +50,7 @@ class CommentState implements Avatar{
   });
 
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
-  int get numberOfNotDisplayedReplies => numberOfReplies - (repliesVisibility ? replies.ids.length : 0);
+  int get numberOfNotDisplayedReplies => numberOfReplies - (repliesVisibility ? replies.values.length : 0);
 
   CommentState _optional({
     String? newUserName,
@@ -59,8 +59,8 @@ class CommentState implements Avatar{
     bool? newIsLiked,
     int? newNumberOfLikes,
     int? newNumberOfReplies,
-    Pagination? newLikes,
-    Pagination? newReplies,
+    Pagination<num,Id<num>>? newLikes,
+    Pagination<num,Id<num>>? newReplies,
     bool? newRepliesVisibility,
     Multimedia? newImage,
   }) => CommentState(
@@ -86,43 +86,43 @@ class CommentState implements Avatar{
 
   CommentState startLoadingNextLikes() => _optional(newLikes: likes.startLoadingNext());
   CommentState stopLoadingNextLikes() => _optional(newLikes: likes.stopLoadingNext());
-  CommentState addNextPageLikes(Iterable<int> ids) => _optional(newLikes: likes.addNextPage(ids));
-  CommentState like(int likeId) =>
+  CommentState addNextPageLikes(Iterable<num> ids) => _optional(newLikes: likes.addNextPage(ids.map((e) => Id(id: e))));
+  CommentState like(num likeId) =>
     _optional(
       newNumberOfLikes: numberOfLikes + 1,
-      newLikes: likes.prependOne(likeId),
+      newLikes: likes.prependOne(Id(id: likeId)),
       newIsLiked: true,
     );
-  CommentState dislike(int likeId) =>
+  CommentState dislike(num likeId) =>
     _optional(
       newNumberOfLikes: numberOfLikes - 1,
-      newLikes: likes.removeOne(likeId),
+      newLikes: likes.where((e) => e.id != likeId),
       newIsLiked: false
     );
-  CommentState addNewLike(int likeId) =>
+  CommentState addNewLike(num likeId) =>
     _optional(
       newNumberOfLikes: numberOfLikes + 1,
-      newLikes: likes.addInOrder(likeId)
+      newLikes: likes.addInOrder(Id(id: likeId))
     );
  
   CommentState startLoadingNextReplies() => _optional(newReplies: replies.startLoadingNext());
   CommentState stopLoadingNextReplies() => _optional(newReplies: replies.stopLoadingNext());
-  CommentState addNextReplies(Iterable<int> replyIds) => _optional(newReplies: replies.addNextPage(replyIds));
-  CommentState addReply(int replyId) =>
+  CommentState addNextReplies(Iterable<num> replyIds) => _optional(newReplies: replies.addNextPage(replyIds.map((e) => Id(id: e))));
+  CommentState addReply(num replyId) =>
     _optional(
-      newReplies: replies.prependOne(replyId),
+      newReplies: replies.prependOne(Id(id: replyId)),
       newNumberOfReplies: numberOfReplies + 1,
       newRepliesVisibility: true,
     );
-  CommentState removeReply(int replyId) =>
+  CommentState removeReply(num replyId) =>
     _optional(
-      newReplies: replies.removeOne(replyId),
+      newReplies: replies.where((e) => e.id != replyId),
       newNumberOfReplies: numberOfReplies - 1,
       newRepliesVisibility: true,
     );
-  CommentState addNewReply(int replyId) =>
+  CommentState addNewReply(num replyId) =>
     _optional(
-      newReplies: replies.addInOrder(replyId),
+      newReplies: replies.addInOrder(Id(id: replyId)),
       newNumberOfReplies: numberOfReplies + 1,
       newRepliesVisibility: true,
     );

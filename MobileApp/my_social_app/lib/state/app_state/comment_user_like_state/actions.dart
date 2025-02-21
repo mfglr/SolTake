@@ -16,6 +16,6 @@ class AddCommentUserLikeAction extends AppAction{
 
 @immutable
 class RemoveCommentUserLikeAction extends AppAction{
-  final int likeId;
+  final num likeId;
   const RemoveCommentUserLikeAction({required this.likeId});
 }

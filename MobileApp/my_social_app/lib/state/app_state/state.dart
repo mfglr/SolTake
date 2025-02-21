@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
@@ -7,7 +8,7 @@ import 'package:my_social_app/state/app_state/create_comment_state/create_commen
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
-import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
+import 'package:my_social_app/state/app_state/home_page_questions_state/home_page_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
@@ -18,6 +19,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_user_like_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/question_user_save_state/question_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
@@ -32,12 +34,20 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
+import 'package:my_social_app/state/entity_state/Id.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
 
 @immutable
 class AppState{
+  final EntityState<num,QuestionState> questionEntityState;
+  final EntityState<num,QuestionUserLikeState> questionUserLikeEntityState;
+  final Pagination<num,Id<num>> homePageQuestions;
+  final EntityState<num,ExamState> examEntityState;
+  final Pagination<num,Id<num>> appExams;
+
   final bool isInitialized;
   final ActiveAccountPage activeAccountPage;
   final String? accessToken;
@@ -45,41 +55,40 @@ class AppState{
   final UserEntityState userEntityState;
   final FollowEntityState followEntityState;
   final SearchState searchState;
-  final ExamEntityState examEntityState;
   final SubjectEntityState subjectEntityState;
   final TopicEntityState topicEntityState;
   final SolutionEntityState solutionEntityState;
   final SolutionUserVoteEntityState solutionUserVoteEntityState;
   final SolutionUserSaveEntityState solutionUserSaveEntityState;
-  final HomePageState homePageState;
-  final CommentEntityState commentEntityState;
-  final CommentUserLikeEntityState commentUserLikeEntityState;
+  final EntityState<num,CommentState> commentEntityState;
+  final EntityState<num,CommentUserLikeState> commentUserLikeEntityState;
   final CreateCommentState createCommentState;
   final NotificationEntityState notificationEntityState;
   final MessageEntityState messageEntityState;
   final MessageHomePageState messageHomePageState;
   final UserSearchEntityState userSearchEntityState;
-  final QuestionEntityState questionEntityState;
-  final QuestionUserSaveEntityState questionUserSaveEntityState;
-  final Pagination exams;
   final PolicyState policyState;
   final Pagination videoQuestions;
   final UploadEntityState uploadEntityState;
 
   const AppState({
+    required this.questionEntityState,
+    required this.questionUserLikeEntityState,
+    required this.homePageQuestions,
+    required this.examEntityState,
+    required this.appExams,
+
     required this.activeAccountPage,
     required this.accessToken,
     required this.loginState,
     required this.isInitialized,
     required this.userEntityState,
     required this.searchState,
-    required this.examEntityState,
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.solutionEntityState,
     required this.solutionUserVoteEntityState,
     required this.solutionUserSaveEntityState,
-    required this.homePageState,
     required this.commentEntityState,
     required this.commentUserLikeEntityState,
     required this.createCommentState,
@@ -88,15 +97,19 @@ class AppState{
     required this.messageHomePageState,
     required this.userSearchEntityState,
     required this.followEntityState,
-    required this.questionEntityState,
-    required this.questionUserSaveEntityState,
-    required this.exams,
     required this.policyState,
     required this.videoQuestions,
     required this.uploadEntityState
   });
 
   AppState clear() => AppState(
+    questionEntityState: EntityState(),
+    questionUserLikeEntityState: EntityState(),
+    homePageQuestions: Pagination.init(questionsPerPage, true),
+
+    examEntityState: EntityState(),
+    appExams: Pagination.init(examsPerPage, true),
+
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     loginState: null,
@@ -108,24 +121,19 @@ class AppState{
       users: Pagination.init(usersPerPage,true),
       searchedUsers: Pagination.init(usersPerPage,true)
     ),
-    examEntityState: const ExamEntityState(entities: {}),
     subjectEntityState: const SubjectEntityState(entities: {}),
     topicEntityState: const TopicEntityState(entities: {}),
     solutionEntityState: const SolutionEntityState(entities: {}),
-    homePageState: HomePageState(questions: Pagination.init(questionsPerPage,true)),
-    commentEntityState: const CommentEntityState(entities: {}),
-    commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
+    commentEntityState: EntityState(),
+    commentUserLikeEntityState: EntityState(),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
     messageEntityState: const MessageEntityState(entities: {}),
     messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),
-    questionEntityState: const QuestionEntityState(entities: {}),
-    questionUserSaveEntityState: const QuestionUserSaveEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
-    exams: Pagination.init(examsPerPage, true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()

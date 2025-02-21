@@ -1,4 +1,4 @@
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
 class MessageHomePageState{
   final Pagination conversations;

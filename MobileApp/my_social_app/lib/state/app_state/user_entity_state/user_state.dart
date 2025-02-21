@@ -4,7 +4,7 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class UserState implements Avatar{

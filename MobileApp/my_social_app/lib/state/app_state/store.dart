@@ -1,15 +1,12 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_entity_state.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/exam_entity_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
-import 'package:my_social_app/state/app_state/home_page_state/home_page_state.dart';
-import 'package:my_social_app/state/app_state/home_page_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/home_page_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
@@ -21,8 +18,6 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_entity_state.dart';
-import 'package:my_social_app/state/app_state/question_user_save_state/question_user_save_entity_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
@@ -40,13 +35,18 @@ import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart
 import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
   reducers,
   initialState: AppState(
+    questionEntityState: EntityState(),
+    questionUserLikeEntityState: EntityState(),
+    homePageQuestions: Pagination.init(questionsPerPage, true),
+
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     loginState: null,
@@ -58,12 +58,11 @@ final store = Store(
       users: Pagination.init(usersPerPage,true),
       searchedUsers: Pagination.init(usersPerPage,true)
     ),
-    examEntityState: const ExamEntityState(entities: {}),
+    examEntityState: EntityState(),
     subjectEntityState: const SubjectEntityState(entities: {}),
     topicEntityState: const TopicEntityState(entities: {}),
     solutionEntityState: const SolutionEntityState(entities: {}),
-    homePageState: HomePageState(questions: Pagination.init(questionsPerPage,true)),
-    commentEntityState: const CommentEntityState(entities: {}),
+    commentEntityState: EntityState(),
     commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
@@ -71,8 +70,6 @@ final store = Store(
     messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
     userSearchEntityState: const UserSearchEntityState(entities: {}),
     followEntityState: const FollowEntityState(entities: {}),
-    questionEntityState: const QuestionEntityState(entities: {}),
-    questionUserSaveEntityState: const QuestionUserSaveEntityState(entities: {}),
     solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
     solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
     exams: Pagination.init(examsPerPage, true),
@@ -168,8 +165,8 @@ final store = Store(
     loadQuestionMiddleware,
     createQuestionMiddleware,
     deleteQuestionMiddleware,
-    saveQuestionMiddleware,
-    unsaveQuestionMiddleware,
+    // saveQuestionMiddleware,
+    // unsaveQuestionMiddleware,
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
 

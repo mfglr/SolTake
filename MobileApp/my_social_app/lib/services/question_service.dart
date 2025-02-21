@@ -7,7 +7,7 @@ import 'package:my_social_app/constants/question_endpoints.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/models/question_user_save.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/pagination/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:http_parser/http_parser.dart';
 
 class QuestionService{
@@ -45,7 +45,7 @@ class QuestionService{
   
   
 
-  Future<QuestionUserSave> save(int questionId) =>
+  Future<QuestionUserSave> save(num questionId) =>
     _appClient
       .post(
         "$questionController/$saveQuestionEndpoint",
@@ -53,11 +53,11 @@ class QuestionService{
       )
       .then((json) => QuestionUserSave.fromJson(json));
   
-  Future<void> unsave(int questionId) =>
+  Future<void> unsave(num questionId) =>
     _appClient
       .delete("$questionController/$unsaveQuestionEndpoint/$questionId");
   
-  Future<Question> getById(int questionId) =>
+  Future<Question> getById(num questionId) =>
     _appClient
       .get("$questionController/$getQuestionByIdEndpoint/$questionId")
       .then((json) => Question.fromJson(json));

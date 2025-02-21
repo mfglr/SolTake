@@ -7,7 +7,7 @@ class NextExamsAction extends AppAction{
 }
 @immutable
 class NextExamsSuccessAction extends AppAction{
-  final Iterable<int> examIds;
+  final Iterable<num> examIds;
   const NextExamsSuccessAction({required this.examIds});
 }
 @immutable

@@ -1,5 +1,5 @@
 import 'package:my_social_app/state/pagination/entity_pagination.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 

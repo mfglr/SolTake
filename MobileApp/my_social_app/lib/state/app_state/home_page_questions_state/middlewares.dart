@@ -1,6 +1,6 @@
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/home_page_state/actions.dart';
+import 'package:my_social_app/state/app_state/home_page_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -9,7 +9,7 @@ import 'package:redux/redux.dart';
 
 void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextHomeQuestionsAction){
-    final pagination = store.state.homePageState.questions;
+    final pagination = store.state.homePageQuestions;
     QuestionService()
       .getHomePageQuestions(pagination.next)
       .then((questions){
@@ -29,7 +29,7 @@ void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
 }
 void getPrevPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is PrevHomePageQuestionsAction){
-    final pagination = store.state.homePageState.questions;
+    final pagination = store.state.homePageQuestions;
     QuestionService()
       .getHomePageQuestions(pagination.prev)
       .then((questions){

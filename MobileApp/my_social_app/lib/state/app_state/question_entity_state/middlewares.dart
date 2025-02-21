@@ -7,7 +7,6 @@ import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_user_save_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -46,7 +45,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LoadQuestionAction){
-    if(store.state.questionEntityState.entities[action.questionId] == null){
+    if(store.state.questionEntityState.getValue(action.questionId) == null){
       QuestionService()
         .getById(action.questionId)
         .then((question){
@@ -73,33 +72,18 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-void saveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is SaveQuestionAction){
-    final accountId = store.state.loginState!.id;
-    QuestionService()
-      .save(action.questionId)
-      .then((save){
-        store.dispatch(SaveQuestionSuccessAction(questionId: action.questionId));
-        store.dispatch(AddQuestionUserSaveAction(save: save.toQuestionUserSaveState()));
-        store.dispatch(AddUserSavedQuestionAction(userId: accountId, saveId: save.id));
-      });
-  }
-  next(action);
-}
-void unsaveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UnsaveQuestionAction){
-    final accountId = store.state.loginState!.id;
-    QuestionService()
-      .unsave(action.questionId)
-      .then((_){
-        final saveId = store.state.questionUserSaveEntityState.select(action.questionId, accountId)?.id ?? 0;
-        store.dispatch(UnsaveQuestionSuccessAction(questionId: action.questionId));
-        store.dispatch(RemoveQuestionUserSaveAction(saveId: saveId));
-        store.dispatch(RemoveUserSavedQuestionAction(userId: accountId, saveId: saveId));
-      });
-  }
-  next(action);
-}
+// void saveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+//   if(action is SaveQuestionAction){
+//     final accountId = store.state.loginState!.id;
+//     QuestionService()
+//       .save(action.questionId)
+//       .then((save){
+//         store.dispatch(SaveQuestionSuccessAction(questionId: action.questionId));
+//         store.dispatch(AddUserSavedQuestionAction(userId: accountId, saveId: save.id));
+//       });
+//   }
+//   next(action);
+// }
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){
@@ -109,7 +93,7 @@ void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
         store.dispatch(
           LikeQuestionSuccessAction(
             questionId: action.questionId,
-            questionUserLike: questionUserLike.toQuestionUserLikeState()
+            likeId: questionUserLike.id
           )
         )
       );
@@ -121,9 +105,11 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
     QuestionUserLikeService()
       .dislike(action.questionId)
       .then((_){
+        var userId = store.state.loginState!.id; 
+        var like = store.state.questionUserLikeEntityState.get((e) => e.questionId == action.questionId && e.userId == userId);
         store.dispatch(DislikeQuestionSuccessAction(
           questionId: action.questionId,
-          userId: store.state.loginState!.id
+          likeId: like!.id
         ));
       });
   }
@@ -132,17 +118,16 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
 
 void nextQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextQuestionLikesAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.likes;
+    final pagination = store.state.questionEntityState.getValue(action.questionId)!.likes;
     QuestionUserLikeService()
       .getQuestionLikes(action.questionId, pagination.next)
       .then(
         (likes){
           var states = likes.map((e) => e.toQuestionUserLikeState());
-          
           store.dispatch(
             NextQuestionLikesSuccessAction(
               questionId: action.questionId,
-              questionUserLikes: states
+              likeIds: states.map((e) => e.id)
             )
           );
         }
@@ -156,7 +141,7 @@ void nextQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher nex
 }
 void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is NextQuestionSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.solutions;
+    final pagination = store.state.questionEntityState.getValue(action.questionId)!.solutions;
     SolutionService()
       .getSolutionsByQuestionId(action.questionId,pagination.next)
       .then((solutions){
@@ -172,7 +157,7 @@ void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatche
 }
 void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionCorrectSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.correctSolutions;
+    final pagination = store.state.questionEntityState.getValue(action.questionId)!.correctSolutions;
     SolutionService()
       .getCorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
@@ -188,7 +173,7 @@ void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextD
 }
 void nextQuestionPendingSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextQuestionPendingSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.pendingSolutions;
+    final pagination = store.state.questionEntityState.getValue(action.questionId)!.pendingSolutions;
     SolutionService()
       .getPendingSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
@@ -204,7 +189,7 @@ void nextQuestionPendingSolutionsMiddleware(Store<AppState> store,action,NextDis
 }
 void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextQuestionIncorrectSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.incorrectSolutions;
+    final pagination = store.state.questionEntityState.getValue(action.questionId)!.incorrectSolutions;
     SolutionService()
       .getIncorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions){
@@ -220,7 +205,7 @@ void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store,action,NextD
 }
 void nextQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextQuestionVideoSolutionsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.videoSolutions;
+    final pagination = store.state.questionEntityState.getValue(action.questionId)!.videoSolutions;
     SolutionService()
       .getVideoSolutions(action.questionId, pagination.next)
       .then((solutions){
@@ -236,7 +221,7 @@ void nextQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispa
 }
 void nextQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextQuestionCommentsAction){
-    final pagination = store.state.questionEntityState.entities[action.questionId]!.comments;
+    final pagination = store.state.questionEntityState.getValue(action.questionId)!.comments;
     CommentService()
       .getCommentsByQuestionId(action.questionId, pagination.next)
       .then((comments){

@@ -10,7 +10,7 @@ import 'package:redux/redux.dart';
 
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentAction){
-    if(store.state.commentEntityState.entities[action.commentId] == null){
+    if(store.state.commentEntityState.getValue(action.commentId) == null){
       CommentService()
         .getById(action.commentId)
         .then((comment) => store.dispatch(AddCommentAction(comment: comment.toCommentState())));
@@ -20,7 +20,7 @@ void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void loadCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentsAction){
-    final ids = action.commentIds.where((id) => store.state.commentEntityState.entities[id] == null);
+    final ids = action.commentIds.where((id) => store.state.commentEntityState.getValue(id) == null);
     if(ids.isNotEmpty){
       CommentService()
         .getByIds(ids)
@@ -32,7 +32,7 @@ void loadCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextCommentLikesAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.likes;
+    final pagination = store.state.commentEntityState.getValue(action.commentId)!.likes;
     CommentService()
       .getCommentLikes(action.commentId, pagination.next)
       .then((likes){
@@ -56,11 +56,11 @@ void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DislikeCommentAction){
-    final int accountId = store.state.loginState!.id;
+    final int userId = store.state.loginState!.id;
     CommentService()
       .dislike(action.commentId)
       .then((_){
-        final likeId = store.state.commentUserLikeEntityState.select(action.commentId,accountId)?.id ?? 0;
+        final likeId = store.state.commentUserLikeEntityState.get((e) => e.commentId == action.commentId && e.userId == userId)!.id;
         store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId,likeId: likeId));
         store.dispatch(RemoveCommentUserLikeAction(likeId: likeId));
       });
@@ -70,7 +70,7 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void nextCommentRepliesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextCommentRepliesAction){
-    final pagination = store.state.commentEntityState.entities[action.commentId]!.replies;
+    final pagination = store.state.commentEntityState.getValue(action.commentId)!.replies;
     CommentService()
       .getByParentId(action.commentId, pagination.next)
       .then((replies){

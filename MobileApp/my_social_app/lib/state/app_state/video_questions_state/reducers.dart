@@ -1,5 +1,5 @@
 import 'package:my_social_app/state/app_state/video_questions_state/actions.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination nextVideoQuestionsReducer(Pagination prev, NextVideoQuestionsAction action)

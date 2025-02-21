@@ -7,7 +7,7 @@ import 'package:my_social_app/constants/message_endpoints.dart';
 import 'package:my_social_app/constants/message_functions.dart';
 import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/pagination/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 
 class MessageService{
   final AppClient _appClient;

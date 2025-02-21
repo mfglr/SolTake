@@ -10,7 +10,7 @@ import 'package:redux/redux.dart';
 
 void loadExamMiddleare(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadExamAction){
-    if(store.state.examEntityState.entities[action.examId] == null){
+    if(store.state.examEntityState.getValue(action.examId) == null){
       ExamService()
         .getExamById(action.examId)
         .then((exam) => store.dispatch(AddExamAction(exam: exam.toExamState())));
@@ -21,7 +21,7 @@ void loadExamMiddleare(Store<AppState> store,action,NextDispatcher next){
 
 void nextExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextExamQuestionsAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    final pagination = store.state.examEntityState.getValue(action.examId)!.questions;
     QuestionService()
       .getByExamId(action.examId,pagination.next)
       .then((questions){
@@ -41,7 +41,7 @@ void nextExamQeuestionsMiddleware(Store<AppState> store,action,NextDispatcher ne
 }
 void prevExamQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is PrevExamQuestionsAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.questions;
+    final pagination = store.state.examEntityState.getValue(action.examId)!.questions;
     QuestionService()
       .getByExamId(action.examId, pagination.prev)
       .then((questions){
@@ -62,7 +62,7 @@ void prevExamQuestionsMiddleware(Store<AppState> store,action,NextDispatcher nex
 
 void nextExamSubjectsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextExamSubjectsAction){
-    final pagination = store.state.examEntityState.entities[action.examId]!.subjects;
+    final pagination = store.state.examEntityState.getValue(action.examId)!.subjects;
     SubjectService()
       .getByExamId(action.examId,pagination.next)
       .then((subjects){

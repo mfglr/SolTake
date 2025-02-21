@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/models/avatar.dart';
-import 'package:my_social_app/state/app_state/question_user_like_entity_state/question_user_like_state.dart';
-import 'package:my_social_app/state/pagination/entity_pagination.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
 @immutable
-class QuestionState implements Avatar{
-  final int id;
+class QuestionState extends HasId<num> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int state;
@@ -31,22 +30,21 @@ class QuestionState implements Avatar{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final Multimedia? image;
-  final EntityPagination<QuestionUserLikeState> likes;
-  final Pagination comments;
-  final Pagination solutions;
-  final Pagination correctSolutions;
-  final Pagination pendingSolutions;
-  final Pagination incorrectSolutions;
-  final Pagination videoSolutions;
+  final Pagination<num,Id<num>> likes;
+  final Pagination<num,Id<num>> comments;
+  final Pagination<num,Id<num>> solutions;
+  final Pagination<num,Id<num>> correctSolutions;
+  final Pagination<num,Id<num>> pendingSolutions;
+  final Pagination<num,Id<num>> incorrectSolutions;
+  final Pagination<num,Id<num>> videoSolutions;
 
   @override
   int get avatarId => userId;
-
   @override
   Multimedia? get avatar => image;
 
-  const QuestionState({
-    required this.id,
+  QuestionState({
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.state,
@@ -91,13 +89,13 @@ class QuestionState implements Avatar{
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
     Multimedia? newImage,
-    EntityPagination<QuestionUserLikeState>? newLikes,
-    Pagination? newComments,
-    Pagination? newSolutions,
-    Pagination? newCorrectSolutions,
-    Pagination? newPendingSolutions,
-    Pagination? newIncorrectSolutions,
-    Pagination? newVideoSolutions,
+    Pagination<num,Id<num>>? newLikes,
+    Pagination<num,Id<num>>? newComments,
+    Pagination<num,Id<num>>? newSolutions,
+    Pagination<num,Id<num>>? newCorrectSolutions,
+    Pagination<num,Id<num>>? newPendingSolutions,
+    Pagination<num,Id<num>>? newIncorrectSolutions,
+    Pagination<num,Id<num>>? newVideoSolutions,
   }) => 
     QuestionState(
       id: id,
@@ -135,69 +133,67 @@ class QuestionState implements Avatar{
     return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
   }
   
-  QuestionState startLodingNextLikes() => 
-    _optional(newLikes: likes.startLoadingNext());
-  QuestionState stopLoadingNextLikes() =>
-    _optional(newLikes: likes.stopLoadingNext());
-  QuestionState addNextPageLikes(Iterable<QuestionUserLikeState> questionUserLikes) =>
-    _optional(newLikes: likes.addNextPage(questionUserLikes));
-  QuestionState like(QuestionUserLikeState questionUserLike) => 
+  QuestionState startLodingNextLikes() => _optional(newLikes: likes.startLoadingNext());
+  QuestionState stopLoadingNextLikes() => _optional(newLikes: likes.stopLoadingNext());
+  QuestionState addNextPageLikes(Iterable<num> likeIds)
+    => _optional(newLikes: likes.addNextPage(likeIds.map((likeId) => Id(id: likeId))));
+  QuestionState like(num likeId) => 
     _optional(
       newIsLiked: true,
-      newLikes: likes.prependOne(questionUserLike),
+      newLikes: likes.prependOne(Id(id: likeId)),
       newNumberOfLikes: numberOfLikes + 1
     );
-  QuestionState dislike(int userId) => 
+  QuestionState dislike(num likeId) => 
     _optional(
       newIsLiked: false,
-      newLikes: likes.where((e) => e.userId != userId),
+      newLikes: likes.where((e) => e.id != likeId),
       newNumberOfLikes: numberOfLikes - 1
     ); 
-  QuestionState addNewLike(QuestionUserLikeState like) =>
+  QuestionState addNewLike(num likeId) =>
     _optional(
-      newLikes: likes.addInOrder(like),
+      newLikes: likes.addInOrder(Id(id: likeId)),
       newNumberOfLikes: numberOfLikes + 1
     );
 
-
-  QuestionState markSolutionAsCorrect(int solutionId) =>
+  QuestionState markSolutionAsCorrect(num solutionId) =>
     _optional(
-      newPendingSolutions: pendingSolutions.removeOne(solutionId),
+      newPendingSolutions: pendingSolutions.where((e) => e.id != solutionId),
       newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1,
-      newCorrectSolutions: correctSolutions.addInOrder(solutionId),
+      newCorrectSolutions: correctSolutions.addInOrder(Id(id: solutionId)),
       newState: QuestionStatus.solved
     );
-  QuestionState markSolutionAsIncorrect(int solutionId) =>
+  QuestionState markSolutionAsIncorrect(num solutionId) =>
     _optional(
-      newPendingSolutions: pendingSolutions.removeOne(solutionId),
-      newIncorrectSolutions: incorrectSolutions.addInOrder(solutionId),
+      newPendingSolutions: pendingSolutions.where((e) => e.id != solutionId),
+      newIncorrectSolutions: incorrectSolutions.addInOrder(Id(id: solutionId)),
     );
 
   QuestionState startLoadingNextSolutions() => 
     _optional(newSolutions: solutions.startLoadingNext());
-  QuestionState addNextSolutions(Iterable<int> solutionIds) => 
-    _optional(newSolutions: solutions.addNextPage(solutionIds));
+  QuestionState addNextSolutions(Iterable<num> solutionIds) => 
+    _optional(newSolutions: solutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
   QuestionState stopLoadingNextSolutions() =>
     _optional(newSolutions: solutions.stopLoadingNext());
-  QuestionState createNewSolution(int solutionId) => 
+  
+  QuestionState createNewSolution(num solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
-      newSolutions: solutions.prependOne(solutionId),
-      newPendingSolutions: pendingSolutions.prependOne(solutionId)
+      newSolutions: solutions.prependOne(Id(id: solutionId)),
+      newPendingSolutions: pendingSolutions.prependOne(Id(id: solutionId))
     );
-  QuestionState createNewVideoSolution(int solutionId) => 
+  QuestionState createNewVideoSolution(num solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
       newNumberOfVideoSolutions: numberOfVideoSolutions + 1,
-      newSolutions: solutions.prependOne(solutionId),
-      newPendingSolutions: pendingSolutions.prependOne(solutionId),
-      newVideoSolutions: videoSolutions.prependOne(solutionId),
+      newSolutions: solutions.prependOne(Id(id: solutionId)),
+      newPendingSolutions: pendingSolutions.prependOne(Id(id: solutionId)),
+      newVideoSolutions: videoSolutions.prependOne(Id(id: solutionId)),
     );
-  QuestionState addNewSolution(int solutionId) =>
+  QuestionState addNewSolution(num solutionId) =>
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
-      newSolutions: solutions.addInOrder(solutionId),
-      newPendingSolutions: pendingSolutions.addInOrder(solutionId)
+      newSolutions: solutions.addInOrder(Id(id: solutionId)),
+      newPendingSolutions: pendingSolutions.addInOrder(Id(id: solutionId))
     );
   QuestionState removeSolution(SolutionState solution) =>
     _optional(
@@ -206,18 +202,18 @@ class QuestionState implements Avatar{
         solution.state == SolutionStatus.correct
           ? numberOfCorrectSolutions - 1
           : numberOfCorrectSolutions,
-      newSolutions: solutions.removeOne(solution.id),
+      newSolutions: solutions.where((e) => e.id != solution.id),
       newCorrectSolutions: 
         solution.state == SolutionStatus.correct
-          ? correctSolutions.removeOne(solution.id) 
+          ? correctSolutions.where((e) => e.id != solution.id) 
           : correctSolutions,
       newPendingSolutions: 
         solution.state == SolutionStatus.pending 
-          ? pendingSolutions.removeOne(solution.id)
+          ? pendingSolutions.where((e) => e.id != solution.id)
           : pendingSolutions,
       newIncorrectSolutions: 
         solution.state == SolutionStatus.incorrect
-          ? incorrectSolutions.removeOne(solution.id)
+          ? incorrectSolutions.where((e) => e.id != solution.id)
           : incorrectSolutions,
       newNumberOfVideoSolutions: 
         solution.medias.any((e) => e.multimediaType == MultimediaType.video)
@@ -225,7 +221,7 @@ class QuestionState implements Avatar{
           : numberOfVideoSolutions,
       newVideoSolutions:
         solution.medias.any((e) => e.multimediaType == MultimediaType.video)
-          ? videoSolutions.removeOne(solution.id)
+          ? videoSolutions.where((e) => e.id != solution.id)
           : videoSolutions,
       newState: 
         solution.state == SolutionStatus.correct && numberOfCorrectSolutions == 1
@@ -235,48 +231,59 @@ class QuestionState implements Avatar{
 
   QuestionState startLoadingNextCorrectSolutions() =>
     _optional(newCorrectSolutions: correctSolutions.startLoadingNext());
-  QuestionState addNextPageCorrectSolutions(Iterable<int> solutionIds) =>
-    _optional(newCorrectSolutions: correctSolutions.addNextPage(solutionIds));
+  QuestionState addNextPageCorrectSolutions(Iterable<num> solutionIds) =>
+    _optional(newCorrectSolutions: correctSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
   QuestionState stopLoadingNextCorrectSolutions() =>
     _optional(newCorrectSolutions: correctSolutions.stopLoadingNext());
 
   QuestionState startLoadingNextPendingSolutions() =>
     _optional(newPendingSolutions: pendingSolutions.startLoadingNext());
-  QuestionState addNextPedingSolutions(Iterable<int> solutionIds) =>
-    _optional(newPendingSolutions: pendingSolutions.addNextPage(solutionIds));
+  QuestionState addNextPagePedingSolutions(Iterable<num> solutionIds) =>
+    _optional(newPendingSolutions: pendingSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
   QuestionState stopLoadingNextPendingSolutions() =>
     _optional(newPendingSolutions: pendingSolutions.stopLoadingNext());
 
-  QuestionState startLoadinNextIncorrectSolutions() =>
+  QuestionState startLoadingNextIncorrectSolutions() =>
     _optional(newIncorrectSolutions: incorrectSolutions.startLoadingNext());
   QuestionState stopLoadingNextIncorrectSolutions() =>
     _optional(newIncorrectSolutions: incorrectSolutions.stopLoadingNext());
-  QuestionState addNextIncorrectSolutions(Iterable<int> solutionIds) =>
-    _optional(newIncorrectSolutions: incorrectSolutions.addNextPage(solutionIds));
+  QuestionState addNextIncorrectSolutions(Iterable<num> solutionIds) =>
+    _optional(newIncorrectSolutions: incorrectSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
  
   QuestionState startLoadingNextVideoSolutions() =>
     _optional(newVideoSolutions: videoSolutions.startLoadingNext());
   QuestionState stopLodingNextVideoSolutions() =>
     _optional(newVideoSolutions: videoSolutions.stopLoadingNext());
-  QuestionState addNextPageVideoSolutions(Iterable<int> solutionIds) =>
-    _optional(newVideoSolutions: videoSolutions.addNextPage(solutionIds));
-  QuestionState addVideoSolution(int solutionId) =>
-    _optional(newVideoSolutions: videoSolutions.prependOne(solutionId));
-  QuestionState removeVideoSolution(int solutionId) =>
-    _optional(newVideoSolutions: videoSolutions.removeOne(solutionId));
+  QuestionState addNextPageVideoSolutions(Iterable<num> solutionIds) =>
+    _optional(newVideoSolutions: videoSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
+  QuestionState addVideoSolution(num solutionId) =>
+    _optional(newVideoSolutions: videoSolutions.prependOne(Id(id: solutionId)));
+  QuestionState removeVideoSolution(num solutionId) =>
+    _optional(
+      newVideoSolutions: videoSolutions.where((e) => e.id != solutionId)
+    );
 
   QuestionState startLoadingNextComments() =>
     _optional(newComments: comments.startLoadingNext());
   QuestionState stopLoadingNextComments() =>
     _optional(newComments: comments.stopLoadingNext()); 
-  QuestionState addNextPageComments(Iterable<int> commentIds) => 
-    _optional(newComments: comments.addNextPage(commentIds));
-  QuestionState addComment(int commentId) => 
-    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.prependOne(commentId));
-  QuestionState removeComment(int commentId) =>
-    _optional(newNumberOfComments: numberOfComments - 1,newComments: comments.removeOne(commentId));
-  QuestionState addNewComment(int commentId) =>
-    _optional(newNumberOfComments: numberOfComments + 1,newComments: comments.addInOrder(commentId));
+  QuestionState addNextPageComments(Iterable<num> commentIds) => 
+    _optional(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
+  QuestionState addComment(num commentId) =>
+    _optional(
+      newNumberOfComments: numberOfComments + 1,
+      newComments: comments.prependOne(Id(id: commentId))
+    );
+  QuestionState removeComment(num commentId) =>
+    _optional(
+      newNumberOfComments: numberOfComments - 1,
+      newComments: comments.where((e) => e.id != commentId)
+    );
+  QuestionState addNewComment(num commentId) =>
+    _optional(
+      newNumberOfComments: numberOfComments + 1,
+      newComments: comments.addInOrder(Id(id: commentId))
+    );
 
   QuestionState markAsSolved() =>
     _optional(newState: QuestionStatus.solved);

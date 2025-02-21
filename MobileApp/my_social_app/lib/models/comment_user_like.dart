@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/entity_state/has_id.dart';
 part 'comment_user_like.g.dart';
 
 @immutable
 @JsonSerializable()
-class CommentUserLike{
-  final int id;
+class CommentUserLike extends HasId<num>{
   final int commentId;
   final int userId;
   final DateTime createdAt;
   final User? user;
   
-  const CommentUserLike({
-    required this.id,
+  CommentUserLike({
+    required super.id,
     required this.commentId,
     required this.userId,
     required this.createdAt,

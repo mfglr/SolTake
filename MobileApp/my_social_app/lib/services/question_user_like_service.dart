@@ -2,7 +2,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_user_like_endpoints.dart';
 import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/pagination/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 
 class QuestionUserLikeService {
   final AppClient _appClient;
@@ -11,7 +11,7 @@ class QuestionUserLikeService {
   static final QuestionUserLikeService _singleton = QuestionUserLikeService._(AppClient());
   factory QuestionUserLikeService() => _singleton;
 
-  Future<QuestionUserLike> like(int questionId) =>
+  Future<QuestionUserLike> like(num questionId) =>
     _appClient
       .post(
         "$questionUserLikeController/$likeEndpoint",
@@ -23,7 +23,7 @@ class QuestionUserLikeService {
     _appClient
       .delete("$questionUserLikeController/$dislikeEndpoint/$questionId");
 
-  Future<Iterable<QuestionUserLike>> getQuestionLikes(int questionId,Page page) =>
+  Future<Iterable<QuestionUserLike>> getQuestionLikes(num questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionUserLikeController/$getQuestionLikesEndpoint/$questionId", page))
       .then((json) => json as List)

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/Id.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class SearchState{
@@ -8,9 +9,9 @@ class SearchState{
   final int? examId;
   final int? subjectId;
   final int? topicId;
-  final Pagination questions;
-  final Pagination users;
-  final Pagination searchedUsers;
+  final Pagination<num,Id<num>> questions;
+  final Pagination<num,Id<num>> users;
+  final Pagination<num,Id<num>> searchedUsers;
 
   const SearchState({
     required this.key,
@@ -42,24 +43,24 @@ class SearchState{
         users: users.stopLoadingNext(),
         searchedUsers: searchedUsers
       );
-  SearchState addFirstUsers(Iterable<int> ids)
+  SearchState addFirstUsers(Iterable<num> userIds)
     => SearchState(
         key: key,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
         questions: questions,
-        users: users.addfirstPage(ids),
+        users: users.addfirstPage(userIds.map((userId) => Id(id: userId))),
         searchedUsers: searchedUsers
       );
-  SearchState addNextUsers(Iterable<int> ids)
+  SearchState addNextUsers(Iterable<num> userIds)
     => SearchState(
         key: key,
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
         questions: questions,
-        users: users.addNextPage(ids),
+        users: users.addNextPage(userIds.map((userId) => Id(id: userId))),
         searchedUsers: searchedUsers
       );
 
@@ -85,7 +86,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers.stopLoadingNext()
       );
-  SearchState addNextPageSearchedUsers(Iterable<int> searchIds)
+  SearchState addNextPageSearchedUsers(Iterable<num> searchIds)
     => SearchState(
         key: key,
         examId: examId,
@@ -93,7 +94,7 @@ class SearchState{
         topicId: topicId, 
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.addNextPage(searchIds)
+        searchedUsers: searchedUsers.addNextPage(searchIds.map((e) => Id(id: e)))
       );
   SearchState addSearchedUser(int addedOne,int removeOne)
     => SearchState(
@@ -103,7 +104,7 @@ class SearchState{
         topicId: topicId,
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.prependOneAndRemoveOne(addedOne,removeOne)
+        searchedUsers: searchedUsers.prependOneAndRemoveOne(Id(id: addedOne),removeOne)
       );
   SearchState removeSearchedUser(int searchId)
     => SearchState(
@@ -113,7 +114,7 @@ class SearchState{
         topicId: topicId,
         questions: questions,
         users: users,
-        searchedUsers: searchedUsers.removeOne(searchId)
+        searchedUsers: searchedUsers.where((e) => e.id != searchId)
       );
 
   SearchState startLoadingNextQuestions()
@@ -142,7 +143,7 @@ class SearchState{
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
-        questions: questions.addfirstPage(questionIds),
+        questions: questions.addfirstPage(questionIds.map((questionId) => Id(id: questionId))),
         users: users,
         searchedUsers: searchedUsers
       );
@@ -152,7 +153,7 @@ class SearchState{
         examId: examId,
         subjectId: subjectId,
         topicId: topicId,
-        questions: questions.addNextPage(questionIds),
+        questions: questions.addNextPage(questionIds.map((questionId) => Id(id: questionId))),
         users: users,
         searchedUsers: searchedUsers
       );

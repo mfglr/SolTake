@@ -1,79 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/map_extentions.dart';
 
 @immutable
-class EntityState<T extends dynamic> {
-  final Map<dynamic,T> entities;
-  const EntityState({required this.entities});
+class EntityState<K extends Comparable<K>,V extends HasId<K>>{
+  final Map<K,V> _map;
+  const EntityState._({required Map<K,V> map}) : _map = map;
+  factory EntityState() => const EntityState._(map: {});
+
+  V? get(bool Function(V) test) => _map.values.where(test).firstOrNull;
+  Iterable<V> getList(bool Function(V) test) => _map.values.where(test);
+  V? getValue(K key) => _map[key];
+
+  EntityState<K,V> prependOne(V value) =>
+    _map[value.id] != null ? this : EntityState._(map: _map.prependOne(value));
+  EntityState<K,V> appendOne(V value) =>
+    _map[value.id] != null ? this : EntityState._(map: _map.appendOne(value));
+  EntityState<K,V> appendMany(Iterable<V> values) =>
+    EntityState._(map: _map.appendMany(values.where((e) => _map[e.id] == null)));
+  EntityState<K,V> appendList(Iterable<Iterable<V>> list) =>
+    EntityState._(map: _map.appendLists(list.map((e) => e.where((e) => _map[e.id] == null))));
+  EntityState<K,V> updateOne(V value) => 
+    EntityState._(map: _map.updateOne(value));
+  EntityState<K,V> where(bool Function(V) test) =>
+    EntityState._(map: _map.where(test));
+
   
-  Map<dynamic,T> prependOne(T value){
-    if(this.entities[value.id] != null) return this.entities;
-    final Map<dynamic,T> entities = {};
-    entities[value.id] = value;
-    entities.addAll(this.entities);
-    return entities;
-  }
-  Map<dynamic,T> appendOne(T value){
-    if(this.entities[value.id] != null) return this.entities;
-    final Map<dynamic,T> entities = {};
-    entities.addAll(this.entities);
-    entities.addEntries([MapEntry(value.id, value)]);
-    return entities;
-  }
-  Map<dynamic,T> appendMany(Iterable<T> values){
-    final Map<dynamic,T> entities = {};
-    final notAvailables = values.where((e) => this.entities[e.id] == null);
-    entities.addAll(this.entities);
-    entities.addEntries(notAvailables.map((e) => MapEntry(e.id, e)));
-    return entities;
-  }
-  Map<dynamic,T> appendLists(Iterable<Iterable<T>> lists){
-    final Map<dynamic,T> entities = {};
-    entities.addAll(this.entities);
-    for(final list in lists){
-      var notAvailables = list.where((e) => this.entities[e.id] == null);
-      entities.addEntries(notAvailables.map((e) => MapEntry(e.id, e)));
-    }
-    return entities;
-  }
-  Map<dynamic,T> updateOne(T? value){
-    if(value == null) return this.entities;
-    final Map<dynamic,T> entities = {};
-    entities.addAll(this.entities);
-    entities[value.id] = value;
-    return entities;
-  }
-  Map<dynamic,T> updateMany(Iterable<T?> values){
-    final Map<dynamic,T> entities = {};
-    entities.addAll(this.entities);
-    for(final value in values){
-      if(value != null) entities[value.id] = value;
-    }
-    return entities;
-  }
-  Map<dynamic,T> removeOne(int id){
-    final Map<dynamic,T> entities = {};
-    entities.addAll(this.entities);
-    entities.removeWhere((key,value) => key == id);
-    return entities;
-  }
-  Map<dynamic,T> removeMany(Iterable<int> ids){
-    final Map<dynamic,T> entities = {};
-    entities.addAll(this.entities); 
-    entities.removeWhere((key,value) => ids.any((id) => id == key));
-    return entities;
-  }
-  Map<dynamic,T> removeLists(Iterable<Iterable<int>> lists){
-    final Map<dynamic,T> entities = {};
-    entities.addAll(this.entities);
-    for(final list in lists){
-      entities.removeWhere((key,e) => list.any((id) => id == key));
-    }
-    return entities;
-  }
-  Map<dynamic,T> where(bool Function(T) test){
-    final Map<dynamic,T> entities = {};
-    final values = this.entities.values.where(test);
-    entities.addEntries(values.map((e) => MapEntry(e.id, e)));
-    return entities;
-  }
+
+  // Map<int,T> updateMany(Iterable<T?> values){
+  //   final Map<int,T> entities = {};
+  //   entities.addAll(this.entities);
+  //   for(final value in values){
+  //     if(value != null) entities[value.id] = value;
+  //   }
+  //   return entities;
+  // }
+  // Map<int,T> removeOne(int id){
+  //   final Map<int,T> entities = {};
+  //   entities.addAll(this.entities);
+  //   entities.removeWhere((key,value) => key == id);
+  //   return entities;
+  // }
+  // Map<int,T> removeMany(Iterable<int> ids){
+  //   final Map<int,T> entities = {};
+  //   entities.addAll(this.entities); 
+  //   entities.removeWhere((key,value) => ids.any((id) => id == key));
+  //   return entities;
+  // }
+  // Map<int,T> removeLists(Iterable<Iterable<int>> lists){
+  //   final Map<int,T> entities = {};
+  //   entities.addAll(this.entities);
+  //   for(final list in lists){
+  //     entities.removeWhere((key,e) => list.any((id) => id == key));
+  //   }
+  //   return entities;
+  // }
+  
 }

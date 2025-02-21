@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/entity_state/has_id.dart';
 
 @immutable
-class QuestionUserLikeState implements Avatar{
-  final int id;
+class QuestionUserLikeState extends HasId<num> implements Avatar{
   final DateTime createdAt;
   final int questionId;
   final int userId;
@@ -17,8 +17,8 @@ class QuestionUserLikeState implements Avatar{
   @override
   int get avatarId => userId;
 
-  const QuestionUserLikeState({
-    required this.id,
+  QuestionUserLikeState({
+    required super.id,
     required this.createdAt,
     required this.questionId,
     required this.userId,
@@ -26,6 +26,5 @@ class QuestionUserLikeState implements Avatar{
     required this.userName,
     required this.image
   });
-  
   
 }

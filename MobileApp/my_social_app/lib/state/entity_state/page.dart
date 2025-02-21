@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 @immutable
-class Page{
-  final int? offset;
+class Page<K extends Comparable<K>>{
+  final K? offset;
   final int take;
   final bool isDescending;
   
@@ -12,5 +12,5 @@ class Page{
     required this.isDescending
   });
 
-  factory Page.init(int take,bool isDescending) => Page(offset: 2147483647, take: take, isDescending: isDescending);
+  factory Page.init(int take,bool isDescending) => Page(offset: null, take: take, isDescending: isDescending);
 }

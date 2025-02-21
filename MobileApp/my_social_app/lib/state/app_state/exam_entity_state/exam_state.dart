@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/pagination/pagination.dart';
+import 'package:my_social_app/state/entity_state/Id.dart';
+import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class ExamState{
-  final int id;
+class ExamState extends HasId<num>{
   final String shortName;
   final String fullName;
-  final Pagination subjects;
-  final Pagination questions;
+  final Pagination<num,Id<num>> subjects;
+  final Pagination<num,Id<num>> questions;
 
-  const ExamState({
-    required this.id,
+  ExamState({
+    required super.id,
     required this.shortName,
     required this.fullName,
     required this.subjects,
@@ -33,13 +34,13 @@ class ExamState{
         subjects: subjects,
         questions: questions.stopLoadingNext()
       );
-  ExamState addNextQuestions(Iterable<int> questionIds)
+  ExamState addNextQuestions(Iterable<num> questionIds)
     => ExamState(
         id: id,
         shortName: shortName,
         fullName: fullName,
         subjects: subjects,
-        questions: questions.addNextPage(questionIds)
+        questions: questions.addNextPage(questionIds.map((questionId) => Id(id: questionId)))
       );
 
   ExamState startLoadingPrevQuestions()
@@ -58,13 +59,13 @@ class ExamState{
         subjects: subjects,
         questions: questions.stopLoadingPrev()
       );
-  ExamState addPrevQuestions(Iterable<int> questionIds)
+  ExamState addPrevQuestions(Iterable<num> questionIds)
     => ExamState(
         id: id,
         shortName: shortName,
         fullName: fullName,
         subjects: subjects,
-        questions: questions.addPrevPage(questionIds)
+        questions: questions.addPrevPage(questionIds.map((questionId) => Id(id: questionId)))
       );
 
   ExamState startLoadingNextSubjects()
@@ -83,12 +84,12 @@ class ExamState{
         subjects: subjects.stopLoadingNext(),
         questions: questions
       );
-  ExamState addNextSubjects(Iterable<int> subjectIds)
+  ExamState addNextSubjects(Iterable<num> subjectIds)
     => ExamState(
         id: id,
         shortName: shortName,
         fullName: fullName,
-        subjects: subjects.addNextPage(subjectIds),
+        subjects: subjects.addNextPage(subjectIds.map((subjectId) => Id(id: subjectId))),
         questions: questions
       );
 }

@@ -9,7 +9,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_search_state/actions.dart';
-import 'package:my_social_app/state/pagination/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:redux/redux.dart';
 
 void firstSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){

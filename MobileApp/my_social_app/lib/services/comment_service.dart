@@ -3,7 +3,7 @@ import 'package:my_social_app/constants/comment_endpoints.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/comment_user_like.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/pagination/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 
 class CommentService{
   final AppClient _appClient;
@@ -12,7 +12,7 @@ class CommentService{
   static final CommentService _singleton = CommentService._(AppClient());
   factory CommentService() => _singleton;
 
-  Future<Comment> createComment(String content,int? questionId,int? solutionId,int? repliedId) =>
+  Future<Comment> createComment(String content,num? questionId,num? solutionId,num? repliedId) =>
     _appClient
       .post(
         "$commentController/$createCommentEndpoint",
@@ -25,10 +25,10 @@ class CommentService{
       )
       .then((json) => Comment.fromJson(json));
 
-  Future<void> deleteComment(int commentId) =>
+  Future<void> deleteComment(num commentId) =>
     _appClient.delete("$commentController/$deleteCommentEndpoint/$commentId");
 
-  Future<CommentUserLike> like(int commentId) =>
+  Future<CommentUserLike> like(num commentId) =>
     _appClient
       .post(
         "$commentController/$likeQuestionCommentEndpoint",
@@ -36,22 +36,22 @@ class CommentService{
       )
       .then((json) => CommentUserLike.fromJson(json));
 
-  Future<void> dislike(int commentId) =>
+  Future<void> dislike(num commentId) =>
     _appClient
       .delete("$commentController/$dislikeQuestionCommentEndpoint/$commentId");
 
-  Future<Comment> getById(int id) => 
+  Future<Comment> getById(num id) => 
     _appClient
       .get("$commentController/$getCommentByIdEndpoint/$id")
       .then((json) => Comment.fromJson(json));
     
-  Future<Iterable<Comment>> getByIds(Iterable<int> ids) =>
+  Future<Iterable<Comment>> getByIds(Iterable<num> ids) =>
     _appClient
       .get("$commentController/$getCommentsByIdsEndpoint?ids=${ids.join(',')}")
       .then((response) => (response as List))
       .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<Comment>> getCommentsByQuestionId(int questionId, Page page) =>
+  Future<Iterable<Comment>> getCommentsByQuestionId(num questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByQuestionIdEndpoint/$questionId", page))
       .then((json) => json as List)
@@ -63,13 +63,13 @@ class CommentService{
         .then((json) => json as List)
         .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<Comment>> getByParentId(int parentId, Page page) =>
+  Future<Iterable<Comment>> getByParentId(num parentId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByParentIdEndpoint/$parentId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<CommentUserLike>> getCommentLikes(int commentId, Page page) =>
+  Future<Iterable<CommentUserLike>> getCommentLikes(num commentId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentLikesEndpoint/$commentId", page))
       .then((json) => json as List)
