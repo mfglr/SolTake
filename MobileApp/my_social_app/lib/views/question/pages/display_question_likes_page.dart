@@ -54,9 +54,9 @@ class _DisplayQuestionLikesPageState extends State<DisplayQuestionLikesPage> {
             widget.question.likes,
             NextQuestionLikesAction(questionId: widget.question.id)
           ),
-          converter: (store) => store.state.questionEntityState.entities[widget.question.id]!,
+          converter: (store) => store.state.questionEntityState.getValue(widget.question.id)!,
           builder:(context,question) => QuestionUserLikesWidget(
-            likes: question.likes.toIterable()
+            likes: question.likes.values
           ),
         ),
       )

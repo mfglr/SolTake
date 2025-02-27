@@ -22,7 +22,7 @@ class ConversationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,int>(
+    return StoreConnector<AppState,num>(
       converter: (store) => store.state.loginState!.id,
       builder: (context,accountId){
         return Card(
@@ -73,7 +73,8 @@ class ConversationItem extends StatelessWidget {
                   ],
                 ),
                 StoreConnector<AppState,int>(
-                  converter: (store) => store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(message.conversationId),
+                  converter: (store) => //store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(message.conversationId),
+                  0,
                   builder: (context,count){
                     if(count > 0) return Text(count.toString());
                     return const SizedBox.shrink();

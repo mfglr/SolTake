@@ -1,20 +1,15 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
-import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_entity_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/follow_entity_state/follow_entity_state.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_entity_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
-import 'package:my_social_app/state/app_state/message_home_page_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
@@ -22,21 +17,13 @@ import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
-import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_entity_state.dart';
-import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_entity_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
-import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
-import 'package:my_social_app/state/pagination/entity_pagination.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
@@ -44,35 +31,34 @@ final store = Store(
   reducers,
   initialState: AppState(
     questionEntityState: EntityState(),
-    questionUserLikeEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
+    examEntityState: EntityState(),
+    appExams: Pagination.init(examsPerPage, true),
 
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     loginState: null,
     isInitialized: false,
-    userEntityState: const UserEntityState(entities: {}),
+    userEntityState: EntityState(),
     searchState: SearchState(
       key: "",examId: null,subjectId: null,topicId: null,
       questions: Pagination.init(questionsPerPage,true),
       users: Pagination.init(usersPerPage,true),
       searchedUsers: Pagination.init(usersPerPage,true)
     ),
-    examEntityState: EntityState(),
-    subjectEntityState: const SubjectEntityState(entities: {}),
-    topicEntityState: const TopicEntityState(entities: {}),
-    solutionEntityState: const SolutionEntityState(entities: {}),
+    subjectEntityState: EntityState(),
+    topicEntityState: EntityState(),
+    solutionEntityState: EntityState(),
     commentEntityState: EntityState(),
-    commentUserLikeEntityState: const CommentUserLikeEntityState(entities: {}),
+    commentUserLikeEntityState: EntityState(),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
-    notificationEntityState: NotificationEntityState(pagination: EntityPagination.init(notificationsPerPage, true)),
-    messageEntityState: const MessageEntityState(entities: {}),
-    messageHomePageState: MessageHomePageState(conversations: Pagination.init(conversationsPerPage,true)),
-    userSearchEntityState: const UserSearchEntityState(entities: {}),
-    followEntityState: const FollowEntityState(entities: {}),
-    solutionUserVoteEntityState: const SolutionUserVoteEntityState(entities: {}),
-    solutionUserSaveEntityState: const SolutionUserSaveEntityState(entities: {}),
-    exams: Pagination.init(examsPerPage, true),
+    notifications: Pagination.init(notificationsPerPage, true),
+    messageEntityState: EntityState(),
+    conversations: Pagination.init(conversationsPerPage,true),
+    userSearchEntityState: EntityState(),
+    followEntityState: EntityState(),
+    solutionUserVoteEntityState: EntityState(),
+    solutionUserSaveEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()

@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 
 void nextTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextTopicQuestionsAction){
-    final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
+    final pagination = store.state.topicEntityState.getValue(action.topicId)!.questions;
     QuestionService()
       .getByTopicId(action.topicId, pagination.next)
       .then(
@@ -26,7 +26,7 @@ void nextTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatcher ne
 }
 void prevTopicQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is PrevTopicQuestionsAction){
-    final pagination = store.state.topicEntityState.entities[action.topicId]!.questions;
+    final pagination = store.state.topicEntityState.getValue(action.topicId)!.questions;
     QuestionService()
       .getByTopicId(action.topicId, pagination.prev)
       .then(

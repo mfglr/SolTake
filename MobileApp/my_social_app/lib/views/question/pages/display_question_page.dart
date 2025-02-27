@@ -49,7 +49,7 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
-      converter: (store) => store.state.questionEntityState.entities[widget.questionId],
+      converter: (store) => store.state.questionEntityState.getValue(widget.questionId),
       builder: (context,question){
         if(question == null) return const LoadingView();
         return Scaffold(

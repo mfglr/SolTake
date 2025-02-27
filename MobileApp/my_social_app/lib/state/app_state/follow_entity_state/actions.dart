@@ -16,6 +16,6 @@ class AddFollowAction extends AppAction{
 
 @immutable
 class RemoveFollowAction extends AppAction{
-  final int followId;
+  final num followId;
   const RemoveFollowAction({required this.followId});
 }

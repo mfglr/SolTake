@@ -6,7 +6,7 @@ import 'package:my_social_app/views/create_solution/pages/add_solution_content_p
 import 'package:uuid/uuid.dart';
 
 class CreateSolutionButton extends StatelessWidget {
-  final int questionId;
+  final num questionId;
   final PageController pageController;
   const CreateSolutionButton({
     super.key,

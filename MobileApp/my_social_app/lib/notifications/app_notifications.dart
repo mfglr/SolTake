@@ -28,7 +28,7 @@ Future<void> initNotifications(BuildContext context){
       _settings,
       onDidReceiveNotificationResponse: (details){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        final notification = store.state.notificationEntityState.notifications.firstWhereOrNull((e) => e.id == details.id);
+        final notification = store.state.notifications.values.firstWhereOrNull((e) => e.id == details.id);
         if(notification != null){
           notficationsActions[notification.type]!(context,notification);
         }
@@ -38,7 +38,7 @@ Future<void> initNotifications(BuildContext context){
 
 Future<void> showNotification(BuildContext context, int notificationId) async {
   final store = StoreProvider.of<AppState>(context,listen: false);
-  final notification = store.state.notificationEntityState.notifications.firstWhere((e) => e.id == notificationId);
+  final notification = store.state.notifications.values.firstWhere((e) => e.id == notificationId);
 
   await _flutterLocalNotificationsPlugin
     .show(

@@ -1,10 +1,10 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
-import 'package:my_social_app/state/entity_state/Id.dart';
-import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
-class CommentState extends HasId<num> implements Avatar{
+class CommentState extends BaseEntity<num> implements Avatar{
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isOwner;

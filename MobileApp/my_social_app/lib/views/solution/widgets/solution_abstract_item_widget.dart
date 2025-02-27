@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 
 class SolutionAbstractItemWidget extends StatelessWidget {
   final SolutionState solution;
-  final void Function(int solutionId) onTap;
+  final void Function(num solutionId) onTap;
 
   const SolutionAbstractItemWidget({
     super.key,

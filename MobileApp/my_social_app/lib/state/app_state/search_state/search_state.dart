@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/entity_state/Id.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class SearchState{
   final String key;
-  final int? examId;
-  final int? subjectId;
-  final int? topicId;
+  final num? examId;
+  final num? subjectId;
+  final num? topicId;
   final Pagination<num,Id<num>> questions;
   final Pagination<num,Id<num>> users;
   final Pagination<num,Id<num>> searchedUsers;
@@ -96,7 +96,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers.addNextPage(searchIds.map((e) => Id(id: e)))
       );
-  SearchState addSearchedUser(int addedOne,int removeOne)
+  SearchState addSearchedUser(num addedOne,num removeOne)
     => SearchState(
         key: key,
         examId: examId,
@@ -106,7 +106,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers.prependOneAndRemoveOne(Id(id: addedOne),removeOne)
       );
-  SearchState removeSearchedUser(int searchId)
+  SearchState removeSearchedUser(num searchId)
     => SearchState(
         key: key,
         examId: examId,
@@ -168,7 +168,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers
       );
-  SearchState changeExamId(int examId)
+  SearchState changeExamId(num examId)
     => SearchState(
         key: key,
         examId: examId,
@@ -178,7 +178,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers
       );
-  SearchState changeSubjectId(int subjectId)
+  SearchState changeSubjectId(num subjectId)
     => SearchState(
         key: key,
         examId: examId,
@@ -188,7 +188,7 @@ class SearchState{
         users: users,
         searchedUsers: searchedUsers
       );
-  SearchState changeTopicId(int topicId)
+  SearchState changeTopicId(num topicId)
     => SearchState(
         key: key,
         examId: examId,

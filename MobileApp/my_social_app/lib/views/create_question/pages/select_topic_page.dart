@@ -17,7 +17,7 @@ import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class SelectTopicPage extends StatefulWidget {
-  final int subjectId;
+  final num subjectId;
   const SelectTopicPage({
     super.key,
     required this.subjectId
@@ -29,7 +29,7 @@ class SelectTopicPage extends StatefulWidget {
 
 class _SelectTopicPageState extends State<SelectTopicPage> {
   String _content = "";
-  int? _topicId;
+  num? _topicId;
 
   void _createQuestion() =>
     Navigator
@@ -40,7 +40,7 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,SubjectState?>(
       onInit: (store) => store.dispatch(LoadSubjectAction(subjectId: widget.subjectId)),
-      converter: (store) => store.state.subjectEntityState.entities[widget.subjectId],
+      converter: (store) => store.state.subjectEntityState.getValue(widget.subjectId),
       builder: (context,subject){
         if(subject == null) return const LoadingView();
         return Scaffold(

@@ -14,7 +14,7 @@ import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySolutionDownvotesPage extends StatelessWidget {
-  final int solutionId;
+  final num solutionId;
 
   const DisplaySolutionDownvotesPage({
     super.key,
@@ -25,7 +25,7 @@ class DisplaySolutionDownvotesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,SolutionState?>(
       onInit: (store) => store.dispatch(LoadSolutionAction(solutionId: solutionId)),
-      converter: (store) => store.state.solutionEntityState.entities[solutionId],
+      converter: (store) => store.state.solutionEntityState.getValue(solutionId),
       builder: (context,solution){
         if(solution == null) return const LoadingView();
         return Scaffold(
@@ -41,7 +41,7 @@ class DisplaySolutionDownvotesPage extends StatelessWidget {
             builder:(context,users) => UserItemsWidget(
               users: users,
               pagination: solution.downvotes,
-              rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
+              rigthButtonBuilder: (user) => StoreConnector<AppState,num>(
                 converter: (store) => store.state.loginState!.id,
                 builder: (context,accountId){
                   if(accountId == user.id) return const SpaceSavingWidget();

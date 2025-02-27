@@ -10,8 +10,8 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
-  final int userId;
-  final int? firstDisplayedQuestionId;
+  final num userId;
+  final num? firstDisplayedQuestionId;
 
   const DisplayUserUnsolvedQuestionsPage({
     super.key,
@@ -22,7 +22,7 @@ class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState>(
-      converter: (store) => store.state.userEntityState.entities[userId]!,
+      converter: (store) => store.state.userEntityState.getValue(userId)!,
       builder: (store,user) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),

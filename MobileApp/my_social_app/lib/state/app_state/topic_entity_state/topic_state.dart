@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class TopicState{
-  final int id;
+class TopicState extends BaseEntity<num>{
   final String name;
-  final Pagination questions;
+  final Pagination<num,Id<num>> questions;
 
-  const TopicState({
-    required this.id,
+  TopicState({
+    required super.id,
     required this.name,
     required this.questions
   });
@@ -25,11 +26,11 @@ class TopicState{
       name: name,
       questions: questions.stopLoadingNext()
     );
-  TopicState addNextQuestions(Iterable<int> quesionIds)
+  TopicState addNextQuestions(Iterable<num> quesionIds)
     => TopicState(
         id: id,
         name: name,
-        questions: questions.addNextPage(quesionIds),
+        questions: questions.addNextPage(quesionIds.map((questionId) => Id(id: questionId))),
       );
 
   TopicState startLoadingPrevQuestions()
@@ -44,20 +45,20 @@ class TopicState{
         name: name,
         questions: questions.stopLoadingPrev()
       );
-  TopicState addPrevQuestions(Iterable<int> questionIds)
+  TopicState addPrevQuestions(Iterable<num> questionIds)
     => TopicState(
         id: id,
         name: name,
-        questions: questions.addPrevPage(questionIds)
+        questions: questions.addPrevPage(questionIds.map((questionId) => Id(id: questionId)))
       );
     
-  TopicState addQuestionId(int questionId)
+  TopicState addQuestionId(num questionId)
     => TopicState(
         id: id,
         name: name,
-        questions: questions.prependOne(questionId)
+        questions: questions.prependOne(Id(id: questionId))
       );
-  TopicState removeQuestionId(int questionId)
+  TopicState removeQuestionId(num questionId)
     => TopicState(
         id: id,
         name: name,

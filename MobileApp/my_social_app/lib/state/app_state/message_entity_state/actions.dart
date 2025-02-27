@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 
 @immutable
 class CreateMessageAction extends AppAction{
-  final int receiverId;
+  final num receiverId;
   final String content;
   const CreateMessageAction({required this.receiverId, required this.content});
 }
@@ -13,7 +13,7 @@ class CreateMessageAction extends AppAction{
 @immutable
 class CreateMessageWithMediasAction extends AppAction{
   final String id;
-  final int receiverId;
+  final num receiverId;
   final String? content;
   final Iterable<AppFile> medias;
   const CreateMessageWithMediasAction({
@@ -26,7 +26,7 @@ class CreateMessageWithMediasAction extends AppAction{
 
 @immutable
 class LoadMessageAction extends AppAction{
-  final int messageId;
+  final num messageId;
   const LoadMessageAction({required this.messageId});
 }
 
@@ -57,23 +57,23 @@ class RemoveMessageSuccessAction extends AppAction{
 }
 @immutable
 class RemoveMessagesAction extends AppAction{
-  final int userId;
-  final Iterable<int> messageIds;
+  final num userId;
+  final Iterable<num> messageIds;
   const RemoveMessagesAction({required this.userId, required this.messageIds});
 }
 @immutable
 class RemoveMessagesSuccessAction extends AppAction{
-  final Iterable<int> messageIds;
+  final Iterable<num> messageIds;
   const RemoveMessagesSuccessAction({required this.messageIds});
 }
 @immutable
 class RemoveMessagesByUserIdsAction extends AppAction{
-  final Iterable<int> userIds;
+  final Iterable<num> userIds;
   const RemoveMessagesByUserIdsAction({required this.userIds});
 }
 @immutable
 class RemoveMessagesByUserIdsSuccessAction extends AppAction{
-  final Iterable<int> userIds;
+  final Iterable<num> userIds;
   const RemoveMessagesByUserIdsSuccessAction({required this.userIds});
 }
 
@@ -84,7 +84,7 @@ class GetUnviewedMessagesAction extends AppAction{
 
 @immutable
 class MarkComingMessageAsReceivedAction extends AppAction{
-  final int messageId;
+  final num messageId;
   const MarkComingMessageAsReceivedAction({required this.messageId});
 }
 @immutable
@@ -93,23 +93,23 @@ class MarkComingMessagesAsReceivedAction extends AppAction{
 }
 @immutable
 class MarkComingMessagesAsReceivedSuccessAction extends AppAction{
-  final Iterable<int> messageIds;
+  final Iterable<num> messageIds;
   const MarkComingMessagesAsReceivedSuccessAction({required this.messageIds});
 }
 
 @immutable
 class MarkComingMessageAsViewedAction extends AppAction{
-  final int messageId;
+  final num messageId;
   const MarkComingMessageAsViewedAction({required this.messageId});
 }
 @immutable
 class MarkComingMessagesAsViewedAction extends AppAction{
-  final int userId;
+  final num userId;
   const MarkComingMessagesAsViewedAction({required this.userId});
 }
 @immutable
 class MarkComingMessagesAsViewedSuccessAction extends AppAction{
-  final Iterable<int> messageIds;
+  final Iterable<num> messageIds;
   const MarkComingMessagesAsViewedSuccessAction({required this.messageIds});
 }
 

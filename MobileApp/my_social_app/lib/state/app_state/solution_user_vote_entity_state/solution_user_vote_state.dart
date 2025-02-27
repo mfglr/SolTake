@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
-class SolutionUserVoteState{
-  final int id;
+class SolutionUserVoteState extends BaseEntity<num>{
   final DateTime createdAt;
-  final int solutionId;
-  final int userId;
+  final num solutionId;
+  final num userId;
 
-  const SolutionUserVoteState({
-    required this.id,
+  SolutionUserVoteState({
+    required super.id,
     required this.createdAt,
     required this.solutionId,
     required this.userId

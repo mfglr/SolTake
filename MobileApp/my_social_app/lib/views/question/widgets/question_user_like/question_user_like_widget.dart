@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
-import 'package:my_social_app/state/app_state/question_user_like_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -56,12 +56,12 @@ class QuestionUserLikeWidget extends StatelessWidget {
               ],
             ),
 
-            StoreConnector<AppState,int>(
-              converter: (store) => store.state.loginState!.id,
-              builder: (context, id) => id == like.userId
-                ? const SpaceSavingWidget()
-                : like.,
-            )
+            // StoreConnector<AppState,num>(
+            //   converter: (store) => store.state.loginState!.id,
+            //   builder: (context, id) => id == like.userId
+            //     ? const SpaceSavingWidget()
+            //     : like.,
+            // )
 
           ],
         ),

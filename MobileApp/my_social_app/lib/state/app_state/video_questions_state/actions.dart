@@ -7,7 +7,7 @@ class NextVideoQuestionsAction extends AppAction{
 }
 @immutable
 class NextVideoQuestionsSuccessAction extends AppAction{
-  final Iterable<int> questionIds;
+  final Iterable<num> questionIds;
   const NextVideoQuestionsSuccessAction({required this.questionIds});
 }
 @immutable

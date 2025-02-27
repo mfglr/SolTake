@@ -4,7 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/exam_state/actions.dart';
+import 'package:my_social_app/state/app_state/app_exams_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/search_state/actions.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
@@ -36,8 +36,8 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   child: StoreConnector<AppState,Iterable<ExamState>>(
-                    onInit: (store) => getNextPageIfNoPage(store,store.state.exams,const NextExamsAction()),
-                    converter: (store) => store.state.examEntityState.entities.values,
+                    onInit: (store) => getNextPageIfNoPage(store,store.state.appExams,const NextExamsAction()),
+                    converter: (store) => store.state.examEntityState.values,
                     builder:(context,exams) => DropdownSearch<String>(
                       selectedItem: exams.where((x) => x.id == state.examId).firstOrNull?.shortName,
                       items: exams.map((e) => e.shortName).toList(),
@@ -65,7 +65,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   child: StoreConnector<AppState,Iterable<SubjectState>>(
-                    converter: (store) =>store.state.selectExamSubjects(state.examId),
+                    converter: (store) => state.examId != null ? store.state.selectExamSubjects(state.examId!) : [],
                     builder: (context,subjects) => DropdownSearch<String>(
                       enabled: subjects.isNotEmpty,
                       dropdownDecoratorProps: DropDownDecoratorProps(
@@ -92,7 +92,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
           Container(
             margin: const EdgeInsets.all(5),
             child: StoreConnector<AppState,Iterable<TopicState>>(
-              converter: (store) => store.state.selectSubjectTopics(state.subjectId),
+              converter: (store) => state.subjectId != null ? store.state.selectSubjectTopics(state.subjectId!) : [],
               builder: (context,topics) => DropdownSearch<String>(
                 enabled: topics.isNotEmpty,
                 dropdownDecoratorProps: DropDownDecoratorProps(

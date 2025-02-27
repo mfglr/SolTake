@@ -39,7 +39,7 @@ class QuestionService{
     return Question.fromJson(jsonDecode(data));
   }
 
-  Future<void> delete(int questionId) =>
+  Future<void> delete(num questionId) =>
     _appClient
       .delete("$questionController/$deleteQuestionEndpoint/$questionId");
   
@@ -68,37 +68,37 @@ class QuestionService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
   
-  Future<Iterable<Question>> getByUserId(int userId, Page page) =>
+  Future<Iterable<Question>> getByUserId(num userId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionController/$getQuestionsByUserIdEndpoint/$userId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
   
-  Future<Iterable<Question>> getByTopicId(int topicId, Page page) =>
+  Future<Iterable<Question>> getByTopicId(num topicId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionController/$getQuestionsByTopicIdEndpoint/$topicId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
   
-  Future<Iterable<Question>> getBySubjectId(int subjectId, Page page) =>
+  Future<Iterable<Question>> getBySubjectId(num subjectId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionController/$getQuestionsBySubjectIdEndpoint/$subjectId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
   
-  Future<Iterable<Question>> getByExamId(int examId, Page page) =>
+  Future<Iterable<Question>> getByExamId(num examId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionController/$getQuestionsByExamIdEndpoint/$examId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
 
-  Future<Iterable<Question>> getSolvedQuestionsByUserId(int userId, Page page) =>
+  Future<Iterable<Question>> getSolvedQuestionsByUserId(num userId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionController/$getSolvedQuestionsByUserIdEndpoint/$userId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
 
-  Future<Iterable<Question>> getUnsolvedQuestionsByUserId(int userId, Page page) =>
+  Future<Iterable<Question>> getUnsolvedQuestionsByUserId(num userId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionController/$getUnsolvedQuestionsByUserIdEndpoint/$userId", page))
       .then((json) => json as List)
@@ -116,7 +116,7 @@ class QuestionService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
 
-  Future<Iterable<Question>> searchQuestions(int? examId,int? subjectId,int? topicId,Page page) async {
+  Future<Iterable<Question>> searchQuestions(num? examId,num? subjectId,num? topicId,Page page) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {
       'examId': examId,

@@ -64,7 +64,7 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget> {
     return 
       state.key == "" ? 
       RemoveSearchedUserButton(user: user) :
-      StoreConnector<AppState,int>(
+      StoreConnector<AppState,num>(
         converter: (store) => store.state.loginState!.id,
         builder: (context,accountId) => accountId != user.id ? FollowButtonWidget(user: user) : const SpaceSavingWidget()
       );

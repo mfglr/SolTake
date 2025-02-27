@@ -10,8 +10,8 @@ import 'package:my_social_app/views/question/widgets/question_items_widget.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayUserQuestionsPage extends StatelessWidget {
-  final int userId;
-  final int? firstDisplayedQuestionId;
+  final num userId;
+  final num? firstDisplayedQuestionId;
   
   const DisplayUserQuestionsPage({
     super.key,
@@ -22,7 +22,7 @@ class DisplayUserQuestionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState>(
-      converter: (store) => store.state.userEntityState.entities[userId]!,
+      converter: (store) => store.state.userEntityState.getValue(userId)!,
       builder: (store,user) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
@@ -36,7 +36,8 @@ class DisplayUserQuestionsPage extends StatelessWidget {
         ),
         body: StoreConnector<AppState,Iterable<QuestionState>>(
           onInit: (store) => getNextPageIfNoPage(store,user.questions,NextUserQuestionsAction(userId: user.id)),
-          converter: (store) => store.state.selectUserQuestions(userId),
+          converter: (store) => //store.state.selectUserQuestions(userId),
+            [],
           builder: (context,questions) => QuestionItemsWidget(
             firstDisplayedQuestionId: firstDisplayedQuestionId,
             questions: questions,

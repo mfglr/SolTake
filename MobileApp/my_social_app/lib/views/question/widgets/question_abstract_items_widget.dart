@@ -9,7 +9,7 @@ class QuestionAbstractItemsWidget extends StatefulWidget {
   final Iterable<QuestionState> questions;
   final Pagination pagination;
   final Function onScrollBottom;
-  final void Function(int questionId) onTap;
+  final void Function(num questionId) onTap;
 
   const QuestionAbstractItemsWidget({
     super.key,
@@ -51,7 +51,7 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if(widget.pagination.isLast && widget.pagination.ids.isEmpty)
+        if(widget.pagination.isLast && widget.pagination.values.isEmpty)
           const Expanded(
             child: NoQuestionAbstractItemsWidget()
           ),

@@ -57,7 +57,7 @@ class CommentService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<Comment>> getBySolutionId(int solutionId, Page page) =>
+  Future<Iterable<Comment>> getBySolutionId(num solutionId, Page page) =>
     _appClient
         .get(_appClient.generatePaginationUrl("$commentController/$getCommentsBySolutionIdEndpoint/$solutionId", page))
         .then((json) => json as List)

@@ -1,6 +1,7 @@
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_message_state.dart';
@@ -45,7 +46,7 @@ void createMessageWithMediasMiddleware(Store<AppState> store,action,NextDispatch
 
 void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadMessageAction){
-    if(store.state.messageEntityState.entities[action.messageId] == null){
+    if(store.state.messageEntityState.getValue(action.messageId) == null){
       MessageService()
         .getMessageById(action.messageId)
         .then((message) => store.dispatch(AddMessageAction(message: message.toMessageState())));
@@ -56,7 +57,7 @@ void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void removeMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveMessageAction){
-    final message = store.state.messageEntityState.entities[action.messageId];
+    final message = store.state.messageEntityState.getValue(action.messageId);
     if(message != null){
       final conversationId = message.conversationId;
       MessageService()
@@ -89,7 +90,9 @@ void removeMessagesByUserIdsMiddleware(Store<AppState> store,action,NextDispatch
       .then((_){
         store.dispatch(RemoveMessagesByUserIdsSuccessAction(userIds: action.userIds));
         for(var userId in action.userIds){
-          var messageIds = store.state.messageEntityState.selectUserMessages(userId).map((e) => e.id);
+          var messageIds = store.state.messageEntityState
+            .select((e) => e.senderId == userId || e.receiverId == userId)
+            .map((e) => e.id);
           store.dispatch(RemoveUserMessagesAction(userId: userId, messageIds: messageIds));
         }
       });
@@ -140,7 +143,9 @@ void markComingMessagesAsReceivedMiddleware(Store<AppState> store,action,NextDis
 }
 void markComingMessagesAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MarkComingMessagesAsViewedAction){
-    final messageIds = store.state.messageEntityState.selectIdsOfUnviewedMessagesOfUser(action.userId);
+    final messageIds = store.state.messageEntityState
+      .select((e) => e.senderId == action.userId && e.state != MessageStatus.viewed)
+      .map((e) => e.id);
     if(messageIds.isNotEmpty){
       MessageHub()
       .markMessagesAsViewed(messageIds)

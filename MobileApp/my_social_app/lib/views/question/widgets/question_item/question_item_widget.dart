@@ -137,16 +137,16 @@ class QuestionItemWidget extends StatelessWidget {
             child: Wrap(
               children: [
                 StoreConnector<AppState,ExamState>(
-                  converter: (store) => store.state.examEntityState.entities[question.examId]!,
+                  converter: (store) => store.state.examEntityState.getValue(question.examId)!,
                   builder: (context,exam) => ExamTagItem(exam: exam)
                 ),
                 StoreConnector<AppState,SubjectState>(
-                  converter: (store) => store.state.subjectEntityState.entities[question.subjectId]!,
+                  converter: (store) => store.state.subjectEntityState.getValue(question.subjectId)!,
                   builder: (context,subject) => SubjectTagItem(subject: subject,)
                 ),
                 if(question.topicId != null)
                   StoreConnector<AppState,TopicState>(
-                    converter: (store) => store.state.topicEntityState.entities[question.topicId]!,
+                    converter: (store) => store.state.topicEntityState.getValue(question.topicId)!,
                     builder: (context,topic) => TopicTagItem(topic: topic),
                   ),
               ]

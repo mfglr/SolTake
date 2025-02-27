@@ -12,7 +12,7 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
 class DisplaySavedSolutionsPage extends StatelessWidget {
-  final int? solutionId;
+  final num? solutionId;
   const DisplaySavedSolutionsPage({
     super.key,
     this.solutionId,
@@ -34,7 +34,8 @@ class DisplaySavedSolutionsPage extends StatelessWidget {
           if(user == null) return const LoadingView();
           return StoreConnector<AppState,Iterable<SolutionState>>(
             onInit: (store) => getNextPageIfNoPage(store,user.savedSolutions,NextUserSavedSolutionsAction(userId: user.id)),
-            converter: (store) => store.state.selectUserSavedSolutions(store.state.loginState!.id),
+            converter: (store) => // store.state.selectUserSavedSolutions(store.state.loginState!.id),
+            [],
             builder: (context,solutions) => SolutionItemsWidget(
               pagination: user.savedSolutions,
               solutions: solutions,

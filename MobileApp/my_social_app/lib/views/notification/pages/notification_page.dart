@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
+import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/notification/widgets/no_notifications.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/notification/widgets/notification_items.dart';
@@ -28,7 +29,7 @@ class _NotificationPageState extends State<NotificationPage> {
         final store = StoreProvider.of<AppState>(context,listen: false);
         getNextEntitiesIfReady(
           store,
-          store.state.notificationEntityState.pagination,
+          store.state.notifications,
           const NextNotificationsAction()
         );
       }
@@ -57,24 +58,22 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
         ),
       ),
-      body: StoreConnector<AppState,NotificationEntityState>(
+      body: StoreConnector<AppState,Pagination<num,NotificationState>>(
         onInit: (store) => getNextEntitiesIfNoPage(
           store,
-          store.state.notificationEntityState.pagination,
+          store.state.notifications,
           const NextNotificationsAction()
         ),
-        converter: (store) => store.state.notificationEntityState,
-        builder: (context,state) => SingleChildScrollView(
+        converter: (store) => store.state.notifications,
+        builder: (context,pagination) => SingleChildScrollView(
           controller: _scrollController,
           child: Column(
             children: [
-              if(state.pagination.isLast && state.pagination.entities.isEmpty)
+              if(pagination.isLast && pagination.values.isEmpty)
                 const NoNotifications()
               else
-                NotificationItems(
-                  notifications: state.notifications
-                ),
-              if(state.pagination.loadingNext)
+                NotificationItems(notifications: pagination.values),
+              if(pagination.loadingNext)
                 const LoadingCircleWidget(
                   strokeWidth: 3
                 )

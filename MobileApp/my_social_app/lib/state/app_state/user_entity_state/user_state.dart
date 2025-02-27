@@ -4,11 +4,12 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class UserState implements Avatar{
-  final int id;
+class UserState extends BaseEntity<num> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;
@@ -21,21 +22,21 @@ class UserState implements Avatar{
   final bool isFollowed;
   final Multimedia? image;
   final UserImageState? userImageState;
-  final Pagination followers;
-  final Pagination followeds;
-  final Pagination notFolloweds;
-  final Pagination questions;
-  final Pagination solvedQuestions;
-  final Pagination unsolvedQuestions;
-  final Pagination savedQuestions;
-  final Pagination savedSolutions;
-  final Pagination messages;
-  final Pagination conversations;
+  final Pagination<num,Id<num>> followers;
+  final Pagination<num,Id<num>> followeds;
+  final Pagination<num,Id<num>> notFolloweds;
+  final Pagination<num,Id<num>> questions;
+  final Pagination<num,Id<num>> solvedQuestions;
+  final Pagination<num,Id<num>> unsolvedQuestions;
+  final Pagination<num,Id<num>> savedQuestions;
+  final Pagination<num,Id<num>> savedSolutions;
+  final Pagination<num,Id<num>> messages;
+  final Pagination<num,Id<num>> conversations;
 
   @override
   Multimedia? get avatar => image;
   @override
-  int get avatarId => id;
+  num get avatarId => id;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -46,8 +47,8 @@ class UserState implements Avatar{
     return userName.length <= count ? userName : "${userName.substring(0,count)}...";
   }
 
-  const UserState({
-    required this.id,
+  UserState({
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.userName,
@@ -82,16 +83,16 @@ class UserState implements Avatar{
     int? newNumberOfFolloweds,
     bool? newIsFollower,
     bool? newIsFollowed,
-    Pagination? newFollowers,
-    Pagination? newFolloweds,
-    Pagination? newQuestions,
-    Pagination? newSolvedQuestions,
-    Pagination? newUnsolvedQuestions,
-    Pagination? newSavedQuestions,
-    Pagination? newSavedSolutions,
-    Pagination? newMessages,
-    Pagination? newNotFolloweds,
-    Pagination? newConversations,
+    Pagination<num,Id<num>>? newFollowers,
+    Pagination<num,Id<num>>? newFolloweds,
+    Pagination<num,Id<num>>? newQuestions,
+    Pagination<num,Id<num>>? newSolvedQuestions,
+    Pagination<num,Id<num>>? newUnsolvedQuestions,
+    Pagination<num,Id<num>>? newSavedQuestions,
+    Pagination<num,Id<num>>? newSavedSolutions,
+    Pagination<num,Id<num>>? newMessages,
+    Pagination<num,Id<num>>? newNotFolloweds,
+    Pagination<num,Id<num>>? newConversations,
     Multimedia? newImage,
     UserImageState? newUserImageState
   }) => UserState(
@@ -123,16 +124,16 @@ class UserState implements Avatar{
   //followers
   UserState startLoadingNextFollowers() => 
     _optional(newFollowers: followers.startLoadingNext());
-  UserState addNextFollowers(Iterable<int> followIds) => 
-    _optional(newFollowers: followers.addNextPage(followIds));
+  UserState addNextFollowers(Iterable<num> followIds) => 
+    _optional(newFollowers: followers.addNextPage(followIds.map((e) => Id(id: e))));
   UserState stopLoadingNextFollowers() =>
     _optional(newFollowers: followers.stopLoadingNext());
 
-  UserState addFollower(int followId) => 
+  UserState addFollower(num followId) => 
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
       newIsFollowed: true,
-      newFollowers: followers.prependOne(followId)
+      newFollowers: followers.prependOne(Id(id: followId))
     );
   UserState removeFollower(int followId) => 
     _optional(
@@ -140,10 +141,10 @@ class UserState implements Avatar{
       newIsFollowed: false,
       newFollowers: followers.removeOne(followId)
     );
-  UserState addFollowerToCurrentUser(int followId) =>
+  UserState addFollowerToCurrentUser(num followId) =>
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
-      newFollowers: followers.prependOne(followId)
+      newFollowers: followers.prependOne(Id(id: followId))
     );
   UserState removeFollowerToCurrentUser(int followId) =>
     _optional(
@@ -154,27 +155,27 @@ class UserState implements Avatar{
   //followeds
   UserState startLoadingNextFolloweds() =>
     _optional(newFolloweds: followeds.startLoadingNext());
-  UserState addNextFolloweds(Iterable<int> ids) =>
-    _optional(newFolloweds: followeds.addNextPage(ids));
+  UserState addNextFolloweds(Iterable<num> ids) =>
+    _optional(newFolloweds: followeds.addNextPage(ids.map((e) => Id(id: e))));
   UserState stopLoadingNextFolloweds() =>
     _optional(newFolloweds: followeds.stopLoadingNext());
     
-  UserState addFollowed(int followId)
+  UserState addFollowed(num followId)
     => _optional(
         newNumberOfFolloweds: numberOfFolloweds + 1,
         newIsFollower: true,
-        newFolloweds: followeds.prependOne(followId)
+        newFolloweds: followeds.prependOne(Id(id: followId))
       );
-  UserState removeFollowed(int followId) =>
+  UserState removeFollowed(num followId) =>
     _optional(
       newNumberOfFolloweds: numberOfFolloweds - 1,
       newIsFollower: false,
       newFolloweds: followeds.removeOne(followId)
     );
-  UserState addFollowedToCurrentUser(int followId) =>
+  UserState addFollowedToCurrentUser(num followId) =>
     _optional(
       newNumberOfFolloweds: numberOfFolloweds + 1,
-      newFolloweds: followeds.prependOne(followId)
+      newFolloweds: followeds.prependOne(Id(id: followId))
     );
   UserState removeFollowedToCurrentUser(int followId) =>
     _optional(
@@ -185,37 +186,29 @@ class UserState implements Avatar{
 
   //not followeds
   UserState getNextPageNotFolloweds() =>
-    _optional(
-      newNotFolloweds: notFolloweds.startLoadingNext()
-    );
-  UserState addNextPageNotFolloweds(Iterable<int> ids) =>
-    _optional(
-      newNotFolloweds: notFolloweds.addNextPage(ids)
-    );
-  UserState addNotFollowed(int id) =>
-    _optional(
-      newNotFolloweds: notFolloweds.prependOne(id)
-    );
-  UserState removeNotFollowed(int id) =>
-    _optional(
-      newNotFolloweds: notFolloweds.removeOne(id)
-    );
+    _optional(newNotFolloweds: notFolloweds.startLoadingNext());
+  UserState addNextPageNotFolloweds(Iterable<num> ids) =>
+    _optional(newNotFolloweds: notFolloweds.addNextPage(ids.map((e) => Id(id: id))));
+  UserState addNotFollowed(num id) =>
+    _optional(newNotFolloweds: notFolloweds.prependOne(Id(id: id)));
+  UserState removeNotFollowed(num id) =>
+    _optional(newNotFolloweds: notFolloweds.removeOne(id));
 
   //questions
   UserState startLoadingNextQuestions() =>
     _optional(newQuestions: questions.startLoadingNext());
-  UserState stopLoadingNextQuestion() =>
+  UserState stopLoadingNextQuestions() =>
     _optional(newQuestions: questions.stopLoadingNext());
-  UserState addNextPageQuestions(Iterable<int> ids) =>
-    _optional(newQuestions: questions.addNextPage(ids));
+  UserState addNextPageQuestions(Iterable<num> ids) =>
+    _optional(newQuestions: questions.addNextPage(ids.map((e) => Id(id: e))));
 
-  UserState addNewQuestion(int id) =>
+  UserState addNewQuestion(num questionId) =>
     _optional(
       newNumberOfQuestions: numberOfQuestions + 1,
-      newQuestions: questions.prependOne(id),
-      newUnsolvedQuestions: unsolvedQuestions.prependOne(id)
+      newQuestions: questions.prependOne(Id(id: questionId)),
+      newUnsolvedQuestions: unsolvedQuestions.prependOne(Id(id: questionId))
     );
-  UserState removeQuestion(int questionId) =>
+  UserState removeQuestion(num questionId) =>
     _optional(
       newNumberOfQuestions: numberOfQuestions - 1,
       newQuestions: questions.removeOne(questionId),
@@ -228,60 +221,60 @@ class UserState implements Avatar{
     _optional(newSolvedQuestions: solvedQuestions.startLoadingNext());
   UserState stopLoadingNextSolvedQuestions() =>
     _optional(newSolvedQuestions: solvedQuestions.stopLoadingNext());
-  UserState addNextSolvedQuestions(Iterable<int> ids) =>
-    _optional(newSolvedQuestions: solvedQuestions.addNextPage(ids));
+  UserState addNextSolvedQuestions(Iterable<num> ids) =>
+    _optional(newSolvedQuestions: solvedQuestions.addNextPage(ids.map((e) => Id(id: e))));
 
   //unsolved questions
   UserState startLoadingNextUnsolvedQuestions() =>
     _optional(newUnsolvedQuestions: unsolvedQuestions.startLoadingNext());
-  UserState addNextUnsolvedQuestions(Iterable<int> ids) =>
-    _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(ids));
+  UserState addNextUnsolvedQuestions(Iterable<num> ids) =>
+    _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(ids.map((e) => Id(id: e))));
   UserState stopLoadingNextUnsolvedQuestion() =>
     _optional(newUnsolvedQuestions: unsolvedQuestions.stopLoadingNext());
 
-  UserState markQuestionAsSolved(int id) =>
+  UserState markQuestionAsSolved(num id) =>
     _optional(
-      newSolvedQuestions: solvedQuestions.ids.any((e) => e == id) ? solvedQuestions : solvedQuestions.addInOrder(id),
+      newSolvedQuestions: solvedQuestions.values.any((e) => e.id == id) ? solvedQuestions : solvedQuestions.addInOrder(Id(id: id)),
       newUnsolvedQuestions: unsolvedQuestions.removeOne(id)
     );
-  UserState markQuestionAsUnsolved(int id) =>
+  UserState markQuestionAsUnsolved(num id) =>
     _optional(
       newSolvedQuestions: solvedQuestions.removeOne(id),
-      newUnsolvedQuestions: unsolvedQuestions.addInOrder(id),
+      newUnsolvedQuestions: unsolvedQuestions.addInOrder(Id(id: id)),
     );
   
   //saved questions
   UserState startLoadingNextSavedQuestions() => 
     _optional(newSavedQuestions: savedQuestions.startLoadingNext());
-  UserState addNextSavedQuestions(Iterable<int> saveIds) => 
-    _optional(newSavedQuestions: savedQuestions.addNextPage(saveIds));
+  UserState addNextSavedQuestions(Iterable<num> saveIds) => 
+    _optional(newSavedQuestions: savedQuestions.addNextPage(saveIds.map((e) => Id(id: e))));
   UserState stopLoadingNextSavedQuestions() =>
     _optional(newSavedQuestions: savedQuestions.stopLoadingNext());
     
-  UserState addSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.prependOne(saveId));
-  UserState removeSavedQuestion(int saveId) => _optional(newSavedQuestions: savedQuestions.removeOne(saveId));
+  UserState addSavedQuestion(num saveId) => _optional(newSavedQuestions: savedQuestions.prependOne(Id(id: saveId)));
+  UserState removeSavedQuestion(num saveId) => _optional(newSavedQuestions: savedQuestions.removeOne(saveId));
 
   //saved solutions
   UserState startLoadingSavedSolutions() =>
     _optional(newSavedSolutions: savedSolutions.startLoadingNext());
-  UserState addNextSavedSolutions(Iterable<int> saveIds) =>
-    _optional(newSavedSolutions: savedSolutions.addNextPage(saveIds));
+  UserState addNextSavedSolutions(Iterable<num> saveIds) =>
+    _optional(newSavedSolutions: savedSolutions.addNextPage(saveIds.map((e) => Id(id: e))));
   UserState stopLoadingSavedSolutions() =>
     _optional(newSavedSolutions: savedSolutions.stopLoadingNext());
 
-  UserState addSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(saveId));
-  UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
+  UserState addSavedSolution(num saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(Id(id: saveId)));
+  UserState removeSavedSolution(num saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
 
   //messages
   UserState startLoadingNextMessages() =>
     _optional(newMessages: messages.startLoadingNext());
   UserState addNextMessages(Iterable<int> messageIds) =>
-    _optional(newMessages: messages.addNextPage(messageIds));
+    _optional(newMessages: messages.addNextPage(messageIds.map((e) => Id(id: e))));
   UserState stopLoadingNextMessages() =>
     _optional(newMessages: messages.stopLoadingNext());
 
   UserState addMessage(int messageId) =>
-    _optional(newMessages: messages.prependOne(messageId));
+    _optional(newMessages: messages.prependOne(Id(id: messageId)));
   UserState removeMessage(int messageId) =>
     _optional(newMessages: messages.removeOne(messageId));
   UserState removeMessages(Iterable<int> messageIds) =>
@@ -290,16 +283,16 @@ class UserState implements Avatar{
   //converations
   UserState startLoadingNextConversations() =>
     _optional(newConversations: conversations.startLoadingNext());
-  UserState addNextConversations(Iterable<int> ids) =>
-    _optional(newConversations: conversations.addNextPage(ids));
+  UserState addNextConversations(Iterable<num> ids) =>
+    _optional(newConversations: conversations.addNextPage(ids.map((e) => Id(id: e))));
   UserState stopLoadingNextConversations() =>
     _optional(newConversations: conversations.stopLoadingNext());
 
-  UserState addConversation(int id) =>
-    _optional(newConversations: conversations.prependOne(id));
-  UserState addConversationInOrder(int id) =>
-    _optional(newConversations: conversations.addInOrder(id));
-  UserState removeConversation(int id) =>
+  UserState addConversation(num id) =>
+    _optional(newConversations: conversations.prependOne(Id(id: id)));
+  UserState addConversationInOrder(num id) =>
+    _optional(newConversations: conversations.addInOrder(Id(id: id)));
+  UserState removeConversation(num id) =>
     _optional(newConversations: conversations.removeOne(id));
 
   UserState updateUserName(String userName) =>

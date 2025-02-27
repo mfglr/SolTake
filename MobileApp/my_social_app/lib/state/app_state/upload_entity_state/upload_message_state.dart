@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 
 class UploadMessageState extends UploadState{
   final String? content;
-  final int userId;
+  final num userId;
 
   UploadMessageState._({
     required super.id,

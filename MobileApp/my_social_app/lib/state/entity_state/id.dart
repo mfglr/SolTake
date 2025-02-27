@@ -1,5 +1,5 @@
-import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 
-class Id<K extends Comparable<K>> extends HasId<K>{
+class Id<K extends Comparable<K>> extends BaseEntity<K>{
   Id({required super.id});
 }

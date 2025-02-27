@@ -10,7 +10,7 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySearchQuestionsPage extends StatelessWidget {
-  final int? firstDisplayedQuestionId;
+  final num? firstDisplayedQuestionId;
   
   const DisplaySearchQuestionsPage({
     super.key,

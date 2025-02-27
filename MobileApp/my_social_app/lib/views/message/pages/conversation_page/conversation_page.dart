@@ -24,7 +24,7 @@ import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.da
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConversationPage extends StatefulWidget {
-  final int userId;
+  final num userId;
   const ConversationPage({super.key,required this.userId});
   @override
   State<ConversationPage> createState() => _ConversationPageState();
@@ -35,7 +35,7 @@ class _ConversationPageState extends State<ConversationPage>{
   final ScrollController _scrollController = ScrollController();
   late final StreamSubscription<MessageState> _messageConsumer;
   int _numberOfNewMessages = 0;
-  Iterable<int> _selectedIds = [];
+  Iterable<num> _selectedIds = [];
 
   void _onLongPressed(MessageState message){
     if(!_selectedIds.any((e) => e == message.id)){
@@ -72,7 +72,7 @@ class _ConversationPageState extends State<ConversationPage>{
   void _onScrollTop(){
     if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
       final store = StoreProvider.of<AppState>(context,listen: false);
-      var pagination = store.state.userEntityState.entities[widget.userId]!.messages;
+      var pagination = store.state.userEntityState.getValue(widget.userId)!.messages;
       getNextPageIfReady(store,pagination,NextUserMessagesAction(userId: widget.userId));
     }
   }
@@ -133,7 +133,7 @@ class _ConversationPageState extends State<ConversationPage>{
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState?>(
       onInit: (store) => store.dispatch(LoadUserAction(userId: widget.userId)),
-      converter: (store) => store.state.userEntityState.entities[widget.userId],
+      converter: (store) => store.state.userEntityState.getValue(widget.userId),
       builder: (context,user){
         if(user == null) return const LoadingView();
         return Scaffold(

@@ -12,7 +12,7 @@ class CommentItemsWidget extends StatefulWidget {
   final Widget noItems;
   final void Function() onScrollBottom;
   final Pagination pagination;
-  final int? parentId;
+  final num? parentId;
 
   const CommentItemsWidget({
     super.key,
@@ -55,7 +55,7 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
       controller: widget.scrollController,
       child: Builder(
         builder: (context) {
-          if(widget.pagination.isLast && widget.pagination.ids.isEmpty) return widget.noItems;
+          if(widget.pagination.isLast && widget.pagination.values.isEmpty) return widget.noItems;
           return Column(
             children: [
               ...List.generate(

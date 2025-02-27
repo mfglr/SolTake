@@ -47,7 +47,7 @@ class UserService{
       )
       .then((json) => Login.fromJson(json));
   
-   Future<Login> loginByRefreshtoken(int id,String token) =>
+   Future<Login> loginByRefreshtoken(num id,String token) =>
     _appClient
       .post(
         "$userController/$loginByRefreshTokenEndPoint",
@@ -141,7 +141,7 @@ class UserService{
     _appClient
       .put("$userController/$approveTermsOfUseEndpoint");
 
-  Future<Multimedia> updateImage(AppFile image, int userId, void Function(double) callback) async {
+  Future<Multimedia> updateImage(AppFile image, num userId, void Function(double) callback) async {
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
     request.files.add(await MultipartFile.fromPath("file",image.file.path,contentType: MediaType.parse(image.contentType)));
@@ -149,7 +149,7 @@ class UserService{
     return Multimedia.fromJson(jsonDecode(data));
   }
   
-  Future<void> removeImage(int userId) =>
+  Future<void> removeImage(num userId) =>
     _appClient.delete("$userController/$removeUserImageEndpoint");
   
   Future<void> updateName(String name) => 
@@ -160,27 +160,27 @@ class UserService{
      _appClient
       .put("$userController/$updateBiographyEndpoint",body: {'biography': biography});
   
-  Future<Follow> follow(int followedId) => 
+  Future<Follow> follow(num followedId) => 
     _appClient
       .post("$userController/$followEndPoint", body: { 'followedId': followedId })
       .then((json) => Follow.fromJson(json));
 
-  Future<void> unfollow(int followedId) => 
+  Future<void> unfollow(num followedId) => 
     _appClient
       .delete("$userController/$unfollowEndPoint/$followedId");
   
-  Future<void> removeFollower(int followerId) => 
+  Future<void> removeFollower(num followerId) => 
     _appClient
       .delete("$userController/$removeFollowerEndPoint/$followerId");
     
-  Future<UserSearch> addSearcher(int searchedId) => 
+  Future<UserSearch> addSearcher(num searchedId) => 
     _appClient
       .post("$userController/$addUserSearcherEndpoint", body: { 'searchedId': searchedId })
       .then((json) => UserSearch.fromJson(json));
 
-  Future<void> removeSearcher(int searchedId) => _appClient.delete("$userController/$removeUserSearcherEndpoint/$searchedId");
+  Future<void> removeSearcher(num searchedId) => _appClient.delete("$userController/$removeUserSearcherEndpoint/$searchedId");
 
-  Future<User> getById(int id) => 
+  Future<User> getById(num id) => 
     _appClient
       .get("$userController/$getUserByIdEndPoint/$id")
       .then((json) => User.fromJson(json));
@@ -194,19 +194,19 @@ class UserService{
     _appClient
       .getBytes("$userController/$gerUserImageByIdEndPoint/$id");
   
-  Future<Iterable<Follow>> getFollowersById(int id, Page page) =>
+  Future<Iterable<Follow>> getFollowersById(num id, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$userController/$getFollowersByIdEndPoint/$id", page))
       .then((json) => json as List)
       .then((list) => list.map((item) => Follow.fromJson(item)));
  
-  Future<Iterable<Follow>> getFollowedsById(int id, Page page) =>
+  Future<Iterable<Follow>> getFollowedsById(num id, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$userController/$getFollowedsByIdEndPoint/$id", page))
       .then((json) => json as List)
       .then((list) => list.map((item) => Follow.fromJson(item)));
 
-  Future<Iterable<User>> getNotFolloweds(int id, Page page) =>
+  Future<Iterable<User>> getNotFolloweds(num id, Page page) =>
    _appClient
     .get(_appClient.generatePaginationUrl("$userController/$getNotFollowedsEndpoint/$id", page))
     .then((json) => json as List)

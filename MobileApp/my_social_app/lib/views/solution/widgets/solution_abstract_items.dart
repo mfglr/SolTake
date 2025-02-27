@@ -8,7 +8,7 @@ class SolutionAbstractItems extends StatefulWidget {
   final Iterable<SolutionState> solutions;
   final Pagination pagination;
   final void Function() onScrollBottom;
-  final void Function(int solutionId) onTap;
+  final void Function(num solutionId) onTap;
   final Widget noItems;
 
   const SolutionAbstractItems({
@@ -48,7 +48,7 @@ class _SolutionAbstractItemsState extends State<SolutionAbstractItems> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.pagination.isLast && widget.pagination.ids.isEmpty) return widget.noItems;
+    if(widget.pagination.isLast && widget.pagination.values.isEmpty) return widget.noItems;
     return Column(
       children: [
         Expanded(

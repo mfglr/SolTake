@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 
 void markNotificationsAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MarkNotificationsAsViewedAction){
-    final ids = store.state.notificationEntityState.idsOfUnviewedNotifications;
+    final ids = store.state.notifications.select((e) => !e.isViewed).map((e) => e.id);
     if(ids.isNotEmpty){
       NotificationService()
         .markNotificationsAsViewed(ids.toList())
@@ -29,7 +29,7 @@ void getUnviewedNotificationMiddleware(Store<AppState> store,action,NextDispatch
 void getNextPageNotificationsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextNotificationsAction){
     NotificationService()
-      .getNotifications(store.state.notificationEntityState.pagination.next)
+      .getNotifications(store.state.notifications.next)
       .then((notifications){
         store.dispatch(NextNotificationsSuccessAction(notifications: notifications.map((e) => e.toNotificationState())));
       })

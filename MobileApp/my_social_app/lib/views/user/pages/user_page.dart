@@ -17,7 +17,7 @@ import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserPage extends StatefulWidget {
-  final int? userId;
+  final num? userId;
   final String? userName;
 
   const UserPage({
@@ -59,7 +59,8 @@ class _UserPageState extends State<UserPage> {
   Widget _getQuestionsGrid(UserState user){
     return StoreConnector<AppState,Iterable<QuestionState>>(
       onInit: (store) => getNextPageIfNoPage(store,user.questions,NextUserQuestionsAction(userId: user.id)),
-      converter: (store) => store.state.selectUserQuestions(user.id),
+      converter: (store) => // store.state.selectUserQuestions(user.id),
+      [],
       builder: (context, questions) => QuestionAbstractItemsWidget(
         questions: questions,
         pagination: user.questions,
@@ -149,9 +150,9 @@ class _UserPageState extends State<UserPage> {
       },
       converter: (store){
         if(widget.userId != null){
-          return store.state.userEntityState.entities[widget.userId];
+          return store.state.userEntityState.getValue(widget.userId);
         }
-        return store.state.userEntityState.entities.values.where((e) => e.userName == widget.userName).firstOrNull;
+        return store.state.userEntityState.getList((e) => e.userName == widget.userName).firstOrNull;
       },
       builder: (context, user){
         if(user == null) return const LoadingView();

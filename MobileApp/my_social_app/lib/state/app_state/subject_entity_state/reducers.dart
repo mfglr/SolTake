@@ -1,46 +1,47 @@
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_entity_state.dart';
+import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-SubjectEntityState nextSubjectQuestionsReducer(SubjectEntityState prev,NextSubjectQuestionsAction action)
-  => prev.startLoadingNextQuestions(action.subjectId);
-SubjectEntityState nextSubjectQuestionsSuccessReducer(SubjectEntityState prev,NextSubjectQuestionsSuccessAction action)
-  => prev.addNextPageQuestions(action.subjectId,action.questions);
-SubjectEntityState nextSubjectQuestionsFailedReducer(SubjectEntityState prev,NextSubjectQuestionsFailedAction action)
-  => prev.stopLoadingNextQuestions(action.subjectId);
+EntityState<num,SubjectState> nextSubjectQuestionsReducer(EntityState<num,SubjectState> prev,NextSubjectQuestionsAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.startLoadingNextQuestions());
+EntityState<num,SubjectState> nextSubjectQuestionsSuccessReducer(EntityState<num,SubjectState> prev,NextSubjectQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.addNextPageQuestions(action.questions));
+EntityState<num,SubjectState> nextSubjectQuestionsFailedReducer(EntityState<num,SubjectState> prev,NextSubjectQuestionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.stopLoadingNextQuestions()); 
 
-SubjectEntityState prevQuestionReducer(SubjectEntityState prev,PrevSubjectQuestionsAction action)
-  => prev.startLoadingPrevQuestions(action.subjectId);
-SubjectEntityState prevQuestionSuccessReducer(SubjectEntityState prev,PrevSubjectQuestionsSuccessAction action)
-  => prev.addPrevPageQuestions(action.subjectId,action.questionIds);
-SubjectEntityState prevQuestionsFailedReducer(SubjectEntityState prev,PrevSubjectQuestionsFailedAction action)
-  => prev.stopLoadingPrevQuestions(action.subjectId);
+EntityState<num,SubjectState> prevQuestionReducer(EntityState<num,SubjectState> prev,PrevSubjectQuestionsAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.startLoadingPrevQuestions());
+EntityState<num,SubjectState> prevQuestionSuccessReducer(EntityState<num,SubjectState> prev,PrevSubjectQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.addPrevQuestions(action.questionIds));
+EntityState<num,SubjectState> prevQuestionsFailedReducer(EntityState<num,SubjectState> prev,PrevSubjectQuestionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.stopLoadingPrevQuestions()) ;
 
-SubjectEntityState addSubjectReducer(SubjectEntityState prev,AddSubjectAction action)
-  => prev.addSubject(action.subject);
-SubjectEntityState addSubjectsReducer(SubjectEntityState prev,AddSubjectsAction action)
-  => prev.addSubjects(action.subjects);
+EntityState<num,SubjectState> addSubjectReducer(EntityState<num,SubjectState> prev,AddSubjectAction action)
+  => prev.appendOne(action.subject);
+EntityState<num,SubjectState> addSubjectsReducer(EntityState<num,SubjectState> prev,AddSubjectsAction action)
+  => prev.appendMany(action.subjects);
 
-SubjectEntityState nextTopicsReducer(SubjectEntityState prev,NextSubjectTopicsAction action)
-  => prev.startLoadingNextTopics(action.subjectId);
-SubjectEntityState nextTopicsSuccessReducer(SubjectEntityState prev,NextSubjectTopicsSuccessAction action)
-  => prev.addNextPageTopics(action.subjectId, action.topicIds);
-SubjectEntityState nextTopicsFailedReducer(SubjectEntityState prev,NextSubjectTopicsFailedAction action)
-  => prev.stopLoadingNextTopics(action.subjectId);
+EntityState<num,SubjectState> nextTopicsReducer(EntityState<num,SubjectState> prev,NextSubjectTopicsAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.startLoadingNextTopics());
+EntityState<num,SubjectState> nextTopicsSuccessReducer(EntityState<num,SubjectState> prev,NextSubjectTopicsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.addNextTopics(action.topicIds)) ;
+EntityState<num,SubjectState> nextTopicsFailedReducer(EntityState<num,SubjectState> prev,NextSubjectTopicsFailedAction action)
+  => prev.updateOne(prev.getValue(action.subjectId)!.stopLoadingNextTopics());
 
-Reducer<SubjectEntityState> subjectEntityStateReducers = combineReducers<SubjectEntityState>([
-  TypedReducer<SubjectEntityState,NextSubjectQuestionsAction>(nextSubjectQuestionsReducer).call,
-  TypedReducer<SubjectEntityState,NextSubjectQuestionsSuccessAction>(nextSubjectQuestionsSuccessReducer).call,
-  TypedReducer<SubjectEntityState,NextSubjectQuestionsFailedAction>(nextSubjectQuestionsFailedReducer).call,
+Reducer<EntityState<num,SubjectState>> subjectEntityStateReducers = combineReducers<EntityState<num,SubjectState>>([
+  TypedReducer<EntityState<num,SubjectState>,NextSubjectQuestionsAction>(nextSubjectQuestionsReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,NextSubjectQuestionsSuccessAction>(nextSubjectQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,NextSubjectQuestionsFailedAction>(nextSubjectQuestionsFailedReducer).call,
 
-  TypedReducer<SubjectEntityState,PrevSubjectQuestionsAction>(prevQuestionReducer).call,
-  TypedReducer<SubjectEntityState,PrevSubjectQuestionsSuccessAction>(prevQuestionSuccessReducer).call,
-  TypedReducer<SubjectEntityState,PrevSubjectQuestionsFailedAction>(prevQuestionsFailedReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,PrevSubjectQuestionsAction>(prevQuestionReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,PrevSubjectQuestionsSuccessAction>(prevQuestionSuccessReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,PrevSubjectQuestionsFailedAction>(prevQuestionsFailedReducer).call,
 
-  TypedReducer<SubjectEntityState,AddSubjectAction>(addSubjectReducer).call,
-  TypedReducer<SubjectEntityState,AddSubjectsAction>(addSubjectsReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,AddSubjectAction>(addSubjectReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,AddSubjectsAction>(addSubjectsReducer).call,
 
-  TypedReducer<SubjectEntityState,NextSubjectTopicsAction>(nextTopicsReducer).call,
-  TypedReducer<SubjectEntityState,NextSubjectTopicsSuccessAction>(nextTopicsSuccessReducer).call,
-  TypedReducer<SubjectEntityState,NextSubjectTopicsFailedAction>(nextTopicsFailedReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,NextSubjectTopicsAction>(nextTopicsReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,NextSubjectTopicsSuccessAction>(nextTopicsSuccessReducer).call,
+  TypedReducer<EntityState<num,SubjectState>,NextSubjectTopicsFailedAction>(nextTopicsFailedReducer).call,
 ]);

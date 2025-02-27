@@ -7,7 +7,7 @@ class NextConversationsAction extends AppAction{
 }
 @immutable
 class NextConversationsSuccessAction extends AppAction{
-  final Iterable<int> messageIds;  
+  final Iterable<num> messageIds;  
   const NextConversationsSuccessAction({required this.messageIds});
 }
 @immutable

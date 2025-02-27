@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/entity_state/has_id.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/page.dart' as pagination;
 
 @immutable
-class Pagination<K extends Comparable<K>,V extends HasId<K>>{
+class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
   final bool isLast;
   final bool loadingNext;
   final bool loadingPrev;
   final int recordsPerPage;
   final bool isDescending;
   final Iterable<V> values;
+
+  Iterable<V> select(bool Function(V) test) => values.where(test);
 
   const Pagination({
     required this.isLast,
@@ -49,6 +51,8 @@ class Pagination<K extends Comparable<K>,V extends HasId<K>>{
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
 
+  Iterable<V> getByIds(Iterable<K> ids) => values.where((e) => ids.any((id) => id.compareTo(e.id) == 0));
+  
   Iterable<V> merge(V value) => [value, ...values.where((e) => e.id.compareTo(value.id) != 0)];
 
   Pagination<K,V> prependMany(Iterable<V> values)
@@ -68,6 +72,24 @@ class Pagination<K extends Comparable<K>,V extends HasId<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
         values: [...this.values,...values]
+      );
+  Pagination<K,V> updateMany(Iterable<V> values)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        values: this.values.map((e) => values.where(((value) => e.id.compareTo(value.id) == 0)).firstOrNull ?? e)
+      );
+  Pagination<K,V> removeMany(Iterable<K> ids)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        values: values.where((value) => !ids.any((id) => id.compareTo(value.id) == 0))
       );
 
   Pagination<K,V> startLoadingNext()
@@ -126,28 +148,43 @@ class Pagination<K extends Comparable<K>,V extends HasId<K>>{
         recordsPerPage: recordsPerPage,
       );
   
-  Pagination<K,V> prependOne(V value){
-    if(values.any((e) => e.id.compareTo(value.id) == 0)) return this;
-    return Pagination(
-      isLast: isLast,
-      loadingNext: loadingNext,
-      loadingPrev: loadingPrev,
-      values: [value, ...values],
-      isDescending: isDescending,
-      recordsPerPage: recordsPerPage,
-    );
-  }
-  Pagination<K,V> appendOne(V value){
-    if(values.any((e) => e.id.compareTo(value.id) == 0)) return this;
-    return Pagination(
-      isLast: isLast,
-      loadingNext: loadingNext,
-      loadingPrev: loadingPrev,
-      values: [...values, value],
-      isDescending: isDescending,
-      recordsPerPage: recordsPerPage,
-    );
-  }
+  Pagination<K,V> prependOne(V value)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        values: [value, ...values],
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+      );
+  Pagination<K,V> appendOne(V value)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        values: [...values, value],
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+      );
+  Pagination<K,V> updateOne(V value)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        values: values.map((e) => e.id.compareTo(value.id) == 0 ? value : e)
+      );
+  Pagination<K,V> removeOne(K key)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        values: values.where((value) => value.id.compareTo(key) != 0)
+      );
+
   Pagination<K,V> prependOneAndRemovePrev(V value)
     => Pagination(
         isLast: isLast,

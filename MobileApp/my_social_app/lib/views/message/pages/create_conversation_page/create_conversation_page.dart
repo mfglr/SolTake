@@ -17,7 +17,7 @@ class CreateConversationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState?>(
       onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
-      converter: (store) => store.state.userEntityState.entities[store.state.loginState!.id],
+      converter: (store) => store.state.userEntityState.getValue(store.state.loginState!.id),
       builder: (context,user){
         if(user == null) return const LoadingView();
          return Scaffold(

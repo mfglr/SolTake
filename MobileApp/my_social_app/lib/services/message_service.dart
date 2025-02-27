@@ -16,7 +16,7 @@ class MessageService{
   static final MessageService _singleton = MessageService._(AppClient());
   factory MessageService() => _singleton;
 
-  Future<MultipartRequest> _createMessageRequest(int receiverId,String? content,Iterable<AppFile> medias) async{
+  Future<MultipartRequest> _createMessageRequest(num receiverId,String? content,Iterable<AppFile> medias) async{
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$messageController/$createMessageEndpoint")
@@ -28,30 +28,30 @@ class MessageService{
     if(content != null) request.fields["content"] = content;
     return request;
   }
-  Future<Message> createMessage(int receiverId,String? content,Iterable<AppFile> medias,void Function(double) callback) =>
+  Future<Message> createMessage(num receiverId,String? content,Iterable<AppFile> medias,void Function(double) callback) =>
     _createMessageRequest(receiverId,content,medias)
       .then((request) => _appClient.postStream(request,callback))
       .then((data) => Message.fromJson(jsonDecode(data)));
   
-  Future<void> removeMessage(int messageId) =>
+  Future<void> removeMessage(num messageId) =>
     _appClient
       .delete("$messageController/$removeMessageEndpoint");
 
-  Future<void> removeMessages(Iterable<int> messageIds) =>
+  Future<void> removeMessages(Iterable<num> messageIds) =>
     _appClient
       .delete(
         "$messageController/$removeMessagesEndpoint",
         body:{ 'messageIds': messageIds }
       );
 
-  Future<void> removeMessagesByUserIds(Iterable<int> userIds) =>
+  Future<void> removeMessagesByUserIds(Iterable<num> userIds) =>
     _appClient
       .delete(
         "$messageController/$removeMessagesByUserIdsEndpoint",
         body: { 'userIds': userIds.toList() }
       );
 
-  Future<Iterable<Message>> getMessagesByUserId(int userId, Page page) => 
+  Future<Iterable<Message>> getMessagesByUserId(num userId, Page page) => 
     _appClient
       .get(_appClient.generatePaginationUrl("$messageController/$getMessagesByUserIdEndpoint/$userId", page))
       .then((json) => json as List)
@@ -69,7 +69,7 @@ class MessageService{
       .then((json) => json as List)
       .then((list) => list.map((item) => Message.fromJson(item)));
  
-  Future<Message> getMessageById(int messageId) =>
+  Future<Message> getMessageById(num messageId) =>
     _appClient
       .get("$messageController/$getMessageByIdEndpoint/$messageId")
       .then((json) => Message.fromJson(json));

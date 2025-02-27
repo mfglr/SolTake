@@ -21,7 +21,7 @@ class UsersToFollowWidget extends StatelessWidget {
       onInit: (store) => store.dispatch(GetNextPageUserNotFollowedsIfNoPageAction(userId: user.id)),
       converter: (store) => store.state.selectNotFolloweds(user.id),
       builder: (context,users){
-        if(user.notFolloweds.isLast && user.notFolloweds.ids.isEmpty) return const SpaceSavingWidget();
+        if(user.notFolloweds.isLast && user.notFolloweds.values.isEmpty) return const SpaceSavingWidget();
         return Column(
           children: [
             const Text(

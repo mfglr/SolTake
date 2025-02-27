@@ -16,7 +16,7 @@ import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class SelectMediaPage extends StatelessWidget {
-  final int questionId;
+  final num questionId;
   const SelectMediaPage({
     super.key,
     required this.questionId
@@ -26,7 +26,7 @@ class SelectMediaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: questionId)),
-      converter: (store) => store.state.questionEntityState.entities[questionId],
+      converter: (store) => store.state.questionEntityState.getValue(questionId),
       builder: (context,question) =>
         question == null
           ? const LoadingView()

@@ -1,16 +1,17 @@
 import 'package:my_social_app/state/app_state/solution_user_save_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_entity_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-SolutionUserSaveEntityState addSavesReducer(SolutionUserSaveEntityState prev, AddSolutionUserSavesAction action)
-  => prev.addSaves(action.saves);
-SolutionUserSaveEntityState addSaveReducer(SolutionUserSaveEntityState prev, AddSolutionUserSaveAction action)
-  => prev.addSave(action.save);
-SolutionUserSaveEntityState removeSaveReducer(SolutionUserSaveEntityState prev,RemoveSolutionUserSaveAction action)
-  => prev.removeSave(action.saveId);
+EntityState<num,SolutionUserSaveState> addSavesReducer(EntityState<num,SolutionUserSaveState> prev, AddSolutionUserSavesAction action)
+  => prev.appendMany(action.saves);
+EntityState<num,SolutionUserSaveState> addSaveReducer(EntityState<num,SolutionUserSaveState> prev, AddSolutionUserSaveAction action)
+  => prev.appendOne(action.save);
+EntityState<num,SolutionUserSaveState> removeSaveReducer(EntityState<num,SolutionUserSaveState> prev,RemoveSolutionUserSaveAction action)
+  => prev.removeOne(action.saveId);
 
-Reducer<SolutionUserSaveEntityState> solutionUserSaveEntityReducers = combineReducers<SolutionUserSaveEntityState>([
-  TypedReducer<SolutionUserSaveEntityState,AddSolutionUserSavesAction>(addSavesReducer).call,
-  TypedReducer<SolutionUserSaveEntityState,AddSolutionUserSaveAction>(addSaveReducer).call,
-  TypedReducer<SolutionUserSaveEntityState,RemoveSolutionUserSaveAction>(removeSaveReducer).call,
+Reducer<EntityState<num,SolutionUserSaveState>> solutionUserSaveEntityReducers = combineReducers<EntityState<num,SolutionUserSaveState>>([
+  TypedReducer<EntityState<num,SolutionUserSaveState>,AddSolutionUserSavesAction>(addSavesReducer).call,
+  TypedReducer<EntityState<num,SolutionUserSaveState>,AddSolutionUserSaveAction>(addSaveReducer).call,
+  TypedReducer<EntityState<num,SolutionUserSaveState>,RemoveSolutionUserSaveAction>(removeSaveReducer).call,
 ]);

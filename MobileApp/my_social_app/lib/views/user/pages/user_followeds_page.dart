@@ -11,13 +11,13 @@ import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserFollowedsPage extends StatelessWidget {
-  final int userId;
+  final num userId;
   const UserFollowedsPage({super.key,required this.userId});
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState>(
-      converter: (store) => store.state.userEntityState.entities[userId]!,
+      converter: (store) => store.state.userEntityState.getValue(userId)!,
       builder: (context,profileUser) => Scaffold(
         appBar: AppBar(
           title: Text(
@@ -44,7 +44,7 @@ class UserFollowedsPage extends StatelessWidget {
                 return UserItemsWidget(
                   users : users,
                   pagination: profileUser.followeds,
-                  rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
+                  rigthButtonBuilder: (user) => StoreConnector<AppState,num>(
                     converter: (store) => store.state.loginState!.id,
                     builder: (context,accountId){
                       if(accountId != user.id) return FollowButtonWidget(user: user);

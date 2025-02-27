@@ -29,7 +29,8 @@ class DisplayAbstractSavedQuestionsPage extends StatelessWidget {
           if(user == null) return const LoadingWidget();
           return StoreConnector<AppState,Iterable<QuestionState>>(
             onInit: (store) => getNextPageIfNoPage(store,user.savedQuestions,NextUserSavedQuestionsAction(userId: user.id)),
-            converter: (store) => store.state.selectUserSavedQuestions(user.id),
+            converter: (store) => //store.state.selectUserSavedQuestions(user.id),
+              [],
             builder: (context,questions) => QuestionAbstractItemsWidget(
               questions: questions,
               pagination: user.savedQuestions,

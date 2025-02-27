@@ -5,7 +5,7 @@ import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
   final String hintText;
-  final int receiverId;
+  final num receiverId;
   final ScrollController scrollController;
   final void Function(Iterable<AppFile> images) addMedias;
   final void Function(String? content) createMessage;

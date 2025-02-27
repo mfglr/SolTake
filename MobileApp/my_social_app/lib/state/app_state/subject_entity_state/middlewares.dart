@@ -9,7 +9,7 @@ import 'package:redux/redux.dart';
 
 void loadSubjectMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSubjectAction){
-    if(store.state.subjectEntityState.entities[action.subjectId] == null){
+    if(store.state.subjectEntityState.getValue(action.subjectId) == null){
       SubjectService()
         .getSubjectById(action.subjectId)
         .then((subject) => store.dispatch(AddSubjectAction(subject: subject.toSubjectState())));
@@ -19,7 +19,7 @@ void loadSubjectMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void nextSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextSubjectQuestionsAction){
-    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.questions;
+    final pagination = store.state.subjectEntityState.getValue(action.subjectId)!.questions;
     QuestionService()
       .getBySubjectId(action.subjectId,pagination.next)
       .then((questions){
@@ -37,7 +37,7 @@ void nextSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher 
 }
 void prevSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is PrevSubjectQuestionsAction){
-    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.questions;
+    final pagination = store.state.subjectEntityState.getValue(action.subjectId)!.questions;
     QuestionService()
       .getBySubjectId(action.subjectId,pagination.prev)
       .then((questions){
@@ -55,7 +55,7 @@ void prevSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher 
 }
 void nextSubjectTopicsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextSubjectTopicsAction){
-    final pagination = store.state.subjectEntityState.entities[action.subjectId]!.topics;
+    final pagination = store.state.subjectEntityState.getValue(action.subjectId)!.topics;
     TopicService()
       .getBySubjectId(action.subjectId,pagination.next)
       .then((topics){

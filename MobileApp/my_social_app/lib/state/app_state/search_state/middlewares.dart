@@ -16,7 +16,7 @@ void firstSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher n
   if(action is FirstSearchingUsersAction){
     final key = store.state.searchState.key;
     UserService()
-      .search(key, Page.init(usersPerPage, true))
+      .search(key, Page<num>.init(usersPerPage, true))
       .then((users){
         store.dispatch(FirstSearchingUsersSuccessAction(userIds: users.map((e) => e.id)));
         store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
@@ -50,7 +50,7 @@ void firstSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatch
   if(action is FirstSearchingQuestionsAction){
     final state = store.state.searchState;
     QuestionService()
-      .searchQuestions(state.examId, state.subjectId, state.topicId, Page.init(questionsPerPage, true))
+      .searchQuestions(state.examId, state.subjectId, state.topicId, Page<num>.init(questionsPerPage, true))
       .then((questions){
         store.dispatch(FirstSearchingQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
@@ -106,11 +106,11 @@ void nextSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher nex
 }
 void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is AddSearchedUserAction){
-    final int searcherId = store.state.loginState!.id;
+    final num searcherId = store.state.loginState!.id;
     UserService()
       .addSearcher(action.userId)
       .then((search){
-        final searchId = store.state.userSearchEntityState.select(searcherId, action.userId)?.id ?? 0;
+        final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == searcherId && e.searchedId == action.userId)?.id ?? 0;
         store.dispatch(RemoveUserSearchAction(searchId: searchId));
         store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
         store.dispatch(AddSearchedUserSuccessAction(addedOne: search.id,removedOne: searchId));
@@ -125,7 +125,7 @@ void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher ne
       .removeSearcher(action.searchedId)
       .then((_){
         final accountId = store.state.loginState!.id;
-        final searchId = store.state.userSearchEntityState.select(accountId, action.searchedId)?.id ?? 0;
+        final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == accountId && e.searchedId == action.searchedId)?.id ?? 0;
         store.dispatch(RemoveSearcedUserSuccessAction(searchId: searchId));
         store.dispatch(RemoveUserSearchAction(searchId: searchId));
         store.dispatch(RemoveUserConversationAction(userId: accountId, id: action.searchedId));

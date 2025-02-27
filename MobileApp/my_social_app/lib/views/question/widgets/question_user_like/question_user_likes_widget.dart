@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/question_user_like_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/views/question/widgets/question_user_like/question_user_like_widget.dart';
 
 class QuestionUserLikesWidget extends StatelessWidget {

@@ -6,12 +6,12 @@ import 'package:my_social_app/state/app_state/application_init_state/reducers.da
 import 'package:my_social_app/state/app_state/comment_user_like_state/reducer.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/exam_state/reducers.dart';
+import 'package:my_social_app/state/app_state/app_exams_state/reducers.dart';
 import 'package:my_social_app/state/app_state/follow_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
-import 'package:my_social_app/state/app_state/message_home_page_state/reducers.dart';
+import 'package:my_social_app/state/app_state/conversations_state/reducers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
@@ -42,20 +42,19 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),
   solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
-  homePageState: homePageReducers(prev.homePageState,action),
+  homePageQuestions: homePageQuestionsReducers(prev.homePageQuestions, action),
   commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
   commentUserLikeEntityState: commentUserLikeEntityReducers(prev.commentUserLikeEntityState,action),
   createCommentState: createCommentStateReducers(prev.createCommentState,action),
-  notificationEntityState: notificationEntityStateReducers(prev.notificationEntityState,action),
+  notifications: notificationEntityStateReducers(prev.notifications,action),
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
-  messageHomePageState: messageHomePageReducers(prev.messageHomePageState,action),
+  conversations: conversationsReducer(prev.conversations,action),
   userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
   followEntityState: followEntityReducers(prev.followEntityState,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
-  questionUserSaveEntityState: questionUserSaveEntityReducers(prev.questionUserSaveEntityState,action),
   solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
   solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
-  exams: examsReducers(prev.exams,action),
+  appExams: appExamsReducers(prev.appExams, action),
   policyState: policyReducers(prev.policyState,action),
   videoQuestions: videoQuestionsReducers(prev.videoQuestions, action),
   uploadEntityState: uploadingEntityStateReducers(prev.uploadEntityState, action)

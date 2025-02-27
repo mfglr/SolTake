@@ -6,9 +6,9 @@ import 'package:redux/redux.dart';
 EntityState<num,FollowState> addFollowsReducer(EntityState<num,FollowState> prev,AddFollowsAction action)
   => prev.appendMany(action.follows);
 EntityState<num,FollowState> addFollowReducer(EntityState<num,FollowState> prev,AddFollowAction action)
-  => prev.addFollow(action.follow);
+  => prev.appendOne(action.follow);
 EntityState<num,FollowState> removeFollowReducer(EntityState<num,FollowState> prev,RemoveFollowAction action)
-  => prev.removeFollow(action.followId);
+  => prev.where((follow) => follow.id != action.followId);
 
 Reducer<EntityState<num,FollowState>> followEntityReducers = combineReducers<EntityState<num,FollowState>>([
   TypedReducer<EntityState<num,FollowState>,AddFollowsAction>(addFollowsReducer).call,

@@ -19,7 +19,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
       converter: (store) => store.state.loginState!,
       builder: (store,login) => StoreConnector<AppState,UserState?>(
         onInit: (store) => store.dispatch(LoadUserAction(userId: login.id)),
-        converter: (store) => store.state.userEntityState.entities[login.id],
+        converter: (store) => store.state.userEntityState.getValue(login.id),
         builder: (store,user){
           if(user == null) return const LoadingView();
           return Column(

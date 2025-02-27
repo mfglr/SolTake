@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/solution_video_page_slider.dart';
 
 class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
-  final int questionId;
+  final num questionId;
   const DisplayQuestionVideoSolutionsPage({
     super.key,
     required this.questionId
@@ -21,7 +21,7 @@ class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
           backgroundColor: Colors.white.withAlpha(153),
           body: StoreConnector<AppState,Iterable<SolutionState>>(
             onInit: (store){
-              var pagination = store.state.questionEntityState.entities[questionId]!.videoSolutions;
+              var pagination = store.state.questionEntityState.getValue(questionId)!.videoSolutions;
               getNextPageIfNoPage(store,pagination,NextQuestionVideoSolutionsAction(questionId: questionId));
             },
             converter: (store) => store.state.selectQuestionVideoSolutions(questionId),
@@ -29,7 +29,7 @@ class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
               solutions: solutions,
               onNext: (){
                 final store = StoreProvider.of<AppState>(context, listen: false);
-                var pagination = store.state.questionEntityState.entities[questionId]!.videoSolutions;
+                var pagination = store.state.questionEntityState.getValue(questionId)!.videoSolutions;
                 getNextPageIfReady(store,pagination,NextQuestionVideoSolutionsAction(questionId: questionId));
               },
             )

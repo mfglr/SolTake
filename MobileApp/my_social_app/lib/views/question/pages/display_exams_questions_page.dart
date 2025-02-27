@@ -10,13 +10,13 @@ import 'package:my_social_app/views/question/widgets/question_items_widget.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayExamsQuestionsPage extends StatelessWidget {
-  final int examId;
+  final num examId;
   const DisplayExamsQuestionsPage({super.key,required this.examId});
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,ExamState>(
-      converter: (store) => store.state.examEntityState.entities[examId]!,
+      converter: (store) => store.state.examEntityState.getValue(examId)!,
       builder: (context,exam) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
@@ -33,7 +33,7 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
             final store = StoreProvider.of<AppState>(context,listen: false);
             getPrevPageIfReady(store, exam.questions, PrevExamQuestionsAction(examId: examId));
             return store.onChange
-              .map((state) => state.examEntityState.entities[examId]!.questions)
+              .map((state) => state.examEntityState.getValue(examId)!.questions)
               .firstWhere((x) => !x.loadingPrev);
           },
           child: StoreConnector<AppState,Iterable<QuestionState>>(

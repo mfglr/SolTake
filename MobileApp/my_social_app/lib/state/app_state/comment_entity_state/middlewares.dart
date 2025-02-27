@@ -56,7 +56,7 @@ void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DislikeCommentAction){
-    final int userId = store.state.loginState!.id;
+    final num userId = store.state.loginState!.id;
     CommentService()
       .dislike(action.commentId)
       .then((_){

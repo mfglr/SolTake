@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class SubjectState{
-  final int id;
+class SubjectState extends BaseEntity<num>{
   final String name;
-  final Pagination topics;
-  final Pagination questions;
+  final Pagination<num,Id<num>> topics;
+  final Pagination<num,Id<num>> questions;
   
-  const SubjectState({
-    required this.id,
+  SubjectState({
+    required super.id,
     required this.name,
     required this.topics,
     required this.questions
@@ -22,12 +23,12 @@ class SubjectState{
         topics: topics,
         questions: questions.startLoadingNext()
       );
-  SubjectState addNextPageQuestions(Iterable<int> ids)
+  SubjectState addNextPageQuestions(Iterable<num> ids)
     => SubjectState(
         id: id,
         name: name,
         topics: topics,
-        questions: questions.addNextPage(ids)
+        questions: questions.addNextPage(ids.map((e) => Id(id: e)))
       );
   SubjectState stopLoadingNextQuestions()
     => SubjectState(
@@ -44,12 +45,12 @@ class SubjectState{
         topics: topics,
         questions: questions.startLoadingPrev()
       );
-  SubjectState addPrevQuestions(Iterable<int> questionIds)
+  SubjectState addPrevQuestions(Iterable<num> questionIds)
     => SubjectState(
         id: id,
         name: name,
         topics: topics,
-        questions: questions.addPrevPage(questionIds)
+        questions: questions.addPrevPage(questionIds.map((e) => Id(id: e)))
       );
   SubjectState stopLoadingPrevQuestions()
     => SubjectState(
@@ -59,18 +60,18 @@ class SubjectState{
         questions: questions.stopLoadingPrev()
       );
       
-  SubjectState startloadingNextTopics()
+  SubjectState startLoadingNextTopics()
     => SubjectState(
         id: id,
         name: name,
         topics: topics.startLoadingNext(),
         questions: questions
       );
-  SubjectState addNextTopics(Iterable<int> ids)
+  SubjectState addNextTopics(Iterable<num> ids)
     => SubjectState(
         id: id,
         name: name,
-        topics: topics.appendLastPage(ids),
+        topics: topics.appendLastPage(ids.map((e) => Id(id: e))),
         questions: questions
       );
   SubjectState stopLoadingNextTopics()

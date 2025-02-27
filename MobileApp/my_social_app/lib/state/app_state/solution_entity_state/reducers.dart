@@ -1,96 +1,97 @@
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_entity_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-SolutionEntityState addSolutionReducer(SolutionEntityState prev, AddSolutionAction action)
-  => SolutionEntityState(entities: prev.appendOne(action.solution));
-SolutionEntityState addSolutionsReducer(SolutionEntityState prev, AddSolutionsAction action)
-  => SolutionEntityState(entities: prev.appendMany(action.solutions));
-SolutionEntityState removeSolutionReducer(SolutionEntityState prev,RemoveSolutionSuccessAction action)
-  => SolutionEntityState(entities: prev.removeOne(action.solutionId));
+EntityState<num,SolutionState> addSolutionReducer(EntityState<num,SolutionState> prev, AddSolutionAction action)
+  => prev.appendOne(action.solution);
+EntityState<num,SolutionState> addSolutionsReducer(EntityState<num,SolutionState> prev, AddSolutionsAction action)
+  => prev.appendMany(action.solutions);
+EntityState<num,SolutionState> removeSolutionReducer(EntityState<num,SolutionState> prev,RemoveSolutionSuccessAction action)
+  => prev.where((e) => e.id != action.solutionId);
 
-SolutionEntityState nextUpvotesReducer(SolutionEntityState prev,NextSolutionUpvotesAction action)
-  => prev.startLoadingNextUpvotes(action.solutionId);
-SolutionEntityState nextUpvotesSuccessReducer(SolutionEntityState prev,NextSolutionUpvotesSuccessAction action)
-  => prev.addNextUpvotes(action.solutionId, action.voteIds);
-SolutionEntityState nextUpvotesFailedReducer(SolutionEntityState prev,NextSolutionUpvotesFailedAction action)
-  => prev.stopLoadingNextUpvotes(action.solutionId);
+EntityState<num,SolutionState> nextUpvotesReducer(EntityState<num,SolutionState> prev,NextSolutionUpvotesAction action)
+  =>  prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextUpvotes());
+EntityState<num,SolutionState> nextUpvotesSuccessReducer(EntityState<num,SolutionState> prev,NextSolutionUpvotesSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNextUpvotes(action.voteIds));
+EntityState<num,SolutionState> nextUpvotesFailedReducer(EntityState<num,SolutionState> prev,NextSolutionUpvotesFailedAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.stopLoadingNextUpvotes());
 
-SolutionEntityState makeUpvoteReducer(SolutionEntityState prev,MakeSolutionUpvoteSuccessAction action)
-  => prev.makeUpvote(action.solutionId,action.upvoteId,action.downvoteId);
-SolutionEntityState removeUpvoteReducer(SolutionEntityState prev,RemoveSolutionUpvoteSuccessAction action)
-  => prev.removeUpvote(action.solutionId,action.voteId);
-SolutionEntityState addNewSolutionUpvoteReducer(SolutionEntityState prev,AddNewSolutionUpvoteAction action)
-  => prev.addNewUpvote(action.solutionId,action.voteId);
+EntityState<num,SolutionState> makeUpvoteReducer(EntityState<num,SolutionState> prev,MakeSolutionUpvoteSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.makeUpvote(action.upvoteId,action.downvoteId));
+EntityState<num,SolutionState> removeUpvoteReducer(EntityState<num,SolutionState> prev,RemoveSolutionUpvoteSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.removeUpvote(action.voteId));
+EntityState<num,SolutionState> addNewSolutionUpvoteReducer(EntityState<num,SolutionState> prev,AddNewSolutionUpvoteAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNewUpvote(action.voteId));
 
-SolutionEntityState nextDownvotesReducer(SolutionEntityState prev,NextSolutionDownvotesAction action)
-  => prev.starLoadingNextDownvotes(action.solutionId);
-SolutionEntityState nextDownvotesSuccessReducer(SolutionEntityState prev,NextSolutionDownvotesSuccessAction action)
-  => prev.addNextPageDownvotes(action.solutionId, action.voteIds);
-SolutionEntityState nextDownvotesFailedReducer(SolutionEntityState prev,NextSolutionDownvotesFailedAction action)
-  => prev.stopLoadingNextDowvotes(action.solutionId);
+EntityState<num,SolutionState> nextDownvotesReducer(EntityState<num,SolutionState> prev,NextSolutionDownvotesAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextDownvotes());
+EntityState<num,SolutionState> nextDownvotesSuccessReducer(EntityState<num,SolutionState> prev,NextSolutionDownvotesSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNextDownvotes(action.voteIds)) ;
+EntityState<num,SolutionState> nextDownvotesFailedReducer(EntityState<num,SolutionState> prev,NextSolutionDownvotesFailedAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.stopLoadingNextDownvotes());
 
-SolutionEntityState makeDownvoteReducer(SolutionEntityState prev,MakeSolutionDownvoteSuccessAction action)
-  => prev.makeDownvote(action.solutionId,action.upvoteId,action.downvoteId);
-SolutionEntityState removeDownVoteAction(SolutionEntityState prev,RemoveSolutionDownvoteSuccessAction action)
-  => prev.removeDownvote(action.solutionId,action.voteId);
-SolutionEntityState addNewSolutionDownvoteReducer(SolutionEntityState prev,AddNewSolutionDownvoteAction action)
-  => prev.addNewDownvote(action.solutionId,action.voteId);
+EntityState<num,SolutionState> makeDownvoteReducer(EntityState<num,SolutionState> prev,MakeSolutionDownvoteSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.makeDownvote(action.upvoteId,action.downvoteId));
+EntityState<num,SolutionState> removeDownVoteAction(EntityState<num,SolutionState> prev,RemoveSolutionDownvoteSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.removeDownvote(action.voteId));
+EntityState<num,SolutionState> addNewSolutionDownvoteReducer(EntityState<num,SolutionState> prev,AddNewSolutionDownvoteAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNewDownvote(action.voteId));
 
-SolutionEntityState nextCommentsReducer(SolutionEntityState prev,NextSolutionCommentsAction action)
-  => prev.startLoadingNextComments(action.solutionId);
-SolutionEntityState nextCommentsSuccessReducer(SolutionEntityState prev, NextSolutionCommentsSuccessAction action)
-  => prev.addNextPageComments(action.solutionId,action.commentsIds);
-SolutionEntityState nextCommentsFailedReducer(SolutionEntityState prev,NextSolutionCommentsFailedAction action)
-  => prev.stopLoadingNextComments(action.solutionId);
+EntityState<num,SolutionState> nextCommentsReducer(EntityState<num,SolutionState> prev,NextSolutionCommentsAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextComments());
+EntityState<num,SolutionState> nextCommentsSuccessReducer(EntityState<num,SolutionState> prev, NextSolutionCommentsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNextComments(action.commentsIds));
+EntityState<num,SolutionState> nextCommentsFailedReducer(EntityState<num,SolutionState> prev,NextSolutionCommentsFailedAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.stopLoadingNextComments());
 
-SolutionEntityState addCommentReducer(SolutionEntityState prev,AddSolutionCommentAction action)
-  => prev.addComment(action.solutionId,action.commentId);
-SolutionEntityState removeCommentReducer(SolutionEntityState prev,RemoveSolutionCommentAction action)
-  => prev.removeComment(action.solutionId,action.commentId);
-SolutionEntityState addNewCommentReducer(SolutionEntityState prev,AddNewSolutionCommentAction action)
-  => prev.addNewComment(action.solutionId,action.commentId);
+EntityState<num,SolutionState> addCommentReducer(EntityState<num,SolutionState> prev,AddSolutionCommentAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.addComment(action.commentId));
+EntityState<num,SolutionState> removeCommentReducer(EntityState<num,SolutionState> prev,RemoveSolutionCommentAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.removeComment(action.commentId));
+EntityState<num,SolutionState> addNewCommentReducer(EntityState<num,SolutionState> prev,AddNewSolutionCommentAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNewComment(action.commentId));
 
-SolutionEntityState markAsCorrectReducer(SolutionEntityState prev, MarkSolutionAsCorrectSuccessAction action)
-  => prev.markAsCorrect(action.solutionId);
-SolutionEntityState markAsIncorrectReducer(SolutionEntityState prev, MarkSolutionAsIncorrectSuccessAction action)
-  => prev.markAsIncorrect(action.solutionId);
+EntityState<num,SolutionState> markAsCorrectReducer(EntityState<num,SolutionState> prev, MarkSolutionAsCorrectSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.markAsCorrect()) ;
+EntityState<num,SolutionState> markAsIncorrectReducer(EntityState<num,SolutionState> prev, MarkSolutionAsIncorrectSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.markAsIncorrect());
 
-SolutionEntityState saveSolutionReducer(SolutionEntityState prev, SaveSolutionSuccessAction action)
-  => prev.save(action.solutionId);
-SolutionEntityState unsaveSolutionReducer(SolutionEntityState prev, UnsaveSolutionSuccessAction action)
-  => prev.unsave(action.solutionId);
+EntityState<num,SolutionState> saveSolutionReducer(EntityState<num,SolutionState> prev, SaveSolutionSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.save()) ;
+EntityState<num,SolutionState> unsaveSolutionReducer(EntityState<num,SolutionState> prev, UnsaveSolutionSuccessAction action)
+  => prev.updateOne(prev.getValue(action.solutionId)!.unsave());
 
-Reducer<SolutionEntityState> solutionEntityStateReducers = combineReducers<SolutionEntityState>([
-  TypedReducer<SolutionEntityState,AddSolutionAction>(addSolutionReducer).call,
-  TypedReducer<SolutionEntityState,AddSolutionsAction>(addSolutionsReducer).call,
-  TypedReducer<SolutionEntityState,RemoveSolutionSuccessAction>(removeSolutionReducer).call,
-  TypedReducer<SolutionEntityState,MakeSolutionUpvoteSuccessAction>(makeUpvoteReducer).call,
-  TypedReducer<SolutionEntityState,RemoveSolutionUpvoteSuccessAction>(removeUpvoteReducer).call,
-  TypedReducer<SolutionEntityState,AddNewSolutionUpvoteAction>(addNewSolutionUpvoteReducer).call,
-  TypedReducer<SolutionEntityState,MakeSolutionDownvoteSuccessAction>(makeDownvoteReducer).call,
-  TypedReducer<SolutionEntityState,RemoveSolutionDownvoteSuccessAction>(removeDownVoteAction).call,
-  TypedReducer<SolutionEntityState,AddNewSolutionDownvoteAction>(addNewSolutionDownvoteReducer).call,
+Reducer<EntityState<num,SolutionState>> solutionEntityStateReducers = combineReducers<EntityState<num,SolutionState>>([
+  TypedReducer<EntityState<num,SolutionState>,AddSolutionAction>(addSolutionReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,AddSolutionsAction>(addSolutionsReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,RemoveSolutionSuccessAction>(removeSolutionReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,MakeSolutionUpvoteSuccessAction>(makeUpvoteReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,RemoveSolutionUpvoteSuccessAction>(removeUpvoteReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,AddNewSolutionUpvoteAction>(addNewSolutionUpvoteReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,MakeSolutionDownvoteSuccessAction>(makeDownvoteReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,RemoveSolutionDownvoteSuccessAction>(removeDownVoteAction).call,
+  TypedReducer<EntityState<num,SolutionState>,AddNewSolutionDownvoteAction>(addNewSolutionDownvoteReducer).call,
 
-  TypedReducer<SolutionEntityState,NextSolutionUpvotesAction>(nextUpvotesReducer).call,
-  TypedReducer<SolutionEntityState,NextSolutionUpvotesSuccessAction>(nextUpvotesSuccessReducer).call,
-  TypedReducer<SolutionEntityState,NextSolutionUpvotesFailedAction>(nextUpvotesFailedReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionUpvotesAction>(nextUpvotesReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionUpvotesSuccessAction>(nextUpvotesSuccessReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionUpvotesFailedAction>(nextUpvotesFailedReducer).call,
 
-  TypedReducer<SolutionEntityState,NextSolutionDownvotesAction>(nextDownvotesReducer).call,
-  TypedReducer<SolutionEntityState,NextSolutionDownvotesSuccessAction>(nextDownvotesSuccessReducer).call,
-  TypedReducer<SolutionEntityState,NextSolutionDownvotesFailedAction>(nextDownvotesFailedReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionDownvotesAction>(nextDownvotesReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionDownvotesSuccessAction>(nextDownvotesSuccessReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionDownvotesFailedAction>(nextDownvotesFailedReducer).call,
 
-  TypedReducer<SolutionEntityState,NextSolutionCommentsAction>(nextCommentsReducer).call,
-  TypedReducer<SolutionEntityState,NextSolutionCommentsSuccessAction>(nextCommentsSuccessReducer).call,
-  TypedReducer<SolutionEntityState,NextSolutionCommentsFailedAction>(nextCommentsFailedReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionCommentsAction>(nextCommentsReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionCommentsSuccessAction>(nextCommentsSuccessReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,NextSolutionCommentsFailedAction>(nextCommentsFailedReducer).call,
 
-  TypedReducer<SolutionEntityState,AddSolutionCommentAction>(addCommentReducer).call,
-  TypedReducer<SolutionEntityState,RemoveSolutionCommentAction>(removeCommentReducer).call,
-  TypedReducer<SolutionEntityState,AddNewSolutionCommentAction>(addNewCommentReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,AddSolutionCommentAction>(addCommentReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,RemoveSolutionCommentAction>(removeCommentReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,AddNewSolutionCommentAction>(addNewCommentReducer).call,
 
-  TypedReducer<SolutionEntityState,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
-  TypedReducer<SolutionEntityState,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,
 
-  TypedReducer<SolutionEntityState,SaveSolutionSuccessAction>(saveSolutionReducer).call,
-  TypedReducer<SolutionEntityState,UnsaveSolutionSuccessAction>(unsaveSolutionReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,SaveSolutionSuccessAction>(saveSolutionReducer).call,
+  TypedReducer<EntityState<num,SolutionState>,UnsaveSolutionSuccessAction>(unsaveSolutionReducer).call,
 ]);

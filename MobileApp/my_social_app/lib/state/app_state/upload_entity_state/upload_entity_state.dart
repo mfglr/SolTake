@@ -30,8 +30,8 @@ class UploadEntityState {
     => UploadEntityState._(entities: entities.where((e) => e.id != id));
 
   UploadState get(String id) => entities.firstWhere((e) => e.id == id);
-  Iterable<UploadState> getUploadSolutions(int questionId) => entities.whereType<UploadSolutionState>();
+  Iterable<UploadState> getUploadSolutions(num questionId) => entities.whereType<UploadSolutionState>();
   Iterable<UploadState> get getUploadQuestions => entities.whereType<UploadQuestionState>();
-  Iterable<UploadState> getUploadMessages(int userId) => entities.where((e) => e is UploadMessageState && e.userId == userId);
+  Iterable<UploadState> getUploadMessages(num userId) => entities.where((e) => e is UploadMessageState && e.userId == userId);
   int get length => entities.length;
 }

@@ -35,7 +35,7 @@ class NextSearchedUsersAction extends AppAction{
 }
 @immutable
 class NextSearchedUsersSuccessAction extends AppAction{
-  final Iterable<int> searchIds;
+  final Iterable<num> searchIds;
   const NextSearchedUsersSuccessAction({required this.searchIds});
 }
 @immutable
@@ -45,23 +45,23 @@ class NextSearchedUsersFailedAction extends AppAction{
 
 @immutable
 class AddSearchedUserAction extends AppAction{
-  final int userId;
+  final num userId;
   const AddSearchedUserAction({required this.userId});
 }
 @immutable
 class AddSearchedUserSuccessAction extends AppAction{
-  final int addedOne;
-  final int removedOne;
+  final num addedOne;
+  final num removedOne;
   const AddSearchedUserSuccessAction({required this.addedOne,required this.removedOne});
 }
 @immutable
 class RemoveSearchedUserAction extends AppAction{
-  final int searchedId;
+  final num searchedId;
   const RemoveSearchedUserAction({required this.searchedId});
 }
 @immutable
 class RemoveSearcedUserSuccessAction extends AppAction{
-  final int searchId;
+  final num searchId;
   const RemoveSearcedUserSuccessAction({required this.searchId});
 }
 
@@ -100,17 +100,17 @@ class ChangeSearchKeyAction extends AppAction{
 }
 @immutable
 class ChangeSearchExamIdAction extends AppAction{
-  final int examId;
+  final num examId;
   const ChangeSearchExamIdAction({required this.examId});
 }
 @immutable
 class ChangeSearchSubjectIdAction extends AppAction{
-  final int subjectId;
+  final num subjectId;
   const ChangeSearchSubjectIdAction({required this.subjectId});
 }
 @immutable
 class ChangeSearchTopicIdAction extends AppAction{
-  final int topicId;
+  final num topicId;
   const ChangeSearchTopicIdAction({required this.topicId});
 }
 @immutable

@@ -13,7 +13,7 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class SelectSubjectPage extends StatefulWidget {
-  final int examId;
+  final num examId;
   const SelectSubjectPage({
     super.key,
     required this.examId
@@ -28,7 +28,7 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,ExamState?>(
       onInit: (store) => store.dispatch(LoadExamAction(examId: widget.examId)),
-      converter: (store) => store.state.examEntityState.entities[widget.examId],
+      converter: (store) => store.state.examEntityState.getValue(widget.examId),
       builder:(store,exam){
         if(exam == null) return const LoadingView(); 
         return Scaffold(

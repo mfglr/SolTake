@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/exam_state/actions.dart';
+import 'package:my_social_app/state/app_state/app_exams_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_question/widgets/exam_item_widget.dart';
@@ -25,7 +25,7 @@ class _SelectExamPageState extends State<SelectExamPage> {
     _onScrollBottom = (){
       if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        getNextPageIfReady(store,store.state.exams,const NextExamsAction());
+        getNextPageIfReady(store,store.state.appExams,const NextExamsAction());
       }
     };
     _scrollController.addListener(_onScrollBottom);
@@ -49,10 +49,10 @@ class _SelectExamPageState extends State<SelectExamPage> {
         ),
       ),
       body: StoreConnector<AppState,Iterable<ExamState>>(
-        onInit: (store) => getNextPageIfNoPage(store,store.state.exams,const NextExamsAction()),
+        onInit: (store) => getNextPageIfNoPage(store,store.state.appExams,const NextExamsAction()),
         converter: (store) => store.state.selectExams,
         builder:(context,exams) => StoreConnector<AppState,Pagination>(
-          converter: (store) => store.state.exams,
+          converter: (store) => store.state.appExams,
           builder: (context,pagination){
             if(pagination.loadingNext) return const LoadingWidget();
             return GridView.count(

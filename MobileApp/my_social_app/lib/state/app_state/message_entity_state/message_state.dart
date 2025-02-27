@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
-class MessageState implements Avatar{
-  final int id;
+class MessageState extends BaseEntity<num> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final bool isOwner;
@@ -25,8 +25,8 @@ class MessageState implements Avatar{
   @override
   Multimedia? get avatar => image;
 
-  const MessageState({
-    required this.id,
+  MessageState({
+    required super.id,
     required this.createdAt,
     required this.updatedAt,
     required this.isOwner,
@@ -69,7 +69,7 @@ class MessageState implements Avatar{
     return "${content!.substring(0,count - 3)}...";
   }  
 
-  MessageState markAsReceived() => _optinal( newState: state != MessageStatus.viewed ? MessageStatus.received : state);
+  MessageState markAsReceived() => _optinal(newState: state != MessageStatus.viewed ? MessageStatus.received : state);
   MessageState markAsViewed() => _optinal(newState: MessageStatus.viewed);
   
 }

@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
 class DisplayUserImagePage extends StatefulWidget {
-  final int userId;
+  final num userId;
   const DisplayUserImagePage({super.key,required this.userId});
 
   @override
@@ -21,7 +21,7 @@ class _DisplayUserImagePageState extends State<DisplayUserImagePage> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState>(
-      converter: (store) => store.state.userEntityState.entities[widget.userId]!,
+      converter: (store) => store.state.userEntityState.getValue(widget.userId)!,
       builder: (context,state) => Scaffold(
         backgroundColor: Colors.black,
         body: Stack(

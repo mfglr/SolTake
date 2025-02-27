@@ -18,7 +18,7 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-  Future<MultipartRequest> _createSolutionRequest(int questionId, String? content, Iterable<AppFile> medias) async {
+  Future<MultipartRequest> _createSolutionRequest(num questionId, String? content, Iterable<AppFile> medias) async {
     MultipartRequest multiPartRequest = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
@@ -32,13 +32,13 @@ class SolutionService{
     return multiPartRequest;
   }
  
-  Future<Solution> create(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
+  Future<Solution> create(num questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
     var request = await _createSolutionRequest(questionId,content,medias);
     var data = await _appClient.postStream(request, callback);
     return Solution.fromJson(jsonDecode(data));
   }
 
-  Future<Solution> createByAI(String model,int questionId,String? blobName,double? duration,String? prompt)
+  Future<Solution> createByAI(String model,num questionId,String? blobName,double? duration,String? prompt)
     => _appClient
         .post(
           "$solutionController/$createSolutionByAiEndpoint",
@@ -52,16 +52,16 @@ class SolutionService{
         )
         .then((json) => Solution.fromJson(json));
 
-  Future<void> delete(int solutionId) => 
+  Future<void> delete(num solutionId) => 
     _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");
 
-  Future<Iterable<SolutionUserVote>> getSolutionUpvotes(int solutionId,Page page) =>
+  Future<Iterable<SolutionUserVote>> getSolutionUpvotes(num solutionId,Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionUpvotesEndpoint/$solutionId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => SolutionUserVote.fromJson(e)));
   
-  Future<SolutionUserVote> makeUpvote(int solutionId) =>
+  Future<SolutionUserVote> makeUpvote(num solutionId) =>
     _appClient
       .post(
         "$solutionController/$makeUpvoteEndpoint",
@@ -69,17 +69,17 @@ class SolutionService{
       )
       .then((json) => SolutionUserVote.fromJson(json));
 
-  Future<void> removeUpvote(int solutionId) =>
+  Future<void> removeUpvote(num solutionId) =>
     _appClient
       .delete("$solutionController/$removeUpvoteEndpoint/$solutionId");
   
-  Future<Iterable<SolutionUserVote>> getSolutionDownvotes(int solutionId,Page page) =>
+  Future<Iterable<SolutionUserVote>> getSolutionDownvotes(num solutionId,Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionDownvotesEndpoint/$solutionId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => SolutionUserVote.fromJson(e)));
 
-  Future<SolutionUserVote> makeDownvote(int solutionId) =>
+  Future<SolutionUserVote> makeDownvote(num solutionId) =>
     _appClient
       .post(
         "$solutionController/$makeDownvoteEndpoint",
@@ -87,25 +87,25 @@ class SolutionService{
       )
       .then((json) => SolutionUserVote.fromJson(json));
 
-  Future<void> removeDownvote(int solutionId) =>
+  Future<void> removeDownvote(num solutionId) =>
     _appClient
       .delete("$solutionController/$removeDownvoteEndpoint/$solutionId");
 
-  Future<void> markAsCorrect(int solutionId) =>
+  Future<void> markAsCorrect(num solutionId) =>
     _appClient
       .put(
         "$solutionController/$markSolutionAsCorrectEndpoint",
         body: { "solutionId":solutionId }
       );
 
-  Future<void> markAsIncorrect(int solutionId) =>
+  Future<void> markAsIncorrect(num solutionId) =>
     _appClient
       .put(
         "$solutionController/$markSolutionAsIncorrectEndpoint",
         body: { "solutionId":solutionId }
       );
 
-  Future<SolutionUserSave> saveSolution(int solutionId) =>
+  Future<SolutionUserSave> saveSolution(num solutionId) =>
     _appClient
       .post(
         "$solutionController/$saveSolutionEndpoint",
@@ -113,11 +113,11 @@ class SolutionService{
       )
       .then((json) => SolutionUserSave.fromJson(json));
 
-  Future<void> unsaveSolution(int solutionId) =>
+  Future<void> unsaveSolution(num solutionId) =>
     _appClient
       .delete("$solutionController/$unsaveSolutionEndpoint/$solutionId");
 
-  Future<Solution> getSolutionById(int solutionId) =>
+  Future<Solution> getSolutionById(num solutionId) =>
     _appClient
       .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
       .then((response) => Solution.fromJson(response)); 

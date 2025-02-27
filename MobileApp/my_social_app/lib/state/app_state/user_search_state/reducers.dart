@@ -1,18 +1,19 @@
 import 'package:my_social_app/state/app_state/user_search_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_search_state/user_search_entity_state.dart';
+import 'package:my_social_app/state/app_state/user_search_state/user_search_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-UserSearchEntityState addSearchsReducer(UserSearchEntityState prev,AddUserSearchsAction action)
-  => prev.addSearchs(action.searchs);
+EntityState<num,UserSearchState> addSearchsReducer(EntityState<num,UserSearchState> prev,AddUserSearchsAction action)
+  => prev.appendMany(action.searchs);
 
-UserSearchEntityState addSearchReducer(UserSearchEntityState prev,AddUserSearchAction action)
-  => prev.addSearch(action.search);
+EntityState<num,UserSearchState> addSearchReducer(EntityState<num,UserSearchState> prev,AddUserSearchAction action)
+  => prev.appendOne(action.search);
 
-UserSearchEntityState removeSearchReducer(UserSearchEntityState prev,RemoveUserSearchAction action)
-  => prev.removeSearch(action.searchId);
+EntityState<num,UserSearchState> removeSearchReducer(EntityState<num,UserSearchState> prev,RemoveUserSearchAction action)
+  => prev.removeOne(action.searchId);
 
-Reducer<UserSearchEntityState> userSearchEntityReducers = combineReducers<UserSearchEntityState>([
-  TypedReducer<UserSearchEntityState,AddUserSearchsAction>(addSearchsReducer).call,
-  TypedReducer<UserSearchEntityState,AddUserSearchAction>(addSearchReducer).call,
-  TypedReducer<UserSearchEntityState,RemoveUserSearchAction>(removeSearchReducer).call,
+Reducer<EntityState<num,UserSearchState>> userSearchEntityReducers = combineReducers<EntityState<num,UserSearchState>>([
+  TypedReducer<EntityState<num,UserSearchState>,AddUserSearchsAction>(addSearchsReducer).call,
+  TypedReducer<EntityState<num,UserSearchState>,AddUserSearchAction>(addSearchReducer).call,
+  TypedReducer<EntityState<num,UserSearchState>,RemoveUserSearchAction>(removeSearchReducer).call,
 ]);

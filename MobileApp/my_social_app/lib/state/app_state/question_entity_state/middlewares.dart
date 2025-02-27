@@ -93,7 +93,7 @@ void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
         store.dispatch(
           LikeQuestionSuccessAction(
             questionId: action.questionId,
-            likeId: questionUserLike.id
+            like: questionUserLike.toQuestionUserLikeState()
           )
         )
       );
@@ -104,14 +104,7 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
   if(action is DislikeQuestionAction){
     QuestionUserLikeService()
       .dislike(action.questionId)
-      .then((_){
-        var userId = store.state.loginState!.id; 
-        var like = store.state.questionUserLikeEntityState.get((e) => e.questionId == action.questionId && e.userId == userId);
-        store.dispatch(DislikeQuestionSuccessAction(
-          questionId: action.questionId,
-          likeId: like!.id
-        ));
-      });
+      .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,userId: store.state.loginState!.id)));
   }
   next(action);
 }
@@ -122,15 +115,13 @@ void nextQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher nex
     QuestionUserLikeService()
       .getQuestionLikes(action.questionId, pagination.next)
       .then(
-        (likes){
-          var states = likes.map((e) => e.toQuestionUserLikeState());
+        (likes) =>
           store.dispatch(
             NextQuestionLikesSuccessAction(
               questionId: action.questionId,
-              likeIds: states.map((e) => e.id)
+              likes: likes.map((e) => e.toQuestionUserLikeState())
             )
-          );
-        }
+          )
       )
       .catchError((e){
         store.dispatch(NextQuestionLikesFailedAction(questionId: action.questionId));

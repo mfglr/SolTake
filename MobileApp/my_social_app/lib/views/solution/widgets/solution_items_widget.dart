@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
@@ -7,8 +8,8 @@ import 'package:my_social_app/views/solution/widgets/solution_item/solution_item
 class SolutionItemsWidget extends StatefulWidget {
   final Iterable<SolutionState> solutions;
   final Function onScrollBottom;
-  final Pagination pagination;
-  final int? solutionId;
+  final Pagination<num,Id<num>> pagination;
+  final num? solutionId;
 
   const SolutionItemsWidget({
     super.key,

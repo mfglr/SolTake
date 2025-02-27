@@ -8,7 +8,7 @@ class QuestionItemsWidget extends StatefulWidget {
   final Pagination pagination;
   final Iterable<QuestionState> questions;
   final Function onScrollBottom;
-  final int? firstDisplayedQuestionId;
+  final num? firstDisplayedQuestionId;
 
   
   const QuestionItemsWidget({

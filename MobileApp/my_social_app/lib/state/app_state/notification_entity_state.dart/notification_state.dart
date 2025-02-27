@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
-class NotificationState implements Avatar{
-  final int id;
+class NotificationState extends BaseEntity<num> implements Avatar{
   final int ownerId;
   final int userId;
   final String userName;
@@ -24,10 +24,9 @@ class NotificationState implements Avatar{
 
   @override
   Multimedia? get avatar => image;
-  
 
-  const NotificationState({
-    required this.id,
+  NotificationState({
+    required super.id,
     required this.ownerId,
     required this.createdAt,
     required this.isViewed,

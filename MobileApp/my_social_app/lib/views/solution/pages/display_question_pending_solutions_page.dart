@@ -12,8 +12,8 @@ import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
-  final int questionId;
-  final int? solutionId;
+  final num questionId;
+  final num? solutionId;
 
   const DisplayQuestionPendingSolutionsPage({
     super.key,
@@ -25,7 +25,7 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: questionId)),
-      converter: (store) => store.state.questionEntityState.entities[questionId],
+      converter: (store) => store.state.questionEntityState.getValue(questionId),
       builder: (context,question){
         if(question == null) return const LoadingView();
         return Scaffold(
@@ -45,10 +45,11 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
               question.pendingSolutions,
               NextQuestionPendingSolutionsAction(questionId: question.id)
             ),
-            converter: (store) => store.state.selectQuestionPendingSolutions(question.id),
+            converter: (store) => //store.state.selectQuestionPendingSolutions(question.id),
+            [],
             builder:(context,solutions) => Builder(
               builder: (context) {
-                if(question.pendingSolutions.ids.isEmpty && question.pendingSolutions.isLast){
+                if(question.pendingSolutions.values.isEmpty && question.pendingSolutions.isLast){
                   return NoSolutions(
                     text: AppLocalizations.of(context)!.display_question_pending_solutions_page_no_solutions,
                   );

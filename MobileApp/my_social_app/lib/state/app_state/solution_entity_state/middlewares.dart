@@ -32,11 +32,8 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         (rate) => store.dispatch(ChangeUploadRateAction(id: action.id, rate: rate))
       )
       .then((solution){
-        final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-        store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
-        store.dispatch(RemoveUploadStateAction(id: action.id));
-        
+        store.dispatch(CreateNewQuestionSolutionAction(questionId: action.questionId, solutionId: solution.id,));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
       .catchError((e){
@@ -53,9 +50,8 @@ void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher ne
     SolutionService()
       .createByAI(action.model,action.questionId,action.blobName,action.position,action.prompt)
       .then((solution){
-        final solutionState = solution.toSolutionState();
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-        store.dispatch(CreateNewQuestionSolutionAction(solution: solutionState));
+        store.dispatch(CreateNewQuestionSolutionAction(questionId: action.questionId, solutionId: solution.id));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
@@ -65,7 +61,7 @@ void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher ne
 
 void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadSolutionAction){
-    if(store.state.solutionEntityState.entities[action.solutionId] == null){
+    if(store.state.solutionEntityState.getValue(action.solutionId) == null){
       SolutionService()
         .getSolutionById(action.solutionId)
         .then((solution){
@@ -78,7 +74,7 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveSolutionAction){
-    final question = store.state.questionEntityState.entities[action.solution.questionId];
+    final question = store.state.questionEntityState.getValue(action.solution.questionId);
     SolutionService()
       .delete(action.solution.id)
       .then((_){
@@ -136,7 +132,7 @@ void unsaveSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
     SolutionService()
       .unsaveSolution(action.solutionId)
       .then((save){
-        final saveId = store.state.solutionUserSaveEntityState.select(action.solutionId, accountId)?.id ?? 0;
+        final saveId = store.state.solutionUserSaveEntityState.get((e) => e.id == action.solutionId && e.userId == accountId)?.id ?? 0;
         store.dispatch(RemoveSolutionUserSaveAction(saveId: saveId));
         store.dispatch(RemoveUserSavedSolutionAction(userId: accountId, saveId: saveId));
         store.dispatch(UnsaveSolutionSuccessAction(solutionId: action.solutionId));
@@ -150,7 +146,7 @@ void makeSolutionUpvoteMiddleware(Store<AppState> store,action,NextDispatcher ne
     SolutionService()
       .makeUpvote(action.solutionId)
       .then((upvote){
-        final downvoteId = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId)?.id ?? 0;
+        final downvoteId = store.state.solutionUserVoteEntityState.get((e) => e.id == action.solutionId && e.userId == accountId)?.id ?? 0;
         store.dispatch(RemoveSolutionUserVoteAction(voteId: downvoteId));
         store.dispatch(AddSolutionUserVoteAction(vote: upvote.toSolutionUserVoteState()));
         store.dispatch(MakeSolutionUpvoteSuccessAction(solutionId: action.solutionId,upvoteId: upvote.id,downvoteId: downvoteId));
@@ -164,7 +160,7 @@ void removeSolutionUpvoteMiddleware(Store<AppState> store,action, NextDispatcher
     SolutionService()
       .removeUpvote(action.solutionId)
       .then((_){
-        final voteId = store.state.solutionUserVoteEntityState.select(action.solutionId, accountId)?.id ?? -1;
+        final voteId = store.state.solutionUserVoteEntityState.get((e) => e.id == action.solutionId && e.userId == accountId)?.id ?? 0;
         store.dispatch(RemoveSolutionUpvoteSuccessAction(solutionId: action.solutionId,voteId: voteId));
         store.dispatch(RemoveSolutionUserVoteAction(voteId: voteId));
       });
@@ -177,7 +173,7 @@ void makeSolutionDownvoteMiddleware(Store<AppState> store,action,NextDispatcher 
     SolutionService()
       .makeDownvote(action.solutionId)
       .then((downvote){
-        final upvoteId = store.state.solutionUserVoteEntityState.select(action.solutionId,accountId)?.id ?? 0;
+        final upvoteId = store.state.solutionUserVoteEntityState.get((e) => e.id == action.solutionId && e.userId == accountId)?.id ?? 0;
         store.dispatch(RemoveSolutionUserVoteAction(voteId: upvoteId));
         store.dispatch(AddSolutionUserVoteAction(vote: downvote.toSolutionUserVoteState()));
         store.dispatch(MakeSolutionDownvoteSuccessAction(solutionId: action.solutionId,upvoteId: upvoteId,downvoteId: downvote.id));
@@ -191,7 +187,7 @@ void removeSolutionDownvoteMiddleware(Store<AppState> store,action, NextDispatch
     SolutionService()
       .removeDownvote(action.solutionId)
       .then((_){
-        final voteId = store.state.solutionUserVoteEntityState.select(action.solutionId, accountId)?.id ?? 0;
+        final voteId = store.state.solutionUserVoteEntityState.get((e) => e.id == action.solutionId && e.userId == accountId)?.id ?? 0;
         store.dispatch(RemoveSolutionDownvoteSuccessAction(solutionId: action.solutionId, voteId: voteId));
         store.dispatch(RemoveSolutionUserVoteAction(voteId: voteId));
       });
@@ -201,7 +197,7 @@ void removeSolutionDownvoteMiddleware(Store<AppState> store,action, NextDispatch
 
 void nextSolutionUpvotesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextSolutionUpvotesAction){
-    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.upvotes;
+    final pagination = store.state.solutionEntityState.getValue(action.solutionId)!.upvotes;
     SolutionService()
       .getSolutionUpvotes(action.solutionId, pagination.next)
       .then((votes){
@@ -218,7 +214,7 @@ void nextSolutionUpvotesMiddleware(Store<AppState> store,action,NextDispatcher n
 }
 void nextSolutionDownvotesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextSolutionDownvotesAction){
-    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.downvotes;
+    final pagination = store.state.solutionEntityState.getValue(action.solutionId)!.downvotes;
     SolutionService()
       .getSolutionDownvotes(action.solutionId, pagination.next)
       .then((votes){
@@ -235,7 +231,7 @@ void nextSolutionDownvotesMiddleware(Store<AppState> store,action,NextDispatcher
 }
 void nextSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextSolutionCommentsAction){
-    final pagination = store.state.solutionEntityState.entities[action.solutionId]!.comments;
+    final pagination = store.state.solutionEntityState.getValue(action.solutionId)!.comments;
     CommentService()
       .getBySolutionId(action.solutionId,pagination.next)
       .then((comments){

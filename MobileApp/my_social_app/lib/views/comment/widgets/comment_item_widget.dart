@@ -90,7 +90,7 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                 )
               ),
       
-            if(widget.comment.repliesVisibility && widget.comment.replies.ids.isNotEmpty)
+            if(widget.comment.repliesVisibility && widget.comment.replies.values.isNotEmpty)
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

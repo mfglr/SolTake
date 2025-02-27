@@ -3,9 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/state/app_state/message_home_page_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_home_page_state/message_home_page_state.dart';
+import 'package:my_social_app/state/app_state/conversations_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
 import 'package:my_social_app/views/message/pages/create_conversation_page/create_conversation_page.dart';
@@ -73,9 +74,9 @@ class _MessageHomePageState extends State<MessageHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,MessageHomePageState>(
-      converter: (store) => store.state.messageHomePageState,
-      builder:(context,state) => Scaffold(
+    return StoreConnector<AppState,Pagination<num,Id<num>>>(
+      converter: (store) => store.state.conversations,
+      builder:(context,conversations) => Scaffold(
         appBar: AppBar(
           title: 
             _selectedConversations.isEmpty
@@ -102,17 +103,17 @@ class _MessageHomePageState extends State<MessageHomePage> {
         body: Padding(
           padding: const EdgeInsets.all(5),
           child: StoreConnector<AppState,Iterable<MessageState>>(
-            onInit: (store) => getNextPageIfNoPage(store,state.conversations,const NextConversationsAction()),
+            onInit: (store) => getNextPageIfNoPage(store,conversations,const NextConversationsAction()),
             converter: (store) => store.state.selectConversations,
             builder: (context,messages) => ConversationItems(
               messages: messages,
               onLongPress: (conversationId) => _onLongPress(conversationId),
               onPress: _onPress,
               isSelected: (conversationId) => _selectedConversations.any((e) => e == conversationId),
-              pagination: state.conversations,
+              pagination: conversations,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
-                getNextPageIfReady(store, state.conversations, const NextConversationsAction());
+                getNextPageIfReady(store, conversations, const NextConversationsAction());
               },
             )
           ),

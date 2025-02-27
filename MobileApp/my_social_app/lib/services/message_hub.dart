@@ -99,7 +99,7 @@ class MessageHub{
     _hubConnection.off(messageViewedNotification);
   }
 
-  Future<Message> createMessage(int receiverId,String content)
+  Future<Message> createMessage(num receiverId,String content)
     => _hubConnection
         .invoke(
           createMessageWebSocket, 
@@ -107,14 +107,14 @@ class MessageHub{
         )
         .then((response) => Message.fromJson(response as dynamic));
 
-  Future<void> markMessagesAsReceived(Iterable<int> ids)
+  Future<void> markMessagesAsReceived(Iterable<num> ids)
     => _hubConnection
         .invoke(
           markMessagesAsReceivedWebSocket,
           args: [{'ids': ids.toList()}]
         );
 
-  Future<void> markMessagesAsViewed(Iterable<int> ids)
+  Future<void> markMessagesAsViewed(Iterable<num> ids)
     => _hubConnection
         .invoke(
           markMessagesAsViewedWebSocket,

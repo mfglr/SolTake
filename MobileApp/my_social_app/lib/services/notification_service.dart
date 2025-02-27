@@ -11,7 +11,7 @@ class NotificationService{
   static final NotificationService _singleton = NotificationService._(AppClient());
   factory NotificationService() => _singleton;
 
-  Future<void> markNotificationsAsViewed(List<int> ids) =>
+  Future<void> markNotificationsAsViewed(Iterable<num> ids) =>
     _appClient
       .put(
         "$notificationController/$markNotificationsAsViewedEndpoint",

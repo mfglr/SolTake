@@ -10,7 +10,7 @@ Pagination<num,Id<num>> nextExamsSuccessReducer(Pagination<num,Id<num>> prev,Nex
 Pagination<num,Id<num>> nextExamsFailedReducer(Pagination<num,Id<num>> prev,NextExamsFailedAction action)
   => prev.stopLoadingNext();
 
-Reducer<Pagination<num,Id<num>>> examsReducers = combineReducers<Pagination<num,Id<num>>>([
+Reducer<Pagination<num,Id<num>>> appExamsReducers = combineReducers<Pagination<num,Id<num>>>([
   TypedReducer<Pagination<num,Id<num>>,NextExamsAction>(nextExamsReducer).call,
   TypedReducer<Pagination<num,Id<num>>,NextExamsSuccessAction>(nextExamsSuccessReducer).call,
   TypedReducer<Pagination<num,Id<num>>,NextExamsFailedAction>(nextExamsFailedReducer).call,

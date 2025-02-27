@@ -11,7 +11,7 @@ class TopicService{
   static final TopicService _singleton = TopicService._(AppClient());
   factory TopicService() => _singleton;
 
-  Future<Iterable<Topic>> getBySubjectId(int subjectId, Page page)
+  Future<Iterable<Topic>> getBySubjectId(num subjectId, Page page)
     => _appClient
       .get(_appClient.generatePaginationUrl("$topicController/$getTopicsBySubjectIdEndPoint/$subjectId", page))
       .then((json) => json as List)

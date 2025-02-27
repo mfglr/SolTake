@@ -1,11 +1,12 @@
-class SolutionUserSaveState{
-  final int id;
+import 'package:my_social_app/state/entity_state/base_entity.dart';
+
+class SolutionUserSaveState extends BaseEntity<num>{
   final DateTime createdAt;
   final int solutionId;
   final int userId;
 
-  const SolutionUserSaveState({
-    required this.id,
+  SolutionUserSaveState({
+    required super.id,
     required this.createdAt,
     required this.solutionId,
     required this.userId

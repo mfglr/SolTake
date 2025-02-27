@@ -13,8 +13,8 @@ import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayQuestionCorrectSolutionsPage extends StatelessWidget {
-  final int questionId;
-  final int? solutionId;
+  final num questionId;
+  final num? solutionId;
   const DisplayQuestionCorrectSolutionsPage({
     super.key,
     required this.questionId,
@@ -25,7 +25,7 @@ class DisplayQuestionCorrectSolutionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: questionId)),
-      converter: (store) => store.state.questionEntityState.entities[questionId],
+      converter: (store) => store.state.questionEntityState.getValue(questionId),
       builder: (context,question){
         if(question == null) return const LoadingView();
         return Scaffold(
@@ -44,7 +44,7 @@ class DisplayQuestionCorrectSolutionsPage extends StatelessWidget {
             converter: (store) => store.state.selectQuestionCorrectSolutions(question.id),
             builder:(context,solutions) => Builder(
               builder: (context) {
-                if(question.correctSolutions.ids.isEmpty && question.correctSolutions.isLast){
+                if(question.correctSolutions.values.isEmpty && question.correctSolutions.isLast){
                   return NoSolutions(
                     text: AppLocalizations.of(context)!.display_question_correct_solutions_page_no_solutions
                   );

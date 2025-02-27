@@ -19,7 +19,7 @@ class QuestionUserLikeService {
       )
       .then((json) => QuestionUserLike.fromJson(json));
 
-  Future<void> dislike(int questionId) =>
+  Future<void> dislike(num questionId) =>
     _appClient
       .delete("$questionUserLikeController/$dislikeEndpoint/$questionId");
 

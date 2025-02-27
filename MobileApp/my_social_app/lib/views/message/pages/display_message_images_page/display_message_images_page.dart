@@ -76,7 +76,7 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                             ),
                           ),
                           StoreConnector<AppState,UserState?>(
-                            converter: (store) => store.state.userEntityState.entities[widget.message.senderId],
+                            converter: (store) => store.state.userEntityState.getValue(widget.message.senderId),
                             onInit: (store) => store.dispatch(LoadUserAction(userId: widget.message.senderId)),
                             builder: (store,user){
                               if(user == null) return const SpaceSavingWidget();

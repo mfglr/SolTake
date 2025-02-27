@@ -16,8 +16,8 @@ import 'package:my_social_app/views/comment/widgets/no_comments_widget.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class DisplaySolutionCommentsModal extends StatefulWidget {
-  final int solutionId;
-  final int? parentId;
+  final num solutionId;
+  final num? parentId;
   const DisplaySolutionCommentsModal({
     super.key,
     required this.solutionId, 
@@ -40,7 +40,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
     store.dispatch(const ClearCreateCommentStateAction());
     _questionConsumer =
       store.onChange
-        .map((state) => state.solutionEntityState.entities[widget.solutionId])
+        .map((state) => state.solutionEntityState.getValue(widget.solutionId))
         .distinct()
         .listen((solution){
           if(solution != null){
@@ -113,13 +113,13 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,SolutionState?>(
-      converter: (store) => store.state.solutionEntityState.entities[widget.solutionId],
+      converter: (store) => store.state.solutionEntityState.getValue(widget.solutionId),
       builder: (context, solution){
         if(solution == null) return const LoadingWidget();
         if(widget.parentId != null){
           return StoreConnector<AppState,CommentState?>(
             onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
-            converter: (store) => store.state.commentEntityState.entities[widget.parentId],
+            converter: (store) => store.state.commentEntityState.getValue(widget.parentId),
             builder: (context,comment){
               
               if(comment == null){

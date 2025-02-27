@@ -25,7 +25,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];
 
 class DisplayQuestionAbstractSolutionsPage extends StatefulWidget {
-  final int questionId;
+  final num questionId;
   const DisplayQuestionAbstractSolutionsPage({
     super.key,
     required this.questionId
@@ -61,7 +61,8 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
   Widget _displayAllSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
       onInit: (store) => getNextPageIfNoPage(store,question.solutions,NextQuestionSolutionsAction(questionId: question.id)),
-      converter: (store) => store.state.selectQuestionSolutions(widget.questionId),
+      converter: (store) => //store.state.selectQuestionSolutions(widget.questionId),
+      [],
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.solutions,
@@ -92,7 +93,8 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
         question.correctSolutions,
         NextQuestionCorrectSolutionsAction(questionId: question.id)
       ),
-      converter: (store) => store.state.selectQuestionCorrectSolutions(widget.questionId),
+      converter: (store) => //store.state.selectQuestionCorrectSolutions(widget.questionId),
+      [],
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.correctSolutions,
@@ -129,7 +131,8 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
         question.pendingSolutions,
         NextQuestionPendingSolutionsAction(questionId: question.id)
       ),
-      converter: (store) => store.state.selectQuestionPendingSolutions(widget.questionId),
+      converter: (store) => //store.state.selectQuestionPendingSolutions(widget.questionId),
+      [],
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.pendingSolutions,
@@ -214,7 +217,7 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
-      converter: (store) => store.state.questionEntityState.entities[widget.questionId],
+      converter: (store) => store.state.questionEntityState.getValue(widget.questionId),
       builder:(context,question){
         if(question == null) return const LoadingView();
         return Scaffold(

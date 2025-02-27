@@ -13,17 +13,17 @@ EntityState<num,QuestionState> removeQuestionReducer(EntityState<num,QuestionSta
 
 //likes
 EntityState<num,QuestionState> likeQuestionSuccessReducer(EntityState<num,QuestionState> prev, LikeQuestionSuccessAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.like(action.likeId));
+  => prev.updateOne(prev.getValue(action.questionId)!.like(action.like));
 EntityState<num,QuestionState> dislikeQuestionSuccessReducer(EntityState<num,QuestionState> prev, DislikeQuestionSuccessAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.dislike(action.likeId));
+  => prev.updateOne(prev.getValue(action.questionId)!.dislike(action.userId));
 EntityState<num,QuestionState> nextLikesReducer(EntityState<num,QuestionState> prev,NextQuestionLikesAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLodingNextLikes());
 EntityState<num,QuestionState> nextLikesSuccessReducer(EntityState<num,QuestionState> prev,NextQuestionLikesSuccessAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.addNextPageLikes(action.likeIds));
+  => prev.updateOne(prev.getValue(action.questionId)!.addNextPageLikes(action.likes));
 EntityState<num,QuestionState> nextLikesFailedReducer(EntityState<num,QuestionState> prev, NextQuestionLikesFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextLikes());
 EntityState<num,QuestionState> addNewLikeReducer(EntityState<num,QuestionState> prev,AddNewQuestionLikeAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.addNewLike(action.likeId));
+  => prev.updateOne(prev.getValue(action.questionId)!.addNewLike(action.like));
 
 //solutions
 EntityState<num,QuestionState> markSolutionAsCorrectReducer(EntityState<num,QuestionState> prev, MarkQuestionSolutionAsCorrectAction action)

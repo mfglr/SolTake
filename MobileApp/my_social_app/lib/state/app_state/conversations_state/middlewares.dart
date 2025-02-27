@@ -1,12 +1,12 @@
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_home_page_state/actions.dart';
+import 'package:my_social_app/state/app_state/conversations_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 
 void nextConversationsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextConversationsAction){
-    final pagination = store.state.messageHomePageState.conversations;
+    final pagination = store.state.conversations;
     MessageService()
       .getConversations(pagination.next)
       .then(

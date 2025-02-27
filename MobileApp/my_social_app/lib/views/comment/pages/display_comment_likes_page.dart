@@ -14,7 +14,7 @@ import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayCommentLikesPage extends StatelessWidget {
-  final int commentId;
+  final num commentId;
 
   const DisplayCommentLikesPage({
     super.key,
@@ -24,7 +24,7 @@ class DisplayCommentLikesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,CommentState?>(
-      converter: (store) => store.state.commentEntityState.entities[commentId],
+      converter: (store) => store.state.commentEntityState.getValue(commentId),
       builder:(context,comment){
         if(comment == null) return const LoadingView();
         return Scaffold(
@@ -44,7 +44,7 @@ class DisplayCommentLikesPage extends StatelessWidget {
             builder: (context,users) => UserItemsWidget(
               users: users,
               pagination: comment.likes,
-              rigthButtonBuilder: (user) => StoreConnector<AppState,int>(
+              rigthButtonBuilder: (user) => StoreConnector<AppState,num>(
                 converter: (store) => store.state.loginState!.id,
                 builder:(context,accountId){
                   if(accountId == user.id) return const SpaceSavingWidget();

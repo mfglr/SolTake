@@ -1,29 +1,28 @@
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_entity_state.dart';
+import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
-NotificationEntityState nextNotificationsReducer(NotificationEntityState prev,NextNotificationsAction action)
+Pagination<num,NotificationState> nextNotificationsReducer(Pagination<num,NotificationState> prev, NextNotificationsAction action)
   => prev.startLoadingNext();
-NotificationEntityState nextNotificationsSuccessReducer(NotificationEntityState prev,NextNotificationsSuccessAction action)
+Pagination<num,NotificationState> nextNotificationsSuccessReducer(Pagination<num,NotificationState> prev,NextNotificationsSuccessAction action)
   => prev.addNextPage(action.notifications);
-NotificationEntityState nextNotificationsFailedReducer(NotificationEntityState prev, NextNotificationsFailedAction action)
+Pagination<num,NotificationState> nextNotificationsFailedReducer(Pagination<num,NotificationState> prev, NextNotificationsFailedAction action)
   => prev.stopLoadingNext();
 
-NotificationEntityState addUnviewedNotificationsReducer(NotificationEntityState prev,AddUnviewedNotificationsAction action)
-  => prev.prependNotifications(action.notifications);
+Pagination<num,NotificationState> addUnviewedNotificationsReducer(Pagination<num,NotificationState> prev,AddUnviewedNotificationsAction action)
+  => prev.prependMany(action.notifications);
+Pagination<num,NotificationState> prependNotificationReducer(Pagination<num,NotificationState> prev, PrependNotificationAction action)
+  => prev.prependOne(action.notification);
+Pagination<num,NotificationState> markNotificationsAsViewedReducer(Pagination<num,NotificationState> prev,MarkNotificationsAsViewedSuccessAction action)
+  => prev.updateMany(prev.getByIds(action.ids).map((e) => e.markAsViewed()));
 
-NotificationEntityState prependNotificationReducer(NotificationEntityState prev, PrependNotificationAction action)
-  => prev.prependNotification(action.notification);
+Reducer<Pagination<num,NotificationState>> notificationEntityStateReducers = combineReducers<Pagination<num,NotificationState>>([
+  TypedReducer<Pagination<num,NotificationState>,NextNotificationsAction>(nextNotificationsReducer).call,
+  TypedReducer<Pagination<num,NotificationState>,NextNotificationsSuccessAction>(nextNotificationsSuccessReducer).call,
+  TypedReducer<Pagination<num,NotificationState>,NextNotificationsFailedAction>(nextNotificationsFailedReducer).call,
 
-NotificationEntityState markNotificationsAsViewedReducer(NotificationEntityState prev,MarkNotificationsAsViewedSuccessAction action)
-  => prev.markAsViewed(action.ids);
-
-Reducer<NotificationEntityState> notificationEntityStateReducers = combineReducers<NotificationEntityState>([
-  TypedReducer<NotificationEntityState,NextNotificationsAction>(nextNotificationsReducer).call,
-  TypedReducer<NotificationEntityState,NextNotificationsSuccessAction>(nextNotificationsSuccessReducer).call,
-  TypedReducer<NotificationEntityState,NextNotificationsFailedAction>(nextNotificationsFailedReducer).call,
-
-  TypedReducer<NotificationEntityState,AddUnviewedNotificationsAction>(addUnviewedNotificationsReducer).call,
-  TypedReducer<NotificationEntityState,PrependNotificationAction>(prependNotificationReducer).call,
-  TypedReducer<NotificationEntityState,MarkNotificationsAsViewedSuccessAction>(markNotificationsAsViewedReducer).call,
+  TypedReducer<Pagination<num,NotificationState>,AddUnviewedNotificationsAction>(addUnviewedNotificationsReducer).call,
+  TypedReducer<Pagination<num,NotificationState>,PrependNotificationAction>(prependNotificationReducer).call,
+  TypedReducer<Pagination<num,NotificationState>,MarkNotificationsAsViewedSuccessAction>(markNotificationsAsViewedReducer).call,
 ]);

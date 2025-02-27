@@ -7,7 +7,7 @@ import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 
 class CreateConversationPageUserItem extends StatelessWidget {
   final UserState user;
-  final void Function(int userId) onPressed;
+  final void Function(num userId) onPressed;
 
   const CreateConversationPageUserItem({
     super.key,
@@ -45,7 +45,8 @@ class CreateConversationPageUserItem extends StatelessWidget {
                 ],
               ),
               StoreConnector<AppState,int>(
-                converter: (store) => store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(user.id),
+                converter: (store) => //0store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(user.id),
+                0,
                 builder: (context,count){
                   if(count > 0) return Text(count.toString());
                   return const SizedBox.shrink();

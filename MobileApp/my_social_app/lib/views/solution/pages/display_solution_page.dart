@@ -56,7 +56,7 @@ class _DisplaySolutionPageState extends State<DisplaySolutionPage> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,SolutionState?>(
       onInit: (store) => store.dispatch(LoadSolutionAction(solutionId: widget.solutionId)),
-      converter: (store) => store.state.solutionEntityState.entities[widget.solutionId],
+      converter: (store) => store.state.solutionEntityState.getValue(widget.solutionId),
       builder: (context,solution){
         if(solution == null) return const LoadingView();
         return Scaffold(

@@ -31,10 +31,10 @@ class SolutionStateWidget extends StatelessWidget {
       default:
         return StoreConnector<AppState,QuestionState?>(
           onInit: (store) => store.dispatch(LoadQuestionAction(questionId: solution.questionId)),
-          converter: (store) => store.state.questionEntityState.entities[solution.questionId],
+          converter: (store) => store.state.questionEntityState.getValue(solution.questionId),
           builder: (store,question){
             if(question == null) return const LoadingCircleWidget(diameter: 16, strokeWidth: 2);
-            return StoreConnector<AppState,int>(
+            return StoreConnector<AppState,num>(
               converter: (store) => store.state.loginState!.id,
               builder:(context,accountId) => Builder(
                 builder: (context) {

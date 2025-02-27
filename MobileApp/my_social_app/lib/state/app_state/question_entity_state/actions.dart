@@ -2,6 +2,7 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
@@ -25,7 +26,7 @@ class CreateQuestionAction extends AppAction{
 
 @immutable
 class LoadQuestionAction extends AppAction{
-  final int questionId;
+  final num questionId;
   const LoadQuestionAction({required this.questionId});
 }
 @immutable
@@ -40,27 +41,27 @@ class AddQuestionsAction extends AppAction{
 }
 @immutable
 class DeleteQuestionAction extends AppAction{
-  final int questionId;
+  final num questionId;
   const DeleteQuestionAction({required this.questionId});
 }
 @immutable
 class DeleteQuestionSuccessAction extends AppAction{
-  final int questionId;
+  final num questionId;
   const DeleteQuestionSuccessAction({required this.questionId});
 }
 
 @immutable
 class DislikeQuestionAction extends AppAction{
-  final int questionId;
+  final num questionId;
   const DislikeQuestionAction({required this.questionId});
 }
 @immutable
 class DislikeQuestionSuccessAction extends AppAction{
   final num questionId;
-  final num likeId;
+  final num userId;
   const DislikeQuestionSuccessAction({
     required this.questionId,
-    required this.likeId
+    required this.userId
   });
 }
 @immutable
@@ -71,14 +72,14 @@ class LikeQuestionAction extends AppAction{
 @immutable
 class LikeQuestionSuccessAction extends AppAction{
   final num questionId;
-  final num likeId;
-  const LikeQuestionSuccessAction({required this.questionId,required this.likeId});
+  final QuestionUserLikeState like;
+  const LikeQuestionSuccessAction({required this.questionId, required this.like});
 }
 @immutable
 class AddNewQuestionLikeAction extends AppAction{
   final num questionId;
-  final num likeId;
-  const AddNewQuestionLikeAction({required this.questionId, required this.likeId});
+  final QuestionUserLikeState like;
+  const AddNewQuestionLikeAction({required this.questionId, required this.like});
 }
 
 
@@ -90,8 +91,8 @@ class NextQuestionLikesAction extends AppAction{
 @immutable
 class NextQuestionLikesSuccessAction extends AppAction{
   final num questionId;
-  final Iterable<num> likeIds;
-  const NextQuestionLikesSuccessAction({required this.questionId, required this.likeIds});
+  final Iterable<QuestionUserLikeState> likes;
+  const NextQuestionLikesSuccessAction({required this.questionId, required this.likes});
 }
 @immutable
 class NextQuestionLikesFailedAction extends AppAction{

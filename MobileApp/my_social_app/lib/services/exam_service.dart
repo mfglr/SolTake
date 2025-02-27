@@ -17,7 +17,7 @@ class ExamService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Exam.fromJson(e)));
 
-  Future<Exam> getExamById(int examId) =>
+  Future<Exam> getExamById(num examId) =>
     _appClient
       .get("$examController/$getExamByIdEndpoint")
       .then((json) => Exam.fromJson(json));

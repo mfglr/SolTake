@@ -1,244 +1,245 @@
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_entity_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-UserEntityState markQuestionAsSolvedReducer(UserEntityState prev,MarkUserQuestionAsSolvedAction action)
-  => prev.markQuestionAsSolved(action.userId, action.questionId);
-UserEntityState markQuestionAsUnsolvedReducer(UserEntityState prev,MarkUserQuestionAsUnsolvedAction action)
-  => prev.markQuestionAsUnsolved(action.userId, action.questionId);
+EntityState<num,UserState> markQuestionAsSolvedReducer(EntityState<num,UserState> prev,MarkUserQuestionAsSolvedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.markQuestionAsSolved(action.questionId));
+EntityState<num,UserState> markQuestionAsUnsolvedReducer(EntityState<num,UserState> prev,MarkUserQuestionAsUnsolvedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.markQuestionAsUnsolved(action.questionId));
 
 //questions
-UserEntityState nextQuestionsReducer(UserEntityState prev,NextUserQuestionsAction action)
-  => prev.startLoadingNextQuestions(action.userId);
-UserEntityState nextQuestionsSuccessReducer(UserEntityState prev,NextUserQuestionsSuccessAction action)
-  => prev.addNextQuestions(action.userId,action.questionIds);
-UserEntityState nextQuestionFailedReducer(UserEntityState prev,NextUserQuestionsFailedAction action)
-  => prev.stopLoadingNextQuestions(action.userId);
+EntityState<num,UserState> nextQuestionsReducer(EntityState<num,UserState> prev,NextUserQuestionsAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextQuestions());
+EntityState<num,UserState> nextQuestionsSuccessReducer(EntityState<num,UserState> prev,NextUserQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextPageQuestions(action.questionIds));
+EntityState<num,UserState> nextQuestionFailedReducer(EntityState<num,UserState> prev,NextUserQuestionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextQuestions()) ;
 
-UserEntityState addNewQuestionReducer(UserEntityState prev, AddNewUserQuestionAction action)
-  => prev.addNewQuestion(action.userId, action.questionId);
-UserEntityState removeQuestionReducer(UserEntityState prev, RemoveUserQuestionAction action)
-  => prev.removeQuestion(action.userId,action.questionId);
+EntityState<num,UserState> addNewQuestionReducer(EntityState<num,UserState> prev, AddNewUserQuestionAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNewQuestion(action.questionId));
+EntityState<num,UserState> removeQuestionReducer(EntityState<num,UserState> prev, RemoveUserQuestionAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.removeQuestion(action.questionId));
 
 //solved questions
-UserEntityState nextSolvedQuestionsReducer(UserEntityState prev, NextUserSolvedQuestionsAction action) 
-  => prev.startLoadingNextSolvedQuestions(action.userId);
-UserEntityState nextSolvedQuestionsSuccessReducer(UserEntityState prev, NextUserSolvedQuestionsSuccessAction action)
-  => prev.addNextSolvedQuestions(action.userId,action.questionIds);
-UserEntityState nextSolvedQuestionsFailedReducer(UserEntityState prev, NextUserSolvedQuestionsFailedAction action)
-  => prev.stopLoadingNextSolvedQuestions(action.userId);
+EntityState<num,UserState> nextSolvedQuestionsReducer(EntityState<num,UserState> prev, NextUserSolvedQuestionsAction action) 
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextSolvedQuestions());
+EntityState<num,UserState> nextSolvedQuestionsSuccessReducer(EntityState<num,UserState> prev, NextUserSolvedQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextSolvedQuestions(action.questionIds));
+EntityState<num,UserState> nextSolvedQuestionsFailedReducer(EntityState<num,UserState> prev, NextUserSolvedQuestionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextSolvedQuestions());
 
 //unsolved questions
-UserEntityState nextUnsolvedQuestionsReducer(UserEntityState prev, NextUserUnsolvedQuestionsAction action)
-  => prev.startLoadingNextUnsolvedQuestions(action.userId);
-UserEntityState nextUnsolvedQuestionsSuccessReducer(UserEntityState prev, NextUserUnsolvedQuestionsSuccessAction action)
-  => prev.addNextUnsolvedQuestions(action.userId, action.questionIds);
-UserEntityState nextUnsolvedQuestionsFailedReducer(UserEntityState prev, NextUserUnsolvedQuestionsFailedAction action)
-  => prev.stopLoadingNextUnsolvedQuestions(action.userId);
+EntityState<num,UserState> nextUnsolvedQuestionsReducer(EntityState<num,UserState> prev, NextUserUnsolvedQuestionsAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextUnsolvedQuestions());
+EntityState<num,UserState> nextUnsolvedQuestionsSuccessReducer(EntityState<num,UserState> prev, NextUserUnsolvedQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextUnsolvedQuestions(action.questionIds)) ;
+EntityState<num,UserState> nextUnsolvedQuestionsFailedReducer(EntityState<num,UserState> prev, NextUserUnsolvedQuestionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextUnsolvedQuestion());
 
 //saved questions
-UserEntityState nextSavedQuestionsReducer(UserEntityState prev,NextUserSavedQuestionsAction action)
-  => prev.startLoadingNextSavedQuestions(action.userId);
-UserEntityState nextSavedQuestionsSuccessReducer(UserEntityState prev,NextUserSavedQuestionsSuccessAction action)
-  => prev.addNextPageSavedQuestions(action.userId,action.savedIds);
-UserEntityState nextSavedQuestionsFailedReducer(UserEntityState prev,NextUserSavedQuestionsFailedAction action)
-  => prev.stopLoadingNextSavedQuestions(action.userId);
+EntityState<num,UserState> nextSavedQuestionsReducer(EntityState<num,UserState> prev,NextUserSavedQuestionsAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextSavedQuestions());
+EntityState<num,UserState> nextSavedQuestionsSuccessReducer(EntityState<num,UserState> prev,NextUserSavedQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextSavedQuestions(action.savedIds));
+EntityState<num,UserState> nextSavedQuestionsFailedReducer(EntityState<num,UserState> prev,NextUserSavedQuestionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextSavedQuestions());
 
-UserEntityState addSavedQuestionReducer(UserEntityState prev,AddUserSavedQuestionAction action)
-  => prev.addSavedQuestion(action.userId,action.saveId);
-UserEntityState removeSavedQuestionReducer(UserEntityState prev,RemoveUserSavedQuestionAction action)
-  => prev.removeSavedQuestion(action.userId,action.saveId);
+EntityState<num,UserState> addSavedQuestionReducer(EntityState<num,UserState> prev,AddUserSavedQuestionAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addSavedQuestion(action.saveId));
+EntityState<num,UserState> removeSavedQuestionReducer(EntityState<num,UserState> prev,RemoveUserSavedQuestionAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.removeSavedQuestion(action.saveId)) ;
 
 //saved solutions
-UserEntityState nextSavedSolutionsReducer(UserEntityState prev, NextUserSavedSolutionsAction action)
-  => prev.startLoadingSavedSolutions(action.userId);
-UserEntityState nextSavedSolutionsSuccessReducer(UserEntityState prev, NextUserSavedSolutionsSuccessAction action)
-  => prev.addNextPageSolutions(action.userId,action.savedIds);
-UserEntityState nextSavedSolutionsFailedReducer(UserEntityState prev, NextUserSavedSolutionsFailedAction action)
-  => prev.stopLoadingSavedSolution(action.userId);
+EntityState<num,UserState> nextSavedSolutionsReducer(EntityState<num,UserState> prev, NextUserSavedSolutionsAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingSavedSolutions());
+EntityState<num,UserState> nextSavedSolutionsSuccessReducer(EntityState<num,UserState> prev, NextUserSavedSolutionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextSavedSolutions(action.savedIds)) ;
+EntityState<num,UserState> nextSavedSolutionsFailedReducer(EntityState<num,UserState> prev, NextUserSavedSolutionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingSavedSolutions());
 
-UserEntityState addSavedSolutionReducer(UserEntityState prev, AddUserSavedSolutionAction action)
-  => prev.addSavedSolution(action.userId, action.saveId);
-UserEntityState removeSavedSolutionReducer(UserEntityState prev, RemoveUserSavedSolutionAction action)
-  => prev.removeSavedSolution(action.userId, action.saveId);
+EntityState<num,UserState> addSavedSolutionReducer(EntityState<num,UserState> prev, AddUserSavedSolutionAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addSavedSolution(action.saveId));
+EntityState<num,UserState> removeSavedSolutionReducer(EntityState<num,UserState> prev, RemoveUserSavedSolutionAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.removeSavedSolution(action.saveId));
 
 //followers
-UserEntityState nextFollowersReducer(UserEntityState prev,NextUserFollowersAction action)
-  => prev.startLoadingNextFollowers(action.userId);
-UserEntityState nextFollowersSuccessReducer(UserEntityState prev,NextUserFollowersSuccessAction action)
-  => prev.addNextPageFollowers(action.userId,action.followIds);
-UserEntityState nextFollowersFailedReducer(UserEntityState prev,NextUserFollowersFailedAction action)
-  => prev.stopLoadingNextFollowers(action.userId);
+EntityState<num,UserState> nextFollowersReducer(EntityState<num,UserState> prev,NextUserFollowersAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextFollowers());
+EntityState<num,UserState> nextFollowersSuccessReducer(EntityState<num,UserState> prev,NextUserFollowersSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextFollowers(action.followIds));
+EntityState<num,UserState> nextFollowersFailedReducer(EntityState<num,UserState> prev,NextUserFollowersFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextFollowers());
 
 //followeds
-UserEntityState nextFollowedsReducer(UserEntityState prev,NextUserFollowedsAction action)
-  => prev.startLoadingNextFolloweds(action.userId);
-UserEntityState nextFollowedsSuccessReducer(UserEntityState prev,NextUserFollowedsSuccessAction action)
-  => prev.addNextPageFolloweds(action.userId,action.followIds);
-UserEntityState nextFollowedsFailedReducer(UserEntityState prev,NextuserFollowedsFailedAction action)
-  => prev.stopLoadingNextFolloweds(action.userId);
+EntityState<num,UserState> nextFollowedsReducer(EntityState<num,UserState> prev,NextUserFollowedsAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextFolloweds());
+EntityState<num,UserState> nextFollowedsSuccessReducer(EntityState<num,UserState> prev,NextUserFollowedsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextFolloweds(action.followIds));
+EntityState<num,UserState> nextFollowedsFailedReducer(EntityState<num,UserState> prev,NextuserFollowedsFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextFolloweds());
 
-UserEntityState followReducer(UserEntityState prev,FollowUserSuccessAction action)
-  => prev.follow(action.currentUserId, action.followedId, action.followId);
-UserEntityState unfollowReducer(UserEntityState prev,UnfollowUserSuccessAction action)
-  => prev.unfollow(action.currentUserId, action.followedId, action.followId);
-UserEntityState removeFollowerReducer(UserEntityState prev,RemoveFollowerSuccessAction action)
-  => prev.removeFollower(action.currentUserId, action.followerId, action.followId);
-UserEntityState addNewFollowerReducer(UserEntityState prev,AddNewFollowerAction action)
-  => prev.addNewFollower(action.curentUserId, action.followerId, action.followId);
+// EntityState<num,UserState> followReducer(EntityState<num,UserState> prev,FollowUserSuccessAction action)
+//   => prev.updateOne(prev.getValue(action.currentUserId)!.follow()) prev.follow(action.currentUserId, action.followedId, action.followId);
+// EntityState<num,UserState> unfollowReducer(EntityState<num,UserState> prev,UnfollowUserSuccessAction action)
+//   => prev.unfollow(action.currentUserId, action.followedId, action.followId);
+// EntityState<num,UserState> removeFollowerReducer(EntityState<num,UserState> prev,RemoveFollowerSuccessAction action)
+//   => prev.removeFollower(action.currentUserId, action.followerId, action.followId);
+// EntityState<num,UserState> addNewFollowerReducer(EntityState<num,UserState> prev,AddNewFollowerAction action)
+//   => prev.addNewFollower(action.curentUserId, action.followerId, action.followId);
 
-// not followeds
-UserEntityState getNextPageNotFollowedsReducer(UserEntityState prev,GetNextPageUserNotFollowedsAction action)
-  => prev.getNextPageNotFolloweds(action.userId);
-UserEntityState addNextPageNotFollowedsReducer(UserEntityState prev,AddNextPageUserNotFollowedsAction action)
-  => prev.addNextPageNotFolloweds(action.userId, action.userIds);
-UserEntityState addNotFollowedReducer(UserEntityState prev,AddUserNotFollowedAction action)
-  => prev.addNotFollowed(action.userId,action.notFollowedId);
-UserEntityState removeNotFollowedReducer(UserEntityState prev,RemoveUserNotFollowedAction action)
-  => prev.removeNotFollowed(action.userId,action.notFollowedId);
+// // not followeds
+// EntityState<num,UserState> getNextPageNotFollowedsReducer(EntityState<num,UserState> prev,GetNextPageUserNotFollowedsAction action)
+//   => prev.getNextPageNotFolloweds(action.userId);
+// EntityState<num,UserState> addNextPageNotFollowedsReducer(EntityState<num,UserState> prev,AddNextPageUserNotFollowedsAction action)
+//   => prev.addNextPageNotFolloweds(action.userId, action.userIds);
+// EntityState<num,UserState> addNotFollowedReducer(EntityState<num,UserState> prev,AddUserNotFollowedAction action)
+//   => prev.addNotFollowed(action.userId,action.notFollowedId);
+// EntityState<num,UserState> removeNotFollowedReducer(EntityState<num,UserState> prev,RemoveUserNotFollowedAction action)
+//   => prev.removeNotFollowed(action.userId,action.notFollowedId);
 
-//messages
-UserEntityState nextMessagesReducer(UserEntityState prev,NextUserMessagesAction action)
-  => prev.startLoadingNextMessages(action.userId);
-UserEntityState nextMessagesSuccessReducer(UserEntityState prev,NextUserMessagesSuccessAction action)
-  => prev.addNextMessages(action.userId, action.messageIds);
-UserEntityState nextMessagesFailedReducer(UserEntityState prev,NextUserMessagesFailedAction action)
-  => prev.stopLoadingNextMessages(action.userId);
+// //messages
+// EntityState<num,UserState> nextMessagesReducer(EntityState<num,UserState> prev,NextUserMessagesAction action)
+//   => prev.startLoadingNextMessages(action.userId);
+// EntityState<num,UserState> nextMessagesSuccessReducer(EntityState<num,UserState> prev,NextUserMessagesSuccessAction action)
+//   => prev.addNextMessages(action.userId, action.messageIds);
+// EntityState<num,UserState> nextMessagesFailedReducer(EntityState<num,UserState> prev,NextUserMessagesFailedAction action)
+//   => prev.stopLoadingNextMessages(action.userId);
 
-UserEntityState addMessageReducer(UserEntityState prev,AddUserMessageAction action)
-  => prev.addMessage(action.userId, action.messageId);
-UserEntityState removeMessageReducer(UserEntityState prev,RemoveUserMessageAction action)
-  => prev.removeMessage(action.userId, action.messageId);
-UserEntityState removeMessagesReducer(UserEntityState prev,RemoveUserMessagesAction action)
-  => prev.removeMessages(action.userId, action.messageIds);
+// EntityState<num,UserState> addMessageReducer(EntityState<num,UserState> prev,AddUserMessageAction action)
+//   => prev.addMessage(action.userId, action.messageId);
+// EntityState<num,UserState> removeMessageReducer(EntityState<num,UserState> prev,RemoveUserMessageAction action)
+//   => prev.removeMessage(action.userId, action.messageId);
+// EntityState<num,UserState> removeMessagesReducer(EntityState<num,UserState> prev,RemoveUserMessagesAction action)
+//   => prev.removeMessages(action.userId, action.messageIds);
 
-//conversations
-UserEntityState nextConversationsReducer(UserEntityState prev,NextUserConversationsAction action)
-  => prev.startLoadingNextConversations(action.userId);
-UserEntityState nextConversationsSuccessReducer(UserEntityState prev,NextUserConversationsSuccessAction action)
-  => prev.addNextConversations(action.userId,action.ids);
-UserEntityState nextConversationsFailedRedcer(UserEntityState prev,NextUserConversationsFailedAction action)
- => prev.stopLoadingNextConversations(action.userId);
+// //conversations
+// EntityState<num,UserState> nextConversationsReducer(EntityState<num,UserState> prev,NextUserConversationsAction action)
+//   => prev.startLoadingNextConversations(action.userId);
+// EntityState<num,UserState> nextConversationsSuccessReducer(EntityState<num,UserState> prev,NextUserConversationsSuccessAction action)
+//   => prev.addNextConversations(action.userId,action.ids);
+// EntityState<num,UserState> nextConversationsFailedRedcer(EntityState<num,UserState> prev,NextUserConversationsFailedAction action)
+//  => prev.stopLoadingNextConversations(action.userId);
 
-UserEntityState addConversationReducer(UserEntityState prev, AddUserConversationAction action)
-  => prev.addConversation(action.userId,action.id);
-UserEntityState addConversationInOrderReducer(UserEntityState prev,AddUserConversationInOrderAction action)
-  => prev.addConversationInOrder(action.userId, action.id);
-UserEntityState removeConversationReducer(UserEntityState prev, RemoveUserConversationAction action)
-  => prev.removeConversation(action.userId, action.id);
+// EntityState<num,UserState> addConversationReducer(EntityState<num,UserState> prev, AddUserConversationAction action)
+//   => prev.addConversation(action.userId,action.id);
+// EntityState<num,UserState> addConversationInOrderReducer(EntityState<num,UserState> prev,AddUserConversationInOrderAction action)
+//   => prev.addConversationInOrder(action.userId, action.id);
+// EntityState<num,UserState> removeConversationReducer(EntityState<num,UserState> prev, RemoveUserConversationAction action)
+//   => prev.removeConversation(action.userId, action.id);
 
-UserEntityState loadUserReducer(UserEntityState prev,AddUserAction action)
-  => prev.addUser(action.user);
-UserEntityState addUsersReducer(UserEntityState prev,AddUsersAction action)
-  => prev.addUsers(action.users);
+// EntityState<num,UserState> loadUserReducer(EntityState<num,UserState> prev,AddUserAction action)
+//   => prev.addUser(action.user);
+// EntityState<num,UserState> addUsersReducer(EntityState<num,UserState> prev,AddUsersAction action)
+//   => prev.addUsers(action.users);
 
-UserEntityState updateUserNameReducer(UserEntityState prev,UpdateUserNameSuccessAction action)
-  => prev.updateUserName(action.userId, action.userName);
-UserEntityState updateNameReducer(UserEntityState prev,UpdateNameSuccessAction action)
-  => prev.updateName(action.userId, action.name);
-UserEntityState updateBiographyReducer(UserEntityState prev, UpdateBiographySuccessAction action)
-  => prev.updateBiography(action.userId, action.biography);
+// EntityState<num,UserState> updateUserNameReducer(EntityState<num,UserState> prev,UpdateUserNameSuccessAction action)
+//   => prev.updateUserName(action.userId, action.userName);
+// EntityState<num,UserState> updateNameReducer(EntityState<num,UserState> prev,UpdateNameSuccessAction action)
+//   => prev.updateName(action.userId, action.name);
+// EntityState<num,UserState> updateBiographyReducer(EntityState<num,UserState> prev, UpdateBiographySuccessAction action)
+//   => prev.updateBiography(action.userId, action.biography);
 
-UserEntityState uploadUserImageReducer(UserEntityState prev,UploadUserImageAction action)
-  => prev.uploadImage(action.userId,action.image);
-UserEntityState uploadUserImageSuccessReducer(UserEntityState prev,UploadUserImageSuccessAction action)
-  => prev.uploadImageSuccess(action.userId, action.image);
-UserEntityState uploadUserImageFailedReducer(UserEntityState prev,UploadUserImageFailedAction action)
-  => prev.uploadImageFailed(action.userId);
-UserEntityState remvoeUserImageReducer(UserEntityState prev, RemoveUserImageSuccessAction action)
-  => prev.removeImage(action.userId);
-UserEntityState changeUserImageRateReducer(UserEntityState prev, ChangeUserImageRateAction action)
-  => prev.changeImageRate(action.userId,action.rate);
+// EntityState<num,UserState> uploadUserImageReducer(EntityState<num,UserState> prev,UploadUserImageAction action)
+//   => prev.uploadImage(action.userId,action.image);
+// EntityState<num,UserState> uploadUserImageSuccessReducer(EntityState<num,UserState> prev,UploadUserImageSuccessAction action)
+//   => prev.uploadImageSuccess(action.userId, action.image);
+// EntityState<num,UserState> uploadUserImageFailedReducer(EntityState<num,UserState> prev,UploadUserImageFailedAction action)
+//   => prev.uploadImageFailed(action.userId);
+// EntityState<num,UserState> remvoeUserImageReducer(EntityState<num,UserState> prev, RemoveUserImageSuccessAction action)
+//   => prev.removeImage(action.userId);
+// EntityState<num,UserState> changeUserImageRateReducer(EntityState<num,UserState> prev, ChangeUserImageRateAction action)
+//   => prev.changeImageRate(action.userId,action.rate);
 
 
-Reducer<UserEntityState> userEntityStateReducers = combineReducers<UserEntityState>([
+Reducer<EntityState<num,UserState>> userEntityStateReducers = combineReducers<EntityState<num,UserState>>([
   //
-  TypedReducer<UserEntityState,MarkUserQuestionAsSolvedAction>(markQuestionAsSolvedReducer).call,
-  TypedReducer<UserEntityState,MarkUserQuestionAsUnsolvedAction>(markQuestionAsUnsolvedReducer).call,
-  TypedReducer<UserEntityState,AddNewUserQuestionAction>(addNewQuestionReducer).call,
-  TypedReducer<UserEntityState,RemoveUserQuestionAction>(removeQuestionReducer).call,
+  TypedReducer<EntityState<num,UserState>,MarkUserQuestionAsSolvedAction>(markQuestionAsSolvedReducer).call,
+  TypedReducer<EntityState<num,UserState>,MarkUserQuestionAsUnsolvedAction>(markQuestionAsUnsolvedReducer).call,
+  TypedReducer<EntityState<num,UserState>,AddNewUserQuestionAction>(addNewQuestionReducer).call,
+  TypedReducer<EntityState<num,UserState>,RemoveUserQuestionAction>(removeQuestionReducer).call,
 
   //questions
-  TypedReducer<UserEntityState,NextUserQuestionsAction>(nextQuestionsReducer).call,
-  TypedReducer<UserEntityState,NextUserQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserQuestionsFailedAction>(nextQuestionFailedReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserQuestionsAction>(nextQuestionsReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserQuestionsFailedAction>(nextQuestionFailedReducer).call,
 
   //solved questions
-  TypedReducer<UserEntityState,NextUserSolvedQuestionsAction>(nextSolvedQuestionsReducer).call,
-  TypedReducer<UserEntityState,NextUserSolvedQuestionsSuccessAction>(nextSolvedQuestionsSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserSolvedQuestionsFailedAction>(nextSolvedQuestionsFailedReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSolvedQuestionsAction>(nextSolvedQuestionsReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSolvedQuestionsSuccessAction>(nextSolvedQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSolvedQuestionsFailedAction>(nextSolvedQuestionsFailedReducer).call,
 
   //unsolved questions
-  TypedReducer<UserEntityState,NextUserUnsolvedQuestionsAction>(nextUnsolvedQuestionsReducer).call,
-  TypedReducer<UserEntityState,NextUserUnsolvedQuestionsSuccessAction>(nextUnsolvedQuestionsSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserUnsolvedQuestionsFailedAction>(nextUnsolvedQuestionsFailedReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserUnsolvedQuestionsAction>(nextUnsolvedQuestionsReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserUnsolvedQuestionsSuccessAction>(nextUnsolvedQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserUnsolvedQuestionsFailedAction>(nextUnsolvedQuestionsFailedReducer).call,
 
   //saved questions
-  TypedReducer<UserEntityState,NextUserSavedQuestionsAction>(nextSavedQuestionsReducer).call,
-  TypedReducer<UserEntityState,NextUserSavedQuestionsSuccessAction>(nextSavedQuestionsSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserSavedQuestionsFailedAction>(nextSavedQuestionsFailedReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSavedQuestionsAction>(nextSavedQuestionsReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSavedQuestionsSuccessAction>(nextSavedQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSavedQuestionsFailedAction>(nextSavedQuestionsFailedReducer).call,
 
-  TypedReducer<UserEntityState,AddUserSavedQuestionAction>(addSavedQuestionReducer).call,
-  TypedReducer<UserEntityState,RemoveUserSavedQuestionAction>(removeSavedQuestionReducer).call,
+  TypedReducer<EntityState<num,UserState>,AddUserSavedQuestionAction>(addSavedQuestionReducer).call,
+  TypedReducer<EntityState<num,UserState>,RemoveUserSavedQuestionAction>(removeSavedQuestionReducer).call,
 
   //saved solutions
-  TypedReducer<UserEntityState,NextUserSavedSolutionsAction>(nextSavedSolutionsReducer).call,
-  TypedReducer<UserEntityState,NextUserSavedSolutionsSuccessAction>(nextSavedSolutionsSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserSavedSolutionsFailedAction>(nextSavedSolutionsFailedReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSavedSolutionsAction>(nextSavedSolutionsReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSavedSolutionsSuccessAction>(nextSavedSolutionsSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserSavedSolutionsFailedAction>(nextSavedSolutionsFailedReducer).call,
 
-  TypedReducer<UserEntityState,AddUserSavedSolutionAction>(addSavedSolutionReducer).call,
-  TypedReducer<UserEntityState,RemoveUserSavedSolutionAction>(removeSavedSolutionReducer).call,
+  TypedReducer<EntityState<num,UserState>,AddUserSavedSolutionAction>(addSavedSolutionReducer).call,
+  TypedReducer<EntityState<num,UserState>,RemoveUserSavedSolutionAction>(removeSavedSolutionReducer).call,
 
   //followers
-  TypedReducer<UserEntityState,NextUserFollowersAction>(nextFollowersReducer).call,
-  TypedReducer<UserEntityState,NextUserFollowersSuccessAction>(nextFollowersSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserFollowersFailedAction>(nextFollowersFailedReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowersAction>(nextFollowersReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowersSuccessAction>(nextFollowersSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowersFailedAction>(nextFollowersFailedReducer).call,
 
   //followeds
-  TypedReducer<UserEntityState,NextUserFollowedsAction>(nextFollowedsReducer).call,
-  TypedReducer<UserEntityState,NextUserFollowedsSuccessAction>(nextFollowedsSuccessReducer).call,
-  TypedReducer<UserEntityState,NextuserFollowedsFailedAction>(nextFollowedsFailedReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowedsAction>(nextFollowedsReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowedsSuccessAction>(nextFollowedsSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextuserFollowedsFailedAction>(nextFollowedsFailedReducer).call,
   
-  TypedReducer<UserEntityState,FollowUserSuccessAction>(followReducer).call,
-  TypedReducer<UserEntityState,UnfollowUserSuccessAction>(unfollowReducer).call,
-  TypedReducer<UserEntityState,RemoveFollowerSuccessAction>(removeFollowerReducer).call,
-  TypedReducer<UserEntityState,AddNewFollowerAction>(addNewFollowerReducer).call,
+  // TypedReducer<EntityState<num,UserState>,FollowUserSuccessAction>(followReducer).call,
+  // TypedReducer<EntityState<num,UserState>,UnfollowUserSuccessAction>(unfollowReducer).call,
+  // TypedReducer<EntityState<num,UserState>,RemoveFollowerSuccessAction>(removeFollowerReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddNewFollowerAction>(addNewFollowerReducer).call,
 
-  //not followeds
-  TypedReducer<UserEntityState,GetNextPageUserNotFollowedsAction>(getNextPageNotFollowedsReducer).call,
-  TypedReducer<UserEntityState,AddNextPageUserNotFollowedsAction>(addNextPageNotFollowedsReducer).call,
-  TypedReducer<UserEntityState,RemoveUserNotFollowedAction>(removeNotFollowedReducer).call,
-  TypedReducer<UserEntityState,AddUserNotFollowedAction>(addNotFollowedReducer).call,
+  // //not followeds
+  // TypedReducer<EntityState<num,UserState>,GetNextPageUserNotFollowedsAction>(getNextPageNotFollowedsReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddNextPageUserNotFollowedsAction>(addNextPageNotFollowedsReducer).call,
+  // TypedReducer<EntityState<num,UserState>,RemoveUserNotFollowedAction>(removeNotFollowedReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddUserNotFollowedAction>(addNotFollowedReducer).call,
 
-  //messages
-  TypedReducer<UserEntityState,NextUserMessagesAction>(nextMessagesReducer).call,
-  TypedReducer<UserEntityState,NextUserMessagesSuccessAction>(nextMessagesSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserMessagesFailedAction>(nextMessagesFailedReducer).call,
+  // //messages
+  // TypedReducer<EntityState<num,UserState>,NextUserMessagesAction>(nextMessagesReducer).call,
+  // TypedReducer<EntityState<num,UserState>,NextUserMessagesSuccessAction>(nextMessagesSuccessReducer).call,
+  // TypedReducer<EntityState<num,UserState>,NextUserMessagesFailedAction>(nextMessagesFailedReducer).call,
 
-  TypedReducer<UserEntityState,AddUserMessageAction>(addMessageReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddUserMessageAction>(addMessageReducer).call,
   
-  TypedReducer<UserEntityState,RemoveUserMessageAction>(removeMessageReducer).call,
-  TypedReducer<UserEntityState,RemoveUserMessagesAction>(removeMessagesReducer).call,
+  // TypedReducer<EntityState<num,UserState>,RemoveUserMessageAction>(removeMessageReducer).call,
+  // TypedReducer<EntityState<num,UserState>,RemoveUserMessagesAction>(removeMessagesReducer).call,
 
-  //conversations
-  TypedReducer<UserEntityState,NextUserConversationsAction>(nextConversationsReducer).call,
-  TypedReducer<UserEntityState,NextUserConversationsSuccessAction>(nextConversationsSuccessReducer).call,
-  TypedReducer<UserEntityState,NextUserConversationsFailedAction>(nextConversationsFailedRedcer).call,
+  // //conversations
+  // TypedReducer<EntityState<num,UserState>,NextUserConversationsAction>(nextConversationsReducer).call,
+  // TypedReducer<EntityState<num,UserState>,NextUserConversationsSuccessAction>(nextConversationsSuccessReducer).call,
+  // TypedReducer<EntityState<num,UserState>,NextUserConversationsFailedAction>(nextConversationsFailedRedcer).call,
 
-  TypedReducer<UserEntityState,AddUserConversationAction>(addConversationReducer).call,
-  TypedReducer<UserEntityState,AddUserConversationInOrderAction>(addConversationInOrderReducer).call,
-  TypedReducer<UserEntityState,RemoveUserConversationAction>(removeConversationReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddUserConversationAction>(addConversationReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddUserConversationInOrderAction>(addConversationInOrderReducer).call,
+  // TypedReducer<EntityState<num,UserState>,RemoveUserConversationAction>(removeConversationReducer).call,
 
-  TypedReducer<UserEntityState,AddUserAction>(loadUserReducer).call,
-  TypedReducer<UserEntityState,AddUsersAction>(addUsersReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddUserAction>(loadUserReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddUsersAction>(addUsersReducer).call,
 
-  TypedReducer<UserEntityState,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
-  TypedReducer<UserEntityState,UpdateNameSuccessAction>(updateNameReducer).call,
-  TypedReducer<UserEntityState,UpdateBiographySuccessAction>(updateBiographyReducer).call,
+  // TypedReducer<EntityState<num,UserState>,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
+  // TypedReducer<EntityState<num,UserState>,UpdateNameSuccessAction>(updateNameReducer).call,
+  // TypedReducer<EntityState<num,UserState>,UpdateBiographySuccessAction>(updateBiographyReducer).call,
 
-  TypedReducer<UserEntityState,UploadUserImageAction>(uploadUserImageReducer).call,
-  TypedReducer<UserEntityState,UploadUserImageSuccessAction>(uploadUserImageSuccessReducer).call,
-  TypedReducer<UserEntityState,UploadUserImageFailedAction>(uploadUserImageFailedReducer).call,
-  TypedReducer<UserEntityState,RemoveUserImageSuccessAction>(remvoeUserImageReducer).call,
-  TypedReducer<UserEntityState,ChangeUserImageRateAction>(changeUserImageRateReducer).call,
+  // TypedReducer<EntityState<num,UserState>,UploadUserImageAction>(uploadUserImageReducer).call,
+  // TypedReducer<EntityState<num,UserState>,UploadUserImageSuccessAction>(uploadUserImageSuccessReducer).call,
+  // TypedReducer<EntityState<num,UserState>,UploadUserImageFailedAction>(uploadUserImageFailedReducer).call,
+  // TypedReducer<EntityState<num,UserState>,RemoveUserImageSuccessAction>(remvoeUserImageReducer).call,
+  // TypedReducer<EntityState<num,UserState>,ChangeUserImageRateAction>(changeUserImageRateReducer).call,
 ]);

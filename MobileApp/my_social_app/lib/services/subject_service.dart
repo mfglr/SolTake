@@ -11,13 +11,13 @@ class SubjectService{
   static final SubjectService _singleton = SubjectService._(AppClient());
   factory SubjectService() => _singleton;
 
-  Future<List<Subject>> getByExamId(int examId, Page page)
+  Future<List<Subject>> getByExamId(num examId, Page page)
     => _appClient
       .get(_appClient.generatePaginationUrl("$subjectController/$getSubjectsByExamIdEndPoint/$examId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Subject.fromJson(e)).toList());
 
-  Future<Subject> getSubjectById(int subjectId)
+  Future<Subject> getSubjectById(num subjectId)
     => _appClient
       .get("$subjectController/$getSubjectByIdEndpoint/$subjectId")
       .then((json) => Subject.fromJson(json));

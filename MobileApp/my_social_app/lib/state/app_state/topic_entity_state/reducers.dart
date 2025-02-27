@@ -1,38 +1,39 @@
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/topic_entity_state.dart';
+import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-TopicEntityState nextQuestionsReducer(TopicEntityState prev,NextTopicQuestionsAction action)
-  => prev.startLoadingNextQuestions(action.topicId);
-TopicEntityState nextQuestionsSuccessReducer(TopicEntityState prev,NextTopicQuestionsSuccessAction action)
-  => prev.addNextQuestions(action.topicId, action.questionIds);
-TopicEntityState nextQuestionsFailedReducer(TopicEntityState prev,NextTopicQuestionFailedAction action)
-  => prev.stopLoadingNextQuestions(action.topicId);
+EntityState<num,TopicState> nextQuestionsReducer(EntityState<num,TopicState> prev,NextTopicQuestionsAction action)
+  => prev.updateOne(prev.getValue(action.topicId)!.startLoadingNextQuestions());
+EntityState<num,TopicState> nextQuestionsSuccessReducer(EntityState<num,TopicState> prev,NextTopicQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.topicId)!.addNextQuestions(action.questionIds));
+EntityState<num,TopicState> nextQuestionsFailedReducer(EntityState<num,TopicState> prev,NextTopicQuestionFailedAction action)
+  => prev.updateOne(prev.getValue(action.topicId)!.stopLoadingNextQuestions());
 
-TopicEntityState prevQuestionsReducer(TopicEntityState prev,PrevTopicQuestionsAction action)
-  => prev.startLoadingPrevQuestions(action.topicId);
-TopicEntityState prevQuestionsSuccessReducer(TopicEntityState prev,PrevTopicQuestionsSuccessAction action)
-  => prev.addPrevPageQuestions(action.topicId,action.questionIds);
-TopicEntityState prevQuestionsFailedReducer(TopicEntityState prev,PrevTopicQuestionsFailedAction action)
-  => prev.stopLoadingPrevQuestions(action.topicId);
+EntityState<num,TopicState> prevQuestionsReducer(EntityState<num,TopicState> prev,PrevTopicQuestionsAction action)
+  => prev.updateOne(prev.getValue(action.topicId)!.startLoadingPrevQuestions());
+EntityState<num,TopicState> prevQuestionsSuccessReducer(EntityState<num,TopicState> prev,PrevTopicQuestionsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.topicId)!.addPrevQuestions(action.questionIds));
+EntityState<num,TopicState> prevQuestionsFailedReducer(EntityState<num,TopicState> prev,PrevTopicQuestionsFailedAction action)
+  => prev.updateOne(prev.getValue(action.topicId)!.stopLoadingPrevQuestions());
 
-TopicEntityState addTopicReducer(TopicEntityState prev,AddTopicAction action)
-  => prev.addTopic(action.topic);
-TopicEntityState addTopicsReducer(TopicEntityState prev,AddTopicsAction action)
-  => prev.addTopics(action.topics);
-TopicEntityState addTopicsListsReducer(TopicEntityState prev,AddTopicsListAction action)
-  => prev.addLists(action.lists);
+EntityState<num,TopicState> addTopicReducer(EntityState<num,TopicState> prev,AddTopicAction action)
+  => prev.appendOne(action.topic);
+EntityState<num,TopicState> addTopicsReducer(EntityState<num,TopicState> prev,AddTopicsAction action)
+  => prev.appendMany(action.topics);
+EntityState<num,TopicState> addTopicsListsReducer(EntityState<num,TopicState> prev,AddTopicsListAction action)
+  => prev.appendList(action.lists);
 
-Reducer<TopicEntityState> topicEntityStateReducers = combineReducers<TopicEntityState>([
-  TypedReducer<TopicEntityState,NextTopicQuestionsAction>(nextQuestionsReducer).call,
-  TypedReducer<TopicEntityState,NextTopicQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
-  TypedReducer<TopicEntityState,NextTopicQuestionFailedAction>(nextQuestionsFailedReducer).call,
+Reducer<EntityState<num,TopicState>> topicEntityStateReducers = combineReducers<EntityState<num,TopicState>>([
+  TypedReducer<EntityState<num,TopicState>,NextTopicQuestionsAction>(nextQuestionsReducer).call,
+  TypedReducer<EntityState<num,TopicState>,NextTopicQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<num,TopicState>,NextTopicQuestionFailedAction>(nextQuestionsFailedReducer).call,
 
-  TypedReducer<TopicEntityState,PrevTopicQuestionsAction>(prevQuestionsReducer).call,
-  TypedReducer<TopicEntityState,PrevTopicQuestionsSuccessAction>(prevQuestionsSuccessReducer).call,
-  TypedReducer<TopicEntityState,PrevTopicQuestionsFailedAction>(prevQuestionsFailedReducer).call,
+  TypedReducer<EntityState<num,TopicState>,PrevTopicQuestionsAction>(prevQuestionsReducer).call,
+  TypedReducer<EntityState<num,TopicState>,PrevTopicQuestionsSuccessAction>(prevQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<num,TopicState>,PrevTopicQuestionsFailedAction>(prevQuestionsFailedReducer).call,
 
-  TypedReducer<TopicEntityState,AddTopicAction>(addTopicReducer).call,
-  TypedReducer<TopicEntityState,AddTopicsAction>(addTopicsReducer).call,
-  TypedReducer<TopicEntityState,AddTopicsListAction>(addTopicsListsReducer).call,
+  TypedReducer<EntityState<num,TopicState>,AddTopicAction>(addTopicReducer).call,
+  TypedReducer<EntityState<num,TopicState>,AddTopicsAction>(addTopicsReducer).call,
+  TypedReducer<EntityState<num,TopicState>,AddTopicsListAction>(addTopicsListsReducer).call,
 ]);

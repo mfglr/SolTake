@@ -12,7 +12,7 @@ import 'package:my_social_app/views/shared/loading_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySavedQuestionsPage extends StatelessWidget {
-  final int questionId;
+  final num questionId;
   const DisplaySavedQuestionsPage({
     super.key,
     required this.questionId
@@ -34,7 +34,8 @@ class DisplaySavedQuestionsPage extends StatelessWidget {
           if(user == null) return const LoadingWidget();
           return StoreConnector<AppState,Iterable<QuestionState>>(
             onInit: (store) => getNextPageIfNoPage(store,user.savedQuestions,NextUserSavedQuestionsAction(userId: user.id)),
-            converter: (store) => store.state.selectUserSavedQuestions(user.id),
+            converter: (store) => // store.state.selectUserSavedQuestions(user.id),
+              [],
             builder: (context,questions) => QuestionItemsWidget(
               questions: questions,
               pagination: user.savedQuestions,

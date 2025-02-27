@@ -100,7 +100,7 @@ class NotificationHub{
       store.dispatch(AddNewQuestionCommentAction(questionId: comment.questionId!, commentId: comment.id));
       store.dispatch(AddCommentAction(comment: comment));
 
-      showNotification(context, notification.id);
+      showNotification(context, notification.id.toInt());
     }
   );
   //SolutionCommentCreatedNotification
@@ -117,7 +117,7 @@ class NotificationHub{
       store.dispatch(AddNewSolutionCommentAction(solutionId: comment.solutionId!, commentId: comment.id));
       store.dispatch(AddCommentAction(comment: comment));
 
-      showNotification(context, notification.id);
+      showNotification(context, notification.id.toInt());
     }
   );
   //CommentRepliedNotification
@@ -134,7 +134,7 @@ class NotificationHub{
       store.dispatch(AddNewCommentReplyAction(commentId: comment.parentId!,replyId: comment.id));
       store.dispatch(AddCommentAction(comment: comment));
 
-      showNotification(context, notification.id);
+      showNotification(context, notification.id.toInt());
     }
   );
   //QuestionLikedNotification
@@ -148,9 +148,9 @@ class NotificationHub{
       final like = QuestionUserLike.fromJson(list[1] as dynamic);
 
       store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, questionUserLike: like.toQuestionUserLikeState()));
+      store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, like: like.toQuestionUserLikeState()));
 
-      showNotification(context, notification.id);
+      showNotification(context, notification.id.toInt());
     }
   );
   //CommentLikedNotification
@@ -168,7 +168,7 @@ class NotificationHub{
       store.dispatch(AddUserAction(user: like.user!.toUserState()));
       store.dispatch(AddNewCommentLikeAction(commentId: notification.commentId!, likeId:like.id));
 
-      showNotification(context, notification.id);
+      showNotification(context, notification.id.toInt());
     }
   );
   //SolutionCreatedNotification
@@ -184,7 +184,7 @@ class NotificationHub{
       store.dispatch(PrependNotificationAction(notification: notification));
       store.dispatch(AddNewQuestionSolutionAction(questionId: solution.questionId, solutionId: solution.id));
       store.dispatch(AddSolutionAction(solution: solution));
-      showNotification(context, notification.id);
+      showNotification(context, notification.id.toInt());
     }
   );
   //UserFollowedNotification
@@ -203,7 +203,7 @@ class NotificationHub{
       store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
       store.dispatch(AddUserAction(user: follow.follower!.toUserState()));
 
-      showNotification(context, notification.id);
+      showNotification(context, notification.id.toInt());
     }
   );
   //SolutionMarkAsIncorrectNotification
@@ -220,7 +220,7 @@ class NotificationHub{
         store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: notification.solutionId!));
         store.dispatch(MarkQuestionSolutionAsIncorrectAction(questionId:notification.questionId!,solutionId:notification.solutionId!));
 
-        showNotification(context, notification.id);
+        showNotification(context, notification.id.toInt());
       }
     );
   //SolutionMarkAsCorrectNotification
@@ -238,7 +238,7 @@ class NotificationHub{
         store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: notification.questionId!,solutionId: notification.solutionId!));
         store.dispatch(MarkUserQuestionAsSolvedAction(userId: notification.userId, questionId: notification.questionId!));
 
-        showNotification(context, notification.id);
+        showNotification(context, notification.id.toInt());
       }
     );
   //getQuestionSolvedNotification
@@ -252,7 +252,7 @@ class NotificationHub{
         final notification = notificationModel.Notification.fromJson((list[0] as dynamic)).toNotificationState();
         store.dispatch(PrependNotificationAction(notification: notification));
 
-        showNotification(context, notification.id);
+        showNotification(context, notification.id.toInt());
       }
     );
   //SolutionWasUpvotedNotification
@@ -272,7 +272,7 @@ class NotificationHub{
         store.dispatch(AddNewSolutionUpvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
         store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
 
-        showNotification(context, notification.id);
+        showNotification(context, notification.id.toInt());
       }
     );
   //SolutionWasDownvotedNotification
@@ -292,7 +292,7 @@ class NotificationHub{
         store.dispatch(AddNewSolutionDownvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
         store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
 
-        showNotification(context, notification.id);
+        showNotification(context, notification.id.toInt());
       }
     );
   //UserTagInCommentNotification
@@ -318,7 +318,7 @@ class NotificationHub{
           store.dispatch(AddNewCommentReplyAction(commentId: comment.parentId!,replyId: comment.id));
         }
         
-        showNotification(context, notification.id);
+        showNotification(context, notification.id.toInt());
       }
     );
   }
