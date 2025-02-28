@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 
-extension MapExtentions<K extends Comparable<K>,V extends BaseEntity<K>> on Map<K,V>{
+extension MapExtentions<K extends Comparable,V extends BaseEntity<K>> on Map<K,V>{
   Map<K,V> prependOne(V value) =>
     { for (var e in [value, ...values]) e.id : e };
   Map<K,V> appendOne(V value) => 

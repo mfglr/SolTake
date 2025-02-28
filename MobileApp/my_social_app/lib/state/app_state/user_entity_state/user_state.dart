@@ -9,7 +9,7 @@ import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class UserState extends BaseEntity<num> implements Avatar{
+class UserState extends BaseEntity<int> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String userName;

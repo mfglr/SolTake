@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
-class UserSearchState extends BaseEntity<num>{
+class UserSearchState extends BaseEntity<int>{
   final int searcherId;
   final int searchedId;
   final DateTime createdAt;

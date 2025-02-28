@@ -4,7 +4,7 @@ import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class SubjectState extends BaseEntity<num>{
+class SubjectState extends BaseEntity<int>{
   final String name;
   final Pagination<num,Id<num>> topics;
   final Pagination<num,Id<num>> questions;

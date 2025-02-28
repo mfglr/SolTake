@@ -3,7 +3,7 @@ import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/page.dart' as pagination;
 
 @immutable
-class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
+class Pagination<K extends Comparable,V extends BaseEntity<K>>{
   final bool isLast;
   final bool loadingNext;
   final bool loadingPrev;

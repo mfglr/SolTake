@@ -5,7 +5,7 @@ import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
-class SolutionState extends BaseEntity<num> implements Avatar{
+class SolutionState extends BaseEntity<int> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int questionId;

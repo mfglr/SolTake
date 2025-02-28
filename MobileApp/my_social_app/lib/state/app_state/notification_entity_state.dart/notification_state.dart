@@ -4,7 +4,7 @@ import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
-class NotificationState extends BaseEntity<num> implements Avatar{
+class NotificationState extends BaseEntity<int> implements Avatar{
   final int ownerId;
   final int userId;
   final String userName;

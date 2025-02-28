@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_stata
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
-class MessageState extends BaseEntity<num> implements Avatar{
+class MessageState extends BaseEntity<int> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final bool isOwner;

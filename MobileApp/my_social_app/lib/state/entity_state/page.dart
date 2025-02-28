@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 @immutable
-class Page<K extends Comparable<K>>{
+class Page<K extends Comparable>{
   final K? offset;
   final int take;
   final bool isDescending;

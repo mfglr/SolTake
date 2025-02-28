@@ -11,7 +11,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
 @immutable
-class QuestionState extends BaseEntity<num> implements Avatar{
+class QuestionState extends BaseEntity<int> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int state;
