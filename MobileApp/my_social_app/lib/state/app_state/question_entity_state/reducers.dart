@@ -9,7 +9,7 @@ EntityState<num,QuestionState> addQuestionReducer(EntityState<num,QuestionState>
 EntityState<num,QuestionState> addQuestionsReducer(EntityState<num,QuestionState> prev,AddQuestionsAction action)
   => prev.appendMany(action.questions);
 EntityState<num,QuestionState> removeQuestionReducer(EntityState<num,QuestionState> prev,DeleteQuestionSuccessAction action)
-  => prev.where((e) => e.id == action.questionId);
+  => prev.removeOne(action.questionId);
 
 //likes
 EntityState<num,QuestionState> likeQuestionSuccessReducer(EntityState<num,QuestionState> prev, LikeQuestionSuccessAction action)

@@ -150,7 +150,7 @@ class _UserPageState extends State<UserPage> {
       },
       converter: (store){
         if(widget.userId != null){
-          return store.state.userEntityState.getValue(widget.userId);
+          return store.state.userEntityState.getValue(widget.userId!);
         }
         return store.state.userEntityState.getList((e) => e.userName == widget.userName).firstOrNull;
       },

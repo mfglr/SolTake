@@ -123,7 +123,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
         if(widget.parentId != null){
           return StoreConnector<AppState,CommentState?>(
             onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
-            converter: (store) => store.state.commentEntityState.getValue(widget.parentId),
+            converter: (store) => widget.parentId != null ? store.state.commentEntityState.getValue(widget.parentId!) : null,
             builder: (context,parent){
               
               if(parent == null){

@@ -17,8 +17,7 @@ void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
+        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
       })
       .catchError((e){
         store.dispatch(const NextHomeQuestionsFailedAction());
@@ -37,8 +36,7 @@ void getPrevPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
+        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
       })
       .catchError((e){
         store.dispatch(const PrevHomeQuestionsFailedAction());

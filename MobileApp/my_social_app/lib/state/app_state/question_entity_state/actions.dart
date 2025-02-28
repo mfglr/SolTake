@@ -23,6 +23,16 @@ class CreateQuestionAction extends AppAction{
     required this.medias
   });
 }
+@immutable
+class DeleteQuestionAction extends AppAction{
+  final num questionId;
+  const DeleteQuestionAction({required this.questionId});
+}
+@immutable
+class DeleteQuestionSuccessAction extends AppAction{
+  final num questionId;
+  const DeleteQuestionSuccessAction({required this.questionId});
+}
 
 @immutable
 class LoadQuestionAction extends AppAction{
@@ -39,16 +49,7 @@ class AddQuestionsAction extends AppAction{
   final Iterable<QuestionState> questions;
   const AddQuestionsAction({required this.questions});
 }
-@immutable
-class DeleteQuestionAction extends AppAction{
-  final num questionId;
-  const DeleteQuestionAction({required this.questionId});
-}
-@immutable
-class DeleteQuestionSuccessAction extends AppAction{
-  final num questionId;
-  const DeleteQuestionSuccessAction({required this.questionId});
-}
+
 
 @immutable
 class DislikeQuestionAction extends AppAction{

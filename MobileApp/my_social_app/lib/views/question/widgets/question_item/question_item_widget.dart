@@ -146,7 +146,7 @@ class QuestionItemWidget extends StatelessWidget {
                 ),
                 if(question.topicId != null)
                   StoreConnector<AppState,TopicState>(
-                    converter: (store) => store.state.topicEntityState.getValue(question.topicId)!,
+                    converter: (store) => store.state.topicEntityState.getValue(question.topicId!)!,
                     builder: (context,topic) => TopicTagItem(topic: topic),
                   ),
               ]

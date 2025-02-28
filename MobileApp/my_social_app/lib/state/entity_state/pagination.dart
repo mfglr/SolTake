@@ -23,7 +23,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
   });
 
   factory Pagination.init(int recordsPerPage,bool isDescending)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: false,
         loadingNext: false,
         loadingPrev: false,
@@ -33,14 +33,14 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
       );
   
   pagination.Page<K> get prev => 
-    pagination.Page(
+    pagination.Page<K>(
       offset: values.firstOrNull?.id,
       take: recordsPerPage,
       isDescending: !isDescending
     );
 
   pagination.Page<K> get next =>
-    pagination.Page(
+    pagination.Page<K>(
       offset: values.lastOrNull?.id,
       take: recordsPerPage,
       isDescending: isDescending
@@ -56,7 +56,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
   Iterable<V> merge(V value) => [value, ...values.where((e) => e.id.compareTo(value.id) != 0)];
 
   Pagination<K,V> prependMany(Iterable<V> values)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -65,7 +65,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         values: [...values, ...this.values]
       );
   Pagination<K,V> appendMany(Iterable<V> values)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -74,7 +74,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         values: [...this.values,...values]
       );
   Pagination<K,V> updateMany(Iterable<V> values)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -83,7 +83,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         values: this.values.map((e) => values.where(((value) => e.id.compareTo(value.id) == 0)).firstOrNull ?? e)
       );
   Pagination<K,V> removeMany(Iterable<K> ids)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -93,7 +93,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
       );
 
   Pagination<K,V> startLoadingNext()
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: true,
         loadingPrev: loadingPrev,
@@ -102,7 +102,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         values: values,
       );
   Pagination<K,V> stopLoadingNext()
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: false,
         loadingPrev: loadingPrev,
@@ -111,7 +111,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         values: values,
       );
   Pagination<K,V> addNextPage(Iterable<V> values)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: values.length < recordsPerPage,
         loadingNext: false,
         loadingPrev: loadingPrev,
@@ -121,7 +121,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
       );
       
   Pagination<K,V> startLoadingPrev()
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: true,
@@ -130,7 +130,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   Pagination<K,V> stopLoadingPrev()
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: false,
@@ -139,7 +139,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   Pagination<K,V> addPrevPage(Iterable<V> values)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: false,
@@ -149,7 +149,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
       );
   
   Pagination<K,V> prependOne(V value)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -158,7 +158,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   Pagination<K,V> appendOne(V value)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -167,7 +167,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   Pagination<K,V> updateOne(V value)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -176,7 +176,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         values: values.map((e) => e.id.compareTo(value.id) == 0 ? value : e)
       );
   Pagination<K,V> removeOne(K key)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -186,7 +186,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
       );
 
   Pagination<K,V> prependOneAndRemovePrev(V value)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -195,7 +195,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   Pagination<K,V> prependOneAndRemoveOne(V addedOne,K removedOne)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: isLast,
         loadingNext: loadingNext,
         loadingPrev: loadingPrev,
@@ -204,7 +204,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         values: [addedOne, ...values.where((e) => e.id != removedOne)],
       );
   Pagination<K,V> addfirstPage(Iterable<V> values)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: values.length < recordsPerPage,
         loadingNext: false,
         loadingPrev: loadingPrev,
@@ -213,7 +213,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   Pagination<K,V> appendLastPage(Iterable<V> values)
-    => Pagination(
+    => Pagination<K,V>(
         isLast: true,
         loadingNext: false,
         loadingPrev: loadingPrev,
@@ -237,7 +237,7 @@ class Pagination<K extends Comparable<K>,V extends BaseEntity<K>>{
     );
   }
   Pagination<K,V> where(bool Function(V) test) =>
-    Pagination(
+    Pagination<K,V>(
       isLast: isLast,
       loadingNext: loadingNext,
       loadingPrev: loadingPrev,

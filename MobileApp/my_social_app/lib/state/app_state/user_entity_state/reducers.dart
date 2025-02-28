@@ -128,10 +128,10 @@ EntityState<num,UserState> nextFollowedsFailedReducer(EntityState<num,UserState>
 // EntityState<num,UserState> removeConversationReducer(EntityState<num,UserState> prev, RemoveUserConversationAction action)
 //   => prev.removeConversation(action.userId, action.id);
 
-// EntityState<num,UserState> loadUserReducer(EntityState<num,UserState> prev,AddUserAction action)
-//   => prev.addUser(action.user);
-// EntityState<num,UserState> addUsersReducer(EntityState<num,UserState> prev,AddUsersAction action)
-//   => prev.addUsers(action.users);
+EntityState<num,UserState> addUserReducer(EntityState<num,UserState> prev,AddUserAction action)
+  => prev.appendOne(action.user);
+EntityState<num,UserState> addUsersReducer(EntityState<num,UserState> prev,AddUsersAction action)
+  => prev.appendMany(action.users);
 
 // EntityState<num,UserState> updateUserNameReducer(EntityState<num,UserState> prev,UpdateUserNameSuccessAction action)
 //   => prev.updateUserName(action.userId, action.userName);
@@ -230,8 +230,8 @@ Reducer<EntityState<num,UserState>> userEntityStateReducers = combineReducers<En
   // TypedReducer<EntityState<num,UserState>,AddUserConversationInOrderAction>(addConversationInOrderReducer).call,
   // TypedReducer<EntityState<num,UserState>,RemoveUserConversationAction>(removeConversationReducer).call,
 
-  // TypedReducer<EntityState<num,UserState>,AddUserAction>(loadUserReducer).call,
-  // TypedReducer<EntityState<num,UserState>,AddUsersAction>(addUsersReducer).call,
+  TypedReducer<EntityState<num,UserState>,AddUserAction>(addUserReducer).call,
+  TypedReducer<EntityState<num,UserState>,AddUsersAction>(addUsersReducer).call,
 
   // TypedReducer<EntityState<num,UserState>,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
   // TypedReducer<EntityState<num,UserState>,UpdateNameSuccessAction>(updateNameReducer).call,
