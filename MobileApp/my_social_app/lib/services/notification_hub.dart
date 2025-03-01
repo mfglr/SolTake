@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/models/follower.dart';
 import 'package:my_social_app/notifications/app_notifications.dart';
 import 'package:my_social_app/constants/notification_functions.dart';
 import 'package:my_social_app/models/comment.dart';
@@ -12,7 +13,6 @@ import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
-import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
@@ -194,13 +194,11 @@ class NotificationHub{
       final store = StoreProvider.of<AppState>(context,listen: false);
 
       final notification = notificationModel.Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      final follow = Follow.fromJson(list[1] as dynamic);
-      final followState = follow.toFollowState();
+      final follower = Follower.fromJson(list[1] as dynamic);
+      final followerState = follower.toFollowerState();
 
       store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddFollowAction(follow: followState));
-      store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
-      store.dispatch(AddUserAction(user: follow.follower!.toUserState()));
+      // store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));
 
       showNotification(context, notification.id.toInt());
     }

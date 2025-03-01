@@ -14,6 +14,8 @@ Followed _$FollowedFromJson(Map<String, dynamic> json) => Followed(
       image: json['image'] == null
           ? null
           : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
+      isFollower: json['isFollower'] as bool,
+      isFollowed: json['isFollowed'] as bool,
     );
 
 Map<String, dynamic> _$FollowedToJson(Followed instance) => <String, dynamic>{
@@ -22,4 +24,6 @@ Map<String, dynamic> _$FollowedToJson(Followed instance) => <String, dynamic>{
       'userName': instance.userName,
       'name': instance.name,
       'image': instance.image,
+      'isFollower': instance.isFollower,
+      'isFollowed': instance.isFollowed,
     };

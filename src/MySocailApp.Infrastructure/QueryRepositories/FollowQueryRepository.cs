@@ -13,27 +13,27 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         private readonly AppDbContext _context = context;
 
 
-        public Task<FollowerResponseDto?> GetFollowerAsync(int followId, CancellationToken cancellationToken)
+        public Task<FollowerResponseDto?> GetFollowerAsync(int followId, int accountId, CancellationToken cancellationToken)
             => _context.Follows
                 .AsNoTracking()
                 .Where(x => x.Id == followId)
-                .ToFollowerResponseDto(_context)
+                .ToFollowerResponseDto(_context,accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<List<FollowerResponseDto>> GetFollowersByUserIdAsync(int userId, IPage page, CancellationToken cancellationToken)
+        public Task<List<FollowerResponseDto>> GetFollowersByUserIdAsync(int userId, IPage page, int accountId, CancellationToken cancellationToken)
             => _context.Follows
                 .AsNoTracking()
                 .Where(x => x.FollowedId == userId)
                 .ToPage(page)
-                .ToFollowerResponseDto(_context)
+                .ToFollowerResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<FollowedResponseDto>> GetFollowedsByUserIdAsync(int userId, IPage page, CancellationToken cancellationToken)
+        public Task<List<FollowedResponseDto>> GetFollowedsByUserIdAsync(int userId, IPage page, int accountId, CancellationToken cancellationToken)
            => _context.Follows
                 .AsNoTracking()
                 .Where(x => x.FollowerId == userId)
                 .ToPage(page)
-                .ToFollowedResponseDto(_context)
+                .ToFollowedResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
         

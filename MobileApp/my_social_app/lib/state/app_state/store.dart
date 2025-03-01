@@ -56,7 +56,6 @@ final store = Store(
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
     userSearchEntityState: EntityState(),
-    followEntityState: EntityState(),
     solutionUserVoteEntityState: EntityState(),
     solutionUserSaveEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
@@ -108,10 +107,6 @@ final store = Store(
     nextUserSavedQuestionsMiddleware,
     nextUserSavedSolutionsMiddleware,
     nextUserConvesationsMiddleware,
-
-    getNextPageUserNotFollowedsIfNoPageMiddleware,
-    getNextPageUserNotFollowedsIfReadyMiddleware,
-    getNextPageUserNotFollowedsMiddleware,
 
     updateUserNameMiddleware,
     updateNameMiddleware,

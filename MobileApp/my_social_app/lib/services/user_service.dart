@@ -179,14 +179,6 @@ class UserService{
   Future<Uint8List> getImageById(int id) => 
     _appClient
       .getBytes("$userController/$gerUserImageByIdEndPoint/$id");
-  
-  
-
-  Future<Iterable<User>> getNotFolloweds(num id, Page page) =>
-   _appClient
-    .get(_appClient.generatePaginationUrl("$userController/$getNotFollowedsEndpoint/$id", page))
-    .then((json) => json as List)
-    .then((list) => list.map((item) => User.fromJson(item)));
 
   Future<Iterable<User>> search(String key, Page page) =>
     _appClient

@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_state.dart';
-import 'package:my_social_app/state/app_state/follow_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
@@ -42,7 +41,6 @@ class AppState{
   final String? accessToken;
   final LoginState? loginState;
   final EntityState<num,UserState> userEntityState;
-  final EntityState<num,FollowState> followEntityState;
   final SearchState searchState;
   final EntityState<num,TopicState> topicEntityState;
   final EntityState<num,SolutionState> solutionEntityState;
@@ -81,7 +79,6 @@ class AppState{
     required this.notifications,
     required this.messageEntityState,
     required this.userSearchEntityState,
-    required this.followEntityState,
     required this.policyState,
     required this.videoQuestions,
     required this.uploadEntityState
@@ -93,7 +90,6 @@ class AppState{
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
-    followEntityState: EntityState(),
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     loginState: null,
@@ -147,21 +143,9 @@ class AppState{
   Iterable<UserState> get searchedUsers 
     => searchState.users.values
         .map((e) => userEntityState.getValue(e.id)!);
-  Iterable<UserState> selectNotFolloweds(num userId)
-    => userEntityState
-        .getValue(userId)!.notFolloweds.values
-        .map((e) => userEntityState.getValue(e.id)!);
   Iterable<UserState> get selectSearchedUsers
     => searchState.searchedUsers.values
         .map((e) => userEntityState.getValue(userSearchEntityState.getValue(e.id)!.searchedId)!);
-  Iterable<UserState> selectFollowers(num userId)
-    => userEntityState
-        .getValue(userId)!.followers.values
-        .map((e) => userEntityState.getValue(followEntityState.getValue(e.id)!.followerId)!);
-  Iterable<UserState> selectFolloweds(num userId)
-    => userEntityState
-        .getValue(userId)!.followeds.values
-        .map((e) => userEntityState.getValue(followEntityState.getValue(e.id)!.followedId)!);
   Iterable<UserState> selectCommentLikes(num commentId)
     => commentEntityState
         .getValue(commentId)!.likes.values

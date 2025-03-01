@@ -9,19 +9,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
         public static IQueryable<UserResponseDto> ToUserResponseDto(this IQueryable<User> query, AppDbContext context, int accountId)
             => query
                 .Select(
-                    x => new UserResponseDto(
-                        x.Id,
-                        x.CreatedAt,
-                        x.UpdatedAt,
-                        x.UserName.Value,
-                        x.Name,
-                        x.Biography.Value,
-                        context.Questions.Count(x => x.UserId == x.Id),
-                        context.Follows.Count(x => x.FollowedId == x.Id),
-                        context.Follows.Count(x => x.FollowerId == x.Id),
-                        context.Follows.Any(x => x.FollowerId == x.Id && x.FollowedId == accountId),
-                        context.Follows.Any(x => x.FollowerId == accountId && x.FollowedId == x.Id),
-                        x.Image
+                    user => new UserResponseDto(
+                        user.Id,
+                        user.CreatedAt,
+                        user.UpdatedAt,
+                        user.UserName.Value,
+                        user.Name,
+                        user.Biography.Value,
+                        context.Questions.Count(question => question.UserId == user.Id),
+                        context.Follows.Count(follow => follow.FollowedId == user.Id),
+                        context.Follows.Count(follow => follow.FollowerId == user.Id),
+                        context.Follows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == accountId),
+                        context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id),
+                        user.Image
                     )
                 );
     }

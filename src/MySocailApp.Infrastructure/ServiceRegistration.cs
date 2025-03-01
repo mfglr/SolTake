@@ -116,7 +116,7 @@ namespace MySocailApp.Infrastructure
         }
         private static IServiceCollection AddQueryRepositories(this IServiceCollection services)
             => services
-                .AddScoped<IUserQueryRepository, AppUserQueryRepository>()
+                .AddScoped<IUserQueryRepository, UserQueryRepository>()
                 .AddScoped<ICommentUserLikeQueryRepository, CommentUserLikeQueryRepository>()
                 .AddScoped<IFollowQueryRepository, FollowQueryRepository>()
                 .AddScoped<IUserSearchQueryRepository, UserSearchQueryRepository>()

@@ -7,7 +7,7 @@ import 'package:my_social_app/state/entity_state/base_entity.dart';
 class QuestionUserLikeState extends BaseEntity<num> implements Avatar{
   final DateTime createdAt;
   final num questionId;
-  final num userId;
+  final int userId;
   final String? name;
   final String userName;
   final Multimedia? image;
@@ -15,7 +15,7 @@ class QuestionUserLikeState extends BaseEntity<num> implements Avatar{
   @override 
   Multimedia? get avatar => image;
   @override
-  num get avatarId => userId;
+  int get avatarId => userId;
 
   QuestionUserLikeState({
     required super.id,

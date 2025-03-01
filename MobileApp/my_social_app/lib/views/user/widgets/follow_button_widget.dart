@@ -13,12 +13,11 @@ class FollowButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: () {
+        final store = StoreProvider.of<AppState>(context,listen: false);
         if(user.isFollowed){
-          final store = StoreProvider.of<AppState>(context,listen: false);
           store.dispatch(UnfollowUserAction(followedId: user.id));
         }
         else{
-          final store = StoreProvider.of<AppState>(context,listen: false);
           store.dispatch(FollowUserAction(followedId: user.id));
         }
       },

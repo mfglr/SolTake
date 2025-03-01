@@ -6,7 +6,6 @@ import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/follow_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
@@ -39,41 +38,39 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
   }
   next(action);
 }
+
 void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FollowUserAction){
-    final accountId = store.state.loginState!.id;
     FollowService()
       .follow(action.followedId)
-      .then((follow){
-        store.dispatch(FollowUserSuccessAction(currentUserId: accountId, followedId: action.followedId, followId: follow.id));
+      .then((response){
+        store.dispatch(FollowUserSuccessAction(
+          currentUserId: store.state.loginState!.id,
+          followedId: action.followedId,
+          followId: response.id
+        ));
       });
   }
   next(action);
 }
+
+
 void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UnfollowUserAction){
-    final accountId = store.state.loginState!.id;
     FollowService()
       .unfollow(action.followedId)
-      .then((_){
-        final followId = store.state.followEntityState.get((e) => e.followerId == accountId && e.followedId == action.followedId)?.id ?? 0;
-        store.dispatch(RemoveFollowAction(followId: followId));
-        store.dispatch(UnfollowUserSuccessAction(currentUserId: accountId, followedId: action.followedId, followId: followId));
-      });
+      .then((_) => store.dispatch(UnfollowUserSuccessAction(
+        currentUserId: store.state.loginState!.id,
+        followedId: action.followedId
+      )));
   }
   next(action);
 }
 void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveFollowerAction){
-    // final followerId = action.followerId;
-    // final currentUserId = store.state.loginState!.id;
-    // UserService()
-    //   .removeFollower(action.followerId)
-    //   .then((_){
-        // final followId = store.state.followEntityState.select(followerId, currentUserId)?.id ?? 0;
-        // store.dispatch(RemoveFollowAction(followId: followId));
-        // store.dispatch(RemoveFollowerSuccessAction(currentUserId: currentUserId,followerId: followerId,followId: followId));
-    //   });
+    FollowService()
+      .removeFollower(action.followerId)
+      .then((_) => store.dispatch(RemoveFollowerSuccessAction(currentUserId: store.state.loginState!.id,followerId: action.followerId)));
   }
   next(action);
 }
@@ -267,39 +264,6 @@ void nextUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher 
       .catchError((e){
         store.dispatch(NextUserConversationsFailedAction(userId: action.userId));
         throw e;
-      });
-  }
-  next(action);
-}
-
-//not followeds
-void getNextPageUserNotFollowedsIfNoPageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserNotFollowedsIfNoPageAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.notFolloweds;
-    if(pagination.isReadyForNextPage && !pagination.hasAtLeastOnePage){
-      store.dispatch(GetNextPageUserNotFollowedsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserNotFollowedsIfReadyMiddleware(Store<AppState> store,action, NextDispatcher next){
-  if(action is GetNextPageUserNotFollowedsIfReadyAction){
-    final accountId = store.state.loginState!.id;
-    final pagination = store.state.userEntityState.getValue(accountId)!.notFolloweds;
-    if(pagination.isReadyForNextPage){
-      store.dispatch(GetNextPageUserNotFollowedsAction(userId: action.userId));
-    }
-  }
-  next(action);
-}
-void getNextPageUserNotFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is GetNextPageUserNotFollowedsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.notFolloweds;
-    UserService()
-      .getNotFolloweds(action.userId, pagination.next)
-      .then((users){
-        store.dispatch(AddNextPageUserNotFollowedsAction(userId: action.userId,userIds: users.map((e) => e.id)));
-        store.dispatch(AddUsersAction(users: users.map((user) => user.toUserState())));
       });
   }
   next(action);

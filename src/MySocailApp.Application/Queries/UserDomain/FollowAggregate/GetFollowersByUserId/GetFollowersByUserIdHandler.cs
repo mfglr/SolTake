@@ -1,14 +1,16 @@
 ﻿using MediatR;
+using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.Queries.UserDomain.FollowAggregate;
 using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.UserDomain.UserAggregate.GetFollowersByUserId
 {
-    public class GetFollowersByUserIdHandler(IFollowQueryRepository repository) : IRequestHandler<GetFollowersByUserIdDto, List<FollowerResponseDto>>
+    public class GetFollowersByUserIdHandler(IFollowQueryRepository repository, IUserAccessor userAccessor) : IRequestHandler<GetFollowersByUserIdDto, List<FollowerResponseDto>>
     {
         private readonly IFollowQueryRepository _repository = repository;
+        private readonly IUserAccessor _userAccessor = userAccessor;
 
         public Task<List<FollowerResponseDto>> Handle(GetFollowersByUserIdDto request, CancellationToken cancellationToken)
-            => _repository.GetFollowersByUserIdAsync(request.UserId, request, cancellationToken);
+            => _repository.GetFollowersByUserIdAsync(request.UserId, request, _userAccessor.User.Id, cancellationToken);
     }
 }

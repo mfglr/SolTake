@@ -1,7 +1,110 @@
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
+
+
+EntityState<num,UserState> addUserReducer(EntityState<num,UserState> prev,AddUserAction action)
+  => prev.appendOne(action.user);
+EntityState<num,UserState> addUsersReducer(EntityState<num,UserState> prev,AddUsersAction action)
+  => prev.appendMany(action.users);
+
+
+//following ************************************* following//
+
+//followers
+EntityState<num,UserState> nextFollowersReducer(EntityState<num,UserState> prev,NextUserFollowersAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextFollowers());
+EntityState<num,UserState> nextFollowersSuccessReducer(EntityState<num,UserState> prev,NextUserFollowersSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextFollowers(action.followers));
+EntityState<num,UserState> nextFollowersFailedReducer(EntityState<num,UserState> prev,NextUserFollowersFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextFollowers());
+
+//followeds
+EntityState<num,UserState> nextFollowedsReducer(EntityState<num,UserState> prev,NextUserFollowedsAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextFolloweds());
+EntityState<num,UserState> nextFollowedsSuccessReducer(EntityState<num,UserState> prev,NextUserFollowedsSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.addNextFolloweds(action.followeds));
+EntityState<num,UserState> nextFollowedsFailedReducer(EntityState<num,UserState> prev,NextuserFollowedsFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextFolloweds());
+
+EntityState<num,UserState> followUserSuccessReducer(EntityState<num,UserState> prev, FollowUserSuccessAction action){
+  var follower = prev.getValue(action.currentUserId)!;
+  var followed = prev.getValue(action.followedId)!;
+  return prev.updateMany(
+    [
+      follower.addFollowedToCurrentUser(
+        FollowedState(
+          id: action.followId,
+          followedId: followed.id,
+          userName: followed.userName,
+          name: followed.name,
+          image: followed.image,
+          isFollower: followed.isFollower,
+          isFollowed: true,
+        )
+      ),
+      followed.addFollower(
+        FollowerState(
+          id: action.followId,
+          followerId: follower.id,
+          userName: follower.userName,
+          name: follower.name,
+          image: follower.image,
+          isFollower: false,
+          isFollowed: false
+        )
+      )
+    ]
+  );
+}
+EntityState<num,UserState> unfollowUserSuccessReducer(EntityState<num,UserState> prev, UnfollowUserSuccessAction action) =>
+  prev.updateMany(
+    [
+      prev.getValue(action.currentUserId)!.removeFollowedToCurrentUser(action.followedId),
+      prev.getValue(action.followedId)!.removeFollower(action.currentUserId)
+    ]
+  );
+
+EntityState<num,UserState> removeFollowerSuccessReducer(EntityState<num,UserState> prev, RemoveFollowerSuccessAction action) =>
+  prev.updateMany(
+    [
+      prev.getValue(action.followerId)!.removeFollowed(action.currentUserId),
+      prev.getValue(action.currentUserId)!.removeFollowerToCurrentUser(action.followerId),
+    ]
+  );
+
+// EntityState<num,UserState> addNewFollowerReducer(EntityState<num,UserState> prev,AddNewFollowerAction action){
+//   var follower = prev.getValue(action.followerId);
+//   var followed = prev.getValue(action.curentUserId)!;
+//   return prev.updateMany(
+//     [
+//       follower
+//         ?.addFollowed(
+//           FollowedState(
+//             id: action.followId,
+//             followedId: followed.id,
+//             userName: followed.userName,
+//             name: followed.name,
+//             image: followed.image
+//           )
+//         ),
+//         followed.addFollower(
+//           FollowerState(
+//             id: action.followId,
+//             followerId: followerId, userName: userName, name: name, image: image)
+//         )
+//     ]
+//     .where((e) => e != null)
+//     .map((e) => e!)
+//   );
+// }
+  
+
+//follow ************************************* follow//
+
 
 EntityState<num,UserState> markQuestionAsSolvedReducer(EntityState<num,UserState> prev,MarkUserQuestionAsSolvedAction action)
   => prev.updateOne(prev.getValue(action.userId)!.markQuestionAsSolved(action.questionId));
@@ -63,40 +166,6 @@ EntityState<num,UserState> addSavedSolutionReducer(EntityState<num,UserState> pr
 EntityState<num,UserState> removeSavedSolutionReducer(EntityState<num,UserState> prev, RemoveUserSavedSolutionAction action)
   => prev.updateOne(prev.getValue(action.userId)!.removeSavedSolution(action.saveId));
 
-//followers
-EntityState<num,UserState> nextFollowersReducer(EntityState<num,UserState> prev,NextUserFollowersAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextFollowers());
-EntityState<num,UserState> nextFollowersSuccessReducer(EntityState<num,UserState> prev,NextUserFollowersSuccessAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.addNextFollowers(action.));
-EntityState<num,UserState> nextFollowersFailedReducer(EntityState<num,UserState> prev,NextUserFollowersFailedAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextFollowers());
-
-//followeds
-EntityState<num,UserState> nextFollowedsReducer(EntityState<num,UserState> prev,NextUserFollowedsAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextFolloweds());
-EntityState<num,UserState> nextFollowedsSuccessReducer(EntityState<num,UserState> prev,NextUserFollowedsSuccessAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.addNextFolloweds(action.followIds));
-EntityState<num,UserState> nextFollowedsFailedReducer(EntityState<num,UserState> prev,NextuserFollowedsFailedAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextFolloweds());
-
-// EntityState<num,UserState> followReducer(EntityState<num,UserState> prev,FollowUserSuccessAction action)
-//   => prev.updateOne(prev.getValue(action.currentUserId)!.follow()) prev.follow(action.currentUserId, action.followedId, action.followId);
-// EntityState<num,UserState> unfollowReducer(EntityState<num,UserState> prev,UnfollowUserSuccessAction action)
-//   => prev.unfollow(action.currentUserId, action.followedId, action.followId);
-// EntityState<num,UserState> removeFollowerReducer(EntityState<num,UserState> prev,RemoveFollowerSuccessAction action)
-//   => prev.removeFollower(action.currentUserId, action.followerId, action.followId);
-// EntityState<num,UserState> addNewFollowerReducer(EntityState<num,UserState> prev,AddNewFollowerAction action)
-//   => prev.addNewFollower(action.curentUserId, action.followerId, action.followId);
-
-// // not followeds
-// EntityState<num,UserState> getNextPageNotFollowedsReducer(EntityState<num,UserState> prev,GetNextPageUserNotFollowedsAction action)
-//   => prev.getNextPageNotFolloweds(action.userId);
-// EntityState<num,UserState> addNextPageNotFollowedsReducer(EntityState<num,UserState> prev,AddNextPageUserNotFollowedsAction action)
-//   => prev.addNextPageNotFolloweds(action.userId, action.userIds);
-// EntityState<num,UserState> addNotFollowedReducer(EntityState<num,UserState> prev,AddUserNotFollowedAction action)
-//   => prev.addNotFollowed(action.userId,action.notFollowedId);
-// EntityState<num,UserState> removeNotFollowedReducer(EntityState<num,UserState> prev,RemoveUserNotFollowedAction action)
-//   => prev.removeNotFollowed(action.userId,action.notFollowedId);
 
 // //messages
 // EntityState<num,UserState> nextMessagesReducer(EntityState<num,UserState> prev,NextUserMessagesAction action)
@@ -128,11 +197,6 @@ EntityState<num,UserState> nextFollowedsFailedReducer(EntityState<num,UserState>
 // EntityState<num,UserState> removeConversationReducer(EntityState<num,UserState> prev, RemoveUserConversationAction action)
 //   => prev.removeConversation(action.userId, action.id);
 
-EntityState<num,UserState> addUserReducer(EntityState<num,UserState> prev,AddUserAction action)
-  => prev.appendOne(action.user);
-EntityState<num,UserState> addUsersReducer(EntityState<num,UserState> prev,AddUsersAction action)
-  => prev.appendMany(action.users);
-
 // EntityState<num,UserState> updateUserNameReducer(EntityState<num,UserState> prev,UpdateUserNameSuccessAction action)
 //   => prev.updateUserName(action.userId, action.userName);
 // EntityState<num,UserState> updateNameReducer(EntityState<num,UserState> prev,UpdateNameSuccessAction action)
@@ -153,6 +217,23 @@ EntityState<num,UserState> addUsersReducer(EntityState<num,UserState> prev,AddUs
 
 
 Reducer<EntityState<num,UserState>> userEntityStateReducers = combineReducers<EntityState<num,UserState>>([
+  TypedReducer<EntityState<num,UserState>,AddUserAction>(addUserReducer).call,
+  TypedReducer<EntityState<num,UserState>,AddUsersAction>(addUsersReducer).call,
+
+  //followers
+  TypedReducer<EntityState<num,UserState>,NextUserFollowersAction>(nextFollowersReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowersSuccessAction>(nextFollowersSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowersFailedAction>(nextFollowersFailedReducer).call,
+  //followeds
+  TypedReducer<EntityState<num,UserState>,NextUserFollowedsAction>(nextFollowedsReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextUserFollowedsSuccessAction>(nextFollowedsSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,NextuserFollowedsFailedAction>(nextFollowedsFailedReducer).call,
+  //
+  TypedReducer<EntityState<num,UserState>,FollowUserSuccessAction>(followUserSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,UnfollowUserSuccessAction>(unfollowUserSuccessReducer).call,
+  TypedReducer<EntityState<num,UserState>,RemoveFollowerSuccessAction>(removeFollowerSuccessReducer).call,
+  // TypedReducer<EntityState<num,UserState>,AddNewFollowerAction>(addNewFollowerSuccessReducer).call,
+  
   //
   TypedReducer<EntityState<num,UserState>,MarkUserQuestionAsSolvedAction>(markQuestionAsSolvedReducer).call,
   TypedReducer<EntityState<num,UserState>,MarkUserQuestionAsUnsolvedAction>(markQuestionAsUnsolvedReducer).call,
@@ -189,28 +270,7 @@ Reducer<EntityState<num,UserState>> userEntityStateReducers = combineReducers<En
 
   TypedReducer<EntityState<num,UserState>,AddUserSavedSolutionAction>(addSavedSolutionReducer).call,
   TypedReducer<EntityState<num,UserState>,RemoveUserSavedSolutionAction>(removeSavedSolutionReducer).call,
-
-  //followers
-  TypedReducer<EntityState<num,UserState>,NextUserFollowersAction>(nextFollowersReducer).call,
-  TypedReducer<EntityState<num,UserState>,NextUserFollowersSuccessAction>(nextFollowersSuccessReducer).call,
-  TypedReducer<EntityState<num,UserState>,NextUserFollowersFailedAction>(nextFollowersFailedReducer).call,
-
-  //followeds
-  TypedReducer<EntityState<num,UserState>,NextUserFollowedsAction>(nextFollowedsReducer).call,
-  TypedReducer<EntityState<num,UserState>,NextUserFollowedsSuccessAction>(nextFollowedsSuccessReducer).call,
-  TypedReducer<EntityState<num,UserState>,NextuserFollowedsFailedAction>(nextFollowedsFailedReducer).call,
   
-  // TypedReducer<EntityState<num,UserState>,FollowUserSuccessAction>(followReducer).call,
-  // TypedReducer<EntityState<num,UserState>,UnfollowUserSuccessAction>(unfollowReducer).call,
-  // TypedReducer<EntityState<num,UserState>,RemoveFollowerSuccessAction>(removeFollowerReducer).call,
-  // TypedReducer<EntityState<num,UserState>,AddNewFollowerAction>(addNewFollowerReducer).call,
-
-  // //not followeds
-  // TypedReducer<EntityState<num,UserState>,GetNextPageUserNotFollowedsAction>(getNextPageNotFollowedsReducer).call,
-  // TypedReducer<EntityState<num,UserState>,AddNextPageUserNotFollowedsAction>(addNextPageNotFollowedsReducer).call,
-  // TypedReducer<EntityState<num,UserState>,RemoveUserNotFollowedAction>(removeNotFollowedReducer).call,
-  // TypedReducer<EntityState<num,UserState>,AddUserNotFollowedAction>(addNotFollowedReducer).call,
-
   // //messages
   // TypedReducer<EntityState<num,UserState>,NextUserMessagesAction>(nextMessagesReducer).call,
   // TypedReducer<EntityState<num,UserState>,NextUserMessagesSuccessAction>(nextMessagesSuccessReducer).call,
@@ -230,8 +290,7 @@ Reducer<EntityState<num,UserState>> userEntityStateReducers = combineReducers<En
   // TypedReducer<EntityState<num,UserState>,AddUserConversationInOrderAction>(addConversationInOrderReducer).call,
   // TypedReducer<EntityState<num,UserState>,RemoveUserConversationAction>(removeConversationReducer).call,
 
-  TypedReducer<EntityState<num,UserState>,AddUserAction>(addUserReducer).call,
-  TypedReducer<EntityState<num,UserState>,AddUsersAction>(addUsersReducer).call,
+  
 
   // TypedReducer<EntityState<num,UserState>,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
   // TypedReducer<EntityState<num,UserState>,UpdateNameSuccessAction>(updateNameReducer).call,

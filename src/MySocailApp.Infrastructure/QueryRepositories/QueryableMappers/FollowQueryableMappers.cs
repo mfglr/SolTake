@@ -6,7 +6,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class FollowQueryableMappers
     {
-        public static IQueryable<FollowerResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, AppDbContext context)
+        public static IQueryable<FollowerResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
                 .Join(
                     context.Users,
@@ -17,11 +17,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         follow.FollowerId,
                         user.UserName.Value,
                         user.Name,
-                        user.Image
+                        user.Image,
+                        context.Follows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == accountId),
+                        context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
                     )
                 );
 
-        public static IQueryable<FollowedResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context)
+        public static IQueryable<FollowedResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
                 .Join(
                     context.Users,
@@ -32,7 +34,9 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         follow.FollowedId,
                         user.UserName.Value,
                         user.Name,
-                        user.Image
+                        user.Image,
+                        context.Follows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == accountId),
+                        context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
                     )
                 );
     }

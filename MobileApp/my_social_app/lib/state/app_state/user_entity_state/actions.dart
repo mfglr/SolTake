@@ -56,14 +56,14 @@ class AddNewFollowerAction extends AppAction{
 
 @immutable
 class FollowUserAction extends AppAction{
-  final num followedId;
+  final int followedId;
   const FollowUserAction({required this.followedId});
 }
 @immutable
 class FollowUserSuccessAction extends AppAction{
-  final num currentUserId;
-  final num followedId;
-  final num followId;
+  final int currentUserId;
+  final int followedId;
+  final int followId;
   const FollowUserSuccessAction({
     required this.currentUserId,
     required this.followedId,
@@ -72,31 +72,28 @@ class FollowUserSuccessAction extends AppAction{
 }
 @immutable
 class UnfollowUserAction extends AppAction{
-  final num followedId;
+  final int followedId;
   const UnfollowUserAction({required this.followedId});
 }
 @immutable
 class UnfollowUserSuccessAction extends AppAction{
-  final num currentUserId;
-  final num followedId;
-  final num followId;
+  final int currentUserId;
+  final int followedId;
   const UnfollowUserSuccessAction({
     required this.currentUserId,
     required this.followedId,
-    required this.followId
   });
 }
 @immutable
 class RemoveFollowerAction extends AppAction{
-  final num followerId;
+  final int followerId;
   const RemoveFollowerAction({required this.followerId});
 }
 @immutable
 class RemoveFollowerSuccessAction extends AppAction{
-  final num currentUserId;
-  final num followerId;
-  final num followId;
-  const RemoveFollowerSuccessAction({required this.currentUserId, required this.followerId, required this.followId});
+  final int currentUserId;
+  final int followerId;
+  const RemoveFollowerSuccessAction({required this.currentUserId, required this.followerId});
 }
 
 //followers
@@ -107,13 +104,13 @@ class NextUserFollowersAction extends AppAction{
 }
 @immutable
 class NextUserFollowersSuccessAction extends AppAction{
-  final num userId;
+  final int userId;
   final Iterable<FollowerState> followers;
   const NextUserFollowersSuccessAction({required this.userId, required this.followers});
 }
 @immutable
 class NextUserFollowersFailedAction extends AppAction{
-  final num userId;
+  final int userId;
   const NextUserFollowersFailedAction({required this.userId});
 }
 
@@ -135,40 +132,6 @@ class NextuserFollowedsFailedAction extends AppAction{
   const NextuserFollowedsFailedAction({required this.userId});
 }
 
-
-@immutable
-class GetNextPageUserNotFollowedsIfNoPageAction extends AppAction{
-  final num userId;
-  const GetNextPageUserNotFollowedsIfNoPageAction({required this.userId});
-}
-@immutable
-class GetNextPageUserNotFollowedsIfReadyAction extends AppAction{
-  final num userId;
-  const GetNextPageUserNotFollowedsIfReadyAction({required this.userId});
-}
-@immutable
-class GetNextPageUserNotFollowedsAction extends AppAction{
-  final num userId;
-  const GetNextPageUserNotFollowedsAction({required this.userId});
-}
-@immutable
-class AddNextPageUserNotFollowedsAction extends AppAction{
-  final num userId;
-  final Iterable<num> userIds;
-  const AddNextPageUserNotFollowedsAction({required this.userId, required this.userIds});
-}
-@immutable
-class RemoveUserNotFollowedAction extends AppAction{
-  final num userId;
-  final num notFollowedId;
-  const RemoveUserNotFollowedAction({required this.userId, required this.notFollowedId});
-}
-@immutable
-class AddUserNotFollowedAction extends AppAction{
-  final num userId;
-  final num notFollowedId;
-  const AddUserNotFollowedAction({required this.userId, required this.notFollowedId});
-}
 
 @immutable
 class NextUserQuestionsAction extends AppAction{

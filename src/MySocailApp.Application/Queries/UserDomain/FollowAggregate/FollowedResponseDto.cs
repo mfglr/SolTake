@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.UserDomain.FollowAggregate
 {
-    public record FollowedResponseDto(int Id, int FollowedId, string UserName, string? Name, Multimedia? Image);
+    public record FollowedResponseDto(int Id, int FollowedId, string UserName, string? Name, Multimedia? Image, bool IsFollower, bool IsFollowed);
 }

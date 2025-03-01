@@ -12,13 +12,17 @@ class Followed {
   final String userName;
   final String? name;
   final Multimedia? image;
+  final bool isFollower;
+  final bool isFollowed;
 
   const Followed({
     required this.id,
     required this.followedId,
     required this.userName,
     required this.name,
-    required this.image
+    required this.image,
+    required this.isFollower,
+    required this.isFollowed
   });
 
   factory Followed.fromJson(Map<String, dynamic> json) => _$FollowedFromJson(json);
@@ -30,6 +34,8 @@ class Followed {
         followedId: followedId,
         userName: userName,
         name: name,
-        image: image
+        image: image,
+        isFollower: isFollower,
+        isFollowed: isFollowed
       );
 }

@@ -26,7 +26,6 @@ class UserState extends BaseEntity<int> implements Avatar{
   final UserImageState? userImageState;
   final Pagination<num,FollowerState> followers;
   final Pagination<num,FollowedState> followeds;
-  final Pagination<num,Id<num>> notFolloweds;
   final Pagination<num,Id<num>> questions;
   final Pagination<num,Id<num>> solvedQuestions;
   final Pagination<num,Id<num>> unsolvedQuestions;
@@ -38,7 +37,7 @@ class UserState extends BaseEntity<int> implements Avatar{
   @override
   Multimedia? get avatar => image;
   @override
-  num get avatarId => id;
+  int get avatarId => id;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -69,7 +68,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     required this.savedQuestions,
     required this.savedSolutions,
     required this.messages,
-    required this.notFolloweds,
     required this.conversations,
     required this.image,
     required this.userImageState
@@ -93,7 +91,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     Pagination<num,Id<num>>? newSavedQuestions,
     Pagination<num,Id<num>>? newSavedSolutions,
     Pagination<num,Id<num>>? newMessages,
-    Pagination<num,Id<num>>? newNotFolloweds,
     Pagination<num,Id<num>>? newConversations,
     Multimedia? newImage,
     UserImageState? newUserImageState
@@ -117,7 +114,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     savedQuestions: newSavedQuestions ?? savedQuestions,
     savedSolutions: newSavedSolutions ?? savedSolutions,
     messages: newMessages ?? messages,
-    notFolloweds: newNotFolloweds ?? notFolloweds,
     conversations: newConversations ?? conversations,
     image: newImage ?? image,
     userImageState: newUserImageState ?? userImageState
@@ -137,21 +133,22 @@ class UserState extends BaseEntity<int> implements Avatar{
       newIsFollowed: true,
       newFollowers: followers.prependOne(follower)
     );
-  UserState removeFollower(int followId) => 
-    _optional(
-      newNumberOfFollowers: numberOfFollowers - 1,
-      newIsFollowed: false,
-      newFollowers: followers.removeOne(followId)
-    );
   UserState addFollowerToCurrentUser(FollowerState follower) =>
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
       newFollowers: followers.prependOne(follower)
     );
-  UserState removeFollowerToCurrentUser(int followId) =>
+  
+  UserState removeFollower(int followerId) => 
     _optional(
       newNumberOfFollowers: numberOfFollowers - 1,
-      newFollowers: followers.removeOne(followId)
+      newIsFollowed: false,
+      newFollowers: followers.where((e) => e.followerId != followerId)
+    );
+  UserState removeFollowerToCurrentUser(int followerId) =>
+    _optional(
+      newNumberOfFollowers: numberOfFollowers - 1,
+      newFollowers: followers.where((e) => e.followerId != followerId)
     );
 
   //followeds
@@ -168,33 +165,23 @@ class UserState extends BaseEntity<int> implements Avatar{
         newIsFollower: true,
         newFolloweds: followeds.prependOne(followed)
       );
-  UserState removeFollowed(num followId) =>
-    _optional(
-      newNumberOfFolloweds: numberOfFolloweds - 1,
-      newIsFollower: false,
-      newFolloweds: followeds.removeOne(followId)
-    );
   UserState addFollowedToCurrentUser(FollowedState followed) =>
     _optional(
       newNumberOfFolloweds: numberOfFolloweds + 1,
       newFolloweds: followeds.prependOne(followed)
     );
-  UserState removeFollowedToCurrentUser(int followId) =>
+
+  UserState removeFollowed(int followedId) =>
+    _optional(
+      newIsFollower: false,
+      newNumberOfFolloweds: numberOfFolloweds - 1,
+      newFolloweds: followeds.where((e) => e.followedId != followedId)
+    );
+  UserState removeFollowedToCurrentUser(int followedId) =>
     _optional(
       newNumberOfFolloweds: numberOfFolloweds - 1,
-      newFolloweds: followeds.removeOne(followId)
+      newFolloweds: followeds.where((e) => e.followedId != followedId)
     );
-
-
-  //not followeds
-  UserState getNextPageNotFolloweds() =>
-    _optional(newNotFolloweds: notFolloweds.startLoadingNext());
-  UserState addNextPageNotFolloweds(Iterable<num> ids) =>
-    _optional(newNotFolloweds: notFolloweds.addNextPage(ids.map((e) => Id(id: id))));
-  UserState addNotFollowed(num id) =>
-    _optional(newNotFolloweds: notFolloweds.prependOne(Id(id: id)));
-  UserState removeNotFollowed(num id) =>
-    _optional(newNotFolloweds: notFolloweds.removeOne(id));
 
   //questions
   UserState startLoadingNextQuestions() =>
@@ -330,7 +317,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     savedQuestions: savedQuestions,
     savedSolutions: savedSolutions,
     messages: messages,
-    notFolloweds: notFolloweds,
     conversations: conversations,
     image: null,
     userImageState: userImageState
