@@ -11,7 +11,6 @@ EntityState<num,UserState> addUserReducer(EntityState<num,UserState> prev,AddUse
 EntityState<num,UserState> addUsersReducer(EntityState<num,UserState> prev,AddUsersAction action)
   => prev.appendMany(action.users);
 
-
 //following ************************************* following//
 
 //followers
@@ -67,7 +66,6 @@ EntityState<num,UserState> unfollowUserSuccessReducer(EntityState<num,UserState>
       prev.getValue(action.followedId)!.removeFollower(action.currentUserId)
     ]
   );
-
 EntityState<num,UserState> removeFollowerSuccessReducer(EntityState<num,UserState> prev, RemoveFollowerSuccessAction action) =>
   prev.updateMany(
     [

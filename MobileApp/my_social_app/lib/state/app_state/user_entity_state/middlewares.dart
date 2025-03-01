@@ -53,8 +53,6 @@ void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-
-
 void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UnfollowUserAction){
     FollowService()
@@ -108,6 +106,30 @@ void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
         store.dispatch(UpdateBiographySuccessAction(userId: accountId, biography: action.biography));
         ToastCreator.displaySuccess(biographyUpdatedNotificationContent[getLanguageByStore(store)]!);
       });
+  }
+  next(action);
+}
+void uploadUserImageMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is UploadUserImageAction){
+    UserService()
+      .updateImage(
+        action.image,
+        action.userId,
+        (rate) => store.dispatch(ChangeUserImageRateAction(userId: action.userId, rate: rate))
+      )
+      .then((image) => store.dispatch(UploadUserImageSuccessAction(userId: action.userId, image: image)))
+      .catchError((e){
+        store.dispatch(UploadUserImageFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void removeUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RemoveUserImageAction){
+    UserService()
+      .removeImage(action.userId)
+      .then((_) => store.dispatch(RemoveUserImageSuccessAction(userId: action.userId)));
   }
   next(action);
 }
@@ -265,32 +287,6 @@ void nextUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher 
         store.dispatch(NextUserConversationsFailedAction(userId: action.userId));
         throw e;
       });
-  }
-  next(action);
-}
-
-void uploadUserImageMiddleware(Store<AppState> store, action, NextDispatcher next){
-  if(action is UploadUserImageAction){
-    UserService()
-      .updateImage(
-        action.image,
-        action.userId,
-        (rate) => store.dispatch(ChangeUserImageRateAction(userId: action.userId, rate: rate))
-      )
-      .then((image) => store.dispatch(UploadUserImageSuccessAction(userId: action.userId, image: image)))
-      .catchError((e){
-        store.dispatch(UploadUserImageFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-
-void removeUserImageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is RemoveUserImageAction){
-    UserService()
-      .removeImage(action.userId)
-      .then((_) => store.dispatch(RemoveUserImageSuccessAction(userId: action.userId)));
   }
   next(action);
 }
