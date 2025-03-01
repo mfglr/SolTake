@@ -27,7 +27,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(new GetUnviewedNotificationsDto(), cancellationToken);
 
         [HttpGet]
-        public async Task<List<NotificationResponseDto>> GetNotifications([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<NotificationResponseDto>> GetNotifications([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetViewedNotificationsDto(offset, take, isDescending), cancellationToken);
 
         [HttpPut]

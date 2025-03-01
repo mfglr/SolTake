@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.DomainEvents;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;

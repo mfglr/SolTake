@@ -5,7 +5,7 @@ part 'login_state.g.dart';
 @immutable
 @JsonSerializable()
 class LoginState{
-  final num id;
+  final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String email;

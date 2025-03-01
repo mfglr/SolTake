@@ -5,7 +5,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extetions;
+using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
 using System.Linq.Expressions;
 

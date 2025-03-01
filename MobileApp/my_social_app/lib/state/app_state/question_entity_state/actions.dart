@@ -59,7 +59,7 @@ class DislikeQuestionAction extends AppAction{
 @immutable
 class DislikeQuestionSuccessAction extends AppAction{
   final num questionId;
-  final num userId;
+  final int userId;
   const DislikeQuestionSuccessAction({
     required this.questionId,
     required this.userId

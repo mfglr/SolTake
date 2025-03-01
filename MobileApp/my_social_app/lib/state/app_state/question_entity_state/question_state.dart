@@ -137,13 +137,14 @@ class QuestionState extends BaseEntity<int> implements Avatar{
   QuestionState startLodingNextLikes() => _optional(newLikes: likes.startLoadingNext());
   QuestionState stopLoadingNextLikes() => _optional(newLikes: likes.stopLoadingNext());
   QuestionState addNextPageLikes(Iterable<QuestionUserLikeState> likes) => _optional(newLikes: this.likes.addNextPage(likes));
+  
   QuestionState like(QuestionUserLikeState like) => 
     _optional(
       newIsLiked: true,
       newLikes: likes.prependOne(like),
       newNumberOfLikes: numberOfLikes + 1
     );
-  QuestionState dislike(num userId) => 
+  QuestionState dislike(int userId) => 
     _optional(
       newIsLiked: false,
       newLikes: likes.where((e) => e.userId != userId),

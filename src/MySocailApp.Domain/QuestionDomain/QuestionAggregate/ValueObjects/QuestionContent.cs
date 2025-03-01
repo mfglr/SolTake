@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
+﻿using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
 
 namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects
 {

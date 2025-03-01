@@ -6,7 +6,6 @@ import 'package:my_social_app/notifications/app_notifications.dart';
 import 'package:my_social_app/constants/notification_functions.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/comment_user_like.dart';
-import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/notification.dart' as notificationModel;
 import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/models/solution.dart';

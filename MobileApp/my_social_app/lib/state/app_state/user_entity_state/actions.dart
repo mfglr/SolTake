@@ -2,6 +2,8 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
@@ -100,14 +102,14 @@ class RemoveFollowerSuccessAction extends AppAction{
 //followers
 @immutable
 class NextUserFollowersAction extends AppAction{
-  final num userId;
+  final int userId;
   const NextUserFollowersAction({required this.userId});
 }
 @immutable
 class NextUserFollowersSuccessAction extends AppAction{
   final num userId;
-  final Iterable<num> followIds;
-  const NextUserFollowersSuccessAction({required this.userId, required this.followIds});
+  final Iterable<FollowerState> followers;
+  const NextUserFollowersSuccessAction({required this.userId, required this.followers});
 }
 @immutable
 class NextUserFollowersFailedAction extends AppAction{
@@ -118,14 +120,14 @@ class NextUserFollowersFailedAction extends AppAction{
 //followeds
 @immutable
 class NextUserFollowedsAction extends AppAction{
-  final num userId;
+  final int userId;
   const NextUserFollowedsAction({required this.userId});
 }
 @immutable
 class NextUserFollowedsSuccessAction extends AppAction{
   final num userId;
-  final Iterable<num> followIds;
-  const NextUserFollowedsSuccessAction({required this.userId, required this.followIds});
+  final Iterable<FollowedState> followeds;
+  const NextUserFollowedsSuccessAction({required this.userId, required this.followeds});
 }
 @immutable
 class NextuserFollowedsFailedAction extends AppAction{

@@ -4,7 +4,7 @@ using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extetions;
+using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
 
 namespace MySocailApp.Infrastructure.QueryRepositories

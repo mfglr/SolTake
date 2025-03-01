@@ -9,7 +9,6 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/request_timeout.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/models/login.dart';
-import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
@@ -160,19 +159,6 @@ class UserService{
      _appClient
       .put("$userController/$updateBiographyEndpoint",body: {'biography': biography});
   
-  Future<Follow> follow(num followedId) => 
-    _appClient
-      .post("$userController/$followEndPoint", body: { 'followedId': followedId })
-      .then((json) => Follow.fromJson(json));
-
-  Future<void> unfollow(num followedId) => 
-    _appClient
-      .delete("$userController/$unfollowEndPoint/$followedId");
-  
-  Future<void> removeFollower(num followerId) => 
-    _appClient
-      .delete("$userController/$removeFollowerEndPoint/$followerId");
-    
   Future<UserSearch> addSearcher(num searchedId) => 
     _appClient
       .post("$userController/$addUserSearcherEndpoint", body: { 'searchedId': searchedId })
@@ -194,17 +180,7 @@ class UserService{
     _appClient
       .getBytes("$userController/$gerUserImageByIdEndPoint/$id");
   
-  Future<Iterable<Follow>> getFollowersById(num id, Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$userController/$getFollowersByIdEndPoint/$id", page))
-      .then((json) => json as List)
-      .then((list) => list.map((item) => Follow.fromJson(item)));
- 
-  Future<Iterable<Follow>> getFollowedsById(num id, Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$userController/$getFollowedsByIdEndPoint/$id", page))
-      .then((json) => json as List)
-      .then((list) => list.map((item) => Follow.fromJson(item)));
+  
 
   Future<Iterable<User>> getNotFolloweds(num id, Page page) =>
    _appClient

@@ -11205,6 +11205,31 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("SolutionUserVoteNotifications");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.UserDomain.FollowAggregate.Entities.Follow", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FollowedId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Follows");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate.PrivacyPolicy", b =>
                 {
                     b.Property<int>("Id")
@@ -11308,30 +11333,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.Block", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BlockedId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BlockerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlockedId");
-
-                    b.ToTable("Block");
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.EmailVerificationToken", b =>
                 {
                     b.Property<int>("Id")
@@ -11367,33 +11368,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("EmailVerificationToken");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.Follow", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FollowedId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FollowedId");
-
-                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.PasswordResetToken", b =>
@@ -11451,22 +11425,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.UserFollowNotification", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("UserId", "FollowerId");
-
-                    b.ToTable("UserFollowNotifications");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.UserPrivacyPolicy", b =>
@@ -11879,29 +11837,11 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.Block", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.UserDomain.UserAggregate.Entities.User", null)
-                        .WithMany("Blockers")
-                        .HasForeignKey("BlockedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.EmailVerificationToken", b =>
                 {
                     b.HasOne("MySocailApp.Domain.UserDomain.UserAggregate.Entities.User", null)
                         .WithMany("VerificationTokens")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.Follow", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.UserDomain.UserAggregate.Entities.User", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("FollowedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -12084,15 +12024,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.UserFollowNotification", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.UserDomain.UserAggregate.Entities.User", null)
-                        .WithMany("UserFollowNotifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.UserPrivacyPolicy", b =>
                 {
                     b.HasOne("MySocailApp.Domain.UserDomain.UserAggregate.Entities.User", null)
@@ -12174,10 +12105,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.UserAggregate.Entities.User", b =>
                 {
-                    b.Navigation("Blockers");
-
-                    b.Navigation("Followers");
-
                     b.Navigation("PasswordResestTokens");
 
                     b.Navigation("PrivacyPolicies");
@@ -12187,8 +12114,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Searchers");
 
                     b.Navigation("TermsOfUses");
-
-                    b.Navigation("UserFollowNotifications");
 
                     b.Navigation("VerificationTokens");
                 });

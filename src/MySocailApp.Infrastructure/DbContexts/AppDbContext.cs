@@ -12,6 +12,7 @@ using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
+using MySocailApp.Domain.UserDomain.FollowAggregate.Entities;
 using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
 using MySocailApp.Domain.UserDomain.TermsOfUseAggregate;
@@ -27,9 +28,11 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
         public DbSet<TermsOfUse> TermsOfUses { get; private set; }
 
-        public DbSet<UserSearch> UserSearchs { get; private set; }
         public DbSet<Follow> Follows { get; private set; }
-        public DbSet<UserFollowNotification> UserFollowNotifications { get; private set; }
+
+
+        public DbSet<UserSearch> UserSearchs { get; private set; }
+
 
         public DbSet<Question> Questions { get; private set; }
         public DbSet<Exam> Exams { get; private set; }

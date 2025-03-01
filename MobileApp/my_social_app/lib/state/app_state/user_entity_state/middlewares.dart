@@ -1,4 +1,5 @@
 import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/services/follow_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
@@ -41,10 +42,9 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
 void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FollowUserAction){
     final accountId = store.state.loginState!.id;
-    UserService()
+    FollowService()
       .follow(action.followedId)
       .then((follow){
-        store.dispatch(AddFollowAction(follow: follow.toFollowState()));
         store.dispatch(FollowUserSuccessAction(currentUserId: accountId, followedId: action.followedId, followId: follow.id));
       });
   }
@@ -53,7 +53,7 @@ void followMiddleware(Store<AppState> store,action,NextDispatcher next){
 void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UnfollowUserAction){
     final accountId = store.state.loginState!.id;
-    UserService()
+    FollowService()
       .unfollow(action.followedId)
       .then((_){
         final followId = store.state.followEntityState.get((e) => e.followerId == accountId && e.followedId == action.followedId)?.id ?? 0;
@@ -67,13 +67,13 @@ void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveFollowerAction){
     // final followerId = action.followerId;
     // final currentUserId = store.state.loginState!.id;
-    UserService()
-      .removeFollower(action.followerId)
-      .then((_){
+    // UserService()
+    //   .removeFollower(action.followerId)
+    //   .then((_){
         // final followId = store.state.followEntityState.select(followerId, currentUserId)?.id ?? 0;
         // store.dispatch(RemoveFollowAction(followId: followId));
         // store.dispatch(RemoveFollowerSuccessAction(currentUserId: currentUserId,followerId: followerId,followId: followId));
-      });
+    //   });
   }
   next(action);
 }
@@ -118,13 +118,9 @@ void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
 void nextUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextUserFollowersAction){
     final pagination = store.state.userEntityState.getValue(action.userId)!.followers;
-    UserService()
-      .getFollowersById(action.userId, pagination.next)
-      .then((follows){
-        store.dispatch(NextUserFollowersSuccessAction(userId: action.userId,followIds: follows.map((e) => e.id)));
-        store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
-        store.dispatch(AddUsersAction(users: follows.map((e) => e.follower!.toUserState())));
-      })
+    FollowService()
+      .getFollowersByUserId(action.userId, pagination.next)
+      .then((followers) => store.dispatch(NextUserFollowersSuccessAction(userId: action.userId,followers: followers.map((e) => e.toFollowerState()))))
       .catchError((e){
         store.dispatch(NextUserFollowersFailedAction(userId: action.userId));
         throw e;
@@ -135,13 +131,9 @@ void nextUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher nex
 void nextUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextUserFollowedsAction){
     final pagination = store.state.userEntityState.getValue(action.userId)!.followeds;
-    UserService()
-      .getFollowedsById(action.userId,pagination.next)
-      .then((follows){
-        store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followIds: follows.map((e) => e.id)));
-        store.dispatch(AddFollowsAction(follows: follows.map((e) => e.toFollowState())));
-        store.dispatch(AddUsersAction(users: follows.map((e) => e.followed!.toUserState())));
-      })
+    FollowService()
+      .getFollowedsByUserId(action.userId,pagination.next)
+      .then((followeds) => store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followeds: followeds.map((e) => e.toFollowedState()))))
       .catchError((e){
         store.dispatch(NextuserFollowedsFailedAction(userId: action.userId));
         throw e;

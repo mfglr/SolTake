@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities

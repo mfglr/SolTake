@@ -13,14 +13,9 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Abstracts
         Task<User?> GetByUserNameAsync(UserName userName, CancellationToken cancellationToken);
         Task<User?> GetByGoogleAccount(GoogleAccount googleAccount, CancellationToken cancellationToken);
 
-        Task<User?> GetWithFollowerByIdAsync(int id, int followerId, CancellationToken cancellationToken);
         Task<User?> GetWithSearcherByIdAsync(int id, int searcherId, CancellationToken cancellationToken);
 
         Task DeleteFollowsByUserId(int userId, CancellationToken cancellationToken);
-        Task DeleteFollowNotificationsByUserId(int userId, CancellationToken cancellationToken);
         Task DeleteUserSerchsByUserId(int userId, CancellationToken cancellationToken);
-
-
-        
     }
 }

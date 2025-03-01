@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Domain.QuestionDomain.ExamAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Abstracts;

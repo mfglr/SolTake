@@ -19,18 +19,14 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
         public Biography? Biography { get; private set; }
         private readonly List<UserRole> _roles = [];
         public IReadOnlyCollection<UserRole> Roles => _roles;
-        public bool IsSendableEmailVerificationMail => GoogleAccount == null;
         public string AccessToken { get; internal set; } = null!; //not mapped
         public string RefreshToken { get; internal set; } = null!; //not mapped
 
         private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
         private User() { }
-        public User(Email email, Password password, Password passwordConfirm, Language language)
+        public User(Email email, Password password,Language language)
         {
-            if (!password.CompareValue(passwordConfirm))
-                throw new PassowordAndPasswordConfirmationNotMatchException();
-
             Password = password;
             Email = email;
             UserName = email.GenerateUserName();
@@ -55,7 +51,7 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             _privacyPolicies.Add(UserPrivacyPolicy.Create(policyId));
             _termsOfUses.Add(UserTermsOfUse.Create(termsOfUseId));
             CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new UserCreatedDominEvent(this));
+            AddDomainEvent(new UserCreatedDomainEvent(this));
         }
 
         public void UpdateImage(Multimedia image)
@@ -97,45 +93,6 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
         {
             Language = language;
             UpdatedAt = DateTime.UtcNow;
-        }
-
-        //following
-        private readonly List<Follow> _followers = [];
-        public IReadOnlyList<Follow> Followers => _followers;
-        private readonly List<UserFollowNotification> _userFollowNotifications = [];
-        public IReadOnlyCollection<UserFollowNotification> UserFollowNotifications => _userFollowNotifications;
-        public Follow Follow(int followerId)
-        {
-            if (followerId == Id)
-                throw new PermissionDeniedToFollowYourselfException();
-            if (_followers.Any(x => x.FollowerId == followerId))
-                throw new UserIsAlreadyFollowedException();
-
-            var follow = Entities.Follow.Create(followerId, Id);
-            _followers.Add(follow);
-
-            var notification = _userFollowNotifications.FirstOrDefault(x => x.FollowerId == followerId);
-            if (notification == null || DateTime.UtcNow >= notification.CreatedAt.AddDays(1))
-            {
-                if (notification != null) _userFollowNotifications.Remove(notification);
-                _userFollowNotifications.Add(UserFollowNotification.Create(followerId));
-                AddDomainEvent(new UserFollowedDomainEvent(follow));
-            }
-            return follow;
-        }
-        public void Unfollow(int followerId)
-        {
-            var index = _followers.FindIndex(x => x.FollowerId == followerId);
-            if (index == -1) return;
-            _followers.RemoveAt(index);
-
-            AddDomainEvent(new UserUnfollowedDomainEvent(followerId, Id));
-        }
-        public void RemoveFollower(int followerId)
-        {
-            var index = _followers.FindIndex(x => x.FollowerId == followerId);
-            if (index == -1) return;
-            _followers.RemoveAt(index);
         }
 
         //searchings
@@ -258,24 +215,6 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
 
             Password = newPassword;
             UpdatedAt = DateTime.UtcNow;
-        }
-
-        //blocking
-        public readonly List<Block> _blockers = [];
-        public IReadOnlyCollection<Block> Blockers => _blockers;
-        public Block Block(int blockerId)
-        {
-            if (_blockers.Any(x => x.BlockerId == blockerId))
-                throw new UserIsAlreadyBlockedException();
-            var block = Entities.Block.Create(blockerId);
-            _blockers.Add(block);
-            return block;
-        }
-        public void Unblock(int blockerId)
-        {
-            var index = _blockers.FindIndex(x => x.BlockerId == blockerId);
-            if (index == -1) return;
-            _blockers.RemoveAt(index);
         }
     }
 }

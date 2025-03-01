@@ -3,7 +3,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extetions;
+using MySocailApp.Infrastructure.Extentions;
 
 namespace MySocailApp.Infrastructure.NotificationAggregate
 {

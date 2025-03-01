@@ -25,7 +25,7 @@ namespace MySocailApp.Application.DomainEventConsumers.NotificationAggregate.Use
             var n = await _notificationQueryRepository.GetNotificationById(notification.Notification.Id, cancellationToken);
             if(n == null) return;
 
-            var follow = await _followQueryRepository.GetFollowerAsync(ownerId, followId, cancellationToken);
+            var follow = await _followQueryRepository.GetFollowerAsync(followId, cancellationToken);
             if (follow == null) return;
 
             await _notificationHub.Clients

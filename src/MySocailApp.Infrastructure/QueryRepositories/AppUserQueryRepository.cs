@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.UserAggregate;
+using MySocailApp.Application.Queries.UserDomain.UserAggregate;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extetions;
+using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
 
 namespace MySocailApp.Infrastructure.QueryRepositories
 {
-    public class AppUserQueryRepository(AppDbContext context) : IAppUserQueryRepository
+    public class AppUserQueryRepository(AppDbContext context) : IUserQueryRepository
     {
         private readonly AppDbContext _context = context;
 
@@ -47,14 +47,6 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 )
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<List<UserResponseDto>> GetNotFollowedsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
-            => _context.Users
-                .AsNoTracking()
-                .Where(x => x.Id != userId && !x.Followers.Any(x => x.FollowerId == userId))
-                .ToPage(page)
-                .ToUserResponseDto(_context, accountId)
-                .ToListAsync(cancellationToken);
-
         public Task<List<UserResponseDto>> GetCreateConversationPageUsersAsync(int accountId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
@@ -62,7 +54,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                     x =>
                         (
                             x.Searchers.Any(x => x.SearcherId == accountId) || 
-                            x.Followers.Any(x => x.FollowerId == accountId)
+                            _context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == x.Id)
                         ) &&
                         x.Id != accountId
                 )

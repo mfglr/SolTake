@@ -1,18 +1,19 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserDomain.FollowAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserAggregate
 {
-    public class DeleteUserFollows(IUnitOfWork unitOfWork, IUserWriteRepository userWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
+    public class DeleteUserFollows(IUnitOfWork unitOfWork, IFollowWriteRepository followWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
+        private readonly IFollowWriteRepository _followWriteRepository = followWriteRepository;
 
         public async Task Handle(UserDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            await _userWriteRepository.DeleteFollowsByUserId(notification.User.Id, cancellationToken);
+            var follows = await _followWriteRepository.GetByUserIdAsync(notification.User.Id,cancellationToken);
+            _followWriteRepository.DeleteRange(follows);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

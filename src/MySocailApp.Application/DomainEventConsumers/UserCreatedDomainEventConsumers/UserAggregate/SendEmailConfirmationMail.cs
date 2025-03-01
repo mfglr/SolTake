@@ -4,13 +4,13 @@ using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.AccountCreatedDomainEventConsumers.AccountAggregate
 {
-    public class SendEmailConfirmationMail(IEmailService emailService) : IDomainEventConsumer<UserCreatedDominEvent>
+    public class SendEmailConfirmationMail(IEmailService emailService) : IDomainEventConsumer<UserCreatedDomainEvent>
     {
         private readonly IEmailService _emailService = emailService;
 
-        public async Task Handle(UserCreatedDominEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(UserCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            if (notification.User.IsSendableEmailVerificationMail)
+            if (notification.User.GoogleAccount == null)
             {
                 var verificationToken = notification.User.VerificationTokens.OrderByDescending(x => x.Id).First();
                 await _emailService

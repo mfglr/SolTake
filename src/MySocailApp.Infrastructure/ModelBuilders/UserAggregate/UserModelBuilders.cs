@@ -50,30 +50,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
-            builder
-                .HasMany(x => x.Blockers)
-                .WithOne()
-                .HasForeignKey(x => x.BlockedId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder
                 .HasMany(x => x.Searchers)
                 .WithOne()
                 .HasForeignKey(x => x.SearchedId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasMany(x => x.Followers)
-                .WithOne()
-                .HasForeignKey(x => x.FollowedId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.UserFollowNotifications)
-                .WithOne()
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

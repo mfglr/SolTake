@@ -31,7 +31,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _sender.Send(new DislikeQuestionDto(questionId), cancellationToken);
 
         [HttpGet("{questionId}")]
-        public async Task<List<QuestionUserLikeResponseDto>> GetLikes(int questionId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionUserLikeResponseDto>> GetLikes(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetQuestionLikesDto(questionId,offset,take,isDescending), cancellationToken);
     }
 }

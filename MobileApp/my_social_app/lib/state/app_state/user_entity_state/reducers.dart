@@ -67,7 +67,7 @@ EntityState<num,UserState> removeSavedSolutionReducer(EntityState<num,UserState>
 EntityState<num,UserState> nextFollowersReducer(EntityState<num,UserState> prev,NextUserFollowersAction action)
   => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextFollowers());
 EntityState<num,UserState> nextFollowersSuccessReducer(EntityState<num,UserState> prev,NextUserFollowersSuccessAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.addNextFollowers(action.followIds));
+  => prev.updateOne(prev.getValue(action.userId)!.addNextFollowers(action.));
 EntityState<num,UserState> nextFollowersFailedReducer(EntityState<num,UserState> prev,NextUserFollowersFailedAction action)
   => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextFollowers());
 

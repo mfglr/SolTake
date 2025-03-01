@@ -55,19 +55,19 @@ namespace MySocailApp.Api.Controllers.Api
            => await _sender.Send(new GetQuestionByIdDto(id), cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsByUserId(int userId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _sender.Send(new GetQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{topicId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsByTopicId(int topicId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsByTopicId(int topicId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _sender.Send(new GetQuestionsByTopicIdDto(topicId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{subjectId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsBySubjectId(int subjectId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsBySubjectId(int subjectId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _sender.Send(new GetQuestionsBySubjectIdDto(subjectId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{examId}")]
-        public async Task<List<QuestionResponseDto>> GetQuestionsByExamId(int examId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetQuestionsByExamId(int examId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _sender.Send(new GetQuestionsByExamIdDto(examId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
@@ -79,19 +79,19 @@ namespace MySocailApp.Api.Controllers.Api
             => await _sender.Send(request, cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserId(int userId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _sender.Send(new GetSolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
            => await _sender.Send(new GetUnsolvedQuestionsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<QuestionResponseDto>> GetVideoQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetVideoQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetVideoQuestionsDto(offset, take, isDescending),cancellationToken);
 
         [HttpGet]
-        public async Task<List<QuestionUserSaveResponseDto>> GetSavedQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionUserSaveResponseDto>> GetSavedQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetSavedQuestionsDto(offset, take, isDescending), cancellationToken);
     }
 }

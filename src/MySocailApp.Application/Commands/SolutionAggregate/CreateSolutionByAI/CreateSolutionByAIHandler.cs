@@ -8,12 +8,11 @@ using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI
 {

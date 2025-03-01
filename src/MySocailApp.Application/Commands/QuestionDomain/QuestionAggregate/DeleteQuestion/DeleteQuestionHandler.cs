@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Excpetions;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
 {

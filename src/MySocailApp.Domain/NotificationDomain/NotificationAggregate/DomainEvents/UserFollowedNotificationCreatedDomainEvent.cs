@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
-using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.FollowAggregate.Entities;
 
 namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents
 {

@@ -14,7 +14,7 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.DomainServices
 
         public async Task CreateAsync(User user, CancellationToken cancellationToken)
         {
-            if (await _userReadRepository.EmailExist(user.Email, cancellationToken))
+            if (await _userReadRepository.IsEmailTaken(user.Email, cancellationToken))
                 throw new EmailIsAlreadyTakenException();
 
             var policy = await _policyReadRepository.GetLastPolicyAsync(cancellationToken);
