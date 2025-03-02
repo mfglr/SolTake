@@ -107,29 +107,29 @@ void nextSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher nex
 void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is AddSearchedUserAction){
     final num searcherId = store.state.loginState!.id;
-    UserService()
-      .addSearcher(action.userId)
-      .then((search){
-        final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == searcherId && e.searchedId == action.userId)?.id ?? 0;
-        store.dispatch(RemoveUserSearchAction(searchId: searchId));
-        store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
-        store.dispatch(AddSearchedUserSuccessAction(addedOne: search.id,removedOne: searchId));
-        store.dispatch(AddUserConversationInOrderAction(userId: searcherId, id: action.userId));
-      });
+    // UserService()
+    //   .addSearcher(action.userId)
+    //   .then((search){
+    //     final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == searcherId && e.searchedId == action.userId)?.id ?? 0;
+    //     store.dispatch(RemoveUserSearchAction(searchId: searchId));
+    //     store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
+    //     store.dispatch(AddSearchedUserSuccessAction(addedOne: search.id,removedOne: searchId));
+    //     store.dispatch(AddUserConversationInOrderAction(userId: searcherId, id: action.userId));
+    //   });
   }
   next(action);
 }
 void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveSearchedUserAction){
-    UserService()
-      .removeSearcher(action.searchedId)
-      .then((_){
-        final accountId = store.state.loginState!.id;
-        final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == accountId && e.searchedId == action.searchedId)?.id ?? 0;
-        store.dispatch(RemoveSearcedUserSuccessAction(searchId: searchId));
-        store.dispatch(RemoveUserSearchAction(searchId: searchId));
-        store.dispatch(RemoveUserConversationAction(userId: accountId, id: action.searchedId));
-      });
+    // UserService()
+    //   .removeSearcher(action.searchedId)
+    //   .then((_){
+    //     final accountId = store.state.loginState!.id;
+    //     final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == accountId && e.searchedId == action.searchedId)?.id ?? 0;
+    //     store.dispatch(RemoveSearcedUserSuccessAction(searchId: searchId));
+    //     store.dispatch(RemoveUserSearchAction(searchId: searchId));
+    //     store.dispatch(RemoveUserConversationAction(userId: accountId, id: action.searchedId));
+    //   });
   }
   next(action);
 }

@@ -49,13 +49,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
                 .WithOne()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Searchers)
-                .WithOne()
-                .HasForeignKey(x => x.SearchedId)
-                .OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

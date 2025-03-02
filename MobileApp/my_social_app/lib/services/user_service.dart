@@ -159,13 +159,7 @@ class UserService{
      _appClient
       .put("$userController/$updateBiographyEndpoint",body: {'biography': biography});
   
-  Future<UserSearch> addSearcher(num searchedId) => 
-    _appClient
-      .post("$userController/$addUserSearcherEndpoint", body: { 'searchedId': searchedId })
-      .then((json) => UserSearch.fromJson(json));
-
-  Future<void> removeSearcher(num searchedId) => _appClient.delete("$userController/$removeUserSearcherEndpoint/$searchedId");
-
+ 
   Future<User> getById(num id) => 
     _appClient
       .get("$userController/$getUserByIdEndPoint/$id")

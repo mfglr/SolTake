@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate;
-using MySocailApp.Application.Commands.UserDomain.UserAggregate.AddUserSearcher;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.ApprovePrivacyPolicy;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.ApproveTermsOfUse;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.CreateUser;
@@ -15,7 +14,6 @@ using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByPassword;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByRefreshToken;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LogOut;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveUserImage;
-using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveUserSearcher;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.ResetPassword;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateBiography;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateEmail;
@@ -177,27 +175,7 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpPut]
         public async Task UpdateBiography(UpdateBiographyDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
-
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
-        [HttpPost]
-        public async Task<AddUserSearcherCommandResponseDto> AddSearcher(AddUserSearcherDto request, CancellationToken cancellationToken)
-            => await _sender.Send(request, cancellationToken);
-
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
-        [HttpDelete("{searchedId}")]
-        public async Task RemoveSearcher(int searchedId, CancellationToken cancellationToken)
-            => await _sender.Send(new RemoveUserSearcherDto(searchedId), cancellationToken);
-
+     
         //Queries
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]

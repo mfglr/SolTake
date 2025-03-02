@@ -12,10 +12,5 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Abstracts
         Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken);
         Task<User?> GetByUserNameAsync(UserName userName, CancellationToken cancellationToken);
         Task<User?> GetByGoogleAccount(GoogleAccount googleAccount, CancellationToken cancellationToken);
-
-        Task<User?> GetWithSearcherByIdAsync(int id, int searcherId, CancellationToken cancellationToken);
-
-        Task DeleteFollowsByUserId(int userId, CancellationToken cancellationToken);
-        Task DeleteUserSerchsByUserId(int userId, CancellationToken cancellationToken);
     }
 }

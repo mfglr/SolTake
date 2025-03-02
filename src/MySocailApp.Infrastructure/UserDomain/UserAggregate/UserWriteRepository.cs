@@ -50,23 +50,5 @@ namespace MySocailApp.Infrastructure.UserDomain.UserAggregate
                 .Include(x => x.VerificationTokens)
                 .Include(x => x.PasswordResestTokens)
                 .FirstOrDefaultAsync(x => x.GoogleAccount.GoogleId == googleAccount.GoogleId, cancellationToken);
-
-        public Task<User?> GetWithSearcherByIdAsync(int id, int searcherId, CancellationToken cancellationToken)
-            => _context.Users
-                .Include(x => x.Searchers.Where(x => x.SearcherId == searcherId))
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-
-        public async Task DeleteFollowsByUserId(int userId, CancellationToken cancellationToken)
-        {
-            var follows = await _context.Follows.Where(x => x.FollowerId == userId).ToListAsync(cancellationToken);
-            _context.Follows.RemoveRange(follows);
-        }
-
-
-        public async Task DeleteUserSerchsByUserId(int userId, CancellationToken cancellationToken)
-        {
-            var searchs = await _context.UserSearchs.Where(x => x.SearcherId == userId).ToListAsync(cancellationToken);
-            _context.UserSearchs.RemoveRange(searchs);
-        }
     }
 }

@@ -95,25 +95,6 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        //searchings
-        private readonly List<UserSearch> _searchers = [];
-        public IReadOnlyCollection<UserSearch> Searchers => _searchers;
-        public UserSearch AddSearcher(int searcherId)
-        {
-            var index = _searchers.FindIndex(x => x.SearcherId == searcherId);
-            if (index != -1)
-                _searchers.RemoveAt(index);
-            var search = UserSearch.Create(searcherId);
-            _searchers.Add(search);
-            return search;
-        }
-        public void RemoveSearcher(int searcherId)
-        {
-            var index = _searchers.FindIndex(x => x.SearcherId == searcherId);
-            if (index == -1) return;
-            _searchers.RemoveAt(index);
-        }
-
         //Email verfication Tokens
         public EmailVerificationToken VerificationToken => VerificationTokens.OrderBy(x => x.Id).Last();
         public bool IsEmailVerified => GoogleAccount != null || VerificationToken.IsVerified;
@@ -141,6 +122,7 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             var verificationToken = _verificationTokens.OrderBy(x => x.Id).Last();
             verificationToken.Verify(token);
         }
+
 
         //Password Reset tokens
         private readonly List<PasswordResetToken> _passwordResetTokens = [];

@@ -32,7 +32,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .Where(
                     x =>
                         (
-                            x.Searchers.Any(x => x.SearcherId == accountId) || 
+                            _context.UserSearchs.Any(userSearch => userSearch.SearcherId == accountId && userSearch.SearchedId == x.Id) ||
                             _context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == x.Id)
                         ) &&
                         x.Id != accountId
