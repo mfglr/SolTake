@@ -25,12 +25,12 @@ using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserImage;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserName;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.VerifyEmail;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate;
+using MySocailApp.Application.Queries.UserDomain;
+using MySocailApp.Application.Queries.UserDomain.GetUsersSearched;
+using MySocailApp.Application.Queries.UserDomain.SearchUsers;
 using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetCreateConversationPageUsers;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetSearchedUsers;
 using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetUserById;
 using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetUserByUserName;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate.SearchUsers;
 using MySocailApp.Core;
 
 namespace MySocailApp.Api.Controllers.Api
@@ -204,7 +204,7 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
         [HttpPost]
-        public async Task<List<UserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
+        public async Task<List<SearchUserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -214,8 +214,8 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
         [HttpGet]
-        public async Task<List<UserSearchResponseDto>> GetSearcheds([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetSearchedUsersDto(offset, take, isDescending), cancellationToken);
+        public async Task<List<UserSearchedResponseDto>> GetSearcheds([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new GetUsersSearchedDto(offset, take, isDescending), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(CheckVersionFiltterAttribute))]

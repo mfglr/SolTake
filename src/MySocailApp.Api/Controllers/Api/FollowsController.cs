@@ -6,7 +6,8 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.UserDomain.FollowAggregate.Follow;
 using MySocailApp.Application.Commands.UserDomain.FollowAggregate.Unfollow;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveFollower;
-using MySocailApp.Application.Queries.UserDomain.FollowAggregate;
+using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
+using MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId;
 using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetFollowedsByUserId;
 using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetFollowersByUserId;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate;
+using MySocailApp.Application.Queries.UserDomain.GetUsersSearched;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;
@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public Task<List<UserSearchResponseDto>> GetUserSearcheds(int userId, int accuntId, IPage page, CancellationToken cancellationToken)
+        public Task<List<UserSearchedResponseDto>> GetUsersSearched(int userId, int accuntId, IPage page, CancellationToken cancellationToken)
             => _context.UserSearchs
                 .AsNoTracking()
                 .Where(x => x.SearcherId == userId)

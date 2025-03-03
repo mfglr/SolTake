@@ -1,4 +1,5 @@
-﻿using MySocailApp.Application.Queries.UserDomain.FollowAggregate;
+﻿using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
+using MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId;
 using MySocailApp.Domain.UserDomain.FollowAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 

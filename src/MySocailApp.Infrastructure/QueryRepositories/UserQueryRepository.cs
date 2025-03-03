@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate;
+using MySocailApp.Application.Queries.UserDomain;
+using MySocailApp.Application.Queries.UserDomain.SearchUsers;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;
@@ -41,7 +42,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToUserResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<UserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<SearchUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Where(
@@ -53,7 +54,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                         user.UserName.Value.ToLower().Contains(key.ToLower())
                 )
                 .ToPage(page)
-                .ToUserResponseDto(_context, accountId)
+                .ToSearchUserResponse()
                 .ToListAsync(cancellationToken);
     }
 }

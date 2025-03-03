@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.UserDomain.UserAggregate;
+﻿using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 

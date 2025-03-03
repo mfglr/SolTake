@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.UserDomain.UserAggregate;
+﻿using MySocailApp.Application.Queries.UserDomain;
 
 namespace MySocailApp.Application.Queries.CommentAggregate
 {

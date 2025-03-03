@@ -12,40 +12,6 @@ import 'package:my_social_app/state/app_state/user_search_state/actions.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:redux/redux.dart';
 
-void firstSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is FirstSearchingUsersAction){
-    final key = store.state.searchState.key;
-    UserService()
-      .search(key, Page<num>.init(usersPerPage, true))
-      .then((users){
-        store.dispatch(FirstSearchingUsersSuccessAction(userIds: users.map((e) => e.id)));
-        store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-      })
-      .catchError((e){
-        store.dispatch(const FirstSearchingUsersFailedAction());
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextSearchingUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextSearchingUsersAction){
-    final key = store.state.searchState.key;
-    final pagination = store.state.searchState.users;
-    UserService()
-      .search(key, pagination.next)
-      .then((users){
-        store.dispatch(NextSearchingUsersSuccessAction(userIds: users.map((e) => e.id)));
-        store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-      })
-      .catchError((e){
-        store.dispatch(const NextSearhcingUsersFailedAction());
-        throw e;
-      });
-  }
-  next(action);
-}
-
 void firstSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FirstSearchingQuestionsAction){
     final state = store.state.searchState;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.UserDomain.FollowAggregate;
+using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
+using MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;
