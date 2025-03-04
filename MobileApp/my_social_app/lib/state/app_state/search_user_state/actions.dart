@@ -19,7 +19,8 @@ class FirstSearchUsersFailedAction extends AppAction{
 
 @immutable
 class NextSearchUsersAction extends AppAction{
-  const NextSearchUsersAction();
+  final String key;
+  const NextSearchUsersAction({required this.key});
 }
 @immutable
 class NextSearchUsersSuccessAction extends AppAction{
@@ -33,7 +34,8 @@ class NextSearchUsersFailedAction extends AppAction{
 
 @immutable
 class PrevSearchUsersAction extends AppAction{
-  const PrevSearchUsersAction();
+  final String key;
+  const PrevSearchUsersAction({required this.key});
 }
 @immutable
 class PrevSearchUsersSuccessAction extends AppAction{

@@ -9,6 +9,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/request_timeout.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/models/login.dart';
+import 'package:my_social_app/models/search_user.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
@@ -174,7 +175,7 @@ class UserService{
     _appClient
       .getBytes("$userController/$gerUserImageByIdEndPoint/$id");
 
-  Future<Iterable<User>> search(String key, Page page) =>
+  Future<Iterable<SearchUser>> search(String key, Page page) =>
     _appClient
       .post(
         "$userController/$searchUserEndPoint",
@@ -186,7 +187,7 @@ class UserService{
         }
       )
       .then((json) => json as List)
-      .then((list) => list.map((item) => User.fromJson(item)));
+      .then((list) => list.map((item) => SearchUser.fromJson(item)));
 
   Future<Iterable<UserSearch>> getSearcheds(Page page) =>
     _appClient
