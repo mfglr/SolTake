@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/search_user_state/search_user_state.dart';
+import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 part 'search_user.g.dart';
 
 @JsonSerializable()

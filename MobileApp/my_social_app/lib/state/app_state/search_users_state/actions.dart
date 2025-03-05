@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/search_user_state/search_user_state.dart';
+import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 
 @immutable
 class FirstSearchUsersAction extends AppAction{

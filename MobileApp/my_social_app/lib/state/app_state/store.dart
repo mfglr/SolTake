@@ -16,7 +16,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/middlewares.
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_state/search_state.dart';
-import 'package:my_social_app/state/app_state/search_user_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
