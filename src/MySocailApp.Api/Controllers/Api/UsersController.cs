@@ -26,11 +26,10 @@ using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserName;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.VerifyEmail;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
 using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Application.Queries.UserDomain.GetUsersSearched;
+using MySocailApp.Application.Queries.UserDomain.GetConversationPageUsers;
+using MySocailApp.Application.Queries.UserDomain.GetUserById;
+using MySocailApp.Application.Queries.UserDomain.GetUserByUserName;
 using MySocailApp.Application.Queries.UserDomain.SearchUsers;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetCreateConversationPageUsers;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetUserById;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate.GetUserByUserName;
 using MySocailApp.Core;
 
 namespace MySocailApp.Api.Controllers.Api
@@ -214,18 +213,8 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
         [HttpGet]
-        public async Task<List<UserSearchedResponseDto>> GetSearcheds([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetUsersSearchedDto(offset, take, isDescending), cancellationToken);
-
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
-        [HttpGet]
-        public async Task<List<UserResponseDto>> GetCreateConversationPageUsers([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetCreateConversationPageUsersDto(offset, take, isDescending), cancellationToken);
+        public async Task<List<UserResponseDto>> GetConversationPageUsers([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new GetConversationPageUsersDto(offset, take, isDescending), cancellationToken);
 
         [HttpGet("{userName}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

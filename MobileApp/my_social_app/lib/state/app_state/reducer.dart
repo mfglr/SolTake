@@ -25,6 +25,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
+import 'package:my_social_app/state/app_state/user_user_search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/reducers.dart';
 import 'package:redux/redux.dart';
 
@@ -32,12 +33,14 @@ import 'package:redux/redux.dart';
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
+  searchUsers: searchUsersReducers(prev.searchUsers,action),
+  userUserSearchs: userUserSearchsReducers(prev.userUserSearchs,action),
+
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
   loginState: accoutStateReducers(prev.loginState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
-  searchUsers: searchUsersReducers(prev.searchUsers,action),
   searchState: searchStateReducers(prev.searchState,action),
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),

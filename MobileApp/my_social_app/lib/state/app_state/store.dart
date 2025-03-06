@@ -23,6 +23,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -31,11 +32,13 @@ import 'package:redux/redux.dart';
 final store = Store(
   reducers,
   initialState: AppState(
+    searchUsers: Pagination.init(usersPerPage, true),
+    userUserSearchs: Pagination.init(usersPerPage, true),
+
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
-    searchUsers: Pagination.init(usersPerPage, true),
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     loginState: null,
@@ -64,6 +67,11 @@ final store = Store(
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
+    //user user searchs middlewares
+    addUserUserSearchMiddleware,
+    removeUserUserSearchMiddleware,
+    nextUserUserSearchsMiddleware,
+    //user user searchs middlewares
 
     //search users middleware
     firstSearchUsersMiddleware,
@@ -123,10 +131,6 @@ final store = Store(
     removeUserImageMiddleware,
 
     //search state
-    nextSearchedUsersMiddleware,
-    addSearchedUserMiddleware,
-    removeSearchedUserMiddleware,
-    
     firstSearchingQuestionsMiddleware,
     nextSearchingQuestionsMiddleware,
     //search end

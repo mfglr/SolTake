@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.Queries.UserAggregate;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate;
+using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 

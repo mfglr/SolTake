@@ -11,7 +11,6 @@ import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/models/login.dart';
 import 'package:my_social_app/models/search_user.dart';
 import 'package:my_social_app/models/user.dart';
-import 'package:my_social_app/models/user_search.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
@@ -188,12 +187,6 @@ class UserService{
       )
       .then((json) => json as List)
       .then((list) => list.map((item) => SearchUser.fromJson(item)));
-
-  Future<Iterable<UserSearch>> getSearcheds(Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$userController/$getSearchedsEndpoint",page))
-      .then((json) => json as List)
-      .then((list) => list.map((item) => UserSearch.fromJson(item)));
 
   Future<Iterable<User>> getCreateConversationPageUsers(Page page) =>
     _appClient

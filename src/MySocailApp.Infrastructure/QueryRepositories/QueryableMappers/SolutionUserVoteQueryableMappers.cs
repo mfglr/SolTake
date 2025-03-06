@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.SolutionAggregate;
-using MySocailApp.Application.Queries.UserDomain.UserAggregate;
+using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 

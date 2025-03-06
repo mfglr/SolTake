@@ -119,7 +119,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IUserQueryRepository, UserQueryRepository>()
                 .AddScoped<ICommentUserLikeQueryRepository, CommentUserLikeQueryRepository>()
                 .AddScoped<IFollowQueryRepository, FollowQueryRepository>()
-                .AddScoped<IUserSearchQueryRepository, UserSearchQueryRepository>()
+                .AddScoped<IUserUserSearchQueryRepository, UserUserSearchedQueryRepository>()
                 .AddScoped<IQuestionQueryRepository, QuestionQueryRepository>()
                 .AddScoped<IQuestionUserLikeQueryRepository, QuestionUserLikeQueryRepository>()
                 .AddScoped<IQuestionUserSaveQueryRepository, QuestionUserSaveQuestionRepository>()
@@ -131,8 +131,6 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
                 .AddScoped<ISolutionUserSaveQueryRepository, SolutionUserSaveQueryRepository>()
                 .AddScoped<INotificationQueryRepository, NotificationQueryRepository>();
-        
-        
 
         private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
             => services

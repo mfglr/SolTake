@@ -1,14 +1,11 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/question_service.dart';
-import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/search_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_search_state/actions.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:redux/redux.dart';
 
@@ -49,53 +46,6 @@ void nextSearchingQuestionsMiddleware(Store<AppState> store,action,NextDispatche
         store.dispatch(const NextSearchingQuestionsFailedAction());
         throw e;
       });
-  }
-  next(action);
-}
-
-void nextSearchedUsersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextSearchedUsersAction){
-    final pagination = store.state.searchState.searchedUsers;
-    UserService()
-      .getSearcheds(pagination.next)
-      .then((searchs){
-        store.dispatch(NextSearchedUsersSuccessAction(searchIds: searchs.map((e) => e.id)));
-        store.dispatch(AddUserSearchsAction(searchs: searchs.map((e) => e.toUserSearchState())));
-        store.dispatch(AddUsersAction(users: searchs.map((e) => e.searched!.toUserState())));
-      })
-      .catchError((e){
-        store.dispatch(const NextSearchedUsersFailedAction());
-        throw e;
-      });
-  }
-  next(action);
-}
-void addSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is AddSearchedUserAction){
-    final num searcherId = store.state.loginState!.id;
-    // UserService()
-    //   .addSearcher(action.userId)
-    //   .then((search){
-    //     final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == searcherId && e.searchedId == action.userId)?.id ?? 0;
-    //     store.dispatch(RemoveUserSearchAction(searchId: searchId));
-    //     store.dispatch(AddUserSearchAction(search: search.toUserSearchState()));
-    //     store.dispatch(AddSearchedUserSuccessAction(addedOne: search.id,removedOne: searchId));
-    //     store.dispatch(AddUserConversationInOrderAction(userId: searcherId, id: action.userId));
-    //   });
-  }
-  next(action);
-}
-void removeSearchedUserMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is RemoveSearchedUserAction){
-    // UserService()
-    //   .removeSearcher(action.searchedId)
-    //   .then((_){
-    //     final accountId = store.state.loginState!.id;
-    //     final searchId = store.state.userSearchEntityState.get((e) => e.searcherId == accountId && e.searchedId == action.searchedId)?.id ?? 0;
-    //     store.dispatch(RemoveSearcedUserSuccessAction(searchId: searchId));
-    //     store.dispatch(RemoveUserSearchAction(searchId: searchId));
-    //     store.dispatch(RemoveUserConversationAction(userId: accountId, id: action.searchedId));
-    //   });
   }
   next(action);
 }

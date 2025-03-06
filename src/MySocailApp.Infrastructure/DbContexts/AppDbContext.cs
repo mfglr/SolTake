@@ -17,7 +17,7 @@ using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
 using MySocailApp.Domain.UserDomain.TermsOfUseAggregate;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
-using MySocailApp.Domain.UserDomain.UserSearchAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts
@@ -31,8 +31,7 @@ namespace MySocailApp.Infrastructure.DbContexts
 
         public DbSet<Follow> Follows { get; private set; }
 
-
-        public DbSet<UserSearch> UserSearchs { get; private set; }
+        public DbSet<UserUserSearch> UserUserSearchs { get; private set; }
 
 
         public DbSet<Question> Questions { get; private set; }

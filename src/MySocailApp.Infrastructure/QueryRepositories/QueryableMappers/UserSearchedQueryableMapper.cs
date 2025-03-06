@@ -1,20 +1,20 @@
-﻿using MySocailApp.Application.Queries.UserDomain.GetUsersSearched;
-using MySocailApp.Domain.UserDomain.UserSearchAggregate.Entities;
+﻿using MySocailApp.Application.Queries.UserDomain;
+using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class UserSearchedQueryableMapper
     {
-        public static IQueryable<UserSearchedResponseDto> ToUserSearchedResponseDto(this IQueryable<UserSearch> query, AppDbContext context, int userId)
+        public static IQueryable<UserUserSearchResponseDto> ToUserVisitedResponseDto(this IQueryable<UserUserSearch> query, AppDbContext context)
             => query
                 .Join(
                     context.Users,
-                    us => us.SearchedId,
+                    uuv => uuv.SearchedId,
                     user => user.Id,
-                    (us, user) => new UserSearchedResponseDto(
-                        us.Id,
-                        us.SearchedId,
+                    (uuv, user) => new UserUserSearchResponseDto(
+                        uuv.Id,
+                        uuv.SearchedId,
                         user.UserName.Value,
                         user.Name,
                         user.Image

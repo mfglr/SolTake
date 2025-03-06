@@ -24,6 +24,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_state.dart';
+import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -31,13 +32,15 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class AppState{
+  final Pagination<int,SearchUserState> searchUsers;
+  final Pagination<int,UserUserSearchState> userUserSearchs;
+
   final EntityState<num,QuestionState> questionEntityState;
   final Pagination<num,Id<num>> homePageQuestions;
   final EntityState<num,ExamState> examEntityState;
   final Pagination<num,Id<num>> appExams;
   final Pagination<num,NotificationState> notifications;
   final EntityState<num,SubjectState> subjectEntityState;
-  final Pagination<int,SearchUserState> searchUsers;
   final bool isInitialized;
   final ActiveAccountPage activeAccountPage;
   final String? accessToken;
@@ -59,12 +62,16 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
+
+    required this.searchUsers,
+    required this.userUserSearchs,
+
+
     required this.questionEntityState,
     required this.homePageQuestions,
     required this.examEntityState,
     required this.appExams,
     required this.conversations,
-    required this.searchUsers,
     required this.activeAccountPage,
     required this.accessToken,
     required this.loginState,
@@ -88,12 +95,14 @@ class AppState{
   });
 
   AppState clear() => AppState(
+    searchUsers: Pagination.init(usersPerPage, true),
+    userUserSearchs: Pagination.init(usersPerPage, true),
+
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
-    searchUsers: Pagination.init(usersPerPage, true),
     activeAccountPage: ActiveAccountPage.loginPage,
     accessToken: null,
     loginState: null,

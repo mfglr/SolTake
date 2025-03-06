@@ -52,7 +52,8 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
   bool get isReadyForPrevPage => !loadingPrev;
 
   Iterable<V> getByIds(Iterable<K> ids) => values.where((e) => ids.any((id) => id.compareTo(e.id) == 0));
-  
+  V? getById(K id) => values.where((e) => e.id.compareTo(id) == 0).firstOrNull;
+
   Iterable<V> merge(V value) => [value, ...values.where((e) => e.id.compareTo(value.id) != 0)];
 
   Pagination<K,V> prependMany(Iterable<V> values)

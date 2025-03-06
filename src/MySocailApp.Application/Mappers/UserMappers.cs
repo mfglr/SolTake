@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Commands.UserDomain.UserSearchAggregate.CreateUserSearch;
-using MySocailApp.Domain.UserDomain.UserSearchAggregate.Entities;
+using MySocailApp.Application.Commands.UserDomain.UserUserSearchAggregate.Create;
+using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {
@@ -8,7 +8,7 @@ namespace MySocailApp.Application.Mappers
     {
         public UserMappers()
         {
-            CreateMap<UserSearch, CreateUserSearchResponseDto>();
+            CreateMap<UserUserSearch, CreateUserUserSearchResponseDto>();
         }
     }
 }
