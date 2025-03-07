@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/app_state/search_users_state/actions.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -25,45 +26,57 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  late final PageController _pageController;
-  late final TextEditingController _textEditingController;
-  late final StreamController<String> _keyStream;
+  final PageController _pageController = PageController();
+  final TextEditingController _textEditingController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final StreamController<String> _keyStream = StreamController();
   late final StreamSubscription _keyListener;
 
   double _page = 0;
-  void _setPage(){
-    setState(() {
-      _page = _pageController.page ?? 0;
-    });
+  void _setPage() => setState(() => _page = _pageController.page ?? 0 );
+
+  void _onKeyChanged(String key){
+    setState((){});
+    _keyStream.add(key);
   }
 
-  void _onKeyChanged(String key) => _keyStream.add(key);
-
   void _listenKey(String key){
-    final store = StoreProvider.of<AppState>(context,listen: false);
+    final store = StoreProvider.of<AppState>(context, listen: false);
     if(key == ""){
-      getNextPageIfNoPage(store,store.state.userUserSearchs,const NextUserUserSearchsAction());
+      getNextPageIfNoPage(store, store.state.userUserSearchs, const NextUserUserSearchsAction());
     }
     else{
       store.dispatch(FirstSearchUsersAction(key: key));
     }
   }
 
+  void _onScrollBottom() =>
+    onScrollBottom(
+      _scrollController,
+      (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        if(_textEditingController.text == ""){
+          getNextPageIfReady(store, store.state.userUserSearchs, const NextUserUserSearchsAction());
+        }
+        else{
+          getNextPageIfReady(store, store.state.searchUsers, NextSearchUsersAction(key: _textEditingController.text));
+        }
+      }
+    );
 
   @override
   void initState() {
-    _pageController = PageController();
     _pageController.addListener(_setPage);
 
-    _textEditingController = TextEditingController();
-
-    _keyStream = StreamController();
     _keyStream.add("");
     _keyListener = 
       _keyStream.stream
-        .debounceTime(const Duration(milliseconds: 500))
+        .debounceTime(const Duration(milliseconds: 400))
         .distinct()
         .listen(_listenKey);
+    _listenKey(_textEditingController.text);
+
+    _scrollController.addListener(_onScrollBottom);
 
     super.initState();
   }
@@ -121,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
                 Column(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(left:8,right: 8),
+                      margin: const EdgeInsets.only(left:8,right: 8,bottom: 8),
                       child: TextField(
                         controller: _textEditingController,
                         onChanged: _onKeyChanged,
@@ -131,6 +144,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                     SingleChildScrollView(
+                      controller: _scrollController,
                       child: _textEditingController.text.isEmpty 
                         ? StoreConnector<AppState,Pagination<int,UserUserSearchState>>(
                             converter: (store) => store.state.userUserSearchs,

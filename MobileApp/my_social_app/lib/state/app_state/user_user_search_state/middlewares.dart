@@ -35,7 +35,7 @@ void removeUserUserSearchMiddleware(Store<AppState> store, action, NextDispatche
 void nextUserUserSearchsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextUserUserSearchsAction){
     UserUserSearchService()
-      .get()
+      .get(store.state.userUserSearchs.next)
       .then((e) => store.dispatch(NextUserUserSearchsSuccessAction(userUserSearchs: e.map((v) => v.toUserUserSearchState()))))
       .catchError((e){
         store.dispatch(const NextUserUserSearchsFailedAction());

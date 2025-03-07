@@ -18,10 +18,10 @@ class SearchUsersWidget extends StatelessWidget {
           .mapIndexed(
             (index,searchUser) => 
               index == searchUsers.length - 1
-                ? SearchUserWidget(state: searchUser)
+                ? SearchUserWidget(searchUser: searchUser)
                 : Container(
                     margin: const EdgeInsets.only(bottom: 8),
-                    child: SearchUserWidget(state: searchUser),
+                    child: SearchUserWidget(searchUser: searchUser),
                   )
           )
           .toList(),
