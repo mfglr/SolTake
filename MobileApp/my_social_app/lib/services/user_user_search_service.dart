@@ -27,6 +27,6 @@ class UserUserSearchService{
   Future<Iterable<UserUserSearch>> get(Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$userUserSearchController/$getUserUserSearchsEndpoint", page))
-      .then((json) => json as List)
+      .then((json) => json as Iterable)
       .then((list) => list.map((json) => UserUserSearch.fromJson(json)));
 }

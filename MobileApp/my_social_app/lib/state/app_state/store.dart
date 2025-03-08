@@ -68,7 +68,7 @@ final store = Store(
   ),
   middleware: [
     //user user searchs middlewares
-    addUserUserSearchMiddleware,
+    createUserUserSearchMiddleware,
     removeUserUserSearchMiddleware,
     nextUserUserSearchsMiddleware,
     //user user searchs middlewares

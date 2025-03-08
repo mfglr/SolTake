@@ -3,14 +3,14 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 
 @immutable
-class AddUserUserSearchAction extends AppAction{
+class CreateUserUserSearchAction extends AppAction{
   final int searchedId;
-  const AddUserUserSearchAction({required this.searchedId});
+  const CreateUserUserSearchAction({required this.searchedId});
 }
 @immutable
-class AddUserUserSearchSuccessAction extends AppAction{
+class CreateUserUserSearchSuccessAction extends AppAction{
   final UserUserSearchState userUserSearch;
-  const AddUserUserSearchSuccessAction({required this.userUserSearch});
+  const CreateUserUserSearchSuccessAction({required this.userUserSearch});
 }
 
 @immutable

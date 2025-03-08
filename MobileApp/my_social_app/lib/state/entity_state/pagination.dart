@@ -51,8 +51,9 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
 
-  Iterable<V> getByIds(Iterable<K> ids) => values.where((e) => ids.any((id) => id.compareTo(e.id) == 0));
+  V? get(bool Function(V) test) => values.where(test).firstOrNull; 
   V? getById(K id) => values.where((e) => e.id.compareTo(id) == 0).firstOrNull;
+  Iterable<V> getByIds(Iterable<K> ids) => values.where((e) => ids.any((id) => id.compareTo(e.id) == 0));
 
   Iterable<V> merge(V value) => [value, ...values.where((e) => e.id.compareTo(value.id) != 0)];
 
@@ -185,7 +186,6 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
         values: values.where((value) => value.id.compareTo(key) != 0)
       );
-
   Pagination<K,V> prependOneAndRemovePrev(V value)
     => Pagination<K,V>(
         isLast: isLast,
@@ -204,6 +204,16 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
         values: [addedOne, ...values.where((e) => e.id != removedOne)],
       );
+  Pagination<K,V> prependOneAndRemoveWhere(V addedOne,bool Function(V) test)
+    => Pagination<K,V>(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        values: [addedOne, ...values.where(test)],
+      );
+
   Pagination<K,V> addfirstPage(Iterable<V> values)
     => Pagination<K,V>(
         isLast: values.length < recordsPerPage,
@@ -237,6 +247,7 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
       recordsPerPage: recordsPerPage
     );
   }
+  
   Pagination<K,V> where(bool Function(V) test) =>
     Pagination<K,V>(
       isLast: isLast,
@@ -246,4 +257,15 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
       recordsPerPage: recordsPerPage,
       values: values.where(test)
     );
+  
+  Pagination<K,V> clear() =>
+    Pagination<K,V>(
+      isLast: isLast,
+      loadingNext: loadingNext,
+      loadingPrev: loadingPrev,
+      isDescending: isDescending,
+      recordsPerPage: recordsPerPage,
+      values: const []
+    );
+  
 }

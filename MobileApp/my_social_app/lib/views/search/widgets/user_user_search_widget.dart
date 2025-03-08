@@ -19,10 +19,13 @@ class UserUserSearchWidget extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(5),
         child: TextButton(
-          onPressed: () => 
+          onPressed: (){
             Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => UserPage(userId: userUserSearch.searchedId))),
+              .push(MaterialPageRoute(builder: (context) => UserPage(userId: userUserSearch.searchedId)));
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            store.dispatch(CreateUserUserSearchAction(searchedId: userUserSearch.searchedId));
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

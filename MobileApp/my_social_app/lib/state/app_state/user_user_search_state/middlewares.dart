@@ -1,16 +1,17 @@
 import 'package:my_social_app/services/user_user_search_service.dart';
-import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:redux/redux.dart';
 
-void addUserUserSearchMiddleware(Store<AppState> store, action, NextDispatcher next){
-  if(action is AddUserUserSearchAction){
-    final SearchUserState user = store.state.searchUsers.getById(action.searchedId)!;
+void createUserUserSearchMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is CreateUserUserSearchAction){
+    final dynamic user = 
+      store.state.searchUsers.getById(action.searchedId) ??
+      store.state.userUserSearchs.get((e) => e.searchedId == action.searchedId);
     UserUserSearchService()
       .create(action.searchedId)
-      .then((response) => store.dispatch(AddUserUserSearchSuccessAction(
+      .then((response) => store.dispatch(CreateUserUserSearchSuccessAction(
         userUserSearch: UserUserSearchState(
           id: response.id,
           searchedId: action.searchedId,
@@ -32,7 +33,7 @@ void removeUserUserSearchMiddleware(Store<AppState> store, action, NextDispatche
   next(action);
 }
 
-void nextUserUserSearchsMiddleware(Store<AppState> store,action,NextDispatcher next){
+void nextUserUserSearchsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextUserUserSearchsAction){
     UserUserSearchService()
       .get(store.state.userUserSearchs.next)

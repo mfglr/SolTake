@@ -36,7 +36,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   child: StoreConnector<AppState,Iterable<ExamState>>(
-                    onInit: (store) => getNextPageIfNoPage(store,store.state.appExams,const NextExamsAction()),
+                    // onInit: (store) => getNextPageIfNoPage(store,store.state.appExams,const NextExamsAction()),
                     converter: (store) => store.state.examEntityState.values,
                     builder:(context,exams) => DropdownSearch<String>(
                       selectedItem: exams.where((x) => x.id == state.examId).firstOrNull?.shortName,
@@ -47,15 +47,15 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                         ),
                       ),
                       onChanged: (value){
-                        setState(() {
-                          final store = StoreProvider.of<AppState>(context,listen: false);
-                          final exam = exams.firstWhere((exam) => exam.shortName == value);
-                          if(exam.id == state.examId) return;
+                        // setState(() {
+                        //   final store = StoreProvider.of<AppState>(context,listen: false);
+                        //   final exam = exams.firstWhere((exam) => exam.shortName == value);
+                        //   if(exam.id == state.examId) return;
 
-                          store.dispatch(ChangeSearchExamIdAction(examId: exam.id));
-                          getNextPageIfNoPage(store, exam.subjects, NextExamSubjectsAction(examId: exam.id));
-                          store.dispatch(const FirstSearchingQuestionsAction());
-                        });
+                        //   store.dispatch(ChangeSearchExamIdAction(examId: exam.id));
+                        //   getNextPageIfNoPage(store, exam.subjects, NextExamSubjectsAction(examId: exam.id));
+                        //   store.dispatch(const FirstSearchingQuestionsAction());
+                        // });
                       },
                     ),
                   ),
@@ -76,12 +76,12 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                       selectedItem: subjects.where((subject) => subject.id == state.subjectId).firstOrNull?.name,
                       items: subjects.map((e) => e.name).toList(),
                       onChanged: (value){
-                        final subject = subjects.firstWhere((subject) => subject.name == value);
-                        final store = StoreProvider.of<AppState>(context,listen: false);
-                        if(subject.id == state.subjectId) return;
-                        store.dispatch(ChangeSearchSubjectIdAction(subjectId: subject.id));
-                        getNextPageIfNoPage(store, subject.topics, NextSubjectTopicsAction(subjectId: subject.id));
-                        store.dispatch(const FirstSearchingQuestionsAction());
+                        // final subject = subjects.firstWhere((subject) => subject.name == value);
+                        // final store = StoreProvider.of<AppState>(context,listen: false);
+                        // if(subject.id == state.subjectId) return;
+                        // store.dispatch(ChangeSearchSubjectIdAction(subjectId: subject.id));
+                        // getNextPageIfNoPage(store, subject.topics, NextSubjectTopicsAction(subjectId: subject.id));
+                        // store.dispatch(const FirstSearchingQuestionsAction());
                       },
                     ),
                   ),
@@ -103,13 +103,13 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                 selectedItem: topics.where((x) => x.id == state.topicId).firstOrNull?.name,
                 items: topics.map((e) => e.name).toList(),
                 onChanged: (value){
-                  setState(() {
-                    final topicId = topics.firstWhere((exam) => exam.name == value).id;
-                    final store = StoreProvider.of<AppState>(context,listen: false);
-                    if(topicId == store.state.searchState.topicId) return;
-                    store.dispatch(ChangeSearchTopicIdAction(topicId: topicId));
-                    store.dispatch(const FirstSearchingQuestionsAction());
-                  });
+                  // setState(() {
+                  //   final topicId = topics.firstWhere((exam) => exam.name == value).id;
+                  //   final store = StoreProvider.of<AppState>(context,listen: false);
+                  //   if(topicId == store.state.searchState.topicId) return;
+                  //   store.dispatch(ChangeSearchTopicIdAction(topicId: topicId));
+                  //   store.dispatch(const FirstSearchingQuestionsAction());
+                  // });
                 },
               ),
             ),
@@ -125,8 +125,8 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                   .push(MaterialPageRoute(builder: (context) => DisplaySearchQuestionsPage(firstDisplayedQuestionId: questionId))),
                 pagination: state.questions,
                 onScrollBottom: (){
-                  final store = StoreProvider.of<AppState>(context,listen: false);
-                  getNextPageIfReady(store, state.questions, const NextSearchingQuestionsAction());
+                  // final store = StoreProvider.of<AppState>(context,listen: false);
+                  // getNextPageIfReady(store, state.questions, const NextSearchingQuestionsAction());
                 }
               ),
             ),

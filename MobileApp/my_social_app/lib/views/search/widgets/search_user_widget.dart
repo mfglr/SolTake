@@ -24,7 +24,7 @@ class SearchUserWidget extends StatelessWidget {
               .of(context)
               .push(MaterialPageRoute(builder: (context) => UserPage(userId: searchUser.id)));
             final store = StoreProvider.of<AppState>(context,listen: false);
-            store.dispatch(AddUserUserSearchAction(searchedId: searchUser.id));
+            store.dispatch(CreateUserUserSearchAction(searchedId: searchUser.id));
           },
           child: Row(
             children: [

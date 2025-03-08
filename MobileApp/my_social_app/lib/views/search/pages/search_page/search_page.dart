@@ -9,11 +9,12 @@ import 'package:my_social_app/state/app_state/user_user_search_state/actions.dar
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
-import 'package:my_social_app/views/search/widgets/search_question_widget.dart';
+import 'package:my_social_app/views/search/pages/search_page/search_page_texts.dart';
 import 'package:my_social_app/views/search/widgets/search_users_widget.dart';
 import 'package:my_social_app/views/search/widgets/user_user_searchs_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
 const icons = [Icons.question_mark, Icons.person];
@@ -31,6 +32,7 @@ class _SearchPageState extends State<SearchPage> {
   final ScrollController _scrollController = ScrollController();
   final StreamController<String> _keyStream = StreamController();
   late final StreamSubscription _keyListener;
+  late final Iterable<String> _labels;
 
   double _page = 0;
   void _setPage() => setState(() => _page = _pageController.page ?? 0 );
@@ -54,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
     onScrollBottom(
       _scrollController,
       (){
-        final store = StoreProvider.of<AppState>(context,listen: false);
+        final store = StoreProvider.of<AppState>(context, listen: false);
         if(_textEditingController.text == ""){
           getNextPageIfReady(store, store.state.userUserSearchs, const NextUserUserSearchsAction());
         }
@@ -66,15 +68,20 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    _labels = [
+      labelQuestion[store.state.loginState!.language]!,
+      labelUser[store.state.loginState!.language]!
+    ];
+
     _pageController.addListener(_setPage);
 
-    _keyStream.add("");
-    _keyListener = 
+    _keyListener =
       _keyStream.stream
         .debounceTime(const Duration(milliseconds: 400))
         .distinct()
         .listen(_listenKey);
-    _listenKey(_textEditingController.text);
+    _keyStream.add(_textEditingController.text);
 
     _scrollController.addListener(_onScrollBottom);
 
@@ -92,15 +99,11 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Iterable<String> labels = [
-      AppLocalizations.of(context)!.search_page_label_question,
-      AppLocalizations.of(context)!.search_page_label_user,
-    ];
     return Scaffold(
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 15,top:15),
+            padding: const EdgeInsets.only(bottom: 15, top:15),
             child: LabelPaginationWidget(
               initialPage: 0,
               labelCount: 2,
@@ -113,7 +116,7 @@ class _SearchPageState extends State<SearchPage> {
                       color: isActive ? Colors.black : Colors.grey
                     ),
                     Text(
-                      labels.elementAt(index),
+                      _labels.elementAt(index),
                       style: TextStyle(
                         color: isActive ? Colors.black : Colors.grey
                       ),
@@ -130,34 +133,47 @@ class _SearchPageState extends State<SearchPage> {
             child: PageView(
               controller: _pageController,
               children: [
-                const SearchQuestionWidget(),
+                // const SearchQuestionWidget(),
+                const Column(),
                 Column(
                   children: [
                     Container(
                       margin: const EdgeInsets.only(left:8,right: 8,bottom: 8),
-                      child: TextField(
-                        controller: _textEditingController,
-                        onChanged: _onKeyChanged,
-                        decoration: const InputDecoration(
-                          hintText: "Search Users"
+                      child: LanguageWidget(
+                        child: (language) => TextField(
+                          controller: _textEditingController,
+                          onChanged: _onKeyChanged,
+                          decoration: InputDecoration(
+                            hintText: textFieldHintText[language]
+                          ),
                         ),
                       ),
                     ),
-                    SingleChildScrollView(
-                      controller: _scrollController,
-                      child: _textEditingController.text.isEmpty 
-                        ? StoreConnector<AppState,Pagination<int,UserUserSearchState>>(
-                            converter: (store) => store.state.userUserSearchs,
-                            builder:(context, pagination) => UserUserSearchsWidget(
-                              userUserSearchs: pagination.values
+                    Expanded(
+                      child: SingleChildScrollView(
+                        controller: _scrollController,
+                        child: _textEditingController.text.isEmpty 
+                          ? StoreConnector<AppState, Pagination<int,UserUserSearchState>>(
+                              converter: (store) => store.state.userUserSearchs,
+                              builder: (context, pagination) => Column(
+                                children: [
+                                  UserUserSearchsWidget(userUserSearchs: pagination.values),
+                                  if(pagination.loadingNext)
+                                    const LoadingCircleWidget()
+                                ],
+                              )
                             )
-                          )
-                        : StoreConnector<AppState,Pagination<int, SearchUserState>>(
-                            converter: (store) => store.state.searchUsers,
-                            builder: (context,pagination) => SearchUsersWidget(
-                              searchUsers: pagination.values
+                          : StoreConnector<AppState,Pagination<int, SearchUserState>>(
+                              converter: (store) => store.state.searchUsers,
+                              builder: (context, pagination) => Column(
+                                children: [
+                                  SearchUsersWidget(searchUsers: pagination.values),
+                                  if(pagination.loadingNext)
+                                    const LoadingCircleWidget()
+                                ],
+                              ),
                             ),
-                          ),
+                      ),
                     ),
                   ],
                 )

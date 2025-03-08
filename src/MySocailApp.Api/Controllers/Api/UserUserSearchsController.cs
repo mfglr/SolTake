@@ -29,7 +29,7 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpDelete("{searchedId}")]
         public async Task Delete(int searchedId, CancellationToken cancellationToken)
             => await _sender.Send(new DeleteUserUserSearchDto(searchedId), cancellationToken);
-        
+
         [HttpGet]
         public async Task<List<UserUserSearchResponseDto>> Get([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetUsersSearchedDto(offset, take, isDescending), cancellationToken);
