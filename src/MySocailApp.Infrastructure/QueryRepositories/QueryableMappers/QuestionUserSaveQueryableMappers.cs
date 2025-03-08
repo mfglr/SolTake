@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
@@ -35,9 +35,9 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             question.UserId == userId,
                             question.UserId,
                             join.user.UserName.Value,
-                    question.Content.Value,
+                            question.Content.Value,
                             context.QuestionUserLikes.Any(x => x.UserId == userId && x.QuestionId == question.Id),
-                            question.Savers.Any(x => x.UserId == userId),
+                            context.QuestionUserSaves.Any(x => x.QuestionId == x.QuestionId && x.UserId == userId),
                             context.QuestionUserLikes.Count(x => x.QuestionId == question.Id),
                             context.Comments.Count(c => c.QuestionId == question.Id),
                             context.Solutions.Count(solution => solution.QuestionId == question.Id),

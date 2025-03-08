@@ -10,8 +10,8 @@ using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate.G
 
 namespace MySocailApp.Api.Controllers.Api
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(CheckUserFilterAttribute))]
     [ServiceFilter(typeof(CheckVersionFiltterAttribute))]

@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion;
-using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.SaveQuestion;
-using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.UnsaveQuestion;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetHomePageQuestions;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionById;
@@ -41,14 +39,6 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpDelete("{questionId}")]
         public async Task Delete(int questionId, CancellationToken cancellationToken)
             => await _sender.Send(new DeleteQuestionDto(questionId), cancellationToken);
-
-        [HttpPost]
-        public async Task<SaveQuestionCommandResponseDto> SaveQuestion(SaveQuestionDto request, CancellationToken cancellationToken)
-            => await _sender.Send(request, cancellationToken);
-
-        [HttpDelete("{questionId}")]
-        public async Task UnsaveQuestion(int questionId, CancellationToken cancellationToken)
-            => await _sender.Send(new UnsaveQuestionDto(questionId), cancellationToken);
 
         [HttpGet("{id}")]
         public async Task<QuestionResponseDto> GetQuestionById(int id, CancellationToken cancellationToken)

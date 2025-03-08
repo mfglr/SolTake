@@ -24,7 +24,7 @@ namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggreg
                 throw new QuestionNotFoundException();
 
             if (await _questionUserLikeRepository.IsLikedAsync(request.QuestionId, _userAccessor.User.Id, cancellationToken))
-                throw new QuestionAlreadyLikedException();
+                throw new Domain.QuestionDomain.QuestionUserLikeAggregate.Exceptions.QuestionAlreadyLikedException();
 
             var like = QuestionUserLike.Create(request.QuestionId, _userAccessor.User.Id);
             await _questionUserLikeWriteRepository.CreateAsync(like, cancellationToken);

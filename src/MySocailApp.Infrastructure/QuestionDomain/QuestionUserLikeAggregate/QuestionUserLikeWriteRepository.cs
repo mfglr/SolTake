@@ -15,8 +15,13 @@ namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
         public void Delete(QuestionUserLike like)
             => _context.QuestionUserLikes.Remove(like);
 
+        public void DeleteRange(IEnumerable<QuestionUserLike> likes)
+            => _context.QuestionUserLikes.RemoveRange(likes);
+
         public Task<QuestionUserLike?> GetAsync(int questionId, int userId, CancellationToken cancellationToken)
             => _context.QuestionUserLikes.FirstOrDefaultAsync(x => x.QuestionId == questionId && x.UserId == userId, cancellationToken: cancellationToken);
 
+        public Task<List<QuestionUserLike>> GetByUserIdAsync(int userId, CancellationToken cancellationToken)
+            => _context.QuestionUserLikes.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
     }
 }

@@ -18,12 +18,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
                 .WithOne()
                 .HasForeignKey(x => x.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Savers)
-                .WithOne()
-                .HasForeignKey(x => x.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

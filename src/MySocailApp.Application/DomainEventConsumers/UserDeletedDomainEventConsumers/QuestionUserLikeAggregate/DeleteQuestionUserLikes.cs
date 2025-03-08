@@ -3,16 +3,17 @@ using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.QuestionAggregate
+namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.QuestionUserLikeAggregate
 {
-    public class DeleteQuestionUserLikeNotifications(IUnitOfWork unitOfWork, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
+    public class DeleteQuestionUserLikes(IUnitOfWork unitOfWork, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {
         private readonly IQuestionUserLikeWriteRepository _questionUserLikeWriteRepository = questionUserLikeWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(UserDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            //_questionUserLikeWriteRepository.Delete(notification.User, cancellationToken);
+            var likes = await _questionUserLikeWriteRepository.GetByUserIdAsync(notification.User.Id, cancellationToken);
+            _questionUserLikeWriteRepository.DeleteRange(likes);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

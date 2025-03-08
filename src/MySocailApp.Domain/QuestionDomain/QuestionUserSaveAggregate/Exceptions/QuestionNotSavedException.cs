@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions
+namespace MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Exceptions
 {
     public class QuestionNotSavedException : AppException
     {

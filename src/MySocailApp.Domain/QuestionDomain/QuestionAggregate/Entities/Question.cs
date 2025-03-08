@@ -40,28 +40,5 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
             CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new QuestionCreatedDomainEvent(this));
         }
-
-        //saving questions
-        private readonly List<QuestionUserSave> _savers = [];
-        public IReadOnlyList<QuestionUserSave> Savers => _savers;
-        public QuestionUserSave Save(int userId)
-        {
-            if (_savers.Any(x => x.UserId == userId))
-                throw new QuestionAlreadySavedException();
-            var save = QuestionUserSave.Create(userId);
-            _savers.Add(save);
-            return save;
-        }
-        public void Unsave(int userId)
-        {
-            var save = _savers.FirstOrDefault(x => x.UserId == userId) ?? throw new QuestionNotSavedException();
-            _savers.Remove(save);
-        }
-        public void DeleteSave(int userId)
-        {
-            var index = _savers.FindIndex(x => x.UserId == userId);
-            if (index == -1) return;
-            _savers.RemoveAt(index);
-        }
     }
 }

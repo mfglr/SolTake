@@ -25,11 +25,7 @@ namespace MySocailApp.Infrastructure.QuestionDomain.QuestionAggregate
                 .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
-        public Task<Question?> GetQuestionWithSaveAsync(int questionId, int saverId, CancellationToken cancellationToken)
-            => _context.Questions
-                .Include(x => x.Savers.Where(x => x.UserId == saverId))
-                .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
-
+        
         public Task<Question?> GetQuestionAsync(int questionId, CancellationToken cancellationToken)
             => _context.Questions
                 .Include(x => x.Medias)
