@@ -10,6 +10,7 @@ import 'package:my_social_app/state/app_state/user_user_search_state/user_user_s
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/search/pages/search_page/search_page_texts.dart';
+import 'package:my_social_app/views/search/widgets/search_question_widget.dart';
 import 'package:my_social_app/views/search/widgets/search_users_widget.dart';
 import 'package:my_social_app/views/search/widgets/user_user_searchs_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
@@ -17,7 +18,7 @@ import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
-const icons = [Icons.question_mark, Icons.person];
+const _icons = [Icons.question_mark, Icons.person];
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -27,7 +28,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final PageController _pageController = PageController();
+  final PageController _pageController = PageController(viewportFraction: 0.99);
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final StreamController<String> _keyStream = StreamController();
@@ -103,7 +104,7 @@ class _SearchPageState extends State<SearchPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 15, top:15),
+            padding: const EdgeInsets.only(top:15),
             child: LabelPaginationWidget(
               initialPage: 0,
               labelCount: 2,
@@ -112,7 +113,7 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      icons[index],
+                      _icons[index],
                       color: isActive ? Colors.black : Colors.grey
                     ),
                     Text(
@@ -133,8 +134,7 @@ class _SearchPageState extends State<SearchPage> {
             child: PageView(
               controller: _pageController,
               children: [
-                // const SearchQuestionWidget(),
-                const Column(),
+                const SearchQuestionWidget(),
                 Column(
                   children: [
                     Container(

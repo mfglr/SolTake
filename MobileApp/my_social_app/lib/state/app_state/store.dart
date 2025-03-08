@@ -14,8 +14,7 @@ import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
-import 'package:my_social_app/state/app_state/search_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/search_state/search_state.dart';
+import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -33,6 +32,7 @@ final store = Store(
   reducers,
   initialState: AppState(
     searchUsers: Pagination.init(usersPerPage, true),
+    searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
 
     questionEntityState: EntityState(),
@@ -44,12 +44,6 @@ final store = Store(
     loginState: null,
     isInitialized: false,
     userEntityState: EntityState(),
-    searchState: SearchState(
-      key: "",examId: null,subjectId: null,topicId: null,
-      questions: Pagination.init(questionsPerPage,true),
-      users: Pagination.init(usersPerPage,true),
-      searchedUsers: Pagination.init(usersPerPage,true)
-    ),
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
@@ -67,17 +61,23 @@ final store = Store(
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
-    //user user searchs middlewares
-    createUserUserSearchMiddleware,
-    removeUserUserSearchMiddleware,
-    nextUserUserSearchsMiddleware,
-    //user user searchs middlewares
-
+    
     //search users middleware
     firstSearchUsersMiddleware,
     nextSearchUsersMiddleware,
     prevSearchUsersMiddleware,
     //search users middleware
+
+    //search questions middleware
+    firstSearchQuestionsMiddleware,
+    nextSearchQuestionsMiddleware,
+    //search questions middleware
+
+    //user user searchs middlewares
+    createUserUserSearchMiddleware,
+    removeUserUserSearchMiddleware,
+    nextUserUserSearchsMiddleware,
+    //user user searchs middlewares
 
     //exams middlewares
     nextExamsMidleware,
@@ -129,11 +129,7 @@ final store = Store(
     updateBiographyMidleware,
     uploadUserImageMiddleware,
     removeUserImageMiddleware,
-
-    //search state
-    firstSearchingQuestionsMiddleware,
-    nextSearchingQuestionsMiddleware,
-    //search end
+    
     
     //Exam entity state
     loadExamMiddleare,

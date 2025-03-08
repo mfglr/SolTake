@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/views/question/widgets/no_question_abstract_items_widget.dart';
@@ -8,8 +9,8 @@ import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 class QuestionAbstractItemsWidget extends StatefulWidget {
   final Iterable<QuestionState> questions;
   final Pagination pagination;
-  final Function onScrollBottom;
-  final void Function(num questionId) onTap;
+  final void Function() onScrollBottom;
+  final void Function(int questionId) onTap;
 
   const QuestionAbstractItemsWidget({
     super.key,
@@ -30,11 +31,7 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
 
   @override
   void initState() {
-    _onScrollBottom = (){
-      if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-        widget.onScrollBottom();
-      }
-    };
+    _onScrollBottom = () => onScrollBottom(_scrollController,widget.onScrollBottom);
     _scrollController.addListener(_onScrollBottom);
     super.initState();
   }

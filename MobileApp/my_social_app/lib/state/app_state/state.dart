@@ -14,7 +14,6 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/search_state/search_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_state.dart';
@@ -33,6 +32,7 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 @immutable
 class AppState{
   final Pagination<int,SearchUserState> searchUsers;
+  final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
 
   final EntityState<num,QuestionState> questionEntityState;
@@ -46,7 +46,6 @@ class AppState{
   final String? accessToken;
   final LoginState? loginState;
   final EntityState<num,UserState> userEntityState;
-  final SearchState searchState;
   final EntityState<num,TopicState> topicEntityState;
   final EntityState<num,SolutionState> solutionEntityState;
   final EntityState<num,SolutionUserVoteState> solutionUserVoteEntityState;
@@ -64,8 +63,8 @@ class AppState{
   const AppState({
 
     required this.searchUsers,
+    required this.searchQuestions,
     required this.userUserSearchs,
-
 
     required this.questionEntityState,
     required this.homePageQuestions,
@@ -77,7 +76,6 @@ class AppState{
     required this.loginState,
     required this.isInitialized,
     required this.userEntityState,
-    required this.searchState,
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.solutionEntityState,
@@ -96,6 +94,7 @@ class AppState{
 
   AppState clear() => AppState(
     searchUsers: Pagination.init(usersPerPage, true),
+    searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
 
     questionEntityState: EntityState(),
@@ -108,12 +107,6 @@ class AppState{
     loginState: null,
     isInitialized: true,
     userEntityState: EntityState(),
-    searchState: SearchState(
-      key: "",examId: null,subjectId: null,topicId: null,
-      questions: Pagination.init(questionsPerPage,true),
-      users: Pagination.init(usersPerPage,true),
-      searchedUsers: Pagination.init(usersPerPage,true)
-    ),
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
@@ -153,12 +146,6 @@ class AppState{
 
   //select users
   UserState? get currentUser => userEntityState.getValue(loginState!.id);
-  Iterable<UserState> get searchedUsers 
-    => searchState.users.values
-        .map((e) => userEntityState.getValue(e.id)!);
-  Iterable<UserState> get selectSearchedUsers
-    => searchState.searchedUsers.values
-        .map((e) => userEntityState.getValue(userSearchEntityState.getValue(e.id)!.searchedId)!);
   Iterable<UserState> selectCommentLikes(num commentId)
     => commentEntityState
         .getValue(commentId)!.likes.values
@@ -190,12 +177,10 @@ class AppState{
     => userEntityState.getValue(userId)!.solvedQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> selectUserUnsolvedQuestions(num userId)
     => userEntityState.getValue(userId)!.unsolvedQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
-  // Iterable<QuestionState> selectUserSavedQuestions(int userId) =>
-  //   userEntityState.getValue(userId)!.savedQuestions.values.map(
-  //     (saveId) => questionEntityState.entities[questionUserSaveEntityState.entities[saveId]!.questionId]!
-  //   );
+  
   Iterable<QuestionState> get selectSearchQuestions
-    => searchState.questions.values.map((e) => questionEntityState.getValue(e.id)!);
+    => searchQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
+
   QuestionState? selectQuestion(int questionId) => questionEntityState.getValue(questionId);
 
 

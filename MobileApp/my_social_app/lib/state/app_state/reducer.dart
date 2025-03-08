@@ -14,7 +14,7 @@ import 'package:my_social_app/state/app_state/conversations_state/reducers.dart'
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/search_state/reducers.dart';
+import 'package:my_social_app/state/app_state/search_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_user_save_entity_state/reducers.dart';
@@ -34,6 +34,7 @@ AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear(
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
   searchUsers: searchUsersReducers(prev.searchUsers,action),
+  searchQuestions: searchQuestionsReducer(prev.searchQuestions,action),
   userUserSearchs: userUserSearchsReducers(prev.userUserSearchs,action),
 
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
@@ -41,7 +42,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   loginState: accoutStateReducers(prev.loginState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
-  searchState: searchStateReducers(prev.searchState,action),
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),

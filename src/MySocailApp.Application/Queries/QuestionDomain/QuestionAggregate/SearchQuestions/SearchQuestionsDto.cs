@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
 using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.SearchQuestions
 {
-    public class SearchQuestionsDto(int? examId, int? subjectId, int? topicId, int offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<QuestionResponseDto>>
+    public class SearchQuestionsDto(int? examId, int? subjectId, int? topicId, int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<QuestionResponseDto>>
     {
         public int? ExamId { get; private set; } = examId;
         public int? SubjectId { get; private set; } = subjectId;

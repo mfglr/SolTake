@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 
 class QuestionAbstractItemWidget extends StatelessWidget {
   final QuestionState question;
-  final void Function(num questionId) onTap;
+  final void Function(int questionId) onTap;
   
   const QuestionAbstractItemWidget({
     super.key,
