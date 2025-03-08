@@ -16,6 +16,6 @@ class AddUserSearchAction extends AppAction{
 
 @immutable
 class RemoveUserSearchAction extends AppAction{
-  final num searchId;
+  final int searchId;
   const RemoveUserSearchAction({required this.searchId});
 }

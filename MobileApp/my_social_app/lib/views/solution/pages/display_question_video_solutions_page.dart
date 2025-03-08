@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/solution_video_page_slider.dart';
 
 class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
-  final num questionId;
+  final int questionId;
   const DisplayQuestionVideoSolutionsPage({
     super.key,
     required this.questionId

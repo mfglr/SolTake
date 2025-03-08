@@ -17,7 +17,7 @@ import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class SelectTopicPage extends StatefulWidget {
-  final num subjectId;
+  final int subjectId;
   const SelectTopicPage({
     super.key,
     required this.subjectId

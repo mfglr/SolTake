@@ -12,8 +12,8 @@ import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayQuestionSolutionsPage extends StatelessWidget {
-  final num questionId;
-  final num? solutionId;
+  final int questionId;
+  final int? solutionId;
 
   const DisplayQuestionSolutionsPage({
     super.key,

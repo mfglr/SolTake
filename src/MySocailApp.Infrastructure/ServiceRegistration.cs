@@ -122,7 +122,7 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IUserUserSearchQueryRepository, UserUserSearchedQueryRepository>()
                 .AddScoped<IQuestionQueryRepository, QuestionQueryRepository>()
                 .AddScoped<IQuestionUserLikeQueryRepository, QuestionUserLikeQueryRepository>()
-                .AddScoped<IQuestionUserSaveQueryRepository, QuestionUserSaveQuestionRepository>()
+                .AddScoped<IQuestionUserSaveQueryRepository, QuestionUserSaveQueryRepository>()
                 .AddScoped<ISolutionQueryRepository, SolutionQueryRepository>()
                 .AddScoped<ICommentQueryRepository, CommentQueryRepository>()
                 .AddScoped<ISolutionUserVoteQueryRepository, SolutionUserVoteQueryRepository>()

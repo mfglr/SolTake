@@ -14,7 +14,7 @@ import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplaySolutionUpvotesPage extends StatelessWidget {
-  final num solutionId;
+  final int solutionId;
   const DisplaySolutionUpvotesPage({
     super.key,
     required this.solutionId

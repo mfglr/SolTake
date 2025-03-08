@@ -6,7 +6,7 @@ class NextHomeQuestionsAction extends AppAction{
 }
 @immutable
 class NextHomeQuestionsSuccessAction extends AppAction{
-  final Iterable<num> questionIds;
+  final Iterable<int> questionIds;
   const NextHomeQuestionsSuccessAction({required this.questionIds});
 }
 @immutable
@@ -20,7 +20,7 @@ class PrevHomePageQuestionsAction extends AppAction{
 }
 @immutable
 class PrevHomeQuestionsSuccessAction extends AppAction{
-  final Iterable<num> questionIds;
+  final Iterable<int> questionIds;
   const PrevHomeQuestionsSuccessAction({required this.questionIds});
 }
 @immutable

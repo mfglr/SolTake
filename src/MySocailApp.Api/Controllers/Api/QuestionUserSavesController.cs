@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.DeleteQuestionUserSave;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionUserSaveAggregate;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionUserSaveAggregate.GetQuestionUserSaves;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -28,5 +30,8 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task Delete(int questionId, CancellationToken cancellationToken)
             => await _sender.Send(new DeleteQuestionUserSaveDto(questionId), cancellationToken);
 
+        [HttpGet]
+        public async Task<List<QuestionUserSaveResponseDto>> Get([FromQuery]int? offset, [FromQuery]int take, [FromQuery]bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new GetQuestionUserSavesDto(offset,take,isDescending),cancellationToken);
     }
 }

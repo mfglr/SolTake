@@ -18,6 +18,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
+
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
@@ -72,18 +73,7 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-// void saveQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
-//   if(action is SaveQuestionAction){
-//     final accountId = store.state.loginState!.id;
-//     QuestionService()
-//       .save(action.questionId)
-//       .then((save){
-//         store.dispatch(SaveQuestionSuccessAction(questionId: action.questionId));
-//         store.dispatch(AddUserSavedQuestionAction(userId: accountId, saveId: save.id));
-//       });
-//   }
-//   next(action);
-// }
+
 
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){

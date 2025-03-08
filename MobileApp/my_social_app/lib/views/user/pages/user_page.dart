@@ -17,7 +17,7 @@ import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserPage extends StatefulWidget {
-  final num? userId;
+  final int? userId;
   final String? userName;
 
   const UserPage({

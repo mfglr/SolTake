@@ -14,6 +14,6 @@ class AddSolutionUserSaveAction extends AppAction{
 }
 @immutable
 class RemoveSolutionUserSaveAction extends AppAction{
-  final num saveId;
+  final int saveId;
   const RemoveSolutionUserSaveAction({required this.saveId});
 }

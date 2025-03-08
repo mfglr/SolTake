@@ -6,7 +6,7 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 @immutable
 class TopicState extends BaseEntity<int>{
   final String name;
-  final Pagination<num,Id<num>> questions;
+  final Pagination<int,Id<int>> questions;
 
   TopicState({
     required super.id,
@@ -26,7 +26,7 @@ class TopicState extends BaseEntity<int>{
       name: name,
       questions: questions.stopLoadingNext()
     );
-  TopicState addNextQuestions(Iterable<num> quesionIds)
+  TopicState addNextQuestions(Iterable<int> quesionIds)
     => TopicState(
         id: id,
         name: name,
@@ -45,20 +45,20 @@ class TopicState extends BaseEntity<int>{
         name: name,
         questions: questions.stopLoadingPrev()
       );
-  TopicState addPrevQuestions(Iterable<num> questionIds)
+  TopicState addPrevQuestions(Iterable<int> questionIds)
     => TopicState(
         id: id,
         name: name,
         questions: questions.addPrevPage(questionIds.map((questionId) => Id(id: questionId)))
       );
     
-  TopicState addQuestionId(num questionId)
+  TopicState addQuestionId(int questionId)
     => TopicState(
         id: id,
         name: name,
         questions: questions.prependOne(Id(id: questionId))
       );
-  TopicState removeQuestionId(num questionId)
+  TopicState removeQuestionId(int questionId)
     => TopicState(
         id: id,
         name: name,

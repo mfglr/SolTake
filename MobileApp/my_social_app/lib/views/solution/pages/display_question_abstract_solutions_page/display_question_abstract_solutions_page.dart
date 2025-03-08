@@ -25,7 +25,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];
 
 class DisplayQuestionAbstractSolutionsPage extends StatefulWidget {
-  final num questionId;
+  final int questionId;
   const DisplayQuestionAbstractSolutionsPage({
     super.key,
     required this.questionId

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_user_saves_state/actions.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 
 class SaveQuestionButton extends StatelessWidget {
   final QuestionState question;
@@ -12,12 +15,12 @@ class SaveQuestionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
-        // final store = StoreProvider.of<AppState>(context,listen: false);
+        final store = StoreProvider.of<AppState>(context,listen: false);
         if(question.isSaved){
-          // store.dispatch(UnsaveQuestionAction(questionId: question.id));
+          store.dispatch(DeleteQuestionUserSaveAction(questionId: question.id));
         }
         else{
-          // store.dispatch(SaveQuestionAction(questionId: question.id));
+          store.dispatch(CreateQuestionUserSaveAction(questionId: question.id));
         }
       },
       style: ButtonStyle(

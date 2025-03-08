@@ -17,13 +17,13 @@ class SolutionState extends BaseEntity<int> implements Avatar{
   final bool isUpvoted;
   final int numberOfUpvotes;
   final bool isDownvoted;
-  final Pagination<num,Id<num>> upvotes;
-  final Pagination<num,Id<num>> downvotes;
+  final Pagination<int,Id<int>> upvotes;
+  final Pagination<int,Id<int>> downvotes;
   final int numberOfDownvotes;
   final int state;
   final Iterable<Multimedia> medias;
   final int numberOfComments;
-  final Pagination<num,Id<num>> comments;
+  final Pagination<int,Id<int>> comments;
   final bool doesBelongToQuestionOfCurrentUser;
   final Multimedia? image;
   final bool isCreatedByAI;
@@ -72,12 +72,12 @@ class SolutionState extends BaseEntity<int> implements Avatar{
     int? newNumberOfUpvotes,
     bool? newIsDownvoted,
     int? newNumberOfDownvotes,
-    Pagination<num,Id<num>>? newComments,
+    Pagination<int,Id<int>>? newComments,
     Iterable<Multimedia>? newMedias,
     int? newNumberOfComments,
     int? newState,
-    Pagination<num,Id<num>>? newUpvotes,
-    Pagination<num,Id<num>>? newDownvotes,
+    Pagination<int,Id<int>>? newUpvotes,
+    Pagination<int,Id<int>>? newDownvotes,
     Multimedia? newImage,
   })
     => SolutionState(
@@ -110,11 +110,11 @@ class SolutionState extends BaseEntity<int> implements Avatar{
     => _optinal(newUpvotes: upvotes.startLoadingNext());
   SolutionState stopLoadingNextUpvotes()
     => _optinal(newUpvotes: upvotes.stopLoadingNext());
-  SolutionState addNextUpvotes(Iterable<num> voteIds)
+  SolutionState addNextUpvotes(Iterable<int> voteIds)
     => _optinal(newUpvotes: upvotes.addNextPage(voteIds.map((voteId) => Id(id: voteId))));
   
   
-  SolutionState makeUpvote(num upvoteId,num downvoteId)
+  SolutionState makeUpvote(int upvoteId,int downvoteId)
     => _optinal(
       newIsUpvoted: true,
       newNumberOfUpvotes: numberOfUpvotes + 1,
@@ -123,13 +123,13 @@ class SolutionState extends BaseEntity<int> implements Avatar{
       newNumberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
       newDownvotes: isDownvoted ? downvotes.removeOne(downvoteId) : downvotes
     ); 
-  SolutionState removeUpvote(num voteId)
+  SolutionState removeUpvote(int voteId)
     => _optinal(
       newIsUpvoted: false,
       newNumberOfUpvotes: numberOfUpvotes - 1,
       newUpvotes: upvotes.removeOne(voteId)
     );
-  SolutionState addNewUpvote(num voteId)
+  SolutionState addNewUpvote(int voteId)
     => _optinal(
       newNumberOfUpvotes: numberOfUpvotes + 1,
       newUpvotes: upvotes.addInOrder(Id(id: voteId)),
@@ -137,12 +137,12 @@ class SolutionState extends BaseEntity<int> implements Avatar{
 
   SolutionState startLoadingNextDownvotes()
     => _optinal(newDownvotes: downvotes.startLoadingNext());
-  SolutionState addNextDownvotes(Iterable<num> voteIds)
+  SolutionState addNextDownvotes(Iterable<int> voteIds)
     => _optinal(newDownvotes: downvotes.addNextPage(voteIds.map((voteId) => Id(id: voteId))));
   SolutionState stopLoadingNextDownvotes()
     => _optinal(newDownvotes: downvotes.stopLoadingNext());
     
-  SolutionState makeDownvote(num upvoteId,num downvoteId)
+  SolutionState makeDownvote(int upvoteId,int downvoteId)
     => _optinal(
       newIsUpvoted: false,
       newNumberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
@@ -151,13 +151,13 @@ class SolutionState extends BaseEntity<int> implements Avatar{
       newNumberOfDownvotes: numberOfDownvotes + 1,
       newDownvotes: downvotes.prependOne(Id(id: downvoteId)),
     );
-  SolutionState removeDownvote(num voteId)
+  SolutionState removeDownvote(int voteId)
     => _optinal(
       newIsDownvoted: false,
       newNumberOfDownvotes: numberOfDownvotes - 1,
       newDownvotes: downvotes.removeOne(voteId)
     );
-  SolutionState addNewDownvote(num voteId)
+  SolutionState addNewDownvote(int voteId)
     => _optinal(
       newNumberOfDownvotes: numberOfDownvotes + 1,
       newDownvotes: downvotes.addInOrder(Id(id: voteId))
@@ -166,22 +166,22 @@ class SolutionState extends BaseEntity<int> implements Avatar{
 
   SolutionState startLoadingNextComments()
     => _optinal(newComments: comments.startLoadingNext());
-  SolutionState addNextComments(Iterable<num> commentIds)
+  SolutionState addNextComments(Iterable<int> commentIds)
     => _optinal(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
   SolutionState stopLoadingNextComments()
     => _optinal(newComments: comments.stopLoadingNext());
     
-  SolutionState addComment(num commentId) =>
+  SolutionState addComment(int commentId) =>
     _optinal(
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.prependOne(Id(id: commentId)),
     );
-  SolutionState removeComment(num commentId) =>
+  SolutionState removeComment(int commentId) =>
     _optinal(
       newNumberOfComments: numberOfComments - 1,
       newComments: comments.removeOne(commentId),
     );
-  SolutionState addNewComment(num commentId) =>
+  SolutionState addNewComment(int commentId) =>
     _optinal(
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.addInOrder(Id(id: commentId))

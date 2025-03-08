@@ -3,45 +3,45 @@ import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart'
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-EntityState<num,ExamState> addExamsReducer(EntityState<num,ExamState> prev,AddExamsAction action)
+EntityState<int,ExamState> addExamsReducer(EntityState<int,ExamState> prev,AddExamsAction action)
   => prev.appendMany(action.exams);
-EntityState<num,ExamState> addExamReducer(EntityState<num,ExamState> prev,AddExamAction action)
+EntityState<int,ExamState> addExamReducer(EntityState<int,ExamState> prev,AddExamAction action)
   => prev.appendOne(action.exam);
 
-EntityState<num,ExamState> nextQuestionsReducer(EntityState<num,ExamState> prev,NextExamQuestionsAction action)
+EntityState<int,ExamState> nextQuestionsReducer(EntityState<int,ExamState> prev,NextExamQuestionsAction action)
   => prev.updateOne(prev.getValue(action.examId)!.startLoadingNextQuestions());
-EntityState<num,ExamState> nextQuestionsSuccessReducer(EntityState<num,ExamState> prev,NextExamQuestionsSuccessAction action)
+EntityState<int,ExamState> nextQuestionsSuccessReducer(EntityState<int,ExamState> prev,NextExamQuestionsSuccessAction action)
   => prev.updateOne(prev.getValue(action.examId)!.addNextQuestions(action.questionIds));
-EntityState<num,ExamState> nextQuestionsFailedReducer(EntityState<num,ExamState> prev,NextExamQuestionsFailedAction action)
+EntityState<int,ExamState> nextQuestionsFailedReducer(EntityState<int,ExamState> prev,NextExamQuestionsFailedAction action)
   => prev.updateOne(prev.getValue(action.examId)!.stopLoadingNextQuestions());
 
-EntityState<num,ExamState> prevQuestionsReducer(EntityState<num,ExamState> prev,PrevExamQuestionsAction action)
+EntityState<int,ExamState> prevQuestionsReducer(EntityState<int,ExamState> prev,PrevExamQuestionsAction action)
   => prev.updateOne(prev.getValue(action.examId)!.startLoadingPrevQuestions());
-EntityState<num,ExamState> prevQuestionsSuccessReducer(EntityState<num,ExamState> prev,PrevExamQuestionsSuccessAction action)
+EntityState<int,ExamState> prevQuestionsSuccessReducer(EntityState<int,ExamState> prev,PrevExamQuestionsSuccessAction action)
   => prev.updateOne(prev.getValue(action.examId)!.addPrevQuestions(action.questionIds));
-EntityState<num,ExamState> prevQuestionsFailedReducer(EntityState<num,ExamState> prev,PrevExamQuestionsFailedAction action)
+EntityState<int,ExamState> prevQuestionsFailedReducer(EntityState<int,ExamState> prev,PrevExamQuestionsFailedAction action)
   => prev.updateOne(prev.getValue(action.examId)!.stopLoadingPrevQuestions());
 
-EntityState<num,ExamState> nextSubjectsReducer(EntityState<num,ExamState> prev,NextExamSubjectsAction action)
+EntityState<int,ExamState> nextSubjectsReducer(EntityState<int,ExamState> prev,NextExamSubjectsAction action)
   => prev.updateOne(prev.getValue(action.examId)!.startLoadingNextSubjects());
-EntityState<num,ExamState> nextSubjectsSuccessReducer(EntityState<num,ExamState> prev,NextExamSubjectsSuccessAction action)
+EntityState<int,ExamState> nextSubjectsSuccessReducer(EntityState<int,ExamState> prev,NextExamSubjectsSuccessAction action)
   => prev.updateOne(prev.getValue(action.examId)!.addNextSubjects(action.subjectIds));
-EntityState<num,ExamState> nextSubjectsFailedReducer(EntityState<num,ExamState> prev,NextExamSubjectsFailedAction action)
+EntityState<int,ExamState> nextSubjectsFailedReducer(EntityState<int,ExamState> prev,NextExamSubjectsFailedAction action)
   => prev.updateOne(prev.getValue(action.examId)!.stopLoadingNextSubjects());
 
-Reducer<EntityState<num,ExamState>> examEntityStateReducers = combineReducers<EntityState<num,ExamState>>([
-  TypedReducer<EntityState<num,ExamState>,AddExamAction>(addExamReducer).call,
-  TypedReducer<EntityState<num,ExamState>,AddExamsAction>(addExamsReducer).call,
+Reducer<EntityState<int,ExamState>> examEntityStateReducers = combineReducers<EntityState<int,ExamState>>([
+  TypedReducer<EntityState<int,ExamState>,AddExamAction>(addExamReducer).call,
+  TypedReducer<EntityState<int,ExamState>,AddExamsAction>(addExamsReducer).call,
 
-  TypedReducer<EntityState<num,ExamState>,NextExamQuestionsAction>(nextQuestionsReducer).call,
-  TypedReducer<EntityState<num,ExamState>,NextExamQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
-  TypedReducer<EntityState<num,ExamState>,NextExamQuestionsFailedAction>(nextQuestionsFailedReducer).call,
+  TypedReducer<EntityState<int,ExamState>,NextExamQuestionsAction>(nextQuestionsReducer).call,
+  TypedReducer<EntityState<int,ExamState>,NextExamQuestionsSuccessAction>(nextQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<int,ExamState>,NextExamQuestionsFailedAction>(nextQuestionsFailedReducer).call,
 
-  TypedReducer<EntityState<num,ExamState>,PrevExamQuestionsAction>(prevQuestionsReducer).call,
-  TypedReducer<EntityState<num,ExamState>,PrevExamQuestionsSuccessAction>(prevQuestionsSuccessReducer).call,
-  TypedReducer<EntityState<num,ExamState>,PrevExamQuestionsFailedAction>(prevQuestionsFailedReducer).call,
+  TypedReducer<EntityState<int,ExamState>,PrevExamQuestionsAction>(prevQuestionsReducer).call,
+  TypedReducer<EntityState<int,ExamState>,PrevExamQuestionsSuccessAction>(prevQuestionsSuccessReducer).call,
+  TypedReducer<EntityState<int,ExamState>,PrevExamQuestionsFailedAction>(prevQuestionsFailedReducer).call,
   
-  TypedReducer<EntityState<num,ExamState>,NextExamSubjectsAction>(nextSubjectsReducer).call,
-  TypedReducer<EntityState<num,ExamState>,NextExamSubjectsSuccessAction>(nextSubjectsSuccessReducer).call,
-  TypedReducer<EntityState<num,ExamState>,NextExamSubjectsFailedAction>(nextSubjectsFailedReducer).call,
+  TypedReducer<EntityState<int,ExamState>,NextExamSubjectsAction>(nextSubjectsReducer).call,
+  TypedReducer<EntityState<int,ExamState>,NextExamSubjectsSuccessAction>(nextSubjectsSuccessReducer).call,
+  TypedReducer<EntityState<int,ExamState>,NextExamSubjectsFailedAction>(nextSubjectsFailedReducer).call,
 ]);

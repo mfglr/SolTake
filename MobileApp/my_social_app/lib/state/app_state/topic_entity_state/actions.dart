@@ -21,34 +21,34 @@ class AddTopicsListAction extends AppAction{
 
 @immutable
 class NextTopicQuestionsAction extends AppAction{
-  final num topicId;
+  final int topicId;
   const NextTopicQuestionsAction({required this.topicId});
 }
 @immutable
 class NextTopicQuestionsSuccessAction extends AppAction{
-  final num topicId;
-  final List<num> questionIds;
+  final int topicId;
+  final List<int> questionIds;
   const NextTopicQuestionsSuccessAction({required this.topicId, required this.questionIds});
 }
 @immutable
 class NextTopicQuestionFailedAction extends AppAction{
-  final num topicId;
+  final int topicId;
   const NextTopicQuestionFailedAction({required this.topicId});
 }
 
 @immutable
 class PrevTopicQuestionsAction extends AppAction{
-  final num topicId;
+  final int topicId;
   const PrevTopicQuestionsAction({required this.topicId});
 }
 @immutable
 class PrevTopicQuestionsSuccessAction extends AppAction{
-  final num topicId;
-  final Iterable<num> questionIds;
+  final int topicId;
+  final Iterable<int> questionIds;
   const PrevTopicQuestionsSuccessAction({required this.topicId, required this.questionIds});
 }
 @immutable
 class PrevTopicQuestionsFailedAction extends AppAction{
-  final num topicId;
+  final int topicId;
   const PrevTopicQuestionsFailedAction({required this.topicId});
 }

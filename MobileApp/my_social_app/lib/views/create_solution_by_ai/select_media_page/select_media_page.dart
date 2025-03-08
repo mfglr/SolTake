@@ -16,7 +16,7 @@ import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 
 class SelectMediaPage extends StatelessWidget {
-  final num questionId;
+  final int questionId;
   const SelectMediaPage({
     super.key,
     required this.questionId

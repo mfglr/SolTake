@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionDomain.QuestionUserSaveAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
@@ -14,7 +15,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     context.Users,
                     qus => qus.UserId,
                     user => user.Id,
-                    (qus, user) => new { qus, user }
+                    (qus, user) => new { qus, UserName = user.UserName.Value, user.Image }
                 )
                 .Join(
                     context.Questions,
@@ -22,9 +23,6 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     question => question.Id,
                     (join, question) => new QuestionUserSaveResponseDto(
                         join.qus.Id,
-                        join.qus.CreatedAt,
-                        join.qus.QuestionId,
-                        join.qus.UserId,
                         new QuestionResponseDto(
                             question.Id,
                             question.CreatedAt,
@@ -34,7 +32,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                 : QuestionState.Unsolved,
                             question.UserId == userId,
                             question.UserId,
-                            join.user.UserName.Value,
+                            join.UserName,
                             question.Content.Value,
                             context.QuestionUserLikes.Any(x => x.UserId == userId && x.QuestionId == question.Id),
                             context.QuestionUserSaves.Any(x => x.QuestionId == x.QuestionId && x.UserId == userId),
@@ -60,7 +58,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                                     i.MultimediaType
                                 )
                             ),
-                            join.user.Image
+                            join.Image
                         )
                     )
                 );

@@ -13,6 +13,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/mid
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/question_user_saves_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
@@ -34,6 +35,7 @@ final store = Store(
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
+    questionUserSaves: Pagination.init(questionsPerPage, true),
 
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
@@ -62,6 +64,12 @@ final store = Store(
   ),
   middleware: [
     
+    //question user save middlewares
+    createQuestionUserSaveMiddleware,
+    deleteQuestionUserSaveMiddleware,
+    nextQuestionUserSavesMiddleware,
+    //questino user save middlewares
+
     //search users middleware
     firstSearchUsersMiddleware,
     nextSearchUsersMiddleware,
@@ -120,7 +128,6 @@ final store = Store(
     nextUserQuestionsMiddleware,
     nextUserSolvedQuestionsMiddleware,
     nextUserUnsolvedQuestionsMiddleware,
-    nextUserSavedQuestionsMiddleware,
     nextUserSavedSolutionsMiddleware,
     nextUserConvesationsMiddleware,
 

@@ -3,41 +3,41 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
-EntityState<num,MessageState> addMessageReducer(EntityState<num,MessageState> prev,AddMessageAction action)
+EntityState<int,MessageState> addMessageReducer(EntityState<int,MessageState> prev,AddMessageAction action)
   => prev.appendOne(action.message);
-EntityState<num,MessageState> addMessagesReducer(EntityState<num,MessageState> prev,AddMessagesAction action)
+EntityState<int,MessageState> addMessagesReducer(EntityState<int,MessageState> prev,AddMessagesAction action)
   => prev.appendMany(action.messages);
-EntityState<num,MessageState> addMessagesListsReducer(EntityState<num,MessageState> prev,AddMessagesListsAction action)
+EntityState<int,MessageState> addMessagesListsReducer(EntityState<int,MessageState> prev,AddMessagesListsAction action)
   => prev.appendList(action.lists);
-EntityState<num,MessageState> removeMessageReducer(EntityState<num,MessageState> prev,RemoveMessageSuccessAction action)
+EntityState<int,MessageState> removeMessageReducer(EntityState<int,MessageState> prev,RemoveMessageSuccessAction action)
   => prev.where((e) => e.id != action.messageId);
-EntityState<num,MessageState> removeMessagesReducer(EntityState<num,MessageState> prev,RemoveMessagesSuccessAction action)
+EntityState<int,MessageState> removeMessagesReducer(EntityState<int,MessageState> prev,RemoveMessagesSuccessAction action)
   => prev.where((e) => !action.messageIds.contains(e.id));
-EntityState<num,MessageState> removeMessagesByUserIdsReducer(EntityState<num,MessageState> prev,RemoveMessagesByUserIdsSuccessAction action)
+EntityState<int,MessageState> removeMessagesByUserIdsReducer(EntityState<int,MessageState> prev,RemoveMessagesByUserIdsSuccessAction action)
   => prev.where((e) => !action.userIds.any((userId) => userId == e.senderId || userId == e.receiverId));
 
-EntityState<num,MessageState> markComingMessagesAsReceivedSuccessAction(EntityState<num,MessageState> prev,MarkComingMessagesAsReceivedSuccessAction action)
+EntityState<int,MessageState> markComingMessagesAsReceivedSuccessAction(EntityState<int,MessageState> prev,MarkComingMessagesAsReceivedSuccessAction action)
   => prev.updateMany(prev.getList((e) => action.messageIds.any((messageId) => messageId == e.id)).map((e) => e.markAsReceived()));
-EntityState<num,MessageState> markComingMessagesAsViewedSuccessAction(EntityState<num,MessageState> prev,MarkComingMessagesAsViewedSuccessAction action)
+EntityState<int,MessageState> markComingMessagesAsViewedSuccessAction(EntityState<int,MessageState> prev,MarkComingMessagesAsViewedSuccessAction action)
   => prev.updateMany(prev.getList((e) => action.messageIds.any((messageId) => messageId == e.id)).map((e) => e.markAsViewed()));
 
-EntityState<num,MessageState> markOutgoingMessageAsReceivedReducer(EntityState<num,MessageState> prev,MarkOutgoingMessageAsReceivedAction action)
+EntityState<int,MessageState> markOutgoingMessageAsReceivedReducer(EntityState<int,MessageState> prev,MarkOutgoingMessageAsReceivedAction action)
   // => prev.markOutgoingMessageAsReceived(action.message);
   => prev;
-EntityState<num,MessageState> markOutgoingMessageAsViewedReducer(EntityState<num,MessageState> prev,MarkOutgoingMessageAsViewedAction action)
+EntityState<int,MessageState> markOutgoingMessageAsViewedReducer(EntityState<int,MessageState> prev,MarkOutgoingMessageAsViewedAction action)
   // => prev.markOutgoingMessageAsViewed(action.message);
   => prev;
-Reducer<EntityState<num,MessageState>> messageEntityStateReducers = combineReducers<EntityState<num,MessageState>>([
-  TypedReducer<EntityState<num,MessageState>,AddMessageAction>(addMessageReducer).call,
-  TypedReducer<EntityState<num,MessageState>,AddMessagesAction>(addMessagesReducer).call,
-  TypedReducer<EntityState<num,MessageState>,AddMessagesListsAction>(addMessagesListsReducer).call,
-  TypedReducer<EntityState<num,MessageState>,RemoveMessageSuccessAction>(removeMessageReducer).call,
-  TypedReducer<EntityState<num,MessageState>,RemoveMessagesSuccessAction>(removeMessagesReducer).call,
-  TypedReducer<EntityState<num,MessageState>,RemoveMessagesByUserIdsSuccessAction>(removeMessagesByUserIdsReducer).call,
+Reducer<EntityState<int,MessageState>> messageEntityStateReducers = combineReducers<EntityState<int,MessageState>>([
+  TypedReducer<EntityState<int,MessageState>,AddMessageAction>(addMessageReducer).call,
+  TypedReducer<EntityState<int,MessageState>,AddMessagesAction>(addMessagesReducer).call,
+  TypedReducer<EntityState<int,MessageState>,AddMessagesListsAction>(addMessagesListsReducer).call,
+  TypedReducer<EntityState<int,MessageState>,RemoveMessageSuccessAction>(removeMessageReducer).call,
+  TypedReducer<EntityState<int,MessageState>,RemoveMessagesSuccessAction>(removeMessagesReducer).call,
+  TypedReducer<EntityState<int,MessageState>,RemoveMessagesByUserIdsSuccessAction>(removeMessagesByUserIdsReducer).call,
 
-  TypedReducer<EntityState<num,MessageState>,MarkComingMessagesAsReceivedSuccessAction>(markComingMessagesAsReceivedSuccessAction).call,
-  TypedReducer<EntityState<num,MessageState>,MarkComingMessagesAsViewedSuccessAction>(markComingMessagesAsViewedSuccessAction).call,
+  TypedReducer<EntityState<int,MessageState>,MarkComingMessagesAsReceivedSuccessAction>(markComingMessagesAsReceivedSuccessAction).call,
+  TypedReducer<EntityState<int,MessageState>,MarkComingMessagesAsViewedSuccessAction>(markComingMessagesAsViewedSuccessAction).call,
   
-  TypedReducer<EntityState<num,MessageState>,MarkOutgoingMessageAsReceivedAction>(markOutgoingMessageAsReceivedReducer).call,
-  TypedReducer<EntityState<num,MessageState>,MarkOutgoingMessageAsViewedAction>(markOutgoingMessageAsViewedReducer).call,
+  TypedReducer<EntityState<int,MessageState>,MarkOutgoingMessageAsReceivedAction>(markOutgoingMessageAsReceivedReducer).call,
+  TypedReducer<EntityState<int,MessageState>,MarkOutgoingMessageAsViewedAction>(markOutgoingMessageAsViewedReducer).call,
 ]);

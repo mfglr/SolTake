@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 
 @immutable
 class UploadSolutionState extends UploadState{
-  final num questionId;
+  final int questionId;
   final String? content;
 
   const UploadSolutionState._({

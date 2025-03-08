@@ -14,6 +14,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_user_saves_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_state.dart';
@@ -34,30 +35,32 @@ class AppState{
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
+  final Pagination<int,QuestionUserSaveState> questionUserSaves;
 
-  final EntityState<num,QuestionState> questionEntityState;
-  final Pagination<num,Id<num>> homePageQuestions;
-  final EntityState<num,ExamState> examEntityState;
-  final Pagination<num,Id<num>> appExams;
-  final Pagination<num,NotificationState> notifications;
-  final EntityState<num,SubjectState> subjectEntityState;
+
+  final EntityState<int,QuestionState> questionEntityState;
+  final Pagination<int,Id<int>> homePageQuestions;
+  final EntityState<int,ExamState> examEntityState;
+  final Pagination<int,Id<int>> appExams;
+  final Pagination<int,NotificationState> notifications;
+  final EntityState<int,SubjectState> subjectEntityState;
   final bool isInitialized;
   final ActiveAccountPage activeAccountPage;
   final String? accessToken;
   final LoginState? loginState;
-  final EntityState<num,UserState> userEntityState;
-  final EntityState<num,TopicState> topicEntityState;
-  final EntityState<num,SolutionState> solutionEntityState;
-  final EntityState<num,SolutionUserVoteState> solutionUserVoteEntityState;
-  final EntityState<num,SolutionUserSaveState> solutionUserSaveEntityState;
-  final EntityState<num,CommentState> commentEntityState;
-  final EntityState<num,CommentUserLikeState> commentUserLikeEntityState;
+  final EntityState<int,UserState> userEntityState;
+  final EntityState<int,TopicState> topicEntityState;
+  final EntityState<int,SolutionState> solutionEntityState;
+  final EntityState<int,SolutionUserVoteState> solutionUserVoteEntityState;
+  final EntityState<int,SolutionUserSaveState> solutionUserSaveEntityState;
+  final EntityState<int,CommentState> commentEntityState;
+  final EntityState<int,CommentUserLikeState> commentUserLikeEntityState;
   final CreateCommentState createCommentState;
-  final EntityState<num,MessageState> messageEntityState;
-  final Pagination<num,Id<num>> conversations;
-  final EntityState<num,UserSearchState> userSearchEntityState;
+  final EntityState<int,MessageState> messageEntityState;
+  final Pagination<int,Id<int>> conversations;
+  final EntityState<int,UserSearchState> userSearchEntityState;
   final PolicyState policyState;
-  final Pagination<num,Id<num>> videoQuestions;
+  final Pagination<int,Id<int>> videoQuestions;
   final UploadEntityState uploadEntityState;
 
   const AppState({
@@ -65,6 +68,7 @@ class AppState{
     required this.searchUsers,
     required this.searchQuestions,
     required this.userUserSearchs,
+    required this.questionUserSaves,
 
     required this.questionEntityState,
     required this.homePageQuestions,
@@ -96,6 +100,7 @@ class AppState{
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
+    questionUserSaves: Pagination.init(questionsPerPage, true),
 
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
@@ -130,7 +135,7 @@ class AppState{
     .values
     .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last)
     .sorted((x,y) => y.id.compareTo(x.id));
-  Iterable<MessageState> selectUserMessages(num userId)
+  Iterable<MessageState> selectUserMessages(int userId)
     => userEntityState
         .getValue(userId)!.messages.values
         .map((e) => e.id)
@@ -146,18 +151,18 @@ class AppState{
 
   //select users
   UserState? get currentUser => userEntityState.getValue(loginState!.id);
-  Iterable<UserState> selectCommentLikes(num commentId)
+  Iterable<UserState> selectCommentLikes(int commentId)
     => commentEntityState
         .getValue(commentId)!.likes.values
         .map((e) => userEntityState.getValue(commentUserLikeEntityState.getValue(e.id)!.userId)!);
-  Iterable<UserState> selectSolutionUpvotes(num solutionId)
+  Iterable<UserState> selectSolutionUpvotes(int solutionId)
     => solutionEntityState
         .getValue(solutionId)!.upvotes.values
         .map((id) => userEntityState.getValue(solutionUserVoteEntityState.getValue(id.id)!.userId)!);
-  Iterable<UserState> selectSolutionDownvotes(num solutionId)
+  Iterable<UserState> selectSolutionDownvotes(int solutionId)
     => solutionEntityState.getValue(solutionId)!.downvotes.values
         .map((id) => userEntityState.getValue(solutionUserVoteEntityState.getValue(id.id)!.userId)!);
-  Iterable<UserState> selectUserConversations(num userId)
+  Iterable<UserState> selectUserConversations(int userId)
     => userEntityState
         .getValue(userId)!.conversations.values
         .map((id) => userEntityState.getValue(id.id)!);
@@ -165,63 +170,65 @@ class AppState{
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions
     => homePageQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectExamQuestions(num examId)
+  Iterable<QuestionState> selectExamQuestions(int examId)
     => examEntityState.getValue(examId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectSubjectQuestions(num subjectId)
+  Iterable<QuestionState> selectSubjectQuestions(int subjectId)
     => subjectEntityState.getValue(subjectId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectTopicQuestions(num topicId)
+  Iterable<QuestionState> selectTopicQuestions(int topicId)
     => topicEntityState.getValue(topicId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectUserQuestions(num userId)
+  Iterable<QuestionState> selectUserQuestions(int userId)
     => userEntityState.getValue(userId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectUserSolvedQuestions(num userId)
+  Iterable<QuestionState> selectUserSolvedQuestions(int userId)
     => userEntityState.getValue(userId)!.solvedQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectUserUnsolvedQuestions(num userId)
+  Iterable<QuestionState> selectUserUnsolvedQuestions(int userId)
     => userEntityState.getValue(userId)!.unsolvedQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
   
   Iterable<QuestionState> get selectSearchQuestions
     => searchQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
+  Iterable<QuestionState> get selectSavedQuestions
+    => questionUserSaves.values.map((e) => questionEntityState.getValue(e.questionId)!);
 
   QuestionState? selectQuestion(int questionId) => questionEntityState.getValue(questionId);
 
 
   //SelectSolutions
-  Iterable<SolutionState> selectQuestionSolutions(num questionId)
+  Iterable<SolutionState> selectQuestionSolutions(int questionId)
     => questionEntityState.getValue(questionId)!.solutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectQuestionCorrectSolutions(num questionId)
+  Iterable<SolutionState> selectQuestionCorrectSolutions(int questionId)
     => questionEntityState.getValue(questionId)!.correctSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectQuestionPendingSolutions(num questionId)
+  Iterable<SolutionState> selectQuestionPendingSolutions(int questionId)
     => questionEntityState.getValue(questionId)!.pendingSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectQuestionIncorrectSolutions(num questionId)
+  Iterable<SolutionState> selectQuestionIncorrectSolutions(int questionId)
     => questionEntityState.getValue(questionId)!.incorrectSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectUserSavedSolutions(num userId) =>
+  Iterable<SolutionState> selectUserSavedSolutions(int userId) =>
     userEntityState.getValue(userId)!.savedSolutions.values
     .map((e) => solutionEntityState.getValue(solutionUserSaveEntityState.getValue(e.id)!.solutionId)!);
-  Iterable<SolutionState> selectQuestionVideoSolutions(num questionId) =>
+  Iterable<SolutionState> selectQuestionVideoSolutions(int questionId) =>
     questionEntityState.getValue(questionId)!.videoSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
 
   //Select comments
-  Iterable<CommentState> getQuestionComments(num questionId)
+  Iterable<CommentState> getQuestionComments(int questionId)
     => questionEntityState.getValue(questionId)!.comments.values.map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> getFormatedQuestionComments(num id,num questionId)
+  Iterable<CommentState> getFormatedQuestionComments(int id,int questionId)
     => questionEntityState.getValue(questionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> getSolutionComments(num solutionId)
+  Iterable<CommentState> getSolutionComments(int solutionId)
     => solutionEntityState.getValue(solutionId)!.comments.values.map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> getFormatedSolutionComments(num id,num solutionId)
+  Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
     => solutionEntityState.getValue(solutionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> selectCommentReplies(num commentId)
+  Iterable<CommentState> selectCommentReplies(int commentId)
     => commentEntityState.getValue(commentId)!.replies.values.map((e) => commentEntityState.getValue(e.id)!).toList().reversed;
-  Iterable<CommentState> selectFormattedCommentReplies(num id,num commentId)
+  Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
     => commentEntityState.getValue(commentId)!.replies.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
 
   //select exams
   Iterable<ExamState> get selectExams => appExams.values.map((e) => examEntityState.getValue(e.id)!);
 
   //Select Subjects
-  Iterable<SubjectState> selectExamSubjects(num examId)
+  Iterable<SubjectState> selectExamSubjects(int examId)
     => examEntityState.getValue(examId)!.subjects.values.map((e) => subjectEntityState.getValue(e.id)!);
 
   // select topics
-  Iterable<TopicState> selectSubjectTopics(num subjectId)
+  Iterable<TopicState> selectSubjectTopics(int subjectId)
     => subjectEntityState.getValue(subjectId)!.topics.values.map((e) => topicEntityState.getValue(e.id)!);
 
   //select privacy policy

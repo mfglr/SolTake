@@ -7,7 +7,7 @@ import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 
 class CreateConversationPageUserItem extends StatelessWidget {
   final UserState user;
-  final void Function(num userId) onPressed;
+  final void Function(int userId) onPressed;
 
   const CreateConversationPageUserItem({
     super.key,

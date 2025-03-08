@@ -14,6 +14,7 @@ import 'package:my_social_app/state/app_state/conversations_state/reducers.dart'
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/question_user_saves_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
@@ -36,6 +37,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   searchUsers: searchUsersReducers(prev.searchUsers,action),
   searchQuestions: searchQuestionsReducer(prev.searchQuestions,action),
   userUserSearchs: userUserSearchsReducers(prev.userUserSearchs,action),
+  questionUserSaves: questionUserSavesReducers(prev.questionUserSaves,action),
 
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   accessToken: changeAccessTokenReducer(prev.accessToken,action),

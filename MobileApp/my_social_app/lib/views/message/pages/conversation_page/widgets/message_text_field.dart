@@ -10,7 +10,7 @@ import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 class MessageTextField extends StatefulWidget {
   final String hintText;
   final ScrollController scrollController;
-  final num receiverId;
+  final int receiverId;
 
   const MessageTextField({
     super.key,

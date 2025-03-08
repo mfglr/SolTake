@@ -14,6 +14,6 @@ class AddSolutionUserVoteAction extends AppAction{
 }
 @immutable
 class RemoveSolutionUserVoteAction extends AppAction{
-  final num voteId;
+  final int voteId;
   const RemoveSolutionUserVoteAction({required this.voteId});
 }

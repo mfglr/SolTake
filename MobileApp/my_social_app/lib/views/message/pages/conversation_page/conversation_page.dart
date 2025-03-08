@@ -24,7 +24,7 @@ import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.da
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConversationPage extends StatefulWidget {
-  final num userId;
+  final int userId;
   const ConversationPage({super.key,required this.userId});
   @override
   State<ConversationPage> createState() => _ConversationPageState();
@@ -35,7 +35,7 @@ class _ConversationPageState extends State<ConversationPage>{
   final ScrollController _scrollController = ScrollController();
   late final StreamSubscription<MessageState> _messageConsumer;
   int _numberOfNewMessages = 0;
-  Iterable<num> _selectedIds = [];
+  Iterable<int> _selectedIds = [];
 
   void _onLongPressed(MessageState message){
     if(!_selectedIds.any((e) => e == message.id)){

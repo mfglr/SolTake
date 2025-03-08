@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 
 @immutable
 class LoadSubjectAction extends AppAction{
-  final num subjectId;
+  final int subjectId;
   const LoadSubjectAction({required this.subjectId});
 }
 @immutable
@@ -20,51 +20,51 @@ class AddSubjectsAction extends AppAction{
 
 @immutable
 class NextSubjectTopicsAction extends AppAction{
-  final num subjectId;
+  final int subjectId;
   const NextSubjectTopicsAction({required this.subjectId});
 }
 @immutable
 class NextSubjectTopicsSuccessAction extends AppAction{
-  final num subjectId;
-  final Iterable<num> topicIds;
+  final int subjectId;
+  final Iterable<int> topicIds;
   const NextSubjectTopicsSuccessAction({required this.subjectId, required this.topicIds});
 }
 @immutable
 class NextSubjectTopicsFailedAction extends AppAction{
-  final num subjectId;
+  final int subjectId;
   const NextSubjectTopicsFailedAction({required this.subjectId});
 }
 
 @immutable
 class NextSubjectQuestionsAction extends AppAction{
-  final num subjectId;
+  final int subjectId;
   const NextSubjectQuestionsAction({required this.subjectId});
 }
 @immutable
 class NextSubjectQuestionsSuccessAction extends AppAction{
-  final num subjectId;
-  final Iterable<num> questions;
+  final int subjectId;
+  final Iterable<int> questions;
   const NextSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
 }
 @immutable
 class NextSubjectQuestionsFailedAction extends AppAction{
-  final num subjectId;
+  final int subjectId;
   const NextSubjectQuestionsFailedAction({required this.subjectId});
 }
 
 @immutable
 class PrevSubjectQuestionsAction extends AppAction{
-  final num subjectId;
+  final int subjectId;
   const PrevSubjectQuestionsAction({required this.subjectId});
 }
 @immutable
 class PrevSubjectQuestionsSuccessAction extends AppAction{
-  final num subjectId;
-  final Iterable<num> questionIds;
+  final int subjectId;
+  final Iterable<int> questionIds;
   const PrevSubjectQuestionsSuccessAction({required this.subjectId, required this.questionIds});
 }
 @immutable
 class PrevSubjectQuestionsFailedAction extends AppAction{
-  final num subjectId;
+  final int subjectId;
   const PrevSubjectQuestionsFailedAction({required this.subjectId});
 }

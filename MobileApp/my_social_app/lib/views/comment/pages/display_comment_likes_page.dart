@@ -14,7 +14,7 @@ import 'package:my_social_app/views/user/widgets/user_items_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayCommentLikesPage extends StatelessWidget {
-  final num commentId;
+  final int commentId;
 
   const DisplayCommentLikesPage({
     super.key,

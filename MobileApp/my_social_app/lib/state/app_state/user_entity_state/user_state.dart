@@ -24,15 +24,14 @@ class UserState extends BaseEntity<int> implements Avatar{
   final bool isFollowed;
   final Multimedia? image;
   final UserImageState? userImageState;
-  final Pagination<num,FollowerState> followers;
-  final Pagination<num,FollowedState> followeds;
-  final Pagination<num,Id<num>> questions;
-  final Pagination<num,Id<num>> solvedQuestions;
-  final Pagination<num,Id<num>> unsolvedQuestions;
-  final Pagination<num,Id<num>> savedQuestions;
-  final Pagination<num,Id<num>> savedSolutions;
-  final Pagination<num,Id<num>> messages;
-  final Pagination<num,Id<num>> conversations;
+  final Pagination<int,FollowerState> followers;
+  final Pagination<int,FollowedState> followeds;
+  final Pagination<int,Id<int>> questions;
+  final Pagination<int,Id<int>> solvedQuestions;
+  final Pagination<int,Id<int>> unsolvedQuestions;
+  final Pagination<int,Id<int>> savedSolutions;
+  final Pagination<int,Id<int>> messages;
+  final Pagination<int,Id<int>> conversations;
 
   @override
   Multimedia? get avatar => image;
@@ -65,7 +64,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     required this.questions,
     required this.solvedQuestions,
     required this.unsolvedQuestions,
-    required this.savedQuestions,
     required this.savedSolutions,
     required this.messages,
     required this.conversations,
@@ -83,15 +81,14 @@ class UserState extends BaseEntity<int> implements Avatar{
     int? newNumberOfFolloweds,
     bool? newIsFollower,
     bool? newIsFollowed,
-    Pagination<num,FollowerState>? newFollowers,
-    Pagination<num,FollowedState>? newFolloweds,
-    Pagination<num,Id<num>>? newQuestions,
-    Pagination<num,Id<num>>? newSolvedQuestions,
-    Pagination<num,Id<num>>? newUnsolvedQuestions,
-    Pagination<num,Id<num>>? newSavedQuestions,
-    Pagination<num,Id<num>>? newSavedSolutions,
-    Pagination<num,Id<num>>? newMessages,
-    Pagination<num,Id<num>>? newConversations,
+    Pagination<int,FollowerState>? newFollowers,
+    Pagination<int,FollowedState>? newFolloweds,
+    Pagination<int,Id<int>>? newQuestions,
+    Pagination<int,Id<int>>? newSolvedQuestions,
+    Pagination<int,Id<int>>? newUnsolvedQuestions,
+    Pagination<int,Id<int>>? newSavedSolutions,
+    Pagination<int,Id<int>>? newMessages,
+    Pagination<int,Id<int>>? newConversations,
     Multimedia? newImage,
     UserImageState? newUserImageState
   }) => UserState(
@@ -111,7 +108,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     questions: newQuestions ?? questions,
     solvedQuestions: newSolvedQuestions ?? solvedQuestions,
     unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
-    savedQuestions: newSavedQuestions ?? savedQuestions,
     savedSolutions: newSavedSolutions ?? savedSolutions,
     messages: newMessages ?? messages,
     conversations: newConversations ?? conversations,
@@ -188,16 +184,16 @@ class UserState extends BaseEntity<int> implements Avatar{
     _optional(newQuestions: questions.startLoadingNext());
   UserState stopLoadingNextQuestions() =>
     _optional(newQuestions: questions.stopLoadingNext());
-  UserState addNextPageQuestions(Iterable<num> ids) =>
+  UserState addNextPageQuestions(Iterable<int> ids) =>
     _optional(newQuestions: questions.addNextPage(ids.map((e) => Id(id: e))));
 
-  UserState addNewQuestion(num questionId) =>
+  UserState addNewQuestion(int questionId) =>
     _optional(
       newNumberOfQuestions: numberOfQuestions + 1,
       newQuestions: questions.prependOne(Id(id: questionId)),
       newUnsolvedQuestions: unsolvedQuestions.prependOne(Id(id: questionId))
     );
-  UserState removeQuestion(num questionId) =>
+  UserState removeQuestion(int questionId) =>
     _optional(
       newNumberOfQuestions: numberOfQuestions - 1,
       newQuestions: questions.removeOne(questionId),
@@ -210,49 +206,38 @@ class UserState extends BaseEntity<int> implements Avatar{
     _optional(newSolvedQuestions: solvedQuestions.startLoadingNext());
   UserState stopLoadingNextSolvedQuestions() =>
     _optional(newSolvedQuestions: solvedQuestions.stopLoadingNext());
-  UserState addNextSolvedQuestions(Iterable<num> ids) =>
+  UserState addNextSolvedQuestions(Iterable<int> ids) =>
     _optional(newSolvedQuestions: solvedQuestions.addNextPage(ids.map((e) => Id(id: e))));
 
   //unsolved questions
   UserState startLoadingNextUnsolvedQuestions() =>
     _optional(newUnsolvedQuestions: unsolvedQuestions.startLoadingNext());
-  UserState addNextUnsolvedQuestions(Iterable<num> ids) =>
+  UserState addNextUnsolvedQuestions(Iterable<int> ids) =>
     _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(ids.map((e) => Id(id: e))));
   UserState stopLoadingNextUnsolvedQuestion() =>
     _optional(newUnsolvedQuestions: unsolvedQuestions.stopLoadingNext());
 
-  UserState markQuestionAsSolved(num id) =>
+  UserState markQuestionAsSolved(int id) =>
     _optional(
       newSolvedQuestions: solvedQuestions.values.any((e) => e.id == id) ? solvedQuestions : solvedQuestions.addInOrder(Id(id: id)),
       newUnsolvedQuestions: unsolvedQuestions.removeOne(id)
     );
-  UserState markQuestionAsUnsolved(num id) =>
+  UserState markQuestionAsUnsolved(int id) =>
     _optional(
       newSolvedQuestions: solvedQuestions.removeOne(id),
       newUnsolvedQuestions: unsolvedQuestions.addInOrder(Id(id: id)),
     );
-  
-  //saved questions
-  UserState startLoadingNextSavedQuestions() => 
-    _optional(newSavedQuestions: savedQuestions.startLoadingNext());
-  UserState addNextSavedQuestions(Iterable<num> saveIds) => 
-    _optional(newSavedQuestions: savedQuestions.addNextPage(saveIds.map((e) => Id(id: e))));
-  UserState stopLoadingNextSavedQuestions() =>
-    _optional(newSavedQuestions: savedQuestions.stopLoadingNext());
-    
-  UserState addSavedQuestion(num saveId) => _optional(newSavedQuestions: savedQuestions.prependOne(Id(id: saveId)));
-  UserState removeSavedQuestion(num saveId) => _optional(newSavedQuestions: savedQuestions.removeOne(saveId));
-
+ 
   //saved solutions
   UserState startLoadingSavedSolutions() =>
     _optional(newSavedSolutions: savedSolutions.startLoadingNext());
-  UserState addNextSavedSolutions(Iterable<num> saveIds) =>
+  UserState addNextSavedSolutions(Iterable<int> saveIds) =>
     _optional(newSavedSolutions: savedSolutions.addNextPage(saveIds.map((e) => Id(id: e))));
   UserState stopLoadingSavedSolutions() =>
     _optional(newSavedSolutions: savedSolutions.stopLoadingNext());
 
-  UserState addSavedSolution(num saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(Id(id: saveId)));
-  UserState removeSavedSolution(num saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
+  UserState addSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(Id(id: saveId)));
+  UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
 
   //messages
   UserState startLoadingNextMessages() =>
@@ -272,16 +257,16 @@ class UserState extends BaseEntity<int> implements Avatar{
   //converations
   UserState startLoadingNextConversations() =>
     _optional(newConversations: conversations.startLoadingNext());
-  UserState addNextConversations(Iterable<num> ids) =>
+  UserState addNextConversations(Iterable<int> ids) =>
     _optional(newConversations: conversations.addNextPage(ids.map((e) => Id(id: e))));
   UserState stopLoadingNextConversations() =>
     _optional(newConversations: conversations.stopLoadingNext());
 
-  UserState addConversation(num id) =>
+  UserState addConversation(int id) =>
     _optional(newConversations: conversations.prependOne(Id(id: id)));
-  UserState addConversationInOrder(num id) =>
+  UserState addConversationInOrder(int id) =>
     _optional(newConversations: conversations.addInOrder(Id(id: id)));
-  UserState removeConversation(num id) =>
+  UserState removeConversation(int id) =>
     _optional(newConversations: conversations.removeOne(id));
 
   UserState updateUserName(String userName) =>
@@ -297,30 +282,8 @@ class UserState extends BaseEntity<int> implements Avatar{
     _optional(newImage: image, newUserImageState: userImageState?.success());
   UserState uploadImageFailed() =>
     _optional(newUserImageState: userImageState?.failed());
-  UserState removeImage() => UserState(
-    id: id,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    userName: userName,
-    name: name,
-    biography: biography,
-    numberOfQuestions: numberOfQuestions,
-    numberOfFollowers: numberOfFollowers,
-    numberOfFolloweds: numberOfFolloweds,
-    isFollower: isFollower,
-    isFollowed: isFollowed,
-    followers: followers,
-    followeds: followeds,
-    questions: questions,
-    solvedQuestions: solvedQuestions,
-    unsolvedQuestions: unsolvedQuestions,
-    savedQuestions: savedQuestions,
-    savedSolutions: savedSolutions,
-    messages: messages,
-    conversations: conversations,
-    image: null,
-    userImageState: userImageState
-  );
+  UserState removeImage() => 
+    _optional(newImage: null);
   UserState changeRate(rate)
     => _optional(newUserImageState: userImageState?.changeRate(rate));
 }

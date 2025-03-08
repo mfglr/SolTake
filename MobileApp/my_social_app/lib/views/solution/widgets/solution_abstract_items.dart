@@ -8,7 +8,7 @@ class SolutionAbstractItems extends StatefulWidget {
   final Iterable<SolutionState> solutions;
   final Pagination pagination;
   final void Function() onScrollBottom;
-  final void Function(num solutionId) onTap;
+  final void Function(int solutionId) onTap;
   final Widget noItems;
 
   const SolutionAbstractItems({

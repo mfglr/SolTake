@@ -16,8 +16,8 @@ import 'package:my_social_app/views/comment/widgets/no_comments_widget.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class DisplayQuestionCommentsModal extends StatefulWidget {
-  final num questionId;
-  final num? parentId;
+  final int questionId;
+  final int? parentId;
   final Iterable<num>? childIds;
 
   const DisplayQuestionCommentsModal({

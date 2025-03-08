@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart'
 
 @immutable
 class LoadExamAction extends AppAction{
-  final num examId;
+  final int examId;
   const LoadExamAction({required this.examId});
 }
 
@@ -21,51 +21,51 @@ class AddExamsAction extends AppAction{
 
 @immutable
 class NextExamQuestionsAction extends AppAction{
-  final num examId;
+  final int examId;
   const NextExamQuestionsAction({required this.examId});
 }
 @immutable
 class NextExamQuestionsSuccessAction extends AppAction{
-  final num examId;
-  final Iterable<num> questionIds;
+  final int examId;
+  final Iterable<int> questionIds;
   const NextExamQuestionsSuccessAction({required this.examId, required this.questionIds});
 }
 @immutable
 class NextExamQuestionsFailedAction extends AppAction{
-  final num examId;
+  final int examId;
   const NextExamQuestionsFailedAction({required this.examId});
 }
 
 @immutable
 class PrevExamQuestionsAction extends AppAction{
-  final num examId;
+  final int examId;
   const PrevExamQuestionsAction({required this.examId});
 }
 @immutable
 class PrevExamQuestionsSuccessAction extends AppAction{
-  final num examId;
-  final Iterable<num> questionIds;
+  final int examId;
+  final Iterable<int> questionIds;
   const PrevExamQuestionsSuccessAction({required this.examId, required this.questionIds});
 }
 @immutable
 class PrevExamQuestionsFailedAction extends AppAction{
-  final num examId;
+  final int examId;
   const PrevExamQuestionsFailedAction({required this.examId});
 }
 
 @immutable
 class NextExamSubjectsAction extends AppAction{
-  final num examId;
+  final int examId;
   const NextExamSubjectsAction({required this.examId});
 }
 @immutable
 class NextExamSubjectsSuccessAction extends AppAction{
-  final num examId;
-  final Iterable<num> subjectIds;
+  final int examId;
+  final Iterable<int> subjectIds;
   const NextExamSubjectsSuccessAction({required this.examId, required this.subjectIds});
 }
 @immutable
 class NextExamSubjectsFailedAction extends AppAction{
-  final num examId;
+  final int examId;
   const NextExamSubjectsFailedAction({required this.examId});
 }

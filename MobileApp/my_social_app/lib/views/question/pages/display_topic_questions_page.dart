@@ -10,7 +10,7 @@ import 'package:my_social_app/views/question/widgets/question_items_widget.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayTopicQuestionsPage extends StatelessWidget {
-  final num topicId;
+  final int topicId;
   const DisplayTopicQuestionsPage({super.key, required this.topicId});
 
   @override

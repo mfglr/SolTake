@@ -3,15 +3,15 @@ import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
-Pagination<num,Id<num>> nextConversationsReducer(Pagination<num,Id<num>> prev,NextConversationsAction action)
+Pagination<int,Id<int>> nextConversationsReducer(Pagination<int,Id<int>> prev,NextConversationsAction action)
   => prev.startLoadingNext();
-Pagination<num,Id<num>> nextConversationsSuccessReducer(Pagination<num,Id<num>> prev,NextConversationsSuccessAction action)
+Pagination<int,Id<int>> nextConversationsSuccessReducer(Pagination<int,Id<int>> prev,NextConversationsSuccessAction action)
   => prev.addNextPage(action.messageIds.map((e) => Id(id: e)));
-Pagination<num,Id<num>> nextConversationsFailedReducer(Pagination<num,Id<num>> prev,NextConversationsFailedAction action)
+Pagination<int,Id<int>> nextConversationsFailedReducer(Pagination<int,Id<int>> prev,NextConversationsFailedAction action)
   => prev.stopLoadingNext();
 
-Reducer<Pagination<num,Id<num>>> conversationsReducer = combineReducers<Pagination<num,Id<num>>>([
-  TypedReducer<Pagination<num,Id<num>>,NextConversationsAction>(nextConversationsReducer).call,
-  TypedReducer<Pagination<num,Id<num>>,NextConversationsSuccessAction>(nextConversationsSuccessReducer).call,
-  TypedReducer<Pagination<num,Id<num>>,NextConversationsFailedAction>(nextConversationsFailedReducer).call,
+Reducer<Pagination<int,Id<int>>> conversationsReducer = combineReducers<Pagination<int,Id<int>>>([
+  TypedReducer<Pagination<int,Id<int>>,NextConversationsAction>(nextConversationsReducer).call,
+  TypedReducer<Pagination<int,Id<int>>,NextConversationsSuccessAction>(nextConversationsSuccessReducer).call,
+  TypedReducer<Pagination<int,Id<int>>,NextConversationsFailedAction>(nextConversationsFailedReducer).call,
 ]);

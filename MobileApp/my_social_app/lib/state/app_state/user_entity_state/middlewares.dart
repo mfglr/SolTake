@@ -186,8 +186,7 @@ void nextUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher nex
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
+        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
       })
       .catchError((e){
         store.dispatch(NextUserQuestionsFailedAction(userId: action.userId));
@@ -231,27 +230,6 @@ void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispat
       })
       .catchError((e){
         store.dispatch(NextUserUnsolvedQuestionsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextUserSavedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserSavedQuestionsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.savedQuestions;
-    QuestionService()
-      .getSavedQuestions(pagination.next)
-      .then((saves){
-        store.dispatch(NextUserSavedQuestionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
-        store.dispatch(AddQuestionsAction(questions: saves.map((e) => e.question!.toQuestionState())));
-        // store.dispatch(AddQuestionUserSavesAction(saves: saves.map((e) => e.toQuestionUserSaveState())));
-        store.dispatch(AddExamsAction(exams: saves.map((e) => e.question!.exam.toExamState())));
-        store.dispatch(AddSubjectsAction(subjects: saves.map((e) => e.question!.subject.toSubjectState())));
-        var topics = saves.map((e) => e.question!.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
-      })
-      .catchError((e){
-        store.dispatch(NextUserSavedQuestionsFailedAction(userId: action.userId));
         throw e;
       });
   }

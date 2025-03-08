@@ -10,8 +10,8 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayUserSolvedQuestionsPage extends StatelessWidget {
-  final num userId;
-  final num? firstDisplayedQuestionId;
+  final int userId;
+  final int? firstDisplayedQuestionId;
   
   const DisplayUserSolvedQuestionsPage({
     super.key,

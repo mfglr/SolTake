@@ -10,8 +10,8 @@ import 'package:my_social_app/views/question/widgets/question_items_widget.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayUserQuestionsPage extends StatelessWidget {
-  final num userId;
-  final num? firstDisplayedQuestionId;
+  final int userId;
+  final int? firstDisplayedQuestionId;
   
   const DisplayUserQuestionsPage({
     super.key,

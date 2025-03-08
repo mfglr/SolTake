@@ -18,8 +18,8 @@ class CommentState extends BaseEntity<int> implements Avatar{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
-  final Pagination<num,Id<num>> likes;
-  final Pagination<num,Id<num>> replies;
+  final Pagination<int,Id<int>> likes;
+  final Pagination<int,Id<int>> replies;
   final bool repliesVisibility;
   final Multimedia? image;
 
@@ -59,8 +59,8 @@ class CommentState extends BaseEntity<int> implements Avatar{
     bool? newIsLiked,
     int? newNumberOfLikes,
     int? newNumberOfReplies,
-    Pagination<num,Id<num>>? newLikes,
-    Pagination<num,Id<num>>? newReplies,
+    Pagination<int,Id<int>>? newLikes,
+    Pagination<int,Id<int>>? newReplies,
     bool? newRepliesVisibility,
     Multimedia? newImage,
   }) => CommentState(
@@ -86,20 +86,20 @@ class CommentState extends BaseEntity<int> implements Avatar{
 
   CommentState startLoadingNextLikes() => _optional(newLikes: likes.startLoadingNext());
   CommentState stopLoadingNextLikes() => _optional(newLikes: likes.stopLoadingNext());
-  CommentState addNextPageLikes(Iterable<num> ids) => _optional(newLikes: likes.addNextPage(ids.map((e) => Id(id: e))));
-  CommentState like(num likeId) =>
+  CommentState addNextPageLikes(Iterable<int> ids) => _optional(newLikes: likes.addNextPage(ids.map((e) => Id(id: e))));
+  CommentState like(int likeId) =>
     _optional(
       newNumberOfLikes: numberOfLikes + 1,
       newLikes: likes.prependOne(Id(id: likeId)),
       newIsLiked: true,
     );
-  CommentState dislike(num likeId) =>
+  CommentState dislike(int likeId) =>
     _optional(
       newNumberOfLikes: numberOfLikes - 1,
       newLikes: likes.where((e) => e.id != likeId),
       newIsLiked: false
     );
-  CommentState addNewLike(num likeId) =>
+  CommentState addNewLike(int likeId) =>
     _optional(
       newNumberOfLikes: numberOfLikes + 1,
       newLikes: likes.addInOrder(Id(id: likeId))
@@ -107,20 +107,20 @@ class CommentState extends BaseEntity<int> implements Avatar{
  
   CommentState startLoadingNextReplies() => _optional(newReplies: replies.startLoadingNext());
   CommentState stopLoadingNextReplies() => _optional(newReplies: replies.stopLoadingNext());
-  CommentState addNextReplies(Iterable<num> replyIds) => _optional(newReplies: replies.addNextPage(replyIds.map((e) => Id(id: e))));
-  CommentState addReply(num replyId) =>
+  CommentState addNextReplies(Iterable<int> replyIds) => _optional(newReplies: replies.addNextPage(replyIds.map((e) => Id(id: e))));
+  CommentState addReply(int replyId) =>
     _optional(
       newReplies: replies.prependOne(Id(id: replyId)),
       newNumberOfReplies: numberOfReplies + 1,
       newRepliesVisibility: true,
     );
-  CommentState removeReply(num replyId) =>
+  CommentState removeReply(int replyId) =>
     _optional(
       newReplies: replies.where((e) => e.id != replyId),
       newNumberOfReplies: numberOfReplies - 1,
       newRepliesVisibility: true,
     );
-  CommentState addNewReply(num replyId) =>
+  CommentState addNewReply(int replyId) =>
     _optional(
       newReplies: replies.addInOrder(Id(id: replyId)),
       newNumberOfReplies: numberOfReplies + 1,

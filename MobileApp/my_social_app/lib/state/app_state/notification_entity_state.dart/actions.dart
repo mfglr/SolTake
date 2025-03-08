@@ -38,7 +38,7 @@ class MarkNotificationsAsViewedAction extends AppAction{
 }
 @immutable
 class MarkNotificationsAsViewedSuccessAction extends AppAction{
-  final Iterable<num> ids;
+  final Iterable<int> ids;
   const MarkNotificationsAsViewedSuccessAction({required this.ids});
 }
 

@@ -12,7 +12,7 @@ import 'package:uuid/uuid.dart';
 
 class CreateMessageMediasPage extends StatefulWidget {
   final Iterable<AppFile> medias;
-  final num receiverId;
+  final int receiverId;
   final ScrollController scrollController;
 
   const CreateMessageMediasPage({

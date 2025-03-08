@@ -13,7 +13,7 @@ import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class SelectSubjectPage extends StatefulWidget {
-  final num examId;
+  final int examId;
   const SelectSubjectPage({
     super.key,
     required this.examId

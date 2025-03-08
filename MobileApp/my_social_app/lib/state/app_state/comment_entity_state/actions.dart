@@ -4,12 +4,12 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 
 @immutable
 class LoadCommentAction extends AppAction{
-  final num commentId;
+  final int commentId;
   const LoadCommentAction({required this.commentId});
 }
 @immutable
 class LoadCommentsAction extends AppAction{
-  final Iterable<num> commentIds;
+  final Iterable<int> commentIds;
   const LoadCommentsAction({required this.commentIds});
 }
 @immutable
@@ -36,52 +36,52 @@ class RemoveCommentSuccessAction extends AppAction{
 
 @immutable
 class NextCommentLikesAction extends AppAction{
-  final num commentId;
+  final int commentId;
   const NextCommentLikesAction({required this.commentId});
 }
 @immutable
 class NextCommentLikesSuccessAction extends AppAction{
-  final num commentId;
-  final Iterable<num> likeIds;
+  final int commentId;
+  final Iterable<int> likeIds;
   const NextCommentLikesSuccessAction({required this.commentId, required this.likeIds});
 }
 @immutable
 class NextCommentLikesFailedAction extends AppAction{
-  final num commentId;
+  final int commentId;
   const NextCommentLikesFailedAction({required this.commentId});
 }
 @immutable
 class LikeCommentAction extends AppAction{
-  final num commentId;
+  final int commentId;
   const LikeCommentAction({required this.commentId});
 }
 @immutable
 class LikeCommentSuccessAction extends AppAction{
-  final num commentId;
-  final num likeId;
+  final int commentId;
+  final int likeId;
   const LikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 @immutable
 class DislikeCommentAction extends AppAction{
-  final num commentId;
+  final int commentId;
   const DislikeCommentAction({required this.commentId});
 }
 @immutable
 class DislikeCommentSuccessAction extends AppAction{
-  final num commentId;
-  final num likeId;
+  final int commentId;
+  final int likeId;
   const DislikeCommentSuccessAction({required this.commentId,required this.likeId});
 }
 @immutable
 class AddNewCommentLikeAction extends AppAction{
-  final num commentId;
-  final num likeId;
+  final int commentId;
+  final int likeId;
   const AddNewCommentLikeAction({required this.commentId, required this.likeId});
 }
 
 @immutable
 class ChangeRepliesVisibilityAction extends AppAction{
-  final num commentId;
+  final int commentId;
   final bool visibility;
   const ChangeRepliesVisibilityAction({required this.commentId, required this.visibility});
 }
@@ -89,35 +89,35 @@ class ChangeRepliesVisibilityAction extends AppAction{
 
 @immutable
 class NextCommentRepliesAction extends AppAction{
-  final num commentId;
+  final int commentId;
   const NextCommentRepliesAction({required this.commentId});
 }
 @immutable
 class NextCommentRepliesSuccessAction extends AppAction{
-  final num commentId;
-  final Iterable<num> replyIds;
+  final int commentId;
+  final Iterable<int> replyIds;
   const NextCommentRepliesSuccessAction({required this.commentId, required this.replyIds});
 }
 @immutable
 class NextCommentRepliesFailedAction extends AppAction{
-  final num commentId;
+  final int commentId;
   const NextCommentRepliesFailedAction({required this.commentId});
 }
 @immutable
 class AddCommentReplyAction extends AppAction{
-  final num commentId;
-  final num replyId;
+  final int commentId;
+  final int replyId;
   const AddCommentReplyAction({required this.replyId, required this.commentId});
 }
 @immutable
 class RemoveCommentReplyAction extends AppAction{
-  final num commentId;
-  final num replyId;
+  final int commentId;
+  final int replyId;
   const RemoveCommentReplyAction({required this.commentId, required this.replyId});
 }
 @immutable
 class AddNewCommentReplyAction extends AppAction{
-  final num commentId;
-  final num replyId;
+  final int commentId;
+  final int replyId;
   const AddNewCommentReplyAction({required this.commentId, required this.replyId});
 }

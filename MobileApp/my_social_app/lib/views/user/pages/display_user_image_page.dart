@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 
 class DisplayUserImagePage extends StatefulWidget {
-  final num userId;
+  final int userId;
   const DisplayUserImagePage({super.key,required this.userId});
 
   @override

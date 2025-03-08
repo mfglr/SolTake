@@ -25,18 +25,18 @@ class CreateQuestionAction extends AppAction{
 }
 @immutable
 class DeleteQuestionAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const DeleteQuestionAction({required this.questionId});
 }
 @immutable
 class DeleteQuestionSuccessAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const DeleteQuestionSuccessAction({required this.questionId});
 }
 
 @immutable
 class LoadQuestionAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const LoadQuestionAction({required this.questionId});
 }
 @immutable
@@ -53,12 +53,12 @@ class AddQuestionsAction extends AppAction{
 
 @immutable
 class DislikeQuestionAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const DislikeQuestionAction({required this.questionId});
 }
 @immutable
 class DislikeQuestionSuccessAction extends AppAction{
-  final num questionId;
+  final int questionId;
   final int userId;
   const DislikeQuestionSuccessAction({
     required this.questionId,
@@ -67,18 +67,18 @@ class DislikeQuestionSuccessAction extends AppAction{
 }
 @immutable
 class LikeQuestionAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const LikeQuestionAction({required this.questionId});
 }
 @immutable
 class LikeQuestionSuccessAction extends AppAction{
-  final num questionId;
+  final int questionId;
   final QuestionUserLikeState like;
   const LikeQuestionSuccessAction({required this.questionId, required this.like});
 }
 @immutable
 class AddNewQuestionLikeAction extends AppAction{
-  final num questionId;
+  final int questionId;
   final QuestionUserLikeState like;
   const AddNewQuestionLikeAction({required this.questionId, required this.like});
 }
@@ -86,68 +86,68 @@ class AddNewQuestionLikeAction extends AppAction{
 
 @immutable
 class NextQuestionLikesAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionLikesAction({required this.questionId});
 }
 @immutable
 class NextQuestionLikesSuccessAction extends AppAction{
-  final num questionId;
+  final int questionId;
   final Iterable<QuestionUserLikeState> likes;
   const NextQuestionLikesSuccessAction({required this.questionId, required this.likes});
 }
 @immutable
 class NextQuestionLikesFailedAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionLikesFailedAction({required this.questionId});
 }
 
 @immutable
 class MarkQuestionSolutionAsCorrectAction extends AppAction{
-  final num questionId;
-  final num solutionId;
+  final int questionId;
+  final int solutionId;
   const MarkQuestionSolutionAsCorrectAction({required this.questionId,required this.solutionId});
 }
 @immutable
 class MarkQuestionSolutionAsIncorrectAction extends AppAction{
-  final num questionId;
-  final num solutionId;
+  final int questionId;
+  final int solutionId;
   const MarkQuestionSolutionAsIncorrectAction({required this.questionId,required this.solutionId});
 }
 
 
 @immutable
 class NextQuestionSolutionsAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionSolutionsAction({required this.questionId});
 }
 @immutable
 class NextQuestionSolutionsSuccessAction extends AppAction{
-  final num questionId;
-  final Iterable<num> solutionIds;
+  final int questionId;
+  final Iterable<int> solutionIds;
   const NextQuestionSolutionsSuccessAction({required this.questionId, required this.solutionIds});
 }
 @immutable
 class NextQuestionSolutionsFailedAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionSolutionsFailedAction({required this.questionId});
 }
 
 @immutable
 class CreateNewQuestionSolutionAction extends AppAction{
-  final num questionId;
-  final num solutionId;
+  final int questionId;
+  final int solutionId;
   const CreateNewQuestionSolutionAction({required this.questionId,required this.solutionId});
 }
 @immutable
 class CreateNewQuestionVideoSolutionAction extends AppAction{
-  final num questionId;
-  final num solutionId;
+  final int questionId;
+  final int solutionId;
   const CreateNewQuestionVideoSolutionAction({required this.questionId,required this.solutionId});
 }
 @immutable
 class AddNewQuestionSolutionAction extends AppAction{
-  final num questionId;
-  final num solutionId;
+  final int questionId;
+  final int solutionId;
   const AddNewQuestionSolutionAction({required this.questionId, required this.solutionId});
 }
 @immutable
@@ -158,138 +158,129 @@ class RemoveQuestionSolutionAction extends AppAction{
 
 @immutable
 class NextQuestionCorrectSolutionsAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionCorrectSolutionsAction({required this.questionId});
 }
 @immutable
 class NextQuestionCorrectSolutionsSuccessAction extends AppAction{
-  final num questionId;
-  final Iterable<num> solutionIds;
+  final int questionId;
+  final Iterable<int> solutionIds;
   const NextQuestionCorrectSolutionsSuccessAction({required this.questionId, required this.solutionIds});
 }
 @immutable
 class NextQuestionCorrectSolutionsFailedAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionCorrectSolutionsFailedAction({required this.questionId});
 }
 @immutable
 class RemoveCorrectSolutionAction extends AppAction{
-  final num questionId;
-  final num solutionId;
+  final int questionId;
+  final int solutionId;
   const RemoveCorrectSolutionAction({required this.questionId, required this.solutionId});
 }
 
 @immutable
 class NextQuestionPendingSolutionsAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionPendingSolutionsAction({required this.questionId});
 }
 @immutable
 class NextQuestionPendingSolutionsSuccessAction extends AppAction{
-  final num questionId;
-  final Iterable<num> solutionIds;
+  final int questionId;
+  final Iterable<int> solutionIds;
   const NextQuestionPendingSolutionsSuccessAction({required this.questionId, required this.solutionIds});
 }
 @immutable
 class NextQuestionPendingSolutionsFailedAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionPendingSolutionsFailedAction({required this.questionId});
 }
 
 @immutable
 class NextQuestionIncorrectSolutionsAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionIncorrectSolutionsAction({required this.questionId});
 }
 @immutable
 class NextQuestionIncorrectSolutionsSuccessAction extends AppAction{
-  final num questionId;
-  final Iterable<num> solutionIds;
+  final int questionId;
+  final Iterable<int> solutionIds;
   const NextQuestionIncorrectSolutionsSuccessAction({required this.questionId, required this.solutionIds});
 }
 @immutable
 class NextQuestionIncorrectSolutionsFailedAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionIncorrectSolutionsFailedAction({required this.questionId});
 }
 
 @immutable
 class NextQuestionVideoSolutionsAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionVideoSolutionsAction({required this.questionId});
 }
 @immutable
 class NextQuestionVideoSolutionsSuccessAction extends AppAction{
-  final num questionId;
-  final Iterable<num> solutionIds;
+  final int questionId;
+  final Iterable<int> solutionIds;
   const NextQuestionVideoSolutionsSuccessAction({required this.questionId, required this.solutionIds});
 }
 @immutable
 class NextQuestionVideoSolutionsFailedAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionVideoSolutionsFailedAction({required this.questionId});
 }
 @immutable
 class AddQuestionVideoSolutionAction extends AppAction{
-  final num questionId;
-  final num solutionId;
+  final int questionId;
+  final int solutionId;
   const AddQuestionVideoSolutionAction({required this.questionId, required this.solutionId});
 }
 
 @immutable
 class NextQuestionCommentsAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionCommentsAction({required this.questionId});
 }
 @immutable
 class NexQuestionCommentsSuccessAction extends AppAction{
-  final num questionId;
-  final Iterable<num> commentIds;
+  final int questionId;
+  final Iterable<int> commentIds;
   const NexQuestionCommentsSuccessAction({required this.questionId,required this.commentIds});
 }
 @immutable
 class NextQuestionCommentsFailedAction extends AppAction{
-  final num questionId;
+  final int questionId;
   const NextQuestionCommentsFailedAction({required this.questionId});
 }
 
 @immutable
 class AddQuestionCommentAction extends AppAction{
-  final num questionId;
-  final num commenId;
+  final int questionId;
+  final int commenId;
   const AddQuestionCommentAction({required this.questionId,required this.commenId});
 }
 @immutable
 class RemoveQuestionCommentAction extends AppAction{
-  final num questionid;
-  final num commentId;
+  final int questionid;
+  final int commentId;
   const RemoveQuestionCommentAction({required this.commentId, required this.questionid});
 }
 @immutable
 class AddNewQuestionCommentAction extends AppAction{
-  final num questionId;
-  final num commentId;
+  final int questionId;
+  final int commentId;
   const AddNewQuestionCommentAction({required this.questionId, required this.commentId});
 }
 
 
-// @immutable
-// class SaveQuestionAction extends AppAction{
-//   final num questionId;
-//   const SaveQuestionAction({required this.questionId});
-// }
-// @immutable
-// class SaveQuestionSuccessAction extends AppAction{
-//   final num questionId;
-//   const SaveQuestionSuccessAction({required this.questionId});
-// }
-// @immutable
-// class UnsaveQuestionAction extends AppAction{
-//   final num questionId;
-//   const UnsaveQuestionAction({required this.questionId});
-// }
-// @immutable
-// class UnsaveQuestionSuccessAction extends AppAction{
-//   final num questionId;
-//   const UnsaveQuestionSuccessAction({required this.questionId});
-// }
+@immutable
+class SaveQuestionAction extends AppAction{
+  final int questionId;
+  const SaveQuestionAction({required this.questionId});
+}
+
+@immutable
+class UnsaveQuestionAction extends AppAction{
+  final int questionId;
+  const UnsaveQuestionAction({required this.questionId});
+}

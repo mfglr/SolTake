@@ -4,7 +4,7 @@ import 'package:my_social_app/models/avatar.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
-class QuestionUserLikeState extends BaseEntity<num> implements Avatar{
+class QuestionUserLikeState extends BaseEntity<int> implements Avatar{
   final DateTime createdAt;
   final num questionId;
   final int userId;

@@ -16,8 +16,8 @@ import 'package:my_social_app/views/comment/widgets/no_comments_widget.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class DisplaySolutionCommentsModal extends StatefulWidget {
-  final num solutionId;
-  final num? parentId;
+  final int solutionId;
+  final int? parentId;
   const DisplaySolutionCommentsModal({
     super.key,
     required this.solutionId, 

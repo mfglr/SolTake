@@ -31,13 +31,13 @@ class QuestionState extends BaseEntity<int> implements Avatar{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final Multimedia? image;
-  final Pagination<num,QuestionUserLikeState> likes;
-  final Pagination<num,Id<num>> comments;
-  final Pagination<num,Id<num>> solutions;
-  final Pagination<num,Id<num>> correctSolutions;
-  final Pagination<num,Id<num>> pendingSolutions;
-  final Pagination<num,Id<num>> incorrectSolutions;
-  final Pagination<num,Id<num>> videoSolutions;
+  final Pagination<int,QuestionUserLikeState> likes;
+  final Pagination<int,Id<int>> comments;
+  final Pagination<int,Id<int>> solutions;
+  final Pagination<int,Id<int>> correctSolutions;
+  final Pagination<int,Id<int>> pendingSolutions;
+  final Pagination<int,Id<int>> incorrectSolutions;
+  final Pagination<int,Id<int>> videoSolutions;
 
   @override
   int get avatarId => userId;
@@ -90,13 +90,13 @@ class QuestionState extends BaseEntity<int> implements Avatar{
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
     Multimedia? newImage,
-    Pagination<num,QuestionUserLikeState>? newLikes,
-    Pagination<num,Id<num>>? newComments,
-    Pagination<num,Id<num>>? newSolutions,
-    Pagination<num,Id<num>>? newCorrectSolutions,
-    Pagination<num,Id<num>>? newPendingSolutions,
-    Pagination<num,Id<num>>? newIncorrectSolutions,
-    Pagination<num,Id<num>>? newVideoSolutions,
+    Pagination<int,QuestionUserLikeState>? newLikes,
+    Pagination<int,Id<int>>? newComments,
+    Pagination<int,Id<int>>? newSolutions,
+    Pagination<int,Id<int>>? newCorrectSolutions,
+    Pagination<int,Id<int>>? newPendingSolutions,
+    Pagination<int,Id<int>>? newIncorrectSolutions,
+    Pagination<int,Id<int>>? newVideoSolutions,
   }) => 
     QuestionState(
       id: id,
@@ -156,14 +156,14 @@ class QuestionState extends BaseEntity<int> implements Avatar{
       newNumberOfLikes: numberOfLikes + 1
     );
 
-  QuestionState markSolutionAsCorrect(num solutionId) =>
+  QuestionState markSolutionAsCorrect(int solutionId) =>
     _optional(
       newPendingSolutions: pendingSolutions.where((e) => e.id != solutionId),
       newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1,
       newCorrectSolutions: correctSolutions.addInOrder(Id(id: solutionId)),
       newState: QuestionStatus.solved
     );
-  QuestionState markSolutionAsIncorrect(num solutionId) =>
+  QuestionState markSolutionAsIncorrect(int solutionId) =>
     _optional(
       newPendingSolutions: pendingSolutions.where((e) => e.id != solutionId),
       newIncorrectSolutions: incorrectSolutions.addInOrder(Id(id: solutionId)),
@@ -171,18 +171,18 @@ class QuestionState extends BaseEntity<int> implements Avatar{
 
   QuestionState startLoadingNextSolutions() => 
     _optional(newSolutions: solutions.startLoadingNext());
-  QuestionState addNextSolutions(Iterable<num> solutionIds) => 
+  QuestionState addNextSolutions(Iterable<int> solutionIds) => 
     _optional(newSolutions: solutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
   QuestionState stopLoadingNextSolutions() =>
     _optional(newSolutions: solutions.stopLoadingNext());
   
-  QuestionState createNewSolution(num solutionId) => 
+  QuestionState createNewSolution(int solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
       newSolutions: solutions.prependOne(Id(id: solutionId)),
       newPendingSolutions: pendingSolutions.prependOne(Id(id: solutionId))
     );
-  QuestionState createNewVideoSolution(num solutionId) => 
+  QuestionState createNewVideoSolution(int solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
       newNumberOfVideoSolutions: numberOfVideoSolutions + 1,
@@ -190,7 +190,7 @@ class QuestionState extends BaseEntity<int> implements Avatar{
       newPendingSolutions: pendingSolutions.prependOne(Id(id: solutionId)),
       newVideoSolutions: videoSolutions.prependOne(Id(id: solutionId)),
     );
-  QuestionState addNewSolution(num solutionId) =>
+  QuestionState addNewSolution(int solutionId) =>
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
       newSolutions: solutions.addInOrder(Id(id: solutionId)),
@@ -232,14 +232,14 @@ class QuestionState extends BaseEntity<int> implements Avatar{
 
   QuestionState startLoadingNextCorrectSolutions() =>
     _optional(newCorrectSolutions: correctSolutions.startLoadingNext());
-  QuestionState addNextPageCorrectSolutions(Iterable<num> solutionIds) =>
+  QuestionState addNextPageCorrectSolutions(Iterable<int> solutionIds) =>
     _optional(newCorrectSolutions: correctSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
   QuestionState stopLoadingNextCorrectSolutions() =>
     _optional(newCorrectSolutions: correctSolutions.stopLoadingNext());
 
   QuestionState startLoadingNextPendingSolutions() =>
     _optional(newPendingSolutions: pendingSolutions.startLoadingNext());
-  QuestionState addNextPagePedingSolutions(Iterable<num> solutionIds) =>
+  QuestionState addNextPagePedingSolutions(Iterable<int> solutionIds) =>
     _optional(newPendingSolutions: pendingSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
   QuestionState stopLoadingNextPendingSolutions() =>
     _optional(newPendingSolutions: pendingSolutions.stopLoadingNext());
@@ -248,18 +248,18 @@ class QuestionState extends BaseEntity<int> implements Avatar{
     _optional(newIncorrectSolutions: incorrectSolutions.startLoadingNext());
   QuestionState stopLoadingNextIncorrectSolutions() =>
     _optional(newIncorrectSolutions: incorrectSolutions.stopLoadingNext());
-  QuestionState addNextIncorrectSolutions(Iterable<num> solutionIds) =>
+  QuestionState addNextIncorrectSolutions(Iterable<int> solutionIds) =>
     _optional(newIncorrectSolutions: incorrectSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
  
   QuestionState startLoadingNextVideoSolutions() =>
     _optional(newVideoSolutions: videoSolutions.startLoadingNext());
   QuestionState stopLodingNextVideoSolutions() =>
     _optional(newVideoSolutions: videoSolutions.stopLoadingNext());
-  QuestionState addNextPageVideoSolutions(Iterable<num> solutionIds) =>
+  QuestionState addNextPageVideoSolutions(Iterable<int> solutionIds) =>
     _optional(newVideoSolutions: videoSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
-  QuestionState addVideoSolution(num solutionId) =>
+  QuestionState addVideoSolution(int solutionId) =>
     _optional(newVideoSolutions: videoSolutions.prependOne(Id(id: solutionId)));
-  QuestionState removeVideoSolution(num solutionId) =>
+  QuestionState removeVideoSolution(int solutionId) =>
     _optional(
       newVideoSolutions: videoSolutions.where((e) => e.id != solutionId)
     );
@@ -268,27 +268,25 @@ class QuestionState extends BaseEntity<int> implements Avatar{
     _optional(newComments: comments.startLoadingNext());
   QuestionState stopLoadingNextComments() =>
     _optional(newComments: comments.stopLoadingNext()); 
-  QuestionState addNextPageComments(Iterable<num> commentIds) => 
+  QuestionState addNextPageComments(Iterable<int> commentIds) => 
     _optional(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
-  QuestionState addComment(num commentId) =>
+  QuestionState addComment(int commentId) =>
     _optional(
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.prependOne(Id(id: commentId))
     );
-  QuestionState removeComment(num commentId) =>
+  QuestionState removeComment(int commentId) =>
     _optional(
       newNumberOfComments: numberOfComments - 1,
       newComments: comments.where((e) => e.id != commentId)
     );
-  QuestionState addNewComment(num commentId) =>
+  QuestionState addNewComment(int commentId) =>
     _optional(
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.addInOrder(Id(id: commentId))
     );
 
-  QuestionState markAsSolved() =>
-    _optional(newState: QuestionStatus.solved);
-    
+  QuestionState markAsSolved() => _optional(newState: QuestionStatus.solved);
   QuestionState save() => _optional(newIsSaved: true);
   QuestionState unsave() => _optional(newIsSaved: false);
 

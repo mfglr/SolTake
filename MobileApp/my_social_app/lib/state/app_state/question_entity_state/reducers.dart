@@ -4,152 +4,162 @@ import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 
 //questions
-EntityState<num,QuestionState> addQuestionReducer(EntityState<num,QuestionState> prev,AddQuestionAction action)
+EntityState<int,QuestionState> addQuestionReducer(EntityState<int,QuestionState> prev,AddQuestionAction action)
   => prev.appendOne(action.value);
-EntityState<num,QuestionState> addQuestionsReducer(EntityState<num,QuestionState> prev,AddQuestionsAction action)
+EntityState<int,QuestionState> addQuestionsReducer(EntityState<int,QuestionState> prev,AddQuestionsAction action)
   => prev.appendMany(action.questions);
-EntityState<num,QuestionState> removeQuestionReducer(EntityState<num,QuestionState> prev,DeleteQuestionSuccessAction action)
+EntityState<int,QuestionState> removeQuestionReducer(EntityState<int,QuestionState> prev,DeleteQuestionSuccessAction action)
   => prev.removeOne(action.questionId);
 
+//save
+EntityState<int,QuestionState> saveQuestionReducer(EntityState<int,QuestionState> prev,SaveQuestionAction action)
+  => prev.updateOne(prev.getValue(action.questionId)!.save());
+EntityState<int,QuestionState> unsaveQuestionReducer(EntityState<int,QuestionState> prev,UnsaveQuestionAction action)
+  => prev.updateOne(prev.getValue(action.questionId)!.unsave());
+
 //likes
-EntityState<num,QuestionState> likeQuestionSuccessReducer(EntityState<num,QuestionState> prev, LikeQuestionSuccessAction action)
+EntityState<int,QuestionState> likeQuestionSuccessReducer(EntityState<int,QuestionState> prev, LikeQuestionSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.like(action.like));
-EntityState<num,QuestionState> dislikeQuestionSuccessReducer(EntityState<num,QuestionState> prev, DislikeQuestionSuccessAction action)
+EntityState<int,QuestionState> dislikeQuestionSuccessReducer(EntityState<int,QuestionState> prev, DislikeQuestionSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.dislike(action.userId));
-EntityState<num,QuestionState> nextLikesReducer(EntityState<num,QuestionState> prev,NextQuestionLikesAction action)
+EntityState<int,QuestionState> nextLikesReducer(EntityState<int,QuestionState> prev,NextQuestionLikesAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLodingNextLikes());
-EntityState<num,QuestionState> nextLikesSuccessReducer(EntityState<num,QuestionState> prev,NextQuestionLikesSuccessAction action)
+EntityState<int,QuestionState> nextLikesSuccessReducer(EntityState<int,QuestionState> prev,NextQuestionLikesSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextPageLikes(action.likes));
-EntityState<num,QuestionState> nextLikesFailedReducer(EntityState<num,QuestionState> prev, NextQuestionLikesFailedAction action)
+EntityState<int,QuestionState> nextLikesFailedReducer(EntityState<int,QuestionState> prev, NextQuestionLikesFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextLikes());
-EntityState<num,QuestionState> addNewLikeReducer(EntityState<num,QuestionState> prev,AddNewQuestionLikeAction action)
+EntityState<int,QuestionState> addNewLikeReducer(EntityState<int,QuestionState> prev,AddNewQuestionLikeAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNewLike(action.like));
 
 //solutions
-EntityState<num,QuestionState> markSolutionAsCorrectReducer(EntityState<num,QuestionState> prev, MarkQuestionSolutionAsCorrectAction action)
+EntityState<int,QuestionState> markSolutionAsCorrectReducer(EntityState<int,QuestionState> prev, MarkQuestionSolutionAsCorrectAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.markSolutionAsCorrect(action.solutionId));
-EntityState<num,QuestionState> markSolutionAsIncorrectReducer(EntityState<num,QuestionState> prev,MarkQuestionSolutionAsIncorrectAction action)
+EntityState<int,QuestionState> markSolutionAsIncorrectReducer(EntityState<int,QuestionState> prev,MarkQuestionSolutionAsIncorrectAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.markSolutionAsIncorrect(action.solutionId));
-EntityState<num,QuestionState> createNewSolutionReducer(EntityState<num,QuestionState> prev,CreateNewQuestionSolutionAction action)
+EntityState<int,QuestionState> createNewSolutionReducer(EntityState<int,QuestionState> prev,CreateNewQuestionSolutionAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.createNewSolution(action.solutionId));
-EntityState<num,QuestionState> createNewVideoSolutionReducer(EntityState<num,QuestionState> prev,CreateNewQuestionVideoSolutionAction action)
+EntityState<int,QuestionState> createNewVideoSolutionReducer(EntityState<int,QuestionState> prev,CreateNewQuestionVideoSolutionAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.createNewVideoSolution(action.solutionId)); 
-EntityState<num,QuestionState> addNewSolutionReducer(EntityState<num,QuestionState> prev,AddNewQuestionSolutionAction action)
+EntityState<int,QuestionState> addNewSolutionReducer(EntityState<int,QuestionState> prev,AddNewQuestionSolutionAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNewSolution(action.solutionId));
-EntityState<num,QuestionState> removeSolutionReducer(EntityState<num,QuestionState> prev,RemoveQuestionSolutionAction action)
+EntityState<int,QuestionState> removeSolutionReducer(EntityState<int,QuestionState> prev,RemoveQuestionSolutionAction action)
   => prev.updateOne(prev.getValue(action.solution.questionId)!.removeSolution(action.solution));
-EntityState<num,QuestionState> addVideoSolutionReducer(EntityState<num,QuestionState> prev,AddQuestionVideoSolutionAction action)
+EntityState<int,QuestionState> addVideoSolutionReducer(EntityState<int,QuestionState> prev,AddQuestionVideoSolutionAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addVideoSolution(action.solutionId));
 
 //get solutions
-EntityState<num,QuestionState> nextSolutionsReducer(EntityState<num,QuestionState> prev,NextQuestionSolutionsAction action)
+EntityState<int,QuestionState> nextSolutionsReducer(EntityState<int,QuestionState> prev,NextQuestionSolutionsAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLoadingNextSolutions());
-EntityState<num,QuestionState> nextSolutionsSuccessReducer(EntityState<num,QuestionState> prev,NextQuestionSolutionsSuccessAction action)
+EntityState<int,QuestionState> nextSolutionsSuccessReducer(EntityState<int,QuestionState> prev,NextQuestionSolutionsSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextSolutions(action.solutionIds));
-EntityState<num,QuestionState> nextSolutionsFailedReducer(EntityState<num,QuestionState> prev,NextQuestionSolutionsFailedAction action)
+EntityState<int,QuestionState> nextSolutionsFailedReducer(EntityState<int,QuestionState> prev,NextQuestionSolutionsFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextSolutions());
 
 //get correct solutions
-EntityState<num,QuestionState> nextCorrectSolutionsReducer(EntityState<num,QuestionState> prev,NextQuestionCorrectSolutionsAction action)
+EntityState<int,QuestionState> nextCorrectSolutionsReducer(EntityState<int,QuestionState> prev,NextQuestionCorrectSolutionsAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLoadingNextCorrectSolutions());
-EntityState<num,QuestionState> nextCorrectSolutionsSuccessReducer(EntityState<num,QuestionState> prev,NextQuestionCorrectSolutionsSuccessAction action)
+EntityState<int,QuestionState> nextCorrectSolutionsSuccessReducer(EntityState<int,QuestionState> prev,NextQuestionCorrectSolutionsSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextPageCorrectSolutions(action.solutionIds));
-EntityState<num,QuestionState> nextCorrectSolutionsFailedReducer(EntityState<num,QuestionState> prev,NextQuestionCorrectSolutionsFailedAction action)
+EntityState<int,QuestionState> nextCorrectSolutionsFailedReducer(EntityState<int,QuestionState> prev,NextQuestionCorrectSolutionsFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextCorrectSolutions());
 
 //get pending solutions
-EntityState<num,QuestionState> nextPendingSolutionsReducer(EntityState<num,QuestionState> prev,NextQuestionPendingSolutionsAction action)
+EntityState<int,QuestionState> nextPendingSolutionsReducer(EntityState<int,QuestionState> prev,NextQuestionPendingSolutionsAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLoadingNextPendingSolutions());
-EntityState<num,QuestionState> nextPendingSolutionsSuccessReducer(EntityState<num,QuestionState> prev,NextQuestionPendingSolutionsSuccessAction action)
+EntityState<int,QuestionState> nextPendingSolutionsSuccessReducer(EntityState<int,QuestionState> prev,NextQuestionPendingSolutionsSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextPagePedingSolutions(action.solutionIds));
-EntityState<num,QuestionState> nextPendingSolutionsFailedReducer(EntityState<num,QuestionState> prev,NextQuestionPendingSolutionsFailedAction action)
+EntityState<int,QuestionState> nextPendingSolutionsFailedReducer(EntityState<int,QuestionState> prev,NextQuestionPendingSolutionsFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextPendingSolutions());
 
 //get incorrect solutions
-EntityState<num,QuestionState> nextIncorrectSolutionsReducer(EntityState<num,QuestionState> prev,NextQuestionIncorrectSolutionsAction action)
+EntityState<int,QuestionState> nextIncorrectSolutionsReducer(EntityState<int,QuestionState> prev,NextQuestionIncorrectSolutionsAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLoadingNextIncorrectSolutions());
-EntityState<num,QuestionState> nextIncorrectSolutionsSuccessReducer(EntityState<num,QuestionState> prev,NextQuestionIncorrectSolutionsSuccessAction action)
+EntityState<int,QuestionState> nextIncorrectSolutionsSuccessReducer(EntityState<int,QuestionState> prev,NextQuestionIncorrectSolutionsSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextIncorrectSolutions(action.solutionIds));
-EntityState<num,QuestionState> nextIncorrectSolutionsFailedReducer(EntityState<num,QuestionState> prev,NextQuestionIncorrectSolutionsFailedAction action)
+EntityState<int,QuestionState> nextIncorrectSolutionsFailedReducer(EntityState<int,QuestionState> prev,NextQuestionIncorrectSolutionsFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextIncorrectSolutions());
 
 //get video solutions
-EntityState<num,QuestionState> nextVideoSolutionsReducer(EntityState<num,QuestionState> prev,NextQuestionVideoSolutionsAction action)
+EntityState<int,QuestionState> nextVideoSolutionsReducer(EntityState<int,QuestionState> prev,NextQuestionVideoSolutionsAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLoadingNextVideoSolutions());
-EntityState<num,QuestionState> nextVideoSolutionsSuccessReducer(EntityState<num,QuestionState> prev,NextQuestionVideoSolutionsSuccessAction action)
+EntityState<int,QuestionState> nextVideoSolutionsSuccessReducer(EntityState<int,QuestionState> prev,NextQuestionVideoSolutionsSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextPageVideoSolutions(action.solutionIds));
-EntityState<num,QuestionState> nextVideoSolutionsFailedReducer(EntityState<num,QuestionState> prev,NextQuestionVideoSolutionsFailedAction action)
+EntityState<int,QuestionState> nextVideoSolutionsFailedReducer(EntityState<int,QuestionState> prev,NextQuestionVideoSolutionsFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLodingNextVideoSolutions());
 
 //comments
-EntityState<num,QuestionState> addCommentReducer(EntityState<num,QuestionState> prev,AddQuestionCommentAction action)
+EntityState<int,QuestionState> addCommentReducer(EntityState<int,QuestionState> prev,AddQuestionCommentAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addComment(action.commenId));
-EntityState<num,QuestionState> removeCommentReducer(EntityState<num,QuestionState> prev,RemoveQuestionCommentAction action)
+EntityState<int,QuestionState> removeCommentReducer(EntityState<int,QuestionState> prev,RemoveQuestionCommentAction action)
   => prev.updateOne(prev.getValue(action.questionid)!.removeComment(action.commentId));
-EntityState<num,QuestionState> addNewCommentReducer(EntityState<num,QuestionState> prev,AddNewQuestionCommentAction action)
+EntityState<int,QuestionState> addNewCommentReducer(EntityState<int,QuestionState> prev,AddNewQuestionCommentAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNewComment(action.commentId)) ;
 
 //get comments
-EntityState<num,QuestionState> nextPageCommentsReducer(EntityState<num,QuestionState> prev,NextQuestionCommentsAction action)
+EntityState<int,QuestionState> nextPageCommentsReducer(EntityState<int,QuestionState> prev,NextQuestionCommentsAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLoadingNextComments());
-EntityState<num,QuestionState> nextPageCommentsFailedReducer(EntityState<num,QuestionState> prev,NextQuestionCommentsFailedAction action)
+EntityState<int,QuestionState> nextPageCommentsFailedReducer(EntityState<int,QuestionState> prev,NextQuestionCommentsFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextComments());
-EntityState<num,QuestionState> nextPageCommentsSuccessReducer(EntityState<num,QuestionState> prev,NexQuestionCommentsSuccessAction action)
+EntityState<int,QuestionState> nextPageCommentsSuccessReducer(EntityState<int,QuestionState> prev,NexQuestionCommentsSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextPageComments(action.commentIds));
 
-Reducer<EntityState<num,QuestionState>> questionsReducer = combineReducers<EntityState<num,QuestionState>>([
-  TypedReducer<EntityState<num,QuestionState>,AddQuestionAction>(addQuestionReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,AddQuestionsAction>(addQuestionsReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,DeleteQuestionSuccessAction>(removeQuestionReducer).call,
+Reducer<EntityState<int,QuestionState>> questionsReducer = combineReducers<EntityState<int,QuestionState>>([
+  TypedReducer<EntityState<int,QuestionState>,AddQuestionAction>(addQuestionReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,AddQuestionsAction>(addQuestionsReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,DeleteQuestionSuccessAction>(removeQuestionReducer).call,
+
+  //saves
+  TypedReducer<EntityState<int,QuestionState>,SaveQuestionAction>(saveQuestionReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,UnsaveQuestionAction>(unsaveQuestionReducer).call,
 
   //question likes
-  TypedReducer<EntityState<num,QuestionState>,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,AddNewQuestionLikeAction>(addNewLikeReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionLikesAction>(nextLikesReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionLikesSuccessAction>(nextLikesSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionLikesFailedAction>(nextLikesFailedReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,AddNewQuestionLikeAction>(addNewLikeReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionLikesAction>(nextLikesReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionLikesSuccessAction>(nextLikesSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionLikesFailedAction>(nextLikesFailedReducer).call,
 
   //
-  TypedReducer<EntityState<num,QuestionState>,MarkQuestionSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,MarkQuestionSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,
 
   //solutions
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionSolutionsAction>(nextSolutionsReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionSolutionsSuccessAction>(nextSolutionsSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionSolutionsFailedAction>(nextSolutionsFailedReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionSolutionsAction>(nextSolutionsReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionSolutionsSuccessAction>(nextSolutionsSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionSolutionsFailedAction>(nextSolutionsFailedReducer).call,
 
   //correct solutions
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionCorrectSolutionsAction>(nextCorrectSolutionsReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionCorrectSolutionsSuccessAction>(nextCorrectSolutionsSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionCorrectSolutionsFailedAction>(nextCorrectSolutionsFailedReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionCorrectSolutionsAction>(nextCorrectSolutionsReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionCorrectSolutionsSuccessAction>(nextCorrectSolutionsSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionCorrectSolutionsFailedAction>(nextCorrectSolutionsFailedReducer).call,
 
   //pending solutions
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionPendingSolutionsAction>(nextPendingSolutionsReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionPendingSolutionsSuccessAction>(nextPendingSolutionsSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionPendingSolutionsFailedAction>(nextPendingSolutionsFailedReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionPendingSolutionsAction>(nextPendingSolutionsReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionPendingSolutionsSuccessAction>(nextPendingSolutionsSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionPendingSolutionsFailedAction>(nextPendingSolutionsFailedReducer).call,
 
   //Incorrect solutions
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionIncorrectSolutionsAction>(nextIncorrectSolutionsReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionIncorrectSolutionsSuccessAction>(nextIncorrectSolutionsSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionIncorrectSolutionsFailedAction>(nextIncorrectSolutionsFailedReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionIncorrectSolutionsAction>(nextIncorrectSolutionsReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionIncorrectSolutionsSuccessAction>(nextIncorrectSolutionsSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionIncorrectSolutionsFailedAction>(nextIncorrectSolutionsFailedReducer).call,
   
   //video solutions
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionVideoSolutionsAction>(nextVideoSolutionsReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionVideoSolutionsSuccessAction>(nextVideoSolutionsSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionVideoSolutionsFailedAction>(nextVideoSolutionsFailedReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,AddQuestionVideoSolutionAction>(addVideoSolutionReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionVideoSolutionsAction>(nextVideoSolutionsReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionVideoSolutionsSuccessAction>(nextVideoSolutionsSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionVideoSolutionsFailedAction>(nextVideoSolutionsFailedReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,AddQuestionVideoSolutionAction>(addVideoSolutionReducer).call,
 
-  TypedReducer<EntityState<num,QuestionState>,CreateNewQuestionSolutionAction>(createNewSolutionReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,CreateNewQuestionVideoSolutionAction>(createNewVideoSolutionReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,CreateNewQuestionSolutionAction>(createNewSolutionReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,CreateNewQuestionVideoSolutionAction>(createNewVideoSolutionReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
 
   //comments
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionCommentsAction>(nextPageCommentsReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NextQuestionCommentsFailedAction>(nextPageCommentsFailedReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,NexQuestionCommentsSuccessAction>(nextPageCommentsSuccessReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,AddQuestionCommentAction>(addCommentReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,RemoveQuestionCommentAction>(removeCommentReducer).call,
-  TypedReducer<EntityState<num,QuestionState>,AddNewQuestionCommentAction>(addNewCommentReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionCommentsAction>(nextPageCommentsReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NextQuestionCommentsFailedAction>(nextPageCommentsFailedReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,NexQuestionCommentsSuccessAction>(nextPageCommentsSuccessReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,AddQuestionCommentAction>(addCommentReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,RemoveQuestionCommentAction>(removeCommentReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,AddNewQuestionCommentAction>(addNewCommentReducer).call,
 ]);

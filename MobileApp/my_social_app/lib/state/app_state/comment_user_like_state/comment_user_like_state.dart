@@ -3,8 +3,8 @@ import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
 class CommentUserLikeState extends BaseEntity<int>{
-  final num commentId;
-  final num userId;
+  final int commentId;
+  final int userId;
   final DateTime createdAt;
   
   CommentUserLikeState({

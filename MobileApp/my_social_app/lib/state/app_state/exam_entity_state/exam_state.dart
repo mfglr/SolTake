@@ -7,8 +7,8 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 class ExamState extends BaseEntity<int>{
   final String shortName;
   final String fullName;
-  final Pagination<num,Id<num>> subjects;
-  final Pagination<num,Id<num>> questions;
+  final Pagination<int,Id<int>> subjects;
+  final Pagination<int,Id<int>> questions;
 
   ExamState({
     required super.id,
@@ -34,7 +34,7 @@ class ExamState extends BaseEntity<int>{
         subjects: subjects,
         questions: questions.stopLoadingNext()
       );
-  ExamState addNextQuestions(Iterable<num> questionIds)
+  ExamState addNextQuestions(Iterable<int> questionIds)
     => ExamState(
         id: id,
         shortName: shortName,
@@ -59,7 +59,7 @@ class ExamState extends BaseEntity<int>{
         subjects: subjects,
         questions: questions.stopLoadingPrev()
       );
-  ExamState addPrevQuestions(Iterable<num> questionIds)
+  ExamState addPrevQuestions(Iterable<int> questionIds)
     => ExamState(
         id: id,
         shortName: shortName,
@@ -84,7 +84,7 @@ class ExamState extends BaseEntity<int>{
         subjects: subjects.stopLoadingNext(),
         questions: questions
       );
-  ExamState addNextSubjects(Iterable<num> subjectIds)
+  ExamState addNextSubjects(Iterable<int> subjectIds)
     => ExamState(
         id: id,
         shortName: shortName,

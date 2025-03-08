@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 
 @immutable
 class CreateMessageAction extends AppAction{
-  final num receiverId;
+  final int receiverId;
   final String content;
   const CreateMessageAction({required this.receiverId, required this.content});
 }
@@ -13,7 +13,7 @@ class CreateMessageAction extends AppAction{
 @immutable
 class CreateMessageWithMediasAction extends AppAction{
   final String id;
-  final num receiverId;
+  final int receiverId;
   final String? content;
   final Iterable<AppFile> medias;
   const CreateMessageWithMediasAction({
@@ -26,7 +26,7 @@ class CreateMessageWithMediasAction extends AppAction{
 
 @immutable
 class LoadMessageAction extends AppAction{
-  final num messageId;
+  final int messageId;
   const LoadMessageAction({required this.messageId});
 }
 
@@ -57,23 +57,23 @@ class RemoveMessageSuccessAction extends AppAction{
 }
 @immutable
 class RemoveMessagesAction extends AppAction{
-  final num userId;
-  final Iterable<num> messageIds;
+  final int userId;
+  final Iterable<int> messageIds;
   const RemoveMessagesAction({required this.userId, required this.messageIds});
 }
 @immutable
 class RemoveMessagesSuccessAction extends AppAction{
-  final Iterable<num> messageIds;
+  final Iterable<int> messageIds;
   const RemoveMessagesSuccessAction({required this.messageIds});
 }
 @immutable
 class RemoveMessagesByUserIdsAction extends AppAction{
-  final Iterable<num> userIds;
+  final Iterable<int> userIds;
   const RemoveMessagesByUserIdsAction({required this.userIds});
 }
 @immutable
 class RemoveMessagesByUserIdsSuccessAction extends AppAction{
-  final Iterable<num> userIds;
+  final Iterable<int> userIds;
   const RemoveMessagesByUserIdsSuccessAction({required this.userIds});
 }
 
@@ -84,7 +84,7 @@ class GetUnviewedMessagesAction extends AppAction{
 
 @immutable
 class MarkComingMessageAsReceivedAction extends AppAction{
-  final num messageId;
+  final int messageId;
   const MarkComingMessageAsReceivedAction({required this.messageId});
 }
 @immutable

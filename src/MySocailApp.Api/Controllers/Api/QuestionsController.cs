@@ -12,7 +12,6 @@ using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuesti
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionsBySubjectId;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionsByTopicId;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionsByUserId;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetSavedQuestions;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetSolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetUnsolvedQuestionsByUserId;
 using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetVideoQuestions;
@@ -79,9 +78,5 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet]
         public async Task<List<QuestionResponseDto>> GetVideoQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetVideoQuestionsDto(offset, take, isDescending),cancellationToken);
-
-        [HttpGet]
-        public async Task<List<QuestionUserSaveResponseDto>> GetSavedQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetSavedQuestionsDto(offset, take, isDescending), cancellationToken);
     }
 }
