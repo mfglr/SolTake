@@ -132,7 +132,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                 NextSearchQuestionsAction(examId: _examId, subjectId: _subjectId, topicId: _topicId)
               ),
               converter: (store) => store.state.selectSearchQuestions,
-              builder: (context,questions) => QuestionAbstractItemsWidget(
+              builder: (context, questions) => QuestionAbstractItemsWidget(
                 questions: questions,
                 onTap: (questionId) => Navigator
                   .of(context)

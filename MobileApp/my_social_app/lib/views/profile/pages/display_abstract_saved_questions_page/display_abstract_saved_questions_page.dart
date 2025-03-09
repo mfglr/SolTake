@@ -21,9 +21,9 @@ class DisplayAbstractSavedQuestionsPage extends StatelessWidget {
         leading: const AppBackButtonWidget(),
         title: AppTitle(title: AppLocalizations.of(context)!.display_abstract_saved_questions_page_title),
       ),
-      body: StoreConnector<AppState,Pagination>(
+      body: StoreConnector<AppState, Pagination>(
         converter: (store) => store.state.questionUserSaves,
-        builder: (context,pagination) => StoreConnector<AppState, Iterable<QuestionState>>(
+        builder: (context, pagination) => StoreConnector<AppState, Iterable<QuestionState>>(
           onInit: (store) => getNextPageIfNoPage(store, store.state.questionUserSaves, const NextQuestionUserSavesAction()),
           converter: (store) => store.state.selectSavedQuestions,
           builder: (context, questions) => QuestionAbstractItemsWidget(

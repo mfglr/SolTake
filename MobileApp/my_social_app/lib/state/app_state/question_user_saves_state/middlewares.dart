@@ -31,13 +31,13 @@ void deleteQuestionUserSaveMiddleware(Store<AppState> store, action, NextDispatc
   next(action);
 }
 
-void nextQuestionUserSavesMiddleware(Store<AppState> store,action,NextDispatcher next){
+void nextQuestionUserSavesMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionUserSavesAction){
     QuestionUserSaveService()
       .get(store.state.questionUserSaves.next)
       .then((questionUserSaves){
         store.dispatch(NextQuestionUserSavesSuccessAction(questionUserSaves: questionUserSaves.map((e) => e.toQuestionUserSaveState())));
-
+        
         store.dispatch(AddQuestionsAction(questions: questionUserSaves.map((e) => e.question.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questionUserSaves.map((e) => e.question.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questionUserSaves.map((e) => e.question.subject.toSubjectState())));

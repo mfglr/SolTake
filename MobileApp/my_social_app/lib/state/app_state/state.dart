@@ -36,8 +36,7 @@ class AppState{
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
   final Pagination<int,QuestionUserSaveState> questionUserSaves;
-
-
+  
   final EntityState<int,QuestionState> questionEntityState;
   final Pagination<int,Id<int>> homePageQuestions;
   final EntityState<int,ExamState> examEntityState;

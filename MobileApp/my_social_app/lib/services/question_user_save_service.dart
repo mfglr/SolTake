@@ -23,6 +23,6 @@ class QuestionUserSaveService {
   Future<Iterable<QuestionUserSave>> get(Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$_controllerName/get", page))
-      .then((json) => json as List)
+      .then((json) => json as Iterable)
       .then((list) => list.map((e) => QuestionUserSave.fromJson(e)));
 }

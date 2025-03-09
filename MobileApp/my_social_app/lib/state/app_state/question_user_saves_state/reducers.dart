@@ -10,7 +10,7 @@ Pagination<int, QuestionUserSaveState> deleteQuestionUserSaveFailedReducer(Pagin
 
 Pagination<int, QuestionUserSaveState> nextQuestionUserSavesReducer(Pagination<int,QuestionUserSaveState> prev,NextQuestionUserSavesAction action)
   => prev.startLoadingNext();
-Pagination<int,QuestionUserSaveState> nextQuestionUserSavesSuccessReducer(Pagination<int,QuestionUserSaveState> prev, NextQuestionUserSavesSuccessAction action)
+Pagination<int,QuestionUserSaveState> nextQuestionUserSavesSuccessReducer(Pagination<int, QuestionUserSaveState> prev, NextQuestionUserSavesSuccessAction action)
   => prev.addNextPage(action.questionUserSaves);
 Pagination<int,QuestionUserSaveState> nextQuestionUserSavesFailedReducer(Pagination<int,QuestionUserSaveState> prev, NextQuestionUserSavesFailedAction action)
   => prev.stopLoadingNext();
