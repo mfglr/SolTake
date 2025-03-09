@@ -5,7 +5,6 @@ using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
@@ -13,9 +12,9 @@ using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Inte
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Abstracts;
-using MySocailApp.Infrastructure.CommentAggregate;
+using MySocailApp.Infrastructure.CommentDomain;
+using MySocailApp.Infrastructure.CommentDomain.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.ExamAggregate;
 using MySocailApp.Infrastructure.InfrastructureServices;
@@ -30,7 +29,6 @@ using MySocailApp.Infrastructure.QueryRepositories;
 using MySocailApp.Infrastructure.QuestionDomain;
 using MySocailApp.Infrastructure.RoleAggregate;
 using MySocailApp.Infrastructure.SolutionDomain;
-using MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
 using MySocailApp.Infrastructure.UserConnectionAggregate;
@@ -49,6 +47,7 @@ namespace MySocailApp.Infrastructure
                 .AddUserDomainInfrastructureServices()
                 .AddQuestionDomainInfrastructureServices()
                 .AddSolutionDomainInfrastructureServices()
+                .AddCommentDomainInfrastructureService()
                 .AddExamAggregate()
                 .AddSubjectAggregate()
                 .AddTopicAggregate()
@@ -144,11 +143,6 @@ namespace MySocailApp.Infrastructure
         private static IServiceCollection AddTopicAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ITopicReadRepository, TopicReadRepository>();
-
-        private static IServiceCollection AddCommentAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<ICommentReadRepository, CommentReadRepository>()
-                .AddScoped<ICommentWriteRepository, CommentWriteRepository>();
 
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
             => services

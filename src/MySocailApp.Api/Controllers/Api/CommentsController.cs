@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.CommentAggregate.Create;
 using MySocailApp.Application.Commands.CommentAggregate.DeleteComment;
 using MySocailApp.Application.Commands.CommentAggregate.DislikeComment;
-using MySocailApp.Application.Commands.CommentAggregate.LikeComment;
+using MySocailApp.Application.Commands.CommentDomain.CommentAggregate.CreateComment;
+using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment;
 using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentById;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes;
@@ -34,7 +34,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<CommentUserLikeResponseDto> LikeComment(LikeCommentDto request, CancellationToken cancellationToken)
+        public async Task<CommentUserLikeResponseDto> LikeComment(CreateCommentUserLikeDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpDelete("{commentId}")]

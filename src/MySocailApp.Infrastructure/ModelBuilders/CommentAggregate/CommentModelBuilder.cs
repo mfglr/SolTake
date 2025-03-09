@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
 {

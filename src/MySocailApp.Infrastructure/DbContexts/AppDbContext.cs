@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AppVersionAggregate.Entities;
-using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;

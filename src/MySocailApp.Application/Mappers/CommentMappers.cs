@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Queries.CommentAggregate;
-using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {

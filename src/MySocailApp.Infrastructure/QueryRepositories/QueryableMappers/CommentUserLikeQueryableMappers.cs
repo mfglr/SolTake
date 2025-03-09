@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.Queries.UserAggregate;
 using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

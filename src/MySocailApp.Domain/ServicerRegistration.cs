@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Domain.AppVersionAggregate;
-using MySocailApp.Domain.CommentAggregate;
+using MySocailApp.Domain.CommentDomain.CommentAggregate;
 using MySocailApp.Domain.MessageDomain;
 using MySocailApp.Domain.QuestionDomain;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate;
