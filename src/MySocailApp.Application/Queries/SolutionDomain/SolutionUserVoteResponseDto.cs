@@ -1,7 +1,6 @@
-﻿using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+﻿using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.SolutionDomain
 {
-    public record SolutionUserVoteResponseDto(int Id, DateTime CreatedAt, int SolutionId, int UserId, SolutionVoteType Type, UserResponseDto AppUser);
+    public record SolutionUserVoteResponseDto(int Id, int UserId, string UserName, string? Name, Multimedia? Image);
 }

@@ -22,7 +22,7 @@ namespace MySocailApp.Application.DomainEventConsumers.NotificationAggregate.Sol
             var n = await _notificationQueryRepository.GetNotificationById(notification.Notification.Id, cancellationToken);
             if (n == null) return;
 
-            var vote = await _solutionUserVoteQueryRepository.GetSolutionVote(notification.Notification.OwnerId, notification.VoteId, cancellationToken);
+            var vote = await _solutionUserVoteQueryRepository.GetSolutionVote(notification.VoteId, cancellationToken);
             if (vote == null) return;
 
             await _notificationHub.Clients

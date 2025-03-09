@@ -2,9 +2,9 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions
+namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Exceptions
 {
-    public class VoteIsNotFoundException : AppException
+    public class VoteNotFoundException : AppException
     {
         private readonly static string _messageEn = "Vote was not found!";
         private readonly static string _messageTr = "Oy bulunamadı!";
@@ -14,6 +14,6 @@ namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions
         };
 
         public override string GetErrorMessage(string culture) => _messages[culture];
-        public VoteIsNotFoundException() : base((int)HttpStatusCode.BadRequest) { }
+        public VoteNotFoundException() : base((int)HttpStatusCode.BadRequest) { }
     }
 }

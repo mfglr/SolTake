@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions
+namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Exceptions
 {
     public class SolutionUpvotedBeforeException : AppException
     {

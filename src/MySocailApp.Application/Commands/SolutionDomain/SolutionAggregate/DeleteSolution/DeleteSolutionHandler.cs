@@ -15,8 +15,9 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Dele
         public async Task Handle(DeleteSolutionDto request, CancellationToken cancellationToken)
         {
             var solution =
-                await _solutionWriteRepository.GetWithImagesByIdAsync(request.SolutionId, cancellationToken) ??
+                await _solutionWriteRepository.GetByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionNotFoundException();
+
             _solutionWriteRepository.Delete(solution);
             await _unitOfWork.CommitAsync(cancellationToken);
             await _publisher.Publish(new SolutionDeletedDomainEvent(solution), cancellationToken);

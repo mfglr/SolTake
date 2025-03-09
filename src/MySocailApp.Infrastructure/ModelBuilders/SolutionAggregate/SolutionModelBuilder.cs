@@ -16,18 +16,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
                 .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Votes)
-                .WithOne()
-                .HasForeignKey(x => x.SolutionId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.VoteNotifications)
-                .WithOne()
-                .HasForeignKey(x => x.SolutionId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

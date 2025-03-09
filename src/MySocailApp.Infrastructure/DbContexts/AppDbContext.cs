@@ -14,6 +14,7 @@ using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
 using MySocailApp.Domain.UserDomain.FollowAggregate.Entities;
 using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
@@ -47,9 +48,10 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
 
         public DbSet<Solution> Solutions { get; private set; }
+
         public DbSet<SolutionUserVote> SolutionUserVotes { get; private set; }
+        
         public DbSet<SolutionUserSave> SolutionUserSaves { get; private set; }
-        public DbSet<SolutionUserVoteNotification> SolutionUserVoteNotifications { get; private set; }
 
         public DbSet<Comment> Comments { get; private set; }
         public DbSet<CommentUserLike> CommentUserLikes { get; private set; }

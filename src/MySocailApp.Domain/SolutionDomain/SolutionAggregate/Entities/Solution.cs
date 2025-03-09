@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
 
@@ -8,7 +7,6 @@ namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities
     public class Solution : Entity, IAggregateRoot
     {
         public static int MaxNumberOfMultimedia = 5;
-
         private Solution() { }
 
         public int QuestionId { get; private set; }
@@ -52,75 +50,6 @@ namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities
                 CreatedAt = DateTime.UtcNow
             };
             return solution;
-        }
-
-        private readonly List<SolutionUserVote> _votes = [];
-        public IReadOnlyCollection<SolutionUserVote> Votes => _votes;
-        private readonly List<SolutionUserVoteNotification> _voteNotifications = [];
-        public IReadOnlyCollection<SolutionUserVoteNotification> VoteNotifications => _voteNotifications;
-        public SolutionUserVote MakeUpvote(int voterId)
-        {
-            var index = _votes.FindIndex(x => x.UserId == voterId);
-            if (index != -1)
-            {
-                if (_votes[index].Type == SolutionVoteType.Upvote)
-                    throw new SolutionUpvotedBeforeException();
-                _votes.RemoveAt(index);//Remove downvote
-                AddDomainEvent(new SolutionDownvoteRemovedDomainEvent(this));
-            }
-
-            var vote = SolutionUserVote.GenerateUpvote(voterId);
-            _votes.Add(vote);
-
-            if (UserId != voterId && !_voteNotifications.Any(x => x.UserId == voterId))
-            {
-                _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
-                AddDomainEvent(new SolutionWasUpvotedDomainEvent(this, vote));
-            }
-            return vote;
-        }
-        public SolutionUserVote MakeDownvote(int voterId)
-        {
-            var index = _votes.FindIndex(x => x.UserId == voterId);
-            if (index != -1)
-            {
-                if (_votes[index].Type == SolutionVoteType.Downvote)
-                    throw new SolutionDownvotedBeforeException();
-                _votes.RemoveAt(index);//Remove upvote
-                AddDomainEvent(new SolutionUpvoteRemovedDomainEvent(this));
-            }
-
-            var vote = SolutionUserVote.GenerateDownvote(voterId);
-            _votes.Add(vote);
-
-            if (UserId != voterId && !_voteNotifications.Any(x => x.UserId == voterId))
-            {
-                _voteNotifications.Add(new SolutionUserVoteNotification(voterId));
-                AddDomainEvent(new SolutionWasDownvotedDomainEvent(this, vote));
-            }
-            return vote;
-        }
-        public void RemoveUpvote(int voterId)
-        {
-            int index = _votes.FindIndex(x => x.UserId == voterId);
-            if (index == -1 || _votes[index].Type == SolutionVoteType.Downvote)
-                throw new VoteIsNotFoundException();
-            _votes.RemoveAt(index);
-            AddDomainEvent(new SolutionUpvoteRemovedDomainEvent(this));
-        }
-        public void RemoveDownvote(int voterId)
-        {
-            int index = _votes.FindIndex(x => x.UserId == voterId);
-            if (index == -1 || _votes[index].Type == SolutionVoteType.Upvote)
-                throw new VoteIsNotFoundException();
-            _votes.RemoveAt(index);
-            AddDomainEvent(new SolutionDownvoteRemovedDomainEvent(this));
-        }
-        public void DeleteVote(int voterId)
-        {
-            int index = _votes.FindIndex(x => x.UserId == voterId);
-            if (index == -1) return;
-            _votes.RemoveAt(index);
         }
 
         public SolutionState State { get; private set; }

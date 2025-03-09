@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MakeDownvote;
-using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MakeUpvote;
 using MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.CreateSolutionUserSave;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeDownvote;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeUpvote;
 using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
 
 namespace MySocailApp.Application.Mappers
 {
@@ -11,8 +11,8 @@ namespace MySocailApp.Application.Mappers
     {
         public SolutionMappers()
         {
-            CreateMap<SolutionUserVote, MakeUpvoteCommandResponseDto>();
-            CreateMap<SolutionUserVote, MakeDownvoteCommandResponseDto>();
+            CreateMap<SolutionUserVote, MakeUpvoteResponseDto>();
+            CreateMap<SolutionUserVote, MakeDownvoteResponseDto>();
             CreateMap<SolutionUserSave, CreateSolutionUserSaveResponseDto>();
         }
     }

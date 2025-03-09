@@ -2,7 +2,7 @@
 
 namespace MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Entities
 {
-    public class SolutionUserSave : Entity
+    public class SolutionUserSave : Entity, IAggregateRoot
     {
         public int SolutionId { get; private set; }
         public int UserId { get; private set; }
