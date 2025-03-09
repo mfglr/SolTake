@@ -89,6 +89,7 @@ dependencies:
     path: ../flutter_and_dart_packages/app_file_slider
   multimedia_grid:
     path: ../flutter_and_dart_packages/multimedia_grid
+  hive: ^2.2.3
     
 dev_dependencies:
   flutter_test:
