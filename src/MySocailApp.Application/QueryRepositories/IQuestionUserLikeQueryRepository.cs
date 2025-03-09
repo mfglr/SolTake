@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate;
+﻿using MySocailApp.Application.Queries.QuestionDomain;
 using MySocailApp.Core;
 
 namespace MySocailApp.Application.QueryRepositories

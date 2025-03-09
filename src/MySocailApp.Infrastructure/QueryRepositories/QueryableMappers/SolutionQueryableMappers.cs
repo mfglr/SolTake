@@ -1,6 +1,6 @@
-﻿using MySocailApp.Application.Queries.SolutionAggregate;
-using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+﻿using MySocailApp.Application.Queries.SolutionDomain;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -34,7 +34,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         context.Comments.Count(c => c.SolutionId == join.solution.Id),
                         join.solution.State,
                         join.solution.UserId == userId,
-                        join.solution.Savers.Any(x => x.UserId == userId),
+                        context.SolutionUserSaves.Any(sus => sus.UserId == userId && sus.Id == join.solution.Id),
                         question.UserId == userId,
                         join.solution.Medias.Select(
                             i => new SolutionMediaResponseDto(

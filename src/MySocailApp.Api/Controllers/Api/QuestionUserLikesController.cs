@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.DislikeQuestion;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate.GetQuestionLikes;
+using MySocailApp.Application.Queries.QuestionDomain;
+using MySocailApp.Application.Queries.QuestionDomain.GetQuestionLikes;
 
 namespace MySocailApp.Api.Controllers.Api
 {

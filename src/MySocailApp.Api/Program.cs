@@ -8,7 +8,7 @@ using MySocailApp.Domain.AppVersionAggregate;
 using MySocailApp.Domain.CommentAggregate;
 using MySocailApp.Domain.MessageDomain.MessageAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate;
-using MySocailApp.Domain.SolutionAggregate;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate;
 using MySocailApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

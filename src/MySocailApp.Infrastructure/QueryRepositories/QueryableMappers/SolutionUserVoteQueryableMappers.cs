@@ -1,6 +1,6 @@
-﻿using MySocailApp.Application.Queries.SolutionAggregate;
+﻿using MySocailApp.Application.Queries.SolutionDomain;
 using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

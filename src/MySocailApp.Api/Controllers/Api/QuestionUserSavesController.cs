@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.DeleteQuestionUserSave;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionUserSaveAggregate;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionUserSaveAggregate.GetQuestionUserSaves;
+using MySocailApp.Application.Queries.QuestionDomain;
+using MySocailApp.Application.Queries.QuestionDomain.GetQuestionUserSaves;
 
 namespace MySocailApp.Api.Controllers.Api
 {

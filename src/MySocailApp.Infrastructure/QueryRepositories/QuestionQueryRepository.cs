@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionDomain;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;

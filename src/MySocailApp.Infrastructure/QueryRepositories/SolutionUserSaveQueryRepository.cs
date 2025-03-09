@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.SolutionAggregate;
+using MySocailApp.Application.Queries.SolutionDomain;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;
@@ -12,7 +12,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public Task<List<SolutionUserSaveResponseDto>> GetSavedSolutions(int userId, int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<SolutionUserSaveResponseDto>> GetSolutionUserSaves(int userId, int accountId, IPage page, CancellationToken cancellationToken)
             => _context.SolutionUserSaves
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)

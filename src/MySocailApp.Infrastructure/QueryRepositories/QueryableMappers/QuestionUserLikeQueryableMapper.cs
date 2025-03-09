@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.QuestionDomain.QuestionUserLikeAggregate;
+﻿using MySocailApp.Application.Queries.QuestionDomain;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 

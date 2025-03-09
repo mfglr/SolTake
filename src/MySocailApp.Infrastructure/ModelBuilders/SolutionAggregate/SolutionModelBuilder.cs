@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
 {
@@ -25,12 +25,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
 
             builder
                 .HasMany(x => x.VoteNotifications)
-                .WithOne()
-                .HasForeignKey(x => x.SolutionId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(x => x.Savers)
                 .WithOne()
                 .HasForeignKey(x => x.SolutionId)
                 .OnDelete(DeleteBehavior.Cascade);

@@ -13,7 +13,7 @@ using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Inte
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Abstracts;
 using MySocailApp.Infrastructure.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
@@ -29,7 +29,8 @@ using MySocailApp.Infrastructure.NotificationConnectionAggregate;
 using MySocailApp.Infrastructure.QueryRepositories;
 using MySocailApp.Infrastructure.QuestionDomain;
 using MySocailApp.Infrastructure.RoleAggregate;
-using MySocailApp.Infrastructure.SolutionAggregate;
+using MySocailApp.Infrastructure.SolutionDomain;
+using MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
 using MySocailApp.Infrastructure.UserConnectionAggregate;
@@ -47,7 +48,7 @@ namespace MySocailApp.Infrastructure
                 .AddServices()
                 .AddUserDomainInfrastructureServices()
                 .AddQuestionDomainInfrastructureServices()
-                .AddSolutionAggregate()
+                .AddSolutionDomainInfrastructureServices()
                 .AddExamAggregate()
                 .AddSubjectAggregate()
                 .AddTopicAggregate()
@@ -131,11 +132,6 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
                 .AddScoped<ISolutionUserSaveQueryRepository, SolutionUserSaveQueryRepository>()
                 .AddScoped<INotificationQueryRepository, NotificationQueryRepository>();
-
-        private static IServiceCollection AddSolutionAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<ISolutionWriteRepository, SolutionWriteRepository>()
-                .AddScoped<ISolutionReadRepository, SolutionReadRepository>();
 
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
             => services

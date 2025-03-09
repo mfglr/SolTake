@@ -3,27 +3,25 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.SolutionAggregate.CreateSolution;
-using MySocailApp.Application.Commands.SolutionAggregate.CreateSolutionByAI;
-using MySocailApp.Application.Commands.SolutionAggregate.DeleteSolution;
-using MySocailApp.Application.Commands.SolutionAggregate.MakeDownvote;
-using MySocailApp.Application.Commands.SolutionAggregate.MakeUpvote;
-using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsCorrect;
-using MySocailApp.Application.Commands.SolutionAggregate.MarkSolutionAsIncorrect;
-using MySocailApp.Application.Commands.SolutionAggregate.RemoveDownvote;
-using MySocailApp.Application.Commands.SolutionAggregate.RemoveUpvote;
-using MySocailApp.Application.Commands.SolutionAggregate.SaveSolution;
-using MySocailApp.Application.Commands.SolutionAggregate.UnsaveSolution;
-using MySocailApp.Application.Queries.SolutionAggregate;
-using MySocailApp.Application.Queries.SolutionAggregate.GetCorrectSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionAggregate.GetIncorrectsSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionAggregate.GetPendingSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionAggregate.GetQuestionSolutionsThatHaveVideo;
-using MySocailApp.Application.Queries.SolutionAggregate.GetSavedSolutions;
-using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionById;
-using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionDownvotes;
-using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionAggregate.GetSolutionUpvotes;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.DeleteSolution;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MakeDownvote;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MakeUpvote;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MarkSolutionAsCorrect;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MarkSolutionAsIncorrect;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.RemoveDownvote;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.RemoveUpvote;
+using MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.CreateSolutionUserSave;
+using MySocailApp.Application.Queries.SolutionDomain;
+using MySocailApp.Application.Queries.SolutionDomain.GetCorrectSolutionsByQuestionId;
+using MySocailApp.Application.Queries.SolutionDomain.GetIncorrectsSolutionsByQuestionId;
+using MySocailApp.Application.Queries.SolutionDomain.GetPendingSolutionsByQuestionId;
+using MySocailApp.Application.Queries.SolutionDomain.GetSolutionById;
+using MySocailApp.Application.Queries.SolutionDomain.GetSolutionDownvotes;
+using MySocailApp.Application.Queries.SolutionDomain.GetSolutionsByQuestionId;
+using MySocailApp.Application.Queries.SolutionDomain.GetSolutionUpvotes;
+using MySocailApp.Application.Queries.SolutionDomain.GetVideoSolutions;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -76,13 +74,9 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<SaveSolutionCommandResponseDto> Save(SaveSolutionDto request,CancellationToken cancellationToken)
+        public async Task<CreateSolutionUserSaveResponseDto> Save(CreateSolutionUserSaveDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
-
-        [HttpDelete("{solutionId}")]
-        public async Task Unsave(int solutionId, CancellationToken cancellationToken)
-            => await _mediator.Send(new UnsaveSolutionDto(solutionId),cancellationToken);
-
+        
         [HttpGet("{id}")]
         public async Task<SolutionResponseDto> GetSolutionById(int id, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSolutionByIdDto(id), cancellationToken);
@@ -110,11 +104,7 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet("{solutionId}")]
         public async Task<List<SolutionUserVoteResponseDto>> GetSolutionDownvotes(int solutionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSolutionDownvotesDto(solutionId, offset, take, isDescending), cancellationToken);
-
-        [HttpGet]
-        public async Task<List<SolutionUserSaveResponseDto>> GetSavedSolutions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetSavedSolutionsDto(offset, take, isDescending), cancellationToken);
-
+     
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetVideoSolutions(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetVideoSolutionsDto(questionId,offset,take,isDescending), cancellationToken);

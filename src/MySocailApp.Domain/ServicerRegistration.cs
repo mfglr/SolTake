@@ -3,7 +3,7 @@ using MySocailApp.Domain.AppVersionAggregate;
 using MySocailApp.Domain.CommentAggregate;
 using MySocailApp.Domain.MessageDomain;
 using MySocailApp.Domain.QuestionDomain;
-using MySocailApp.Domain.SolutionAggregate;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate;
 using MySocailApp.Domain.UserDomain;
 
 namespace MySocailApp.Domain

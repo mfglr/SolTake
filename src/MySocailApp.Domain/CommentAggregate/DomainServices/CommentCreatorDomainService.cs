@@ -3,7 +3,7 @@ using MySocailApp.Domain.CommentAggregate.DomainServices.InternalDomainServices;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
 
 namespace MySocailApp.Domain.CommentAggregate.DomainServices
 {

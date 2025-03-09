@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
+using MySocailApp.Application.Queries.QuestionDomain;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 

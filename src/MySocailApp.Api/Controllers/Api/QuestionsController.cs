@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion;
 using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetHomePageQuestions;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionById;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionsByExamId;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionsBySubjectId;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionsByTopicId;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetQuestionsByUserId;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetSolvedQuestionsByUserId;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetUnsolvedQuestionsByUserId;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.GetVideoQuestions;
-using MySocailApp.Application.Queries.QuestionDomain.QuestionAggregate.SearchQuestions;
+using MySocailApp.Application.Queries.QuestionDomain;
+using MySocailApp.Application.Queries.QuestionDomain.GetHomePageQuestions;
+using MySocailApp.Application.Queries.QuestionDomain.GetQuestionById;
+using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsByExamId;
+using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsBySubjectId;
+using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsByTopicId;
+using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsByUserId;
+using MySocailApp.Application.Queries.QuestionDomain.GetSolvedQuestionsByUserId;
+using MySocailApp.Application.Queries.QuestionDomain.GetUnsolvedQuestionsByUserId;
+using MySocailApp.Application.Queries.QuestionDomain.GetVideoQuestions;
+using MySocailApp.Application.Queries.QuestionDomain.SearchQuestions;
 
 namespace MySocailApp.Api.Controllers.Api
 {
