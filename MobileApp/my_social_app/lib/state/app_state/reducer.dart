@@ -18,7 +18,7 @@ import 'package:my_social_app/state/app_state/question_user_saves_state/reducers
 import 'package:my_social_app/state/app_state/search_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/solution_user_save_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/solution_user_saves_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
@@ -38,6 +38,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   searchQuestions: searchQuestionsReducer(prev.searchQuestions,action),
   userUserSearchs: userUserSearchsReducers(prev.userUserSearchs,action),
   questionUserSaves: questionUserSavesReducers(prev.questionUserSaves,action),
+  solutionUserSaves: solutionUserSavesReducers(prev.solutionUserSaves,action),
 
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   accessToken: changeAccessTokenReducer(prev.accessToken,action),
@@ -58,7 +59,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
   solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
-  solutionUserSaveEntityState: solutionUserSaveEntityReducers(prev.solutionUserSaveEntityState,action),
   appExams: appExamsReducers(prev.appExams, action),
   policyState: policyReducers(prev.policyState,action),
   videoQuestions: videoQuestionsReducers(prev.videoQuestions, action),

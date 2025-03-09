@@ -42,7 +42,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             context.Comments.Count(c => c.SolutionId == join1.solution.Id),
                             join1.solution.State,
                             join1.solution.UserId == accountId,
-                            context.SolutionUserSaves.Any(sus => sus.UserId == accountId && sus.Id == join1.solution.Id),
+                            context.SolutionUserSaves.Any(sus => sus.UserId == accountId && sus.SolutionId == join1.solution.Id),
                             question.UserId == accountId,
                             join1.solution.Medias.Select(
                                 i => new SolutionMediaResponseDto(

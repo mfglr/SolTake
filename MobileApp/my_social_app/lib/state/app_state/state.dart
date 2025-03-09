@@ -17,7 +17,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/question_user_saves_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_user_save_entity_state/solution_user_save_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_saves_state/solution_user_save_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
@@ -36,7 +36,8 @@ class AppState{
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
   final Pagination<int,QuestionUserSaveState> questionUserSaves;
-  
+  final Pagination<int,SolutionUserSaveState> solutionUserSaves;
+
   final EntityState<int,QuestionState> questionEntityState;
   final Pagination<int,Id<int>> homePageQuestions;
   final EntityState<int,ExamState> examEntityState;
@@ -51,7 +52,6 @@ class AppState{
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,SolutionUserVoteState> solutionUserVoteEntityState;
-  final EntityState<int,SolutionUserSaveState> solutionUserSaveEntityState;
   final EntityState<int,CommentState> commentEntityState;
   final EntityState<int,CommentUserLikeState> commentUserLikeEntityState;
   final CreateCommentState createCommentState;
@@ -63,11 +63,11 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
-
     required this.searchUsers,
     required this.searchQuestions,
     required this.userUserSearchs,
     required this.questionUserSaves,
+    required this.solutionUserSaves,
 
     required this.questionEntityState,
     required this.homePageQuestions,
@@ -83,7 +83,6 @@ class AppState{
     required this.topicEntityState,
     required this.solutionEntityState,
     required this.solutionUserVoteEntityState,
-    required this.solutionUserSaveEntityState,
     required this.commentEntityState,
     required this.commentUserLikeEntityState,
     required this.createCommentState,
@@ -100,6 +99,7 @@ class AppState{
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
     questionUserSaves: Pagination.init(questionsPerPage, true),
+    solutionUserSaves: Pagination.init(solutionsPerPage, true),
 
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
@@ -121,7 +121,6 @@ class AppState{
     messageEntityState: EntityState(),
     userSearchEntityState: EntityState(),
     solutionUserVoteEntityState: EntityState(),
-    solutionUserSaveEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()
@@ -199,11 +198,11 @@ class AppState{
     => questionEntityState.getValue(questionId)!.pendingSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
   Iterable<SolutionState> selectQuestionIncorrectSolutions(int questionId)
     => questionEntityState.getValue(questionId)!.incorrectSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectUserSavedSolutions(int userId) =>
-    userEntityState.getValue(userId)!.savedSolutions.values
-    .map((e) => solutionEntityState.getValue(solutionUserSaveEntityState.getValue(e.id)!.solutionId)!);
   Iterable<SolutionState> selectQuestionVideoSolutions(int questionId) =>
     questionEntityState.getValue(questionId)!.videoSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
+  Iterable<SolutionState> get selectSavedSolutions
+    => solutionUserSaves.values.map((e) => solutionEntityState.getValue(e.solutionId)!);
+
 
   //Select comments
   Iterable<CommentState> getQuestionComments(int questionId)

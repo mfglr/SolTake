@@ -3,13 +3,10 @@ import 'package:my_social_app/services/follow_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
-import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_user_save_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
@@ -230,23 +227,6 @@ void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispat
       })
       .catchError((e){
         store.dispatch(NextUserUnsolvedQuestionsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextUserSavedSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserSavedSolutionsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.savedSolutions;
-    SolutionService()
-      .getSavedSolutions(pagination.next)
-      .then((saves){
-        store.dispatch(AddSolutionUserSavesAction(saves: saves.map((e) => e.toSolutionUserSaveState())));
-        store.dispatch(AddSolutionsAction(solutions: saves.map((e) => e.solution!.toSolutionState())));
-        store.dispatch(NextUserSavedSolutionsSuccessAction(userId: action.userId,savedIds: saves.map((e) => e.id)));
-      })
-      .catchError((e){
-        store.dispatch(NextUserSavedSolutionsFailedAction(userId: action.userId));        
         throw e;
       });
   }

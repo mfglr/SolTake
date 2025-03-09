@@ -7,7 +7,7 @@ namespace MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Exceptions
     public class SolutionNotSavedException : AppException
     {
         private readonly static string _messageEn = "This solution is not registered!";
-        private readonly static string _messageTr = "Bu çözüm kayıtlı değil.";
+        private readonly static string _messageTr = "Bu çözüm zaten kayıtlı değil.";
         private readonly static Dictionary<string, string> _messages = new() {
             { Languages.EN, _messageEn },
             { Languages.TR, _messageTr }

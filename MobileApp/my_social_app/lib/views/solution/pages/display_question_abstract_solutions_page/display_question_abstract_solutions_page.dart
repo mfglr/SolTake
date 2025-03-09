@@ -61,8 +61,7 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
   Widget _displayAllSolutions(QuestionState question){
     return StoreConnector<AppState,Iterable<SolutionState>>(
       onInit: (store) => getNextPageIfNoPage(store,question.solutions,NextQuestionSolutionsAction(questionId: question.id)),
-      converter: (store) => //store.state.selectQuestionSolutions(widget.questionId),
-      [],
+      converter: (store) => store.state.selectQuestionSolutions(widget.questionId),
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.solutions,
@@ -93,8 +92,7 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
         question.correctSolutions,
         NextQuestionCorrectSolutionsAction(questionId: question.id)
       ),
-      converter: (store) => //store.state.selectQuestionCorrectSolutions(widget.questionId),
-      [],
+      converter: (store) => store.state.selectQuestionCorrectSolutions(widget.questionId),
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.correctSolutions,
@@ -131,8 +129,7 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
         question.pendingSolutions,
         NextQuestionPendingSolutionsAction(questionId: question.id)
       ),
-      converter: (store) => //store.state.selectQuestionPendingSolutions(widget.questionId),
-      [],
+      converter: (store) => store.state.selectQuestionPendingSolutions(widget.questionId),
       builder: (context,solutions) => SolutionAbstractItems(
         solutions: solutions,
         pagination: question.pendingSolutions,

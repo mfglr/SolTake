@@ -192,8 +192,6 @@ class SolutionState extends BaseEntity<int> implements Avatar{
   SolutionState markAsIncorrect()
     => _optinal(newState: SolutionStatus.incorrect);  
 
-  SolutionState save()
-    => _optinal(newIsSaved: true);
-  SolutionState unsave()
-    => _optinal(newIsSaved: false);
+  SolutionState save() => _optinal(newIsSaved: true);
+  SolutionState unsave() => _optinal(newIsSaved: false);
 }

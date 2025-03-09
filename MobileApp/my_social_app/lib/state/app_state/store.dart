@@ -18,6 +18,7 @@ import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/solution_user_saves_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
@@ -36,6 +37,7 @@ final store = Store(
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
     questionUserSaves: Pagination.init(questionsPerPage, true),
+    solutionUserSaves: Pagination.init(solutionsPerPage, true),
 
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
@@ -57,7 +59,6 @@ final store = Store(
     conversations: Pagination.init(conversationsPerPage,true),
     userSearchEntityState: EntityState(),
     solutionUserVoteEntityState: EntityState(),
-    solutionUserSaveEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()
@@ -86,6 +87,13 @@ final store = Store(
     removeUserUserSearchMiddleware,
     nextUserUserSearchsMiddleware,
     //user user searchs middlewares
+
+    //solution user saves middewares
+    createSolutionUserSaveMiddleware,
+    deleteSolutionUserSaveMiddleware,
+    nextSolutionUserSavesMiddleware,
+    //solution user saves middewares
+
 
     //exams middlewares
     nextExamsMidleware,
@@ -128,7 +136,6 @@ final store = Store(
     nextUserQuestionsMiddleware,
     nextUserSolvedQuestionsMiddleware,
     nextUserUnsolvedQuestionsMiddleware,
-    nextUserSavedSolutionsMiddleware,
     nextUserConvesationsMiddleware,
 
     updateUserNameMiddleware,
@@ -181,8 +188,6 @@ final store = Store(
     removeSolutionUpvoteMiddleware,
     markSolutionAsCorrectMiddleware,
     markSolutionAsIncorrectMiddleware,
-    saveSolutionMiddleware,
-    unsaveSolutionMiddleware,
     makeSolutionDownvoteMiddleware,
     removeSolutionDownvoteMiddleware,
     nextSolutionUpvotesMiddleware,

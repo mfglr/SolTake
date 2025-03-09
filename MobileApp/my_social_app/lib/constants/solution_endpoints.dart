@@ -18,9 +18,6 @@ const removeDownvoteEndpoint = "removeDownvote";
 const markSolutionAsCorrectEndpoint = "MarkAsCorrect";
 const markSolutionAsIncorrectEndpoint = "MarkAsIncorrect";
 
-const saveSolutionEndpoint = "Save";
-const unsaveSolutionEndpoint = "Unsave";
-
 const getSolutionUpvotesEndpoint = "GetSolutionUpvotes";
 const makeUpvoteEndpoint = "MakeUpvote";
 const removeUpvoteEndpoint = "removeUpvote";

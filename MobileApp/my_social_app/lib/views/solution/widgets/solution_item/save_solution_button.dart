@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solution_user_saves_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 
 class SaveSolutionButton extends StatelessWidget {
@@ -17,10 +17,10 @@ class SaveSolutionButton extends StatelessWidget {
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
         if(solution.isSaved){
-          store.dispatch(UnsaveSolutionAction(solutionId: solution.id));
+          store.dispatch(DeleteSolutionUserSaveAction(solutionId: solution.id));
         }
         else{
-          store.dispatch(SaveSolutionAction(solutionId: solution.id));
+          store.dispatch(CreateSolutionUserSaveAction(solutionId: solution.id));
         }
       },
       style: ButtonStyle(

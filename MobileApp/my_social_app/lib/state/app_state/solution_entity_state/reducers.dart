@@ -57,9 +57,9 @@ EntityState<int,SolutionState> markAsCorrectReducer(EntityState<int,SolutionStat
 EntityState<int,SolutionState> markAsIncorrectReducer(EntityState<int,SolutionState> prev, MarkSolutionAsIncorrectSuccessAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.markAsIncorrect());
 
-EntityState<int,SolutionState> saveSolutionReducer(EntityState<int,SolutionState> prev, SaveSolutionSuccessAction action)
+EntityState<int,SolutionState> saveSolutionReducer(EntityState<int,SolutionState> prev, SaveSolutionAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.save()) ;
-EntityState<int,SolutionState> unsaveSolutionReducer(EntityState<int,SolutionState> prev, UnsaveSolutionSuccessAction action)
+EntityState<int,SolutionState> unsaveSolutionReducer(EntityState<int,SolutionState> prev, UnsaveSolutionAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.unsave());
 
 Reducer<EntityState<int,SolutionState>> solutionEntityStateReducers = combineReducers<EntityState<int,SolutionState>>([
@@ -92,6 +92,6 @@ Reducer<EntityState<int,SolutionState>> solutionEntityStateReducers = combineRed
   TypedReducer<EntityState<int,SolutionState>,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
   TypedReducer<EntityState<int,SolutionState>,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,
 
-  TypedReducer<EntityState<int,SolutionState>,SaveSolutionSuccessAction>(saveSolutionReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,UnsaveSolutionSuccessAction>(unsaveSolutionReducer).call,
+  TypedReducer<EntityState<int,SolutionState>,SaveSolutionAction>(saveSolutionReducer).call,
+  TypedReducer<EntityState<int,SolutionState>,UnsaveSolutionAction>(unsaveSolutionReducer).call,
 ]);

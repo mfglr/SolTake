@@ -11,7 +11,7 @@ using MySocailApp.Application.Queries.SolutionDomain.GetSavedSolutions;
 namespace MySocailApp.Api.Controllers.Api
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(CheckUserFilterAttribute))]
     [ServiceFilter(typeof(CheckVersionFiltterAttribute))]

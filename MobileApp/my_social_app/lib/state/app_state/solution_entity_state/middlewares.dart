@@ -6,7 +6,6 @@ import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
-import 'package:my_social_app/state/app_state/solution_user_save_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
@@ -113,33 +112,7 @@ void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatch
   }
   next(action);
 }
-void saveSolutionMiddleware(Store<AppState> store,action, NextDispatcher next){
-  if(action is SaveSolutionAction){
-    final accountId = store.state.loginState!.id;
-    SolutionService()
-      .saveSolution(action.solutionId)
-      .then((save){
-        store.dispatch(AddUserSavedSolutionAction(userId: accountId, saveId: save.id));
-        store.dispatch(AddSolutionUserSaveAction(save: save.toSolutionUserSaveState()));
-        store.dispatch(SaveSolutionSuccessAction(solutionId: action.solutionId));
-      });
-  }
-  next(action);
-}
-void unsaveSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UnsaveSolutionAction){
-    final accountId = store.state.loginState!.id;
-    SolutionService()
-      .unsaveSolution(action.solutionId)
-      .then((save){
-        final saveId = store.state.solutionUserSaveEntityState.get((e) => e.id == action.solutionId && e.userId == accountId)?.id ?? 0;
-        store.dispatch(RemoveSolutionUserSaveAction(saveId: saveId));
-        store.dispatch(RemoveUserSavedSolutionAction(userId: accountId, saveId: saveId));
-        store.dispatch(UnsaveSolutionSuccessAction(solutionId: action.solutionId));
-      });
-  }
-  next(action);
-}
+
 void makeSolutionUpvoteMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MakeSolutionUpvoteAction){
     final accountId = store.state.loginState!.id;

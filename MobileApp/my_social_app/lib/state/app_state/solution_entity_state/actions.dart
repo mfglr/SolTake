@@ -223,18 +223,7 @@ class SaveSolutionAction extends AppAction{
   const SaveSolutionAction({required this.solutionId});
 }
 @immutable
-class SaveSolutionSuccessAction extends AppAction{
-  final int solutionId;
-  const SaveSolutionSuccessAction({required this.solutionId});
-}
-
-@immutable
 class UnsaveSolutionAction extends AppAction{
   final int solutionId;
   const UnsaveSolutionAction({required this.solutionId});
-}
-@immutable
-class UnsaveSolutionSuccessAction extends AppAction{
-  final int solutionId;
-  const UnsaveSolutionSuccessAction({required this.solutionId});
 }

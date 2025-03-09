@@ -31,7 +31,6 @@ class SolutionService{
     }
     return multiPartRequest;
   }
- 
   Future<Solution> create(num questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
     var request = await _createSolutionRequest(questionId,content,medias);
     var data = await _appClient.postStream(request, callback);
@@ -104,19 +103,7 @@ class SolutionService{
         "$solutionController/$markSolutionAsIncorrectEndpoint",
         body: { "solutionId":solutionId }
       );
-
-  Future<SolutionUserSave> saveSolution(num solutionId) =>
-    _appClient
-      .post(
-        "$solutionController/$saveSolutionEndpoint",
-        body: { "solutionId":solutionId }
-      )
-      .then((json) => SolutionUserSave.fromJson(json));
-
-  Future<void> unsaveSolution(num solutionId) =>
-    _appClient
-      .delete("$solutionController/$unsaveSolutionEndpoint/$solutionId");
-
+  
   Future<Solution> getSolutionById(num solutionId) =>
     _appClient
       .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")

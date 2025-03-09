@@ -199,36 +199,6 @@ class NextUserUnsolvedQuestionsFailedAction extends AppAction{
 }
 
 @immutable
-class NextUserSavedSolutionsAction extends AppAction{
-  final int userId;
-  const NextUserSavedSolutionsAction({required this.userId});
-}
-@immutable
-class NextUserSavedSolutionsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<int> savedIds;
-  const NextUserSavedSolutionsSuccessAction({required this.userId, required this.savedIds});
-}
-@immutable
-class NextUserSavedSolutionsFailedAction extends AppAction{
-  final int userId;
-  const NextUserSavedSolutionsFailedAction({required this.userId});
-}
-
-@immutable
-class AddUserSavedSolutionAction extends AppAction{
-  final int userId;
-  final int saveId;
-  const AddUserSavedSolutionAction({required this.userId, required this.saveId});
-}
-@immutable
-class RemoveUserSavedSolutionAction extends AppAction{
-  final int userId;
-  final int saveId;
-  const RemoveUserSavedSolutionAction({required this.userId, required this.saveId});
-}
-
-@immutable
 class NextUserMessagesAction extends AppAction{
   final int userId;
   const NextUserMessagesAction({required this.userId});
