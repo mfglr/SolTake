@@ -7,6 +7,9 @@ using MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.
 using MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeUpvote;
 using MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveDownvote;
 using MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveUpvote;
+using MySocailApp.Application.Queries.SolutionDomain;
+using MySocailApp.Application.Queries.SolutionDomain.GetSolutionDownvotes;
+using MySocailApp.Application.Queries.SolutionDomain.GetSolutionUpvotes;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -37,5 +40,14 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpDelete("{solutionId}")]
         public async Task RemoveDownvote(int solutionId, CancellationToken cancellationToken)
             => await _sender.Send(new RemoveDownvoteDto(solutionId), cancellationToken);
+
+
+        [HttpGet("{solutionId}")]
+        public async Task<List<SolutionUserVoteResponseDto>> GetUpvotes(int solutionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new GetSolutionUpvotesDto(solutionId,offset,take,isDescending), cancellationToken);
+
+        [HttpGet("{solutionId}")]
+        public async Task<List<SolutionUserVoteResponseDto>> GetDownvotes(int solutionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new GetSolutionDownvotesDto(solutionId, offset, take, isDescending), cancellationToken);
     }
 }

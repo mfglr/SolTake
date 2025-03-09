@@ -16,7 +16,6 @@ import 'package:my_social_app/state/app_state/comment_user_like_state/actions.da
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:signalr_netcore/hub_connection.dart';
@@ -265,9 +264,8 @@ class NotificationHub{
         final voteState = vote.toSolutionUserVoteState();
 
         store.dispatch(PrependNotificationAction(notification: notification));
-        store.dispatch(AddSolutionUserVoteAction(vote: voteState));
-        store.dispatch(AddNewSolutionUpvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
-        store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
+        // store.dispatch(AddNewSolutionUpvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
+        // store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
 
         showNotification(context, notification.id.toInt());
       }
@@ -285,9 +283,8 @@ class NotificationHub{
         final voteState = vote.toSolutionUserVoteState();
 
         store.dispatch(PrependNotificationAction(notification: notification));
-        store.dispatch(AddSolutionUserVoteAction(vote: voteState));
-        store.dispatch(AddNewSolutionDownvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
-        store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
+        // store.dispatch(AddNewSolutionDownvoteAction(solutionId: notification.solutionId!, voteId: vote.id));
+        // store.dispatch(AddUserAction(user: vote.appUser!.toUserState()));
 
         showNotification(context, notification.id.toInt());
       }

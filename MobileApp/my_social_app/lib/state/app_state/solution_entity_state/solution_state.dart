@@ -1,5 +1,6 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -17,8 +18,8 @@ class SolutionState extends BaseEntity<int> implements Avatar{
   final bool isUpvoted;
   final int numberOfUpvotes;
   final bool isDownvoted;
-  final Pagination<int,Id<int>> upvotes;
-  final Pagination<int,Id<int>> downvotes;
+  final Pagination<int,SolutionUserVoteState> upvotes;
+  final Pagination<int,SolutionUserVoteState> downvotes;
   final int numberOfDownvotes;
   final int state;
   final Iterable<Multimedia> medias;
@@ -76,8 +77,8 @@ class SolutionState extends BaseEntity<int> implements Avatar{
     Iterable<Multimedia>? newMedias,
     int? newNumberOfComments,
     int? newState,
-    Pagination<int,Id<int>>? newUpvotes,
-    Pagination<int,Id<int>>? newDownvotes,
+    Pagination<int,SolutionUserVoteState>? newUpvotes,
+    Pagination<int,SolutionUserVoteState>? newDownvotes,
     Multimedia? newImage,
   })
     => SolutionState(
@@ -110,60 +111,58 @@ class SolutionState extends BaseEntity<int> implements Avatar{
     => _optinal(newUpvotes: upvotes.startLoadingNext());
   SolutionState stopLoadingNextUpvotes()
     => _optinal(newUpvotes: upvotes.stopLoadingNext());
-  SolutionState addNextUpvotes(Iterable<int> voteIds)
-    => _optinal(newUpvotes: upvotes.addNextPage(voteIds.map((voteId) => Id(id: voteId))));
+  SolutionState addNextUpvotes(Iterable<SolutionUserVoteState> votes)
+    => _optinal(newUpvotes: upvotes.addNextPage(votes));
   
-  
-  SolutionState makeUpvote(int upvoteId,int downvoteId)
+  SolutionState makeUpvote(SolutionUserVoteState vote)
     => _optinal(
       newIsUpvoted: true,
       newNumberOfUpvotes: numberOfUpvotes + 1,
-      newUpvotes: upvotes.prependOne(Id(id: upvoteId)),
+      newUpvotes: upvotes.prependOne(vote),
       newIsDownvoted: false,
       newNumberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
-      newDownvotes: isDownvoted ? downvotes.removeOne(downvoteId) : downvotes
+      newDownvotes: downvotes.where((e) => e.userId != vote.userId)
     ); 
-  SolutionState removeUpvote(int voteId)
+  SolutionState removeUpvote(int userId)
     => _optinal(
       newIsUpvoted: false,
       newNumberOfUpvotes: numberOfUpvotes - 1,
-      newUpvotes: upvotes.removeOne(voteId)
+      newUpvotes: upvotes.where((e) => e.userId != userId)
     );
-  SolutionState addNewUpvote(int voteId)
+  SolutionState addNewUpvote(SolutionUserVoteState vote)
     => _optinal(
       newNumberOfUpvotes: numberOfUpvotes + 1,
-      newUpvotes: upvotes.addInOrder(Id(id: voteId)),
+      newUpvotes: upvotes.addInOrder(vote),
     );
 
   SolutionState startLoadingNextDownvotes()
     => _optinal(newDownvotes: downvotes.startLoadingNext());
-  SolutionState addNextDownvotes(Iterable<int> voteIds)
-    => _optinal(newDownvotes: downvotes.addNextPage(voteIds.map((voteId) => Id(id: voteId))));
+  SolutionState addNextDownvotes(Iterable<SolutionUserVoteState> votes)
+    => _optinal(newDownvotes: downvotes.addNextPage(votes));
   SolutionState stopLoadingNextDownvotes()
     => _optinal(newDownvotes: downvotes.stopLoadingNext());
     
-  SolutionState makeDownvote(int upvoteId,int downvoteId)
+  SolutionState makeDownvote(SolutionUserVoteState vote)
     => _optinal(
       newIsUpvoted: false,
       newNumberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
-      newUpvotes: isUpvoted ? upvotes.removeOne(upvoteId) : upvotes,
+      newUpvotes: upvotes.where((e) => e.userId != vote.userId),
       newIsDownvoted: true,
       newNumberOfDownvotes: numberOfDownvotes + 1,
-      newDownvotes: downvotes.prependOne(Id(id: downvoteId)),
+      newDownvotes: downvotes.prependOne(vote),
     );
-  SolutionState removeDownvote(int voteId)
+  SolutionState removeDownvote(int userId)
     => _optinal(
       newIsDownvoted: false,
       newNumberOfDownvotes: numberOfDownvotes - 1,
-      newDownvotes: downvotes.removeOne(voteId)
+      newDownvotes: downvotes.where((e) => e.userId != userId)
     );
-  SolutionState addNewDownvote(int voteId)
+  SolutionState addNewDownvote(SolutionUserVoteState vote)
     => _optinal(
       newNumberOfDownvotes: numberOfDownvotes + 1,
-      newDownvotes: downvotes.addInOrder(Id(id: voteId))
+      newDownvotes: downvotes.addInOrder(vote)
     );
   
-
   SolutionState startLoadingNextComments()
     => _optinal(newComments: comments.startLoadingNext());
   SolutionState addNextComments(Iterable<int> commentIds)

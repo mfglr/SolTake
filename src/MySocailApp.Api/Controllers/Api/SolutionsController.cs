@@ -14,9 +14,7 @@ using MySocailApp.Application.Queries.SolutionDomain.GetCorrectSolutionsByQuesti
 using MySocailApp.Application.Queries.SolutionDomain.GetIncorrectsSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionDomain.GetPendingSolutionsByQuestionId;
 using MySocailApp.Application.Queries.SolutionDomain.GetSolutionById;
-using MySocailApp.Application.Queries.SolutionDomain.GetSolutionDownvotes;
 using MySocailApp.Application.Queries.SolutionDomain.GetSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionDomain.GetSolutionUpvotes;
 using MySocailApp.Application.Queries.SolutionDomain.GetVideoSolutions;
 
 namespace MySocailApp.Api.Controllers.Api
@@ -77,14 +75,6 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetIncorrectSolutionsByQuestionId(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetIncorrectSolutionsByQuestionIdDto(questionId, offset, take, isDescending), cancellationToken);
-
-        [HttpGet("{solutionId}")]
-        public async Task<List<SolutionUserVoteResponseDto>> GetSolutionUpvotes(int solutionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetSolutionUpvotesDto(solutionId, offset, take, isDescending), cancellationToken);
-
-        [HttpGet("{solutionId}")]
-        public async Task<List<SolutionUserVoteResponseDto>> GetSolutionDownvotes(int solutionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetSolutionDownvotesDto(solutionId, offset, take, isDescending), cancellationToken);
      
         [HttpGet("{questionId}")]
         public async Task<List<SolutionResponseDto>> GetVideoSolutions(int questionId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)

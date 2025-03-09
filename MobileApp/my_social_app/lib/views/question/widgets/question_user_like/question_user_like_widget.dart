@@ -29,7 +29,7 @@ class QuestionUserLikeWidget extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 5),
                   child: AppAvatar(
                     avatar: like,
-                    diameter: 60
+                    diameter: 55
                   ),
                 ),
                 Column(

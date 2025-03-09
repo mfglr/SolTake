@@ -19,7 +19,6 @@ import 'package:my_social_app/state/app_state/search_questions_state/reducers.da
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_user_saves_state/reducers.dart';
-import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
@@ -58,7 +57,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   conversations: conversationsReducer(prev.conversations,action),
   userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
-  solutionUserVoteEntityState: solutionUserVoteEntityReducers(prev.solutionUserVoteEntityState,action),
   appExams: appExamsReducers(prev.appExams, action),
   policyState: policyReducers(prev.policyState,action),
   videoQuestions: videoQuestionsReducers(prev.videoQuestions, action),

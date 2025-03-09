@@ -13,30 +13,30 @@ EntityState<int,SolutionState> removeSolutionReducer(EntityState<int,SolutionSta
 EntityState<int,SolutionState> nextUpvotesReducer(EntityState<int,SolutionState> prev,NextSolutionUpvotesAction action)
   =>  prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextUpvotes());
 EntityState<int,SolutionState> nextUpvotesSuccessReducer(EntityState<int,SolutionState> prev,NextSolutionUpvotesSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.addNextUpvotes(action.voteIds));
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNextUpvotes(action.votes));
 EntityState<int,SolutionState> nextUpvotesFailedReducer(EntityState<int,SolutionState> prev,NextSolutionUpvotesFailedAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.stopLoadingNextUpvotes());
 
 EntityState<int,SolutionState> makeUpvoteReducer(EntityState<int,SolutionState> prev,MakeSolutionUpvoteSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.makeUpvote(action.upvoteId,action.downvoteId));
+  => prev.updateOne(prev.getValue(action.solutionId)!.makeUpvote(action.solutionUserVoteState));
 EntityState<int,SolutionState> removeUpvoteReducer(EntityState<int,SolutionState> prev,RemoveSolutionUpvoteSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.removeUpvote(action.voteId));
+  => prev.updateOne(prev.getValue(action.solutionId)!.removeUpvote(action.userId));
 EntityState<int,SolutionState> addNewSolutionUpvoteReducer(EntityState<int,SolutionState> prev,AddNewSolutionUpvoteAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.addNewUpvote(action.voteId));
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNewUpvote(action.solutionUserVote));
 
 EntityState<int,SolutionState> nextDownvotesReducer(EntityState<int,SolutionState> prev,NextSolutionDownvotesAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextDownvotes());
 EntityState<int,SolutionState> nextDownvotesSuccessReducer(EntityState<int,SolutionState> prev,NextSolutionDownvotesSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.addNextDownvotes(action.voteIds)) ;
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNextDownvotes(action.votes));
 EntityState<int,SolutionState> nextDownvotesFailedReducer(EntityState<int,SolutionState> prev,NextSolutionDownvotesFailedAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.stopLoadingNextDownvotes());
 
 EntityState<int,SolutionState> makeDownvoteReducer(EntityState<int,SolutionState> prev,MakeSolutionDownvoteSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.makeDownvote(action.upvoteId,action.downvoteId));
+  => prev.updateOne(prev.getValue(action.solutionId)!.makeDownvote(action.solutionUserVote));
 EntityState<int,SolutionState> removeDownVoteAction(EntityState<int,SolutionState> prev,RemoveSolutionDownvoteSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.removeDownvote(action.voteId));
+  => prev.updateOne(prev.getValue(action.solutionId)!.removeDownvote(action.userId));
 EntityState<int,SolutionState> addNewSolutionDownvoteReducer(EntityState<int,SolutionState> prev,AddNewSolutionDownvoteAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.addNewDownvote(action.voteId));
+  => prev.updateOne(prev.getValue(action.solutionId)!.addNewDownvote(action.solutionUserVoteState));
 
 EntityState<int,SolutionState> nextCommentsReducer(EntityState<int,SolutionState> prev,NextSolutionCommentsAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextComments());

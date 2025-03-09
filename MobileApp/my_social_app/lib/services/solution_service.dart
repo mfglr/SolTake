@@ -7,7 +7,6 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/models/solution_user_save.dart';
-import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 
@@ -53,43 +52,7 @@ class SolutionService{
 
   Future<void> delete(num solutionId) => 
     _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");
-
-  Future<Iterable<SolutionUserVote>> getSolutionUpvotes(num solutionId,Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionUpvotesEndpoint/$solutionId", page))
-      .then((json) => json as List)
-      .then((list) => list.map((e) => SolutionUserVote.fromJson(e)));
-  
-  Future<SolutionUserVote> makeUpvote(num solutionId) =>
-    _appClient
-      .post(
-        "$solutionController/$makeUpvoteEndpoint",
-        body: {'solutionId': solutionId}
-      )
-      .then((json) => SolutionUserVote.fromJson(json));
-
-  Future<void> removeUpvote(num solutionId) =>
-    _appClient
-      .delete("$solutionController/$removeUpvoteEndpoint/$solutionId");
-  
-  Future<Iterable<SolutionUserVote>> getSolutionDownvotes(num solutionId,Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionDownvotesEndpoint/$solutionId", page))
-      .then((json) => json as List)
-      .then((list) => list.map((e) => SolutionUserVote.fromJson(e)));
-
-  Future<SolutionUserVote> makeDownvote(num solutionId) =>
-    _appClient
-      .post(
-        "$solutionController/$makeDownvoteEndpoint",
-        body: {'solutionId': solutionId}
-      )
-      .then((json) => SolutionUserVote.fromJson(json));
-
-  Future<void> removeDownvote(num solutionId) =>
-    _appClient
-      .delete("$solutionController/$removeDownvoteEndpoint/$solutionId");
-
+ 
   Future<void> markAsCorrect(num solutionId) =>
     _appClient
       .put(

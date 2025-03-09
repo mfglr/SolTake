@@ -18,7 +18,6 @@ import 'package:my_social_app/state/app_state/question_user_saves_state/question
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_saves_state/solution_user_save_state.dart';
-import 'package:my_social_app/state/app_state/solution_user_vote_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
@@ -51,7 +50,6 @@ class AppState{
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
-  final EntityState<int,SolutionUserVoteState> solutionUserVoteEntityState;
   final EntityState<int,CommentState> commentEntityState;
   final EntityState<int,CommentUserLikeState> commentUserLikeEntityState;
   final CreateCommentState createCommentState;
@@ -82,7 +80,6 @@ class AppState{
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.solutionEntityState,
-    required this.solutionUserVoteEntityState,
     required this.commentEntityState,
     required this.commentUserLikeEntityState,
     required this.createCommentState,
@@ -120,7 +117,6 @@ class AppState{
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     userSearchEntityState: EntityState(),
-    solutionUserVoteEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()
@@ -153,13 +149,7 @@ class AppState{
     => commentEntityState
         .getValue(commentId)!.likes.values
         .map((e) => userEntityState.getValue(commentUserLikeEntityState.getValue(e.id)!.userId)!);
-  Iterable<UserState> selectSolutionUpvotes(int solutionId)
-    => solutionEntityState
-        .getValue(solutionId)!.upvotes.values
-        .map((id) => userEntityState.getValue(solutionUserVoteEntityState.getValue(id.id)!.userId)!);
-  Iterable<UserState> selectSolutionDownvotes(int solutionId)
-    => solutionEntityState.getValue(solutionId)!.downvotes.values
-        .map((id) => userEntityState.getValue(solutionUserVoteEntityState.getValue(id.id)!.userId)!);
+  
   Iterable<UserState> selectUserConversations(int userId)
     => userEntityState
         .getValue(userId)!.conversations.values

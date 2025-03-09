@@ -58,7 +58,6 @@ final store = Store(
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
     userSearchEntityState: EntityState(),
-    solutionUserVoteEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()
@@ -184,6 +183,8 @@ final store = Store(
     createSolutionByAiMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
+    nextSolutionCommentsMiddleware,
+
     makeSolutionUpvoteMiddleware,
     removeSolutionUpvoteMiddleware,
     markSolutionAsCorrectMiddleware,
@@ -192,7 +193,6 @@ final store = Store(
     removeSolutionDownvoteMiddleware,
     nextSolutionUpvotesMiddleware,
     nextSolutionDownvotesMiddleware,
-    nextSolutionCommentsMiddleware,
 
     //comments entity state
     createCommentMiddleware,

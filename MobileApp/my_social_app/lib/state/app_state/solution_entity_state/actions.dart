@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 
 
 @immutable
@@ -62,13 +63,10 @@ class MakeSolutionUpvoteAction extends AppAction{
 @immutable
 class MakeSolutionUpvoteSuccessAction extends AppAction{
   final int solutionId;
-  final int upvoteId;
-  final int downvoteId;
-
+  final SolutionUserVoteState solutionUserVoteState;
   const MakeSolutionUpvoteSuccessAction({
     required this.solutionId,
-    required this.upvoteId,
-    required this.downvoteId
+    required this.solutionUserVoteState
   });
 }
 @immutable 
@@ -79,14 +77,14 @@ class RemoveSolutionUpvoteAction extends AppAction{
 @immutable
 class RemoveSolutionUpvoteSuccessAction extends AppAction{
   final int solutionId;
-  final int voteId;
-  const RemoveSolutionUpvoteSuccessAction({required this.solutionId,required this.voteId});
+  final int userId;
+  const RemoveSolutionUpvoteSuccessAction({required this.solutionId,required this.userId});
 }
 @immutable
 class AddNewSolutionUpvoteAction extends AppAction{
   final int solutionId;
-  final int voteId;
-  const AddNewSolutionUpvoteAction({required this.solutionId, required this.voteId});
+  final SolutionUserVoteState solutionUserVote;
+  const AddNewSolutionUpvoteAction({required this.solutionId, required this.solutionUserVote});
 }
 @immutable
 class MakeSolutionDownvoteAction extends AppAction{
@@ -96,12 +94,10 @@ class MakeSolutionDownvoteAction extends AppAction{
 @immutable
 class MakeSolutionDownvoteSuccessAction extends AppAction{
   final int solutionId;
-  final int upvoteId;
-  final int downvoteId;
+  final SolutionUserVoteState solutionUserVote;
   const MakeSolutionDownvoteSuccessAction({
     required this.solutionId,
-    required this.upvoteId,
-    required this.downvoteId
+    required this.solutionUserVote,
   });
 }
 @immutable
@@ -112,14 +108,14 @@ class RemoveSolutionDownvoteAction extends AppAction{
 @immutable
 class RemoveSolutionDownvoteSuccessAction extends AppAction{
   final int solutionId;
-  final int voteId;
-  const RemoveSolutionDownvoteSuccessAction({required this.solutionId,required this.voteId});
+  final int userId;
+  const RemoveSolutionDownvoteSuccessAction({required this.solutionId,required this.userId});
 }
 @immutable
 class AddNewSolutionDownvoteAction extends AppAction{
   final int solutionId;
-  final int voteId;
-  const AddNewSolutionDownvoteAction({required this.solutionId, required this.voteId});
+  final SolutionUserVoteState solutionUserVoteState;
+  const AddNewSolutionDownvoteAction({required this.solutionId, required this.solutionUserVoteState});
 }
 
 //upvotes
@@ -131,8 +127,8 @@ class NextSolutionUpvotesAction extends AppAction{
 @immutable
 class NextSolutionUpvotesSuccessAction extends AppAction{
   final int solutionId;
-  final Iterable<int> voteIds;
-  const NextSolutionUpvotesSuccessAction({required this.solutionId, required this.voteIds});
+  final Iterable<SolutionUserVoteState> votes;
+  const NextSolutionUpvotesSuccessAction({required this.solutionId, required this.votes});
 }
 @immutable
 class NextSolutionUpvotesFailedAction extends AppAction{
@@ -149,8 +145,8 @@ class NextSolutionDownvotesAction extends AppAction{
 @immutable
 class NextSolutionDownvotesSuccessAction extends AppAction{
   final int solutionId;
-  final Iterable<int> voteIds;
-  const NextSolutionDownvotesSuccessAction({required this.solutionId, required this.voteIds});
+  final Iterable<SolutionUserVoteState> votes;
+  const NextSolutionDownvotesSuccessAction({required this.solutionId, required this.votes});
 }
 @immutable
 class NextSolutionDownvotesFailedAction extends AppAction{
