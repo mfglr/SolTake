@@ -1,8 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
 {
@@ -52,37 +49,5 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
         }
 
         public void SetRepliedIdNull() => RepliedId = null;
-
-        private readonly List<CommentUserLike> _likes = [];
-        public IReadOnlyCollection<CommentUserLike> Likes => _likes;
-        private readonly List<CommentUserLikeNotification> _likeNotifications = [];
-        public IReadOnlyCollection<CommentUserLikeNotification> LikeNotifications => _likeNotifications;
-        public CommentUserLike Like(int likerId)
-        {
-            if (_likes.Any(x => x.UserId == likerId))
-                throw new CommentWasAlreadyLikedException();
-
-            var like = CommentUserLike.Create(likerId);
-            _likes.Add(like);
-            if (likerId != UserId && !LikeNotifications.Any(x => x.UserId == likerId))
-            {
-                _likeNotifications.Add(new CommentUserLikeNotification(likerId));
-                AddDomainEvent(new CommentLikedDomainEvent(this, like));
-            }
-            return like;
-        }
-        public void Dislike(int userId)
-        {
-            var index = _likes.FindIndex(x => x.UserId == userId);
-            if (index == -1) return;
-            _likes.RemoveAt(index);
-            AddDomainEvent(new CommentDislikedDomainEvent(this));
-        }
-        public void DeleteLike(int userId)
-        {
-            var index = _likes.FindIndex(x => x.UserId == userId);
-            if (index == -1) return;
-            _likes.RemoveAt(index);
-        }
     }
 }

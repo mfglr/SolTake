@@ -21,5 +21,7 @@ namespace MySocailApp.Infrastructure.CommentDomain.CommentUserLikeAggregate
         public Task<List<CommentUserLike>> GetByCommentId(int commentId, CancellationToken cancellationToken)
             => _context.CommentUserLikes.Where(x => x.CommentId == commentId).ToListAsync(cancellationToken);
 
+        public Task<CommentUserLike?> GetAsync(int commentId, int userId, CancellationToken cancellationToken)
+            => _context.CommentUserLikes.FirstOrDefaultAsync(x => x.CommentId == commentId && x.UserId == userId, cancellationToken);
     }
 }

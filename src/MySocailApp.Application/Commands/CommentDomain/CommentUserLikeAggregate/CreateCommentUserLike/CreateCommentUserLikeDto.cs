@@ -3,5 +3,5 @@ using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.Cr
 
 namespace MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment
 {
-    public record CreateCommentUserLikeDto(int Id) : IRequest<CreateCommentUserLikeResponseDto>;
+    public record CreateCommentUserLikeDto(int CommentId) : IRequest<CreateCommentUserLikeResponseDto>;
 }

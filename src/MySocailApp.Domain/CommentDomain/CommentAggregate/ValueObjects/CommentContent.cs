@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.CommentAggregate.Exceptions;
+﻿using MySocailApp.Domain.CommentDomain.CommentAggregate.Exceptions;
 
 namespace MySocailApp.Domain.CommentDomain.CommentAggregate.ValueObjects
 {

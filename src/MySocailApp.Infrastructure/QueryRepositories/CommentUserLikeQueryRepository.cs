@@ -12,19 +12,19 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public Task<CommentUserLikeResponseDto?> GetLikeAsync(int likeId, int accountId, CancellationToken cancellationToken)
+        public Task<CommentUserLikeResponseDto?> GetLikeAsync(int likeId, CancellationToken cancellationToken)
             => _context.CommentUserLikes
                 .AsNoTracking()
                 .Where(x => x.Id == likeId)
-                .ToCommentUserLikeResponseDto(_context, accountId)
+                .ToCommentUserLikeResponseDto(_context)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<List<CommentUserLikeResponseDto>> GetLikesAsync(int commentId, int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<CommentUserLikeResponseDto>> GetLikesAsync(int commentId, IPage page, CancellationToken cancellationToken)
             => _context.CommentUserLikes
                 .AsNoTracking()
                 .Where(x => x.CommentId == commentId)
                 .ToPage(page)
-                .ToCommentUserLikeResponseDto(_context, accountId)
+                .ToCommentUserLikeResponseDto(_context)
                 .ToListAsync(cancellationToken);
 
 

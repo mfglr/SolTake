@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.CommentDomain.CommentAggregate.DeleteComment
 {

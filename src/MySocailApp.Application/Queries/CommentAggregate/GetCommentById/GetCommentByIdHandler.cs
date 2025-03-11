@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.CommentAggregate.Exceptions;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentById
 {

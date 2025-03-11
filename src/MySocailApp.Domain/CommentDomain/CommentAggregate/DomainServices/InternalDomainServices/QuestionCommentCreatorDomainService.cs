@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.CommentAggregate.DomainEvents;
+﻿using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
