@@ -3,14 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.CommentAggregate.DeleteComment;
-using MySocailApp.Application.Commands.CommentAggregate.DislikeComment;
 using MySocailApp.Application.Commands.CommentDomain.CommentAggregate.CreateComment;
 using MySocailApp.Application.Commands.CommentDomain.CommentAggregate.DeleteComment;
-using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment;
 using MySocailApp.Application.Queries.CommentAggregate;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentById;
-using MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByIds;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByParentId;
 using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId;
@@ -55,8 +51,6 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet("{parentId}")]
         public async Task<List<CommentResponseDto>> GetCommentsByParentId(int parentId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _mediator.Send(new GetCommentsByParentIdDto(parentId, offset, take, isDescending), cancellationToken);
-
-        
 
         [HttpGet]
         public async Task<List<CommentResponseDto>> GetCommentsByIds([FromQuery] string ids, CancellationToken cancellationToken)

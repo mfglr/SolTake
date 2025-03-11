@@ -3,7 +3,6 @@ import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/application_init_state/reducers.dart';
-import 'package:my_social_app/state/app_state/comment_user_like_state/reducer.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/app_exams_state/reducers.dart';
@@ -50,7 +49,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
   homePageQuestions: homePageQuestionsReducers(prev.homePageQuestions, action),
   commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
-  commentUserLikeEntityState: commentUserLikeEntityReducers(prev.commentUserLikeEntityState,action),
   createCommentState: createCommentStateReducers(prev.createCommentState,action),
   notifications: notificationEntityStateReducers(prev.notifications,action),
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),

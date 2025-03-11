@@ -1,7 +1,6 @@
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/comment_endpoints.dart';
 import 'package:my_social_app/models/comment.dart';
-import 'package:my_social_app/models/comment_user_like.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 
@@ -27,18 +26,6 @@ class CommentService{
 
   Future<void> deleteComment(num commentId) =>
     _appClient.delete("$commentController/$deleteCommentEndpoint/$commentId");
-
-  Future<CommentUserLike> like(num commentId) =>
-    _appClient
-      .post(
-        "$commentController/$likeQuestionCommentEndpoint",
-        body: { 'id' : commentId }
-      )
-      .then((json) => CommentUserLike.fromJson(json));
-
-  Future<void> dislike(num commentId) =>
-    _appClient
-      .delete("$commentController/$dislikeQuestionCommentEndpoint/$commentId");
 
   Future<Comment> getById(num id) => 
     _appClient
@@ -68,10 +55,4 @@ class CommentService{
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByParentIdEndpoint/$parentId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Comment.fromJson(e)));
-
-  Future<Iterable<CommentUserLike>> getCommentLikes(num commentId, Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$commentController/$getCommentLikesEndpoint/$commentId", page))
-      .then((json) => json as List)
-      .then((list) => list.map((e) => CommentUserLike.fromJson(e)));
 }

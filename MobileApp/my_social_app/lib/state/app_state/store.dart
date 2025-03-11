@@ -52,7 +52,6 @@ final store = Store(
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
     commentEntityState: EntityState(),
-    commentUserLikeEntityState: EntityState(),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),

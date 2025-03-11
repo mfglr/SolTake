@@ -49,5 +49,13 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
         }
 
         public void SetRepliedIdNull() => RepliedId = null;
+
+        public void DeleteTag(int userId)
+        {
+            var tag = _tags.FirstOrDefault(t => t.UserId == userId);
+            if (tag != null)
+                _tags.Remove(tag);
+        }
+
     }
 }

@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregat
             var like = 
                 await _commentUserLikeWriteRepository.GetAsync(request.CommentId, _userAccessor.User.Id, cancellationToken) ??
                 throw new CommentLikeNotFoundException();
-            await _commentUserLikeWriteRepository.CreateAsync(like, cancellationToken);
+            _commentUserLikeWriteRepository.Delete(like);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

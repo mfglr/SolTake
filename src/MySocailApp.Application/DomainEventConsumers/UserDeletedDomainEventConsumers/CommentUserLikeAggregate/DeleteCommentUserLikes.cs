@@ -3,7 +3,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.CommentAggregate
+namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.CommentUserLikeAggregate
 {
     public class DeleteCommentUserLikes(IUnitOfWork unitOfWork, ICommentUserLikeWriteRepository commentUserLikeWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

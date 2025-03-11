@@ -9,19 +9,19 @@ part of 'comment_user_like.dart';
 CommentUserLike _$CommentUserLikeFromJson(Map<String, dynamic> json) =>
     CommentUserLike(
       id: (json['id'] as num).toInt(),
-      commentId: (json['commentId'] as num).toInt(),
       userId: (json['userId'] as num).toInt(),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      user: json['user'] == null
+      userName: json['userName'] as String,
+      name: json['name'] as String?,
+      image: json['image'] == null
           ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+          : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CommentUserLikeToJson(CommentUserLike instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'commentId': instance.commentId,
       'userId': instance.userId,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'user': instance.user,
+      'userName': instance.userName,
+      'name': instance.name,
+      'image': instance.image,
     };

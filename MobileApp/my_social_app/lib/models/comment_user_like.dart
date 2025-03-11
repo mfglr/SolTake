@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/models/user.dart';
-import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_state.dart';
+import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 part 'comment_user_like.g.dart';
 
 @immutable
 @JsonSerializable()
 class CommentUserLike{
   final int id;
-  final int commentId;
   final int userId;
-  final DateTime createdAt;
-  final User? user;
+  final String userName;
+  final String? name;
+  final Multimedia? image;
   
   const CommentUserLike({
     required this.id,
-    required this.commentId,
     required this.userId,
-    required this.createdAt,
-    required this.user
+    required this.userName,
+    required this.name,
+    required this.image
   });
 
 
@@ -29,8 +29,9 @@ class CommentUserLike{
     => CommentUserLikeState(
         id: id,
         userId: userId,
-        commentId: commentId,
-        createdAt: createdAt,
+        userName: userName,
+        name: name,
+        image: image
       );
 
 }

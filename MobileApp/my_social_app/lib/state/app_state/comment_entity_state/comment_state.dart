@@ -1,5 +1,6 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -18,7 +19,7 @@ class CommentState extends BaseEntity<int> implements Avatar{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
-  final Pagination<int,Id<int>> likes;
+  final Pagination<int,CommentUserLikeState> likes;
   final Pagination<int,Id<int>> replies;
   final bool repliesVisibility;
   final Multimedia? image;
@@ -59,7 +60,7 @@ class CommentState extends BaseEntity<int> implements Avatar{
     bool? newIsLiked,
     int? newNumberOfLikes,
     int? newNumberOfReplies,
-    Pagination<int,Id<int>>? newLikes,
+    Pagination<int,CommentUserLikeState>? newLikes,
     Pagination<int,Id<int>>? newReplies,
     bool? newRepliesVisibility,
     Multimedia? newImage,
@@ -84,25 +85,29 @@ class CommentState extends BaseEntity<int> implements Avatar{
       image: newImage ?? image
     );
 
-  CommentState startLoadingNextLikes() => _optional(newLikes: likes.startLoadingNext());
-  CommentState stopLoadingNextLikes() => _optional(newLikes: likes.stopLoadingNext());
-  CommentState addNextPageLikes(Iterable<int> ids) => _optional(newLikes: likes.addNextPage(ids.map((e) => Id(id: e))));
-  CommentState like(int likeId) =>
+  CommentState startLoadingNextLikes()
+    => _optional(newLikes: likes.startLoadingNext());
+  CommentState stopLoadingNextLikes()
+    => _optional(newLikes: likes.stopLoadingNext());
+  CommentState addNextPageLikes(Iterable<CommentUserLikeState> commentUserLikes)
+    => _optional(newLikes: likes.addNextPage(commentUserLikes));
+  
+  CommentState like(CommentUserLikeState commentUserLike) =>
     _optional(
       newNumberOfLikes: numberOfLikes + 1,
-      newLikes: likes.prependOne(Id(id: likeId)),
+      newLikes: likes.prependOne(commentUserLike),
       newIsLiked: true,
     );
-  CommentState dislike(int likeId) =>
+  CommentState dislike(int userId) =>
     _optional(
       newNumberOfLikes: numberOfLikes - 1,
-      newLikes: likes.where((e) => e.id != likeId),
+      newLikes: likes.where((e) => e.userId != userId),
       newIsLiked: false
     );
-  CommentState addNewLike(int likeId) =>
+  CommentState addNewLike(CommentUserLikeState commentUserLike) =>
     _optional(
       newNumberOfLikes: numberOfLikes + 1,
-      newLikes: likes.addInOrder(Id(id: likeId))
+      newLikes: likes.addInOrder(commentUserLike)
     );
  
   CommentState startLoadingNextReplies() => _optional(newReplies: replies.startLoadingNext());

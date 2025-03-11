@@ -55,9 +55,8 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<SolutionUserSave> SolutionUserSaves { get; private set; }
 
         public DbSet<Comment> Comments { get; private set; }
+
         public DbSet<CommentUserLike> CommentUserLikes { get; private set; }
-        public DbSet<CommentUserLikeNotification> CommentUserLikeNotifications { get; private set; }
-        public DbSet<CommentUserTag> CommentUserTags { get; private set; }
 
         public DbSet<Notification> Notifications { get; private set; }
         public DbSet<NotificationConnection> NotificationConnections { get; private set; }

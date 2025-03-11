@@ -12,7 +12,7 @@ using MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes;
 namespace MySocailApp.Api.Controllers.Api
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
     [ServiceFilter(typeof(CheckUserFilterAttribute))]
@@ -32,7 +32,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _sender.Send(new DeleteCommentUserLikeDto(commentId), cancellationToken);
 
         [HttpGet("{commentId}")]
-        public async Task<List<CommentUserLikeResponseDto>> GetCommentLikes(int commentId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<CommentUserLikeResponseDto>> Get(int commentId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetCommentLikesDto(commentId, offset, take, isDescending), cancellationToken);
     }
 }

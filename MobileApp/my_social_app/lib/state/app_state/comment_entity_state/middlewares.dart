@@ -1,11 +1,11 @@
 import 'package:my_social_app/services/comment_service.dart';
+import 'package:my_social_app/services/comment_user_like_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/comment_user_like_state/actions.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -33,37 +33,35 @@ void loadCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
 void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextCommentLikesAction){
     final pagination = store.state.commentEntityState.getValue(action.commentId)!.likes;
-    CommentService()
-      .getCommentLikes(action.commentId, pagination.next)
-      .then((likes){
-        store.dispatch(AddCommentUserLikesAction(likes: likes.map((e) => e.toCommentUserLikeState())));
-        store.dispatch(AddUsersAction(users: likes.map((e) => e.user!.toUserState())));
-        store.dispatch(NextCommentLikesSuccessAction(commentId: action.commentId,likeIds: likes.map((e) => e.id)));
-      });
+    CommentUserLikeService()
+      .get(action.commentId, pagination.next)
+      .then((likes) => store.dispatch(NextCommentLikesSuccessAction(commentId: action.commentId,commentUserLikes: likes.map((e) => e.toCommentUserLikeState()))));
   }
   next(action);
 }
 void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LikeCommentAction){
-    CommentService()
-      .like(action.commentId)
-      .then((like){
-        store.dispatch(LikeCommentSuccessAction(commentId: action.commentId,likeId: like.id));
-        store.dispatch(AddCommentUserLikeAction(like: like.toCommentUserLikeState()));
-      });
+    final user = store.state.currentUser!;
+    CommentUserLikeService()
+      .create(action.commentId)
+      .then((response) => store.dispatch(LikeCommentSuccessAction(
+        commentId: action.commentId,
+        commentUserLike: CommentUserLikeState(
+          id: response.id,
+          userId: user.id,
+          userName: user.userName,
+          name: user.name,
+          image: user.image
+        )
+      )));
   }
   next(action);
 }
 void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DislikeCommentAction){
-    final num userId = store.state.loginState!.id;
-    CommentService()
-      .dislike(action.commentId)
-      .then((_){
-        final likeId = store.state.commentUserLikeEntityState.get((e) => e.commentId == action.commentId && e.userId == userId)!.id;
-        store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId,likeId: likeId));
-        store.dispatch(RemoveCommentUserLikeAction(likeId: likeId));
-      });
+    CommentUserLikeService()
+      .delete(action.commentId)
+      .then((_) => store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId, userId:store.state.loginState!.id )));
   }
   next(action);
 }

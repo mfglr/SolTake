@@ -1,9 +1,7 @@
 import 'dart:core';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/comment_user_like_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
@@ -51,7 +49,6 @@ class AppState{
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,CommentState> commentEntityState;
-  final EntityState<int,CommentUserLikeState> commentUserLikeEntityState;
   final CreateCommentState createCommentState;
   final EntityState<int,MessageState> messageEntityState;
   final Pagination<int,Id<int>> conversations;
@@ -81,7 +78,6 @@ class AppState{
     required this.topicEntityState,
     required this.solutionEntityState,
     required this.commentEntityState,
-    required this.commentUserLikeEntityState,
     required this.createCommentState,
     required this.notifications,
     required this.messageEntityState,
@@ -112,7 +108,6 @@ class AppState{
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
     commentEntityState: EntityState(),
-    commentUserLikeEntityState: EntityState(),
     createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
@@ -145,10 +140,6 @@ class AppState{
 
   //select users
   UserState? get currentUser => userEntityState.getValue(loginState!.id);
-  Iterable<UserState> selectCommentLikes(int commentId)
-    => commentEntityState
-        .getValue(commentId)!.likes.values
-        .map((e) => userEntityState.getValue(commentUserLikeEntityState.getValue(e.id)!.userId)!);
   
   Iterable<UserState> selectUserConversations(int userId)
     => userEntityState

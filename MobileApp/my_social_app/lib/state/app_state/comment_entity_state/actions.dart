@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 
 @immutable
 class LoadCommentAction extends AppAction{
@@ -42,14 +43,15 @@ class NextCommentLikesAction extends AppAction{
 @immutable
 class NextCommentLikesSuccessAction extends AppAction{
   final int commentId;
-  final Iterable<int> likeIds;
-  const NextCommentLikesSuccessAction({required this.commentId, required this.likeIds});
+  final Iterable<CommentUserLikeState> commentUserLikes;
+  const NextCommentLikesSuccessAction({required this.commentId, required this.commentUserLikes});
 }
 @immutable
 class NextCommentLikesFailedAction extends AppAction{
   final int commentId;
   const NextCommentLikesFailedAction({required this.commentId});
 }
+
 @immutable
 class LikeCommentAction extends AppAction{
   final int commentId;
@@ -58,8 +60,8 @@ class LikeCommentAction extends AppAction{
 @immutable
 class LikeCommentSuccessAction extends AppAction{
   final int commentId;
-  final int likeId;
-  const LikeCommentSuccessAction({required this.commentId,required this.likeId});
+  final CommentUserLikeState commentUserLike;
+  const LikeCommentSuccessAction({required this.commentId,required this.commentUserLike});
 }
 @immutable
 class DislikeCommentAction extends AppAction{
@@ -69,15 +71,16 @@ class DislikeCommentAction extends AppAction{
 @immutable
 class DislikeCommentSuccessAction extends AppAction{
   final int commentId;
-  final int likeId;
-  const DislikeCommentSuccessAction({required this.commentId,required this.likeId});
+  final int userId;
+  const DislikeCommentSuccessAction({required this.commentId,required this.userId});
 }
 @immutable
 class AddNewCommentLikeAction extends AppAction{
   final int commentId;
-  final int likeId;
-  const AddNewCommentLikeAction({required this.commentId, required this.likeId});
+  final CommentUserLikeState commentUserLike;
+  const AddNewCommentLikeAction({required this.commentId, required this.commentUserLike});
 }
+
 
 @immutable
 class ChangeRepliesVisibilityAction extends AppAction{

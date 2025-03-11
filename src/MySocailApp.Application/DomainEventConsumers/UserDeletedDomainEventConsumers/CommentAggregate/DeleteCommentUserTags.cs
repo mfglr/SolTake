@@ -12,7 +12,9 @@ namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventCon
 
         public async Task Handle(UserDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            await _commentWriteRepository.RemoveCommentUserTagsByUserId(notification.User.Id,cancellationToken);
+            var comments = await _commentWriteRepository.GetCommentsByTag(notification.User.Id, cancellationToken);
+            foreach (var comment in comments)
+                comment.DeleteTag(notification.User.Id);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
