@@ -1,23 +1,11 @@
-import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
-
-class SolutionUserVoteState extends BaseEntity<int> implements Avatar {
-  final int userId;
-  final String userName;
-  final String? name;
-  final Multimedia? image;
+import 'package:my_social_app/state/app_state/user_item.dart';
+class SolutionUserVoteState extends UserItem {
 
   SolutionUserVoteState({
     required super.id,
-    required this.userId,
-    required this.userName,
-    required this.name,
-    required this.image
+    required super.userId,
+    required super.userName,
+    required super.name,
+    required super.image
   });
-
-  @override
-  Multimedia? get avatar => image;
-  @override
-  int get avatarId => userId;
 }
