@@ -142,10 +142,10 @@ class NotificationHub{
       final store = StoreProvider.of<AppState>(context,listen: false);
       
       final notification = notificationModel.Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      final like = QuestionUserLike.fromJson(list[1] as dynamic);
+      // final like = QuestionUserLike.fromJson(list[1] as dynamic);
 
       store.dispatch(PrependNotificationAction(notification: notification));
-      store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, like: like.toQuestionUserLikeState()));
+      // store.dispatch(AddNewQuestionLikeAction(questionId: like.questionId, like: like.toQuestionUserLikeState()));
 
       showNotification(context, notification.id.toInt());
     }

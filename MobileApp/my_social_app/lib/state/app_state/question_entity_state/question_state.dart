@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
-import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/id.dart';

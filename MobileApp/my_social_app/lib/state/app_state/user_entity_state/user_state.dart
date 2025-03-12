@@ -1,7 +1,7 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';

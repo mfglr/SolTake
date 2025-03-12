@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/models/avatar.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/app_state/user_item.dart';
 
 @immutable
-class CommentUserLikeState extends BaseEntity<int> implements Avatar{
-  final int userId;
-  final String userName;
-  final String? name;
-  final Multimedia? image;
-  
+class CommentUserLikeState extends UserItem{
   CommentUserLikeState({
     required super.id,
-    required this.userId,
-    required this.userName,
-    required this.name,
-    required this.image
+    required super.userName,
+    required super.name,
+    required super.userId,
+    required super.image
   });
-  
-  @override
-  Multimedia? get avatar => image;
-  @override
-  int get avatarId => userId;
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/models/avatar.dart';
+import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 

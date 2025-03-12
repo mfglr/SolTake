@@ -14,11 +14,9 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     user => user.Id,
                     (qul, user) => new QuestionUserLikeResponseDto(
                         qul.Id,
-                        qul.CreatedAt,
-                        qul.QuestionId,
                         qul.UserId,
-                        user.Name,
                         user.UserName.Value,
+                        user.Name,
                         user.Image
                     )
                 );

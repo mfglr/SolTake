@@ -8,8 +8,6 @@ part 'question_user_like.g.dart';
 @JsonSerializable()
 class QuestionUserLike{
   final int id;
-  final DateTime createdAt;
-  final int questionId;
   final int userId;
   final String? name;
   final String userName;
@@ -17,8 +15,6 @@ class QuestionUserLike{
   
   const QuestionUserLike({
     required this.id,
-    required this.createdAt,
-    required this.questionId,
     required this.userId,
     required this.name,
     required this.userName,
@@ -31,8 +27,6 @@ class QuestionUserLike{
   QuestionUserLikeState toQuestionUserLikeState()
     => QuestionUserLikeState(
         id: id,
-        createdAt: createdAt,
-        questionId: questionId,
         userId: userId,
         name: name,
         userName: userName,
