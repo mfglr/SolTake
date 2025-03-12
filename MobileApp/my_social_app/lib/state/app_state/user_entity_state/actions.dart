@@ -283,6 +283,7 @@ class UpdateUserNameSuccessAction extends AppAction{
   final String userName;
   const UpdateUserNameSuccessAction({required this.userId,required this.userName});
 }
+
 @immutable
 class UpdateNameAction extends AppAction{
   final String name;
@@ -294,6 +295,7 @@ class UpdateNameSuccessAction extends AppAction{
   final String name;
   const UpdateNameSuccessAction({required this.userId, required this.name});
 }
+
 @immutable
 class UpdateBiographyAction extends AppAction{
   final String biography;

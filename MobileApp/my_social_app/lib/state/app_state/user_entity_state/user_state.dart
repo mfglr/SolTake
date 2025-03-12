@@ -268,7 +268,7 @@ class UserState extends BaseEntity<int> implements Avatar{
   UserState removeConversation(int id) =>
     _optional(newConversations: conversations.removeOne(id));
 
-  UserState updateUserName(String userName) =>
+  UserState updateUserName(String userName) => 
     _optional(newUserName: userName);
   UserState updateName(String name) =>
     _optional(newName: name);

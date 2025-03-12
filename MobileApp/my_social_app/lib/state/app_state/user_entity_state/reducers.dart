@@ -167,12 +167,12 @@ EntityState<int,UserState> nextUnsolvedQuestionsFailedReducer(EntityState<int,Us
 // EntityState<num,UserState> removeConversationReducer(EntityState<num,UserState> prev, RemoveUserConversationAction action)
 //   => prev.removeConversation(action.userId, action.id);
 
-// EntityState<num,UserState> updateUserNameReducer(EntityState<num,UserState> prev,UpdateUserNameSuccessAction action)
-//   => prev.updateUserName(action.userId, action.userName);
-// EntityState<num,UserState> updateNameReducer(EntityState<num,UserState> prev,UpdateNameSuccessAction action)
-//   => prev.updateName(action.userId, action.name);
-// EntityState<num,UserState> updateBiographyReducer(EntityState<num,UserState> prev, UpdateBiographySuccessAction action)
-//   => prev.updateBiography(action.userId, action.biography);
+EntityState<int,UserState> updateUserNameReducer(EntityState<int,UserState> prev,UpdateUserNameSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.updateUserName(action.userName));
+EntityState<int,UserState> updateNameReducer(EntityState<int,UserState> prev, UpdateNameSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.updateName(action.name));
+EntityState<int,UserState> updateBiographyReducer(EntityState<int,UserState> prev, UpdateBiographySuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.updateBiography(action.biography));
 
 // EntityState<num,UserState> uploadUserImageReducer(EntityState<num,UserState> prev,UploadUserImageAction action)
 //   => prev.uploadImage(action.userId,action.image);
@@ -246,9 +246,9 @@ Reducer<EntityState<int,UserState>> userEntityStateReducers = combineReducers<En
 
   
 
-  // TypedReducer<EntityState<num,UserState>,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
-  // TypedReducer<EntityState<num,UserState>,UpdateNameSuccessAction>(updateNameReducer).call,
-  // TypedReducer<EntityState<num,UserState>,UpdateBiographySuccessAction>(updateBiographyReducer).call,
+  TypedReducer<EntityState<int,UserState>,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
+  TypedReducer<EntityState<int,UserState>,UpdateNameSuccessAction>(updateNameReducer).call,
+  TypedReducer<EntityState<int,UserState>,UpdateBiographySuccessAction>(updateBiographyReducer).call,
 
   // TypedReducer<EntityState<num,UserState>,UploadUserImageAction>(uploadUserImageReducer).call,
   // TypedReducer<EntityState<num,UserState>,UploadUserImageSuccessAction>(uploadUserImageSuccessReducer).call,

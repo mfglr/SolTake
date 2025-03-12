@@ -148,12 +148,12 @@ class UserService{
     return Multimedia.fromJson(jsonDecode(data));
   }
   
-  Future<void> removeImage(num userId) =>
+  Future<void> removeImage(int userId) =>
     _appClient.delete("$userController/$removeUserImageEndpoint");
   
   Future<void> updateName(String name) => 
     _appClient
-      .put("$userController/$updateNameEndpoint",body: {'name' : name});
+      .put("$userController/$updateNameEndpoint", body: {'name' : name});
   
   Future<void> updateBiography(String biography) =>
      _appClient

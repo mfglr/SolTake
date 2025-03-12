@@ -72,11 +72,10 @@ void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateUserNameAction){
-    final accountId = store.state.loginState!.id;
     UserService()
       .updateUserName(action.userName)
       .then((_){
-        store.dispatch(UpdateUserNameSuccessAction(userId: accountId, userName: action.userName));
+        store.dispatch(UpdateUserNameSuccessAction(userId: store.state.loginState!.id, userName: action.userName));
         ToastCreator.displaySuccess(userNameUpdatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
@@ -84,11 +83,10 @@ void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateNameAction){
-    final accountId = store.state.loginState!.id;
     UserService()
       .updateName(action.name)
       .then((_){
-        store.dispatch(UpdateNameSuccessAction(userId: accountId, name: action.name));
+        store.dispatch(UpdateNameSuccessAction(userId: store.state.loginState!.id, name: action.name));
         ToastCreator.displaySuccess(nameUpdatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
