@@ -2,8 +2,7 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
@@ -105,7 +104,7 @@ class NextUserFollowersAction extends AppAction{
 @immutable
 class NextUserFollowersSuccessAction extends AppAction{
   final int userId;
-  final Iterable<FollowerState> followers;
+  final Iterable<FollowState> followers;
   const NextUserFollowersSuccessAction({required this.userId, required this.followers});
 }
 @immutable
@@ -123,7 +122,7 @@ class NextUserFollowedsAction extends AppAction{
 @immutable
 class NextUserFollowedsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<FollowedState> followeds;
+  final Iterable<FollowState> followeds;
   const NextUserFollowedsSuccessAction({required this.userId, required this.followeds});
 }
 @immutable

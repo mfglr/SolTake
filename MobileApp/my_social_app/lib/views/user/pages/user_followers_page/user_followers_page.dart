@@ -5,7 +5,7 @@ import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/user/pages/user_followers_page/widgets/followers_widget.dart';
+import 'package:my_social_app/views/user/widgets/follows_widget.dart';
 import 'package:my_social_app/views/user/widgets/no_follows.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -73,8 +73,8 @@ class _UserFollowersPageState extends State<UserFollowersPage> {
                 );
               }
               return SingleChildScrollView(
-                child: FollowersWidget(
-                  followers: user.followers.values
+                child: FollowsWidget(
+                  follows: user.followers.values
                 ),
               );
             }

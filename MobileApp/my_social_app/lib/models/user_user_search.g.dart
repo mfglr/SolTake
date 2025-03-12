@@ -9,7 +9,7 @@ part of 'user_user_search.dart';
 UserUserSearch _$UserUserSearchFromJson(Map<String, dynamic> json) =>
     UserUserSearch(
       id: (json['id'] as num).toInt(),
-      searchedId: (json['searchedId'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
       userName: json['userName'] as String,
       name: json['name'] as String?,
       image: json['image'] == null
@@ -20,7 +20,7 @@ UserUserSearch _$UserUserSearchFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UserUserSearchToJson(UserUserSearch instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'searchedId': instance.searchedId,
+      'userId': instance.userId,
       'userName': instance.userName,
       'name': instance.name,
       'image': instance.image,

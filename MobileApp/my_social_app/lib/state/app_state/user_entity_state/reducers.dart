@@ -1,6 +1,5 @@
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
@@ -35,9 +34,9 @@ EntityState<int,UserState> followUserSuccessReducer(EntityState<int,UserState> p
   return prev.updateMany(
     [
       follower.addFollowedToCurrentUser(
-        FollowedState(
+        FollowState(
           id: action.followId,
-          followedId: followed.id,
+          userId: followed.id,
           userName: followed.userName,
           name: followed.name,
           image: followed.image,
@@ -46,9 +45,9 @@ EntityState<int,UserState> followUserSuccessReducer(EntityState<int,UserState> p
         )
       ),
       followed.addFollower(
-        FollowerState(
+        FollowState(
           id: action.followId,
-          followerId: follower.id,
+          userId: follower.id,
           userName: follower.userName,
           name: follower.name,
           image: follower.image,

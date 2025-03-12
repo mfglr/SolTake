@@ -136,7 +136,7 @@ void nextUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher nex
     final pagination = store.state.userEntityState.getValue(action.userId)!.followers;
     FollowService()
       .getFollowersByUserId(action.userId, pagination.next)
-      .then((followers) => store.dispatch(NextUserFollowersSuccessAction(userId: action.userId,followers: followers.map((e) => e.toFollowerState()))))
+      .then((followers) => store.dispatch(NextUserFollowersSuccessAction(userId: action.userId,followers: followers.map((e) => e.toFollowState()))))
       .catchError((e){
         store.dispatch(NextUserFollowersFailedAction(userId: action.userId));
         throw e;
@@ -149,7 +149,7 @@ void nextUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher nex
     final pagination = store.state.userEntityState.getValue(action.userId)!.followeds;
     FollowService()
       .getFollowedsByUserId(action.userId,pagination.next)
-      .then((followeds) => store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followeds: followeds.map((e) => e.toFollowedState()))))
+      .then((followeds) => store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followeds: followeds.map((e) => e.toFollowState()))))
       .catchError((e){
         store.dispatch(NextuserFollowedsFailedAction(userId: action.userId));
         throw e;

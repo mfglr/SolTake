@@ -22,9 +22,9 @@ class UserUserSearchWidget extends StatelessWidget {
           onPressed: (){
             Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => UserPage(userId: userUserSearch.searchedId)));
+              .push(MaterialPageRoute(builder: (context) => UserPage(userId: userUserSearch.userId)));
             final store = StoreProvider.of<AppState>(context,listen: false);
-            store.dispatch(CreateUserUserSearchAction(searchedId: userUserSearch.searchedId));
+            store.dispatch(CreateUserUserSearchAction(searchedId: userUserSearch.userId));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +61,7 @@ class UserUserSearchWidget extends StatelessWidget {
               IconButton(
                 onPressed: (){
                   final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(RemoveUserUserSearchAction(searchedId: userUserSearch.searchedId));
+                  store.dispatch(RemoveUserUserSearchAction(searchedId: userUserSearch.userId));
                 },
                 icon: const Icon(Icons.close)
               )

@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-class AppColumns extends StatelessWidget {
+class AppColumn extends StatelessWidget {
   final Iterable<Widget> children;
-  const AppColumns({
+  const AppColumn({
     super.key,
     required this.children
   });

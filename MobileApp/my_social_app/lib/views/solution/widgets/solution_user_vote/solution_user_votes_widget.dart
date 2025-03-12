@@ -1,7 +1,8 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
-import 'package:my_social_app/views/solution/widgets/solution_user_vote/solution_user_vote_widget.dart';
+import 'package:my_social_app/views/shared/app_column.dart';
+import 'package:my_social_app/views/shared/user_item/user_item_widget.dart';
+import 'package:my_social_app/views/user/pages/user_page.dart';
 
 class SolutionUserVotesWidget extends StatelessWidget {
   final Iterable<SolutionUserVoteState> solutionUserVotes;
@@ -11,19 +12,14 @@ class SolutionUserVotesWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: solutionUserVotes
-        .mapIndexed(
-          (index,solutionUserVote) =>
-            solutionUserVotes.length - 1 == index
-              ? SolutionUserVoteWidget(solutionUserVote: solutionUserVote)
-              : Container(
-                  margin: const EdgeInsets.only(bottom: 5),
-                  child: SolutionUserVoteWidget(solutionUserVote: solutionUserVote),
-                )
-        )
-        .toList(),
-    );
-  }
+  Widget build(BuildContext context)
+    => AppColumn(
+        children: solutionUserVotes.map((e) =>  UserItemWidget(
+          userItem: e,
+          onPressed: () =>
+            Navigator
+              .of(context)
+              .push(MaterialPageRoute(builder: (context) => UserPage(userId: e.userId))),
+        ))
+      );
 }

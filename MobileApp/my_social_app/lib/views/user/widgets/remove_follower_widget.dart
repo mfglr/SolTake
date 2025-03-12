@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RemoveFollowerButton extends StatelessWidget {
-  
-  final UserState user;
-  const RemoveFollowerButton({super.key,required this.user});
+class RemoveFollowerWidget extends StatelessWidget {
+  final FollowState follower;
+  const RemoveFollowerWidget({
+    super.key,
+    required this.follower
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +25,9 @@ class RemoveFollowerButton extends StatelessWidget {
             AppLocalizations.of(context)!.show_remove_follower_dialog_content_of_approve_button,
           )
           .then((response){
-            if(response){
+            if(response && context.mounted){
               final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(RemoveFollowerAction(followerId: user.id));
+              store.dispatch(RemoveFollowerAction(followerId: follower.userId));
             }
           });
       },

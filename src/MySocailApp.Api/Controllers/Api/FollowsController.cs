@@ -36,11 +36,11 @@ namespace MySocailApp.Api.Controllers.Api
             => await _sender.Send(new RemoveFollowerDto(followerId), cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<FollowerResponseDto>> GetFollowersByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<FollowResponseDto>> GetFollowersByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetFollowersByUserIdDto(userId, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{userId}")]
-        public async Task<List<FollowedResponseDto>> GetFollowedsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<FollowResponseDto>> GetFollowedsByUserId(int userId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetFollowedsByUserIdDto(userId, offset, take, isDescending), cancellationToken);
     }
 }

@@ -1,24 +1,13 @@
-import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/app_state/user_item.dart';
 
-class UserUserSearchState extends BaseEntity<int> implements Avatar  {
-  final int searchedId;
-  final String userName;
-  final String? name;
-  final Multimedia? image;
-
-  @override
-  Multimedia? get avatar => image;
-  @override
-  int get avatarId => searchedId;
+class UserUserSearchState extends UserItem  {
 
   UserUserSearchState({
     required super.id,
-    required this.searchedId,
-    required this.userName,
-    required this.name,
-    required this.image
+    required super.userId,
+    required super.userName,
+    required super.name,
+    required super.image
   });
   
 }

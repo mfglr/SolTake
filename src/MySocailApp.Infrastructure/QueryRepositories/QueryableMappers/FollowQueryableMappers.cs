@@ -7,13 +7,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class FollowQueryableMappers
     {
-        public static IQueryable<FollowerResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
+        public static IQueryable<FollowResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
                 .Join(
                     context.Users,
                     follow => follow.FollowerId,
                     user => user.Id,
-                    (follow, user) => new FollowerResponseDto(
+                    (follow, user) => new FollowResponseDto(
                         follow.Id,
                         follow.FollowerId,
                         user.UserName.Value,
@@ -24,13 +24,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     )
                 );
 
-        public static IQueryable<FollowedResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
+        public static IQueryable<FollowResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
             => query
                 .Join(
                     context.Users,
                     follow => follow.FollowedId,
                     user => user.Id,
-                    (follow, user) => new FollowedResponseDto(
+                    (follow, user) => new FollowResponseDto(
                         follow.Id,
                         follow.FollowedId,
                         user.UserName.Value,

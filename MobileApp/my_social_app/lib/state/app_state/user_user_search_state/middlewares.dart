@@ -8,13 +8,13 @@ void createUserUserSearchMiddleware(Store<AppState> store, action, NextDispatche
   if(action is CreateUserUserSearchAction){
     final dynamic user = 
       store.state.searchUsers.getById(action.searchedId) ??
-      store.state.userUserSearchs.get((e) => e.searchedId == action.searchedId);
+      store.state.userUserSearchs.get((e) => e.userId == action.searchedId);
     UserUserSearchService()
       .create(action.searchedId)
       .then((response) => store.dispatch(CreateUserUserSearchSuccessAction(
         userUserSearch: UserUserSearchState(
           id: response.id,
-          searchedId: action.searchedId,
+          userId: action.searchedId,
           userName: user.userName,
           name: user.name,
           image: user.image

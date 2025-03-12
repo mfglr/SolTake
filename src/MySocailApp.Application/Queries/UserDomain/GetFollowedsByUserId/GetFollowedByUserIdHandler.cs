@@ -4,11 +4,11 @@ using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId
 {
-    public class GetFollowedByUserIdHandler(IFollowQueryRepository repository, IUserAccessor userAccessor) : IRequestHandler<GetFollowedsByUserIdDto, List<FollowedResponseDto>>
+    public class GetFollowedByUserIdHandler(IFollowQueryRepository repository, IUserAccessor userAccessor) : IRequestHandler<GetFollowedsByUserIdDto, List<FollowResponseDto>>
     {
         private readonly IFollowQueryRepository _repository = repository;
         private readonly IUserAccessor _userAccessor = userAccessor;
-        public Task<List<FollowedResponseDto>> Handle(GetFollowedsByUserIdDto request, CancellationToken cancellationToken)
+        public Task<List<FollowResponseDto>> Handle(GetFollowedsByUserIdDto request, CancellationToken cancellationToken)
             => _repository
                 .GetFollowedsByUserIdAsync(
                     request.UserId,

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
-part 'follower.g.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
+part 'follow.g.dart';
 
-@immutable
 @JsonSerializable()
-class Follower{
+@immutable
+class Follow {
   final int id;
-  final int followerId;
+  final int userId;
   final String userName;
   final String? name;
   final Multimedia? image;
   final bool isFollower;
   final bool isFollowed;
 
-  const Follower({
+  const Follow({
     required this.id,
-    required this.followerId,
+    required this.userId,
     required this.userName,
     required this.name,
     required this.image,
@@ -25,13 +25,13 @@ class Follower{
     required this.isFollowed
   });
 
-  factory Follower.fromJson(Map<String, dynamic> json) => _$FollowerFromJson(json);
-  Map<String, dynamic> toJson() => _$FollowerToJson(this);
-  
-  FollowerState toFollowerState()
-    => FollowerState(
+  factory Follow.fromJson(Map<String, dynamic> json) => _$FollowFromJson(json);
+  Map<String, dynamic> toJson() => _$FollowToJson(this);
+
+  FollowState toFollowState()
+    => FollowState(
         id: id,
-        followerId: followerId,
+        userId: userId,
         userName: userName,
         name: name,
         image: image,

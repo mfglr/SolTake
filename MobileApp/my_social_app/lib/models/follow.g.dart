@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'followed.dart';
+part of 'follow.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Followed _$FollowedFromJson(Map<String, dynamic> json) => Followed(
+Follow _$FollowFromJson(Map<String, dynamic> json) => Follow(
       id: (json['id'] as num).toInt(),
-      followedId: (json['followedId'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
       userName: json['userName'] as String,
       name: json['name'] as String?,
       image: json['image'] == null
@@ -18,9 +18,9 @@ Followed _$FollowedFromJson(Map<String, dynamic> json) => Followed(
       isFollowed: json['isFollowed'] as bool,
     );
 
-Map<String, dynamic> _$FollowedToJson(Followed instance) => <String, dynamic>{
+Map<String, dynamic> _$FollowToJson(Follow instance) => <String, dynamic>{
       'id': instance.id,
-      'followedId': instance.followedId,
+      'userId': instance.userId,
       'userName': instance.userName,
       'name': instance.name,
       'image': instance.image,

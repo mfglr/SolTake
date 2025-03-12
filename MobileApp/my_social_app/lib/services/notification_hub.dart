@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/models/follower.dart';
 import 'package:my_social_app/notifications/app_notifications.dart';
 import 'package:my_social_app/constants/notification_functions.dart';
 import 'package:my_social_app/models/comment.dart';
@@ -191,8 +190,8 @@ class NotificationHub{
       final store = StoreProvider.of<AppState>(context,listen: false);
 
       final notification = notificationModel.Notification.fromJson((list[0] as dynamic)).toNotificationState();
-      final follower = Follower.fromJson(list[1] as dynamic);
-      final followerState = follower.toFollowerState();
+      // final follower = Follower.fromJson(list[1] as dynamic);
+      // final followerState = follower.toFollowerState();
 
       store.dispatch(PrependNotificationAction(notification: notification));
       // store.dispatch(AddNewFollowerAction(curentUserId: follow.followedId,followerId: follow.followerId,followId: follow.id));

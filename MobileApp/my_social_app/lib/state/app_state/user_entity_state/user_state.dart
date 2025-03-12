@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/followed_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follower_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
@@ -24,8 +23,8 @@ class UserState extends BaseEntity<int> implements Avatar{
   final bool isFollowed;
   final Multimedia? image;
   final UserImageState? userImageState;
-  final Pagination<int,FollowerState> followers;
-  final Pagination<int,FollowedState> followeds;
+  final Pagination<int,FollowState> followers;
+  final Pagination<int,FollowState> followeds;
   final Pagination<int,Id<int>> questions;
   final Pagination<int,Id<int>> solvedQuestions;
   final Pagination<int,Id<int>> unsolvedQuestions;
@@ -81,8 +80,8 @@ class UserState extends BaseEntity<int> implements Avatar{
     int? newNumberOfFolloweds,
     bool? newIsFollower,
     bool? newIsFollowed,
-    Pagination<int,FollowerState>? newFollowers,
-    Pagination<int,FollowedState>? newFolloweds,
+    Pagination<int,FollowState>? newFollowers,
+    Pagination<int,FollowState>? newFolloweds,
     Pagination<int,Id<int>>? newQuestions,
     Pagination<int,Id<int>>? newSolvedQuestions,
     Pagination<int,Id<int>>? newUnsolvedQuestions,
@@ -118,18 +117,18 @@ class UserState extends BaseEntity<int> implements Avatar{
   //followers
   UserState startLoadingNextFollowers() => 
     _optional(newFollowers: followers.startLoadingNext());
-  UserState addNextFollowers(Iterable<FollowerState> followers) => 
+  UserState addNextFollowers(Iterable<FollowState> followers) => 
     _optional(newFollowers: this.followers.addNextPage(followers));
   UserState stopLoadingNextFollowers() =>
     _optional(newFollowers: followers.stopLoadingNext());
 
-  UserState addFollower(FollowerState follower) => 
+  UserState addFollower(FollowState follower) => 
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
       newIsFollowed: true,
       newFollowers: followers.prependOne(follower)
     );
-  UserState addFollowerToCurrentUser(FollowerState follower) =>
+  UserState addFollowerToCurrentUser(FollowState follower) =>
     _optional(
       newNumberOfFollowers: numberOfFollowers + 1,
       newFollowers: followers.prependOne(follower)
@@ -139,29 +138,29 @@ class UserState extends BaseEntity<int> implements Avatar{
     _optional(
       newNumberOfFollowers: numberOfFollowers - 1,
       newIsFollowed: false,
-      newFollowers: followers.where((e) => e.followerId != followerId)
+      newFollowers: followers.where((e) => e.userId != followerId)
     );
   UserState removeFollowerToCurrentUser(int followerId) =>
     _optional(
       newNumberOfFollowers: numberOfFollowers - 1,
-      newFollowers: followers.where((e) => e.followerId != followerId)
+      newFollowers: followers.where((e) => e.userId != followerId)
     );
 
   //followeds
   UserState startLoadingNextFolloweds() =>
     _optional(newFolloweds: followeds.startLoadingNext());
-  UserState addNextFolloweds(Iterable<FollowedState> followeds) =>
+  UserState addNextFolloweds(Iterable<FollowState> followeds) =>
     _optional(newFolloweds: this.followeds.addNextPage(followeds));
   UserState stopLoadingNextFolloweds() =>
     _optional(newFolloweds: followeds.stopLoadingNext());
     
-  UserState addFollowed(FollowedState followed)
+  UserState addFollowed(FollowState followed)
     => _optional(
         newNumberOfFolloweds: numberOfFolloweds + 1,
         newIsFollower: true,
         newFolloweds: followeds.prependOne(followed)
       );
-  UserState addFollowedToCurrentUser(FollowedState followed) =>
+  UserState addFollowedToCurrentUser(FollowState followed) =>
     _optional(
       newNumberOfFolloweds: numberOfFolloweds + 1,
       newFolloweds: followeds.prependOne(followed)
@@ -171,12 +170,12 @@ class UserState extends BaseEntity<int> implements Avatar{
     _optional(
       newIsFollower: false,
       newNumberOfFolloweds: numberOfFolloweds - 1,
-      newFolloweds: followeds.where((e) => e.followedId != followedId)
+      newFolloweds: followeds.where((e) => e.userId != followedId)
     );
   UserState removeFollowedToCurrentUser(int followedId) =>
     _optional(
       newNumberOfFolloweds: numberOfFolloweds - 1,
-      newFolloweds: followeds.where((e) => e.followedId != followedId)
+      newFolloweds: followeds.where((e) => e.userId != followedId)
     );
 
   //questions

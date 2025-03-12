@@ -8,14 +8,14 @@ part 'user_user_search.g.dart';
 @JsonSerializable()
 class UserUserSearch{
   final int id;
-  final int searchedId;
+  final int userId;
   final String userName;
   final String? name;
   final Multimedia? image;
   
   const UserUserSearch({
     required this.id, 
-    required this.searchedId,
+    required this.userId,
     required this.userName,
     required this.name,
     required this.image
@@ -28,7 +28,7 @@ class UserUserSearch{
   UserUserSearchState toUserUserSearchState()
     => UserUserSearchState(
       id: id,
-      searchedId: searchedId,
+      userId: userId,
       userName: userName,
       name: name,
       image: image
