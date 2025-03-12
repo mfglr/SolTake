@@ -11,6 +11,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
@@ -171,13 +172,14 @@ void nextUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next
   }
   next(action);
 }
+
 void nextUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextUserQuestionsAction){
     final pagination = store.state.userEntityState.getValue(action.userId)!.questions;
     QuestionService()
       .getByUserId(action.userId,pagination.next)
       .then((questions){
-        store.dispatch(NextUserQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
+        store.dispatch(NextUserQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => Id(id: e.id))));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
@@ -200,8 +202,7 @@ void nextUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatch
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
+        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
       })
       .catchError((e){
         store.dispatch(NextUserSolvedQuestionsFailedAction(userId: action.userId));
@@ -220,8 +221,7 @@ void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispat
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
+        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
       })
       .catchError((e){
         store.dispatch(NextUserUnsolvedQuestionsFailedAction(userId: action.userId));
@@ -230,6 +230,7 @@ void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispat
   }
   next(action);
 }
+
 void nextUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextUserConversationsAction){
     final pagination = store.state.userEntityState.getValue(action.userId)!.conversations;

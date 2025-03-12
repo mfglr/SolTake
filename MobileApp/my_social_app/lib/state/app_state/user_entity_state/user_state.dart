@@ -183,8 +183,8 @@ class UserState extends BaseEntity<int> implements Avatar{
     _optional(newQuestions: questions.startLoadingNext());
   UserState stopLoadingNextQuestions() =>
     _optional(newQuestions: questions.stopLoadingNext());
-  UserState addNextPageQuestions(Iterable<int> ids) =>
-    _optional(newQuestions: questions.addNextPage(ids.map((e) => Id(id: e))));
+  UserState addNextPageQuestions(Iterable<Id<int>> ids) =>
+    _optional(newQuestions: questions.addNextPage(ids));
 
   UserState addNewQuestion(int questionId) =>
     _optional(

@@ -4,6 +4,7 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
@@ -140,7 +141,7 @@ class NextUserQuestionsAction extends AppAction{
 @immutable
 class NextUserQuestionsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<int> questionIds;
+  final Iterable<Id<int>> questionIds;
   const NextUserQuestionsSuccessAction({required this.userId,required this.questionIds});
 }
 @immutable
