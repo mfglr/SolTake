@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 Pagination<int,Id<int>> nextVideoQuestionsReducer(Pagination<int,Id<int>> prev, NextVideoQuestionsAction action)
   => prev.startLoadingNext();
 Pagination<int,Id<int>> nextVideoQuestionsSuccessReducer(Pagination<int,Id<int>> prev,NextVideoQuestionsSuccessAction action)
-  => prev.addNextPage(action.questionIds.map((questionId) => Id(id: questionId)));
+  => prev.addNextPage(action.questionIds);
 Pagination<int,Id<int>> nextVideoQuestionsFailedReducer(Pagination<int,Id<int>> prev, NextVideoQuestionsFailedAction action)
   => prev.stopLoadingNext();
 

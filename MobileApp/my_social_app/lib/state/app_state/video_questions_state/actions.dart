@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
 
 @immutable
 class NextVideoQuestionsAction extends AppAction{
@@ -7,7 +8,7 @@ class NextVideoQuestionsAction extends AppAction{
 }
 @immutable
 class NextVideoQuestionsSuccessAction extends AppAction{
-  final Iterable<int> questionIds;
+  final Iterable<Id<int>> questionIds;
   const NextVideoQuestionsSuccessAction({required this.questionIds});
 }
 @immutable

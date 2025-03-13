@@ -4,12 +4,12 @@ using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.QuestionDomain.GetVideoQuestions
 {
-    public class GetVideoQuestionsHandler(IQuestionQueryRepository questionQueryRepository, IUserAccessor userAccessor) : IRequestHandler<GetVideoQuestionsDto, List<QuestionResponseDto>>
+    public class GetVideoQuestionsHandler(IQuestionQueryRepository questionQueryRepository,IAccessTokenReader accessTokenReader) : IRequestHandler<GetVideoQuestionsDto, List<QuestionResponseDto>>
     {
-        private readonly IUserAccessor _userAccessor = userAccessor;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IQuestionQueryRepository _questionQueryRepository = questionQueryRepository;
 
         public Task<List<QuestionResponseDto>> Handle(GetVideoQuestionsDto request, CancellationToken cancellationToken)
-            => _questionQueryRepository.GetVideoQuestionsAsync(_userAccessor.User.Id, request, cancellationToken);
+            => _questionQueryRepository.GetVideoQuestionsAsync(_accessTokenReader.GetAccountId(), request, cancellationToken);
     }
 }

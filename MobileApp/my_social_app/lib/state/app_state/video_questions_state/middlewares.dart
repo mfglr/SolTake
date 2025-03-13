@@ -5,6 +5,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/actions.dart';
+import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:redux/redux.dart';
 
 void nextVideoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -13,12 +14,11 @@ void nextVideoQuestionsMiddleware(Store<AppState> store,action,NextDispatcher ne
     QuestionService()
       .getVideoQuestions(pagination.next)
       .then((questions){
-        store.dispatch(NextVideoQuestionsSuccessAction(questionIds: questions.map((e) => e.id)));
+        store.dispatch(NextVideoQuestionsSuccessAction(questionIds: questions.map((e) =>Id(id: e.id))));
         store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
         store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
         store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
+        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
       })
       .catchError((e){
         store.dispatch(const NextVideoQuestionsFailedAction());
