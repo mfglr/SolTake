@@ -59,8 +59,7 @@ class _UserPageState extends State<UserPage> {
   Widget _getQuestionsGrid(UserState user){
     return StoreConnector<AppState,Iterable<QuestionState>>(
       onInit: (store) => getNextPageIfNoPage(store,user.questions,NextUserQuestionsAction(userId: user.id)),
-      converter: (store) => // store.state.selectUserQuestions(user.id),
-      [],
+      converter: (store) => store.state.selectUserQuestions(user.id),
       builder: (context, questions) => QuestionAbstractItemsWidget(
         questions: questions,
         pagination: user.questions,
