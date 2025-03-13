@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 
-void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+void nextHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextHomeQuestionsAction){
     final pagination = store.state.homePageQuestions;
     QuestionService()
@@ -26,7 +26,8 @@ void getNextPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatc
   }
   next(action);
 }
-void getPrevPageHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
+
+void prevHomeQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is PrevHomePageQuestionsAction){
     final pagination = store.state.homePageQuestions;
     QuestionService()

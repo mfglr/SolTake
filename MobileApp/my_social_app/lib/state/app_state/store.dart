@@ -104,8 +104,8 @@ final store = Store(
     nextCommentRepliesMiddleware,
 
     //Home page state
-    getNextPageHomeQuestionsMiddleware,
-    getPrevPageHomeQuestionsMiddleware,
+    nextHomeQuestionsMiddleware,
+    prevHomeQuestionsMiddleware,
     
     //account start
     loginByRefreshTokenMiddleware,

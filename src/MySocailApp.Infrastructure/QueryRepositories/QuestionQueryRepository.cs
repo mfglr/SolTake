@@ -22,18 +22,18 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToQuestionResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        private Task<List<QuestionResponseDto>> GetListAsync(int accountId, IPage page, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
+        private Task<List<QuestionResponseDto>> GetListAsync(int? userId, IPage page, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
             => _context.Questions
                 .AsNoTracking()
                 .Where(predicate)
                 .ToPage(page)
-                .ToQuestionResponseDto(_context, accountId)
+                .ToQuestionResponseDto(_context, userId)
                 .ToListAsync(cancellationToken);
 
         public Task<QuestionResponseDto?> GetQuestionByIdAsync(int id, int accountId, CancellationToken cancellationToken)
             => GetFirstAsync(accountId, x => x.Id == id, cancellationToken);
 
-        public Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int? accountId, IPage page, CancellationToken cancellationToken)
             => GetListAsync(accountId, page, x => x.UserId != accountId, cancellationToken);
         
         public Task<List<QuestionResponseDto>> GetUserQuestionsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)

@@ -6,7 +6,7 @@ namespace MySocailApp.Application.QueryRepositories
     public interface IQuestionQueryRepository
     {
         Task<QuestionResponseDto?> GetQuestionByIdAsync(int id, int accountId, CancellationToken cancellationToken);
-        Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int accountId, IPage page, CancellationToken cancellationToken);
+        Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int? userId, IPage page, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetUserQuestionsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetTopicQuestionsAsync(int topicId, int accountId, IPage page, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int accountId, IPage page, CancellationToken cancellationToken);

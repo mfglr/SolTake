@@ -60,7 +60,7 @@ namespace MySocailApp.Api.Controllers.Api
            => await _sender.Send(new GetQuestionsByExamIdDto(examId, offset, take, isDescending), cancellationToken);
 
         [HttpGet]
-        public async Task<List<QuestionResponseDto>> GetHomePageQuestions([FromQuery] int offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<QuestionResponseDto>> GetHomePageQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetHomePageQuestionsDto(offset, take, isDescending), cancellationToken);
 
         [HttpPost]

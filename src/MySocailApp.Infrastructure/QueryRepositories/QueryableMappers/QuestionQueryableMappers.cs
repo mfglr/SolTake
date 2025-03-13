@@ -9,7 +9,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class QuestionQueryableMappers
     {
-        public static IQueryable<QuestionResponseDto> ToQuestionResponseDto(this IQueryable<Question> query, AppDbContext context, int userId)
+        public static IQueryable<QuestionResponseDto> ToQuestionResponseDto(this IQueryable<Question> query, AppDbContext context, int? userId)
             => query
                 .Join(
                     context.Users,
