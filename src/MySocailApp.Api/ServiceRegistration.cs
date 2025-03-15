@@ -3,9 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Application.InfrastructureServices.IAService.Objects;
-using MySocailApp.Core;
 using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.Configurations;
 using MySocailApp.Infrastructure.AppVersionAggregate;
@@ -34,11 +31,11 @@ namespace MySocailApp.Api
         public static IServiceCollection AddFilters(this IServiceCollection services)
         {
             return services
-                .AddScoped<CheckVersionFiltterAttribute>()
-                .AddScoped<CheckUserFilterAttribute>()
-                .AddScoped<CheckPrivacyPolicyApprovalFilterAttribute>()
-                .AddScoped<CheckTermsOfUseApprovalFilterAttribute>()
-                .AddScoped<CheckEmailVerificationFilterAttribute>();
+                .AddScoped<VersionFiltterAttribute>()
+                .AddScoped<UserFilterAttribute>()
+                .AddScoped<PrivacyPolicyApprovalFilterAttribute>()
+                .AddScoped<TermsOfUseApprovalFilterAttribute>()
+                .AddScoped<EmailVerificationFilterAttribute>();
         }
         public static IServiceCollection AddJWT(this IServiceCollection services)
         {
@@ -53,33 +50,23 @@ namespace MySocailApp.Api
                     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
-                {
-                    opt.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
+                .AddJwtBearer(
+                    JwtBearerDefaults.AuthenticationScheme,
+                    opt => {
+                        opt.TokenValidationParameters = new()
                         {
-                            var accessToken = context.Request.Query["access_token"];
-                            var pathString = context.Request.Path;
-                            if (pathString.StartsWithSegments("/message") || pathString.StartsWithSegments("/notification"))
-                                context.Token = accessToken;
-                            return Task.CompletedTask;
-                        }
-                    };
+                            IssuerSigningKey = securityKey,
+                            ValidIssuer = tokenProviderOptions.Issuer,
+                            ValidAudience = tokenProviderOptions.Audience,
 
-                    opt.TokenValidationParameters = new()
-                    {
-                        IssuerSigningKey = securityKey,
-                        ValidIssuer = tokenProviderOptions.Issuer,
-                        ValidAudience = tokenProviderOptions.Audience,
-
-                        ValidateIssuerSigningKey = true,
-                        ValidateAudience = true,
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
+                            ValidateIssuerSigningKey = true,
+                            ValidateAudience = true,
+                            ValidateIssuer = true,
+                            ValidateLifetime = true,
+                            ClockSkew = TimeSpan.Zero
+                        };
+                    }
+                );
             return services;
         }
 

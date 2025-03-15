@@ -5,7 +5,6 @@ using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
@@ -22,7 +21,8 @@ using MySocailApp.Infrastructure.InfrastructureServices.BlobService;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using MySocailApp.Infrastructure.InfrastructureServices.Email;
 using MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
-using MySocailApp.Infrastructure.MessageAggregate;
+using MySocailApp.Infrastructure.MessageDomain;
+using MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate;
 using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.NotificationConnectionAggregate;
 using MySocailApp.Infrastructure.QueryRepositories;
@@ -31,7 +31,6 @@ using MySocailApp.Infrastructure.RoleAggregate;
 using MySocailApp.Infrastructure.SolutionDomain;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
-using MySocailApp.Infrastructure.UserConnectionAggregate;
 using MySocailApp.Infrastructure.UserDomain;
 using System.Net;
 using System.Net.Mail;
@@ -48,13 +47,12 @@ namespace MySocailApp.Infrastructure
                 .AddQuestionDomainInfrastructureServices()
                 .AddSolutionDomainInfrastructureServices()
                 .AddCommentDomainInfrastructureService()
+                .AddMessageDomainInfrastructureServices()
                 .AddExamAggregate()
                 .AddSubjectAggregate()
                 .AddTopicAggregate()
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
-                .AddMessageAggregate()
-                .AddUserConnectionAggregate()
                 .AddRoleAggregate()
                 .AddNotificationConnectionAggregate();
 
@@ -148,16 +146,6 @@ namespace MySocailApp.Infrastructure
             => services
                 .AddScoped<INotificationWriteRepository, NotificationWriteRepository>()
                 .AddScoped<INotificationReadRepository, NotificationReadRepository>();
-        
-        private static IServiceCollection AddMessageAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
-                .AddScoped<IMessageReadRepository, MessageReadRepository>();
-
-        private static IServiceCollection AddUserConnectionAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<IMessageConnectionWriteRepository, UserConnectionWriteRepository>()
-                .AddScoped<IMessageConnectionReadRepository, UserConnectionReadRepository>();
 
         private static IServiceCollection AddNotificationConnectionAggregate(this IServiceCollection services)
             => services

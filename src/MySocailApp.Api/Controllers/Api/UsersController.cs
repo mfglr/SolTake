@@ -58,66 +58,66 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task LogOut(CancellationToken cancellationToken)
             => await _sender.Send(new LogOutDto(), cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
         public async Task UpdateEmail(UpdateEmailDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task UpdatePassword(UpdatePasswordDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task UpdateEmailVerificationToken(CancellationToken cancellationToken)
             => await _sender.Send(new UpdateEmailVerificationTokenDto(), cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task UpdateLanguage(UpdateLanguageDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task VerifyEmail(VerifyEmailDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task ApprovePrivacyPolicy(CancellationToken cancellationToken)
             => await _sender.Send(new ApprovePrivacyPolicyDto(), cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task ApproveTermsOfUse(CancellationToken cancellationToken)
             => await _sender.Send(new ApproveTermsOfUse(), cancellationToken);
 
@@ -131,97 +131,97 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpDelete]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task Delete(CancellationToken cancellationToken)
             => await _sender.Send(new DeleteUserDto(), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpPost]
         public async Task<Multimedia> UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
              => await _sender.Send(new UpdateUserImageDto(file), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpDelete]
         public async Task RemoveImage(CancellationToken cancellationToken)
              => await _sender.Send(new RemoveUserImageDto(), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpPut]
         public async Task UpdateName(UpdateNameDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpPut]
         public async Task UpdateBiography(UpdateBiographyDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
      
         //Queries
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpGet("{id}")]
         public async Task<UserResponseDto> GetById(int id, CancellationToken cancellationToken)
             => await _sender.Send(new GetUserByIdDto(id), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpGet("{userName}")]
         public async Task<UserResponseDto> GetByUserName(string userName, CancellationToken cancellationToken)
             => await _sender.Send(new GetUserByUserNameDto(userName), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpPost]
         public async Task<List<SearchUserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpGet]
         public async Task<List<UserResponseDto>> GetConversationPageUsers([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetConversationPageUsersDto(offset, take, isDescending), cancellationToken);
 
         [HttpGet("{userName}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
-        [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task<bool> IsUserNameExist(string userName, CancellationToken cancellationToken)
             => await _sender.Send(new IsUserNameExistDto(userName), cancellationToken);
     }

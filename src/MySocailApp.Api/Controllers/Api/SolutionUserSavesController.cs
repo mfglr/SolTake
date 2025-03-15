@@ -13,11 +13,11 @@ namespace MySocailApp.Api.Controllers.Api
     [ApiController]
     [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckUserFilterAttribute))]
-    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-    [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+    [ServiceFilter(typeof(UserFilterAttribute))]
+    [ServiceFilter(typeof(VersionFiltterAttribute))]
+    [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+    [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+    [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
     public class SolutionUserSavesController(ISender sender) : ControllerBase
     {
         private readonly ISender _sender = sender;

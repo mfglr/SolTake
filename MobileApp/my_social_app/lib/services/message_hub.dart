@@ -8,6 +8,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:redux/redux.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:signalr_netcore/ihub_protocol.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 class MessageHub{
@@ -16,9 +17,16 @@ class MessageHub{
   late final StreamSubscription<HubConnectionState> _stateConsumer;
 
   MessageHub._(Store<AppState> store,PublishSubject<MessageState>? rMs){
+
+    // var header = MessageHeaders();
+    // header.setHeaderValue(MessageHeaders.AuthorizationHeaderName, value)
+
     _hubConnection =
       HubConnectionBuilder()
-        .withUrl("${dotenv.env['API_URL']}/message?access_token=${store.state.accessToken}")
+        .withUrl(
+          "${dotenv.env['API_URL']}/message?access_token=${store.state.accessToken}",
+          options: HttpConnectionOptions(),
+        )
         .withAutomaticReconnect()
         .build();
 

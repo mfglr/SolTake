@@ -14,7 +14,6 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         public int ReceiverId { get; private set; }
         public MessageContent? Content { get; private set; }
         
-        public int NumberOfMedias { get; private set; }
         private readonly List<MessageMultimedia> _medias = [];
         public IReadOnlyList<MessageMultimedia> Medias => _medias;
 
@@ -33,17 +32,15 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
             SenderId = senderId;
             ReceiverId = receiverId;
             Content = content;
-            if (medias != null)
-            {
-                NumberOfMedias = medias.Count();
-                _medias.AddRange(medias);
-            }
+            _medias.AddRange(medias ?? []);
         }
         public void Create()
         {
-            UpdatedAt = CreatedAt = DateTime.UtcNow;
+            CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new MessageCreatedDomainEvent(this));
         }
+
+        public IEnumerable<int> UserIds => [SenderId, ReceiverId];
 
         private readonly List<MessageUserReceive> _receivers = [];
         private readonly List<MessageUserView> _viewers = [];
@@ -67,19 +64,12 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
             _viewers.Add(MessageUserView.Create(viewerId));
             AddDomainEvent(new MessageMarkedAsViewedDomainEvent(this));
         }
-        public int State => _viewers.Count != 0 ? 2 : _receivers.Count != 0 ? 1 : 0;
-
-        private readonly List<MessageUserRemove> _removers = [];
-        public IReadOnlyList<MessageUserRemove> Removers => _removers;
-        internal void Remove(int removerId)
-        {
-            if (removerId != ReceiverId && removerId != SenderId)
-                throw new PermissionDeniedToRemoveMessageException();
-
-            if (_removers.Any(x => x.UserId == removerId))
-                return;
-
-            _removers.Add(new(removerId));
-        }
+        
+        public MessageState State => 
+            _viewers.Count != 0 
+                ? MessageState.Viewed 
+                : _receivers.Count != 0 
+                    ? MessageState.Reached 
+                    : MessageState.Created;
     }
 }

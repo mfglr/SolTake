@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Api;
+using MySocailApp.Api.HubFilters;
 using MySocailApp.Api.Middlewares;
 using MySocailApp.Application;
 using MySocailApp.Application.Hubs;
@@ -19,7 +21,17 @@ builder.Services.Configure<FormOptions>(options =>
 });
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddSignalR();
+builder.Services
+    .AddSignalR(
+        opt => {
+            opt.AddFilter<VersionHubFilter>();
+            opt.AddFilter<UserHubFilter>();
+            opt.AddFilter<PrivacyPolicyApprovalHubFilter>();
+            opt.AddFilter<TermsOfUseApprovalHubFilter>();
+            opt.AddFilter<EmailVerficationHubFilter>();
+        }
+    );
+
 builder.Services
     .AddConfigurations()
     .AddFilters()

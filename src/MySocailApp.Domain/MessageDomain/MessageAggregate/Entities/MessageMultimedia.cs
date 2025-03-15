@@ -5,7 +5,6 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
     public class MessageMultimedia
     {
         public int Id { get; private set; }
-        public int MessageId { get; private set; }
         public string ContainerName { get; private set; }
         public string BlobName { get; private set; }
         public string? BlobNameOfFrame { get; private set; }

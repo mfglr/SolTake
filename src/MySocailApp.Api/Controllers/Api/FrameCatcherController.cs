@@ -10,11 +10,11 @@ namespace MySocailApp.Api.Controllers.Api
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-    [ServiceFilter(typeof(CheckUserFilterAttribute))]
-    [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+    [ServiceFilter(typeof(VersionFiltterAttribute))]
+    [ServiceFilter(typeof(UserFilterAttribute))]
+    [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+    [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+    [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
     public class FrameCatcherController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;

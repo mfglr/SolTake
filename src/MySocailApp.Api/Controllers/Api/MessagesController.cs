@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.MessageAggregate.CreateMessage;
-using MySocailApp.Application.Commands.MessageAggregate.RemoveMessage;
-using MySocailApp.Application.Commands.MessageAggregate.RemoveMessages;
-using MySocailApp.Application.Commands.MessageAggregate.RemoveMessagesByUserIds;
+using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage;
+using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.RemoveMessages;
+using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.RemoveMessagesByUserIds;
 using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessageById;
@@ -15,25 +14,21 @@ using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessages;
 
 namespace MySocailApp.Api.Controllers.Api
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ServiceFilter(typeof(CheckVersionFiltterAttribute))]
-    [ServiceFilter(typeof(CheckUserFilterAttribute))]
-    [ServiceFilter(typeof(CheckPrivacyPolicyApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckTermsOfUseApprovalFilterAttribute))]
-    [ServiceFilter(typeof(CheckEmailVerificationFilterAttribute))]
+    [ServiceFilter(typeof(VersionFiltterAttribute))]
+    [ServiceFilter(typeof(UserFilterAttribute))]
+    [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+    [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+    [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
     public class MessagesController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
 
         [HttpPost]
-        public async Task<MessageResponseDto> CreateMessage([FromForm] int receiverId, [FromForm] string? content, [FromForm] IFormFileCollection medias)
+        public async Task<CreateMessageResponseDto> CreateMessage([FromForm] int receiverId, [FromForm] string? content, [FromForm] IFormFileCollection medias)
             => await _mediator.Send(new CreateMessageDto(receiverId, content, medias));
-
-        [HttpDelete("{messageId}")]
-        public async Task RemoveMessage(int messageId, CancellationToken cancellationToken)
-            => await _mediator.Send(new RemoveMessageDto(messageId), cancellationToken);
 
         [HttpDelete]
         public async Task RemoveMessages(RemoveMessagesDto request, CancellationToken cancellationToken)

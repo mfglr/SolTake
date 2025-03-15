@@ -152,9 +152,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
-                    b.Property<int>("NumberOfMedias")
-                        .HasColumnType("int");
-
                     b.Property<int>("ReceiverId")
                         .HasColumnType("int");
 
@@ -194,7 +191,7 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<double>("Height")
                         .HasColumnType("float");
 
-                    b.Property<int>("MessageId")
+                    b.Property<int?>("MessageId")
                         .HasColumnType("int");
 
                     b.Property<int>("MultimediaType")
@@ -238,19 +235,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasIndex("MessageId");
 
                     b.ToTable("MessageUserReceive");
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserRemove", b =>
-                {
-                    b.Property<int>("MessageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MessageId", "UserId");
-
-                    b.ToTable("MessageUserRemove");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserView", b =>
@@ -300,6 +284,31 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MessageConnections");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Entities.MessageUserRemove", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MessageId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageUserRemoves");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities.Notification", b =>
@@ -11562,23 +11571,13 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
                         .WithMany("Medias")
                         .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserReceive", b =>
                 {
                     b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
                         .WithMany("Receivers")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserRemove", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
-                        .WithMany("Removers")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -11979,8 +11978,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Navigation("Medias");
 
                     b.Navigation("Receivers");
-
-                    b.Navigation("Removers");
 
                     b.Navigation("Viewers");
                 });

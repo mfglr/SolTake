@@ -12,7 +12,6 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts
         Task<Message?> GetMesssageWithRemovers(int id, CancellationToken cancellationToken);
         Task<List<Message>> GetMessagesWithRemovers(IEnumerable<int> messageIds, CancellationToken cancellationToken);
         Task<List<Message>> GetMessagesWithRemoverByUserIds(List<int> userIds, int accountId, CancellationToken cancellationToken);
-
         Task<List<Message>> GetUserMessages(int userId, CancellationToken cancellationToken);
     }
 }

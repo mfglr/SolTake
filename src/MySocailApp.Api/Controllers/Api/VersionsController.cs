@@ -20,13 +20,13 @@ namespace MySocailApp.Api.Controllers.Api
 
         [HttpPost]
         [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task Create(CreateVersionDto request,CancellationToken cancellationToken)
             => await _mediator.Send(request,cancellationToken);
 
         [HttpDelete]
         [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(CheckUserFilterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
         public async Task DeleteLastVersion(CancellationToken cancellationToken)
             => await _mediator.Send(new DeleteLastVersionDto(), cancellationToken);
 

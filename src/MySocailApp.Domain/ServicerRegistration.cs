@@ -14,7 +14,6 @@ namespace MySocailApp.Domain
             => services
                 .AddAppVersionDomainServices()
                 .AddCommentDomainServices()
-                .AddMessageDomain()
                 .AddQuestionDomain()
                 .AddSolutionDomainServices()
                 .AddUserDomain();
