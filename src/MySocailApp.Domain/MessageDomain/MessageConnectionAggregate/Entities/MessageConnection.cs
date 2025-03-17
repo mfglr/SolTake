@@ -1,23 +1,46 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
 {
-    public class MessageConnection(int id) : Entity(id), IAggregateRoot
+    public class MessageConnection : Entity, IAggregateRoot
     {
-        public string? ConnectionId { get; private set; }
-        public bool IsConnected { get; private set; }
+        public string ConnectionId { get; private set; }
+        public MessageConnectionState State { get; private set; }
+        public int? TypingId { get; private set; }
+        public bool IsOnline => State != MessageConnectionState.Ofline;
 
-        public void Connect(string connectionId)
+        private MessageConnection(int id, string connectionId)
         {
-            ArgumentException.ThrowIfNullOrEmpty(connectionId);
-
-            IsConnected = true;
+            Id = id;
             ConnectionId = connectionId;
         }
-        public void Disconnect()
+
+        public static MessageConnection Create(int id, string  messageConnectionId)
+            => new (id, messageConnectionId) { CreatedAt = DateTime.UtcNow };
+
+        public void SetStateAsOnline()
         {
-            IsConnected = false;
             UpdatedAt = DateTime.UtcNow;
+            State = MessageConnectionState.Online;
+            AddDomainEvent(new MessageConnectionStateChangedDomainEvent(this));
         }
+
+        public void SetStateAsOfline()
+        {
+            UpdatedAt = DateTime.UtcNow;
+            State = MessageConnectionState.Ofline;
+            AddDomainEvent(new MessageConnectionStateChangedDomainEvent(this));
+        }
+
+        public void SetStateAsWriting(int typingId)
+        {
+            UpdatedAt = DateTime.UtcNow;
+            TypingId = typingId;
+            State = MessageConnectionState.Ofline;
+            AddDomainEvent(new MessageConnectionStateChangedDomainEvent(this));
+        }
+
     }
 }

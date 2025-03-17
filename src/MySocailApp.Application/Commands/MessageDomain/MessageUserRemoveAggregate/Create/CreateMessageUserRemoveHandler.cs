@@ -4,10 +4,11 @@ using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
 using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.DeleteMessage
+namespace MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.Create
 {
-    public class DeleteMessageHandler(IUnitOfWork unitOfWork, IMessageUserRemoveWriteRepository messageUserRemoveWriteRepository, IMessageUserRemoveReadRepository messageUserRemoveReadRepository, IUserAccessor userAccessor, IMessageReadRepository messageReadRepository) : IRequestHandler<DeleteMessageDto>
+    public class CreateMessageUserRemoveHandler(IUnitOfWork unitOfWork, IMessageUserRemoveWriteRepository messageUserRemoveWriteRepository, IMessageUserRemoveReadRepository messageUserRemoveReadRepository, IUserAccessor userAccessor, IMessageReadRepository messageReadRepository) : IRequestHandler<CreateMessageUserRemoveDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IUserAccessor _userAccessor = userAccessor;
@@ -15,7 +16,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggreg
         private readonly IMessageUserRemoveWriteRepository _messageUserRemoveWriteRepository = messageUserRemoveWriteRepository;
         private readonly IMessageUserRemoveReadRepository _messageUserRemoveReadRepository = messageUserRemoveReadRepository;
 
-        public async Task Handle(DeleteMessageDto request, CancellationToken cancellationToken)
+        public async Task Handle(CreateMessageUserRemoveDto request, CancellationToken cancellationToken)
         {
             var message =
                 await _messageReadRepository.GetByIdAsync(request.MessageId, cancellationToken) ??
@@ -24,10 +25,12 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggreg
             if (!message.UserIds.Any(x => x == _userAccessor.User.Id))
                 throw new PermissionDeniedToRemoveMessageException();
 
-            var userIdsRemoved = await _messageUserRemoveReadRepository.GetUserIdsRemovedAsync(request.MessageId, cancellationToken);
+            if (request.Everyone && message.SenderId != _userAccessor.User.Id)
+                throw new PermissionDeniedToRemoveMessageFromEveryoneException();
 
-            if (request.All)
+            if (request.Everyone)
             {
+                var userIdsRemoved = await _messageUserRemoveReadRepository.GetUserIdsRemovedAsync(request.MessageId, cancellationToken);
                 var userIdsNotRemoved = message.UserIds.Where(x => !userIdsRemoved.Any(uir => uir != x));
 
                 foreach (var userId in userIdsNotRemoved)
@@ -38,7 +41,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggreg
             }
             else
             {
-                if (userIdsRemoved.Any(x => x == _userAccessor.User.Id))
+                if (await _messageUserRemoveReadRepository.ExistAsync(request.MessageId, _userAccessor.User.Id,cancellationToken))
                     throw new MessageAlreadyDeletedException();
 
                 var messageUserRemove = MessageUserRemove.Create(request.MessageId, _userAccessor.User.Id);

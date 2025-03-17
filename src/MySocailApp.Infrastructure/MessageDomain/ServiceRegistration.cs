@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Infrastructure.MessageDomain.MessageAggregate;
 using MySocailApp.Infrastructure.MessageDomain.MessageConnectionAggregate;
+using MySocailApp.Infrastructure.MessageDomain.MessageUserReceiveAggregate;
 using MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate;
 
 namespace MySocailApp.Infrastructure.MessageDomain
@@ -11,6 +12,7 @@ namespace MySocailApp.Infrastructure.MessageDomain
             => services
                 .AddMessageAggregateInfrastructreServices()
                 .AddMessageConnectionAggregateInfrastructureServices()
+                .AddMessageUserReceiveAggregateInfrastructureServices()
                 .AddMessageUserRemoveAggregateInfrastructureServices();
     }
 }

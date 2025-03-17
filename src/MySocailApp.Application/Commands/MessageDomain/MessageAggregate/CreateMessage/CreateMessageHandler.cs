@@ -35,7 +35,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.Create
                 var messageMedias = medias?.Select(x => new MessageMultimedia(x));
                 var content = request.Content != null ? new MessageContent(request.Content) : null;
                 var message = new Message(_userAccessor.User.Id, request.ReceiverId, content, messageMedias);
-                message.Create();
+                message.Create(_userAccessor.User.UserName.Value,_userAccessor.User.Image);
                 await _messageWriteRepository.CreateAsync(message, cancellationToken);
 
                 await _unitOfWork.CommitAsync(cancellationToken);

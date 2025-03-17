@@ -25,7 +25,6 @@ namespace MySocailApp.Infrastructure.MessageDomain.MessageAggregate
 
         public async Task<List<Message>> GetByIds(IEnumerable<int> ids, CancellationToken cancellationToken)
             => await _context.Messages
-                .Include(x => x.Receivers)
                 .Include(x => x.Viewers)
                 .Where(x => ids.Contains(x.Id))
                 .ToListAsync(cancellationToken);

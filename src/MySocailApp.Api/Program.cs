@@ -8,7 +8,6 @@ using MySocailApp.Application.Hubs;
 using MySocailApp.Domain;
 using MySocailApp.Domain.AppVersionAggregate;
 using MySocailApp.Domain.CommentDomain.CommentAggregate;
-using MySocailApp.Domain.MessageDomain.MessageAggregate;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate;
 using MySocailApp.Infrastructure;
@@ -42,7 +41,6 @@ builder.Services
     .AddInfrastructureServices()
     .AddAppVersionDomainServices()
     .AddCommentDomainServices()
-    .AddMessageDomainServices()
     .AddQuestionDomainServices()
     .AddSolutionDomainServices()
     .InitializeDb();

@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.Create
         public int ReceiverId { get; private set; } = message.ReceiverId;
         public bool IsEdited { get; private set; } = false;
         public string? Content { get; private set; } = message.Content?.Value;
-        public MessageState State { get; private set; } = message.State;
+        public MessageState State { get; private set; } = MessageState.Created;
         public IEnumerable<MessageMultimediaResponseDto> Medias { get; private set; }
             = message.Medias
                 .Select(

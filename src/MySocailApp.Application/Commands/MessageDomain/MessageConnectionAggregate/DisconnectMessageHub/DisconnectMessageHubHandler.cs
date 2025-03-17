@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggreg
             var connection = await _repository.GetByIdAsync(accountId, cancellationToken);
             if (connection != null)
             {
-                connection.Disconnect();
+                connection.SetStateAsOfline();
                 await _unitOfWork.CommitAsync(cancellationToken);
             }
         }

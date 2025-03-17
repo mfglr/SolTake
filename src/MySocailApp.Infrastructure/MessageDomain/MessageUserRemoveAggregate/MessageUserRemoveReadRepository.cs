@@ -8,6 +8,9 @@ namespace MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate
     {
         private readonly AppDbContext _context = context;
 
+        public Task<bool> ExistAsync(int messageId, int userId, CancellationToken cancellationToken)
+            => _context.MessageUserRemoves.AnyAsync(x => x.MessageId == messageId && x.UserId == userId, cancellationToken);
+
         public Task<List<int>> GetUserIdsRemovedAsync(int messageId, CancellationToken cancellationToken)
             => _context.MessageUserRemoves
                 .Where(x => x.MessageId == messageId)
@@ -15,6 +18,6 @@ namespace MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate
                 .ToListAsync(cancellationToken);
 
         public async Task<bool> IsDeletedAllUsersAsync(int messageId, CancellationToken cancellationToken)
-            => (await GetUserIdsRemovedAsync(messageId,cancellationToken)).Count == 2;
+            => (await GetUserIdsRemovedAsync(messageId, cancellationToken)).Count == 2;
     }
 }

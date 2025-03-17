@@ -3,7 +3,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
 using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Abstracts;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers
+namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageUserRemoveAggregate
 {
     public class DeleteMessageUserRemovers(IMessageUserRemoveWriteRepository messageUserRemoverWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {

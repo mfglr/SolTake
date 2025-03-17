@@ -210,33 +210,6 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("MessageMultimedia");
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserReceive", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MessageId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MessageId");
-
-                    b.ToTable("MessageUserReceive");
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserView", b =>
                 {
                     b.Property<int>("Id")
@@ -284,6 +257,31 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MessageConnections");
+                });
+
+            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageUserReceiveAggregate.Entities.MessageUserReceive", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MessageId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageUserReceives");
                 });
 
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Entities.MessageUserRemove", b =>
@@ -11574,15 +11572,6 @@ namespace MySocailApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserReceive", b =>
-                {
-                    b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
-                        .WithMany("Receivers")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.MessageUserView", b =>
                 {
                     b.HasOne("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", null)
@@ -11976,8 +11965,6 @@ namespace MySocailApp.Infrastructure.Migrations
             modelBuilder.Entity("MySocailApp.Domain.MessageDomain.MessageAggregate.Entities.Message", b =>
                 {
                     b.Navigation("Medias");
-
-                    b.Navigation("Receivers");
 
                     b.Navigation("Viewers");
                 });

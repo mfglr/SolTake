@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions
+namespace MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Exceptions
 {
     public class PermissionDeniedToRemoveMessageException : AppException
     {

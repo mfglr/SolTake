@@ -9,7 +9,13 @@ namespace MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<MessageConnection?> GetById(int id, CancellationToken cancellationToken)
-            => await _context.MessageConnections.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        public Task<MessageConnection?> GetById(int id, CancellationToken cancellationToken)
+            => _context.MessageConnections.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public Task<List<MessageConnection>> GetByIds(IEnumerable<int> ids, CancellationToken cancellationToken)
+            => _context.MessageConnections
+                .AsNoTracking()
+                .Where(x => ids.Any(id => x.Id == id))
+                .ToListAsync(cancellationToken);
     }
 }

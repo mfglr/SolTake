@@ -17,16 +17,12 @@ class MessageHub{
   late final StreamSubscription<HubConnectionState> _stateConsumer;
 
   MessageHub._(Store<AppState> store,PublishSubject<MessageState>? rMs){
-
-    // var header = MessageHeaders();
-    // header.setHeaderValue(MessageHeaders.AuthorizationHeaderName, value)
+    var headers = MessageHeaders();
+    headers.setHeaderValue(MessageHeaders.AuthorizationHeaderName, store.state.accessToken!);
 
     _hubConnection =
       HubConnectionBuilder()
-        .withUrl(
-          "${dotenv.env['API_URL']}/message?access_token=${store.state.accessToken}",
-          options: HttpConnectionOptions(),
-        )
+        .withUrl("${dotenv.env['API_URL']}/message", options: HttpConnectionOptions(headers: headers))
         .withAutomaticReconnect()
         .build();
 
@@ -40,6 +36,7 @@ class MessageHub{
         }
       });
   }
+
   static MessageHub? _singleton;
   factory MessageHub() => _singleton!;
   static Future init(Store<AppState> store) async {

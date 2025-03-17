@@ -26,7 +26,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         message.Content.Value,
                         message.Viewers.Count != 0
                             ? MessageState.Viewed
-                            : message.Receivers.Count != 0
+                            : context.MessageUserReceives.Count() != 0
                                 ? MessageState.Reached
                                 : MessageState.Created,
                         message.Medias.Select(

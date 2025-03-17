@@ -16,12 +16,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasMany(x => x.Receivers)
-                .WithOne()
-                .HasForeignKey(x => x.MessageId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
                 .HasMany(x => x.Viewers)
                 .WithOne()
                 .HasForeignKey(x => x.MessageId)

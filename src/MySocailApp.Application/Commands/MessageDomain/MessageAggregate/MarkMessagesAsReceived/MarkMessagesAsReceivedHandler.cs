@@ -15,8 +15,8 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.MarkMe
             var receiverId = _accessTokenReader.GetRequiredAccountId();
             var messages = await _repository.GetByIds(request.Ids, cancellationToken);
 
-            foreach (var message in messages)
-                message.MarkAsReceived(receiverId);
+            //foreach (var message in messages)
+            //    message.MarkAsReceived(receiverId);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }

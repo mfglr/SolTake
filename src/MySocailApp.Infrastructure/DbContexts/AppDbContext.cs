@@ -5,6 +5,7 @@ using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageUserReceiveAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
@@ -66,7 +67,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Message> Messages { get; private set; }
         public DbSet<MessageUserRemove> MessageUserRemoves { get; private set; }
         public DbSet<MessageConnection> MessageConnections { get; private set; }
-
+        public DbSet<MessageUserReceive> MessageUserReceives { get; private set; }
         
         public DbSet<AppVersion> AppVersions { get; private set; }
 

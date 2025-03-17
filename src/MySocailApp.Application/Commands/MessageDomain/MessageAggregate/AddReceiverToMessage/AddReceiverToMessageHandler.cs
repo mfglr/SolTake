@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.AddRec
                 await _messageRepository.GetById(request.MessageId, cancellationToken) ??
                 throw new MessageNotFoundException();
 
-            message.MarkAsReceived(receiverId);
+            //message.MarkAsReceived(receiverId);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }
