@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/message_functions.dart';
+import 'package:my_social_app/main.dart';
 import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
@@ -16,9 +17,10 @@ class MessageHub{
   late final PublishSubject<MessageState> receivedMessages;
   late final StreamSubscription<HubConnectionState> _stateConsumer;
 
-  MessageHub._(Store<AppState> store,PublishSubject<MessageState>? rMs){
+  MessageHub._(Store<AppState> store, PublishSubject<MessageState>? rMs){
     var headers = MessageHeaders();
     headers.setHeaderValue(MessageHeaders.AuthorizationHeaderName, store.state.accessToken!);
+    headers.setHeaderValue("client_version", packageVersion);
 
     _hubConnection =
       HubConnectionBuilder()
@@ -106,23 +108,18 @@ class MessageHub{
 
   Future<Message> createMessage(num receiverId,String content)
     => _hubConnection
-        .invoke(
-          createMessageWebSocket, 
-          args: [{'receiverId': receiverId,'content': content}]
-        )
+        .invoke(createMessageWebSocket, args: [{'receiverId': receiverId,'content': content}])
         .then((response) => Message.fromJson(response as dynamic));
+  
+  Future setStateAsTyping(int typingId)
+    => _hubConnection
+        .invoke("SetStateAsTyping", args: [{'typingId': typingId}]);
 
   Future<void> markMessagesAsReceived(Iterable<num> ids)
     => _hubConnection
-        .invoke(
-          markMessagesAsReceivedWebSocket,
-          args: [{'ids': ids.toList()}]
-        );
+        .invoke(markMessagesAsReceivedWebSocket, args: [{'ids': ids.toList()}]);
 
   Future<void> markMessagesAsViewed(Iterable<num> ids)
     => _hubConnection
-        .invoke(
-          markMessagesAsViewedWebSocket,
-          args: [{'ids': ids.toList()}]
-        );
+        .invoke(markMessagesAsViewedWebSocket,args: [{'ids': ids.toList()}]);
 }

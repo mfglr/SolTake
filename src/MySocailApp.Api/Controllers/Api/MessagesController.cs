@@ -6,11 +6,11 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage;
 using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.RemoveMessages;
 using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.RemoveMessagesByUserIds;
-using MySocailApp.Application.Queries.MessageAggregate;
 using MySocailApp.Application.Queries.MessageAggregate.GetConversations;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessageById;
 using MySocailApp.Application.Queries.MessageAggregate.GetMessagesByUserId;
 using MySocailApp.Application.Queries.MessageAggregate.GetUnviewedMessages;
+using MySocailApp.Application.Queries.MessageDomain;
 
 namespace MySocailApp.Api.Controllers.Api
 {

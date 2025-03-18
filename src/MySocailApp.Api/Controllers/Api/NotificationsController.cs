@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.NotificationAggregate.MarkAsViewedNotifications;
+using MySocailApp.Application.Commands.NotificationDomain.NotificationAggregate.MarkAsViewedNotifications;
 using MySocailApp.Application.Queries.NotificationAggregate;
 using MySocailApp.Application.Queries.NotificationAggregate.GetUnviewedNotifications;
 using MySocailApp.Application.Queries.NotificationAggregate.GetViewedNotifications;

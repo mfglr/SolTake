@@ -18,4 +18,8 @@
     <ProjectReference Include="..\MySocailApp.Domain\MySocailApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\MessageAggregate\" />
+  </ItemGroup>
+
 </Project>

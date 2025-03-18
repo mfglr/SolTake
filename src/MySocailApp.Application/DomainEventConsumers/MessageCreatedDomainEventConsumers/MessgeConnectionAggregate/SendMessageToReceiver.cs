@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.Hubs;
-using MySocailApp.Application.Queries.MessageAggregate;
+using MySocailApp.Application.Queries.MessageDomain;
 using MySocailApp.Core;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;

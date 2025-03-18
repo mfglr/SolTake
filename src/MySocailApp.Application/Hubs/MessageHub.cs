@@ -9,6 +9,7 @@ using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.MarkMessag
 using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.MarkMessagesAsViewed;
 using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub;
 using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub;
+using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.SetMessageConnectionStateAsTyping;
 using MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.Create;
 
 namespace MySocailApp.Application.Hubs
@@ -20,9 +21,10 @@ namespace MySocailApp.Application.Hubs
 
         public override async Task OnConnectedAsync()
             => await _sender.Send(new ConnectMessageHubDto(Context.ConnectionId));
-
         public override async Task OnDisconnectedAsync(Exception? exception)
             => await _sender.Send(new DisconnectMessageHubDto());
+        public async Task SetStateAsTyping(SetMessageConnectionStateAsTypingDto request)
+            => await _sender.Send(request);
 
         public async Task<CreateMessageResponseDto> CreateMessage(CreateMessageDto request)
             => await _sender.Send(request);

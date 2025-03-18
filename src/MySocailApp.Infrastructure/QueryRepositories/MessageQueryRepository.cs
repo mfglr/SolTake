@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.MessageAggregate;
+using MySocailApp.Application.Queries.MessageDomain;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
 using MySocailApp.Infrastructure.DbContexts;

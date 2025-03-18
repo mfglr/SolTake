@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.MessageAggregate;
+﻿using MySocailApp.Application.Queries.MessageDomain;
 using MySocailApp.Core;
 
 namespace MySocailApp.Application.QueryRepositories
