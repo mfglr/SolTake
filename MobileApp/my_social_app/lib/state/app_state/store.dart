@@ -5,6 +5,7 @@ import 'package:my_social_app/state/app_state/create_comment_state/create_commen
 import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/middlewares.dart';
@@ -38,6 +39,7 @@ final store = Store(
     userUserSearchs: Pagination.init(usersPerPage, true),
     questionUserSaves: Pagination.init(questionsPerPage, true),
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
+    messageConnectionEntityState: EntityState(),
 
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
@@ -119,6 +121,10 @@ final store = Store(
     approveTersmOfUseMiddleware,
     logOutMiddleware,
     //account end
+
+    //message connection
+    loadMessageConnectionMiddleware,
+    //
 
     //user entity state
     loadUserMiddleware,

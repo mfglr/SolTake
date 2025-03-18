@@ -10,4 +10,12 @@ class MessageConnectionState extends BaseEntity<int>{
     required this.state,
     required this.typingId
   });
+
+  MessageConnectionState changeState(MessageConnectionStatus state,int? typingId) =>
+    MessageConnectionState(
+      id: id,
+      state: state,
+      typingId: typingId
+    );
+  
 }

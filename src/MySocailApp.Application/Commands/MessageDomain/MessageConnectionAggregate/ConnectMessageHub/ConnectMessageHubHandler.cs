@@ -2,6 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub
 {
@@ -19,7 +20,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggreg
                 connection = MessageConnection.Create(_userAccessor.User.Id,request.ConnectionId);
                 await _repository.CreateAsync(connection, cancellationToken);
             }
-            connection.SetStateAsOnline();
+            connection.ChangeState(MessageConnectionState.Online);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

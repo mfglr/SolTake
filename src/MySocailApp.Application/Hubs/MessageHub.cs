@@ -7,10 +7,12 @@ using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.AddViewerT
 using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage;
 using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.MarkMessagesAsReceived;
 using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.MarkMessagesAsViewed;
+using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionState;
 using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub;
 using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub;
-using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.SetMessageConnectionStateAsTyping;
 using MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.Create;
+using MySocailApp.Application.Queries.MessageDomain;
+using MySocailApp.Application.Queries.MessageDomain.GetMessageConnection;
 
 namespace MySocailApp.Application.Hubs
 {
@@ -21,9 +23,11 @@ namespace MySocailApp.Application.Hubs
 
         public override async Task OnConnectedAsync()
             => await _sender.Send(new ConnectMessageHubDto(Context.ConnectionId));
+
         public override async Task OnDisconnectedAsync(Exception? exception)
             => await _sender.Send(new DisconnectMessageHubDto());
-        public async Task SetStateAsTyping(SetMessageConnectionStateAsTypingDto request)
+
+        public async Task ChangeState(ChangeMessageConnectionStateDto request)
             => await _sender.Send(request);
 
         public async Task<CreateMessageResponseDto> CreateMessage(CreateMessageDto request)
@@ -42,6 +46,11 @@ namespace MySocailApp.Application.Hubs
             => await _sender.Send(request);
 
         public async Task MarkMessagesAsViewed(MarkMessagesAsViewedDto request)
+            => await _sender.Send(request);
+
+
+        //queries
+        public async Task<MessageConnectionResponseDto> GetById(GetMessageConnectionDto request)
             => await _sender.Send(request);
     }
 }

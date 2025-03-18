@@ -8,6 +8,7 @@ import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/app_exams_state/reducers.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/message_connection_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
 import 'package:my_social_app/state/app_state/conversations_state/reducers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
@@ -37,6 +38,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   userUserSearchs: userUserSearchsReducers(prev.userUserSearchs,action),
   questionUserSaves: questionUserSavesReducers(prev.questionUserSaves,action),
   solutionUserSaves: solutionUserSavesReducers(prev.solutionUserSaves,action),
+  messageConnectionEntityState: messageConnectionsReducers(prev.messageConnectionEntityState,action),
 
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   accessToken: changeAccessTokenReducer(prev.accessToken,action),

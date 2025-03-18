@@ -2,6 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Exceptions;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
 {
@@ -16,7 +17,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggreg
             var connection = 
                 await _repository.GetByIdAsync(_userAccessor.User.Id, cancellationToken) ??
                 throw new MessageConnectionNotFoundException();
-            connection.SetStateAsOfline();
+            connection.ChangeState(MessageConnectionState.Ofline);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

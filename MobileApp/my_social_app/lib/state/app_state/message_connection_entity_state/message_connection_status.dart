@@ -1,5 +1,5 @@
 enum MessageConnectionStatus {
-  online,
   ofline,
+  online,
   typing
 }

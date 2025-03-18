@@ -2,8 +2,8 @@
 {
     public enum MessageConnectionState
     {
-        Online,
         Ofline,
-        Writing
+        Online,
+        Typing
     }
 }

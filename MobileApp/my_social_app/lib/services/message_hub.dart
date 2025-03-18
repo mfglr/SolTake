@@ -3,6 +3,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/message_functions.dart';
 import 'package:my_social_app/main.dart';
 import 'package:my_social_app/models/message.dart';
+import 'package:my_social_app/models/message_connection.dart';
+import 'package:my_social_app/state/app_state/message_connection_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -29,7 +32,7 @@ class MessageHub{
         .build();
 
     receivedMessages = rMs ?? PublishSubject<MessageState>();
-    
+
     _stateConsumer = _hubConnection.stateStream
       .distinct()
       .listen((state){
@@ -64,6 +67,17 @@ class MessageHub{
   }
 
   void _on(Store<AppState> store){
+    
+    _hubConnection.on(
+      changeMessageConnectionState,
+      (list) => 
+        store.dispatch(
+          ChangeMessageConnectionStateAction(
+            state: MessageConnection.fromJson(list!.first as dynamic).toMessageConnectionState()
+          )
+        )
+    );
+
     _hubConnection.on(
       receiveMessage,
       (list){
@@ -111,9 +125,9 @@ class MessageHub{
         .invoke(createMessageWebSocket, args: [{'receiverId': receiverId,'content': content}])
         .then((response) => Message.fromJson(response as dynamic));
   
-  Future setStateAsTyping(int typingId)
+  Future changeState(MessageConnectionStatus state, int? typingId)
     => _hubConnection
-        .invoke("SetStateAsTyping", args: [{'typingId': typingId}]);
+        .invoke("ChangeState", args: [{state: state, 'typingId': typingId}]);
 
   Future<void> markMessagesAsReceived(Iterable<num> ids)
     => _hubConnection
@@ -122,4 +136,10 @@ class MessageHub{
   Future<void> markMessagesAsViewed(Iterable<num> ids)
     => _hubConnection
         .invoke(markMessagesAsViewedWebSocket,args: [{'ids': ids.toList()}]);
+
+
+  Future<MessageConnection> getById(int userId)
+    => _hubConnection
+        .invoke("GetById", args: [{userId: userId}])
+        .then((json) => MessageConnection.fromJson(json as dynamic));
 }

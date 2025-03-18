@@ -6,9 +6,9 @@ using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageConnectionAggregate
 {
-    public class NotifyUsers(MessageHub messageHub, IMessageConnectionReadRepository messageConnectionReadRepository) : IDomainEventConsumer<MessageDeletedDomainEvent>
+    public class NotifyUsers(IHubContext<MessageHub> messageHub, IMessageConnectionReadRepository messageConnectionReadRepository) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {
-        private readonly MessageHub _messageHub = messageHub;
+        private readonly IHubContext<MessageHub> _messageHub = messageHub;
         private readonly IMessageConnectionReadRepository _messageConnectionReadRepository = messageConnectionReadRepository;
 
         public async Task Handle(MessageDeletedDomainEvent notification, CancellationToken cancellationToken)

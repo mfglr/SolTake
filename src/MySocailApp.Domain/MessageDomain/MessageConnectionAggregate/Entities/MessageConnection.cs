@@ -20,27 +20,12 @@ namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
         public static MessageConnection Create(int id, string  messageConnectionId)
             => new (id, messageConnectionId) { CreatedAt = DateTime.UtcNow };
 
-        public void SetStateAsOnline()
+        public void ChangeState(MessageConnectionState state,int? typingId = null)
         {
             UpdatedAt = DateTime.UtcNow;
-            State = MessageConnectionState.Online;
-            AddDomainEvent(new MessageConnectionStateChangedDomainEvent(this));
-        }
-
-        public void SetStateAsOfline()
-        {
-            UpdatedAt = DateTime.UtcNow;
-            State = MessageConnectionState.Ofline;
-            AddDomainEvent(new MessageConnectionStateChangedDomainEvent(this));
-        }
-
-        public void SetStateAsWriting(int typingId)
-        {
-            UpdatedAt = DateTime.UtcNow;
+            State = state;
             TypingId = typingId;
-            State = MessageConnectionState.Ofline;
             AddDomainEvent(new MessageConnectionStateChangedDomainEvent(this));
         }
-
     }
 }

@@ -7,6 +7,7 @@ import 'package:my_social_app/state/app_state/active_account_page_state/active_a
 import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
@@ -34,6 +35,7 @@ class AppState{
   final Pagination<int,UserUserSearchState> userUserSearchs;
   final Pagination<int,QuestionUserSaveState> questionUserSaves;
   final Pagination<int,SolutionUserSaveState> solutionUserSaves;
+  final EntityState<int,MessageConnectionState> messageConnectionEntityState;
 
   final EntityState<int,QuestionState> questionEntityState;
   final Pagination<int,Id<int>> homePageQuestions;
@@ -63,6 +65,7 @@ class AppState{
     required this.userUserSearchs,
     required this.questionUserSaves,
     required this.solutionUserSaves,
+    required this.messageConnectionEntityState,
 
     required this.questionEntityState,
     required this.homePageQuestions,
@@ -93,6 +96,7 @@ class AppState{
     userUserSearchs: Pagination.init(usersPerPage, true),
     questionUserSaves: Pagination.init(questionsPerPage, true),
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
+    messageConnectionEntityState: EntityState(),
 
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
