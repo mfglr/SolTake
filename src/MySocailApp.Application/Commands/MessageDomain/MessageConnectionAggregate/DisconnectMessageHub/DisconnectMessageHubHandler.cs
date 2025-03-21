@@ -1,22 +1,22 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Exceptions;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
 {
-    public class DisconnectMessageHubHandler(IUnitOfWork unitOfWork, IMessageConnectionWriteRepository repository, IUserAccessor userAccessor) : IRequestHandler<DisconnectMessageHubDto>
+    public class DisconnectMessageHubHandler(IUnitOfWork unitOfWork, IMessageConnectionWriteRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<DisconnectMessageHubDto>
     {
-        private readonly IUserAccessor _userAccessor = userAccessor;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IMessageConnectionWriteRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task Handle(DisconnectMessageHubDto request, CancellationToken cancellationToken)
         {
-            var connection = 
-                await _repository.GetByIdAsync(_userAccessor.User.Id, cancellationToken) ??
-                throw new MessageConnectionNotFoundException();
+            var userId = _accessTokenReader.GetRequiredAccountId();
+            var connection = await _repository.GetByIdAsync(userId, cancellationToken);
+            if (connection == null) return;
+
             connection.ChangeState(MessageConnectionState.Ofline);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

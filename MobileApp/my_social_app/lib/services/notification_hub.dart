@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/main.dart';
 import 'package:my_social_app/notifications/app_notifications.dart';
 import 'package:my_social_app/constants/notification_functions.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/comment_user_like.dart';
 import 'package:my_social_app/models/notification.dart' as notificationModel;
-import 'package:my_social_app/models/question_user_like.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/models/solution_user_vote.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
@@ -16,8 +16,8 @@ import 'package:my_social_app/state/app_state/question_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:signalr_netcore/hub_connection.dart';
-import 'package:signalr_netcore/hub_connection_builder.dart';
+import 'package:signalr_netcore/ihub_protocol.dart';
+import 'package:signalr_netcore/signalr_client.dart';
 
 class NotificationHub{
   late final HubConnection _hubConnection; 
@@ -27,8 +27,18 @@ class NotificationHub{
 
   NotificationHub._(BuildContext context){
     final store = StoreProvider.of<AppState>(context,listen: false);
+
+    var headers = MessageHeaders();
+    headers.setHeaderValue("client_version", packageVersion);
+
     _hubConnection = HubConnectionBuilder()
-      .withUrl("${dotenv.env['API_URL']}/notification?access_token=${store.state.accessToken}")
+      .withUrl(
+        "${dotenv.env['API_URL']}/notification",
+        options: HttpConnectionOptions(
+          headers: headers,
+          accessTokenFactory: () async => await Future.value(store.state.accessToken)
+        )
+      )
       .build();
       
     _stateConsumer = _hubConnection.stateStream

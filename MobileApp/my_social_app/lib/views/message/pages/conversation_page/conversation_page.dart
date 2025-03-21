@@ -116,7 +116,7 @@ class _ConversationPageState extends State<ConversationPage>{
   void initState() {
     _scrollController.addListener(_onScrollBottom);
     _scrollController.addListener(_onScrollTop);
-    _messageConsumer = MessageHub().receivedMessages.stream.listen(_onMessageReceived);
+    // _messageConsumer = MessageHub().receivedMessages.stream.listen(_onMessageReceived);
     super.initState();
   }
 

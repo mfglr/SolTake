@@ -35,16 +35,16 @@ class _RootViewState extends State<RootView> {
     _accessTokenConsumer = store.onChange
       .map((state) => state.accessToken)
       .distinct()
-      .listen((token){
+      .listen((token) async {
         if(token != null){
-          MessageHub.init(store);
-          if(mounted){
-            NotificationHub.init(context);
-          }
+          await MessageHub.init(store);
+          // if(mounted){
+          //   NotificationHub.init(context);
+          // }
         }
         else{
-          MessageHub.close();
-          NotificationHub.close();
+          await MessageHub.close();
+          // NotificationHub.close();
         }
       });
     super.initState();

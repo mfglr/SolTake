@@ -17,9 +17,9 @@ using MySocailApp.Application.Queries.MessageDomain.GetMessageConnection;
 namespace MySocailApp.Application.Hubs
 {
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class MessageHub(IMediator mediator) : Hub
+    public class MessageHub(ISender sender) : Hub
     {
-        private readonly ISender _sender = mediator;
+        private readonly ISender _sender = sender;
 
         public override async Task OnConnectedAsync()
             => await _sender.Send(new ConnectMessageHubDto(Context.ConnectionId));
