@@ -18,12 +18,18 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggreg
             var messageConnection =
                 await _messageConnectionWriteRepository.GetByIdAsync(_userAccessor.User.Id, cancellationToken) ??
                 throw new MessageConnectionNotFoundException();
-
-            messageConnection.ChangeState(request.State, request.TypingId);
-
+            messageConnection.ChangeState(request.State, request.UserId);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new MessageConnectionStateChangedDomainEvent(messageConnection, _userAccessor.User.UserName.Value, _userAccessor.User.Image),cancellationToken);
+            await _publisher
+                .Publish(
+                    new MessageConnectionStateChangedDomainEvent(
+                        messageConnection,
+                        _userAccessor.User.UserName.Value,
+                        _userAccessor.User.Image
+                    ),
+                    cancellationToken
+                );
 
         }
     }

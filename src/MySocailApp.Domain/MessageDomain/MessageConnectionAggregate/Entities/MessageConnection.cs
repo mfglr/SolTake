@@ -7,8 +7,8 @@ namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
     {
         public string ConnectionId { get; private set; }
         public MessageConnectionState State { get; private set; }
-        public int? TypingId { get; private set; }
-        public bool IsOnline => State != MessageConnectionState.Ofline;
+        public int? UserId { get; private set; }
+        public DateTime LastSeenAt { get; private set; }
 
         private MessageConnection(int id, string connectionId)
         {
@@ -16,14 +16,24 @@ namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
             ConnectionId = connectionId;
         }
 
-        public static MessageConnection Create(int id, string  messageConnectionId)
-            => new (id, messageConnectionId) { CreatedAt = DateTime.UtcNow };
+        public static MessageConnection Create(int id, string connectionId)
+            => new (id, connectionId) { CreatedAt = DateTime.UtcNow };
 
-        public void ChangeState(MessageConnectionState state,int? typingId = null)
+        public void Connect(string connectionId)
+        {
+            UpdatedAt = DateTime.UtcNow;
+            ConnectionId = connectionId;
+            State = MessageConnectionState.Online;
+        }
+
+        public void ChangeState(MessageConnectionState state, int? userId = null)
         {
             UpdatedAt = DateTime.UtcNow;
             State = state;
-            TypingId = typingId;
+            UserId = userId;
+
+            if(state == MessageConnectionState.Ofline)
+                LastSeenAt = (DateTime)UpdatedAt!;
         }
     }
 }

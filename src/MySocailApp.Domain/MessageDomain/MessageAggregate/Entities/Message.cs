@@ -47,8 +47,8 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         
         public void MarkAsViewed(int viewerId)
         {
-            if (viewerId != ReceiverId)
-                throw new PermissionDeniedToChangeStateOfMessageException();
+            //if (viewerId != ReceiverId)
+            //    throw new PermissionDeniedToChangeStateOfMessageException();
             if (_viewers.Any(x => x.UserId == viewerId))
                 throw new MessageAlreadyMarkedAsViewedException();
             _viewers.Add(MessageUserView.Create(viewerId));

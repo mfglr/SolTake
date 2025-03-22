@@ -3,29 +3,29 @@ import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 class MessageConnectionState extends BaseEntity<int> implements Avatar{
-  final DateTime? updatedAt;
+  final DateTime? lastSeenAt;
   final String userName;
   final Multimedia? image;
   final int state;
-  final int? typingId;
+  final int? userId;
 
   MessageConnectionState({
     required super.id,
-    required this.updatedAt,
+    required this.lastSeenAt,
     required this.userName,
     required this.image,
     required this.state,
-    required this.typingId
+    required this.userId
   });
 
-  MessageConnectionState changeState(int state,int? typingId) =>
+  MessageConnectionState changeState(int state,int? userId) =>
     MessageConnectionState(
       id: id,
-      updatedAt: updatedAt,
+      lastSeenAt: lastSeenAt,
       image: image,
       userName: userName,
       state: state,
-      typingId: typingId
+      userId: userId
     );
     
     @override

@@ -15,7 +15,7 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageCreatedDomainEvent
         public async Task Handle(MessageCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
             var receiver = await _userConnectionReadRepository.GetById(notification.Message.ReceiverId, cancellationToken);
-            if (receiver != null && receiver.IsOnline)
+            if (receiver != null)
             {
                 await _messageHub.Clients
                     .Client(receiver.ConnectionId!)

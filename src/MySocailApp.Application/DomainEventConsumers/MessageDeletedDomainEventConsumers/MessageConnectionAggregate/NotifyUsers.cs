@@ -15,11 +15,10 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEvent
         {
             var connections = await _messageConnectionReadRepository.GetByIds(notification.Message.UserIds,cancellationToken);
             foreach (var connection in connections)
-                if (connection.IsOnline)
-                    await _messageHub
-                        .Clients
-                        .Client(connection.ConnectionId!)
-                        .SendAsync("removeMessages", new List<int>(notification.Message.Id), cancellationToken);
+                await _messageHub
+                    .Clients
+                    .Client(connection.ConnectionId!)
+                    .SendAsync("removeMessages", new List<int>(notification.Message.Id), cancellationToken);
         }
     }
 }

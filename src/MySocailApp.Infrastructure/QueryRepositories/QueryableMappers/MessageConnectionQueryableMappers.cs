@@ -15,13 +15,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     (mc, u) =>
                         new MessageConnectionResponseDto(
                             mc.Id,
-                            mc.UpdatedAt,
+                            mc.LastSeenAt,
                             u.UserName.Value,
                             u.Image,
                             mc.State,
-                            mc.TypingId
+                            mc.UserId
                         )
-
                 );
     }
 }

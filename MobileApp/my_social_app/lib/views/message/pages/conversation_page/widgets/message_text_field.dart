@@ -31,7 +31,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
   Future _onFocusChanged() =>
     _focusNode.hasFocus 
-      ? MessageHub().changeState(MessageConnectionStatus.typing,widget.receiverId)
+      ? MessageHub().changeState(MessageConnectionStatus.typing, widget.receiverId)
       : MessageHub().changeState(MessageConnectionStatus.online, null);
     
 

@@ -4,6 +4,7 @@
     {
         Ofline,
         Online,
-        Typing
+        Focused,
+        Typing,
     }
 }

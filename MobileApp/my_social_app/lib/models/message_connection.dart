@@ -8,18 +8,18 @@ part 'message_connection.g.dart';
 @immutable
 class MessageConnection{
   final int id;
-  final DateTime? updatedAt;
+  final DateTime? lastSeenAt;
   final String userName;
   final Multimedia? image;
-  final int? typingId;
+  final int? userId;
   final int state;
 
   const MessageConnection({
     required this.id,
-    required this.updatedAt,
+    required this.lastSeenAt,
     required this.userName,
     required this.image,
-    required this.typingId,
+    required this.userId,
     required this.state
   });
   
@@ -29,11 +29,11 @@ class MessageConnection{
   MessageConnectionState toMessageConnectionState() =>
     MessageConnectionState(
       id: id,
-      updatedAt: updatedAt,
+      lastSeenAt: lastSeenAt,
       userName: userName,
       image: image,
       state: state,
-      typingId: typingId
+      userId: userId
     );
     
 }

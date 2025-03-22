@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_social_app/constants/valid_user_name_characters.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -83,7 +82,7 @@ class _EditUserNamePageState extends State<EditUserNamePage> {
             if(value.isNotEmpty && !validUserNameChracters.contains(value[value.length - 1])){
               ToastCreator.displayError(
                 AppLocalizations.of(context)!.edit_user_name_page_invalid_characters,
-                length: Toast.LENGTH_SHORT
+                length: 2
               );
               _controller.text = value.substring(0,value.length - 1);
               return;

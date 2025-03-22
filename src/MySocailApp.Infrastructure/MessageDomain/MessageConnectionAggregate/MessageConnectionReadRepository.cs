@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate
@@ -16,6 +17,13 @@ namespace MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate
             => _context.MessageConnections
                 .AsNoTracking()
                 .Where(x => ids.Any(id => x.Id == id))
+                .ToListAsync(cancellationToken);
+
+        public Task<List<string>> GetConnectionIdsFocused(int userId, CancellationToken cancellationToken)
+            => _context.MessageConnections
+                .AsNoTracking()
+                .Where(x => x.UserId == userId && (x.State == MessageConnectionState.Focused || x.State == MessageConnectionState.Typing))
+                .Select(x => x.ConnectionId)
                 .ToListAsync(cancellationToken);
     }
 }

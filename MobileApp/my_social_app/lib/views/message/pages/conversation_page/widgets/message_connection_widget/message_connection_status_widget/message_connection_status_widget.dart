@@ -19,7 +19,7 @@ class MessageConnectionStatusWidget extends StatelessWidget {
     if(messageConnection.state == MessageConnectionStatus.ofline){
       return ofline[language]!;
     }
-    if(messageConnection.state == MessageConnectionStatus.typing && messageConnection.typingId == accountId){
+    if(messageConnection.state == MessageConnectionStatus.typing && messageConnection.userId == accountId){
       return writing[language]!;
     }
     return online[language]!;
@@ -28,14 +28,14 @@ class MessageConnectionStatusWidget extends StatelessWidget {
   Widget getWidgetByStatus(int accountId){
     if(messageConnection.state == MessageConnectionStatus.ofline){
       return AppDateWidget(
-        dateTime: messageConnection.updatedAt!,
+        dateTime: messageConnection.lastSeenAt!,
         style: const TextStyle(
           fontSize: 11
         ),
       );
     }
-    if(messageConnection.state == MessageConnectionStatus.typing && messageConnection.typingId == accountId){
-      return LoadingAnimationWidget.waveDots(color: Colors.black, size: 15);
+    if(messageConnection.state == MessageConnectionStatus.typing && messageConnection.userId == accountId){
+      return LoadingAnimationWidget.waveDots(color: Colors.black, size: 11);
     }
     return const Icon(
       Icons.signal_cellular_alt_sharp,
@@ -49,6 +49,7 @@ class MessageConnectionStatusWidget extends StatelessWidget {
       converter: (store) => store.state.loginState!.id,
       builder: (context,accountId) => Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             margin: const EdgeInsets.only(right: 5),

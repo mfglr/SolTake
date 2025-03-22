@@ -22,7 +22,7 @@ void _setAccount(Store<AppState> store,Login login){
   final state = login.toLoginState();
   LoginStorage().set(state);
   AppClient().changeAccessToken(login.accessToken);
-  MessageHub().chageAccessToken(login.accessToken);
+  MessageHub.init(login.accessToken, store);
   store.dispatch(UpdateLoginStateAction(payload: state));
 }
 void _clearSession(Store<AppState> store){

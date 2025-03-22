@@ -2,15 +2,26 @@
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.Queries.MessageDomain;
 using MySocailApp.Core;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageConnectionStateChangedDomainEventConsumers.MessageConnectionAggregate
 {
-    public class NotifyUsers(IHubContext<MessageHub> messageHub) : IDomainEventConsumer<MessageConnectionStateChangedDomainEvent>
+    public class NotifyUsers(IHubContext<MessageHub> messageHub, IMessageConnectionReadRepository messageConnectionReadRepository) : IDomainEventConsumer<MessageConnectionStateChangedDomainEvent>
     {
         private readonly IHubContext<MessageHub> _messageHub = messageHub;
+        private readonly IMessageConnectionReadRepository _messageConnectionReadRepository = messageConnectionReadRepository;
 
         public async Task Handle(MessageConnectionStateChangedDomainEvent notification, CancellationToken cancellationToken)
-            => await _messageHub.Clients.All.SendAsync("changeMessageConnectionState", MessageConnectionResponseDto.Create(notification), cancellationToken);
+        {
+            var connectionIds = await _messageConnectionReadRepository.GetConnectionIdsFocused(notification.MessageConnection.Id, cancellationToken);
+            await _messageHub.Clients
+                .Clients(connectionIds)
+                .SendAsync(
+                    "changeMessageConnectionState",
+                    MessageConnectionResponseDto.Create(notification),
+                    cancellationToken
+                );
+        }
     }
 }
