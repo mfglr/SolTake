@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
+using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
 {
@@ -16,8 +16,11 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggreg
         public async Task Handle(DisconnectMessageHubDto request, CancellationToken cancellationToken)
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
-            var messageConnection = (await _repository.GetByIdAsync(userId, cancellationToken))!;
-            messageConnection.ChangeState(MessageConnectionState.Ofline);
+            var messageConnection = 
+                await _repository.GetByIdAsync(userId, cancellationToken) ??
+                throw new MessageConnectionNotFoundException();
+
+            messageConnection.Disconnect();
             await _unitOfWork.CommitAsync(cancellationToken);
 
             await _publisher.Publish(

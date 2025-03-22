@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/services/message_hub.dart';
-import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/pages/create_message_medias_page/create_message_medias_page.dart';
@@ -31,8 +30,8 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
   Future _onFocusChanged() =>
     _focusNode.hasFocus 
-      ? MessageHub().changeState(MessageConnectionStatus.typing, widget.receiverId)
-      : MessageHub().changeState(MessageConnectionStatus.online, null);
+      ? MessageHub().changeStateToTyping(widget.receiverId)
+      : MessageHub().chageStateToOnline();
     
 
   @override

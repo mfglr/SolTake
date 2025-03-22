@@ -24,16 +24,43 @@ namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
             ConnectionId = connectionId;
             State = MessageConnectionState.Online;
+            UserId = null;
         }
 
-        public void ChangeState(MessageConnectionState state, int? userId = null)
+        public void ChangeStateToOnline()
         {
             UpdatedAt = DateTime.UtcNow;
-            State = state;
-            UserId = userId;
+            State = MessageConnectionState.Online;
+            UserId = null;
+        }
 
-            if(state == MessageConnectionState.Ofline)
-                LastSeenAt = (DateTime)UpdatedAt!;
+        public void ChangeStateToOfline()
+        {
+            UpdatedAt = LastSeenAt = DateTime.UtcNow;
+            State = MessageConnectionState.Ofline;
+            UserId = null;
+
+        }
+
+        public void ChangeStateToFocused(int userId)
+        {
+            UpdatedAt = DateTime.UtcNow;
+            State = MessageConnectionState.Focused;
+            UserId = userId;
+        }
+
+        public void ChangeStateToTyping(int userId)
+        {
+            UpdatedAt = DateTime.UtcNow;
+            State = MessageConnectionState.Typing;
+            UserId = userId;
+        }
+
+        public void Disconnect()
+        {
+            UpdatedAt = LastSeenAt = DateTime.UtcNow;
+            State = MessageConnectionState.Ofline;
+            UserId = null;
         }
     }
 }

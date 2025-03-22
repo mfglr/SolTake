@@ -4,21 +4,21 @@ using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionState
+namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToFocused
 {
-    public class ChangeMessageConnectionStateHandler(IMessageConnectionWriteRepository messageConnectionWriteRepository, IUnitOfWork unitOfWork, IUserAccessor userAccessor, IPublisher publisher) : IRequestHandler<ChangeMessageConnectionStateDto>
+    public class ChangeMessageConnectionStateToFocusedHandler(IMessageConnectionWriteRepository messageConnectionWriteRepository, IUnitOfWork unitOfWork, IUserAccessor userAccessor, IPublisher publisher) : IRequestHandler<ChangeMessageConnectionStateToFocusedDto>
     {
         private readonly IMessageConnectionWriteRepository _messageConnectionWriteRepository = messageConnectionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IPublisher _publisher = publisher;
 
-        public async Task Handle(ChangeMessageConnectionStateDto request, CancellationToken cancellationToken)
+        public async Task Handle(ChangeMessageConnectionStateToFocusedDto request, CancellationToken cancellationToken)
         {
             var messageConnection =
                 await _messageConnectionWriteRepository.GetByIdAsync(_userAccessor.User.Id, cancellationToken) ??
                 throw new MessageConnectionNotFoundException();
-            messageConnection.ChangeState(request.State, request.UserId);
+            messageConnection.ChangeStateToFocused(request.UserId);
             await _unitOfWork.CommitAsync(cancellationToken);
 
             await _publisher

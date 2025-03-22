@@ -44,12 +44,14 @@ class MessageHub{
   void _on(Store<AppState> store){
     _hubConnection.on(
       changeMessageConnectionState,
-      (list) =>
+      (list){
         store.dispatch(
           ChangeMessageConnectionStateAction(
             state: MessageConnection.fromJson(list!.first as dynamic).toMessageConnectionState()
           )
-        )
+        );
+      }
+        
     );
     _hubConnection.on(
       receiveMessage,
@@ -91,10 +93,20 @@ class MessageHub{
         .invoke(createMessageWebSocket, args: [{'receiverId': receiverId, 'content': content}])
         .then((response) => Message.fromJson(response as dynamic));
   
-  Future changeState(int state, int? userId)
+  Future changeStateToFocused(int userId)
     => _hubConnection
-        .invoke("ChangeState", args: [{'state': state, 'userId': userId}]);
+        .invoke("ChangeStateToFocused", args: [{'userId': userId}]);
 
+  Future changeStateToTyping(int userId)
+    => _hubConnection
+        .invoke("ChangeStateToTyping", args: [{'userId' : userId}]);
+
+  Future chageStateToOnline()
+    => _hubConnection
+        .invoke("ChangeStateToOnline");
+
+  
+  
   Future<void> markMessagesAsReceived(Iterable<num> ids)
     => _hubConnection
         .invoke(markMessagesAsReceivedWebSocket, args: [{'ids': ids.toList()}]);
