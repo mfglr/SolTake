@@ -17,6 +17,10 @@ extension MapExtentions<K extends Comparable,V extends BaseEntity<K>> on Map<K,V
     };
   Map<K,V> updateOne(V value) => 
     { for( var e in [...values.map((e) => e.id == value.id ? value : e)]) e.id : e };
+  Map<K,V> updateElseAppendOne(V value) => 
+    this[value.id] != null ? updateOne(value) : appendOne(value);
+  Map<K,V> updateElsePrependOne(V value) =>
+    this[value.id] != null ? updateOne(value) : prependOne(value);
   Map<K,V> removeOne(K id) =>
     { for (var e in [...values.where((e) => e.id.compareTo(id) != 0)]) e.id : e };
   

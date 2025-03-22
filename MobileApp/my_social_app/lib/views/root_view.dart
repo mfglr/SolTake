@@ -28,23 +28,19 @@ class _RootViewState extends State<RootView> {
 
   @override
   void initState() {
-    initNotifications(context);
+    // initNotifications(context);
 
     final store = StoreProvider.of<AppState>(context,listen: false);
 
     _accessTokenConsumer = store.onChange
       .map((state) => state.accessToken)
       .distinct()
-      .listen((token) async {
+      .listen((token) {
         if(token != null){
-          await MessageHub.init(store);
-          // if(mounted){
-          //   NotificationHub.init(context);
-          // }
+          
         }
         else{
-          await MessageHub.close();
-          // NotificationHub.close();
+          MessageHub.close();
         }
       });
     super.initState();

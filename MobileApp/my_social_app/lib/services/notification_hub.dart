@@ -36,7 +36,7 @@ class NotificationHub{
         "${dotenv.env['API_URL']}/notification",
         options: HttpConnectionOptions(
           headers: headers,
-          accessTokenFactory: () async => await Future.value(store.state.accessToken)
+          accessTokenFactory: () => store.onChange.map((e) => e.accessToken!).first,
         )
       )
       .build();

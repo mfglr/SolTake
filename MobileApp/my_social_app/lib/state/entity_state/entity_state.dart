@@ -20,6 +20,10 @@ class EntityState<K extends Comparable, V extends BaseEntity<K>>{
     _map[value.id] != null ? this : EntityState<K,V>._(map: _map.prependOne(value));
   EntityState<K,V> updateOne(V value) => 
     EntityState<K,V>._(map: _map.updateOne(value));
+  EntityState<K,V> updateElseAppendOne(V value) => 
+    EntityState<K,V>._(map: _map.updateOne(value));
+  EntityState<K,V> updateElsePrependOne(V value) => 
+    EntityState<K,V>._(map: _map.updateOne(value));
   EntityState<K,V> removeOne(K id) =>
     EntityState<K,V>._(map: _map.removeOne(id));
 

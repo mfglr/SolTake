@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/global_error_handling.dart';
+import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/package_version_service.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
@@ -58,8 +59,10 @@ Future<void> main() async {
         onInit: (store){
           store.dispatch(const LoginByRefreshToken());
           Timer.periodic(
-            Duration(minutes:  int.parse(dotenv.env['accessTokenDuration']!)),
-            (timer) => store.dispatch(const LoginByRefreshToken())
+            Duration(minutes: int.parse(dotenv.env['accessTokenDuration']!)),
+            (timer){
+              store.dispatch(const LoginByRefreshToken());
+            }
           );
         },
         converter: (store) => store.state.loginState,

@@ -12,9 +12,7 @@ class MessageConnection{
   final MessageConnectionStatus state;
 
   const MessageConnection({required this.id, required this.typingId, required this.state});
-
   factory MessageConnection.fromJson(Map<String, dynamic> json) => _$MessageConnectionFromJson(json);
-  Map<String, dynamic> toJson() => _$MessageConnectionToJson(this);
 
   MessageConnectionState toMessageConnectionState() =>
     MessageConnectionState(
@@ -22,4 +20,5 @@ class MessageConnection{
       state: state,
       typingId: typingId
     );
+    
 }

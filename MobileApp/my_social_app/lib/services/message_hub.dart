@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/message_functions.dart';
-import 'package:my_social_app/main.dart';
 import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/models/message_connection.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/actions.dart';
@@ -16,17 +15,15 @@ import 'package:signalr_netcore/signalr_client.dart';
 class MessageHub{
   late final HubConnection _hubConnection;
 
-  MessageHub._(Store<AppState> store){
+  MessageHub._(String accessToken){
     var headers = MessageHeaders();
-    headers.setHeaderValue("client_version", packageVersion);
-
     _hubConnection =
       HubConnectionBuilder()
         .withUrl(
           "${dotenv.env['API_URL']}/message",
           options: HttpConnectionOptions(
             headers: headers,
-            accessTokenFactory: () async => await Future.value(store.state.accessToken)
+            accessTokenFactory: () => Future.value(accessToken)
           ),
         )
         .build();
@@ -35,17 +32,14 @@ class MessageHub{
   static MessageHub? _singleton;
   factory MessageHub() => _singleton!;
   
-  static Future init(Store<AppState> store) async {
+  static Future<MessageHub> init(String accessToken) async {
     if(_singleton != null){
-      _singleton!._off();
-      await _singleton!._hubConnection.stop();
-      _singleton = MessageHub._(store);
+      await close();
     }
-    else{
-      _singleton = MessageHub._(store);
-    }
+    _singleton = MessageHub._(accessToken);
     await _singleton!._hubConnection.start();
-    _singleton!._on(store);
+
+    return _singleton!;
   }
   
   static Future close() async {
@@ -55,10 +49,10 @@ class MessageHub{
     }
   }
 
-  void _on(Store<AppState> store){
+  void onNotifications(Store<AppState> store){
     _hubConnection.on(
       changeMessageConnectionState,
-      (list) => 
+      (list) =>
         store.dispatch(
           ChangeMessageConnectionStateAction(
             state: MessageConnection.fromJson(list!.first as dynamic).toMessageConnectionState()

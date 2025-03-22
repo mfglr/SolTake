@@ -14,9 +14,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggreg
         public async Task Handle(DisconnectMessageHubDto request, CancellationToken cancellationToken)
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
-            var connection = await _repository.GetByIdAsync(userId, cancellationToken);
-            if (connection == null) return;
-
+            var connection = (await _repository.GetByIdAsync(userId, cancellationToken))!;
             connection.ChangeState(MessageConnectionState.Ofline);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

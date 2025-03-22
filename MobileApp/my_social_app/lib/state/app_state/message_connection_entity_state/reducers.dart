@@ -5,10 +5,10 @@ import 'package:redux/redux.dart';
 
 EntityState<int,MessageConnectionState> loadMessageConnectionSuccessReducer(EntityState<int,MessageConnectionState> prev,LoadMessageConnectionSuccessAction action)
   => prev.appendOne(action.messageConnectionState);
-EntityState<int,MessageConnectionState> setMessageConnectionStateAsOnlineReducer(EntityState<int,MessageConnectionState> prev, ChangeMessageConnectionStateAction action)
-  => prev.updateOne(prev.getValue(action.state.id)!.changeState(action.state.state,action.state.typingId));
+EntityState<int,MessageConnectionState> changeMessageConnectionStateReducer(EntityState<int,MessageConnectionState> prev, ChangeMessageConnectionStateAction action)
+  => prev.updateElseAppendOne(action.state);
 
 Reducer<EntityState<int,MessageConnectionState>> messageConnectionsReducers = combineReducers<EntityState<int,MessageConnectionState>>([
   TypedReducer<EntityState<int,MessageConnectionState>,LoadMessageConnectionSuccessAction>(loadMessageConnectionSuccessReducer).call,
-  TypedReducer<EntityState<int,MessageConnectionState>,ChangeMessageConnectionStateAction>(setMessageConnectionStateAsOnlineReducer).call,
+  TypedReducer<EntityState<int,MessageConnectionState>,ChangeMessageConnectionStateAction>(changeMessageConnectionStateReducer).call,
 ]);
