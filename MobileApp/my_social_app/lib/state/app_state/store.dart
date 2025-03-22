@@ -46,7 +46,6 @@ final store = Store(
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     activeAccountPage: ActiveAccountPage.loginPage,
-    accessToken: null,
     loginState: null,
     isInitialized: false,
     userEntityState: EntityState(),

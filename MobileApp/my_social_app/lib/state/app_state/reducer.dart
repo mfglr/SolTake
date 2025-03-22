@@ -1,4 +1,3 @@
-import 'package:my_social_app/state/app_state/access_token_state/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/reducers.dart';
@@ -41,7 +40,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   messageConnectionEntityState: messageConnectionsReducers(prev.messageConnectionEntityState,action),
 
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
-  accessToken: changeAccessTokenReducer(prev.accessToken,action),
   loginState: accoutStateReducers(prev.loginState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),

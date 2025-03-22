@@ -1,1 +1,1 @@
-const requestTimeout = Duration(seconds: 10);
+const requestTimeout = Duration(seconds: 30);

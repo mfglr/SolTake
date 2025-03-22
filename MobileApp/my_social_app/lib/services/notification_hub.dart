@@ -34,10 +34,7 @@ class NotificationHub{
     _hubConnection = HubConnectionBuilder()
       .withUrl(
         "${dotenv.env['API_URL']}/notification",
-        options: HttpConnectionOptions(
-          headers: headers,
-          accessTokenFactory: () => store.onChange.map((e) => e.accessToken!).first,
-        )
+        options: HttpConnectionOptions(headers: headers,)
       )
       .build();
       

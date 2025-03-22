@@ -1,9 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/notifications/app_notifications.dart';
-import 'package:my_social_app/services/message_hub.dart';
-import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -24,33 +20,6 @@ class RootView extends StatefulWidget {
 
 class _RootViewState extends State<RootView> {
   int currentPageIndex = 0;
-  late StreamSubscription<String?> _accessTokenConsumer;
-
-  @override
-  void initState() {
-    // initNotifications(context);
-
-    final store = StoreProvider.of<AppState>(context,listen: false);
-
-    _accessTokenConsumer = store.onChange
-      .map((state) => state.accessToken)
-      .distinct()
-      .listen((token) {
-        if(token != null){
-          
-        }
-        else{
-          MessageHub.close();
-        }
-      });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _accessTokenConsumer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

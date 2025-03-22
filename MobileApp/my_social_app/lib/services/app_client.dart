@@ -6,21 +6,23 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/services/package_version_service.dart';
-import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 
 class AppClient{
   static final apiUrl = "${dotenv.env['API_URL']}/api";
   static final blobService = "$apiUrl/blobs";
 
-  const AppClient._();
-  static const AppClient _singleton = AppClient._();
+  String? _accessToken;
+
+  AppClient._();
+  static final AppClient _singleton = AppClient._();
   factory AppClient() => _singleton;
+
+  void changeAccessToken(String? accessToken) => _accessToken = accessToken;
 
   Future<Map<String,String>> getHeader() async =>
     {
-      "Authorization": "Bearer ${store.state.accessToken}",
-      "Accept-Language": store.state.loginState?.language ?? PlatformDispatcher.instance.locale.languageCode,
+      "Authorization": "Bearer $_accessToken",
       "Client-Version": await PackageVersionService().getVersion()
     };
 
@@ -29,7 +31,7 @@ class AppClient{
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
     request.headers.addAll(await getHeader());
     if(headers != null) request.headers.addAll(headers);
-   
+
     var response = await request.send();
 
     if(response.statusCode >= 400){
@@ -47,8 +49,7 @@ class AppClient{
 
     var r = await HttpClient().postUrl(request.url);
     r.headers.set(HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);
-    r.headers.set(HttpHeaders.authorizationHeader, "Bearer ${store.state.accessToken}");
-    r.headers.set(HttpHeaders.acceptLanguageHeader, store.state.loginState?.language ?? PlatformDispatcher.instance.locale.languageCode);
+    r.headers.set(HttpHeaders.authorizationHeader, "Bearer $_accessToken");
     r.headers.set("Client-Version", await PackageVersionService().getVersion());
 
     var byteCount = 0;
@@ -88,8 +89,7 @@ class AppClient{
 
   Future<dynamic> get(String url) async {
     final Request request = Request("GET", generateUri(url));
-    final response = await 
-      send(request);
+    final response = await send(request);
       
     var decode = utf8.decode(await response.stream.toBytes());
     if(decode == '') return null;

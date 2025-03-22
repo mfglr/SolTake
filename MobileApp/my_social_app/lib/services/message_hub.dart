@@ -9,88 +9,85 @@ import 'package:my_social_app/state/app_state/message_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:redux/redux.dart';
-import 'package:signalr_netcore/ihub_protocol.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 class MessageHub{
   late final HubConnection _hubConnection;
+  String? _acessToken;
 
-  MessageHub._(String accessToken){
-    var headers = MessageHeaders();
+  MessageHub._(){
     _hubConnection =
       HubConnectionBuilder()
         .withUrl(
           "${dotenv.env['API_URL']}/message",
-          options: HttpConnectionOptions(
-            headers: headers,
-            accessTokenFactory: () => Future.value(accessToken)
-          ),
+          options: HttpConnectionOptions(accessTokenFactory: () => Future.value(_acessToken)),
         )
         .build();
   }
 
-  static MessageHub? _singleton;
-  factory MessageHub() => _singleton!;
+  static final MessageHub _singleton = MessageHub._();
+  factory MessageHub() => _singleton;
   
-  static Future<MessageHub> init(String accessToken) async {
-    if(_singleton != null){
-      await close();
+  Future<void> chageAccessToken(String accessToken) async{
+    if(_acessToken == null){
+      _acessToken = accessToken;
+      await _hubConnection.start();
+      return;
     }
-    _singleton = MessageHub._(accessToken);
-    await _singleton!._hubConnection.start();
-
-    return _singleton!;
+    _acessToken = accessToken;
   }
-  
+
   static Future close() async {
-    if(_singleton != null){
-      _singleton!._off();
-      await _singleton!._hubConnection.stop();
-    }
+    _singleton._off();
+    await _singleton._hubConnection.stop();
   }
 
   void onNotifications(Store<AppState> store){
-    _hubConnection.on(
-      changeMessageConnectionState,
-      (list) =>
-        store.dispatch(
-          ChangeMessageConnectionStateAction(
-            state: MessageConnection.fromJson(list!.first as dynamic).toMessageConnectionState()
+    if(_acessToken == null){
+      
+      _hubConnection.on(
+        changeMessageConnectionState,
+        (list) =>
+          store.dispatch(
+            ChangeMessageConnectionStateAction(
+              state: MessageConnection.fromJson(list!.first as dynamic).toMessageConnectionState()
+            )
           )
-        )
-    );
+      );
 
-    _hubConnection.on(
-      receiveMessage,
-      (list){
-        final messageState = Message.fromJson((list!.first as dynamic)).toMessageState();
+      _hubConnection.on(
+        receiveMessage,
+        (list){
+          final messageState = Message.fromJson((list!.first as dynamic)).toMessageState();
 
-        store.dispatch(AddMessageAction(message: messageState));
-        store.dispatch(AddUserMessageAction(userId: messageState.senderId, messageId: messageState.id));
-        store.dispatch(MarkComingMessageAsReceivedAction(messageId: messageState.id));
-      }
-    );
+          store.dispatch(AddMessageAction(message: messageState));
+          store.dispatch(AddUserMessageAction(userId: messageState.senderId, messageId: messageState.id));
+          store.dispatch(MarkComingMessageAsReceivedAction(messageId: messageState.id));
+        }
+      );
 
-    _hubConnection.on(
-      messageReceivedNotification,
-      (list){
-        final message = Message.fromJson((list!.first as dynamic)).toMessageState();
-        
-        store.dispatch(MarkOutgoingMessageAsReceivedAction(message: message));
-        store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
-        
-      },
-    );
+      _hubConnection.on(
+        messageReceivedNotification,
+        (list){
+          final message = Message.fromJson((list!.first as dynamic)).toMessageState();
+          
+          store.dispatch(MarkOutgoingMessageAsReceivedAction(message: message));
+          store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
+          
+        },
+      );
 
-    _hubConnection.on(
-      messageViewedNotification,
-      (list){
-        final message = Message.fromJson((list!.first as dynamic)).toMessageState();
+      _hubConnection.on(
+        messageViewedNotification,
+        (list){
+          final message = Message.fromJson((list!.first as dynamic)).toMessageState();
 
-        store.dispatch(MarkOutgoingMessageAsViewedAction(message: message));
-        store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
-      }
-    );
+          store.dispatch(MarkOutgoingMessageAsViewedAction(message: message));
+          store.dispatch(AddUserMessageAction(userId: message.senderId, messageId: message.id));
+        }
+      );  
+    }
+    
   }
 
   void _off(){

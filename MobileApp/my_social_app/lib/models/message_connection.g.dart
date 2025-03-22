@@ -21,7 +21,7 @@ Map<String, dynamic> _$MessageConnectionToJson(MessageConnection instance) =>
     };
 
 const _$MessageConnectionStatusEnumMap = {
-  MessageConnectionStatus.online: 'online',
   MessageConnectionStatus.ofline: 'ofline',
+  MessageConnectionStatus.online: 'online',
   MessageConnectionStatus.typing: 'typing',
 };

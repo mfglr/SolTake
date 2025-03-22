@@ -45,7 +45,6 @@ class AppState{
   final EntityState<int,SubjectState> subjectEntityState;
   final bool isInitialized;
   final ActiveAccountPage activeAccountPage;
-  final String? accessToken;
   final LoginState? loginState;
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,TopicState> topicEntityState;
@@ -73,7 +72,6 @@ class AppState{
     required this.appExams,
     required this.conversations,
     required this.activeAccountPage,
-    required this.accessToken,
     required this.loginState,
     required this.isInitialized,
     required this.userEntityState,
@@ -104,7 +102,6 @@ class AppState{
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
     activeAccountPage: ActiveAccountPage.loginPage,
-    accessToken: null,
     loginState: null,
     isInitialized: true,
     userEntityState: EntityState(),

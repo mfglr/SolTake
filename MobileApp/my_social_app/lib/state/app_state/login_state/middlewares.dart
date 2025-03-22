@@ -3,10 +3,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/models/login.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/login_storage.dart';
 import 'package:my_social_app/services/get_language.dart';
+import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/user_service.dart';
-import 'package:my_social_app/state/app_state/access_token_state/actions.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
@@ -21,7 +22,9 @@ final _googleSignIn = GoogleSignIn();
 void _setAccount(Store<AppState> store,Login login){
   final state = login.toLoginState();
   LoginStorage().set(state);
-  store.dispatch(ChangeAccessTokenAction(accessToken: login.accessToken));
+  AppClient().changeAccessToken(login.accessToken);
+  MessageHub().chageAccessToken(login.accessToken);
+  MessageHub().onNotifications(store);
   store.dispatch(UpdateLoginStateAction(payload: state));
 }
 void _clearSession(Store<AppState> store){
