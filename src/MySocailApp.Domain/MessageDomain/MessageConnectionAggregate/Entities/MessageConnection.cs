@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
@@ -25,7 +24,6 @@ namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
             State = state;
             TypingId = typingId;
-            AddDomainEvent(new MessageConnectionStateChangedDomainEvent(this));
         }
     }
 }

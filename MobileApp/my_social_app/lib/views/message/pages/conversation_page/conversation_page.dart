@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -11,6 +9,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_connection_widget/message_connection_widget.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_item.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_text_field.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
@@ -18,9 +17,7 @@ import 'package:my_social_app/views/message/pages/display_message_images_page/di
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConversationPage extends StatefulWidget {
@@ -33,7 +30,6 @@ class ConversationPage extends StatefulWidget {
 class _ConversationPageState extends State<ConversationPage>{
   
   final ScrollController _scrollController = ScrollController();
-  late final StreamSubscription<MessageState> _messageConsumer;
   int _numberOfNewMessages = 0;
   Iterable<int> _selectedIds = [];
 
@@ -76,16 +72,16 @@ class _ConversationPageState extends State<ConversationPage>{
       getNextPageIfReady(store,pagination,NextUserMessagesAction(userId: widget.userId));
     }
   }
-  void _onMessageReceived(MessageState message){
-    if(message.senderId == widget.userId){
-      if(!mounted) return;
-      final store = StoreProvider.of<AppState>(context,listen: false);
-      store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
-      if(_scrollController.position.pixels != 0){
-        setState(() { _numberOfNewMessages++; });
-      }
-    }
-  }
+  // void _onMessageReceived(MessageState message){
+  //   if(message.senderId == widget.userId){
+  //     if(!mounted) return;
+  //     final store = StoreProvider.of<AppState>(context,listen: false);
+  //     store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
+  //     if(_scrollController.position.pixels != 0){
+  //       setState(() { _numberOfNewMessages++; });
+  //     }
+  //   }
+  // }
 
   Widget _generateMessageItem(MessageState message){
     return GestureDetector(
@@ -116,7 +112,6 @@ class _ConversationPageState extends State<ConversationPage>{
   void initState() {
     _scrollController.addListener(_onScrollBottom);
     _scrollController.addListener(_onScrollTop);
-    // _messageConsumer = MessageHub().receivedMessages.stream.listen(_onMessageReceived);
     super.initState();
   }
 
@@ -125,40 +120,20 @@ class _ConversationPageState extends State<ConversationPage>{
     _scrollController.removeListener(_onScrollBottom);
     _scrollController.removeListener(_onScrollTop);
     _scrollController.dispose();
-    _messageConsumer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,UserState?>(
+    return StoreConnector<AppState, UserState?>(
       onInit: (store) => store.dispatch(LoadUserAction(userId: widget.userId)),
       converter: (store) => store.state.userEntityState.getValue(widget.userId),
       builder: (context,user){
         if(user == null) return const LoadingView();
         return Scaffold(
           appBar: AppBar(
-            title: _selectedIds.isEmpty 
-              ? TextButton(
-                onPressed: () =>
-                  Navigator
-                    .of(context)
-                    .push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.userId))),
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all(EdgeInsets.zero),
-                  minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: UserImageWithNamesWidget(
-                  user: user,
-                  diameter: 50,
-                  marginRight: 5,
-                  userNameFontSize: 12,
-                  userNameFontWeight: FontWeight.bold,
-                  nameFontSize: 11,
-                  nameFontWeight: FontWeight.normal,
-                )
-              ) 
+            title: _selectedIds.isEmpty
+              ? MessageConnectionWidget(userId: widget.userId)
               : Text(_selectedIds.length.toString()),
             leading: _selectedIds.isEmpty ? const AppBackButtonWidget() : const SpaceSavingWidget(),
             actions: [

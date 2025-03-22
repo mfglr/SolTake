@@ -5,7 +5,6 @@ using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Interfaces;
@@ -22,7 +21,6 @@ using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServ
 using MySocailApp.Infrastructure.InfrastructureServices.Email;
 using MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using MySocailApp.Infrastructure.MessageDomain;
-using MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate;
 using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.NotificationConnectionAggregate;
 using MySocailApp.Infrastructure.QueryRepositories;
@@ -128,7 +126,8 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ITopicQueryRepository, TopicQueryRepository>()
                 .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
                 .AddScoped<ISolutionUserSaveQueryRepository, SolutionUserSaveQueryRepository>()
-                .AddScoped<INotificationQueryRepository, NotificationQueryRepository>();
+                .AddScoped<INotificationQueryRepository, NotificationQueryRepository>()
+                .AddScoped<IMessageConnectionQueryRepository, MessageConnectionQueryRepository>();
 
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
             => services

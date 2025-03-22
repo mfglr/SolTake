@@ -3,5 +3,5 @@ using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
 
 namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents
 {
-    public record MessageConnectionStateChangedDomainEvent(MessageConnection MessageConnection) : IDomainEvent;
+    public record MessageConnectionStateChangedDomainEvent(MessageConnection MessageConnection, string UserName, Multimedia? Image) : IDomainEvent;
 }

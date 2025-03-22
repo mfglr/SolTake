@@ -3,6 +3,7 @@ using MySocailApp.Domain.UserDomain.RoleAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
 using MySocailApp.Domain.UserDomain.UserAggregate.Configurations;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,6 +22,9 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.DomainServices
                 new (JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new (JwtRegisteredClaimNames.Aud, _tokenProviderOptions.Audience),
                 new (ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new (JwtRegisteredClaimNames.Name,user.UserName.Value),
+                new (JwtRegisteredClaimNames.Nickname,user.Name ?? ""),
+                new (JwtRegisteredClaimNames.Picture, JsonConvert.SerializeObject(user.Image)),
             };
 
             foreach (var role in roles)

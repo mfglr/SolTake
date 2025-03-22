@@ -11,6 +11,8 @@
         public double Duration { get; private set; }
         public MultimediaType MultimediaType { get; private set; }
 
+        private Multimedia() { }
+
         private Multimedia(string containerName, string blobName, long size, double height, double width)
         {
             ContainerName = containerName;

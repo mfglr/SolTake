@@ -6,9 +6,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/global_error_handling.dart';
+import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/package_version_service.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
+import 'package:my_social_app/state/app_state/message_connection_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/app_view.dart';
@@ -56,11 +58,17 @@ Future<void> main() async {
       store: store,
       child: StoreConnector<AppState,LoginState?>(
         onInit: (store){
+          
           store.dispatch(const LoginByRefreshToken());
           Timer.periodic(
             Duration(minutes: int.parse(dotenv.env['accessTokenDuration']!)),
             (timer) => store.dispatch(const LoginByRefreshToken())
           );
+
+          // MessageHub().messageConnections
+          //   .listen((e){
+          //     store.dispatch(ChangeMessageConnectionStateAction(state: e));
+          //   });
         },
         converter: (store) => store.state.loginState,
         builder: (context,login) => MaterialApp(

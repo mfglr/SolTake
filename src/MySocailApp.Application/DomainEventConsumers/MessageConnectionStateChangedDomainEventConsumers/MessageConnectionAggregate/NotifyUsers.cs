@@ -11,6 +11,6 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageConnectionStateCha
         private readonly IHubContext<MessageHub> _messageHub = messageHub;
 
         public async Task Handle(MessageConnectionStateChangedDomainEvent notification, CancellationToken cancellationToken)
-            => await _messageHub.Clients.All.SendAsync("changeMessageConnectionState", MessageConnectionResponseDto.Create(notification.MessageConnection), cancellationToken);
+            => await _messageHub.Clients.All.SendAsync("changeMessageConnectionState", MessageConnectionResponseDto.Create(notification), cancellationToken);
     }
 }

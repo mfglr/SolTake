@@ -1,4 +1,3 @@
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
@@ -24,13 +23,11 @@ void _setAccount(Store<AppState> store,Login login){
   LoginStorage().set(state);
   AppClient().changeAccessToken(login.accessToken);
   MessageHub().chageAccessToken(login.accessToken);
-  MessageHub().onNotifications(store);
   store.dispatch(UpdateLoginStateAction(payload: state));
 }
 void _clearSession(Store<AppState> store){
   LoginStorage().remove();
   _googleSignIn.disconnect();
-  FacebookAuth.instance.logOut();
   store.dispatch(const ClearStateAction());
 }
 

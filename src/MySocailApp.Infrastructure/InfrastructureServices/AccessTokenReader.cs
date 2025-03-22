@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.Exceptions;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Core;
+using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices
@@ -23,6 +26,31 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
                 context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ??
                 throw new NotAuthorizedException();
             return int.Parse(value);
+        }
+
+        public string? GetUserName()
+        {
+            var context = _contextAccessor.HttpContext;
+            if (context == null) return null;
+            return context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Name)?.Value;
+        }
+
+        public string? NickName()
+        {
+            var context = _contextAccessor.HttpContext;
+            if (context == null) return null;
+            return context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Nickname)?.Value;
+        }
+
+        public Multimedia? GetMedia()
+        {
+            var context = _contextAccessor.HttpContext;
+            if (context == null) return null;
+            
+            var mediaJson = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Picture)?.Value;
+            if (mediaJson == null) return null;
+
+            return JsonConvert.DeserializeObject<Multimedia>(mediaJson);
         }
     }
 }
