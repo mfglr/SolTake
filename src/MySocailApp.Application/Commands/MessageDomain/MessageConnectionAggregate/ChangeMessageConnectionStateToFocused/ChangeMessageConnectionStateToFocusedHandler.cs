@@ -6,18 +6,20 @@ using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToFocused
 {
-    public class ChangeMessageConnectionStateToFocusedHandler(IMessageConnectionWriteRepository messageConnectionWriteRepository, IUnitOfWork unitOfWork, IUserAccessor userAccessor, IPublisher publisher) : IRequestHandler<ChangeMessageConnectionStateToFocusedDto>
+    public class ChangeMessageConnectionStateToFocusedHandler(IMessageConnectionWriteRepository messageConnectionWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher, IAccessTokenReader accessTokenReader) : IRequestHandler<ChangeMessageConnectionStateToFocusedDto>
     {
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IMessageConnectionWriteRepository _messageConnectionWriteRepository = messageConnectionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IPublisher _publisher = publisher;
 
         public async Task Handle(ChangeMessageConnectionStateToFocusedDto request, CancellationToken cancellationToken)
         {
+            var userId = _accessTokenReader.GetRequiredAccountId();
             var messageConnection =
-                await _messageConnectionWriteRepository.GetByIdAsync(_userAccessor.User.Id, cancellationToken) ??
+                await _messageConnectionWriteRepository.GetByIdAsync(userId, cancellationToken) ??
                 throw new MessageConnectionNotFoundException();
+
             messageConnection.ChangeStateToFocused(request.UserId);
             await _unitOfWork.CommitAsync(cancellationToken);
 
@@ -25,8 +27,8 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggreg
                 .Publish(
                     new MessageConnectionStateChangedDomainEvent(
                         messageConnection,
-                        _userAccessor.User.UserName.Value,
-                        _userAccessor.User.Image
+                        _accessTokenReader.GetUserName()!,
+                        _accessTokenReader.GetMedia()
                     ),
                     cancellationToken
                 );

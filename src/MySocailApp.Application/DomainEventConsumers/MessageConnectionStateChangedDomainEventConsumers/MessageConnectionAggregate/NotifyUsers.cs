@@ -14,7 +14,8 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageConnectionStateCha
 
         public async Task Handle(MessageConnectionStateChangedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var connectionIds = await _messageConnectionReadRepository.GetConnectionIdsFocused(notification.MessageConnection.Id, cancellationToken);
+            var connectionIds = await _messageConnectionReadRepository.GetConnectionIdsByConnection(notification.MessageConnection, cancellationToken);
+
             await _messageHub.Clients
                 .Clients(connectionIds)
                 .SendAsync(

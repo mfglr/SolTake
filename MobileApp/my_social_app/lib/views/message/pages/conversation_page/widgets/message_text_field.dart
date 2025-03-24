@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -6,6 +7,7 @@ import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/pages/create_message_medias_page/create_message_medias_page.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
@@ -27,22 +29,20 @@ class MessageTextField extends StatefulWidget {
 class _MessageTextFieldState extends State<MessageTextField> {
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _messageContentController = TextEditingController();
-
-  Future _onFocusChanged() =>
-    _focusNode.hasFocus 
-      ? MessageHub().changeStateToTyping(widget.receiverId)
-      : MessageHub().chageStateToOnline();
-    
+  final BehaviorSubject<String> _subject = BehaviorSubject();
+  late final StreamSubscription<String> _subscription;
 
   @override
   void initState() {
-    _focusNode.addListener(_onFocusChanged);
+    _subscription = _subject
+      .debounceTime(const Duration(milliseconds: 500))
+      .listen((_) => MessageHub().changeStateToFocused(widget.receiverId));
     super.initState();
   }
 
   @override
   void dispose() {
-    _focusNode.removeListener(_onFocusChanged);
+    _subscription.cancel();
     _focusNode.dispose();
     _messageContentController.dispose();
     super.dispose();
@@ -61,7 +61,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
             style: const TextStyle(
               fontSize: 14,
             ),
-            onChanged: (value) => setState(() {}),
+            onChanged: (value){
+              _subject.add(value);
+              MessageHub().changeStateToTyping(widget.receiverId);
+            },
 
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(28.0)),

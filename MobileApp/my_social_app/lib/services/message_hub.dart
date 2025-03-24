@@ -21,7 +21,7 @@ class MessageHub{
       HubConnectionBuilder()
         .withUrl(
           "${dotenv.env['API_URL']}/message",
-          options: HttpConnectionOptions(accessTokenFactory: () async => _acessToken!),
+          options: HttpConnectionOptions(accessTokenFactory: () => Future.value(_acessToken)),
         )
         .withAutomaticReconnect()
         .build();
@@ -81,12 +81,20 @@ class MessageHub{
     );  
   }
 
-  // void _off(){
-  //   _hubConnection.off(changeMessageConnectionState);
-  //   _hubConnection.off(receiveMessage);
-  //   _hubConnection.off(messageReceivedNotification);
-  //   _hubConnection.off(messageViewedNotification);
-  // }
+  void _off(){
+    _hubConnection.off(changeMessageConnectionState);
+    _hubConnection.off(receiveMessage);
+    _hubConnection.off(messageReceivedNotification);
+    _hubConnection.off(messageViewedNotification);
+  }
+
+  Future<void> close() async{
+    if(_singleton != null){
+      _off();
+      await _hubConnection.stop();
+    }
+    _singleton = null;
+  }
 
   Future<Message> createMessage(num receiverId,String content)
     => _hubConnection

@@ -19,10 +19,14 @@ namespace MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate
                 .Where(x => ids.Any(id => x.Id == id))
                 .ToListAsync(cancellationToken);
 
-        public Task<List<string>> GetConnectionIdsFocused(int userId, CancellationToken cancellationToken)
+        public Task<List<string>> GetConnectionIdsByConnection(MessageConnection connection,CancellationToken cancellationToken)
             => _context.MessageConnections
-                .AsNoTracking()
-                .Where(x => x.UserId == userId && (x.State == MessageConnectionState.Focused || x.State == MessageConnectionState.Typing))
+                .Where(
+                    x => 
+                        connection.State == MessageConnectionState.Typing
+                            ? x.Id == connection.UserId
+                            : x.UserId == connection.Id && (x.State == MessageConnectionState.Focused || x.State == MessageConnectionState.Typing)
+                )
                 .Select(x => x.ConnectionId)
                 .ToListAsync(cancellationToken);
     }

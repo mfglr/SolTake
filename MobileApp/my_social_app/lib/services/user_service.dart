@@ -6,14 +6,12 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/controllers.dart';
-import 'package:my_social_app/constants/request_timeout.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/models/login.dart';
 import 'package:my_social_app/models/search_user.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
-import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/login/widgets/google_login_button.dart';
 
 class UserService{
@@ -52,14 +50,7 @@ class UserService{
         "$userController/$loginByRefreshTokenEndPoint",
         body: { 'id': id.toString(),'token': token}
       )
-      .then((json) => Login.fromJson(json))
-      .timeout(
-        requestTimeout,
-        onTimeout: (){
-          ToastCreator.displayError("Service is not available");
-          return loginByRefreshtoken(id, token);
-        }
-      );
+      .then((json) => Login.fromJson(json));
 
   Future<Login> loginByGoogle(String accessToken) =>
     _appClient

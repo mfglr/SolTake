@@ -28,7 +28,9 @@ void _setAccount(Store<AppState> store,Login login){
 void _clearSession(Store<AppState> store){
   LoginStorage().remove();
   _googleSignIn.disconnect();
+  MessageHub().close();
   store.dispatch(const ClearStateAction());
+  
 }
 
 void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){

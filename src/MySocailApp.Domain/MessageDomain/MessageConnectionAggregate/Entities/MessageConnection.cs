@@ -39,7 +39,6 @@ namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities
             UpdatedAt = LastSeenAt = DateTime.UtcNow;
             State = MessageConnectionState.Ofline;
             UserId = null;
-
         }
 
         public void ChangeStateToFocused(int userId)

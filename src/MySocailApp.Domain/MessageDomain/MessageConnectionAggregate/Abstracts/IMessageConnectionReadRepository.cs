@@ -6,6 +6,6 @@ namespace MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts
     {
         Task<MessageConnection?> GetById(int id, CancellationToken cancellationToken);
         Task<List<MessageConnection>> GetByIds(IEnumerable<int> ids, CancellationToken cancellationToken);
-        Task<List<string>> GetConnectionIdsFocused(int userId, CancellationToken cancellationToken);
+        Task<List<string>> GetConnectionIdsByConnection(MessageConnection connection, CancellationToken cancellationToken);
     }
 }
