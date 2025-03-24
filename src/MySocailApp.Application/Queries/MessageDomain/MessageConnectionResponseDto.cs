@@ -13,7 +13,6 @@ namespace MySocailApp.Application.Queries.MessageDomain
         public MessageConnectionState State { get; private set; } = state;
         public int? UserId { get; private set; } = userId;
 
-
         public static MessageConnectionResponseDto Create(MessageConnectionStateChangedDomainEvent @event) =>
             new(
                 @event.MessageConnection.Id,
@@ -23,6 +22,5 @@ namespace MySocailApp.Application.Queries.MessageDomain
                 @event.MessageConnection.State,
                 @event.MessageConnection.UserId
             );
-
     }
 }
