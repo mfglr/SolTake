@@ -1,12 +1,11 @@
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_message_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_message_state/actions.dart';
 import 'package:redux/redux.dart';
 
 void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -15,7 +14,7 @@ void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
       .createMessage(action.receiverId, action.content)
       .then((message){
         store.dispatch(AddMessageAction(message: message.toMessageState()));
-        store.dispatch(AddUserMessageAction(userId: action.receiverId,messageId: message.id));
+        store.dispatch(AddUserMessageAction(userId: message.receiverId, messageId: message.id));
       });
   }
   next(action);
@@ -102,55 +101,30 @@ void removeMessagesByUserIdsMiddleware(Store<AppState> store,action,NextDispatch
 
 void getUnviewedMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetUnviewedMessagesAction){
-    MessageService()
+    MessageHub()
       .getUnviewedMessages()
       .then((messages){
         store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
-        store.dispatch(const MarkComingMessagesAsReceivedAction());
+        store.dispatch(MarkMessagesAsReceivedAction(messageIds: messages.map((e) => e.id)));
       });
   }
   next(action);
 }
 
-void markComingMessageAsReceivedMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkComingMessageAsReceivedAction){
-    final messageIds = [action.messageId];
+void markMessagesAsReceivedMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is MarkMessagesAsReceivedAction){
     MessageHub()
-      .markMessagesAsReceived(messageIds)
-      .then((_) => store.dispatch(MarkComingMessagesAsReceivedSuccessAction(messageIds: messageIds)));
+      .markMessagesAsReceived(action.messageIds)
+      .then((_) => store.dispatch(MarkMessagesAsReceivedSuccessAction(messageIds: action.messageIds)));
   }
   next(action);
 }
-void markComingMessageAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkComingMessageAsViewedAction){
-    final messageIds = [action.messageId];
+
+void markMessagesAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkMessagesAsViewedAction){
     MessageHub()
-      .markMessagesAsViewed(messageIds)
-      .then((_) => store.dispatch(MarkComingMessagesAsViewedSuccessAction(messageIds: messageIds)));
-  }
-  next(action);
-}
-void markComingMessagesAsReceivedMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkComingMessagesAsReceivedAction){
-    final messageIds = store.state.selectIdsOfNewComingMessages;
-    if(messageIds.isNotEmpty){
-      MessageHub()
-        .markMessagesAsReceived(messageIds)
-        .then((_) => store.dispatch(MarkComingMessagesAsReceivedSuccessAction(messageIds: messageIds)));
-    }
-  }
-  next(action);
-}
-void markComingMessagesAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkComingMessagesAsViewedAction){
-    final messageIds = store.state.messageEntityState
-      .select((e) => e.senderId == action.userId && e.state != MessageStatus.viewed)
-      .map((e) => e.id);
-    if(messageIds.isNotEmpty){
-      MessageHub()
-      .markMessagesAsViewed(messageIds)
-      .then((_) => store.dispatch(MarkComingMessagesAsViewedSuccessAction(messageIds: messageIds)));
-    }    
+      .markMessagesAsViewed(action.messageIds)
+      .then((_) => store.dispatch(MarkMessagesAsViewedSuccessAction(messageIds: action.messageIds))); 
   }
   next(action);
 }

@@ -8,7 +8,7 @@ import 'package:my_social_app/state/app_state/create_comment_state/create_commen
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
@@ -21,6 +21,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
 import 'package:my_social_app/state/app_state/user_search_state/user_search_state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
@@ -37,6 +38,9 @@ class AppState{
   final Pagination<int,SolutionUserSaveState> solutionUserSaves;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
 
+  final EntityState<int,UserState> userEntityState;
+  final EntityState<int,UserMessageState> userMessageState;
+
   final EntityState<int,QuestionState> questionEntityState;
   final Pagination<int,Id<int>> homePageQuestions;
   final EntityState<int,ExamState> examEntityState;
@@ -46,7 +50,6 @@ class AppState{
   final bool isInitialized;
   final ActiveAccountPage activeAccountPage;
   final LoginState? loginState;
-  final EntityState<int,UserState> userEntityState;
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,CommentState> commentEntityState;
@@ -66,6 +69,9 @@ class AppState{
     required this.solutionUserSaves,
     required this.messageConnectionEntityState,
 
+    required this.userEntityState,
+    required this.userMessageState,
+
     required this.questionEntityState,
     required this.homePageQuestions,
     required this.examEntityState,
@@ -74,7 +80,6 @@ class AppState{
     required this.activeAccountPage,
     required this.loginState,
     required this.isInitialized,
-    required this.userEntityState,
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.solutionEntityState,
@@ -96,6 +101,9 @@ class AppState{
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
 
+    userEntityState: EntityState(),
+    userMessageState: EntityState(),
+
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
     examEntityState: EntityState(),
@@ -104,7 +112,6 @@ class AppState{
     activeAccountPage: ActiveAccountPage.loginPage,
     loginState: null,
     isInitialized: true,
-    userEntityState: EntityState(),
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
@@ -125,12 +132,19 @@ class AppState{
     .values
     .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last)
     .sorted((x,y) => y.id.compareTo(x.id));
+
   Iterable<MessageState> selectUserMessages(int userId)
-    => userEntityState
-        .getValue(userId)!.messages.values
-        .map((e) => e.id)
-        .map((e) => messageEntityState.getValue(e)!);
-  Iterable<num> get selectIdsOfNewComingMessages
+    => userMessageState
+        .getValue(userId)!.messageIds.values
+        .map((e) => messageEntityState.getValue(e.id)!);
+
+  Iterable<int> selectIdsOfUserUnviewedMessages(int userId)
+    => messageEntityState
+        .getList((e) => e.senderId == userId && e.state != MessageStatus.viewed)
+        .map((e) => e.id);
+        
+
+  Iterable<int> get selectIdsOfNewComingMessages
     => messageEntityState.values
         .where((e) => e.state == MessageStatus.created && e.senderId != loginState!.id)
         .map((e) => e.id);

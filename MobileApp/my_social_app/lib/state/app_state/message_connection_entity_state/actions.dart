@@ -13,15 +13,11 @@ class LoadMessageConnectionAction extends MessageConnectionAction{
   final int userId;
   const LoadMessageConnectionAction({required this.userId});
 }
+
 @immutable
-class LoadMessageConnectionSuccessAction extends MessageConnectionAction{
-  final MessageConnectionState messageConnectionState;
-  const LoadMessageConnectionSuccessAction({required this.messageConnectionState});
-}
-@immutable
-class ChangeMessageConnectionStateAction extends MessageConnectionAction{
+class UpdateMessageConnectionStateAction extends MessageConnectionAction{
   final MessageConnectionState state;
-  const ChangeMessageConnectionStateAction({
+  const UpdateMessageConnectionStateAction({
     required this.state,
   });
 }

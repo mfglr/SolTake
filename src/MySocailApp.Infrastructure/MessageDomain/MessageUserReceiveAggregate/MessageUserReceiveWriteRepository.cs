@@ -12,6 +12,9 @@ namespace MySocailApp.Infrastructure.MessageDomain.MessageUserReceiveAggregate
         public async Task CreateAsync(MessageUserReceive messageUserReceive, CancellationToken cancellationToken)
             => await _context.MessageUserReceives.AddAsync(messageUserReceive, cancellationToken);
 
+        public async Task CreateRangeAsync(IEnumerable<MessageUserReceive> messageUserRecives, CancellationToken cancellationToken)
+            => await _context.MessageUserReceives.AddRangeAsync(messageUserRecives, cancellationToken);
+
         public void Delete(MessageUserReceive messageUserReceive)
             => _context.MessageUserReceives.Remove(messageUserReceive);
 

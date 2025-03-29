@@ -61,11 +61,11 @@ class _MessageTextFieldState extends State<MessageTextField> {
             style: const TextStyle(
               fontSize: 14,
             ),
-            onChanged: (value){
+            onChanged: (value) => setState((){
               _subject.add(value);
               MessageHub().changeStateToTyping(widget.receiverId);
-            },
-
+            }),
+            
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(28.0)),
               hintText: widget.hintText,

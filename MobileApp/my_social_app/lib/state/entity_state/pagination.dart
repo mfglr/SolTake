@@ -159,6 +159,15 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
+  Pagination<K,V> prepenUniqOne(V value)
+    => Pagination<K,V>(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        values: values.any((e) => e.id.compareTo(value.id) == 0) ? values : [value, ...values],
+      );
   Pagination<K,V> appendOne(V value)
     => Pagination<K,V>(
         isLast: isLast,

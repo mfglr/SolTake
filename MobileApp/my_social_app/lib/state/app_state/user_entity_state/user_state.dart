@@ -29,7 +29,6 @@ class UserState extends BaseEntity<int> implements Avatar{
   final Pagination<int,Id<int>> solvedQuestions;
   final Pagination<int,Id<int>> unsolvedQuestions;
   final Pagination<int,Id<int>> savedSolutions;
-  final Pagination<int,Id<int>> messages;
   final Pagination<int,Id<int>> conversations;
 
   @override
@@ -64,7 +63,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     required this.solvedQuestions,
     required this.unsolvedQuestions,
     required this.savedSolutions,
-    required this.messages,
     required this.conversations,
     required this.image,
     required this.userImageState
@@ -86,7 +84,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     Pagination<int,Id<int>>? newSolvedQuestions,
     Pagination<int,Id<int>>? newUnsolvedQuestions,
     Pagination<int,Id<int>>? newSavedSolutions,
-    Pagination<int,Id<int>>? newMessages,
     Pagination<int,Id<int>>? newConversations,
     Multimedia? newImage,
     UserImageState? newUserImageState
@@ -108,7 +105,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     solvedQuestions: newSolvedQuestions ?? solvedQuestions,
     unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
     savedSolutions: newSavedSolutions ?? savedSolutions,
-    messages: newMessages ?? messages,
     conversations: newConversations ?? conversations,
     image: newImage ?? image,
     userImageState: newUserImageState ?? userImageState
@@ -237,21 +233,6 @@ class UserState extends BaseEntity<int> implements Avatar{
 
   UserState addSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(Id(id: saveId)));
   UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
-
-  //messages
-  UserState startLoadingNextMessages() =>
-    _optional(newMessages: messages.startLoadingNext());
-  UserState addNextMessages(Iterable<int> messageIds) =>
-    _optional(newMessages: messages.addNextPage(messageIds.map((e) => Id(id: e))));
-  UserState stopLoadingNextMessages() =>
-    _optional(newMessages: messages.stopLoadingNext());
-
-  UserState addMessage(int messageId) =>
-    _optional(newMessages: messages.prependOne(Id(id: messageId)));
-  UserState removeMessage(int messageId) =>
-    _optional(newMessages: messages.removeOne(messageId));
-  UserState removeMessages(Iterable<int> messageIds) =>
-    _optional(newMessages: messages.removeMany(messageIds));
 
   //converations
   UserState startLoadingNextConversations() =>

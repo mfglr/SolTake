@@ -17,5 +17,11 @@ namespace MySocailApp.Infrastructure.MessageDomain.MessageAggregate
                 .AsNoTracking()
                 .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == messageId);
+
+        public Task<int> GetMessageSenderIdAsync(int messageId, CancellationToken cancellationToken)
+            => _context.Messages
+                .Where(x => x.Id == messageId)
+                .Select(x => x.SenderId)
+                .FirstOrDefaultAsync(cancellationToken);
     }
 }

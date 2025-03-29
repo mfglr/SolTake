@@ -1,0 +1,21 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MySocailApp.Domain.MessageDomain.MessageUserViewAggregate.Abstracts;
+using MySocailApp.Infrastructure.DbContexts;
+
+namespace MySocailApp.Infrastructure.MessageDomain.MessageUserViewAggregate
+{
+    public class MessageUserViewReadRepository(AppDbContext context) : IMessageUserViewReadRepository
+    {
+        private readonly AppDbContext _context = context;
+
+        public async Task<List<int>> GetIdOfMessagesNotViewedByUser(IEnumerable<int> messageIds, int userId, CancellationToken cancellationToken)
+        {
+            var existentMessageIds =
+                await _context.MessageUserViews
+                    .Where(mur => mur.UserId == userId && messageIds.Any(messageId => mur.MessageId == messageId))
+                    .Select(x => x.MessageId)
+                    .ToListAsync(cancellationToken);
+            return messageIds.Where(x => !existentMessageIds.Any(e => x == e)).ToList();
+        }
+    }
+}

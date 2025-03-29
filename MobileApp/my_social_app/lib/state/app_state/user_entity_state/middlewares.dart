@@ -1,11 +1,9 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/follow_service.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -151,22 +149,6 @@ void nextUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher nex
       .then((followeds) => store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followeds: followeds.map((e) => e.toFollowState()))))
       .catchError((e){
         store.dispatch(NextuserFollowedsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextUserMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserMessagesAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.messages;
-    MessageService()
-      .getMessagesByUserId(action.userId, pagination.next)
-      .then((messages){
-        store.dispatch(NextUserMessagesSuccessAction(userId: action.userId,messageIds: messages.map((message) => message.id)));
-        store.dispatch(AddMessagesAction(messages: messages.map((e) => e.toMessageState())));
-      })
-      .catchError((e){
-        store.dispatch(NextUserMessagesFailedAction(userId: action.userId));
         throw e;
       });
   }

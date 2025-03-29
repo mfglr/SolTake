@@ -1,13 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/message_hub.dart';
+import 'package:my_social_app/state/app_state/user_message_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_connection_widget/message_connection_widget.dart';
@@ -16,7 +18,6 @@ import 'package:my_social_app/views/message/pages/conversation_page/widgets/mess
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
 import 'package:my_social_app/views/message/pages/display_message_images_page/display_message_images_page.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -33,6 +34,7 @@ class _ConversationPageState extends State<ConversationPage>{
   final ScrollController _scrollController = ScrollController();
   int _numberOfNewMessages = 0;
   Iterable<int> _selectedIds = [];
+  late final StreamSubscription<MessageState> _subscription;
 
   void _onLongPressed(MessageState message){
     if(!_selectedIds.any((e) => e == message.id)){
@@ -69,20 +71,19 @@ class _ConversationPageState extends State<ConversationPage>{
   void _onScrollTop(){
     if(_scrollController.hasClients && _scrollController.position.pixels == _scrollController.position.maxScrollExtent){
       final store = StoreProvider.of<AppState>(context,listen: false);
-      var pagination = store.state.userEntityState.getValue(widget.userId)!.messages;
+      var pagination = store.state.userMessageState.getValue(widget.userId)?.messageIds ?? UserMessageState.init(widget.userId).messageIds;
       getNextPageIfReady(store,pagination,NextUserMessagesAction(userId: widget.userId));
     }
   }
-  // void _onMessageReceived(MessageState message){
-  //   if(message.senderId == widget.userId){
-  //     if(!mounted) return;
-  //     final store = StoreProvider.of<AppState>(context,listen: false);
-  //     store.dispatch(MarkComingMessageAsViewedAction(messageId: message.id));
-  //     if(_scrollController.position.pixels != 0){
-  //       setState(() { _numberOfNewMessages++; });
-  //     }
-  //   }
-  // }
+  
+  void _onMessageReceived(MessageState message){
+    if(!mounted) return;
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(MarkMessagesAsViewedAction(messageIds: [message.id]));
+    if(_scrollController.position.pixels != 0){
+      setState(() { _numberOfNewMessages++; });
+    }
+  }
 
   Widget _generateMessageItem(MessageState message){
     return GestureDetector(
@@ -111,10 +112,20 @@ class _ConversationPageState extends State<ConversationPage>{
 
   @override
   void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    var messageIds = store.state.selectIdsOfUserUnviewedMessages(widget.userId);
+    MessageHub().markMessagesAsViewed(messageIds);
+
     MessageHub().changeStateToFocused(widget.userId);
 
     _scrollController.addListener(_onScrollBottom);
     _scrollController.addListener(_onScrollTop);
+
+    _subscription =
+      MessageHub().receivedMessages
+        .where((message) => message.senderId == widget.userId)
+        .listen((message) => _onMessageReceived(message));
+
     super.initState();
   }
 
@@ -122,126 +133,130 @@ class _ConversationPageState extends State<ConversationPage>{
   void dispose() {
     MessageHub().chageStateToOnline();
 
+
     _scrollController.removeListener(_onScrollBottom);
     _scrollController.removeListener(_onScrollTop);
     _scrollController.dispose();
+
+    _subscription.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, UserState?>(
-      onInit: (store) => store.dispatch(LoadUserAction(userId: widget.userId)),
-      converter: (store) => store.state.userEntityState.getValue(widget.userId),
-      builder: (context,user){
-        if(user == null) return const LoadingView();
-        return Scaffold(
-          appBar: AppBar(
-            title: _selectedIds.isEmpty
-              ? MessageConnectionWidget(userId: widget.userId)
-              : Text(_selectedIds.length.toString()),
-            leading: _selectedIds.isEmpty ? const AppBackButtonWidget() : const SpaceSavingWidget(),
-            actions: [
-              if(_selectedIds.isNotEmpty)
-                TextButton(
-                  onPressed: _clearAllSelectedIds,
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 4),
-                        child: const Icon(Icons.cancel)
-                      ),
-                      Text(AppLocalizations.of(context)!.conversation_page_delete_cancel_button)
-                    ],
-                  )
-                ),
-              if(_selectedIds.isNotEmpty)
-                TextButton(
-                  onPressed: () => 
-                    DialogCreator
-                      .showAppDialog(
-                        context,
-                        AppLocalizations.of(context)!.conversation_page_delete_dialog_title,
-                        AppLocalizations.of(context)!.conversation_page_delete_dialog_content,
-                        AppLocalizations.of(context)!.show_app_dialog_delete_button
-                      )
-                      .then((value){
-                        if(value && context.mounted){
-                          final store = StoreProvider.of<AppState>(context,listen: false);
-                          store.dispatch(RemoveMessagesAction(userId: widget.userId, messageIds: _selectedIds));
-                          _clearAllSelectedIds();
-                        }
-                      }),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 4),
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.conversation_page_delete_button,
-                        style: const TextStyle(
-                          color: Colors.red
-                        ),
-                      ),
-                    ],
-                  )
-                )
-            ],
-          ),
-          body: Stack(
-            children: [
-              Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: _selectedIds.isEmpty
+          ? MessageConnectionWidget(userId: widget.userId)
+          : Text(_selectedIds.length.toString()),
+        leading: _selectedIds.isEmpty ? const AppBackButtonWidget() : const SpaceSavingWidget(),
+        actions: [
+          if(_selectedIds.isNotEmpty)
+            TextButton(
+              onPressed: _clearAllSelectedIds,
+              child: Row(
                 children: [
-                  Expanded(
-                    child: StoreConnector<AppState,Iterable<MessageState>>(
-                      onInit: (store) => getNextPageIfNoPage(store,user.messages,NextUserMessagesAction(userId: widget.userId)),
-                      converter: (store) => store.state.selectUserMessages(widget.userId),
-                      builder: (context,messages){
-                        return SingleChildScrollView(
-                          controller: _scrollController,
-                          reverse: true,
-                          child: Column(
-                            children: [
-                              if(user.messages.loadingNext)
-                                const LoadingCircleWidget(strokeWidth: 3),
-                              ...messages.toList().reversed.map(_generateMessageItem),
-                              StoreConnector<AppState,Iterable<UploadState>>(
-                                converter: (store) => store.state.uploadEntityState.getUploadMessages(widget.userId),
-                                builder: (context,items) => UploadItems(items: items),
-                              )
-                            ]
-                          )
-                        );
-                      }
+                  Container(
+                    margin: const EdgeInsets.only(right: 4),
+                    child: const Icon(Icons.cancel)
+                  ),
+                  Text(AppLocalizations.of(context)!.conversation_page_delete_cancel_button)
+                ],
+              )
+            ),
+          if(_selectedIds.isNotEmpty)
+            TextButton(
+              onPressed: () => 
+                DialogCreator
+                  .showAppDialog(
+                    context,
+                    AppLocalizations.of(context)!.conversation_page_delete_dialog_title,
+                    AppLocalizations.of(context)!.conversation_page_delete_dialog_content,
+                    AppLocalizations.of(context)!.show_app_dialog_delete_button
+                  )
+                  .then((value){
+                    if(value && context.mounted){
+                      final store = StoreProvider.of<AppState>(context,listen: false);
+                      store.dispatch(RemoveMessagesAction(userId: widget.userId, messageIds: _selectedIds));
+                      _clearAllSelectedIds();
+                    }
+                  }),
+              child: Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 4),
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5,5,5,20),
-                    child: MessageTextField(
-                      hintText: AppLocalizations.of(context)!.conversation_page_message_field_hint_text,
-                      scrollController: _scrollController,
-                      receiverId: widget.userId,
+                  Text(
+                    AppLocalizations.of(context)!.conversation_page_delete_button,
+                    style: const TextStyle(
+                      color: Colors.red
                     ),
                   ),
                 ],
+              )
+            )
+        ],
+      ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Expanded(
+                child: StoreConnector<AppState,Iterable<MessageState>>(
+                  onInit: (store) => getNextPageIfNoPage(
+                    store,
+                    store.state.userMessageState.getValue(widget.userId)?.messageIds ?? UserMessageState.init(widget.userId).messageIds,
+                    NextUserMessagesAction(userId: widget.userId)
+                  ),
+                  converter: (store) => store.state.selectUserMessages(widget.userId),
+                  builder: (context, messages){
+                    return SingleChildScrollView(
+                      controller: _scrollController,
+                      reverse: true,
+                      child: Column(
+                        children: [
+                          StoreConnector<AppState,bool?>(
+                            converter: (store) => store.state.userMessageState.getValue(widget.userId)?.messageIds.loadingNext,
+                            builder: (context, loadinNext) => loadinNext == null || loadinNext
+                              ? const LoadingCircleWidget(strokeWidth: 3)
+                              : const SpaceSavingWidget()
+                          ),
+                          ...messages.toList().reversed.map(_generateMessageItem),
+                          StoreConnector<AppState,Iterable<UploadState>>(
+                            converter: (store) => store.state.uploadEntityState.getUploadMessages(widget.userId),
+                            builder: (context,items) => UploadItems(items: items),
+                          )
+                        ]
+                      )
+                    );
+                  }
+                ),
               ),
-              if(_numberOfNewMessages > 0)
-                Positioned(
-                  left: 5,
-                  top: 15,
-                  child: ScrollToBottomButton(
-                    numberOfNewMessages: _numberOfNewMessages,
-                    scrollController: _scrollController
-                  )
-                )
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5,5,5,20),
+                child: MessageTextField(
+                  hintText: AppLocalizations.of(context)!.conversation_page_message_field_hint_text,
+                  scrollController: _scrollController,
+                  receiverId: widget.userId,
+                ),
+              ),
             ],
           ),
-        );
-      }
+          if(_numberOfNewMessages > 0)
+            Positioned(
+              left: 5,
+              top: 15,
+              child: ScrollToBottomButton(
+                numberOfNewMessages: _numberOfNewMessages,
+                scrollController: _scrollController
+              )
+            )
+        ],
+      ),
     );
   }
 }

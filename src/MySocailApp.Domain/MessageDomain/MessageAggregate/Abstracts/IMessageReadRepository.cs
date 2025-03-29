@@ -6,5 +6,7 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts
     {
         Task<bool> ExistAsync(int messageId, CancellationToken cancellationToken);
         Task<Message?> GetByIdAsync(int messageId, CancellationToken cancellationToken);
+        Task<int> GetMessageSenderIdAsync(int messageId, CancellationToken cancellationToken);
+
     }
 }

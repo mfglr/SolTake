@@ -37,22 +37,10 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         public void Create(string userName, Multimedia? image)
         {
             CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new MessageCreatedDomainEvent(this,userName,image));
+            AddDomainEvent(new MessageCreatedDomainEvent(this, userName, image));
         }
 
         public IEnumerable<int> UserIds => [ SenderId, ReceiverId ];
-
-        private readonly List<MessageUserView> _viewers = [];
-        public IReadOnlyCollection<MessageUserView> Viewers => _viewers;
         
-        public void MarkAsViewed(int viewerId)
-        {
-            //if (viewerId != ReceiverId)
-            //    throw new PermissionDeniedToChangeStateOfMessageException();
-            if (_viewers.Any(x => x.UserId == viewerId))
-                throw new MessageAlreadyMarkedAsViewedException();
-            _viewers.Add(MessageUserView.Create(viewerId));
-            AddDomainEvent(new MessageMarkedAsViewedDomainEvent(this));
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.Queries.MessageDomain;
 using MySocailApp.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.MessageDomain.GetMessagesByUserId

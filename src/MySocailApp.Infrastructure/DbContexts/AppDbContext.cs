@@ -7,6 +7,7 @@ using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageUserReceiveAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Entities;
+using MySocailApp.Domain.MessageDomain.MessageUserViewAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities;
@@ -68,7 +69,8 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<MessageUserRemove> MessageUserRemoves { get; private set; }
         public DbSet<MessageConnection> MessageConnections { get; private set; }
         public DbSet<MessageUserReceive> MessageUserReceives { get; private set; }
-        
+        public DbSet<MessageUserView> MessageUserViews { get; private set; }
+
         public DbSet<AppVersion> AppVersions { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.Queries.MessageDomain;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
 
@@ -17,8 +16,10 @@ namespace MySocailApp.Application.Queries.MessageDomain.GetMessageById
             var message =
                 await _messageQueryRepository.GetMessageByIdAsync(accountId, request.MessageId, cancellationToken) ??
                 throw new MessageNotFoundException();
+
             if (message.SenderId != accountId && message.ReceiverId != accountId)
                 throw new PermissionDeinedToAccessMessageException();
+            
             return message;
         }
     }

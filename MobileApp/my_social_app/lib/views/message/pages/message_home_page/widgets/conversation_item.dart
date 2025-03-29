@@ -73,8 +73,7 @@ class ConversationItem extends StatelessWidget {
                   ],
                 ),
                 StoreConnector<AppState,int>(
-                  converter: (store) => //store.state.messageEntityState.selectNumberOfUnviewedMessagesOfUser(message.conversationId),
-                  0,
+                  converter: (store) => store.state.selectIdsOfUserUnviewedMessages(message.conversationId).length,
                   builder: (context,count){
                     if(count > 0) return Text(count.toString());
                     return const SizedBox.shrink();

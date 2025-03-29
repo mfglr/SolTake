@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_stataus.dart';
+import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
@@ -71,5 +71,4 @@ class MessageState extends BaseEntity<int> implements Avatar{
 
   MessageState markAsReceived() => _optinal(newState: state != MessageStatus.viewed ? MessageStatus.received : state);
   MessageState markAsViewed() => _optinal(newState: MessageStatus.viewed);
-  
 }

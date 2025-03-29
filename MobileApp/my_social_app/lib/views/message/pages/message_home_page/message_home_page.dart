@@ -45,7 +45,7 @@ class _MessageHomePageState extends State<MessageHomePage> {
         .of(context)
         .push(MaterialPageRoute(builder: (context) => ConversationPage(userId: conversationId)));
       final store = StoreProvider.of<AppState>(context,listen: false);
-      store.dispatch(MarkComingMessagesAsViewedAction(userId: conversationId));
+      store.dispatch(MarkMessagesAsViewedAction(messageIds: store.state.selectIdsOfUserUnviewedMessages(conversationId)));
     }
   }
 
@@ -64,7 +64,7 @@ class _MessageHomePageState extends State<MessageHomePage> {
         AppLocalizations.of(context)!.message_home_page_content_aprove_button
       )
       .then((response){
-        if(response){
+        if(response && mounted){
           final store = StoreProvider.of<AppState>(context,listen: false);
           store.dispatch(RemoveMessagesByUserIdsAction(userIds: _selectedConversations));
         }

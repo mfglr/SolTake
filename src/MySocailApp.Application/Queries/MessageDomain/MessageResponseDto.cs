@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Queries.MessageDomain
         public int ReceiverId { get; private set; } = receiverId;
         public bool IsEdited { get; private set; } = isEdited;
         public string? Content { get; private set; } = content;
-        public MessageState state { get; private set; } = state;
+        public MessageState State { get; private set; } = state;
         public IEnumerable<MessageMultimediaResponseDto> Medias { get; private set; } = medias;
         public Multimedia? Multimedia { get; private set; } = multimedia;
 

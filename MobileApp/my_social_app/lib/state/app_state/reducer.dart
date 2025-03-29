@@ -23,6 +23,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/user_message_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/reducers.dart';
@@ -39,10 +40,12 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   solutionUserSaves: solutionUserSavesReducers(prev.solutionUserSaves,action),
   messageConnectionEntityState: messageConnectionsReducers(prev.messageConnectionEntityState,action),
 
+  userEntityState: userEntityStateReducers(prev.userEntityState, action),
+  userMessageState: userMessageReducers(prev.userMessageState, action),
+
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   loginState: accoutStateReducers(prev.loginState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
-  userEntityState: userEntityStateReducers(prev.userEntityState, action),
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),

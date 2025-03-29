@@ -3,6 +3,7 @@ using MySocailApp.Infrastructure.MessageDomain.MessageAggregate;
 using MySocailApp.Infrastructure.MessageDomain.MessageConnectionAggregate;
 using MySocailApp.Infrastructure.MessageDomain.MessageUserReceiveAggregate;
 using MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate;
+using MySocailApp.Infrastructure.MessageDomain.MessageUserViewAggregate;
 
 namespace MySocailApp.Infrastructure.MessageDomain
 {
@@ -13,6 +14,7 @@ namespace MySocailApp.Infrastructure.MessageDomain
                 .AddMessageAggregateInfrastructreServices()
                 .AddMessageConnectionAggregateInfrastructureServices()
                 .AddMessageUserReceiveAggregateInfrastructureServices()
-                .AddMessageUserRemoveAggregateInfrastructureServices();
+                .AddMessageUserRemoveAggregateInfrastructureServices()
+                .AddMessageUserViewAggregateInfrastructureServices();
     }
 }

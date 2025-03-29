@@ -48,16 +48,16 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .OrderByDescending(x => x.OrderBy(x => x.Id).Last().Id)
                 .Select(x => x.OrderBy(x => x.Id).Last());
 
-        public Task<List<MessageResponseDto>> GetUnviewedMessagesAsync(int accountId, CancellationToken cancellationToken)
+        public Task<List<MessageResponseDto>> GetUnviewedMessagesAsync(int userId, CancellationToken cancellationToken)
             => _context.Messages
                 .AsNoTracking()
                 .Where(
                     x =>
-                        x.ReceiverId == accountId && 
-                        x.Viewers.Count == 0 &&
-                        !_context.MessageUserRemoves.Any(mur => mur.MessageId == x.Id && mur.UserId == accountId)
+                        x.ReceiverId == userId &&
+                        _context.MessageUserViews.Count(muv => muv.MessageId == x.Id) == 0 &&
+                        !_context.MessageUserRemoves.Any(mur => mur.MessageId == x.Id && mur.UserId == userId)
                 )
-                .ToMessageResponseDto(_context, accountId)
+                .ToMessageResponseDto(_context, userId)
                 .ToListAsync(cancellationToken);
     }
 }

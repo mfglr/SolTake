@@ -41,11 +41,6 @@ class AddMessagesAction extends AppAction{
   const AddMessagesAction({required this.messages});
 }
 @immutable
-class AddMessagesListsAction extends AppAction{
-  final Iterable<Iterable<MessageState>> lists;
-  const AddMessagesListsAction({required this.lists});
-}
-@immutable
 class RemoveMessageAction extends AppAction{
   final int messageId;
   const RemoveMessageAction({required this.messageId});
@@ -83,43 +78,31 @@ class GetUnviewedMessagesAction extends AppAction{
 }
 
 @immutable
-class MarkComingMessageAsReceivedAction extends AppAction{
+class MarkMessagesAsReceivedAction extends AppAction{
+  final Iterable<int> messageIds;
+  const MarkMessagesAsReceivedAction({required this.messageIds});
+}
+
+@immutable
+class MarkMessagesAsReceivedSuccessAction extends AppAction{
+  final Iterable<int> messageIds;
+  const MarkMessagesAsReceivedSuccessAction({required this.messageIds});
+}
+
+@immutable
+class MarkMessageAsViewedAction extends AppAction{
   final int messageId;
-  const MarkComingMessageAsReceivedAction({required this.messageId});
-}
-@immutable
-class MarkComingMessagesAsReceivedAction extends AppAction{
-  const MarkComingMessagesAsReceivedAction();
-}
-@immutable
-class MarkComingMessagesAsReceivedSuccessAction extends AppAction{
-  final Iterable<num> messageIds;
-  const MarkComingMessagesAsReceivedSuccessAction({required this.messageIds});
+  const MarkMessageAsViewedAction({required this.messageId});
 }
 
 @immutable
-class MarkComingMessageAsViewedAction extends AppAction{
-  final num messageId;
-  const MarkComingMessageAsViewedAction({required this.messageId});
-}
-@immutable
-class MarkComingMessagesAsViewedAction extends AppAction{
-  final num userId;
-  const MarkComingMessagesAsViewedAction({required this.userId});
-}
-@immutable
-class MarkComingMessagesAsViewedSuccessAction extends AppAction{
-  final Iterable<num> messageIds;
-  const MarkComingMessagesAsViewedSuccessAction({required this.messageIds});
+class MarkMessagesAsViewedAction extends AppAction{
+  final Iterable<int> messageIds;
+  const MarkMessagesAsViewedAction({required this.messageIds});
 }
 
 @immutable
-class MarkOutgoingMessageAsReceivedAction extends AppAction{
-  final MessageState message;
-  const MarkOutgoingMessageAsReceivedAction({required this.message});
-}
-@immutable
-class MarkOutgoingMessageAsViewedAction extends AppAction{
-  final MessageState message;
-  const MarkOutgoingMessageAsViewedAction({required this.message});
+class MarkMessagesAsViewedSuccessAction extends AppAction{
+  final Iterable<int> messageIds;
+  const MarkMessagesAsViewedSuccessAction({required this.messageIds});
 }

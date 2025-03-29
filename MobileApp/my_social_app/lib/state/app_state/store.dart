@@ -25,6 +25,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/user_message_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
@@ -41,6 +42,9 @@ final store = Store(
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
 
+    userEntityState: EntityState(),
+    userMessageState: EntityState(),
+
     questionEntityState: EntityState(),
     homePageQuestions: Pagination.init(questionsPerPage, true),
     examEntityState: EntityState(),
@@ -48,7 +52,6 @@ final store = Store(
     activeAccountPage: ActiveAccountPage.loginPage,
     loginState: null,
     isInitialized: false,
-    userEntityState: EntityState(),
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
@@ -125,6 +128,9 @@ final store = Store(
     loadMessageConnectionMiddleware,
     //
 
+    //message
+    nextUserMessagesMiddleware,
+
     //user entity state
     loadUserMiddleware,
     loadUserByUserNameMiddleware,
@@ -135,7 +141,6 @@ final store = Store(
 
     nextUserFollowersMiddleware,
     nextUserFollowedsMiddleware,
-    nextUserMessagesMiddleware,
     nextUserQuestionsMiddleware,
     nextUserSolvedQuestionsMiddleware,
     nextUserUnsolvedQuestionsMiddleware,
@@ -215,10 +220,8 @@ final store = Store(
     //message
     createMessageWithMediasMiddleware,
     createMessageMiddleware,
-    markComingMessageAsReceivedMiddleware,
-    markComingMessageAsViewedMiddleware,
-    markComingMessagesAsReceivedMiddleware,
-    markComingMessagesAsViewedMiddleware,
+    markMessagesAsReceivedMiddleware,
+    markMessagesAsViewedMiddleware,
     getUnviewedMessagesMiddleware,
     loadMessageMiddleware,
     removeMessageMiddleware,

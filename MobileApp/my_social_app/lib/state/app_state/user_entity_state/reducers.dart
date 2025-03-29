@@ -137,21 +137,6 @@ EntityState<int,UserState> nextUnsolvedQuestionsSuccessReducer(EntityState<int,U
 EntityState<int,UserState> nextUnsolvedQuestionsFailedReducer(EntityState<int,UserState> prev, NextUserUnsolvedQuestionsFailedAction action)
   => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextUnsolvedQuestion());
 
-//messages
-EntityState<int,UserState> nextMessagesReducer(EntityState<int,UserState> prev,NextUserMessagesAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.startLoadingNextMessages());
-EntityState<int,UserState> nextMessagesSuccessReducer(EntityState<int,UserState> prev,NextUserMessagesSuccessAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.addNextMessages(action.messageIds));
-EntityState<int,UserState> nextMessagesFailedReducer(EntityState<int,UserState> prev,NextUserMessagesFailedAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextMessages());
-
-EntityState<int,UserState> addMessageReducer(EntityState<int, UserState> prev, AddUserMessageAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.addMessage(action.messageId));
-EntityState<int,UserState> removeMessageReducer(EntityState<int,UserState> prev,RemoveUserMessageAction action)
-  => prev.updateOne(prev.getValue(action.messageId)!.removeMessage(action.messageId));
-EntityState<int,UserState> removeMessagesReducer(EntityState<int,UserState> prev,RemoveUserMessagesAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.removeMessages(action.messageIds));
-
 // //conversations
 // EntityState<num,UserState> nextConversationsReducer(EntityState<num,UserState> prev,NextUserConversationsAction action)
 //   => prev.startLoadingNextConversations(action.userId);
@@ -224,16 +209,7 @@ Reducer<EntityState<int,UserState>> userEntityStateReducers = combineReducers<En
   TypedReducer<EntityState<int,UserState>,NextUserUnsolvedQuestionsAction>(nextUnsolvedQuestionsReducer).call,
   TypedReducer<EntityState<int,UserState>,NextUserUnsolvedQuestionsSuccessAction>(nextUnsolvedQuestionsSuccessReducer).call,
   TypedReducer<EntityState<int,UserState>,NextUserUnsolvedQuestionsFailedAction>(nextUnsolvedQuestionsFailedReducer).call,
- 
-  //messages
-  TypedReducer<EntityState<int,UserState>,NextUserMessagesAction>(nextMessagesReducer).call,
-  TypedReducer<EntityState<int,UserState>,NextUserMessagesSuccessAction>(nextMessagesSuccessReducer).call,
-  TypedReducer<EntityState<int,UserState>,NextUserMessagesFailedAction>(nextMessagesFailedReducer).call,
   
-  TypedReducer<EntityState<int,UserState>,AddUserMessageAction>(addMessageReducer).call,
-  TypedReducer<EntityState<int,UserState>,RemoveUserMessageAction>(removeMessageReducer).call,
-  TypedReducer<EntityState<int,UserState>,RemoveUserMessagesAction>(removeMessagesReducer).call,
-
   // //conversations
   // TypedReducer<EntityState<num,UserState>,NextUserConversationsAction>(nextConversationsReducer).call,
   // TypedReducer<EntityState<num,UserState>,NextUserConversationsSuccessAction>(nextConversationsSuccessReducer).call,
