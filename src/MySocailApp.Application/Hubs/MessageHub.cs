@@ -9,9 +9,12 @@ using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.
 using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub;
 using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub;
 using MySocailApp.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived;
-using MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.Create;
+using MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessages;
+using MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessagesByUserIds;
 using MySocailApp.Application.Commands.MessageDomain.MessageUserViewAggregate.MarkMessagesAsViewed;
 using MySocailApp.Application.Queries.MessageDomain;
+using MySocailApp.Application.Queries.MessageDomain.GetConversations;
+using MySocailApp.Application.Queries.MessageDomain.GetMessageById;
 using MySocailApp.Application.Queries.MessageDomain.GetMessageConnection;
 using MySocailApp.Application.Queries.MessageDomain.GetMessagesByUserId;
 using MySocailApp.Application.Queries.MessageDomain.GetUnviewedMessages;
@@ -36,7 +39,11 @@ namespace MySocailApp.Application.Hubs
 
         public async Task<CreateMessageResponseDto> CreateMessage(CreateMessageDto request)
             => await _sender.Send(request);
-        public async Task DeleteMessage(CreateMessageUserRemoveDto request)
+
+        public async Task RemoveMessages(RemoveMessagesDto request)
+            => await _sender.Send(request);
+
+        public async Task RemoveMessagesByUserIds(RemoveMessagesByUserIdsDto request)
             => await _sender.Send(request);
 
         public async Task MarkMessagesAsReceived(MarkMessagesAsReceivedDto request)
@@ -46,13 +53,19 @@ namespace MySocailApp.Application.Hubs
             => await _sender.Send(request);
 
         //queries
-        public async Task<MessageConnectionResponseDto> GetById(GetMessageConnectionDto request)
+        public async Task<MessageConnectionResponseDto> GetMessageConnectionById(GetMessageConnectionDto request)
+            => await _sender.Send(request);
+
+        public async Task<MessageResponseDto> GetMessageById(GetMessageByIdDto request)
             => await _sender.Send(request);
 
         public async Task<List<MessageResponseDto>> GetByUserId(GetMessagesByUserIdDto request)
             => await _sender.Send(request);
 
         public async Task<List<MessageResponseDto>> GetUnviewedMessages(GetUnviewedMessagesDto request)
+            => await _sender.Send(request);
+
+        public async Task<IEnumerable<MessageResponseDto>> GetConversations(GetConversationsDto request)
             => await _sender.Send(request);
     }
 }

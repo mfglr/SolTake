@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers
+namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.BlobService
 {
     public class DeleteMedias(IBlobService blobService) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {

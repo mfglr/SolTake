@@ -5,6 +5,7 @@ namespace MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Abstracts
     public interface IMessageUserRemoveWriteRepository
     {
         Task CreateAsync(MessageUserRemove messageUserRemove,CancellationToken cancellationToken);
+        Task CreateRangeAsync(IEnumerable<MessageUserRemove> messageUserRemoves,CancellationToken cancellationToken);
         void Delete(MessageUserRemove messageUserRemove);
         void DeleteRange(IEnumerable<MessageUserRemove> messageUserRemoves);
 

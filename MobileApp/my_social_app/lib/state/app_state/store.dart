@@ -224,7 +224,6 @@ final store = Store(
     markMessagesAsViewedMiddleware,
     getUnviewedMessagesMiddleware,
     loadMessageMiddleware,
-    removeMessageMiddleware,
     removeMessagesMiddleware,
     removeMessagesByUserIdsMiddleware,
  

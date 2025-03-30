@@ -18,7 +18,9 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageCreatedDomainEvent
             var receiver = await _messageConnectionReadRepository.GetById(notification.Message.ReceiverId, cancellationToken);
             if (receiver == null || receiver.State == MessageConnectionState.Ofline) return;
 
-            await _messageHub.Clients.Client(receiver.ConnectionId).SendAsync("receiveMessage", MessageResponseDto.Create(notification),cancellationToken);
+            var message = MessageResponseDto.Create(notification);
+            await _messageHub.Clients.Client(receiver.ConnectionId).SendAsync("receiveMessage", message, cancellationToken);
+            await _messageHub.Clients.Client(receiver.ConnectionId).SendAsync("receiveMessage1", message, cancellationToken);
         }
     }
 }

@@ -40,21 +40,17 @@ class AddMessagesAction extends AppAction{
   final Iterable<MessageState> messages;
   const AddMessagesAction({required this.messages});
 }
-@immutable
-class RemoveMessageAction extends AppAction{
-  final int messageId;
-  const RemoveMessageAction({required this.messageId});
-}
-@immutable
-class RemoveMessageSuccessAction extends AppAction{
-  final int messageId;
-  const RemoveMessageSuccessAction({required this.messageId});
-}
+
 @immutable
 class RemoveMessagesAction extends AppAction{
   final int userId;
   final Iterable<int> messageIds;
-  const RemoveMessagesAction({required this.userId, required this.messageIds});
+  final bool everyone;
+  const RemoveMessagesAction({
+    required this.userId,
+    required this.messageIds,
+    required this.everyone
+  });
 }
 @immutable
 class RemoveMessagesSuccessAction extends AppAction{

@@ -5,12 +5,10 @@ import 'package:my_social_app/models/message.dart';
 import 'package:my_social_app/models/message_connection.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/actions.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:redux/redux.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
@@ -18,7 +16,6 @@ import 'package:signalr_netcore/hub_connection_builder.dart';
 class MessageHub{
   late final HubConnection _hubConnection;
   String? _acessToken;
-  final receivedMessages = BehaviorSubject<MessageState>();
 
   MessageHub._(Store<AppState> store){
     _hubConnection =
@@ -68,7 +65,6 @@ class MessageHub{
         receiveMessage,
         (list){
           final messageState = Message.fromJson((list!.first as dynamic)).toMessageState();
-          receivedMessages.add(messageState);
           store.dispatch(AddMessageAction(message: messageState));
           store.dispatch(AddUserMessageAction(userId: messageState.senderId, messageId: messageState.id));
           store.dispatch(MarkMessagesAsReceivedAction(messageIds: [messageState.id]));
@@ -86,7 +82,28 @@ class MessageHub{
         messageViewedNotification,
         (list) => store.dispatch(MarkMessagesAsViewedSuccessAction(messageIds: [list!.first as int]))
       );
+
+    _hubConnection
+      .on(
+        removeMessagesNotification,
+        (list){
+          var messageIds = list!.map((e) => e as int);
+          for(var messageId in messageIds){
+            var message = store.state.messageEntityState.getValue(messageId);
+            if(message != null){
+              store.dispatch(RemoveUserMessagesAction(userId: message.conversationId, messageIds: [messageId]));
+            }
+          }
+          store.dispatch(RemoveMessagesSuccessAction(messageIds: messageIds));
+        }
+      );
   }
+
+  void onReceivedMessage(void Function(Message) callback)
+    => _hubConnection
+        .on(receiveMessage1, (list) => callback(Message.fromJson((list!.first as dynamic))));
+  void offReceivedMessage() => _hubConnection.off(receiveMessage1);
+
 
   void _off(){
     _hubConnection.off(changeMessageConnectionState);
@@ -107,6 +124,14 @@ class MessageHub{
     => _hubConnection
         .invoke("CreateMessage", args: [{'receiverId': receiverId, 'content': content}])
         .then((response) => Message.fromJson(response as dynamic));
+
+  Future<void> removeMessages(Iterable<int> messageIds, bool everyone)
+    => _hubConnection
+        .invoke("RemoveMessages", args: [{ 'messageIds': messageIds.toList(), 'everyone': everyone }]);
+  
+  Future<void> removeMessagesByUserIds(Iterable<int> userIds)
+    => _hubConnection
+        .invoke("RemoveMessagesByUserIds", args: [{ 'userIds': userIds}]);
   
   Future changeStateToFocused(int userId)
     => _hubConnection
@@ -119,7 +144,6 @@ class MessageHub{
   Future chageStateToOnline()
     => _hubConnection
         .invoke("ChangeStateToOnline");
-  
  
   Future<void> markMessagesAsReceived(Iterable<int> ids)
     => _hubConnection
@@ -129,11 +153,16 @@ class MessageHub{
     => _hubConnection
         .invoke("MarkMessagesAsViewed",args: [{'messageIds': ids.toList()}]);
 
-  Future<MessageConnection> getById(int userId)
+  Future<MessageConnection> getMessageConnectionById(int userId)
     => _hubConnection
-        .invoke("GetById", args: [{'id': userId}])
+        .invoke("GetMessageConnectionById", args: [{'id': userId}])
         .then((json) => MessageConnection.fromJson(json as dynamic));
-        
+  
+  Future<Message> getMessageById(int messageId)
+    => _hubConnection
+        .invoke("GetMessageById",args: [{'messageId': messageId}])
+        .then((json) => Message.fromJson(json as dynamic));
+
   Future<Iterable<Message>> getByUserId(int userId,Page page)
     => _hubConnection
         .invoke("GetByUserId",args: [{'userId': userId, 'offset': page.offset, 'take': page.take, 'isDescending': page.isDescending}])
@@ -143,6 +172,12 @@ class MessageHub{
   Future<Iterable<Message>> getUnviewedMessages()
     => _hubConnection
         .invoke("GetUnviewedMessages",args: [{}])
+        .then((json) => json as Iterable)
+        .then((list) => list.map((e) => Message.fromJson(e)));
+
+  Future<Iterable<Message>> getConversations(Page page)
+    => _hubConnection
+        .invoke("GetConversations", args: [{'offset': page.offset, 'take': page.take, 'isDescending': page.isDescending}])
         .then((json) => json as Iterable)
         .then((list) => list.map((e) => Message.fromJson(e)));
 }

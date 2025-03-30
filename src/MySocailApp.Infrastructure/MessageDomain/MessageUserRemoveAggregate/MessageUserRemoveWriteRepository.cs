@@ -12,6 +12,9 @@ namespace MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate
         public async Task CreateAsync(MessageUserRemove messageUserRemove, CancellationToken cancellationToken)
             => await _context.MessageUserRemoves.AddAsync(messageUserRemove, cancellationToken);
 
+        public async Task CreateRangeAsync(IEnumerable<MessageUserRemove> messageUserRemoves, CancellationToken cancellationToken)
+            => await _context.MessageUserRemoves.AddRangeAsync(messageUserRemoves, cancellationToken);
+
         public void Delete(MessageUserRemove messageUserRemove)
             => _context.MessageUserRemoves.Remove(messageUserRemove);
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/message_hub.dart';
@@ -10,8 +9,9 @@ import 'package:my_social_app/state/app_state/message_entity_state/actions.dart'
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
-import 'package:my_social_app/utilities/dialog_creator.dart';
 import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/enums/message_deletion_type.dart';
+import 'package:my_social_app/views/message/pages/conversation_page/widgets/delete_messages_dialog/delete_messages_dialog.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_connection_widget/message_connection_widget.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_item.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_text_field.dart';
@@ -30,20 +30,25 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage>{
-  
+
   final ScrollController _scrollController = ScrollController();
   int _numberOfNewMessages = 0;
-  Iterable<int> _selectedIds = [];
-  late final StreamSubscription<MessageState> _subscription;
+  Iterable<MessageState> _selectedMessages = [];
+
+  Future<MessageDeletionType?> _createDialog(BuildContext context)
+    => showDialog(
+        context: context,
+        builder: (context) => DeleteMessagesDialog(messages: _selectedMessages,)
+      );
 
   void _onLongPressed(MessageState message){
-    if(!_selectedIds.any((e) => e == message.id)){
-      setState(() { _selectedIds = [..._selectedIds, message.id]; });
+    if(!_selectedMessages.any((e) => e.id == message.id)){
+      setState(() { _selectedMessages = [..._selectedMessages, message]; });
     }
   }
   void _onPressed(MessageState message,{int activeIndex = 0}){
-    if(_selectedIds.isEmpty && message.medias.isEmpty) return;
-    if(_selectedIds.isEmpty && message.medias.isNotEmpty){
+    if(_selectedMessages.isEmpty && message.medias.isEmpty) return;
+    if(_selectedMessages.isEmpty && message.medias.isNotEmpty){
       Navigator
         .of(context)
         .push(
@@ -56,13 +61,13 @@ class _ConversationPageState extends State<ConversationPage>{
         );
       return;
     }
-    if(_selectedIds.any((e) => e == message.id)){
-      setState(() { _selectedIds = _selectedIds.where((e) => e != message.id); });
+    if(_selectedMessages.any((e) => e.id == message.id)){
+      setState(() { _selectedMessages = _selectedMessages.where((e) => e.id != message.id); });
       return;
     }
-    setState(() { _selectedIds = [..._selectedIds, message.id]; });
+    setState(() { _selectedMessages = [..._selectedMessages, message]; });
   }
-  void _clearAllSelectedIds() => setState(() { _selectedIds = []; });
+  void _clearAllSelectedIds() => setState(() { _selectedMessages = []; });
   void _onScrollBottom(){
     if(_scrollController.position.pixels == 0){
       setState(() { _numberOfNewMessages = 0; });
@@ -77,7 +82,9 @@ class _ConversationPageState extends State<ConversationPage>{
   }
   
   void _onMessageReceived(MessageState message){
-    if(!mounted) return;
+    
+    if(message.senderId != widget.userId || !mounted) return;
+
     final store = StoreProvider.of<AppState>(context,listen: false);
     store.dispatch(MarkMessagesAsViewedAction(messageIds: [message.id]));
     if(_scrollController.position.pixels != 0){
@@ -90,7 +97,7 @@ class _ConversationPageState extends State<ConversationPage>{
       onTap: () => _onPressed(message),
       onLongPress: () => _onLongPressed(message),
       child: Container(
-        color: _selectedIds.any((e) => e == message.id) ? Colors.black.withAlpha(102) : null,
+        color: _selectedMessages.any((e) => e.id == message.id) ? Colors.black.withAlpha(102) : null,
         margin: const EdgeInsets.only(bottom: 10),
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -121,10 +128,7 @@ class _ConversationPageState extends State<ConversationPage>{
     _scrollController.addListener(_onScrollBottom);
     _scrollController.addListener(_onScrollTop);
 
-    _subscription =
-      MessageHub().receivedMessages
-        .where((message) => message.senderId == widget.userId)
-        .listen((message) => _onMessageReceived(message));
+    MessageHub().onReceivedMessage((message) => _onMessageReceived(message.toMessageState()));
 
     super.initState();
   }
@@ -133,12 +137,11 @@ class _ConversationPageState extends State<ConversationPage>{
   void dispose() {
     MessageHub().chageStateToOnline();
 
-
     _scrollController.removeListener(_onScrollBottom);
     _scrollController.removeListener(_onScrollTop);
     _scrollController.dispose();
 
-    _subscription.cancel();
+    MessageHub().offReceivedMessage();
     super.dispose();
   }
 
@@ -146,12 +149,12 @@ class _ConversationPageState extends State<ConversationPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: _selectedIds.isEmpty
+        title: _selectedMessages.isEmpty
           ? MessageConnectionWidget(userId: widget.userId)
-          : Text(_selectedIds.length.toString()),
-        leading: _selectedIds.isEmpty ? const AppBackButtonWidget() : const SpaceSavingWidget(),
+          : Text(_selectedMessages.length.toString()),
+        leading: _selectedMessages.isEmpty ? const AppBackButtonWidget() : const SpaceSavingWidget(),
         actions: [
-          if(_selectedIds.isNotEmpty)
+          if(_selectedMessages.isNotEmpty)
             TextButton(
               onPressed: _clearAllSelectedIds,
               child: Row(
@@ -164,22 +167,25 @@ class _ConversationPageState extends State<ConversationPage>{
                 ],
               )
             ),
-          if(_selectedIds.isNotEmpty)
+          if(_selectedMessages.isNotEmpty)
             TextButton(
-              onPressed: () => 
-                DialogCreator
-                  .showAppDialog(
-                    context,
-                    AppLocalizations.of(context)!.conversation_page_delete_dialog_title,
-                    AppLocalizations.of(context)!.conversation_page_delete_dialog_content,
-                    AppLocalizations.of(context)!.show_app_dialog_delete_button
-                  )
+              onPressed: () =>
+                _createDialog(context)
                   .then((value){
-                    if(value && context.mounted){
-                      final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(RemoveMessagesAction(userId: widget.userId, messageIds: _selectedIds));
+                    if(value == null || !context.mounted) return;
+                    if(value == MessageDeletionType.cancel){
                       _clearAllSelectedIds();
+                      return;
                     }
+                    final store = StoreProvider.of<AppState>(context,listen: false);
+                    store.dispatch(
+                      RemoveMessagesAction(
+                        userId: widget.userId,
+                        messageIds: _selectedMessages.map((e) => e.id),
+                        everyone: value == MessageDeletionType.deleteFromEveryone ? true : false
+                      )
+                    );
+                    _clearAllSelectedIds();
                   }),
               child: Row(
                 children: [

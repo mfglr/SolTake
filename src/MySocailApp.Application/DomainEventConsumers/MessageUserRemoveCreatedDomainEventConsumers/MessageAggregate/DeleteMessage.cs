@@ -22,10 +22,11 @@ namespace MySocailApp.Application.DomainEventConsumers.MessageUserRemoveCreatedD
             if (message != null && await _messageUserRemoveReadRepository.IsDeletedAllUsersAsync(notification.MessageUserRemove.MessageId,cancellationToken))
             {
                 _messageWriteRepository.Delete(message);
+                await _unitOfWork.CommitAsync(cancellationToken);
+                
                 await _publisher.Publish(new MessageDeletedDomainEvent(message));
             }
 
-            await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

@@ -46,7 +46,7 @@ void createMessageWithMediasMiddleware(Store<AppState> store,action,NextDispatch
 void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadMessageAction){
     if(store.state.messageEntityState.getValue(action.messageId) == null){
-      MessageService()
+      MessageHub()
         .getMessageById(action.messageId)
         .then((message) => store.dispatch(AddMessageAction(message: message.toMessageState())));
     }
@@ -54,26 +54,10 @@ void loadMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void removeMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is RemoveMessageAction){
-    final message = store.state.messageEntityState.getValue(action.messageId);
-    if(message != null){
-      final conversationId = message.conversationId;
-      MessageService()
-        .removeMessage(action.messageId)
-        .then((_){
-          store.dispatch(RemoveMessageSuccessAction(messageId: action.messageId));
-          store.dispatch(RemoveUserMessageAction(userId: conversationId, messageId: action.messageId));
-        });
-    }
-  }
-  next(action);
-}
-
 void removeMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveMessagesAction && action.messageIds.isNotEmpty){
-    MessageService()
-      .removeMessages(action.messageIds)
+    MessageHub()
+      .removeMessages(action.messageIds, action.everyone)
       .then((_){
         store.dispatch(RemoveMessagesSuccessAction(messageIds: action.messageIds));
         store.dispatch(RemoveUserMessagesAction(userId: action.userId, messageIds: action.messageIds));
@@ -84,16 +68,16 @@ void removeMessagesMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void removeMessagesByUserIdsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveMessagesByUserIdsAction){
-    MessageService()
+    MessageHub()
       .removeMessagesByUserIds(action.userIds)
       .then((_){
-        store.dispatch(RemoveMessagesByUserIdsSuccessAction(userIds: action.userIds));
         for(var userId in action.userIds){
           var messageIds = store.state.messageEntityState
             .select((e) => e.senderId == userId || e.receiverId == userId)
             .map((e) => e.id);
           store.dispatch(RemoveUserMessagesAction(userId: userId, messageIds: messageIds));
         }
+        store.dispatch(RemoveMessagesByUserIdsSuccessAction(userIds: action.userIds));
       });
   }
   next(action);

@@ -5,7 +5,7 @@ class DialogCreator{
 
   static Future<bool> showAppDialog(BuildContext context, String title, String content,String contentOfApproveButton){
     return showDialog<bool>(
-      context: context, 
+      context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title),

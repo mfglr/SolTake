@@ -8,8 +8,7 @@ EntityState<int,MessageState> addMessageReducer(EntityState<int,MessageState> pr
 EntityState<int,MessageState> addMessagesReducer(EntityState<int,MessageState> prev, AddMessagesAction action)
   => prev.appendMany(action.messages);
 
-EntityState<int,MessageState> removeMessageReducer(EntityState<int,MessageState> prev,RemoveMessageSuccessAction action)
-  => prev.where((e) => e.id != action.messageId);
+
 EntityState<int,MessageState> removeMessagesReducer(EntityState<int,MessageState> prev,RemoveMessagesSuccessAction action)
   => prev.where((e) => !action.messageIds.contains(e.id));
 EntityState<int,MessageState> removeMessagesByUserIdsReducer(EntityState<int,MessageState> prev,RemoveMessagesByUserIdsSuccessAction action)
@@ -23,7 +22,6 @@ EntityState<int,MessageState> markMessagesAsViewedSuccessAction(EntityState<int,
 Reducer<EntityState<int,MessageState>> messageEntityStateReducers = combineReducers<EntityState<int,MessageState>>([
   TypedReducer<EntityState<int,MessageState>,AddMessageAction>(addMessageReducer).call,
   TypedReducer<EntityState<int,MessageState>,AddMessagesAction>(addMessagesReducer).call,
-  TypedReducer<EntityState<int,MessageState>,RemoveMessageSuccessAction>(removeMessageReducer).call,
   TypedReducer<EntityState<int,MessageState>,RemoveMessagesSuccessAction>(removeMessagesReducer).call,
   TypedReducer<EntityState<int,MessageState>,RemoveMessagesByUserIdsSuccessAction>(removeMessagesByUserIdsReducer).call,
 

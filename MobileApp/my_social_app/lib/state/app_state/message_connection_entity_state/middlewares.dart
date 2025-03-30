@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 void loadMessageConnectionMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is LoadMessageConnectionAction){
     MessageHub()
-      .getById(action.userId)
+      .getMessageConnectionById(action.userId)
       .then((e) => store.dispatch(UpdateMessageConnectionStateAction(state: e.toMessageConnectionState())));
   }
   next(action);

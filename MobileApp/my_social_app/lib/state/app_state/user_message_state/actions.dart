@@ -29,12 +29,7 @@ class AddUserMessageAction extends UserMessageAction{
   final int messageId;
   const AddUserMessageAction({required this.userId, required this.messageId});
 }
-@immutable
-class RemoveUserMessageAction extends UserMessageAction{
-  final int userId;
-  final int messageId;
-  const RemoveUserMessageAction({required this.userId, required this.messageId});
-}
+
 @immutable
 class RemoveUserMessagesAction extends UserMessageAction{
   final int userId;

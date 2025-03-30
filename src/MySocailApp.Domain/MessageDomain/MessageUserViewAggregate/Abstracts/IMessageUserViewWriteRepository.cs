@@ -5,7 +5,6 @@ namespace MySocailApp.Domain.MessageDomain.MessageUserViewAggregate.Abstracts
     public interface IMessageUserViewWriteRepository
     {
         Task CreateRangeAsync(IEnumerable<MessageUserView> messageUserViews, CancellationToken cancellationToken);
-
         void DeleteRange(IEnumerable<MessageUserView> messageUserViews);
 
         Task<List<MessageUserView>> GetByMessageIdAsync(int messageId, CancellationToken cancellationToken);

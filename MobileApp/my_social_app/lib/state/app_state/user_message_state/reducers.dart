@@ -21,13 +21,13 @@ EntityState<int, UserMessageState> addUserMessageAction(EntityState<int,UserMess
         UserMessageState.init(action.userId).prependOne(action.messageId)
       );
 
-EntityState<int, UserMessageState> removeUserMessageAction(EntityState<int,UserMessageState> prev, RemoveUserMessageAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.removeOne(action.messageId));
+EntityState<int, UserMessageState> removeUserMessagesAction(EntityState<int,UserMessageState> prev, RemoveUserMessagesAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.removeMany(action.messageIds));
 
 
 Reducer<EntityState<int, UserMessageState>> userMessageReducers = combineReducers<EntityState<int, UserMessageState>>([
   TypedReducer<EntityState<int, UserMessageState>, NextUserMessagesAction>(nextUserMessagesReducer).call,
   TypedReducer<EntityState<int, UserMessageState>, NextUserMessagesSuccessAction>(nextUserMessagesSuccessReducer).call,
   TypedReducer<EntityState<int, UserMessageState>, AddUserMessageAction>(addUserMessageAction).call,
-  TypedReducer<EntityState<int, UserMessageState>, RemoveUserMessageAction>(removeUserMessageAction).call,
+  TypedReducer<EntityState<int, UserMessageState>, RemoveUserMessagesAction>(removeUserMessagesAction).call,
 ]);

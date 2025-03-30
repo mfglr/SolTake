@@ -13,9 +13,9 @@ namespace MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Entities
             MessageId = messageId;
             UserId = userId;
         }
-        public static MessageUserRemove Create(int messageId, int removeId)
+        public static MessageUserRemove Create(int messageId, int userId)
         {
-            var messagUserRemove = new MessageUserRemove(messageId, removeId) { CreatedAt = DateTime.UtcNow };
+            var messagUserRemove = new MessageUserRemove(messageId, userId) { CreatedAt = DateTime.UtcNow };
             messagUserRemove.AddDomainEvent(new MessageUserRemoveCreatedDomainEvent(messagUserRemove));
             return messagUserRemove;
         }

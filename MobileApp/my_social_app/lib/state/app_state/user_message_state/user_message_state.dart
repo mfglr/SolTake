@@ -42,10 +42,10 @@ class UserMessageState extends BaseEntity<int>{
       id: id,
       messageIds: messageIds.prependOne(Id(id: messageId))
     );
-    
-  UserMessageState removeOne(int messageId) =>
+
+  UserMessageState removeMany(Iterable<int> messageIds) =>
     UserMessageState(
       id: id,
-      messageIds: messageIds.removeOne(messageId)
+      messageIds: this.messageIds.removeMany(messageIds)
     );
 }
