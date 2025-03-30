@@ -3,5 +3,5 @@ using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 
 namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents
 {
-    public record QuestionLikedNotificationCreatedDomainEvent(Notification Notification, Login Login) : IDomainEvent;
+    public record NotificationDeletedDomainEvent(Notification Notification) : IDomainEvent;
 }

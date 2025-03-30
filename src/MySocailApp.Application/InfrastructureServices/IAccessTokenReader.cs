@@ -6,9 +6,11 @@ namespace MySocailApp.Application.InfrastructureServices
     {
         int? GetAccountId();
         int GetRequiredAccountId();
-
         string? GetUserName();
         string? NickName();
         Multimedia? GetMedia();
+
+        Login GetLogin();
+
     }
 }

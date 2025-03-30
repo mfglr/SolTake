@@ -6,6 +6,7 @@ import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/login_storage.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/message_hub.dart';
+import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -23,12 +24,14 @@ void _setAccount(Store<AppState> store,Login login){
   LoginStorage().set(state);
   AppClient().changeAccessToken(login.accessToken);
   MessageHub.init(login.accessToken, store);
+  NotificationHub.init(login.accessToken, store);
   store.dispatch(UpdateLoginStateAction(payload: state));
 }
 void _clearSession(Store<AppState> store){
   LoginStorage().remove();
   _googleSignIn.disconnect();
   MessageHub().close();
+  NotificationHub().close();
   store.dispatch(const ClearStateAction());
   
 }

@@ -1,23 +1,27 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.NotificationAggregate
 {
-    public class NotificationResponseDto(int id, DateTime createdAt, int ownerId, int userId, string userName, bool isViewed, NotificationType type, int? parentId, int? repliedId, int? commentId, string? commentContent, int? questionId, int? solutionId, Multimedia? image)
+    public record NotificationResponseDto(int Id, DateTime CreatedAt, int OwnerId, int UserId, string UserName, bool IsViewed, NotificationType Type, int? ParentId, int? RepliedId, int? CommentId, string? CommentContent, int? QuestionId, int? SolutionId, Multimedia? Image)
     {
-        public int Id { get; private set; } = id;
-        public DateTime CreatedAt { get; private set; } = createdAt;
-        public int OwnerId { get; private set; } = ownerId;
-        public int UserId { get; private set; } = userId;
-        public string UserName { get; private set; } = userName;
-        public bool IsViewed { get; private set; } = isViewed;
-        public NotificationType Type { get; private set; } = type;
-        public int? ParentId { get; private set; } = parentId;
-        public int? RepliedId { get; private set; } = repliedId;
-        public int? CommentId { get; private set; } = commentId;
-        public string? CommentContent { get; private set; } = commentContent;
-        public int? QuestionId { get; private set; } = questionId;
-        public int? SolutionId { get; private set; } = solutionId;
-        public Multimedia? Image { get; private set; } = image;
+        public static NotificationResponseDto Create(QuestionLikedNotificationCreatedDomainEvent @event) =>
+            new(
+                @event.Notification.Id,
+                @event.Notification.CreatedAt,
+                @event.Notification.OwnerId,
+                @event.Notification.UserId,
+                @event.Login.UserName,
+                @event.Notification.IsViewed,
+                @event.Notification.Type,
+                null,
+                null,
+                null,
+                null,
+                @event.Notification.QuestionId,
+                null,
+                @event.Login.Image
+            );
     }
 }

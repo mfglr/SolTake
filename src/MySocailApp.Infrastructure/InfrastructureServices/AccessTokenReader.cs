@@ -52,5 +52,24 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
 
             return JsonConvert.DeserializeObject<Multimedia>(mediaJson);
         }
+
+        public Login GetLogin()
+        {
+            var context = _contextAccessor.HttpContext ?? throw new NotAuthorizedException();
+            
+            var userIdString =
+                context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ??
+                throw new NotAuthorizedException();
+            var userId = int.Parse(userIdString);
+
+            var name = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Nickname)?.Value;
+
+            var userName = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Name)!.Value;
+
+            var mediaJson = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Picture)?.Value;
+            var media = mediaJson == null ? null : JsonConvert.DeserializeObject<Multimedia>(mediaJson);
+
+            return new(userId, userName, name, media);
+        }
     }
 }

@@ -9,33 +9,35 @@ using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
 {
-    public class LikeQuestionHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository, IQuestionUserLikeReadRepository questionUserLikeRepository, IQuestionReadRepository questionReadRepository, IPublisher publisher) : IRequestHandler<LikeQuestionDto, LikeQuestionCommandResponseDto>
+    public class LikeQuestionHandler(IUnitOfWork unitOfWork, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository, IQuestionUserLikeReadRepository questionUserLikeRepository, IQuestionReadRepository questionReadRepository, IPublisher publisher, IAccessTokenReader accessTokenReader) : IRequestHandler<LikeQuestionDto, LikeQuestionCommandResponseDto>
     {
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
         private readonly IQuestionUserLikeWriteRepository _questionUserLikeWriteRepository = questionUserLikeWriteRepository;
-        private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IQuestionUserLikeReadRepository _questionUserLikeRepository = questionUserLikeRepository;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IPublisher _publisher = publisher;
 
         public async Task<LikeQuestionCommandResponseDto> Handle(LikeQuestionDto request, CancellationToken cancellationToken)
         {
-            if (!await _questionReadRepository.ExistAsync(request.QuestionId, cancellationToken))
+            var login = _accessTokenReader.GetLogin();
+
+            var questionUserId =
+                await _questionReadRepository.GetUserIdOfQuestionAsync(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
-            if (await _questionUserLikeRepository.IsLikedAsync(request.QuestionId, _userAccessor.User.Id, cancellationToken))
-                throw new Domain.QuestionDomain.QuestionUserLikeAggregate.Exceptions.QuestionAlreadyLikedException();
+            if (await _questionUserLikeRepository.IsLikedAsync(request.QuestionId, login.UserId, cancellationToken))
+                throw new QuestionAlreadyLikedException();
 
-            var like = QuestionUserLike.Create(request.QuestionId, _userAccessor.User.Id);
+            var like = QuestionUserLike.Create(request.QuestionId, login.UserId);
             await _questionUserLikeWriteRepository.CreateAsync(like, cancellationToken);
-            
+
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            var userIdOfQuestion = await _questionReadRepository.GetUserIdOfQuestionAsync(request.QuestionId, cancellationToken);
-            if (userIdOfQuestion != _userAccessor.User.Id)
-                await _publisher.Publish(new QuestionLikedDomainEvent(like),cancellationToken);
+            if (questionUserId != login.UserId)
+                await _publisher.Publish(new QuestionLikedDomainEvent(like, login, questionUserId), cancellationToken);
 
-            return new(like, _userAccessor.User);
+            return new(like, login);
         }
     }
 }
