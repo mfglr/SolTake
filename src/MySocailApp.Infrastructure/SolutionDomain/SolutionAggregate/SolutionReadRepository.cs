@@ -27,5 +27,8 @@ namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
         public async Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken)
             => await _context.Solutions
                 .CountAsync(x => x.QuestionId == questionId && x.State == SolutionState.Correct, cancellationToken);
+
+        public Task<int> GetSolutionUserId(int id, CancellationToken cancellationToken)
+            => _context.Solutions.Where(x => x.Id == id).Select(x => x.UserId).FirstOrDefaultAsync(cancellationToken);
     }
 }

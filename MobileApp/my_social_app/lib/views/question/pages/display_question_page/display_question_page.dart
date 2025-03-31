@@ -4,11 +4,12 @@ import 'package:my_social_app/state/app_state/question_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
+import 'package:my_social_app/views/question/pages/display_question_page/display_question_page_texts.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayQuestionPage extends StatefulWidget {
   final int questionId;
@@ -55,8 +56,10 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
         return Scaffold(
           appBar: AppBar(
             leading: const AppBackButtonWidget(),
-            title: AppTitle(
-              title: "${question.userName}${AppLocalizations.of(context)!.display_question_page_title}"
+            title: LanguageWidget(
+              child: (language) => AppTitle(
+                title: "${question.userName}${title[language]}"
+              ),
             ),
           ),
           body: SingleChildScrollView(

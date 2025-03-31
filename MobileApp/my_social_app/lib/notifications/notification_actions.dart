@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
-import 'package:my_social_app/views/question/pages/display_question_page.dart';
+import 'package:my_social_app/views/question/pages/display_question_page/display_question_page.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
 

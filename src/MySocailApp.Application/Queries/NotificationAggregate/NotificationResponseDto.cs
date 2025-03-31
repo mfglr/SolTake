@@ -23,5 +23,41 @@ namespace MySocailApp.Application.Queries.NotificationAggregate
                 null,
                 @event.Login.Image
             );
+
+        public static NotificationResponseDto Create(QuestionCommentNotificationCreatedDomainEvent @event) =>
+            new(
+                @event.Notification.Id,
+                @event.Notification.CreatedAt,
+                @event.Notification.OwnerId,
+                @event.Notification.UserId,
+                @event.Login.UserName,
+                @event.Notification.IsViewed,
+                @event.Notification.Type,
+                null,
+                null,
+                @event.Notification.CommentId,
+                @event.Comment.Content.Value,
+                @event.Comment.QuestionId,
+                null,
+                @event.Login.Image
+            );
+
+        public static NotificationResponseDto Create(SolutionCommentNotificationCreatedDomainEvent @event) =>
+            new(
+                @event.Notification.Id,
+                @event.Notification.CreatedAt,
+                @event.Notification.OwnerId,
+                @event.Notification.UserId,
+                @event.Login.UserName,
+                @event.Notification.IsViewed,
+                @event.Notification.Type,
+                null,
+                null,
+                @event.Notification.CommentId,
+                @event.Comment.Content.Value,
+                null,
+                @event.Comment.SolutionId,
+                @event.Login.Image
+            );
     }
 }

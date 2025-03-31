@@ -18,13 +18,11 @@ import 'package:my_social_app/views/shared/loading_widget.dart';
 class DisplayQuestionCommentsModal extends StatefulWidget {
   final int questionId;
   final int? parentId;
-  final Iterable<num>? childIds;
 
   const DisplayQuestionCommentsModal({
     super.key,
     required this.questionId,
     this.parentId,
-    this.childIds,
   });
 
   @override
@@ -120,10 +118,11 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
       converter: (store) => store.state.questionEntityState.getValue(widget.questionId),
       builder: (context, question){
         if(question == null) return const LoadingWidget();
+        
         if(widget.parentId != null){
           return StoreConnector<AppState,CommentState?>(
             onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
-            converter: (store) => widget.parentId != null ? store.state.commentEntityState.getValue(widget.parentId!) : null,
+            converter: (store) => store.state.commentEntityState.getValue(widget.parentId!),
             builder: (context,parent){
               
               if(parent == null){

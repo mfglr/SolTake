@@ -1,6 +1,67 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
+using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Queries.CommentAggregate
 {
-    public record CommentResponseDto(int Id, DateTime CreatedAt,DateTime? UpdatedAt, string UserName, int UserId,bool IsEdited,string Content,bool IsLiked,int NumberOfLikes,int NumberOfReplies, bool IsOwner, int? QuestionId,int? SolutionId,int? ParentId, Multimedia? Image);
+    public record CommentResponseDto(int Id, DateTime CreatedAt,DateTime? UpdatedAt, string UserName, int UserId,bool IsEdited,string Content,bool IsLiked,int NumberOfLikes,int NumberOfReplies, bool IsOwner, int? QuestionId,int? SolutionId,int? ParentId, Multimedia? Image)
+    {
+        public static CommentResponseDto Create(Comment comment, Login login) =>
+            new(
+                comment.Id,
+                comment.CreatedAt,
+                comment.UpdatedAt,
+                login.UserName,
+                comment.UserId,
+                comment.IsEdited,
+                comment.Content.Value,
+                false,
+                0,
+                0,
+                true,
+                comment.QuestionId,
+                comment.SolutionId,
+                comment.ParentId,
+                login.Image
+            );
+
+        public static CommentResponseDto Create(QuestionCommentNotificationCreatedDomainEvent @event) =>
+            new(
+                @event.Comment.Id,
+                @event.Comment.CreatedAt,
+                @event.Comment.UpdatedAt,
+                @event.Login.UserName,
+                @event.Login.UserId,
+                @event.Comment.IsEdited,
+                @event.Comment.Content.Value,
+                false,
+                0,
+                0,
+                false,
+                @event.Comment.QuestionId,
+                null,
+                null,
+                @event.Login.Image
+            );
+
+        public static CommentResponseDto Create(SolutionCommentNotificationCreatedDomainEvent @event) =>
+            new(
+                @event.Comment.Id,
+                @event.Comment.CreatedAt,
+                @event.Comment.UpdatedAt,
+                @event.Login.UserName,
+                @event.Login.UserId,
+                @event.Comment.IsEdited,
+                @event.Comment.Content.Value,
+                false,
+                0,
+                0,
+                false,
+                null,
+                @event.Comment.SolutionId,
+                null,
+                @event.Login.Image
+            );
+    }
 }

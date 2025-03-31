@@ -29,14 +29,13 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
-        public static Notification SolutionCommentCreatedNotification(int ownerId, int userId, int commentId, int solutionId, int questionId)
+        public static Notification SolutionCommentCreatedNotification(int ownerId, int userId, int commentId, int solutionId)
             => new(NotificationType.SolutionCommentCreatedNotification)
             {
                 OwnerId = ownerId,
                 UserId = userId,
                 CommentId = commentId,
                 SolutionId = solutionId,
-                QuestionId = questionId,
                 CreatedAt = DateTime.UtcNow,
             };
 

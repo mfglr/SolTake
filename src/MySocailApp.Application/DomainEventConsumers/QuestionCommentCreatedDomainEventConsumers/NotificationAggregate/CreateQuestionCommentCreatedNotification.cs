@@ -16,16 +16,16 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionCommentCreatedDom
 
         public async Task Handle(QuestionCommentCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var ownerId = notification.Question.UserId;
-            var userId = notification.Comment.UserId;
-            var commentId = notification.Comment.Id;
-            var questionId = notification.Question.Id;
-
-            var n = Notification.QuestionCommentCreatedNotification(ownerId, userId, commentId, questionId);
+            var n = Notification.QuestionCommentCreatedNotification(
+                notification.QuestionUserId,
+                notification.Comment.UserId,
+                notification.Comment.Id,
+                (int)notification.Comment.QuestionId!
+            );
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new QuestionCommentNotificationCreatedDomainEvent(n), cancellationToken);
+            await _publisher.Publish(new QuestionCommentNotificationCreatedDomainEvent(n,notification.Comment,notification.Login), cancellationToken);
         }
     }
 }

@@ -5,7 +5,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 
-namespace MySocailApp.Application.DomainEventConsumers.NotificationAggregate.SolutionDownvotedNotificationCreatedDomainEventConsumers
+namespace MySocailApp.Application.DomainEventConsumers.SolutionDownvotedNotificationCreatedDomainEventConsumers.NotificationAggregate
 {
     public class SendNotification(IHubContext<NotificationHub> notificationHub, INotificationConnectionReadRepository notificationConnectionReadRepository, ISolutionUserVoteQueryRepository solutionUserVoteQueryRepository, INotificationQueryRepository notificationQueryRepository) : IDomainEventConsumer<SolutionDownvotedNotificationCreatedDomainEvent>
     {
@@ -27,7 +27,7 @@ namespace MySocailApp.Application.DomainEventConsumers.NotificationAggregate.Sol
 
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)
-                .SendAsync("getSolutionWasDownvotedNotification",n,vote,cancellationToken);
+                .SendAsync("getSolutionWasDownvotedNotification", n, vote, cancellationToken);
         }
     }
 }

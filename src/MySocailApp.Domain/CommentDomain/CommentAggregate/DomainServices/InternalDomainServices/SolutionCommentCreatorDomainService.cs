@@ -1,4 +1,5 @@
-﻿using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions;
@@ -7,19 +8,19 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices.Inter
 {
     internal static class SolutionCommentCreatorDomainService
     {
-        public static async Task CreateAsync(ISolutionReadRepository solutionReadRepository, Comment comment, int solutionId, CancellationToken cancellationToken)
+        public static async Task CreateAsync(ISolutionReadRepository solutionReadRepository, Comment comment, int solutionId, Login login, CancellationToken cancellationToken)
         {
-            var solution =
-                    await solutionReadRepository.GetAsync(solutionId, cancellationToken) ??
-                    throw new SolutionNotFoundException();
+            var solutionUserId = await solutionReadRepository.GetSolutionUserId(solutionId, cancellationToken);
+            if(solutionUserId == 0)
+                throw new SolutionNotFoundException();
 
-            comment.CreateSolutionComment(solution.Id);
+            comment.CreateSolutionComment(solutionId);
 
-            if (solution.UserId != comment.UserId)
-                comment.AddDomainEvent(new SolutionCommentCreatedDomainEvent(solution, comment));
+            if (solutionUserId != comment.UserId)
+                comment.AddDomainEvent(new SolutionCommentCreatedDomainEvent(comment,solutionUserId, login));
 
             foreach (var tag in comment.Tags)
-                if (tag.UserId != comment.UserId && tag.UserId != solution.UserId)
+                if (tag.UserId != comment.UserId && tag.UserId != solutionUserId)
                     comment.AddDomainEvent(new UserTaggedInCommentDomainEvent(comment, tag.UserId));
         }
     }

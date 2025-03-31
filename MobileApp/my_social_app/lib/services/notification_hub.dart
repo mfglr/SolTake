@@ -1,10 +1,13 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/notification.dart';
 import 'package:my_social_app/models/question_user_like.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/selectors.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
@@ -63,6 +66,16 @@ class NotificationHub{
         questionId: notificationState.questionId!,
         like:  QuestionUserLike.fromJson(list.last as dynamic).toQuestionUserLikeState()
       ));
+    }
+    else if(notificationState.type == NotificationType.questionCommentCreatedNotification){
+      var comment = Comment.fromJson(list.last as dynamic).toCommentState();
+      store.dispatch(AddCommentAction(comment: comment));
+      store.dispatch(AddNewQuestionCommentAction(questionId: notificationState.questionId!,commentId: comment.id));
+    }
+    else if(notificationState.type == NotificationType.solutionCommentCreatedNotification){
+      var comment = Comment.fromJson(list.last as dynamic).toCommentState();
+      store.dispatch(AddCommentAction(comment: comment));
+      store.dispatch(AddNewSolutionCommentAction(solutionId: notificationState.solutionId!,commentId: comment.id));
     }
 
   }

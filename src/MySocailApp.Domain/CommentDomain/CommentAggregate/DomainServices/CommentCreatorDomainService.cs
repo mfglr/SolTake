@@ -1,4 +1,5 @@
-﻿using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices.InternalDomainServices;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Exceptions;
@@ -13,17 +14,17 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices
         private readonly ISolutionReadRepository _solutionReadRepository = solutionReadRepository;
         private readonly ICommentReadRepository _commentReadRepository = commentReadRepository;
 
-        public async Task CreateAsync(Comment comment, int? questionId, int? solutionId, int? repliedId, CancellationToken cancellationToken)
+        public async Task CreateAsync(Comment comment, int? questionId, int? solutionId, int? repliedId, Login login, CancellationToken cancellationToken)
         {
             if (repliedId != null)
                 await ReplyCommentCreatorDomainService
                     .CreateAsync(_commentReadRepository, comment, (int)repliedId, cancellationToken);
             else if (questionId != null)
                 await QuestionCommentCreatorDomainService
-                    .CreateAsync(_questionReadRepository, comment, (int)questionId, cancellationToken);
+                    .CreateAsync(_questionReadRepository, comment, (int)questionId, login, cancellationToken);
             else if (solutionId != null)
                 await SolutionCommentCreatorDomainService
-                    .CreateAsync(_solutionReadRepository, comment, (int)solutionId, cancellationToken);
+                    .CreateAsync(_solutionReadRepository, comment, (int)solutionId, login, cancellationToken);
             else
                 throw new NoRootException();
         }
