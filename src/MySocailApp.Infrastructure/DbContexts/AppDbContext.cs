@@ -13,6 +13,7 @@ using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Enti
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeNotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
@@ -50,6 +51,8 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
         
         public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
+
+        public DbSet<QuestionUserLikeNotification> QuestionUserLikeNotifications { get; private set; }
 
         public DbSet<Solution> Solutions { get; private set; }
 

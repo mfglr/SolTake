@@ -20,7 +20,7 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventC
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new QuestionLikedNotificationCreatedDomainEvent(n, notification.Login), cancellationToken);
+            await _publisher.Publish(new QuestionLikedNotificationCreatedDomainEvent(n, notification.Like, notification.Login), cancellationToken);
         }
     }
 }

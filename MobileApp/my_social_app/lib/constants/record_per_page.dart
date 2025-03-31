@@ -5,6 +5,7 @@ const commentsPerPage = 16;
 const usersPerPage = 16;
 const solutionsPerPage = 12;
 const questionsPerPage = 12;
+const questionUserLikesPerPage = 20;
 const subjectsPerPage = 200;
 const topicsPerPage = 200;
 const examsPerPage = 20;

@@ -66,6 +66,15 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
         values: [...values, ...this.values]
       );
+  Pagination<K,V> prependUniqMany(Iterable<V> values)
+    => Pagination(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+        values: [...values.where((e) => !this.values.any((v) => v.id.compareTo(e.id) == 0)), ...this.values]
+      );
   Pagination<K,V> appendMany(Iterable<V> values)
     => Pagination<K,V>(
         isLast: isLast,

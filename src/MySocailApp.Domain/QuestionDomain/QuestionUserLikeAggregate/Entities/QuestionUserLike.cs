@@ -2,17 +2,11 @@
 
 namespace MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities
 {
-    public class QuestionUserLike : Entity, IAggregateRoot
+    public class QuestionUserLike(int questionId, int userId) : Entity, IAggregateRoot
     {
-        public int QuestionId { get; private set; }
-        public int UserId { get; private set; }
+        public int QuestionId { get; private set; } = questionId;
+        public int UserId { get; private set; } = userId;
 
-        private QuestionUserLike(int questionId, int userId)
-        {
-            UserId = userId;
-            QuestionId = questionId;
-        }
-        
-        public static QuestionUserLike Create(int questionId,int userId) => new (questionId,userId){ CreatedAt = DateTime.UtcNow };
+        internal void Create() => CreatedAt = DateTime.UtcNow;
     }
 }

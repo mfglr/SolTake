@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate;
+using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate;
 
 namespace MySocailApp.Domain.QuestionDomain
 {
@@ -7,7 +8,8 @@ namespace MySocailApp.Domain.QuestionDomain
     {
         public static IServiceCollection AddQuestionDomain(this IServiceCollection services)
             => services
-                .AddQuestionDomainServices();
+                .AddQuestionDomainServices()
+                .AddQuestionUserLikeDomainServices();
 
     }
 }

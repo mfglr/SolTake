@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.QuestionAggregate
+namespace MySocailApp.Infrastructure.ModelBuilders.QuestionDomain
 {
     public class QuestionModelBuilder : IEntityTypeConfiguration<Question>
     {

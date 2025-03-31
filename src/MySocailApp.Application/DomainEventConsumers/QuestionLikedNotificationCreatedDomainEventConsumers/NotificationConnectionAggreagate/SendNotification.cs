@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.Queries.NotificationAggregate;
+using MySocailApp.Application.Queries.QuestionDomain;
 using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
@@ -19,7 +20,12 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedNotification
 
             await _notificationHub.Clients
                 .Client(connection.ConnectionId!)
-                .SendAsync("receiveNotification", NotificationResponseDto.Create(notification), cancellationToken);
+                .SendAsync(
+                    "receiveNotification",
+                    NotificationResponseDto.Create(notification),
+                    QuestionUserLikeResponseDto.Create(notification),
+                    cancellationToken
+                );
         }
     }
 }

@@ -65,6 +65,7 @@ class DislikeQuestionSuccessAction extends AppAction{
     required this.userId
   });
 }
+
 @immutable
 class LikeQuestionAction extends AppAction{
   final int questionId;
@@ -76,13 +77,19 @@ class LikeQuestionSuccessAction extends AppAction{
   final QuestionUserLikeState like;
   const LikeQuestionSuccessAction({required this.questionId, required this.like});
 }
+
 @immutable
 class AddNewQuestionLikeAction extends AppAction{
   final int questionId;
   final QuestionUserLikeState like;
   const AddNewQuestionLikeAction({required this.questionId, required this.like});
 }
-
+@immutable
+class RemoveNewQuestionLikeAction extends AppAction{
+  final int questionId;
+  final int userId;
+  const RemoveNewQuestionLikeAction({required this.questionId, required this.userId});
+}
 
 @immutable
 class NextQuestionLikesAction extends AppAction{

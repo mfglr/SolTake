@@ -39,12 +39,15 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public Task<Notification?> GetSolutionWasDownvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications
                 .FirstOrDefaultAsync(x => x.SolutionId == solutionId && x.OwnerId == ownerId && x.Type == NotificationType.SolutionWasDownvotedNotification, cancellationToken);
-        public Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int ownerId, CancellationToken cancellationToken)
+        public Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int userId, CancellationToken cancellationToken)
             => _context.Notifications
-                .FirstOrDefaultAsync(x => x.CommentId == commentId && x.OwnerId == ownerId && x.Type == NotificationType.CommentLikedNotification,cancellationToken);
-        public Task<Notification?> GetQuestionLikedNotificationAsync(int questionId, int ownerId, CancellationToken cancellationToken)
+                .FirstOrDefaultAsync(x => x.CommentId == commentId && x.UserId == userId && x.Type == NotificationType.CommentLikedNotification,cancellationToken);
+        
+        public Task<List<Notification>> GetQuestionLikedNotificationsAsync(int questionId, int userId, CancellationToken cancellationToken)
             => _context.Notifications
-                .FirstOrDefaultAsync(x => x.QuestionId == questionId && x.OwnerId == ownerId && x.Type == NotificationType.QuestionLikedNotification,cancellationToken);
+                .Where(x => x.QuestionId == questionId && x.UserId == userId && x.Type == NotificationType.QuestionLikedNotification)
+                .ToListAsync(cancellationToken);
+        
         public Task<Notification?> GetUserFollowedNotificationAsync(int userId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.OwnerId == ownerId && x.Type == NotificationType.UserFollowedNotification,cancellationToken);

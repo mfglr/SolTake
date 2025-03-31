@@ -21,6 +21,11 @@ class PrependNotificationAction extends AppAction{
   final NotificationState notification;
   const PrependNotificationAction({required this.notification});
 }
+@immutable
+class RemoveNotificationAction extends AppAction{
+  final int notificationId;
+  const RemoveNotificationAction({required this.notificationId});
+}
 
 @immutable
 class GetUnviewedNotificationsAction extends AppAction{

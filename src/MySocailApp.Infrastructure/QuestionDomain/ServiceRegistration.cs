@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Infrastructure.QuestionDomain.QuestionAggregate;
 using MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate;
+using MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeNotificationAggregate;
 using MySocailApp.Infrastructure.QuestionDomain.QuestionUserSaveAggregate;
 
 namespace MySocailApp.Infrastructure.QuestionDomain
@@ -11,6 +12,7 @@ namespace MySocailApp.Infrastructure.QuestionDomain
             => services
                 .AddQuestionUserLikeAggregateInfrastructureServices()
                 .AddQuestionAggregateInfrastructureServices()
+                .AddQuestionUserLikeNotificationInfrastructureServices()
                 .AddQuestionUserSaveAggregate();
     }
 }

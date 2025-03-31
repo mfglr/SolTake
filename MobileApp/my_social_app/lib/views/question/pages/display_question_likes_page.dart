@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -8,12 +9,13 @@ import 'package:my_social_app/views/question/widgets/question_user_like/question
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/loading_view.dart';
 
 class DisplayQuestionLikesPage extends StatefulWidget {
-  final QuestionState question;
+  final int questionId;
   const DisplayQuestionLikesPage({
     super.key,
-    required this.question
+    required this.questionId
   });
 
   @override
@@ -27,7 +29,8 @@ class _DisplayQuestionLikesPageState extends State<DisplayQuestionLikesPage> {
   void _onScrollBottom(){
     if(_controller.hasClients && _controller.position.pixels == _controller.position.maxScrollExtent){
       final store = StoreProvider.of<AppState>(context,listen: false);
-      getNextEntitiesIfReady(store,widget.question.likes,NextQuestionLikesAction(questionId: widget.question.id));
+      final pagination = selectQuestionLikesPagination(store,widget.questionId);
+      getNextEntitiesIfReady(store, pagination ,NextQuestionLikesAction(questionId: widget.questionId));
     }
   }
 
@@ -39,27 +42,28 @@ class _DisplayQuestionLikesPageState extends State<DisplayQuestionLikesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: AppTitle(
-          title: AppLocalizations.of(context)!.display_question_likes_page_likes
+    return StoreConnector<AppState,QuestionState?>(
+      onInit: (store) => 
+        getNextEntitiesIfNoPage(
+          store,
+          selectQuestionLikesPagination(store, widget.questionId),
+          NextQuestionLikesAction(questionId: widget.questionId)
         ),
-      ),
-      body: SingleChildScrollView(
-        controller: _controller,
-        child: StoreConnector<AppState,QuestionState>(
-          onInit: (store) => getNextEntitiesIfNoPage(
-            store,
-            widget.question.likes,
-            NextQuestionLikesAction(questionId: widget.question.id)
+      converter: (store) => selectQuestion(store, widget.questionId),
+      builder: (context,question) => question == null
+        ? const LoadingView()
+        : Scaffold(
+            appBar: AppBar(
+              leading: const AppBackButtonWidget(),
+              title: AppTitle(
+                title: AppLocalizations.of(context)!.display_question_likes_page_likes
+              ),
+            ),
+            body: SingleChildScrollView(
+              controller: _controller,
+              child: QuestionUserLikesWidget(likes: question.likes.values),
+            )
           ),
-          converter: (store) => store.state.questionEntityState.getValue(widget.question.id)!,
-          builder:(context,question) => QuestionUserLikesWidget(
-            likes: question.likes.values
-          ),
-        ),
-      )
     );
   }
 }

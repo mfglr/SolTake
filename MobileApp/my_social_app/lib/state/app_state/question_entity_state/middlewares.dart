@@ -7,6 +7,7 @@ import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -75,6 +76,38 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 
 
+//question likes;
+void _nextQuestionLikes(Store<AppState> store,NextQuestionLikesAction action){
+  QuestionUserLikeService()
+    .getQuestionLikes(action.questionId, selectQuestionNextLikesPage(store, action.questionId))
+    .then(
+      (likes) =>
+        store.dispatch(
+          NextQuestionLikesSuccessAction(questionId: action.questionId,likes: likes.map((e) => e.toQuestionUserLikeState()))
+        )
+    )
+    .catchError((e){
+      store.dispatch(NextQuestionLikesFailedAction(questionId: action.questionId));
+      throw e;
+    });
+}
+void nextQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is NextQuestionLikesAction){
+    if(selectQuestion(store, action.questionId) == null){
+      QuestionService()
+        .getById(action.questionId)
+        .then((question){
+          store.dispatch(AddQuestionAction(value: question.toQuestionState()));
+          _nextQuestionLikes(store,action);
+        });
+    }
+    else{
+      _nextQuestionLikes(store,action);
+    }
+  }
+  next(action);
+}
+
 void likeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is LikeQuestionAction){
     QuestionUserLikeService()
@@ -98,28 +131,9 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
   }
   next(action);
 }
+//question likes;
 
-void nextQuestionLikesMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextQuestionLikesAction){
-    final pagination = store.state.questionEntityState.getValue(action.questionId)!.likes;
-    QuestionUserLikeService()
-      .getQuestionLikes(action.questionId, pagination.next)
-      .then(
-        (likes) =>
-          store.dispatch(
-            NextQuestionLikesSuccessAction(
-              questionId: action.questionId,
-              likes: likes.map((e) => e.toQuestionUserLikeState())
-            )
-          )
-      )
-      .catchError((e){
-        store.dispatch(NextQuestionLikesFailedAction(questionId: action.questionId));
-        throw e;
-      });
-  }
-  next(action);
-}
+
 void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is NextQuestionSolutionsAction){
     final pagination = store.state.questionEntityState.getValue(action.questionId)!.solutions;

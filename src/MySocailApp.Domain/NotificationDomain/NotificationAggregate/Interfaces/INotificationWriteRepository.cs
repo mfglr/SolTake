@@ -20,7 +20,7 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces
         Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken);
         Task<Notification?> GetSolutionWasDownvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken);
         Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int ownerId, CancellationToken cancellationToken);
-        Task<Notification?> GetQuestionLikedNotificationAsync(int questionId, int ownerId, CancellationToken cancellationToken);
+        Task<List<Notification>> GetQuestionLikedNotificationsAsync(int questionId, int ownerId, CancellationToken cancellationToken);
         Task<Notification?> GetUserFollowedNotificationAsync(int userId, int ownerId, CancellationToken cancellationToken);
 
     }

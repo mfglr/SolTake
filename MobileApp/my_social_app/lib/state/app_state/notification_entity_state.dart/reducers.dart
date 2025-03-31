@@ -11,9 +11,13 @@ Pagination<int,NotificationState> nextNotificationsFailedReducer(Pagination<int,
   => prev.stopLoadingNext();
 
 Pagination<int,NotificationState> addUnviewedNotificationsReducer(Pagination<int,NotificationState> prev,AddUnviewedNotificationsAction action)
-  => prev.prependMany(action.notifications);
+  => prev.prependUniqMany(action.notifications);
 Pagination<int,NotificationState> prependNotificationReducer(Pagination<int,NotificationState> prev, PrependNotificationAction action)
   => prev.prependOne(action.notification);
+Pagination<int,NotificationState> removeNotificationReducer(Pagination<int,NotificationState> prev, RemoveNotificationAction action)
+  => prev.removeOne(action.notificationId);
+ 
+
 Pagination<int,NotificationState> markNotificationsAsViewedReducer(Pagination<int,NotificationState> prev,MarkNotificationsAsViewedSuccessAction action)
   => prev.updateMany(prev.getByIds(action.ids).map((e) => e.markAsViewed()));
 
@@ -24,5 +28,7 @@ Reducer<Pagination<int,NotificationState>> notificationEntityStateReducers = com
 
   TypedReducer<Pagination<int,NotificationState>,AddUnviewedNotificationsAction>(addUnviewedNotificationsReducer).call,
   TypedReducer<Pagination<int,NotificationState>,PrependNotificationAction>(prependNotificationReducer).call,
+  TypedReducer<Pagination<int,NotificationState>,RemoveNotificationAction>(removeNotificationReducer).call,
+
   TypedReducer<Pagination<int,NotificationState>,MarkNotificationsAsViewedSuccessAction>(markNotificationsAsViewedReducer).call,
 ]);

@@ -22,14 +22,18 @@ EntityState<int,QuestionState> likeQuestionSuccessReducer(EntityState<int,Questi
   => prev.updateOne(prev.getValue(action.questionId)!.like(action.like));
 EntityState<int,QuestionState> dislikeQuestionSuccessReducer(EntityState<int,QuestionState> prev, DislikeQuestionSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.dislike(action.userId));
+
+EntityState<int,QuestionState> addNewLikeReducer(EntityState<int,QuestionState> prev,AddNewQuestionLikeAction action)
+  => prev.updateOne(prev.getValue(action.questionId)!.addNewLike(action.like));
+EntityState<int,QuestionState> removeNewLikeReducer(EntityState<int,QuestionState> prev,RemoveNewQuestionLikeAction action)
+  => prev.updateOne(prev.getValue(action.questionId)!.removeNewLike(action.userId));
+
 EntityState<int,QuestionState> nextLikesReducer(EntityState<int,QuestionState> prev,NextQuestionLikesAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.startLodingNextLikes());
 EntityState<int,QuestionState> nextLikesSuccessReducer(EntityState<int,QuestionState> prev,NextQuestionLikesSuccessAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.addNextPageLikes(action.likes));
 EntityState<int,QuestionState> nextLikesFailedReducer(EntityState<int,QuestionState> prev, NextQuestionLikesFailedAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextLikes());
-EntityState<int,QuestionState> addNewLikeReducer(EntityState<int,QuestionState> prev,AddNewQuestionLikeAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.addNewLike(action.like));
 
 //solutions
 EntityState<int,QuestionState> markSolutionAsCorrectReducer(EntityState<int,QuestionState> prev, MarkQuestionSolutionAsCorrectAction action)
@@ -115,7 +119,10 @@ Reducer<EntityState<int,QuestionState>> questionsReducer = combineReducers<Entit
   //question likes
   TypedReducer<EntityState<int,QuestionState>,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   TypedReducer<EntityState<int,QuestionState>,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
+  
   TypedReducer<EntityState<int,QuestionState>,AddNewQuestionLikeAction>(addNewLikeReducer).call,
+  TypedReducer<EntityState<int,QuestionState>,RemoveNewQuestionLikeAction>(removeNewLikeReducer).call,
+
   TypedReducer<EntityState<int,QuestionState>,NextQuestionLikesAction>(nextLikesReducer).call,
   TypedReducer<EntityState<int,QuestionState>,NextQuestionLikesSuccessAction>(nextLikesSuccessReducer).call,
   TypedReducer<EntityState<int,QuestionState>,NextQuestionLikesFailedAction>(nextLikesFailedReducer).call,

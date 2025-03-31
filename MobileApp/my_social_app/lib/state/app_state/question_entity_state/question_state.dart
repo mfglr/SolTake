@@ -150,10 +150,16 @@ class QuestionState extends BaseEntity<int> implements Avatar{
       newLikes: likes.where((e) => e.userId != userId),
       newNumberOfLikes: numberOfLikes - 1
     ); 
+  
   QuestionState addNewLike(QuestionUserLikeState like) =>
     _optional(
       newLikes: likes.addInOrder(like),
       newNumberOfLikes: numberOfLikes + 1
+    );
+  QuestionState removeNewLike(int userId) =>
+    _optional(
+      newLikes: likes.where((e) => e.userId != userId),
+      newNumberOfLikes: numberOfLikes - 1
     );
 
   QuestionState markSolutionAsCorrect(int solutionId) =>
