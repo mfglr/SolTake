@@ -11,6 +11,8 @@ class CommentItemsWidget extends StatefulWidget {
   final Iterable<CommentState> comments;
   final Widget noItems;
   final void Function() onScrollBottom;
+  final void Function(CommentState) replyComment;
+  final void Function() cancelReplying;
   final Pagination pagination;
   final num? parentId;
 
@@ -23,6 +25,8 @@ class CommentItemsWidget extends StatefulWidget {
     required this.pagination,
     required this.noItems,
     required this.onScrollBottom,
+    required this.replyComment,
+    required this.cancelReplying,
     this.parentId,
   });
 
@@ -66,7 +70,9 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
                     isFocused: widget.comments.elementAt(index).id == widget.parentId ? true : false,
                     contentController: widget.contentController,
                     focusNode: widget.focusNode,
-                    comment: widget.comments.elementAt(index)
+                    comment: widget.comments.elementAt(index),
+                    cancelReplying: widget.cancelReplying,
+                    replyComment: widget.replyComment,
                   )
                 )
               ),

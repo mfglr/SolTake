@@ -11,12 +11,16 @@ class CommentItemWidget extends StatefulWidget {
   final FocusNode focusNode;
   final CommentState comment;
   final bool? isFocused;
+  final void Function(CommentState) replyComment;
+  final void Function() cancelReplying;
 
   const CommentItemWidget({
     super.key,
     required this.contentController,
     required this.focusNode,
     required this.comment,
+    required this.replyComment,
+    required this.cancelReplying,
     this.isFocused,
   });
 
@@ -64,6 +68,8 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
               comment: widget.comment,
               contentController: widget.contentController,
               focusNode: widget.focusNode,
+              replyComment: widget.replyComment,
+              cancelReplying: widget.cancelReplying,
               isRoot: true,
               diameter: 45,
             ),
@@ -73,7 +79,7 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                 converter: (store) => store.state.selectCommentReplies(widget.comment.id),
                 builder: (context,replies) => Column(
                   children: [
-                    if(widget.comment.replies.loadingNext)
+                    if(widget.comment.children.loadingNext)
                       const LoadingCircleWidget(strokeWidth: 2),
                     ...replies.map(
                       (reply) => Padding(
@@ -81,6 +87,8 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                         child: CommentHeaderWidget(
                           comment: reply,
                           isRoot: false,
+                          replyComment: widget.replyComment,
+                          cancelReplying: widget.cancelReplying,
                           contentController: widget.contentController,
                           focusNode: widget.focusNode
                         ),
@@ -90,7 +98,7 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                 )
               ),
       
-            if(widget.comment.repliesVisibility && widget.comment.replies.values.isNotEmpty)
+            if(widget.comment.repliesVisibility && widget.comment.children.values.isNotEmpty)
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

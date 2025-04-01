@@ -9,12 +9,18 @@ namespace MySocailApp.Infrastructure.CommentDomain.CommentAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<bool> Exist(int id, CancellationToken cancellationToken)
-            => await _context.Comments.AnyAsync(x => x.Id == id, cancellationToken);
+        public Task<bool> Exist(int id, CancellationToken cancellationToken)
+            => _context.Comments.AnyAsync(x => x.Id == id, cancellationToken);
 
-        public async Task<Comment?> GetAsync(int id, CancellationToken cancellationToken)
-            => await _context.Comments
+        public Task<Comment?> GetAsync(int id, CancellationToken cancellationToken)
+            => _context.Comments
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        public Task<int?> GetParentId(int id, CancellationToken cancellationToken)
+            => _context.Comments
+                .Where(x => x.Id == id)
+                .Select(x => x.ParentId)
+                .FirstOrDefaultAsync(cancellationToken);
     }
 }

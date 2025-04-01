@@ -1,12 +1,8 @@
- import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -30,25 +26,39 @@ class DisplayQuestionCommentsModal extends StatefulWidget {
 }
 
 class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsModal> {
-  
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
-  late final StreamSubscription<QuestionState?> _questionConsumer;
-  
+  late int? questionId;
+  CommentState? comment;
+
+  void replyComment(CommentState comment) => setState((){
+    this.comment = comment;
+    _contentController.text = "@${comment.userName} ";
+    questionId = null;
+  });
+
+  void cancelReplying() => setState((){
+    _contentController.text = _contentController.text.replaceFirst("@${comment?.userName} ",'');
+    questionId = widget.questionId;
+    comment = null;
+  });
+
+  void createComment(){
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(CreateCommentAction(
+      content: _contentController.text,
+      questionId: questionId,
+      repliedId: comment?.id
+    ));
+    cancelReplying();
+    _contentController.clear();
+    _focusNode.unfocus();
+  }
+
   @override
   void initState() {
-    final store = StoreProvider.of<AppState>(context,listen: false);
-    store.dispatch(const ClearCreateCommentStateAction());
-    _questionConsumer =
-      store.onChange
-        .map((state) => state.questionEntityState.getValue(widget.questionId))
-        .distinct()
-        .listen((question){
-          if(question != null){
-            store.dispatch(ChangeQuestionAction(question: question));
-          }
-        });
+    questionId = widget.questionId;
     super.initState();
   }
 
@@ -57,11 +67,10 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
     _contentController.dispose();
     _focusNode.dispose();
     _scrollController.dispose();
-    _questionConsumer.cancel();
     super.dispose();
   }
 
-  Widget _buildModal(Iterable<CommentState> comments,Pagination pagination){
+  Widget _buildModal(Iterable<CommentState> comments,QuestionState question){
     return SizedBox(
       height: MediaQuery.of(context).size.height * 3 / 4,
       child: Padding(
@@ -85,25 +94,26 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                 contentController: _contentController,
                 focusNode: _focusNode,
                 noItems: const NoCommentsWidget(),
-                pagination: pagination,
+                pagination: question.comments,
                 comments: comments,
                 parentId: widget.parentId,
+                cancelReplying: cancelReplying,
+                replyComment: replyComment,
                 onScrollBottom: (){
                   final store = StoreProvider.of<AppState>(context,listen: false);
-                  getNextPageIfReady(store, pagination, NextQuestionCommentsAction(questionId: widget.questionId));
+                  getNextPageIfReady(store, question.comments, NextQuestionCommentsAction(questionId: widget.questionId));
                 },
               )
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(20,10,20,20),
-              child: StoreConnector<AppState,CreateCommentState>(
-                converter: (store) => store.state.createCommentState,
-                builder: (context,state) => CommentFieldWidget(
-                  state: state,
-                  contentController: _contentController,
-                  focusNode: _focusNode,
-                  scrollController: _scrollController,
-                ),
+              child: CommentFieldWidget(
+                contentController: _contentController,
+                focusNode: _focusNode,
+                scrollController: _scrollController,
+                cancelReplying: cancelReplying,
+                createComment: createComment,
+                comment: comment,
               ),
             ),
           ],
@@ -133,7 +143,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                     NextQuestionCommentsAction(questionId: widget.questionId)
                   ),
                   converter: (store) => store.state.getQuestionComments(widget.questionId),
-                  builder:(context,comments) => _buildModal(comments,question.comments)
+                  builder:(context,comments) => _buildModal(comments,question)
                 );
               }
 
@@ -144,7 +154,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                   NextQuestionCommentsAction(questionId: widget.questionId)
                 ),
                 converter: (store) => store.state.getFormatedQuestionComments(widget.parentId!, widget.questionId),
-                builder:(context,comments) => _buildModal(comments,question.comments)
+                builder:(context,comments) => _buildModal(comments,question)
               );
               
             },
@@ -157,7 +167,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
             NextQuestionCommentsAction(questionId: widget.questionId)
           ),
           converter: (store) => store.state.getQuestionComments(widget.questionId),
-          builder:(context,comments) => _buildModal(comments,question.comments)
+          builder:(context,comments) => _buildModal(comments,question)
         );
       }
     );

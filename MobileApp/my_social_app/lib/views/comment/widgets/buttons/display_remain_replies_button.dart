@@ -11,7 +11,7 @@ class DisplayRemainRepliesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => getNextPageIfReady(store,comment.replies,NextCommentRepliesAction(commentId: comment.id)),
+      onPressed: () => getNextPageIfReady(store,comment.children,NextCommentChildrenAction(commentId: comment.id)),
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),

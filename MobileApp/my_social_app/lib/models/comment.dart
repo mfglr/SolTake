@@ -61,7 +61,7 @@ class Comment{
       numberOfLikes: numberOfLikes,
       isLiked: isLiked,
       likes: Pagination.init(usersPerPage,true),
-      replies: Pagination.init(commentsPerPage,true),
+      children: Pagination.init(commentsPerPage,true),
       numberOfReplies: numberOfReplies,
       parentId: parentId,
       solutionId: solutionId,

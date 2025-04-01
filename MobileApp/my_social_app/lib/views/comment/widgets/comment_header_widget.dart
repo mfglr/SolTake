@@ -19,12 +19,17 @@ class CommentHeaderWidget extends StatelessWidget {
   final bool isRoot;
   final double? diameter;
   final Color? color;
+  final void Function(CommentState) replyComment;
+  final void Function() cancelReplying;
+
   const CommentHeaderWidget({
     super.key,
     required this.comment,
     required this.contentController,
     required this.focusNode,
     required this.isRoot,
+    required this.replyComment,
+    required this.cancelReplying,
     this.diameter,
     this.color,
   });
@@ -133,6 +138,8 @@ class CommentHeaderWidget extends StatelessWidget {
                             contentController: contentController,
                             focusNode: focusNode,
                             comment: comment,
+                            cancelReplying: cancelReplying,
+                            replyComment: replyComment,
                           ),
                         ),
         

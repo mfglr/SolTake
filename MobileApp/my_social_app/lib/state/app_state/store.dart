@@ -1,8 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
@@ -56,7 +54,6 @@ final store = Store(
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
     commentEntityState: EntityState(),
-    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
@@ -105,7 +102,7 @@ final store = Store(
     likeCommentMiddleware,
     dislikeCommentMiddleware,
     
-    nextCommentRepliesMiddleware,
+    nextCommentChildrenMiddleware,
 
     //Home page state
     nextHomeQuestionsMiddleware,

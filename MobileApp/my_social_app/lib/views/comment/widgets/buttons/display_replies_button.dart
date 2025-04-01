@@ -14,7 +14,7 @@ class DisplayRepliesButton extends StatelessWidget {
     return TextButton(
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        getNextPageIfNoPage(store,comment.replies,NextCommentRepliesAction(commentId: comment.id));
+        getNextPageIfNoPage(store,comment.children,NextCommentChildrenAction(commentId: comment.id));
         store.dispatch(ChangeRepliesVisibilityAction(commentId: comment.id, visibility: true));
       },
       style: ButtonStyle(

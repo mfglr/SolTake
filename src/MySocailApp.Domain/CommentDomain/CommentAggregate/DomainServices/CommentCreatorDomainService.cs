@@ -17,8 +17,8 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices
         public async Task CreateAsync(Comment comment, int? questionId, int? solutionId, int? repliedId, Login login, CancellationToken cancellationToken)
         {
             if (repliedId != null)
-                await ReplyCommentCreatorDomainService
-                    .CreateAsync(_commentReadRepository, comment, (int)repliedId, cancellationToken);
+                await CommentReplier
+                    .ReplyAsync(_commentReadRepository, comment, (int)repliedId, cancellationToken);
             else if (questionId != null)
                 await QuestionCommentCreatorDomainService
                     .CreateAsync(_questionReadRepository, comment, (int)questionId, login, cancellationToken);

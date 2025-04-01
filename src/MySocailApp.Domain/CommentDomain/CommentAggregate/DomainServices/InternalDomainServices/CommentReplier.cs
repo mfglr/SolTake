@@ -5,9 +5,9 @@ using MySocailApp.Domain.CommentDomain.CommentAggregate.Exceptions;
 
 namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices.InternalDomainServices
 {
-    internal static class ReplyCommentCreatorDomainService
+    internal static class CommentReplier
     {
-        public static async Task CreateAsync(ICommentReadRepository commentReadRepository, Comment comment, int repliedId, CancellationToken cancellationToken)
+        public static async Task ReplyAsync(ICommentReadRepository commentReadRepository, Comment comment, int repliedId, CancellationToken cancellationToken)
         {
             var repliedComment =
                 await commentReadRepository.GetAsync(repliedId, cancellationToken) ??
@@ -22,12 +22,12 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices.Inter
 
                 if (parent.ParentId != null)
                     throw new CommentIsNotRootException();
-                comment.CreateReplyComment(parent.Id, repliedId);
+                comment.ReplyComment(parent.Id, repliedId);
             }
             else
             {
                 parent = repliedComment;
-                comment.CreateReplyComment(repliedId, repliedId);
+                comment.ReplyComment(repliedId, repliedId);
             }
 
             if (repliedComment.UserId != comment.UserId)

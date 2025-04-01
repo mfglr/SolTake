@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 
 class QuestionCommentButtonWidget extends StatelessWidget {
@@ -23,10 +21,7 @@ class QuestionCommentButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: (){
-        showCommentModal(context);
-        store.dispatch(ChangeQuestionAction(question: question));
-      },
+      onPressed: () => showCommentModal(context),
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),

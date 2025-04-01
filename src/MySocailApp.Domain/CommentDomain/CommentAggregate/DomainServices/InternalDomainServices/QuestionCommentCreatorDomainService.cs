@@ -17,7 +17,7 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices.Inter
             comment.CreateQuestionComment(questionId);
 
             if (questionUserId != comment.UserId)
-                comment.AddDomainEvent(new QuestionCommentCreatedDomainEvent(comment,questionUserId,login));
+                comment.AddDomainEvent(new QuestionCommentCreatedDomainEvent(comment, questionUserId, login));
 
             foreach (var tag in comment.Tags)
                 if (tag.UserId != comment.UserId && tag.UserId != questionUserId)

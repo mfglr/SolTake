@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
-import 'package:my_social_app/state/app_state/store.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReplyCommentButton extends StatelessWidget {
@@ -9,20 +7,23 @@ class ReplyCommentButton extends StatelessWidget {
   final TextEditingController contentController;
   final FocusNode focusNode;
   final CommentState comment;
+  final void Function(CommentState) replyComment;
+  final void Function() cancelReplying;
 
   const ReplyCommentButton({
     super.key,
     required this.contentController,
     required this.focusNode,
     required this.comment,
+    required this.replyComment,
+    required this.cancelReplying,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
-        store.dispatch(ChangeCommentAction(comment: comment));
-        contentController.text = "@${comment.userName} ";
+        replyComment(comment);
         WidgetsBinding.instance.addPostFrameCallback((_){
           FocusScope.of(context).requestFocus(focusNode);
         });

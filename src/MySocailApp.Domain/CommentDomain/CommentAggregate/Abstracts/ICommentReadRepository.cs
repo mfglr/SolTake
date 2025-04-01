@@ -6,5 +6,6 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts
     {
         Task<Comment?> GetAsync(int id, CancellationToken cancellationToken);
         Task<bool> Exist(int id, CancellationToken cancellationToken);
+        Task<int?> GetParentId(int id, CancellationToken cancellationToken);
     }
 }

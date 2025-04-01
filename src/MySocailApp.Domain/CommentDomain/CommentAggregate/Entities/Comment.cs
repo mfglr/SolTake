@@ -34,7 +34,7 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
             SolutionId = solutionId;
             UpdatedAt = CreatedAt = DateTime.UtcNow;
         }
-        internal void CreateReplyComment(int parentId, int repliedId)
+        internal void ReplyComment(int parentId, int repliedId)
         {
             ParentId = parentId;
             RepliedId = repliedId;

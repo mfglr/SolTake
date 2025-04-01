@@ -4,6 +4,21 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 
 @immutable
+class CreateCommentAction{
+  final int? questionId;
+  final int? solutionId;
+  final int? repliedId;
+  final String content;
+
+  const CreateCommentAction({
+    this.questionId,
+    this.solutionId,
+    this.repliedId,
+    required this.content
+  });
+}
+
+@immutable
 class LoadCommentAction extends AppAction{
   final int commentId;
   const LoadCommentAction({required this.commentId});
@@ -91,20 +106,20 @@ class ChangeRepliesVisibilityAction extends AppAction{
 
 
 @immutable
-class NextCommentRepliesAction extends AppAction{
+class NextCommentChildrenAction extends AppAction{
   final int commentId;
-  const NextCommentRepliesAction({required this.commentId});
+  const NextCommentChildrenAction({required this.commentId});
 }
 @immutable
-class NextCommentRepliesSuccessAction extends AppAction{
+class NextCommentChildrenSuccessAction extends AppAction{
   final int commentId;
-  final Iterable<int> replyIds;
-  const NextCommentRepliesSuccessAction({required this.commentId, required this.replyIds});
+  final Iterable<int> childIds;
+  const NextCommentChildrenSuccessAction({required this.commentId, required this.childIds});
 }
 @immutable
-class NextCommentRepliesFailedAction extends AppAction{
+class NextCommentChildrenFailedAction extends AppAction{
   final int commentId;
-  const NextCommentRepliesFailedAction({required this.commentId});
+  const NextCommentChildrenFailedAction({required this.commentId});
 }
 @immutable
 class AddCommentReplyAction extends AppAction{

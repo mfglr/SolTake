@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
@@ -53,7 +52,6 @@ class AppState{
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,CommentState> commentEntityState;
-  final CreateCommentState createCommentState;
   final EntityState<int,MessageState> messageEntityState;
   final Pagination<int,Id<int>> conversations;
   final EntityState<int,UserSearchState> userSearchEntityState;
@@ -84,7 +82,6 @@ class AppState{
     required this.topicEntityState,
     required this.solutionEntityState,
     required this.commentEntityState,
-    required this.createCommentState,
     required this.notifications,
     required this.messageEntityState,
     required this.userSearchEntityState,
@@ -116,7 +113,6 @@ class AppState{
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
     commentEntityState: EntityState(),
-    createCommentState: const CreateCommentState(question: null, solution: null, comment: null, content: ""),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     userSearchEntityState: EntityState(),
@@ -210,9 +206,9 @@ class AppState{
   Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
     => solutionEntityState.getValue(solutionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
   Iterable<CommentState> selectCommentReplies(int commentId)
-    => commentEntityState.getValue(commentId)!.replies.values.map((e) => commentEntityState.getValue(e.id)!).toList().reversed;
+    => commentEntityState.getValue(commentId)!.children.values.map((e) => commentEntityState.getValue(e.id)!).toList().reversed;
   Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
-    => commentEntityState.getValue(commentId)!.replies.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
+    => commentEntityState.getValue(commentId)!.children.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
 
   //select exams
   Iterable<ExamState> get selectExams => appExams.values.map((e) => examEntityState.getValue(e.id)!);

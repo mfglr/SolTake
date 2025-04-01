@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/comment_font_size.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/actions.dart';
-import 'package:my_social_app/state/app_state/create_comment_state/create_comment_state.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 
 class CommentFieldWidget extends StatelessWidget {
-  final CreateCommentState state;
   final TextEditingController contentController;
   final FocusNode focusNode;
   final ScrollController scrollController;
+  final void Function() cancelReplying;
+  final void Function() createComment;
+  final CommentState? comment;
 
   const CommentFieldWidget({
     super.key,
-    required this.state,
     required this.contentController,
     required this.focusNode,
-    required this.scrollController
+    required this.scrollController,
+    required this.cancelReplying,
+    required this.createComment,
+    required this.comment
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if(state.comment != null)
+        if(comment != null)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("${AppLocalizations.of(context)!.comment_field_widget_reply_content} ${state.comment!.userName}"),
+              Text("${AppLocalizations.of(context)!.comment_field_widget_reply_content} ${comment!.userName}"),
               IconButton(
-                onPressed: (){
-                  contentController.text = "";
-                  store.dispatch(const CancelReplyAction());
-                },
+                onPressed: cancelReplying,
                 icon: const Icon(Icons.clear)
               )
             ],
@@ -61,7 +60,6 @@ class CommentFieldWidget extends StatelessWidget {
                   hintText: AppLocalizations.of(context)!.comment_field_widget_hint_text,
                   hintStyle: const TextStyle(fontSize: commentTextFontSize)
                 ),
-                onChanged: (value) => store.dispatch(ChangeContentAction(content: value)),
               ),
             ),
             FilledButton(
@@ -69,11 +67,7 @@ class CommentFieldWidget extends StatelessWidget {
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(13)
               ),
-              onPressed: (){
-                store.dispatch(const CreateCommentAction());
-                contentController.text = "";
-                focusNode.unfocus();
-              },
+              onPressed: createComment,
               child: const Icon(Icons.send_outlined)
             )
           ],
