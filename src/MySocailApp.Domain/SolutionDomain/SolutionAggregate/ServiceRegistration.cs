@@ -7,7 +7,6 @@ namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate
     {
         public static IServiceCollection AddSolutionDomainServices(this IServiceCollection services)
             => services
-                .AddScoped<SolutionCreatorDomainService>()
                 .AddScoped<SolutionStateMarkerDomainService>();
     }
 }

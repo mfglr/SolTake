@@ -12,11 +12,11 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionDownvoteRemovedDo
 
         public async Task Handle(SolutionDownvoteRemovedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = await _notificationWriteRepository.GetSolutionWasDownvotedNotificationAsync(notification.Solution.Id, notification.Solution.UserId, cancellationToken);
-            if (n == null) return;
+            //var n = await _notificationWriteRepository.GetSolutionWasDownvotedNotificationAsync(notification.Solution.Id, notification.Solution.UserId, cancellationToken);
+            //if (n == null) return;
 
-            _notificationWriteRepository.Delete(n);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //_notificationWriteRepository.Delete(n);
+            //await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

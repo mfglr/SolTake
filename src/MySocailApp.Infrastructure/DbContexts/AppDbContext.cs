@@ -13,7 +13,6 @@ using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Enti
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeNotificationAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
@@ -32,27 +31,22 @@ namespace MySocailApp.Infrastructure.DbContexts
 {
     public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
-        public DbSet<User> Users { get; private set; }
-        public DbSet<Role> Roles { get; private set; }
         public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
         public DbSet<TermsOfUse> TermsOfUses { get; private set; }
 
+        public DbSet<User> Users { get; private set; }
         public DbSet<Follow> Follows { get; private set; }
-
         public DbSet<UserUserSearch> UserUserSearchs { get; private set; }
+        public DbSet<Role> Roles { get; private set; }
 
-
-        public DbSet<Question> Questions { get; private set; }
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }
         public DbSet<SubjectTopic> SubjectTopics { get; private set; }
         public DbSet<Topic> Topics { get; private set; }
 
+        public DbSet<Question> Questions { get; private set; }
         public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
-        
         public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
-
-        public DbSet<QuestionUserLikeNotification> QuestionUserLikeNotifications { get; private set; }
 
         public DbSet<Solution> Solutions { get; private set; }
 
@@ -61,13 +55,11 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<SolutionUserSave> SolutionUserSaves { get; private set; }
 
         public DbSet<Comment> Comments { get; private set; }
-
         public DbSet<CommentUserLike> CommentUserLikes { get; private set; }
 
         public DbSet<Notification> Notifications { get; private set; }
         public DbSet<NotificationConnection> NotificationConnections { get; private set; }
 
-        
         public DbSet<Message> Messages { get; private set; }
         public DbSet<MessageUserRemove> MessageUserRemoves { get; private set; }
         public DbSet<MessageConnection> MessageConnections { get; private set; }

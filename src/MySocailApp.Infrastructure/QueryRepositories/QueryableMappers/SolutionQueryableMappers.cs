@@ -36,20 +36,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         join.solution.UserId == userId,
                         context.SolutionUserSaves.Any(sus => sus.UserId == userId && sus.SolutionId == join.solution.Id),
                         question.UserId == userId,
-                        join.solution.Medias.Select(
-                            i => new SolutionMediaResponseDto(
-                                i.Id,
-                                i.SolutionId,
-                                i.ContainerName,
-                                i.BlobName,
-                                i.BlobNameOfFrame,
-                                i.Size,
-                                i.Height,
-                                i.Width,
-                                i.Duration,
-                                i.MultimediaType
-                            )
-                        ),
+                        join.solution.Medias,
                         join.Image,
                         join.solution.IsCreatedByAI,
                         join.solution.Model.Name

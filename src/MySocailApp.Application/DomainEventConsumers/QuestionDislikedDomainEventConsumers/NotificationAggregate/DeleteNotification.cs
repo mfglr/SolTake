@@ -13,9 +13,9 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionDislikedDomainEve
 
         public async Task Handle(QuestionDislikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var notifications = await _notificationWriteRepository.GetQuestionLikedNotificationsAsync(notification.Like.QuestionId, notification.Like.UserId, cancellationToken);
-            _notificationWriteRepository.DeleteRange(notifications);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //var notifications = await _notificationWriteRepository.GetQuestionLikedNotificationsAsync(notification.Like.QuestionId, notification.Like.UserId, cancellationToken);
+            //_notificationWriteRepository.DeleteRange(notifications);
+            //await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

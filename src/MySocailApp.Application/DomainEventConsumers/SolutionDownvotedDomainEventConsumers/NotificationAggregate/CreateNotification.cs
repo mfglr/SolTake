@@ -17,10 +17,10 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionDownvotedDomainEv
         public async Task Handle(SolutionWasDownvotedDomainEvent notification, CancellationToken cancellationToken)
         {
             var solution = notification.Solution;
-            var n = Notification.SolutionWasDownvotedNotification(solution.UserId, notification.Vote.UserId, solution.QuestionId, solution.Id);
-            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
-            await _publisher.Publish(new SolutionDownvotedNotificationCreatedDomainEvent(n, notification.Vote.Id), cancellationToken);
+            //var n = Notification.SolutionWasDownvotedNotification(solution.UserId, notification.Vote.UserId, solution.QuestionId, solution.Id);
+            //await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            //await _unitOfWork.CommitAsync(cancellationToken);
+            //await _publisher.Publish(new SolutionDownvotedNotificationCreatedDomainEvent(n, notification.Vote.Id), cancellationToken);
         }
     }
 }

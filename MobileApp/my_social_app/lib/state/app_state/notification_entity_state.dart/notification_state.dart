@@ -5,19 +5,23 @@ import 'package:my_social_app/state/entity_state/base_entity.dart';
 
 @immutable
 class NotificationState extends BaseEntity<int> implements Avatar{
-  final int ownerId;
-  final int userId;
-  final String userName;
   final DateTime createdAt;
+  final int ownerId;
   final bool isViewed;
   final int type;
-  final int? parentId;
-  final int? repliedId;
+  final int userId;
+  final String userName;
+  final Multimedia? image;
+
+  final int? questionId;
+  final String? questionContent;
+  final Multimedia? questionMedia;
   final int? commentId;
   final String? commentContent;
-  final int? questionId;
   final int? solutionId;
-  final Multimedia? image;
+  final String? solutionContent;
+  final Multimedia? solutionMedia;
+
 
   @override
   int get avatarId => userId;
@@ -27,19 +31,23 @@ class NotificationState extends BaseEntity<int> implements Avatar{
 
   NotificationState({
     required super.id,
-    required this.ownerId,
     required this.createdAt,
+    required this.ownerId,
     required this.isViewed,
     required this.type,
-    required this.parentId,
-    required this.commentId,
-    required this.repliedId,
-    required this.questionId,
     required this.userId,
     required this.userName,
+    required this.image,
+
+    required this.questionId,
+    required this.questionContent,
+    required this.questionMedia,
+    required this.commentId,
     required this.commentContent,
     required this.solutionId,
-    required this.image
+    required this.solutionContent,
+    required this.solutionMedia
+
   });
 
   NotificationState markAsViewed()
@@ -49,14 +57,17 @@ class NotificationState extends BaseEntity<int> implements Avatar{
         createdAt: createdAt,
         isViewed: true,
         type: type,
-        parentId: parentId,
-        commentId: commentId,
-        repliedId: repliedId,
-        questionId: questionId,
         userId: userId,
         userName: userName,
+        image: image,
+
+        questionId: questionId,
+        questionContent: questionContent,
+        questionMedia: questionMedia,
+        commentId: commentId,
         commentContent: commentContent,
         solutionId: solutionId,
-        image: image
+        solutionContent: solutionContent,
+        solutionMedia: solutionMedia
       );
 }

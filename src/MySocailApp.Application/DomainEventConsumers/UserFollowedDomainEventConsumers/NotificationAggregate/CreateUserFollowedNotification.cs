@@ -16,10 +16,10 @@ namespace MySocailApp.Application.DomainEventConsumers.UserFollowedDomainEventCo
 
         public async Task Handle(UserFollowedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = Notification.UserFollowedNotification(notification.Follow.FollowerId, notification.Follow.FollowedId);
-            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
-            await _publisher.Publish(new UserFollowedNotificationCreatedDomainEvent(n, notification.Follow), cancellationToken);
+            //var n = Notification.UserFollowedNotification(notification.Follow.FollowerId, notification.Follow.FollowedId);
+            //await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            //await _unitOfWork.CommitAsync(cancellationToken);
+            //await _publisher.Publish(new UserFollowedNotificationCreatedDomainEvent(n, notification.Follow), cancellationToken);
         }
     }
 }

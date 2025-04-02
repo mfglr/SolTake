@@ -20,33 +20,33 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
         public Task<List<Notification>> GetByIds(List<int> ids, CancellationToken cancellationToken)
             => _context.Notifications.Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
 
-        public Task<List<Notification>> GetNotificationsByRepliedIdOrCommentId(int id, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.RepliedId == id || x.CommentId == id).ToListAsync(cancellationToken);
-        public Task<List<Notification>> GetNotificationsByRepliedId(int repliedId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.RepliedId == repliedId).ToListAsync(cancellationToken);
-        public Task<List<Notification>> GetCommentNoificationsAsync(int commentId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.CommentId == commentId).ToListAsync(cancellationToken);
-        public Task<List<Notification>> GetSolutionNotificationsAsync(int solutionId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.SolutionId == solutionId).ToListAsync(cancellationToken);
-        public Task<List<Notification>> GetQuestionNotificationsAsync(int questionId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.QuestionId == questionId).ToListAsync(cancellationToken);
-        public Task<List<Notification>> GetUserNotificaitons(int userId, CancellationToken cancellationToken)
-            => _context.Notifications.Where(x => x.UserId == userId || x.OwnerId == userId).ToListAsync(cancellationToken);
+        //public Task<List<Notification>> GetNotificationsByRepliedIdOrCommentId(int id, CancellationToken cancellationToken)
+        //    => _context.Notifications.Where(x => x.RepliedId == id || x.CommentId == id).ToListAsync(cancellationToken);
+        //public Task<List<Notification>> GetNotificationsByRepliedId(int repliedId, CancellationToken cancellationToken)
+        //    => _context.Notifications.Where(x => x.RepliedId == repliedId).ToListAsync(cancellationToken);
+        //public Task<List<Notification>> GetCommentNoificationsAsync(int commentId, CancellationToken cancellationToken)
+        //    => _context.Notifications.Where(x => x.CommentId == commentId).ToListAsync(cancellationToken);
+        //public Task<List<Notification>> GetSolutionNotificationsAsync(int solutionId, CancellationToken cancellationToken)
+        //    => _context.Notifications.Where(x => x.SolutionId == solutionId).ToListAsync(cancellationToken);
+        //public Task<List<Notification>> GetQuestionNotificationsAsync(int questionId, CancellationToken cancellationToken)
+        //    => _context.Notifications.Where(x => x.QuestionId == questionId).ToListAsync(cancellationToken);
+        //public Task<List<Notification>> GetUserNotificaitons(int userId, CancellationToken cancellationToken)
+        //    => _context.Notifications.Where(x => x.UserId == userId || x.OwnerId == userId).ToListAsync(cancellationToken);
 
-        public Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
-            => _context.Notifications
-                .FirstOrDefaultAsync(x => x.SolutionId == solutionId && x.OwnerId == ownerId && x.Type == NotificationType.SolutionWasUpvotedNotification, cancellationToken);
-        public Task<Notification?> GetSolutionWasDownvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
-            => _context.Notifications
-                .FirstOrDefaultAsync(x => x.SolutionId == solutionId && x.OwnerId == ownerId && x.Type == NotificationType.SolutionWasDownvotedNotification, cancellationToken);
-        public Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int userId, CancellationToken cancellationToken)
-            => _context.Notifications
-                .FirstOrDefaultAsync(x => x.CommentId == commentId && x.UserId == userId && x.Type == NotificationType.CommentLikedNotification,cancellationToken);
+        //public Task<Notification?> GetSolutionWasUpvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
+        //    => _context.Notifications
+        //        .FirstOrDefaultAsync(x => x.SolutionId == solutionId && x.OwnerId == ownerId && x.Type == NotificationType.SolutionWasUpvotedNotification, cancellationToken);
+        //public Task<Notification?> GetSolutionWasDownvotedNotificationAsync(int solutionId, int ownerId, CancellationToken cancellationToken)
+        //    => _context.Notifications
+        //        .FirstOrDefaultAsync(x => x.SolutionId == solutionId && x.OwnerId == ownerId && x.Type == NotificationType.SolutionWasDownvotedNotification, cancellationToken);
+        //public Task<Notification?> GetCommentLikedNotificationAsync(int commentId, int userId, CancellationToken cancellationToken)
+        //    => _context.Notifications
+        //        .FirstOrDefaultAsync(x => x.CommentId == commentId && x.UserId == userId && x.Type == NotificationType.CommentLikedNotification,cancellationToken);
         
-        public Task<List<Notification>> GetQuestionLikedNotificationsAsync(int questionId, int userId, CancellationToken cancellationToken)
-            => _context.Notifications
-                .Where(x => x.QuestionId == questionId && x.UserId == userId && x.Type == NotificationType.QuestionLikedNotification)
-                .ToListAsync(cancellationToken);
+        //public Task<List<Notification>> GetQuestionLikedNotificationsAsync(int questionId, int userId, CancellationToken cancellationToken)
+        //    => _context.Notifications
+        //        .Where(x => x.QuestionId == questionId && x.UserId == userId && x.Type == NotificationType.QuestionLikedNotification)
+        //        .ToListAsync(cancellationToken);
         
         public Task<Notification?> GetUserFollowedNotificationAsync(int userId, int ownerId, CancellationToken cancellationToken)
             => _context.Notifications

@@ -1,8 +1,6 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/notifications/notification_actions.dart';
 import 'package:my_social_app/notifications/notification_titles.dart';
 import 'package:my_social_app/notifications/notifications_bodies.dart';
 import 'package:my_social_app/services/get_language.dart';
@@ -27,11 +25,7 @@ Future<void> initNotifications(BuildContext context){
     .initialize(
       _settings,
       onDidReceiveNotificationResponse: (details){
-        final store = StoreProvider.of<AppState>(context,listen: false);
-        final notification = store.state.notifications.values.firstWhereOrNull((e) => e.id == details.id);
-        if(notification != null){
-          notficationsActions[notification.type]!(context,notification);
-        }
+        
       }
     );
 }

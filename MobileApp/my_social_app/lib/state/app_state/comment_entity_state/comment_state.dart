@@ -7,7 +7,7 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 
 class CommentState extends BaseEntity<int> implements Avatar{
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final bool isOwner;
   final String userName;
   final int userId;

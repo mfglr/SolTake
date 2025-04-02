@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 
@@ -24,25 +23,6 @@ namespace MySocailApp.Application.Queries.CommentAggregate
                 comment.SolutionId,
                 comment.ParentId,
                 login.Image
-            );
-
-        public static CommentResponseDto Create(QuestionCommentNotificationCreatedDomainEvent @event) =>
-            new(
-                @event.Comment.Id,
-                @event.Comment.CreatedAt,
-                @event.Comment.UpdatedAt,
-                @event.Login.UserName,
-                @event.Login.UserId,
-                @event.Comment.IsEdited,
-                @event.Comment.Content.Value,
-                false,
-                0,
-                0,
-                false,
-                @event.Comment.QuestionId,
-                null,
-                null,
-                @event.Login.Image
             );
 
         public static CommentResponseDto Create(SolutionCommentNotificationCreatedDomainEvent @event) =>

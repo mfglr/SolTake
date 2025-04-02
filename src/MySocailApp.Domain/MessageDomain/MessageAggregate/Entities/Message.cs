@@ -14,11 +14,11 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         public int ReceiverId { get; private set; }
         public MessageContent? Content { get; private set; }
         
-        private readonly List<MessageMultimedia> _medias = [];
-        public IReadOnlyList<MessageMultimedia> Medias => _medias;
+        private readonly List<Multimedia> _medias = [];
+        public IReadOnlyList<Multimedia> Medias => _medias;
 
         private Message() { }
-        public Message(int senderId, int receiverId, MessageContent? content, IEnumerable<MessageMultimedia>? medias)
+        public Message(int senderId, int receiverId, MessageContent? content, IEnumerable<Multimedia>? medias)
         {
             if (SenderId == receiverId)
                 throw new SelfMessagingException();

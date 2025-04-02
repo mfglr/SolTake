@@ -2,6 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainServices;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
@@ -20,11 +21,11 @@ namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.Crea
 
         public async Task<CreateQuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
         {
-            IEnumerable<QuestionMultimedia> questionMedias = [];
+            IEnumerable<Multimedia> questionMedias = [];
             try
             {
                 //upload question images
-                questionMedias = (await _multimedyaService.UploadAsync(ContainerName.QuestionMedias, request.Medias, cancellationToken)).Select(x => new QuestionMultimedia(x));
+                questionMedias = await _multimedyaService.UploadAsync(ContainerName.QuestionMedias, request.Medias, cancellationToken);
 
                 //create question
                 var content = request.Content != null ? new QuestionContent(request.Content) : null;

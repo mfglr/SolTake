@@ -16,11 +16,11 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionUpvotedDomainEven
 
         public async Task Handle(SolutionWasUpvotedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = Notification.SolutionWasUpvotedNotification(notification.Solution.UserId, notification.Vote.UserId, notification.Solution.QuestionId, notification.Solution.Id);
-            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //var n = Notification.SolutionWasUpvotedNotification(notification.Solution.UserId, notification.Vote.UserId, notification.Solution.QuestionId, notification.Solution.Id);
+            //await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            //await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new SolutionUpvotedNotificationCreatedDomainEvent(n, notification.Vote.Id), cancellationToken);
+            //await _publisher.Publish(new SolutionUpvotedNotificationCreatedDomainEvent(n, notification.Vote.Id), cancellationToken);
         }
     }
 }

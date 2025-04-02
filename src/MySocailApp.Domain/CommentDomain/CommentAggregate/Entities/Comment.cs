@@ -1,5 +1,8 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
 {
@@ -24,16 +27,28 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
             _tags.AddRange(idsOfUsersTagged.Select(CommentUserTag.Create));
         }
 
-        internal void CreateQuestionComment(int questionId)
+        private void Create(Login login, Question? question = null, Solution? solution = null, Comment? parent = null)
         {
-            QuestionId = questionId;
-            UpdatedAt = CreatedAt = DateTime.UtcNow;
+            CreatedAt = DateTime.UtcNow;
+            AddDomainEvent(new CommentCreatedDomainEvent(this, login, Question: question,Solution: solution, Parent: parent));
+            foreach (var tag in _tags)
+                AddDomainEvent(new UserTaggedInCommentDomainEvent(this, tag.UserId, Question: question, Solution: solution, Parent: parent));
         }
-        internal void CreateSolutionComment(int solutionId)
+
+        internal void CreateQuestionComment(Question question, Login login)
         {
-            SolutionId = solutionId;
-            UpdatedAt = CreatedAt = DateTime.UtcNow;
+            QuestionId = question.Id;
+            CreatedAt = DateTime.UtcNow;
+            
+            Create(login, question: question);
         }
+
+        internal void CreateSolutionComment(Solution solution,Login login)
+        {
+            SolutionId = solution.Id;
+            Create(login, solution: solution);
+        }
+
         internal void ReplyComment(int parentId, int repliedId)
         {
             ParentId = parentId;

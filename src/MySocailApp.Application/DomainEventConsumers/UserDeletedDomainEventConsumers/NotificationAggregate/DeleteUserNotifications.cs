@@ -12,9 +12,9 @@ namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventCon
 
         public async Task Handle(UserDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var notifications = await _notificationWriteRepository.GetUserNotificaitons(notification.User.Id, cancellationToken);
-            _notificationWriteRepository.DeleteRange(notifications);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //var notifications = await _notificationWriteRepository.GetUserNotificaitons(notification.User.Id, cancellationToken);
+            //_notificationWriteRepository.DeleteRange(notifications);
+            //await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

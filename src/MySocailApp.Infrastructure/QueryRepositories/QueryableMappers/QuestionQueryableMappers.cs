@@ -36,20 +36,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         question.Exam,
                         question.Subject,
                         question.Topic,
-                        question.Medias.Select(
-                            i => new QuestionMultimediaResponseDto(
-                                i.Id,
-                                i.QuestionId,
-                                i.ContainerName,
-                                i.BlobName,
-                                i.BlobNameOfFrame,
-                                i.Size,
-                                i.Height,
-                                i.Width,
-                                i.Duration,
-                                i.MultimediaType
-                            )
-                        ),
+                        question.Medias,
                         user.Image
                     )
                 );

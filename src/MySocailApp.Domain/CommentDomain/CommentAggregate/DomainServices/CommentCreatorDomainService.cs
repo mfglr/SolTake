@@ -4,7 +4,9 @@ using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices.InternalD
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices
 {
@@ -20,11 +22,22 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices
                 await CommentReplier
                     .ReplyAsync(_commentReadRepository, comment, (int)repliedId, cancellationToken);
             else if (questionId != null)
-                await QuestionCommentCreatorDomainService
-                    .CreateAsync(_questionReadRepository, comment, (int)questionId, login, cancellationToken);
+            {
+                var question =
+                    await _questionReadRepository.GetAsync((int)questionId, cancellationToken) ??
+                    throw new QuestionNotFoundException();
+
+                comment.CreateQuestionComment(question, login);
+            }
+                
             else if (solutionId != null)
-                await SolutionCommentCreatorDomainService
-                    .CreateAsync(_solutionReadRepository, comment, (int)solutionId, login, cancellationToken);
+            {
+                var solution = 
+                    await _solutionReadRepository.GetAsync((int)solutionId, cancellationToken) ??
+                    throw new SolutionNotFoundException();
+
+                comment.CreateSolutionComment(solution,login);
+            }
             else
                 throw new NoRootException();
         }

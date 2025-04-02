@@ -8,14 +8,9 @@ namespace MySocailApp.Infrastructure.ModelBuilders.NotificationAggregate
     {
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
-            builder.HasIndex(x => x.OwnerId);
-            builder.HasIndex(x => x.UserId);
-            builder.HasIndex(x => x.QuestionId);
-            builder.HasIndex(x => x.SolutionId);
-            builder.HasIndex(x => x.CommentId);
-            builder.HasIndex(x => x.ParentId);
-            builder.HasIndex(x => x.RepliedId);
-
+            builder.OwnsOne(x => x.Image);
+            builder.OwnsOne(x => x.QuestionMedia);
+            builder.OwnsOne(x => x.SolutionMedia);
         }
     }
 }

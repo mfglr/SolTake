@@ -27,19 +27,19 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventCo
                 if (parent == null) return;
             }
 
-            var n = Notification
-                .CommentLikedNotification(
-                    notification.Comment.UserId,
-                    comment.QuestionId ?? parent?.QuestionId,
-                    comment.SolutionId ?? parent?.SolutionId,
-                    comment.ParentId,
-                    comment.Id,
-                    notification.Like.UserId
-                );
+            //var n = Notification
+            //    .CommentLikedNotification(
+            //        notification.Comment.UserId,
+            //        comment.QuestionId ?? parent?.QuestionId,
+            //        comment.SolutionId ?? parent?.SolutionId,
+            //        comment.ParentId,
+            //        comment.Id,
+            //        notification.Like.UserId
+            //    );
 
-            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
-            await _publisher.Publish(new CommentLikedNotificationCreatedDomainEvent(n, notification.Like.Id), cancellationToken);
+            //await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            //await _unitOfWork.CommitAsync(cancellationToken);
+            //await _publisher.Publish(new CommentLikedNotificationCreatedDomainEvent(n, notification.Like.Id), cancellationToken);
         }
     }
 }

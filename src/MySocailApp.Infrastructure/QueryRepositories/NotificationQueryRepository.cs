@@ -11,12 +11,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     public class NotificationQueryRepository(AppDbContext context) : INotificationQueryRepository
     {
         private readonly AppDbContext _context = context;
-        
+
         public Task<NotificationResponseDto?> GetNotificationById(int id, CancellationToken cancellationToken)
             => _context.Notifications
                 .AsNoTracking()
                 .Where(x => x.Id == id)
-                .ToNotificationResponseDto(_context)
+                .ToNotificationResponseDto()
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<List<NotificationResponseDto>> GetNotificationsUnviewedByOwnerId(int ownerId, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.OwnerId == ownerId && !x.IsViewed)
                 .OrderByDescending(x => x.Id)
-                .ToNotificationResponseDto(_context)
+                .ToNotificationResponseDto()
                 .ToListAsync(cancellationToken);
 
         public Task<List<NotificationResponseDto>> GetNotificationsViewedByOwnerId(int ownerId, IPage page, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.OwnerId == ownerId && x.IsViewed)
                 .ToPage(page)
-                .ToNotificationResponseDto(_context)
+                .ToNotificationResponseDto()
                 .ToListAsync(cancellationToken);
     }
 }

@@ -10,17 +10,22 @@ class Notification{
   final int id;
   final DateTime createdAt;
   final int ownerId;
-  final int userId;
-  final String userName;
   final bool isViewed;
   final int type;
-  final int? parentId;
-  final int? repliedId;
+  final int userId;
+  final String userName;
+  final Multimedia? image;
+  
+  final int? questionId;
+  final String? questionContent;
+  final Multimedia? questionMedia;
+  
   final int? commentId;
   final String? commentContent;
+
   final int? solutionId;
-  final int? questionId;
-  final Multimedia? image;
+  final String? solutionContent;
+  final Multimedia? solutionMedia;
 
   const Notification({
     required this.id,
@@ -28,15 +33,20 @@ class Notification{
     required this.createdAt,
     required this.isViewed,
     required this.type,
-    required this.parentId,
-    required this.commentId,
-    required this.commentContent,
-    required this.repliedId,
-    required this.questionId,
     required this.userId,
     required this.userName,
+    required this.image,
+
+    required this.questionId,
+    required this.questionContent,
+    required this.questionMedia,
+
+    required this.commentId,
+    required this.commentContent,
+
     required this.solutionId,
-    required this.image
+    required this.solutionContent,
+    required this.solutionMedia
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);
@@ -50,13 +60,19 @@ class Notification{
         isViewed: isViewed,
         userName: userName,
         type: type,
-        parentId: parentId,
+        userId: userId,
+        image: image,
+
+        questionId: questionId,
+        questionContent: questionContent,
+        questionMedia: questionMedia,
+
         commentId: commentId,
         commentContent: commentContent,
-        repliedId: repliedId,
-        questionId: questionId,
-        userId: userId,
+
         solutionId: solutionId,
-        image: image
+        solutionContent: solutionContent,
+        solutionMedia: solutionMedia
+
       );
 }

@@ -4,7 +4,7 @@ using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.MessageDomain
 {
-    public class MessageResponseDto(int id, DateTime createdAt, DateTime? updatedAt, bool isOwner, string userName, int conversationId, int senderId, int receiverId, bool isEdited, string? content, MessageState state, IEnumerable<MessageMultimediaResponseDto> medias, Multimedia? multimedia)
+    public class MessageResponseDto(int id, DateTime createdAt, DateTime? updatedAt, bool isOwner, string userName, int conversationId, int senderId, int receiverId, bool isEdited, string? content, MessageState state, IEnumerable<Multimedia> medias, Multimedia? multimedia)
     {
         public int Id { get; private set; } = id;
         public DateTime CreatedAt { get; private set; } = createdAt;
@@ -17,7 +17,7 @@ namespace MySocailApp.Application.Queries.MessageDomain
         public bool IsEdited { get; private set; } = isEdited;
         public string? Content { get; private set; } = content;
         public MessageState State { get; private set; } = state;
-        public IEnumerable<MessageMultimediaResponseDto> Medias { get; private set; } = medias;
+        public IEnumerable<Multimedia> Medias { get; private set; } = medias;
         public Multimedia? Multimedia { get; private set; } = multimedia;
 
         public static MessageResponseDto Create(MessageCreatedDomainEvent @event)
@@ -34,19 +34,7 @@ namespace MySocailApp.Application.Queries.MessageDomain
                     false,
                     @event.Message.Content?.Value,
                     MessageState.Created,
-                    @event.Message.Medias.Select(
-                        (e) =>
-                            new MessageMultimediaResponseDto(
-                                e.ContainerName,
-                                e.BlobName,
-                                e.BlobNameOfFrame,
-                                e.Size,
-                                e.Height,
-                                e.Width,
-                                e.Duration,
-                                e.MultimediaType
-                            )
-                    ),
+                    @event.Message.Medias,
                     @event.Image
                 );
 

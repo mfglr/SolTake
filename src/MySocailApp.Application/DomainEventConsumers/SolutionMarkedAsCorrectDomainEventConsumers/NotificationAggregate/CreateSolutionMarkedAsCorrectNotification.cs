@@ -19,11 +19,11 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsCorrectDo
             var solution = notification.Solution;
             var question = notification.Question;
 
-            var n = Notification.SolutionMarkedAsCorrectNotification(solution.UserId, question.UserId, solution.QuestionId, solution.Id);
-            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //var n = Notification.SolutionMarkedAsCorrectNotification(solution.UserId, question.UserId, solution.QuestionId, solution.Id);
+            //await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            //await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new SolutionMarkedAsCorrectNotificationCreatedDomainEvent(n), cancellationToken);
+            //await _publisher.Publish(new SolutionMarkedAsCorrectNotificationCreatedDomainEvent(n), cancellationToken);
         }
     }
 }

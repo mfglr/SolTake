@@ -9,11 +9,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
         public void Configure(EntityTypeBuilder<Message> builder)
         {
             builder.OwnsOne(x => x.Content);
-
-            builder
-                .HasMany(x => x.Medias)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsMany(x => x.Medias);
         }
     }
 }

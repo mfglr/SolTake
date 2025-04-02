@@ -1,5 +1,4 @@
-﻿using MySocailApp.Application.Queries.QuestionDomain;
-using MySocailApp.Core;
+﻿using MySocailApp.Core;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
@@ -27,19 +26,7 @@ namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.Crea
         public QuestionExam Exam { get; private set; } = question.Exam;
         public QuestionSubject Subject { get; private set; } = question.Subject;
         public QuestionTopic? Topic { get; private set; } = question.Topic;
-        public IEnumerable<QuestionMultimediaResponseDto> Medias { get; private set; } = question.Medias
-                .Select(x => new QuestionMultimediaResponseDto(
-                    x.Id,
-                    x.QuestionId,
-                    x.ContainerName,
-                    x.BlobName,
-                    x.BlobNameOfFrame,
-                    x.Size,
-                    x.Height,
-                    x.Width,
-                    x.Duration,
-                    x.MultimediaType
-                ));
+        public IEnumerable<Multimedia> Medias { get; private set; } = question.Medias;
         public Multimedia? Image { get; private set; } = user.Image;
     }
 }

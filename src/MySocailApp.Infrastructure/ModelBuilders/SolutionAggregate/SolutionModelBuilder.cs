@@ -10,12 +10,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
         {
             builder.OwnsOne(x => x.Content);
             builder.OwnsOne(x => x.Model);
-
-            builder
-                .HasMany(x => x.Medias)
-                .WithOne()
-                .HasForeignKey(x => x.SolutionId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsMany(x => x.Medias);
         }
     }
 }

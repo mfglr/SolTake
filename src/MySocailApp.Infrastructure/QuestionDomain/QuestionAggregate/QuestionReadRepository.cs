@@ -16,14 +16,8 @@ namespace MySocailApp.Infrastructure.QuestionDomain.QuestionAggregate
             => _context
                 .Questions
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
-
-        public Task<Question?> GetQuestionWithMediasById(int id, CancellationToken cancellationToken)
-            => _context
-                .Questions
-                .AsNoTracking()
                 .Include(x => x.Medias)
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == questionId, cancellationToken);
 
         public async Task<int?> GetUserIdOfQuestionAsync(int questionId, CancellationToken cancellationToken)
             => await _context

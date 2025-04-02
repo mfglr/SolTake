@@ -16,11 +16,22 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventC
 
         public async Task Handle(QuestionLikedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = Notification.QuestionLikedNotification(notification.QuestionUserId, notification.Like.QuestionId, notification.Like.UserId);
+            if (notification.Question.UserId == notification.Login.UserId) return;
+
+            var n = Notification.QuestionLikedNotification(
+                notification.Question.UserId,
+                notification.Login.UserId,
+                notification.Login.UserName,
+                notification.Login.Image,
+                notification.Like.QuestionId,
+                notification.Question.Content?.Value,
+                notification.Question.Medias.FirstOrDefault()
+            );
+
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new QuestionLikedNotificationCreatedDomainEvent(n, notification.Like, notification.Login), cancellationToken);
+            await _publisher.Publish(new NotificationCreatedDomainEvent(n), cancellationToken);
         }
     }
 }

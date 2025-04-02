@@ -9,7 +9,9 @@ part of 'comment.dart';
 Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       id: (json['id'] as num).toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
       isOwner: json['isOwner'] as bool,
       userName: json['userName'] as String,
       userId: (json['userId'] as num).toInt(),
@@ -29,7 +31,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
       'isOwner': instance.isOwner,
       'userName': instance.userName,
       'userId': instance.userId,

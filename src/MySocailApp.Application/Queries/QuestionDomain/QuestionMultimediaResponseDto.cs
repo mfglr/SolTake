@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.QuestionDomain
 {
-    public record QuestionMultimediaResponseDto(int Id, int QuestionId, string ContainerName, string BlobName, string? BlobNameOfFrame, long Size, double Height, double Width, double Duration, MultimediaType MultimediaType);
+    public record QuestionMultimediaResponseDto(int Id, string ContainerName, string BlobName, string? BlobNameOfFrame, long Size, double Height, double Width, double Duration, MultimediaType MultimediaType);
 }

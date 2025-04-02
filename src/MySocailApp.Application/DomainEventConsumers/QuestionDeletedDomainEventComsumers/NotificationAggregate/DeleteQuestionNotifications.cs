@@ -12,9 +12,9 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionDeletedDomainEven
 
         public async Task Handle(QuestionDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var notifications = await _notficationWriteRepository.GetQuestionNotificationsAsync(notification.Question.Id, cancellationToken);
-            _notficationWriteRepository.DeleteRange(notifications);
-            await _unitOfWork.CommitAsync(cancellationToken);
+            //var notifications = await _notficationWriteRepository.GetQuestionNotificationsAsync(notification.Question.Id, cancellationToken);
+            //_notficationWriteRepository.DeleteRange(notifications);
+            //await _unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

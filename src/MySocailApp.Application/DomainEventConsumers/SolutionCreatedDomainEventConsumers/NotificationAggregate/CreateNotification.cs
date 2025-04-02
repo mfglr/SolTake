@@ -16,16 +16,21 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionCreatedDomainEven
 
         public async Task Handle(SolutionCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
+            if (notification.Question.UserId == notification.Solution.UserId) return;
+
             var n = Notification.SolutionCreatedNotification(
                 notification.Question.UserId,
-                notification.Solution.QuestionId,
+                notification.Solution.UserId,
+                notification.Login.UserName,
+                notification.Login.Image,
                 notification.Solution.Id,
-                notification.Solution.UserId
+                notification.Solution.Content?.Value,
+                notification.Solution.Medias.FirstOrDefault()
             );
-
             await _notificationWriteRepository.CreateAsync(n, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
-            await _publisher.Publish(new SolutionNotificationCreatedDomainEvent(n), cancellationToken);
+
+            await _publisher.Publish(new NotificationCreatedDomainEvent(n), cancellationToken);
         }
     }
 }

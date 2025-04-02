@@ -29,18 +29,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             : context.MessageUserReceives.Count(mur => mur.MessageId == message.Id) != 0
                                 ? MessageState.Reached
                                 : MessageState.Created,
-                        message.Medias.Select(
-                            media => new MessageMultimediaResponseDto(
-                                media.ContainerName,
-                                media.BlobName,
-                                media.BlobNameOfFrame,
-                                media.Size,
-                                media.Height,
-                                media.Width,
-                                media.Duration,
-                                media.MultimediaType
-                            )
-                        ),
+                        message.Medias,
                         user.Image
                     )
                 );

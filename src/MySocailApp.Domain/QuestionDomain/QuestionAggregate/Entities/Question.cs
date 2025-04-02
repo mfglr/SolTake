@@ -16,10 +16,10 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities
         public QuestionSubject Subject { get; private set; } = null!;
         public QuestionTopic? Topic { get; private set; }
         public QuestionContent? Content { get; private set; }
-        private readonly List<QuestionMultimedia> _medias = [];
-        public IReadOnlyList<QuestionMultimedia> Medias => _medias;
+        private readonly List<Multimedia> _medias = [];
+        public IReadOnlyList<Multimedia> Medias => _medias;
 
-        public Question(int userId, QuestionContent? content, IEnumerable<QuestionMultimedia> medias)
+        public Question(int userId, QuestionContent? content, IEnumerable<Multimedia> medias)
         {
             if (!medias.Any() && content == null)
                 throw new QuesitonContentRequiredException();

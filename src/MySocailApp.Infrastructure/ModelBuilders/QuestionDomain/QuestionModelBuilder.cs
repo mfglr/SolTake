@@ -12,12 +12,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.QuestionDomain
             builder.OwnsOne(x => x.Subject);
             builder.OwnsOne(x => x.Topic);
             builder.OwnsOne(x => x.Content);
-
-            builder
-                .HasMany(x => x.Medias)
-                .WithOne()
-                .HasForeignKey(x => x.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.OwnsMany(x => x.Medias);
         }
     }
 }

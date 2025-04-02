@@ -19,20 +19,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.Create
         public bool IsEdited { get; private set; } = false;
         public string? Content { get; private set; } = message.Content?.Value;
         public MessageState State { get; private set; } = MessageState.Created;
-        public IEnumerable<MessageMultimediaResponseDto> Medias { get; private set; }
-            = message.Medias
-                .Select(
-                    (x) => new MessageMultimediaResponseDto(
-                        x.ContainerName,
-                        x.BlobName,
-                        x.BlobNameOfFrame,
-                        x.Size,
-                        x.Height,
-                        x.Width,
-                        x.Duration,
-                        x.MultimediaType
-                    )
-                );
+        public IEnumerable<Multimedia> Medias { get; private set; } = message.Medias;
         public Multimedia? Image { get; private set; } = user.Image;
     }
 }

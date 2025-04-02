@@ -1,13 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/models/notification.dart';
-import 'package:my_social_app/models/question_user_like.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/selectors.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
@@ -30,9 +24,14 @@ class NotificationHub{
 
     _hubConnection.onreconnected(({connectionId}) => store.dispatch(const GetUnviewedNotificationsAction()));
 
-    _hubConnection.on('receiveNotification',(list) => _onReceivedNotification(store, list));
+    _hubConnection
+      .on(
+        'receiveNotification',
+        (list) => store.dispatch(PrependNotificationAction(
+          notification: Notification.fromJson(list!.first as dynamic).toNotificationState()
+        ))
+      );
     _hubConnection.on('deleteNotification',(list) => _onNotificationDeleted(store, list!.first as int));
-
   }
 
   static NotificationHub? _singleton;
@@ -57,36 +56,10 @@ class NotificationHub{
     _singleton = null;
   }
 
-  void _onReceivedNotification(Store<AppState> store, List<Object?>? list){
-    final notificationState = Notification.fromJson(list!.first as dynamic).toNotificationState();
-    store.dispatch(PrependNotificationAction(notification: notificationState));
-    
-    if(notificationState.type == NotificationType.questionLikedNotification){
-      store.dispatch(AddNewQuestionLikeAction(
-        questionId: notificationState.questionId!,
-        like:  QuestionUserLike.fromJson(list.last as dynamic).toQuestionUserLikeState()
-      ));
-    }
-    else if(notificationState.type == NotificationType.questionCommentCreatedNotification){
-      var comment = Comment.fromJson(list.last as dynamic).toCommentState();
-      store.dispatch(AddCommentAction(comment: comment));
-      store.dispatch(AddNewQuestionCommentAction(questionId: notificationState.questionId!,commentId: comment.id));
-    }
-    else if(notificationState.type == NotificationType.solutionCommentCreatedNotification){
-      var comment = Comment.fromJson(list.last as dynamic).toCommentState();
-      store.dispatch(AddCommentAction(comment: comment));
-      store.dispatch(AddNewSolutionCommentAction(solutionId: notificationState.solutionId!,commentId: comment.id));
-    }
-
-  }
-
   void _onNotificationDeleted(Store<AppState> store, int notificationId){
     var notification = selectNotification(store, notificationId);
     if(notification == null) return;
     store.dispatch(RemoveNotificationAction(notificationId: notificationId));
-    if(notification.type == NotificationType.questionLikedNotification){
-      store.dispatch(RemoveNewQuestionLikeAction(questionId: notification.questionId!, userId: notification.userId));
-    }
   }
 
 }

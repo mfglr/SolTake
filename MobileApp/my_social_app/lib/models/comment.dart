@@ -12,7 +12,7 @@ part 'comment.g.dart';
 class Comment{
   final int id;
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final bool isOwner;
   final String userName;
   final int userId;
