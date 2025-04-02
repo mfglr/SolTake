@@ -1,4 +1,6 @@
-﻿namespace MySocailApp.Core
+﻿using Newtonsoft.Json;
+
+namespace MySocailApp.Core
 {
     public class Multimedia
     {
@@ -11,7 +13,18 @@
         public double Duration { get; private set; }
         public MultimediaType MultimediaType { get; private set; }
 
-        private Multimedia() { }
+        [JsonConstructor]
+        private Multimedia(string containerName, string blobName, string? blobNameOfFrame, long size, double height, double width, double duration, MultimediaType multimediaType)
+        {
+            ContainerName = containerName;
+            BlobName = blobName;
+            BlobNameOfFrame = blobNameOfFrame;
+            Size = size;
+            Height = height;
+            Width = width;
+            Duration = duration;
+            MultimediaType = multimediaType;
+        }
 
         private Multimedia(string containerName, string blobName, long size, double height, double width)
         {
@@ -39,5 +52,18 @@
 
         public static Multimedia CreateVideo(string containerName, string blobName, string blobNameOfFrame, long size, double height, double width, double duration)
             => new(containerName, blobName, blobNameOfFrame, size, height, width, duration) { MultimediaType = MultimediaType.Video };
+
+
+        public static Multimedia Clone(Multimedia media) => new(
+            media.ContainerName,
+            media.BlobName,
+            media.BlobNameOfFrame,
+            media.Size,
+            media.Height,
+            media.Width,
+            media.Duration,
+            media.MultimediaType
+        );
+
     }
 }

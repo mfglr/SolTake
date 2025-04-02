@@ -21,6 +21,9 @@ LoginState? deleteUserReducer(LoginState? prev,DeleteUserAction action)
 LoginState? deleteUserFailedReducer(LoginState? prev,DeleteUserFailedAction action)
   => prev?.stopAccountDeletion();
 
+LoginState? updateRefreshToken(LoginState? prev,UpdateRefreshTokenAction action)
+  => prev?.updateRefhreshToken(action.refreshToken);
+
 final Reducer<LoginState?> accoutStateReducers = combineReducers<LoginState?>([
   TypedReducer<LoginState?,UpdateLoginStateAction>(updateAccountStateReducer).call,
   TypedReducer<LoginState?,UpdateLanguageSuccessAction>(updateLanguageReducer).call,
@@ -29,4 +32,5 @@ final Reducer<LoginState?> accoutStateReducers = combineReducers<LoginState?>([
   TypedReducer<LoginState?,ApproveTermsOfUseSuccessAction>(approveTermsOfUseReducer).call,
   TypedReducer<LoginState?,DeleteUserAction>(deleteUserReducer).call,
   TypedReducer<LoginState?,DeleteUserFailedAction>(deleteUserFailedReducer).call,
+  TypedReducer<LoginState?,UpdateRefreshTokenAction>(updateRefreshToken).call
 ]);

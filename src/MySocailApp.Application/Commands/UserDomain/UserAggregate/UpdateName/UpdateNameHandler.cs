@@ -1,17 +1,20 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
+using MySocailApp.Domain.UserDomain.UserAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateName
 {
-    public class UpdateNameHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor) : IRequestHandler<UpdateNameDto>
+    public class UpdateNameHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, UserManipulator userManipulator) : IRequestHandler<UpdateNameDto, UpdateNameResponseDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IUserAccessor _userAccessor = userAccessor;
+        private readonly UserManipulator _userManipulator = userManipulator;
 
-        public async Task Handle(UpdateNameDto request, CancellationToken cancellationToken)
+        public async Task<UpdateNameResponseDto> Handle(UpdateNameDto request, CancellationToken cancellationToken)
         {
-            _userAccessor.User.UpdateName(request.Name);
+            await _userManipulator.UpdateNameAsync(_userAccessor.User,request.Name,cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
+            return new(_userAccessor.User);
         }
     }
 }

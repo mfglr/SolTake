@@ -26,6 +26,12 @@ class LoginByGoogleAction extends AppAction{
 }
 
 @immutable
+class UpdateRefreshTokenAction extends AppAction{
+  final String refreshToken;
+  const UpdateRefreshTokenAction({required this.refreshToken});
+}
+
+@immutable
 class UpdateLanguageAction extends AppAction{
   final String language;
   const UpdateLanguageAction({required this.language});

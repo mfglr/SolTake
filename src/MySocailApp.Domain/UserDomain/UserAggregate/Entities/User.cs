@@ -54,23 +54,32 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
             AddDomainEvent(new UserCreatedDomainEvent(this));
         }
 
-        public void UpdateImage(Multimedia image)
+        internal void UpdateImage(Multimedia image)
         {
+            ArgumentNullException.ThrowIfNull(image);
+
             if (Image != null)
-                AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
+                AddDomainEvent(new MediasDeletedDomainEvent([Image]));
+            
             Image = image;
+            UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new ProfileImageUpdatedDomainEvent(this));
         }
-        public void RemoveImage()
+        internal void RemoveImage()
         {
             if (Image == null)
                 throw new UserImageIsNotAvailableException();
-            AddDomainEvent(new ProfileImageDeletedDomainEvent(Image));
+            AddDomainEvent(new MediasDeletedDomainEvent([Image]));
+
             Image = null;
+            UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new ProfileImageUpdatedDomainEvent(this));
         }
-        public void UpdateName(string name)
+        internal void UpdateName(string name)
         {
             Name = name;
             UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new NameUpdatedDomainEvent(this));
         }
         public void UpdateBiography(Biography biography)
         {
@@ -81,6 +90,7 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate.Entities
         {
             UserName = userName;
             UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new UserNameUpdatedDomainEvent(this));
         }
         internal void UpdateEmail(Email email)
         {

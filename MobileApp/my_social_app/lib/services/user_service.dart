@@ -4,11 +4,14 @@ import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/user_endpoints.dart';
 import 'package:my_social_app/models/login.dart';
+import 'package:my_social_app/models/remove_user_image_response.dart';
 import 'package:my_social_app/models/search_user.dart';
+import 'package:my_social_app/models/update_name_response.dart';
+import 'package:my_social_app/models/update_user_image_response.dart';
+import 'package:my_social_app/models/update_user_name_response.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
@@ -90,18 +93,13 @@ class UserService{
 
   Future<Login> updateEmail(String email) =>
     _appClient
-      .post(
-        "$userController/$updateEmailEndPoint",
-        body: { 'email': email }
-      )
+      .post("$userController/$updateEmailEndPoint",body: { 'email': email })
       .then((json) => Login.fromJson(json));
 
-  Future<void> updateUserName(String userName) =>
+  Future<UpdateUserNameResponse> updateUserName(String userName) =>
     _appClient
-      .put(
-        "$userController/$updateUserNameEndPoint",
-        body: { 'userName': userName }
-      );
+      .post("$userController/$updateUserNameEndPoint",body: { 'userName': userName })
+      .then((json) => UpdateUserNameResponse.fromJson(json));
 
   Future<void> updateLanguage(String language) =>
     _appClient
@@ -131,26 +129,28 @@ class UserService{
     _appClient
       .put("$userController/$approveTermsOfUseEndpoint");
 
-  Future<Multimedia> updateImage(AppFile image, num userId, void Function(double) callback) async {
+  Future<UpdateUserImageResponse> updateImage(AppFile image, num userId, void Function(double) callback) async {
     const url = "$userController/$updateUserImageEndpoint";
     final request = MultipartRequest("Post", _appClient.generateUri(url));
     request.files.add(await MultipartFile.fromPath("file",image.file.path,contentType: MediaType.parse(image.contentType)));
     var data = await _appClient.postStream(request, callback);
-    return Multimedia.fromJson(jsonDecode(data));
+    return UpdateUserImageResponse.fromJson(jsonDecode(data));
   }
   
-  Future<void> removeImage(int userId) =>
-    _appClient.delete("$userController/$removeUserImageEndpoint");
-  
-  Future<void> updateName(String name) => 
+  Future<RemoveUserImageResponse> removeImage(int userId) =>
     _appClient
-      .put("$userController/$updateNameEndpoint", body: {'name' : name});
+      .post("$userController/$removeUserImageEndpoint")
+      .then((json) => RemoveUserImageResponse.fromJson(json));
+  
+  Future<UpdateNameResponse> updateName(String name) => 
+    _appClient
+      .post("$userController/$updateNameEndpoint", body: {'name' : name})
+      .then((json) => UpdateNameResponse.fromJson(json));
   
   Future<void> updateBiography(String biography) =>
      _appClient
       .put("$userController/$updateBiographyEndpoint",body: {'biography': biography});
   
- 
   Future<User> getById(num id) => 
     _appClient
       .get("$userController/$getUserByIdEndPoint/$id")

@@ -4,16 +4,17 @@ using MySocailApp.Domain.UserDomain.UserAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserName
 {
-    public class UpdateUserNamehandler(UserNameUpdaterDomainService userNameUpdater, IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<UpdateUserNameDto>
+    public class UpdateUserNamehandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork, UserManipulator userManipulator) : IRequestHandler<UpdateUserNameDto, UpdateUserNameResponseDto>
     {
-        private readonly UserNameUpdaterDomainService _userNameUpdater = userNameUpdater;
         private readonly IUserAccessor _userAccessor = userAccessor;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly UserManipulator _userManipulator = userManipulator;
 
-        public async Task Handle(UpdateUserNameDto request, CancellationToken cancellationToken)
+        public async Task<UpdateUserNameResponseDto> Handle(UpdateUserNameDto request, CancellationToken cancellationToken)
         {
-            await _userNameUpdater.UpdateAsync(_userAccessor.User, new(request.UserName), cancellationToken);
+            await _userManipulator.UpdateUserNameAsync(_userAccessor.User, new(request.UserName), cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
+            return new(_userAccessor.User);
         }
     }
 }

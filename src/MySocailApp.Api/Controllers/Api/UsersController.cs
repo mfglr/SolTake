@@ -62,13 +62,13 @@ namespace MySocailApp.Api.Controllers.Api
         public async Task LogOut(CancellationToken cancellationToken)
             => await _sender.Send(new LogOutDto(), cancellationToken);
 
-        [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(UserFilterAttribute))]
         [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
-        public async Task UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
+        [HttpPost]
+        public async Task<UpdateUserNameResponseDto> UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]
@@ -142,7 +142,7 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpPost]
-        public async Task<Multimedia> UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
+        public async Task<UpdateUserImageResponseDto> UpdateImage([FromForm] IFormFile file, CancellationToken cancellationToken)
              => await _sender.Send(new UpdateUserImageDto(file), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -151,8 +151,8 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
-        [HttpDelete]
-        public async Task RemoveImage(CancellationToken cancellationToken)
+        [HttpPost]
+        public async Task<RemoveUserImageResponseDto> RemoveImage(CancellationToken cancellationToken)
              => await _sender.Send(new RemoveUserImageDto(), cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -161,8 +161,8 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
-        [HttpPut]
-        public async Task UpdateName(UpdateNameDto request, CancellationToken cancellationToken)
+        [HttpPost]
+        public async Task<UpdateNameResponseDto> UpdateName(UpdateNameDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -23,10 +23,24 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentCreatedDomainEvent
                     notification.Question.UserId,
                     notification.Comment.UserId,
                     notification.Login.UserName,
-                    notification.Login.Image,
+                    notification.Login.Image != null ? Multimedia.Clone(notification.Login.Image) : null,
                     notification.Question.Id,
                     notification.Question.Content?.Value,
-                    notification.Question.Medias.FirstOrDefault(),
+                    notification.Question.Medias.FirstOrDefault() != null ? Multimedia.Clone(notification.Question.Medias.FirstOrDefault()!) : null,
+                    notification.Comment.Id,
+                    notification.Comment.Content.Value
+                );
+            }
+            else if(notification.Solution != null)
+            {
+                n = Notification.SolutionCommentCreatedNotification(
+                    notification.Solution.UserId,
+                    notification.Comment.UserId,
+                    notification.Login.UserName,
+                    notification.Login.Image != null ? Multimedia.Clone(notification.Login.Image) : null,
+                    notification.Solution.Id,
+                    notification.Solution.Content?.Value,
+                    notification.Solution.Medias.FirstOrDefault() != null ? Multimedia.Clone(notification.Solution.Medias.FirstOrDefault()!) : null,
                     notification.Comment.Id,
                     notification.Comment.Content.Value
                 );

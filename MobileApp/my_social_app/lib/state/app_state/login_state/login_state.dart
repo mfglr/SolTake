@@ -61,6 +61,20 @@ class LoginState{
         accountDeletionStart: accountDeletionStart
       );
 
+  LoginState updateRefhreshToken(String refreshToken) =>
+    LoginState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      email: email,
+      isEmailVerified: isEmailVerified,
+      language: language,
+      refreshToken: refreshToken,
+      isPrivacyPolicyApproved: isPrivacyPolicyApproved,
+      isTermsOfUseApproved: isTermsOfUseApproved,
+      accountDeletionStart: accountDeletionStart
+    );
+
   LoginState approvePrivacyPolicy()
     => LoginState(
         id: id,

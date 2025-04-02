@@ -7,7 +7,7 @@ import 'package:my_social_app/views/notification/widgets/question_comment_create
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_liked_notification_item/question_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_solved_notification.dart';
-import 'package:my_social_app/views/notification/widgets/solution_comment_created_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/solutoin_comment_created_notification_item/solution_comment_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_created_notification_item/solution_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_marked_as_correct_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_marked_as_incorrect_notification_item.dart';

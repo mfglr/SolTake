@@ -14,7 +14,6 @@ namespace MySocailApp.Domain.UserDomain.UserAggregate
                 .AddScoped<UserCreatorDomainService>()
                 .AddScoped<EmailUpdaterDomainService>()
                 .AddScoped<GoogleTokenValidatorDomainService>()
-                .AddScoped<UserNameUpdaterDomainService>()
-                .AddScoped<UserNameUpdaterDomainService>();
+                .AddScoped<UserManipulator>();
     }
 }
