@@ -129,7 +129,9 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
                 .AddScoped<ISolutionUserSaveQueryRepository, SolutionUserSaveQueryRepository>()
                 .AddScoped<INotificationQueryRepository, NotificationQueryRepository>()
-                .AddScoped<IMessageConnectionQueryRepository, MessageConnectionQueryRepository>();
+                .AddScoped<IMessageConnectionQueryRepository, MessageConnectionQueryRepository>()
+                .AddScoped<IStoryQueryRepository, StoryQueryRepository>();
+
 
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
             => services

@@ -17,6 +17,9 @@ namespace MySocailApp.Infrastructure.StoryDomain.StoryAggregate
             => _context.Stories.Remove(story);
         public void DeleteRange(IEnumerable<Story> stories)
             => _context.Stories.RemoveRange(stories);
+
+        public Task<Story?> GetByIdAsync(int storyId, CancellationToken cancellationToken)
+            => _context.Stories.FirstOrDefaultAsync(x => x.Id == storyId, cancellationToken);
         public Task<List<Story>> GetByUserId(int userId, CancellationToken cancellationToken)
             => _context.Stories.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
     }

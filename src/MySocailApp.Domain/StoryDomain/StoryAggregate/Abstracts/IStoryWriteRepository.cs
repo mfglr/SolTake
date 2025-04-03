@@ -8,7 +8,8 @@ namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts
         Task CreateRangeAsync(IEnumerable<Story> stories, CancellationToken cancellationToken);
         void Delete(Story story);
         void DeleteRange(IEnumerable<Story> stories);
-        
+
+        Task<Story?> GetByIdAsync(int storyId, CancellationToken cancellationToken);
         Task<List<Story>> GetByUserId(int userId,CancellationToken cancellationToken);
     }
 }

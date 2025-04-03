@@ -15,18 +15,19 @@ namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Entities
 
         public Story(int userId, Multimedia media)
         {
-            if (media.MultimediaType == MultimediaType.Video && media.Duration >= 60)
+            if (media.MultimediaType == MultimediaType.Video && media.Duration >= MaxDuration)
                 throw new StoryDurationExceedException();
 
             UserId = userId;
             Media = media;
         }
 
-
         public void Create()
         {
             CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new StoryCreatedDomainEvent(this));
         }
+
+        public bool IsActive => DateTime.UtcNow <= CreatedAt.AddDays(1);
     }
 }

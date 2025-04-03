@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.StoryDomain.CreateStory
+namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory
 {
     public class CreateStoryResponseDto
     {
