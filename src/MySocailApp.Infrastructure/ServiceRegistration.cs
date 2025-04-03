@@ -27,6 +27,7 @@ using MySocailApp.Infrastructure.QueryRepositories;
 using MySocailApp.Infrastructure.QuestionDomain;
 using MySocailApp.Infrastructure.RoleAggregate;
 using MySocailApp.Infrastructure.SolutionDomain;
+using MySocailApp.Infrastructure.StoryDomain;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
 using MySocailApp.Infrastructure.UserDomain;
@@ -52,7 +53,8 @@ namespace MySocailApp.Infrastructure
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
                 .AddRoleAggregate()
-                .AddNotificationConnectionAggregate();
+                .AddNotificationConnectionAggregate()
+                .AddStoryDomainInfrastructureServices();
 
         private static IServiceCollection AddServices(this IServiceCollection services)
             => services

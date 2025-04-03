@@ -19,6 +19,8 @@ using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
+using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
+using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities;
 using MySocailApp.Domain.UserDomain.FollowAggregate.Entities;
 using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
@@ -67,6 +69,8 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<MessageUserView> MessageUserViews { get; private set; }
 
         public DbSet<AppVersion> AppVersions { get; private set; }
+
+        public DbSet<Story> Stories { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

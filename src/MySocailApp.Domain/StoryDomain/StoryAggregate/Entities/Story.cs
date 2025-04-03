@@ -1,0 +1,32 @@
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.StoryDomain.StoryAggregate.DomainEvents;
+using MySocailApp.Domain.StoryDomain.StoryAggregate.Exceptions;
+
+namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Entities
+{
+    public class Story : Entity, IAggregateRoot
+    {
+        public static readonly int MaxDuration = 60;
+
+        public int UserId { get; private set; }
+        public Multimedia Media { get; private set; }
+
+        private Story() { }
+
+        public Story(int userId, Multimedia media)
+        {
+            if (media.MultimediaType == MultimediaType.Video && media.Duration >= 60)
+                throw new StoryDurationExceedException();
+
+            UserId = userId;
+            Media = media;
+        }
+
+
+        public void Create()
+        {
+            CreatedAt = DateTime.UtcNow;
+            AddDomainEvent(new StoryCreatedDomainEvent(this));
+        }
+    }
+}
