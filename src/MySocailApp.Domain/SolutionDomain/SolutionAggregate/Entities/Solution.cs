@@ -51,20 +51,31 @@ namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities
         }
 
         public SolutionState State { get; private set; }
-        internal void MarkAsCorrect()
+        internal void MarkAsCorrect(Question question, Login login)
         {
             if (State != SolutionState.Pending)
                 throw new InvalidStateTransitionException();
 
+            if (login.UserId != question.UserId)
+                throw new PermissionDeniedToChangeStateOfSolution();
+
             State = SolutionState.Correct;
             UpdatedAt = DateTime.UtcNow;
+
+            AddDomainEvent(new SolutionMarkedAsCorrectDomainEvent(question, this, login));
         }
-        internal void MarkAsIncorrect()
+        internal void MarkAsIncorrect(Question question, Login login)
         {
             if (State != SolutionState.Pending)
                 throw new InvalidStateTransitionException();
+
+            if (login.UserId != question.UserId)
+                throw new PermissionDeniedToChangeStateOfSolution();
+
             State = SolutionState.Incorrect;
             UpdatedAt = DateTime.UtcNow;
+
+            AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(question, this, login));
         }
     }
 }

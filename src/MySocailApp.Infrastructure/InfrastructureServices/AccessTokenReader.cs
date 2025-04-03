@@ -62,7 +62,8 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
                 throw new NotAuthorizedException();
             var userId = int.Parse(userIdString);
 
-            var name = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Nickname)?.Value;
+            var nameValue = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Nickname)?.Value;
+            var name = nameValue == "" ? null : nameValue;
 
             var userName = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Name)!.Value;
 

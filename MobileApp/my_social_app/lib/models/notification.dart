@@ -27,6 +27,11 @@ class Notification{
   final String? solutionContent;
   final Multimedia? solutionMedia;
 
+  final int? repliedId;
+  final String? repliedContent;
+
+  final int? solutionVoteType;
+
   const Notification({
     required this.id,
     required this.ownerId,
@@ -46,7 +51,12 @@ class Notification{
 
     required this.solutionId,
     required this.solutionContent,
-    required this.solutionMedia
+    required this.solutionMedia,
+
+    required this.repliedId,
+    required this.repliedContent,
+
+    required this.solutionVoteType
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);
@@ -72,7 +82,11 @@ class Notification{
 
         solutionId: solutionId,
         solutionContent: solutionContent,
-        solutionMedia: solutionMedia
+        solutionMedia: solutionMedia,
 
+        repliedId: repliedId,
+        repliedContent: repliedContent,
+
+        solutionVoteType: solutionVoteType
       );
 }

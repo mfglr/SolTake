@@ -15,12 +15,12 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Mark
 
         public async Task Handle(MarkSolutionAsIncorrectDto request, CancellationToken cancellationToken)
         {
-            var markerId = _accessTokenReader.GetRequiredAccountId();
+            var login = _accessTokenReader.GetLogin();
             var solution =
                 await _solutionWriteRepository.GetByIdAsync(request.SolutionId, cancellationToken) ??
                 throw new SolutionNotFoundException();
 
-            await _solutionStateMarker.MarkAsIncorrectAsync(solution, markerId, cancellationToken);
+            await _solutionStateMarker.MarkAsIncorrectAsync(solution, login, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
         }
     }

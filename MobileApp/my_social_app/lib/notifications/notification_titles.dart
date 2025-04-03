@@ -21,11 +21,6 @@ const Map<int,Map<String,String>> notificationTitles = {
     "en": "New Like",
     "tr": "Yeni beğeni"
   },
-  NotificationType.questionSolvedNotification:
-  {
-    "en": "New Solved Question",
-    "tr": "Yeni Çözümlü Soru"
-  },
   NotificationType.solutionCommentCreatedNotification:
   {
     "en": "New Comment",
@@ -45,16 +40,6 @@ const Map<int,Map<String,String>> notificationTitles = {
   {
     "en": "New Incorrect Solution",
     "tr": "Yeni Yanlış Çözüm"
-  },
-  NotificationType.solutionWasDownvotedNotification:
-  {
-    "en": "New Downvote",
-    "tr": "Yeni Olumsuz Oy"
-  },
-  NotificationType.solutionWasUpvotedNotification:
-  {
-    "en": "New Upvote",
-    "tr": "Yeni Olumlu Oy"
   },
   NotificationType.userFollowedNotification:
   {

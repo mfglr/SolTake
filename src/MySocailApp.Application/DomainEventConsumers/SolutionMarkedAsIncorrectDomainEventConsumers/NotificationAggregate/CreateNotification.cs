@@ -16,13 +16,19 @@ namespace MySocailApp.Application.DomainEventConsumers.SolutionMarkedAsIncorrect
 
         public async Task Handle(SolutionMarkedAsIncorrectDomainEvent notification, CancellationToken cancellationToken)
         {
-            var solution = notification.Solution;
-            var question = notification.Question;
+            var n = Notification.SolutionMarkedAsIncorrectNotification(
+                notification.Solution.UserId,
+                notification.Question.UserId,
+                notification.Login.UserName,
+                notification.Login.Image,
+                notification.Solution.Id,
+                notification.Solution.Content?.Value,
+                notification.Solution.Medias.FirstOrDefault()
+            );
+            await _notificationWriteRepository.CreateAsync(n, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
 
-            //var n = Notification.SolutionMarkedAsIncorrectNotification(solution.UserId, question.UserId, question.Id, solution.Id);
-            //await _notificationWriteRepository.CreateAsync(n, cancellationToken);
-            //await _unitOfWork.CommitAsync(cancellationToken);
-            //await _publisher.Publish(new SolutionMarkedAsIncorrectNotificationCreatedDomainEvent(n),cancellationToken);
+            await _publisher.Publish(new NotificationCreatedDomainEvent(n), cancellationToken);
         }
     }
 }

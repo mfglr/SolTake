@@ -2,19 +2,17 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
-import 'package:my_social_app/views/notification/widgets/comment_replied_notification.dart';
+import 'package:my_social_app/views/notification/widgets/comment_replied_notification/comment_replied_notification.dart';
 import 'package:my_social_app/views/notification/widgets/question_comment_created_notification_item/question_comment_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item/comment_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_liked_notification_item/question_liked_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/question_solved_notification.dart';
-import 'package:my_social_app/views/notification/widgets/solutoin_comment_created_notification_item/solution_comment_created_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/solution_comment_created_notification_item/solution_comment_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/solution_created_notification_item/solution_created_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/solution_marked_as_correct_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/solution_marked_as_incorrect_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/solution_was_downvoted_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/solution_was_upvoted_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/user_followed_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/user_tagged_in_comment_item.dart';
+import 'package:my_social_app/views/notification/widgets/solution_marked_as_correct_notification_item/solution_marked_as_correct_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/solution_marked_as_incorrect_notification_item/solution_marked_as_incorrect_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/solution_voted_notification_item/solution_voted_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/user_followed_notification_item/user_followed_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/user_tagged_in_comment_notification_item/user_tagged_in_comment_item.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class NotificationItems extends StatelessWidget {
@@ -52,12 +50,8 @@ class NotificationItems extends StatelessWidget {
                   return SolutionMarkedAsIncorrectNotificationItem(notification: notification);
                 case NotificationType.solutionMarkedAsCorrectNotification:
                   return SolutionMarkedAsCorrectNotificationItem(notification: notification);
-                case NotificationType.questionSolvedNotification:
-                  return QuestionSolvedNotification(notification: notification);
-                case NotificationType.solutionWasUpvotedNotification:
-                  return SolutionWasUpvotedNotificationItem(notification: notification);
-                case NotificationType.solutionWasDownvotedNotification:
-                  return SolutionWasDownvotedNotificationItem(notification: notification);
+                case NotificationType.solutionVotedNotification:
+                  return SolutionVotedNotificationItem(notification: notification);
                 default :
                   return const SpaceSavingWidget();
               }

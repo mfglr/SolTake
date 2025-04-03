@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MySocailApp.Domain.UserDomain.FollowAggregate;
 using MySocailApp.Domain.UserDomain.UserAggregate;
 
 namespace MySocailApp.Domain.UserDomain
@@ -7,6 +8,7 @@ namespace MySocailApp.Domain.UserDomain
     {
         public static IServiceCollection AddUserDomain(this IServiceCollection services)
             => services
-                .AddUserAggregate();
+                .AddUserAggregate()
+                .AddFollowAggregate();
     }
 }

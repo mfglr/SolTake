@@ -16,11 +16,18 @@ class NotificationState extends BaseEntity<int> implements Avatar{
   final int? questionId;
   final String? questionContent;
   final Multimedia? questionMedia;
+
   final int? commentId;
   final String? commentContent;
+  
   final int? solutionId;
   final String? solutionContent;
   final Multimedia? solutionMedia;
+
+  final int? repliedId;
+  final String? repliedContent;
+
+  final int? solutionVoteType;
 
 
   @override
@@ -46,7 +53,12 @@ class NotificationState extends BaseEntity<int> implements Avatar{
     required this.commentContent,
     required this.solutionId,
     required this.solutionContent,
-    required this.solutionMedia
+    required this.solutionMedia,
+
+    required this.repliedId,
+    required this.repliedContent,
+
+    required this.solutionVoteType
 
   });
 
@@ -68,6 +80,11 @@ class NotificationState extends BaseEntity<int> implements Avatar{
         commentContent: commentContent,
         solutionId: solutionId,
         solutionContent: solutionContent,
-        solutionMedia: solutionMedia
+        solutionMedia: solutionMedia,
+
+        repliedId: repliedId,
+        repliedContent: repliedContent,
+        
+        solutionVoteType: solutionVoteType
       );
 }

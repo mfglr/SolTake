@@ -26,56 +26,53 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
-        margin: const EdgeInsets.all(15),
-        child: GestureDetector(
-          onTap: onPressed,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: TextButton(
-                  onPressed: () => Navigator
-                    .of(context)
-                    .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.userId))),
-                  style: ButtonStyle(
-                    padding: WidgetStateProperty.all(EdgeInsets.zero),
-                    minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      child: TextButton(
+        onPressed: onPressed,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: TextButton(
+                onPressed: () => Navigator
+                  .of(context)
+                  .push(MaterialPageRoute(builder: (context) => UserPage(userId: notification.userId))),
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.zero),
+                  minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: badges.Badge(
+                  badgeContent: icon,
+                  badgeStyle: const badges.BadgeStyle(
+                    badgeColor: Colors.transparent,
                   ),
-                  child: badges.Badge(
-                    badgeContent: icon,
-                    badgeStyle: const badges.BadgeStyle(
-                      badgeColor: Colors.transparent,
-                    ),
-                    child: AppAvatar(
-                      avatar: notification,
-                      diameter: 45
-                    ),
-                  )
-                ),
+                  child: AppAvatar(
+                    avatar: notification,
+                    diameter: 45
+                  ),
+                )
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    StoreConnector<AppState,String>(
-                      converter: (store) => store.state.loginState!.language,
-                      builder:(context,language) => Text(
-                        "${notification.userName}. $content ${timeago.format(notification.createdAt,locale: '${language}_short')}",
-                      ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  StoreConnector<AppState,String>(
+                    converter: (store) => store.state.loginState!.language,
+                    builder:(context,language) => Text(
+                      "${notification.userName}. $content ${timeago.format(notification.createdAt,locale: '${language}_short')}",
                     ),
-                    if(bottomContent != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top:15),
-                        child: bottomContent!,
-                      )
-                  ],
-                ),
+                  ),
+                  if(bottomContent != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top:15),
+                      child: bottomContent!,
+                    )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

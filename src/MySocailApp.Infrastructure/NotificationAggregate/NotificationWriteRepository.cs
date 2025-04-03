@@ -12,6 +12,8 @@ namespace MySocailApp.Infrastructure.NotificationAggregate
 
         public async Task CreateAsync(Notification notification, CancellationToken cancellationToken)
             => await _context.Notifications.AddAsync(notification, cancellationToken);
+        public async Task CreateRangeAsync(IEnumerable<Notification> notifications, CancellationToken cancellationToken)
+            => await _context.Notifications.AddRangeAsync(notifications, cancellationToken);
         public void Delete(Notification notification)
             => _context.Notifications.Remove(notification);
         public void DeleteRange(IEnumerable<Notification> notifications)

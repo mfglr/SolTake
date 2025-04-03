@@ -1,6 +1,5 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices.InternalDomainServices;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentDomain.CommentAggregate.Exceptions;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
@@ -19,8 +18,20 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices
         public async Task CreateAsync(Comment comment, int? questionId, int? solutionId, int? repliedId, Login login, CancellationToken cancellationToken)
         {
             if (repliedId != null)
-                await CommentReplier
-                    .ReplyAsync(_commentReadRepository, comment, (int)repliedId, cancellationToken);
+            {
+                var replied = 
+                    await _commentReadRepository.GetAsync((int)repliedId, cancellationToken) ??
+                    throw new CommentNotFoundException();
+
+                Comment parent;
+                if (replied.ParentId != null)
+                    parent =
+                        await _commentReadRepository.GetAsync((int)replied.ParentId, cancellationToken) ??
+                        throw new CommentNotFoundException();
+                else parent = replied;
+
+                comment.ReplyComment(login, parent, replied);
+            }
             else if (questionId != null)
             {
                 var question =

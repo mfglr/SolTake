@@ -1,38 +1,26 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.UserDomain.FollowAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.FollowAggregate.Exceptions;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
+using MySocailApp.Domain.UserDomain.FollowAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Follow
 {
-    public class FollowHandler(IUnitOfWork unitOfWork, IFollowReadRepository followReadRepository, IUserAccessor userAccessor, IFollowWriteRepository followWriteRepository, IUserReadRepository userReadRepository) : IRequestHandler<FollowDto, FollowCommandResponseDto>
+    public class FollowHandler(IUnitOfWork unitOfWork, IFollowWriteRepository followWriteRepository, IAccessTokenReader accessTokenReader, UserFollowerDomainService userFollowerDomainService) : IRequestHandler<FollowDto, FollowCommandResponseDto>
     {
-        private readonly IUserReadRepository _userReadRepository = userReadRepository;
-        private readonly IFollowReadRepository _followReadRepository = followReadRepository;
         private readonly IFollowWriteRepository _followWriteRepository = followWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IUserAccessor _userAccessor = userAccessor;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
+        private readonly UserFollowerDomainService _userFollowerDomainService = userFollowerDomainService;
 
         public async Task<FollowCommandResponseDto> Handle(FollowDto request, CancellationToken cancellationToken)
         {
-            if (_userAccessor.User.Id == request.FollowedId)
-                throw new PermissionDeniedToFollowYourselfException();
-
-            if (!await _userReadRepository.Exist(request.FollowedId, cancellationToken))
-                throw new UserNotFoundException();
-
-            if (await _followReadRepository.ExistAsync(_userAccessor.User.Id, request.FollowedId, cancellationToken))
-                throw new UserIsAlreadyFollowedException();
-
-            var follow = Domain.UserDomain.FollowAggregate.Entities.Follow.Create(_userAccessor.User.Id, request.FollowedId);
-
+            var login = _accessTokenReader.GetLogin();
+            var follow = new Domain.UserDomain.FollowAggregate.Entities.Follow(login.UserId, request.FollowedId);
+            await _userFollowerDomainService.Follow(follow, login, cancellationToken);
             await _followWriteRepository.CreateAsync(follow, cancellationToken);
-
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return new (follow.Id);
+            return new(follow.Id);
         }
     }
 }

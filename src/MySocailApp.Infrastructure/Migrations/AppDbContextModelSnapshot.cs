@@ -299,10 +299,19 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RepliedContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RepliedId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SolutionContent")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SolutionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SolutionVoteType")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")

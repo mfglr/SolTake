@@ -5,5 +5,5 @@ using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents
 {
-    public record UserTaggedInCommentDomainEvent(Comment Comment, int UserId, Question? Question = null, Solution? Solution = null, Comment? Parent = null) : IDomainEvent;
+    public record UserTaggedInCommentDomainEvent(Comment Comment, int UserId, Question? Question = null, Solution? Solution = null, Comment? Parent = null, Comment? Replied = null) : IDomainEvent;
 }

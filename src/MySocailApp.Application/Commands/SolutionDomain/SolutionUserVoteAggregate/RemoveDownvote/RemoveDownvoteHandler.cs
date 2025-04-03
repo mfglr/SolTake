@@ -6,16 +6,17 @@ using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveDownvote
 {
-    public class RemoveDownvoteHandler(IUnitOfWork unitOfWork, ISolutionUserVoteWriteRepository solutionUserVoteWriteRepository, IUserAccessor userAccessor) : IRequestHandler<RemoveDownvoteDto>
+    public class RemoveDownvoteHandler(IUnitOfWork unitOfWork, ISolutionUserVoteWriteRepository solutionUserVoteWriteRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<RemoveDownvoteDto>
     {
         private readonly ISolutionUserVoteWriteRepository _solutionUserVoteWriteRepository = solutionUserVoteWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IUserAccessor _userAccessor = userAccessor;
+        private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
         public async Task Handle(RemoveDownvoteDto request, CancellationToken cancellationToken)
         {
+            var userId = _accessTokenReader.GetRequiredAccountId();
             var vote =
-                await _solutionUserVoteWriteRepository.GetAsync(request.solutionId, _userAccessor.User.Id, cancellationToken) ??
+                await _solutionUserVoteWriteRepository.GetAsync(request.solutionId, userId, cancellationToken) ??
                 throw new VoteNotFoundException();
 
             if (vote.Type != SolutionVoteType.Downvote)

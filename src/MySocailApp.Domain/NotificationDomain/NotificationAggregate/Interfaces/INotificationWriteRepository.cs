@@ -5,6 +5,8 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces
     public interface INotificationWriteRepository
     {
         Task CreateAsync(Notification notification, CancellationToken cancellationToken);
+        Task CreateRangeAsync(IEnumerable<Notification> notifications, CancellationToken cancellationToken);
+
         void DeleteRange(IEnumerable<Notification> notifications);
         void Delete(Notification notification);
 

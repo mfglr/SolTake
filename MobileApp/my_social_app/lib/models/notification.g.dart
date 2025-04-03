@@ -29,6 +29,9 @@ Notification _$NotificationFromJson(Map<String, dynamic> json) => Notification(
       solutionMedia: json['solutionMedia'] == null
           ? null
           : Multimedia.fromJson(json['solutionMedia'] as Map<String, dynamic>),
+      repliedId: (json['repliedId'] as num?)?.toInt(),
+      repliedContent: json['repliedContent'] as String?,
+      solutionVoteType: (json['solutionVoteType'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$NotificationToJson(Notification instance) =>
@@ -49,4 +52,7 @@ Map<String, dynamic> _$NotificationToJson(Notification instance) =>
       'solutionId': instance.solutionId,
       'solutionContent': instance.solutionContent,
       'solutionMedia': instance.solutionMedia,
+      'repliedId': instance.repliedId,
+      'repliedContent': instance.repliedContent,
+      'solutionVoteType': instance.solutionVoteType,
     };

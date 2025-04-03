@@ -26,6 +26,11 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
         public string? SolutionContent { get; private set; }
         public Multimedia? SolutionMedia { get; private set; }
 
+        public int? RepliedId { get; private set; }
+        public string? RepliedContent { get; private set; }
+
+        public SolutionVoteType? SolutionVoteType { get; private set; }
+
         private Notification() { }
         
         private Notification(int ownerId, NotificationType type, int userId, string userName, Multimedia? image)
@@ -93,6 +98,22 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
             return notification;
         }
 
+        public static Notification CommentRepliedNotification(int ownerId, int userId, string userName, Multimedia? image, int? solutionId, int? questionId, int repliedId, string repliedContent, int commentId, string commentContent)
+        {
+            var notification = new Notification(ownerId, NotificationType.CommentRepliedNotification, userId, userName, image)
+            {
+                CreatedAt = DateTime.UtcNow,
+                QuestionId = questionId,
+                SolutionId = solutionId,
+                CommentId = commentId,
+                CommentContent = commentContent,
+                RepliedId = repliedId,
+                RepliedContent = repliedContent,
+            };
+            notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
+            return notification;
+        }
+
         public static Notification CommentLikedNotification(int ownerId, int userId, string userName, Multimedia? image,int commentId,string commentContent,int? questionId, int? solutionId)
         {
             var notification = new Notification(ownerId, NotificationType.CommentLikedNotification, userId, userName, image)
@@ -102,6 +123,70 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
                 CommentContent = commentContent,
                 QuestionId = questionId,
                 SolutionId = solutionId
+            };
+            notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
+            return notification;
+        }
+
+        public static Notification SolutionMarkedAsCorrectNotification(int ownerId, int userId, string userName, Multimedia? image, int solutionId, string? solutionContent, Multimedia? solutionMedia)
+        {
+            var notification = new Notification(ownerId, NotificationType.SolutionMarkedAsCorrect, userId, userName, image)
+            {
+                CreatedAt = DateTime.UtcNow,
+                SolutionId = solutionId,
+                CommentContent = solutionContent,
+                SolutionMedia = solutionMedia,
+            };
+            notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
+            return notification;
+        }
+
+        public static Notification SolutionMarkedAsIncorrectNotification(int ownerId, int userId, string userName, Multimedia? image, int solutionId, string? solutionContent, Multimedia? solutionMedia)
+        {
+            var notification = new Notification(ownerId, NotificationType.SolutionMarkedAsIncorrect, userId, userName, image)
+            {
+                CreatedAt = DateTime.UtcNow,
+                SolutionId = solutionId,
+                CommentContent = solutionContent,
+                SolutionMedia = solutionMedia,
+            };
+            notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
+            return notification;
+        }
+
+        public static Notification SolutionVotedNotification(int ownerId, int userId, string userName, Multimedia? image, int solutionId, string? solutionContent, Multimedia? solutionMedia, SolutionVoteType solutionVoteType)
+        {
+            var notification = new Notification(ownerId, NotificationType.SolutionVotedNotification, userId, userName, image)
+            {
+                CreatedAt = DateTime.UtcNow,
+                SolutionId = solutionId,
+                CommentContent = solutionContent,
+                SolutionMedia = solutionMedia,
+                SolutionVoteType = solutionVoteType
+            };
+            notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
+            return notification;
+        }
+
+        public static Notification UserFollowedNotification(int ownerId, int userId, string userName, Multimedia? image)
+        {
+            var notification = new Notification(ownerId, NotificationType.UserFollowedNotification, userId, userName, image)
+            {
+                CreatedAt = DateTime.UtcNow,
+            };
+            notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
+            return notification;
+        }
+
+        public static Notification UserTaggedInComment(int ownerId, int userId, string userName, Multimedia? image, int? questionId, int? solutionId, int commentId, string commentContent)
+        {
+            var notification = new Notification(ownerId, NotificationType.UserTaggedInCommentNotification, userId, userName, image)
+            {
+                CreatedAt = DateTime.UtcNow,
+                QuestionId = questionId,
+                SolutionId = solutionId,
+                CommentId = commentId,
+                CommentContent = commentContent,
             };
             notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
             return notification;

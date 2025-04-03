@@ -25,7 +25,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                             x.CommentContent,
                             x.SolutionId,
                             x.SolutionContent,
-                            x.SolutionMedia
+                            x.SolutionMedia,
+                            x.RepliedId,
+                            x.RepliedContent,
+                            x.SolutionVoteType
                         )
                 );
     }

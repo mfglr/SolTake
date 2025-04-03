@@ -7,6 +7,7 @@ namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserVoteAggregate
     {
         public static IServiceCollection AddSolutionUserVoteAggregate(this IServiceCollection services)
             => services
-                .AddScoped<ISolutionUserVoteWriteRepository,SolutionUserVoteWriteRepository>();
+                .AddScoped<ISolutionUserVoteWriteRepository, SolutionUserVoteWriteRepository>()
+                .AddScoped<ISolutionUserVoteReadRepository, SolutionUserVoteReadRepository>();
     }
 }

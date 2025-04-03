@@ -4,5 +4,5 @@ using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 
 namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.DomainEvents
 {
-    public record SolutionMarkedAsCorrectDomainEvent(Question Question, Solution Solution) : IDomainEvent;
+    public record SolutionMarkedAsCorrectDomainEvent(Question Question, Solution Solution, Login Login) : IDomainEvent;
 }

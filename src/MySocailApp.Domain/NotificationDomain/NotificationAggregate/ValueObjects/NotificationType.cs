@@ -8,12 +8,10 @@
         QuestionLikedNotification,
         CommentLikedNotification,
         SolutionCreatedNotification,
-        UserTaggedCommentNotification,
+        UserTaggedInCommentNotification,
         UserFollowedNotification,
-        SolutionMarkedAdIncorrect,
+        SolutionMarkedAsIncorrect,
         SolutionMarkedAsCorrect,
-        QuestionSolvedNotification,
-        SolutionWasUpvotedNotification,
-        SolutionWasDownvotedNotification
+        SolutionVotedNotification
     }
 }

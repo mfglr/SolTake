@@ -1,24 +1,20 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.DomainEvents;
 
 namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities
 {
-    public class SolutionUserVote : Entity, IAggregateRoot
+    public class SolutionUserVote(int solutionId, int userId, SolutionVoteType type) : Entity, IAggregateRoot
     {
-        public int SolutionId { get; private set; }
-        public int UserId { get; private set; }
-        public SolutionVoteType Type { get; private set; }
+        public int SolutionId { get; private set; } = solutionId;
+        public int UserId { get; private set; } = userId;
+        public SolutionVoteType Type { get; private set; } = type;
 
-        private SolutionUserVote(int solutionId, int userId)
+        internal void Create(Solution solution, Login login)
         {
-            SolutionId = solutionId;
-            UserId = userId;
+            CreatedAt = DateTime.UtcNow;
+            AddDomainEvent(new SolutionVotedDomainEvent(solution, this, login));
         }
-
-        public static SolutionUserVote GenerateUpvote(int solutionId,int userId)
-            => new(solutionId,userId) { Type = SolutionVoteType.Upvote, CreatedAt = DateTime.UtcNow };
-
-        public static SolutionUserVote GenerateDownvote(int solutionId, int userId)
-            => new(solutionId, userId) { Type = SolutionVoteType.Downvote, CreatedAt = DateTime.UtcNow };
     }
 }

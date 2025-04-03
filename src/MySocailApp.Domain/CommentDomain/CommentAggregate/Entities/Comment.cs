@@ -27,12 +27,10 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
             _tags.AddRange(idsOfUsersTagged.Select(CommentUserTag.Create));
         }
 
-        private void Create(Login login, Question? question = null, Solution? solution = null, Comment? parent = null)
+        private void Create(Login login, Question? question = null, Solution? solution = null, Comment? parent = null, Comment? replied = null)
         {
             CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new CommentCreatedDomainEvent(this, login, Question: question,Solution: solution, Parent: parent));
-            foreach (var tag in _tags)
-                AddDomainEvent(new UserTaggedInCommentDomainEvent(this, tag.UserId, Question: question, Solution: solution, Parent: parent));
+            AddDomainEvent(new CommentCreatedDomainEvent(this, login, Question: question,Solution: solution, Parent: parent, Replied: replied));
         }
 
         internal void CreateQuestionComment(Question question, Login login)
@@ -49,11 +47,11 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate.Entities
             Create(login, solution: solution);
         }
 
-        internal void ReplyComment(int parentId, int repliedId)
+        internal void ReplyComment(Login login, Comment parent, Comment replied)
         {
-            ParentId = parentId;
-            RepliedId = repliedId;
-            UpdatedAt = CreatedAt = DateTime.UtcNow;
+            ParentId = parent.Id;
+            RepliedId = replied.Id;
+            Create(login, parent: parent, replied: replied);
         }
 
         public void Update(CommentContent content)

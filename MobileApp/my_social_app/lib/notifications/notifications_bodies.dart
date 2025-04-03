@@ -21,11 +21,7 @@ const Map<int,Map<String,String>> notificationBodies = {
     "en": "Your question has been liked.",
     "tr": "Sorun beğenildi."
   },
-  NotificationType.questionSolvedNotification:
-  {
-    "en": "YAY!!!🥳 Your question has been solved. Click to display the solution.",
-    "tr": "YAŞASIN!!!🥳 Sorun çözüldü. Çözümü görmek için tıkla."
-  },
+ 
   NotificationType.solutionCommentCreatedNotification:
   {
     "en": "Your solution has been commented",
@@ -45,16 +41,6 @@ const Map<int,Map<String,String>> notificationBodies = {
   {
     "en": "Your solution has been marked as incorrect!😓",
     "tr": "Çözümün yanlış olarak işaretlendi!😓"
-  },
-  NotificationType.solutionWasDownvotedNotification:
-  {
-    "en": "Oh No🙁 Your solution has been downvoted!",
-    "tr": "Olamaz🙁 Çözümün olumsuz oy aldı!👎"
-  },
-  NotificationType.solutionWasUpvotedNotification:
-  {
-    "en": "Hey!!! Your solution has been upvoted!👍",
-    "tr": "Hey!!! Çözümün olumlu oy aldı!👍"
   },
   NotificationType.userFollowedNotification:
   {
