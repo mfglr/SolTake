@@ -57,6 +57,16 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
 
   Iterable<V> merge(V value) => [value, ...values.where((e) => e.id.compareTo(value.id) != 0)];
 
+  Pagination<K,V> clear() =>
+    Pagination<K,V>(
+      isLast: false,
+      loadingNext: false,
+      loadingPrev: false,
+      isDescending: isDescending,
+      recordsPerPage: recordsPerPage,
+      values: const []
+    );
+
   Pagination<K,V> prependMany(Iterable<V> values)
     => Pagination<K,V>(
         isLast: isLast,
@@ -159,6 +169,7 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   
+
   Pagination<K,V> prependOne(V value)
     => Pagination<K,V>(
         isLast: isLast,
@@ -276,14 +287,6 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
       values: values.where(test)
     );
   
-  Pagination<K,V> clear() =>
-    Pagination<K,V>(
-      isLast: isLast,
-      loadingNext: loadingNext,
-      loadingPrev: loadingPrev,
-      isDescending: isDescending,
-      recordsPerPage: recordsPerPage,
-      values: const []
-    );
+  
   
 }

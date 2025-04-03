@@ -244,6 +244,12 @@ class AddQuestionVideoSolutionAction extends AppAction{
 }
 
 @immutable
+class ClearQuestionCommentsAction extends AppAction{
+  final int questionId;
+  const ClearQuestionCommentsAction({required this.questionId});
+}
+
+@immutable
 class NextQuestionCommentsAction extends AppAction{
   final int questionId;
   const NextQuestionCommentsAction({required this.questionId});
@@ -258,6 +264,23 @@ class NexQuestionCommentsSuccessAction extends AppAction{
 class NextQuestionCommentsFailedAction extends AppAction{
   final int questionId;
   const NextQuestionCommentsFailedAction({required this.questionId});
+}
+
+@immutable
+class PrevQuestionCommentsAction extends AppAction{
+  final int questionId;
+  const PrevQuestionCommentsAction({required this.questionId});
+}
+@immutable
+class PrevQuestionCommentsSuccessAction extends AppAction{
+  final int questionId;
+  final Iterable<int> commentIds;
+  const PrevQuestionCommentsSuccessAction({required this.questionId, required this.commentIds});
+}
+@immutable
+class PrevQuestionCommentsFailedAction extends AppAction{
+  final int questionId;
+  const PrevQuestionCommentsFailedAction({required this.questionId});
 }
 
 @immutable

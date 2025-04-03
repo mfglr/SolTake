@@ -183,6 +183,7 @@ final store = Store(
     nextQuestionIncorrectSolutionsMiddleware,
     nextQuestionVideoSolutionsMiddleware,
     nextQuestionCommentsMiddleware,
+    prevQuestionCommentsMiddleware,
 
     //solution entity state
     createSolutionMiddleware,

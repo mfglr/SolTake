@@ -62,6 +62,8 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
           if(widget.pagination.isLast && widget.pagination.values.isEmpty) return widget.noItems;
           return Column(
             children: [
+              if(widget.pagination.loadingPrev)
+                const LoadingCircleWidget(),
               ...List.generate(
                 widget.comments.length,
                 (index) => Container(

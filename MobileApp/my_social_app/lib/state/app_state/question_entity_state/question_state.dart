@@ -270,12 +270,24 @@ class QuestionState extends BaseEntity<int> implements Avatar{
       newVideoSolutions: videoSolutions.where((e) => e.id != solutionId)
     );
 
+//comments ****************************************************
   QuestionState startLoadingNextComments() =>
     _optional(newComments: comments.startLoadingNext());
   QuestionState stopLoadingNextComments() =>
     _optional(newComments: comments.stopLoadingNext()); 
   QuestionState addNextPageComments(Iterable<int> commentIds) => 
     _optional(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
+  
+  QuestionState startLoadingPrevComments() =>
+    _optional(newComments: comments.startLoadingPrev());
+  QuestionState stopLoadingPrevComments() =>
+    _optional(newComments: comments.stopLoadingPrev());
+  QuestionState addPrevPageComments(Iterable<int> commentIds) =>
+    _optional(newComments: comments.addPrevPage(commentIds.map((commentId) => Id(id: commentId))));
+
+  QuestionState clear() =>
+    _optional(newComments: comments.clear());
+
   QuestionState addComment(int commentId) =>
     _optional(
       newNumberOfComments: numberOfComments + 1,
@@ -291,6 +303,9 @@ class QuestionState extends BaseEntity<int> implements Avatar{
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.addInOrder(Id(id: commentId))
     );
+//comments ****************************************************
+
+
 
   QuestionState markAsSolved() => _optional(newState: QuestionStatus.solved);
   QuestionState save() => _optional(newIsSaved: true);

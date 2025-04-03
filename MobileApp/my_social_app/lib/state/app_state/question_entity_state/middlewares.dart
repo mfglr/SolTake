@@ -20,6 +20,21 @@ import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
 
+void _loadQuestion(Store<AppState> store, int questionId, void Function() callback){
+  if(selectQuestion(store,questionId) == null){
+    QuestionService()
+      .getById(questionId)
+      .then((question){
+        store.dispatch(AddQuestionAction(value: question.toQuestionState()));
+        callback();
+      });
+  }
+  else{
+    callback();
+  }
+}
+
+
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
@@ -133,12 +148,10 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
 }
 //question likes;
 
-
 void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is NextQuestionSolutionsAction){
-    final pagination = store.state.questionEntityState.getValue(action.questionId)!.solutions;
     SolutionService()
-      .getSolutionsByQuestionId(action.questionId,pagination.next)
+      .getSolutionsByQuestionId(action.questionId,selectQuestionNextCommentsPage(store, action.questionId))
       .then((solutions){
         store.dispatch(NextQuestionSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
@@ -150,8 +163,6 @@ void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatche
   }
   next(action);
 }
-
-
 void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionCorrectSolutionsAction){
     final pagination = store.state.questionEntityState.getValue(action.questionId)!.correctSolutions;
@@ -216,19 +227,46 @@ void nextQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispa
   }
   next(action);
 }
+
 void nextQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextQuestionCommentsAction){
-    final pagination = store.state.questionEntityState.getValue(action.questionId)!.comments;
-    CommentService()
-      .getCommentsByQuestionId(action.questionId, pagination.next)
-      .then((comments){
-        store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
-        store.dispatch(NexQuestionCommentsSuccessAction(questionId: action.questionId,commentIds: comments.map((e) => e.id)));
-      })
-      .catchError((e){
-        store.dispatch(NextQuestionCommentsFailedAction(questionId: action.questionId));
-        throw e;
-      });
+    _loadQuestion(
+      store,
+      action.questionId,
+      () =>
+        CommentService()
+          .getCommentsByQuestionId(action.questionId, selectQuestionNextCommentsPage(store, action.questionId))
+          .then((comments){
+            store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
+            store.dispatch(NexQuestionCommentsSuccessAction(questionId: action.questionId,commentIds: comments.map((e) => e.id)));
+          })
+          .catchError((e){
+            store.dispatch(NextQuestionCommentsFailedAction(questionId: action.questionId));
+            throw e;
+          })
+    );
+    
   }
   next(action);
 }
+void prevQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is PrevQuestionCommentsAction){
+    _loadQuestion(
+      store,
+      action.questionId,
+      () => 
+        CommentService()
+          .getCommentsByQuestionId(action.questionId, selectQuestionPrevCommentsPage(store,action.questionId))
+          .then((comments){
+            store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
+            store.dispatch(PrevQuestionCommentsSuccessAction(questionId: action.questionId,commentIds: comments.map((e) => e.id)));
+          })
+          .catchError((e){
+            store.dispatch(PrevQuestionCommentsFailedAction(questionId: action.questionId));
+            throw e;
+          })
+    );
+  }
+  next(action);
+}
+
