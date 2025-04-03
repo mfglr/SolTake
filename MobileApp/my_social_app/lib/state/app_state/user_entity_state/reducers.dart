@@ -73,33 +73,6 @@ EntityState<int,UserState> removeFollowerSuccessReducer(EntityState<int,UserStat
     ]
   );
 
-// EntityState<num,UserState> addNewFollowerReducer(EntityState<num,UserState> prev,AddNewFollowerAction action){
-//   var follower = prev.getValue(action.followerId);
-//   var followed = prev.getValue(action.curentUserId)!;
-//   return prev.updateMany(
-//     [
-//       follower
-//         ?.addFollowed(
-//           FollowedState(
-//             id: action.followId,
-//             followedId: followed.id,
-//             userName: followed.userName,
-//             name: followed.name,
-//             image: followed.image
-//           )
-//         ),
-//         followed.addFollower(
-//           FollowerState(
-//             id: action.followId,
-//             followerId: followerId, userName: userName, name: name, image: image)
-//         )
-//     ]
-//     .where((e) => e != null)
-//     .map((e) => e!)
-//   );
-// }
-  
-
 //follow ************************************* follow//
 
 
@@ -159,16 +132,16 @@ EntityState<int,UserState> updateNameReducer(EntityState<int,UserState> prev, Up
 EntityState<int,UserState> updateBiographyReducer(EntityState<int,UserState> prev, UpdateBiographySuccessAction action)
   => prev.updateOne(prev.getValue(action.userId)!.updateBiography(action.biography));
 
-// EntityState<num,UserState> uploadUserImageReducer(EntityState<num,UserState> prev,UploadUserImageAction action)
-//   => prev.uploadImage(action.userId,action.image);
-// EntityState<num,UserState> uploadUserImageSuccessReducer(EntityState<num,UserState> prev,UploadUserImageSuccessAction action)
-//   => prev.uploadImageSuccess(action.userId, action.image);
-// EntityState<num,UserState> uploadUserImageFailedReducer(EntityState<num,UserState> prev,UploadUserImageFailedAction action)
-//   => prev.uploadImageFailed(action.userId);
-// EntityState<num,UserState> remvoeUserImageReducer(EntityState<num,UserState> prev, RemoveUserImageSuccessAction action)
-//   => prev.removeImage(action.userId);
-// EntityState<num,UserState> changeUserImageRateReducer(EntityState<num,UserState> prev, ChangeUserImageRateAction action)
-//   => prev.changeImageRate(action.userId,action.rate);
+EntityState<int,UserState> uploadUserImageReducer(EntityState<int,UserState> prev,UploadUserImageAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.uploadImage(action.image));
+EntityState<int,UserState> uploadUserImageSuccessReducer(EntityState<int,UserState> prev, UploadUserImageSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.uploadImageSuccess(action.image));
+EntityState<int,UserState> uploadUserImageFailedReducer(EntityState<int,UserState> prev,UploadUserImageFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.uploadImageFailed());
+EntityState<int,UserState> remvoeUserImageReducer(EntityState<int,UserState> prev, RemoveUserImageSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.removeImage());
+EntityState<int,UserState> changeUserImageRateReducer(EntityState<int,UserState> prev, ChangeUserImageRateAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.changeRate(action.rate));
 
 
 Reducer<EntityState<int,UserState>> userEntityStateReducers = combineReducers<EntityState<int,UserState>>([
@@ -225,9 +198,9 @@ Reducer<EntityState<int,UserState>> userEntityStateReducers = combineReducers<En
   TypedReducer<EntityState<int,UserState>,UpdateNameSuccessAction>(updateNameReducer).call,
   TypedReducer<EntityState<int,UserState>,UpdateBiographySuccessAction>(updateBiographyReducer).call,
 
-  // TypedReducer<EntityState<num,UserState>,UploadUserImageAction>(uploadUserImageReducer).call,
-  // TypedReducer<EntityState<num,UserState>,UploadUserImageSuccessAction>(uploadUserImageSuccessReducer).call,
-  // TypedReducer<EntityState<num,UserState>,UploadUserImageFailedAction>(uploadUserImageFailedReducer).call,
-  // TypedReducer<EntityState<num,UserState>,RemoveUserImageSuccessAction>(remvoeUserImageReducer).call,
-  // TypedReducer<EntityState<num,UserState>,ChangeUserImageRateAction>(changeUserImageRateReducer).call,
+  TypedReducer<EntityState<int,UserState>,UploadUserImageAction>(uploadUserImageReducer).call,
+  TypedReducer<EntityState<int,UserState>,UploadUserImageSuccessAction>(uploadUserImageSuccessReducer).call,
+  TypedReducer<EntityState<int,UserState>,UploadUserImageFailedAction>(uploadUserImageFailedReducer).call,
+  TypedReducer<EntityState<int,UserState>,RemoveUserImageSuccessAction>(remvoeUserImageReducer).call,
+  TypedReducer<EntityState<int,UserState>,ChangeUserImageRateAction>(changeUserImageRateReducer).call,
 ]);
