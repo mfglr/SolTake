@@ -8,6 +8,7 @@ namespace MySocailApp.Domain.CommentDomain.CommentAggregate
         public static IServiceCollection AddCommentDomainServices(this IServiceCollection services)
             => services
                 .AddScoped<CommentCreatorDomainService>()
-                .AddScoped<UserNamesReaderDomainService>();
+                .AddScoped<UserNamesReaderDomainService>()
+                .AddScoped<CommentLikerDomainService>();
     }
 }

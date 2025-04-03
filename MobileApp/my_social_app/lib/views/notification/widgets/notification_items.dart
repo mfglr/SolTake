@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_type.dart';
 import 'package:my_social_app/views/notification/widgets/comment_replied_notification.dart';
 import 'package:my_social_app/views/notification/widgets/question_comment_created_notification_item/question_comment_created_notification_item.dart';
-import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item.dart';
+import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item/comment_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_liked_notification_item/question_liked_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_solved_notification.dart';
 import 'package:my_social_app/views/notification/widgets/solutoin_comment_created_notification_item/solution_comment_created_notification_item.dart';

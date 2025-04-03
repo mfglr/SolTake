@@ -4,5 +4,5 @@ using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Entities;
 
 namespace MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents
 {
-    public record CommentLikedDomainEvent(Comment Comment, CommentUserLike Like) : IDomainEvent;
+    public record CommentLikedDomainEvent(Comment Comment, CommentUserLike Like, Login Login) : IDomainEvent;
 }

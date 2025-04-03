@@ -1,6 +1,8 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
 {
@@ -86,6 +88,20 @@ namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
                 SolutionMedia = solutionMedia,
                 CommentId = commentId,
                 CommentContent = commentContent,
+            };
+            notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
+            return notification;
+        }
+
+        public static Notification CommentLikedNotification(int ownerId, int userId, string userName, Multimedia? image,int commentId,string commentContent,int? questionId, int? solutionId)
+        {
+            var notification = new Notification(ownerId, NotificationType.CommentLikedNotification, userId, userName, image)
+            {
+                CreatedAt = DateTime.UtcNow,
+                CommentId = commentId,
+                CommentContent = commentContent,
+                QuestionId = questionId,
+                SolutionId = solutionId
             };
             notification.AddDomainEvent(new NotificationCreatedDomainEvent(notification));
             return notification;

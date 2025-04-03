@@ -19,6 +19,8 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentCreatedDomainEvent
             Notification n;
             if (notification.Question != null)
             {
+                if (notification.Question.UserId == notification.Comment.UserId) return;
+
                 n = Notification.QuestionCommentCreatedNotification(
                     notification.Question.UserId,
                     notification.Comment.UserId,
@@ -33,6 +35,8 @@ namespace MySocailApp.Application.DomainEventConsumers.CommentCreatedDomainEvent
             }
             else if(notification.Solution != null)
             {
+                if (notification.Solution.UserId == notification.Comment.UserId) return;
+
                 n = Notification.SolutionCommentCreatedNotification(
                     notification.Solution.UserId,
                     notification.Comment.UserId,
