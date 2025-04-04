@@ -13,7 +13,9 @@ class ImageSlide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.file(
-      File(file.file.path)
+      File(file.file.path),
+      width: MediaQuery.of(context).size.width,
+      fit: BoxFit.contain
     );
   }
 }

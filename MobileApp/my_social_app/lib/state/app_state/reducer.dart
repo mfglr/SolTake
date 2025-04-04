@@ -38,6 +38,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   questionUserSaves: questionUserSavesReducers(prev.questionUserSaves,action),
   solutionUserSaves: solutionUserSavesReducers(prev.solutionUserSaves,action),
   messageConnectionEntityState: messageConnectionsReducers(prev.messageConnectionEntityState,action),
+  stories: ,
 
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userMessageState: userMessageReducers(prev.userMessageState, action),

@@ -89,6 +89,8 @@ dependencies:
   multimedia_grid:
     path: ../flutter_and_dart_packages/multimedia_grid
   shimmer: ^3.0.0
+  photo_manager: ^3.6.4
+  camera: ^0.11.1
   # fluttertoast: ^8.2.8
     
 dev_dependencies:

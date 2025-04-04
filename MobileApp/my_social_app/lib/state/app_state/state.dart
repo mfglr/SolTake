@@ -16,6 +16,7 @@ import 'package:my_social_app/state/app_state/question_user_saves_state/question
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_saves_state/solution_user_save_state.dart';
+import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
@@ -37,6 +38,8 @@ class AppState{
   final Pagination<int,SolutionUserSaveState> solutionUserSaves;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
 
+  final Iterable<StoryState> stories;
+  
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
 
@@ -66,6 +69,8 @@ class AppState{
     required this.questionUserSaves,
     required this.solutionUserSaves,
     required this.messageConnectionEntityState,
+
+    required this.stories,
 
     required this.userEntityState,
     required this.userMessageState,
@@ -97,6 +102,8 @@ class AppState{
     questionUserSaves: Pagination.init(questionsPerPage, true),
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
+
+    currentUserStories: const Iterable.empty(),
 
     userEntityState: EntityState(),
     userMessageState: EntityState(),
