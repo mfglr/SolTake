@@ -27,7 +27,11 @@ class GoFurtherButton extends StatelessWidget {
             if(!context.mounted) return;
               Navigator
                 .of(context)
-                .push(MaterialPageRoute(builder: (context) => CreateStoryPage(appFiles: appFiles,)));
+                .push(MaterialPageRoute(builder: (context) => CreateStoryPage(appFiles: appFiles)))
+                .then((appFiles){
+                  if(appFiles == null || !context.mounted) return;
+                  Navigator.of(context).pop(appFiles);
+                });
           }),
       child: Row(
         mainAxisSize: MainAxisSize.min,

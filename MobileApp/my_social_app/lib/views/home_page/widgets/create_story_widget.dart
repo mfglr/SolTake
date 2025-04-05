@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/story_state/actions.dart';
+import 'package:my_social_app/state/app_state/story_state/selectors.dart';
+import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/create_story/pages/select_medias_page/select_medias_page.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
@@ -8,29 +11,44 @@ import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.
 class CreateStoryWidget extends StatelessWidget {
   const CreateStoryWidget({super.key});
 
+  void _createStory(BuildContext context){
+    Navigator
+      .of(context)
+      .push(MaterialPageRoute(builder: (context) => const SelectMediasPage()))
+      .then((appFiles){
+        if(appFiles == null || !context.mounted) return;
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        store.dispatch(CreateStoryAction(appFiles: appFiles));
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,UserState>(
-      converter: (store) => store.state.currentUser!,
-      builder: (context,user) =>
-        Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            UserImageWidget(
-              image: user.image,
-              diameter: 80,
-            ),
-            IconButton(
-              onPressed: () => Navigator
-                  .of(context)
-                  .push(MaterialPageRoute(builder: (context) => const SelectMediasPage())),
-              icon: const Icon(
-                Icons.add_a_photo_rounded,
-                color: Colors.white,
-              )
-            ),
-          ],
-        ),
+    return StoreConnector<AppState,Iterable<StoryState>>(
+      converter: (store) => selectCurrentUserStories(store),
+      builder: (context,stories) => StoreConnector<AppState, UserState>(
+        converter: (store) => store.state.currentUser!,
+        builder: (context,user) => stories.isEmpty
+          ? Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                UserImageWidget(
+                  image: user.image,
+                  diameter: 80,
+                ),
+                IconButton(
+                  onPressed: () => _createStory,
+                  icon: const Icon(
+                    Icons.add_a_photo_rounded,
+                    color: Colors.white,
+                  )
+                ),
+              ],
+            )
+          : Container(
+              width: 90,
+            )
+      ),
     );
   }
 }

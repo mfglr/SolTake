@@ -1,8 +1,6 @@
 import 'package:app_file/app_file.dart';
 import 'package:app_file_slider/app_file_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/create_story/pages/create_story_page/create_story_page_texts.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 
@@ -42,10 +40,7 @@ class _CreateStoryPageState extends State<CreateStoryPage> {
         onRemoved: _removeMedia
       ),
       floatingActionButton: FilledButton(
-        onPressed: (){
-          final store = StoreProvider.of<AppState>(context,listen: false);
-          
-        },
+        onPressed: () => Navigator.of(context).pop(_appfiles),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

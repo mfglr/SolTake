@@ -10,7 +10,6 @@ part 'story.g.dart';
 @JsonSerializable()
 class Story {
   final int id;
-  final int storyId;
   final int userId;
   final String userName;
   final Multimedia? image;
@@ -18,7 +17,6 @@ class Story {
 
   const Story({
     required this.id,
-    required this.storyId,
     required this.userId,
     required this.userName,
     required this.image,

@@ -53,7 +53,11 @@ class _SelectMediasPageState extends State<SelectMediasPage> {
           var appFiles = [asset.type == AssetType.video ? AppFile.video(XFile(file!.path)) : AppFile.image(XFile(file!.path))];
           Navigator
             .of(context)
-            .push(MaterialPageRoute(builder: (context) => CreateStoryPage(appFiles: appFiles)));
+            .push(MaterialPageRoute(builder: (context) => CreateStoryPage(appFiles: appFiles)))
+            .then((appFiles){
+              if(appFiles == null || !mounted) return;
+              Navigator.of(context).pop(appFiles);
+            });
         });
       }
     });
@@ -155,7 +159,22 @@ class _SelectMediasPageState extends State<SelectMediasPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () => Navigator.of(context).pushNamed(takeMediaRoute),
+                        onPressed: () 
+                          => 
+                            Navigator
+                              .of(context)
+                              .pushNamed(takeMediaRoute)
+                              .then((appFile){
+                                if(appFile != null && context.mounted){
+                                  Navigator
+                                    .of(context)
+                                    .push(MaterialPageRoute(builder: (context) => CreateStoryPage(appFiles: [appFile as AppFile])))
+                                    .then((appFiles){
+                                      if(appFiles == null || !context.mounted) return;
+                                      Navigator.of(context).pop(appFiles);
+                                    });
+                                }
+                              }),
                         icon: const Icon(
                           Icons.photo_camera,
                           color: Colors.white,

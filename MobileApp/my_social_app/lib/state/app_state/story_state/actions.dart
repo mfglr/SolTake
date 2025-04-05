@@ -9,14 +9,13 @@ class StoryAction extends AppAction{
 }
 
 @immutable
-class LoadStoriesAction extends StoryAction{
-  const LoadStoriesAction();
+class GetStoriesAction extends StoryAction{
+  const GetStoriesAction();
 }
-
 @immutable
-class LoadStoriesSuccessAction extends StoryAction{
+class GetStoriesSuccessAction extends StoryAction{
   final Iterable<StoryState> stories;
-  const LoadStoriesSuccessAction({required this.stories});
+  const GetStoriesSuccessAction({required this.stories});
 }
 
 @immutable

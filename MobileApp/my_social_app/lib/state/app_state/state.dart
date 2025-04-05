@@ -103,7 +103,7 @@ class AppState{
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
 
-    currentUserStories: const Iterable.empty(),
+    stories: const Iterable.empty(),
 
     userEntityState: EntityState(),
     userMessageState: EntityState(),
