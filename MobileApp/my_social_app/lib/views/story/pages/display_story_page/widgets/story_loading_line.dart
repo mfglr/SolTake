@@ -1,63 +1,51 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
-class StoryLoadingLine extends StatefulWidget {
+class StoryLoadingLine extends StatelessWidget {
   final int duration;
-  final double width;
   final double height;
+  final int activeIndex;
+  final double rate;
+  final int numberOfItems;
+  final void Function() next;
+
   const StoryLoadingLine({
     super.key,
     this.duration = 15,
-    required this.width,
-    required this.height
+    this.activeIndex = 0,
+    this.height = 6,
+    required this.numberOfItems,
+    required this.next,
+    required this.rate
   });
 
   @override
-  State<StoryLoadingLine> createState() => _StoryLoadingLineState();
-}
-
-class _StoryLoadingLineState extends State<StoryLoadingLine> {
-  
-  final int _interval = 4;
-  late final int _lastTick;
-  double rate = 0;
-
-  @override
-  void initState() {
-    _lastTick = widget.duration * _interval;
-    Timer.periodic(
-      Duration(milliseconds: (1000 / _interval).toInt()),
-      (timer){
-        if(timer.tick <= _lastTick){
-          timer.cancel();
-          return;
-        }
-        setState(() => rate = timer.tick / _lastTick );
-      }
-    );
-    
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: widget.width,
-          height: widget.height,
-          color: Colors.grey,
-        ),
-        Positioned(
-          left: 0,
-          top: 0,
-          child: Container(
-            width: widget.width * rate,
-            height: widget.height,
-            color: Colors.white,
-          )
-        )
-      ],
+    final widthOfItem = (MediaQuery.of(context).size.width - (numberOfItems + 1) * 5) / numberOfItems;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children : 
+        Iterable<int>
+          .generate(numberOfItems)
+          .map((index) => Stack(
+            children: [
+              Container(
+                width: widthOfItem,
+                height: height,
+                color: Colors.grey,
+              ),
+              if(activeIndex == index)
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Container(
+                    width: widthOfItem * rate,
+                    height: height,
+                    color: Colors.white,
+                  )
+                )
+            ],
+          ))
+          .toList()
     );
   }
 }

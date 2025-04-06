@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
@@ -16,8 +18,23 @@ class StoryItems extends StatefulWidget {
 }
 
 class _StoryItemsState extends State<StoryItems> {
-  
+  final PageController _pageController = PageController();
   late int _activeIndex;
+  final int _interval = 4;
+  double rate = 0;
+  late final Timer _timer;
+
+  void _next(){
+    setState(() => _activeIndex = (_activeIndex + 1) % widget.stories.length);
+    _pageController.jumpToPage(_activeIndex);
+  }
+    
+
+  void _prev(){
+    setState(() =>_activeIndex = (_activeIndex - 1) % widget.stories.length);
+    _pageController.jumpToPage(_activeIndex);
+  }
+
 
   @override
   void initState() {
@@ -25,33 +42,76 @@ class _StoryItemsState extends State<StoryItems> {
       .mapIndexed((index,story) => (story: story,index: index))
       .where((e) => !e.story.isViewed)
       .firstOrNull?.index ?? 0;
+    
+    final lastTick = 10 * _interval;
+    _timer = Timer.periodic(
+      Duration(milliseconds: (1000 / _interval).toInt()),
+      (timer){
+        if(timer.tick != 0 && timer.tick % lastTick == 0){
+          _next();
+        }
+        setState(() => rate = ((timer.tick % lastTick) / lastTick));
+      }
+    );
+    
     super.initState();
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+  
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => setState(() => _activeIndex = (_activeIndex + 1) % widget.stories.length),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          StoryItem(story: widget.stories.elementAt(_activeIndex)),
-          Positioned(
-            bottom: 15,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: widget.stories
-                .map((e) => StoryLoadingLine(
-                  width: MediaQuery.of(context).size.width / widget.stories.length,
-                  height: 5
-                ))
-                .toList(),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Stack(
+          children: [
+            PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: widget.stories.map((story) => StoryItem(story: story)).toList(),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: _next,
+                    child: Container(
+                      color: Colors.transparent,
+                    ),
+                  )
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: _prev,
+                    child: Container(
+                      color: Colors.transparent,
+                    ),
+                  )
+                )
+              ],
             )
-          )
-          
-          
-        ],
-      ),
+          ],
+        ),
+        Positioned(
+          top: 0,
+          child: Row(
+            children: widget.stories
+              .map((e) => StoryLoadingLine(
+                numberOfItems: widget.stories.length,
+                activeIndex: _activeIndex,
+                next: _next,
+                rate: rate,
+              ))
+              .toList(),
+          ),
+        )
+      ],
     );
   }
 }
