@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using MySocailApp.Domain.QuestionDomain.ExamAggregate.Interfaces;
@@ -112,26 +111,6 @@ namespace MySocailApp.Infrastructure
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
-        private static IServiceCollection AddQueryRepositories(this IServiceCollection services)
-            => services
-                .AddScoped<IUserQueryRepository, UserQueryRepository>()
-                .AddScoped<ICommentUserLikeQueryRepository, CommentUserLikeQueryRepository>()
-                .AddScoped<IFollowQueryRepository, FollowQueryRepository>()
-                .AddScoped<IUserUserSearchQueryRepository, UserUserSearchedQueryRepository>()
-                .AddScoped<IQuestionQueryRepository, QuestionQueryRepository>()
-                .AddScoped<IQuestionUserLikeQueryRepository, QuestionUserLikeQueryRepository>()
-                .AddScoped<IQuestionUserSaveQueryRepository, QuestionUserSaveQueryRepository>()
-                .AddScoped<ISolutionQueryRepository, SolutionQueryRepository>()
-                .AddScoped<ICommentQueryRepository, CommentQueryRepository>()
-                .AddScoped<ISolutionUserVoteQueryRepository, SolutionUserVoteQueryRepository>()
-                .AddScoped<IMessageQueryRepository, MessageQueryRepository>()
-                .AddScoped<ITopicQueryRepository, TopicQueryRepository>()
-                .AddScoped<ISubjectQueryRepository, SubjectQueryRepository>()
-                .AddScoped<ISolutionUserSaveQueryRepository, SolutionUserSaveQueryRepository>()
-                .AddScoped<INotificationQueryRepository, NotificationQueryRepository>()
-                .AddScoped<IMessageConnectionQueryRepository, MessageConnectionQueryRepository>()
-                .AddScoped<IStoryQueryRepository, StoryQueryRepository>();
-
 
         private static IServiceCollection AddExamAggregate(this IServiceCollection services)
             => services

@@ -10,6 +10,8 @@ part 'story.g.dart';
 @JsonSerializable()
 class Story {
   final int id;
+  final DateTime createdAt;
+  final bool isViewed;
   final int userId;
   final String userName;
   final Multimedia? image;
@@ -17,6 +19,8 @@ class Story {
 
   const Story({
     required this.id,
+    required this.createdAt,
+    required this.isViewed,
     required this.userId,
     required this.userName,
     required this.image,
@@ -29,6 +33,8 @@ class Story {
   StoryState toStoryState() =>
     StoryState(
       id: id,
+      createdAt: createdAt,
+      isViewed: isViewed,
       userId: userId,
       userName: userName,
       image: image,

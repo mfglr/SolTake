@@ -10,6 +10,11 @@ namespace MySocailApp.Application.Queries.StoryDomain.GetAllStories
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 
         public Task<List<StoryResponseDto>> Handle(GetAllStoriesDto request, CancellationToken cancellationToken)
-            => _storyQueryRepository.GetAllStoriesByUserId(_accessTokenReader.GetRequiredAccountId(), request, cancellationToken);
+            => _storyQueryRepository.GetAllStoriesByUserId(
+                    _accessTokenReader.GetRequiredAccountId(),
+                    _accessTokenReader.GetRequiredAccountId(),
+                    request,
+                    cancellationToken
+                );
     }
 }

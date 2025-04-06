@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Infrastructure.StoryDomain.StoryAggregate;
+using MySocailApp.Infrastructure.StoryDomain.StoryUserViewAggregate;
 
 namespace MySocailApp.Infrastructure.StoryDomain
 {
@@ -7,6 +8,7 @@ namespace MySocailApp.Infrastructure.StoryDomain
     {
         public static IServiceCollection AddStoryDomainInfrastructureServices(this IServiceCollection services)
             => services
-                .AddStoryAggregateInfrastructureServices();
+                .AddStoryAggregateInfrastructureServices()
+                .AddStoryUserViewAggregateInfrastructureServices();
     }
 }

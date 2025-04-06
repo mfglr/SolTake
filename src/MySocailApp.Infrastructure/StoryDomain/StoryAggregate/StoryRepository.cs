@@ -5,7 +5,7 @@ using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.StoryDomain.StoryAggregate
 {
-    public class StoryWriteRepository(AppDbContext context) : IStoryWriteRepository
+    public class StoryRepository(AppDbContext context) : IStoryRepository
     {
         private readonly AppDbContext _context = context;
 
@@ -18,6 +18,8 @@ namespace MySocailApp.Infrastructure.StoryDomain.StoryAggregate
         public void DeleteRange(IEnumerable<Story> stories)
             => _context.Stories.RemoveRange(stories);
 
+        public Task<Story?> GetAsNoTrackingAsync(int storyId, CancellationToken cancellationToken)
+            => _context.Stories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == storyId, cancellationToken);
         public Task<Story?> GetByIdAsync(int storyId, CancellationToken cancellationToken)
             => _context.Stories.FirstOrDefaultAsync(x => x.Id == storyId, cancellationToken);
         public Task<List<Story>> GetByUserId(int userId, CancellationToken cancellationToken)

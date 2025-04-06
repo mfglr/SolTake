@@ -29,7 +29,7 @@ class StoryService {
   Future<Iterable<Story>> create(Iterable<AppFile> medias) =>
     _createStoryRequest(medias)
       .then((request) => _appClient.postStream(request, (x){}))
-      .then((json) => jsonDecode(json)as Iterable)
+      .then((json) => jsonDecode(json) as Iterable)
       .then((list) => list.map((e) => Story.fromJson(e)));
 
   Future<void> delete(int storyId) =>

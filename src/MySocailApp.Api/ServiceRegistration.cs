@@ -53,21 +53,6 @@ namespace MySocailApp.Api
                 .AddJwtBearer(
                     JwtBearerDefaults.AuthenticationScheme,
                     opt => {
-
-                        opt.Events = new JwtBearerEvents
-                        {
-                            OnMessageReceived = context =>
-                            {
-                                //var accessToken = context.Request.Query["access_token"];
-                                var pathString = context.Request.Path;
-                                if (pathString.StartsWithSegments("/message") || pathString.StartsWithSegments("/notification"))
-                                {
-                                    Console.WriteLine();
-                                }
-                                return Task.CompletedTask;
-                            }
-                        };
-
                         opt.TokenValidationParameters = new()
                         {
                             IssuerSigningKey = securityKey,

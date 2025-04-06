@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.DomainEvents;
 
 namespace MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities
 {
@@ -7,9 +8,10 @@ namespace MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities
         public int StoryId { get; private set; } = storyId;
         public int UserId { get; private set; } = userId;
 
-        public void Create()
+        internal void Create()
         {
             CreatedAt = DateTime.UtcNow;
+            AddDomainEvent(new StoryUserViewCreatedDomainEvent(this));
         }
 
     }

@@ -16,7 +16,7 @@ void getStoriesMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is GetStoriesAction){
     StoryService()
       .getStories()
-      .then((stories) => GetStoriesSuccessAction(stories: stories.map((e) => e.toStoryState())));
+      .then((stories) => store.dispatch(GetStoriesSuccessAction(stories: stories.map((e) => e.toStoryState()))));
   }
   next(action);
 }

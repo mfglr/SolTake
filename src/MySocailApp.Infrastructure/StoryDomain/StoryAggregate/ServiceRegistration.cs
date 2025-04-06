@@ -7,6 +7,6 @@ namespace MySocailApp.Infrastructure.StoryDomain.StoryAggregate
     {
         public static IServiceCollection AddStoryAggregateInfrastructureServices(this IServiceCollection services)
             => services
-                .AddScoped<IStoryWriteRepository,StoryWriteRepository>();
+                .AddScoped<IStoryRepository,StoryRepository>();
     }
 }

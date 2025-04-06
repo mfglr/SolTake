@@ -3,33 +3,14 @@ using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory
 {
-    public class CreateStoryResponseDto
+    public class CreateStoryResponseDto(Story story, Login login)
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public int UserId { get; private set; }
-        public string UserName { get; private set; }
-        public Multimedia? Image { get; private set; }
-        public Multimedia Media { get; private set; }
-
-        public CreateStoryResponseDto(int id, DateTime createdAt, int userId, string userName, Multimedia? image, Multimedia media)
-        {
-            Id = id;
-            CreatedAt = createdAt;
-            UserId = userId;
-            UserName = userName;
-            Image = image;
-            Media = media;
-        }
-
-        public CreateStoryResponseDto(Story story, Login login)
-        {
-            Id = story.Id;
-            CreatedAt = story.CreatedAt;
-            UserId = story.UserId;
-            UserName = login.UserName;
-            Image = login.Image;
-            Media = story.Media;
-        }
+        public int Id { get; private set; } = story.Id;
+        public DateTime CreatedAt { get; private set; } = story.CreatedAt;
+        public bool IsViewed { get; private set; } = false;
+        public int UserId { get; private set; } = story.UserId;
+        public string UserName { get; private set; } = login.UserName;
+        public Multimedia? Image { get; private set; } = login.Image;
+        public Multimedia Media { get; private set; } = story.Media;
     }
 }

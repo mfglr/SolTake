@@ -8,9 +8,9 @@ using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory
 {
-    public class CreateStoryHandler(IStoryWriteRepository storyWriteRepository, IUnitOfWork unitOfWork, IMultimediaService multimediaService, IAccessTokenReader accessTokenReader, IBlobService blobService) : IRequestHandler<CreateStoryDto, List<CreateStoryResponseDto>>
+    public class CreateStoryHandler(IStoryRepository storyWriteRepository, IUnitOfWork unitOfWork, IMultimediaService multimediaService, IAccessTokenReader accessTokenReader, IBlobService blobService) : IRequestHandler<CreateStoryDto, List<CreateStoryResponseDto>>
     {
-        private readonly IStoryWriteRepository _storyWriteRepository = storyWriteRepository;
+        private readonly IStoryRepository _storyWriteRepository = storyWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMultimediaService _multimediaService = multimediaService;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;

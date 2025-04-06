@@ -3,8 +3,5 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes
 {
-    public class GetCommentLikesDto(int commentId,int? offset,int take,bool isDescending) : Page(offset,take,isDescending), IRequest<List<CommentUserLikeResponseDto>>
-    {
-        public int CommentId { get; private set; } = commentId;
-    }
+    public record GetCommentLikesDto(int CommentId,int? Offset,int Take,bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<CommentUserLikeResponseDto>>;
 }

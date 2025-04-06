@@ -3,6 +3,6 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionDomain.GetVideoQuestions
 {
-    public class GetVideoQuestionsDto(int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<QuestionResponseDto>>;
+    public record GetVideoQuestionsDto(int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<QuestionResponseDto>>;
 
 }

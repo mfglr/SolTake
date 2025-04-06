@@ -71,6 +71,8 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<AppVersion> AppVersions { get; private set; }
 
         public DbSet<Story> Stories { get; private set; }
+        public DbSet<StoryUserView> StoryUserViews { get; private set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

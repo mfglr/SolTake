@@ -8,6 +8,8 @@ part of 'story.dart';
 
 Story _$StoryFromJson(Map<String, dynamic> json) => Story(
       id: (json['id'] as num).toInt(),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      isViewed: json['isViewed'] as bool,
       userId: (json['userId'] as num).toInt(),
       userName: json['userName'] as String,
       image: json['image'] == null
@@ -18,6 +20,8 @@ Story _$StoryFromJson(Map<String, dynamic> json) => Story(
 
 Map<String, dynamic> _$StoryToJson(Story instance) => <String, dynamic>{
       'id': instance.id,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'isViewed': instance.isViewed,
       'userId': instance.userId,
       'userName': instance.userName,
       'image': instance.image,

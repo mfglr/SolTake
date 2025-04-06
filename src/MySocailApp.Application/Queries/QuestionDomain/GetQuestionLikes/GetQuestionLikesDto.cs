@@ -3,8 +3,5 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionDomain.GetQuestionLikes
 {
-    public class GetQuestionLikesDto(int questionId, int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<QuestionUserLikeResponseDto>>
-    {
-        public int QuestionId { get; private set; } = questionId;
-    }
+    public record GetQuestionLikesDto(int QuestionId, int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<QuestionUserLikeResponseDto>>;
 }

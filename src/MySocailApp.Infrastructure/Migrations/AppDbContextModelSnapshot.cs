@@ -11081,6 +11081,31 @@ namespace MySocailApp.Infrastructure.Migrations
                     b.ToTable("Stories");
                 });
 
+            modelBuilder.Entity("MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities.StoryUserView", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StoryUserViews");
+                });
+
             modelBuilder.Entity("MySocailApp.Domain.UserDomain.FollowAggregate.Entities.Follow", b =>
                 {
                     b.Property<int>("Id")

@@ -3,5 +3,5 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.StoryDomain.GetAllStories
 {
-    public class GetAllStoriesDto(int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<StoryResponseDto>>;
+    public record GetAllStoriesDto(int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<StoryResponseDto>>;
 }

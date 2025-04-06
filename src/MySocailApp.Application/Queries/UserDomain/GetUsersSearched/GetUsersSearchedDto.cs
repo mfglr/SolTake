@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.UserDomain.GetUsersSearched
 {
-    public class GetUsersSearchedDto(int? offset, int take, bool isDescending) : Core.Page(offset, take, isDescending), IRequest<List<UserUserSearchResponseDto>>;
+    public record GetUsersSearchedDto(int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<UserUserSearchResponseDto>>;
 }

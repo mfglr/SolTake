@@ -5,9 +5,9 @@ using MySocailApp.Domain.StoryDomain.StoryAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.DeleteStory
 {
-    public class DeleteStoryHandler(IStoryWriteRepository storyWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<DeleteStoryDto>
+    public class DeleteStoryHandler(IStoryRepository storyWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<DeleteStoryDto>
     {
-        private readonly IStoryWriteRepository _storyWriteRepository = storyWriteRepository;
+        private readonly IStoryRepository _storyWriteRepository = storyWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
 

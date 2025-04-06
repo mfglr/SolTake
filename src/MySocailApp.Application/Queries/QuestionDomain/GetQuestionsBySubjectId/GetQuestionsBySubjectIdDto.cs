@@ -3,8 +3,5 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionDomain.GetQuestionsBySubjectId
 {
-    public class GetQuestionsBySubjectIdDto(int subjectId, int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<QuestionResponseDto>>
-    {
-        public int SubjectId { get; set; } = subjectId;
-    }
+    public record GetQuestionsBySubjectIdDto(int SubjectId, int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<QuestionResponseDto>>;
 }

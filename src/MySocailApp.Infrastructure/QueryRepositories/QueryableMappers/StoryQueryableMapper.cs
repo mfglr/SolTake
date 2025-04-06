@@ -6,7 +6,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class StoryQueryableMapper
     {
-        public static IQueryable<StoryResponseDto> ToStoryResponseSto(this IQueryable<Story> query, AppDbContext context)
+        public static IQueryable<StoryResponseDto> ToStoryResponseSto(this IQueryable<Story> query, int forUserId, AppDbContext context)
             => query
                 .Join(
                     context.Users,
@@ -14,6 +14,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     u => u.Id,
                     (s, u) => new StoryResponseDto(
                         s.Id,
+                        s.CreatedAt,
+                        context.StoryUserViews.Any(suv => suv.StoryId == s.Id && suv.UserId == forUserId),
                         u.Id,
                         u.UserName.Value,
                         u.Image,

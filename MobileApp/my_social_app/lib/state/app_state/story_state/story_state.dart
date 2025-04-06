@@ -7,6 +7,8 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 @immutable
 class StoryState extends BaseEntity<int>{
   final int userId;
+  final DateTime createdAt;
+  final bool isViewed;
   final String userName;
   final Multimedia? image;
   final Multimedia media;
@@ -14,6 +16,8 @@ class StoryState extends BaseEntity<int>{
 
   StoryState({
     required super.id,
+    required this.createdAt,
+    required this.isViewed,
     required this.userId,
     required this.userName,
     required this.image,

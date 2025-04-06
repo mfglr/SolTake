@@ -3,8 +3,5 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.UserDomain.SearchUsers
 {
-    public class SearchUserDto(string key, int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<SearchUserResponseDto>>
-    {
-        public string Key { get; private set; } = key;
-    }
+    public record SearchUserDto(string Key, int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<SearchUserResponseDto>>;
 }

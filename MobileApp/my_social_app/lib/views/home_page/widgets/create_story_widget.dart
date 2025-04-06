@@ -7,6 +7,7 @@ import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/views/create_story/pages/select_medias_page/select_medias_page.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
+import 'package:my_social_app/views/story/widgets/story_widget.dart';
 
 class CreateStoryWidget extends StatelessWidget {
   const CreateStoryWidget({super.key});
@@ -37,7 +38,7 @@ class CreateStoryWidget extends StatelessWidget {
                   diameter: 80,
                 ),
                 IconButton(
-                  onPressed: () => _createStory,
+                  onPressed: () => _createStory(context),
                   icon: const Icon(
                     Icons.add_a_photo_rounded,
                     color: Colors.white,
@@ -45,9 +46,7 @@ class CreateStoryWidget extends StatelessWidget {
                 ),
               ],
             )
-          : Container(
-              width: 90,
-            )
+          : StoryWidget(story: stories.first, diameter: 80)
       ),
     );
   }

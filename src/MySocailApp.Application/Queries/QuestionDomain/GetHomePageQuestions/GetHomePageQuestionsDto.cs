@@ -3,5 +3,5 @@ using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.QuestionDomain.GetHomePageQuestions
 {
-    public class GetHomePageQuestionsDto(int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<QuestionResponseDto>>;
+    public record GetHomePageQuestionsDto(int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<QuestionResponseDto>>;
 }

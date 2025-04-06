@@ -1,11 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.Queries.SolutionDomain;
 using MySocailApp.Core;
 
 namespace MySocailApp.Application.Queries.SolutionDomain.GetCorrectSolutionsByQuestionId
 {
-    public class GetCorrectSolutionsByQuestionIdDto(int questionId, int? offset, int take, bool isDescending) : Page(offset, take, isDescending), IRequest<List<SolutionResponseDto>>
-    {
-        public int QuestionId { get; set; } = questionId;
-    }
+    public record GetCorrectSolutionsByQuestionIdDto(int QuestionId, int? Offset, int Take, bool IsDescending) : Page(Offset, Take, IsDescending), IRequest<List<SolutionResponseDto>>;
 }
