@@ -21,45 +21,57 @@ class _StoryItemsState extends State<StoryItems> {
   final PageController _pageController = PageController();
   late int _activeIndex;
   final int _interval = 4;
+  final int _duration = 10;
+  late final int _lastTick;
   double rate = 0;
-  late final Timer _timer;
+  Timer? _timer;
 
   void _next(){
-    setState(() => _activeIndex = (_activeIndex + 1) % widget.stories.length);
+    setState((){
+      rate = 0;
+      _activeIndex = (_activeIndex + 1) % widget.stories.length;
+    });
     _pageController.jumpToPage(_activeIndex);
+    _setTimer();
   }
-    
 
   void _prev(){
-    setState(() =>_activeIndex = (_activeIndex - 1) % widget.stories.length);
+    setState(() => _activeIndex = (_activeIndex - 1) % widget.stories.length);
     _pageController.jumpToPage(_activeIndex);
+    _setTimer();
+  }
+
+  void _setTimer(){
+    if(_timer != null) _timer?.cancel();
+    _timer = Timer.periodic(
+      Duration(milliseconds: (1000 / _interval).toInt()),
+      (timer){
+        if(timer.tick != 0 && timer.tick % _lastTick == 0){
+          _next();
+        }
+        setState(() => rate = ((timer.tick % _lastTick) / _lastTick));
+      }
+    );
   }
 
 
   @override
   void initState() {
+    _lastTick = _duration * _interval;
+
     _activeIndex = widget.stories
       .mapIndexed((index,story) => (story: story,index: index))
       .where((e) => !e.story.isViewed)
       .firstOrNull?.index ?? 0;
     
-    final lastTick = 10 * _interval;
-    _timer = Timer.periodic(
-      Duration(milliseconds: (1000 / _interval).toInt()),
-      (timer){
-        if(timer.tick != 0 && timer.tick % lastTick == 0){
-          _next();
-        }
-        setState(() => rate = ((timer.tick % lastTick) / lastTick));
-      }
-    );
-    
+    _setTimer();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
   
@@ -80,7 +92,7 @@ class _StoryItemsState extends State<StoryItems> {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: _next,
+                    onTap: _prev,
                     child: Container(
                       color: Colors.transparent,
                     ),
@@ -88,7 +100,7 @@ class _StoryItemsState extends State<StoryItems> {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: _prev,
+                    onTap: _next,
                     child: Container(
                       color: Colors.transparent,
                     ),
@@ -99,7 +111,8 @@ class _StoryItemsState extends State<StoryItems> {
           ],
         ),
         Positioned(
-          top: 0,
+          top: MediaQuery.of(context).size.height / 64,
+          left: 0,
           child: Row(
             children: widget.stories
               .map((e) => StoryLoadingLine(
