@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
+import 'package:my_social_app/state/app_state/story_state/selectors.dart';
+import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/actions.dart';
@@ -13,6 +15,7 @@ import 'package:my_social_app/views/home_page/widgets/uploadings_button.dart';
 import 'package:my_social_app/views/question/widgets/question_list_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
+import 'package:my_social_app/views/story/widgets/stories_widget.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -74,9 +77,16 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 margin: const EdgeInsets.all(5),
-                child: const Row(
+                child: Row(
                   children: [
-                    CreateStoryWidget(),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: const CreateStoryWidget()
+                    ),
+                    StoreConnector<AppState,Iterable<StoryState>>(
+                      converter: (store) => selectHomePageStories(store),
+                      builder:(context,stories) => StoriesWidget(stories: stories,)
+                    )
                   ],
                 ),
               ),

@@ -6,7 +6,6 @@ class StoryLoadingLine extends StatelessWidget {
   final int activeIndex;
   final double rate;
   final int numberOfItems;
-  final void Function() next;
 
   const StoryLoadingLine({
     super.key,
@@ -14,7 +13,6 @@ class StoryLoadingLine extends StatelessWidget {
     this.activeIndex = 0,
     this.height = 4,
     required this.numberOfItems,
-    required this.next,
     required this.rate
   });
 
