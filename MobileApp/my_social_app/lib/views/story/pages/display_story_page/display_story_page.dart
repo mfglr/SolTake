@@ -15,9 +15,9 @@ class DisplayStoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState,Iterable<StoryState>>(
-        converter: (store) => selectUserStories(store, userId),
-        builder: (context,stories) => UserStories(userStories: [stories]),
+      body: StoreConnector<AppState,Iterable<Iterable<StoryState>>>(
+        converter: (store) => selectAllStories(store),
+        builder: (context,stories) => UserStories(userStories: stories,userId: userId),
       ),
     );
   }

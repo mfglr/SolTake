@@ -23,14 +23,16 @@ class _UserStoriesState extends State<UserStories> {
   @override
   void initState() {
     if(widget.userId != null){
-      _controller
-        .jumpToPage(
-          widget.userStories
-            .mapIndexed((index,e) => (index: index, userId: e.first.userId))
-            .where((e) => e.userId == widget.userId)
-            .first
-            .index
-        );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _controller
+          .jumpToPage(
+            widget.userStories
+              .mapIndexed((index,e) => (index: index, userId: e.first.userId))
+              .where((e) => e.userId == widget.userId)
+              .first
+              .index
+          );
+      });
     }
     super.initState();
   }
