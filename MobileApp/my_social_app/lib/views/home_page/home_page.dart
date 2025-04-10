@@ -9,6 +9,7 @@ import 'package:my_social_app/state/app_state/home_page_questions_state/actions.
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/views/home_page/widgets/create_story_widget.dart';
 import 'package:my_social_app/views/home_page/widgets/notification_button.dart';
 import 'package:my_social_app/views/home_page/widgets/uploadings_button.dart';
 import 'package:my_social_app/views/question/widgets/question_list_widget.dart';
@@ -78,6 +79,10 @@ class _HomePageState extends State<HomePage> {
                 margin: const EdgeInsets.all(5),
                 child: Row(
                   children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: const CreateStoryWidget(),
+                    ),
                     StoreConnector<AppState,Iterable<StoryState>>(
                       converter: (store) => selectHomePageStories(store),
                       builder:(context,stories) => StoriesWidget(stories: stories,)

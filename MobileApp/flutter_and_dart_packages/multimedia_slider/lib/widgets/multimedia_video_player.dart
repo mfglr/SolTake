@@ -7,12 +7,20 @@ class MultimediaVideoPlayer extends StatefulWidget {
   final Multimedia media;
   final String blobServiceUrl;
   final Map<String,String>? headers;
-  
+  final bool displayRemaningDuration;
+  final bool displayVolume;
+  final bool displayPlayButton;
+  final bool play;
+
   const MultimediaVideoPlayer({
     super.key,
     required this.media,
     required this.blobServiceUrl,
-    this.headers
+    this.headers,
+    this.displayRemaningDuration = true,
+    this.displayVolume = true,
+    this.displayPlayButton = true,
+    this.play = false
   });
 
   @override
@@ -38,7 +46,15 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
     _controller = VideoPlayerController.networkUrl(_url, httpHeaders: widget.headers ?? const <String,String>{});
     _controller.addListener(_setRemainingDuration);
     _controller.setLooping(false);
-    _controller.initialize().then((_) => setState((){}));
+    if(!widget.play){
+      _controller.initialize().then((_) => setState((){}));
+    }
+    else{
+      _controller
+        .initialize()
+        .then((_) => _controller.play())
+        .then((_) => setState((){}));
+    }
     super.initState();
   }
   
@@ -84,7 +100,7 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
             aspectRatio: widget.media.aspectRatio,
             child: VideoPlayer(_controller)
           ),
-          if(!_controller.value.isPlaying)
+          if(!_controller.value.isPlaying && widget.displayPlayButton)
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -96,46 +112,48 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
                 color: Colors.white,
               ),
             ),
-          Positioned(
-            bottom: 15,
-            right: 15,
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black.withAlpha(153),
-              ),
-              child: IconButton(
-                onPressed: () => _controller.value.volume == 0.0 ? volumeUp() : volumeOff(),
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
-                  minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          if(widget.displayVolume)
+            Positioned(
+              bottom: 15,
+              right: 15,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black.withAlpha(153),
                 ),
-                icon: Icon(
-                  _controller.value.volume == 1 ? Icons.volume_up_sharp : Icons.volume_off_sharp,
-                  color: Colors.white,
-                  size: 20,
+                child: IconButton(
+                  onPressed: () => _controller.value.volume == 0.0 ? volumeUp() : volumeOff(),
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
+                    minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  icon: Icon(
+                    _controller.value.volume == 1 ? Icons.volume_up_sharp : Icons.volume_off_sharp,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
-              ),
+              )
+            ),
+          if(widget.displayRemaningDuration)
+            Positioned(
+              top: 15,
+              left: 5,
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.black.withAlpha(153),
+                  borderRadius: BorderRadius.all(Radius.circular(4))
+                ),
+                child: DurationToMinutes(
+                  duration: _remaningDuration,
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
+                ),
+              )
             )
-          ),
-          Positioned(
-            top: 15,
-            left: 5,
-            child: Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.black.withAlpha(153),
-                borderRadius: BorderRadius.all(Radius.circular(4))
-              ),
-              child: DurationToMinutes(
-                duration: _remaningDuration,
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
-            )
-          )
         ],
       )
     );

@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_items.dart';
 
-class UserStories extends StatefulWidget {
+class Stories extends StatefulWidget {
   final Iterable<Iterable<StoryState>> userStories;
   final int? userId;
 
-  const UserStories({
+  const Stories({
     super.key,
     required this.userStories,
     this.userId
   });
 
   @override
-  State<UserStories> createState() => _UserStoriesState();
+  State<Stories> createState() => _StoriesState();
 }
 
-class _UserStoriesState extends State<UserStories> {
+class _StoriesState extends State<Stories> {
   final PageController _controller = PageController();
 
   @override
@@ -46,7 +46,13 @@ class _UserStoriesState extends State<UserStories> {
   Widget build(BuildContext context) {
     return PageView(
       controller: _controller,
-      children: widget.userStories.map((stories) => StoryItems(stories: stories, mainPageController: _controller)).toList(),
+      children: 
+        widget.userStories
+          .map((stories) => StoryItems(
+            stories: stories,
+            mainPageController: _controller
+          ))
+          .toList(),
     );
   }
 }

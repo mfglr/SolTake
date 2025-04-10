@@ -9,13 +9,21 @@ class MultimediaPlayer extends StatelessWidget {
   final String blobServiceUrl;
   final String notFoundImagePath;
   final String noImagePath;
+  final bool displayRemaningDuration;
+  final bool displayVolume;
+  final bool displayPlayButton;
+  final bool play;
 
   const MultimediaPlayer({
     super.key,
     required this.media,
     required this.blobServiceUrl,
     required this.notFoundImagePath,
-    required this.noImagePath
+    required this.noImagePath,
+    this.displayRemaningDuration = true,
+    this.displayVolume = true,
+    this.displayPlayButton = true,
+    this.play = false
   });
 
   @override
@@ -29,7 +37,11 @@ class MultimediaPlayer extends StatelessWidget {
         )
       : MultimediaVideoPlayer(
           media: media,
-          blobServiceUrl: blobServiceUrl
+          blobServiceUrl: blobServiceUrl,
+          displayPlayButton: displayPlayButton,
+          displayRemaningDuration: displayRemaningDuration,
+          displayVolume: displayVolume,
+          play: play,
         );
   }
 }
