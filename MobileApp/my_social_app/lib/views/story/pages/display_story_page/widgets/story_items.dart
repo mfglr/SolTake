@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_item.dart';
 
@@ -87,6 +89,8 @@ class _StoryItemsState extends State<StoryItems> {
               story: story,
               index: index,
               numberOfItems: widget.stories.length,
+              baseUrl: AppClient.blobService,
+              notFoundImagePath: noMediaAssetPath,
               next: _next,
               prev: _prev,
             ))

@@ -16,7 +16,7 @@ class StoppableTimer {
     _setTimer();
   }
 
-  void _setTimer() => _timer = Timer.periodic(_duration, (timer) => _callback(_tick++));
+  void _setTimer() => _timer = Timer.periodic(_duration, (timer) => _callback(++_tick));
 
   void stop(){
     if(isStopped) throw "Timer has been already stoped!";

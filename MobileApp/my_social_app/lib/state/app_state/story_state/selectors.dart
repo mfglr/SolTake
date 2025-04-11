@@ -14,13 +14,18 @@ Iterable<StoryState> selectHomePageStories(Store<AppState> store) =>
   .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last);
 
 Iterable<StoryState> selectCurrentUserStories(Store<AppState> store) =>
-  store.state.stories.where((story) => story.userId == _selectCurrentUserId(store));
+  store.state.stories
+    .where((story) => story.userId == _selectCurrentUserId(store))
+    .sortedByCompare((story) => story.id, (x,y) => y > x ? 1 : -1);
 
 Iterable<Iterable<StoryState>> selectAllStories(Store<AppState> store) =>
   [
     selectCurrentUserStories(store),
-    ...groupBy(
-      store.state.stories.where((story) => story.userId != _selectCurrentUserId(store)),
+    ...
+    groupBy(
+      store.state.stories
+        .where((story) => story.userId != _selectCurrentUserId(store))
+        .sortedByCompare((story) => story.id, (x,y) => y > x ? 1 : -1),
       (story) => story.userId
     )
     .values
