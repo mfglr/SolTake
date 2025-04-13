@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
+import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_items.dart';
 
@@ -25,7 +26,9 @@ class _DisplayStoryPageState extends State<DisplayStoryPage> {
   void _viewFirstStoryOfPage(int page){
     final story = widget.userStories.elementAt(page).firstWhereOrNull((story) => !story.isViewed);
     if(story == null) return;
-    final store = StoreProvider.of<AppState>(context, listen: false);
+    
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    if(isViewed(store, story.id)) return;
     store.dispatch(ViewStoryAction(storyId: story.id));
   }
 

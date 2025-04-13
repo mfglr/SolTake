@@ -41,8 +41,8 @@ extension MapExtentions<K extends Comparable,V extends BaseEntity<K>> on Map<K,V
   Map<K,V> prependManyNotExist(Iterable<V> values) =>
     { for (var e in [...values.where((e) => this[e.id] == null), ...this.values]) e.id : e };
 
-  Map<K,V> appendMany(Iterable<V> values) => 
-    { for (var e in [...this.values,...values]) e.id : e };
+  Map<K,V> appendMany(Iterable<V> values) =>
+    { for (var e in [...this.values, ...values]) e.id : e };
   Map<K,V> appendUniqMany(Iterable<V> values) => 
     { for (var e in [...this.values, ...values.where((e) => this[e.id] == null)]) e.id : e };
 

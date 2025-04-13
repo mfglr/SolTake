@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
+import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
@@ -55,6 +56,7 @@ class _HomePageState extends State<HomePage> {
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
         getPrevPageIfReady(store, store.state.homePageQuestions, const PrevHomePageQuestionsAction());
+        store.dispatch(const GetStoriesAction());
         return store.onChange.map((state) => state.homePageQuestions).firstWhere((x) => !x.loadingPrev);
       },
       child: Scaffold(

@@ -5,6 +5,7 @@ import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
+import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_item.dart';
 
@@ -30,7 +31,8 @@ class _StoryItemsState extends State<StoryItems> {
 
   void _viewStory(){
     final story = widget.stories.elementAt(_activeIndex);
-    if(!story.isViewed){
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    if(!isViewed(store, story.id)){
       final store = StoreProvider.of<AppState>(context,listen: false);
       store.dispatch(ViewStoryAction(storyId: story.id));
     }

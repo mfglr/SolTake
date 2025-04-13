@@ -20,6 +20,8 @@ Iterable<Iterable<StoryState>> _selectOtherUserStories(Store<AppState> store) =>
   )
   .values;
 
+bool isViewed(Store<AppState> store, int id) => store.state.stories.getValue(id)?.isViewed ?? true;
+
 Iterable<StoryCircleState> selectHomePageStories(Store<AppState> store) =>
   _selectOtherUserStories(store)
   .sorted((x,y) => StoryState.compareToList(x, y))
