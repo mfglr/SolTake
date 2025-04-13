@@ -9,9 +9,12 @@ EntityState<int,StoryState> getVieweableStoriesSuccessReducer(EntityState<int,St
   => prev.appendMany(action.stories);
 EntityState<int,StoryState> viewStoryReducer(EntityState<int,StoryState> prev,ViewStorySuccessAction action)
   => prev.updateOne(prev.getValue(action.storyId)!.view(action.storyUserView));
+EntityState<int,StoryState> deleteStorySuccessAction(EntityState<int,StoryState> prev,DeleteStorySuccessAction action)
+  => prev.removeOne(action.storyId);
 
 Reducer<EntityState<int,StoryState>> storyReducers = combineReducers<EntityState<int,StoryState>>([
   TypedReducer<EntityState<int,StoryState>,CreateStorySuccessAction>(createStorySuccessReducer).call,
   TypedReducer<EntityState<int,StoryState>,GetStoriesSuccessAction>(getVieweableStoriesSuccessReducer).call,
   TypedReducer<EntityState<int,StoryState>,ViewStorySuccessAction>(viewStoryReducer).call,
+  TypedReducer<EntityState<int,StoryState>,DeleteStorySuccessAction>(deleteStorySuccessAction).call,
 ]);

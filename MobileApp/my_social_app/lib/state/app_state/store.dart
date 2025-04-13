@@ -128,6 +128,7 @@ final store = Store(
     createStoryMiddleware,
     getStoriesMiddleware,
     viewStoryMiddleware,
+    deleteStoryMiddleware,
     //story
 
     //message connection

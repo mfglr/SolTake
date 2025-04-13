@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
+import 'package:my_social_app/views/shared/owner_widget/owner_widget.dart';
+import 'package:my_social_app/views/story/pages/display_story_page/widgets/create_story_button.dart';
+import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_delete_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_loading_line.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_user_header.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
@@ -104,6 +107,23 @@ class _StoryVideoItemState extends State<StoryVideoItem> {
                 )
               )
             ],
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: OwnerWidget(
+              userId: widget.story.userId,
+              child: Row(
+                children: [
+                  const CreateStoryButton(),
+                  StoryDeleteButton(
+                    story: widget.story,
+                    stopTimer: _controller.pause,
+                    startTimer: _controller.play,
+                  ),
+                ],
+              )
+            )
           ),
           Positioned(
             top: MediaQuery.of(context).size.width / 64,

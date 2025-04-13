@@ -44,3 +44,14 @@ class ViewStorySuccessAction extends StoryAction{
     required this.storyUserView
   });
 }
+
+@immutable
+class DeleteStoryAction extends StoryAction{
+  final int storyId;
+  const DeleteStoryAction({required this.storyId});
+}
+@immutable
+class DeleteStorySuccessAction extends StoryAction{
+  final int storyId;
+  const DeleteStorySuccessAction({required this.storyId});
+}

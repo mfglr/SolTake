@@ -15,7 +15,7 @@ class StoryState extends BaseEntity<int>{
   final Multimedia? image;
   final Multimedia media;
   final Pagination<int,StoryUserViewState> viwes;
-
+  
   StoryState({
     required super.id,
     required this.createdAt,

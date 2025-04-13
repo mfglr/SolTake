@@ -4,6 +4,9 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:multimedia/models/multimedia_status.dart';
 import 'package:my_social_app/helpers/stoppable_timer.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
+import 'package:my_social_app/views/shared/owner_widget/owner_widget.dart';
+import 'package:my_social_app/views/story/pages/display_story_page/widgets/create_story_button.dart';
+import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_delete_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_loading_line.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_user_header.dart';
 import 'package:my_social_app/views/user/pages/user_page.dart';
@@ -122,6 +125,23 @@ class _StoryImageItemState extends State<StoryImageItem> {
             ],
           ),
           Positioned(
+            bottom: 0,
+            right: 0,
+            child: OwnerWidget(
+              userId: widget.story.userId,
+              child: Row(
+                children: [
+                  const CreateStoryButton(),
+                  StoryDeleteButton(
+                    story: widget.story,
+                    stopTimer: _timer.stop,
+                    startTimer: _timer.start,
+                  ),
+                ],
+              )
+            )
+          ),
+          Positioned(
             top: MediaQuery.of(context).size.width / 64,
             left: 0,
             child: Column(
@@ -144,7 +164,7 @@ class _StoryImageItemState extends State<StoryImageItem> {
                     },
                     child: StoryUserHeader(story: widget.story,)
                   ),
-                )
+                ),
               ],
             )
           )

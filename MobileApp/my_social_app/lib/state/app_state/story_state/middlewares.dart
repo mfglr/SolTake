@@ -30,3 +30,13 @@ void viewStoryMiddleware(Store<AppState> store, action, NextDispatcher next){
   }
   next(action);
 }
+
+
+void deleteStoryMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is DeleteStoryAction){
+    StoryService()
+      .delete(action.storyId)
+      .then((_) => store.dispatch(DeleteStorySuccessAction(storyId: action.storyId)));
+  }
+  next(action);
+}
