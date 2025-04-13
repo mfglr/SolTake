@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/display_story_page.dart';
@@ -28,10 +31,20 @@ class StoryCircleWidget extends StatelessWidget {
           child: UserImageWidget(
             image: storyCircle.image,
             diameter: diameter - 10,
-            onPressed: () =>
+            onPressed: (){
+              final store = StoreProvider.of<AppState>(context,listen: false);
+              final userStories = selectAllStories(store);
               Navigator
                 .of(context)
-                .push(MaterialPageRoute(builder: (context) => DisplayStoryPage(userId: storyCircle.userId))),
+                .push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayStoryPage(
+                      userId: storyCircle.userId,
+                      userStories: userStories
+                    )
+                  )
+                );
+            }
           ),
         ),
         Text(

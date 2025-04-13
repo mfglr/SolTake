@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
@@ -26,9 +27,13 @@ class StoryState extends BaseEntity<int>{
     required this.viwes
   });
   
-  // static int _compareTo(StoryState x, StoryState y) => !x.isViewed && y.isViewed ? 1 : x.id > y.id ? 1 : -1;
-  // static int compareToList(Iterable<StoryState> x, Iterable<StoryState> y)
-  //   => _compareTo(x.sorted((a,b) => _compareTo(a, b)).last, y.sorted((a,b) => _compareTo(a, b)).last);
+  static int _compareTo(StoryState x, StoryState y){
+    if (!x.isViewed && y.isViewed) return 1;
+    if (x.isViewed && !y.isViewed) return -1;
+    return x.id > y.id ? 1 : -1;
+  }
+  static int compareToList(Iterable<StoryState> x, Iterable<StoryState> y)
+    => _compareTo(x.sorted((a,b) => _compareTo(a, b)).last, y.sorted((a,b) => _compareTo(a, b)).last);
 
   static bool _isAllViewed(Iterable<StoryState> stories) => !stories.any((story) => !story.isViewed);
   static StoryCircleState toStoryCircleState(Iterable<StoryState> stories) =>

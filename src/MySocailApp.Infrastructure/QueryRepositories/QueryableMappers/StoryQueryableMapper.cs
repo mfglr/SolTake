@@ -22,6 +22,5 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         s.Media
                     )
                 );
-
     }
 }

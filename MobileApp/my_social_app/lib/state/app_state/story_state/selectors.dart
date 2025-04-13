@@ -22,11 +22,17 @@ Iterable<Iterable<StoryState>> _selectOtherUserStories(Store<AppState> store) =>
 
 Iterable<StoryCircleState> selectHomePageStories(Store<AppState> store) =>
   _selectOtherUserStories(store)
+  .sorted((x,y) => StoryState.compareToList(x, y))
+  .reversed
   .map((stories) => StoryState.toStoryCircleState(stories));
 
 Iterable<Iterable<StoryState>> selectAllStories(Store<AppState> store){
   final currentUserStories = selectCurrentUserStories(store);
-  final otherUserStories = _selectOtherUserStories(store);
+  final otherUserStories =
+    _selectOtherUserStories(store)
+    .sorted((x,y) => StoryState.compareToList(x, y))
+    .reversed;
+
   if(currentUserStories.isNotEmpty) return [ currentUserStories, ...otherUserStories];
   return otherUserStories;
 }

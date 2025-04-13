@@ -1,18 +1,23 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_item.dart';
 
 class StoryItems extends StatefulWidget {
   final Iterable<StoryState> stories;
   final PageController mainPageController;
+  final void Function(int page) viewFirstStoryOfPage;
 
   const StoryItems({
     super.key,
     required this.stories,
-    required this.mainPageController
+    required this.mainPageController,
+    required this.viewFirstStoryOfPage
   });
 
   @override
@@ -22,6 +27,14 @@ class StoryItems extends StatefulWidget {
 class _StoryItemsState extends State<StoryItems> {
   final PageController _pageController = PageController();
   late int _activeIndex;
+
+  void _viewStory(){
+    final story = widget.stories.elementAt(_activeIndex);
+    if(!story.isViewed){
+      final store = StoreProvider.of<AppState>(context,listen: false);
+      store.dispatch(ViewStoryAction(storyId: story.id));
+    }
+  }
 
   void _next(){
     _activeIndex += 1;
@@ -33,9 +46,15 @@ class _StoryItemsState extends State<StoryItems> {
           if(widget.mainPageController.page == page && mounted){
             Navigator.of(context).pop();
           }
+          else{
+            var page = widget.mainPageController.page?.round();
+            if(page == null) return;
+            widget.viewFirstStoryOfPage(page);
+          }
         });
     }
     else{
+      _viewStory();
       _pageController.jumpToPage(_activeIndex);
     }
   }
@@ -50,9 +69,15 @@ class _StoryItemsState extends State<StoryItems> {
           if(page == widget.mainPageController.page && mounted){
             Navigator.of(context).pop();
           }
+          else{
+            var page = widget.mainPageController.page?.round();
+            if(page == null) return;
+            widget.viewFirstStoryOfPage(page);
+          }
         });
     }
     else{
+      _viewStory();
       _pageController.jumpToPage(_activeIndex);
     }
   }
