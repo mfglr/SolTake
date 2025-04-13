@@ -1,33 +1,34 @@
 import 'package:collection/collection.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:redux/redux.dart';
 
 int _selectCurrentUserId(Store<AppState> store) => store.state.loginState!.id;
 
-Iterable<StoryState> selectHomePageStories(Store<AppState> store) =>
-  groupBy(
-    store.state.stories.where((story) => story.userId != _selectCurrentUserId(store)),
-    (story) => story.userId
-  )
-  .values
-  .map((list) => list.sorted((x,y) => x.id.compareTo(y.id)).last);
-
 Iterable<StoryState> selectCurrentUserStories(Store<AppState> store) =>
-  store.state.stories
+  store.state.stories.values
     .where((story) => story.userId == _selectCurrentUserId(store))
-    .sortedByCompare((story) => story.id, (x,y) => y > x ? 1 : -1);
+    .sorted((x,y) => y.id.compareTo(x.id));
 
-Iterable<Iterable<StoryState>> selectAllStories(Store<AppState> store) =>
-  [
-    selectCurrentUserStories(store),
-    ...
-    groupBy(
-      store.state.stories
-        .where((story) => story.userId != _selectCurrentUserId(store))
-        .sortedByCompare((story) => story.id, (x,y) => y > x ? 1 : -1),
-      (story) => story.userId
-    )
-    .values
-  ];
+Iterable<Iterable<StoryState>> _selectOtherUserStories(Store<AppState> store) =>
+  groupBy(
+    store.state.stories.values
+    .where((story) => story.userId != _selectCurrentUserId(store))
+    .sorted((x,y) => y.id.compareTo(x.id)),
+    (s) => s.userId
+  )
+  .values;
+
+Iterable<StoryCircleState> selectHomePageStories(Store<AppState> store) =>
+  _selectOtherUserStories(store)
+  .map((stories) => StoryState.toStoryCircleState(stories));
+
+Iterable<Iterable<StoryState>> selectAllStories(Store<AppState> store){
+  final currentUserStories = selectCurrentUserStories(store);
+  final otherUserStories = _selectOtherUserStories(store);
+  if(currentUserStories.isNotEmpty) return [ currentUserStories, ...otherUserStories];
+  return otherUserStories;
+}
+  
   

@@ -9,6 +9,7 @@ namespace MySocailApp.Application.Commands.StoryDomain.StoryUserViewAggregate.Vi
         public DateTime CreatedAt { get; private set; } = storyUserView.CreatedAt;
         public int UserId { get; private set; } = storyUserView.UserId;
         public string UserName { get; private set; } = login.UserName;
+        public string? Name { get; private set; } = login.Name;
         public Multimedia? Image { get; private set; } = login.Image;
     }
 }

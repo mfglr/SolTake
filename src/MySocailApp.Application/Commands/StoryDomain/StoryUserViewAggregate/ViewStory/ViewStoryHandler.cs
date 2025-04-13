@@ -18,6 +18,7 @@ namespace MySocailApp.Application.Commands.StoryDomain.StoryUserViewAggregate.Vi
             var login = _accessTokenReader.GetLogin();
             var storyUserView = new StoryUserView(request.StoryId, login.UserId);
             await _storyUserViewCreatorDomainService.CreateAsync(storyUserView, cancellationToken);
+            await _storyUserViewRepository.CreateAsync(storyUserView, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
             return new(storyUserView, login);
         }

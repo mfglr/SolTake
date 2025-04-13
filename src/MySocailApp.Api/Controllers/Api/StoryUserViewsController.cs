@@ -26,7 +26,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _sender.Send(request, cancellationToken);
 
         [HttpGet("{storyId}")]
-        public async Task<List<StoryUserViewResponseDto>> GetStorUserViewsByStoryId(int storyId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+        public async Task<List<StoryUserViewResponseDto>> GetStoryUserViewsByStoryId(int storyId, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetStoryUserViewsByStoryIdDto(storyId,offset,take,isDescending), cancellationToken);
     }
 }

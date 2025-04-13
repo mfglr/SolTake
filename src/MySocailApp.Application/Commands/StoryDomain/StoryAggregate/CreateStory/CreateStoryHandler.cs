@@ -22,7 +22,7 @@ namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStor
             IEnumerable<Multimedia> medias = [];
             try
             {
-                medias = await _multimediaService.UploadAsync(ContainerName.StoryMedias, request.Medias, cancellationToken);
+                medias = await _multimediaService.UploadAsync(ContainerName.StoryMedias, request.Medias.Reverse(), cancellationToken);
                 List<Story> stories = [];
                 foreach (var media in medias)
                 {

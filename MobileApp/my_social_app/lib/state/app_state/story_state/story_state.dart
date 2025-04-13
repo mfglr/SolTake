@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_user_view_state.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -24,5 +25,29 @@ class StoryState extends BaseEntity<int>{
     required this.media,
     required this.viwes
   });
+  
+  // static int _compareTo(StoryState x, StoryState y) => !x.isViewed && y.isViewed ? 1 : x.id > y.id ? 1 : -1;
+  // static int compareToList(Iterable<StoryState> x, Iterable<StoryState> y)
+  //   => _compareTo(x.sorted((a,b) => _compareTo(a, b)).last, y.sorted((a,b) => _compareTo(a, b)).last);
 
+  static bool _isAllViewed(Iterable<StoryState> stories) => !stories.any((story) => !story.isViewed);
+  static StoryCircleState toStoryCircleState(Iterable<StoryState> stories) =>
+    StoryCircleState(
+      userId: stories.first.userId,
+      image: stories.first.image,
+      isViewed: _isAllViewed(stories),
+      userName: stories.first.userName
+    );
+
+  StoryState view(StoryUserViewState storyUserView) =>
+    StoryState(
+      id: id,
+      createdAt: createdAt,
+      isViewed: true,
+      userId: userId,
+      userName: userName,
+      image: image,
+      media: media,
+      viwes: viwes.prependOne(storyUserView)
+    );
 }

@@ -39,7 +39,7 @@ class _StoryImageItemState extends State<StoryImageItem> {
   late final Uint8List _image;
   late final String url;
   late final StoppableTimer _timer;
-  final int _interval = 1;
+  final int _interval = 34;
   double _rate = 0;
   
   @override

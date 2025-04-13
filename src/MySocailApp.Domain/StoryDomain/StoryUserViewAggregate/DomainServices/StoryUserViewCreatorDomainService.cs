@@ -20,7 +20,7 @@ namespace MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.DomainServices
             if (await _storyUserViewRepository.ExistAsync(storyUserView.StoryId, storyUserView.UserId, cancellationToken))
                 throw new StoryUserViewAlreadyExistException();
 
-            story.Create();
+            storyUserView.Create();
         }
     }
 }

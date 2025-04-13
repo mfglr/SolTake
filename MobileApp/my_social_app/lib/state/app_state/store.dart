@@ -41,7 +41,7 @@ final store = Store(
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
 
-    stories: const Iterable.empty(),
+    stories: EntityState(),
 
     userEntityState: EntityState(),
     userMessageState: EntityState(),
@@ -127,6 +127,7 @@ final store = Store(
     //story
     createStoryMiddleware,
     getStoriesMiddleware,
+    viewStoryMiddleware,
     //story
 
     //message connection

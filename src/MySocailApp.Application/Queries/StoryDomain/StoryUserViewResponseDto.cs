@@ -2,5 +2,5 @@
 
 namespace MySocailApp.Application.Queries.StoryDomain
 {
-    public record StoryUserViewResponseDto(int Id, DateTime CreatedAt, int UserId, string UserName, Multimedia? Image);
+    public record StoryUserViewResponseDto(int Id, DateTime CreatedAt, int UserId, string UserName, string? Name, Multimedia? Image);
 }

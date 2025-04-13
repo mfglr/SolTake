@@ -125,7 +125,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
                 }
             );
 
-        public Task<List<Multimedia>> UploadAsync(string containerName, IFormFileCollection files, CancellationToken cancellationToken) =>
+        public Task<List<Multimedia>> UploadAsync(string containerName, IEnumerable<IFormFile> files, CancellationToken cancellationToken) =>
             _tempDirectoryService.CreateTransactionAsync(
                 async () =>
                 {

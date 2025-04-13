@@ -12,4 +12,7 @@ class StoryUserViewState extends UserItem{
     required super.image,
     required this.createdAt
   });
+
+  
+
 }

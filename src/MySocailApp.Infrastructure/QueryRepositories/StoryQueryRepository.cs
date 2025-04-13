@@ -31,6 +31,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                             _context.Follows.Any(follow => follow.FollowerId == userId && follow.FollowedId == story.UserId)
                         )
                 )
+                .OrderByDescending(x => x.Id)
                 .ToStoryResponseSto(forUserId, _context)
                 .ToListAsync(cancellationToken);
     }

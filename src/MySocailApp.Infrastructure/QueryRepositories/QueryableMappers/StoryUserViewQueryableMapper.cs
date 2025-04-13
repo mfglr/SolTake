@@ -17,6 +17,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         story.CreatedAt,
                         story.UserId,
                         user.UserName.Value,
+                        user.Name,
                         user.Image
                     )
                 );

@@ -38,7 +38,7 @@ class AppState{
   final Pagination<int,SolutionUserSaveState> solutionUserSaves;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
 
-  final Iterable<StoryState> stories;
+  final EntityState<int,StoryState> stories;
   
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
@@ -103,7 +103,7 @@ class AppState{
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
 
-    stories: const Iterable.empty(),
+    stories: EntityState(),
 
     userEntityState: EntityState(),
     userMessageState: EntityState(),

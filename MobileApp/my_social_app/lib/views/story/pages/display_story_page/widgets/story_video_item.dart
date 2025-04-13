@@ -30,13 +30,15 @@ class StoryVideoItem extends StatefulWidget {
 class _StoryVideoItemState extends State<StoryVideoItem> {
   double _rate = 0;
   late final VideoPlayerController _controller;
+  bool _nextFlag = true;
 
   void _setRate() =>
-    setState(() => _rate =_controller.value.position.inSeconds / _controller.value.duration.inSeconds);
+    setState(() => _rate =_controller.value.position.inMilliseconds / _controller.value.duration.inMilliseconds);
 
   void _onDone(){
-    if(_controller.value.isCompleted){
+    if(_nextFlag && _controller.value.isCompleted){
       widget.next();
+      _nextFlag = false;
     }
   }
 
