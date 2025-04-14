@@ -33,11 +33,16 @@ class _SelectedAssetWidgetState extends State<SelectedAssetWidget> {
       badgeStyle: const badges.BadgeStyle(
         badgeColor: Colors.white,
       ),
-      badgeContent: GestureDetector(
-        onTap: () => widget.removeSelectedAsset(widget.asset),
-        child: const Icon(
+      badgeContent: IconButton(
+        onPressed: () => widget.removeSelectedAsset(widget.asset),
+        style: ButtonStyle(
+          padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
+          minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        icon: const Icon(
           Icons.close,
-          size: 13,
+          size: 15,
         ),
       ),
       child: SizedBox(

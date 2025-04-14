@@ -1,0 +1,2 @@
+C:/Users/MFGGL/source/repos/MySocialApp/MobileApp/my_social_app/android/app/.cxx/RelWithDebInfo/e2e2w6m3/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/MFGGL/source/repos/MySocialApp/MobileApp/my_social_app/android/app/.cxx/RelWithDebInfo/e2e2w6m3/armeabi-v7a/CMakeFiles/rebuild_cache.dir
