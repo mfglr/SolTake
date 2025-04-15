@@ -30,6 +30,7 @@ using MySocailApp.Infrastructure.StoryDomain;
 using MySocailApp.Infrastructure.SubjectAggregate;
 using MySocailApp.Infrastructure.TopicAggregate;
 using MySocailApp.Infrastructure.UserDomain;
+using MySocailApp.Infrastructure.UserDomain.UserUserBlockeAggregate;
 using System.Net;
 using System.Net.Mail;
 
@@ -53,7 +54,8 @@ namespace MySocailApp.Infrastructure
                 .AddNotificationAggregate()
                 .AddRoleAggregate()
                 .AddNotificationConnectionAggregate()
-                .AddStoryDomainInfrastructureServices();
+                .AddStoryDomainInfrastructureServices()
+                .AddUserUserBlockAggregateInfrastructureServices();
 
         private static IServiceCollection AddServices(this IServiceCollection services)
             => services

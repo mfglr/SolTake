@@ -26,6 +26,7 @@ using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate;
 using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
 using MySocailApp.Domain.UserDomain.TermsOfUseAggregate;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Entities;
 using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
 using System.Reflection;
 
@@ -40,6 +41,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<Follow> Follows { get; private set; }
         public DbSet<UserUserSearch> UserUserSearchs { get; private set; }
         public DbSet<Role> Roles { get; private set; }
+        public DbSet<UserUserBlock> UserUserBlocks { get; private set; }
 
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }

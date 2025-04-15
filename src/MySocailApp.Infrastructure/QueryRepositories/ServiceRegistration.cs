@@ -24,6 +24,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AddScoped<INotificationQueryRepository, NotificationQueryRepository>()
                 .AddScoped<IMessageConnectionQueryRepository, MessageConnectionQueryRepository>()
                 .AddScoped<IStoryQueryRepository, StoryQueryRepository>()
-                .AddScoped<IStoryUserViewQueryRepository,StoryUserViewQueryRepository>();
+                .AddScoped<IStoryUserViewQueryRepository,StoryUserViewQueryRepository>()
+                .AddScoped<IUserUserBlockQueryRepository,UserUserBlockQueryRepository>();
     }
 }
