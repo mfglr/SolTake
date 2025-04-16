@@ -13,6 +13,7 @@ import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
+import 'package:my_social_app/views/user/pages/user_page/widgets/user_popup_menu/user_popup_menu.dart';
 import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -159,6 +160,9 @@ class _UserPageState extends State<UserPage> {
           appBar: AppBar(
             title: AppTitle(title: user.userName),
             leading: const AppBackButtonWidget(),
+            actions: const [
+              UserPopupMenu(),
+            ],
           ),
           body: Column(
             children: [

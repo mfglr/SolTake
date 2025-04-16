@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/search_users_state/search_user_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class SearchUserWidget extends StatelessWidget {
   final SearchUserState searchUser;

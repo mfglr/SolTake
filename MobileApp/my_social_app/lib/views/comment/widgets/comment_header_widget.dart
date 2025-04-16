@@ -10,7 +10,7 @@ import 'package:my_social_app/views/comment/widgets/buttons/reply_comment_button
 import 'package:my_social_app/views/comment/widgets/comment_popup_menu.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class CommentHeaderWidget extends StatelessWidget {
   final CommentState comment;

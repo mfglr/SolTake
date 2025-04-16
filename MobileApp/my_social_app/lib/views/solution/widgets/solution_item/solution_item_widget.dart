@@ -14,7 +14,7 @@ import 'package:my_social_app/views/solution/widgets/solution_item/solution_comm
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class SolutionItemWidget extends StatelessWidget {
   final SolutionState solution;

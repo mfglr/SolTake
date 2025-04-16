@@ -13,7 +13,7 @@ import 'package:my_social_app/views/question/widgets/question_video_page_slider/
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/widgets/solution_button.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class QuestionVideoPageSlider extends StatefulWidget {
   final Iterable<QuestionState> questions;

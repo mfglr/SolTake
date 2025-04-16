@@ -29,7 +29,6 @@ class LoginState{
     required this.accountDeletionStart
   });
   
-
   factory LoginState.fromJson(Map<String, dynamic> json) => _$LoginStateFromJson(json);
   Map<String, dynamic> toJson() => _$LoginStateToJson(this);
 

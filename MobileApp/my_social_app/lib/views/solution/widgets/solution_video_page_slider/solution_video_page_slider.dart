@@ -10,7 +10,7 @@ import 'package:my_social_app/views/solution/widgets/solution_item/solution_stat
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/solution_comment_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/upvote_button.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class SolutionVideoPageSlider extends StatefulWidget {
   final Iterable<SolutionState> solutions;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/views/shared/user_item/user_item_widget.dart';
 import 'package:my_social_app/views/shared/app_column.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class FollowsWidget extends StatelessWidget {
   final Iterable<FollowState> follows;

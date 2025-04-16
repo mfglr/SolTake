@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 import 'user_followed_notification_item_texts.dart';
 
 class UserFollowedNotificationItem extends StatelessWidget {

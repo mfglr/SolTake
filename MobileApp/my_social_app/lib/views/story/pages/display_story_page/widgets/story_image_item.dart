@@ -9,7 +9,7 @@ import 'package:my_social_app/views/story/pages/display_story_page/widgets/creat
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_delete_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_loading_line.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_user_header.dart';
-import 'package:my_social_app/views/user/pages/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class StoryImageItem extends StatefulWidget {
   final StoryState story;
