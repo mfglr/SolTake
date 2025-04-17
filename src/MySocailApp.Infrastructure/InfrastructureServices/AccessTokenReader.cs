@@ -72,5 +72,13 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
 
             return new(userId, userName, name, media);
         }
+
+        public string? GetLanguage()
+        {
+            var context = _contextAccessor.HttpContext;
+            if (context == null) return null;
+
+            return context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Picture)?.Value;
+        }
     }
 }

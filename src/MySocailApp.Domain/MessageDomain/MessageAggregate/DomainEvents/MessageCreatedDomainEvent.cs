@@ -3,5 +3,5 @@ using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 
 namespace MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents
 {
-    public record MessageCreatedDomainEvent(Message Message, string UserName, Multimedia? Image) : IDomainEvent;
+    public record MessageCreatedDomainEvent(Message Message, Login Login) : IDomainEvent;
 }

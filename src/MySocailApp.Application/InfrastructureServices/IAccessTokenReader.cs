@@ -10,6 +10,8 @@ namespace MySocailApp.Application.InfrastructureServices
         string? NickName();
         Multimedia? GetMedia();
 
+        string? GetLanguage();
+
         Login GetLogin();
 
     }

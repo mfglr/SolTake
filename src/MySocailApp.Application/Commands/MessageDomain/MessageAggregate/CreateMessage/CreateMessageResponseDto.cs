@@ -6,13 +6,13 @@ using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
 {
-    public class CreateMessageResponseDto(Message message, User user)
+    public class CreateMessageResponseDto(Message message, Login login)
     {
         public int Id { get; private set; } = message.Id;
         public DateTime CreatedAt { get; private set; } = message.CreatedAt;
         public DateTime? UpdatedAt { get; private set; } = message.UpdatedAt;
         public bool IsOwner { get; private set; } = true;
-        public string UserName { get; private set; } = user.UserName.Value;
+        public string UserName { get; private set; } = login.UserName;
         public int ConversationId { get; private set; } = message.ReceiverId;
         public int SenderId { get; private set; } = message.SenderId;
         public int ReceiverId { get; private set; } = message.ReceiverId;
@@ -20,6 +20,6 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.Create
         public string? Content { get; private set; } = message.Content?.Value;
         public MessageState State { get; private set; } = MessageState.Created;
         public IEnumerable<Multimedia> Medias { get; private set; } = message.Medias;
-        public Multimedia? Image { get; private set; } = user.Image;
+        public Multimedia? Image { get; private set; } = login.Image;
     }
 }

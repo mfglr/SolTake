@@ -27,7 +27,7 @@ namespace MySocailApp.Application.Queries.MessageDomain
                     @event.Message.CreatedAt,
                     @event.Message.UpdatedAt,
                     false,
-                    @event.UserName,
+                    @event.Login.UserName,
                     @event.Message.SenderId,
                     @event.Message.SenderId,
                     @event.Message.ReceiverId,
@@ -35,7 +35,7 @@ namespace MySocailApp.Application.Queries.MessageDomain
                     @event.Message.Content?.Value,
                     MessageState.Created,
                     @event.Message.Medias,
-                    @event.Image
+                    @event.Login.Image
                 );
 
     }

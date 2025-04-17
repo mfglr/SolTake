@@ -23,7 +23,6 @@ builder.Services.AddControllersWithViews();
 builder.Services
     .AddSignalR(
         opt => {
-            //opt.AddFilter<VersionHubFilter>();
             opt.AddFilter<UserHubFilter>();
             opt.AddFilter<PrivacyPolicyApprovalHubFilter>();
             opt.AddFilter<TermsOfUseApprovalHubFilter>();

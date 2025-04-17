@@ -34,10 +34,10 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
             Content = content;
             _medias.AddRange(medias ?? []);
         }
-        public void Create(string userName, Multimedia? image)
+        internal void Create(Login login)
         {
             CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new MessageCreatedDomainEvent(this, userName, image));
+            AddDomainEvent(new MessageCreatedDomainEvent(this, login));
         }
 
         public IEnumerable<int> UserIds => [ SenderId, ReceiverId ];

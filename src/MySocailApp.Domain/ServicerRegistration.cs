@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Domain.AppVersionAggregate;
 using MySocailApp.Domain.CommentDomain.CommentAggregate;
+using MySocailApp.Domain.MessageDomain.MessageAggregate;
 using MySocailApp.Domain.QuestionDomain;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate;
 using MySocailApp.Domain.StoryDomain;
@@ -17,6 +18,7 @@ namespace MySocailApp.Domain
                 .AddQuestionDomain()
                 .AddSolutionDomainServices()
                 .AddUserDomain()
-                .AddStoryDomainServices();
+                .AddStoryDomainServices()
+                .AddMessageDomainServices();
     }
 }
