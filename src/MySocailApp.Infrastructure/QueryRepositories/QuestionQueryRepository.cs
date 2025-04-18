@@ -31,35 +31,88 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToListAsync(cancellationToken);
 
         public Task<QuestionResponseDto?> GetQuestionByIdAsync(int id, int accountId, CancellationToken cancellationToken)
-            => GetFirstAsync(accountId, x => x.Id == id, cancellationToken);
+            => GetFirstAsync(
+                accountId,
+                question => 
+                    question.Id == id &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
+                cancellationToken
+            );
 
         public Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int? accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.UserId != accountId, cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                question => 
+                    question.UserId != accountId &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetUserQuestionsAsync(int userId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.UserId == userId, cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                question => 
+                    question.UserId == userId &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetTopicQuestionsAsync(int topicId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Topic.Id == topicId && x.UserId != accountId, cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                question => 
+                    question.Topic.Id == topicId &&
+                    question.UserId != accountId &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Subject.Id == subjectId && x.UserId != accountId, cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                question => 
+                    question.Subject.Id == subjectId &&
+                    question.UserId != accountId &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.Exam.Id == examId && x.UserId != accountId, cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                question => 
+                    question.Exam.Id == examId &&
+                    question.UserId != accountId &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
+                cancellationToken
+            );
 
         public Task<List<QuestionResponseDto>> GetVideoQuestionsAsync(int? accountId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(accountId, page, x => x.UserId != accountId && x.Medias.Any(x => x.MultimediaType == MultimediaType.Video), cancellationToken);
+            => GetListAsync(
+                accountId,
+                page,
+                question => 
+                    question.UserId != accountId &&
+                    question.Medias.Any(x => x.MultimediaType == MultimediaType.Video) &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
+                cancellationToken
+            );
 
         public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int accountId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
             => GetListAsync(
                 accountId,
                 page,
-                x =>
-                    (examId == null || x.Exam.Id == examId) &&
-                    (subjectId == null || x.Subject.Id == subjectId) &&
-                    (topicId == null || x.Topic.Id == topicId) &&
-                    x.UserId != accountId,
+                question =>
+                    (examId == null || question.Exam.Id == examId) &&
+                    (subjectId == null || question.Subject.Id == subjectId) &&
+                    (topicId == null || question.Topic.Id == topicId) &&
+                    question.UserId != accountId &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
                 cancellationToken
             );
 
@@ -67,9 +120,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => GetListAsync(
                 accountId,
                 page,
-                q => 
-                    q.UserId == userId && 
-                    _context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
+                question =>
+                    question.UserId == userId && 
+                    _context.Solutions.Any(s => s.QuestionId == question.Id && s.State == SolutionState.Correct) &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
                 cancellationToken
             );
         
@@ -77,8 +131,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => GetListAsync(
                 accountId,
                 page,
-                q => q.UserId == userId &&
-                !_context.Solutions.Any(s => s.QuestionId == q.Id && s.State == SolutionState.Correct),
+                question => 
+                    question.UserId == userId &&
+                    !_context.Solutions.Any(s => s.QuestionId == question.Id && s.State == SolutionState.Correct) &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == question.UserId && uub.BlockedId == accountId),
                 cancellationToken
             );
     }

@@ -4,7 +4,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.DomainEvents;
+using MySocailApp.Domain.QuestionUserLikeAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionLikedDomainEventConumers.NotificationAggregate
 {

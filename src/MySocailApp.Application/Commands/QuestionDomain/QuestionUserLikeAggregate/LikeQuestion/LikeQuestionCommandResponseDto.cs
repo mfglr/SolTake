@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
+using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
 {

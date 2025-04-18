@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
+using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
 {

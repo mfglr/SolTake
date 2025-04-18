@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Exceptions
+namespace MySocailApp.Domain.QuestionUserLikeAggregate.Exceptions
 {
     public class QuestionAlreadyLikedException : AppException
     {

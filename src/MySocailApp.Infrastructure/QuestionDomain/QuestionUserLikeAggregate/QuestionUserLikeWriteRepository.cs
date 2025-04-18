@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
+using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
+using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate

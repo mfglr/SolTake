@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts;
+using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.QuestionUserLikeAggregate

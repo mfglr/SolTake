@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.QuestionDomain;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Entities;
+using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

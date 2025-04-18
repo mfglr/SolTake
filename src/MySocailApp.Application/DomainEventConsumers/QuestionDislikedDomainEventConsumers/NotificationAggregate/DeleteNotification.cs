@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.DomainEvents;
+using MySocailApp.Domain.QuestionUserLikeAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionDislikedDomainEventConsumers.NotificationAggregate
 {

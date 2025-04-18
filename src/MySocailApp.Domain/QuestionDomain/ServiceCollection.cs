@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Domain.QuestionDomain.QuestionAggregate;
-using MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate;
+using MySocailApp.Domain.QuestionUserLikeAggregate;
 
 namespace MySocailApp.Domain.QuestionDomain
 {

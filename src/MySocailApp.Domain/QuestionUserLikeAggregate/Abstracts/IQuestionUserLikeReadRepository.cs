@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.QuestionDomain.QuestionUserLikeAggregate.Abstracts
+﻿namespace MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts
 {
     public interface IQuestionUserLikeReadRepository
     {
