@@ -29,7 +29,11 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public async Task<List<CommentResponseDto>> GetCommentsByQuestionIdAsync(int accountId, IPage page, int questionId, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .Where(x => x.QuestionId == questionId)
+                .Where(
+                    comment =>
+                        comment.QuestionId == questionId &&
+                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == comment.UserId && uub.BlockedId == accountId)
+                )
                 .ToPage(page)
                 .ToCommentResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
@@ -37,7 +41,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<List<CommentResponseDto>> GetCommentsByParentIdAsync(int accountId, IPage page, int parentId, CancellationToken cancellationToken)
             => _context.Comments
                 .AsNoTracking()
-                .Where(x => x.ParentId == parentId)
+                .Where(
+                    comment => comment.ParentId == parentId &&
+                    !_context.UserUserBlocks.Any(uub => uub.BlockerId == comment.UserId && uub.BlockedId == accountId)
+                )
                 .ToPage(page)
                 .ToCommentResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);
@@ -45,7 +52,11 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public async Task<List<CommentResponseDto>> GetCommentsBySolutionIdAsync(int accountId, IPage page, int solutionId, CancellationToken cancellationToken)
             => await _context.Comments
                 .AsNoTracking()
-                .Where(x => x.SolutionId == solutionId)
+                .Where(
+                    comment => 
+                        comment.SolutionId == solutionId && 
+                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == comment.UserId && uub.BlockedId == accountId)
+                )
                 .ToPage(page)
                 .ToCommentResponseDto(_context, accountId)
                 .ToListAsync(cancellationToken);

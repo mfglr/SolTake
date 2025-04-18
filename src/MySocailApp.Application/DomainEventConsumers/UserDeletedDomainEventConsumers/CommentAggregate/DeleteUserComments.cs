@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainEvents;
+using MySocailApp.Domain.CommentAggregate.Abstracts;
+using MySocailApp.Domain.CommentAggregate.DomainEvents;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.CommentAggregate

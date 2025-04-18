@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
+using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.CommentAggregate

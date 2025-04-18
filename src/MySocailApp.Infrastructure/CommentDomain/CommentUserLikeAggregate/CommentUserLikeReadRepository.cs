@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Abstracts;
+using MySocailApp.Domain.CommentUserLikeAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.CommentDomain.CommentUserLikeAggregate

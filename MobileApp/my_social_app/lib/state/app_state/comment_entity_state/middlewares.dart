@@ -28,7 +28,6 @@ void createCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentAction){
     if(store.state.commentEntityState.getValue(action.commentId) == null){
@@ -60,6 +59,7 @@ void getNextPageCommentLikesMiddleware(Store<AppState> store,action,NextDispatch
   }
   next(action);
 }
+
 void likeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LikeCommentAction){
     final user = store.state.currentUser!;

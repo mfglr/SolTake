@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentAggregate.Abstracts;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.CommentDomain.CommentAggregate

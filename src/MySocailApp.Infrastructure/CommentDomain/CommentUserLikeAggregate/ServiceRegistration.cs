@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Abstracts;
+using MySocailApp.Domain.CommentUserLikeAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.CommentDomain.CommentUserLikeAggregate
 {

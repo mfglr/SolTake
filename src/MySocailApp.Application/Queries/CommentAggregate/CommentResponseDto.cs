@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Queries.CommentAggregate

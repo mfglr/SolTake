@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Abstracts;
-using MySocailApp.Domain.CommentDomain.CommentUserLikeAggregate.Exceptions;
+using MySocailApp.Domain.CommentUserLikeAggregate.Abstracts;
+using MySocailApp.Domain.CommentUserLikeAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.DeleteCommentUserLike
 {

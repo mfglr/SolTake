@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.Queries.CommentAggregate;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.Abstracts;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.DomainServices;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.Entities;
-using MySocailApp.Domain.CommentDomain.CommentAggregate.ValueObjects;
+using MySocailApp.Domain.CommentAggregate.Abstracts;
+using MySocailApp.Domain.CommentAggregate.DomainServices;
+using MySocailApp.Domain.CommentAggregate.Entities;
+using MySocailApp.Domain.CommentAggregate.ValueObjects;
 using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.CommentDomain.CommentAggregate.CreateComment
