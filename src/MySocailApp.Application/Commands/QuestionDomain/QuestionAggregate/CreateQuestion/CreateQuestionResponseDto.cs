@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
-using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion
 {

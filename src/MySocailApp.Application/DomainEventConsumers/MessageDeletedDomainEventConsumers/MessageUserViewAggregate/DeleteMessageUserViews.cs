@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageUserViewAggregate.Abstracts;
+using MySocailApp.Domain.MessageUserViewAggregate.Abstracts;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageUserViewAggregate
 {

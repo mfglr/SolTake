@@ -8,7 +8,7 @@ using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainServices;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
 {

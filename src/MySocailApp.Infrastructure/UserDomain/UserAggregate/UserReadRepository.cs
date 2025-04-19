@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
-using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.UserAggregate

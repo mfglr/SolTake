@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Abstracts;
+using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.UserUserBlockeAggregate
 {

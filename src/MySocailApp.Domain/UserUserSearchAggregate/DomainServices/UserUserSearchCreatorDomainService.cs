@@ -1,5 +1,5 @@
-﻿using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Abstracts;
+﻿using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
 using MySocailApp.Domain.UserUserSearchAggregate.Entities;
 using MySocailApp.Domain.UserUserSearchAggregate.Exceptions;

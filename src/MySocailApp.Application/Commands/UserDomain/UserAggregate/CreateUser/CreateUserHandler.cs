@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Http;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate;
 using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserAggregate.DomainServices;
-using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
-using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;
-using MySocailApp.Domain.UserDomain.UserAggregate.ValueObjects;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.DomainServices;
+using MySocailApp.Domain.UserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.CreateUser
 {

@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.UserDomain.SearchUsers;
-using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {

@@ -2,8 +2,8 @@
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.Queries.MessageDomain;
 using MySocailApp.Core;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
+using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
+using MySocailApp.Domain.MessageConnectionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageConnectionStateChangedDomainEventConsumers.MessageConnectionAggregate
 {

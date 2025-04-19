@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Entities;
+using MySocailApp.Domain.UserUserBlockAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

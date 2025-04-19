@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.UserDomain.FollowAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.FollowAggregate.Entities;
+using MySocailApp.Domain.FollowAggregate.Abstracts;
+using MySocailApp.Domain.FollowAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.FollowAggregate

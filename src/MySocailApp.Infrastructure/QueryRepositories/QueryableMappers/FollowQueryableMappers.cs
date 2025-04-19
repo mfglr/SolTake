@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
 using MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId;
-using MySocailApp.Domain.UserDomain.FollowAggregate.Entities;
+using MySocailApp.Domain.FollowAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

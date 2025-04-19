@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
+using MySocailApp.Domain.MessageConnectionAggregate.DomainEvents;
+using MySocailApp.Domain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.MessageDomain
 {

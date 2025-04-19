@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageDomain.MessageUserReceiveAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageUserReceiveAggregate.Entities;
+using MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts;
+using MySocailApp.Domain.MessageUserReceiveAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived
 {

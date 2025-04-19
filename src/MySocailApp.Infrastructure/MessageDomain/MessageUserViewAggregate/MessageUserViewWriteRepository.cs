@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.MessageDomain.MessageUserViewAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageUserViewAggregate.Entities;
+using MySocailApp.Domain.MessageUserViewAggregate.Abstracts;
+using MySocailApp.Domain.MessageUserViewAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.MessageDomain.MessageUserViewAggregate

@@ -5,7 +5,7 @@ using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.DomainServices;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.CommentDomain.CommentAggregate.CreateComment
 {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserDomain.FollowAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.FollowAggregate.DomainServices;
+using MySocailApp.Domain.FollowAggregate.Abstracts;
+using MySocailApp.Domain.FollowAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Follow
 {
@@ -15,7 +15,7 @@ namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Follow
         public async Task<FollowCommandResponseDto> Handle(FollowDto request, CancellationToken cancellationToken)
         {
             var login = _accessTokenReader.GetLogin();
-            var follow = new Domain.UserDomain.FollowAggregate.Entities.Follow(login.UserId, request.FollowedId);
+            var follow = new Domain.FollowAggregate.Entities.Follow(login.UserId, request.FollowedId);
             await _userFollowerDomainService.Follow(follow, login, cancellationToken);
             await _followWriteRepository.CreateAsync(follow, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);

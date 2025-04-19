@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
+using MySocailApp.Domain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.DeleteUser
 {

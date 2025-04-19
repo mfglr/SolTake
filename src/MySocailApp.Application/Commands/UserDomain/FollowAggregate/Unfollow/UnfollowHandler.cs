@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserDomain.FollowAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.FollowAggregate.Exceptions;
+using MySocailApp.Domain.FollowAggregate.Abstracts;
+using MySocailApp.Domain.FollowAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Unfollow
 {

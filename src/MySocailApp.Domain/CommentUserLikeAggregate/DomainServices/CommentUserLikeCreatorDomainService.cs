@@ -3,7 +3,7 @@ using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.CommentUserLikeAggregate.Entities;
 using MySocailApp.Domain.CommentUserLikeAggregate.Exceptions;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Abstracts;
+using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Domain.CommentUserLikeAggregate.DomainServices
 {

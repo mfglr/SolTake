@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Exceptions;
+using MySocailApp.Domain.UserUserBlockAggregate.Exceptions;
+using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Delete
 {

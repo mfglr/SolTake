@@ -3,8 +3,8 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.DomainEvents;
+using MySocailApp.Domain.MessageUserRemoveAggregate.Abstracts;
+using MySocailApp.Domain.MessageUserRemoveAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageUserRemoveCreatedDomainEventConsumers.MessageAggregate
 {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Exceptions;
+using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
+using MySocailApp.Domain.MessageConnectionAggregate.DomainEvents;
+using MySocailApp.Domain.MessageConnectionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToFocused
 {

@@ -2,7 +2,7 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.DomainEvents;
+using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.QuestionUserLikeAggregate
 {

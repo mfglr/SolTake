@@ -2,7 +2,7 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
-using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
 {

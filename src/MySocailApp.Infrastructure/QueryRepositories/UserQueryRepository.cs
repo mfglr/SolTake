@@ -3,7 +3,7 @@ using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Application.Queries.UserDomain.SearchUsers;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
-using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
+using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;

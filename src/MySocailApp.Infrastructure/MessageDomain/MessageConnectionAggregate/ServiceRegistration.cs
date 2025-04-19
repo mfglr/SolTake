@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
+using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate;
 
 namespace MySocailApp.Infrastructure.MessageDomain.MessageConnectionAggregate

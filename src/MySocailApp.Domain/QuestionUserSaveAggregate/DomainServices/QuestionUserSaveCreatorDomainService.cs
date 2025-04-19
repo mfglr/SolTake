@@ -3,7 +3,7 @@ using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
 using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Exceptions;
 using MySocailApp.Domain.QuestionUserSaveAggregate.Exceptions;
-using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Abstracts;
+using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Domain.QuestionUserSaveAggregate.DomainServices
 {

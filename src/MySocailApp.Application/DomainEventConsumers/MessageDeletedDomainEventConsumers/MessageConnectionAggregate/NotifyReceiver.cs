@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Core;
+using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
+using MySocailApp.Domain.MessageConnectionAggregate.ValueObjects;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageConnectionAggregate
 {

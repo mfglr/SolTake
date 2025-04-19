@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.MessageDomain;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Entities;
+using MySocailApp.Domain.MessageConnectionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

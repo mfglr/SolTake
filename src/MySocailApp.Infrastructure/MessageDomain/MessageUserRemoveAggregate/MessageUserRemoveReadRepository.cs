@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.MessageDomain.MessageUserRemoveAggregate.Abstracts;
+using MySocailApp.Domain.MessageUserRemoveAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate

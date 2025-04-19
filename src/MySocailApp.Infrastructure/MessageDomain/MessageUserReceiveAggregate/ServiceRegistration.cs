@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.MessageDomain.MessageUserReceiveAggregate.Abstracts;
+using MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.MessageDomain.MessageUserReceiveAggregate
 {

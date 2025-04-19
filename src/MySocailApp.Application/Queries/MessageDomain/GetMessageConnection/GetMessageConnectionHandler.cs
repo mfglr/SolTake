@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Exceptions;
+using MySocailApp.Domain.MessageConnectionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.MessageDomain.GetMessageConnection
 {
@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Queries.MessageDomain.GetMessageConnection
 
         public async Task<MessageConnectionResponseDto> Handle(GetMessageConnectionDto request, CancellationToken cancellationToken)
         {
-            var connection = 
+            var connection =
                 await _messageConnectionQueryRepository.GetById(request.Id, cancellationToken) ?? 
                 throw new MessageConnectionNotFoundException();
 

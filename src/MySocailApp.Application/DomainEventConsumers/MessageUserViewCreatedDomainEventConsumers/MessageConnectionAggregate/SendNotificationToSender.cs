@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Core;
+using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
+using MySocailApp.Domain.MessageConnectionAggregate.ValueObjects;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageConnectionAggregate.ValueObjects;
-using MySocailApp.Domain.MessageDomain.MessageUserViewAggregate.DomainEvents;
+using MySocailApp.Domain.MessageUserViewAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageUserViewCreatedDomainEventConsumers.MessageConnectionAggregate
 {

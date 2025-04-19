@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.MessageDomain.MessageUserReceiveAggregate.Abstracts;
+using MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.MessageDomain.MessageUserReceiveAggregate

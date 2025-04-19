@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
-using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Queries.UserAggregate.IsUserNameExist
 {
