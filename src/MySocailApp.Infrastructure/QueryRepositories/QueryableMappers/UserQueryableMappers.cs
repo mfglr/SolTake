@@ -17,10 +17,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         user.Name,
                         user.Biography.Value,
                         context.Questions.Count(question => question.UserId == user.Id),
-                        context.Follows.Count(follow => follow.FollowedId == user.Id),
-                        context.Follows.Count(follow => follow.FollowerId == user.Id),
-                        context.Follows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == forUserId),
-                        context.Follows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id),
+                        context.UserUserFollows.Count(follow => follow.FollowedId == user.Id),
+                        context.UserUserFollows.Count(follow => follow.FollowerId == user.Id),
+                        context.UserUserFollows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == forUserId),
+                        context.UserUserFollows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id),
                         user.Image
                     )
                 );

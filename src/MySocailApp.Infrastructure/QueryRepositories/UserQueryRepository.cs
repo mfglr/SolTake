@@ -7,7 +7,6 @@ using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
-using OpenCvSharp;
 using System.Linq.Expressions;
 
 namespace MySocailApp.Infrastructure.QueryRepositories
@@ -63,7 +62,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 user =>
                     (
                         _context.UserUserSearchs.Any(userSearch => userSearch.SearcherId == forUserId && userSearch.SearchedId == user.Id) ||
-                        _context.Follows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id)
+                        _context.UserUserFollows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id)
                     ) &&
                     user.Id != forUserId,
                 cancellationToken

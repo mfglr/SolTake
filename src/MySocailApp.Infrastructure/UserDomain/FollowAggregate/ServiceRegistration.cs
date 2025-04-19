@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.FollowAggregate.Abstracts;
+using MySocailApp.Domain.UserUserFollowAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.FollowAggregate
 {
@@ -7,7 +7,7 @@ namespace MySocailApp.Infrastructure.UserDomain.FollowAggregate
     {
         public static IServiceCollection AddFollowAggregate(this IServiceCollection services)
             => services
-                .AddScoped<IFollowWriteRepository, FollowWriteRepository>()
-                .AddScoped<IFollowReadRepository, FollowReadRepository>();
+                .AddScoped<IUserUserFollowWriteRepository, FollowWriteRepository>()
+                .AddScoped<IUserUserFollowReadRepository, FollowReadRepository>();
     }
 }

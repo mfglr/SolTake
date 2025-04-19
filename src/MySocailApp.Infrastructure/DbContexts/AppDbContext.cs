@@ -4,7 +4,6 @@ using MySocailApp.Domain.AppVersionAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentUserLikeAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
-using MySocailApp.Domain.FollowAggregate.Entities;
 using MySocailApp.Domain.MessageConnectionAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageUserReceiveAggregate.Entities;
@@ -27,6 +26,7 @@ using MySocailApp.Domain.TermsOfUseAggregate;
 using MySocailApp.Domain.TopicAggregate.Entities;
 using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Domain.UserUserBlockAggregate.Entities;
+using MySocailApp.Domain.UserUserFollowAggregate.Entities;
 using MySocailApp.Domain.UserUserSearchAggregate.Entities;
 using System.Reflection;
 
@@ -38,7 +38,7 @@ namespace MySocailApp.Infrastructure.DbContexts
         public DbSet<TermsOfUse> TermsOfUses { get; private set; }
 
         public DbSet<User> Users { get; private set; }
-        public DbSet<Follow> Follows { get; private set; }
+        public DbSet<UserUserFollow> UserUserFollows { get; private set; }
         public DbSet<UserUserSearch> UserUserSearchs { get; private set; }
         public DbSet<Role> Roles { get; private set; }
         public DbSet<UserUserBlock> UserUserBlocks { get; private set; }

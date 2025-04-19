@@ -1,20 +1,20 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.FollowAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserFollowedDomainEventConsumers.NotificationAggregate
 {
-    public class CreateUserFollowedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<UserFollowedDomainEvent>
+    public class CreateUserFollowedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<UserUserFollowCreatedDomainEvent>
     {
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IPublisher _publisher = publisher;
 
-        public async Task Handle(UserFollowedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(UserUserFollowCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
             var n = Notification.UserFollowedNotification(
                 notification.User.Id,

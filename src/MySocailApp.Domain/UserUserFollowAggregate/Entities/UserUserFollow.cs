@@ -1,16 +1,16 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.FollowAggregate.DomainEvents;
+using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
 using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Domain.FollowAggregate.Entities
+namespace MySocailApp.Domain.UserUserFollowAggregate.Entities
 {
-    public class Follow : Entity, IAggregateRoot
+    public class UserUserFollow : Entity, IAggregateRoot
     {
         public int FollowerId { get; private set; }
         public int FollowedId { get; private set; }
 
-        public Follow(int followerId, int followedId)
+        public UserUserFollow(int followerId, int followedId)
         {
             if (followerId == followedId)
                 throw new PermissionDeniedToFollowYourselfException();
@@ -22,7 +22,7 @@ namespace MySocailApp.Domain.FollowAggregate.Entities
         internal void Create(User followed, Login login)
         {
             CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new UserFollowedDomainEvent(followed, this, login));
+            AddDomainEvent(new UserUserFollowCreatedDomainEvent(followed, this, login));
         }
     }
 }

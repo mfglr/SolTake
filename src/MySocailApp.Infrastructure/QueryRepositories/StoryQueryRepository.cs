@@ -28,7 +28,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                         DateTime.UtcNow <= story.CreatedAt.AddDays(1) &&
                         (
                             story.UserId == userId ||
-                            _context.Follows.Any(follow => follow.FollowerId == userId && follow.FollowedId == story.UserId)
+                            _context.UserUserFollows.Any(follow => follow.FollowerId == userId && follow.FollowedId == story.UserId)
                         )
                 )
                 .OrderByDescending(x => x.Id)

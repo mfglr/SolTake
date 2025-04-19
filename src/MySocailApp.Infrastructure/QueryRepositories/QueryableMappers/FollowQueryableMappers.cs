@@ -1,13 +1,13 @@
 ﻿using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
 using MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId;
-using MySocailApp.Domain.FollowAggregate.Entities;
+using MySocailApp.Domain.UserUserFollowAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class FollowQueryableMappers
     {
-        public static IQueryable<FollowResponseDto> ToFollowerResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
+        public static IQueryable<FollowResponseDto> ToFollowerResponseDto(this IQueryable<UserUserFollow> query, AppDbContext context, int accountId)
             => query
                 .Join(
                     context.Users,
@@ -19,12 +19,12 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         user.UserName.Value,
                         user.Name,
                         user.Image,
-                        context.Follows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == accountId),
-                        context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
+                        context.UserUserFollows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == accountId),
+                        context.UserUserFollows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
                     )
                 );
 
-        public static IQueryable<FollowResponseDto> ToFollowedResponseDto(this IQueryable<Follow> query, AppDbContext context, int accountId)
+        public static IQueryable<FollowResponseDto> ToFollowedResponseDto(this IQueryable<UserUserFollow> query, AppDbContext context, int accountId)
             => query
                 .Join(
                     context.Users,
@@ -36,8 +36,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         user.UserName.Value,
                         user.Name,
                         user.Image,
-                        context.Follows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == accountId),
-                        context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
+                        context.UserUserFollows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == accountId),
+                        context.UserUserFollows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
                     )
                 );
     }

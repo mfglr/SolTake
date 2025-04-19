@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.FollowAggregate.Exceptions
+namespace MySocailApp.Domain.UserUserFollowAggregate.Exceptions
 {
     public class NoFollowingFoundException : AppException
     {

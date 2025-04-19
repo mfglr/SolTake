@@ -1,21 +1,22 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.FollowAggregate.Abstracts;
-using MySocailApp.Domain.FollowAggregate.DomainServices;
+using MySocailApp.Domain.UserUserFollowAggregate.Abstracts;
+using MySocailApp.Domain.UserUserFollowAggregate.DomainServices;
+using MySocailApp.Domain.UserUserFollowAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Follow
 {
-    public class FollowHandler(IUnitOfWork unitOfWork, IFollowWriteRepository followWriteRepository, IAccessTokenReader accessTokenReader, UserFollowerDomainService userFollowerDomainService) : IRequestHandler<FollowDto, FollowCommandResponseDto>
+    public class FollowHandler(IUnitOfWork unitOfWork, IUserUserFollowWriteRepository followWriteRepository, IAccessTokenReader accessTokenReader, UserUserFollowCreatorDomainService userFollowerDomainService) : IRequestHandler<FollowDto, FollowCommandResponseDto>
     {
-        private readonly IFollowWriteRepository _followWriteRepository = followWriteRepository;
+        private readonly IUserUserFollowWriteRepository _followWriteRepository = followWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
-        private readonly UserFollowerDomainService _userFollowerDomainService = userFollowerDomainService;
+        private readonly UserUserFollowCreatorDomainService _userFollowerDomainService = userFollowerDomainService;
 
         public async Task<FollowCommandResponseDto> Handle(FollowDto request, CancellationToken cancellationToken)
         {
             var login = _accessTokenReader.GetLogin();
-            var follow = new Domain.FollowAggregate.Entities.Follow(login.UserId, request.FollowedId);
+            var follow = new UserUserFollow(login.UserId, request.FollowedId);
             await _userFollowerDomainService.Follow(follow, login, cancellationToken);
             await _followWriteRepository.CreateAsync(follow, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
