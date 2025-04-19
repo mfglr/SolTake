@@ -4,5 +4,5 @@ using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
 
 namespace MySocailApp.Domain.SolutionUserVoteAggregate.DomainEvents
 {
-    public record SolutionVotedDomainEvent(Solution Solution, SolutionUserVote Vote, Login Login) : IDomainEvent;
+    public record SolutionUserVoteCreatedDomainEvent(Solution Solution, SolutionUserVote Vote, Login Login) : IDomainEvent;
 }

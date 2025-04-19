@@ -14,7 +14,7 @@ namespace MySocailApp.Domain.SolutionUserVoteAggregate.Entities
         internal void Create(Solution solution, Login login)
         {
             CreatedAt = DateTime.UtcNow;
-            AddDomainEvent(new SolutionVotedDomainEvent(solution, this, login));
+            AddDomainEvent(new SolutionUserVoteCreatedDomainEvent(solution, this, login));
         }
     }
 }

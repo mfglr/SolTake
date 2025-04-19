@@ -8,13 +8,13 @@ using MySocailApp.Domain.SolutionUserVoteAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionVotedDomainEventConsumers.NotificationAggregate
 {
-    public class CreateNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<SolutionVotedDomainEvent>
+    public class CreateNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<SolutionUserVoteCreatedDomainEvent>
     {
         private readonly INotificationWriteRepository _notificationWriteRepository = notificationWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IPublisher _publisher = publisher;
 
-        public async Task Handle(SolutionVotedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(SolutionUserVoteCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
 
             if (notification.Solution.UserId == notification.Vote.UserId) return;

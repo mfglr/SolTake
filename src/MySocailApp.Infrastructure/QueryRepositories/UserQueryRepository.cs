@@ -11,37 +11,40 @@ using System.Linq.Expressions;
 
 namespace MySocailApp.Infrastructure.QueryRepositories
 {
+    public static class BlockFilter
+    {
+        public static IQueryable<User> Filter(this IQueryable<User> query, AppDbContext context, int? forUserId)
+            =>
+                query
+                    .Where(
+                        user =>
+                            !context.UserUserBlocks.Any(
+                                uub =>
+                                    (uub.BlockerId == user.Id && uub.BlockedId == forUserId) ||
+                                    (uub.BlockerId == forUserId && uub.BlockedId == user.Id)
+                            )
+                    );
+    }
+
     public class UserQueryRepository(AppDbContext context) : IUserQueryRepository
     {
+
         private readonly AppDbContext _context = context;
 
-        public Task<UserResponseDto?> GetSingleAsync(int? forUserId, Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
+        private Task<UserResponseDto?> GetSingleAsync(int? forUserId, Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Where(predicate)
-                .Where(
-                    user =>
-                        !_context.UserUserBlocks.Any(
-                            uub => 
-                                (uub.BlockerId == user.Id && uub.BlockedId == forUserId) ||
-                                (uub.BlockerId == forUserId && uub.BlockedId == user.Id)
-                        )
-                )
+                .Filter(_context,forUserId)
                 .ToUserResponseDto(_context, forUserId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<List<UserResponseDto>> GetListAsync(int? forUserId, IPage page, Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
+        private Task<List<UserResponseDto>> GetListAsync(int? forUserId, IPage page, Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Where(predicate)
-                .Where(
-                    user =>
-                        !_context.UserUserBlocks.Any(
-                            uub =>
-                                (uub.BlockerId == user.Id && uub.BlockedId == forUserId) ||
-                                (uub.BlockerId == forUserId && uub.BlockedId == user.Id)
-                        )
-                )
+                .Filter(_context, forUserId)
+                .ToPage(page)
                 .ToUserResponseDto(_context, forUserId)
                 .ToListAsync(cancellationToken);
 
@@ -77,13 +80,9 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                             user.Name != null &&
                             user.Name.ToLower().Contains(key.ToLower())
                         ) ||
-                        user.UserName.Value.ToLower().Contains(key.ToLower()) &&
-                        !_context.UserUserBlocks.Any(
-                            uub =>
-                                (uub.BlockerId == user.Id && uub.BlockedId == forUserId) ||
-                                (uub.BlockerId == forUserId && uub.BlockedId == user.Id)
-                        )
+                        user.UserName.Value.ToLower().Contains(key.ToLower())
                 )
+                .Filter(_context, forUserId)
                 .ToPage(page)
                 .ToSearchUserResponse()
                 .ToListAsync(cancellationToken);
