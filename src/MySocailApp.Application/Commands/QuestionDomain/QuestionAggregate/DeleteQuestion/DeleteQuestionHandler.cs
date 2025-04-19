@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.QuestionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
 {

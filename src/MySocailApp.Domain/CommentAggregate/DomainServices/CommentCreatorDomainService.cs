@@ -2,8 +2,7 @@
 using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Exceptions;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions;
 
@@ -36,7 +35,7 @@ namespace MySocailApp.Domain.CommentAggregate.DomainServices
             {
                 var question =
                     await _questionReadRepository.GetAsync((int)questionId, cancellationToken) ??
-                    throw new QuestionNotFoundException();
+                    throw new Exceptions.QuestionNotFoundException();
 
                 comment.CreateQuestionComment(question, login);
             }

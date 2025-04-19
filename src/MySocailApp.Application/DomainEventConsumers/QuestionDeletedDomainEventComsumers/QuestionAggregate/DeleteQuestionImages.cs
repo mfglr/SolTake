@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainEvents;
+using MySocailApp.Domain.QuestionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionDeletedDomainEventComsumers.QuestionAggregate
 {

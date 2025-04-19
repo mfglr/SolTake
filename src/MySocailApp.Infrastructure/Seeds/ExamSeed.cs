@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.QuestionDomain.ExamAggregate.Entitities;
+using MySocailApp.Domain.ExamAggregate.Entitities;
 
 namespace MySocailApp.Infrastructure.Seeds
 {

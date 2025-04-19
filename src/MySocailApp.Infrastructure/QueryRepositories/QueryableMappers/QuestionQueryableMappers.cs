@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.Queries.QuestionDomain;
 using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 

@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.QuestionDomain
 {

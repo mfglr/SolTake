@@ -3,10 +3,10 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.DomainServices;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.ValueObjects;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionAggregate.DomainServices;
+using MySocailApp.Domain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion
 {

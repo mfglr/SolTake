@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.TopicAggregate;
-using MySocailApp.Domain.QuestionDomain.TopicAggregate.Entities;
+using MySocailApp.Domain.TopicAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {

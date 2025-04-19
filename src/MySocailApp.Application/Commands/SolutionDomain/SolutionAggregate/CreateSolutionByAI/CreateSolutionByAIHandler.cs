@@ -7,8 +7,8 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
@@ -33,7 +33,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
 
             var question =
                 await _questionReadRepository.GetAsync(request.QuestionId, cancellationToken) ??
-                throw new QuestionNotFoundException();
+                throw new Domain.SolutionDomain.SolutionAggregate.Exceptions.QuestionNotFoundException();
 
             ChatGBT_Response response;
             if (!question.Medias.Any())

@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Domain.QuestionUserLikeAggregate.Exceptions;

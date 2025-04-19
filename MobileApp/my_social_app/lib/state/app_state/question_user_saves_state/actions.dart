@@ -42,3 +42,13 @@ class NextQuestionUserSavesSuccessAction extends QuestionUserSaveAction{
 class NextQuestionUserSavesFailedAction extends QuestionUserSaveAction{
   const NextQuestionUserSavesFailedAction();
 }
+
+// @immutable
+// class FirstQuestionUserSavesAction extends QuestionUserSaveAction{
+//   const FirstQuestionUserSavesAction();
+// }
+// @immutable
+// class FirstQuestionUserSavesSuccessAction extends QuestionUserSaveAction{
+//   final Iterable<QuestionUserSaveState> questionUserSaves;
+
+// }

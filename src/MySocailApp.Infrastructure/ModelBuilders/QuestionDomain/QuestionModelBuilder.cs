@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Entities;
+using MySocailApp.Domain.QuestionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.QuestionDomain
 {

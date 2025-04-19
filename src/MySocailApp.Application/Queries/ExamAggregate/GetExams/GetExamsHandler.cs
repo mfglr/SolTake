@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Domain.QuestionDomain.ExamAggregate.Interfaces;
+using MySocailApp.Domain.ExamAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.ExamAggregate.GetExams
 {

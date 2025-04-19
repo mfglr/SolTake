@@ -23,5 +23,8 @@ namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserSaveAggregate
 
         public Task<List<QuestionUserSave>> GetByUserId(int userId, CancellationToken cancellationToken)
             => _context.QuestionUserSaves.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
+
+        public Task<List<QuestionUserSave>> GetByUserIds(IEnumerable<int> userIds, CancellationToken cancellationToken)
+            => _context.QuestionUserSaves.Where(x => userIds.Contains(x.UserId)).ToListAsync(cancellationToken);
     }
 }

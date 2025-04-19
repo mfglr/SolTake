@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionAggregate.Exceptions;
+using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Domain.SolutionDomain.SolutionAggregate.DomainServices
 {

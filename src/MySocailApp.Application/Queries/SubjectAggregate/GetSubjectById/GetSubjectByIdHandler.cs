@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Exceptions;
-using MySocailApp.Domain.QuestionDomain.SubjectAggregate.Interfaces;
+using MySocailApp.Domain.SubjectAggregate.Exceptions;
+using MySocailApp.Domain.SubjectAggregate.Interfaces;
 
 namespace MySocailApp.Application.Queries.SubjectAggregate.GetSubjectById
 {
