@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.DomainEvents;
 
 namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities

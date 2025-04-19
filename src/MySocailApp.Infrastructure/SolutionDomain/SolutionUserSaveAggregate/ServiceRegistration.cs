@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserSaveAggregate
 {

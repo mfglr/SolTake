@@ -1,8 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
 {

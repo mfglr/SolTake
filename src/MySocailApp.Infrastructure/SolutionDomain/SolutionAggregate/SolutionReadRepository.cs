@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
@@ -10,25 +10,39 @@ namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<bool> Exist(int id, CancellationToken cancellationToken)
-            => await _context.Solutions.AnyAsync(x => x.Id == id, cancellationToken);
+        public Task<bool> Exist(int id, CancellationToken cancellationToken)
+            => _context.Solutions
+                .AsNoTracking()
+                .AnyAsync(x => x.Id == id, cancellationToken);
 
-        public async Task<Solution?> GetAsync(int id, CancellationToken cancellationToken)
-            => await _context.Solutions
+        public Task<Solution?> GetAsync(int id, CancellationToken cancellationToken)
+            => _context.Solutions
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public async Task<Solution?> GetSolutionWithImagesByIdAsync(int id, CancellationToken cancellationToken)
-            => await _context.Solutions
+        public Task<Solution?> GetSolutionWithImagesByIdAsync(int id, CancellationToken cancellationToken)
+            => _context.Solutions
                 .AsNoTracking()
                 .Include(x => x.Medias)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        public async Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken)
-            => await _context.Solutions
+        public Task<int> GetNumberOfQuestionCorrectSolutionsAsync(int questionId, CancellationToken cancellationToken)
+            => _context.Solutions
+                .AsNoTracking()
                 .CountAsync(x => x.QuestionId == questionId && x.State == SolutionState.Correct, cancellationToken);
 
         public Task<int> GetSolutionUserId(int id, CancellationToken cancellationToken)
-            => _context.Solutions.Where(x => x.Id == id).Select(x => x.UserId).FirstOrDefaultAsync(cancellationToken);
+            => _context.Solutions
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .Select(x => x.UserId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+        public Task<List<int>> GetSolutionIdsOfUser(int userId, CancellationToken cancellationToken)
+            => _context.Solutions
+                .AsNoTracking()
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Id)
+                .ToListAsync(cancellationToken);
     }
 }

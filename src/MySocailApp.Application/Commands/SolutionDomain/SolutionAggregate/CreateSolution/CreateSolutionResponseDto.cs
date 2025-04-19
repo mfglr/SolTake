@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.Queries.SolutionDomain;
 using MySocailApp.Core;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
 {

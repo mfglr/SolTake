@@ -2,7 +2,7 @@
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Exceptions;
+using MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserSaveAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.UnsaveSolution
 {
@@ -16,6 +16,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggreg
             var save = 
                 await _solutionUserSaveWriteRepository.GetAsync(request.SolutionId,_userAccessor.User.Id,cancellationToken) ??
                 throw new SolutionNotSavedException();
+
             _solutionUserSaveWriteRepository.Delete(save);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

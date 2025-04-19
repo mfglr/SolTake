@@ -2,8 +2,8 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionDeletedDomainEventComsumers.SolutionAggregate
 {
@@ -20,7 +20,7 @@ namespace MySocailApp.Application.DomainEventConsumers.QuestionDeletedDomainEven
             await _unitOfWork.CommitAsync(cancellationToken);
 
             foreach (var solution in solutions)
-                await _publisher.Publish(new SolutionDeletedDomainEvent(solution));
+                await _publisher.Publish(new SolutionDeletedDomainEvent(solution),cancellationToken);
         }
     }
 }

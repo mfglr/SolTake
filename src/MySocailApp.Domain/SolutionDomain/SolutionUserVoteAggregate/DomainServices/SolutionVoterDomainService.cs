@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
 using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
 using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Exceptions;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
@@ -33,6 +33,12 @@ namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
             => _context.Solutions
                 .Include(x => x.Medias)
                 .Where(x => x.QuestionId == questionId)
+                .ToListAsync(cancellationToken);
+
+        public Task<List<Solution>> GetAsync(List<int> questionIds, int userId, CancellationToken cancellationToken)
+            => _context.Solutions
+                .Include(x => x.Medias)
+                .Where(x => questionIds.Contains(x.QuestionId) && x.UserId == userId)
                 .ToListAsync(cancellationToken);
     }
 }

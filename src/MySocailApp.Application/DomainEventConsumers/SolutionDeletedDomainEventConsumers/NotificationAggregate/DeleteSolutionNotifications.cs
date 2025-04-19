@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionDeletedDomainEventConsumers.NotificationAggregate
 {

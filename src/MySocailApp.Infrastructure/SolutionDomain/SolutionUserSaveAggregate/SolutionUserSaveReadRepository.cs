@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserSaveAggregate

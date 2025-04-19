@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionUserSaveAggregate.Entities;
+using MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserSaveAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserSaveAggregate
@@ -18,6 +18,12 @@ namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserSaveAggregate
         
         public Task<SolutionUserSave?> GetAsync(int solutionId, int userId, CancellationToken cancellationToken)
             => _context.SolutionUserSaves.FirstOrDefaultAsync(x => x.SolutionId == solutionId && x.UserId == userId,cancellationToken);
+
+        public Task<List<SolutionUserSave>> GetAsync(IEnumerable<int> solutionIds, int userId, CancellationToken cancellationToken)
+            => _context.SolutionUserSaves
+                .Where(x => solutionIds.Contains(x.SolutionId) && x.UserId == userId)
+                .ToListAsync(cancellationToken);
+
         public Task<List<SolutionUserSave>> GetByUserId(int userId, CancellationToken cancellationToken)
             => _context.SolutionUserSaves.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
     }

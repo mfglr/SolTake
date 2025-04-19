@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.CommentAggregate.Abstracts;
 using MySocailApp.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionDeletedDomainEventConsumers.CommentAggregate
 {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionAggregate.Abstracts;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.SolutionAggregate
@@ -20,7 +20,7 @@ namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventCon
             await _unitOfWork.CommitAsync(cancellationToken);
 
             foreach (var solution in solutions)
-                await _publisher.Publish(new SolutionDeletedDomainEvent(solution));
+                await _publisher.Publish(new SolutionDeletedDomainEvent(solution), cancellationToken);
         }
     }
 }

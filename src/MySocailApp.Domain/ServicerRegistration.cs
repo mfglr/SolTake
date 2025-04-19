@@ -2,11 +2,13 @@
 using MySocailApp.Domain.AppVersionAggregate;
 using MySocailApp.Domain.CommentAggregate;
 using MySocailApp.Domain.CommentUserLikeAggregate;
+using MySocailApp.Domain.FollowAggregate;
 using MySocailApp.Domain.MessageDomain.MessageAggregate;
 using MySocailApp.Domain.QuestionAggregate;
 using MySocailApp.Domain.QuestionUserLikeAggregate;
 using MySocailApp.Domain.QuestionUserSaveAggregate;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate;
+using MySocailApp.Domain.SolutionAggregate;
+using MySocailApp.Domain.SolutionUserSaveAggregate;
 using MySocailApp.Domain.StoryDomain;
 using MySocailApp.Domain.UserAggregate;
 using MySocailApp.Domain.UserUserBlockAggregate;
@@ -24,13 +26,16 @@ namespace MySocailApp.Domain
                 .AddQuestionDomainServices()
                 .AddQuestionUserLikeDomainServices()
                 .AddQuestionUserSaveDomainServices()
-                .AddSolutionDomainServices()
 
+                .AddSolutionDomainServices()
+                .AddSolutionUserSaveDomainServices()
+                
                 .AddUserDomainServices()
+                .AddFollowAggregate()
                 .AddUserUserBlockAggregateServices()
                 .AddUserUserSearchDomainServices()
                 
-            .AddStoryDomainServices()
+                .AddStoryDomainServices()
                 .AddMessageDomainServices();
     }
 }

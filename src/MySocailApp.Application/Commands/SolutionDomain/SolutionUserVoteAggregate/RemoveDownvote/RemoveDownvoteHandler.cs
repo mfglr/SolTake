@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
 using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Exceptions;
 

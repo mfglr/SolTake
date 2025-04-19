@@ -2,7 +2,7 @@
 using MySocailApp.Application.Queries.SolutionDomain;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
-using MySocailApp.Domain.SolutionDomain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
