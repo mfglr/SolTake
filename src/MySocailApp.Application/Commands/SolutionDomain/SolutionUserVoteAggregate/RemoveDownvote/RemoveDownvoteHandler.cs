@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Exceptions;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Exceptions;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveDownvote
 {

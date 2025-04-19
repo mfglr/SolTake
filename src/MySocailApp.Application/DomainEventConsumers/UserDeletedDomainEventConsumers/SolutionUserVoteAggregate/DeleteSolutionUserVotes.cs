@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.SolutionUserVoteAggregate

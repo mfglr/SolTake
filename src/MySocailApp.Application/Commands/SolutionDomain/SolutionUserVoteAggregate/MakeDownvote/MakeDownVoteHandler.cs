@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.DomainServices;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserVoteAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeDownvote
 {
@@ -18,7 +18,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggreg
         {
             var login = _accessTokenReader.GetLogin();
             var vote = new SolutionUserVote(request.SolutionId, login.UserId, SolutionVoteType.Downvote);
-            await _solutionVoterDomainService.DownAsync(vote,login,cancellationToken);
+            await _solutionVoterDomainService.DownvoteAsync(vote,login,cancellationToken);
             await _solutionUserVoteWriteRepository.CreateAsync(vote,cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
             return new(vote.Id);

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
 {

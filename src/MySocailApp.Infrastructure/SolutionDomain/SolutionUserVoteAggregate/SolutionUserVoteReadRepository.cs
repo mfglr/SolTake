@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserVoteAggregate

@@ -1,9 +1,9 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionUserVoteAggregate.DomainEvents;
 
-namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities
+namespace MySocailApp.Domain.SolutionUserVoteAggregate.Entities
 {
     public class SolutionUserVote(int solutionId, int userId, SolutionVoteType type) : Entity, IAggregateRoot
     {

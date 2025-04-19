@@ -2,11 +2,11 @@
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Exceptions;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Exceptions;
 
-namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.DomainServices
+namespace MySocailApp.Domain.SolutionUserVoteAggregate.DomainServices
 {
     public class SolutionVoterDomainService(ISolutionReadRepository solutionReadRepository, ISolutionUserVoteWriteRepository solutionUserVoteWriteRepository)
     {
@@ -20,16 +20,16 @@ namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.DomainServ
                 throw new SolutionNotFoundException();
 
             var prevVote = await _solutionUserVoteWriteRepository.GetAsync(solutionUserVote.SolutionId, solutionUserVote.UserId, cancellationToken);
-            if(prevVote != null && prevVote.Type == SolutionVoteType.Upvote)
+            if (prevVote != null && prevVote.Type == SolutionVoteType.Upvote)
                 throw new SolutionUpvotedBeforeException();
 
             if (prevVote != null && prevVote.Type == SolutionVoteType.Downvote)
                 _solutionUserVoteWriteRepository.Delete(prevVote);
 
-            solutionUserVote.Create(solution,login);
+            solutionUserVote.Create(solution, login);
         }
 
-        public async Task DownAsync(SolutionUserVote solutionUserVote, Login login, CancellationToken cancellationToken)
+        public async Task DownvoteAsync(SolutionUserVote solutionUserVote, Login login, CancellationToken cancellationToken)
         {
             var solution =
                 await _solutionReadRepository.GetAsync(solutionUserVote.SolutionId, cancellationToken) ??

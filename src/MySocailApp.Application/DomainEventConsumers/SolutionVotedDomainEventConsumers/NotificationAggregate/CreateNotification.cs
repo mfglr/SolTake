@@ -4,7 +4,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.DomainEvents;
+using MySocailApp.Domain.SolutionUserVoteAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionVotedDomainEventConsumers.NotificationAggregate
 {

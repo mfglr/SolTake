@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts;
-using MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Entities;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
+using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserVoteAggregate
@@ -21,7 +21,14 @@ namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserVoteAggregate
         public Task<SolutionUserVote?> GetAsync(int solutionId, int userId, CancellationToken cancellationToken)
             => _context.SolutionUserVotes.FirstOrDefaultAsync(x => x.SolutionId == solutionId && x.UserId == userId,cancellationToken);
 
+        public Task<List<SolutionUserVote>> GetAsync(IEnumerable<int> solutionIds, int userId, CancellationToken cancellationToken)
+            => _context.SolutionUserVotes
+                .Where(x => solutionIds.Contains(x.SolutionId) && x.UserId == userId)
+                .ToListAsync(cancellationToken);
+
         public Task<List<SolutionUserVote>> GetByUserIdAsync(int userId, CancellationToken cancellationToken)
-            => _context.SolutionUserVotes.Where(x => x.UserId == userId).ToListAsync(cancellationToken);
+            => _context.SolutionUserVotes
+                .Where(x => x.UserId == userId)
+                .ToListAsync(cancellationToken);
     }
 }

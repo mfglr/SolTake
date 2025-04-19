@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.SolutionDomain.SolutionUserVoteAggregate.Abstracts
+﻿namespace MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts
 {
     public interface ISolutionUserVoteReadRepository
     {
