@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
+using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
+using MySocailApp.Domain.UserUserSearchAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.UserUserSearchAggregate

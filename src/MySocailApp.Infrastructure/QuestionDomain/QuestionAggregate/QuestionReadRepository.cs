@@ -25,5 +25,9 @@ namespace MySocailApp.Infrastructure.QuestionDomain.QuestionAggregate
                 .Where(x => x.Id == questionId)
                 .Select(x => x.UserId)
                 .FirstOrDefaultAsync(cancellationToken);
+
+        public Task<List<int>> GetQuestionIdsOfUser(int userId, CancellationToken cancellationToken)
+            => _context.Questions.Where(x => x.UserId == userId).Select(x => x.Id).ToListAsync(cancellationToken);
+
     }
 }

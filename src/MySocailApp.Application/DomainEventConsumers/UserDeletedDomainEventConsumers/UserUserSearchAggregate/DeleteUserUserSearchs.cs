@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.UserDomain.UserAggregate.DomainEvents;
-using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Abstracts;
+using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserUserSearchAggregate
 {

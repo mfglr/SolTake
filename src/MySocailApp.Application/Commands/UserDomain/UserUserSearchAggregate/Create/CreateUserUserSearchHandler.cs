@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
+using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
+using MySocailApp.Domain.UserUserSearchAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserUserSearchAggregate.Create
 {

@@ -16,14 +16,22 @@ namespace MySocailApp.Infrastructure.QueryRepositories
         public Task<UserResponseDto?> GetByIdAsync(int id, int accountId, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
-                .Where(x => x.Id == id)
+                .Where(
+                    user =>
+                        user.Id == id &&
+                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
+                )
                 .ToUserResponseDto(_context, accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public Task<UserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
-                .Where(x => x.UserName.Value.ToLower().Contains(userName.ToLower()))
+                .Where(
+                    user => 
+                        user.UserName.Value.ToLower().Contains(userName.ToLower()) &&
+                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
+                )
                 .ToUserResponseDto(_context,accountId)
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -31,12 +39,13 @@ namespace MySocailApp.Infrastructure.QueryRepositories
             => _context.Users
                 .AsNoTracking()
                 .Where(
-                    x =>
+                    user =>
                         (
-                            _context.UserUserSearchs.Any(userSearch => userSearch.SearcherId == accountId && userSearch.SearchedId == x.Id) ||
-                            _context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == x.Id)
+                            _context.UserUserSearchs.Any(userSearch => userSearch.SearcherId == accountId && userSearch.SearchedId == user.Id) ||
+                            _context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
                         ) &&
-                        x.Id != accountId
+                        user.Id != accountId &&
+                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
                 )
                 .ToPage(page)
                 .ToUserResponseDto(_context, accountId)
@@ -51,7 +60,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                             user.Name != null &&
                             user.Name.ToLower().Contains(key.ToLower())
                         ) ||
-                        user.UserName.Value.ToLower().Contains(key.ToLower())
+                        user.UserName.Value.ToLower().Contains(key.ToLower()) &&
+                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
                 )
                 .ToPage(page)
                 .ToSearchUserResponse()

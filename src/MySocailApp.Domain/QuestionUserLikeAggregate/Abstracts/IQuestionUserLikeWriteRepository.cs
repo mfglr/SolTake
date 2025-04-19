@@ -9,6 +9,7 @@ namespace MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts
         void DeleteRange(IEnumerable<QuestionUserLike> likes);
 
         Task<QuestionUserLike?> GetAsync(int questionId, int userId, CancellationToken cancellationToken);
+        Task<List<QuestionUserLike>> GetAsync(IEnumerable<int> questionIds, int userId, CancellationToken cancellationToken);
         Task<List<QuestionUserLike>> GetByUserIdAsync(int userId, CancellationToken cancellationToken);
     }
 }

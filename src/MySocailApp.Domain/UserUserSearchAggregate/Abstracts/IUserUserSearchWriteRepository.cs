@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
+﻿using MySocailApp.Domain.UserUserSearchAggregate.Entities;
 
-namespace MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Abstracts
+namespace MySocailApp.Domain.UserUserSearchAggregate.Abstracts
 {
     public interface IUserUserSearchWriteRepository
     {

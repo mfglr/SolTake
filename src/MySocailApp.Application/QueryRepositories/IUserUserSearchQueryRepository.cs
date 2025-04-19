@@ -5,6 +5,6 @@ namespace MySocailApp.Application.QueryRepositories
 {
     public interface IUserUserSearchQueryRepository
     {
-        Task<List<UserUserSearchResponseDto>> GetUsersSearched(int userId, IPage page, CancellationToken cancellationToken);
+        Task<List<UserUserSearchResponseDto>> GetUsersSearched(int userId, int forUserId, IPage page, CancellationToken cancellationToken);
     }
 }

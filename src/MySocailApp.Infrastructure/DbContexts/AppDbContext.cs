@@ -27,7 +27,7 @@ using MySocailApp.Domain.UserDomain.RoleAggregate.Entities;
 using MySocailApp.Domain.UserDomain.TermsOfUseAggregate;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using MySocailApp.Domain.UserDomain.UserUserBlockAggregate.Entities;
-using MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities;
+using MySocailApp.Domain.UserUserSearchAggregate.Entities;
 using System.Reflection;
 
 namespace MySocailApp.Infrastructure.DbContexts

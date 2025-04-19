@@ -22,7 +22,7 @@ namespace MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Cre
             await _userUserBlockRepository.CreateAsync(userUserBlock, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return new(userUserBlock, login);
+            return new(userUserBlock.Id);
 
         }
     }

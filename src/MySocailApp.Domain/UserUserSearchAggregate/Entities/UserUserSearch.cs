@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
 
-namespace MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities
+namespace MySocailApp.Domain.UserUserSearchAggregate.Entities
 {
     public class UserUserSearch : Entity, IAggregateRoot
     {
@@ -12,7 +12,7 @@ namespace MySocailApp.Domain.UserDomain.UserUserSearchAggregate.Entities
             SearcherId = searcherId;
             SearchedId = searchedId;
         }
-        public static UserUserSearch Create(int searcherId, int searchedId) 
+        public static UserUserSearch Create(int searcherId, int searchedId)
             => new(searcherId, searchedId) { CreatedAt = DateTime.UtcNow };
     }
 }

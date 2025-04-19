@@ -12,10 +12,10 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public Task<List<UserUserSearchResponseDto>> GetUsersSearched(int userId, IPage page, CancellationToken cancellationToken)
+        public Task<List<UserUserSearchResponseDto>> GetUsersSearched(int userId, int forUserId, IPage page, CancellationToken cancellationToken)
             => _context.UserUserSearchs
                 .AsNoTracking()
-                .Where(x => x.SearcherId == userId)
+                .Where(uus => uus.SearcherId == userId)
                 .ToPage(page)
                 .ToUserVisitedResponseDto(_context)
                 .ToListAsync(cancellationToken);
