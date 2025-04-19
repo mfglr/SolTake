@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.UserDomain.TermsOfUseAggregate.Abstracts;
+using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.TermsOfUseAggregate
 {

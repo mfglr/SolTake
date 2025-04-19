@@ -24,6 +24,13 @@ namespace MySocailApp.Infrastructure.UserDomain.UserUserSearchAggregate
         public Task<UserUserSearch?> GetAsync(int searcherId, int searchedId, CancellationToken cancellationToken)
             => _context.UserUserSearchs.FirstOrDefaultAsync(x => x.SearcherId == searcherId && x.SearchedId == searchedId, cancellationToken);
 
-
+        public Task<List<UserUserSearch>> GetByUserIds(int userId0, int userId1, CancellationToken cancellationToken)
+            => _context.UserUserSearchs
+                .Where(
+                    uus => 
+                        (uus.SearcherId == userId0 && uus.SearchedId == userId1) ||
+                        (uus.SearcherId == userId1 && uus.SearchedId == userId0)
+                )
+                .ToListAsync(cancellationToken);
     }
 }

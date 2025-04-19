@@ -1,5 +1,5 @@
-﻿using MySocailApp.Domain.UserDomain.TermsOfUseAggregate;
-using MySocailApp.Domain.UserDomain.TermsOfUseAggregate.Abstracts;
+﻿using MySocailApp.Domain.TermsOfUseAggregate;
+using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.TermsOfUseAggregate

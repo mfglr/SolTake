@@ -25,6 +25,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dar
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_message_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/user_user_block_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
@@ -40,6 +41,7 @@ final store = Store(
     questionUserSaves: Pagination.init(questionsPerPage, true),
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
+    userUserBlocks: Pagination.init(usersPerPage, true),
 
     stories: EntityState(),
 
@@ -60,7 +62,6 @@ final store = Store(
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
-    userSearchEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()
@@ -72,6 +73,12 @@ final store = Store(
     deleteQuestionUserSaveMiddleware,
     nextQuestionUserSavesMiddleware,
     //questino user save middlewares
+
+    //user user block middlewares
+    blockUserMiddleware,
+    unblockUserMiddleware,
+    nextUserUserBlockMiddleware,
+    //user user block middlewares
 
     //search users middleware
     firstSearchUsersMiddleware,

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.UserDomain.TermsOfUseAggregate;
+using MySocailApp.Domain.TermsOfUseAggregate;
 
 namespace MySocailApp.Infrastructure.Seeds
 {

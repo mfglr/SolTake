@@ -9,6 +9,7 @@ namespace MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts
         void DeleteRange(IEnumerable<QuestionUserSave> questionUserSaves);
 
         Task<QuestionUserSave?> GetAsync(int questionId, int userId, CancellationToken cancellationToken);
+        Task<List<QuestionUserSave>> GetAsync(IEnumerable<int> questionIds, int userId, CancellationToken cancellationToken);
         Task<List<QuestionUserSave>> GetByUserId(int userId, CancellationToken cancellationToken);
         Task<List<QuestionUserSave>> GetByUserIds(IEnumerable<int> userIds, CancellationToken cancellationToken);
     }

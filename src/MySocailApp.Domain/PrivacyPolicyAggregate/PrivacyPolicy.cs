@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Core;
 
-namespace MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate
+namespace MySocailApp.Domain.PrivacyPolicyAggregate
 {
     public class PrivacyPolicy : IHasId
     {

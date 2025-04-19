@@ -3,6 +3,9 @@ import 'package:my_social_app/state/app_state/search_users_state/search_user_sta
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
+Pagination<int,SearchUserState> removeSearchUserReducer(Pagination<int, SearchUserState> prev,RemoveSearchUserAction action)
+  => prev.removeOne(action.userId);
+
 Pagination<int,SearchUserState> firstSearchUsersReducer(Pagination<int,SearchUserState> prev,FirstSearchUsersAction action)
   => prev.startLoadingNext();
 Pagination<int,SearchUserState> firstSearchUsersSuccessReducer(Pagination<int,SearchUserState> prev, FirstSearchUsersSuccessAction action)
@@ -25,6 +28,8 @@ Pagination<int,SearchUserState> prevSearchUsersFailedReducer(Pagination<int,Sear
   => prev.stopLoadingPrev();
 
 Reducer<Pagination<int,SearchUserState>> searchUsersReducers = combineReducers<Pagination<int,SearchUserState>>([
+  TypedReducer<Pagination<int,SearchUserState>,RemoveSearchUserAction>(removeSearchUserReducer).call,
+
   TypedReducer<Pagination<int,SearchUserState>,FirstSearchUsersAction>(firstSearchUsersReducer).call,
   TypedReducer<Pagination<int,SearchUserState>,FirstSearchUsersSuccessAction>(firstSearchUsersSuccessReducer).call,
   TypedReducer<Pagination<int,SearchUserState>,FirstSearchUsersFailedAction>(firstSearchUsersFailedReducer).call,

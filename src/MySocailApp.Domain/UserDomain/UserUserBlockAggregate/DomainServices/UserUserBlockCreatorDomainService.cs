@@ -17,6 +17,9 @@ namespace MySocailApp.Domain.UserDomain.UserUserBlockAggregate.DomainServices
                 await _userReadRepository.GetByIdAsync(userUserBlock.BlockedId, cancellationToken) ??
                 throw new UserNotFoundException();
 
+            if (await _userUserBlockRepository.ExistAsync(userUserBlock.BlockedId, userUserBlock.BlockerId, cancellationToken))
+                throw new UserNotFoundException();
+
             if (await _userUserBlockRepository.ExistAsync(userUserBlock.BlockerId, userUserBlock.BlockedId, cancellationToken))
                 throw new UserUserBlockAlreadyCreatedException();
 

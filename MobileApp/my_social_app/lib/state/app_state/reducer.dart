@@ -24,7 +24,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_message_state/reducers.dart';
-import 'package:my_social_app/state/app_state/user_search_state/reducers.dart';
+import 'package:my_social_app/state/app_state/user_user_block_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/reducers.dart';
 import 'package:redux/redux.dart';
@@ -39,6 +39,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   solutionUserSaves: solutionUserSavesReducers(prev.solutionUserSaves,action),
   messageConnectionEntityState: messageConnectionsReducers(prev.messageConnectionEntityState,action),
   stories: storyReducers(prev.stories,action),
+  userUserBlocks: userUserBlockReducers(prev.userUserBlocks, action),
 
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userMessageState: userMessageReducers(prev.userMessageState, action),
@@ -55,7 +56,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   notifications: notificationEntityStateReducers(prev.notifications,action),
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
   conversations: conversationsReducer(prev.conversations,action),
-  userSearchEntityState: userSearchEntityReducers(prev.userSearchEntityState,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
   appExams: appExamsReducers(prev.appExams, action),
   policyState: policyReducers(prev.policyState,action),

@@ -160,8 +160,8 @@ class _UserPageState extends State<UserPage> {
           appBar: AppBar(
             title: AppTitle(title: user.userName),
             leading: const AppBackButtonWidget(),
-            actions: const [
-              UserPopupMenu(),
+            actions: [
+              UserPopupMenu(userId: user.id),
             ],
           ),
           body: Column(

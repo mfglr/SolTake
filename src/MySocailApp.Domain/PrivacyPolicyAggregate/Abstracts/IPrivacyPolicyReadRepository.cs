@@ -1,4 +1,6 @@
-﻿namespace MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate.Abstracts
+﻿using MySocailApp.Domain.PrivacyPolicyAggregate;
+
+namespace MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts
 {
     public interface IPrivacyPolicyReadRepository
     {

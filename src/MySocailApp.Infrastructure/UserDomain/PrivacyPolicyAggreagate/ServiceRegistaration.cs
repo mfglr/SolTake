@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate.Abstracts;
+using MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.PrivacyPolicyAggreagate
 {

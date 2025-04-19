@@ -22,7 +22,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
-import 'package:my_social_app/state/app_state/user_search_state/user_search_state.dart';
+import 'package:my_social_app/state/app_state/user_user_block_state/user_user_block_state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
@@ -37,6 +37,7 @@ class AppState{
   final Pagination<int,QuestionUserSaveState> questionUserSaves;
   final Pagination<int,SolutionUserSaveState> solutionUserSaves;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
+  final Pagination<int,UserUserBlockState> userUserBlocks;
 
   final EntityState<int,StoryState> stories;
   
@@ -57,7 +58,6 @@ class AppState{
   final EntityState<int,CommentState> commentEntityState;
   final EntityState<int,MessageState> messageEntityState;
   final Pagination<int,Id<int>> conversations;
-  final EntityState<int,UserSearchState> userSearchEntityState;
   final PolicyState policyState;
   final Pagination<int,Id<int>> videoQuestions;
   final UploadEntityState uploadEntityState;
@@ -69,6 +69,7 @@ class AppState{
     required this.questionUserSaves,
     required this.solutionUserSaves,
     required this.messageConnectionEntityState,
+    required this.userUserBlocks,
 
     required this.stories,
 
@@ -89,7 +90,6 @@ class AppState{
     required this.commentEntityState,
     required this.notifications,
     required this.messageEntityState,
-    required this.userSearchEntityState,
     required this.policyState,
     required this.videoQuestions,
     required this.uploadEntityState
@@ -102,6 +102,7 @@ class AppState{
     questionUserSaves: Pagination.init(questionsPerPage, true),
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
+    userUserBlocks: Pagination.init(usersPerPage, true),
 
     stories: EntityState(),
 
@@ -122,7 +123,6 @@ class AppState{
     commentEntityState: EntityState(),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
-    userSearchEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
     videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()

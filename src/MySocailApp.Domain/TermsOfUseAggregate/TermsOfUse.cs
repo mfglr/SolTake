@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.UserDomain.TermsOfUseAggregate
+﻿namespace MySocailApp.Domain.TermsOfUseAggregate
 {
     public class TermsOfUse
     {

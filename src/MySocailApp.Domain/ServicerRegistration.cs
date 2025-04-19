@@ -9,6 +9,7 @@ using MySocailApp.Domain.QuestionUserSaveAggregate;
 using MySocailApp.Domain.SolutionDomain.SolutionAggregate;
 using MySocailApp.Domain.StoryDomain;
 using MySocailApp.Domain.UserDomain;
+using MySocailApp.Domain.UserUserSearchAggregate;
 
 namespace MySocailApp.Domain
 {
@@ -24,6 +25,7 @@ namespace MySocailApp.Domain
                 .AddQuestionUserSaveDomainServices()
                 .AddSolutionDomainServices()
                 .AddUserDomain()
+                .AddUserUserSearchDomainServices()
                 .AddStoryDomainServices()
                 .AddMessageDomainServices();
     }

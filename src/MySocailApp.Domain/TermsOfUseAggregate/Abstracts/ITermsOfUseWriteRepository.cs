@@ -1,4 +1,6 @@
-﻿namespace MySocailApp.Domain.UserDomain.TermsOfUseAggregate.Abstracts
+﻿using MySocailApp.Domain.TermsOfUseAggregate;
+
+namespace MySocailApp.Domain.TermsOfUseAggregate.Abstracts
 {
     public interface ITermsOfUseWriteRepository
     {

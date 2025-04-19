@@ -1,5 +1,5 @@
-﻿using MySocailApp.Domain.UserDomain.PrivacyPolicyAggregate.Abstracts;
-using MySocailApp.Domain.UserDomain.TermsOfUseAggregate.Abstracts;
+﻿using MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts;
+using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using MySocailApp.Domain.UserDomain.UserAggregate.Exceptions;

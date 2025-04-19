@@ -9,6 +9,7 @@ part of 'user_user_block.dart';
 UserUserBlock _$UserUserBlockFromJson(Map<String, dynamic> json) =>
     UserUserBlock(
       id: (json['id'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
       userName: json['userName'] as String,
       name: json['name'] as String?,
       image: json['image'] == null
@@ -19,6 +20,7 @@ UserUserBlock _$UserUserBlockFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UserUserBlockToJson(UserUserBlock instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'userId': instance.userId,
       'userName': instance.userName,
       'name': instance.name,
       'image': instance.image,

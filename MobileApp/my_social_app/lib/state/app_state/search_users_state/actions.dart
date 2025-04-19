@@ -3,6 +3,12 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 
 @immutable
+class RemoveSearchUserAction extends AppAction{
+  final int userId;
+  const RemoveSearchUserAction({required this.userId});
+}
+
+@immutable
 class FirstSearchUsersAction extends AppAction{
   final String key;
   const FirstSearchUsersAction({required this.key});
