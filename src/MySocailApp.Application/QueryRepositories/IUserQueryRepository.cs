@@ -6,9 +6,9 @@ namespace MySocailApp.Application.QueryRepositories
 {
     public interface IUserQueryRepository
     {
-        Task<UserResponseDto?> GetByIdAsync(int id, int accountId, CancellationToken cancellationToken);
-        Task<UserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken);
-        Task<List<SearchUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken);
-        Task<List<UserResponseDto>> GetCreateConversationPageUsersAsync(int accountId, IPage page, CancellationToken cancellationToken);
+        Task<UserResponseDto?> GetByIdAsync(int id, int? forUserId, CancellationToken cancellationToken);
+        Task<UserResponseDto?> GetByUserNameAsync(string userName, int? forUserId, CancellationToken cancellationToken);
+        Task<List<SearchUserResponseDto>> SearchUserAsync(string key, int? forUserId, IPage page, CancellationToken cancellationToken);
+        Task<List<UserResponseDto>> GetCreateConversationPageUsersAsync(int? forUserId, IPage page, CancellationToken cancellationToken);
     }
 }

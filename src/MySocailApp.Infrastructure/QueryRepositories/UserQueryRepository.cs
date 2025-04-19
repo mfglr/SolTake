@@ -3,9 +3,12 @@ using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Application.Queries.UserDomain.SearchUsers;
 using MySocailApp.Application.QueryRepositories;
 using MySocailApp.Core;
+using MySocailApp.Domain.UserDomain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
+using OpenCvSharp;
+using System.Linq.Expressions;
 
 namespace MySocailApp.Infrastructure.QueryRepositories
 {
@@ -13,45 +16,60 @@ namespace MySocailApp.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        public Task<UserResponseDto?> GetByIdAsync(int id, int accountId, CancellationToken cancellationToken)
+        public Task<UserResponseDto?> GetSingleAsync(int? forUserId, Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
+                .Where(predicate)
                 .Where(
                     user =>
-                        user.Id == id &&
-                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
+                        !_context.UserUserBlocks.Any(
+                            uub => 
+                                (uub.BlockerId == user.Id && uub.BlockedId == forUserId) ||
+                                (uub.BlockerId == forUserId && uub.BlockedId == user.Id)
+                        )
                 )
-                .ToUserResponseDto(_context, accountId)
+                .ToUserResponseDto(_context, forUserId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public Task<UserResponseDto?> GetByUserNameAsync(string userName, int accountId, CancellationToken cancellationToken)
+        public Task<List<UserResponseDto>> GetListAsync(int? forUserId, IPage page, Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
-                .Where(
-                    user => 
-                        user.UserName.Value.ToLower().Contains(userName.ToLower()) &&
-                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
-                )
-                .ToUserResponseDto(_context,accountId)
-                .FirstOrDefaultAsync(cancellationToken);
-
-        public Task<List<UserResponseDto>> GetCreateConversationPageUsersAsync(int accountId, IPage page, CancellationToken cancellationToken)
-            => _context.Users
-                .AsNoTracking()
+                .Where(predicate)
                 .Where(
                     user =>
-                        (
-                            _context.UserUserSearchs.Any(userSearch => userSearch.SearcherId == accountId && userSearch.SearchedId == user.Id) ||
-                            _context.Follows.Any(follow => follow.FollowerId == accountId && follow.FollowedId == user.Id)
-                        ) &&
-                        user.Id != accountId &&
-                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
+                        !_context.UserUserBlocks.Any(
+                            uub =>
+                                (uub.BlockerId == user.Id && uub.BlockedId == forUserId) ||
+                                (uub.BlockerId == forUserId && uub.BlockedId == user.Id)
+                        )
                 )
-                .ToPage(page)
-                .ToUserResponseDto(_context, accountId)
+                .ToUserResponseDto(_context, forUserId)
                 .ToListAsync(cancellationToken);
 
-        public Task<List<SearchUserResponseDto>> SearchUserAsync(string key, int accountId, IPage page, CancellationToken cancellationToken)
+        public Task<UserResponseDto?> GetByIdAsync(int id, int? forUserId, CancellationToken cancellationToken)
+            => GetSingleAsync(forUserId, user => user.Id == id, cancellationToken);
+
+        public Task<UserResponseDto?> GetByUserNameAsync(string userName, int? forUserId, CancellationToken cancellationToken)
+            => GetSingleAsync(
+                forUserId,
+                user => user.UserName.Value.ToLower().Contains(userName.ToLower()),
+                cancellationToken
+            );
+
+        public Task<List<UserResponseDto>> GetCreateConversationPageUsersAsync(int? forUserId, IPage page, CancellationToken cancellationToken)
+            => GetListAsync(
+                forUserId,
+                page,
+                user =>
+                    (
+                        _context.UserUserSearchs.Any(userSearch => userSearch.SearcherId == forUserId && userSearch.SearchedId == user.Id) ||
+                        _context.Follows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id)
+                    ) &&
+                    user.Id != forUserId,
+                cancellationToken
+            );
+
+        public Task<List<SearchUserResponseDto>> SearchUserAsync(string key, int? forUserId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()
                 .Where(
@@ -61,7 +79,11 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                             user.Name.ToLower().Contains(key.ToLower())
                         ) ||
                         user.UserName.Value.ToLower().Contains(key.ToLower()) &&
-                        !_context.UserUserBlocks.Any(uub => uub.BlockerId == user.Id && uub.BlockedId == accountId)
+                        !_context.UserUserBlocks.Any(
+                            uub =>
+                                (uub.BlockerId == user.Id && uub.BlockedId == forUserId) ||
+                                (uub.BlockerId == forUserId && uub.BlockedId == user.Id)
+                        )
                 )
                 .ToPage(page)
                 .ToSearchUserResponse()
