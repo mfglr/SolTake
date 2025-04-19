@@ -17,5 +17,9 @@ namespace MySocailApp.Domain.CommentAggregate.Abstracts
         Task<List<Comment>> GetChildrenAsync(int commentId, CancellationToken cancellationToken);
         Task<List<Comment>> GetRepliesAsync(int commentId, CancellationToken cancellationToken);
         Task<List<Comment>> GetCommentsByTag(int userId, CancellationToken cancellationToken);
+
+        Task<List<Comment>> GetQuestionsComments(IEnumerable<int> questionIds, int userId, CancellationToken cancellationToken);
+        Task<List<Comment>> GetSolutionsComments(IEnumerable<int> solutionIds, int userId, CancellationToken cancellationToken);
+        Task<List<Comment>> GetCommentsReplies(IEnumerable<int> commentIds, int userId, CancellationToken cancellationToken);
     }
 }

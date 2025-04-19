@@ -67,5 +67,23 @@ namespace MySocailApp.Infrastructure.CommentDomain.CommentAggregate
                 .Include(x => x.Tags)
                 .Where(x => x.Tags.Any(x => x.UserId == userId))
                 .ToListAsync(cancellationToken);
+
+        public Task<List<Comment>> GetQuestionsComments(IEnumerable<int> questionIds, int userId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Include(x => x.Tags)
+                .Where(x => questionIds.Any(questionId => questionId == x.QuestionId) && x.UserId == userId)
+                .ToListAsync(cancellationToken);
+
+        public Task<List<Comment>> GetSolutionsComments(IEnumerable<int> solutionIds, int userId, CancellationToken cancellationToken)
+           => _context.Comments
+               .Include(x => x.Tags)
+               .Where(x => solutionIds.Any(solutionId => solutionId == x.SolutionId) && x.UserId == userId)
+               .ToListAsync(cancellationToken);
+
+        public Task<List<Comment>> GetCommentsReplies(IEnumerable<int> commentIds, int userId, CancellationToken cancellationToken)
+            => _context.Comments
+                .Include(x => x.Tags)
+                .Where(x => commentIds.Any(commentId => x.ParentId == commentId) && x.UserId == userId)
+                .ToListAsync(cancellationToken);
     }
 }

@@ -17,10 +17,20 @@ namespace MySocailApp.Infrastructure.CommentDomain.CommentAggregate
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
+        
+
         public Task<int?> GetParentId(int id, CancellationToken cancellationToken)
             => _context.Comments
                 .Where(x => x.Id == id)
                 .Select(x => x.ParentId)
                 .FirstOrDefaultAsync(cancellationToken);
+
+
+        public Task<List<int>> GetCommentIdsOfUser(int userId, CancellationToken cancellationToken)
+            => _context.Comments
+                .AsNoTracking()
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Id)
+                .ToListAsync(cancellationToken);
     }
 }
