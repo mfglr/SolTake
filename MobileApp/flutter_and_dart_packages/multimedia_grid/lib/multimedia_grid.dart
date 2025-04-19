@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:multimedia/models/multimedia.dart';
@@ -29,8 +28,7 @@ class MultimediaGrid extends StatefulWidget {
 
 class _MultimediaGridState extends State<MultimediaGrid> {
   String? _url;
-  Uint8List? _image;
-  late MultimediaStatus _status;
+  Multimedia? _media;
   
   @override
   void initState() {
@@ -41,22 +39,21 @@ class _MultimediaGridState extends State<MultimediaGrid> {
       else{
         _url = "${widget.blobServiceUrl}/${widget.state!.containerName}/${widget.state!.blobName}";
       }
-      _status = MultimediaStatus.started;
+
+      _media = widget.state!.start();
+
       DefaultCacheManager()
         .getSingleFile(_url!)
         .then((file) => file.readAsBytes())
         .then((list){
           if(mounted){
-            setState(() {
-              _image = list;
-              _status = MultimediaStatus.done;
-            });
+            setState(() => _media = _media!.done(list));
           }
         })
         .catchError((e){
           if(mounted){
             setState(() {
-              _status = MultimediaStatus.notFound;
+              setState(() => _media = _media!.notFound());
               throw e;
             });
           }
@@ -76,11 +73,11 @@ class _MultimediaGridState extends State<MultimediaGrid> {
             aspectRatio: widget.aspectRatio,
             child: Builder(
               builder: (context) {
-                if(widget.state == null) return Image.asset(widget.noMediaPath);
-                if(_status == MultimediaStatus.notFound) return Image.asset(widget.notFoundMediaPath);
-                if(_status == MultimediaStatus.started) return  const Center( child: CircularProgressIndicator() );
+                if(_media == null) return Image.asset(widget.noMediaPath);
+                if(_media!.status == MultimediaStatus.notFound) return Image.asset(widget.notFoundMediaPath);
+                if(_media!.status == MultimediaStatus.started) return  const Center( child: CircularProgressIndicator() );
                 return Image.memory(
-                  _image!,
+                  _media!.data!,
                   fit: BoxFit.cover,
                 );
               }
