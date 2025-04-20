@@ -26,11 +26,9 @@ using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserName;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.VerifyEmail;
 using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
 using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Application.Queries.UserDomain.GetConversationPageUsers;
 using MySocailApp.Application.Queries.UserDomain.GetUserById;
 using MySocailApp.Application.Queries.UserDomain.GetUserByUserName;
 using MySocailApp.Application.Queries.UserDomain.SearchUsers;
-using MySocailApp.Core;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -205,17 +203,7 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpPost]
         public async Task<List<SearchUserResponseDto>> Search(SearchUserDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
-
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(VersionFiltterAttribute))]
-        [ServiceFilter(typeof(UserFilterAttribute))]
-        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
-        [HttpGet]
-        public async Task<List<UserResponseDto>> GetConversationPageUsers([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetConversationPageUsersDto(offset, take, isDescending), cancellationToken);
-
+        
         [HttpGet("{userName}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(UserFilterAttribute))]

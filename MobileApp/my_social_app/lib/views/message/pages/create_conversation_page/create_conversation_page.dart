@@ -1,49 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/on_scroll_bottom.dart';
+import 'package:my_social_app/state/app_state/user_user_conversation_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_user_conversation_state/selectors.dart';
+import 'package:my_social_app/state/app_state/user_user_conversation_state/user_user_conversation_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/message/pages/create_conversation_page/widgets.dart/create_conversation_page_user_items.dart';
+import 'package:my_social_app/views/message/pages/create_conversation_page/widgets.dart/user_user_conversation_items.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
 
-class CreateConversationPage extends StatelessWidget {
+class CreateConversationPage extends StatefulWidget {
   const CreateConversationPage({super.key});
 
   @override
+  State<CreateConversationPage> createState() => _CreateConversationPageState();
+}
+
+class _CreateConversationPageState extends State<CreateConversationPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  void _onScrollBottom() => onScrollBottom(
+    _scrollController,
+    (){
+      final store = StoreProvider.of<AppState>(context,listen: false);
+      getNextPageIfReady(store,selectUserUserConversationPagination(store), const NextUserUserConversationsAction());
+    }
+  );
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onScrollBottom);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScrollBottom);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,UserState?>(
-      onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
-      converter: (store) => store.state.userEntityState.getValue(store.state.loginState!.id),
-      builder: (context,user){
-        if(user == null) return const LoadingView();
-         return Scaffold(
-          appBar: AppBar(
-            leading: const AppBackButtonWidget(),
-            title: AppTitle(
-              title: AppLocalizations.of(context)!.create_conversation_page_title,
+    return Scaffold(
+      appBar: AppBar(
+        leading: const AppBackButtonWidget(),
+        title: AppTitle(
+          title: AppLocalizations.of(context)!.create_conversation_page_title,
+        ),
+      ),
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: StoreConnector<AppState,Iterable<UserUserConversationState>>(
+            onInit: (store) => getNextEntitiesIfNoPage(
+              store,
+              selectUserUserConversationPagination(store),
+              const NextUserUserConversationsAction()
             ),
+            converter: (store) => selectUserUserConversations(store),
+            builder: (context,userUserConversations) => UserUserConversationItems(
+              userUserConversations: userUserConversations,
+            )
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StoreConnector<AppState,Iterable<UserState>>(
-              onInit: (store) => getNextPageIfNoPage(store,user.conversations, NextUserConversationsAction(userId: user.id)),
-              converter: (store) => store.state.selectUserConversations(store.state.loginState!.id),
-              builder: (context,users) => CreateConversationPageUserItems(
-                users: users,
-                pagination: user.conversations,
-                onScrollBottom: (){
-                  final store = StoreProvider.of<AppState>(context,listen: false);
-                  getNextPageIfReady(store,user.conversations, NextUserConversationsAction(userId: user.id));
-                }
-              )
-            ),
-          ),
-        );
-      }
+        ),
+      ),
     );
   }
 }

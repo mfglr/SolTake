@@ -29,7 +29,6 @@ class UserState extends BaseEntity<int> implements Avatar{
   final Pagination<int,Id<int>> solvedQuestions;
   final Pagination<int,Id<int>> unsolvedQuestions;
   final Pagination<int,Id<int>> savedSolutions;
-  final Pagination<int,Id<int>> conversations;
 
   @override
   Multimedia? get avatar => image;
@@ -63,7 +62,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     required this.solvedQuestions,
     required this.unsolvedQuestions,
     required this.savedSolutions,
-    required this.conversations,
     required this.image,
     required this.userImageState
   });
@@ -84,7 +82,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     Pagination<int,Id<int>>? newSolvedQuestions,
     Pagination<int,Id<int>>? newUnsolvedQuestions,
     Pagination<int,Id<int>>? newSavedSolutions,
-    Pagination<int,Id<int>>? newConversations,
     Multimedia? newImage,
     UserImageState? newUserImageState
   }) => UserState(
@@ -105,7 +102,6 @@ class UserState extends BaseEntity<int> implements Avatar{
     solvedQuestions: newSolvedQuestions ?? solvedQuestions,
     unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
     savedSolutions: newSavedSolutions ?? savedSolutions,
-    conversations: newConversations ?? conversations,
     image: newImage ?? image,
     userImageState: newUserImageState ?? userImageState
   );
@@ -233,21 +229,6 @@ class UserState extends BaseEntity<int> implements Avatar{
 
   UserState addSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(Id(id: saveId)));
   UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
-
-  //converations
-  UserState startLoadingNextConversations() =>
-    _optional(newConversations: conversations.startLoadingNext());
-  UserState addNextConversations(Iterable<int> ids) =>
-    _optional(newConversations: conversations.addNextPage(ids.map((e) => Id(id: e))));
-  UserState stopLoadingNextConversations() =>
-    _optional(newConversations: conversations.stopLoadingNext());
-
-  UserState addConversation(int id) =>
-    _optional(newConversations: conversations.prependOne(Id(id: id)));
-  UserState addConversationInOrder(int id) =>
-    _optional(newConversations: conversations.addInOrder(Id(id: id)));
-  UserState removeConversation(int id) =>
-    _optional(newConversations: conversations.removeOne(id));
 
   UserState updateUserName(String userName) => 
     _optional(newUserName: userName);

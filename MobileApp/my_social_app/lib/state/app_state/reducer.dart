@@ -25,6 +25,7 @@ import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart'
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_message_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/reducers.dart';
+import 'package:my_social_app/state/app_state/user_user_conversation_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/reducers.dart';
 import 'package:redux/redux.dart';
@@ -40,6 +41,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   messageConnectionEntityState: messageConnectionsReducers(prev.messageConnectionEntityState,action),
   stories: storyReducers(prev.stories,action),
   userUserBlocks: userUserBlockReducers(prev.userUserBlocks, action),
+  userUserConversations: userUserConversationReducers(prev.userUserConversations,action),
 
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userMessageState: userMessageReducers(prev.userMessageState, action),

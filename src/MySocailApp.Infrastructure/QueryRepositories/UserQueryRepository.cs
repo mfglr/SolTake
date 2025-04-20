@@ -58,19 +58,6 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 cancellationToken
             );
 
-        public Task<List<UserResponseDto>> GetCreateConversationPageUsersAsync(int? forUserId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(
-                forUserId,
-                page,
-                user =>
-                    (
-                        _context.UserUserSearchs.Any(userSearch => userSearch.SearcherId == forUserId && userSearch.SearchedId == user.Id) ||
-                        _context.UserUserFollows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id)
-                    ) &&
-                    user.Id != forUserId,
-                cancellationToken
-            );
-
         public Task<List<SearchUserResponseDto>> SearchUserAsync(string key, int? forUserId, IPage page, CancellationToken cancellationToken)
             => _context.Users
                 .AsNoTracking()

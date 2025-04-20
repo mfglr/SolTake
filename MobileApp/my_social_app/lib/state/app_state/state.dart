@@ -23,6 +23,7 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/user_user_block_state.dart';
+import 'package:my_social_app/state/app_state/user_user_conversation_state/user_user_conversation_state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
@@ -38,6 +39,7 @@ class AppState{
   final Pagination<int,SolutionUserSaveState> solutionUserSaves;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
   final Pagination<int,UserUserBlockState> userUserBlocks;
+  final Pagination<int,UserUserConversationState> userUserConversations;
 
   final EntityState<int,StoryState> stories;
   
@@ -70,6 +72,7 @@ class AppState{
     required this.solutionUserSaves,
     required this.messageConnectionEntityState,
     required this.userUserBlocks,
+    required this.userUserConversations,
 
     required this.stories,
 
@@ -103,6 +106,7 @@ class AppState{
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
+    userUserConversations: Pagination.init(usersPerPage, true),
 
     stories: EntityState(),
 
@@ -158,11 +162,6 @@ class AppState{
 
   //select users
   UserState? get currentUser => userEntityState.getValue(loginState!.id);
-  
-  Iterable<UserState> selectUserConversations(int userId)
-    => userEntityState
-        .getValue(userId)!.conversations.values
-        .map((id) => userEntityState.getValue(id.id)!);
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions

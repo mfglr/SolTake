@@ -236,20 +236,3 @@ void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispat
   }
   next(action);
 }
-
-void nextUserConvesationsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserConversationsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.conversations;
-    UserService()
-      .getCreateConversationPageUsers(pagination.next)
-      .then((users){
-        store.dispatch(NextUserConversationsSuccessAction(userId: store.state.loginState!.id, ids: users.map((e) => e.id)));
-        store.dispatch(AddUsersAction(users: users.map((e) => e.toUserState())));
-      })
-      .catchError((e){
-        store.dispatch(NextUserConversationsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}

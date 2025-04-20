@@ -26,6 +26,7 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_message_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/user_user_conversation_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
@@ -42,6 +43,7 @@ final store = Store(
     solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
+    userUserConversations: Pagination.init(usersPerPage, true),
 
     stories: EntityState(),
 
@@ -90,6 +92,10 @@ final store = Store(
     firstSearchQuestionsMiddleware,
     nextSearchQuestionsMiddleware,
     //search questions middleware
+
+    //user user conversations middlewares
+    nextUserUserConversationsMiddleware,
+    //user user conversations middlewares
 
     //user user searchs middlewares
     createUserUserSearchMiddleware,
@@ -158,7 +164,6 @@ final store = Store(
     nextUserQuestionsMiddleware,
     nextUserSolvedQuestionsMiddleware,
     nextUserUnsolvedQuestionsMiddleware,
-    nextUserConvesationsMiddleware,
 
     updateUserNameMiddleware,
     updateNameMiddleware,

@@ -64,7 +64,6 @@ class User{
         savedSolutions: Pagination.init(solutionsPerPage, true),
         followers: Pagination.init(usersPerPage,true),
         followeds: Pagination.init(usersPerPage,true),
-        conversations: Pagination.init(usersPerPage, true),
         userImageState: null
       );
 }
