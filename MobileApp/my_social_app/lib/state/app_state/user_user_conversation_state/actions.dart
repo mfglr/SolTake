@@ -3,20 +3,26 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/user_user_conversation_state.dart';
 
 @immutable
-class UserUserConversationActions extends AppAction{
-  const UserUserConversationActions();
+class UserUserConversationAction extends AppAction{
+  const UserUserConversationAction();
 }
 
 @immutable
-class NextUserUserConversationsAction extends UserUserConversationActions{
+class RemoveUserUserConversationAction extends UserUserConversationAction{
+  final int userId;
+  const RemoveUserUserConversationAction({required this.userId});
+}
+
+@immutable
+class NextUserUserConversationsAction extends UserUserConversationAction{
   const NextUserUserConversationsAction();
 }
 @immutable
-class NextUserUserConversationsSuccessAction extends UserUserConversationActions{
+class NextUserUserConversationsSuccessAction extends UserUserConversationAction{
   final Iterable<UserUserConversationState> conversations;
   const NextUserUserConversationsSuccessAction({required this.conversations});
 }
 @immutable
-class NextUserUserConversationsFailedAction extends UserUserConversationActions{
+class NextUserUserConversationsFailedAction extends UserUserConversationAction{
   const NextUserUserConversationsFailedAction();
 }

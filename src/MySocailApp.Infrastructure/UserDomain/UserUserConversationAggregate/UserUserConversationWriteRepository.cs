@@ -21,5 +21,14 @@ namespace MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate
 
         public void DeleteRange(IEnumerable<UserUserConversation> conversations)
             => _context.UserUserConversations.RemoveRange(conversations);
+
+        public Task<List<UserUserConversation>> GetListAsync(int userId0, int userId1, CancellationToken cancellationToken)
+            => _context.UserUserConversations
+                .Where(
+                    x => 
+                        (x.ConverserId == userId0 && x.ListenerId == userId1) ||
+                        (x.ConverserId == userId1 && x.ListenerId == userId0)
+                )
+                .ToListAsync(cancellationToken);
     }
 }

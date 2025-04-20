@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/action.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/selectors.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/user_user_block_state.dart';
+import 'package:my_social_app/state/app_state/user_user_conversation_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
 import 'package:redux/redux.dart';
 
@@ -24,6 +25,7 @@ void blockUserMiddleware(Store<AppState> store, action, NextDispatcher next){
         ));
         store.dispatch(RemoveUserUserSearchAction(searchedId: action.userId));
         store.dispatch(RemoveSearchUserAction(userId: action.userId));
+        store.dispatch(RemoveUserUserConversationAction(userId: action.userId));
       });
   }
   next(action);
