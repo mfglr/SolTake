@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:multimedia_grid/multimedia_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
-import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_vote_type.dart';
@@ -38,7 +37,6 @@ class SolutionVotedNotificationItem extends StatelessWidget {
         children: [
           MultimediaGrid(
             state: notification.solutionMedia,
-            blobServiceUrl: AppClient.blobService,
             noMediaPath: noMediaAssetPath,
             notFoundMediaPath: noMediaAssetPath
           ),

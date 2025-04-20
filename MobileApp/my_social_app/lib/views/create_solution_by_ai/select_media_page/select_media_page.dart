@@ -3,7 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:multimedia_grid/multimedias_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
-import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -39,7 +38,6 @@ class SelectMediaPage extends StatelessWidget {
                 children: [
                   MultimediasGrid(
                     medias: question.medias,
-                    blobServiceUrl: AppClient.blobService,
                     noMediaPath: noMediaAssetPath,
                     notFoundMediaPath: noMediaAssetPath,
                     onTap: (index){

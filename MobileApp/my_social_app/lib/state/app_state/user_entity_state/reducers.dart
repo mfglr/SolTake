@@ -10,6 +10,16 @@ EntityState<int,UserState> addUserReducer(EntityState<int,UserState> prev,AddUse
 EntityState<int,UserState> addUsersReducer(EntityState<int,UserState> prev,AddUsersAction action)
   => prev.appendMany(action.users);
 
+//image
+EntityState<int,UserState> loadUserImageReducer(EntityState<int,UserState> prev,LoadUserImageAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.startImage());
+EntityState<int,UserState> loadUserImageSuccessReducer(EntityState<int,UserState> prev,LoadUserImageSuccessAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.successImage(action.data));
+EntityState<int,UserState> loadUserImageFailedReducer(EntityState<int,UserState> prev, LoadUserImageFailedAction action)
+  => prev.updateOne(prev.getValue(action.userId)!.failedImage());
+//image
+
+
 //following ************************************* following//
 
 //followers
@@ -110,20 +120,6 @@ EntityState<int,UserState> nextUnsolvedQuestionsSuccessReducer(EntityState<int,U
 EntityState<int,UserState> nextUnsolvedQuestionsFailedReducer(EntityState<int,UserState> prev, NextUserUnsolvedQuestionsFailedAction action)
   => prev.updateOne(prev.getValue(action.userId)!.stopLoadingNextUnsolvedQuestion());
 
-// //conversations
-// EntityState<num,UserState> nextConversationsReducer(EntityState<num,UserState> prev,NextUserConversationsAction action)
-//   => prev.startLoadingNextConversations(action.userId);
-// EntityState<num,UserState> nextConversationsSuccessReducer(EntityState<num,UserState> prev,NextUserConversationsSuccessAction action)
-//   => prev.addNextConversations(action.userId,action.ids);
-// EntityState<num,UserState> nextConversationsFailedRedcer(EntityState<num,UserState> prev,NextUserConversationsFailedAction action)
-//  => prev.stopLoadingNextConversations(action.userId);
-
-// EntityState<num,UserState> addConversationReducer(EntityState<num,UserState> prev, AddUserConversationAction action)
-//   => prev.addConversation(action.userId,action.id);
-// EntityState<num,UserState> addConversationInOrderReducer(EntityState<num,UserState> prev,AddUserConversationInOrderAction action)
-//   => prev.addConversationInOrder(action.userId, action.id);
-// EntityState<num,UserState> removeConversationReducer(EntityState<num,UserState> prev, RemoveUserConversationAction action)
-//   => prev.removeConversation(action.userId, action.id);
 
 EntityState<int,UserState> updateUserNameReducer(EntityState<int,UserState> prev,UpdateUserNameSuccessAction action)
   => prev.updateOne(prev.getValue(action.userId)!.updateUserName(action.userName));
@@ -147,6 +143,12 @@ EntityState<int,UserState> changeUserImageRateReducer(EntityState<int,UserState>
 Reducer<EntityState<int,UserState>> userEntityStateReducers = combineReducers<EntityState<int,UserState>>([
   TypedReducer<EntityState<int,UserState>,AddUserAction>(addUserReducer).call,
   TypedReducer<EntityState<int,UserState>,AddUsersAction>(addUsersReducer).call,
+
+  //image
+  TypedReducer<EntityState<int,UserState>,LoadUserImageAction>(loadUserImageReducer).call,
+  TypedReducer<EntityState<int,UserState>,LoadUserImageSuccessAction>(loadUserImageSuccessReducer).call,
+  TypedReducer<EntityState<int,UserState>,LoadUserImageFailedAction>(loadUserImageFailedReducer).call,
+  //image
 
   //followers
   TypedReducer<EntityState<int,UserState>,NextUserFollowersAction>(nextFollowersReducer).call,

@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
@@ -109,6 +110,12 @@ class UserState extends BaseEntity<int> implements Avatar{
     image: newImage ?? image,
     userImageState: newUserImageState ?? userImageState
   );
+
+  //image
+  UserState startImage() => _optional(newImage: image?.start());
+  UserState successImage(Uint8List data) => _optional(newImage: image?.success(data));
+  UserState failedImage() => _optional(newImage: image?.failed());
+  //image
 
   //followers
   UserState startLoadingNextFollowers() => 

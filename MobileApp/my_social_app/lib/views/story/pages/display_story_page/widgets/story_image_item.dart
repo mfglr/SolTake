@@ -1,7 +1,4 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:multimedia/models/multimedia_status.dart';
 import 'package:my_social_app/helpers/stoppable_timer.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/views/shared/owner_widget/owner_widget.dart';
@@ -38,9 +35,6 @@ class StoryImageItem extends StatefulWidget {
 }
 
 class _StoryImageItemState extends State<StoryImageItem> {
-  late MultimediaStatus _status;
-  late final Uint8List _image;
-  late final String url;
   late final StoppableTimer _timer;
   final int _interval = 34;
   double _rate = 0;
@@ -59,18 +53,7 @@ class _StoryImageItemState extends State<StoryImageItem> {
         setState(() => _rate = tick / lastTick);
       }
     );
-
-    _status = MultimediaStatus.started;
-    url = "${widget.baseUrl}/${widget.story.media.containerName}/${widget.story.media.blobName}";
     
-    DefaultCacheManager()
-      .getSingleFile(url,headers: widget.headers)
-      .then((file) => file.readAsBytes())
-      .then((list) => setState(() {
-        _image = list;
-        _status = MultimediaStatus.done;
-      }))
-      .catchError((_) => setState(() { _status = MultimediaStatus.notFound; }));
     super.initState();
   }
 
@@ -88,22 +71,7 @@ class _StoryImageItemState extends State<StoryImageItem> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Builder(
-            builder: (context){
-              if(_status == MultimediaStatus.done){
-                return Image.memory(
-                  _image,
-                  fit: BoxFit.contain,
-                  width: MediaQuery.of(context).size.width,
-                );
-              }
-              if (_status == MultimediaStatus.started) return const Center(child: CircularProgressIndicator());
-              return Image.asset(
-                widget.notFoundImagePath,
-                fit: BoxFit.contain
-              );
-            }
-          ),
+          
           Row(
             children: [
               Expanded(

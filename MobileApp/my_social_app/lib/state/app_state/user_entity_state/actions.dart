@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
@@ -27,6 +28,42 @@ class AddUsersAction extends AppAction{
   final Iterable<UserState> users;
   const AddUsersAction({required this.users});
 }
+
+//image
+@immutable
+class LoadUserImageAction extends AppAction{
+  final int userId;
+  const LoadUserImageAction({required this.userId});
+}
+@immutable
+class LoadUserImageSuccessAction extends AppAction{
+  final int userId;
+  final Uint8List data;
+  const LoadUserImageSuccessAction({required this.userId,required this.data});
+}
+@immutable
+class LoadUserImageFailedAction extends AppAction{
+  final int userId;
+  const LoadUserImageFailedAction({required this.userId});
+}
+
+@immutable
+class StartUserImageAction extends AppAction{
+  final int userId;
+  const StartUserImageAction({required this.userId});
+}
+@immutable
+class DoneUserImageAction extends AppAction{
+  final int userId;
+  final Uint8List data;
+  const DoneUserImageAction({required this.userId, required this.data});
+}
+@immutable
+class NotFoundUserImageAction extends AppAction{
+  final int userId;
+  const NotFoundUserImageAction({required this.userId});
+}
+//image
 
 @immutable
 class MarkUserQuestionAsSolvedAction extends AppAction{

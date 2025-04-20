@@ -1,5 +1,6 @@
 enum MultimediaStatus{
+  notStarted,
   started,
-  done,
-  notFound
+  success,
+  failed
 }

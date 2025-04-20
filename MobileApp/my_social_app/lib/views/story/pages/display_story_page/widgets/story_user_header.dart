@@ -17,6 +17,7 @@ class StoryUserHeader extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(right: 5),
           child: UserImageWidget(
+            userId: story.userId,
             image: story.image,
             diameter: 50
           ),

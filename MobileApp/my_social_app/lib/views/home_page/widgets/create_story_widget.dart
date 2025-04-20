@@ -38,6 +38,7 @@ class CreateStoryWidget extends StatelessWidget {
                 alignment: AlignmentDirectional.center,
                 children: [
                   UserImageWidget(
+                    userId: user.id,
                     image: user.image,
                     diameter: 80,
                   ),

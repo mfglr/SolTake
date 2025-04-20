@@ -13,6 +13,7 @@ class MultimediaPlayer extends StatelessWidget {
   final bool displayVolume;
   final bool displayPlayButton;
   final bool play;
+  final void Function() onInit;
 
   const MultimediaPlayer({
     super.key,
@@ -20,10 +21,11 @@ class MultimediaPlayer extends StatelessWidget {
     required this.blobServiceUrl,
     required this.notFoundImagePath,
     required this.noImagePath,
+    required this.onInit,
     this.displayRemaningDuration = true,
     this.displayVolume = true,
     this.displayPlayButton = true,
-    this.play = false
+    this.play = false,
   });
 
   @override
@@ -31,9 +33,9 @@ class MultimediaPlayer extends StatelessWidget {
     return media.multimediaType == MultimediaType.image 
       ? MultimediaImagePlayer(
           media: media,
-          blobServiceUrl: blobServiceUrl,
           notFoundImagePath: notFoundImagePath,
-          noImagePath: noImagePath
+          noImagePath: noImagePath,
+          onInit: onInit,
         )
       : MultimediaVideoPlayer(
           media: media,

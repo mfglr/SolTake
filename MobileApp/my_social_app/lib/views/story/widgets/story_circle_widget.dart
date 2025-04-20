@@ -29,6 +29,7 @@ class StoryCircleWidget extends StatelessWidget {
             color: storyCircle.isViewed ? Colors.grey : Colors.deepPurple[400],
           ),
           child: UserImageWidget(
+            userId: storyCircle.userId,
             image: storyCircle.image,
             diameter: diameter - 10,
             onPressed: (){

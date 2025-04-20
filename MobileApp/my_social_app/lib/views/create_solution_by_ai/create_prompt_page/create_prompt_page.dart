@@ -4,7 +4,6 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:multimedia_slider/widgets/multimedia_image_player.dart';
 import 'package:my_social_app/constants/assets.dart';
-import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/frame_catcher.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/create_prompt_page_texts.dart';
@@ -70,7 +69,7 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
                 if(widget.media.multimediaType == MultimediaType.image){
                   return MultimediaImagePlayer(
                     media: widget.media,
-                    blobServiceUrl: AppClient.blobService,
+                    onInit: (){},
                     notFoundImagePath: noMediaAssetPath,
                     noImagePath: noMediaAssetPath
                   );

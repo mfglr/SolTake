@@ -1,23 +1,19 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_status.dart';
 
 class MultimediaImagePlayer extends StatefulWidget {
-  final String blobServiceUrl;
   final Multimedia? media;
   final String notFoundImagePath;
   final String noImagePath;
-  final Map<String,String>? headers;
+  final void Function() onInit;
   
   const MultimediaImagePlayer({
     super.key,
     required this.media,
-    required this.blobServiceUrl,
     required this.notFoundImagePath,
     required this.noImagePath,
-    this.headers
+    required this.onInit
   });
 
   @override
@@ -25,23 +21,10 @@ class MultimediaImagePlayer extends StatefulWidget {
 }
 
 class _MultimediaImagePlayerState extends State<MultimediaImagePlayer> {
-  late MultimediaStatus _status;
-  late final Uint8List _image;
-  late final String url;
- 
+  
   @override
   void initState() {
-    _status = MultimediaStatus.started;
-    url = "${widget.blobServiceUrl}/${widget.media?.containerName}/${widget.media?.blobName}";
-    
-    DefaultCacheManager()
-      .getSingleFile(url,headers: widget.headers)
-      .then((file) => file.readAsBytes())
-      .then((list) => setState(() {
-        _image = list;
-        _status = MultimediaStatus.done;
-      }))
-      .catchError((_) => setState(() { _status = MultimediaStatus.notFound; }));
+    widget.onInit();
     super.initState();
   }
 
@@ -56,14 +39,14 @@ class _MultimediaImagePlayerState extends State<MultimediaImagePlayer> {
             fit: BoxFit.contain
           );
         }
-        if(_status == MultimediaStatus.done){
+        if(widget.media!.status == MultimediaStatus.success){
           return Image.memory(
             width: MediaQuery.of(context).size.width,
-            _image,
+            widget.media!.data!,
             fit: BoxFit.contain
           );
         }
-        if (_status == MultimediaStatus.started) return const Center(child: CircularProgressIndicator());
+        if (widget.media!.status == MultimediaStatus.started) return const Center(child: CircularProgressIndicator());
         return Image.asset(
           widget.notFoundImagePath,
           fit: BoxFit.contain

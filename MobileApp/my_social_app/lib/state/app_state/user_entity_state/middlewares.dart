@@ -1,3 +1,5 @@
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:multimedia/models/multimedia_status.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/follow_service.dart';
@@ -13,6 +15,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
@@ -34,6 +37,23 @@ void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher ne
       UserService()
         .getByUserName(action.userName)
         .then((user) => store.dispatch(AddUserAction(user: user.toUserState())));
+    }
+  }
+  next(action);
+}
+
+void loadUserImageMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is LoadUserImageAction){
+    final image = selectUserImage(store,action.userId);
+    if(image != null && image.status == MultimediaStatus.notStarted){
+      DefaultCacheManager()
+        .getSingleFile(image.url(AppClient.blobService))
+        .then((file) => file.readAsBytes())
+        .then((list) => store.dispatch(LoadUserImageSuccessAction(userId: action.userId,data: list)))
+        .catchError((e){
+          store.dispatch(LoadUserImageFailedAction(userId: action.userId));
+          throw e;
+        });
     }
   }
   next(action);

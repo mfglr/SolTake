@@ -27,7 +27,7 @@ class AppAvatar extends StatelessWidget {
         builder: (context,currentUser) => 
           avatar.avatarId == currentUser.id
             ? ProfileImageWidget(user: currentUser, diameter: diameter)
-            : UserImageWidget(image: avatar.avatar, diameter: diameter)
+            : UserImageWidget(userId: avatar.avatarId, image: avatar.avatar, diameter: diameter)
       ),
     );
   }

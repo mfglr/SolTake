@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia_status.dart';
@@ -20,7 +19,9 @@ class Multimedia{
   final MultimediaStatus status;
 
   double get aspectRatio => width / height;
-  
+  String url(String blobService) => "$blobService/$containerName/$blobName";
+  String frameUrl(String blobService) => "$blobService/$containerName/$blobNameOfFrame";
+
   const Multimedia({
     required this.containerName,
     required this.blobName,
@@ -31,7 +32,7 @@ class Multimedia{
     required this.duration,
     required this.multimediaType,
     this.data,
-    this.status = MultimediaStatus.started
+    this.status = MultimediaStatus.notStarted
   });
 
   factory Multimedia.fromJson(Map<String, dynamic> json) => _$MultimediaFromJson(json);
@@ -50,7 +51,7 @@ class Multimedia{
       status: MultimediaStatus.started
     );
 
-  Multimedia done(Uint8List data) =>
+  Multimedia success(Uint8List data) =>
     Multimedia(
       containerName: containerName,
       blobName: blobName,
@@ -60,11 +61,11 @@ class Multimedia{
       width: width,
       duration: duration,
       multimediaType: multimediaType,
-      status: MultimediaStatus.done,
+      status: MultimediaStatus.success,
       data: data
     );
 
-  Multimedia notFound() =>
+  Multimedia failed() =>
     Multimedia(
       containerName: containerName,
       blobName: blobName,
@@ -74,6 +75,6 @@ class Multimedia{
       width: width,
       duration: duration,
       multimediaType: multimediaType,
-      status: MultimediaStatus.notFound
+      status: MultimediaStatus.failed
     );
 }

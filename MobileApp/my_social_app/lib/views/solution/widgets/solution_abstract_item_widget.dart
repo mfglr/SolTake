@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia_grid/multimedia_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
-import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 class SolutionAbstractItemWidget extends StatelessWidget {
@@ -25,7 +24,6 @@ class SolutionAbstractItemWidget extends StatelessWidget {
           )
         : MultimediaGrid(
             state: solution.medias.firstOrNull,
-            blobServiceUrl: AppClient.blobService,
             noMediaPath: noMediaAssetPath,
             notFoundMediaPath: noMediaAssetPath,
             onTap: () => onTap(solution.id),

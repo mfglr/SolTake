@@ -6,7 +6,6 @@ import 'package:video_player/video_player.dart';
 class MultimediaVideoPlayer extends StatefulWidget {
   final Multimedia media;
   final String blobServiceUrl;
-  final Map<String,String>? headers;
   final bool displayRemaningDuration;
   final bool displayVolume;
   final bool displayPlayButton;
@@ -16,7 +15,6 @@ class MultimediaVideoPlayer extends StatefulWidget {
     super.key,
     required this.media,
     required this.blobServiceUrl,
-    this.headers,
     this.displayRemaningDuration = true,
     this.displayVolume = true,
     this.displayPlayButton = true,
@@ -43,7 +41,7 @@ class _MultimediaVideoPlayerState extends State<MultimediaVideoPlayer> {
     _remaningDuration = widget.media.duration.round();
     _url = Uri.parse("${widget.blobServiceUrl}/${widget.media.containerName}/${widget.media.blobName}");
      
-    _controller = VideoPlayerController.networkUrl(_url, httpHeaders: widget.headers ?? const <String,String>{});
+    _controller = VideoPlayerController.networkUrl(_url);
     _controller.addListener(_setRemainingDuration);
     _controller.setLooping(false);
     if(!widget.play){

@@ -4,7 +4,6 @@ import 'package:multimedia_grid/multimedia_grid.dart';
 
 class MultimediasGridForMessage extends StatelessWidget {
   final Iterable<Multimedia> medias;
-  final String blobServiceUrl;
   final String noMediaPath;
   final String notFoundMediaPath;
   final void Function(int)? onTap;
@@ -12,7 +11,6 @@ class MultimediasGridForMessage extends StatelessWidget {
   const MultimediasGridForMessage({
     super.key,
     required this.medias,
-    required this.blobServiceUrl,
     required this.noMediaPath,
     required this.notFoundMediaPath,
     this.onTap,
@@ -24,7 +22,6 @@ class MultimediasGridForMessage extends StatelessWidget {
     if(medias.length == 1){
       return MultimediaGrid(
         state: topFourMedias.first,
-        blobServiceUrl: blobServiceUrl,
         noMediaPath: noMediaPath,
         notFoundMediaPath: notFoundMediaPath,
         aspectRatio: topFourMedias.first.aspectRatio,
@@ -48,7 +45,6 @@ class MultimediasGridForMessage extends StatelessWidget {
               children: [
                 MultimediaGrid(
                   state: topFourMedias.elementAt(index),
-                  blobServiceUrl: blobServiceUrl,
                   noMediaPath: noMediaPath,
                   notFoundMediaPath: notFoundMediaPath,
                   aspectRatio: 1,
@@ -76,7 +72,6 @@ class MultimediasGridForMessage extends StatelessWidget {
           }
           return MultimediaGrid(
             state: topFourMedias.elementAt(index),
-            blobServiceUrl: blobServiceUrl,
             noMediaPath: noMediaPath,
             notFoundMediaPath: notFoundMediaPath,
             aspectRatio: 1,

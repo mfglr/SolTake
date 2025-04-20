@@ -3,18 +3,16 @@ import 'package:circles_pagination/circles_pagination.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:multimedia/models/multimedia_type.dart';
-import 'package:multimedia_slider/widgets/multimedia_image_player.dart';
-import 'package:multimedia_slider/widgets/multimedia_video_player.dart';
+import 'package:multimedia_slider/widgets/multimedia_player.dart';
 
 class MultimediaSlider extends StatefulWidget {
   final Iterable<Multimedia> medias;
   final String blobServiceUrl;
-  final Map<String,String>? headers;
   final String notFoundMediaPath;
   final String noMediaPath;
   final int activeIndex;
   final Widget Function(int index)? child;
+  final void Function(Multimedia) onInit;
   
   const MultimediaSlider({
     super.key,
@@ -22,7 +20,7 @@ class MultimediaSlider extends StatefulWidget {
     required this.blobServiceUrl,
     required this.notFoundMediaPath,
     required this.noMediaPath,
-    this.headers,
+    required this.onInit,
     this.activeIndex = 0,
     this.child
   });
@@ -67,22 +65,13 @@ class _MultimediaSliderState extends State<MultimediaSlider> {
             .mapIndexed((index,media) => Stack(
               alignment: AlignmentDirectional.center,
               children: [
-                Builder(builder: (context){
-                  if(media.multimediaType == MultimediaType.video){
-                    return MultimediaVideoPlayer(
-                      media: media,
-                      blobServiceUrl: widget.blobServiceUrl,
-                      headers: widget.headers,
-                    );
-                  }
-                  return MultimediaImagePlayer(
-                    media: media,
-                    notFoundImagePath: widget.notFoundMediaPath,
-                    noImagePath: widget.noMediaPath,
-                    blobServiceUrl: widget.blobServiceUrl,
-                    headers: widget.headers,
-                  );
-                }),
+                MultimediaPlayer(
+                  blobServiceUrl: widget.blobServiceUrl,
+                  media: media,
+                  noImagePath: widget.noMediaPath,
+                  notFoundImagePath: widget.notFoundMediaPath,
+                  onInit: () => widget.onInit(media),
+                ),
                 if(widget.child != null) widget.child!(index)
               ],
             ))

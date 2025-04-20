@@ -23,9 +23,9 @@ class ProfileImageWidget extends StatelessWidget {
       onTap: onPressed,
       child: Builder(
         builder: (context){
-          if(user.userImageState == null) return UserImageWidget(image: user.image,diameter: diameter);
-          if(user.userImageState!.status == UploadStatus.success) return UserImageWidget(image: user.image,diameter: diameter);
-          if(user.userImageState!.status == UploadStatus.failed) return UserImageWidget(image: user.image,diameter: diameter);
+          if(user.userImageState == null) return UserImageWidget(userId: user.id, image: user.image,diameter: diameter);
+          if(user.userImageState!.status == UploadStatus.success) return UserImageWidget(userId: user.id,image: user.image,diameter: diameter);
+          if(user.userImageState!.status == UploadStatus.failed) return UserImageWidget(userId: user.id,image: user.image,diameter: diameter);
           
           return Stack(
             alignment: AlignmentDirectional.center,

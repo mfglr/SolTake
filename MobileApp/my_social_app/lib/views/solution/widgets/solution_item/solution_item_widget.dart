@@ -91,6 +91,9 @@ class SolutionItemWidget extends StatelessWidget {
               blobServiceUrl: AppClient.blobService,
               notFoundMediaPath: noMediaAssetPath,
               noMediaPath: noMediaAssetPath,
+              onInit: (media){
+                
+              },
             ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
