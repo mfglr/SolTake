@@ -12,6 +12,7 @@ using MySocailApp.Domain.SolutionUserVoteAggregate;
 using MySocailApp.Domain.StoryDomain;
 using MySocailApp.Domain.UserAggregate;
 using MySocailApp.Domain.UserUserBlockAggregate;
+using MySocailApp.Domain.UserUserConversationAggregate;
 using MySocailApp.Domain.UserUserFollowAggregate;
 using MySocailApp.Domain.UserUserSearchAggregate;
 
@@ -36,7 +37,8 @@ namespace MySocailApp.Domain
                 .AddUserUserBlockAggregateServices()
                 .AddUserUserFollowAggregate()
                 .AddUserUserSearchDomainServices()
-                
+                .AddUserUserConversationDomainServices()
+
                 .AddStoryDomainServices()
                 .AddMessageDomainServices();
     }

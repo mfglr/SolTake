@@ -6,7 +6,7 @@ using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserFollowedDomainEventConsumers.NotificationAggregate
+namespace MySocailApp.Application.DomainEventConsumers.UserUserFollowCreatedDomainEventConsumers.NotificationAggregate
 {
     public class CreateUserFollowedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<UserUserFollowCreatedDomainEvent>
     {
