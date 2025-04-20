@@ -21,12 +21,5 @@ namespace MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate
 
         public void DeleteRange(IEnumerable<UserUserConversation> conversations)
             => _context.UserUserConversations.RemoveRange(conversations);
-
-        public Task<bool> ExistAsync(int converserId, int listenerId, CancellationToken cancellationToken)
-            => _context.UserUserConversations
-                .AsNoTracking()
-                .AnyAsync(x => x.ConverserId == converserId &&  x.ListenerId == listenerId,cancellationToken);
-
-        
     }
 }

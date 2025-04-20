@@ -4,6 +4,7 @@ using MySocailApp.Infrastructure.UserDomain.PrivacyPolicyAggreagate;
 using MySocailApp.Infrastructure.UserDomain.TermsOfUseAggregate;
 using MySocailApp.Infrastructure.UserDomain.UserAggregate;
 using MySocailApp.Infrastructure.UserDomain.UserUserBlockeAggregate;
+using MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate;
 using MySocailApp.Infrastructure.UserDomain.UserUserSearchAggregate;
 
 namespace MySocailApp.Infrastructure.UserDomain
@@ -17,6 +18,7 @@ namespace MySocailApp.Infrastructure.UserDomain
                 .AddTermsOfUseAggregate()
                 .AddUserAggregate()
                 .AddUserUserSearchAggregate()
-                .AddUserUserBlockAggregateInfrastructureServices();
+                .AddUserUserBlockAggregateInfrastructureServices()
+                .AddUserUserConversationAggregateInfrastructureServices();
     }
 }

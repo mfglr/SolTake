@@ -8,7 +8,7 @@ using MySocailApp.Application.Queries.UserUserConversation.GetUserUserConversati
 
 namespace MySocailApp.Api.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(UserFilterAttribute))]
@@ -20,6 +20,7 @@ namespace MySocailApp.Api.Controllers.Api
     {
         private readonly ISender _sender = sender;
 
+        [HttpGet]
         public async Task<List<UserUserConversationResponseDto>> Get([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetUserUserConversationsDto(offset, take, isDescending),cancellationToken);
     }

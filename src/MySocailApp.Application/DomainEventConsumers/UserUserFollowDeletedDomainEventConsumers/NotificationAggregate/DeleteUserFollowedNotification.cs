@@ -3,7 +3,7 @@ using MySocailApp.Core;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUnfollowedDomainEventConsumers.NotificationAggregate
+namespace MySocailApp.Application.DomainEventConsumers.UserUserFollowDeletedDomainEventConsumers.NotificationAggregate
 {
     public class DeleteUserFollowedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserUserFollowDeletedDomainEvent>
     {
@@ -12,7 +12,7 @@ namespace MySocailApp.Application.DomainEventConsumers.UserUnfollowedDomainEvent
 
         public async Task Handle(UserUserFollowDeletedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var n = await _notificationWriteRepository.GetUserFollowedNotificationAsync(notification.FollowerId, notification.FollowedId, cancellationToken);
+            var n = await _notificationWriteRepository.GetUserFollowedNotificationAsync(notification.UserUserFollow.FollowerId, notification.UserUserFollow.FollowedId, cancellationToken);
             if (n == null) return;
 
             _notificationWriteRepository.Delete(n);

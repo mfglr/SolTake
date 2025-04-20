@@ -14,6 +14,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
 
         public Task<List<UserUserConversationResponseDto>> GetAsync(int userId, IPage page, CancellationToken cancellationToken)
             => _context.UserUserConversations
+                .AsNoTracking()
                 .Where(x => x.ConverserId == userId)
                 .ToPage(page)
                 .ToUserUserConversationResponseDto(_context)
