@@ -26,3 +26,17 @@ class NextUserUserConversationsSuccessAction extends UserUserConversationAction{
 class NextUserUserConversationsFailedAction extends UserUserConversationAction{
   const NextUserUserConversationsFailedAction();
 }
+
+@immutable
+class FirstUserUserConversationsAction extends UserUserConversationAction{
+  const FirstUserUserConversationsAction();
+}
+@immutable
+class FirstUserUserConversationsSuccessAction extends UserUserConversationAction{
+  final Iterable<UserUserConversationState> conversations;
+  const FirstUserUserConversationsSuccessAction({required this.conversations});
+}
+@immutable
+class FirstUserUserConversationsFailedAction extends UserUserConversationAction{
+  const FirstUserUserConversationsFailedAction();
+}

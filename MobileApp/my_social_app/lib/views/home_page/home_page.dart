@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         final store = StoreProvider.of<AppState>(context,listen: false);
         getPrevPageIfReady(store, store.state.homePageQuestions, const FirstHomeQuestionsAction());
         store.dispatch(const GetStoriesAction());
-        return store.onChange.map((state) => state.homePageQuestions).firstWhere((x) => !x.loadingPrev);
+        return store.onChange.map((state) => state.homePageQuestions).firstWhere((x) => !x.loadingNext);
       },
       child: Scaffold(
         appBar: AppBar(

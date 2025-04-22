@@ -44,27 +44,40 @@ class _CreateConversationPageState extends State<CreateConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: AppTitle(
-          title: AppLocalizations.of(context)!.create_conversation_page_title,
+    return RefreshIndicator(
+      onRefresh: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        getPrevPageIfReady(store, store.state.homePageQuestions, const FirstUserUserConversationsAction());
+        return store.onChange.map((state) => state.userUserConversations).firstWhere((x) => !x.loadingNext);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: AppTitle(
+            title: AppLocalizations.of(context)!.create_conversation_page_title,
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: StoreConnector<AppState,Iterable<UserUserConversationState>>(
-            onInit: (store) => getNextEntitiesIfNoPage(
-              store,
-              selectUserUserConversationPagination(store),
-              const NextUserUserConversationsAction()
+        body: Container(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height
+          ),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            controller: _scrollController,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: StoreConnector<AppState,Iterable<UserUserConversationState>>(
+                onInit: (store) => getNextEntitiesIfNoPage(
+                  store,
+                  selectUserUserConversationPagination(store),
+                  const NextUserUserConversationsAction()
+                ),
+                converter: (store) => selectUserUserConversations(store),
+                builder: (context,userUserConversations) => UserUserConversationItems(
+                  userUserConversations: userUserConversations,
+                )
+              ),
             ),
-            converter: (store) => selectUserUserConversations(store),
-            builder: (context,userUserConversations) => UserUserConversationItems(
-              userUserConversations: userUserConversations,
-            )
           ),
         ),
       ),

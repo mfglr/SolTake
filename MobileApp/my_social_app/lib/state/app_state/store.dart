@@ -95,6 +95,7 @@ final store = Store(
 
     //user user conversations middlewares
     nextUserUserConversationsMiddleware,
+    firstUserUserConversationsMiddleware,
     //user user conversations middlewares
 
     //user user searchs middlewares
