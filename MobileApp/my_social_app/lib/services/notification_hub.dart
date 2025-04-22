@@ -48,10 +48,10 @@ class NotificationHub{
     _singleton!._acessToken = accessToken;
   }
 
-  Future<void> close() async{
+  static Future<void> close() async{
     if(_singleton != null){
-      _hubConnection.off('receiveNotification');
-      await _hubConnection.stop();
+      _singleton!._hubConnection.off('receiveNotification');
+      await _singleton!._hubConnection.stop();
     }
     _singleton = null;
   }

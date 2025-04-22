@@ -104,18 +104,13 @@ class MessageHub{
         .on(receiveMessage1, (list) => callback(Message.fromJson((list!.first as dynamic))));
   void offReceivedMessage() => _hubConnection.off(receiveMessage1);
 
-
-  void _off(){
-    _hubConnection.off(changeMessageConnectionState);
-    _hubConnection.off(receiveMessage);
-    _hubConnection.off(messageReceivedNotification);
-    _hubConnection.off(messageViewedNotification);
-  }
-
-  Future<void> close() async{
+  static Future<void> close() async{
     if(_singleton != null){
-      _off();
-      await _hubConnection.stop();
+      _singleton!._hubConnection.off(changeMessageConnectionState);
+      _singleton!._hubConnection.off(receiveMessage);
+      _singleton!._hubConnection.off(messageReceivedNotification);
+      _singleton!._hubConnection.off(messageViewedNotification);
+      await _singleton!._hubConnection.stop();
     }
     _singleton = null;
   }
