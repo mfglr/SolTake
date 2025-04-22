@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 
+@immutable
+class FirstHomeQuestionsAction extends AppAction{
+  const FirstHomeQuestionsAction();
+}
+@immutable
+class FirstHomeQuestionsSuccessAction extends AppAction{
+  final Iterable<int> questionIds;
+  const FirstHomeQuestionsSuccessAction({required this.questionIds});
+}
+@immutable
+class FirstHomeQuestionsFailedAction extends AppAction{
+  const FirstHomeQuestionsFailedAction();
+}
+
 class NextHomeQuestionsAction extends AppAction{
   const NextHomeQuestionsAction();
 }
@@ -15,8 +29,8 @@ class NextHomeQuestionsFailedAction extends AppAction{
 }
 
 @immutable
-class PrevHomePageQuestionsAction extends AppAction{
-  const PrevHomePageQuestionsAction();
+class PrevHomeQuestionsAction extends AppAction{
+  const PrevHomeQuestionsAction();
 }
 @immutable
 class PrevHomeQuestionsSuccessAction extends AppAction{

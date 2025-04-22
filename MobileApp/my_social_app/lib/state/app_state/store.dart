@@ -123,6 +123,7 @@ final store = Store(
     //Home page state
     nextHomeQuestionsMiddleware,
     prevHomeQuestionsMiddleware,
+    firstHomeQuestionsMiddleware,
     
     //account start
     loginByRefreshTokenMiddleware,

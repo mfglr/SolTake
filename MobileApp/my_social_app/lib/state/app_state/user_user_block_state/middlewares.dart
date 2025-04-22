@@ -45,7 +45,10 @@ void nextUserUserBlockMiddleware(Store<AppState> store,action,NextDispatcher nex
     UserUserBlockService()
       .getBlockeds(selectNextPageOfUserUserBlocks(store))
       .then((userUserBlocks) => store.dispatch(NextUserUserBlocksSuccessAction(userUserBlocks: userUserBlocks.map((e) => e.toState()))))
-      .catchError((e) => store.dispatch(const NextUserUserBlocksFailedAction()));      
+      .catchError((e){
+        store.dispatch(const NextUserUserBlocksFailedAction());
+        throw e;
+      });
   }
   next(action);
 }

@@ -32,7 +32,7 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
         recordsPerPage: recordsPerPage,
       );
   
-  pagination.Page<K> get prev => 
+  pagination.Page<K> get prev =>
     pagination.Page<K>(
       offset: values.firstOrNull?.id,
       take: recordsPerPage,

@@ -11,6 +11,7 @@ import 'package:my_social_app/views/profile/pages/display_blocked_users/widgets/
 import 'package:my_social_app/views/profile/pages/display_blocked_users/widgets/user_user_block_item.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_column.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 
 class DisplayBlockUsers extends StatefulWidget {
@@ -50,7 +51,9 @@ class _DisplayBlockUsersState extends State<DisplayBlockUsers> {
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
         title: LanguageWidget(
-          child: (language) => Text(title[language]!),
+          child: (language) => AppTitle(
+            title: title[language]!
+          ),
         ),
       ),
       body: StoreConnector<AppState,(Iterable<UserUserBlockState>,bool)>(
