@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
@@ -17,7 +20,11 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
-final _googleSignIn = GoogleSignIn();
+final _googleSignIn = Platform.isIOS 
+  ? GoogleSignIn(
+      clientId: dotenv.get('googleClientId')
+    )
+  : GoogleSignIn();
 
 void _setAccount(Store<AppState> store,Login login){
   final state = login.toLoginState();

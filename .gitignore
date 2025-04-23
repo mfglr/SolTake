@@ -368,3 +368,5 @@ Videos/
 Policies/
 FFmpeg/
 Blobs/
+.env.dev
+.env.prod
