@@ -1,6 +1,7 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
 using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
+using MySocailApp.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.Exceptions;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 

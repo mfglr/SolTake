@@ -26,7 +26,8 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.Create
         {
             var login = _accessTokenReader.GetLogin();
 
-            if (!await _userReadRepository.Exist(request.ReceiverId, cancellationToken))
+            var receiver =
+                await _userReadRepository.GetByIdAsync(request.ReceiverId, cancellationToken) ??
                 throw new ReceiverNotFoundException();
 
             IEnumerable<Multimedia>? medias = null;
@@ -42,7 +43,7 @@ namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.Create
 
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                return new(message, login);
+                return new(message, receiver);
             }
             catch (Exception)
             {
