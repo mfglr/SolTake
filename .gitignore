@@ -364,7 +364,6 @@ FodyWeavers.xsd
 
 #customs
 appsettings.*
-Images/
 Videos/
 Policies/
 FFmpeg/
