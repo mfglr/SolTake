@@ -23,7 +23,8 @@ class AppClient{
   Future<Map<String,String>> getHeader() async =>
     {
       "Authorization": "Bearer $_accessToken",
-      "Client-Version": await PackageVersionService().getVersion()
+      "Client-Version": await PackageVersionService().getVersion(),
+      "Accept-Language": PlatformDispatcher.instance.locale.languageCode
     };
 
   Uri generateUri(String url) => Uri.parse("$apiUrl/$url");

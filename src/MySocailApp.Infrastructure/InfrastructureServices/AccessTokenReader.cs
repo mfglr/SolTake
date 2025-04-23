@@ -78,7 +78,7 @@ namespace MySocailApp.Infrastructure.InfrastructureServices
             var context = _contextAccessor.HttpContext;
             if (context == null) return null;
 
-            return context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Picture)?.Value;
+            return context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Locale)?.Value;
         }
     }
 }
