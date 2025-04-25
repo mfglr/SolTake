@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
@@ -84,7 +85,41 @@ class SolutionItemWidget extends StatelessWidget {
             ),
           ),
           if(solution.isCreatedByAI)
-            Image.asset("assets/images/${solution.aiModelName!}.jpg")
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 3 / 5,
+              child: SingleChildScrollView(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Column(
+                    children: solution.content!
+                      .replaceAll('\\[\n', r'\[')
+                      .replaceAll('\n\\]', r'\]')
+                      .split('\n')
+                      .map((e) => e.startsWith(r'\[') && e.endsWith(r'\]')
+                      ? Math.tex(
+                          e.replaceAll(r'\[', '').replaceAll(r'\]', ''),
+                          options: MathOptions(
+                            style: MathStyle.displayCramped,
+                            fontSize: 25,
+                            color: Colors.black
+                          ),
+                        )
+                      : SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Text(
+                              e,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                        ))
+                      .toList(),
+                  ),
+                ),
+              ),
+            )
           else
             MultimediaSlider(
               medias: solution.medias,
@@ -118,7 +153,7 @@ class SolutionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          if(solution.content != null)
+          if(solution.content != null && !solution.isCreatedByAI)
             Padding(
               padding: const EdgeInsets.only(left:12, right: 12, bottom: 15),
               child: ExtendableContent(
