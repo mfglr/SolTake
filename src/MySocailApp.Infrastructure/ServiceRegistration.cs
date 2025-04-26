@@ -101,7 +101,8 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IBlobService, LocalBlobService>()
                 .AddScoped<ITextService, TextService>()
                 .AddScoped<IMultimediaService,MultiMediaService>()
-                .AddScoped<IFrameCatcher,FrameCatcher>();
+                .AddScoped<IFrameCatcher,FrameCatcher>()
+                .AddScoped<IImageToBase64Convertor,ImageToBase64Convertor>();
 
 
         private static IServiceCollection AddDbContext(this IServiceCollection services)

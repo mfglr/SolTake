@@ -3,5 +3,5 @@ using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public record CreateSolutionByAIDto(string Model, int QuestionId, string? BlobName, double? Duration, string? Prompt) : IRequest<CreateSolutionResponseDto>;
+    public record CreateSolutionByAIDto(string Model, int QuestionId, string? BlobName, double? Duration, string? Prompt, bool IsHighResulation) : IRequest<CreateSolutionResponseDto>;
 }

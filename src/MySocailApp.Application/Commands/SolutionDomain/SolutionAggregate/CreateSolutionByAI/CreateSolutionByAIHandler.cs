@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution;
-using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
@@ -8,6 +7,7 @@ using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
+using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.DomainServices;
@@ -16,7 +16,7 @@ using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IApplicationSettings applicationSettings, IAccessTokenReader accessTokenReader, SolutionCreatorDomainService solutionCreatorDomainService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService,IAccessTokenReader accessTokenReader, SolutionCreatorDomainService solutionCreatorDomainService, IImageToBase64Convertor imageToBase64Convertor) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IFrameCatcher _frameCatcher = frameCatcher;
@@ -24,19 +24,12 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly ITempDirectoryService _tempDirectoryService = tempDirectoryService;
-        private readonly IApplicationSettings _applicationSettings = applicationSettings;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly SolutionCreatorDomainService _solutionCreatorDomainService = solutionCreatorDomainService;
+        private readonly IImageToBase64Convertor _imageToBase64Convertor = imageToBase64Convertor;
 
-        public async Task<CreateSolutionResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
+        private async Task<ChatGBT_Response> GenerateAIResponse(CreateSolutionByAIDto request, Question question, CancellationToken cancellationToken)
         {
-
-            var login = _accessTokenReader.GetLogin();
-
-            var question =
-                await _questionReadRepository.GetAsync(request.QuestionId, cancellationToken) ??
-                throw new Domain.SolutionAggregate.Exceptions.QuestionNotFoundException();
-
             ChatGBT_Response response;
             if (!question.Medias.Any())
             {
@@ -56,10 +49,12 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             else
             {
                 var media =
-                question.Medias.FirstOrDefault(x => x.BlobName == request.BlobName) ??
-                throw new QuestionMediaNotFoundException();
+                    question.Medias.FirstOrDefault(x => x.BlobName == request.BlobName) ??
+                    throw new QuestionMediaNotFoundException();
                 if (media.MultimediaType == MultimediaType.Image)
                 {
+                    var base64Url = await _imageToBase64Convertor.ToBase64(media.ContainerName, media.BlobName, cancellationToken);
+
                     var chatGptRequest = new ChatGPT_Request(
                         request.Model,
                         [
@@ -69,8 +64,8 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
                                 new ChatGPT_TextContent(request.Prompt!),
                                 new ChatGPT_ImageContent(
                                     new(
-                                        GetUrl(media.ContainerName,media.BlobName),
-                                        ChatGPT_ImageResolution.Low
+                                        base64Url,
+                                        request.IsHighResulation ? ChatGPT_ImageResolution.High : ChatGPT_ImageResolution.Low
                                     )
                                 )
                             ]
@@ -91,21 +86,23 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
                                     (double)request.Duration!
                                 );
 
+                                var base64Url = await _imageToBase64Convertor.ToBase64(ContainerName.Temp, frameBlobName, cancellationToken);
+
                                 var chatGptRequest = new ChatGPT_Request(
                                     request.Model,
                                     [
                                         new(
-                                        ChatGPT_Roles.User,
-                                        [
-                                            new ChatGPT_TextContent(request.Prompt!),
-                                            new ChatGPT_ImageContent(
-                                                new(
-                                                    GetUrl(ContainerName.Temp,frameBlobName),
-                                                    ChatGPT_ImageResolution.Low
+                                            ChatGPT_Roles.User,
+                                            [
+                                                new ChatGPT_TextContent(request.Prompt!),
+                                                new ChatGPT_ImageContent(
+                                                    new(
+                                                        base64Url,
+                                                        request.IsHighResulation ? ChatGPT_ImageResolution.High : ChatGPT_ImageResolution.Low
+                                                    )
                                                 )
-                                            )
-                                        ]
-                                    ),
+                                            ]
+                                        ),
                                     ]
                                 );
                                 return await _chatGPTService.SendAsync(chatGptRequest);
@@ -113,6 +110,19 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
                         );
                 }
             }
+            return response;
+        }
+
+
+        public async Task<CreateSolutionResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
+        {
+            var login = _accessTokenReader.GetLogin();
+
+            var question =
+                await _questionReadRepository.GetAsync(request.QuestionId, cancellationToken) ??
+                throw new Domain.SolutionAggregate.Exceptions.QuestionNotFoundException();
+
+            var response = await GenerateAIResponse(request, question, cancellationToken);
 
             //create solution
             var model = new SolutionAIModel(request.Model);
@@ -126,8 +136,5 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
 
             return new(solution, login);
         }
-
-        private string GetUrl(string containerName, string blobName)
-            => $"{_applicationSettings.BlobUrl}/{containerName}/{blobName}";
     }
 }

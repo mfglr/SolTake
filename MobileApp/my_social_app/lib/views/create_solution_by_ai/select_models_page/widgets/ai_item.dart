@@ -29,6 +29,7 @@ class AiItem extends StatelessWidget {
                     blobName: value.blobName,
                     position: value.position,
                     prompt: value.prompt,
+                    isHighResulation: value.isHighResulation
                   ));
               }
             });

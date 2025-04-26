@@ -89,7 +89,8 @@ class CreateSolutionByAiButton extends StatelessWidget {
                           questionId: question.id,
                           blobName: value.blobName,
                           position: value.position,
-                          prompt: value.prompt
+                          prompt: value.prompt,
+                          isHighResulation: value.isHighResulation
                         ));
                       }
                     });

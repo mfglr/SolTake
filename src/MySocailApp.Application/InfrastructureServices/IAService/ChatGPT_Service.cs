@@ -30,7 +30,6 @@ namespace MySocailApp.Application.InfrastructureServices.IAService
                 throw new ChatGPTException(r.Error!.Message);
 
             return r;
-
         } 
     }
 }

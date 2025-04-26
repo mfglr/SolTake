@@ -21,12 +21,15 @@ class CreateSolutionByAIAction extends AppAction{
   final String? blobName;
   final double? position;
   final String? prompt;
+  final bool isHighResulation;
+
   const CreateSolutionByAIAction({
     required this.model,
     required this.questionId,
     required this.blobName,
     required this.position,
-    required this.prompt
+    required this.prompt,
+    required this.isHighResulation
   });
 }
 

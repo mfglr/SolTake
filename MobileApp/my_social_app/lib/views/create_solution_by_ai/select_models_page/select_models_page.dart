@@ -20,7 +20,9 @@ class SelectModelsPage extends StatelessWidget {
         leading: const AppBackButtonWidget(),
         title: AppTitle(title: appTitle[getLanguage(context)]!),
       ),
-      body: AiItems(question: question,),
+      body: SingleChildScrollView(
+        child: AiItems(question: question,)
+      ),
     );
   }
 }

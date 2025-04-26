@@ -55,7 +55,8 @@ class SelectMediaPage extends StatelessWidget {
                                 .pop((
                                   position: value.position,
                                   blobName: media.blobName,
-                                  prompt: value.prompt
+                                  prompt: value.prompt,
+                                  isHighResulation: value.isHighResulation
                                 ));
                             }
                           });
@@ -71,7 +72,8 @@ class SelectMediaPage extends StatelessWidget {
                                 .pop((
                                   position: null,
                                   blobName: media.blobName,
-                                  prompt: value.prompt
+                                  prompt: value.prompt,
+                                  isHighResulation: value.isHighResulation
                                 ));
                             }
                           });

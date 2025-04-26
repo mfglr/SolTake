@@ -111,7 +111,8 @@ class _FrameCatcherState extends State<FrameCatcher> {
                       .of(context)
                       .pop((
                         prompt: value.prompt,
-                        position: position
+                        position: position,
+                        isHighResulation: value.isHighResulation
                       ));
                   }
                 });

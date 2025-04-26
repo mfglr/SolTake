@@ -5,15 +5,17 @@ import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/wid
 
 class CreateSolutionButton extends StatelessWidget {
   final String prompt;
+  final bool isHighResulation;
   const CreateSolutionButton({
     super.key,
-    required this.prompt
+    required this.prompt,
+    required this.isHighResulation
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.of(context).pop((prompt: prompt)),
+      onPressed: () => Navigator.of(context).pop((prompt: prompt,isHighResulation: isHighResulation)),
       child: Row(
         children: [
           Container(

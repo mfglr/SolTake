@@ -128,11 +128,13 @@ flutter:
     - assets/images/google.png
     - assets/images/logo-bgremoved.png
     - assets/images/logo.png
+
+    - assets/images/gpt-4.1.jpg
+    - assets/images/gpt-4.1-mini.jpg
     - assets/images/gpt-4o.jpg
     - assets/images/gpt-4o-mini.jpg
+    - assets/images/o4-mini.jpg
     - assets/images/o1.jpg
-    - assets/images/o1-mini.jpg
-    - assets/images/o3-mini.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

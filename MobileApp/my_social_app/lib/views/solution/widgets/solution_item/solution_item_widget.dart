@@ -3,6 +3,8 @@ import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/services/latex_sperator/latex.dart';
+import 'package:my_social_app/services/latex_sperator/latex_sperator.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
@@ -91,13 +93,11 @@ class SolutionItemWidget extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Column(
-                    children: solution.content!
-                      .replaceAll('\\[\n', r'\[')
-                      .replaceAll('\n\\]', r'\]')
-                      .split('\n')
-                      .map((e) => e.startsWith(r'\[') && e.endsWith(r'\]')
-                      ? Math.tex(
-                          e.replaceAll(r'\[', '').replaceAll(r'\]', ''),
+                    children: LatexSperator()
+                      .seperate(solution.content!)
+                      .map((e) => e is Latex
+                        ? Math.tex(
+                          e.content,
                           options: MathOptions(
                             style: MathStyle.displayCramped,
                             fontSize: 25,
@@ -107,7 +107,7 @@ class SolutionItemWidget extends StatelessWidget {
                       : SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Text(
-                              e,
+                              e.content,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 19,

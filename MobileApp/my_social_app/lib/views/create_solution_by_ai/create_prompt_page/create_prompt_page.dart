@@ -11,6 +11,7 @@ import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/cre
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/widgets/create_solution_button/create_solution_button.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class CreatePromptPage extends StatefulWidget {
@@ -30,6 +31,7 @@ class CreatePromptPage extends StatefulWidget {
 class _CreatePromptPageState extends State<CreatePromptPage> {
   late final TextEditingController _promptController;
   late final Future<Uint8List> _frame;
+  bool _isHighResulation = false;
 
   @override
   void initState() {
@@ -57,7 +59,10 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
         leading: const AppBackButtonWidget(),
         title: AppTitle(title: title[getLanguage(context)]!),
         actions: [
-          CreateSolutionButton(prompt: _promptController.text)
+          CreateSolutionButton(
+            prompt: _promptController.text,
+            isHighResulation: _isHighResulation
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -89,6 +94,42 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
                 );
               })
                 
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    LanguageWidget(
+                      child: (language) => TextButton(
+                        onPressed: () => setState(() => _isHighResulation = !_isHighResulation),
+                        child: Text(
+                          highResulation[language]!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20
+                          ),
+                        ),
+                      ),
+                    ),
+                    Checkbox(
+                      value: _isHighResulation,
+                      onChanged: (_) => setState(() => _isHighResulation = !_isHighResulation),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.all(5),
+                  child: LanguageWidget(
+                    child: (language) => Text(
+                      resulationExplation[language]!,
+                      textAlign: TextAlign.center,
+                    )
+                  ),
+                )
+              ],
             ),
             Container(
               margin: const EdgeInsets.all(8),

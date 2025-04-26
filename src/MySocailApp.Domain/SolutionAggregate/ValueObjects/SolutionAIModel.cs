@@ -6,11 +6,23 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
     {
         private class AIModelNames
         {
-            private readonly static string GPT_4O = "gpt-4o";
-            private readonly static string GPT_4O_MINI = "gpt-4o-mini";
-            private readonly static string[] Names = [GPT_4O, GPT_4O_MINI];
+            private readonly static string _gpt_4_1 = "gpt-4.1";
+            private readonly static string _gpt_4_1_MINI = "gpt-4.1-mini";
+            private readonly static string _gpt_4O = "gpt-4o";
+            private readonly static string _gpt_4O_MINI = "gpt-4o-mini";
+            private readonly static string _gpt_O4_MINI = "o4-mini";
+            private readonly static string _gpt_O1 = "o1";
 
-            public static bool ValidName(string name) => Names.Contains(name);
+            private readonly static string[] _names = [
+                _gpt_4_1,
+                _gpt_4_1_MINI,
+                _gpt_4O,
+                _gpt_4O_MINI,
+                _gpt_O4_MINI,
+                _gpt_O1
+            ];
+
+            public static bool ValidName(string name) => _names.Contains(name);
         }
 
         public string Name { get; private set; }
