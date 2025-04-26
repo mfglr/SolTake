@@ -31,6 +31,52 @@ class CreateStorySuccessAction extends StoryAction{
 }
 
 @immutable
+class DeleteStoryAction extends StoryAction{
+  final int storyId;
+  const DeleteStoryAction({required this.storyId});
+}
+@immutable
+class DeleteStorySuccessAction extends StoryAction{
+  final int storyId;
+  const DeleteStorySuccessAction({required this.storyId});
+}
+
+@immutable
+class NextStoryUserViewsAction extends StoryAction{
+  final int storyId;
+  const NextStoryUserViewsAction({required this.storyId});  
+}
+@immutable
+class NextStoryUserViewsSuccessAction extends StoryAction{
+  final int storyId;
+  final Iterable<StoryUserViewState> storyUserViews;
+
+  const NextStoryUserViewsSuccessAction({required this.storyId, required this.storyUserViews});
+}
+@immutable
+class NextStoryUserViewsFailedAction extends StoryAction{
+  final int storyId;
+  const NextStoryUserViewsFailedAction({required this.storyId});
+}
+
+@immutable
+class FirstStoryUserViewsAction extends StoryAction{
+  final int storyId;
+  const FirstStoryUserViewsAction({required this.storyId});
+}
+@immutable
+class FirstStoryUserViewsSuccessAction extends StoryAction{
+  final int storyId;
+  final Iterable<StoryUserViewState> storUserViews;
+  const FirstStoryUserViewsSuccessAction({required this.storyId, required this.storUserViews});
+}
+@immutable
+class FirstStoryUserViewsFailedAction extends StoryAction{
+  final int storyId;
+  const FirstStoryUserViewsFailedAction({required this.storyId});
+}
+
+@immutable
 class ViewStoryAction extends StoryAction{
   final int storyId;
   const ViewStoryAction({required this.storyId});
@@ -43,15 +89,4 @@ class ViewStorySuccessAction extends StoryAction{
     required this.storyId,
     required this.storyUserView
   });
-}
-
-@immutable
-class DeleteStoryAction extends StoryAction{
-  final int storyId;
-  const DeleteStoryAction({required this.storyId});
-}
-@immutable
-class DeleteStorySuccessAction extends StoryAction{
-  final int storyId;
-  const DeleteStorySuccessAction({required this.storyId});
 }

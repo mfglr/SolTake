@@ -141,9 +141,11 @@ final store = Store(
 
     //story
     createStoryMiddleware,
+    deleteStoryMiddleware,
     getStoriesMiddleware,
     viewStoryMiddleware,
-    deleteStoryMiddleware,
+    nextStoryUserViewsMiddleware,
+    firstStoryUserViewsMiddleware,
     //story
 
     //message connection

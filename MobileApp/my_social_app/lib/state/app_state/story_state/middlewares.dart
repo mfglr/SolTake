@@ -1,7 +1,10 @@
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/services/story_service.dart';
 import 'package:my_social_app/services/story_user_view_service.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
+import 'package:my_social_app/state/app_state/story_state/selectors.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:redux/redux.dart';
 
 void createStoryMiddleware(Store<AppState> store,action,NextDispatcher next){
@@ -9,6 +12,14 @@ void createStoryMiddleware(Store<AppState> store,action,NextDispatcher next){
     StoryService()
       .create(action.appFiles)
       .then((stories) => store.dispatch(CreateStorySuccessAction(stories: stories.map((e) => e.toStoryState()))));
+  }
+  next(action);
+}
+void deleteStoryMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is DeleteStoryAction){
+    StoryService()
+      .delete(action.storyId)
+      .then((_) => store.dispatch(DeleteStorySuccessAction(storyId: action.storyId)));
   }
   next(action);
 }
@@ -32,11 +43,26 @@ void viewStoryMiddleware(Store<AppState> store, action, NextDispatcher next){
 }
 
 
-void deleteStoryMiddleware(Store<AppState> store, action, NextDispatcher next){
-  if(action is DeleteStoryAction){
-    StoryService()
-      .delete(action.storyId)
-      .then((_) => store.dispatch(DeleteStorySuccessAction(storyId: action.storyId)));
+void nextStoryUserViewsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextStoryUserViewsAction){
+    StoryUserViewService()
+      .getStoryUserViewsByStoryId(action.storyId, selectStoryUserViewNextPage(store,action.storyId))
+      .then((response) => store.dispatch(NextStoryUserViewsSuccessAction(
+        storyId: action.storyId,
+        storyUserViews: response.map((e) => e.toState())
+      )));
+  }
+  next(action);
+}
+
+void firstStoryUserViewsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is FirstStoryUserViewsAction){
+    StoryUserViewService()
+      .getStoryUserViewsByStoryId(action.storyId, Page.init(usersPerPage, true))
+      .then((response) => store.dispatch(NextStoryUserViewsSuccessAction(
+        storyId: action.storyId,
+        storyUserViews: response.map((e) => e.toState())
+      )));
   }
   next(action);
 }

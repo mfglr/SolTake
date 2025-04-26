@@ -55,4 +55,49 @@ class StoryState extends BaseEntity<int>{
       media: media,
       viwes: viwes.prependOne(storyUserView)
     );
+  
+  StoryState startLoadingNext() =>
+    StoryState(
+      id: id,
+      createdAt: createdAt,
+      isViewed: isViewed,
+      userId: userId,
+      userName: userName,
+      image: image,
+      media: media,
+      viwes: viwes.startLoadingNext()
+    );
+  StoryState stopLoadingNext() =>
+    StoryState(
+      id: id,
+      createdAt: createdAt,
+      isViewed: isViewed,
+      userId: userId,
+      userName: userName,
+      image: image,
+      media: media,
+      viwes: viwes.stopLoadingNext()
+    );
+  StoryState addFirstPageViews(Iterable<StoryUserViewState> storyUserViews) =>
+    StoryState(
+      id: id,
+      createdAt: createdAt,
+      isViewed: isViewed,
+      userId: userId,
+      userName: userName,
+      image: image,
+      media: media,
+      viwes: viwes.addfirstPage(storyUserViews)
+    );
+  StoryState addNextPageViews(Iterable<StoryUserViewState> storyUserView) =>
+    StoryState(
+      id: id,
+      createdAt: createdAt,
+      isViewed: isViewed,
+      userId: userId,
+      userName: userName,
+      image: image,
+      media: media,
+      viwes: viwes.addNextPage(storyUserView)
+    );
 }
