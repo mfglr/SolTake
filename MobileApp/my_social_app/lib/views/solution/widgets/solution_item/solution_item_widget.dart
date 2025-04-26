@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
@@ -152,7 +153,32 @@ class SolutionItemWidget extends StatelessWidget {
                     )
                   ]
                 ),
-                SaveSolutionButton(solution: solution)
+                Row(
+                  children: [
+                    if(solution.isCreatedByAI)
+                      OutlinedButton(
+                        onPressed: () => {},
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              child: const FaIcon(
+                                FontAwesomeIcons.robot,
+                                size: 15,
+                              ),
+                            ),
+                            Text(
+                              solution.aiModelName!,
+                              style: const TextStyle(
+                                fontSize: 13
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    SaveSolutionButton(solution: solution),
+                  ],
+                )
               ],
             ),
           ),
