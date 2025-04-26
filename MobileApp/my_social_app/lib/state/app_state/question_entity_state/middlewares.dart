@@ -151,7 +151,7 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
 void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
   if(action is NextQuestionSolutionsAction){
     SolutionService()
-      .getSolutionsByQuestionId(action.questionId,selectQuestionNextCommentsPage(store, action.questionId))
+      .getSolutionsByQuestionId(action.questionId,selectQuestionNextSolutionsPage(store, action.questionId))
       .then((solutions){
         store.dispatch(NextQuestionSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
         store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));

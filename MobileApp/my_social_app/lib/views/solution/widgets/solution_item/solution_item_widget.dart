@@ -92,30 +92,33 @@ class SolutionItemWidget extends StatelessWidget {
               child: SingleChildScrollView(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: LatexSperator()
-                      .seperate(solution.content!)
-                      .map((e) => e is Latex
-                        ? Math.tex(
-                          e.content,
-                          options: MathOptions(
-                            style: MathStyle.displayCramped,
-                            fontSize: 25,
-                            color: Colors.black
-                          ),
-                        )
-                      : SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                              e.content,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.bold
-                              ),
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: LatexSperator()
+                        .seperate(solution.content!)
+                        .map((e) => e is Latex
+                          ? Math.tex(
+                            e.content,
+                            options: MathOptions(
+                              style: MathStyle.displayCramped,
+                              fontSize: 25,
+                              color: Colors.black
                             ),
-                        ))
-                      .toList(),
+                          )
+                        : SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                                e.content,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                          ))
+                        .toList(),
+                    ),
                   ),
                 ),
               ),

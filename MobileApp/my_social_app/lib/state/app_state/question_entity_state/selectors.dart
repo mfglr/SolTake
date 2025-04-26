@@ -24,3 +24,13 @@ Page<int> selectQuestionNextCommentsPage(Store<AppState> store, int questionId)
 Page<int> selectQuestionPrevCommentsPage(Store<AppState> store, int questionId)
   => selectQuestionCommentsPagination(store, questionId).prev;
 
+
+Pagination<int,Id<int>> selectQuestionSolutionsPagination(Store<AppState> store, int questionId)
+  => selectQuestion(store, questionId)?.solutions ?? Pagination.init(solutionsPerPage, true);
+Page<int> selectQuestionNextSolutionsPage(Store<AppState> store, int questionId)
+  => selectQuestionSolutionsPagination(store, questionId).next;
+Page<int> selectQuestionPrevSolutionsPage(Store<AppState> store, int questionId)
+  => selectQuestionSolutionsPagination(store, questionId).prev;
+
+
+
