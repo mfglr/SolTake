@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
+using MySocailApp.Domain.StoryAggregate.Abstracts;
+using MySocailApp.Domain.StoryAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.StoryDomain.StoryAggregate

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/views/shared/owner_widget/owner_widget.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/create_story_button.dart';
+import 'package:my_social_app/views/story/pages/display_story_page/widgets/display_story_viewers_buttun/display_story_viewers_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_delete_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_loading_line.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_user_header.dart';
@@ -77,57 +78,73 @@ class _StoryVideoItemState extends State<StoryVideoItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () => _controller.pause(),
-      onLongPressUp: () => _controller.play(),
+      onLongPress: _controller.pause,
+      onLongPressUp: _controller.play,
       child: Stack(
-        fit: StackFit.expand,
+        alignment: AlignmentDirectional.topStart,
         children: [
-          AspectRatio(
-            aspectRatio: widget.story.media.aspectRatio,
-            child: VideoPlayer(
-              _controller
-            )
-          ),
-          Row(
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
             children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: widget.prev,
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
-                )
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: widget.next,
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
-                )
-              )
-            ],
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: OwnerWidget(
-              userId: widget.story.userId,
-              child: Row(
+              Stack(
                 children: [
-                  const CreateStoryButton(),
-                  StoryDeleteButton(
-                    story: widget.story,
-                    stopTimer: _controller.pause,
-                    startTimer: _controller.play,
+                  Center(
+                    child: AspectRatio(
+                      aspectRatio: widget.story.media.aspectRatio,
+                      child: VideoPlayer(
+                        _controller
+                      )
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: widget.prev,
+                          child: Container(
+                            color: Colors.transparent,
+                          ),
+                        )
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: widget.next,
+                          child: Container(
+                            color: Colors.transparent,
+                          ),
+                        )
+                      )
+                    ],
                   ),
                 ],
-              )
-            )
+              ),
+              OwnerWidget(
+                userId: widget.story.userId,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DisplayStoryViewersButton(
+                      story: widget.story,
+                      pause: _controller.pause,
+                      play: _controller.play,
+                    ), 
+                    Row(
+                      children: [
+                        const CreateStoryButton(),
+                        StoryDeleteButton(
+                          story: widget.story,
+                          stopTimer: _controller.pause,
+                          startTimer: _controller.play,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ),
+            ],
           ),
-          Positioned(
-            top: MediaQuery.of(context).size.width / 64,
-            left: 0,
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -150,7 +167,7 @@ class _StoryVideoItemState extends State<StoryVideoItem> {
                   ),
                 )
               ],
-            )
+            ),
           )
         ],
       ),

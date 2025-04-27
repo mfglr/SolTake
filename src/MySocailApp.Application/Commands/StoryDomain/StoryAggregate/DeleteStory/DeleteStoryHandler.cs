@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Exceptions;
+using MySocailApp.Domain.StoryAggregate.Abstracts;
+using MySocailApp.Domain.StoryAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.DeleteStory
 {

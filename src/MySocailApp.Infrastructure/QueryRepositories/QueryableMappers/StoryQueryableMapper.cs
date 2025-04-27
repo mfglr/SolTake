@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.StoryDomain;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
+using MySocailApp.Domain.StoryAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
@@ -19,7 +19,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                         u.Id,
                         u.UserName.Value,
                         u.Image,
-                        s.Media
+                        s.Media,
+                        s.UserId == forUserId ? context.StoryUserViews.Count(x => x.StoryId == s.Id) : 0
                     )
                 );
     }

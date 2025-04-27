@@ -1,9 +1,9 @@
 ﻿using MySocailApp.Core;
 using MySocailApp.Core.Exceptions;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
+using MySocailApp.Domain.StoryAggregate.Entities;
 using System.Net;
 
-namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Exceptions
+namespace MySocailApp.Domain.StoryAggregate.Exceptions
 {
     internal class StoryDurationExceedException : AppException
     {

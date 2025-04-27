@@ -16,6 +16,7 @@ class Story {
   final String userName;
   final Multimedia? image;
   final Multimedia media;
+  final int numberOfViewers;
 
   const Story({
     required this.id,
@@ -24,7 +25,8 @@ class Story {
     required this.userId,
     required this.userName,
     required this.image,
-    required this.media
+    required this.media,
+    required this.numberOfViewers
   });
 
   factory Story.fromJson(Map<String, dynamic> json) => _$StoryFromJson(json);
@@ -39,6 +41,7 @@ class Story {
       userName: userName,
       image: image,
       media: media,
-      viwes: Pagination.init(usersPerPage, true)
+      viewers: Pagination.init(usersPerPage, true),
+      numberOfViewers: numberOfViewers
     );
 }

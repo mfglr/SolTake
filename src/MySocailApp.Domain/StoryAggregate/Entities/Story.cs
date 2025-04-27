@@ -1,8 +1,8 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.DomainEvents;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Exceptions;
+using MySocailApp.Domain.StoryAggregate.DomainEvents;
+using MySocailApp.Domain.StoryAggregate.Exceptions;
 
-namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Entities
+namespace MySocailApp.Domain.StoryAggregate.Entities
 {
     public class Story : Entity, IAggregateRoot
     {

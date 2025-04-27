@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Absracts;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.DomainServices;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities;
+using MySocailApp.Domain.StoryUserViewAggregate.Entities;
+using MySocailApp.Domain.StoryUserViewAggregate.Absracts;
+using MySocailApp.Domain.StoryUserViewAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory
 {

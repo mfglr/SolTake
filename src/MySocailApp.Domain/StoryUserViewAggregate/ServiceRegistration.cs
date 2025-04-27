@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.DomainServices;
+using MySocailApp.Domain.StoryUserViewAggregate.DomainServices;
 
-namespace MySocailApp.Domain.StoryDomain.StoryUserViewAggregate
+namespace MySocailApp.Domain.StoryUserViewAggregate
 {
     public static class ServiceRegistration
     {

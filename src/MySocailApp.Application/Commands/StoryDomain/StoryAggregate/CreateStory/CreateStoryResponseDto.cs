@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
+using MySocailApp.Domain.StoryAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory
 {

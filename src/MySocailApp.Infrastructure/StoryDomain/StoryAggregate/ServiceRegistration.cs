@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts;
+using MySocailApp.Domain.StoryAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.StoryDomain.StoryAggregate
 {

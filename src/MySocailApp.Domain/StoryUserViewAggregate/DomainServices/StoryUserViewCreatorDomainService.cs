@@ -1,10 +1,10 @@
-﻿using MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Exceptions;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Absracts;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Exceptions;
+﻿using MySocailApp.Domain.StoryAggregate.Exceptions;
+using MySocailApp.Domain.StoryUserViewAggregate.Exceptions;
+using MySocailApp.Domain.StoryUserViewAggregate.Absracts;
+using MySocailApp.Domain.StoryUserViewAggregate.Entities;
+using MySocailApp.Domain.StoryAggregate.Abstracts;
 
-namespace MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.DomainServices
+namespace MySocailApp.Domain.StoryUserViewAggregate.DomainServices
 {
     public class StoryUserViewCreatorDomainService(IStoryRepository storyRepository, IStoryUserViewRepository storyUserViewRepository)
     {

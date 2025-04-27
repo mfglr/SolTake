@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Exceptions
+namespace MySocailApp.Domain.StoryUserViewAggregate.Exceptions
 {
     public class StoryUserViewAlreadyExistException : AppException
     {

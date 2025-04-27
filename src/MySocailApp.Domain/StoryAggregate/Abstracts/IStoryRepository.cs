@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
+﻿using MySocailApp.Domain.StoryAggregate.Entities;
 
-namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts
+namespace MySocailApp.Domain.StoryAggregate.Abstracts
 {
     public interface IStoryRepository
     {
@@ -10,7 +10,7 @@ namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts
         void DeleteRange(IEnumerable<Story> stories);
 
         Task<Story?> GetByIdAsync(int storyId, CancellationToken cancellationToken);
-        Task<Story?> GetAsNoTrackingAsync(int storyId,CancellationToken cancellationToken);
-        Task<List<Story>> GetByUserId(int userId,CancellationToken cancellationToken);
+        Task<Story?> GetAsNoTrackingAsync(int storyId, CancellationToken cancellationToken);
+        Task<List<Story>> GetByUserId(int userId, CancellationToken cancellationToken);
     }
 }

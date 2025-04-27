@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities;
+using MySocailApp.Domain.StoryUserViewAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory
 {

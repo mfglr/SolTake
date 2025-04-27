@@ -3,8 +3,8 @@ using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Abstracts;
-using MySocailApp.Domain.StoryDomain.StoryAggregate.Entities;
+using MySocailApp.Domain.StoryAggregate.Abstracts;
+using MySocailApp.Domain.StoryAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory
 {

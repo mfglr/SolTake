@@ -50,7 +50,8 @@ void nextStoryUserViewsMiddleware(Store<AppState> store, action, NextDispatcher 
       .then((response) => store.dispatch(NextStoryUserViewsSuccessAction(
         storyId: action.storyId,
         storyUserViews: response.map((e) => e.toState())
-      )));
+      )))
+      .catchError((e) => store.dispatch(NextStoryUserViewsFailedAction(storyId: action.storyId)));
   }
   next(action);
 }
@@ -59,10 +60,11 @@ void firstStoryUserViewsMiddleware(Store<AppState> store, action, NextDispatcher
   if(action is FirstStoryUserViewsAction){
     StoryUserViewService()
       .getStoryUserViewsByStoryId(action.storyId, Page.init(usersPerPage, true))
-      .then((response) => store.dispatch(NextStoryUserViewsSuccessAction(
+      .then((response) => store.dispatch(FirstStoryUserViewsSuccessAction(
         storyId: action.storyId,
         storyUserViews: response.map((e) => e.toState())
-      )));
+      )))
+      .catchError((e) => store.dispatch(FirstStoryUserViewsFailedAction(storyId: action.storyId)));
   }
   next(action);
 }

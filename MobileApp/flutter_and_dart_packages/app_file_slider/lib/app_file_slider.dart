@@ -40,16 +40,11 @@ class _AppFileSliderState extends State<AppFileSlider> {
           onPageChanged: (index) => setState(() { _activeIndex = index; }),
           children: widget.medias
             .map((e) => Stack(
-              alignment: AlignmentDirectional.center,
+              alignment: AlignmentDirectional.topEnd,
               children: [
-                Builder(builder: (context){
-                  if(e.type == AppFileTypes.image){ return ImageSlide(file: e); }
-                  else if(e.type == AppFileTypes.video){ return VideoSlide(file: e); }
-                  else { return Text("test"); } 
-                }),
-                Positioned(
-                  top: MediaQuery.of(context).size.height / 16,
-                  right: 5,
+                e.type == AppFileTypes.image ? ImageSlide(file: e) : VideoSlide(file: e),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: RemoveMediaButton(onPressed: () => widget.onRemoved(e)),
                 ),
               ],

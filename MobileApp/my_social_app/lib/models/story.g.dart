@@ -16,6 +16,7 @@ Story _$StoryFromJson(Map<String, dynamic> json) => Story(
           ? null
           : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
       media: Multimedia.fromJson(json['media'] as Map<String, dynamic>),
+      numberOfViewers: (json['numberOfViewers'] as num).toInt(),
     );
 
 Map<String, dynamic> _$StoryToJson(Story instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$StoryToJson(Story instance) => <String, dynamic>{
       'userName': instance.userName,
       'image': instance.image,
       'media': instance.media,
+      'numberOfViewers': instance.numberOfViewers,
     };

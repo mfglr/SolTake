@@ -9,7 +9,7 @@ using MySocailApp.Domain.QuestionUserSaveAggregate;
 using MySocailApp.Domain.SolutionAggregate;
 using MySocailApp.Domain.SolutionUserSaveAggregate;
 using MySocailApp.Domain.SolutionUserVoteAggregate;
-using MySocailApp.Domain.StoryDomain;
+using MySocailApp.Domain.StoryUserViewAggregate;
 using MySocailApp.Domain.UserAggregate;
 using MySocailApp.Domain.UserUserBlockAggregate;
 using MySocailApp.Domain.UserUserConversationAggregate;
@@ -39,7 +39,7 @@ namespace MySocailApp.Domain
                 .AddUserUserSearchDomainServices()
                 .AddUserUserConversationDomainServices()
 
-                .AddStoryDomainServices()
+                .AddStoryUserViewDomainServices()
                 .AddMessageDomainServices();
     }
 }

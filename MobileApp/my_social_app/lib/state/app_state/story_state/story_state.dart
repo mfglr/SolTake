@@ -14,8 +14,9 @@ class StoryState extends BaseEntity<int>{
   final String userName;
   final Multimedia? image;
   final Multimedia media;
-  final Pagination<int,StoryUserViewState> viwes;
-  
+  final Pagination<int,StoryUserViewState> viewers;
+  final int numberOfViewers;
+
   StoryState({
     required super.id,
     required this.createdAt,
@@ -24,7 +25,8 @@ class StoryState extends BaseEntity<int>{
     required this.userName,
     required this.image,
     required this.media,
-    required this.viwes
+    required this.viewers,
+    required this.numberOfViewers
   });
   
   static int _compareTo(StoryState x, StoryState y){
@@ -53,7 +55,8 @@ class StoryState extends BaseEntity<int>{
       userName: userName,
       image: image,
       media: media,
-      viwes: viwes.prependOne(storyUserView)
+      viewers: viewers.prependOne(storyUserView),
+      numberOfViewers: numberOfViewers + 1
     );
   
   StoryState startLoadingNext() =>
@@ -65,7 +68,8 @@ class StoryState extends BaseEntity<int>{
       userName: userName,
       image: image,
       media: media,
-      viwes: viwes.startLoadingNext()
+      viewers: viewers.startLoadingNext(),
+      numberOfViewers: numberOfViewers
     );
   StoryState stopLoadingNext() =>
     StoryState(
@@ -76,7 +80,8 @@ class StoryState extends BaseEntity<int>{
       userName: userName,
       image: image,
       media: media,
-      viwes: viwes.stopLoadingNext()
+      viewers: viewers.stopLoadingNext(),
+      numberOfViewers: numberOfViewers
     );
   StoryState addFirstPageViews(Iterable<StoryUserViewState> storyUserViews) =>
     StoryState(
@@ -87,7 +92,8 @@ class StoryState extends BaseEntity<int>{
       userName: userName,
       image: image,
       media: media,
-      viwes: viwes.addfirstPage(storyUserViews)
+      viewers: viewers.addfirstPage(storyUserViews),
+      numberOfViewers: numberOfViewers
     );
   StoryState addNextPageViews(Iterable<StoryUserViewState> storyUserView) =>
     StoryState(
@@ -98,6 +104,7 @@ class StoryState extends BaseEntity<int>{
       userName: userName,
       image: image,
       media: media,
-      viwes: viwes.addNextPage(storyUserView)
+      viewers: viewers.addNextPage(storyUserView),
+      numberOfViewers: numberOfViewers
     );
 }

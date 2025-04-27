@@ -21,7 +21,7 @@ class _VideoSlideState extends State<VideoSlide> {
   int _duration = 0;
 
   void _play() => _controller.play().then((_) => setState(() {}));
-  void _pouse() => _controller.pause().then((_) => setState(() {}));
+  void _pause() => _controller.pause().then((_) => setState(() {}));
 
   void _setDuration() => setState(() { 
     _duration = _controller.value.duration.inSeconds - _controller.value.position.inSeconds; 
@@ -45,17 +45,17 @@ class _VideoSlideState extends State<VideoSlide> {
   @override
   Widget build(BuildContext context) {
     return _controller.value.isInitialized
-      ? GestureDetector(
-          onTap: _controller.value.isPlaying ? _pouse : _play,
-          child: Stack(
-            alignment: AlignmentDirectional.center,
+      ? Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Stack(
             children: [
-              VideoPlayer(_controller),
-              if(!_controller.value.isPlaying)
-                PlayIcon(),
-              Positioned(
-                top: 15,
-                left: 5,
+              GestureDetector(
+                onTap: _controller.value.isPlaying ? _pause : _play,
+                child: VideoPlayer(_controller)
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
                   padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
@@ -68,10 +68,16 @@ class _VideoSlideState extends State<VideoSlide> {
                       color: Colors.white
                     ),
                   ),
-                )
+                ),
               )
             ],
           ),
+          if(!_controller.value.isPlaying)
+            GestureDetector(
+              onTap: _controller.value.isPlaying ? _pause : _play,
+              child: PlayIcon()
+            ),
+        ],
       )
       : Center(child: CircularProgressIndicator());
   }

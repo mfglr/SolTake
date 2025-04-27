@@ -67,8 +67,8 @@ class FirstStoryUserViewsAction extends StoryAction{
 @immutable
 class FirstStoryUserViewsSuccessAction extends StoryAction{
   final int storyId;
-  final Iterable<StoryUserViewState> storUserViews;
-  const FirstStoryUserViewsSuccessAction({required this.storyId, required this.storUserViews});
+  final Iterable<StoryUserViewState> storyUserViews;
+  const FirstStoryUserViewsSuccessAction({required this.storyId, required this.storyUserViews});
 }
 @immutable
 class FirstStoryUserViewsFailedAction extends StoryAction{

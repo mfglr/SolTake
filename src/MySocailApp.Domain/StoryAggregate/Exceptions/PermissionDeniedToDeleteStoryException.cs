@@ -2,7 +2,7 @@
 using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.StoryDomain.StoryAggregate.Exceptions
+namespace MySocailApp.Domain.StoryAggregate.Exceptions
 {
     public class PermissionDeniedToDeleteStoryException : AppException
     {

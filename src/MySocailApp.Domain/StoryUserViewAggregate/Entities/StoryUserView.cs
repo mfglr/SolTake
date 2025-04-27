@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.DomainEvents;
+using MySocailApp.Domain.StoryUserViewAggregate.DomainEvents;
 
-namespace MySocailApp.Domain.StoryDomain.StoryUserViewAggregate.Entities
+namespace MySocailApp.Domain.StoryUserViewAggregate.Entities
 {
     public class StoryUserView(int storyId, int userId) : Entity, IAggregateRoot
     {
