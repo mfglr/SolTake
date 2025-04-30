@@ -6,6 +6,7 @@ using MySocailApp.Api.Filters;
 using MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory;
 using MySocailApp.Application.Commands.StoryDomain.StoryAggregate.DeleteStory;
 using MySocailApp.Application.Queries.StoryDomain;
+using MySocailApp.Application.Queries.StoryDomain.GetActiveStoriesByUserId;
 using MySocailApp.Application.Queries.StoryDomain.GetAllStories;
 using MySocailApp.Application.Queries.StoryDomain.GetStories;
 
@@ -36,5 +37,8 @@ namespace MySocailApp.Api.Controllers.Api
         [HttpGet]
         public async Task<List<StoryResponseDto>> GetAllStories([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetAllStoriesDto(offset,take,isDescending),cancellationToken);
+        [HttpGet("{userId}")]
+        public async Task<List<StoryResponseDto>> GetActiveStoriesByUserId(int userId,CancellationToken cancellationToken)
+            => await _sender.Send(new GetActiveStoriesByUserIdDto(userId),cancellationToken);
     }
 }

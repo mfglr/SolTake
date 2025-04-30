@@ -48,4 +48,6 @@ Pagination selectStoryUserViewPagination(Store<AppState> store,int storyId) =>
 Page selectStoryUserViewNextPage(Store<AppState> store, int storyId) =>
   store.state.stories.getValue(storyId)!.viewers.next;
 
+bool hasStory(Store<AppState> store, int userId) => store.state.stories.values.any((e) => e.userId == userId);
+
   

@@ -27,6 +27,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       image: json['image'] == null
           ? null
           : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
+      stories: (json['stories'] as List<dynamic>)
+          .map((e) => UserStory.fromJson(e as Map<String, dynamic>)),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -44,4 +46,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'paginationKey': instance.paginationKey,
       'paginationDate': instance.paginationDate?.toIso8601String(),
       'image': instance.image,
+      'stories': instance.stories.toList(),
     };

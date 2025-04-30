@@ -5,6 +5,7 @@ import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_story_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/base_entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -22,6 +23,7 @@ class UserState extends BaseEntity<int> implements Avatar{
   final bool isFollower;
   final bool isFollowed;
   final Multimedia? image;
+  final Iterable<UserStoryState> stories;
   final UserImageState? userImageState;
   final Pagination<int,FollowState> followers;
   final Pagination<int,FollowState> followeds;
@@ -63,7 +65,8 @@ class UserState extends BaseEntity<int> implements Avatar{
     required this.unsolvedQuestions,
     required this.savedSolutions,
     required this.image,
-    required this.userImageState
+    required this.userImageState,
+    required this.stories
   });
 
   UserState _optional({
@@ -103,7 +106,8 @@ class UserState extends BaseEntity<int> implements Avatar{
     unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
     savedSolutions: newSavedSolutions ?? savedSolutions,
     image: newImage ?? image,
-    userImageState: newUserImageState ?? userImageState
+    stories: stories,
+    userImageState: newUserImageState ?? userImageState,
   );
 
   //followers

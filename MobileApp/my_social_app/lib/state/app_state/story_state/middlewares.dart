@@ -42,7 +42,6 @@ void viewStoryMiddleware(Store<AppState> store, action, NextDispatcher next){
   next(action);
 }
 
-
 void nextStoryUserViewsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextStoryUserViewsAction){
     StoryUserViewService()

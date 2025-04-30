@@ -47,4 +47,10 @@ class StoryService {
       .get(_appClient.generatePaginationUrl("$_controllerName/GetAllStories", page))
       .then((json) => json as Iterable)
       .then((list) => list.map((e) => Story.fromJson(e)));
+
+  Future<Iterable<Story>> getActiveStoriesByUserId(int userId) =>
+    _appClient
+      .get("$_controllerName/GetActiveStoriesByUserId/$userId")
+      .then((json) => json as Iterable)
+      .then((list) => list.map((e) => Story.fromJson(e)));
 }

@@ -39,15 +39,6 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .ToUserResponseDto(_context, forUserId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        private Task<List<UserResponseDto>> GetListAsync(int? forUserId, IPage page, Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
-            => _context.Users
-                .AsNoTracking()
-                .Where(predicate)
-                .Filter(_context, forUserId)
-                .ToPage(page)
-                .ToUserResponseDto(_context, forUserId)
-                .ToListAsync(cancellationToken);
-
         public Task<UserResponseDto?> GetByIdAsync(int id, int? forUserId, CancellationToken cancellationToken)
             => GetSingleAsync(forUserId, user => user.Id == id, cancellationToken);
 
