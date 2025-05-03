@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
@@ -40,7 +41,7 @@ class AppState{
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
   final Pagination<int,UserUserBlockState> userUserBlocks;
   final Pagination<int,UserUserConversationState> userUserConversations;
-
+  final BalanceState balance;
   final EntityState<int,StoryState> stories;
   
   final EntityState<int,UserState> userEntityState;
@@ -73,6 +74,7 @@ class AppState{
     required this.messageConnectionEntityState,
     required this.userUserBlocks,
     required this.userUserConversations,
+    required this.balance,
 
     required this.stories,
 
@@ -107,7 +109,7 @@ class AppState{
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
     userUserConversations: Pagination.init(usersPerPage, true),
-
+    balance: const BalanceState(balance: 0),
     stories: EntityState(),
 
     userEntityState: EntityState(),

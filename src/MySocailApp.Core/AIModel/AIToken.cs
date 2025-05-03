@@ -1,15 +1,13 @@
-﻿using MySocailApp.Domain.SolutionAggregate.Exceptions;
-
-namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
+﻿namespace MySocailApp.Core.AIModel
 {
-    public class SolutionToken
+    public class AIToken
     {
         public decimal Price { get; private set; }
         public int Number { get; private set; }
 
         public decimal Cost => Price * Number;
 
-        public SolutionToken(decimal price, int number)
+        public AIToken(decimal price, int number)
         {
             if (price < 0)
                 throw new OutOfRangeTokenPriceException();

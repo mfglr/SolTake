@@ -1,8 +1,6 @@
-﻿using MySocailApp.Domain.SolutionAggregate.Exceptions;
-
-namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
+﻿namespace MySocailApp.Core.AIModel
 {
-    public class SolutionAIModel
+    public class AIModel
     {
         private class AIModelNames
         {
@@ -46,18 +44,20 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
         };
 
         public string Name { get; private set; }
-        public SolutionToken Input { get; private set; }
-        public SolutionToken Output { get; private set; }
+        public AIToken Input { get; private set; }
+        public AIToken Output { get; private set; }
 
-        private SolutionAIModel() { }
+        public decimal Cost => Input.Cost + Output.Cost;
 
-        public SolutionAIModel(string name,int numberOfInputToken, int numberOfOutputToken)
+        private AIModel() { }
+
+        public AIModel(string name, int numberOfInputToken, int numberOfOutputToken)
         {
             if (!AIModelNames.ValidName(name))
                 throw new UndefinedAIModelException();
             Name = name;
-            Input = new (_inputPrices[name], numberOfInputToken);
-            Output = new(_outputPrices[name], numberOfOutputToken); 
+            Input = new(_inputPrices[name], numberOfInputToken);
+            Output = new(_outputPrices[name], numberOfOutputToken);
 
         }
     }

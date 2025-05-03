@@ -57,8 +57,11 @@ namespace MySocailApp.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BalanceId = table.Column<int>(type: "int", nullable: false),
-                    Money_Currency_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Money_Amount = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
+                    Model_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model_Input_Price = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
+                    Model_Input_Number = table.Column<int>(type: "int", nullable: false),
+                    Model_Output_Price = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
+                    Model_Output_Number = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },

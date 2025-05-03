@@ -1,4 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
+import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
@@ -44,6 +46,7 @@ final store = Store(
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
     userUserConversations: Pagination.init(usersPerPage, true),
+    balance: const BalanceState(balance: 0),
 
     stories: EntityState(),
 
@@ -109,6 +112,10 @@ final store = Store(
     deleteSolutionUserSaveMiddleware,
     nextSolutionUserSavesMiddleware,
     //solution user saves middewares
+
+    //balance state
+    loadBalanceMiddleware,
+    //balance state
 
 
     //exams middlewares

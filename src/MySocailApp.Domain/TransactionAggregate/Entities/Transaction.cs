@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.BalanceAggregate.ValueObjects;
+using MySocailApp.Core.AIModel;
 
 namespace MySocailApp.Domain.TransactionAggregate.Entities
 {
@@ -8,14 +8,13 @@ namespace MySocailApp.Domain.TransactionAggregate.Entities
         private Transaction() { }
 
         public int BalanceId { get; private set; }
-        public Money Money { get; private set; }
+        public AIModel Model { get; private set; }
 
-        public Transaction(int balanceId, Money money)
+        public Transaction(int balanceId, AIModel model)
         {
             BalanceId = balanceId;
-            Money = money;
+            Model = model;
         }
-
 
         public void Create() => CreatedAt = DateTime.UtcNow;
     }

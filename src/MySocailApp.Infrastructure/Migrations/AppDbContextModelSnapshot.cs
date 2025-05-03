@@ -11977,7 +11977,7 @@ namespace MySocailApp.Infrastructure.Migrations
                                 .HasForeignKey("SolutionId");
                         });
 
-                    b.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionAIModel", "Model", b1 =>
+                    b.OwnsOne("MySocailApp.Core.AIModel.AIModel", "Model", b1 =>
                         {
                             b1.Property<int>("SolutionId")
                                 .HasColumnType("int");
@@ -11993,9 +11993,9 @@ namespace MySocailApp.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("SolutionId");
 
-                            b1.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionToken", "Input", b2 =>
+                            b1.OwnsOne("MySocailApp.Core.AIModel.AIToken", "Input", b2 =>
                                 {
-                                    b2.Property<int>("SolutionAIModelSolutionId")
+                                    b2.Property<int>("AIModelSolutionId")
                                         .HasColumnType("int");
 
                                     b2.Property<int>("Number")
@@ -12004,17 +12004,17 @@ namespace MySocailApp.Infrastructure.Migrations
                                     b2.Property<decimal>("Price")
                                         .HasColumnType("decimal(18,9)");
 
-                                    b2.HasKey("SolutionAIModelSolutionId");
+                                    b2.HasKey("AIModelSolutionId");
 
                                     b2.ToTable("Solutions");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("SolutionAIModelSolutionId");
+                                        .HasForeignKey("AIModelSolutionId");
                                 });
 
-                            b1.OwnsOne("MySocailApp.Domain.SolutionAggregate.ValueObjects.SolutionToken", "Output", b2 =>
+                            b1.OwnsOne("MySocailApp.Core.AIModel.AIToken", "Output", b2 =>
                                 {
-                                    b2.Property<int>("SolutionAIModelSolutionId")
+                                    b2.Property<int>("AIModelSolutionId")
                                         .HasColumnType("int");
 
                                     b2.Property<int>("Number")
@@ -12023,12 +12023,12 @@ namespace MySocailApp.Infrastructure.Migrations
                                     b2.Property<decimal>("Price")
                                         .HasColumnType("decimal(18,9)");
 
-                                    b2.HasKey("SolutionAIModelSolutionId");
+                                    b2.HasKey("AIModelSolutionId");
 
                                     b2.ToTable("Solutions");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("SolutionAIModelSolutionId");
+                                        .HasForeignKey("AIModelSolutionId");
                                 });
 
                             b1.Navigation("Input")
@@ -12118,13 +12118,14 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.TransactionAggregate.Entities.Transaction", b =>
                 {
-                    b.OwnsOne("MySocailApp.Domain.BalanceAggregate.ValueObjects.Money", "Money", b1 =>
+                    b.OwnsOne("MySocailApp.Core.AIModel.AIModel", "Model", b1 =>
                         {
                             b1.Property<int>("TransactionId")
                                 .HasColumnType("int");
 
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("decimal(18,9)");
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("TransactionId");
 
@@ -12133,28 +12134,52 @@ namespace MySocailApp.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("TransactionId");
 
-                            b1.OwnsOne("MySocailApp.Domain.BalanceAggregate.ValueObjects.Currency", "Currency", b2 =>
+                            b1.OwnsOne("MySocailApp.Core.AIModel.AIToken", "Input", b2 =>
                                 {
-                                    b2.Property<int>("MoneyTransactionId")
+                                    b2.Property<int>("AIModelTransactionId")
                                         .HasColumnType("int");
 
-                                    b2.Property<string>("Value")
-                                        .IsRequired()
-                                        .HasColumnType("nvarchar(max)");
+                                    b2.Property<int>("Number")
+                                        .HasColumnType("int");
 
-                                    b2.HasKey("MoneyTransactionId");
+                                    b2.Property<decimal>("Price")
+                                        .HasColumnType("decimal(18,9)");
+
+                                    b2.HasKey("AIModelTransactionId");
 
                                     b2.ToTable("Transactions");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("MoneyTransactionId");
+                                        .HasForeignKey("AIModelTransactionId");
                                 });
 
-                            b1.Navigation("Currency")
+                            b1.OwnsOne("MySocailApp.Core.AIModel.AIToken", "Output", b2 =>
+                                {
+                                    b2.Property<int>("AIModelTransactionId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<int>("Number")
+                                        .HasColumnType("int");
+
+                                    b2.Property<decimal>("Price")
+                                        .HasColumnType("decimal(18,9)");
+
+                                    b2.HasKey("AIModelTransactionId");
+
+                                    b2.ToTable("Transactions");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("AIModelTransactionId");
+                                });
+
+                            b1.Navigation("Input")
+                                .IsRequired();
+
+                            b1.Navigation("Output")
                                 .IsRequired();
                         });
 
-                    b.Navigation("Money")
+                    b.Navigation("Model")
                         .IsRequired();
                 });
 

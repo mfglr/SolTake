@@ -1,8 +1,7 @@
-﻿using MySocailApp.Core;
-using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionAggregate.Exceptions
+namespace MySocailApp.Core.AIModel
 {
     public class OutOfRangeTokenPriceException : AppException
     {

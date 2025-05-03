@@ -7,5 +7,7 @@ namespace MySocailApp.Domain.BalanceAggregate.Abstracts
         Task CreateAsync(Balance balance, CancellationToken cancellationToken);
         Task<Balance> GetAsync(int id, CancellationToken cancellationToken);
         Task<bool> HasBalance(int id, CancellationToken cancellationToken);
+        Task<bool> HasDept(int id, CancellationToken cancellationToken);
+        Task<decimal> GetBalanceAsync(int id, CancellationToken cancellationToken);
     }
 }

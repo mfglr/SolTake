@@ -1,13 +1,12 @@
-﻿using MySocailApp.Core;
-using MySocailApp.Core.Exceptions;
+﻿using MySocailApp.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionAggregate.Exceptions
+namespace MySocailApp.Core.AIModel
 {
     public class UndefinedAIModelException : AppException
     {
         private readonly static string _messageEn = "This ai model is undefined.";
-        private readonly static string _messageTr = "Bu ai modeli tanımsız.";
+        private readonly static string _messageTr = "Bu yz modeli tanımsız.";
         private readonly static Dictionary<string, string> _messages = new() {
             { Languages.EN, _messageEn },
             { Languages.TR, _messageTr }

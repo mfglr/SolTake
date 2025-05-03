@@ -6,6 +6,7 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
+using MySocailApp.Core.AIModel;
 using MySocailApp.Domain.BalanceAggregate.Abstracts;
 using MySocailApp.Domain.BalanceAggregate.ValueObjects;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
@@ -141,7 +142,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             var response = await GenerateAIResponse(request, question, cancellationToken);
 
             //create solution
-            var model = new SolutionAIModel(request.Model, response.Usage.PrompTokens, response.Usage.CompletionTokens);
+            var model = new AIModel(request.Model, response.Usage.PrompTokens, response.Usage.CompletionTokens);
             var content = new SolutionContent(response.Choices.First().Message.Content);
             var solution = new Solution(request.QuestionId, login.UserId, content, model);
             solution.Create();
@@ -152,7 +153,8 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             balance.Apply(Money.Dollar(-1 * solution.Cost));
 
             //create transaction
-            var transaction = new Transaction(login.UserId, Money.Dollar(solution.Cost));
+            var transactionAIModel = new AIModel(request.Model, response.Usage.PrompTokens, response.Usage.CompletionTokens);
+            var transaction = new Transaction(login.UserId, transactionAIModel);
             transaction.Create();
             await _transactionRepository.CreateAsync(transaction, cancellationToken);
 
