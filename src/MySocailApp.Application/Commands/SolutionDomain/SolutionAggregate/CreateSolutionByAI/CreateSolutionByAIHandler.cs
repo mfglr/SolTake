@@ -7,6 +7,7 @@ using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.BalanceAggregate.Abstracts;
+using MySocailApp.Domain.BalanceAggregate.ValueObjects;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
@@ -14,11 +15,13 @@ using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.TransactionAggregate.Abstracts;
+using MySocailApp.Domain.TransactionAggregate.Entities;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IFrameCatcher _frameCatcher = frameCatcher;
@@ -31,6 +34,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
         private readonly IBalanceRepository _balanceRepository = balanceRepository;
         private readonly IUserUserBlockRepository _userUserBlockRepository = userUserBlockRepository;
         private readonly IPublisher _publisher = publisher;
+        private readonly ITransactionRepository _transactionRepository = transactionRepository;
 
         private async Task<ChatGBT_Response> GenerateAIResponse(CreateSolutionByAIDto request, Question question, CancellationToken cancellationToken)
         {
@@ -137,16 +141,22 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             var response = await GenerateAIResponse(request, question, cancellationToken);
 
             //create solution
-            var model = new SolutionAIModel(request.Model,response.Usage.PrompTokens,response.Usage.CompletionTokens);
+            var model = new SolutionAIModel(request.Model, response.Usage.PrompTokens, response.Usage.CompletionTokens);
             var content = new SolutionContent(response.Choices.First().Message.Content);
             var solution = new Solution(request.QuestionId, login.UserId, content, model);
             solution.Create();
-
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
+
+            //update balance
+            var balance = await _balanceRepository.GetAsync(login.UserId, cancellationToken);
+            balance.Apply(Money.Dollar(solution.Cost));
+
+            //create transaction
+            var transaction = new Transaction(login.UserId,Money.Dollar(solution.Cost));
+            await _transactionRepository.CreateAsync(transaction, cancellationToken);
 
             //comit changes
             await _unitOfWork.CommitAsync(cancellationToken);
-
             await _publisher.Publish(new SolutionCreatedDomainEvent(question, solution, login), cancellationToken);
 
             return new(solution, login);

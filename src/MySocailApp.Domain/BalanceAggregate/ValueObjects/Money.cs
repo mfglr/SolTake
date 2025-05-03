@@ -7,6 +7,8 @@ namespace MySocailApp.Domain.BalanceAggregate.ValueObjects
         public Currency Currency { get; private set; }
         public decimal Amount { get; private set; }
 
+        private Money() { }
+
         private Money(Currency currency, decimal amount)
         {
             Currency = currency;

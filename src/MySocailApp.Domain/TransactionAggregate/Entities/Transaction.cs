@@ -3,10 +3,19 @@ using MySocailApp.Domain.BalanceAggregate.ValueObjects;
 
 namespace MySocailApp.Domain.TransactionAggregate.Entities
 {
-    public class Transaction(int balanceId, Money money) : Entity, IAggregateRoot
+    public class Transaction : Entity, IAggregateRoot
     {
-        public int BalanceId { get; private set; } = balanceId;
-        public Money Money { get; private set; } = money;
+        private Transaction() { }
+
+        public int BalanceId { get; private set; }
+        public Money Money { get; private set; }
+
+        public Transaction(int balanceId, Money money)
+        {
+            BalanceId = balanceId;
+            Money = money;
+        }
+
 
         public void Create() => CreatedAt = DateTime.UtcNow;
     }

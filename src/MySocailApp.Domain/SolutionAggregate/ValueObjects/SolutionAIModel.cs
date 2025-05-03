@@ -49,6 +49,8 @@ namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
         public SolutionToken Input { get; private set; }
         public SolutionToken Output { get; private set; }
 
+        private SolutionAIModel() { }
+
         public SolutionAIModel(string name,int numberOfInputToken, int numberOfOutputToken)
         {
             if (!AIModelNames.ValidName(name))

@@ -1,8 +1,15 @@
 ﻿namespace MySocailApp.Domain.BalanceAggregate.ValueObjects
 {
-    public class Currency(string value)
+    public class Currency
     {
-        public string Value { get; private set; } = value;
+        public string Value { get; private set; }
+
+        public Currency(string value)
+        {
+            Value = value;
+        }
+
+        private Currency() { }
 
         public static Currency Dollar() => new("$");
 
