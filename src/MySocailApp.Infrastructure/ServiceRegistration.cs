@@ -24,6 +24,7 @@ using MySocailApp.Infrastructure.NotificationAggregate;
 using MySocailApp.Infrastructure.NotificationConnectionAggregate;
 using MySocailApp.Infrastructure.QueryRepositories;
 using MySocailApp.Infrastructure.QuestionDomain;
+using MySocailApp.Infrastructure.Repositories;
 using MySocailApp.Infrastructure.RoleAggregate;
 using MySocailApp.Infrastructure.SolutionDomain;
 using MySocailApp.Infrastructure.StoryDomain;
@@ -41,7 +42,12 @@ namespace MySocailApp.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
             => services
                 .AddDbContext()
-                .AddServices()
+                .AddScoped<IAccessTokenReader, AccessTokenReader>()
+                .AddScoped<IUserAccessor, UserAccessor>()
+                .AddEmailService()
+                .AddBlobService()
+                .AddQueryRepositories()
+                .AddRepositories()
                 .AddUserDomainInfrastructureServices()
                 .AddQuestionDomainInfrastructureServices()
                 .AddSolutionDomainInfrastructureServices()
@@ -56,14 +62,6 @@ namespace MySocailApp.Infrastructure
                 .AddNotificationConnectionAggregate()
                 .AddStoryDomainInfrastructureServices()
                 .AddUserUserBlockAggregateInfrastructureServices();
-
-        private static IServiceCollection AddServices(this IServiceCollection services)
-            => services
-                .AddScoped<IAccessTokenReader, AccessTokenReader>()
-                .AddScoped<IUserAccessor, UserAccessor>()
-                .AddEmailService()
-                .AddBlobService()
-                .AddQueryRepositories();
         
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
@@ -103,7 +101,6 @@ namespace MySocailApp.Infrastructure
                 .AddScoped<IMultimediaService,MultiMediaService>()
                 .AddScoped<IFrameCatcher,FrameCatcher>()
                 .AddScoped<IImageToBase64Convertor,ImageToBase64Convertor>();
-
 
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {

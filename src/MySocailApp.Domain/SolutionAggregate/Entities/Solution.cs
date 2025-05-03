@@ -19,6 +19,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public bool IsCreatedByAI { get; private set; }
         public SolutionAIModel? Model { get; private set; }
 
+        public decimal Cost => Model == null ? 0 : Model.Input.Cost +  Model.Output.Cost;
+
         public Solution(int questionId, int userId, SolutionContent? content = null, IEnumerable<Multimedia>? medias = null)
         {
             if (content == null && (medias == null || !medias.Any()))
@@ -44,8 +46,8 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             Model = model;
         }
 
-        internal void Create() => CreatedAt = DateTime.UtcNow;
-
+        public void Create() => CreatedAt = DateTime.UtcNow;
+        
         public SolutionState State { get; private set; }
         internal void MarkAsCorrect(Question question, Login login)
         {
@@ -73,5 +75,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
 
             AddDomainEvent(new SolutionMarkedAsIncorrectDomainEvent(question, this, login));
         }
+
+
     }
 }

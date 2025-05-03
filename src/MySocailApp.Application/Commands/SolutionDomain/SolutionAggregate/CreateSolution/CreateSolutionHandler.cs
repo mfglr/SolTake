@@ -5,14 +5,15 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.DomainServices;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
 {
-    public class CreateSolutionHandler(IUnitOfWork unitOfWork, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, IMultimediaService multimediaService, IAccessTokenReader accessTokenReader, IQuestionReadRepository questionReadRepository, SolutionCreatorDomainService solutionCreatorDomainService) : IRequestHandler<CreateSolutionDto, CreateSolutionResponseDto>
+    public class CreateSolutionHandler(IUnitOfWork unitOfWork, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, IMultimediaService multimediaService, IAccessTokenReader accessTokenReader, IQuestionReadRepository questionReadRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher) : IRequestHandler<CreateSolutionDto, CreateSolutionResponseDto>
     {
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
@@ -20,7 +21,8 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
         private readonly IBlobService _blobService = blobService;
         private readonly IMultimediaService _multimediaService = multimediaService;
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
-        private readonly SolutionCreatorDomainService _solutionCreatorDomainService = solutionCreatorDomainService;
+        private readonly IUserUserBlockRepository _userUserBlockRepository = userUserBlockRepository;
+        private readonly IPublisher _publisher = publisher;
 
         public async Task<CreateSolutionResponseDto> Handle(CreateSolutionDto request, CancellationToken cancellationToken)
         {
@@ -30,21 +32,23 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
                 await _questionReadRepository.GetAsync(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
 
+            if (await _userUserBlockRepository.ExistAsync(question.UserId, login.UserId, cancellationToken))
+                throw new QuestionNotFoundException();
+
+            if (await _userUserBlockRepository.ExistAsync(login.UserId, question.UserId, cancellationToken))
+                throw new UserBlockedException();
+
             IEnumerable<Multimedia> medias = [];
             try
             {
-                //uploading images
                 medias = await _multimediaService.UploadAsync(ContainerName.SolutionMedias, request.Images, cancellationToken);
-
-                //create solution
                 var content = request.Content != null ? new SolutionContent(request.Content) : null;
                 var solution = new Solution(request.QuestionId, login.UserId, content, medias);
-                await _solutionCreatorDomainService.CreateAsync(solution, login, cancellationToken);
-                
+                solution.Create();
                 await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
-
-                //commit changes
                 await _unitOfWork.CommitAsync(cancellationToken);
+
+                await _publisher.Publish(new SolutionCreatedDomainEvent(question, solution, login), cancellationToken);
 
                 return new(solution, login);
             }

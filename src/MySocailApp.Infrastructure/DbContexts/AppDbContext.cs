@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySocailApp.Domain.AppVersionAggregate.Entities;
+using MySocailApp.Domain.BalanceAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentUserLikeAggregate.Entities;
 using MySocailApp.Domain.ExamAggregate.Entitities;
@@ -24,6 +25,7 @@ using MySocailApp.Domain.StoryUserViewAggregate.Entities;
 using MySocailApp.Domain.SubjectAggregate.Entities;
 using MySocailApp.Domain.TermsOfUseAggregate;
 using MySocailApp.Domain.TopicAggregate.Entities;
+using MySocailApp.Domain.TransactionAggregate.Entities;
 using MySocailApp.Domain.UserAggregate.Entities;
 using MySocailApp.Domain.UserUserBlockAggregate.Entities;
 using MySocailApp.Domain.UserUserConversationAggregate.Entities;
@@ -76,6 +78,9 @@ namespace MySocailApp.Infrastructure.DbContexts
 
         public DbSet<Story> Stories { get; private set; }
         public DbSet<StoryUserView> StoryUserViews { get; private set; }
+
+        public DbSet<Balance> Balances { get; private set; }
+        public DbSet<Transaction> Transactions { get; private set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

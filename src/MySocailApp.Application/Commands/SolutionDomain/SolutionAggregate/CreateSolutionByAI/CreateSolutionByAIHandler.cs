@@ -6,17 +6,19 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
+using MySocailApp.Domain.BalanceAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.DomainServices;
+using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
+using MySocailApp.Domain.SolutionAggregate.Exceptions;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService,IAccessTokenReader accessTokenReader, SolutionCreatorDomainService solutionCreatorDomainService, IImageToBase64Convertor imageToBase64Convertor) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IFrameCatcher _frameCatcher = frameCatcher;
@@ -25,8 +27,10 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly ITempDirectoryService _tempDirectoryService = tempDirectoryService;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
-        private readonly SolutionCreatorDomainService _solutionCreatorDomainService = solutionCreatorDomainService;
         private readonly IImageToBase64Convertor _imageToBase64Convertor = imageToBase64Convertor;
+        private readonly IBalanceRepository _balanceRepository = balanceRepository;
+        private readonly IUserUserBlockRepository _userUserBlockRepository = userUserBlockRepository;
+        private readonly IPublisher _publisher = publisher;
 
         private async Task<ChatGBT_Response> GenerateAIResponse(CreateSolutionByAIDto request, Question question, CancellationToken cancellationToken)
         {
@@ -113,26 +117,37 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             return response;
         }
 
-
         public async Task<CreateSolutionResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
         {
             var login = _accessTokenReader.GetLogin();
 
             var question =
                 await _questionReadRepository.GetAsync(request.QuestionId, cancellationToken) ??
-                throw new Domain.SolutionAggregate.Exceptions.QuestionNotFoundException();
+                throw new QuestionNotFoundException();
+
+            if (await _userUserBlockRepository.ExistAsync(question.UserId, login.UserId, cancellationToken))
+                throw new QuestionNotFoundException();
+
+            if (await _userUserBlockRepository.ExistAsync(login.UserId, question.UserId, cancellationToken))
+                throw new UserBlockedException();
+
+            if (!await _balanceRepository.HasBalance(login.UserId, cancellationToken))
+                throw new InsufficientFundsException();
 
             var response = await GenerateAIResponse(request, question, cancellationToken);
 
             //create solution
-            var model = new SolutionAIModel(request.Model);
+            var model = new SolutionAIModel(request.Model,response.Usage.PrompTokens,response.Usage.CompletionTokens);
             var content = new SolutionContent(response.Choices.First().Message.Content);
             var solution = new Solution(request.QuestionId, login.UserId, content, model);
-            await _solutionCreatorDomainService.CreateAsync(solution, login, cancellationToken);
+            solution.Create();
+
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
 
             //comit changes
             await _unitOfWork.CommitAsync(cancellationToken);
+
+            await _publisher.Publish(new SolutionCreatedDomainEvent(question, solution, login), cancellationToken);
 
             return new(solution, login);
         }
