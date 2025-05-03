@@ -16,6 +16,6 @@ namespace MySocailApp.Infrastructure.Repositories
             => _context.Balances.FirstAsync(x => x.Id == id, cancellationToken);
 
         public Task<bool> HasBalance(int id, CancellationToken cancellationToken)
-            => _context.Balances.AnyAsync(x => x.Id == id && x.Credit.Amount > 0, cancellationToken);
+            => _context.Balances.AnyAsync(x => x.Id == id && x.Credit.Amount > 0.0005m, cancellationToken);
     }
 }

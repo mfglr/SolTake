@@ -34,7 +34,7 @@ namespace MySocailApp.Domain.BalanceAggregate.ValueObjects
         public static Money operator +(Money x, Money y)
         {
             EnsureSameCurrency(x, y);
-            return new(x.Currency, x.Amount + y.Amount);
+            return new(new(x.Currency.Value), x.Amount + y.Amount);
         }
 
         //public static Money operator -(Money x, Money y)

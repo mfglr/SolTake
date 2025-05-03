@@ -149,10 +149,11 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
 
             //update balance
             var balance = await _balanceRepository.GetAsync(login.UserId, cancellationToken);
-            balance.Apply(Money.Dollar(solution.Cost));
+            balance.Apply(Money.Dollar(-1 * solution.Cost));
 
             //create transaction
             var transaction = new Transaction(login.UserId, Money.Dollar(solution.Cost));
+            transaction.Create();
             await _transactionRepository.CreateAsync(transaction, cancellationToken);
 
             //comit changes

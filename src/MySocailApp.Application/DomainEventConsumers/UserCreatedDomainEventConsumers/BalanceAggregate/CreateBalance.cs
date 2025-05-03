@@ -14,7 +14,8 @@ namespace MySocailApp.Application.DomainEventConsumers.UserCreatedDomainEventCon
 
         public async Task Handle(UserCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var balance = new Balance(notification.User.Id, Currency.Dollar());
+            var balance = new Balance(notification.User.Id, Money.Dollar(0.001m));
+            balance.Create();
             await _balanceRepository.CreateAsync(balance, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
         }

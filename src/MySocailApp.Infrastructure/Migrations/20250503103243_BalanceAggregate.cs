@@ -20,7 +20,7 @@ namespace MySocailApp.Infrastructure.Migrations
             migrationBuilder.AddColumn<decimal>(
                 name: "Model_Input_Price",
                 table: "Solutions",
-                type: "decimal(18,2)",
+                type: "decimal(18,9)",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
@@ -32,17 +32,16 @@ namespace MySocailApp.Infrastructure.Migrations
             migrationBuilder.AddColumn<decimal>(
                 name: "Model_Output_Price",
                 table: "Solutions",
-                type: "decimal(18,2)",
+                type: "decimal(18,9)",
                 nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Balances",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Credit_Currency_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Credit_Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Credit_Amount = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -59,7 +58,7 @@ namespace MySocailApp.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BalanceId = table.Column<int>(type: "int", nullable: false),
                     Money_Currency_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Money_Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Money_Amount = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },

@@ -39,15 +39,17 @@ class _AppFileSliderState extends State<AppFileSlider> {
           scrollDirection: Axis.horizontal,
           onPageChanged: (index) => setState(() { _activeIndex = index; }),
           children: widget.medias
-            .map((e) => Stack(
-              alignment: AlignmentDirectional.topEnd,
-              children: [
-                e.type == AppFileTypes.image ? ImageSlide(file: e) : VideoSlide(file: e),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RemoveMediaButton(onPressed: () => widget.onRemoved(e)),
-                ),
-              ],
+            .map((e) => Center(
+              child: Stack(
+                alignment: AlignmentDirectional.topEnd,
+                children: [
+                  e.type == AppFileTypes.image ? ImageSlide(file: e) : VideoSlide(file: e),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RemoveMediaButton(onPressed: () => widget.onRemoved(e)),
+                  ),
+                ],
+              ),
             )).toList(),
         ),
         if(widget.medias.length > 1)

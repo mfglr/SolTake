@@ -8,7 +8,12 @@ namespace MySocailApp.Infrastructure.ModelBuilders.TransactionAggregate
     {
         public void Configure(EntityTypeBuilder<Transaction> builder)
         {
-            builder.OwnsOne(x => x.Money,m => m.OwnsOne(c => c.Currency));
+            builder.OwnsOne(
+                x => x.Money,
+                m => {
+                    m.OwnsOne(c => c.Currency);
+                    m.Property(c => c.Amount).HasColumnType("decimal(18,9)");
+                });
         }
     }
 }
