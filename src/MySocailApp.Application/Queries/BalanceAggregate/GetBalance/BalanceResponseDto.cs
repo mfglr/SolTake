@@ -1,4 +1,4 @@
 ﻿namespace MySocailApp.Application.Queries.BalanceAggregate.GetBalance
 {
-    public record BalanceResponseDto(decimal Balance);
+    public record BalanceResponseDto(int Balance);
 }

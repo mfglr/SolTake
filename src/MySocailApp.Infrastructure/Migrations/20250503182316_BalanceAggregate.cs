@@ -12,27 +12,27 @@ namespace MySocailApp.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "Model_Input_Number",
+                name: "Model_Input_SolPerToken",
                 table: "Solutions",
                 type: "int",
-                nullable: true);
-
-            migrationBuilder.AddColumn<decimal>(
-                name: "Model_Input_Price",
-                table: "Solutions",
-                type: "decimal(18,9)",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Model_Output_Number",
+                name: "Model_Input_TokenNumber",
                 table: "Solutions",
                 type: "int",
                 nullable: true);
 
-            migrationBuilder.AddColumn<decimal>(
-                name: "Model_Output_Price",
+            migrationBuilder.AddColumn<int>(
+                name: "Model_Output_SolPerToken",
                 table: "Solutions",
-                type: "decimal(18,9)",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "Model_Output_TokenNumber",
+                table: "Solutions",
+                type: "int",
                 nullable: true);
 
             migrationBuilder.CreateTable(
@@ -40,8 +40,7 @@ namespace MySocailApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Credit_Currency_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Credit_Amount = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
+                    Credit_Amount = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -58,10 +57,10 @@ namespace MySocailApp.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BalanceId = table.Column<int>(type: "int", nullable: false),
                     Model_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model_Input_Price = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
-                    Model_Input_Number = table.Column<int>(type: "int", nullable: false),
-                    Model_Output_Price = table.Column<decimal>(type: "decimal(18,9)", nullable: false),
-                    Model_Output_Number = table.Column<int>(type: "int", nullable: false),
+                    Model_Input_SolPerToken = table.Column<int>(type: "int", nullable: false),
+                    Model_Input_TokenNumber = table.Column<int>(type: "int", nullable: false),
+                    Model_Output_SolPerToken = table.Column<int>(type: "int", nullable: false),
+                    Model_Output_TokenNumber = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -81,19 +80,19 @@ namespace MySocailApp.Infrastructure.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropColumn(
-                name: "Model_Input_Number",
+                name: "Model_Input_SolPerToken",
                 table: "Solutions");
 
             migrationBuilder.DropColumn(
-                name: "Model_Input_Price",
+                name: "Model_Input_TokenNumber",
                 table: "Solutions");
 
             migrationBuilder.DropColumn(
-                name: "Model_Output_Number",
+                name: "Model_Output_SolPerToken",
                 table: "Solutions");
 
             migrationBuilder.DropColumn(
-                name: "Model_Output_Price",
+                name: "Model_Output_TokenNumber",
                 table: "Solutions");
         }
     }

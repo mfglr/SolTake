@@ -47,7 +47,7 @@ class DisplayBalancePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${balance.balance}\$",
+                        "${balance.balance} Sol",
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

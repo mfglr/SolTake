@@ -23,31 +23,33 @@
             public static bool ValidName(string name) => _names.Contains(name);
         }
 
-        private readonly static Dictionary<string, decimal> _inputPrices = new()
+        private readonly static Dictionary<string, int> _inputPrices = new()
         {
-            { AIModelNames.Gpt_4_1, 0.000002m },
-            { AIModelNames.Gpt_4_1_MINI, 0.0000004m },
-            { AIModelNames.Gpt_4O, 0.0000025m },
-            { AIModelNames.Gpt_4O_MINI, 0.00000015m },
-            { AIModelNames.Gpt_O4_MINI, 0.0000011m },
-            { AIModelNames.Gpt_O1, 0.000015m }
+            { AIModelNames.Gpt_4_1, 200 },
+            { AIModelNames.Gpt_4_1_MINI, 40 },
+            { AIModelNames.Gpt_4O, 250 },
+            { AIModelNames.Gpt_4O_MINI, 15 },
+            { AIModelNames.Gpt_O4_MINI, 110 },
+            { AIModelNames.Gpt_O1, 1500 }
         };
 
-        private readonly static Dictionary<string, decimal> _outputPrices = new()
+        private readonly static Dictionary<string, int> _outputPrices = new()
         {
-            { AIModelNames.Gpt_4_1, 0.000008m },
-            { AIModelNames.Gpt_4_1_MINI, 0.0000016m },
-            { AIModelNames.Gpt_4O, 0.00001m },
-            { AIModelNames.Gpt_4O_MINI, 0.0000006m },
-            { AIModelNames.Gpt_O4_MINI, 0.0000044m },
-            { AIModelNames.Gpt_O1, 0.00006m }
+            { AIModelNames.Gpt_4_1, 800 },
+            { AIModelNames.Gpt_4_1_MINI, 160 },
+            { AIModelNames.Gpt_4O, 1000 },
+            { AIModelNames.Gpt_4O_MINI, 60 },
+            { AIModelNames.Gpt_O4_MINI, 440 },
+            { AIModelNames.Gpt_O1, 6000 }
         };
 
         public string Name { get; private set; }
         public AIToken Input { get; private set; }
         public AIToken Output { get; private set; }
 
-        public decimal Cost => Input.Cost + Output.Cost;
+        public Sol Cost => Input.Cost + Output.Cost;
+        public Sol Price => Input.Price + Output.Price;
+
 
         private AIModel() { }
 

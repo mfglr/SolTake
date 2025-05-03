@@ -8,7 +8,6 @@ using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
 using MySocailApp.Core.AIModel;
 using MySocailApp.Domain.BalanceAggregate.Abstracts;
-using MySocailApp.Domain.BalanceAggregate.ValueObjects;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Abstracts;
@@ -150,7 +149,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
 
             //update balance
             var balance = await _balanceRepository.GetAsync(login.UserId, cancellationToken);
-            balance.Apply(Money.Dollar(-1 * solution.Cost));
+            balance.Apply(-1 * solution.Price);
 
             //create transaction
             var transactionAIModel = new AIModel(request.Model, response.Usage.PrompTokens, response.Usage.CompletionTokens);

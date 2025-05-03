@@ -15,7 +15,7 @@ namespace MySocailApp.Infrastructure.Repositories
         public Task<Balance> GetAsync(int id, CancellationToken cancellationToken)
             => _context.Balances.FirstAsync(x => x.Id == id, cancellationToken);
 
-        public Task<decimal> GetBalanceAsync(int id, CancellationToken cancellationToken)
+        public Task<int> GetBalanceAsync(int id, CancellationToken cancellationToken)
             => _context.Balances
                 .AsNoTracking()
                 .Where(x => x.Id == id)

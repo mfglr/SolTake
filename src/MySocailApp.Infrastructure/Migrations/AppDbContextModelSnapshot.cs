@@ -11523,13 +11523,13 @@ namespace MySocailApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocailApp.Domain.BalanceAggregate.Entities.Balance", b =>
                 {
-                    b.OwnsOne("MySocailApp.Domain.BalanceAggregate.ValueObjects.Money", "Credit", b1 =>
+                    b.OwnsOne("MySocailApp.Core.AIModel.Sol", "Credit", b1 =>
                         {
                             b1.Property<int>("BalanceId")
                                 .HasColumnType("int");
 
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("decimal(18,9)");
+                            b1.Property<int>("Amount")
+                                .HasColumnType("int");
 
                             b1.HasKey("BalanceId");
 
@@ -11537,26 +11537,6 @@ namespace MySocailApp.Infrastructure.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("BalanceId");
-
-                            b1.OwnsOne("MySocailApp.Domain.BalanceAggregate.ValueObjects.Currency", "Currency", b2 =>
-                                {
-                                    b2.Property<int>("MoneyBalanceId")
-                                        .HasColumnType("int");
-
-                                    b2.Property<string>("Value")
-                                        .IsRequired()
-                                        .HasColumnType("nvarchar(max)");
-
-                                    b2.HasKey("MoneyBalanceId");
-
-                                    b2.ToTable("Balances");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("MoneyBalanceId");
-                                });
-
-                            b1.Navigation("Currency")
-                                .IsRequired();
                         });
 
                     b.Navigation("Credit")
@@ -11998,11 +11978,11 @@ namespace MySocailApp.Infrastructure.Migrations
                                     b2.Property<int>("AIModelSolutionId")
                                         .HasColumnType("int");
 
-                                    b2.Property<int>("Number")
+                                    b2.Property<int>("SolPerToken")
                                         .HasColumnType("int");
 
-                                    b2.Property<decimal>("Price")
-                                        .HasColumnType("decimal(18,9)");
+                                    b2.Property<int>("TokenNumber")
+                                        .HasColumnType("int");
 
                                     b2.HasKey("AIModelSolutionId");
 
@@ -12017,11 +11997,11 @@ namespace MySocailApp.Infrastructure.Migrations
                                     b2.Property<int>("AIModelSolutionId")
                                         .HasColumnType("int");
 
-                                    b2.Property<int>("Number")
+                                    b2.Property<int>("SolPerToken")
                                         .HasColumnType("int");
 
-                                    b2.Property<decimal>("Price")
-                                        .HasColumnType("decimal(18,9)");
+                                    b2.Property<int>("TokenNumber")
+                                        .HasColumnType("int");
 
                                     b2.HasKey("AIModelSolutionId");
 
@@ -12139,11 +12119,11 @@ namespace MySocailApp.Infrastructure.Migrations
                                     b2.Property<int>("AIModelTransactionId")
                                         .HasColumnType("int");
 
-                                    b2.Property<int>("Number")
+                                    b2.Property<int>("SolPerToken")
                                         .HasColumnType("int");
 
-                                    b2.Property<decimal>("Price")
-                                        .HasColumnType("decimal(18,9)");
+                                    b2.Property<int>("TokenNumber")
+                                        .HasColumnType("int");
 
                                     b2.HasKey("AIModelTransactionId");
 
@@ -12158,11 +12138,11 @@ namespace MySocailApp.Infrastructure.Migrations
                                     b2.Property<int>("AIModelTransactionId")
                                         .HasColumnType("int");
 
-                                    b2.Property<int>("Number")
+                                    b2.Property<int>("SolPerToken")
                                         .HasColumnType("int");
 
-                                    b2.Property<decimal>("Price")
-                                        .HasColumnType("decimal(18,9)");
+                                    b2.Property<int>("TokenNumber")
+                                        .HasColumnType("int");
 
                                     b2.HasKey("AIModelTransactionId");
 

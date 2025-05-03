@@ -20,7 +20,9 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public bool IsCreatedByAI { get; private set; }
         public AIModel? Model { get; private set; }
 
-        public decimal Cost => Model == null ? 0 : Model.Cost;
+        public Sol Cost => Model == null ? Sol.Zero() : Model.Cost;
+        public Sol Price => Model == null ? Sol.Zero() : Model.Price;
+
 
         public Solution(int questionId, int userId, SolutionContent? content = null, IEnumerable<Multimedia>? medias = null)
         {

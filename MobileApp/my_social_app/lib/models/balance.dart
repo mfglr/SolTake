@@ -6,7 +6,7 @@ part 'balance.g.dart';
 @JsonSerializable()
 @immutable
 class Balance{
-  final double balance;
+  final int balance;
   
   const Balance({required this.balance});
 

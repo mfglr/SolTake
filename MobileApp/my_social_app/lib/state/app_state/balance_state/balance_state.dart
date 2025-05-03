@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 @immutable
 class BalanceState {
-  final double balance;
+  final int balance;
   const BalanceState({required this.balance});
 
-  BalanceState update(double balance) => BalanceState(balance: balance);
+  BalanceState update(int balance) => BalanceState(balance: balance);
 }

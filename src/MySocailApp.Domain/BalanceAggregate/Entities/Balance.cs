@@ -1,29 +1,21 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Domain.BalanceAggregate.ValueObjects;
+using MySocailApp.Core.AIModel;
 
 namespace MySocailApp.Domain.BalanceAggregate.Entities
 {
     public class Balance : Entity, IAggregateRoot
     {
-        public Money Credit { get; private set; }
+        public Sol Credit { get; private set; }
 
         private Balance() { }
-
-        public Balance(int id, Currency currency) : base(id)
-        {
-            Credit = Money.Zero(currency);
-        }
-
-        public Balance(int id, Money money) : base(id)
-        {
-            Credit = money;
-        }
+        public Balance(int id) : base(id) => Credit = Sol.Zero();
+        public Balance(int id, Sol credit) : base(id) => Credit = credit;
 
         public void Create() => CreatedAt = DateTime.UtcNow;
 
-        public void Apply(Money money)
+        public void Apply(Sol sol)
         {
-            Credit += money;
+            Credit += sol;
             UpdatedAt = DateTime.UtcNow;
         }
     }

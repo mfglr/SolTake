@@ -2,21 +2,24 @@
 {
     public class AIToken
     {
-        public decimal Price { get; private set; }
-        public int Number { get; private set; }
+        private readonly static double _profitMargin = 0.25;
 
-        public decimal Cost => Price * Number;
+        public int SolPerToken { get; private set; }
+        public int TokenNumber { get; private set; }
 
-        public AIToken(decimal price, int number)
+        public Sol Cost => new(SolPerToken * TokenNumber);
+        public Sol Price => Cost + (Cost * _profitMargin);
+
+        public AIToken(int solPerToken, int tokenNumber)
         {
-            if (price < 0)
+            if (solPerToken < 0)
                 throw new OutOfRangeTokenPriceException();
 
-            if (number < 0)
+            if (tokenNumber < 0)
                 throw new OutOfRangeTokenNumberException();
 
-            Price = price;
-            Number = number;
+            SolPerToken = solPerToken;
+            TokenNumber = tokenNumber;
         }
     }
 }

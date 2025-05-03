@@ -12,14 +12,8 @@ namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
             builder.OwnsOne(
                 s => s.Model,
                 x => {
-                    x.OwnsOne(
-                        sam => sam.Input,
-                        sam => sam.Property(x => x.Price).HasColumnType("decimal(18,9)")
-                    );
-                    x.OwnsOne(
-                        sam => sam.Output,
-                        sam => sam.Property(x => x.Price).HasColumnType("decimal(18,9)")
-                    );
+                    x.OwnsOne(sam => sam.Input);
+                    x.OwnsOne(sam => sam.Output);
                 });
             builder.OwnsMany(x => x.Medias);
         }

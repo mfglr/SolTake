@@ -1,7 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Core;
 using MySocailApp.Domain.BalanceAggregate.Abstracts;
-using MySocailApp.Domain.BalanceAggregate.ValueObjects;
 using MySocailApp.Domain.BalanceAggregate.Entities;
 using MySocailApp.Domain.UserAggregate.DomainEvents;
 
@@ -14,7 +13,7 @@ namespace MySocailApp.Application.DomainEventConsumers.UserCreatedDomainEventCon
 
         public async Task Handle(UserCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var balance = new Balance(notification.User.Id, Money.Dollar(0.001m));
+            var balance = new Balance(notification.User.Id);
             balance.Create();
             await _balanceRepository.CreateAsync(balance, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
