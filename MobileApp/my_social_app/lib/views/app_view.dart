@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/app_version_service.dart';
 import 'package:my_social_app/services/package_version_service.dart';
+import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -27,14 +29,31 @@ class AppView extends StatefulWidget {
   State<AppView> createState() => _AppViewState();
 }
 
-class _AppViewState extends State<AppView> {
+class _AppViewState extends State<AppView>{
   late final Future<bool> _isUpgradeRequired;
+  late final Timer _timer;
+
   @override
   void initState() {
-    super.initState();
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    store.dispatch(const LoginByRefreshToken());
+    _timer = Timer.periodic(
+      Duration(minutes: int.parse(dotenv.env['accessTokenDuration']!)),
+      (timer) => store.dispatch(const LoginByRefreshToken())
+    );
+
     _isUpgradeRequired = PackageVersionService()
       .getVersion()
-      .then((version) => AppVersionService().isUpgradeRequired(version)); 
+      .then((version) => AppVersionService().isUpgradeRequired(version));
+
+    super.initState();
+  }
+  
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
