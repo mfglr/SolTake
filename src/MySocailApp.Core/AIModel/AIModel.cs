@@ -47,9 +47,10 @@
         public AIToken Input { get; private set; }
         public AIToken Output { get; private set; }
 
-        public Sol Cost => Input.Cost + Output.Cost;
-        public Sol Price => Input.Price + Output.Price;
 
+        private readonly static double _profitMargin = 0.25;
+        public Sol Cost => Input.Cost + Output.Cost;
+        public Sol Price => Cost + (Cost * _profitMargin);
 
         private AIModel() { }
 
