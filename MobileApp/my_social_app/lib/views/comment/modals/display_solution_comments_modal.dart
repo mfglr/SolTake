@@ -6,9 +6,9 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/comment/widgets/comment_field_widget.dart';
+import 'package:my_social_app/views/comment/widgets/comment_field_widget/comment_field_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_items_widget.dart';
-import 'package:my_social_app/views/comment/widgets/no_comments_widget.dart';
+import 'package:my_social_app/views/comment/widgets/no_comments_widget/no_comments_widget.dart';
 import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class DisplaySolutionCommentsModal extends StatefulWidget {

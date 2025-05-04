@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/edit_profile/pages/edit_profile_page.dart';
+import 'package:my_social_app/views/edit_profile/pages/edit_profile_page/edit_profile_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileEditButton extends StatelessWidget {

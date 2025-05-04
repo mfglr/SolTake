@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/utilities/dialog_creator.dart';
+import 'package:my_social_app/utilities/dialog_creator/dialog_creator.dart';
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/logout_menu_item/logout_menu_item_texts.dart';
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/profile_menu_item.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';

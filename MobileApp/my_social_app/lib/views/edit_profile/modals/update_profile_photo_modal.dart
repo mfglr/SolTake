@@ -6,8 +6,9 @@ import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/views/edit_profile/modals/update_profile_photot_modal_texts.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class UpdateProfilePhotoModal extends StatelessWidget {
@@ -65,7 +66,11 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                               child: Column(
                                 children: [
                                   const Icon(Icons.photo_camera),
-                                  Text(AppLocalizations.of(context)!.update_profile_photo_modal_camera)
+                                  LanguageWidget(
+                                    child: (language) => Text(
+                                      camera[language]!
+                                    ),
+                                  )
                                 ],
                               ),
                               ),
@@ -90,7 +95,11 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                               child: Column(
                                 children: [
                                   const Icon(Icons.photo),
-                                  Text(AppLocalizations.of(context)!.update_profile_photo_modal_galeri)
+                                  LanguageWidget(
+                                    child: (language) => Text(
+                                      gallery[language]!
+                                    ),
+                                  )
                                 ],
                               )
                             ),
@@ -112,10 +121,12 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                                 size: 40,
                                 color: user.image != null ?Colors.red : Colors.red[100],
                               ),
-                              Text(
-                                AppLocalizations.of(context)!.update_profile_phot_modal_remove_button,
-                                style: TextStyle(
-                                  color: user.image != null ?Colors.red : Colors.red[100],
+                              LanguageWidget(
+                                child: (language) => Text(
+                                  remove[language]!,
+                                  style: TextStyle(
+                                    color: user.image != null ?Colors.red : Colors.red[100],
+                                  ),
                                 ),
                               )
                             ],

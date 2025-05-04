@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_header_widget.dart';
-import 'package:my_social_app/views/comment/widgets/buttons/hide_replies_button.dart';
+import 'package:my_social_app/views/comment/widgets/buttons/hide_replies_button/hide_replies_button.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class CommentItemWidget extends StatefulWidget {

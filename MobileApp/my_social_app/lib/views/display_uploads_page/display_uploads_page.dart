@@ -5,6 +5,8 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.d
 import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
+import 'display_uploads_page_texts.dart';
 
 class DisplayUploadsPage extends StatelessWidget {
   const DisplayUploadsPage({super.key});
@@ -14,7 +16,11 @@ class DisplayUploadsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: AppTitle(title: "Uploads"),
+        title: LanguageWidget(
+          child: (language) => AppTitle(
+            title: title[language]!
+          ),
+        ),
       ),
       body: StoreConnector<AppState,Iterable<UploadState>>(
         converter: (store) => store.state.uploadEntityState.entities,

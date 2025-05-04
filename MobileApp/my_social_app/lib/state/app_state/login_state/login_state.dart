@@ -100,6 +100,7 @@ class LoginState{
         refreshToken: refreshToken,
         accountDeletionStart: accountDeletionStart
       );
+  
   LoginState startAccountDeletion()
     => LoginState(
         id: id,

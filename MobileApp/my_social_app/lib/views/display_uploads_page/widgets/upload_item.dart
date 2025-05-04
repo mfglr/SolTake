@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
 import 'package:my_social_app/views/display_uploads_page/widgets/upload_media_grid.dart';
-import 'package:my_social_app/views/display_uploads_page/widgets/upload_status_widget.dart';
+import 'package:my_social_app/views/display_uploads_page/widgets/upload_status_widget/upload_status_widget.dart';
 
 class UploadItem extends StatelessWidget {
   final UploadState state;

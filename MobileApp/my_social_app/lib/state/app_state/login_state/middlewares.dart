@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_social_app/constants/notifications_content.dart';
@@ -57,7 +56,6 @@ void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-
 
 void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoginByRefreshToken){

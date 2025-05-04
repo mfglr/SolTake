@@ -50,7 +50,7 @@ class _AppViewState extends State<AppView> {
             builder: (context, isInitialized){
               if(isInitialized){
                 if(widget.login == null){
-                  return StoreConnector<AppState,ActiveAccountPage>(
+                  return StoreConnector<AppState, ActiveAccountPage>(
                     converter: (store) => store.state.activeAccountPage,
                     builder: (context,activeAccountPage){
                       if(activeAccountPage == ActiveAccountPage.appLodingPage) return const ApplicationLoadingPage();
