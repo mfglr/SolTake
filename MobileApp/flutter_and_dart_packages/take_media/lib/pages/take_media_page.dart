@@ -11,10 +11,8 @@ import 'package:take_media/widgets.dart/take_photo_button.dart';
 import 'package:take_media/widgets.dart/video_duration_displayer.dart';
 
 class TakeMediaPage extends StatefulWidget {
-  final List<CameraDescription> cameras;
   const TakeMediaPage({
     super.key,
-    required this.cameras
   });
 
   @override
@@ -22,7 +20,7 @@ class TakeMediaPage extends StatefulWidget {
 }
 
 class _TakeMediaPageState extends State<TakeMediaPage> {
-  late CameraController _controller;
+  CameraController? _controller;
   bool _videoState = false;
   int _duration = 0;
   late bool _isCameraDirectionChangeable;
@@ -31,11 +29,12 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
   double _y = 0;
   Color _color = Colors.white;
   bool _showFocusCircle = false;
+  late final List<CameraDescription> _cameras;
 
   void _focus(TapDownDetails details){
 
     double fullWidth = MediaQuery.of(context).size.width;
-    double cameraHeight = fullWidth * _controller.value.aspectRatio;
+    double cameraHeight = fullWidth * _controller!.value.aspectRatio;
     
     setState(() {
       _x = details.localPosition.dx;
@@ -43,7 +42,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
       _showFocusCircle = true;
       _color = Colors.white;
     });
-    _controller
+    _controller!
       .setFocusPoint(Offset(_x / fullWidth, _y / cameraHeight))
       .then((_){
         setState(() { _color = Colors.yellow; });
@@ -64,22 +63,22 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
 
   void _changeCameraDirection(){
     _direction = _direction == CameraLensDirection.back ? CameraLensDirection.front : CameraLensDirection.back;
-    final cameraDescription = widget.cameras.where((e) => e.lensDirection == _direction).first;
-    _controller.setDescription(cameraDescription).then((_) => setState((){}));
+    final cameraDescription = _cameras.where((e) => e.lensDirection == _direction).first;
+    _controller!.setDescription(cameraDescription).then((_) => setState((){}));
   }
 
   void _takePhoto() =>
-    _controller
+    _controller!
         .takePicture()
         .then((image){ if(mounted) Navigator.of(context).pop(AppFile.image(image)); });
 
   void _startVideoRecording() =>
-    _controller
+    _controller!
         .startVideoRecording()
         .then((_) => setState(_startTimer));
     
   void _stopVideoRecording() =>
-    _controller
+    _controller!
         .stopVideoRecording()
         .then((video){ if(mounted) Navigator.of(context).pop(AppFile.video(video)); });
 
@@ -88,7 +87,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
       const Duration(seconds: 1),
       (timer){
         if(timer.tick >= 300 && mounted){
-          _controller
+          _controller!
             .stopVideoRecording()
             .then((file){
               if(mounted){
@@ -108,32 +107,35 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
 
   Widget _getFloatActionButton(){
     if(!_videoState) return TakePhotoButton(onPressed: _takePhoto);
-    if(!_controller.value.isRecordingVideo) return StartVideoButton(onPressed: _startVideoRecording);
+    if(!_controller!.value.isRecordingVideo) return StartVideoButton(onPressed: _startVideoRecording);
     return StopVideoButton(onPressed: _stopVideoRecording);
   }
 
   @override
   void initState() {
-    _isCameraDirectionChangeable = 
-      ![CameraLensDirection.back,CameraLensDirection.front]
-        .any((cld) => !widget.cameras.any((cm) => cld == cm.lensDirection));
+    availableCameras()
+      .then((cameras){
+        _cameras = cameras;
+        _isCameraDirectionChangeable = 
+          ![CameraLensDirection.back,CameraLensDirection.front]
+            .any((cld) => !_cameras.any((cm) => cld == cm.lensDirection));
 
-    var description = 
-      widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.back) ??
-      widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.front) ??
-      widget.cameras.first;
+        var description = 
+          _cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.back) ??
+          _cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.front) ??
+          _cameras.first;
 
-    _direction = description.lensDirection;
+        _direction = description.lensDirection;
 
-    _controller = CameraController(description, ResolutionPreset.max);
-    _controller.initialize().then((_) => setState((){}));
-
-    super.initState();
+        _controller = CameraController(description, ResolutionPreset.max);
+        _controller!.initialize().then((_) => setState((){}));
+      });
+      super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
   
@@ -141,7 +143,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _controller.value.isInitialized
+      body: _controller != null && _controller!.value.isInitialized
         ? Stack(
           alignment: AlignmentDirectional.topCenter,
           children: [
@@ -153,7 +155,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
                     onTapDown: _focus,
                     child: Stack(
                       children: [
-                        CameraPreview(_controller),
+                        CameraPreview(_controller!),
                         if(_showFocusCircle)
                           Positioned(
                             top: _y - 30,
@@ -174,7 +176,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
                     ),
                   )
                 ),
-                if(!_controller.value.isRecordingVideo) 
+                if(!_controller!.value.isRecordingVideo) 
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -210,7 +212,7 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
                   )
               ],
             ),
-            if(_controller.value.isRecordingVideo)
+            if(_controller!.value.isRecordingVideo)
               Container(
                 margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 16),
                 child: VideoDurationDisplayer(duration: _duration)
@@ -219,16 +221,18 @@ class _TakeMediaPageState extends State<TakeMediaPage> {
         )
         : const Center(child: CircularProgressIndicator()),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          if(!_controller.value.isRecordingVideo)
-            const CameraCloseButton(),
-          _getFloatActionButton(),
-          if(!_controller.value.isRecordingVideo && _isCameraDirectionChangeable)
-            ChangeCameraButton(onPressed: _changeCameraDirection,)
-        ],
-      )
+      floatingActionButton: _controller != null
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              if(!_controller!.value.isRecordingVideo)
+                const CameraCloseButton(),
+              _getFloatActionButton(),
+              if(!_controller!.value.isRecordingVideo && _isCameraDirectionChangeable)
+                ChangeCameraButton(onPressed: _changeCameraDirection,)
+            ],
+          )
+        : null
     );
   }
 }

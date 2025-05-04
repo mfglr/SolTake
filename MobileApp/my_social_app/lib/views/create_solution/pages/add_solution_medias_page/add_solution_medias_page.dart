@@ -2,7 +2,6 @@ import 'package:app_file/app_file.dart';
 import 'package:app_file_slider/app_file_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/create_solution/constants.dart';
@@ -10,8 +9,8 @@ import 'package:my_social_app/views/create_solution/widgets/create_solution_butt
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/take_media_speed_dial.dart';
+import 'package:take_media/pages/take_media_page.dart';
 import 'package:take_media_from_gallery/take_media_from_gallery.dart';
-
 import 'add_solution_medias_page_texts.dart';
 
 class AddSolutionMediasPage extends StatefulWidget {
@@ -47,7 +46,7 @@ class _AddSolutionMediasPageState extends State<AddSolutionMediasPage> {
     if(_validateNumberOfMedias()){
       Navigator
         .of(context)
-        .pushNamed(takeMediaRoute)
+        .push(MaterialPageRoute(builder: (context) => const TakeMediaPage()))
         .then((value){
           if(value == null) return;
           setState(() { _medias = [..._medias,value as AppFile].take(maxNumberOfSolutionMedia);});

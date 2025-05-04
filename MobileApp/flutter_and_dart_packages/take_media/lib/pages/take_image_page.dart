@@ -7,10 +7,8 @@ import 'package:take_media/widgets.dart/change_camera_button.dart';
 import 'package:take_media/widgets.dart/take_photo_button.dart';
 
 class TakeImagePage extends StatefulWidget {
-  final List<CameraDescription> cameras;
   const TakeImagePage({
     super.key,
-    required this.cameras
   });
 
   @override
@@ -18,7 +16,7 @@ class TakeImagePage extends StatefulWidget {
 }
 
 class _TakeImagePageState extends State<TakeImagePage> {
-  late CameraController _controller;
+  CameraController? _controller;
   late CameraLensDirection _direction;
   late CameraDescription _description;
   late bool _isCameraDirectionChangeable;
@@ -26,11 +24,12 @@ class _TakeImagePageState extends State<TakeImagePage> {
   double _y = 0;
   Color _color = Colors.white;
   bool _showFocusCircle = false;
-
+  late final List<CameraDescription> _cameras;
+  
   void _focus(TapDownDetails details){
 
     double fullWidth = MediaQuery.of(context).size.width;
-    double cameraHeight = fullWidth * _controller.value.aspectRatio;
+    double cameraHeight = fullWidth * _controller!.value.aspectRatio;
     
     setState(() {
       _x = details.localPosition.dx;
@@ -39,7 +38,7 @@ class _TakeImagePageState extends State<TakeImagePage> {
       _color = Colors.white;
     });
     
-    _controller
+    _controller!
       .setFocusPoint(Offset(_x / fullWidth, _y / cameraHeight))
       .then((_){
         setState(() { _color = Colors.yellow; });
@@ -61,37 +60,42 @@ class _TakeImagePageState extends State<TakeImagePage> {
 
   void _changeCameraDirection(){
     _direction = _direction == CameraLensDirection.back ? CameraLensDirection.front : CameraLensDirection.back;
-    _description = widget.cameras.where((e) => e.lensDirection == _direction).first;
-    _controller.setDescription(_description).then((_) => setState(() {}));
+    _description = _cameras.where((e) => e.lensDirection == _direction).first;
+    _controller!.setDescription(_description).then((_) => setState(() {}));
   }
 
   void _takePhoto() =>
-    _controller
+    _controller!
       .takePicture()
       .then((image){ if(mounted) Navigator.of(context).pop(AppFile.image(image)); });
 
   @override
   void initState() {
-     _isCameraDirectionChangeable = 
-      ![CameraLensDirection.back,CameraLensDirection.front]
-        .any((cld) => !widget.cameras.any((cm) => cld == cm.lensDirection));
+    availableCameras()
+      .then((cameras){
+        _cameras = cameras;
+        _isCameraDirectionChangeable = 
+          ![CameraLensDirection.back,CameraLensDirection.front]
+            .any((cld) => !_cameras.any((cm) => cld == cm.lensDirection));
 
-    var description =
-      widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.back) ??
-      widget.cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.front) ??
-      widget.cameras.first;
+        var description = 
+          _cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.back) ??
+          _cameras.firstWhereOrNull((e) => e.lensDirection == CameraLensDirection.front) ??
+          _cameras.first;
 
-    _direction = description.lensDirection;
+        _direction = description.lensDirection;
 
-    _controller = CameraController(description, ResolutionPreset.max);
-    _controller.initialize().then((_) => setState((){}));
+        _controller = CameraController(description, ResolutionPreset.max);
+        _controller!.initialize().then((_) => setState((){}));
+      });
+      super.initState();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
   
@@ -99,44 +103,46 @@ class _TakeImagePageState extends State<TakeImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _controller.value.isInitialized
+      body: _controller != null && _controller!.value.isInitialized
         ? Center(
-          child: GestureDetector(
-            onTapDown: _focus,
-            child: Stack(
-              children: [
-                CameraPreview(_controller),
-                if(_showFocusCircle)
-                  Positioned(
-                    top: _y - 30,
-                    left: _x - 30,
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: _color,
-                          width: 1.5
-                        )
-                      ),
+            child: GestureDetector(
+              onTapDown: _focus,
+              child: Stack(
+                children: [
+                  CameraPreview(_controller!),
+                  if(_showFocusCircle)
+                    Positioned(
+                      top: _y - 30,
+                      left: _x - 30,
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: _color,
+                            width: 1.5
+                          )
+                        ),
+                      )
                     )
-                  )
-              ],
+                ],
+              ),
             ),
-          ),
-        )
+          )
         : const Center(child: CircularProgressIndicator()),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const CameraCloseButton(),
-          TakePhotoButton(onPressed: _takePhoto),
-          if(_isCameraDirectionChangeable)
-            ChangeCameraButton(onPressed: _changeCameraDirection,)
-        ],
-      )
+      floatingActionButton: _controller != null
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const CameraCloseButton(),
+              TakePhotoButton(onPressed: _takePhoto),
+              if(_isCameraDirectionChangeable)
+                ChangeCameraButton(onPressed: _changeCameraDirection,)
+            ],
+          )
+        : null
     );
   }
 }

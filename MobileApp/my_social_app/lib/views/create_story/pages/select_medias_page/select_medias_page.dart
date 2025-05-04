@@ -1,6 +1,5 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/views/create_story/pages/create_story_page/create_story_page.dart';
 import 'package:my_social_app/views/create_story/pages/select_medias_page/select_medias_page_texts.dart';
@@ -13,6 +12,7 @@ import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:camera/camera.dart';
+import 'package:take_media/pages/take_media_page.dart';
 
 class SelectMediasPage extends StatefulWidget {
   const SelectMediasPage({super.key});
@@ -163,7 +163,7 @@ class _SelectMediasPageState extends State<SelectMediasPage> {
                           => 
                             Navigator
                               .of(context)
-                              .pushNamed(takeMediaRoute)
+                              .push(MaterialPageRoute(builder: (context) => const TakeMediaPage()))
                               .then((appFile){
                                 if(appFile != null && context.mounted){
                                   Navigator

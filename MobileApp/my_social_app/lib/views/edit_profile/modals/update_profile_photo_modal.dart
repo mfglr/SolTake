@@ -1,7 +1,6 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -9,6 +8,7 @@ import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart'
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photot_modal_texts.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:take_media/pages/take_image_page.dart';
 import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class UpdateProfilePhotoModal extends StatelessWidget {
@@ -52,7 +52,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
                               onPressed: () =>
                                 Navigator
                                   .of(context)
-                                  .pushNamed(takeImageRoute)
+                                  .push(MaterialPageRoute(builder: (context) => const TakeImagePage()))
                                   .then((image){
                                     if(image != null && context.mounted){
                                       final store = StoreProvider.of<AppState>(context,listen: false);

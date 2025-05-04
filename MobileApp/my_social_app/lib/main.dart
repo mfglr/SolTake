@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:my_social_app/constants/routes.dart';
 import 'package:my_social_app/global_error_handling.dart';
 import 'package:my_social_app/services/package_version_service.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
@@ -13,8 +11,6 @@ import 'package:my_social_app/state/app_state/store.dart';
 import 'package:my_social_app/views/app_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:take_media/pages/take_media_page.dart';
-import 'package:take_media/pages/take_image_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:toastification/toastification.dart';
 
@@ -37,7 +33,6 @@ Future _setPackageVersion()
 Future<void> main() async {
     
   WidgetsFlutterBinding.ensureInitialized();
-  final List<CameraDescription> cameras = await availableCameras();
   await loadEnvironmentVariables();
   addTimeAgo();
   await _setPackageVersion();
@@ -75,10 +70,6 @@ Future<void> main() async {
               useMaterial3: true,
             ),
             home: AppView(login: login),
-            routes: {
-              takeMediaRoute: (context) => TakeMediaPage(cameras: cameras),
-              takeImageRoute: (context) => TakeImagePage(cameras: cameras)
-            },
           ),
         )
       ),

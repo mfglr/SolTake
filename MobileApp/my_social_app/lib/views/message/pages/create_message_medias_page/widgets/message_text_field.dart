@@ -1,6 +1,6 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/constants/routes.dart';
+import 'package:take_media/pages/take_media_page.dart';
 import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
@@ -64,7 +64,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   if(!widget.validateNumberOfMedias()) return;
                   Navigator
                     .of(context)
-                    .pushNamed(takeMediaRoute)
+                    .push(MaterialPageRoute(builder: (context) => const TakeMediaPage()))
                     .then(
                       (media){
                         if(media != null && context.mounted){
