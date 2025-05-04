@@ -88,12 +88,18 @@ class QuestionItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          MultimediaSlider(
-            key: ValueKey(question.id),
-            medias: question.medias,
-            blobServiceUrl: AppClient.blobService,
-            notFoundMediaPath: noMediaAssetPath,
-            noMediaPath: noMediaAssetPath,
+          Container(
+            color: Colors.white,
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height * 3 / 5
+            ),
+            child: MultimediaSlider(
+              key: ValueKey(question.id),
+              medias: question.medias,
+              blobServiceUrl: AppClient.blobService,
+              notFoundMediaPath: noMediaAssetPath,
+              noMediaPath: noMediaAssetPath,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15),
