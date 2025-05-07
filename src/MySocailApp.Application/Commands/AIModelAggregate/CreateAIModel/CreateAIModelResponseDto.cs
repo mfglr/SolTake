@@ -1,0 +1,14 @@
+﻿using MySocailApp.Core;
+using MySocailApp.Domain.AIModelAggregate.Entities;
+
+namespace MySocailApp.Application.Commands.AIModelAggregate.CreateAIModel
+{
+    public class CreateAIModelResponseDto(AIModel model)
+    {
+        public int Id { get; private set; } = model.Id;
+        public string Name { get; private set; } = model.Name.Value;
+        public int SolPerInputToken { get; private set; } = model.SolPerInputToken.Amount;
+        public int SolPerOutputToken { get; private set; } = model.SolPerOutputToken.Amount;
+        public Multimedia Image { get; private set; } = model.Image;
+    }
+}

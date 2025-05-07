@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 
 namespace MySocailApp.Api.Controllers.Api
@@ -10,6 +12,7 @@ namespace MySocailApp.Api.Controllers.Api
         private readonly IBlobService _blobService = blobService;
 
         [HttpGet("{containerName}/{blobName}")]
+        [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<Stream> GetBlob(string containerName, string blobName,CancellationToken cancellationToken)
             => await _blobService.ReadAsync(containerName, blobName, cancellationToken);
     }

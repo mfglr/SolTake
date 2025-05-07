@@ -70,6 +70,7 @@
 
   <ItemGroup>
     <Folder Include="Blobs\MessageMedias\" />
+    <Folder Include="Blobs\AIModelMedias\" />
     <Folder Include="Blobs\StoryMedias\" />
     <Folder Include="Blobs\SolutionMedias\" />
     <Folder Include="Blobs\Temp\" />

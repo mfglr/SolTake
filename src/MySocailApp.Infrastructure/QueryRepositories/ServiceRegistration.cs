@@ -27,6 +27,7 @@ namespace MySocailApp.Infrastructure.QueryRepositories
                 .AddScoped<IStoryUserViewQueryRepository,StoryUserViewQueryRepository>()
                 .AddScoped<IUserUserBlockQueryRepository,UserUserBlockQueryRepository>()
                 .AddScoped<IUserUserConversationQueryRepository, UserUserConversationQueryRepository>()
-                .AddScoped<IBalanceQueryRepository,BalanceQueryRepository>();
+                .AddScoped<IBalanceQueryRepository,BalanceQueryRepository>()
+                .AddScoped<IAIModelQueryRepository,AIModelQueryRepository>();
     }
 }

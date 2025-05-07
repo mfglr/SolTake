@@ -23,8 +23,10 @@ namespace MySocailApp.Domain
         public static IServiceCollection AddDomain(this IServiceCollection services)
             => services
                 .AddAppVersionDomainServices()
+                
                 .AddCommentAggregateServices()
                 .AddCommentUserLikeAggregateServices()
+                
                 .AddQuestionDomainServices()
                 .AddQuestionUserLikeDomainServices()
                 .AddQuestionUserSaveDomainServices()

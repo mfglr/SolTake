@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using MySocailApp.Domain.AIModelAggregate.Entities;
 using MySocailApp.Domain.AppVersionAggregate.Entities;
 using MySocailApp.Domain.BalanceAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.Entities;
@@ -81,6 +82,8 @@ namespace MySocailApp.Infrastructure.DbContexts
 
         public DbSet<Balance> Balances { get; private set; }
         public DbSet<Transaction> Transactions { get; private set; }
+
+        public DbSet<AIModel> AIModels { get; private set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

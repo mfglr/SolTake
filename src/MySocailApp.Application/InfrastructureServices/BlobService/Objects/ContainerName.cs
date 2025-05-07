@@ -9,6 +9,7 @@
         public static readonly string PrivacyPolicies = "PrivacyPolicies";
         public static readonly string TermsOfUses = "TermsOfUses";
         public static readonly string StoryMedias = "StoryMedias";
+        public static readonly string AIModelMedias = "AIModelMedias";
         public static readonly string Temp = "Temp";
     }
 }
