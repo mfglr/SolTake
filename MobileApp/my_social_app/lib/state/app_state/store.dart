@@ -1,4 +1,5 @@
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
@@ -47,6 +48,7 @@ final store = Store(
     userUserBlocks: Pagination.init(usersPerPage, true),
     userUserConversations: Pagination.init(usersPerPage, true),
     balance: const BalanceState(balance: 0),
+    aiModels: Pagination.init(aiModelsPerPage, false),
 
     stories: EntityState(),
 
@@ -117,6 +119,10 @@ final store = Store(
     loadBalanceMiddleware,
     //balance state
 
+
+    //ai models state
+    getAllAIModelsMiddleware,
+    //ai models state
 
     //exams middlewares
     nextExamsMidleware,

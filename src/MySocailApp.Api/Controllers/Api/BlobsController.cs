@@ -12,7 +12,6 @@ namespace MySocailApp.Api.Controllers.Api
         private readonly IBlobService _blobService = blobService;
 
         [HttpGet("{containerName}/{blobName}")]
-        [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<Stream> GetBlob(string containerName, string blobName,CancellationToken cancellationToken)
             => await _blobService.ReadAsync(containerName, blobName, cancellationToken);
     }

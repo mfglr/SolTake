@@ -3,8 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 part 'login.g.dart';
 
-@JsonSerializable()
 @immutable
+@JsonSerializable()
 class Login{
   final int id;
   final DateTime createdAt;

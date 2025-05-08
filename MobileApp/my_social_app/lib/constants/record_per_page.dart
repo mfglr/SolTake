@@ -9,3 +9,4 @@ const questionUserLikesPerPage = 20;
 const subjectsPerPage = 200;
 const topicsPerPage = 200;
 const examsPerPage = 20;
+const aiModelsPerPage = 100;

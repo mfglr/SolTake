@@ -1,3 +1,4 @@
+import 'package:my_social_app/state/app_state/ai_model_state/reducers.dart';
 import 'package:my_social_app/state/app_state/balance_state/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -44,7 +45,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   userUserBlocks: userUserBlockReducers(prev.userUserBlocks, action),
   userUserConversations: userUserConversationReducers(prev.userUserConversations,action),
   balance: balanceReducers(prev.balance, action),
-
+  aiModels: aiModelReducers(prev.aiModels, action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userMessageState: userMessageReducers(prev.userMessageState, action),
 
