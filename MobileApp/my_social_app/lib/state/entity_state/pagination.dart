@@ -287,7 +287,4 @@ class Pagination<K extends Comparable,V extends BaseEntity<K>>{
       recordsPerPage: recordsPerPage,
       values: values.where(test)
     );
-  
-  
-  
 }
