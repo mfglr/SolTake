@@ -21,7 +21,7 @@ namespace MySocailApp.Application.Commands.AIModelAggregate.CreateAIModel
             var solPerInputToken = new Sol(request.SolPerInputToken);
             var solPerOutputToken = new Sol(request.SolPerOutputToken);
             var media = await _multimediaService.UploadAsync(ContainerName.AIModelMedias, request.Image, cancellationToken);
-            var aiModel = new AIModel(name, solPerInputToken, solPerOutputToken, media);
+            var aiModel = new AIModel(name, solPerInputToken, solPerOutputToken, media, request.Commission);
             aiModel.Create();
             await _aiModelRepository.CreateAsync(aiModel, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);

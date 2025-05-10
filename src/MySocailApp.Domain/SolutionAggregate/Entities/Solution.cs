@@ -23,7 +23,6 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         public Sol Cost => Model == null ? Sol.Zero() : Model.Cost;
         public Sol Price => Model == null ? Sol.Zero() : Model.Price;
 
-
         public Solution(int questionId, int userId, SolutionContent? content = null, IEnumerable<Multimedia>? medias = null)
         {
             if (content == null && (medias == null || !medias.Any()))

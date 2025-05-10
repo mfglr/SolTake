@@ -10,5 +10,6 @@ namespace MySocailApp.Application.Commands.AIModelAggregate.CreateAIModel
         public int SolPerInputToken { get; private set; } = model.SolPerInputToken.Amount;
         public int SolPerOutputToken { get; private set; } = model.SolPerOutputToken.Amount;
         public Multimedia Image { get; private set; } = model.Image;
+        public double Commission { get; private set; } = model.Commission;
     }
 }

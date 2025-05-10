@@ -12,7 +12,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     model.Name.Value,
                     model.SolPerInputToken.Amount,
                     model.SolPerOutputToken.Amount,
-                    model.Image
+                    model.Image,
+                    model.Commission
                 ));
     }
 }
