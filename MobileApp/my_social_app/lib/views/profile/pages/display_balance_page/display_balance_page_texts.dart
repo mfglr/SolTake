@@ -4,3 +4,8 @@ const title = {
   Languages.en: "Your Balance",
   Languages.tr: "Bakiyeniz" 
 };
+
+const transactionHistory = {
+  Languages.en: "Transactions History",
+  Languages.tr: "Hesap Hareketleri"
+};

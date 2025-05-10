@@ -21,6 +21,7 @@ import 'package:my_social_app/state/app_state/solution_user_saves_state/solution
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
@@ -30,7 +31,6 @@ import 'package:my_social_app/state/app_state/user_user_search_state/user_user_s
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
-
 
 @immutable
 class AppState{
@@ -45,7 +45,8 @@ class AppState{
   final BalanceState balance;
   final EntityState<int,StoryState> stories;
   final Pagination<int,AIModelState> aiModels;
-  
+  final Pagination<int,TransactionState> transactions;
+
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
 
@@ -78,6 +79,7 @@ class AppState{
     required this.userUserConversations,
     required this.balance,
     required this.aiModels,
+    required this.transactions,
 
     required this.stories,
 
@@ -115,6 +117,7 @@ class AppState{
     balance: const BalanceState(balance: 0),
     stories: EntityState(),
     aiModels: Pagination.init(aiModelsPerPage, false),
+    transactions: Pagination.init(transactionsPerPage, true),
 
     userEntityState: EntityState(),
     userMessageState: EntityState(),

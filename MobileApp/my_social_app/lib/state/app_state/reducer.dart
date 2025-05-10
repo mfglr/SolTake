@@ -23,6 +23,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/reducers.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/transaction_state/reducers.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_message_state/reducers.dart';
@@ -48,7 +49,8 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   aiModels: aiModelReducers(prev.aiModels, action),
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userMessageState: userMessageReducers(prev.userMessageState, action),
-
+  transactions: transactionReducers(prev.transactions, action),
+  
   activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   loginState: accoutStateReducers(prev.loginState,action),
   isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),

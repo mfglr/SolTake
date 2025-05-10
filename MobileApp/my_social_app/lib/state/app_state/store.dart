@@ -25,6 +25,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_message_state/middlewares.dart';
@@ -49,6 +50,7 @@ final store = Store(
     userUserConversations: Pagination.init(usersPerPage, true),
     balance: const BalanceState(balance: 0),
     aiModels: Pagination.init(aiModelsPerPage, false),
+    transactions: Pagination.init(transactionsPerPage, true),
 
     stories: EntityState(),
 
@@ -123,6 +125,10 @@ final store = Store(
     //ai models state
     getAllAIModelsMiddleware,
     //ai models state
+
+    //transactions state
+    nextTransactionsMiddleware,
+    //transactions state
 
     //exams middlewares
     nextExamsMidleware,
