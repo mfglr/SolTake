@@ -37,7 +37,7 @@ namespace MySocailApp.Api.Controllers.Api
             => await _mediator.Send(new CreateSolutionDto(content, questionId, images), cancellationToken);
 
         [HttpPost]
-        public async Task<CreateSolutionResponseDto> CreateByAI(CreateSolutionByAIDto request, CancellationToken cancellationToken)
+        public async Task<CreateSolutionByAIResponseDto> CreateByAI(CreateSolutionByAIDto request, CancellationToken cancellationToken)
             => await _mediator.Send(request, cancellationToken);
 
         [HttpDelete("{solutionId}")]

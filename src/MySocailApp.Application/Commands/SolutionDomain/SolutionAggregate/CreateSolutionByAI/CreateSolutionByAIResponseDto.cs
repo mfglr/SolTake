@@ -1,10 +1,11 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Domain.AIModelAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
+namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionResponseDto(Solution solution, Login login)
+    public class CreateSolutionByAIResponseDto(Solution solution, AIModel aIModel, Login login)
     {
         public int Id { get; private set; } = solution.Id;
         public DateTime CreatedAt { get; private set; } = solution.CreatedAt;
@@ -25,7 +26,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
         public IEnumerable<Multimedia> Medias { get; private set; } = solution.Medias;
         public Multimedia? Image { get; private set; } = login.Image;
         public bool IsCreatedByAI { get; private set; } = solution.IsCreatedByAI;
-        public string? AiModelName { get; private set; } = null;
-        public Multimedia? AiImage { get; private set; } = null;
+        public string? AiModelName { get; private set; } = aIModel.Name.Value;
+        public Multimedia? AiImage { get; private set; } = aIModel.Image;
     }
 }

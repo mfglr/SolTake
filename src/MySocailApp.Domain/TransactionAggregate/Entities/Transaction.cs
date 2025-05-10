@@ -1,21 +1,29 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Core.AIModel;
 
 namespace MySocailApp.Domain.TransactionAggregate.Entities
 {
     public class Transaction : Entity, IAggregateRoot
     {
-        private Transaction() { }
 
         public int BalanceId { get; private set; }
-        public AIModel Model { get; private set; }
+        public int AIModelId { get; private set; }
+        public int NumberOfInputToken { get; private set; }
+        public int NumberOfOutputToken { get; private set; }
+        public int SolPerInputToken { get; private set; }
+        public int SolPerOutputToken { get; private set; }
 
-        public Transaction(int balanceId, AIModel model)
+        public Transaction(int balanceId, int aiModelId, int numberOfInputToken, int numberOfOutputToken, int solPerInputToken, int solPerOutputToken)
         {
             BalanceId = balanceId;
-            Model = model;
+            AIModelId = aiModelId;
+            NumberOfInputToken = numberOfInputToken;
+            NumberOfOutputToken = numberOfOutputToken;
+            SolPerInputToken = solPerInputToken;
+            SolPerOutputToken = solPerOutputToken;
         }
-
+        
+        private Transaction() { }
+        
         public void Create() => CreatedAt = DateTime.UtcNow;
     }
 }

@@ -22,32 +22,39 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                     (join, solution) => new { join, solution }
                 )
                 .Join(
+                    context.AIModels,
+                    join1 => join1.solution.AIModelId,
+                    aIModel => aIModel.Id,
+                    (join1, aIModel) => new {join1, aIModel}
+                )
+                .Join(
                     context.Questions,
-                    join1 => join1.solution.QuestionId,
+                    join2 => join2.join1.solution.QuestionId,
                     question => question.Id,
-                    (join1, question) => new SolutionUserSaveResponseDto(
-                        join1.join.sus.Id,
+                    (join2, question) => new SolutionUserSaveResponseDto(
+                        join2.join1.join.sus.Id,
                         new(
-                            join1.solution.Id,
-                            join1.solution.CreatedAt,
-                            join1.solution.UpdatedAt,
-                            join1.solution.QuestionId,
-                            join1.join.user.UserName.Value,
-                            join1.solution.UserId,
-                            join1.solution.Content.Value,
-                            context.SolutionUserVotes.Any(v => v.SolutionId == join1.solution.Id && v.UserId == accountId && v.Type == SolutionVoteType.Upvote),
-                            context.SolutionUserVotes.Count(v => v.SolutionId == join1.solution.Id && v.Type == SolutionVoteType.Upvote),
-                            context.SolutionUserVotes.Any(v => v.SolutionId == join1.solution.Id && v.UserId == accountId && v.Type == SolutionVoteType.Downvote),
-                            context.SolutionUserVotes.Count(v => v.SolutionId == join1.solution.Id && v.Type == SolutionVoteType.Downvote),
-                            context.Comments.Count(c => c.SolutionId == join1.solution.Id),
-                            join1.solution.State,
-                            join1.solution.UserId == accountId,
-                            context.SolutionUserSaves.Any(sus => sus.UserId == accountId && sus.SolutionId == join1.solution.Id),
+                            join2.join1.solution.Id,
+                            join2.join1.solution.CreatedAt,
+                            join2.join1.solution.UpdatedAt,
+                            join2.join1.solution.QuestionId,
+                            join2.join1.join.user.UserName.Value,
+                            join2.join1.solution.UserId,
+                            join2.join1.solution.Content.Value,
+                            context.SolutionUserVotes.Any(v => v.SolutionId == join2.join1.solution.Id && v.UserId == accountId && v.Type == SolutionVoteType.Upvote),
+                            context.SolutionUserVotes.Count(v => v.SolutionId == join2.join1.solution.Id && v.Type == SolutionVoteType.Upvote),
+                            context.SolutionUserVotes.Any(v => v.SolutionId == join2.join1.solution.Id && v.UserId == accountId && v.Type == SolutionVoteType.Downvote),
+                            context.SolutionUserVotes.Count(v => v.SolutionId == join2.join1.solution.Id && v.Type == SolutionVoteType.Downvote),
+                            context.Comments.Count(c => c.SolutionId == join2.join1.solution.Id),
+                            join2.join1.solution.State,
+                            join2.join1.solution.UserId == accountId,
+                            context.SolutionUserSaves.Any(sus => sus.UserId == accountId && sus.SolutionId == join2.join1.solution.Id),
                             question.UserId == accountId,
-                            join1.solution.Medias,
-                            join1.join.user.Image,
-                            join1.solution.IsCreatedByAI,
-                            join1.solution.Model.Name
+                            join2.join1.solution.Medias,
+                            join2.join1.join.user.Image,
+                            join2.join1.solution.IsCreatedByAI,
+                            join2.aIModel.Name.Value,
+                            join2.aIModel.Image
                         )
                     )
                 );

@@ -30,7 +30,7 @@ class AiModelWidget extends StatelessWidget {
                 Navigator
                   .of(context)
                   .pop((
-                    model: aiModel.name,
+                    modelId: aiModel.id,
                     blobName: value.blobName,
                     position: value.position,
                     prompt: value.prompt,
@@ -43,7 +43,7 @@ class AiModelWidget extends StatelessWidget {
           Navigator
             .of(context)
             .pop((
-              model: aiModel.name,
+              model: aiModel.id,
               blobName: null,
               position: null,
               prompt: question.content

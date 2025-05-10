@@ -10,8 +10,8 @@ namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
                 .Select(model => new AIModelResponseDto(
                     model.Id,
                     model.Name.Value,
-                    model.SolPerInputToken.Amount,
-                    model.SolPerOutputToken.Amount,
+                    model.SolPerInputTokenWithCommission.Amount,
+                    model.SolPerOutputTokenWithCommission.Amount,
                     model.Image,
                     model.Commission
                 ));

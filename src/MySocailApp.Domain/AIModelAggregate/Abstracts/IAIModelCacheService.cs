@@ -7,5 +7,7 @@ namespace MySocailApp.Domain.AIModelAggregate.Abstracts
         IReadOnlyCollection<AIModel> Models { get; }
         void Add(AIModel model);
         void Remove(AIModel model);
+        AIModel? Get(int id);
+        AIModel? Get(string name);
     }
 }

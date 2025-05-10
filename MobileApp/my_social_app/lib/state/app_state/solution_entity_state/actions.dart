@@ -16,7 +16,7 @@ class CreateSolutionAction extends AppAction{
 }
 @immutable
 class CreateSolutionByAIAction extends AppAction{
-  final String model;
+  final int modelId;
   final int questionId;
   final String? blobName;
   final double? position;
@@ -24,7 +24,7 @@ class CreateSolutionByAIAction extends AppAction{
   final bool isHighResulation;
 
   const CreateSolutionByAIAction({
-    required this.model,
+    required this.modelId,
     required this.questionId,
     required this.blobName,
     required this.position,

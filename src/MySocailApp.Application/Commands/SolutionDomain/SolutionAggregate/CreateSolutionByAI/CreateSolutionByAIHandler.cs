@@ -1,12 +1,13 @@
 ﻿using MediatR;
-using MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using MySocailApp.Application.InfrastructureServices.IAService;
 using MySocailApp.Application.InfrastructureServices.IAService.Objects;
 using MySocailApp.Core;
-using MySocailApp.Core.AIModel;
+using MySocailApp.Domain.AIModelAggregate.Abstracts;
+using MySocailApp.Domain.AIModelAggregate.Entities;
+using MySocailApp.Domain.AIModelAggregate.Exceptions;
 using MySocailApp.Domain.BalanceAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.QuestionAggregate.Entities;
@@ -21,7 +22,7 @@ using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository, IAIModelCacheService aiModelCacheService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionByAIResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IFrameCatcher _frameCatcher = frameCatcher;
@@ -35,14 +36,15 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
         private readonly IUserUserBlockRepository _userUserBlockRepository = userUserBlockRepository;
         private readonly IPublisher _publisher = publisher;
         private readonly ITransactionRepository _transactionRepository = transactionRepository;
+        private readonly IAIModelCacheService _aiModelCacheService = aiModelCacheService;
 
-        private async Task<ChatGBT_Response> GenerateAIResponse(CreateSolutionByAIDto request, Question question, CancellationToken cancellationToken)
+        private async Task<ChatGBT_Response> GenerateAIResponse(AIModel model, CreateSolutionByAIDto request, Question question, CancellationToken cancellationToken)
         {
             ChatGBT_Response response;
             if (!question.Medias.Any())
             {
                 var chatGptRequest = new ChatGPT_Request(
-                    request.Model,
+                    model.Name.Value,
                     [
                         new(
                             ChatGPT_Roles.User,
@@ -64,7 +66,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
                     var base64Url = await _imageToBase64Convertor.ToBase64(media.ContainerName, media.BlobName, cancellationToken);
 
                     var chatGptRequest = new ChatGPT_Request(
-                        request.Model,
+                        model.Name.Value,
                         [
                             new(
                             ChatGPT_Roles.User,
@@ -97,7 +99,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
                                 var base64Url = await _imageToBase64Convertor.ToBase64(ContainerName.Temp, frameBlobName, cancellationToken);
 
                                 var chatGptRequest = new ChatGPT_Request(
-                                    request.Model,
+                                    model.Name.Value,
                                     [
                                         new(
                                             ChatGPT_Roles.User,
@@ -121,7 +123,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             return response;
         }
 
-        public async Task<CreateSolutionResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
+        public async Task<CreateSolutionByAIResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
         {
             var login = _accessTokenReader.GetLogin();
 
@@ -138,22 +140,25 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             if (!await _balanceRepository.HasBalance(login.UserId, cancellationToken))
                 throw new InsufficientFundsException();
 
-            var response = await GenerateAIResponse(request, question, cancellationToken);
+            var aiModel =
+                _aiModelCacheService.Get(request.ModelId) ??
+                throw new AIModelNotFoundException();
+
+            var response = await GenerateAIResponse(aiModel, request, question, cancellationToken);
 
             //create solution
-            var model = new AIModel(request.Model, response.Usage.PrompTokens, response.Usage.CompletionTokens);
             var content = new SolutionContent(response.Choices.First().Message.Content);
-            var solution = new Solution(request.QuestionId, login.UserId, content, model);
+            var solution = new Solution(request.QuestionId, login.UserId, content, aiModel.Id);
             solution.Create();
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
 
             //update balance
             var balance = await _balanceRepository.GetAsync(login.UserId, cancellationToken);
-            balance.Apply(-1 * solution.Price);
+            var price = aiModel.CalculatePrice(response.Usage.PrompTokens, response.Usage.CompletionTokens);
+            balance.Apply(-1 * price);
 
             //create transaction
-            var transactionAIModel = new AIModel(request.Model, response.Usage.PrompTokens, response.Usage.CompletionTokens);
-            var transaction = new Transaction(login.UserId, transactionAIModel);
+            var transaction = new Transaction(login.UserId, aiModel.Id, response.Usage.PrompTokens, response.Usage.CompletionTokens, aiModel.SolPerInputTokenWithCommission.Amount, aiModel.SolPerOutputTokenWithCommission.Amount);
             transaction.Create();
             await _transactionRepository.CreateAsync(transaction, cancellationToken);
 
@@ -161,7 +166,7 @@ namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.Crea
             await _unitOfWork.CommitAsync(cancellationToken);
             await _publisher.Publish(new SolutionCreatedDomainEvent(question, solution, login), cancellationToken);
 
-            return new(solution, login);
+            return new(solution, aiModel, login);
         }
     }
 }

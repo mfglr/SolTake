@@ -2,6 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using MySocailApp.Core.AIModel;
 using MySocailApp.Domain.AIModelAggregate.Abstracts;
 using MySocailApp.Domain.AIModelAggregate.Entities;
 using MySocailApp.Domain.AIModelAggregate.ValueObjects;

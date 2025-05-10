@@ -85,7 +85,7 @@ class CreateSolutionByAiButton extends StatelessWidget {
                       if(value != null && context.mounted){
                         final store = StoreProvider.of<AppState>(context,listen: false);
                         store.dispatch(CreateSolutionByAIAction(
-                          model: value.model,
+                          modelId: value.modelId,
                           questionId: question.id,
                           blobName: value.blobName,
                           position: value.position,

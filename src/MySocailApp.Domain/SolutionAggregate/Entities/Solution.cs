@@ -1,5 +1,4 @@
 ﻿using MySocailApp.Core;
-using MySocailApp.Core.AIModel;
 using MySocailApp.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Exceptions;
@@ -18,10 +17,7 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
         private readonly List<Multimedia> _medias = [];
         public IReadOnlyCollection<Multimedia> Medias => _medias;
         public bool IsCreatedByAI { get; private set; }
-        public AIModel? Model { get; private set; }
-
-        public Sol Cost => Model == null ? Sol.Zero() : Model.Cost;
-        public Sol Price => Model == null ? Sol.Zero() : Model.Price;
+        public int? AIModelId { get; private set; }
 
         public Solution(int questionId, int userId, SolutionContent? content = null, IEnumerable<Multimedia>? medias = null)
         {
@@ -38,14 +34,14 @@ namespace MySocailApp.Domain.SolutionAggregate.Entities
             _medias.AddRange(medias ?? []);
         }
 
-        public Solution(int questionId, int userId, SolutionContent content, AIModel model)
+        public Solution(int questionId, int userId, SolutionContent content, int aIModelId)
         {
             QuestionId = questionId;
             UserId = userId;
             Content = content;
             State = SolutionState.Pending;
             IsCreatedByAI = true;
-            Model = model;
+            AIModelId = aIModelId;
         }
 
         public void Create() => CreatedAt = DateTime.UtcNow;

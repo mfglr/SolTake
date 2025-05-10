@@ -8,12 +8,6 @@ namespace MySocailApp.Infrastructure.ModelBuilders.TransactionAggregate
     {
         public void Configure(EntityTypeBuilder<Transaction> builder)
         {
-            builder.OwnsOne(
-                s => s.Model,
-                x => {
-                    x.OwnsOne(sam => sam.Input);
-                    x.OwnsOne(sam => sam.Output);
-                });
         }
     }
 }

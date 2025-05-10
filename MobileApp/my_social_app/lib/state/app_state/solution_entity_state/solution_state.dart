@@ -29,6 +29,7 @@ class SolutionState extends BaseEntity<int> implements Avatar{
   final Multimedia? image;
   final bool isCreatedByAI;
   final String? aiModelName;
+  final Multimedia? aiImage;
 
   @override
   int get avatarId => userId;
@@ -59,7 +60,8 @@ class SolutionState extends BaseEntity<int> implements Avatar{
     required this.doesBelongToQuestionOfCurrentUser,
     required this.image,
     required this.isCreatedByAI,
-    required this.aiModelName
+    required this.aiModelName,
+    required this.aiImage
   });
 
   String formatUserName(int count)
@@ -104,7 +106,8 @@ class SolutionState extends BaseEntity<int> implements Avatar{
         doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
         image: newImage ?? image,
         isCreatedByAI: isCreatedByAI,
-        aiModelName: aiModelName
+        aiModelName: aiModelName,
+        aiImage: aiImage
       );
 
   SolutionState startLoadingNextUpvotes()

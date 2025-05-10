@@ -1,4 +1,5 @@
 ﻿using MySocailApp.Core;
+using MySocailApp.Core.AIModel;
 using MySocailApp.Domain.AIModelAggregate.DomainEvents;
 using MySocailApp.Domain.AIModelAggregate.Exceptions;
 using MySocailApp.Domain.AIModelAggregate.ValueObjects;
@@ -12,6 +13,8 @@ namespace MySocailApp.Domain.AIModelAggregate.Entities
         public Sol SolPerOutputToken { get; private set; }
         public Multimedia Image { get; private set; }
         public double Commission { get; private set; }
+        public Sol SolPerInputTokenWithCommission => SolPerInputToken + (Commission * SolPerInputToken);
+        public Sol SolPerOutputTokenWithCommission => SolPerOutputToken + (Commission * SolPerOutputToken);
 
         private AIModel() { }
 
@@ -19,6 +22,7 @@ namespace MySocailApp.Domain.AIModelAggregate.Entities
         {
             if (image.MultimediaType != MultimediaType.Image)
                 throw new InvalidAIModelMediaTypeException();
+
             Name = name;
             SolPerInputToken = solPerInputToken;
             SolPerOutputToken = solPerOutputToken;
@@ -44,5 +48,8 @@ namespace MySocailApp.Domain.AIModelAggregate.Entities
             Commission = commission;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public Sol CalculatePrice(int numberOfInputToken, int numberOfOutputToken) =>
+            numberOfInputToken * SolPerInputTokenWithCommission + numberOfOutputToken * SolPerOutputTokenWithCommission;
     }
 }
