@@ -31,7 +31,7 @@ class CreatePromptPage extends StatefulWidget {
 class _CreatePromptPageState extends State<CreatePromptPage> {
   late final TextEditingController _promptController;
   late final Future<Uint8List> _frame;
-  bool _isHighResulation = false;
+  bool _isHighResulation = true;
 
   @override
   void initState() {

@@ -16,6 +16,6 @@ const highResulation = {
 };
 
 const resulationExplation = {
-  Languages.en: "To get a more accurate result, you should enable the high-resolution parameter. However, this will cause you to consume more tokens.",
-  Languages.tr: "Daha doğru bir sonuç almak için yüksek çözünürlük parametresini aktif hala getirmelisin. Ama bu daha fazla token harcamana neden olur."
+  Languages.en: "To get a more accurate result, you should enable the high-resolution parameter. However, this will cause you to consume more Sol🪙.",
+  Languages.tr: "Daha doğru bir sonuç almak için yüksek çözünürlük parametresini aktif hala getirmelisin. Ama bu daha fazla Sol🪙 harcamana neden olur."
 };
