@@ -23,7 +23,7 @@ class SortingMenuWidget extends StatelessWidget {
             ),
           ),
           Icon(
-            isDescending ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+            isDescending ? Icons.arrow_drop_down : Icons.arrow_drop_up,
           )
         ],
       )

@@ -6,6 +6,6 @@ import 'package:redux/redux.dart';
 Iterable<AIModelState> selectAIModels(Store<AppState> store, bool isDescending) =>
   store.state.aiModels.values.sorted(
     (x,y) => isDescending 
-      ? x.solPerInputToken.compareTo(y.solPerInputToken)
-      : y.solPerInputToken.compareTo(x.solPerInputToken)
+      ? y.solPerInputToken.compareTo(x.solPerInputToken)
+      : x.solPerInputToken.compareTo(y.solPerInputToken)
     );
