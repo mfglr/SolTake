@@ -20,7 +20,7 @@ namespace MySocailApp.Domain.UserAggregate.DomainServices
 
         public void Set(User user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(user.SecurityStamp));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(user.SecurityStamps.Last().Value));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
             var expirationDateOfRefreshToken = DateTime.Now.AddMinutes(_tokenProviderOptions.RefreshTokenExpiration);
             JwtSecurityToken jwtSecurityToken = new(

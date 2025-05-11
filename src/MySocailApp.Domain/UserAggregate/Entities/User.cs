@@ -13,7 +13,6 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         public Password? Password { get; private set; }
         public Language Language { get; private set; }
         public GoogleAccount? GoogleAccount { get; private set; }
-        public string SecurityStamp { get; private set; }
         public Multimedia? Image { get; private set; }
         public string? Name { get; private set; }
         public Biography? Biography { get; private set; }
@@ -22,7 +21,9 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         public string AccessToken { get; internal set; } = null!; //not mapped
         public string RefreshToken { get; internal set; } = null!; //not mapped
 
-        private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
+        private readonly List<SecurityStamp> _securityStamps = [];
+        public  IReadOnlyList<SecurityStamp> SecurityStamps => _securityStamps;
+
 
         private User() { }
         public User(Email email, Password password, Language language)
@@ -31,7 +32,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
             Email = email;
             UserName = email.GenerateUserName();
             Language = language;
-            SecurityStamp = GenerateSecurityStamp();
+            _securityStamps = [SecurityStamp.CreateRandom()];
         }
         public User(GoogleAccount googleAccount, Language language)
         {
@@ -39,7 +40,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
             Email = new(googleAccount.Email);
             UserName = Email.GenerateUserName();
             Language = language;
-            SecurityStamp = GenerateSecurityStamp();
+            _securityStamps = [SecurityStamp.CreateRandom()];
         }
 
         internal void Create(int policyId, int termsOfUseId)
@@ -191,9 +192,11 @@ namespace MySocailApp.Domain.UserAggregate.Entities
                 _privacyPolicies.Add(UserPrivacyPolicy.Create(policyId));
             if (_termsOfUses.OrderBy(x => x.TermsOfUseId).Last().TermsOfUseId < termsOfUseId)
                 _termsOfUses.Add(UserTermsOfUse.Create(termsOfUseId));
-            SecurityStamp = GenerateSecurityStamp();
+            _securityStamps.Add(SecurityStamp.CreateRandom());
         }
-        public void Logout() => SecurityStamp = GenerateSecurityStamp();
+        public void Logout() => _securityStamps.Clear();
+        internal void RemoveOldSecurityStamps(SecurityStamp currentSecurityStamp)
+            => _securityStamps.RemoveAll(x => x != currentSecurityStamp);
 
         //password
         public bool CheckPassword(Password password) => Password != null && HashComputer.Check(password.Value, Password.Hash);

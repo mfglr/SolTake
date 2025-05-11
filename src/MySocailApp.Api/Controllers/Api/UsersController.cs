@@ -13,6 +13,7 @@ using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByGoogle;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByPassword;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByRefreshToken;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LogOut;
+using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveOldSecurityStamps;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveUserImage;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.ResetPassword;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateBiography;
@@ -29,6 +30,7 @@ using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Application.Queries.UserDomain.GetUserById;
 using MySocailApp.Application.Queries.UserDomain.GetUserByUserName;
 using MySocailApp.Application.Queries.UserDomain.SearchUsers;
+using System.Threading;
 
 namespace MySocailApp.Api.Controllers.Api
 {
@@ -51,8 +53,13 @@ namespace MySocailApp.Api.Controllers.Api
             => await _sender.Send(request, cancellationToken);
 
         [HttpPost]
-        public async Task<LoginDto> LoginByGoogle(LoginByGoogleDto request, CancellationToken cancelToken)
-            => await _sender.Send(request, cancelToken);
+        public async Task<LoginDto> LoginByGoogle(LoginByGoogleDto request, CancellationToken cancellationToken)
+            => await _sender.Send(request, cancellationToken);
+
+        [HttpPut]
+        public async Task RemoveOldSecurityStamps(RemoveOldSecurityStampsDto request, CancellationToken cancellationToken)
+            => await _sender.Send(request, cancellationToken);
+
 
         [HttpPut]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

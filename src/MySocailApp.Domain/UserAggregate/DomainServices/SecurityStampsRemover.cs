@@ -8,11 +8,11 @@ using System.Text;
 
 namespace MySocailApp.Domain.UserAggregate.DomainServices
 {
-    public class RefreshTokenValidatorDomainService(ITokenProviderOptions tokenProviderOptions)
+    public class SecurityStampsRemover(ITokenProviderOptions tokenProviderOptions)
     {
         private readonly ITokenProviderOptions _tokenProviderOptions = tokenProviderOptions;
 
-        public async Task ValidateAsync(User user, string token)
+        public async Task RemoveAsync(User user, string token)
         {
             var handler = new JwtSecurityTokenHandler();
             TokenValidationResult result;
@@ -34,7 +34,7 @@ namespace MySocailApp.Domain.UserAggregate.DomainServices
                 };
 
                 result = await handler.ValidateTokenAsync(token, validationParameters);
-                
+
                 if (result.IsValid)
                 {
                     var idString = result.Claims.First(x => x.Key == ClaimTypes.NameIdentifier).Value as string;
@@ -43,10 +43,12 @@ namespace MySocailApp.Domain.UserAggregate.DomainServices
                     var id = int.Parse(idString);
                     if (id != user.Id)
                         throw new InvalidRefreshTokenException();
+
+                    user.RemoveOldSecurityStamps(user.SecurityStamps[i]);
+
                     break;
                 }
             }
-           
         }
     }
 }

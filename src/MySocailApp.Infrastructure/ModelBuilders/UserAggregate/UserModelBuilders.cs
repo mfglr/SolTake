@@ -11,6 +11,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
             builder.Ignore(x => x.AccessToken);
             builder.Ignore(x => x.RefreshToken);
 
+            builder.OwnsMany(x => x.SecurityStamps);
             builder.OwnsOne(x => x.Image);
             builder.OwnsOne(x => x.Language);
             builder.OwnsOne(x => x.Biography);
