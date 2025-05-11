@@ -4,12 +4,14 @@ using Microsoft.Extensions.DependencyInjection;
 using MySocailApp.Application.Configurations;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
+using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.ExamAggregate.Interfaces;
 using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using MySocailApp.Domain.RoleAggregate.Abstracts;
 using MySocailApp.Domain.SubjectAggregate.Interfaces;
 using MySocailApp.Domain.TopicAggregate.Abstracts;
+using MySocailApp.Infrastructure.AppVersionAggregate;
 using MySocailApp.Infrastructure.CommentDomain;
 using MySocailApp.Infrastructure.CommentDomain.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
@@ -42,6 +44,7 @@ namespace MySocailApp.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
             => services
                 .AddDbContext()
+                .InitializeDb()
                 .AddScoped<IAccessTokenReader, AccessTokenReader>()
                 .AddScoped<IUserAccessor, UserAccessor>()
                 .AddEmailService()
@@ -62,7 +65,25 @@ namespace MySocailApp.Infrastructure
                 .AddNotificationConnectionAggregate()
                 .AddStoryDomainInfrastructureServices()
                 .AddUserUserBlockAggregateInfrastructureServices();
-        
+
+
+        private static IServiceCollection InitializeDb(this IServiceCollection services)
+        {
+            using var scope = services.BuildServiceProvider().CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            context.Database.Migrate();
+
+            //initiliaze versionCacheService
+            var versionCacheService = new AppVersionCacheService();
+            var versions = context.AppVersions.AsNoTracking().ToList();
+            versionCacheService.Init(versions);
+
+            return services
+                .AddScoped<IAppVersionReadRepository, AppVersionReadRepository>()
+                .AddScoped<IAppVersionWriteRepository, AppVersionWriteRepository>()
+                .AddSingleton<IAppVersionCacheService>(versionCacheService);
+        }
+
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
             var emailServiceSettings = services.BuildServiceProvider().GetRequiredService<IEmailServiceSettings>()!;

@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
 using MySocailApp.Application.Configurations;
-using MySocailApp.Domain.AppVersionAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.Configurations;
-using MySocailApp.Infrastructure.AppVersionAggregate;
-using MySocailApp.Infrastructure.DbContexts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
@@ -68,23 +64,6 @@ namespace MySocailApp.Api
                     }
                 );
             return services;
-        }
-
-        public static IServiceCollection InitializeDb(this IServiceCollection services)
-        {
-            using var scope = services.BuildServiceProvider().CreateScope();
-            using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            context.Database.Migrate();
-
-            //initiliaze versionCacheService
-            var versionCacheService = new AppVersionCacheService();
-            var versions = context.AppVersions.AsNoTracking().ToList();
-            versionCacheService.Init(versions);
-
-            return services
-                .AddScoped<IAppVersionReadRepository, AppVersionReadRepository>()
-                .AddScoped<IAppVersionWriteRepository, AppVersionWriteRepository>()
-                .AddSingleton<IAppVersionCacheService>(versionCacheService);
         }
     }
 }

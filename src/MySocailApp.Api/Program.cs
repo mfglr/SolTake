@@ -33,8 +33,7 @@ builder.Services
     .AddHttpContextAccessor()
     .AddDomain()
     .AddApplicationServices()
-    .AddInfrastructureServices()
-    .InitializeDb();
+    .AddInfrastructureServices();
 
 var app = builder.Build();
 
