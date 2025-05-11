@@ -10,7 +10,7 @@ namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateName
         public UpdateNameResponseDto(User User)
         {
             AccessToken = User.AccessToken;
-            RefreshToken = User.RefreshToken;
+            RefreshToken = User.RefreshTokens.Last().Value;
         }
 
         public UpdateNameResponseDto(string accessToken, string refreshToken)

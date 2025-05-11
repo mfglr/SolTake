@@ -9,8 +9,7 @@ namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.Ignore(x => x.AccessToken);
-            builder.Ignore(x => x.RefreshToken);
-
+            builder.OwnsMany(x => x.RefreshTokens, x => x.Ignore(a => a.Value));
             builder.OwnsOne(x => x.Image);
             builder.OwnsOne(x => x.Language);
             builder.OwnsOne(x => x.Biography);

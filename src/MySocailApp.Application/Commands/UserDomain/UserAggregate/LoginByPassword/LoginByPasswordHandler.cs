@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Application.Commands.UserDomain.UserAggregate;
+﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserAggregate.DomainServices;
@@ -10,11 +8,10 @@ using MySocailApp.Domain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByPassword
 {
-    public class LoginByPasswordHandler(AuthenticatorDomainService authenticatorDomainService, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService) : IRequestHandler<LoginByPasswordDto, LoginDto>
+    public class LoginByPasswordHandler(AuthenticatorDomainService authenticatorDomainService, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService) : IRequestHandler<LoginByPasswordDto, LoginDto>
     {
         private readonly AuthenticatorDomainService _authenticatorDomainService = authenticatorDomainService;
         private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
-        private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;
         private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
@@ -46,7 +43,6 @@ namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByPassw
             await _unitOfWork.CommitAsync(cancellationToken);
 
             await _accessTokenSetterDomainService.SetAsync(user, cancellationToken);
-            _refreshTokenSetterDomainService.Set(user);
 
             return new(user);
         }

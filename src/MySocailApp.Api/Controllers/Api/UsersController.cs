@@ -13,6 +13,7 @@ using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByGoogle;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByPassword;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByRefreshToken;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.LogOut;
+using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveRefreshTokens;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveUserImage;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.ResetPassword;
 using MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateBiography;
@@ -67,6 +68,14 @@ namespace MySocailApp.Api.Controllers.Api
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         [HttpPost]
         public async Task<UpdateUserNameResponseDto> UpdateUserName(UpdateUserNameDto request, CancellationToken cancellationToken)
+            => await _sender.Send(request, cancellationToken);
+
+        [HttpPut]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        public async Task RemoveRefreshTokens(RemoveRefreshTokensDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]

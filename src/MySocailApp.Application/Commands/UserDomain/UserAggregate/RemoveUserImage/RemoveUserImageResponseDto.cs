@@ -5,6 +5,6 @@ namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveUserIm
     public class RemoveUserImageResponseDto(User User)
     {
         public string AccessToken { get; private set; } = User.AccessToken;
-        public string RefreshToken { get; private set; } = User.RefreshToken;
+        public string RefreshToken { get; private set; } = User.RefreshTokens.Last().Value;
     }
 }

@@ -14,11 +14,10 @@ using MySocailApp.Domain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.CreateUser
 {
-    public class CreateUserHandler(UserCreatorDomainService userCreatorDomainService, IHttpContextAccessor contextAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, RefreshTokenSetterDomainService refreshTokenSetterDomainService, IBalanceRepository balanceRepository) : IRequestHandler<CreateUserDto, LoginDto>
+    public class CreateUserHandler(UserCreatorDomainService userCreatorDomainService, IHttpContextAccessor contextAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService, IBalanceRepository balanceRepository) : IRequestHandler<CreateUserDto, LoginDto>
     {
         private readonly UserCreatorDomainService _userCreatorDomainService = userCreatorDomainService;
         private readonly AccessTokenSetterDomainService _accessTokenSetterDomainService = accessTokenSetterDomainService;
-        private readonly RefreshTokenSetterDomainService _refreshTokenSetterDomainService = refreshTokenSetterDomainService;
         private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
         private readonly IUserWriteRepository _userWriteRepository = userWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -38,12 +37,9 @@ namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.CreateUser
             await _userCreatorDomainService.CreateAsync(user, cancellationToken);
             await _userWriteRepository.CreateAsync(user, cancellationToken);
 
-
-
             await _unitOfWork.CommitAsync(cancellationToken);
 
             await _accessTokenSetterDomainService.SetAsync(user, cancellationToken);
-            _refreshTokenSetterDomainService.Set(user);
 
             return new(user);
         }

@@ -16,7 +16,7 @@ namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserNa
         public UpdateUserNameResponseDto(User user)
         {
             AccessToken = user.AccessToken;
-            RefreshToken = user.RefreshToken;
+            RefreshToken = user.RefreshTokens.Last().Value;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserIm
         public UpdateUserImageResponseDto(User user)
         {
             AccessToken = user.AccessToken;
-            RefreshToken = user.RefreshToken;
+            RefreshToken = user.RefreshTokens.Last().Value;
             Image = user.Image!;
         }
     }

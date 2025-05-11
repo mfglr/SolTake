@@ -11,7 +11,7 @@ namespace MySocailApp.Application.Commands.UserDomain.UserAggregate
         public bool IsEmailVerified { get; private set; } = user.IsEmailVerified;
         public string Language { get; private set; } = user.Language.Value;
         public string AccessToken { get; private set; } = user.AccessToken;
-        public string RefreshToken { get; private set; } = user.RefreshToken;
+        public string RefreshToken { get; private set; } = user.RefreshTokens.Last().Value;
         public bool IsPrivacyPolicyApproved { get; private set; } = user.IsPrivacyPolicyApproved;
         public bool IsTermsOfUseApproved { get; private set; } = user.IsTersmOfUseApproved;
         public bool IsGoogleAuthenticated { get; private set; } = user.GoogleAccount != null;

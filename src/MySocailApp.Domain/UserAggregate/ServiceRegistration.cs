@@ -9,8 +9,6 @@ namespace MySocailApp.Domain.UserAggregate
             => services
                 .AddScoped<AccessTokenSetterDomainService>()
                 .AddScoped<AuthenticatorDomainService>()
-                .AddScoped<RefreshTokenSetterDomainService>()
-                .AddScoped<RefreshTokenValidatorDomainService>()
                 .AddScoped<UserCreatorDomainService>()
                 .AddScoped<EmailUpdaterDomainService>()
                 .AddScoped<GoogleTokenValidatorDomainService>()

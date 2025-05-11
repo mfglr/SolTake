@@ -20,7 +20,9 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         private readonly List<UserRole> _roles = [];
         public IReadOnlyCollection<UserRole> Roles => _roles;
         public string AccessToken { get; internal set; } = null!; //not mapped
-        public string RefreshToken { get; internal set; } = null!; //not mapped
+
+        private readonly List<RefreshToken> _refreshTokens = [];
+        public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens;
 
         private static string GenerateSecurityStamp() => Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
@@ -32,6 +34,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
             UserName = email.GenerateUserName();
             Language = language;
             SecurityStamp = GenerateSecurityStamp();
+            
         }
         public User(GoogleAccount googleAccount, Language language)
         {
@@ -42,6 +45,8 @@ namespace MySocailApp.Domain.UserAggregate.Entities
             SecurityStamp = GenerateSecurityStamp();
         }
 
+        public bool IsValidRefreshToken(string token) => _refreshTokens.Any(x => x.Check(token));
+
         internal void Create(int policyId, int termsOfUseId)
         {
             if (GoogleAccount == null)
@@ -51,8 +56,11 @@ namespace MySocailApp.Domain.UserAggregate.Entities
             _privacyPolicies.Add(UserPrivacyPolicy.Create(policyId));
             _termsOfUses.Add(UserTermsOfUse.Create(termsOfUseId));
             CreatedAt = DateTime.UtcNow;
+            _refreshTokens.Add(RefreshToken.CreateRandom());
             AddDomainEvent(new UserCreatedDomainEvent(this));
         }
+
+        public void RemoveRefreshTokens(string token) => _refreshTokens.RemoveAll(x => !x.Check(token));
 
         internal void UpdateImage(Multimedia image)
         {
@@ -63,6 +71,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
 
             Image = image;
             UpdatedAt = DateTime.UtcNow;
+            _refreshTokens.Add(RefreshToken.CreateRandom());
             AddDomainEvent(new ProfileImageUpdatedDomainEvent(this));
         }
         internal void RemoveImage()
@@ -73,12 +82,14 @@ namespace MySocailApp.Domain.UserAggregate.Entities
 
             Image = null;
             UpdatedAt = DateTime.UtcNow;
+            _refreshTokens.Add(RefreshToken.CreateRandom());
             AddDomainEvent(new ProfileImageUpdatedDomainEvent(this));
         }
         internal void UpdateName(string name)
         {
             Name = name;
             UpdatedAt = DateTime.UtcNow;
+            _refreshTokens.Add(RefreshToken.CreateRandom());
             AddDomainEvent(new NameUpdatedDomainEvent(this));
         }
         public void UpdateBiography(Biography biography)
@@ -90,6 +101,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
         {
             UserName = userName;
             UpdatedAt = DateTime.UtcNow;
+            _refreshTokens.Add(RefreshToken.CreateRandom());
             AddDomainEvent(new UserNameUpdatedDomainEvent(this));
         }
         internal void UpdateEmail(Email email)
@@ -97,6 +109,7 @@ namespace MySocailApp.Domain.UserAggregate.Entities
             _verificationTokens.Add(EmailVerificationToken.Create());
             Email = email;
             UpdatedAt = DateTime.UtcNow;
+            _refreshTokens.Add(RefreshToken.CreateRandom());
             AddDomainEvent(new EmailVerificationTokenUpdatedDomainEvent(this));
         }
         public void UpdateLanguage(Language language)
@@ -191,9 +204,10 @@ namespace MySocailApp.Domain.UserAggregate.Entities
                 _privacyPolicies.Add(UserPrivacyPolicy.Create(policyId));
             if (_termsOfUses.OrderBy(x => x.TermsOfUseId).Last().TermsOfUseId < termsOfUseId)
                 _termsOfUses.Add(UserTermsOfUse.Create(termsOfUseId));
+            _refreshTokens.Add(RefreshToken.CreateRandom());
             SecurityStamp = GenerateSecurityStamp();
         }
-        public void Logout() => SecurityStamp = GenerateSecurityStamp();
+        public void Logout() => _refreshTokens.Clear();
 
         //password
         public bool CheckPassword(Password password) => Password != null && HashComputer.Check(password.Value, Password.Hash);
