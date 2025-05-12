@@ -35,8 +35,10 @@ class _AppViewState extends State<AppView>{
 
   @override
   void initState() {
+    
     final store = StoreProvider.of<AppState>(context,listen: false);
     store.dispatch(const LoginByRefreshToken());
+    
     _timer = Timer.periodic(
       Duration(minutes: int.parse(dotenv.env['accessTokenDuration']!)),
       (timer) => store.dispatch(const LoginByRefreshToken())

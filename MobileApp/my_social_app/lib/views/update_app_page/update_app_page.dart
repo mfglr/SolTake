@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'update_app_page_texts.dart';
 
 final urlMarket = Uri.parse('market://details?id=com.soltake');
 final urlBrowser = Uri.parse('https://play.google.com/store/apps/details?id=com.soltake');
@@ -30,12 +33,14 @@ class UpdateAppPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                AppLocalizations.of(context)!.update_page_app_content,
-                style: const TextStyle(
-                  fontSize: 20
+              child: LanguageWidget(
+                child: (language) => Text(
+                  content[language]!,
+                  style: const TextStyle(
+                    fontSize: 20
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             )
           ],
