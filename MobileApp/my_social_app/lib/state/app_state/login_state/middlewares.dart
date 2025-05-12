@@ -32,6 +32,7 @@ void _setAccount(Store<AppState> store,Login login){
   MessageHub.init(login.accessToken, store);
   NotificationHub.init(login.accessToken, store);
   store.dispatch(UpdateLoginStateAction(payload: state));
+  UserService().removeRefreshTokens(login.refreshToken);
 }
 void _clearSession(Store<AppState> store){
   LoginStorage().remove();
@@ -70,7 +71,9 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
               store.dispatch(const ApplicationSuccessfullyInitAction());
             })
             .catchError((error){
-              if(!(error is BackendException && error.statusCode == 426)) _clearSession(store);
+              if((error is BackendException && error.statusCode == 426)){
+                _clearSession(store);
+              }
               store.dispatch(const ApplicationSuccessfullyInitAction());
               throw error;
             });

@@ -47,13 +47,16 @@ class UserService{
       )
       .then((json) => Login.fromJson(json));
   
-   Future<Login> loginByRefreshtoken(num id,String token) =>
+  Future<Login> loginByRefreshtoken(num id,String token) =>
     _appClient
       .post(
         "$userController/$loginByRefreshTokenEndPoint",
         body: { 'id': id.toString(),'token': token}
       )
       .then((json) => Login.fromJson(json));
+
+  Future removeRefreshTokens(String token) =>
+    _appClient.put("$userController/removeRefreshTokens", body: { 'token': token });
 
   Future<Login> loginByGoogle(String accessToken) =>
     _appClient
