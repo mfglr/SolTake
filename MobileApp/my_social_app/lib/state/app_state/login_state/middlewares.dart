@@ -12,8 +12,6 @@ import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/application_init_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
@@ -47,11 +45,9 @@ void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .create(action.email, action.password, action.passwordConfirmation)
       .then((login){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
         _setAccount(store, login);
       })
       .catchError((e){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
         throw e;
       });
   }
@@ -68,18 +64,18 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
             .loginByRefreshtoken(prev.id, prev.refreshToken)
             .then((account){
               _setAccount(store, account);
-              store.dispatch(const ApplicationSuccessfullyInitAction());
+              store.dispatch(const LoginSuccessAction());
             })
             .catchError((error){
               if((error is BackendException && error.statusCode == 426)){
                 _clearSession(store);
               }
-              store.dispatch(const ApplicationSuccessfullyInitAction());
+              store.dispatch(const LoginSuccessAction());
               throw error;
             });
         }
         else{
-          store.dispatch(const ApplicationSuccessfullyInitAction());
+          store.dispatch(const LoginSuccessAction());
         }
       });
   }
@@ -91,11 +87,9 @@ void loginByPaswordMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .loginByPassword(action.emailOrPassword, action.password)
       .then((account){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
         _setAccount(store, account);
       })
       .catchError((e){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
         throw e;
       });
   }
@@ -108,7 +102,6 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
       .signIn()
       .then((value){
         if(value == null){
-          store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
           _googleSignIn.disconnect();
           ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
           return;
@@ -117,7 +110,6 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
           .then((e){
             final accessToken = e.accessToken;
             if(accessToken == null){
-              store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
               _googleSignIn.disconnect();
               ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
               return;
@@ -125,18 +117,15 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
             UserService()
               .loginByGoogle(accessToken)
               .then((account){
-                store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
                 _setAccount(store, account);
               })
               .catchError((e){
-                store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
                 _googleSignIn.disconnect();
                 throw e;
               });
           });
       })
       .catchError((e){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
         _googleSignIn.disconnect();
         throw e;
       });

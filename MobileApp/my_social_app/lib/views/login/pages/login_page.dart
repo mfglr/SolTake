@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
-import 'package:my_social_app/state/app_state/state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/login/pages/register_page.dart';
 import 'package:my_social_app/views/login/widgets/login_form.dart';
 import 'package:my_social_app/views/login/widgets/google_login_button.dart';
 import 'package:my_social_app/views/login/widgets/login_page_diveder.dart';
@@ -33,10 +30,13 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 children: [
                   OutlinedButton(
-                    onPressed: () {
-                      final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
-                    },
+                    onPressed: () =>
+                      Navigator
+                        .of(context)
+                        .pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => const RegisterPage()),
+                          (_) => false
+                        ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [ 

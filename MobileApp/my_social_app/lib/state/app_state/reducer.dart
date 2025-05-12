@@ -2,7 +2,6 @@ import 'package:my_social_app/state/app_state/ai_model_state/reducers.dart';
 import 'package:my_social_app/state/app_state/balance_state/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/application_init_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/app_exams_state/reducers.dart';
@@ -50,10 +49,8 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userMessageState: userMessageReducers(prev.userMessageState, action),
   transactions: transactionReducers(prev.transactions, action),
-  
-  activeAccountPage: changeActiveAccountPageReducer(prev.activeAccountPage, action),
   loginState: accoutStateReducers(prev.loginState,action),
-  isInitialized: appSuccessfullyInitReducer(prev.isInitialized,action),
+  isLogin: loginSuccessReducer(prev.isLogin,action),
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),

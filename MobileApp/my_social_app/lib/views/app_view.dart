@@ -6,12 +6,10 @@ import 'package:my_social_app/services/app_version_service.dart';
 import 'package:my_social_app/services/package_version_service.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/login/pages/application_loading_page.dart';
 import 'package:my_social_app/views/login/pages/approve_privacy_policy_page.dart';
 import 'package:my_social_app/views/login/pages/approve_terms_of_use_page.dart';
-import 'package:my_social_app/views/login/pages/register_page.dart';
 import 'package:my_social_app/views/login/pages/login_page.dart';
 import 'package:my_social_app/views/root_view.dart';
 import 'package:my_social_app/views/login/pages/verify_email_page.dart';
@@ -50,7 +48,6 @@ class _AppViewState extends State<AppView>{
 
     super.initState();
   }
-  
 
   @override
   void dispose() {
@@ -67,19 +64,10 @@ class _AppViewState extends State<AppView>{
           if(snapshot.data == null) return const ApplicationLoadingPage();
           if(snapshot.data!) return const UpdateAppPage();
           return StoreConnector<AppState,bool>(
-            converter: (store) => store.state.isInitialized,
-            builder: (context, isInitialized){
-              if(isInitialized){
-                if(widget.login == null){
-                  return StoreConnector<AppState, ActiveAccountPage>(
-                    converter: (store) => store.state.activeAccountPage,
-                    builder: (context,activeAccountPage){
-                      if(activeAccountPage == ActiveAccountPage.appLodingPage) return const ApplicationLoadingPage();
-                      if(activeAccountPage == ActiveAccountPage.loginPage) return const LoginPage();
-                      return const RegisterPage();
-                    },
-                  );
-                }
+            converter: (store) => store.state.isLogin,
+            builder: (context, isLogin){
+              if(isLogin){
+                if(widget.login == null) return const LoginPage();
                 if(!widget.login!.isPrivacyPolicyApproved) return const ApprovePolicyPage();
                 if(!widget.login!.isTermsOfUseApproved) return const ApproveTermsOfUsePage();
                 if(!widget.login!.isEmailVerified) return const VerifyEmailPage();

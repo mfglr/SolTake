@@ -5,7 +5,6 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
@@ -56,8 +55,7 @@ class AppState{
   final Pagination<int,Id<int>> appExams;
   final Pagination<int,NotificationState> notifications;
   final EntityState<int,SubjectState> subjectEntityState;
-  final bool isInitialized;
-  final ActiveAccountPage activeAccountPage;
+  final bool isLogin;
   final LoginState? loginState;
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
@@ -91,9 +89,8 @@ class AppState{
     required this.examEntityState,
     required this.appExams,
     required this.conversations,
-    required this.activeAccountPage,
     required this.loginState,
-    required this.isInitialized,
+    required this.isLogin,
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.solutionEntityState,
@@ -127,9 +124,8 @@ class AppState{
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
-    activeAccountPage: ActiveAccountPage.loginPage,
     loginState: null,
-    isInitialized: true,
+    isLogin: true,
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
