@@ -10,4 +10,9 @@ class Login {
   Login success(LoginState login) => Login(status: LoginStatus.success,login: login);
   Login failed() => Login(status: LoginStatus.failed, login: login);
   Login trying() => Login(status: LoginStatus.trying, login: login);
+  Login confirmEmail() => Login(status: status, login: login?.confirmEmail());
+  Login updateLanguage(String language) => Login(status: status, login: login?.updateLanguage(language));
+  Login updateRefhreshToken(String refreshToken) => Login(status: status, login: login?.updateRefhreshToken(refreshToken));
+  Login approvePrivacyPolicy() => Login(status: status, login: login?.approvePrivacyPolicy());
+  Login approveTermsOfUse() => Login(status: status, login: login?.approveTermsOfUse());
 }

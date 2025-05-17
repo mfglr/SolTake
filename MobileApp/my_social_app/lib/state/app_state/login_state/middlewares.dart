@@ -55,7 +55,7 @@ void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 
 void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoginByRefreshToken){
+  if(action is LoginByRefreshTokenAction){
     LoginStorage()
       .get()
       .then((prev){

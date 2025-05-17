@@ -3,14 +3,26 @@ import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 
 @immutable
+class LoginSuccessAction extends AppAction{
+  final LoginState payload;
+  const LoginSuccessAction({required this.payload});
+}
+@immutable
+class LoginFailedAction extends AppAction{
+  const LoginFailedAction();
+}
+
+
+@immutable
 class UpdateLoginStateAction extends AppAction{
   final LoginState? payload;
   const UpdateLoginStateAction({required this.payload});
 }
 
+
 @immutable
-class LoginByRefreshToken extends AppAction{
-  const LoginByRefreshToken();
+class LoginByRefreshTokenAction extends AppAction{
+  const LoginByRefreshTokenAction();
 }
 
 @immutable

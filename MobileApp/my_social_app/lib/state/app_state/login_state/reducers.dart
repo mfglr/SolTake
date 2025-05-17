@@ -1,36 +1,30 @@
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:redux/redux.dart';
 
-LoginState? updateAccountStateReducer(LoginState? prev,UpdateLoginStateAction action)
-  => action.payload;
-
-LoginState? updateLanguageReducer(LoginState? prev,UpdateLanguageSuccessAction action)
+Login logingByRefReshTokenReducer(Login prev, LoginByRefreshTokenAction action)
+  => prev.trying();
+Login loginSuccessReducer(Login prev, LoginSuccessAction action)
+  => prev.success(action.payload);
+Login loginFailedReducer(Login prev, LoginFailedAction action)
+  => prev.failed();
+  
+Login? updateLanguageReducer(Login? prev,UpdateLanguageSuccessAction action)
   => prev?.updateLanguage(action.language);
-
-LoginState? confirmEmailReducer(LoginState? prev,ConfirmEmailByTokenSuccessAction action)
+Login? confirmEmailReducer(Login? prev,ConfirmEmailByTokenSuccessAction action)
   => prev?.confirmEmail();
-
-LoginState? approveTermsOfUseReducer(LoginState? prev,ApproveTermsOfUseSuccessAction action)
+Login? approveTermsOfUseReducer(Login? prev,ApproveTermsOfUseSuccessAction action)
   => prev?.approveTermsOfUse();
-LoginState? approvePrivacyPolicyReducer(LoginState? prev, ApprovePrivacyPolicySuccessAction action)
+Login? approvePrivacyPolicyReducer(Login? prev, ApprovePrivacyPolicySuccessAction action)
   => prev?.approvePrivacyPolicy();
 
-LoginState? deleteUserReducer(LoginState? prev,DeleteUserAction action)
-  => prev?.startAccountDeletion();
-LoginState? deleteUserFailedReducer(LoginState? prev,DeleteUserFailedAction action)
-  => prev?.stopAccountDeletion();
-
-LoginState? updateRefreshToken(LoginState? prev,UpdateRefreshTokenAction action)
+Login? updateRefreshToken(Login? prev,UpdateRefreshTokenAction action)
   => prev?.updateRefhreshToken(action.refreshToken);
 
-final Reducer<LoginState?> accoutStateReducers = combineReducers<LoginState?>([
-  TypedReducer<LoginState?,UpdateLoginStateAction>(updateAccountStateReducer).call,
-  TypedReducer<LoginState?,UpdateLanguageSuccessAction>(updateLanguageReducer).call,
-  TypedReducer<LoginState?,ConfirmEmailByTokenSuccessAction>(confirmEmailReducer).call,
-  TypedReducer<LoginState?,ApprovePrivacyPolicySuccessAction>(approvePrivacyPolicyReducer).call,
-  TypedReducer<LoginState?,ApproveTermsOfUseSuccessAction>(approveTermsOfUseReducer).call,
-  TypedReducer<LoginState?,DeleteUserAction>(deleteUserReducer).call,
-  TypedReducer<LoginState?,DeleteUserFailedAction>(deleteUserFailedReducer).call,
-  TypedReducer<LoginState?,UpdateRefreshTokenAction>(updateRefreshToken).call
+final Reducer<Login?> accoutStateReducers = combineReducers<Login?>([
+  TypedReducer<Login?,UpdateLanguageSuccessAction>(updateLanguageReducer).call,
+  TypedReducer<Login?,ConfirmEmailByTokenSuccessAction>(confirmEmailReducer).call,
+  TypedReducer<Login?,ApprovePrivacyPolicySuccessAction>(approvePrivacyPolicyReducer).call,
+  TypedReducer<Login?,ApproveTermsOfUseSuccessAction>(approveTermsOfUseReducer).call,
+  TypedReducer<Login?,UpdateRefreshTokenAction>(updateRefreshToken).call
 ]);
