@@ -1,0 +1,19 @@
+﻿using SolTake.Core;
+using SolTake.Core.Exceptions;
+using System.Net;
+
+namespace MySocailApp.Domain.SolutionUserVoteAggregate.Exceptions
+{
+    public class VoteNotFoundException : AppException
+    {
+        private readonly static string _messageEn = "Vote was not found!";
+        private readonly static string _messageTr = "Oy bulunamadı!";
+        private readonly static Dictionary<string, string> _messages = new() {
+            { Languages.EN, _messageEn },
+            { Languages.TR, _messageTr }
+        };
+
+        public override string GetErrorMessage(string culture) => _messages[culture];
+        public VoteNotFoundException() : base((int)HttpStatusCode.BadRequest) { }
+    }
+}

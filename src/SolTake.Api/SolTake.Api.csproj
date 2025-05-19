@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>62a4d200-3720-4de4-906a-056954275d73</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Blobs\QuestionImages\**" />
+    <Content Remove="Blobs\QuestionImages\**" />
+    <EmbeddedResource Remove="Blobs\QuestionImages\**" />
+    <None Remove="Blobs\QuestionImages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="appsettings.production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SolTake.Application\SolTake.Application.csproj" />
+    <ProjectReference Include="..\SolTake.Infrastructure\SolTake.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MySocialApp.Api.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="FFmpeg\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="FFmpeg\ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MailMessages\EmailVerification_en.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MailMessages\EmailVerification_tr.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Blobs\PrivacyPolicies\privacy_policy_en">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Blobs\PrivacyPolicies\privacy_policy_tr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Blobs\TermsOfUses\terms_of_use_en">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Blobs\TermsOfUses\terms_of_use_tr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MailMessages\ResetPassword_en.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MailMessages\ResetPassword_tr.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Blobs\MessageMedias\" />
+    <Folder Include="Blobs\AIModelMedias\" />
+    <Folder Include="Blobs\StoryMedias\" />
+    <Folder Include="Blobs\SolutionMedias\" />
+    <Folder Include="Blobs\Temp\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="FFmpeg\version.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
