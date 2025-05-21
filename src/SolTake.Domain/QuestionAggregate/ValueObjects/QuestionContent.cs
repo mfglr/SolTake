@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Exceptions;
+﻿using SolTake.Domain.QuestionAggregate.Exceptions;
 
-namespace MySocailApp.Domain.QuestionAggregate.ValueObjects
+namespace SolTake.Domain.QuestionAggregate.ValueObjects
 {
     public class QuestionContent
     {

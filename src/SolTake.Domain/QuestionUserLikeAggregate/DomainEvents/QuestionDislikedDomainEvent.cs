@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
+﻿using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.QuestionUserLikeAggregate.DomainEvents
+namespace SolTake.Domain.QuestionUserLikeAggregate.DomainEvents
 {
     public record QuestionDislikedDomainEvent(QuestionUserLike Like) : IDomainEvent;
 }

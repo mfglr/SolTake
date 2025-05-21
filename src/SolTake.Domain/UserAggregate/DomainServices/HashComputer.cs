@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace MySocailApp.Domain.UserAggregate.DomainServices
+namespace SolTake.Domain.UserAggregate.DomainServices
 {
     public static class HashComputer
     {

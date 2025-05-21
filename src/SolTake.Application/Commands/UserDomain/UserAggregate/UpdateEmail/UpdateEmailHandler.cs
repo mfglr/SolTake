@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.DomainServices;
+using SolTake.Domain.UserAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateEmail
 {

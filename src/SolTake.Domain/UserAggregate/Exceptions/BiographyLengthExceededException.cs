@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.UserAggregate.ValueObjects;
+﻿using SolTake.Domain.UserAggregate.ValueObjects;
 using SolTake.Core;
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.UserAggregate.Exceptions
+namespace SolTake.Domain.UserAggregate.Exceptions
 {
     public class BiographyLengthExceededException : AppException
     {

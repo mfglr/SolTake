@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.UserAggregate.Configurations
+﻿namespace SolTake.Domain.UserAggregate.Configurations
 {
     public class TokenProviderOptions(string audience, string issuer, int accessTokenExpiration, int refreshTokenExpiration, string securityKey) : ITokenProviderOptions
     {

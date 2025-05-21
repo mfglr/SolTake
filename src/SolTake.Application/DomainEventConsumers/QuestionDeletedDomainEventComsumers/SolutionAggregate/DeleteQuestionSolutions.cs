@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.DomainEvents;
+using SolTake.Domain.QuestionAggregate.DomainEvents;
+using SolTake.Domain.SolutionAggregate.Abstracts;
+using SolTake.Domain.SolutionAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionDeletedDomainEventComsumers.SolutionAggregate

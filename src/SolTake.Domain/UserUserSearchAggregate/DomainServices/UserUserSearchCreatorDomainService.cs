@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.UserAggregate.Abstracts;
+﻿using SolTake.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
 using MySocailApp.Domain.UserUserSearchAggregate.Entities;

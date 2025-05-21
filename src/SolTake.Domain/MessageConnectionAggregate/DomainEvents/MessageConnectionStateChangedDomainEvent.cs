@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.MessageConnectionAggregate.Entities;
-using SolTake.Core;
+﻿using SolTake.Core;
+using SolTake.Domain.MessageConnectionAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageConnectionAggregate.DomainEvents
+namespace SolTake.Domain.MessageConnectionAggregate.DomainEvents
 {
     public record MessageConnectionStateChangedDomainEvent(MessageConnection MessageConnection, string UserName, Multimedia? Image) : IDomainEvent;
 }

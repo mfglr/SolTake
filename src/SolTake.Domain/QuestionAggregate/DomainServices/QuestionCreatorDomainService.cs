@@ -1,13 +1,13 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.Exceptions;
-using MySocailApp.Domain.SubjectAggregate.Exceptions;
-using MySocailApp.Domain.SubjectAggregate.Interfaces;
-using MySocailApp.Domain.TopicAggregate.Abstracts;
-using MySocailApp.Domain.TopicAggregate.Entities;
+﻿using SolTake.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.QuestionAggregate.Exceptions;
+using SolTake.Domain.SubjectAggregate.Exceptions;
+using SolTake.Domain.SubjectAggregate.Interfaces;
+using SolTake.Domain.TopicAggregate.Abstracts;
+using SolTake.Domain.TopicAggregate.Entities;
 using SolTake.Domain.ExamAggregate.Exceptions;
 using SolTake.Domain.ExamAggregate.Interfaces;
 
-namespace MySocailApp.Domain.QuestionAggregate.DomainServices
+namespace SolTake.Domain.QuestionAggregate.DomainServices
 {
     public class QuestionCreatorDomainService(IExamReadRepository examReadRepository, ISubjectReadRepository subjectReadRepository, ITopicReadRepository topicReadRepository)
     {

@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.Queries.MessageDomain;
-using MySocailApp.Domain.MessageConnectionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Domain.MessageConnectionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
 {

@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.CommentDeletedDomainEventConsumers.NotificationAggregate

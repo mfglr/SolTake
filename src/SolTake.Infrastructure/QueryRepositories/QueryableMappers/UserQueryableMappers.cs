@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Domain.UserAggregate.Entities;
+using SolTake.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

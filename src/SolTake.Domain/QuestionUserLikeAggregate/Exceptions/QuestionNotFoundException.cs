@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.QuestionUserLikeAggregate.Exceptions
+namespace SolTake.Domain.QuestionUserLikeAggregate.Exceptions
 {
     public class QuestionNotFoundException : AppException
     {

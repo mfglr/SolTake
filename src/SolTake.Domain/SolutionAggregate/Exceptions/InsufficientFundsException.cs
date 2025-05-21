@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionAggregate.Exceptions
+namespace SolTake.Domain.SolutionAggregate.Exceptions
 {
     public class InsufficientFundsException : AppException
     {

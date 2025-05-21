@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.TermsOfUseAggregate
+﻿namespace SolTake.Domain.TermsOfUseAggregate
 {
     public class TermsOfUse
     {

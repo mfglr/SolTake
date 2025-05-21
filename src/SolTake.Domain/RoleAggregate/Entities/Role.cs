@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.RoleAggregate.Entities
+namespace SolTake.Domain.RoleAggregate.Entities
 {
     public class Role : IHasId, IAggregateRoot
     {

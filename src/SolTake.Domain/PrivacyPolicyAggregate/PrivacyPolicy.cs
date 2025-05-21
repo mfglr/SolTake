@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.PrivacyPolicyAggregate
+namespace SolTake.Domain.PrivacyPolicyAggregate
 {
     public class PrivacyPolicy : IHasId
     {

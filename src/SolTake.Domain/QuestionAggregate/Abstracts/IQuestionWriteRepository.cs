@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
+﻿using SolTake.Domain.QuestionAggregate.Entities;
 
-namespace MySocailApp.Domain.QuestionAggregate.Abstracts
+namespace SolTake.Domain.QuestionAggregate.Abstracts
 {
     public interface IQuestionWriteRepository
     {

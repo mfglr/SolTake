@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
+﻿using SolTake.Domain.MessageAggregate.Exceptions;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects
+namespace SolTake.Domain.MessageAggregate.ValueObjects
 {
     public class MessageContent
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.TransactionAggregate.Entities;
+using SolTake.Domain.TransactionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.TransactionAggregate
 {

@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.MessageDomain.MessageAggregate;
-using MySocailApp.Domain.QuestionAggregate;
-using MySocailApp.Domain.QuestionUserLikeAggregate;
-using MySocailApp.Domain.QuestionUserSaveAggregate;
+using SolTake.Domain.QuestionAggregate;
+using SolTake.Domain.QuestionUserLikeAggregate;
+using SolTake.Domain.QuestionUserSaveAggregate;
 using MySocailApp.Domain.SolutionAggregate;
 using MySocailApp.Domain.SolutionUserSaveAggregate;
-using MySocailApp.Domain.SolutionUserVoteAggregate;
-using MySocailApp.Domain.StoryUserViewAggregate;
-using MySocailApp.Domain.UserAggregate;
+using SolTake.Domain.SolutionUserVoteAggregate;
+using SolTake.Domain.StoryUserViewAggregate;
 using MySocailApp.Domain.UserUserBlockAggregate;
 using MySocailApp.Domain.UserUserConversationAggregate;
 using MySocailApp.Domain.UserUserFollowAggregate;
@@ -15,6 +13,8 @@ using MySocailApp.Domain.UserUserSearchAggregate;
 using SolTake.Domain.AppVersionAggregate;
 using SolTake.Domain.CommentAggregate;
 using SolTake.Domain.CommentUserLikeAggregate;
+using SolTake.Domain.MessageAggregate;
+using SolTake.Domain.UserAggregate;
 
 namespace MySocailApp.Domain
 {

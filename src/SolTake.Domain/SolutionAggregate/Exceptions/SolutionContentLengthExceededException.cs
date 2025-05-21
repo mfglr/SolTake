@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+﻿using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionAggregate.Exceptions
+namespace SolTake.Domain.SolutionAggregate.Exceptions
 {
     public class SolutionContentLengthExceededException : AppException
     {

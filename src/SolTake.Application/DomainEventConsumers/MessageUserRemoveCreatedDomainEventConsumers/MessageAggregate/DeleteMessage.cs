@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.MessageUserRemoveAggregate.Abstracts;
-using MySocailApp.Domain.MessageUserRemoveAggregate.DomainEvents;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.Abstracts;
+using SolTake.Domain.MessageAggregate.DomainEvents;
+using SolTake.Domain.MessageUserRemoveAggregate.Abstracts;
+using SolTake.Domain.MessageUserRemoveAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageUserRemoveCreatedDomainEventConsumers.MessageAggregate
 {

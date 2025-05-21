@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
-using SolTake.Core;
+﻿using SolTake.Core;
+using SolTake.Domain.MessageAggregate.DomainEvents;
+using SolTake.Domain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Queries.MessageDomain
 {

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.SubjectAggregate.Entities
+﻿namespace SolTake.Domain.SubjectAggregate.Entities
 {
     public class SubjectTopic
     {

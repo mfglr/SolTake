@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Core;
 

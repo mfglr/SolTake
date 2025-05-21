@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
-using SolTake.Core;
+﻿using SolTake.Core;
+using SolTake.Domain.MessageAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents
+namespace SolTake.Domain.MessageAggregate.DomainEvents
 {
     public record MessageCreatedDomainEvent(Message Message, Login Login) : IDomainEvent;
 }

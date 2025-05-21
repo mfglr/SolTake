@@ -1,11 +1,10 @@
-﻿using MySocailApp.Domain.UserAggregate.DomainServices;
-using MySocailApp.Domain.UserAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.DomainEvents;
-using MySocailApp.Domain.UserAggregate.Exceptions;
-using SolTake.Core;
+﻿using SolTake.Domain.UserAggregate.DomainServices;
 using SolTake.Domain.UserAggregate.ValueObjects;
+using SolTake.Domain.UserAggregate.DomainEvents;
+using SolTake.Domain.UserAggregate.Exceptions;
+using SolTake.Core;
 
-namespace MySocailApp.Domain.UserAggregate.Entities
+namespace SolTake.Domain.UserAggregate.Entities
 {
     public class User : Entity, IAggregateRoot
     {

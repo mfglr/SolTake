@@ -2,8 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.UserAggregate.DomainServices;
-using MySocailApp.Domain.UserAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.DomainServices;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserImage

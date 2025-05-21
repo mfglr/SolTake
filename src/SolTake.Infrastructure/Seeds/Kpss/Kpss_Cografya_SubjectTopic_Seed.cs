@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.SubjectAggregate.Entities;
+using SolTake.Domain.SubjectAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.Seeds.Kpss
 {

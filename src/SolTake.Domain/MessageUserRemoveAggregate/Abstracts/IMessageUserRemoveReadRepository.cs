@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.MessageUserRemoveAggregate.Abstracts
+﻿namespace SolTake.Domain.MessageUserRemoveAggregate.Abstracts
 {
     public interface IMessageUserRemoveReadRepository
     {

@@ -1,9 +1,9 @@
 ﻿using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionUserVoteAggregate.DomainEvents;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
+using SolTake.Domain.SolutionUserVoteAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.SolutionUserVoteAggregate.Entities
+namespace SolTake.Domain.SolutionUserVoteAggregate.Entities
 {
     public class SolutionUserVote(int solutionId, int userId, SolutionVoteType type) : Entity, IAggregateRoot
     {

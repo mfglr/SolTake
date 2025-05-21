@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.QueryRepositories;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
+using SolTake.Domain.MessageAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.MessageDomain.GetMessageById
 {

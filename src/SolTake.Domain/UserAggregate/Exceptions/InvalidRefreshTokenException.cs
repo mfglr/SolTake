@@ -1,7 +1,7 @@
 ﻿using SolTake.Core;
 using SolTake.Core.Exceptions;
 
-namespace MySocailApp.Domain.UserAggregate.Exceptions
+namespace SolTake.Domain.UserAggregate.Exceptions
 {
     public class InvalidRefreshTokenException : AppException
     {

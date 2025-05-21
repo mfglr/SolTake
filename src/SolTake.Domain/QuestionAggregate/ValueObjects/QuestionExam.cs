@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.QuestionAggregate.ValueObjects
+﻿namespace SolTake.Domain.QuestionAggregate.ValueObjects
 {
     public class QuestionExam(int id, string shortName, string fullName)
     {

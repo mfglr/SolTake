@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Domain.SolutionAggregate.Entities;
 
-namespace MySocailApp.Domain.SolutionAggregate.Abstracts
+namespace SolTake.Domain.SolutionAggregate.Abstracts
 {
     public interface ISolutionWriteRepository
     {

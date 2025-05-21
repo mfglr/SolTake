@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.SolutionAggregate.DomainServices;
-using MySocailApp.Domain.SolutionUserVoteAggregate.DomainServices;
+using SolTake.Domain.SolutionAggregate.DomainServices;
 
 namespace MySocailApp.Domain.SolutionAggregate
 {

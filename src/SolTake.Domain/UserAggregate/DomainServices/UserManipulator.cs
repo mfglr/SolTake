@@ -1,10 +1,10 @@
-﻿using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Entities;
-using MySocailApp.Domain.UserAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.UserAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Entities;
+using SolTake.Domain.UserAggregate.ValueObjects;
+using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.UserAggregate.DomainServices
+namespace SolTake.Domain.UserAggregate.DomainServices
 {
     public class UserManipulator(AccessTokenSetterDomainService accessTokenSetterDomainService, IUserReadRepository userReadRepository)
     {

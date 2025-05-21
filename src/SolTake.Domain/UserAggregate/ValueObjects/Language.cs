@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.UserAggregate.ValueObjects
+namespace SolTake.Domain.UserAggregate.ValueObjects
 {
     public class Language
     {

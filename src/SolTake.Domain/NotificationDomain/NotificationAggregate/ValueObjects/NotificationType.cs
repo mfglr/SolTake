@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects
+﻿namespace SolTake.Domain.NotificationDomain.NotificationAggregate.ValueObjects
 {
     public enum NotificationType
     {

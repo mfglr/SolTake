@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Core;
 

@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Domain.SolutionAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.SolutionAggregate.DomainEvents
+namespace SolTake.Domain.SolutionAggregate.DomainEvents
 {
     public record SolutionDeletedDomainEvent(Solution Solution) : IDomainEvent;
 }

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts
+﻿namespace SolTake.Domain.SolutionUserSaveAggregate.Abstracts
 {
     public interface ISolutionUserSaveReadRepository
     {

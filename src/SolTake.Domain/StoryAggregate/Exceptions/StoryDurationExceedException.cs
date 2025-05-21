@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.StoryAggregate.Entities;
+﻿using SolTake.Domain.StoryAggregate.Entities;
 using SolTake.Core;
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.StoryAggregate.Exceptions
+namespace SolTake.Domain.StoryAggregate.Exceptions
 {
     internal class StoryDurationExceedException : AppException
     {

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects
+﻿namespace SolTake.Domain.MessageAggregate.ValueObjects
 {
     public enum MessageState
     {

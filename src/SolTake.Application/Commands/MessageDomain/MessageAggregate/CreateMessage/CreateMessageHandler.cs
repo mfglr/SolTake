@@ -2,13 +2,13 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainServices;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.Abstracts;
+using SolTake.Domain.MessageAggregate.DomainServices;
+using SolTake.Domain.MessageAggregate.Entities;
+using SolTake.Domain.MessageAggregate.Exceptions;
+using SolTake.Domain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
 {

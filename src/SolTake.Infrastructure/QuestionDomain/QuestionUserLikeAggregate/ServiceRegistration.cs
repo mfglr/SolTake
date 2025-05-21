@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
+using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
 {

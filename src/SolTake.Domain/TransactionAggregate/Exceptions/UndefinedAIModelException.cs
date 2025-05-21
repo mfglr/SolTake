@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.TransactionAggregate.Exceptions
+namespace SolTake.Domain.TransactionAggregate.Exceptions
 {
     public class UndefinedAIModelException : AppException
     {

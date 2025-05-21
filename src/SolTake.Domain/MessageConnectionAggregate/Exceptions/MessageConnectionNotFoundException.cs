@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.MessageConnectionAggregate.Exceptions
+namespace SolTake.Domain.MessageConnectionAggregate.Exceptions
 {
     public class MessageConnectionNotFoundException : AppException
     {

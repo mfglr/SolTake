@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.MessageUserRemoveAggregate.Abstracts;
+using SolTake.Domain.MessageUserRemoveAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate
 {

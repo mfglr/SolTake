@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SubjectAggregate.Exceptions
+namespace SolTake.Domain.SubjectAggregate.Exceptions
 {
     public class SubjectNotFoundException : AppException
     {

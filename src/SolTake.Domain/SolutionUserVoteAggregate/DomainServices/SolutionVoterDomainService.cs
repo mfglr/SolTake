@@ -1,12 +1,12 @@
-﻿using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Exceptions;
+﻿using SolTake.Domain.SolutionAggregate.ValueObjects;
+using SolTake.Domain.SolutionAggregate.Exceptions;
+using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
+using SolTake.Domain.SolutionUserVoteAggregate.Entities;
+using SolTake.Domain.SolutionUserVoteAggregate.Exceptions;
 using SolTake.Core;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 
-namespace MySocailApp.Domain.SolutionUserVoteAggregate.DomainServices
+namespace SolTake.Domain.SolutionUserVoteAggregate.DomainServices
 {
     public class SolutionVoterDomainService(ISolutionReadRepository solutionReadRepository, ISolutionUserVoteWriteRepository solutionUserVoteWriteRepository)
     {

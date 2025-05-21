@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts
+﻿namespace SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts
 {
     public interface IQuestionUserSaveReadRepository
     {

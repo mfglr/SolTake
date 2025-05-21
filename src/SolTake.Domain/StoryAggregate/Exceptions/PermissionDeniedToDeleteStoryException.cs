@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.StoryAggregate.Exceptions
+namespace SolTake.Domain.StoryAggregate.Exceptions
 {
     public class PermissionDeniedToDeleteStoryException : AppException
     {

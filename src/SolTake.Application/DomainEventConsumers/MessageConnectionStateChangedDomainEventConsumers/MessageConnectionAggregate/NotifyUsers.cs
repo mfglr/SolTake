@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.Hubs;
 using MySocailApp.Application.Queries.MessageDomain;
-using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageConnectionAggregate.DomainEvents;
 using SolTake.Core;
+using SolTake.Domain.MessageConnectionAggregate.Abstracts;
+using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageConnectionStateChangedDomainEventConsumers.MessageConnectionAggregate
 {

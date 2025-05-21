@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.NotificationAggregate
 {

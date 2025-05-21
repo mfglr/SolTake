@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.MessageUserRemoveAggregate.Entities;
+﻿using SolTake.Domain.MessageUserRemoveAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageUserRemoveAggregate.Abstracts
+namespace SolTake.Domain.MessageUserRemoveAggregate.Abstracts
 {
     public interface IMessageUserRemoveWriteRepository
     {

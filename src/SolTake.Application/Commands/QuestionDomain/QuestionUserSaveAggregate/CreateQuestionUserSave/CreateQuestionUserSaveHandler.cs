@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
-using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
-using MySocailApp.Domain.QuestionUserSaveAggregate.DomainServices;
+using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
+using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
+using SolTake.Domain.QuestionUserSaveAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave
 {

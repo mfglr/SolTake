@@ -1,8 +1,8 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionUserLikeAggregate.DomainEvents;
+﻿using SolTake.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.QuestionUserLikeAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.QuestionUserLikeAggregate.Entities
+namespace SolTake.Domain.QuestionUserLikeAggregate.Entities
 {
     public class QuestionUserLike(int questionId, int userId) : Entity, IAggregateRoot
     {

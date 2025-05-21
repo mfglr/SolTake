@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.BlobService
 {

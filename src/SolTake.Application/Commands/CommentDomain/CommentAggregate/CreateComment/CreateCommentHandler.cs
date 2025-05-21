@@ -5,7 +5,7 @@ using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.DomainServices;
 using SolTake.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.CommentDomain.CommentAggregate.CreateComment
 {

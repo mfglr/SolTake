@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.SolutionUserSaveAggregate.Entities
+namespace SolTake.Domain.SolutionUserSaveAggregate.Entities
 {
     public class SolutionUserSave(int solutionId, int userId) : Entity, IAggregateRoot
     {

@@ -2,8 +2,8 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.StoryAggregate.Abstracts;
-using MySocailApp.Domain.StoryAggregate.Entities;
+using SolTake.Domain.StoryAggregate.Abstracts;
+using SolTake.Domain.StoryAggregate.Entities;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory

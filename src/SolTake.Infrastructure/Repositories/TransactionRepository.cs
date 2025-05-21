@@ -1,5 +1,5 @@
-﻿using MySocailApp.Domain.TransactionAggregate.Abstracts;
-using MySocailApp.Domain.TransactionAggregate.Entities;
+﻿using SolTake.Domain.TransactionAggregate.Abstracts;
+using SolTake.Domain.TransactionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.Repositories

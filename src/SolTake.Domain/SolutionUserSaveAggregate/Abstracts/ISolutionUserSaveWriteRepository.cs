@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.SolutionUserSaveAggregate.Entities;
+﻿using SolTake.Domain.SolutionUserSaveAggregate.Entities;
 
-namespace MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts
+namespace SolTake.Domain.SolutionUserSaveAggregate.Abstracts
 {
     public interface ISolutionUserSaveWriteRepository
     {

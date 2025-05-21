@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
+using SolTake.Domain.QuestionAggregate.Abstracts;
+using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 

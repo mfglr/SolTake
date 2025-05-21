@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.StoryAggregate.Entities;
+﻿using SolTake.Domain.StoryAggregate.Entities;
 
-namespace MySocailApp.Domain.StoryAggregate.Abstracts
+namespace SolTake.Domain.StoryAggregate.Abstracts
 {
     public interface IStoryRepository
     {

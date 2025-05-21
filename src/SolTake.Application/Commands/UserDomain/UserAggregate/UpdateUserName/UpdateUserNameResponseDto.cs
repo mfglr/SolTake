@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.UserAggregate.Entities;
+﻿using SolTake.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserName
 {

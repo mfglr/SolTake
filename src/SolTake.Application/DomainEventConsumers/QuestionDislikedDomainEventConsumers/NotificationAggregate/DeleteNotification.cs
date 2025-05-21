@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.QuestionUserLikeAggregate.DomainEvents;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using SolTake.Domain.QuestionUserLikeAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.QuestionDislikedDomainEventConsumers.NotificationAggregate

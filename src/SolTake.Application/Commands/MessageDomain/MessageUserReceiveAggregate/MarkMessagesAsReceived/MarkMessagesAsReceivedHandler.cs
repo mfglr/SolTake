@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using MySocailApp.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts;
-using MySocailApp.Domain.MessageUserReceiveAggregate.Entities;
+using SolTake.Domain.MessageUserReceiveAggregate.Abstracts;
+using SolTake.Domain.MessageUserReceiveAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived
+namespace SolTake.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived
 {
     public class MarkMessagesAsReceivedHandler(IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IMessageUserReceiveWriteRepository messageUserReceiveWriteRepository, IMessageUserReceiveReadRepository messageUserReceiveReadRepository) : IRequestHandler<MarkMessagesAsReceivedDto>
     {

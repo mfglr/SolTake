@@ -1,10 +1,10 @@
-﻿using MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts;
-using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Entities;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.PrivacyPolicyAggregate.Abstracts;
+using SolTake.Domain.TermsOfUseAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Entities;
+using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Domain.UserAggregate.DomainServices
+namespace SolTake.Domain.UserAggregate.DomainServices
 {
     public class UserCreatorDomainService(IPrivacyPolicyReadRepository policyReadRepository, ITermsOfUseReadRepository termsOfUserReadRepository, IUserReadRepository userReadRepository)
     {

@@ -1,5 +1,5 @@
-﻿using MySocailApp.Domain.PrivacyPolicyAggregate;
-using MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts;
+﻿using SolTake.Domain.PrivacyPolicyAggregate;
+using SolTake.Domain.PrivacyPolicyAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.PrivacyPolicyAggreagate

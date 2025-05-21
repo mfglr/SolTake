@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts;
+using SolTake.Domain.PrivacyPolicyAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.PrivacyPolicyAggreagate
 {

@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.Entities;
+﻿using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.Entities;
+using SolTake.Domain.MessageAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
 {

@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.MessageUserReceiveAggregate.Entities;
+﻿using SolTake.Domain.MessageUserReceiveAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts
+namespace SolTake.Domain.MessageUserReceiveAggregate.Abstracts
 {
     public interface IMessageUserReceiveWriteRepository
     {

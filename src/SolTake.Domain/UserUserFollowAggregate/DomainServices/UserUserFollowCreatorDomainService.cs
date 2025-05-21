@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Domain.UserUserFollowAggregate.Exceptions;
-using MySocailApp.Domain.UserAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Abstracts;
 using MySocailApp.Domain.UserUserFollowAggregate.Abstracts;
 using MySocailApp.Domain.UserUserFollowAggregate.Entities;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;

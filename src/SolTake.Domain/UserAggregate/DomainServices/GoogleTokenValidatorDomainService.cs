@@ -1,8 +1,8 @@
-﻿using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.UserAggregate.Exceptions;
 using Newtonsoft.Json.Linq;
 using SolTake.Domain.UserAggregate.ValueObjects;
 
-namespace MySocailApp.Domain.UserAggregate.DomainServices
+namespace SolTake.Domain.UserAggregate.DomainServices
 {
     public class GoogleTokenValidatorDomainService
     {

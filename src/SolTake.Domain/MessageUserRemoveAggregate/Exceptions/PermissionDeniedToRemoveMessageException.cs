@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.MessageUserRemoveAggregate.Exceptions
+namespace SolTake.Domain.MessageUserRemoveAggregate.Exceptions
 {
     public class PermissionDeniedToRemoveMessageException : AppException
     {

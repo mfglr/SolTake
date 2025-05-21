@@ -2,12 +2,12 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.DomainEvents;
+using SolTake.Domain.QuestionAggregate.Abstracts;
+using SolTake.Domain.SolutionAggregate.Abstracts;
+using SolTake.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using SolTake.Domain.SolutionAggregate.Exceptions;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 

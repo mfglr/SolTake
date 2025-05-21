@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.UserAggregate.DomainEvents;
+using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.Abstracts;
+using SolTake.Domain.MessageAggregate.DomainEvents;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.MessageAggregate
 {

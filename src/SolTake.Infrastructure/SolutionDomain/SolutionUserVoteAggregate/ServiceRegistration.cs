@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
+using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserVoteAggregate
 {

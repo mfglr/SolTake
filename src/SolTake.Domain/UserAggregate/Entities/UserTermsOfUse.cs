@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.UserAggregate.Entities
+﻿namespace SolTake.Domain.UserAggregate.Entities
 {
     public class UserTermsOfUse
     {

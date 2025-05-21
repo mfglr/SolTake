@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+﻿using SolTake.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities
+namespace SolTake.Domain.NotificationDomain.NotificationAggregate.Entities
 {
     public class Notification : Entity, IAggregateRoot
     {

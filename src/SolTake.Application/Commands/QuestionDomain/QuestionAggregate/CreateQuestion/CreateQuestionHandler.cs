@@ -2,10 +2,10 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionAggregate.DomainServices;
-using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+using SolTake.Domain.QuestionAggregate.Abstracts;
+using SolTake.Domain.QuestionAggregate.DomainServices;
+using SolTake.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion

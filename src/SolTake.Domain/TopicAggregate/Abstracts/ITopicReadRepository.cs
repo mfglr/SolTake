@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.TopicAggregate.Entities;
+﻿using SolTake.Domain.TopicAggregate.Entities;
 
-namespace MySocailApp.Domain.TopicAggregate.Abstracts
+namespace SolTake.Domain.TopicAggregate.Abstracts
 {
     public interface ITopicReadRepository
     {

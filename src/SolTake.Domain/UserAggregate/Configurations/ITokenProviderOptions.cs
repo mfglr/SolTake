@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.UserAggregate.Configurations
+﻿namespace SolTake.Domain.UserAggregate.Configurations
 {
     public interface ITokenProviderOptions
     {

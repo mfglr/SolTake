@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.MessageConnectionAggregate.ValueObjects;
-using SolTake.Core;
+﻿using SolTake.Core;
+using SolTake.Domain.MessageConnectionAggregate.ValueObjects;
 
-namespace MySocailApp.Domain.MessageConnectionAggregate.Entities
+namespace SolTake.Domain.MessageConnectionAggregate.Entities
 {
     public class MessageConnection : Entity, IAggregateRoot
     {

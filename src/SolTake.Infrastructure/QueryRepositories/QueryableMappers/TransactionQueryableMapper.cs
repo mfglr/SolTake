@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.TransactionAggregate;
-using MySocailApp.Domain.TransactionAggregate.Entities;
+using SolTake.Domain.TransactionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

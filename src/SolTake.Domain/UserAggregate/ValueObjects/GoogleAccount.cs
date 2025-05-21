@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Core.Exceptions;
 
 namespace SolTake.Domain.UserAggregate.ValueObjects

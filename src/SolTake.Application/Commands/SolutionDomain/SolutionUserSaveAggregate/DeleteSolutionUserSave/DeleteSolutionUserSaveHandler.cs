@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts;
-using MySocailApp.Domain.SolutionUserSaveAggregate.Exceptions;
+using SolTake.Domain.SolutionUserSaveAggregate.Abstracts;
+using SolTake.Domain.SolutionUserSaveAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.UnsaveSolution
 {

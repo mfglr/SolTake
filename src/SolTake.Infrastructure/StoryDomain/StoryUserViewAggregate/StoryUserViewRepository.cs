@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.StoryUserViewAggregate.Absracts;
-using MySocailApp.Domain.StoryUserViewAggregate.Entities;
+using SolTake.Domain.StoryUserViewAggregate.Absracts;
+using SolTake.Domain.StoryUserViewAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.StoryDomain.StoryUserViewAggregate

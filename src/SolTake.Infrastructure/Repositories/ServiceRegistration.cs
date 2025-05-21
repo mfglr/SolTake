@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.TransactionAggregate.Abstracts;
+using SolTake.Domain.TransactionAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 

@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.TermsOfUseAggregate;
+﻿using SolTake.Domain.TermsOfUseAggregate;
 
-namespace MySocailApp.Domain.TermsOfUseAggregate.Abstracts
+namespace SolTake.Domain.TermsOfUseAggregate.Abstracts
 {
     public interface ITermsOfUseWriteRepository
     {

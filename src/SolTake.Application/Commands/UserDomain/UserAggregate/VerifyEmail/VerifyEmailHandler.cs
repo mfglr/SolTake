@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+using SolTake.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.VerifyEmail
 {

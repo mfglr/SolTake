@@ -1,9 +1,9 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts;
+using SolTake.Domain.MessageUserReceiveAggregate.Abstracts;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageUserReceiveAggregate
+namespace SolTake.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageUserReceiveAggregate
 {
     public class DeleteMessageUserReceives(IMessageUserReceiveWriteRepository messageUserReceiveWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {

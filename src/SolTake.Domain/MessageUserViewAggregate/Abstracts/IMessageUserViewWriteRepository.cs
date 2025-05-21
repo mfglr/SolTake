@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.MessageUserViewAggregate.Entities;
+﻿using SolTake.Domain.MessageUserViewAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageUserViewAggregate.Abstracts
+namespace SolTake.Domain.MessageUserViewAggregate.Abstracts
 {
     public interface IMessageUserViewWriteRepository
     {

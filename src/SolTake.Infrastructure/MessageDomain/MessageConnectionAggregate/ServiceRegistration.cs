@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
 using MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate;
+using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.MessageDomain.MessageConnectionAggregate
 {

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.RoleAggregate.ValueObjects
+﻿namespace SolTake.Domain.RoleAggregate.ValueObjects
 {
     public static class Roles
     {

@@ -1,10 +1,9 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.TransactionAggregate.Entities
+namespace SolTake.Domain.TransactionAggregate.Entities
 {
     public class Transaction : Entity, IAggregateRoot
     {
-
         public int BalanceId { get; private set; }
         public int AIModelId { get; private set; }
         public int NumberOfInputToken { get; private set; }

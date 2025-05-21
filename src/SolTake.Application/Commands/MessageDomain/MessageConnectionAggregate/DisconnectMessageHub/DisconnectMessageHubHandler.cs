@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageConnectionAggregate.DomainEvents;
-using MySocailApp.Domain.MessageConnectionAggregate.Exceptions;
+using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
+using SolTake.Domain.MessageConnectionAggregate.Exceptions;
+using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
 {

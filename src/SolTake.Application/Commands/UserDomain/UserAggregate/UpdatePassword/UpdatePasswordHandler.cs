@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.ValueObjects;
+using SolTake.Domain.UserAggregate.ValueObjects;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdatePassword
 {

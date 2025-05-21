@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.MessageConnectionAggregate.Entities;
+using SolTake.Domain.MessageConnectionAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.UserConnectionAggregate
 {

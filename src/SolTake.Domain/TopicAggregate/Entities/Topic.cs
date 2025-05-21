@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.TopicAggregate.Entities
+namespace SolTake.Domain.TopicAggregate.Entities
 {
     public class Topic(string name) : IHasId, IAggregateRoot
     {

@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.StoryAggregate.Entities;
+﻿using SolTake.Domain.StoryAggregate.Entities;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory

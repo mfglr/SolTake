@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.DomainEvents;
+using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.SolutionUserVoteAggregate

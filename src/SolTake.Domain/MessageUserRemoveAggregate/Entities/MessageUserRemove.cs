@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.MessageUserRemoveAggregate.DomainEvents;
-using SolTake.Core;
+﻿using SolTake.Core;
+using SolTake.Domain.MessageUserRemoveAggregate.DomainEvents;
 
-namespace MySocailApp.Domain.MessageUserRemoveAggregate.Entities
+namespace SolTake.Domain.MessageUserRemoveAggregate.Entities
 {
     public class MessageUserRemove : Entity, IAggregateRoot
     {

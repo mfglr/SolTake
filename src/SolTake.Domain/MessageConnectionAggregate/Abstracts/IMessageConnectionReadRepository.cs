@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.MessageConnectionAggregate.Entities;
+﻿using SolTake.Domain.MessageConnectionAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageConnectionAggregate.Abstracts
+namespace SolTake.Domain.MessageConnectionAggregate.Abstracts
 {
     public interface IMessageConnectionReadRepository
     {

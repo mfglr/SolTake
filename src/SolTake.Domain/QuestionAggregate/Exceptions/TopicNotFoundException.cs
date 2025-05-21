@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.QuestionAggregate.Exceptions
+namespace SolTake.Domain.QuestionAggregate.Exceptions
 {
     public class TopicNotFoundException : AppException
     {

@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionAggregate.Exceptions;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+﻿using SolTake.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.SolutionAggregate.DomainEvents;
+using SolTake.Domain.SolutionAggregate.Exceptions;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 
 namespace MySocailApp.Domain.SolutionAggregate.Entities

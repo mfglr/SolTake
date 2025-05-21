@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
+﻿using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 
-namespace MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces
+namespace SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces
 {
     public interface INotificationWriteRepository
     {

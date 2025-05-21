@@ -1,5 +1,5 @@
-﻿using MySocailApp.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+﻿using SolTake.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Queries.NotificationAggregate

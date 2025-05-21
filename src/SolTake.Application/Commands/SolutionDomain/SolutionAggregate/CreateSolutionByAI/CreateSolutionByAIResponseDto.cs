@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 using SolTake.Domain.AIModelAggregate.Entities;
 

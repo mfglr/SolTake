@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.StoryUserViewAggregate.Entities;
+﻿using SolTake.Domain.StoryUserViewAggregate.Entities;
 
-namespace MySocailApp.Domain.StoryUserViewAggregate.Absracts
+namespace SolTake.Domain.StoryUserViewAggregate.Absracts
 {
     public interface IStoryUserViewRepository
     {

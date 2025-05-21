@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
+﻿using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Core;
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.QuestionAggregate.Exceptions
+namespace SolTake.Domain.QuestionAggregate.Exceptions
 {
     public class TooManyTopicsException : AppException
     {

@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
-using MySocailApp.Domain.UserAggregate.Entities;
+﻿using SolTake.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.QuestionAggregate.ValueObjects;
+using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion

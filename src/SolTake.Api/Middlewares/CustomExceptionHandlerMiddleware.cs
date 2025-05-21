@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.Extentions;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.ValueObjects;
+using SolTake.Domain.UserAggregate.ValueObjects;
 using SolTake.Core.Exceptions;
 
 

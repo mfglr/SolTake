@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
-using MySocailApp.Domain.SolutionUserVoteAggregate.DomainServices;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
+using SolTake.Domain.SolutionUserVoteAggregate.Entities;
+using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
+using SolTake.Domain.SolutionUserVoteAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeUpvote
 {

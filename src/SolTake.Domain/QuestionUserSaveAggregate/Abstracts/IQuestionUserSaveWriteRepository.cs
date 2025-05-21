@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
+﻿using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 
-namespace MySocailApp.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts
+namespace SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts
 {
     public interface IQuestionUserSaveWriteRepository
     {

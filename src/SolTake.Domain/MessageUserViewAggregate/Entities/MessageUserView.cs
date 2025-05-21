@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.MessageUserViewAggregate.DomainEvents;
+﻿using SolTake.Domain.MessageUserViewAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.MessageUserViewAggregate.Entities
+namespace SolTake.Domain.MessageUserViewAggregate.Entities
 {
     public class MessageUserView : Entity
     {

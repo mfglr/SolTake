@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.RoleAggregate.Entities;
+﻿using SolTake.Domain.RoleAggregate.Entities;
 
-namespace MySocailApp.Domain.RoleAggregate.Abstracts
+namespace SolTake.Domain.RoleAggregate.Abstracts
 {
     public interface IRoleReadRepository
     {

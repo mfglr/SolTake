@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.Entities;
+using SolTake.Domain.UserAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices
 {

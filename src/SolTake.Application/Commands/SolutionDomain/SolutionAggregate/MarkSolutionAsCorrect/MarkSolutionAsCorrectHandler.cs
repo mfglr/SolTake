@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.DomainServices;
-using MySocailApp.Domain.SolutionAggregate.Exceptions;
+using SolTake.Domain.SolutionAggregate.Abstracts;
+using SolTake.Domain.SolutionAggregate.DomainServices;
+using SolTake.Domain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MarkSolutionAsCorrect
 {

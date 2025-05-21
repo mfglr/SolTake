@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.SolutionUserVoteAggregate.Entities;
+﻿using SolTake.Domain.SolutionUserVoteAggregate.Entities;
 
-namespace MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts
+namespace SolTake.Domain.SolutionUserVoteAggregate.Abstracts
 {
     public interface ISolutionUserVoteWriteRepository
     {

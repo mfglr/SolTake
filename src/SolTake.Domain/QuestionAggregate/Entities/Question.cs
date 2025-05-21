@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.QuestionAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionAggregate.Exceptions;
-using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+﻿using SolTake.Domain.QuestionAggregate.DomainEvents;
+using SolTake.Domain.QuestionAggregate.Exceptions;
+using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.QuestionAggregate.Entities
+namespace SolTake.Domain.QuestionAggregate.Entities
 {
     public class Question : Entity, IAggregateRoot
     {

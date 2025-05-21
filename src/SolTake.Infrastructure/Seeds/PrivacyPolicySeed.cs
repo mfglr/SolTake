@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.PrivacyPolicyAggregate;
+using SolTake.Domain.PrivacyPolicyAggregate;
 
 namespace MySocailApp.Infrastructure.Seeds
 {

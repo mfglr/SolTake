@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.DomainEvents;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
+﻿using SolTake.Domain.MessageAggregate.Exceptions;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.DomainEvents;
+using SolTake.Domain.MessageAggregate.ValueObjects;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
+namespace SolTake.Domain.MessageAggregate.Entities
 {
     public class Message : Entity, IAggregateRoot
     {
@@ -13,7 +13,7 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
         public int SenderId { get; private set; }
         public int ReceiverId { get; private set; }
         public MessageContent? Content { get; private set; }
-        
+
         private readonly List<Multimedia> _medias = [];
         public IReadOnlyList<Multimedia> Medias => _medias;
 
@@ -40,7 +40,7 @@ namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Entities
             AddDomainEvent(new MessageCreatedDomainEvent(this, login));
         }
 
-        public IEnumerable<int> UserIds => [ SenderId, ReceiverId ];
-        
+        public IEnumerable<int> UserIds => [SenderId, ReceiverId];
+
     }
 }

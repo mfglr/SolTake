@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts;
+using SolTake.Domain.MessageUserReceiveAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.MessageDomain.MessageUserReceiveAggregate
+namespace SolTake.Infrastructure.MessageDomain.MessageUserReceiveAggregate
 {
     public static class ServiceRegistration
     {

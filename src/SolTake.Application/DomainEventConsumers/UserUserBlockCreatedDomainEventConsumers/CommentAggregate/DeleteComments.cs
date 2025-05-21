@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
+using SolTake.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.CommentAggregate.Entities;

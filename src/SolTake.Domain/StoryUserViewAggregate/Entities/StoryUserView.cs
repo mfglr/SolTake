@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.StoryUserViewAggregate.DomainEvents;
+﻿using SolTake.Domain.StoryUserViewAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.StoryUserViewAggregate.Entities
+namespace SolTake.Domain.StoryUserViewAggregate.Entities
 {
     public class StoryUserView(int storyId, int userId) : Entity, IAggregateRoot
     {

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.SolutionAggregate.ValueObjects
+﻿namespace SolTake.Domain.SolutionAggregate.ValueObjects
 {
     public enum SolutionVoteType
     {

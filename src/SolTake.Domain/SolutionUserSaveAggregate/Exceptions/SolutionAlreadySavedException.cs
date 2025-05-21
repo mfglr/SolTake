@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionUserSaveAggregate.Exceptions
+namespace SolTake.Domain.SolutionUserSaveAggregate.Exceptions
 {
     public class SolutionAlreadySavedException : AppException
     {

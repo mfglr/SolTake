@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.SolutionUserSaveAggregate.DomainServices;
+using SolTake.Domain.SolutionUserSaveAggregate.DomainServices;
 
 namespace MySocailApp.Domain.SolutionUserSaveAggregate
 {

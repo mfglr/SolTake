@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.StoryUserViewAggregate.Exceptions
+namespace SolTake.Domain.StoryUserViewAggregate.Exceptions
 {
     public class StoryUserViewAlreadyExistException : AppException
     {

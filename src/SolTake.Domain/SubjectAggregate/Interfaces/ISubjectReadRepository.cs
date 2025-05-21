@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.SubjectAggregate.Entities;
+﻿using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Domain.SubjectAggregate.Interfaces
+namespace SolTake.Domain.SubjectAggregate.Interfaces
 {
     public interface ISubjectReadRepository
     {

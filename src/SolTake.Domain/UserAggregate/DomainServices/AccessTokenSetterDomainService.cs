@@ -1,14 +1,14 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using MySocailApp.Domain.RoleAggregate.Abstracts;
-using MySocailApp.Domain.RoleAggregate.Entities;
-using MySocailApp.Domain.UserAggregate.Configurations;
-using MySocailApp.Domain.UserAggregate.Entities;
+using SolTake.Domain.RoleAggregate.Abstracts;
+using SolTake.Domain.RoleAggregate.Entities;
+using SolTake.Domain.UserAggregate.Configurations;
+using SolTake.Domain.UserAggregate.Entities;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace MySocailApp.Domain.UserAggregate.DomainServices
+namespace SolTake.Domain.UserAggregate.DomainServices
 {
     public class AccessTokenSetterDomainService(ITokenProviderOptions tokenProviderOptions, IRoleReadRepository roleReadRepository)
     {

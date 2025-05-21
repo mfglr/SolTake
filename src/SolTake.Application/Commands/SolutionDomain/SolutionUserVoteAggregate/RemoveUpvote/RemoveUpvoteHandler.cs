@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Exceptions;
-using MySocailApp.Domain.SolutionUserVoteAggregate.Abstracts;
+using SolTake.Domain.SolutionAggregate.ValueObjects;
+using SolTake.Domain.SolutionUserVoteAggregate.Exceptions;
+using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveUpvote
 {

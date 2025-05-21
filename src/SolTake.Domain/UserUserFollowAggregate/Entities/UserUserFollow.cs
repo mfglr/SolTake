@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
-using MySocailApp.Domain.UserAggregate.Entities;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+using SolTake.Domain.UserAggregate.Entities;
+using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Core;
 
 namespace MySocailApp.Domain.UserUserFollowAggregate.Entities

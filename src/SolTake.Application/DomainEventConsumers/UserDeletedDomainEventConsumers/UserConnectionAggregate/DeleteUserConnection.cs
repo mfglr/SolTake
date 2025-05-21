@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.DomainEvents;
+using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
+using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserConnectionAggregate
 {

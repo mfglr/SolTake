@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Application.Hubs;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
-using MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.NotificationCreatedDomainEventConsumers.NotificationConnectionAggregate

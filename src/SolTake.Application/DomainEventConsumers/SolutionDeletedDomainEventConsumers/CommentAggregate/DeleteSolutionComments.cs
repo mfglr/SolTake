@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionAggregate.DomainEvents;
+using SolTake.Domain.SolutionAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.SolutionDeletedDomainEventConsumers.CommentAggregate

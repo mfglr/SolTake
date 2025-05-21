@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.DomainEvents;
+using SolTake.Domain.UserAggregate.DomainEvents;
 using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
 using SolTake.Core;
 

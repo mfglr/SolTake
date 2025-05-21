@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+using SolTake.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Api.Filters
 {

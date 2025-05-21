@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.UserAggregate.DomainServices;
+using SolTake.Domain.UserAggregate.DomainServices;
 
-namespace MySocailApp.Domain.UserAggregate
+namespace SolTake.Domain.UserAggregate
 {
     public static class ServiceRegistration
     {

@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.UserAggregate.Exceptions
+namespace SolTake.Domain.UserAggregate.Exceptions
 {
     public class IncorrectPasswordException : AppException
     {

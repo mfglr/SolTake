@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Entities;
+﻿using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.QuestionAggregate.DomainEvents
+namespace SolTake.Domain.QuestionAggregate.DomainEvents
 {
     public record QuestionCreatedDomainEvent(Question Question) : IDomainEvent;
 }

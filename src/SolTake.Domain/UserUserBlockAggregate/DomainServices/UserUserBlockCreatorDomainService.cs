@@ -1,8 +1,8 @@
-﻿using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.UserAggregate.Exceptions;
 using MySocailApp.Domain.UserUserBlockAggregate.Exceptions;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 using MySocailApp.Domain.UserUserBlockAggregate.Entities;
-using MySocailApp.Domain.UserAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Abstracts;
 
 namespace MySocailApp.Domain.UserUserBlockAggregate.DomainServices
 {

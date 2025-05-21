@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.UserAggregate.Entities;
+﻿using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.UserAggregate.DomainEvents
+namespace SolTake.Domain.UserAggregate.DomainEvents
 {
     public record UserDeletedDomainEvent(User User) : IDomainEvent;
 }

@@ -1,11 +1,10 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions;
-using MySocailApp.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.UserAggregate.Exceptions;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
+using SolTake.Domain.MessageAggregate.Entities;
+using SolTake.Domain.MessageAggregate.Exceptions;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.DomainServices
+namespace SolTake.Domain.MessageAggregate.DomainServices
 {
     public class MessageCreatorDomainService(IUserUserBlockRepository userUserBlockRepository)
     {

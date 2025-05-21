@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
+﻿using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion

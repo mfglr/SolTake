@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.TransactionAggregate.Entities;
+﻿using SolTake.Domain.TransactionAggregate.Entities;
 
-namespace MySocailApp.Domain.TransactionAggregate.Abstracts
+namespace SolTake.Domain.TransactionAggregate.Abstracts
 {
     public interface ITransactionRepository
     {

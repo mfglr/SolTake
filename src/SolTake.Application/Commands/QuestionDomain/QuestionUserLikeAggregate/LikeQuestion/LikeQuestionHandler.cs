@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
-using MySocailApp.Domain.QuestionUserLikeAggregate.DomainServices;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
+using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
+using SolTake.Domain.QuestionUserLikeAggregate.DomainServices;
+using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
 {

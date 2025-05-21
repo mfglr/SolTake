@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
-using MySocailApp.Domain.QuestionUserLikeAggregate.DomainEvents;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Exceptions;
+using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
+using SolTake.Domain.QuestionUserLikeAggregate.DomainEvents;
+using SolTake.Domain.QuestionUserLikeAggregate.Exceptions;
 
 namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.DislikeQuestion
 {

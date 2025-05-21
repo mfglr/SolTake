@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.UserAggregate.Entities;
+﻿using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserImage

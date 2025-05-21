@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.MessageUserReceiveAggregate.Entities;
-using SolTake.Core;
+﻿using SolTake.Core;
+using SolTake.Domain.MessageUserReceiveAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageUserReceiveAggregate.DomainEvents
+namespace SolTake.Domain.MessageUserReceiveAggregate.DomainEvents
 {
     public record MessageUserReceiveCreatedDomainEvent(MessageUserReceive MessageUserReceive) : IDomainEvent;
 }

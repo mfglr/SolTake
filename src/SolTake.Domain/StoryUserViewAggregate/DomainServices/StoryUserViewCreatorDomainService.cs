@@ -1,10 +1,10 @@
-﻿using MySocailApp.Domain.StoryAggregate.Exceptions;
-using MySocailApp.Domain.StoryUserViewAggregate.Exceptions;
-using MySocailApp.Domain.StoryUserViewAggregate.Absracts;
-using MySocailApp.Domain.StoryUserViewAggregate.Entities;
-using MySocailApp.Domain.StoryAggregate.Abstracts;
+﻿using SolTake.Domain.StoryAggregate.Exceptions;
+using SolTake.Domain.StoryUserViewAggregate.Exceptions;
+using SolTake.Domain.StoryUserViewAggregate.Absracts;
+using SolTake.Domain.StoryUserViewAggregate.Entities;
+using SolTake.Domain.StoryAggregate.Abstracts;
 
-namespace MySocailApp.Domain.StoryUserViewAggregate.DomainServices
+namespace SolTake.Domain.StoryUserViewAggregate.DomainServices
 {
     public class StoryUserViewCreatorDomainService(IStoryRepository storyRepository, IStoryUserViewRepository storyUserViewRepository)
     {

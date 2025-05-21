@@ -1,8 +1,8 @@
-﻿using MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts;
-using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
-using MySocailApp.Domain.UserAggregate.Entities;
+﻿using SolTake.Domain.PrivacyPolicyAggregate.Abstracts;
+using SolTake.Domain.TermsOfUseAggregate.Abstracts;
+using SolTake.Domain.UserAggregate.Entities;
 
-namespace MySocailApp.Domain.UserAggregate.DomainServices
+namespace SolTake.Domain.UserAggregate.DomainServices
 {
     public class AuthenticatorDomainService(IPrivacyPolicyReadRepository privacyPolicyReadRepository, ITermsOfUseReadRepository termsOfUseReadRepository)
     {

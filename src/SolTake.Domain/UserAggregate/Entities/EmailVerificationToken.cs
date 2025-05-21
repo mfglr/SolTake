@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.UserAggregate.DomainServices;
-using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.UserAggregate.DomainServices;
+using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Domain.UserAggregate.Entities
+namespace SolTake.Domain.UserAggregate.Entities
 {
     public class EmailVerificationToken
     {

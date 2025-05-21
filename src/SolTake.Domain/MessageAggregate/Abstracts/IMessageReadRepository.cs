@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.Entities;
+﻿using SolTake.Domain.MessageAggregate.Entities;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts
+namespace SolTake.Domain.MessageAggregate.Abstracts
 {
     public interface IMessageReadRepository
     {

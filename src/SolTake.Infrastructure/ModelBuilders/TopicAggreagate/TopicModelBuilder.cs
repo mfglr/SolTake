@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.TopicAggregate.Entities;
+using SolTake.Domain.TopicAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.TopicAggreagate
 {

@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.MessageDomain.MessageAggregate.Abstracts;
-using MySocailApp.Domain.MessageUserRemoveAggregate.Exceptions;
-using MySocailApp.Domain.MessageUserRemoveAggregate.Abstracts;
-using MySocailApp.Domain.MessageUserRemoveAggregate.Entities;
+using SolTake.Domain.MessageUserRemoveAggregate.Exceptions;
+using SolTake.Domain.MessageAggregate.Abstracts;
+using SolTake.Domain.MessageUserRemoveAggregate.Abstracts;
+using SolTake.Domain.MessageUserRemoveAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessages
 {

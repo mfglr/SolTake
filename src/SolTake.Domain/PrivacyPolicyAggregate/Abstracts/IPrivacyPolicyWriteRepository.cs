@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.PrivacyPolicyAggregate;
+﻿using SolTake.Domain.PrivacyPolicyAggregate;
 
-namespace MySocailApp.Domain.PrivacyPolicyAggregate.Abstracts
+namespace SolTake.Domain.PrivacyPolicyAggregate.Abstracts
 {
     public interface IPrivacyPolicyWriteRepository
     {

@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.UserAggregate.Entities;
+﻿using SolTake.Domain.UserAggregate.Entities;
 using MySocailApp.Domain.UserUserFollowAggregate.Entities;
 using SolTake.Core;
 

@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.SubjectAggregate.Entities
+namespace SolTake.Domain.SubjectAggregate.Entities
 {
     public class Subject(int examId, string name) : IHasId, IAggregateRoot
     {

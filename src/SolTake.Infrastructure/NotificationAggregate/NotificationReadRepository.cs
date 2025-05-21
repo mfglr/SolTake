@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Entities;
-using MySocailApp.Domain.NotificationDomain.NotificationAggregate.Interfaces;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
+using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;
 using SolTake.Core;

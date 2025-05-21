@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.DomainEvents;
+using SolTake.Domain.QuestionAggregate.Abstracts;
+using SolTake.Domain.SolutionAggregate.Abstracts;
+using SolTake.Domain.SolutionAggregate.DomainEvents;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;

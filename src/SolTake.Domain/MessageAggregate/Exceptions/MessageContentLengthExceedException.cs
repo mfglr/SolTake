@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.MessageDomain.MessageAggregate.ValueObjects;
-using SolTake.Core;
+﻿using SolTake.Core;
 using SolTake.Core.Exceptions;
+using SolTake.Domain.MessageAggregate.ValueObjects;
 using System.Net;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions
+namespace SolTake.Domain.MessageAggregate.Exceptions
 {
     public class MessageContentLengthExceedException : AppException
     {

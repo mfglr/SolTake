@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using MySocailApp.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.QuestionAggregate.Entities;
 using MySocailApp.Domain.SolutionAggregate.Entities;
 using SolTake.Core;
 using SolTake.Domain.CommentAggregate.DomainEvents;

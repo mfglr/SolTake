@@ -1,10 +1,10 @@
-﻿using MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts;
-using MySocailApp.Domain.SolutionUserSaveAggregate.Entities;
-using MySocailApp.Domain.SolutionUserSaveAggregate.Exceptions;
+﻿using SolTake.Domain.SolutionUserSaveAggregate.Abstracts;
+using SolTake.Domain.SolutionUserSaveAggregate.Entities;
+using SolTake.Domain.SolutionUserSaveAggregate.Exceptions;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 
-namespace MySocailApp.Domain.SolutionUserSaveAggregate.DomainServices
+namespace SolTake.Domain.SolutionUserSaveAggregate.DomainServices
 {
     public class SolutionUserSaveCreatorDomainService(ISolutionReadRepository solutionReadRepository, IUserUserBlockRepository userUserBlockRepository, ISolutionUserSaveReadRepository solutionUserSaveReadRepository)
     {

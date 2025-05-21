@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.QuestionAggregate.ValueObjects
+﻿namespace SolTake.Domain.QuestionAggregate.ValueObjects
 {
     public enum QuestionState
     {

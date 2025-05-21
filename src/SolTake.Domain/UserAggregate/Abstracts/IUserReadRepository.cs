@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.UserAggregate.Entities;
-using MySocailApp.Domain.UserAggregate.ValueObjects;
+﻿using SolTake.Domain.UserAggregate.Entities;
+using SolTake.Domain.UserAggregate.ValueObjects;
 
-namespace MySocailApp.Domain.UserAggregate.Abstracts
+namespace SolTake.Domain.UserAggregate.Abstracts
 {
     public interface IUserReadRepository
     {

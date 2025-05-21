@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySocailApp.Domain.StoryAggregate.Entities;
+using SolTake.Domain.StoryAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.ModelBuilders.StoryDomain
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.MessageConnectionAggregate.Abstracts;
-using MySocailApp.Domain.MessageConnectionAggregate.Entities;
-using MySocailApp.Domain.MessageConnectionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Domain.MessageConnectionAggregate.Abstracts;
+using SolTake.Domain.MessageConnectionAggregate.Entities;
+using SolTake.Domain.MessageConnectionAggregate.ValueObjects;
 
 namespace MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate
 {

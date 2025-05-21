@@ -1,8 +1,8 @@
-﻿using MySocailApp.Domain.StoryAggregate.DomainEvents;
-using MySocailApp.Domain.StoryAggregate.Exceptions;
+﻿using SolTake.Domain.StoryAggregate.DomainEvents;
+using SolTake.Domain.StoryAggregate.Exceptions;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.StoryAggregate.Entities
+namespace SolTake.Domain.StoryAggregate.Entities
 {
     public class Story : Entity, IAggregateRoot
     {

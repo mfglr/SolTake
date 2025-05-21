@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Abstracts;
+﻿using SolTake.Domain.QuestionAggregate.Abstracts;
 using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.SolutionAggregate.Exceptions;
+using SolTake.Domain.SolutionAggregate.Exceptions;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.SolutionAggregate.DomainServices
+namespace SolTake.Domain.SolutionAggregate.DomainServices
 {
     public class SolutionStateMarkerDomainService(IQuestionReadRepository questionReadRepository)
     {

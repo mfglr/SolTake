@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.MessageDomain.MessageAggregate.Exceptions
+namespace SolTake.Domain.MessageAggregate.Exceptions
 {
     public class MessageAlreadyDeletedException : AppException
     {

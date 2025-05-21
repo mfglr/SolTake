@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.MessageUserReceiveAggregate.Abstracts;
-using MySocailApp.Domain.MessageUserReceiveAggregate.Entities;
+using SolTake.Domain.MessageUserReceiveAggregate.Abstracts;
+using SolTake.Domain.MessageUserReceiveAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.MessageDomain.MessageUserReceiveAggregate
+namespace SolTake.Infrastructure.MessageDomain.MessageUserReceiveAggregate
 {
     public class MessageUserReceiveWriteRepository(AppDbContext context) : IMessageUserReceiveWriteRepository
     {

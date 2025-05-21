@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
+﻿using SolTake.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.CommentAggregate.Entities;
 

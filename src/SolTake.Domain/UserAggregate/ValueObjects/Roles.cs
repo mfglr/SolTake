@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.UserAggregate.ValueObjects
+﻿namespace SolTake.Domain.UserAggregate.ValueObjects
 {
     internal enum Roles
     {

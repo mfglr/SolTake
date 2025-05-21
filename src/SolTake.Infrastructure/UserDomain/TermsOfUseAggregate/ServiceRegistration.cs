@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.TermsOfUseAggregate.Abstracts;
+using SolTake.Domain.TermsOfUseAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.TermsOfUseAggregate
 {

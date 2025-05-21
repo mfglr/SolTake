@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.StoryAggregate.Entities;
+﻿using SolTake.Domain.StoryAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.StoryAggregate.DomainEvents
+namespace SolTake.Domain.StoryAggregate.DomainEvents
 {
     public record StoryCreatedDomainEvent(Story Story) : IDomainEvent;
 }

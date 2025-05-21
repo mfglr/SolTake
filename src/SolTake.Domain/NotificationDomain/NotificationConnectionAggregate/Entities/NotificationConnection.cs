@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Domain.NotificationDomain.NotificationConnectionAggregate.Entities
+﻿namespace SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Entities
 {
     public class NotificationConnection(int id)
     {

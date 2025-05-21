@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.UserAggregate.Exceptions;
+﻿using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Domain.UserAggregate.ValueObjects
+namespace SolTake.Domain.UserAggregate.ValueObjects
 {
     public class UserName
     {

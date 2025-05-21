@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.QuestionAggregate.ValueObjects;
+﻿using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Queries.QuestionDomain

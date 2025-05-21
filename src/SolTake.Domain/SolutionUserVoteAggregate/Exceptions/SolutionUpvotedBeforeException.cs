@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.SolutionUserVoteAggregate.Exceptions
+namespace SolTake.Domain.SolutionUserVoteAggregate.Exceptions
 {
     public class SolutionUpvotedBeforeException : AppException
     {

@@ -1,11 +1,11 @@
-﻿using MySocailApp.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Abstracts;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Entities;
-using MySocailApp.Domain.QuestionUserLikeAggregate.Exceptions;
+﻿using SolTake.Domain.QuestionAggregate.Abstracts;
+using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
+using SolTake.Domain.QuestionUserLikeAggregate.Entities;
+using SolTake.Domain.QuestionUserLikeAggregate.Exceptions;
 using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.QuestionUserLikeAggregate.DomainServices
+namespace SolTake.Domain.QuestionUserLikeAggregate.DomainServices
 {
     public class QuestionUserLikeCreatorDomainService(IQuestionUserLikeReadRepository questionUserLikeReadRepository, IQuestionReadRepository questionReadRepository, IUserUserBlockRepository userUserBlockRepository)
     {

@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.SolutionUserSaveAggregate.Abstracts;
+using SolTake.Domain.SolutionUserSaveAggregate.Abstracts;
 using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.SolutionAggregate.Abstracts;
