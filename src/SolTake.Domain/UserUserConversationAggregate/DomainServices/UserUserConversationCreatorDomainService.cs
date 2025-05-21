@@ -1,7 +1,7 @@
-﻿using MySocailApp.Domain.UserUserConversationAggregate.Abstracts;
-using MySocailApp.Domain.UserUserConversationAggregate.Entities;
+﻿using SolTake.Domain.UserUserConversationAggregate.Abstracts;
+using SolTake.Domain.UserUserConversationAggregate.Entities;
 
-namespace MySocailApp.Domain.UserUserConversationAggregate.DomainServices
+namespace SolTake.Domain.UserUserConversationAggregate.DomainServices
 {
     public class UserUserConversationCreatorDomainService(IUserUserConversationWriteRepository userUserConversationWriteRepository)
     {

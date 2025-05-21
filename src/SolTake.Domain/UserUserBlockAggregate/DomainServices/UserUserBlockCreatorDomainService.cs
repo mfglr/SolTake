@@ -1,10 +1,10 @@
 ﻿using SolTake.Domain.UserAggregate.Exceptions;
-using MySocailApp.Domain.UserUserBlockAggregate.Exceptions;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
-using MySocailApp.Domain.UserUserBlockAggregate.Entities;
+using SolTake.Domain.UserUserBlockAggregate.Exceptions;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Entities;
 using SolTake.Domain.UserAggregate.Abstracts;
 
-namespace MySocailApp.Domain.UserUserBlockAggregate.DomainServices
+namespace SolTake.Domain.UserUserBlockAggregate.DomainServices
 {
     public class UserUserBlockCreatorDomainService(IUserReadRepository userReadRepository, IUserUserBlockRepository userUserBlockRepository)
     {

@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.UserUserBlockAggregate.Entities;
+﻿using SolTake.Domain.UserUserBlockAggregate.Entities;
 
-namespace MySocailApp.Domain.UserUserBlockAggregate.Abstracts
+namespace SolTake.Domain.UserUserBlockAggregate.Abstracts
 {
     public interface IUserUserBlockRepository
     {

@@ -1,10 +1,10 @@
 ﻿using SolTake.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
-using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
-using MySocailApp.Domain.UserUserSearchAggregate.Entities;
-using MySocailApp.Domain.UserUserSearchAggregate.Exceptions;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserSearchAggregate.Abstracts;
+using SolTake.Domain.UserUserSearchAggregate.Entities;
+using SolTake.Domain.UserUserSearchAggregate.Exceptions;
 
-namespace MySocailApp.Domain.UserUserSearchAggregate.DomainServices
+namespace SolTake.Domain.UserUserSearchAggregate.DomainServices
 {
     public class UserUserSearchCreatorDomainService(IUserReadRepository userReadRepository, IUserUserBlockRepository userUserBlockRepository, IUserUserSearchWriteRepository userUserSearchWriteRepository)
     {

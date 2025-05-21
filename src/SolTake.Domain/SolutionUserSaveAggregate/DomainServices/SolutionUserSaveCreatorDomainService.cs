@@ -1,7 +1,7 @@
 ﻿using SolTake.Domain.SolutionUserSaveAggregate.Abstracts;
 using SolTake.Domain.SolutionUserSaveAggregate.Entities;
 using SolTake.Domain.SolutionUserSaveAggregate.Exceptions;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 
 namespace SolTake.Domain.SolutionUserSaveAggregate.DomainServices

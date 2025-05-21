@@ -3,7 +3,7 @@ using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Exceptions;
 using SolTake.Domain.QuestionUserSaveAggregate.Exceptions;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace SolTake.Domain.QuestionUserSaveAggregate.DomainServices
 {

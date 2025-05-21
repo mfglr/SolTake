@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserUserFollowAggregate.Exceptions;
-using MySocailApp.Domain.UserUserFollowAggregate.Abstracts;
-using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
+using SolTake.Domain.UserUserFollowAggregate.Exceptions;
+using SolTake.Domain.UserUserFollowAggregate.Abstracts;
+using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 
 namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Unfollow
 {

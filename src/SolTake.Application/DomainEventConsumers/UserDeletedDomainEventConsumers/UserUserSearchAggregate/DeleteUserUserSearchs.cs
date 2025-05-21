@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainEvents;
-using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
+using SolTake.Domain.UserUserSearchAggregate.Abstracts;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserUserSearchAggregate

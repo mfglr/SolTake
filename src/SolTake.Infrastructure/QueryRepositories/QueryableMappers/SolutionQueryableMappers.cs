@@ -1,5 +1,5 @@
 ﻿using MySocailApp.Application.Queries.SolutionDomain;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 

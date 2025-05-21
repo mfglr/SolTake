@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.UserUserBlockAggregate.DomainServices;
+using SolTake.Domain.UserUserBlockAggregate.DomainServices;
 
 namespace MySocailApp.Domain.UserUserBlockAggregate
 {

@@ -1,11 +1,11 @@
-﻿using MySocailApp.Domain.UserUserFollowAggregate.Exceptions;
+﻿using SolTake.Domain.UserUserFollowAggregate.Exceptions;
 using SolTake.Domain.UserAggregate.Abstracts;
-using MySocailApp.Domain.UserUserFollowAggregate.Abstracts;
-using MySocailApp.Domain.UserUserFollowAggregate.Entities;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserFollowAggregate.Abstracts;
+using SolTake.Domain.UserUserFollowAggregate.Entities;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.UserUserFollowAggregate.DomainServices
+namespace SolTake.Domain.UserUserFollowAggregate.DomainServices
 {
     public class UserUserFollowCreatorDomainService(IUserUserFollowReadRepository followReadRepository, IUserReadRepository userReadRepository, IUserUserBlockRepository userUserBlockRepository)
     {

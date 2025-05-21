@@ -1,8 +1,8 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserUserConversationAggregate.Abstracts;
-using MySocailApp.Domain.UserUserConversationAggregate.DomainServices;
-using MySocailApp.Domain.UserUserConversationAggregate.Entities;
-using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
+using SolTake.Domain.UserUserConversationAggregate.Abstracts;
+using SolTake.Domain.UserUserConversationAggregate.DomainServices;
+using SolTake.Domain.UserUserConversationAggregate.Entities;
+using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserUserFollowCreatedDomainEventConsumers.UserUserConversationAggregate

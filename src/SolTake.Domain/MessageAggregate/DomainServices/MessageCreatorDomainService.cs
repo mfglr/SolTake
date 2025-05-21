@@ -1,5 +1,5 @@
 ﻿using SolTake.Domain.UserAggregate.Exceptions;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.Entities;
 using SolTake.Domain.MessageAggregate.Exceptions;

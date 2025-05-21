@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.UserUserConversationAggregate.Entities;
+﻿using SolTake.Domain.UserUserConversationAggregate.Entities;
 
-namespace MySocailApp.Domain.UserUserConversationAggregate.Abstracts
+namespace SolTake.Domain.UserUserConversationAggregate.Abstracts
 {
     public interface IUserUserConversationWriteRepository
     {

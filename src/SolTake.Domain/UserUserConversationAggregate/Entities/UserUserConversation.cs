@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.UserUserConversationAggregate.Entities
+namespace SolTake.Domain.UserUserConversationAggregate.Entities
 {
     public class UserUserConversation(int converserId, int listenerId) : Entity, IAggregateRoot
     {

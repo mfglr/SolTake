@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
+using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserUserFollowDeletedDomainEventConsumers.NotificationAggregate

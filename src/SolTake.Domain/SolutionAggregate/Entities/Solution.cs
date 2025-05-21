@@ -4,7 +4,7 @@ using SolTake.Domain.SolutionAggregate.Exceptions;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.SolutionAggregate.Entities
+namespace SolTake.Domain.SolutionAggregate.Entities
 {
     public class Solution : Entity, IAggregateRoot
     {

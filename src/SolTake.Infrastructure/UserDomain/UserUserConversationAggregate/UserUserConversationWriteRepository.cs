@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.UserUserConversationAggregate.Abstracts;
-using MySocailApp.Domain.UserUserConversationAggregate.Entities;
+using SolTake.Domain.UserUserConversationAggregate.Abstracts;
+using SolTake.Domain.UserUserConversationAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate

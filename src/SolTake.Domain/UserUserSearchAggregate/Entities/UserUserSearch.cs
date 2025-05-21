@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Domain.UserUserSearchAggregate.Entities
+namespace SolTake.Domain.UserUserSearchAggregate.Entities
 {
     public class UserUserSearch(int searcherId, int searchedId) : Entity, IAggregateRoot
     {

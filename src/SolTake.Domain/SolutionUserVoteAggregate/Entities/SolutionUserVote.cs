@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.SolutionAggregate.Entities;
+﻿using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.SolutionUserVoteAggregate.DomainEvents;
 using SolTake.Core;

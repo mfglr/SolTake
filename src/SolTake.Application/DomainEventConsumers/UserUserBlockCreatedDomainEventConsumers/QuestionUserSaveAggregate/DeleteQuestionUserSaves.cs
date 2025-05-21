@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
-using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
+using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.QuestionUserSaveAggregate

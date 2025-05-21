@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.UserUserConversationAggregate.Abstracts;
+using SolTake.Domain.UserUserConversationAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate
 {

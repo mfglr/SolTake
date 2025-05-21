@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserUserConversationAggregate.Abstracts;
-using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
+using SolTake.Domain.UserUserConversationAggregate.Abstracts;
+using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserUserFollowDeletedDomainEventConsumers.UserUserConversationAggregate

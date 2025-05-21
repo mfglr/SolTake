@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
+using SolTake.Domain.UserUserSearchAggregate.Abstracts;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserUserSearchAggregate.Delete
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Domain.UserUserFollowAggregate.Abstracts;
+using SolTake.Domain.UserUserFollowAggregate.Abstracts;
 
 namespace MySocailApp.Infrastructure.UserDomain.FollowAggregate
 {

@@ -1,9 +1,9 @@
-﻿using MySocailApp.Domain.UserUserFollowAggregate.DomainEvents;
+﻿using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.UserUserFollowAggregate.Entities
+namespace SolTake.Domain.UserUserFollowAggregate.Entities
 {
     public class UserUserFollow : Entity, IAggregateRoot
     {

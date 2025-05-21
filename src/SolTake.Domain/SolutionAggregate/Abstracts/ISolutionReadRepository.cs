@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.SolutionAggregate.Entities;
+﻿using SolTake.Domain.SolutionAggregate.Entities;
 
 namespace SolTake.Domain.SolutionAggregate.Abstracts
 {

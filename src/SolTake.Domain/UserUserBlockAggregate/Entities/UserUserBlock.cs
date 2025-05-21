@@ -1,8 +1,8 @@
-﻿using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
-using MySocailApp.Domain.UserUserBlockAggregate.Exceptions;
+﻿using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
+using SolTake.Domain.UserUserBlockAggregate.Exceptions;
 using SolTake.Core;
 
-namespace MySocailApp.Domain.UserUserBlockAggregate.Entities
+namespace SolTake.Domain.UserUserBlockAggregate.Entities
 {
     public class UserUserBlock : Entity, IAggregateRoot
     {

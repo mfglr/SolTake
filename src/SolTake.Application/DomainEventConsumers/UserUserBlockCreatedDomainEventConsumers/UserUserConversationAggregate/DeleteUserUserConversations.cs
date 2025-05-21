@@ -1,6 +1,6 @@
 ﻿using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
-using MySocailApp.Domain.UserUserConversationAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
+using SolTake.Domain.UserUserConversationAggregate.Abstracts;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.UserUserConversationAggregate

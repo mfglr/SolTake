@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.UserUserFollowAggregate.Abstracts;
+using SolTake.Domain.UserUserFollowAggregate.Abstracts;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.FollowAggregate

@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.UserUserBlockAggregate.Exceptions
+namespace SolTake.Domain.UserUserBlockAggregate.Exceptions
 {
     public class UserUserBlockAlreadyCreatedException : AppException
     {

@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.UserUserSearchAggregate.Entities;
+﻿using SolTake.Domain.UserUserSearchAggregate.Entities;
 
-namespace MySocailApp.Domain.UserUserSearchAggregate.Abstracts
+namespace SolTake.Domain.UserUserSearchAggregate.Abstracts
 {
     public interface IUserUserSearchWriteRepository
     {

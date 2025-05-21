@@ -3,8 +3,8 @@ using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionAggregate.Entities;
-using MySocailApp.Domain.UserUserBlockAggregate.DomainEvents;
+using SolTake.Domain.SolutionAggregate.Entities;
+using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 
 namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.SolutionAggregate

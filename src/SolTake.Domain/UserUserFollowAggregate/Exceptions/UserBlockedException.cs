@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.UserUserFollowAggregate.Exceptions
+namespace SolTake.Domain.UserUserFollowAggregate.Exceptions
 {
     public class UserBlockedException : AppException
     {

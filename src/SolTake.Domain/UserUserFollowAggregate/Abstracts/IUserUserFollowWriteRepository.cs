@@ -1,6 +1,6 @@
-﻿using MySocailApp.Domain.UserUserFollowAggregate.Entities;
+﻿using SolTake.Domain.UserUserFollowAggregate.Entities;
 
-namespace MySocailApp.Domain.UserUserFollowAggregate.Abstracts
+namespace SolTake.Domain.UserUserFollowAggregate.Abstracts
 {
     public interface IUserUserFollowWriteRepository
     {

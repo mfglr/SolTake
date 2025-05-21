@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserUserSearchAggregate.Abstracts;
-using MySocailApp.Domain.UserUserSearchAggregate.DomainServices;
-using MySocailApp.Domain.UserUserSearchAggregate.Entities;
+using SolTake.Domain.UserUserSearchAggregate.Abstracts;
+using SolTake.Domain.UserUserSearchAggregate.DomainServices;
+using SolTake.Domain.UserUserSearchAggregate.Entities;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserUserSearchAggregate.Create
 {

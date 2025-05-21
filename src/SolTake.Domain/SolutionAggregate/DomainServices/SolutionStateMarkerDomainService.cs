@@ -1,5 +1,5 @@
 ﻿using SolTake.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 using SolTake.Core;
 

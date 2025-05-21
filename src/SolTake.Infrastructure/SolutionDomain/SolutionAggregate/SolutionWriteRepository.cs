@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.SolutionAggregate.Abstracts;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+using SolTake.Domain.SolutionAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate

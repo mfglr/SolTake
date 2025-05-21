@@ -1,5 +1,5 @@
 ﻿using SolTake.Domain.QuestionAggregate.Abstracts;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.Entities;

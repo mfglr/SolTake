@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Domain.UserUserSearchAggregate.Exceptions
+namespace SolTake.Domain.UserUserSearchAggregate.Exceptions
 {
     public class UserNotFoundException : AppException
     {

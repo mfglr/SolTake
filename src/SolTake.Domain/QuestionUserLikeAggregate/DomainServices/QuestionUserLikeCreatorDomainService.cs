@@ -2,7 +2,7 @@
 using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 using SolTake.Domain.QuestionUserLikeAggregate.Exceptions;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 
 namespace SolTake.Domain.QuestionUserLikeAggregate.DomainServices

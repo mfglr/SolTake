@@ -5,10 +5,10 @@ using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.DomainEvents;
-using MySocailApp.Domain.SolutionAggregate.Entities;
+using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 
 namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution

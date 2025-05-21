@@ -1,4 +1,4 @@
-﻿using MySocailApp.Domain.SolutionAggregate.Entities;
+﻿using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Core;
 using SolTake.Core.Exceptions;
 using System.Net;

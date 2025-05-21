@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
-using MySocailApp.Domain.UserUserBlockAggregate.Entities;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 
 namespace MySocailApp.Infrastructure.UserDomain.UserUserBlockeAggregate

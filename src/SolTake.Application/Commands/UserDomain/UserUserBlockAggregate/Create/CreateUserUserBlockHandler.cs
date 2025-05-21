@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Domain.UserUserBlockAggregate.Entities;
-using MySocailApp.Domain.UserUserBlockAggregate.Abstracts;
-using MySocailApp.Domain.UserUserBlockAggregate.DomainServices;
+using SolTake.Domain.UserUserBlockAggregate.Entities;
+using SolTake.Domain.UserUserBlockAggregate.Abstracts;
+using SolTake.Domain.UserUserBlockAggregate.DomainServices;
 
 namespace MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Create
 {
