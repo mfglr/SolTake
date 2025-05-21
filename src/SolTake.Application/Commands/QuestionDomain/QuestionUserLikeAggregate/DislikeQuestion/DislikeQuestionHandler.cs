@@ -4,7 +4,7 @@ using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 using SolTake.Domain.QuestionUserLikeAggregate.DomainEvents;
 using SolTake.Domain.QuestionUserLikeAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.DislikeQuestion
+namespace SolTake.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.DislikeQuestion
 {
     public class DislikeQuestionHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository, IPublisher publisher) : IRequestHandler<DislikeQuestionDto>
     {

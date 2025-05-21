@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MySocailApp.Application.Commands.NotificationDomain.NotificationConnectionAggregate.DisconnectNotificationHub
+namespace SolTake.Application.Commands.NotificationDomain.NotificationConnectionAggregate.DisconnectNotificationHub
 {
     public record DisconnectNotificationHubDto : IRequest;
 }

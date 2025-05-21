@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 
-namespace MySocailApp.Application.Commands.NotificationDomain.NotificationConnectionAggregate.ConnectNotificationHub
+namespace SolTake.Application.Commands.NotificationDomain.NotificationConnectionAggregate.ConnectNotificationHub
 {
     public class ConnectNotificationHubHandler(INotificationConnectionWriteRepository writeRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<ConnectNotificationHubDto>
     {

@@ -4,7 +4,7 @@ using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using SolTake.Domain.QuestionUserSaveAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave
+namespace SolTake.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave
 {
     public class CreateQuestionUserSaveHandler(IUnitOfWork unitOfWork, IQuestionUserSaveWriteRepository questionUserSaveWriteRepository, IUserAccessor userAccessor, QuestionUserSaveCreatorDomainService questionUserSaveCreatorDomainService) : IRequestHandler<CreateQuestionUserSaveDto, CreateQuestionUserSaveResponseDto>
     {

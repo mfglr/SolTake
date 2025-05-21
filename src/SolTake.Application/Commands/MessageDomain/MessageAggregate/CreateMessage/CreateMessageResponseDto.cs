@@ -3,7 +3,7 @@ using SolTake.Core;
 using SolTake.Domain.MessageAggregate.Entities;
 using SolTake.Domain.MessageAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
+namespace SolTake.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
 {
     public class CreateMessageResponseDto(Message message, User receiver)
     {

@@ -4,7 +4,7 @@ using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 using SolTake.Domain.MessageConnectionAggregate.Exceptions;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToOnline
+namespace SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToOnline
 {
     public class ChangeMessageConnectionStateToOnlineHandler(IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IPublisher publisher, IMessageConnectionWriteRepository messageConnectionWriteRepository) : IRequestHandler<ChangeMessageConnectionStateToOnlineDto>
     {

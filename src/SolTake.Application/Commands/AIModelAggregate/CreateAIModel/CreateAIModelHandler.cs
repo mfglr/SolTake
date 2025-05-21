@@ -2,12 +2,13 @@
 using MySocailApp.Application.InfrastructureServices;
 using MySocailApp.Application.InfrastructureServices.BlobService;
 using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.Commands.AIModelAggregate.CreateAIModel;
 using SolTake.Core.AIModel;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Entities;
 using SolTake.Domain.AIModelAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.AIModelAggregate.CreateAIModel
+namespace SolTake.Application.Commands.AIModelAggregate.CreateAIModel
 {
     public class CreateAIModelHandler(IMultimediaService multimediaService, IAIModelRepository aiModelRepository, IUnitOfWork unitOfWork, IAIModelCacheService aiModelCacheService) : IRequestHandler<CreateAIModelDto, CreateAIModelResponseDto>
     {

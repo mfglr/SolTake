@@ -4,7 +4,7 @@ using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 using SolTake.Domain.MessageConnectionAggregate.Exceptions;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
+namespace SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
 {
     public class DisconnectMessageHubHandler(IUnitOfWork unitOfWork, IMessageConnectionWriteRepository repository, IAccessTokenReader accessTokenReader, IPublisher publisher) : IRequestHandler<DisconnectMessageHubDto>
     {

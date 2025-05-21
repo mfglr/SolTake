@@ -5,7 +5,7 @@ using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.AppVersionAggregate.Entities;
 using SolTake.Domain.AppVersionAggregate.ValuObjects;
 
-namespace MySocailApp.Application.Commands.AppVersionAggregate.CreateVersion
+namespace SolTake.Application.Commands.AppVersionAggregate.CreateVersion
 {
     public class CreateVersionHandler(IAppVersionWriteRepository versionWriteRepository, IUnitOfWork unitOfWork, IAppVersionCacheService versionCacheService, AppVersionCreatorDomainService appVersionCreatorDomainService) : IRequestHandler<CreateVersionDto>
     {

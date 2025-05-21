@@ -4,7 +4,7 @@ using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 using SolTake.Domain.MessageConnectionAggregate.Exceptions;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToFocused
+namespace SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToFocused
 {
     public class ChangeMessageConnectionStateToFocusedHandler(IMessageConnectionWriteRepository messageConnectionWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher, IAccessTokenReader accessTokenReader) : IRequestHandler<ChangeMessageConnectionStateToFocusedDto>
     {

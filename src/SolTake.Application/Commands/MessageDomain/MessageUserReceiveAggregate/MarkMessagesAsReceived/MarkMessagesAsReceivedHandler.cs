@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived;
+using SolTake.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived;
 using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.MessageUserReceiveAggregate.Abstracts;
 using SolTake.Domain.MessageUserReceiveAggregate.Entities;

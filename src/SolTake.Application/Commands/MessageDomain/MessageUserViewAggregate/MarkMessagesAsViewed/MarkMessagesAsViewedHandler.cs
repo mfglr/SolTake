@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.MessageUserViewAggregate.Abstracts;
 using SolTake.Domain.MessageUserViewAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageUserViewAggregate.MarkMessagesAsViewed
+namespace SolTake.Application.Commands.MessageDomain.MessageUserViewAggregate.MarkMessagesAsViewed
 {
     public class MarkMessagesAsViewedHandler(IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IMessageUserViewWriteRepository messageUserViewWriteRepository, IMessageUserViewReadRepository messageUserViewReadRepository) : IRequestHandler<MarkMessagesAsViewedDto>
     {

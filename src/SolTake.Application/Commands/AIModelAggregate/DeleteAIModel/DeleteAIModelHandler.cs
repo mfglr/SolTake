@@ -4,7 +4,7 @@ using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.DomainEvents;
 using SolTake.Domain.AIModelAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.AIModelAggregate.DeleteAIModel
+namespace SolTake.Application.Commands.AIModelAggregate.DeleteAIModel
 {
     public class DeleteAIModelHandler(IAIModelCacheService aiModelCacheService, IAIModelRepository aiModelRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IRequestHandler<DeleteAIModelDto>
     {

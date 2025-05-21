@@ -5,7 +5,7 @@ using SolTake.Domain.CommentUserLikeAggregate.Entities;
 using SolTake.Domain.CommentUserLikeAggregate.Abstracts;
 using SolTake.Domain.CommentUserLikeAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment
+namespace SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment
 {
     public class CreateCommentLikeHandler(IUnitOfWork unitOfWork, ICommentUserLikeWriteRepository commentUserLikeWriteRepository, CommentUserLikeCreatorDomainService commentUserLikeCreatorDomainService, IAccessTokenReader accessTokenReader) : IRequestHandler<CreateCommentUserLikeDto, CreateCommentUserLikeResponseDto>
     {

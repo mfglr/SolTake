@@ -5,7 +5,7 @@ using SolTake.Domain.MessageAggregate.Abstracts;
 using SolTake.Domain.MessageUserRemoveAggregate.Abstracts;
 using SolTake.Domain.MessageUserRemoveAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessages
+namespace SolTake.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessages
 {
     public class RemoveMessagesHandler(IUnitOfWork unitOfWork, IMessageUserRemoveWriteRepository messageUserRemoveWriteRepository, IMessageUserRemoveReadRepository messageUserRemoveReadRepository, IMessageReadRepository messageReadRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<RemoveMessagesDto>
     {

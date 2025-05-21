@@ -4,7 +4,7 @@ using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.DomainEvents;
 using SolTake.Domain.CommentAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.CommentDomain.CommentAggregate.DeleteComment
+namespace SolTake.Application.Commands.CommentDomain.CommentAggregate.DeleteComment
 {
     public class DeleteCommentHandler(ICommentWriteRepository commentWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IPublisher publisher) : IRequestHandler<DeleteCommentDto>
     {

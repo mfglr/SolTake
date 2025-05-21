@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 
-namespace MySocailApp.Application.Commands.NotificationDomain.NotificationConnectionAggregate.DisconnectNotificationHub
+namespace SolTake.Application.Commands.NotificationDomain.NotificationConnectionAggregate.DisconnectNotificationHub
 {
     public class DisconnectNotificationHubHandler(IAccessTokenReader accessTokenReader, INotificationConnectionWriteRepository writeRepository, IUnitOfWork unitOfWork) : IRequestHandler<DisconnectNotificationHubDto>
     {

@@ -4,7 +4,7 @@ using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.QuestionAggregate.DomainEvents;
 using SolTake.Domain.QuestionAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
+namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
 {
     public class DeleteQuestionHandler(IQuestionWriteRepository questionWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IPublisher publisher) : IRequestHandler<DeleteQuestionDto>
     {

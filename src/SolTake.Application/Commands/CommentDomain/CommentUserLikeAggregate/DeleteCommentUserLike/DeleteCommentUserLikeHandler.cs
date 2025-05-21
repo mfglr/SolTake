@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.CommentUserLikeAggregate.Exceptions;
 using SolTake.Domain.CommentUserLikeAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.DeleteCommentUserLike
+namespace SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.DeleteCommentUserLike
 {
     public class DeleteCommentUserLikeHandler(IUnitOfWork unitOfWork, ICommentUserLikeWriteRepository commentUserLikeWriteRepository, IUserAccessor userAccessor) : IRequestHandler<DeleteCommentUserLikeDto>
     {

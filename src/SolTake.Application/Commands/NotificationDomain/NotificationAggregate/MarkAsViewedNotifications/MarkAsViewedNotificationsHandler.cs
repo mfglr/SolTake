@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 
-namespace MySocailApp.Application.Commands.NotificationDomain.NotificationAggregate.MarkAsViewedNotifications
+namespace SolTake.Application.Commands.NotificationDomain.NotificationAggregate.MarkAsViewedNotifications
 {
     public class MarkAsViewedNotificationsHandler(INotificationWriteRepository repository, IUnitOfWork unitOfWork) : IRequestHandler<MarkAsViewedNotificationsDto>
     {

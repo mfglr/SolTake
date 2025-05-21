@@ -8,7 +8,7 @@ using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion
+namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion
 {
     public class CreateQuestionHandler(IUnitOfWork unitOfWork, IQuestionWriteRepository repository, QuestionCreatorDomainService questionCreator, IBlobService blobService, IMultimediaService multimedyaService, IUserAccessor userAccessor) : IRequestHandler<CreateQuestionDto, CreateQuestionResponseDto>
     {

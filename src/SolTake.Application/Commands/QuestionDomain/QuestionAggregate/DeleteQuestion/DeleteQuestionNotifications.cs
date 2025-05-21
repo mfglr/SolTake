@@ -3,7 +3,7 @@ using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.QuestionAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
+namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion
 {
     public class DeleteQuestionNotifications(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<QuestionDeletedDomainEvent>
     {

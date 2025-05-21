@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.DeleteQuestionUserSave
+namespace SolTake.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.DeleteQuestionUserSave
 {
     public class DeleteQuestionUserSaveHandler(IUnitOfWork unitOfWork, IQuestionUserSaveWriteRepository questionUserSaveWriteRepository, IUserAccessor userAccessor) : IRequestHandler<DeleteQuestionUserSaveDto>
     {

@@ -4,7 +4,7 @@ using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 using SolTake.Domain.MessageConnectionAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub
+namespace SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub
 {
     public class ConnectMessageHubHandler(IMessageConnectionWriteRepository repository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, IPublisher publisher) : IRequestHandler<ConnectMessageHubDto>
     {

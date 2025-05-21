@@ -3,7 +3,7 @@ using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.AIModelAggregate.UpdateAIModelCommission
+namespace SolTake.Application.Commands.AIModelAggregate.UpdateAIModelCommission
 {
     public class UpdatreAIModelCommissionHandler(IAIModelRepository aiModelRepository, IAIModelCacheService aiModelCacheService, IUnitOfWork unitOfWork) : IRequestHandler<UpdateAIModelCommissionDto>
     {

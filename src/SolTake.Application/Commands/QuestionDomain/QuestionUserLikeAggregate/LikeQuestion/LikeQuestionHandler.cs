@@ -4,7 +4,7 @@ using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 using SolTake.Domain.QuestionUserLikeAggregate.DomainServices;
 using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
+namespace SolTake.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
 {
     public class LikeQuestionHandler(IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, QuestionUserLikeCreatorDomainService questionUserLikeCreatorDomainService, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository) : IRequestHandler<LikeQuestionDto, LikeQuestionCommandResponseDto>
     {

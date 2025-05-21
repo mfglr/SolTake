@@ -6,7 +6,7 @@ using SolTake.Core;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.AIModelAggregate.UpdateAIModelImage
+namespace SolTake.Application.Commands.AIModelAggregate.UpdateAIModelImage
 {
     public class UpdateAIModelImageHandler(IMultimediaService multimediaService, IAIModelRepository aiModelRepository, IAIModelCacheService aiModelCacheService, IUnitOfWork unitOfWork, IBlobService blobService) : IRequestHandler<UpdateAIModelImageDto, Multimedia>
     {

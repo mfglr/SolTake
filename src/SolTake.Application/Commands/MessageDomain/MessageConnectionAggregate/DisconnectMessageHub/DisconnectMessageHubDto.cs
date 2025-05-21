@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
+namespace SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub
 {
     public record DisconnectMessageHubDto : IRequest;
 }

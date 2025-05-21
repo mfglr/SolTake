@@ -1,7 +1,7 @@
 ﻿using SolTake.Core;
 using SolTake.Domain.AIModelAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.AIModelAggregate.CreateAIModel
+namespace SolTake.Application.Commands.AIModelAggregate.CreateAIModel
 {
     public class CreateAIModelResponseDto(AIModel model)
     {

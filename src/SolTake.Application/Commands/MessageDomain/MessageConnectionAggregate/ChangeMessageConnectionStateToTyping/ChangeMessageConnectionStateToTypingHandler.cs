@@ -4,7 +4,7 @@ using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 using SolTake.Domain.MessageConnectionAggregate.Exceptions;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToTyping
+namespace SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToTyping
 {
     public class ChangeMessageConnectionStateToTypingHandler(IAccessTokenReader accessTokenReader, IUnitOfWork unitOfWork, IPublisher publisher, IMessageConnectionWriteRepository messageConnectionWriteRepository) : IRequestHandler<ChangeMessageConnectionStateToTypingDto>
     {

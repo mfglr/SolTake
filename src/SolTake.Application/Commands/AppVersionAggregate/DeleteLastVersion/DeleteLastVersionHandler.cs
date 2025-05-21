@@ -2,7 +2,7 @@
 using MySocailApp.Application.InfrastructureServices;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.AppVersionAggregate.DeleteLastVersion
+namespace SolTake.Application.Commands.AppVersionAggregate.DeleteLastVersion
 {
     public class DeleteLastVersionHandler(IAppVersionWriteRepository versionWriteRepository, IUnitOfWork unitOfWork, IAppVersionCacheService versionCacheService) : IRequestHandler<DeleteLastVersionDto>
     {

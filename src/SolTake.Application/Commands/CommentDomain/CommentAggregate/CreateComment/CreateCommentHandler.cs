@@ -7,7 +7,7 @@ using SolTake.Domain.CommentAggregate.Entities;
 using MySocailApp.Domain.CommentAggregate.ValueObjects;
 using SolTake.Domain.UserAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.CommentDomain.CommentAggregate.CreateComment
+namespace SolTake.Application.Commands.CommentDomain.CommentAggregate.CreateComment
 {
     public class CreateCommentHandler(ICommentWriteRepository commentWriteRepository,IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader, CommentCreatorDomainService commentCreator, IUserReadRepository userReadRepository, UserNamesReaderDomainService userNameReader) : IRequestHandler<CreateCommentDto, CommentResponseDto>
     {

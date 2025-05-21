@@ -10,7 +10,7 @@ using SolTake.Domain.MessageAggregate.Entities;
 using SolTake.Domain.MessageAggregate.Exceptions;
 using SolTake.Domain.MessageAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
+namespace SolTake.Application.Commands.MessageDomain.MessageAggregate.CreateMessage
 {
     public class CreateMessageHandler(IUnitOfWork unitOfWork, IMultimediaService multimediaService, IBlobService blobService, IMessageWriteRepository messageWriteRepository, IUserReadRepository userReadRepository, MessageCreatorDomainService messageCreatorDomainService, IAccessTokenReader accessTokenReader) : IRequestHandler<CreateMessageDto, CreateMessageResponseDto>
     {

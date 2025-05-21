@@ -1,7 +1,7 @@
 ﻿using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
+namespace SolTake.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion
 {
     public class LikeQuestionCommandResponseDto(QuestionUserLike like, Login login)
     {
