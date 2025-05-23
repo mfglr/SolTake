@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 
-namespace MySocailApp.Application.PipelineBehaviours
+namespace SolTake.Application.PipelineBehaviours
 {
     public class AppPipelineBehaviour<TRequest, TResponse>(IDomainEventsPublisher publisher) : IPipelineBehavior<TRequest, TResponse>
         where TRequest : notnull

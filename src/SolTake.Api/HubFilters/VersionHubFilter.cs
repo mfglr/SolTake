@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Exceptions;
+using SolTake.Application.Exceptions;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.AppVersionAggregate.ValuObjects;
 

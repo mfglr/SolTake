@@ -1,10 +1,10 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.BalanceAggregate.Entities;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserCreatedDomainEventConsumers.BalanceAggregate
+namespace SolTake.Application.DomainEventConsumers.UserCreatedDomainEventConsumers.BalanceAggregate
 {
     public class CreateBalance(IBalanceRepository balanceRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserCreatedDomainEvent>
     {

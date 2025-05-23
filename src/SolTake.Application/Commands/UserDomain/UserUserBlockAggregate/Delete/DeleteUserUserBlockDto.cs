@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Delete
+namespace SolTake.Application.Commands.UserDomain.UserUserBlockAggregate.Delete
 {
     public record DeleteUserUserBlockDto(int BlockedId) : IRequest;
 }

@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.DomainEvents;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.DeleteSolution
+namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.DeleteSolution
 {
     public class DeleteSolutionHandler(IUnitOfWork unitOfWork, ISolutionWriteRepository solutionWriteRepository, IPublisher publisher) : IRequestHandler<DeleteSolutionDto>
     {

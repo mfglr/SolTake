@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.QuestionUserLikeAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.QuestionUserLikeAggregate
 {
     public class DeleteQuestionUserLikes(IUnitOfWork unitOfWork, IQuestionUserLikeWriteRepository questionUserLikeWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

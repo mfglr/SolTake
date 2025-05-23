@@ -1,7 +1,7 @@
 ﻿using SolTake.Domain.StoryAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory
+namespace SolTake.Application.Commands.StoryDomain.StoryAggregate.CreateStory
 {
     public class CreateStoryResponseDto(Story story, Login login)
     {

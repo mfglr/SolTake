@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave;
-using MySocailApp.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.DeleteQuestionUserSave;
-using MySocailApp.Application.Queries.QuestionDomain;
-using MySocailApp.Application.Queries.QuestionDomain.GetQuestionUserSaves;
+using SolTake.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.CreateQuestionUserSave;
+using SolTake.Application.Commands.QuestionDomain.QuestionUserSaveAggregate.DeleteQuestionUserSave;
+using SolTake.Application.Queries.QuestionDomain;
+using SolTake.Application.Queries.QuestionDomain.GetQuestionUserSaves;
 
 namespace MySocailApp.Api.Controllers.Api
 {

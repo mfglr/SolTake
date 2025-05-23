@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.CreateCommentUserLike;
-using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.DeleteCommentUserLike;
-using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment;
-using MySocailApp.Application.Queries.CommentAggregate;
-using MySocailApp.Application.Queries.CommentAggregate.GetCommentLikes;
+using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.CreateCommentUserLike;
+using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.DeleteCommentUserLike;
+using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment;
+using SolTake.Application.Queries.CommentAggregate;
+using SolTake.Application.Queries.CommentAggregate.GetCommentLikes;
 
 namespace MySocailApp.Api.Controllers.Api
 {

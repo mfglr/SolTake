@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 
 namespace SolTake.Application.Commands.NotificationDomain.NotificationAggregate.MarkAsViewedNotifications

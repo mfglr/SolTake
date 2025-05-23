@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 
-namespace MySocailApp.Application.Queries.AppVersionAggregate.IsUpgradeRequired
+namespace SolTake.Application.Queries.AppVersionAggregate.IsUpgradeRequired
 {
     public class IsUpgradeRequiredHandler(IAppVersionReadRepository appVersionReadRepository) : IRequestHandler<IsUpgradeRequiredDto, bool>
     {

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.Configurations
+﻿namespace SolTake.Application.Configurations
 {
     public class ChatGPTSettings(string apiKey,string baseUrl) : IChatGPTSettings
     {

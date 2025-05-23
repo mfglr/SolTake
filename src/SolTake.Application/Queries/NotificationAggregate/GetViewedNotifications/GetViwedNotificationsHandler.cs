@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
-using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.NotificationAggregate.GetViewedNotifications
+namespace SolTake.Application.Queries.NotificationAggregate.GetViewedNotifications
 {
     public class GetViwedNotificationsHandler(INotificationQueryRepository repository, IAccessTokenReader tokenReader) : IRequestHandler<GetViewedNotificationsDto, List<NotificationResponseDto>>
     {

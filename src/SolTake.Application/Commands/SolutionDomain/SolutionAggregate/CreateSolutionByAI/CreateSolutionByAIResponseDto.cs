@@ -3,7 +3,7 @@ using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 using SolTake.Domain.AIModelAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
+namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
     public class CreateSolutionByAIResponseDto(Solution solution, AIModel aIModel, Login login)
     {

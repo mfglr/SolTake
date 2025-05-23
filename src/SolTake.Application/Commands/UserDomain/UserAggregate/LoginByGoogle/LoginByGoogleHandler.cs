@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.Extentions;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.Extentions;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.DomainServices;
 using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Domain.UserAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByGoogle
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.LoginByGoogle
 {
     public class LoginByGoogleHandler(GoogleTokenValidatorDomainService googleTokenReader, IHttpContextAccessor httpContextAccessor, IUserWriteRepository userWriteRepository, UserCreatorDomainService accountCreatorDomainService, AuthenticatorDomainService authenticatorDomainService, AccessTokenSetterDomainService accessTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByGoogleDto, LoginDto>
     {

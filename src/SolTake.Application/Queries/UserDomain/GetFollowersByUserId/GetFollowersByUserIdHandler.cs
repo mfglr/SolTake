@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId
 {

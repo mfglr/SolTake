@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.DomainEvents;
@@ -11,7 +11,7 @@ using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
+namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
 {
     public class CreateSolutionHandler(IUnitOfWork unitOfWork, ISolutionWriteRepository solutionWriteRepository, IBlobService blobService, IMultimediaService multimediaService, IAccessTokenReader accessTokenReader, IQuestionReadRepository questionReadRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher) : IRequestHandler<CreateSolutionDto, CreateSolutionResponseDto>
     {

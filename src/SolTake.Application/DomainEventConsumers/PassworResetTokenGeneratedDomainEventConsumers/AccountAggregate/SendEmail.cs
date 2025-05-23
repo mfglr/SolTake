@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.PassworResetTokenGeneratedDomainEventConsumers.AccountAggregate
+namespace SolTake.Application.DomainEventConsumers.PassworResetTokenGeneratedDomainEventConsumers.AccountAggregate
 {
     public class SendEmail(IEmailService emailService) : IDomainEventConsumer<PasswordResetTokenGeneratedDomainEvent>
     {

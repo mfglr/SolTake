@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.NotificationAggregate;
+﻿using SolTake.Application.Queries.NotificationAggregate;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

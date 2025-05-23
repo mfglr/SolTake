@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.Abstracts;
 using SolTake.Domain.MessageAggregate.DomainEvents;

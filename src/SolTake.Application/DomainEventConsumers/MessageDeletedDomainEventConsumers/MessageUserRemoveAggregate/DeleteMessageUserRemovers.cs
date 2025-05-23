@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.DomainEvents;
 using SolTake.Domain.MessageUserRemoveAggregate.Abstracts;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageUserRemoveAggregate
+namespace SolTake.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageUserRemoveAggregate
 {
     public class DeleteMessageUserRemovers(IMessageUserRemoveWriteRepository messageUserRemoveWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {

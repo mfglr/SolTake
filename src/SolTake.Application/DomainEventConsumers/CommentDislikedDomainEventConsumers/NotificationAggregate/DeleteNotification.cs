@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Core;
 using SolTake.Domain.CommentAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.CommentDislikedDomainEventConsumers.NotificationAggregate
+namespace SolTake.Application.DomainEventConsumers.CommentDislikedDomainEventConsumers.NotificationAggregate
 {
     public class DeleteNotification(INotificationWriteRepository notficationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<CommentDislikedDomainEvent>
     {

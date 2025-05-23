@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.CreateCommentUserLike;
+using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.CreateCommentUserLike;
 
 namespace SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment
 {

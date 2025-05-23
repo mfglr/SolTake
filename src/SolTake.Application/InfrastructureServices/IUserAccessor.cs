@@ -1,6 +1,6 @@
 ﻿using SolTake.Domain.UserAggregate.Entities;
 
-namespace MySocailApp.Application.InfrastructureServices
+namespace SolTake.Application.InfrastructureServices
 {
     public interface IUserAccessor
     {

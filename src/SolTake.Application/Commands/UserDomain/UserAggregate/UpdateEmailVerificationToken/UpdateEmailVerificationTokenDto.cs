@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateEmailVerificationToken
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdateEmailVerificationToken
 {
     public record UpdateEmailVerificationTokenDto() : IRequest;
 }

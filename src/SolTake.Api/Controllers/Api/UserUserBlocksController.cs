@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Create;
-using MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Delete;
+using SolTake.Application.Commands.UserDomain.UserUserBlockAggregate.Create;
+using SolTake.Application.Commands.UserDomain.UserUserBlockAggregate.Delete;
 using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Application.Queries.UserDomain.GetBlockeds;
 

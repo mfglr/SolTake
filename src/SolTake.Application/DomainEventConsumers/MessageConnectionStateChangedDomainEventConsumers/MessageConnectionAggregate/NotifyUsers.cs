@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Hubs;
-using MySocailApp.Application.Queries.MessageDomain;
+using SolTake.Application.Hubs;
+using SolTake.Application.Queries.MessageDomain;
 using SolTake.Core;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageConnectionStateChangedDomainEventConsumers.MessageConnectionAggregate
+namespace SolTake.Application.DomainEventConsumers.MessageConnectionStateChangedDomainEventConsumers.MessageConnectionAggregate
 {
     public class NotifyUsers(IHubContext<MessageHub> messageHub, IMessageConnectionReadRepository messageConnectionReadRepository) : IDomainEventConsumer<MessageConnectionStateChangedDomainEvent>
     {

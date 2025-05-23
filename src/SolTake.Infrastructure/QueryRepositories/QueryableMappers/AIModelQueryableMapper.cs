@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.AIModelAggregate;
+﻿using SolTake.Application.Queries.AIModelAggregate;
 using SolTake.Domain.AIModelAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

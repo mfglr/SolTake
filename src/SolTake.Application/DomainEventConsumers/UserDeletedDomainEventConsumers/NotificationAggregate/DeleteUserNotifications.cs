@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.NotificationAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.NotificationAggregate
 {
     public class DeleteUserNotifications(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

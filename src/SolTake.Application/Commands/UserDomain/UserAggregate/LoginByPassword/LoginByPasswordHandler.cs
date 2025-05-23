@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.DomainServices;
 using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Domain.UserAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByPassword
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.LoginByPassword
 {
     public class LoginByPasswordHandler(AuthenticatorDomainService authenticatorDomainService, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService) : IRequestHandler<LoginByPasswordDto, LoginDto>
     {

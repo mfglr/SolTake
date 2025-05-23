@@ -2,7 +2,7 @@
 using MediatR;
 using SolTake.Domain.ExamAggregate.Interfaces;
 
-namespace MySocailApp.Application.Queries.ExamAggregate.GetExams
+namespace SolTake.Application.Queries.ExamAggregate.GetExams
 {
     public class GetExamsHandler(IMapper mapper, IExamReadRepository repository) : IRequestHandler<GetExamsDto, List<ExamResponseDto>>
     {

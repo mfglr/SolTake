@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.VerifyEmail
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.VerifyEmail
 {
     public class VerifyEmailHandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<VerifyEmailDto>
     {

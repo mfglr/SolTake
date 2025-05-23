@@ -1,7 +1,7 @@
-﻿using MySocailApp.Application.Queries.NotificationAggregate;
+﻿using SolTake.Application.Queries.NotificationAggregate;
 using SolTake.Core;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface INotificationQueryRepository
     {

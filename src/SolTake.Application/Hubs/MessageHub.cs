@@ -2,24 +2,24 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage;
-using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToFocused;
-using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToOnline;
-using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToTyping;
-using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub;
-using MySocailApp.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub;
-using MySocailApp.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived;
-using MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessages;
-using MySocailApp.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessagesByUserIds;
-using MySocailApp.Application.Commands.MessageDomain.MessageUserViewAggregate.MarkMessagesAsViewed;
-using MySocailApp.Application.Queries.MessageDomain;
-using MySocailApp.Application.Queries.MessageDomain.GetConversations;
-using MySocailApp.Application.Queries.MessageDomain.GetMessageById;
-using MySocailApp.Application.Queries.MessageDomain.GetMessageConnection;
-using MySocailApp.Application.Queries.MessageDomain.GetMessagesByUserId;
-using MySocailApp.Application.Queries.MessageDomain.GetUnviewedMessages;
+using SolTake.Application.Commands.MessageDomain.MessageAggregate.CreateMessage;
+using SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToFocused;
+using SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToOnline;
+using SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ChangeMessageConnectionStateToTyping;
+using SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.ConnectMessageHub;
+using SolTake.Application.Commands.MessageDomain.MessageConnectionAggregate.DisconnectMessageHub;
+using SolTake.Application.Commands.MessageDomain.MessageUserReceiveAggregate.MarkMessagesAsReceived;
+using SolTake.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessages;
+using SolTake.Application.Commands.MessageDomain.MessageUserRemoveAggregate.RemoveMessagesByUserIds;
+using SolTake.Application.Commands.MessageDomain.MessageUserViewAggregate.MarkMessagesAsViewed;
+using SolTake.Application.Queries.MessageDomain;
+using SolTake.Application.Queries.MessageDomain.GetConversations;
+using SolTake.Application.Queries.MessageDomain.GetMessageById;
+using SolTake.Application.Queries.MessageDomain.GetMessageConnection;
+using SolTake.Application.Queries.MessageDomain.GetMessagesByUserId;
+using SolTake.Application.Queries.MessageDomain.GetUnviewedMessages;
 
-namespace MySocailApp.Application.Hubs
+namespace SolTake.Application.Hubs
 {
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MessageHub(ISender sender) : Hub

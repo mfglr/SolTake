@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.Configurations
+﻿namespace SolTake.Application.Configurations
 {
     public class EmailServiceSettings(string host, int port, string senderMail, string displayName, string password) : IEmailServiceSettings
     {

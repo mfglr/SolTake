@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Commands.UserDomain.UserUserSearchAggregate.Create;
+using SolTake.Application.Commands.UserDomain.UserUserSearchAggregate.Create;
 using SolTake.Domain.UserUserSearchAggregate.Entities;
 
-namespace MySocailApp.Application.Mappers
+namespace SolTake.Application.Mappers
 {
     public class UserMappers : Profile
     {

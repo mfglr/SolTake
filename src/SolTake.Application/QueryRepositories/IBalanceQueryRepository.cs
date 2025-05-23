@@ -1,6 +1,6 @@
-﻿using MySocailApp.Application.Queries.BalanceAggregate.GetBalance;
+﻿using SolTake.Application.Queries.BalanceAggregate.GetBalance;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface IBalanceQueryRepository
     {

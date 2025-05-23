@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.BalanceAggregate.GetBalance;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.Queries.BalanceAggregate.GetBalance;
+using SolTake.Application.QueryRepositories;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
 

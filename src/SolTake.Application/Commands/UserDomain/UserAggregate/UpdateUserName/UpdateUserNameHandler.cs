@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserName
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdateUserName
 {
     public class UpdateUserNamehandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork, UserManipulator userManipulator) : IRequestHandler<UpdateUserNameDto, UpdateUserNameResponseDto>
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Hubs;
+using SolTake.Application.Hubs;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.DomainEvents;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 using SolTake.Domain.MessageConnectionAggregate.ValueObjects;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageConnectionAggregate
+namespace SolTake.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.MessageConnectionAggregate
 {
     public class NotifyReceiver(IHubContext<MessageHub> messageHub, IMessageConnectionReadRepository messageConnectionReadRepository) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {

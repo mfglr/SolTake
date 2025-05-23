@@ -1,6 +1,6 @@
 ﻿using SolTake.Domain.UserAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveUserImage
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.RemoveUserImage
 {
     public class RemoveUserImageResponseDto(User User)
     {

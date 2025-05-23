@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.DeleteUser
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.DeleteUser
 {
     public class DeleteUserHandler(IPublisher publisher, IUserAccessor userAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, IBalanceRepository balanceRepository) : IRequestHandler<DeleteUserDto>
     {

@@ -1,11 +1,11 @@
-﻿using MySocailApp.Application.Configurations;
-using MySocailApp.Application.InfrastructureServices.IAService.Exceptions;
-using MySocailApp.Application.InfrastructureServices.IAService.Objects;
+﻿using SolTake.Application.Configurations;
+using SolTake.Application.InfrastructureServices.IAService.Exceptions;
+using SolTake.Application.InfrastructureServices.IAService.Objects;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace MySocailApp.Application.InfrastructureServices.IAService
+namespace SolTake.Application.InfrastructureServices.IAService
 {
     public class ChatGPT_Service(IChatGPTSettings chatGPTSettings)
     {

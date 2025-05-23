@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 using SolTake.Domain.CommentAggregate.Exceptions;
 
-namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentById
+namespace SolTake.Application.Queries.CommentAggregate.GetCommentById
 {
     public class GetCommentByIdHandler(ICommentQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetCommentByIdDto, CommentResponseDto>
     {

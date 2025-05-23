@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Hubs;
+using SolTake.Application.Hubs;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.NotificationCreatedDomainEventConsumers.NotificationConnectionAggregate
+namespace SolTake.Application.DomainEventConsumers.NotificationCreatedDomainEventConsumers.NotificationConnectionAggregate
 {
     public class NotifyUser(INotificationConnectionReadRepository notificationConnectionReadRepository, IHubContext<NotificationHub> notificationHub) : IDomainEventConsumer<NotificationCreatedDomainEvent>
     {

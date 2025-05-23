@@ -1,7 +1,7 @@
 ﻿using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Application.InfrastructureServices.IAService.Exceptions
+namespace SolTake.Application.InfrastructureServices.IAService.Exceptions
 {
     public class ChatGPTException(string message) : AppException((int)HttpStatusCode.BadRequest, message)
     {

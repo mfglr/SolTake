@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.SolutionUserVoteAggregate.Exceptions;
 using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveDownvote
+namespace SolTake.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveDownvote
 {
     public class RemoveDownvoteHandler(IUnitOfWork unitOfWork, ISolutionUserVoteWriteRepository solutionUserVoteWriteRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<RemoveDownvoteDto>
     {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateBiography
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdateBiography
 {
     public class UpdateBiographyHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor) : IRequestHandler<UpdateBiographyDto>
     {

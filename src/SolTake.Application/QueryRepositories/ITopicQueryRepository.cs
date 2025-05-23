@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.Queries.TopicAggregate;
 using SolTake.Core;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface ITopicQueryRepository
     {

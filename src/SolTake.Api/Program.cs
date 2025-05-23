@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.SignalR;
 using MySocailApp.Api;
 using MySocailApp.Api.HubFilters;
 using MySocailApp.Api.Middlewares;
-using MySocailApp.Application;
-using MySocailApp.Application.Hubs;
+using SolTake.Application;
+using SolTake.Application.Hubs;
 using SolTake.Domain;
 using MySocailApp.Infrastructure;
 

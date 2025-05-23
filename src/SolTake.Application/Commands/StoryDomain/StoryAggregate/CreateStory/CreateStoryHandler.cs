@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Domain.StoryAggregate.Abstracts;
 using SolTake.Domain.StoryAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.CreateStory
+namespace SolTake.Application.Commands.StoryDomain.StoryAggregate.CreateStory
 {
     public class CreateStoryHandler(IStoryRepository storyWriteRepository, IUnitOfWork unitOfWork, IMultimediaService multimediaService, IAccessTokenReader accessTokenReader, IBlobService blobService) : IRequestHandler<CreateStoryDto, List<CreateStoryResponseDto>>
     {

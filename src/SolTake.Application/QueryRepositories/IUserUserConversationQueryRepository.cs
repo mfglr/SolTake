@@ -1,7 +1,7 @@
 ﻿using MySocailApp.Application.Queries.UserUserConversation;
 using SolTake.Core;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface IUserUserConversationQueryRepository
     {

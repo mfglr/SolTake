@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.MessageUserReceiveAggregate.Abstracts;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.DomainEvents;

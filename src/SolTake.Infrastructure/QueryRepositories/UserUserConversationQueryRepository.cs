@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.Queries.UserUserConversation;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;
 using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;

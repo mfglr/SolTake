@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Exceptions;
 
 namespace MySocailApp.Api.HubFilters

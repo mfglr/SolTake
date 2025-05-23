@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.CommentAggregate;
+﻿using SolTake.Application.Queries.CommentAggregate;
 using MySocailApp.Infrastructure.DbContexts;
 using SolTake.Domain.CommentAggregate.Entities;
 

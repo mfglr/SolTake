@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserBlockAggregate.Exceptions;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Delete
+namespace SolTake.Application.Commands.UserDomain.UserUserBlockAggregate.Delete
 {
     public class DeleteUserUserBlockCommandHandler(IUserUserBlockRepository userUserBlockRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<DeleteUserUserBlockDto>
     {

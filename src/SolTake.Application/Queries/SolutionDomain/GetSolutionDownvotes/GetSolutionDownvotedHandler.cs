@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.Queries.SolutionDomain;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 
 namespace MySocailApp.Application.Queries.SolutionDomain.GetSolutionDownvotes
 {

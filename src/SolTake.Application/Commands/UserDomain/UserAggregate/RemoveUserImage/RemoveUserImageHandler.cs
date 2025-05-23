@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveUserImage
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.RemoveUserImage
 {
     public class RemoveUserImageHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, UserManipulator userImageManipulator) : IRequestHandler<RemoveUserImageDto,RemoveUserImageResponseDto>
     {

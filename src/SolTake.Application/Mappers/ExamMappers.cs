@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Queries.ExamAggregate;
+using SolTake.Application.Queries.ExamAggregate;
 using SolTake.Domain.ExamAggregate.Entitities;
 
-namespace MySocailApp.Application.Mappers
+namespace SolTake.Application.Mappers
 {
     public class ExamMappers : Profile
     {

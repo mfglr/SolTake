@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateEmail
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdateEmail
 {
     public class UpdateEmailHandler(EmailUpdaterDomainService emailUpdater, IUnitOfWork unitOfWork, IUserAccessor userAccessor) : IRequestHandler<UpdateEmailDto>
     {

@@ -2,7 +2,7 @@
 using SolTake.Domain.MessageConnectionAggregate.DomainEvents;
 using SolTake.Domain.MessageConnectionAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Queries.MessageDomain
+namespace SolTake.Application.Queries.MessageDomain
 {
     public class MessageConnectionResponseDto(int id, DateTime? lastSeenAt, string userName, Multimedia? image, MessageConnectionState state, int? userId)
     {

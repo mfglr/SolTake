@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using MySocailApp.Application.Commands.CommentDomain.CommentUserLikeAggregate.CreateCommentUserLike;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.CreateCommentUserLike;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.CommentUserLikeAggregate.Entities;
 using SolTake.Domain.CommentUserLikeAggregate.Abstracts;
 using SolTake.Domain.CommentUserLikeAggregate.DomainServices;

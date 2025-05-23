@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.Queries.AppVersionAggregate
+﻿namespace SolTake.Application.Queries.AppVersionAggregate
 {
     public class AppVersionResponseDto
     {

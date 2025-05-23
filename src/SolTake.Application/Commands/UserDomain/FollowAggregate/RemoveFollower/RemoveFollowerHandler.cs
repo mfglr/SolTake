@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserFollowAggregate.Abstracts;
 using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Domain.UserUserFollowAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveFollower
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.RemoveFollower
 {
     public class RemoveFollowerHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IUserUserFollowWriteRepository userUserfollowWriteRepository, IPublisher publisher) : IRequestHandler<RemoveFollowerDto>
     {

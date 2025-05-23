@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.InfrastructureServices.IAService.Objects
+﻿namespace SolTake.Application.InfrastructureServices.IAService.Objects
 {
     public class ChatGPT_Message(string role, IEnumerable<ChatGPT_Content> content)
     {

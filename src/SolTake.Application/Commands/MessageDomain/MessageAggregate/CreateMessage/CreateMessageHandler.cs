@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.Abstracts;

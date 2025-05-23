@@ -1,6 +1,6 @@
-﻿using MySocailApp.Application.Queries.MessageDomain;
+﻿using SolTake.Application.Queries.MessageDomain;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface IMessageConnectionQueryRepository
     {

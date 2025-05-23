@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUserFollowCreatedDomainEventConsumers.NotificationAggregate
+namespace SolTake.Application.DomainEventConsumers.UserUserFollowCreatedDomainEventConsumers.NotificationAggregate
 {
     public class CreateUserFollowedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<UserUserFollowCreatedDomainEvent>
     {

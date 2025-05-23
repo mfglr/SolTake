@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService;
+﻿using SolTake.Application.InfrastructureServices.BlobService;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {

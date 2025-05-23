@@ -2,7 +2,7 @@
 using SolTake.Domain.MessageAggregate.DomainEvents;
 using SolTake.Domain.MessageAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Queries.MessageDomain
+namespace SolTake.Application.Queries.MessageDomain
 {
     public class MessageResponseDto(int id, DateTime createdAt, DateTime? updatedAt, bool isOwner, string userName, int conversationId, int senderId, int receiverId, bool isEdited, string? content, MessageState state, IEnumerable<Multimedia> medias, Multimedia? multimedia)
     {

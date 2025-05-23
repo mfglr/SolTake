@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserFollowAggregate.Exceptions;
 using SolTake.Domain.UserUserFollowAggregate.Abstracts;
 using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 
-namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Unfollow
+namespace SolTake.Application.Commands.UserDomain.FollowAggregate.Unfollow
 {
     public class UnfollowHandler(IUnitOfWork unitOfWork, IUserUserFollowWriteRepository followWriteRepository, IUserAccessor userAccessor, IPublisher publisher) : IRequestHandler<UnfollowDto>
     {

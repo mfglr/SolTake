@@ -2,7 +2,7 @@
 using MediatR;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 
-namespace MySocailApp.Application.Queries.AppVersionAggregate.GetLatestVersion
+namespace SolTake.Application.Queries.AppVersionAggregate.GetLatestVersion
 {
     public class GetLatestVersionHandler(IAppVersionCacheService appVersionCacheService, IMapper mapper) : IRequestHandler<GetLatestVersionDto, AppVersionResponseDto>
     {

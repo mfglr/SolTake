@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.InfrastructureServices.IAService.Objects
+﻿namespace SolTake.Application.InfrastructureServices.IAService.Objects
 {
     public abstract class ChatGPT_Content(string type)
     {

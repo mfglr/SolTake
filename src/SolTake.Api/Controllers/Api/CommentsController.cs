@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.CommentDomain.CommentAggregate.CreateComment;
-using MySocailApp.Application.Commands.CommentDomain.CommentAggregate.DeleteComment;
-using MySocailApp.Application.Queries.CommentAggregate;
-using MySocailApp.Application.Queries.CommentAggregate.GetCommentById;
-using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByIds;
-using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByParentId;
-using MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId;
-using MySocailApp.Application.Queries.CommentAggregate.GetCommentsBySolutionId;
+using SolTake.Application.Commands.CommentDomain.CommentAggregate.CreateComment;
+using SolTake.Application.Commands.CommentDomain.CommentAggregate.DeleteComment;
+using SolTake.Application.Queries.CommentAggregate;
+using SolTake.Application.Queries.CommentAggregate.GetCommentById;
+using SolTake.Application.Queries.CommentAggregate.GetCommentsByIds;
+using SolTake.Application.Queries.CommentAggregate.GetCommentsByParentId;
+using SolTake.Application.Queries.CommentAggregate.GetCommentsByQuestionId;
+using SolTake.Application.Queries.CommentAggregate.GetCommentsBySolutionId;
 
 namespace MySocailApp.Api.Controllers.Api
 {

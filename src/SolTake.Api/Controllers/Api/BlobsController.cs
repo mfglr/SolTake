@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Application.InfrastructureServices.BlobService;
+﻿using Microsoft.AspNetCore.Mvc;
+using SolTake.Application.InfrastructureServices.BlobService;
 
 namespace MySocailApp.Api.Controllers.Api
 {

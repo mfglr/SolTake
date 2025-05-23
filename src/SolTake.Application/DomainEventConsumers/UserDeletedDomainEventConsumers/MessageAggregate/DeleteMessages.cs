@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.Abstracts;
 using SolTake.Domain.MessageAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.MessageAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.MessageAggregate
 {
     public class DeleteMessages(IMessageWriteRepository messageWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

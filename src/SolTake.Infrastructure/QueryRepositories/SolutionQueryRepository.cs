@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.Queries.SolutionDomain;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;

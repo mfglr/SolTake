@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdatePassword
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdatePassword
 {
     public class UpdatePasswordHandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<UpdatePasswordDto>
     {

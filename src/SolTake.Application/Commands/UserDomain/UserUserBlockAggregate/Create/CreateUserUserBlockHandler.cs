@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserBlockAggregate.Entities;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Domain.UserUserBlockAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserUserBlockAggregate.Create
+namespace SolTake.Application.Commands.UserDomain.UserUserBlockAggregate.Create
 {
     public class CreateUserUserBlockHandler(UserUserBlockCreatorDomainService userUserBlockCreatorDomainService, IAccessTokenReader accessTokenReader, IUserUserBlockRepository userUserBlockRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateUserUserBlockDto, CreateUserUserBlockResponseDto>
     {

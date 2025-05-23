@@ -1,9 +1,8 @@
-﻿using AutoMapper;
-using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+﻿using MediatR;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsByIds
+namespace SolTake.Application.Queries.CommentAggregate.GetCommentsByIds
 {
     public class GetCommentsByIdsHandler(ICommentQueryRepository commentQueryRepository,IAccessTokenReader accessTokenReader) : IRequestHandler<GetCommentsByIdsDto, List<CommentResponseDto>>
     {

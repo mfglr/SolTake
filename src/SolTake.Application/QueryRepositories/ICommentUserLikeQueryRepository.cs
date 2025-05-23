@@ -1,7 +1,7 @@
-﻿using MySocailApp.Application.Queries.CommentAggregate;
+﻿using SolTake.Application.Queries.CommentAggregate;
 using SolTake.Core;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface ICommentUserLikeQueryRepository
     {

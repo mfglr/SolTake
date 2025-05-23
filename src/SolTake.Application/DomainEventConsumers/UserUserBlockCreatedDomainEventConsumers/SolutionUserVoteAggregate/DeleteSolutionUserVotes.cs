@@ -1,10 +1,10 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
 using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.SolutionUserVoteAggregate
+namespace SolTake.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.SolutionUserVoteAggregate
 {
     public class DeleteSolutionUserVotes(ISolutionUserVoteWriteRepository solutionUserVoteWriteRepository, IUnitOfWork unitOfWork, ISolutionReadRepository solutionReadRepository) : IDomainEventConsumer<UserUserBlockCreatedDomainEvent>
     {

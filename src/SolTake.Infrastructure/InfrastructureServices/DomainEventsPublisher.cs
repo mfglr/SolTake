@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using MySocailApp.Infrastructure.DbContexts;
 using SolTake.Core;
 

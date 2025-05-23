@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserSearchAggregate.Abstracts;
 using SolTake.Domain.UserUserSearchAggregate.DomainServices;
 using SolTake.Domain.UserUserSearchAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserUserSearchAggregate.Create
+namespace SolTake.Application.Commands.UserDomain.UserUserSearchAggregate.Create
 {
     public class CreateUserUserSearchHandler(IUnitOfWork unitOfWork, IUserUserSearchWriteRepository userUserVisitWriteRepository, IUserAccessor userAccessor, UserUserSearchCreatorDomainService userUserSearchCreatorDomainService) : IRequestHandler<CreateUserUserSearchDto, CreateUserUserSearchResponseDto>
     {

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.Extentions
+﻿namespace SolTake.Application.Extentions
 {
     public static class StreamExtentions
     {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.QuestionDomain.GetVideoQuestions
+namespace SolTake.Application.Queries.QuestionDomain.GetVideoQuestions
 {
     public class GetVideoQuestionsHandler(IQuestionQueryRepository questionQueryRepository,IAccessTokenReader accessTokenReader) : IRequestHandler<GetVideoQuestionsDto, List<QuestionResponseDto>>
     {

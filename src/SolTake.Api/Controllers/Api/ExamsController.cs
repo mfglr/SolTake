@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Queries.ExamAggregate;
-using MySocailApp.Application.Queries.ExamAggregate.GetExamById;
-using MySocailApp.Application.Queries.ExamAggregate.GetExams;
+using SolTake.Application.Queries.ExamAggregate;
+using SolTake.Application.Queries.ExamAggregate.GetExamById;
+using SolTake.Application.Queries.ExamAggregate.GetExams;
 
 namespace MySocailApp.Api.Controllers.Api
 {

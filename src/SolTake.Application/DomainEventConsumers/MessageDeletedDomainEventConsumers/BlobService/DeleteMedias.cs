@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+﻿using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.BlobService
+namespace SolTake.Application.DomainEventConsumers.MessageDeletedDomainEventConsumers.BlobService
 {
     public class DeleteMedias(IBlobService blobService) : IDomainEventConsumer<MessageDeletedDomainEvent>
     {

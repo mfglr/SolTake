@@ -1,5 +1,5 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+﻿using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using Xabe.FFmpeg;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices

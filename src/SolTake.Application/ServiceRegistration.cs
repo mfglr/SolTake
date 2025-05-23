@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Application.InfrastructureServices.IAService;
-using MySocailApp.Application.PipelineBehaviours;
+using SolTake.Application.InfrastructureServices.IAService;
+using SolTake.Application.PipelineBehaviours;
 using System.Reflection;
 
-namespace MySocailApp.Application
+namespace SolTake.Application
 {
     public static class ServiceRegistration
     {

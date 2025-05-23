@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.InfrastructureServices.BlobService.Objects
+﻿namespace SolTake.Application.InfrastructureServices.BlobService.Objects
 {
     public static class ContainerName
     {

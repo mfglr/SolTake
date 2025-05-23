@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 
 namespace SolTake.Application.Commands.NotificationDomain.NotificationConnectionAggregate.DisconnectNotificationHub

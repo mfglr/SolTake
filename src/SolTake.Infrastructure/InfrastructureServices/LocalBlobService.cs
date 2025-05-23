@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService;
+﻿using SolTake.Application.InfrastructureServices.BlobService;
 using MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices

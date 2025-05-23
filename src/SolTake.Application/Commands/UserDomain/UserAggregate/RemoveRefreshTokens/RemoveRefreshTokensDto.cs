@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveRefreshTokens
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.RemoveRefreshTokens
 {
     public record RemoveRefreshTokensDto(string Token) : IRequest;
 }

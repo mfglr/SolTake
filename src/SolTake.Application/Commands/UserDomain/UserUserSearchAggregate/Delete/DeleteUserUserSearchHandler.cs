@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserSearchAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserUserSearchAggregate.Delete
+namespace SolTake.Application.Commands.UserDomain.UserUserSearchAggregate.Delete
 {
     public class DeleteUserUserSearchHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IUserUserSearchWriteRepository userUserVisitWriteRepository) : IRequestHandler<DeleteUserUserSearchDto>
     {

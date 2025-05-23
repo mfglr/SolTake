@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Application.Configurations;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService;
+using SolTake.Application.Configurations;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Domain.ExamAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;

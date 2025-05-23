@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using MySocailApp.Application.QueryRepositories;
-namespace MySocailApp.Application.Queries.AIModelAggregate.GetAIModels
+using SolTake.Application.QueryRepositories;
+namespace SolTake.Application.Queries.AIModelAggregate.GetAIModels
 {
     public class GetAllAIModelsHandler(IAIModelQueryRepository aiModelQueryRepository) : IRequestHandler<GetAllAIModelsDto, List<AIModelResponseDto>>
     {

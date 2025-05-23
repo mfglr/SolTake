@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.UserDomain.FollowAggregate.Follow;
-using MySocailApp.Application.Commands.UserDomain.FollowAggregate.Unfollow;
-using MySocailApp.Application.Commands.UserDomain.UserAggregate.RemoveFollower;
+using SolTake.Application.Commands.UserDomain.FollowAggregate.Follow;
+using SolTake.Application.Commands.UserDomain.FollowAggregate.Unfollow;
+using SolTake.Application.Commands.UserDomain.UserAggregate.RemoveFollower;
 using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
 using MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId;
 

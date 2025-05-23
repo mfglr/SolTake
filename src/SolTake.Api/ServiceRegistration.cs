@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Configurations;
+using SolTake.Application.Configurations;
 using SolTake.Domain.UserAggregate.Configurations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using SixLabors.ImageSharp.Processing;

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 using SolTake.Domain.QuestionAggregate.Exceptions;
 
-namespace MySocailApp.Application.Queries.QuestionDomain.GetQuestionById
+namespace SolTake.Application.Queries.QuestionDomain.GetQuestionById
 {
     public class GetQuestionByIdHandler(IQuestionQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetQuestionByIdDto, QuestionResponseDto>
     {

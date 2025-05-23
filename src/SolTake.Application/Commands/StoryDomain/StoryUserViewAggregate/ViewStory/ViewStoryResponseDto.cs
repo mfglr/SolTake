@@ -1,7 +1,7 @@
 ﻿using SolTake.Domain.StoryUserViewAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory
+namespace SolTake.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory
 {
     public class ViewStoryResponseDto(StoryUserView storyUserView, Login login)
     {

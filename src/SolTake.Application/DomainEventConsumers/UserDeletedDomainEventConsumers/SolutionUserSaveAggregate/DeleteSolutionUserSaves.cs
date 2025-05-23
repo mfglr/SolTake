@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionUserSaveAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.SolutionUserSaveAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.SolutionUserSaveAggregate
 {
     public class DeleteSolutionUserSaves(IUnitOfWork unitOfWork, ISolutionUserSaveWriteRepository solutionUserSaveWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MySocailApp.Application.Queries.CatchFrame
+namespace SolTake.Application.Queries.CatchFrame
 {
     public record CatchFrameDto(string ContainerName,string BlobName,double Position) : IRequest<byte[]>;
 }

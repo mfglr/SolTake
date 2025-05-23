@@ -3,19 +3,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion;
-using MySocailApp.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion;
-using MySocailApp.Application.Queries.QuestionDomain;
-using MySocailApp.Application.Queries.QuestionDomain.GetHomePageQuestions;
-using MySocailApp.Application.Queries.QuestionDomain.GetQuestionById;
-using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsByExamId;
-using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsBySubjectId;
-using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsByTopicId;
-using MySocailApp.Application.Queries.QuestionDomain.GetQuestionsByUserId;
-using MySocailApp.Application.Queries.QuestionDomain.GetSolvedQuestionsByUserId;
-using MySocailApp.Application.Queries.QuestionDomain.GetUnsolvedQuestionsByUserId;
-using MySocailApp.Application.Queries.QuestionDomain.GetVideoQuestions;
-using MySocailApp.Application.Queries.QuestionDomain.SearchQuestions;
+using SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion;
+using SolTake.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion;
+using SolTake.Application.Queries.QuestionDomain;
+using SolTake.Application.Queries.QuestionDomain.GetHomePageQuestions;
+using SolTake.Application.Queries.QuestionDomain.GetQuestionById;
+using SolTake.Application.Queries.QuestionDomain.GetQuestionsByExamId;
+using SolTake.Application.Queries.QuestionDomain.GetQuestionsBySubjectId;
+using SolTake.Application.Queries.QuestionDomain.GetQuestionsByTopicId;
+using SolTake.Application.Queries.QuestionDomain.GetQuestionsByUserId;
+using SolTake.Application.Queries.QuestionDomain.GetSolvedQuestionsByUserId;
+using SolTake.Application.Queries.QuestionDomain.GetUnsolvedQuestionsByUserId;
+using SolTake.Application.Queries.QuestionDomain.GetVideoQuestions;
+using SolTake.Application.Queries.QuestionDomain.SearchQuestions;
 
 namespace MySocailApp.Api.Controllers.Api
 {

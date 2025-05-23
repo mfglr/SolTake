@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory;
+using SolTake.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory;
 using MySocailApp.Application.Queries.StoryDomain;
 using MySocailApp.Application.Queries.StoryDomain.GetStoryUserViewsByStoryId;
 

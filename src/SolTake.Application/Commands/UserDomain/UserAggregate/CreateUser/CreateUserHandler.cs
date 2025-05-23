@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.Extentions;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.Extentions;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.DomainServices;
 using SolTake.Domain.UserAggregate.Entities;
@@ -9,7 +9,7 @@ using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Domain.UserAggregate.ValueObjects;
 
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.CreateUser
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.CreateUser
 {
     public class CreateUserHandler(UserCreatorDomainService userCreatorDomainService, IHttpContextAccessor contextAccessor, IUserWriteRepository userWriteRepository, IUnitOfWork unitOfWork, AccessTokenSetterDomainService accessTokenSetterDomainService) : IRequestHandler<CreateUserDto, LoginDto>
     {

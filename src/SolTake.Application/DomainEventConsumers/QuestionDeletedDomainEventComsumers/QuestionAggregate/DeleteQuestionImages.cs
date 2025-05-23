@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+﻿using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Domain.QuestionAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.QuestionDeletedDomainEventComsumers.QuestionAggregate
+namespace SolTake.Application.DomainEventConsumers.QuestionDeletedDomainEventComsumers.QuestionAggregate
 {
     public class DeleteQuestionImages(IBlobService blobService) : IDomainEventConsumer<QuestionDeletedDomainEvent>
     {

@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.InfrastructureServices.IAService.Objects
+﻿namespace SolTake.Application.InfrastructureServices.IAService.Objects
 {
     public class ChatGBT_Response(IEnumerable<ChatGPT_Choice> choices, ChatGPT_Usage usage, ChatGPT_Error? error)
     {

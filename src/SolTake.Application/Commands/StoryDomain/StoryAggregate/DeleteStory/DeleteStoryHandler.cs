@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.StoryAggregate.Abstracts;
 using SolTake.Domain.StoryAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.StoryDomain.StoryAggregate.DeleteStory
+namespace SolTake.Application.Commands.StoryDomain.StoryAggregate.DeleteStory
 {
     public class DeleteStoryHandler(IStoryRepository storyWriteRepository, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<DeleteStoryDto>
     {

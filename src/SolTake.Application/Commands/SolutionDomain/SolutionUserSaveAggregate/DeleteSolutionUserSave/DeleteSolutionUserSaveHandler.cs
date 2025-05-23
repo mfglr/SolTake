@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionUserSaveAggregate.Abstracts;
 using SolTake.Domain.SolutionUserSaveAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.UnsaveSolution
+namespace SolTake.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.UnsaveSolution
 {
     public class DeleteSolutionUserSaveHandler(IUnitOfWork unitOfWork, ISolutionUserSaveWriteRepository solutionUserSaveWriteRepository, IUserAccessor userAccessor) : IRequestHandler<DeleteSolutionUserSaveDto>
     {

@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.AccountCreatedDomainEventConsumers.AccountAggregate
+namespace SolTake.Application.DomainEventConsumers.AccountCreatedDomainEventConsumers.AccountAggregate
 {
     public class SendEmailConfirmationMail(IEmailService emailService) : IDomainEventConsumer<UserCreatedDomainEvent>
     {

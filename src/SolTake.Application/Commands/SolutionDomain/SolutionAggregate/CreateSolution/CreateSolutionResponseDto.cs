@@ -2,7 +2,7 @@
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
+namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
 {
     public class CreateSolutionResponseDto(Solution solution, Login login)
     {

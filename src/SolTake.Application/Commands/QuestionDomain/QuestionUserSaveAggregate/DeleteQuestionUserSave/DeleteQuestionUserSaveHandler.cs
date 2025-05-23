@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Exceptions;
 

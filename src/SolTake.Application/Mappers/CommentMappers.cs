@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Queries.CommentAggregate;
+using SolTake.Application.Queries.CommentAggregate;
 using SolTake.Domain.CommentUserLikeAggregate.Entities;
 
-namespace MySocailApp.Application.Mappers
+namespace SolTake.Application.Mappers
 {
     public class CommentMappers : Profile
     {

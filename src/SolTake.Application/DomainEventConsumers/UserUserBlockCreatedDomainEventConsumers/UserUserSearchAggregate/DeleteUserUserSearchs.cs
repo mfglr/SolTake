@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Domain.UserUserSearchAggregate.Abstracts;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.UserUserSearchAggregate
+namespace SolTake.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.UserUserSearchAggregate
 {
     public class DeleteUserUserSearchs(IUserUserSearchWriteRepository userUserSearchWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserUserBlockCreatedDomainEvent>
     {

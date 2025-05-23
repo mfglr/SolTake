@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionUserSaveAggregate.Abstracts;
 using SolTake.Domain.SolutionUserSaveAggregate.DomainServices;
 using SolTake.Domain.SolutionUserSaveAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.CreateSolutionUserSave
+namespace SolTake.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.CreateSolutionUserSave
 {
     public class CreateSolutionUserSaveHandler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, ISolutionUserSaveWriteRepository solutionUserSaveWriteRepository,SolutionUserSaveCreatorDomainService solutionUserSaveCreatorDomainService) : IRequestHandler<CreateSolutionUserSaveDto, CreateSolutionUserSaveResponseDto>
     {

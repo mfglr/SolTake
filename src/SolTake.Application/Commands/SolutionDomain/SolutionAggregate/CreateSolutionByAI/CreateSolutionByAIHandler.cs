@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Application.InfrastructureServices.IAService;
-using MySocailApp.Application.InfrastructureServices.IAService.Objects;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.InfrastructureServices.IAService;
+using SolTake.Application.InfrastructureServices.IAService.Objects;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Abstracts;
@@ -20,7 +20,7 @@ using SolTake.Domain.AIModelAggregate.Entities;
 using SolTake.Domain.AIModelAggregate.Exceptions;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
+namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
     public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository, IAIModelCacheService aiModelCacheService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionByAIResponseDto>
     {

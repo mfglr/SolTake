@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.Commands.AIModelAggregate.CreateAIModel;
+using SolTake.Application.Commands.AIModelAggregate.CreateAIModel;
 
 namespace SolTake.Application.Commands.AIModelAggregate.CreateAIModel
 {

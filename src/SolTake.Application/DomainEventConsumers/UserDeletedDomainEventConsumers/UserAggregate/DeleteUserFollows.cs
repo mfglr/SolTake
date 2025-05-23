@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Domain.UserUserFollowAggregate.Abstracts;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserAggregate
 {
     public class DeleteUserFollows(IUnitOfWork unitOfWork, IUserUserFollowWriteRepository followWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

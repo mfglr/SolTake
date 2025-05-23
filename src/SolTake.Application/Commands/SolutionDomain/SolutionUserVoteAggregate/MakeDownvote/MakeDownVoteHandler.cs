@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.SolutionUserVoteAggregate.Entities;
 using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
 using SolTake.Domain.SolutionUserVoteAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeDownvote
+namespace SolTake.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeDownvote
 {
     public class MakeDownVoteHandler(IUnitOfWork unitOfWork, ISolutionUserVoteWriteRepository solutionUserVoteWriteRepository,SolutionVoterDomainService solutionVoterDomainService, IAccessTokenReader accessTokenReader) : IRequestHandler<MakeDownvoteDto, MakeDownvoteResponseDto>
     {

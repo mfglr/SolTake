@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.Exceptions;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.Exceptions;
+using SolTake.Application.InfrastructureServices;
 using Newtonsoft.Json;
 using SolTake.Core;
 using System.IdentityModel.Tokens.Jwt;

@@ -1,8 +1,7 @@
-﻿using MySocailApp.Application.Extentions;
-using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.Extentions;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.ValueObjects;
 using SolTake.Core.Exceptions;
-
 
 namespace MySocailApp.Api.Middlewares
 {

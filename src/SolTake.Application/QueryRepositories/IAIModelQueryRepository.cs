@@ -1,6 +1,6 @@
-﻿using MySocailApp.Application.Queries.AIModelAggregate;
+﻿using SolTake.Application.Queries.AIModelAggregate;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface IAIModelQueryRepository
     {

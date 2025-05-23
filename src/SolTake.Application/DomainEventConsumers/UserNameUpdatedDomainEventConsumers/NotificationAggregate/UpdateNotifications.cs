@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserNameUpdatedDomainEventConsumers.NotificationAggregate
+namespace SolTake.Application.DomainEventConsumers.UserNameUpdatedDomainEventConsumers.NotificationAggregate
 {
     public class UpdateNotifications(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserNameUpdatedDomainEvent>
     {

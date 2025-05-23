@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Hubs;
+using SolTake.Application.Hubs;
 using SolTake.Domain.MessageUserReceiveAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.Abstracts;

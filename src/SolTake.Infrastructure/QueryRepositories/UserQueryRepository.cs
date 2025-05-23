@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySocailApp.Application.Queries.UserDomain;
 using MySocailApp.Application.Queries.UserDomain.SearchUsers;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 using SolTake.Domain.UserAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 using MySocailApp.Infrastructure.Extentions;

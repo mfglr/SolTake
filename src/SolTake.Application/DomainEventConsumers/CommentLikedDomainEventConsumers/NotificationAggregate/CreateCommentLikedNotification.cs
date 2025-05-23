@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.DomainEvents;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Core;
 using SolTake.Domain.CommentAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.CommentLikedDomainEventConsumers.NotificationAggregate
+namespace SolTake.Application.DomainEventConsumers.CommentLikedDomainEventConsumers.NotificationAggregate
 {
     public class CreateCommentLikedNotification(INotificationWriteRepository notificationWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IDomainEventConsumer<CommentLikedDomainEvent>
     {

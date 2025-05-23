@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Configurations;
+﻿using SolTake.Application.Configurations;
 using SolTake.Core;
 using System.Net.Mail;
 

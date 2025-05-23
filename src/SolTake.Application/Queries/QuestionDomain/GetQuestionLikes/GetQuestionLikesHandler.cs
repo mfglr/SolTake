@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.QuestionDomain.GetQuestionLikes
+namespace SolTake.Application.Queries.QuestionDomain.GetQuestionLikes
 {
     public class GetQuestionLikesHandler(IQuestionUserLikeQueryRepository repository) : IRequestHandler<GetQuestionLikesDto, List<QuestionUserLikeResponseDto>>
     {

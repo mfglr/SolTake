@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.Exceptions;
 using SolTake.Domain.UserAggregate.ValueObjects;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.ResetPassword
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.ResetPassword
 {
     public class ResetPasswordHandler(IUnitOfWork unitOfWork, IUserWriteRepository userWriteRepository) : IRequestHandler<ResetPasswordDto>
     {

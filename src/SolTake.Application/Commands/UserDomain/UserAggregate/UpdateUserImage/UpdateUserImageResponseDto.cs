@@ -1,7 +1,7 @@
 ﻿using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserImage
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdateUserImage
 {
     public class UpdateUserImageResponseDto
     {

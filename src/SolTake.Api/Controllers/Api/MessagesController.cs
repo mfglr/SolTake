@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.MessageDomain.MessageAggregate.CreateMessage;
+using SolTake.Application.Commands.MessageDomain.MessageAggregate.CreateMessage;
 
 namespace MySocailApp.Api.Controllers.Api
 {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.MessageDomain.GetMessagesByUserId
+namespace SolTake.Application.Queries.MessageDomain.GetMessagesByUserId
 {
     public class GetMessagesByUserIdHandler(IAccessTokenReader tokenReader, IMessageQueryRepository messageQueryRepository) : IRequestHandler<GetMessagesByUserIdDto, List<MessageResponseDto>>
     {

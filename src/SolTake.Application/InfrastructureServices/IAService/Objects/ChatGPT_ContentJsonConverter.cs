@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace MySocailApp.Application.InfrastructureServices.IAService.Objects
+namespace SolTake.Application.InfrastructureServices.IAService.Objects
 {
     public class ChatGPT_ContentJsonConverter : JsonConverter<ChatGPT_Content>
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Extentions;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.Extentions;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.Exceptions;
 

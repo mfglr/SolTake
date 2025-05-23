@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.Configurations
+﻿namespace SolTake.Application.Configurations
 {
     public class ApplicationSettings(string applicationUrl, string apiUrl, string blobUrl) : IApplicationSettings
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 
 namespace MySocailApp.Infrastructure.QueryRepositories
 {

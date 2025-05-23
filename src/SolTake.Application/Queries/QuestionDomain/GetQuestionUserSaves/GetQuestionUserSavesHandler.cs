@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.QuestionDomain.GetQuestionUserSaves
+namespace SolTake.Application.Queries.QuestionDomain.GetQuestionUserSaves
 {
     public class GetQuestionUserSavesHandler(IQuestionUserSaveQueryRepository questionUserSaveQueryRepository, IUserAccessor userAccessor) : IRequestHandler<GetQuestionUserSavesDto, List<QuestionUserSaveResponseDto>>
     {

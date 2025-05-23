@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Application.Queries.QuestionDomain
+﻿namespace SolTake.Application.Queries.QuestionDomain
 {
     public record QuestionUserSaveResponseDto(int Id, QuestionResponseDto Question);
 }

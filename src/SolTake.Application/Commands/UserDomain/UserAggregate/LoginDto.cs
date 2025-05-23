@@ -1,6 +1,6 @@
 ﻿using SolTake.Domain.UserAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate
+namespace SolTake.Application.Commands.UserDomain.UserAggregate
 {
     public class LoginDto(User user)
     {

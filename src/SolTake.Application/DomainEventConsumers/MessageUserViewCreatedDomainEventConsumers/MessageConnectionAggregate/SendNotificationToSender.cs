@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Hubs;
+using SolTake.Application.Hubs;
 using SolTake.Domain.MessageUserViewAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.MessageAggregate.Abstracts;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 using SolTake.Domain.MessageConnectionAggregate.ValueObjects;
 
-namespace MySocailApp.Application.DomainEventConsumers.MessageUserViewCreatedDomainEventConsumers.MessageConnectionAggregate
+namespace SolTake.Application.DomainEventConsumers.MessageUserViewCreatedDomainEventConsumers.MessageConnectionAggregate
 {
     public class SendNotificationToSender(IMessageConnectionReadRepository messageConnectionReadRepository, IHubContext<MessageHub> messageHub, IMessageReadRepository messageReadRepository) : IDomainEventConsumer<MessageUserViewCreatedDomainEvent>
     {

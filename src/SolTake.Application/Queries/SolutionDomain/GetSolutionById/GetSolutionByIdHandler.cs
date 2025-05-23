@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 
 namespace MySocailApp.Application.Queries.SolutionDomain.GetSolutionById

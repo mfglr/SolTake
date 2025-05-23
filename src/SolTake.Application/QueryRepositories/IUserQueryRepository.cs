@@ -2,7 +2,7 @@
 using MySocailApp.Application.Queries.UserDomain.SearchUsers;
 using SolTake.Core;
 
-namespace MySocailApp.Application.QueryRepositories
+namespace SolTake.Application.QueryRepositories
 {
     public interface IUserQueryRepository
     {

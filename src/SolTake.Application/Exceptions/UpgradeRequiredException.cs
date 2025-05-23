@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Application.Exceptions
+namespace SolTake.Application.Exceptions
 {
     public class UpgradeRequiredException : AppException
     {

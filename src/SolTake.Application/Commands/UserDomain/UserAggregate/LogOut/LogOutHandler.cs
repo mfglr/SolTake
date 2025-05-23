@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.LogOut
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.LogOut
 {
     public class LogOutHandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<LogOutDto>
     {

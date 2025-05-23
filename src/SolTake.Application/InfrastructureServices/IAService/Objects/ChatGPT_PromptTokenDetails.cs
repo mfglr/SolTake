@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MySocailApp.Application.InfrastructureServices.IAService.Objects
+namespace SolTake.Application.InfrastructureServices.IAService.Objects
 {
     public record ChatGPT_PromptTokenDetails(
         [JsonProperty("cached_tokens")] int CahcedTokens,

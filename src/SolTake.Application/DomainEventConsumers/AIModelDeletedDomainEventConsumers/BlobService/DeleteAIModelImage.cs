@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService;
+﻿using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Core;
 using SolTake.Domain.AIModelAggregate.DomainEvents;
 
-namespace MySocailApp.Application.DomainEventConsumers.AIModelDeletedDomainEventConsumers.BlobService
+namespace SolTake.Application.DomainEventConsumers.AIModelDeletedDomainEventConsumers.BlobService
 {
     public class DeleteAIModelImage(IBlobService blobService) : IDomainEventConsumer<AIModelDeletedDomainEvent>
     {

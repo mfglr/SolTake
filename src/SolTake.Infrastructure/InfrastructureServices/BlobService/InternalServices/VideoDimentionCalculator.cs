@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+﻿using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using OpenCvSharp;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices

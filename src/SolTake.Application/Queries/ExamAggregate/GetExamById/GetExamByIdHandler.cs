@@ -3,7 +3,7 @@ using MediatR;
 using SolTake.Domain.ExamAggregate.Exceptions;
 using SolTake.Domain.ExamAggregate.Interfaces;
 
-namespace MySocailApp.Application.Queries.ExamAggregate.GetExamById
+namespace SolTake.Application.Queries.ExamAggregate.GetExamById
 {
     public class GetExamByIdHandler(IExamReadRepository examReadRepository, IMapper mapper) : IRequestHandler<GetExamByIdDto, ExamResponseDto>
     {

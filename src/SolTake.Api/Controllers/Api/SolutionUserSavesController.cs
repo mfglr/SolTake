@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.CreateSolutionUserSave;
-using MySocailApp.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.UnsaveSolution;
+using SolTake.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.CreateSolutionUserSave;
+using SolTake.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.UnsaveSolution;
 using MySocailApp.Application.Queries.SolutionDomain;
 using MySocailApp.Application.Queries.SolutionDomain.GetSavedSolutions;
 

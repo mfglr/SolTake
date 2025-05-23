@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.CommentAggregate.GetCommentsByQuestionId
+namespace SolTake.Application.Queries.CommentAggregate.GetCommentsByQuestionId
 {
     public class GetCommentsByQuestionIdHandler(ICommentQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetCommentsByQuestionIdDto, List<CommentResponseDto>>
     {

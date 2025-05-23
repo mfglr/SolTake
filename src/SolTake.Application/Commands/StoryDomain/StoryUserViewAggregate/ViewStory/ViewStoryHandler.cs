@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.StoryUserViewAggregate.Entities;
 using SolTake.Domain.StoryUserViewAggregate.Absracts;
 using SolTake.Domain.StoryUserViewAggregate.DomainServices;
 
-namespace MySocailApp.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory
+namespace SolTake.Application.Commands.StoryDomain.StoryUserViewAggregate.ViewStory
 {
     public class ViewStoryHandler(IUnitOfWork unitOfWork, StoryUserViewCreatorDomainService storyUserViewCreatorDomainService, IStoryUserViewRepository storyUserViewRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<ViewStoryDto, ViewStoryResponseDto>
     {

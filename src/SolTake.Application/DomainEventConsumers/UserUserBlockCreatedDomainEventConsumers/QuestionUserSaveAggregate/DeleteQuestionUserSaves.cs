@@ -1,10 +1,10 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Abstracts;
 using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.QuestionUserSaveAggregate
+namespace SolTake.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.QuestionUserSaveAggregate
 {
     public class DeleteQuestionUserSaves(IQuestionUserSaveWriteRepository questionUserSaveWriteRepository, IUnitOfWork unitOfWork, IQuestionReadRepository questionReadRepository) : IDomainEventConsumer<UserUserBlockCreatedDomainEvent>
     {

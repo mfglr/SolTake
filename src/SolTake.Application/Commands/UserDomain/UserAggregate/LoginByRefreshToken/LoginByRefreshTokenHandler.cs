@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.DomainServices;
 using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.LoginByRefreshToken
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.LoginByRefreshToken
 {
     public class LoginByRefreshTokenHandler(IUserWriteRepository userWriteRepository, AuthenticatorDomainService authenticatorDomainService,  AccessTokenSetterDomainService accessTokenSetterDomainService, IUnitOfWork unitOfWork) : IRequestHandler<LoginByRefreshTokenDto, LoginDto>
     {

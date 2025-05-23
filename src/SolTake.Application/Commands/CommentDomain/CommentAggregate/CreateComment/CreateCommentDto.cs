@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.Queries.CommentAggregate;
+using SolTake.Application.Queries.CommentAggregate;
 
 namespace SolTake.Application.Commands.CommentDomain.CommentAggregate.CreateComment
 {

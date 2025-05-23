@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.MessageDomain.GetUnviewedMessages
+namespace SolTake.Application.Queries.MessageDomain.GetUnviewedMessages
 {
     public class GetUnviewedMessagesHandler(IMessageQueryRepository messageQueryRepository, IAccessTokenReader tokenReader) : IRequestHandler<GetUnviewedMessagesDto, List<MessageResponseDto>>
     {

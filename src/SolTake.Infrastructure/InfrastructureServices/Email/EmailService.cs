@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using System.Net.Mail;
 

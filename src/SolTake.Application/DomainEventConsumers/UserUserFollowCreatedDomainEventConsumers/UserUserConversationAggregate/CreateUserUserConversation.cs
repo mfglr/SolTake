@@ -1,11 +1,11 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserConversationAggregate.Abstracts;
 using SolTake.Domain.UserUserConversationAggregate.DomainServices;
 using SolTake.Domain.UserUserConversationAggregate.Entities;
 using SolTake.Domain.UserUserFollowAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUserFollowCreatedDomainEventConsumers.UserUserConversationAggregate
+namespace SolTake.Application.DomainEventConsumers.UserUserFollowCreatedDomainEventConsumers.UserUserConversationAggregate
 {
     internal class CreateUserUserConversation(IUserUserConversationWriteRepository userUserConversationWriteRepository, IUnitOfWork unitOfWork, UserUserConversationCreatorDomainService userUserConversationCreatorDomainService) : IDomainEventConsumer<UserUserFollowCreatedDomainEvent>
     {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.BalanceAggregate.GetBalance
+namespace SolTake.Application.Queries.BalanceAggregate.GetBalance
 {
     public class GetBalanceHandler(IBalanceQueryRepository balanceQueryRepository) : IRequestHandler<GetBalanceDto, BalanceResponseDto>
     {

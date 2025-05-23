@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.Queries.AccountAggregate.IsUserNameExist;
+using SolTake.Application.Queries.AccountAggregate.IsUserNameExist;
 using SolTake.Domain.UserAggregate.Abstracts;
 
-namespace MySocailApp.Application.Queries.UserAggregate.IsUserNameExist
+namespace SolTake.Application.Queries.UserAggregate.IsUserNameExist
 {
     public class IsUserNameExistHandler(IUserReadRepository userReadRepository) : IRequestHandler<IsUserNameExistDto, bool>
     {

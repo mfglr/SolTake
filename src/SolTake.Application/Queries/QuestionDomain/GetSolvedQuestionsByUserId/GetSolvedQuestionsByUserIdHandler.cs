@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.QuestionDomain.GetSolvedQuestionsByUserId
+namespace SolTake.Application.Queries.QuestionDomain.GetSolvedQuestionsByUserId
 {
     public class GEtSolvedQuestionsByUserIdHandler(IQuestionQueryRepository questionReadRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetSolvedQuestionsByUserIdDto, List<QuestionResponseDto>>
     {

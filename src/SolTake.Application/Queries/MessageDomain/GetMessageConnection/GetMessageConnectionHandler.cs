@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySocailApp.Application.QueryRepositories;
+using SolTake.Application.QueryRepositories;
 using SolTake.Domain.MessageConnectionAggregate.Exceptions;
 
-namespace MySocailApp.Application.Queries.MessageDomain.GetMessageConnection
+namespace SolTake.Application.Queries.MessageDomain.GetMessageConnection
 {
     public class GetMessageConnectionHandler(IMessageConnectionQueryRepository messageConnectionQueryRepository) : IRequestHandler<GetMessageConnectionDto, MessageConnectionResponseDto>
     {

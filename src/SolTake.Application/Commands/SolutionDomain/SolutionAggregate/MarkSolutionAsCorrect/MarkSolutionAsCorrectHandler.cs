@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.DomainServices;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 
-namespace MySocailApp.Application.Commands.SolutionDomain.SolutionAggregate.MarkSolutionAsCorrect
+namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.MarkSolutionAsCorrect
 {
     public class MarkSolutionAsCorrectHandler(ISolutionWriteRepository solutionWriteRepository, SolutionStateMarkerDomainService solutionStateMarker, IUnitOfWork unitOfWork, IAccessTokenReader accessTokenReader) : IRequestHandler<MarkSolutionAsCorrectDto>
     {

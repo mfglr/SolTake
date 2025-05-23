@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.BalanceAggregate.GetBalance;
+﻿using SolTake.Application.Queries.BalanceAggregate.GetBalance;
 using SolTake.Domain.BalanceAggregate.Entities;
 
 namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers

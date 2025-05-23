@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserConnectionAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserConnectionAggregate
 {
     public class DeleteUserConnection(IMessageConnectionWriteRepository userConnectionWriteRepository, IUnitOfWork unitOfWork) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

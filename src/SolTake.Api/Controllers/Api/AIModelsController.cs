@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.AIModelAggregate.CreateAIModel;
-using MySocailApp.Application.Commands.AIModelAggregate.DeleteAIModel;
-using MySocailApp.Application.Commands.AIModelAggregate.UpdateAIModelCommission;
-using MySocailApp.Application.Commands.AIModelAggregate.UpdateAIModelImage;
-using MySocailApp.Application.Queries.AIModelAggregate;
-using MySocailApp.Application.Queries.AIModelAggregate.GetAIModels;
+using SolTake.Application.Commands.AIModelAggregate.CreateAIModel;
+using SolTake.Application.Commands.AIModelAggregate.DeleteAIModel;
+using SolTake.Application.Commands.AIModelAggregate.UpdateAIModelCommission;
+using SolTake.Application.Commands.AIModelAggregate.UpdateAIModelImage;
+using SolTake.Application.Queries.AIModelAggregate;
+using SolTake.Application.Queries.AIModelAggregate.GetAIModels;
 
 namespace MySocailApp.Api.Controllers.Api
 {

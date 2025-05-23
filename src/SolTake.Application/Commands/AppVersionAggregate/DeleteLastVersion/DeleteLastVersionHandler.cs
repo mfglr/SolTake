@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 
 namespace SolTake.Application.Commands.AppVersionAggregate.DeleteLastVersion

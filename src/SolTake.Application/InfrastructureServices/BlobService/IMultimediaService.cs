@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SolTake.Core;
 
-namespace MySocailApp.Application.InfrastructureServices.BlobService
+namespace SolTake.Application.InfrastructureServices.BlobService
 {
     public interface IMultimediaService
     {

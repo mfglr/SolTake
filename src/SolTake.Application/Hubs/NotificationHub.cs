@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Application.Commands.NotificationDomain.NotificationConnectionAggregate.ConnectNotificationHub;
-using MySocailApp.Application.Commands.NotificationDomain.NotificationConnectionAggregate.DisconnectNotificationHub;
+using SolTake.Application.Commands.NotificationDomain.NotificationConnectionAggregate.ConnectNotificationHub;
+using SolTake.Application.Commands.NotificationDomain.NotificationConnectionAggregate.DisconnectNotificationHub;
 
-namespace MySocailApp.Application.Hubs
+namespace SolTake.Application.Hubs
 {
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class NotificationHub(IMediator mediator) : Hub

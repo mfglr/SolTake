@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.ApprovePrivacyPolicy
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.ApprovePrivacyPolicy
 {
     public class ApprovePrivacyPolicyHandler(IUserAccessor accountAccessor, IUnitOfWork unitOfWork) : IRequestHandler<ApprovePrivacyPolicyDto>
     {

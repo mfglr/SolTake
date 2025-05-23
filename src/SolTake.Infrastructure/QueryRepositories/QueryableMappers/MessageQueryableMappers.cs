@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.MessageDomain;
+﻿using SolTake.Application.Queries.MessageDomain;
 using MySocailApp.Infrastructure.DbContexts;
 using SolTake.Domain.MessageAggregate.Entities;
 using SolTake.Domain.MessageAggregate.ValueObjects;

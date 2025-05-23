@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.QuestionDomain;
+﻿using SolTake.Application.Queries.QuestionDomain;
 using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 using MySocailApp.Infrastructure.DbContexts;
 

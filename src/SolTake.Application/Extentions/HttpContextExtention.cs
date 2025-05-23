@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MySocailApp.Application.Exceptions;
+using SolTake.Application.Exceptions;
 using SolTake.Core.Exceptions;
 using System.Security.Claims;
 using System.Text;
 
-namespace MySocailApp.Application.Extentions
+namespace SolTake.Application.Extentions
 {
     public static class HttpContextExtention
     {

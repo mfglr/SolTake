@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.DomainEvents;
@@ -7,7 +7,7 @@ using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.UserUserBlockAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.SolutionAggregate
+namespace SolTake.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.SolutionAggregate
 {
     public class DeleteSolutions(ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IQuestionReadRepository questionReadRepository, IPublisher publisher) : IDomainEventConsumer<UserUserBlockCreatedDomainEvent>
     {

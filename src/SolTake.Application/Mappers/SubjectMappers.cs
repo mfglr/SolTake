@@ -2,7 +2,7 @@
 using MySocailApp.Application.Queries.SubjectAggregate;
 using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Application.Mappers
+namespace SolTake.Application.Mappers
 {
     public class SubjectMappers : Profile
     {

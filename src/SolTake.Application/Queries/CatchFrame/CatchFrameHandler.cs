@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using MySocailApp.Application.Extentions;
-using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.Extentions;
+using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 
-namespace MySocailApp.Application.Queries.CatchFrame
+namespace SolTake.Application.Queries.CatchFrame
 {
     public class CatchFrameHandler(IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IPathFinder pathFinder) : IRequestHandler<CatchFrameDto, byte[]>
     {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Queries.AppVersionAggregate;
+using SolTake.Application.Queries.AppVersionAggregate;
 using SolTake.Domain.AppVersionAggregate.Entities;
 
-namespace MySocailApp.Application.Mappers
+namespace SolTake.Application.Mappers
 {
     public class AppVersionMappers : Profile
     {

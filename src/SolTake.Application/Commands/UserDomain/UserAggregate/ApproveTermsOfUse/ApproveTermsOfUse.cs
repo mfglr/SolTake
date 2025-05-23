@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.ApproveTermsOfUse
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.ApproveTermsOfUse
 {
     public record ApproveTermsOfUse : IRequest;
 }

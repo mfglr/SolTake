@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+﻿using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.UserAggregate
 {
     public class DeleteProfileImage(IBlobService blobService) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

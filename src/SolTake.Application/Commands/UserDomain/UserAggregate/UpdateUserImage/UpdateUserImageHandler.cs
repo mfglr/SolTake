@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
-using MySocailApp.Application.InfrastructureServices.BlobService;
-using MySocailApp.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices.BlobService;
+using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Domain.UserAggregate.DomainServices;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserImage
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdateUserImage
 {
     public class UpdateUserImageHandler(IUnitOfWork unitOfWork, IMultimediaService multiMediaService, IBlobService blobService, IUserAccessor userAccessor, UserManipulator userImageManipulator) : IRequestHandler<UpdateUserImageDto, UpdateUserImageResponseDto>
     {

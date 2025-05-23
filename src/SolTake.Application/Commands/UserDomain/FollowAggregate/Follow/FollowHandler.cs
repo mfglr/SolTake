@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserUserFollowAggregate.Abstracts;
 using SolTake.Domain.UserUserFollowAggregate.DomainServices;
 using SolTake.Domain.UserUserFollowAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.UserDomain.FollowAggregate.Follow
+namespace SolTake.Application.Commands.UserDomain.FollowAggregate.Follow
 {
     public class FollowHandler(IUnitOfWork unitOfWork, IUserUserFollowWriteRepository followWriteRepository, IAccessTokenReader accessTokenReader, UserUserFollowCreatorDomainService userFollowerDomainService) : IRequestHandler<FollowDto, FollowCommandResponseDto>
     {

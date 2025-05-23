@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.DomainEvents;
 using SolTake.Domain.QuestionAggregate.Abstracts;
@@ -8,7 +8,7 @@ using SolTake.Core;
 using SolTake.Domain.CommentAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.CommentAggregate
+namespace SolTake.Application.DomainEventConsumers.UserUserBlockCreatedDomainEventConsumers.CommentAggregate
 {
     public class DeleteComments(ICommentWriteRepository commentWriteRepsository, IUnitOfWork unitOfWork, IQuestionReadRepository questionReadRepository, ISolutionReadRepository solutionReadRepository, ICommentReadRepository commentReadRepository, IPublisher publisher) : IDomainEventConsumer<UserUserBlockCreatedDomainEvent>
     {

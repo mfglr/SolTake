@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySocailApp.Api.Filters;
-using MySocailApp.Application.Commands.NotificationDomain.NotificationAggregate.MarkAsViewedNotifications;
-using MySocailApp.Application.Queries.NotificationAggregate;
-using MySocailApp.Application.Queries.NotificationAggregate.GetUnviewedNotifications;
-using MySocailApp.Application.Queries.NotificationAggregate.GetViewedNotifications;
+using SolTake.Application.Commands.NotificationDomain.NotificationAggregate.MarkAsViewedNotifications;
+using SolTake.Application.Queries.NotificationAggregate;
+using SolTake.Application.Queries.NotificationAggregate.GetUnviewedNotifications;
+using SolTake.Application.Queries.NotificationAggregate.GetViewedNotifications;
 
 namespace MySocailApp.Api.Controllers.Api
 {

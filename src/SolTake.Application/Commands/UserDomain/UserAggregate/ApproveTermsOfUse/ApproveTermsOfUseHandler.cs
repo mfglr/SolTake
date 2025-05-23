@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySocailApp.Application.InfrastructureServices;
+using SolTake.Application.InfrastructureServices;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.ApproveTermsOfUse
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.ApproveTermsOfUse
 {
     public class ApproveTermsOfUseHandler(IUserAccessor userAccessor, IUnitOfWork unitOfWork) : IRequestHandler<ApproveTermsOfUse>
     {

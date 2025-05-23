@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.InfrastructureServices;
+﻿using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.DomainEvents;
 using SolTake.Core;
 using SolTake.Domain.CommentUserLikeAggregate.Abstracts;
 
-namespace MySocailApp.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.CommentUserLikeAggregate
+namespace SolTake.Application.DomainEventConsumers.UserDeletedDomainEventConsumers.CommentUserLikeAggregate
 {
     public class DeleteCommentUserLikes(IUnitOfWork unitOfWork, ICommentUserLikeWriteRepository commentUserLikeWriteRepository) : IDomainEventConsumer<UserDeletedDomainEvent>
     {

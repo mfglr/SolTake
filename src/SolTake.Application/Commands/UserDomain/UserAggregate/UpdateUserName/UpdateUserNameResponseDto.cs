@@ -1,6 +1,6 @@
 ﻿using SolTake.Domain.UserAggregate.Entities;
 
-namespace MySocailApp.Application.Commands.UserDomain.UserAggregate.UpdateUserName
+namespace SolTake.Application.Commands.UserDomain.UserAggregate.UpdateUserName
 {
     public class UpdateUserNameResponseDto
     {
