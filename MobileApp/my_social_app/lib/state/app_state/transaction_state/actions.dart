@@ -20,3 +20,17 @@ class NextTransactionsSuccessAction extends TransactionAction{
 class NextTransactionsFailedAction extends TransactionAction{
   const NextTransactionsFailedAction();
 }
+
+@immutable
+class FirstTransactionsAction extends TransactionAction{
+  const FirstTransactionsAction();
+}
+@immutable
+class FirstTransactionsSuccessAction extends TransactionAction{
+  final Iterable<TransactionState> transactions;
+  const FirstTransactionsSuccessAction({required this.transactions});
+}
+@immutable
+class FirstTransactionsFailedAction extends TransactionAction{
+  const FirstTransactionsFailedAction();
+}

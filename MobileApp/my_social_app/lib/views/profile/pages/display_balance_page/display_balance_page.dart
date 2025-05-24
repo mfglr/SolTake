@@ -53,81 +53,89 @@ class _DisplayBalancePageState extends State<DisplayBalancePage> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: LanguageWidget(
-          child: (language) => AppTitle(
-            title: title[language]!
-          )
+    return RefreshIndicator(
+      onRefresh: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        store.dispatch(const LoadBalanceAction());
+        store.dispatch(const FirstTransactionsAction());
+        return store.onChange.map((state) => state.transactions).firstWhere((x) => !x.loadingNext);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: LanguageWidget(
+            child: (language) => AppTitle(
+              title: title[language]!
+            )
+          ),
         ),
-      ),
-      body: StoreConnector<AppState, (BalanceState, Pagination<int, TransactionState>)>(
-        onInit: (store){
-          store.dispatch(const LoadBalanceAction());
-          getNextEntitiesIfNoPage(store, selectTransactionPagination(store), const NextTransactionsAction());
-        },
-        converter: (store) => (store.state.balance,selectTransactionPagination(store)),
-        builder: (context, state) => Container(
-          margin: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+        body: SingleChildScrollView(
+          controller: _scrollController,
+          child: StoreConnector<AppState, (BalanceState, Pagination<int, TransactionState>)>(
+            onInit: (store){
+              store.dispatch(const LoadBalanceAction());
+              getNextEntitiesIfNoPage(store, selectTransactionPagination(store), const NextTransactionsAction());
+            },
+            converter: (store) => (store.state.balance,selectTransactionPagination(store)),
+            builder: (context, state) => Container(
+              margin: const EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 5),
-                            child: const FaIcon(
-                              FontAwesomeIcons.coins,
-                              color: Colors.amber,
-                              size: 40,
-                            ),
+                          Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(right: 5),
+                                child: const FaIcon(
+                                  FontAwesomeIcons.coins,
+                                  color: Colors.amber,
+                                  size: 40,
+                                ),
+                              ),
+                              Text(
+                                "${state.$1.balance} Sol",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
                           ),
-                          Text(
-                            "${state.$1.balance} Sol",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
+                          const AddFundsButton()
                         ],
                       ),
-                      const AddFundsButton()
+                    ),
+                  ),
+                  
+                  Container(
+                    margin: const EdgeInsets.only(top: 8,bottom: 8),
+                    child: LanguageWidget(
+                      child: (language) => Text(
+                        transactionHistory[language]!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                  ),
+                
+                  Column(
+                    children: [
+                      TransactionsWidget(
+                        transactions: state.$2.values,
+                      ),
+                      if(state.$2.loadingNext)
+                        const LoadingCircleWidget()
                     ],
-                  ),
-                ),
+                  )
+                
+                ],
               ),
-              
-              Container(
-                margin: const EdgeInsets.only(top: 8,bottom: 8),
-                child: LanguageWidget(
-                  child: (language) => Text(
-                    transactionHistory[language]!,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-              ),
-
-              SingleChildScrollView(
-                controller: _scrollController,
-                child: Column(
-                  children: [
-                    TransactionsWidget(
-                      transactions: state.$2.values,
-                    ),
-                    if(state.$2.loadingNext)
-                      const LoadingCircleWidget()
-                  ],
-                ),
-              )
-
-            ],
+            ),
           ),
         ),
       ),

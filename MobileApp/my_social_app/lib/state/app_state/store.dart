@@ -128,6 +128,7 @@ final store = Store(
 
     //transactions state
     nextTransactionsMiddleware,
+    firstTransactionsMiddleware,
     //transactions state
 
     //exams middlewares
