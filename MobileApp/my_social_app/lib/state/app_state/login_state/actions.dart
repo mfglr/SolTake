@@ -3,13 +3,13 @@ import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 
 @immutable
+class NotLoginAction extends AppAction{
+  const NotLoginAction();
+}
+@immutable
 class LoginSuccessAction extends AppAction{
   final LoginState payload;
   const LoginSuccessAction({required this.payload});
-}
-@immutable
-class LoginFailedAction extends AppAction{
-  const LoginFailedAction();
 }
 
 

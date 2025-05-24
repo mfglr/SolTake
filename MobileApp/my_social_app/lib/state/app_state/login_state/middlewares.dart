@@ -12,7 +12,6 @@ import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/application_init_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
@@ -46,6 +45,7 @@ void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){
       .create(action.email, action.password, action.passwordConfirmation)
       .then((login){
         _setAccount(store, login);
+        store.dispatch(LoginSuccessAction(payload: login.toLoginState()));
       })
       .catchError((e){
         throw e;
@@ -64,18 +64,18 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
             .loginByRefreshtoken(prev.id, prev.refreshToken)
             .then((account){
               _setAccount(store, account);
-              store.dispatch(const LoginSuccessAction());
+              store.dispatch(LoginSuccessAction(payload: account.toLoginState()));
             })
             .catchError((error){
               if((error is BackendException && error.statusCode == 426)){
                 _clearSession(store);
               }
-              store.dispatch(const LoginSuccessAction());
+              store.dispatch(const NotLoginAction());
               throw error;
             });
         }
         else{
-          store.dispatch(const LoginSuccessAction());
+          store.dispatch(const NotLoginAction());
         }
       });
   }
@@ -118,6 +118,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
               .loginByGoogle(accessToken)
               .then((account){
                 _setAccount(store, account);
+                store.dispatch(LoginSuccessAction(payload: account.toLoginState()));
               })
               .catchError((e){
                 _googleSignIn.disconnect();

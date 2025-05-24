@@ -16,7 +16,7 @@ class ChangeLanguagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,LoginState>(
-      converter: (store) => store.state.loginState!,
+      converter: (store) => store.state.login.login!,
       builder:(context,account) => Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),

@@ -8,13 +8,13 @@ import 'package:redux/redux.dart';
 String getLanguage(BuildContext context){
   final store = StoreProvider.of<AppState>(context,listen: false);
   return
-    store.state.loginState?.language ?? 
+    store.state.login.login?.language ?? 
     Languages.language(PlatformDispatcher.instance.locale.languageCode);
 }
 
 
 String getLanguageByStore(Store<AppState> store){
   return
-    store.state.loginState?.language ?? 
+    store.state.login.login?.language ?? 
     Languages.language(PlatformDispatcher.instance.locale.languageCode);
 }

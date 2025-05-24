@@ -26,7 +26,7 @@ class _RootViewState extends State<RootView> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState?>(
       onInit: (store){
-        store.dispatch(LoadUserAction(userId: store.state.loginState!.id));
+        store.dispatch(LoadUserAction(userId: store.state.login.login!.id));
         store.dispatch(const GetStoriesAction());
       },
       converter: (store) => store.state.currentUser,

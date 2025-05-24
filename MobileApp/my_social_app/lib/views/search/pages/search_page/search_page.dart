@@ -71,8 +71,8 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     final store = StoreProvider.of<AppState>(context,listen: false);
     _labels = [
-      labelQuestion[store.state.loginState!.language]!,
-      labelUser[store.state.loginState!.language]!
+      labelQuestion[store.state.login.login!.language]!,
+      labelUser[store.state.login.login!.language]!
     ];
 
     _pageController.addListener(_setPage);

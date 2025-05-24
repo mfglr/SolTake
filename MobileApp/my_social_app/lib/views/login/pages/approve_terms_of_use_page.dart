@@ -48,7 +48,7 @@ class _ApproveTermsOfUsePageState extends State<ApproveTermsOfUsePage> {
                   ],
                 ),
                 StoreConnector<AppState,String?>(
-                  onInit: (store) => store.dispatch(LoadTermsOfUseAction(language: store.state.loginState!.language)),
+                  onInit: (store) => store.dispatch(LoadTermsOfUseAction(language: store.state.login.login!.language)),
                   converter: (store) => store.state.selectTermsOfUse,
                   builder: (context,termsOfUse){
                     if(termsOfUse == null) return const LoadingCircleWidget();

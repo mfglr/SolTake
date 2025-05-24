@@ -45,7 +45,7 @@ void followMiddleware(Store<AppState> store,action,NextDispatcher next){
       .follow(action.followedId)
       .then((response){
         store.dispatch(FollowUserSuccessAction(
-          currentUserId: store.state.loginState!.id,
+          currentUserId: store.state.login.login!.id,
           followedId: action.followedId,
           followId: response.id
         ));
@@ -58,7 +58,7 @@ void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
     FollowService()
       .unfollow(action.followedId)
       .then((_) => store.dispatch(UnfollowUserSuccessAction(
-        currentUserId: store.state.loginState!.id,
+        currentUserId: store.state.login.login!.id,
         followedId: action.followedId
       )));
   }
@@ -68,7 +68,7 @@ void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is RemoveFollowerAction){
     FollowService()
       .removeFollower(action.followerId)
-      .then((_) => store.dispatch(RemoveFollowerSuccessAction(currentUserId: store.state.loginState!.id,followerId: action.followerId)));
+      .then((_) => store.dispatch(RemoveFollowerSuccessAction(currentUserId: store.state.login.login!.id,followerId: action.followerId)));
   }
   next(action);
 }
@@ -78,7 +78,7 @@ void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .updateUserName(action.userName)
       .then((response){
-        store.dispatch(UpdateUserNameSuccessAction(userId: store.state.loginState!.id, userName: action.userName));
+        store.dispatch(UpdateUserNameSuccessAction(userId: store.state.login.login!.id, userName: action.userName));
         store.dispatch(UpdateRefreshTokenAction(refreshToken: response.refreshToken));
         AppClient().changeAccessToken(response.accessToken);
         MessageHub.init(response.accessToken, store);
@@ -93,7 +93,7 @@ void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .updateName(action.name)
       .then((response){
-        store.dispatch(UpdateNameSuccessAction(userId: store.state.loginState!.id, name: action.name));
+        store.dispatch(UpdateNameSuccessAction(userId: store.state.login.login!.id, name: action.name));
         store.dispatch(UpdateRefreshTokenAction(refreshToken: response.refreshToken));
         AppClient().changeAccessToken(response.accessToken);
         MessageHub.init(response.accessToken, store);
@@ -105,7 +105,7 @@ void updateNameMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 void updateBiographyMidleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateBiographyAction){
-    final accountId = store.state.loginState!.id;
+    final accountId = store.state.login.login!.id;
     UserService()
       .updateBiography(action.biography)
       .then((_){

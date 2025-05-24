@@ -23,7 +23,7 @@ class ConversationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,num>(
-      converter: (store) => store.state.loginState!.id,
+      converter: (store) => store.state.login.login!.id,
       builder: (context,accountId){
         return Card(
           color: isSelected ? Colors.black.withOpacity(0.2) : null,

@@ -21,7 +21,7 @@ class UserInfoCardWidget extends StatelessWidget {
         children: [
           UserInfoHeaderWidget(user: user),
           StoreConnector<AppState,LoginState?>(
-            converter: (store) => store.state.loginState,
+            converter: (store) => store.state.login.login,
             builder: (context,accountState) {
               if(accountState!.id != user.id){
                 return Row(

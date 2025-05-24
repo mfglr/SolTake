@@ -6,7 +6,7 @@ import 'package:my_social_app/state/entity_state/page.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
-int _selectCurrentUserId(Store<AppState> store) => store.state.loginState!.id;
+int _selectCurrentUserId(Store<AppState> store) => store.state.login.login!.id;
 
 StoryState selectStory(Store<AppState> store, int storyId) => store.state.stories.getValue(storyId)!;
 

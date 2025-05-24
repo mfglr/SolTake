@@ -6,10 +6,13 @@ class Login {
   final LoginState? login;
 
   Login({required this.status, required this.login});
+  factory Login.init() => Login(status: LoginStatus.loading, login: null);
+  factory Login.notLogin() => Login(status: LoginStatus.notLogin, login: null);
   
   Login success(LoginState login) => Login(status: LoginStatus.success,login: login);
-  Login failed() => Login(status: LoginStatus.failed, login: login);
-  Login trying() => Login(status: LoginStatus.trying, login: login);
+  Login loading() => Login(status: LoginStatus.loading, login: login);
+  Login notLogin() => Login(status: LoginStatus.notLogin, login: login);
+
   Login confirmEmail() => Login(status: status, login: login?.confirmEmail());
   Login updateLanguage(String language) => Login(status: status, login: login?.updateLanguage(language));
   Login updateRefhreshToken(String refreshToken) => Login(status: status, login: login?.updateRefhreshToken(refreshToken));

@@ -49,7 +49,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       )
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
-        store.dispatch(AddNewUserQuestionAction(userId: store.state.loginState!.id,questionId: question.id));
+        store.dispatch(AddNewUserQuestionAction(userId: store.state.login.login!.id,questionId: question.id));
         store.dispatch(RemoveUploadStateAction(id: action.id));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
@@ -79,7 +79,7 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 }
 void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DeleteQuestionAction){
-    final accountId = store.state.loginState!.id;
+    final accountId = store.state.login.login!.id;
     QuestionService()
       .delete(action.questionId)
       .then((_){
@@ -142,7 +142,7 @@ void dislikeQuestionMiddleware(Store<AppState> store,action, NextDispatcher next
   if(action is DislikeQuestionAction){
     QuestionUserLikeService()
       .dislike(action.questionId)
-      .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,userId: store.state.loginState!.id)));
+      .then((_) => store.dispatch(DislikeQuestionSuccessAction(questionId: action.questionId,userId: store.state.login.login!.id)));
   }
   next(action);
 }

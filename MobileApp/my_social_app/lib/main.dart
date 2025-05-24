@@ -5,12 +5,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/global_error_handling.dart';
 import 'package:my_social_app/services/package_version_service.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
-import 'package:my_social_app/views/app_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/views/app_update_view.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:toastification/toastification.dart';
 
@@ -31,7 +31,6 @@ Future _setPackageVersion()
       .then((version) => packageVersion = version);
 
 Future<void> main() async {
-    
   WidgetsFlutterBinding.ensureInitialized();
   await loadEnvironmentVariables();
   addTimeAgo();
@@ -45,16 +44,16 @@ Future<void> main() async {
     handleErrors(error);
     return true;
   };
-
+  
   runApp(
     ToastificationWrapper(
       child: StoreProvider(
         store: store,
-        child: StoreConnector<AppState,LoginState?>(
-          converter: (store) => store.state.loginState,
+        child: StoreConnector<AppState,Login>(
+          converter: (store) => store.state.login,
           builder: (context,login) => MaterialApp(
             title: 'SolTake', 
-            locale: Locale(login?.language ?? PlatformDispatcher.instance.locale.languageCode),
+            locale: Locale(login.login?.language ?? PlatformDispatcher.instance.locale.languageCode),
             supportedLocales: const [
               Locale('en'),
               Locale('tr'),
@@ -69,7 +68,7 @@ Future<void> main() async {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: AppView(login: login),
+            home: const AppUpdateView(),
           ),
         )
       ),

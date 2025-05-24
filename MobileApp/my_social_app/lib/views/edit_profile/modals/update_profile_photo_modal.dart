@@ -17,7 +17,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,LoginState>(
-      converter: (store) => store.state.loginState!,
+      converter: (store) => store.state.login.login!,
       builder: (store,login) => StoreConnector<AppState,UserState?>(
         onInit: (store) => store.dispatch(LoadUserAction(userId: login.id)),
         converter: (store) => store.state.userEntityState.getValue(login.id),

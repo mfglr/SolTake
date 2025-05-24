@@ -35,7 +35,7 @@ class SolutionStateWidget extends StatelessWidget {
           builder: (store,question){
             if(question == null) return const LoadingCircleWidget(diameter: 16, strokeWidth: 2);
             return StoreConnector<AppState,num>(
-              converter: (store) => store.state.loginState!.id,
+              converter: (store) => store.state.login.login!.id,
               builder:(context,accountId) => Builder(
                 builder: (context) {
                   if(accountId == question.userId){

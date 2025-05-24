@@ -14,7 +14,6 @@ class LoginState{
   final bool isTermsOfUseApproved;
   final String language;
   final String refreshToken;
-  final bool accountDeletionStart;
 
   const LoginState({
     required this.id,
@@ -26,7 +25,6 @@ class LoginState{
     required this.refreshToken,
     required this.isPrivacyPolicyApproved,
     required this.isTermsOfUseApproved,
-    required this.accountDeletionStart
   });
   
   factory LoginState.fromJson(Map<String, dynamic> json) => _$LoginStateFromJson(json);
@@ -43,7 +41,6 @@ class LoginState{
         isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
         refreshToken: refreshToken,
-        accountDeletionStart: accountDeletionStart
       );
 
   LoginState updateLanguage(String language)
@@ -57,7 +54,6 @@ class LoginState{
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         language: language,
         refreshToken: refreshToken,
-        accountDeletionStart: accountDeletionStart
       );
 
   LoginState updateRefhreshToken(String refreshToken) =>
@@ -71,7 +67,6 @@ class LoginState{
       refreshToken: refreshToken,
       isPrivacyPolicyApproved: isPrivacyPolicyApproved,
       isTermsOfUseApproved: isTermsOfUseApproved,
-      accountDeletionStart: accountDeletionStart
     );
 
   LoginState approvePrivacyPolicy()
@@ -85,7 +80,6 @@ class LoginState{
         isPrivacyPolicyApproved: true,
         language: language,
         refreshToken: refreshToken,
-        accountDeletionStart: accountDeletionStart        
       );
   LoginState approveTermsOfUse()
     => LoginState(
@@ -98,33 +92,5 @@ class LoginState{
         isPrivacyPolicyApproved: isPrivacyPolicyApproved,
         language: language,
         refreshToken: refreshToken,
-        accountDeletionStart: accountDeletionStart
-      );
-  
-  LoginState startAccountDeletion()
-    => LoginState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        email: email,
-        isEmailVerified: isEmailVerified,
-        language: language,
-        refreshToken: refreshToken,
-        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
-        isTermsOfUseApproved: isTermsOfUseApproved,
-        accountDeletionStart: true
-      );
-  LoginState stopAccountDeletion()
-    => LoginState(
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        email: email,
-        isEmailVerified: isEmailVerified,
-        language: language,
-        refreshToken: refreshToken,
-        isPrivacyPolicyApproved: isPrivacyPolicyApproved,
-        isTermsOfUseApproved: isTermsOfUseApproved,
-        accountDeletionStart: false
       );
 }

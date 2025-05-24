@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 void nextTransactionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextTransactionsAction){
     TransactionService()
-      .getByBalanceId(store.state.loginState!.id,selectNextTransactionsPage(store))
+      .getByBalanceId(store.state.login.login!.id,selectNextTransactionsPage(store))
       .then((transactions) => store.dispatch(NextTransactionsSuccessAction(transactions: transactions.map((e) => e.toState()))))
       .catchError((e){
         store.dispatch(const NextTransactionsFailedAction());

@@ -1,5 +1,5 @@
 enum LoginStatus {
+  notLogin,
   success,
-  failed,
-  trying
+  loading
 }
