@@ -6,10 +6,10 @@ class Login {
   final LoginState? login;
 
   Login({required this.status, required this.login});
-  factory Login.init() => Login(status: LoginStatus.loading, login: null);
-  factory Login.notLogin() => Login(status: LoginStatus.notLogin, login: null);
+  factory Login.init() => Login(status: LoginStatus.notLogin, login: null);
+  factory Login.loading() => Login(status: LoginStatus.loading, login: null);
   
-  Login success(LoginState login) => Login(status: LoginStatus.success,login: login);
+  Login success(LoginState login) => Login(status: LoginStatus.login,login: login);
   Login loading() => Login(status: LoginStatus.loading, login: login);
   Login notLogin() => Login(status: LoginStatus.notLogin, login: login);
 

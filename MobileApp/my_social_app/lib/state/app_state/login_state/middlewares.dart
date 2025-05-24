@@ -70,7 +70,9 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
               if((error is BackendException && error.statusCode == 426)){
                 _clearSession(store);
               }
-              store.dispatch(const NotLoginAction());
+              else{
+                store.dispatch(const NotLoginAction());
+              }
               throw error;
             });
         }
@@ -88,8 +90,10 @@ void loginByPaswordMiddleware(Store<AppState> store,action,NextDispatcher next){
       .loginByPassword(action.emailOrPassword, action.password)
       .then((account){
         _setAccount(store, account);
+        store.dispatch(LoginSuccessAction(payload: account.toLoginState()));
       })
       .catchError((e){
+        store.dispatch(const NotLoginAction());
         throw e;
       });
   }
@@ -104,6 +108,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
         if(value == null){
           _googleSignIn.disconnect();
           ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
+          store.dispatch(const NotLoginAction());
           return;
         }
         value.authentication
@@ -112,6 +117,7 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
             if(accessToken == null){
               _googleSignIn.disconnect();
               ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
+              store.dispatch(const NotLoginAction());
               return;
             }
             UserService()
@@ -122,12 +128,14 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
               })
               .catchError((e){
                 _googleSignIn.disconnect();
+                store.dispatch(const NotLoginAction());
                 throw e;
               });
           });
       })
       .catchError((e){
         _googleSignIn.disconnect();
+        store.dispatch(const NotLoginAction());
         throw e;
       });
   }

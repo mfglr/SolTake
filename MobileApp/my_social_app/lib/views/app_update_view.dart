@@ -36,7 +36,7 @@ class _AppUpdateViewState extends State<AppUpdateView> {
           if(snapshot.data!) return const UpdateAppPage();
           return StoreConnector<AppState, Login>(
             converter: (store) => store.state.login,
-            builder: (context, login) => AppLoginView(login: login),
+            builder: (context, login) => const AppLoginView(),
           );
         }
         return const ApplicationLoadingPage();

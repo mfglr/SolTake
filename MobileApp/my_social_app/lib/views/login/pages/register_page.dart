@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_social_app/views/login/pages/login_page.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/active_login_page_state/actions.dart';
+import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/login/widgets/register_form.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -27,13 +30,10 @@ class _RegisterViewState extends State<RegisterPage> {
                 children: [
                   Text(AppLocalizations.of(context)!.register_login_label),
                   OutlinedButton(
-                    onPressed: () =>
-                      Navigator
-                        .of(context)
-                        .pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
-                          (_) => false
-                        ),
+                    onPressed: (){
+                      final store = StoreProvider.of<AppState>(context,listen: false);
+                      store.dispatch(const ChangeActiveLoginPage(loginPage: ActiveLoginPage.loginPage));
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

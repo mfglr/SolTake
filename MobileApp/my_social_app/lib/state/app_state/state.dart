@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
@@ -45,6 +46,7 @@ class AppState{
   final EntityState<int,StoryState> stories;
   final Pagination<int,AIModelState> aiModels;
   final Pagination<int,TransactionState> transactions;
+  final ActiveLoginPage activeLoginPage;
 
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
@@ -77,6 +79,7 @@ class AppState{
     required this.balance,
     required this.aiModels,
     required this.transactions,
+    required this.activeLoginPage,
 
     required this.stories,
 
@@ -113,6 +116,7 @@ class AppState{
     stories: EntityState(),
     aiModels: Pagination.init(aiModelsPerPage, false),
     transactions: Pagination.init(transactionsPerPage, true),
+    activeLoginPage: ActiveLoginPage.loginPage,
 
     userEntityState: EntityState(),
     userMessageState: EntityState(),
@@ -122,7 +126,7 @@ class AppState{
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
-    login: Login.notLogin(),
+    login: Login.init(),
     
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
