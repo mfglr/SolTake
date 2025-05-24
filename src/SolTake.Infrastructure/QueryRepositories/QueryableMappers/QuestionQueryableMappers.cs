@@ -2,10 +2,10 @@
 using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Core;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class QuestionQueryableMappers
     {

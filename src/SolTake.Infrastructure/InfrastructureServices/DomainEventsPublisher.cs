@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using SolTake.Application.InfrastructureServices;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Core;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices
+namespace SolTake.Infrastructure.InfrastructureServices
 {
     public class DomainEventsPublisher(IPublisher publisher, AppDbContext context) : IDomainEventsPublisher
     {

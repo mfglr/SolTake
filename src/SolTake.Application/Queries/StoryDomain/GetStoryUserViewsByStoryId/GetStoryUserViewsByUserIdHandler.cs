@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.StoryDomain.GetStoryUserViewsByStoryId
+namespace SolTake.Application.Queries.StoryDomain.GetStoryUserViewsByStoryId
 {
     public class GetStoryUserViewsByUserIdHandler(IStoryUserViewQueryRepository storyUserViewQueryRepository) : IRequestHandler<GetStoryUserViewsByStoryIdDto, List<StoryUserViewResponseDto>>
     {

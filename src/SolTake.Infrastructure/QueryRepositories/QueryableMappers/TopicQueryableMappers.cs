@@ -1,7 +1,7 @@
-﻿using MySocailApp.Application.Queries.TopicAggregate;
+﻿using SolTake.Application.Queries.TopicAggregate;
 using SolTake.Domain.TopicAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class TopicQueryableMappers
     {

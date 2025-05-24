@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.TopicAggregate.Abstracts;
 using SolTake.Domain.TopicAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.TopicAggregate
+namespace SolTake.Infrastructure.TopicAggregate
 {
     public class TopicReadRepository(AppDbContext context) : ITopicReadRepository
     {

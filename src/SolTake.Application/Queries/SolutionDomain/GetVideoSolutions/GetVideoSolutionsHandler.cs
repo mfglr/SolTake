@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.SolutionDomain.GetVideoSolutions
+namespace SolTake.Application.Queries.SolutionDomain.GetVideoSolutions
 {
     public class GetVideoSolutionsHandler(ISolutionQueryRepository solutionQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetVideoSolutionsDto, List<SolutionResponseDto>>
     {

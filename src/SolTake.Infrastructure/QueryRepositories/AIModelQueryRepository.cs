@@ -1,9 +1,9 @@
 ﻿using SolTake.Application.Queries.AIModelAggregate;
 using SolTake.Application.QueryRepositories;
-using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
+using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.QueryRepositories
+namespace SolTake.Infrastructure.QueryRepositories
 {
     public class AIModelQueryRepository(IAIModelCacheService aiModelCachService) : IAIModelQueryRepository
     {

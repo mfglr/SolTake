@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.BalanceAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.BalanceAggregate
+namespace SolTake.Infrastructure.ModelBuilders.BalanceAggregate
 {
     public class BalanceModelBuilder : IEntityTypeConfiguration<Balance>
     {

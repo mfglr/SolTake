@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.AIModelAggregate.CreateAIModel;
 using SolTake.Application.Commands.AIModelAggregate.DeleteAIModel;
 using SolTake.Application.Commands.AIModelAggregate.UpdateAIModelCommission;
@@ -10,7 +10,7 @@ using SolTake.Application.Commands.AIModelAggregate.UpdateAIModelImage;
 using SolTake.Application.Queries.AIModelAggregate;
 using SolTake.Application.Queries.AIModelAggregate.GetAIModels;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
-using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extentions;
+using SolTake.Infrastructure.DbContexts;
+using SolTake.Infrastructure.Extentions;
 using SolTake.Core;
 
-namespace MySocailApp.Infrastructure.NotificationAggregate
+namespace SolTake.Infrastructure.NotificationAggregate
 {
     public class NotificationReadRepository(AppDbContext context) : INotificationReadRepository
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.NotificationConnectionAggregate
+namespace SolTake.Infrastructure.ModelBuilders.NotificationConnectionAggregate
 {
     public class NotificationConnectionModelBuilder : IEntityTypeConfiguration<NotificationConnection>
     {

@@ -1,6 +1,6 @@
 ﻿using SolTake.Core;
 
-namespace MySocailApp.Infrastructure.Extentions
+namespace SolTake.Infrastructure.Extentions
 {
     public static class QueryableExtentions
     {

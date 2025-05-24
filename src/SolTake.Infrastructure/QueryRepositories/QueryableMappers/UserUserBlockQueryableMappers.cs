@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.Queries.UserDomain;
+﻿using SolTake.Application.Queries.UserDomain;
 using SolTake.Domain.UserUserBlockAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class UserUserBlockQueryableMappers
     {

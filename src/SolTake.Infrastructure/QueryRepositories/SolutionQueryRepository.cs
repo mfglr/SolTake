@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Application.Queries.SolutionDomain;
+using SolTake.Application.Queries.SolutionDomain;
 using SolTake.Application.QueryRepositories;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extentions;
-using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
+using SolTake.Infrastructure.DbContexts;
+using SolTake.Infrastructure.Extentions;
+using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
 using SolTake.Core;
 
-namespace MySocailApp.Infrastructure.QueryRepositories
+namespace SolTake.Infrastructure.QueryRepositories
 {
     public class SolutionQueryRepository(AppDbContext context) : ISolutionQueryRepository
     {

@@ -1,7 +1,7 @@
 ﻿using SolTake.Application.Queries.AIModelAggregate;
 using SolTake.Domain.AIModelAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class AIModelQueryableMapper
     {

@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.StoryDomain.GetStories
+namespace SolTake.Application.Queries.StoryDomain.GetStories
 {
     public class GetStoriesHandler(IAccessTokenReader accessTokenReader, IStoryQueryRepository storyQueryRepository) : IRequestHandler<GetStoriesDto, List<StoryResponseDto>>
     {

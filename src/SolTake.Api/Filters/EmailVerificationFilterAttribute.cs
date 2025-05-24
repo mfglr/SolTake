@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Api.Filters
+namespace SolTake.Api.Filters
 {
     public class EmailVerificationFilterAttribute(IUserAccessor userAccessor) : ActionFilterAttribute
     {

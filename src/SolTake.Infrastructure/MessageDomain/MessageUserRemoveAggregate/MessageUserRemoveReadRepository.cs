@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.MessageUserRemoveAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate
+namespace SolTake.Infrastructure.MessageDomain.MessageUserRemoveAggregate
 {
     public class MessageUserRemoveReadRepository(AppDbContext context) : IMessageUserRemoveReadRepository
     {

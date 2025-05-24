@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.UserUserConversationAggregate.Abstracts;
 using SolTake.Domain.UserUserConversationAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate
+namespace SolTake.Infrastructure.UserDomain.UserUserConversationAggregate
 {
     public class UserUserConversationWriteRepository(AppDbContext context) : IUserUserConversationWriteRepository
     {

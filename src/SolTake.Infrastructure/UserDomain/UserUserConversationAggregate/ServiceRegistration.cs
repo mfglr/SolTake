@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolTake.Domain.UserUserConversationAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate
+namespace SolTake.Infrastructure.UserDomain.UserUserConversationAggregate
 {
     public static class ServiceRegistration
     {

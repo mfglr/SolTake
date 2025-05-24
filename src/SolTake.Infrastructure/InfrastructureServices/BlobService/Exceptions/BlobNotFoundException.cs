@@ -2,7 +2,7 @@
 using SolTake.Core.Exceptions;
 using System.Net;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions
+namespace SolTake.Infrastructure.InfrastructureServices.BlobService.Exceptions
 {
     public class BlobNotFoundException : AppException
     {

@@ -1,7 +1,7 @@
 ﻿using OpenCvSharp;
 using SolTake.Core.Exceptions;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
+namespace SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
     public class VideoDurationCalculator
     {

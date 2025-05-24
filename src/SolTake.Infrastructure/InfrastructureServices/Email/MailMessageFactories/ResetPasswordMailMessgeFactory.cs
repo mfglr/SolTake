@@ -2,7 +2,7 @@
 using SolTake.Core;
 using System.Net.Mail;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories
+namespace SolTake.Infrastructure.InfrastructureServices.Email.MailMessageFactories
 {
     public class ResetPasswordMailMessgeFactory(IEmailServiceSettings emailServiceSettings)
     {

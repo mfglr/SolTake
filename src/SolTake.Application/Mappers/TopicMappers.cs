@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MySocailApp.Application.Queries.TopicAggregate;
+using SolTake.Application.Queries.TopicAggregate;
 using SolTake.Domain.TopicAggregate.Entities;
 
 namespace SolTake.Application.Mappers

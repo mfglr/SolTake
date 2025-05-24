@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
-using MySocailApp.Application.Queries.UserUserConversation;
-using MySocailApp.Application.Queries.UserUserConversation.GetUserUserConversations;
+using SolTake.Api.Filters;
+using SolTake.Application.Queries.UserUserConversation;
+using SolTake.Application.Queries.UserUserConversation.GetUserUserConversations;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

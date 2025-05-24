@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.SubjectAggregate;
+﻿using SolTake.Application.Queries.SubjectAggregate;
 using SolTake.Core;
 
 namespace SolTake.Application.QueryRepositories

@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.UserDomain;
+﻿using SolTake.Application.Queries.UserDomain;
 using SolTake.Core;
 
 namespace SolTake.Application.QueryRepositories

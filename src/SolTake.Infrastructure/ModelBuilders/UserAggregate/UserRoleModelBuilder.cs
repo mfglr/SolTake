@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.UserAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.UserAggregate
+namespace SolTake.Infrastructure.ModelBuilders.UserAggregate
 {
     public class UserRoleModelBuilder : IEntityTypeConfiguration<UserRole>
     {

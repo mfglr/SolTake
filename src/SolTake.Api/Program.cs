@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.SignalR;
-using MySocailApp.Api;
-using MySocailApp.Api.HubFilters;
-using MySocailApp.Api.Middlewares;
+using SolTake.Api;
+using SolTake.Api.HubFilters;
+using SolTake.Api.Middlewares;
 using SolTake.Application;
 using SolTake.Application.Hubs;
 using SolTake.Domain;
-using MySocailApp.Infrastructure;
+using SolTake.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = int.MaxValue);

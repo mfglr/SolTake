@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.MessageUserReceiveAggregate.Abstracts;
 using SolTake.Domain.MessageUserReceiveAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.MessageDomain.MessageUserReceiveAggregate
 {

@@ -2,24 +2,23 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution;
 using SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI;
 using SolTake.Application.Commands.SolutionDomain.SolutionAggregate.DeleteSolution;
 using SolTake.Application.Commands.SolutionDomain.SolutionAggregate.MarkSolutionAsCorrect;
 using SolTake.Application.Commands.SolutionDomain.SolutionAggregate.MarkSolutionAsIncorrect;
 using SolTake.Application.Commands.SolutionDomain.SolutionUserSaveAggregate.CreateSolutionUserSave;
-using MySocailApp.Application.Queries.SolutionDomain;
-using MySocailApp.Application.Queries.SolutionDomain.GetCorrectSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionDomain.GetIncorrectsSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionDomain.GetPendingSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionDomain.GetSolutionById;
-using MySocailApp.Application.Queries.SolutionDomain.GetSolutionsByQuestionId;
-using MySocailApp.Application.Queries.SolutionDomain.GetVideoSolutions;
+using SolTake.Application.Queries.SolutionDomain;
+using SolTake.Application.Queries.SolutionDomain.GetCorrectSolutionsByQuestionId;
+using SolTake.Application.Queries.SolutionDomain.GetIncorrectsSolutionsByQuestionId;
+using SolTake.Application.Queries.SolutionDomain.GetPendingSolutionsByQuestionId;
+using SolTake.Application.Queries.SolutionDomain.GetSolutionById;
+using SolTake.Application.Queries.SolutionDomain.GetSolutionsByQuestionId;
+using SolTake.Application.Queries.SolutionDomain.GetVideoSolutions;
 
 namespace SolTake.Api.Controllers.Api
 {
-
     [ApiController]
     [Route("api/[controller]/[action]")]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

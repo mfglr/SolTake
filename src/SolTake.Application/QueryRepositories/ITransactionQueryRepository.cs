@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.TransactionAggregate;
+﻿using SolTake.Application.Queries.TransactionAggregate;
 using SolTake.Core;
 
 namespace SolTake.Application.QueryRepositories

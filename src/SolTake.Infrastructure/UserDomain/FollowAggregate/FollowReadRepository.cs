@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.UserUserFollowAggregate.Abstracts;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.FollowAggregate
+namespace SolTake.Infrastructure.UserDomain.FollowAggregate
 {
     public class FollowReadRepository(AppDbContext context) : IUserUserFollowReadRepository
     {

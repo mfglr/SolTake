@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolTake.Application.InfrastructureServices.BlobService;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]

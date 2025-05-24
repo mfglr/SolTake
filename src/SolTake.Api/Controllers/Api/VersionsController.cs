@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.AppVersionAggregate.CreateVersion;
 using SolTake.Application.Commands.AppVersionAggregate.DeleteLastVersion;
 using SolTake.Application.Queries.AppVersionAggregate;
 using SolTake.Application.Queries.AppVersionAggregate.GetLatestVersion;
 using SolTake.Application.Queries.AppVersionAggregate.IsUpgradeRequired;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId
+namespace SolTake.Application.Queries.UserDomain.GetFollowedsByUserId
 {
     public class GetFollowedByUserIdHandler(IFollowQueryRepository repository, IUserAccessor userAccessor) : IRequestHandler<GetFollowedsByUserIdDto, List<FollowResponseDto>>
     {

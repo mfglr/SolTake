@@ -1,8 +1,8 @@
 ﻿using SolTake.Domain.TransactionAggregate.Abstracts;
 using SolTake.Domain.TransactionAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.Repositories
+namespace SolTake.Infrastructure.Repositories
 {
     public class TransactionRepository(AppDbContext context) : ITransactionRepository
     {

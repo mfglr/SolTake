@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 using SolTake.Domain.UserUserBlockAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.UserUserBlockeAggregate
+namespace SolTake.Infrastructure.UserDomain.UserUserBlockeAggregate
 {
     internal class UserUserBlockRepository(AppDbContext context) : IUserUserBlockRepository
     {

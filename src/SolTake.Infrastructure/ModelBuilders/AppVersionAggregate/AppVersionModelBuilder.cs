@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.AppVersionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.AppVersionAggregate
+namespace SolTake.Infrastructure.ModelBuilders.AppVersionAggregate
 {
     public class AppVersionModelBuilder : IEntityTypeConfiguration<AppVersion>
     {

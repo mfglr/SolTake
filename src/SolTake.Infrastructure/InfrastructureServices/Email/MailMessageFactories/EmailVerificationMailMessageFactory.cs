@@ -1,7 +1,7 @@
 ﻿using SolTake.Application.Configurations;
 using System.Net.Mail;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories
+namespace SolTake.Infrastructure.InfrastructureServices.Email.MailMessageFactories
 {
     public class EmailVerificationMailMessageFactory(IEmailServiceSettings emailServiceSettings)
     {

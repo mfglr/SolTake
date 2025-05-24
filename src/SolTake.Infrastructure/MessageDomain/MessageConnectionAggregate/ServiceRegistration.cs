@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate;
+using SolTake.Infrastructure.MessageDomain.UserConnectionAggregate;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.MessageDomain.MessageConnectionAggregate
+namespace SolTake.Infrastructure.MessageDomain.MessageConnectionAggregate
 {
     public static class ServiceRegistration
     {

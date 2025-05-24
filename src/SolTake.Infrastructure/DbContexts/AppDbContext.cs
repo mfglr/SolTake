@@ -35,7 +35,7 @@ using SolTake.Domain.MessageUserViewAggregate.Entities;
 using System.Reflection;
 
 
-namespace MySocailApp.Infrastructure.DbContexts
+namespace SolTake.Infrastructure.DbContexts
 {
     public class AppDbContext(DbContextOptions options) : DbContext(options)
     {

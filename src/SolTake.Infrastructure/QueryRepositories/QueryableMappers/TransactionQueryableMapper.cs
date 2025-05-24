@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.Queries.TransactionAggregate;
+﻿using SolTake.Application.Queries.TransactionAggregate;
 using SolTake.Domain.TransactionAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class TransactionQueryableMapper
     {

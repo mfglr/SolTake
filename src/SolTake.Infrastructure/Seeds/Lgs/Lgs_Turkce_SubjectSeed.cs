@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Seeds.Lgs
+namespace SolTake.Infrastructure.Seeds.Lgs
 {
     public class Lgs_Turkce_SubjectSeed : IEntityTypeConfiguration<SubjectTopic>
     {

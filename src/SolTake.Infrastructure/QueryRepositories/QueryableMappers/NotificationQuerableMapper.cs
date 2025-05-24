@@ -1,7 +1,7 @@
 ﻿using SolTake.Application.Queries.NotificationAggregate;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class NotificationQuerableMapper
     {

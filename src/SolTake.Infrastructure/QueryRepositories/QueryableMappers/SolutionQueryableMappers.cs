@@ -1,9 +1,9 @@
-﻿using MySocailApp.Application.Queries.SolutionDomain;
+﻿using SolTake.Application.Queries.SolutionDomain;
 using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class SolutionQueryableMappers
     {

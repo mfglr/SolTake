@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Seeds.Lgs
+namespace SolTake.Infrastructure.Seeds.Lgs
 {
     internal class Lgs_Fen_Bilimleri_SubjectTopic_Seed : IEntityTypeConfiguration<SubjectTopic>
     {

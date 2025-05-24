@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Seeds.Kpss
+namespace SolTake.Infrastructure.Seeds.Kpss
 {
     public class Kpss_Tarih_SubjectTopic_Seed : IEntityTypeConfiguration<SubjectTopic>
     {

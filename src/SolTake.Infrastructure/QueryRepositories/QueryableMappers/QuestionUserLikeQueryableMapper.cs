@@ -1,8 +1,8 @@
 ﻿using SolTake.Application.Queries.QuestionDomain;
 using SolTake.Domain.QuestionUserLikeAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class QuestionUserLikeQueryableMapper
     {

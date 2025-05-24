@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.MessageConnectionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.UserConnectionAggregate
+namespace SolTake.Infrastructure.ModelBuilders.UserConnectionAggregate
 {
     public class UserConnectionModelBuilder : IEntityTypeConfiguration<MessageConnection>
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Seeds.Ayt
+namespace SolTake.Infrastructure.Seeds.Ayt
 {
     public class Ayt_Sosyaloji_SubjectTopic_Seed : IEntityTypeConfiguration<SubjectTopic>
     {

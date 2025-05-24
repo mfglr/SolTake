@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.UserUserConversation.GetUserUserConversations
+namespace SolTake.Application.Queries.UserUserConversation.GetUserUserConversations
 {
     public class GetUserUserConversationsHandler(IUserUserConversationQueryRepository userUserConversationQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetUserUserConversationsDto, List<UserUserConversationResponseDto>>
     {

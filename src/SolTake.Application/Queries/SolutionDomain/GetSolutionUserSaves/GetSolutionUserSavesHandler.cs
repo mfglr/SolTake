@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.SolutionDomain.GetSavedSolutions
+namespace SolTake.Application.Queries.SolutionDomain.GetSavedSolutions
 {
     public class GetSolutionUserSavesHandler(ISolutionUserSaveQueryRepository solutionUserSaveQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetSolutionUserSavesDto, List<SolutionUserSaveResponseDto>>
     {

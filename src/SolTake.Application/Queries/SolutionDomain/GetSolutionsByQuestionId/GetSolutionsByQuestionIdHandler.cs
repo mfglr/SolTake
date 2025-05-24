@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.SolutionDomain.GetSolutionsByQuestionId
+namespace SolTake.Application.Queries.SolutionDomain.GetSolutionsByQuestionId
 {
     public class GetSolutionsByQuestionIdHandler(ISolutionQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetSolutionsByQuestionIdDto, List<SolutionResponseDto>>
     {

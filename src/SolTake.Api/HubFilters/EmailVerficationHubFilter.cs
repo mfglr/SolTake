@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Api.HubFilters
+namespace SolTake.Api.HubFilters
 {
     public class EmailVerficationHubFilter(IUserAccessor userAccessor) : IHubFilter
     {

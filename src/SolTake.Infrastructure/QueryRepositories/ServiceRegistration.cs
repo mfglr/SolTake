@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Infrastructure.QueryRepositories
+namespace SolTake.Infrastructure.QueryRepositories
 {
     public static class ServiceRegistration
     {

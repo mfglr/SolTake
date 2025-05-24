@@ -1,8 +1,8 @@
 ﻿using SolTake.Application.InfrastructureServices;
-using MySocailApp.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
+using SolTake.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using System.Net.Mail;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.Email
+namespace SolTake.Infrastructure.InfrastructureServices.Email
 {
     public class EmailService(SmtpClient smtpClient, EmailVerificationMailMessageFactory emailVerificationMailMessageFactory, ResetPasswordMailMessgeFactory resetPasswordMailMessgeFactory) : IEmailService
     {

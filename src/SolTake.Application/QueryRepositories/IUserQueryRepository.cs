@@ -1,5 +1,5 @@
-﻿using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Application.Queries.UserDomain.SearchUsers;
+﻿using SolTake.Application.Queries.UserDomain;
+using SolTake.Application.Queries.UserDomain.SearchUsers;
 using SolTake.Core;
 
 namespace SolTake.Application.QueryRepositories

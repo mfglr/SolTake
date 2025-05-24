@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.StoryUserViewAggregate.Absracts;
 using SolTake.Domain.StoryUserViewAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.StoryDomain.StoryUserViewAggregate
+namespace SolTake.Infrastructure.StoryDomain.StoryUserViewAggregate
 {
     public class StoryUserViewRepository(AppDbContext context) : IStoryUserViewRepository
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 using SolTake.Domain.QuestionUserLikeAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
+namespace SolTake.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
 {
     public class QuestionUserLikeWriteRepository(AppDbContext context) : IQuestionUserLikeWriteRepository
     {

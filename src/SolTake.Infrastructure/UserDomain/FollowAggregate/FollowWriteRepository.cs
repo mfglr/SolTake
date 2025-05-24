@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.UserUserFollowAggregate.Abstracts;
 using SolTake.Domain.UserUserFollowAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.FollowAggregate
+namespace SolTake.Infrastructure.UserDomain.FollowAggregate
 {
     internal class FollowWriteRepository(AppDbContext context) : IUserUserFollowWriteRepository
     {

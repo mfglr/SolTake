@@ -2,9 +2,9 @@
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Domain.UserAggregate.ValueObjects;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.UserAggregate
+namespace SolTake.Infrastructure.UserDomain.UserAggregate
 {
     public class UserReadRepository(AppDbContext context) : IUserReadRepository
     {

@@ -3,7 +3,7 @@ using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Application.Queries.UserDomain.GetUserById
+namespace SolTake.Application.Queries.UserDomain.GetUserById
 {
     public class GetByIdHandler(IUserQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetUserByIdDto, UserResponseDto>
     {

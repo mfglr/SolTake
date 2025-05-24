@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
+using SolTake.Infrastructure.InfrastructureServices.BlobService.Exceptions;
+using SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using SixLabors.ImageSharp;
 using SolTake.Core;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
+namespace SolTake.Infrastructure.InfrastructureServices.BlobService
 {
     public class MultiMediaService(ITempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoManipulator videoManipulator, VideoDurationCalculator videoDurationCalculator, AudioDurationCalculator audioDurationCalculator, AudioManipulator audioManipulator, IFrameCatcher frameCathcer, IPathFinder pathFinder) : IMultimediaService
     {

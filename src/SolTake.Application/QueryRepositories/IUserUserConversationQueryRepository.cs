@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.UserUserConversation;
+﻿using SolTake.Application.Queries.UserUserConversation;
 using SolTake.Core;
 
 namespace SolTake.Application.QueryRepositories

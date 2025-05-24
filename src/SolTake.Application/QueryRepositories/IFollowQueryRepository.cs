@@ -1,4 +1,4 @@
-﻿using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
+﻿using SolTake.Application.Queries.UserDomain.GetFollowedsByUserId;
 using SolTake.Core;
 
 namespace SolTake.Application.QueryRepositories

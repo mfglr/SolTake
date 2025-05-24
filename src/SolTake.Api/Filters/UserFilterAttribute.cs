@@ -3,7 +3,7 @@ using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.Abstracts;
 using SolTake.Domain.UserAggregate.Exceptions;
 
-namespace MySocailApp.Api.Filters
+namespace SolTake.Api.Filters
 {
     public class UserFilterAttribute(IAccessTokenReader accessTokenReader, IUserWriteRepository userWriteRepository, IUserAccessor userAccessor) : ActionFilterAttribute
     {

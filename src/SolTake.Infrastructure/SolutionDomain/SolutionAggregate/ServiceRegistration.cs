@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolTake.Domain.SolutionAggregate.Abstracts;
-using SolTake.Domain.SolutionAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
+namespace SolTake.Infrastructure.SolutionDomain.SolutionAggregate
 {
     public static class ServiceRegistration
     {

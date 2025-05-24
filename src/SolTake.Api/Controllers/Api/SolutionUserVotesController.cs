@@ -2,16 +2,16 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeDownvote;
 using SolTake.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.MakeUpvote;
 using SolTake.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveDownvote;
 using SolTake.Application.Commands.SolutionDomain.SolutionUserVoteAggregate.RemoveUpvote;
-using MySocailApp.Application.Queries.SolutionDomain;
-using MySocailApp.Application.Queries.SolutionDomain.GetSolutionDownvotes;
-using MySocailApp.Application.Queries.SolutionDomain.GetSolutionUpvotes;
+using SolTake.Application.Queries.SolutionDomain;
+using SolTake.Application.Queries.SolutionDomain.GetSolutionDownvotes;
+using SolTake.Application.Queries.SolutionDomain.GetSolutionUpvotes;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.UserDomain.UserUserBlockAggregate.Create;
 using SolTake.Application.Commands.UserDomain.UserUserBlockAggregate.Delete;
-using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Application.Queries.UserDomain.GetBlockeds;
+using SolTake.Application.Queries.UserDomain;
+using SolTake.Application.Queries.UserDomain.GetBlockeds;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

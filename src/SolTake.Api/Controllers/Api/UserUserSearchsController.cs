@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.UserDomain.UserUserSearchAggregate.Create;
 using SolTake.Application.Commands.UserDomain.UserUserSearchAggregate.Delete;
-using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Application.Queries.UserDomain.GetUsersSearched;
+using SolTake.Application.Queries.UserDomain;
+using SolTake.Application.Queries.UserDomain.GetUsersSearched;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

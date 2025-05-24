@@ -3,7 +3,7 @@ using SolTake.Application.InfrastructureServices;
 using SolTake.Domain.UserAggregate.ValueObjects;
 using SolTake.Core.Exceptions;
 
-namespace MySocailApp.Api.Middlewares
+namespace SolTake.Api.Middlewares
 {
     public class CustomExceptionHandlerMiddleware(RequestDelegate next)
     {

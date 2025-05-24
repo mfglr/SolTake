@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.ExamAggregate.Entitities;
 using SolTake.Domain.ExamAggregate.Interfaces;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.ExamAggregate
+namespace SolTake.Infrastructure.ExamAggregate
 {
     public class ExamReadRepository(AppDbContext context) : IExamReadRepository
     {

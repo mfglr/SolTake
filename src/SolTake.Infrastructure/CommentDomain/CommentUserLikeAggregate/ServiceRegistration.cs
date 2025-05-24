@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolTake.Domain.CommentUserLikeAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.CommentDomain.CommentUserLikeAggregate
+namespace SolTake.Infrastructure.CommentDomain.CommentUserLikeAggregate
 {
     public static class ServiceRegistration
     {

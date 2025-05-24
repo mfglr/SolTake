@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Repositories
+namespace SolTake.Infrastructure.Repositories
 {
     public class AIModelRepository(AppDbContext context) : IAIModelRepository
     {

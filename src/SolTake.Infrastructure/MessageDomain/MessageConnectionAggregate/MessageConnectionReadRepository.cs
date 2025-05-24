@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.MessageConnectionAggregate.Abstracts;
 using SolTake.Domain.MessageConnectionAggregate.Entities;
 using SolTake.Domain.MessageConnectionAggregate.ValueObjects;
 
-namespace MySocailApp.Infrastructure.MessageDomain.UserConnectionAggregate
+namespace SolTake.Infrastructure.MessageDomain.UserConnectionAggregate
 {
     public class MessageConnectionReadRepository(AppDbContext context) : IMessageConnectionReadRepository
     {

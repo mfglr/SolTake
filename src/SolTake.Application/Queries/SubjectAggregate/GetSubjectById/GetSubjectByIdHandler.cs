@@ -3,7 +3,7 @@ using MediatR;
 using SolTake.Domain.SubjectAggregate.Exceptions;
 using SolTake.Domain.SubjectAggregate.Interfaces;
 
-namespace MySocailApp.Application.Queries.SubjectAggregate.GetSubjectById
+namespace SolTake.Application.Queries.SubjectAggregate.GetSubjectById
 {
     public class GetSubjectByIdHandler(IMapper mapper, ISubjectReadRepository subjectReadRepository) : IRequestHandler<GetSubjectByIdDto, SubjectResponseDto>
     {

@@ -1,7 +1,7 @@
-﻿using MySocailApp.Application.Queries.UserDomain.SearchUsers;
+﻿using SolTake.Application.Queries.UserDomain.SearchUsers;
 using SolTake.Domain.UserAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class SearchUserQueryableMapper
     {

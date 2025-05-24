@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.SubjectAggregate.GetByExamId
+namespace SolTake.Application.Queries.SubjectAggregate.GetByExamId
 {
     public class GetSubjectsByExamIdHandler(ISubjectQueryRepository repository) : IRequestHandler<GetSubjectsByExamIdDto, List<SubjectResponseDto>>
     {

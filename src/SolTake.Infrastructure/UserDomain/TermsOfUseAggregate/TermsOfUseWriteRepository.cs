@@ -1,8 +1,8 @@
 ﻿using SolTake.Domain.TermsOfUseAggregate;
 using SolTake.Domain.TermsOfUseAggregate.Abstracts;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.TermsOfUseAggregate
+namespace SolTake.Infrastructure.UserDomain.TermsOfUseAggregate
 {
     public class TermsOfUseWriteRepository(AppDbContext context) : ITermsOfUseWriteRepository
     {

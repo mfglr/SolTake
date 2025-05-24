@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.SolutionUserVoteAggregate.Abstracts;
 using SolTake.Domain.SolutionUserVoteAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.SolutionDomain.SolutionUserVoteAggregate
+namespace SolTake.Infrastructure.SolutionDomain.SolutionUserVoteAggregate
 {
     public class SolutionUserVoteWriteRepository(AppDbContext context) : ISolutionUserVoteWriteRepository
     {

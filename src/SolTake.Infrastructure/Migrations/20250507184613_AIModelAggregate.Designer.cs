@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
 #nullable disable
 
-namespace MySocailApp.Infrastructure.Migrations
+namespace SolTake.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20250507184613_AIModelAggregate")]

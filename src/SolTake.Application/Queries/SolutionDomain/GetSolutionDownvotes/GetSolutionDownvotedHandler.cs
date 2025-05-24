@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.SolutionDomain.GetSolutionDownvotes
+namespace SolTake.Application.Queries.SolutionDomain.GetSolutionDownvotes
 {
     public class GetSolutionDownvotedHandler(ISolutionUserVoteQueryRepository repository) : IRequestHandler<GetSolutionDownvotesDto, List<SolutionUserVoteResponseDto>>
     {

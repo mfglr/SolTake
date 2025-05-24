@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.SolutionDomain.GetSolutionUpvotes
+namespace SolTake.Application.Queries.SolutionDomain.GetSolutionUpvotes
 {
     public class GetSolutionUpvotesHandler(ISolutionUserVoteQueryRepository repository) : IRequestHandler<GetSolutionUpvotesDto, List<SolutionUserVoteResponseDto>>
     {

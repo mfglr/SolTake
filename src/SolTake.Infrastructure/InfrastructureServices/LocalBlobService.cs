@@ -1,7 +1,7 @@
 ﻿using SolTake.Application.InfrastructureServices.BlobService;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.Exceptions;
+using SolTake.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices
+namespace SolTake.Infrastructure.InfrastructureServices
 {
     public class LocalBlobService(IPathFinder pathFinder) : IBlobService
     {

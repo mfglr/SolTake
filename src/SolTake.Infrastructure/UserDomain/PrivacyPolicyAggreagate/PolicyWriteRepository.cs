@@ -1,8 +1,8 @@
 ﻿using SolTake.Domain.PrivacyPolicyAggregate;
 using SolTake.Domain.PrivacyPolicyAggregate.Abstracts;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.PrivacyPolicyAggreagate
+namespace SolTake.Infrastructure.UserDomain.PrivacyPolicyAggreagate
 {
     public class PolicyWriteRepository(AppDbContext context) : IPrivacyPolicyWriteRepository
     {

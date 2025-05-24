@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.Queries.StoryDomain;
+﻿using SolTake.Application.Queries.StoryDomain;
 using SolTake.Domain.StoryAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class StoryQueryableMapper
     {

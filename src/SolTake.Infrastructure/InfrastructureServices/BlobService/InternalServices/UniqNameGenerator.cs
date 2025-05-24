@@ -1,4 +1,4 @@
-﻿namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
+﻿namespace SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
     public class UniqNameGenerator
     {

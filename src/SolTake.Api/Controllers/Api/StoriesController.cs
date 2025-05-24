@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.StoryDomain.StoryAggregate.CreateStory;
 using SolTake.Application.Commands.StoryDomain.StoryAggregate.DeleteStory;
-using MySocailApp.Application.Queries.StoryDomain;
-using MySocailApp.Application.Queries.StoryDomain.GetActiveStoriesByUserId;
-using MySocailApp.Application.Queries.StoryDomain.GetAllStories;
-using MySocailApp.Application.Queries.StoryDomain.GetStories;
+using SolTake.Application.Queries.StoryDomain;
+using SolTake.Application.Queries.StoryDomain.GetActiveStoriesByUserId;
+using SolTake.Application.Queries.StoryDomain.GetAllStories;
+using SolTake.Application.Queries.StoryDomain.GetStories;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

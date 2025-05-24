@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.SolutionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.SolutionAggregate
+namespace SolTake.Infrastructure.ModelBuilders.SolutionAggregate
 {
     public class SolutionModelBuilder : IEntityTypeConfiguration<Solution>
     {

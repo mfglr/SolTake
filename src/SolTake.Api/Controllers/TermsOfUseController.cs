@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MySocailApp.Api.Controllers
+namespace SolTake.Api.Controllers
 {
     [Route("[controller]")]
     public class TermsOfUseController : Controller

@@ -1,7 +1,7 @@
 ﻿using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Repositories
+namespace SolTake.Infrastructure.Repositories
 {
     public class AIModelCacheService(IEnumerable<AIModel> models) : IAIModelCacheService
     {

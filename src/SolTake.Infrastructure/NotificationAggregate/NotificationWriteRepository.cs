@@ -2,9 +2,9 @@
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.ValueObjects;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.NotificationAggregate
+namespace SolTake.Infrastructure.NotificationAggregate
 {
     public class NotificationWriteRepository(AppDbContext context) : INotificationWriteRepository
     {

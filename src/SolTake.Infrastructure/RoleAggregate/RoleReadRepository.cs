@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.RoleAggregate.Abstracts;
 using SolTake.Domain.RoleAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.RoleAggregate
+namespace SolTake.Infrastructure.RoleAggregate
 {
     public class RoleReadRepository(AppDbContext context) : IRoleReadRepository
     {

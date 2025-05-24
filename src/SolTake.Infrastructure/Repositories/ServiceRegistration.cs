@@ -3,7 +3,7 @@ using SolTake.Domain.TransactionAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.Repositories
+namespace SolTake.Infrastructure.Repositories
 {
     public static class ServiceRegistration
     {

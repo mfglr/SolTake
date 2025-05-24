@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.ExamAggregate.Entitities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.ExamAggregate
+namespace SolTake.Infrastructure.ModelBuilders.ExamAggregate
 {
     public class ExamModelBuilder : IEntityTypeConfiguration<Exam>
     {

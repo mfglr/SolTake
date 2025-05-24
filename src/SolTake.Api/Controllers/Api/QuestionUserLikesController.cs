@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.DislikeQuestion;
 using SolTake.Application.Commands.QuestionDomain.QuestionUserLikeAggregate.LikeQuestion;
 using SolTake.Application.Queries.QuestionDomain;
 using SolTake.Application.Queries.QuestionDomain.GetQuestionLikes;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.QuestionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.QuestionDomain
+namespace SolTake.Infrastructure.ModelBuilders.QuestionDomain
 {
     public class QuestionModelBuilder : IEntityTypeConfiguration<Question>
     {

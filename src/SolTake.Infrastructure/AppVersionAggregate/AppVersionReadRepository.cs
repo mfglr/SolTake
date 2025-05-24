@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.AppVersionAggregate.Entities;
 using SolTake.Domain.AppVersionAggregate.ValuObjects;
 
-namespace MySocailApp.Infrastructure.AppVersionAggregate
+namespace SolTake.Infrastructure.AppVersionAggregate
 {
     public class AppVersionReadRepository(AppDbContext context) : IAppVersionReadRepository
     {

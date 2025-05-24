@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Infrastructure.QuestionDomain.QuestionAggregate;
-using MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate;
-using MySocailApp.Infrastructure.QuestionDomain.QuestionUserSaveAggregate;
+using SolTake.Infrastructure.QuestionDomain.QuestionAggregate;
+using SolTake.Infrastructure.QuestionDomain.QuestionUserLikeAggregate;
+using SolTake.Infrastructure.QuestionDomain.QuestionUserSaveAggregate;
 
 namespace MySocailApp.Infrastructure.QuestionDomain
 {

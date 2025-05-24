@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Seeds.Dgs
+namespace SolTake.Infrastructure.Seeds.Dgs
 {
     public class Dgs_Matematik_SubjectTopic_Seed : IEntityTypeConfiguration<SubjectTopic>
     {

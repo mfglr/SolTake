@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate;
-using MySocailApp.Infrastructure.SolutionDomain.SolutionUserSaveAggregate;
-using MySocailApp.Infrastructure.SolutionDomain.SolutionUserVoteAggregate;
+using SolTake.Infrastructure.SolutionDomain.SolutionAggregate;
+using SolTake.Infrastructure.SolutionDomain.SolutionUserSaveAggregate;
+using SolTake.Infrastructure.SolutionDomain.SolutionUserVoteAggregate;
 
-namespace MySocailApp.Infrastructure.SolutionDomain
+namespace SolTake.Infrastructure.SolutionDomain
 {
     public static class ServiceRegistration
     {

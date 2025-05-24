@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.MessageAggregate.Abstracts;
 using SolTake.Domain.MessageAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.MessageDomain.MessageAggregate
+namespace SolTake.Infrastructure.MessageDomain.MessageAggregate
 {
     public class MessageWriteRepository(AppDbContext context) : IMessageWriteRepository
     {

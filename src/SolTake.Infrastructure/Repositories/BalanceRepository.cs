@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 using SolTake.Domain.BalanceAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Repositories
+namespace SolTake.Infrastructure.Repositories
 {
     public class BalanceRepository(AppDbContext context) : IBalanceRepository
     {

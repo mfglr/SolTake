@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using Xabe.FFmpeg;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices
+namespace SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices
 {
     public class VideoManipulator(UniqNameGenerator blobNameGenerator, ITempDirectoryService tempDirectoryService, IPathFinder pathFinder)
     {

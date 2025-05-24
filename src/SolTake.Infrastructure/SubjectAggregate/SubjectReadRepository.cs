@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.SubjectAggregate.Entities;
 using SolTake.Domain.SubjectAggregate.Interfaces;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.SubjectAggregate
+namespace SolTake.Infrastructure.SubjectAggregate
 {
     public class SubjectReadRepository(AppDbContext context) : ISubjectReadRepository
     {

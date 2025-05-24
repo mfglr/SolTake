@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.CommentDomain.CommentAggregate
+namespace SolTake.Infrastructure.CommentDomain.CommentAggregate
 {
     public class CommentReadRepository(AppDbContext context) : ICommentReadRepository
     {

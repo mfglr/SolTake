@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.MessageAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.MessageAggregate
+namespace SolTake.Infrastructure.ModelBuilders.MessageAggregate
 {
     public class MessageModelBuilder : IEntityTypeConfiguration<Message>
     {

@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.CreateCommentUserLike;
 using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.DeleteCommentUserLike;
 using SolTake.Application.Commands.CommentDomain.CommentUserLikeAggregate.LikeComment;
 using SolTake.Application.Queries.CommentAggregate;
 using SolTake.Application.Queries.CommentAggregate.GetCommentLikes;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.UserDomain.FollowAggregate.Follow;
 using SolTake.Application.Commands.UserDomain.FollowAggregate.Unfollow;
 using SolTake.Application.Commands.UserDomain.UserAggregate.RemoveFollower;
-using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
-using MySocailApp.Application.Queries.UserDomain.GetFollowersByUserId;
+using SolTake.Application.Queries.UserDomain.GetFollowedsByUserId;
+using SolTake.Application.Queries.UserDomain.GetFollowersByUserId;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

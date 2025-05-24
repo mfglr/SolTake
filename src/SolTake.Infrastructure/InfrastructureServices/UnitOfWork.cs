@@ -1,7 +1,7 @@
 ﻿using SolTake.Application.InfrastructureServices;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices
+namespace SolTake.Infrastructure.InfrastructureServices
 {
     public class UnitOfWork(AppDbContext context) : IUnitOfWork
     {

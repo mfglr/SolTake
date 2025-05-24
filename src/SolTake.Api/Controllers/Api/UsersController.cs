@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.UserDomain.UserAggregate;
 using SolTake.Application.Commands.UserDomain.UserAggregate.ApprovePrivacyPolicy;
 using SolTake.Application.Commands.UserDomain.UserAggregate.ApproveTermsOfUse;
@@ -26,12 +26,12 @@ using SolTake.Application.Commands.UserDomain.UserAggregate.UpdateUserImage;
 using SolTake.Application.Commands.UserDomain.UserAggregate.UpdateUserName;
 using SolTake.Application.Commands.UserDomain.UserAggregate.VerifyEmail;
 using SolTake.Application.Queries.AccountAggregate.IsUserNameExist;
-using MySocailApp.Application.Queries.UserDomain;
-using MySocailApp.Application.Queries.UserDomain.GetUserById;
-using MySocailApp.Application.Queries.UserDomain.GetUserByUserName;
-using MySocailApp.Application.Queries.UserDomain.SearchUsers;
+using SolTake.Application.Queries.UserDomain;
+using SolTake.Application.Queries.UserDomain.GetUserById;
+using SolTake.Application.Queries.UserDomain.GetUserByUserName;
+using SolTake.Application.Queries.UserDomain.SearchUsers;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

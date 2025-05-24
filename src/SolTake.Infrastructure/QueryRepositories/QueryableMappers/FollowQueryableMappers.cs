@@ -1,8 +1,8 @@
-﻿using MySocailApp.Application.Queries.UserDomain.GetFollowedsByUserId;
+﻿using SolTake.Application.Queries.UserDomain.GetFollowedsByUserId;
 using SolTake.Domain.UserUserFollowAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class FollowQueryableMappers
     {

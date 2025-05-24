@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.UserDomain.GetBlockeds
+namespace SolTake.Application.Queries.UserDomain.GetBlockeds
 {
     public class GetBlockedsHandler(IUserUserBlockQueryRepository userUserBlockQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetBlockedsDto, List<UserUserBlockResponseDto>>
     {

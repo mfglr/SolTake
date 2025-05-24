@@ -1,7 +1,7 @@
 ﻿using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.AppVersionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.AppVersionAggregate
+namespace SolTake.Infrastructure.AppVersionAggregate
 {
     public class AppVersionCacheService : IAppVersionCacheService
     {

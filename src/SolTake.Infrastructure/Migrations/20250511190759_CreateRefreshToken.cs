@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MySocailApp.Infrastructure.Migrations
+namespace SolTake.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class CreateRefreshToken : Migration

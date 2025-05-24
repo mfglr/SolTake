@@ -1,7 +1,7 @@
 ﻿using SolTake.Application.Queries.BalanceAggregate.GetBalance;
 using SolTake.Domain.BalanceAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.QueryRepositories.QueryableMappers
+namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class BalanceQueryableMapper
     {

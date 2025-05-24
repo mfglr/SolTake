@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.NotificationDomain.NotificationAggregate.MarkAsViewedNotifications;
 using SolTake.Application.Queries.NotificationAggregate;
 using SolTake.Application.Queries.NotificationAggregate.GetUnviewedNotifications;
 using SolTake.Application.Queries.NotificationAggregate.GetViewedNotifications;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

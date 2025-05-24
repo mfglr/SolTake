@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolTake.Domain.QuestionUserLikeAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
+namespace SolTake.Infrastructure.QuestionDomain.QuestionUserLikeAggregate
 {
     public static class ServiceRegistration
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.Seeds.Tyt
+namespace SolTake.Infrastructure.Seeds.Tyt
 {
     public class Tyt_Geometri_SubjectTopic_Seed : IEntityTypeConfiguration<SubjectTopic>
     {

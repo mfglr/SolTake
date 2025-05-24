@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySocailApp.Api.Filters;
+using SolTake.Api.Filters;
 using SolTake.Application.Commands.CommentDomain.CommentAggregate.CreateComment;
 using SolTake.Application.Commands.CommentDomain.CommentAggregate.DeleteComment;
 using SolTake.Application.Queries.CommentAggregate;
@@ -12,7 +12,7 @@ using SolTake.Application.Queries.CommentAggregate.GetCommentsByParentId;
 using SolTake.Application.Queries.CommentAggregate.GetCommentsByQuestionId;
 using SolTake.Application.Queries.CommentAggregate.GetCommentsBySolutionId;
 
-namespace MySocailApp.Api.Controllers.Api
+namespace SolTake.Api.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

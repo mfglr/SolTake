@@ -6,7 +6,7 @@ using SolTake.Core;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices
+namespace SolTake.Infrastructure.InfrastructureServices
 {
     public class AccessTokenReader(IHttpContextAccessor contextAccessor) : IAccessTokenReader
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.CommentAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.CommentAggregate
+namespace SolTake.Infrastructure.ModelBuilders.CommentAggregate
 {
     public class CommentModelBuilder : IEntityTypeConfiguration<Comment>
     {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolTake.Core;
 
-namespace MySocailApp.Application.Queries.UserDomain.GetBlockeds
+namespace SolTake.Application.Queries.UserDomain.GetBlockeds
 {
     public record GetBlockedsDto(int? Offset,int Take, bool IsDescending) : Page(Offset,Take,IsDescending), IRequest<List<UserUserBlockResponseDto>>;
 }

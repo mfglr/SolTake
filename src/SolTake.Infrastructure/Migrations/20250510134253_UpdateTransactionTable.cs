@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MySocailApp.Infrastructure.Migrations
+namespace SolTake.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class UpdateTransactionTable : Migration

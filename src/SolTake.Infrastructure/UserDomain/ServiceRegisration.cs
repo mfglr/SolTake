@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Infrastructure.UserDomain.FollowAggregate;
-using MySocailApp.Infrastructure.UserDomain.PrivacyPolicyAggreagate;
-using MySocailApp.Infrastructure.UserDomain.TermsOfUseAggregate;
-using MySocailApp.Infrastructure.UserDomain.UserAggregate;
-using MySocailApp.Infrastructure.UserDomain.UserUserBlockeAggregate;
-using MySocailApp.Infrastructure.UserDomain.UserUserConversationAggregate;
-using MySocailApp.Infrastructure.UserDomain.UserUserSearchAggregate;
+using SolTake.Infrastructure.UserDomain.FollowAggregate;
+using SolTake.Infrastructure.UserDomain.PrivacyPolicyAggreagate;
+using SolTake.Infrastructure.UserDomain.TermsOfUseAggregate;
+using SolTake.Infrastructure.UserDomain.UserAggregate;
+using SolTake.Infrastructure.UserDomain.UserUserBlockeAggregate;
+using SolTake.Infrastructure.UserDomain.UserUserConversationAggregate;
+using SolTake.Infrastructure.UserDomain.UserUserSearchAggregate;
 
-namespace MySocailApp.Infrastructure.UserDomain
+namespace SolTake.Infrastructure.UserDomain
 {
     public static class ServiceRegisration
     {

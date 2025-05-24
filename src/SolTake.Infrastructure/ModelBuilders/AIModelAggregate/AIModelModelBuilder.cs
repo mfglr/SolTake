@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SolTake.Domain.AIModelAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.ModelBuilders.AIModelAggregate
+namespace SolTake.Infrastructure.ModelBuilders.AIModelAggregate
 {
     public class AIModelModelBuilder : IEntityTypeConfiguration<AIModel>
     {

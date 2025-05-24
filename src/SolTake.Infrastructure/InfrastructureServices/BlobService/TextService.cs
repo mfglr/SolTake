@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SolTake.Application.InfrastructureServices.BlobService;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
+using SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 
 namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
 {

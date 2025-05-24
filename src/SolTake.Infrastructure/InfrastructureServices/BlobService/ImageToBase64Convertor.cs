@@ -1,6 +1,6 @@
 ﻿using SolTake.Application.InfrastructureServices.BlobService;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
+namespace SolTake.Infrastructure.InfrastructureServices.BlobService
 {
     public class ImageToBase64Convertor(IPathFinder pathFinder) : IImageToBase64Convertor
     {

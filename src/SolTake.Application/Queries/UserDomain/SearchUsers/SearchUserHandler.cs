@@ -2,7 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.UserDomain.SearchUsers
+namespace SolTake.Application.Queries.UserDomain.SearchUsers
 {
     public class SearchUserHandler(IUserQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<SearchUserDto, List<SearchUserResponseDto>>
     {

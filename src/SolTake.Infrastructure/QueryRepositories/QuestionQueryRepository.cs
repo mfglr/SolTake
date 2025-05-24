@@ -3,13 +3,13 @@ using SolTake.Application.Queries.QuestionDomain;
 using SolTake.Application.QueryRepositories;
 using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Infrastructure.DbContexts;
-using MySocailApp.Infrastructure.Extentions;
-using MySocailApp.Infrastructure.QueryRepositories.QueryableMappers;
+using SolTake.Infrastructure.DbContexts;
+using SolTake.Infrastructure.Extentions;
+using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
 using SolTake.Core;
 using System.Linq.Expressions;
 
-namespace MySocailApp.Infrastructure.QueryRepositories
+namespace SolTake.Infrastructure.QueryRepositories
 {
     public class QuestionQueryRepository(AppDbContext context) : IQuestionQueryRepository
     {

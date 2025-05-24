@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Application.InfrastructureServices.BlobService.Objects;
-using MySocailApp.Infrastructure.InfrastructureServices.BlobService.InternalServices;
+using SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using SolTake.Core.Exceptions;
 
-namespace MySocailApp.Infrastructure.InfrastructureServices.BlobService
+namespace SolTake.Infrastructure.InfrastructureServices.BlobService
 {
     public class TempDirectoryService(IHttpContextAccessor contextAccessor, UniqNameGenerator uniqNameGenerator, IPathFinder pathFinder) : ITempDirectoryService
     {

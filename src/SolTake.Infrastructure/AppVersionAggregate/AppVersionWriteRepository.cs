@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.AppVersionAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.AppVersionAggregate
+namespace SolTake.Infrastructure.AppVersionAggregate
 {
     public class AppVersionWriteRepository(AppDbContext context) : IAppVersionWriteRepository
     {

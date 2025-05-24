@@ -3,7 +3,7 @@ using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 
-namespace MySocailApp.Application.Queries.SolutionDomain.GetSolutionById
+namespace SolTake.Application.Queries.SolutionDomain.GetSolutionById
 {
     public class GetSolutionByIdHandler(ISolutionQueryRepository repository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetSolutionByIdDto, SolutionResponseDto>
     {

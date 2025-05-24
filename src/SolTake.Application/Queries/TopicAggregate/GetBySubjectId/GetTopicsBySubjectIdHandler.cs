@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolTake.Application.QueryRepositories;
 
-namespace MySocailApp.Application.Queries.TopicAggregate.GetBySubjectId
+namespace SolTake.Application.Queries.TopicAggregate.GetBySubjectId
 {
     public class GetTopicsBySubjectIdHandler(ITopicQueryRepository topicQueryRepository) : IRequestHandler<GetTopicsBySubjectIdDto, List<TopicResponseDto>>
     {

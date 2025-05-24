@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySocailApp.Infrastructure.MessageDomain.MessageAggregate;
-using MySocailApp.Infrastructure.MessageDomain.MessageConnectionAggregate;
+using SolTake.Infrastructure.MessageDomain.MessageAggregate;
+using SolTake.Infrastructure.MessageDomain.MessageConnectionAggregate;
 using SolTake.Infrastructure.MessageDomain.MessageUserReceiveAggregate;
-using MySocailApp.Infrastructure.MessageDomain.MessageUserRemoveAggregate;
-using MySocailApp.Infrastructure.MessageDomain.MessageUserViewAggregate;
+using SolTake.Infrastructure.MessageDomain.MessageUserRemoveAggregate;
+using SolTake.Infrastructure.MessageDomain.MessageUserViewAggregate;
 
 namespace MySocailApp.Infrastructure.MessageDomain
 {

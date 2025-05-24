@@ -3,7 +3,7 @@ using SolTake.Application.Exceptions;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.AppVersionAggregate.ValuObjects;
 
-namespace MySocailApp.Api.HubFilters
+namespace SolTake.Api.HubFilters
 {
     public class VersionHubFilter(IAppVersionCacheService versionCachService) : IHubFilter
     {

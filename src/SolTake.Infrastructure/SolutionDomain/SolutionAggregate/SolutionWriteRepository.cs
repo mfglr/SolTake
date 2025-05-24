@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
+namespace SolTake.Infrastructure.SolutionDomain.SolutionAggregate
 {
     public class SolutionWriteRepository(AppDbContext context) : ISolutionWriteRepository
     {

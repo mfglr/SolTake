@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.CommentUserLikeAggregate.Abstracts;
 using SolTake.Domain.CommentUserLikeAggregate.Entities;
 
-namespace MySocailApp.Infrastructure.CommentDomain.CommentUserLikeAggregate
+namespace SolTake.Infrastructure.CommentDomain.CommentUserLikeAggregate
 {
     public class CommentUserLikeWriteRepository(AppDbContext context) : ICommentUserLikeWriteRepository
     {

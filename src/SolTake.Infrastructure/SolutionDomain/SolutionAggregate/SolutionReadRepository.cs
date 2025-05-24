@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 
-namespace MySocailApp.Infrastructure.SolutionDomain.SolutionAggregate
+namespace SolTake.Infrastructure.SolutionDomain.SolutionAggregate
 {
     public class SolutionReadRepository(AppDbContext context) : ISolutionReadRepository
     {

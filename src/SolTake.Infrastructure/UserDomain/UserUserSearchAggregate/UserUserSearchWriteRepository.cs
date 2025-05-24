@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Domain.UserUserSearchAggregate.Abstracts;
 using SolTake.Domain.UserUserSearchAggregate.Entities;
-using MySocailApp.Infrastructure.DbContexts;
+using SolTake.Infrastructure.DbContexts;
 
-namespace MySocailApp.Infrastructure.UserDomain.UserUserSearchAggregate
+namespace SolTake.Infrastructure.UserDomain.UserUserSearchAggregate
 {
     public class UserUserSearchWriteRepository(AppDbContext context) : IUserUserSearchWriteRepository
     {
