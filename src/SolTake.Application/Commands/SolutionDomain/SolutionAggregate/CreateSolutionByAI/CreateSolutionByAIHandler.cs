@@ -137,8 +137,8 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
             if (await _userUserBlockRepository.ExistAsync(login.UserId, question.UserId, cancellationToken))
                 throw new UserBlockedException();
 
-            if (!await _balanceRepository.HasBalance(login.UserId, cancellationToken))
-                throw new InsufficientFundsException();
+            //if (!await _balanceRepository.HasBalance(login.UserId, cancellationToken))
+            //    throw new InsufficientFundsException();
 
             var aiModel =
                 _aiModelCacheService.Get(request.ModelId) ??

@@ -8,12 +8,13 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
     public static class SolutionQueryableMappers
     {
         public static IQueryable<SolutionResponseDto> ToSolutionResponseDto(this IQueryable<Solution> query, AppDbContext context, int userId)
-            => query
-                .Join(
-                    context.AIModels,
-                    solution => solution.AIModelId,
-                    aiModels => aiModels.Id,
-                    (solution, aiModel) => new { solution, aiModel }
+            => 
+                (
+                    from s in query
+                    join a in context.AIModels
+                    on s.AIModelId equals a.Id into gj
+                    from aiModel in gj.DefaultIfEmpty()
+                    select new { solution = s, aiModel }
                 )
                 .Join(
                     context.Users,
