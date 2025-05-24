@@ -4,7 +4,7 @@ import 'package:my_social_app/services/app_version_service.dart';
 import 'package:my_social_app/services/package_version_service.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/app_login_by_refresh_token_view.dart';
+import 'package:my_social_app/views/app_login_view.dart';
 import 'package:my_social_app/views/login/pages/application_loading_page.dart';
 import 'package:my_social_app/views/update_app_page/update_app_page.dart';
 
@@ -36,7 +36,7 @@ class _AppUpdateViewState extends State<AppUpdateView> {
           if(snapshot.data!) return const UpdateAppPage();
           return StoreConnector<AppState, Login>(
             converter: (store) => store.state.login,
-            builder: (context, login) => const AppLoginByRefreshTokenView(),
+            builder: (context, login) => AppLoginView(login: login),
           );
         }
         return const ApplicationLoadingPage();
