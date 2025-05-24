@@ -90,33 +90,38 @@ class SolutionItemWidget extends StatelessWidget {
           if(solution.isCreatedByAI)
             SizedBox(
               height: MediaQuery.of(context).size.height * 3 / 5,
-              child: InteractiveViewer(
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: LatexSperator()
-                      .seperate(solution.content!)
-                      .map((e) => e is Latex
-                        ? Math.tex(
-                          e.content,
-                          options: MathOptions(
-                            style: MathStyle.displayCramped,
-                            fontSize: 25,
-                            color: Colors.black
-                          ),
-                        )
-                      : SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                              e.content,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.bold
-                              ),
+              child: SingleChildScrollView(
+                child: InteractiveViewer(
+                  child: Container(
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height * 3 / 5
+                    ),
+                    color: Colors.white,
+                    child: Column(
+                      children: LatexSperator()
+                        .seperate(solution.content!)
+                        .map((e) => e is Latex
+                          ? Math.tex(
+                            e.content,
+                            options: MathOptions(
+                              style: MathStyle.displayCramped,
+                              fontSize: 25,
+                              color: Colors.black
                             ),
-                        ))
-                      .toList(),
+                          )
+                        : SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                                e.content,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                          ))
+                        .toList(),
+                    ),
                   ),
                 ),
               ),
