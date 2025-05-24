@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
-import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
@@ -55,7 +55,7 @@ class AppState{
   final Pagination<int,Id<int>> appExams;
   final Pagination<int,NotificationState> notifications;
   final EntityState<int,SubjectState> subjectEntityState;
-  final Login login;
+  final LoginState? login;
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,CommentState> commentEntityState;
@@ -122,7 +122,7 @@ class AppState{
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
-    login: Login.notLogin(),
+    login: null,
     
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
@@ -156,15 +156,15 @@ class AppState{
 
   Iterable<int> get selectIdsOfNewComingMessages
     => messageEntityState.values
-        .where((e) => e.state == MessageStatus.created && e.senderId != login.login!.id)
+        .where((e) => e.state == MessageStatus.created && e.senderId != login!.id)
         .map((e) => e.id);
   int get selectNumberOfComingMessages
     => messageEntityState.values
-        .where((e) => e.state != MessageStatus.viewed && e.senderId != login.login!.id)
+        .where((e) => e.state != MessageStatus.viewed && e.senderId != login!.id)
         .length;
 
   //select users
-  UserState? get currentUser => userEntityState.getValue(login.login!.id);
+  UserState? get currentUser => userEntityState.getValue(login!.id);
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions
@@ -231,9 +231,9 @@ class AppState{
     => subjectEntityState.getValue(subjectId)!.topics.values.map((e) => topicEntityState.getValue(e.id)!);
 
   //select privacy policy
-  String? get selectPrivacyPolicy => policyState.privacyPolicies[login.login?.language];
+  String? get selectPrivacyPolicy => policyState.privacyPolicies[login?.language];
   //select terms of use
-  String? get selectTermsOfUse => policyState.termOfUses[login.login?.language];
+  String? get selectTermsOfUse => policyState.termOfUses[login?.language];
 
   //select video questions
   Iterable<QuestionState> get selectVideoQuestions => 

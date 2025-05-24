@@ -22,6 +22,19 @@ final _googleSignIn = Platform.isIOS
     )
   : GoogleSignIn();
 
+// void _setLogin(Store<AppState> store,Login login){
+//   final state = login.toLoginState();
+//   LoginStorage()
+//     .set(state)
+//     .then((_){
+//       AppClient().changeAccessToken(login.accessToken);
+//       MessageHub.init(login.accessToken, store);
+//       NotificationHub.init(login.accessToken, store);
+//       UserService().removeRefreshTokens(login.refreshToken);
+//       store.dispatch(UpdateLoginStateAction(payload: state));
+//     });
+// }
+
 void _setAccount(Store<AppState> store,Login login){
   final state = login.toLoginState();
   LoginStorage().set(state);
