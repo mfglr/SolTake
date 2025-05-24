@@ -1,36 +1,46 @@
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:redux/redux.dart';
 
-LoginState? updateAccountStateReducer(LoginState? prev,UpdateLoginStateAction action)
-  => action.payload;
+Login loginSuccessReducer(Login prev, LoginSuccessAction action)
+  => prev.success(action.payload);
+Login notLoginReducer(Login prev, NotLoginAction action)
+  => prev.notLogin();
+Login loginByPasswordReducer(Login prev, LoginByPasswordAction action)
+  => prev.loading();
+Login createUserReducer(Login prev, CreateUserAction action)
+  => prev.loading();
+Login loginByGoogleReducer(Login prev, LoginByGoogleAction action)
+  => prev.loading();
+Login logOutReducer(Login prev, LogOutAction action)
+  => prev.loading();
+Login deleteUserReducer(Login prev, DeleteUserAction action)
+  => prev.loading();
 
-LoginState? updateLanguageReducer(LoginState? prev,UpdateLanguageSuccessAction action)
-  => prev?.updateLanguage(action.language);
+Login updateLanguageReducer(Login prev,UpdateLanguageSuccessAction action)
+  => prev.updateLanguage(action.language);
+Login confirmEmailReducer(Login prev,ConfirmEmailByTokenSuccessAction action)
+  => prev.confirmEmail();
+Login approveTermsOfUseReducer(Login prev,ApproveTermsOfUseSuccessAction action)
+  => prev.approveTermsOfUse();
+Login approvePrivacyPolicyReducer(Login prev, ApprovePrivacyPolicySuccessAction action)
+  => prev.approvePrivacyPolicy();
 
-LoginState? confirmEmailReducer(LoginState? prev,ConfirmEmailByTokenSuccessAction action)
-  => prev?.confirmEmail();
+Login updateRefreshToken(Login prev,UpdateRefreshTokenAction action)
+  => prev.updateRefhreshToken(action.refreshToken);
 
-LoginState? approveTermsOfUseReducer(LoginState? prev,ApproveTermsOfUseSuccessAction action)
-  => prev?.approveTermsOfUse();
-LoginState? approvePrivacyPolicyReducer(LoginState? prev, ApprovePrivacyPolicySuccessAction action)
-  => prev?.approvePrivacyPolicy();
+final Reducer<Login> loginReducers = combineReducers<Login>([
+  TypedReducer<Login,LoginSuccessAction>(loginSuccessReducer).call,
+  TypedReducer<Login,NotLoginAction>(notLoginReducer).call,
+  TypedReducer<Login,LoginByPasswordAction>(loginByPasswordReducer).call,
+  TypedReducer<Login,CreateUserAction>(createUserReducer).call,
+  TypedReducer<Login,LoginByGoogleAction>(loginByGoogleReducer).call,
+  TypedReducer<Login,LogOutAction>(logOutReducer).call,
+  TypedReducer<Login,DeleteUserAction>(deleteUserReducer).call,
 
-LoginState? deleteUserReducer(LoginState? prev,DeleteUserAction action)
-  => prev?.startAccountDeletion();
-LoginState? deleteUserFailedReducer(LoginState? prev,DeleteUserFailedAction action)
-  => prev?.stopAccountDeletion();
-
-LoginState? updateRefreshToken(LoginState? prev,UpdateRefreshTokenAction action)
-  => prev?.updateRefhreshToken(action.refreshToken);
-
-final Reducer<LoginState?> accoutStateReducers = combineReducers<LoginState?>([
-  TypedReducer<LoginState?,UpdateLoginStateAction>(updateAccountStateReducer).call,
-  TypedReducer<LoginState?,UpdateLanguageSuccessAction>(updateLanguageReducer).call,
-  TypedReducer<LoginState?,ConfirmEmailByTokenSuccessAction>(confirmEmailReducer).call,
-  TypedReducer<LoginState?,ApprovePrivacyPolicySuccessAction>(approvePrivacyPolicyReducer).call,
-  TypedReducer<LoginState?,ApproveTermsOfUseSuccessAction>(approveTermsOfUseReducer).call,
-  TypedReducer<LoginState?,DeleteUserAction>(deleteUserReducer).call,
-  TypedReducer<LoginState?,DeleteUserFailedAction>(deleteUserFailedReducer).call,
-  TypedReducer<LoginState?,UpdateRefreshTokenAction>(updateRefreshToken).call
+  TypedReducer<Login,UpdateLanguageSuccessAction>(updateLanguageReducer).call,
+  TypedReducer<Login,ConfirmEmailByTokenSuccessAction>(confirmEmailReducer).call,
+  TypedReducer<Login,ApprovePrivacyPolicySuccessAction>(approvePrivacyPolicyReducer).call,
+  TypedReducer<Login,ApproveTermsOfUseSuccessAction>(approveTermsOfUseReducer).call,
+  TypedReducer<Login,UpdateRefreshTokenAction>(updateRefreshToken).call
 ]);

@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -21,12 +24,29 @@ class RootView extends StatefulWidget {
 
 class _RootViewState extends State<RootView> {
   int currentPageIndex = 0;
+  late final Timer _timer;
+
+  @override
+  void initState() {
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    _timer = Timer.periodic(
+      Duration(minutes: int.parse(dotenv.env['accessTokenDuration']!)),
+      (timer) => store.dispatch(const LoginByRefreshTokenAction())
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,UserState?>(
       onInit: (store){
-        store.dispatch(LoadUserAction(userId: store.state.loginState!.id));
+        store.dispatch(LoadUserAction(userId: store.state.login.login!.id));
         store.dispatch(const GetStoriesAction());
       },
       converter: (store) => store.state.currentUser,

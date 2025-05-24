@@ -1,0 +1,4 @@
+enum ActiveLoginPage {
+  loginPage,
+  registerPage
+}

@@ -18,7 +18,6 @@ LoginState _$LoginStateFromJson(Map<String, dynamic> json) => LoginState(
       refreshToken: json['refreshToken'] as String,
       isPrivacyPolicyApproved: json['isPrivacyPolicyApproved'] as bool,
       isTermsOfUseApproved: json['isTermsOfUseApproved'] as bool,
-      accountDeletionStart: json['accountDeletionStart'] as bool,
     );
 
 Map<String, dynamic> _$LoginStateToJson(LoginState instance) =>
@@ -32,5 +31,4 @@ Map<String, dynamic> _$LoginStateToJson(LoginState instance) =>
       'isTermsOfUseApproved': instance.isTermsOfUseApproved,
       'language': instance.language,
       'refreshToken': instance.refreshToken,
-      'accountDeletionStart': instance.accountDeletionStart,
     };

@@ -29,7 +29,7 @@ class DisplaySavedSolutionsPage extends StatelessWidget {
         ),
       ),
       body: StoreConnector<AppState,UserState?>(
-        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.loginState!.id)),
+        onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.login.login!.id)),
         converter: (store) => store.state.currentUser,
         builder: (context,user){
           if(user == null) return const LoadingView();

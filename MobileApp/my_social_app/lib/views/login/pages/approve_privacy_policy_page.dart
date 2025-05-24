@@ -48,7 +48,7 @@ class _ApprovePolicyPageState extends State<ApprovePolicyPage> {
                   ],
                 ),
                 StoreConnector<AppState,String?>(
-                  onInit: (store) => store.dispatch(LoadPrivacyPolicyAction(language: store.state.loginState!.language)),
+                  onInit: (store) => store.dispatch(LoadPrivacyPolicyAction(language: store.state.login.login!.language)),
                   converter: (store) => store.state.selectPrivacyPolicy,
                   builder: (context,privacyPolicy){
                     if(privacyPolicy == null) return const LoadingCircleWidget();

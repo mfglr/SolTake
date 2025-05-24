@@ -2,10 +2,10 @@ import 'dart:core';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
+import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
@@ -46,6 +46,7 @@ class AppState{
   final EntityState<int,StoryState> stories;
   final Pagination<int,AIModelState> aiModels;
   final Pagination<int,TransactionState> transactions;
+  final ActiveLoginPage activeLoginPage;
 
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
@@ -56,9 +57,7 @@ class AppState{
   final Pagination<int,Id<int>> appExams;
   final Pagination<int,NotificationState> notifications;
   final EntityState<int,SubjectState> subjectEntityState;
-  final bool isInitialized;
-  final ActiveAccountPage activeAccountPage;
-  final LoginState? loginState;
+  final Login login;
   final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,CommentState> commentEntityState;
@@ -80,6 +79,7 @@ class AppState{
     required this.balance,
     required this.aiModels,
     required this.transactions,
+    required this.activeLoginPage,
 
     required this.stories,
 
@@ -91,9 +91,7 @@ class AppState{
     required this.examEntityState,
     required this.appExams,
     required this.conversations,
-    required this.activeAccountPage,
-    required this.loginState,
-    required this.isInitialized,
+    required this.login,
     required this.subjectEntityState,
     required this.topicEntityState,
     required this.solutionEntityState,
@@ -118,6 +116,7 @@ class AppState{
     stories: EntityState(),
     aiModels: Pagination.init(aiModelsPerPage, false),
     transactions: Pagination.init(transactionsPerPage, true),
+    activeLoginPage: ActiveLoginPage.loginPage,
 
     userEntityState: EntityState(),
     userMessageState: EntityState(),
@@ -127,9 +126,8 @@ class AppState{
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
-    activeAccountPage: ActiveAccountPage.loginPage,
-    loginState: null,
-    isInitialized: true,
+    login: Login.init(),
+    
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
@@ -162,15 +160,15 @@ class AppState{
 
   Iterable<int> get selectIdsOfNewComingMessages
     => messageEntityState.values
-        .where((e) => e.state == MessageStatus.created && e.senderId != loginState!.id)
+        .where((e) => e.state == MessageStatus.created && e.senderId != login.login!.id)
         .map((e) => e.id);
   int get selectNumberOfComingMessages
     => messageEntityState.values
-        .where((e) => e.state != MessageStatus.viewed && e.senderId != loginState!.id)
+        .where((e) => e.state != MessageStatus.viewed && e.senderId != login.login!.id)
         .length;
 
   //select users
-  UserState? get currentUser => userEntityState.getValue(loginState!.id);
+  UserState? get currentUser => userEntityState.getValue(login.login!.id);
 
   //Select questions
   Iterable<QuestionState> get selectHomePageQuestions
@@ -237,9 +235,9 @@ class AppState{
     => subjectEntityState.getValue(subjectId)!.topics.values.map((e) => topicEntityState.getValue(e.id)!);
 
   //select privacy policy
-  String? get selectPrivacyPolicy => policyState.privacyPolicies[loginState?.language];
+  String? get selectPrivacyPolicy => policyState.privacyPolicies[login.login?.language];
   //select terms of use
-  String? get selectTermsOfUse => policyState.termOfUses[loginState?.language];
+  String? get selectTermsOfUse => policyState.termOfUses[login.login?.language];
 
   //select video questions
   Iterable<QuestionState> get selectVideoQuestions => 

@@ -46,7 +46,7 @@ class MessageConnectionStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,int>(
-      converter: (store) => store.state.loginState!.id,
+      converter: (store) => store.state.login.login!.id,
       builder: (context,accountId) => Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,

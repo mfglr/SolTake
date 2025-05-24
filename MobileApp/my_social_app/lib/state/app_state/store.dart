@@ -1,9 +1,10 @@
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
@@ -51,6 +52,7 @@ final store = Store(
     balance: const BalanceState(balance: 0),
     aiModels: Pagination.init(aiModelsPerPage, false),
     transactions: Pagination.init(transactionsPerPage, true),
+    activeLoginPage: ActiveLoginPage.loginPage,
 
     stories: EntityState(),
 
@@ -61,9 +63,7 @@ final store = Store(
     homePageQuestions: Pagination.init(questionsPerPage, true),
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
-    activeAccountPage: ActiveAccountPage.loginPage,
-    loginState: null,
-    isInitialized: false,
+    login: Login.loading(),
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
     solutionEntityState: EntityState(),

@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 void loadBalanceMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is LoadBalanceAction){
     BalanceService()
-      .getBalance(store.state.loginState!.id)
+      .getBalance(store.state.login.login!.id)
       .then((balance) => store.dispatch(LoadBalanceSuccessAction(balance: balance.toState())));
   }
   next(action);

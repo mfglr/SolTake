@@ -12,9 +12,6 @@ import 'package:my_social_app/services/notification_hub.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/actions.dart';
-import 'package:my_social_app/state/app_state/active_account_page_state/active_account_page.dart';
-import 'package:my_social_app/state/app_state/application_init_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
@@ -47,11 +44,10 @@ void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .create(action.email, action.password, action.passwordConfirmation)
       .then((login){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
         _setAccount(store, login);
+        store.dispatch(LoginSuccessAction(payload: login.toLoginState()));
       })
       .catchError((e){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.registerPage));
         throw e;
       });
   }
@@ -59,7 +55,7 @@ void createUserMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 
 void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoginByRefreshToken){
+  if(action is LoginByRefreshTokenAction){
     LoginStorage()
       .get()
       .then((prev){
@@ -68,18 +64,20 @@ void loginByRefreshTokenMiddleware(Store<AppState> store,action,NextDispatcher n
             .loginByRefreshtoken(prev.id, prev.refreshToken)
             .then((account){
               _setAccount(store, account);
-              store.dispatch(const ApplicationSuccessfullyInitAction());
+              store.dispatch(LoginSuccessAction(payload: account.toLoginState()));
             })
             .catchError((error){
               if((error is BackendException && error.statusCode == 426)){
                 _clearSession(store);
               }
-              store.dispatch(const ApplicationSuccessfullyInitAction());
+              else{
+                store.dispatch(const NotLoginAction());
+              }
               throw error;
             });
         }
         else{
-          store.dispatch(const ApplicationSuccessfullyInitAction());
+          store.dispatch(const NotLoginAction());
         }
       });
   }
@@ -91,11 +89,11 @@ void loginByPaswordMiddleware(Store<AppState> store,action,NextDispatcher next){
     UserService()
       .loginByPassword(action.emailOrPassword, action.password)
       .then((account){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
         _setAccount(store, account);
+        store.dispatch(LoginSuccessAction(payload: account.toLoginState()));
       })
       .catchError((e){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
+        store.dispatch(const NotLoginAction());
         throw e;
       });
   }
@@ -108,36 +106,36 @@ void loginByGoogleMiddleware(Store<AppState> store,action,NextDispatcher next){
       .signIn()
       .then((value){
         if(value == null){
-          store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
           _googleSignIn.disconnect();
           ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
+          store.dispatch(const NotLoginAction());
           return;
         }
         value.authentication
           .then((e){
             final accessToken = e.accessToken;
             if(accessToken == null){
-              store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
               _googleSignIn.disconnect();
               ToastCreator.displayError(unexceptionExceptionNotificationContents[getLanguageByStore(store)]!);
+              store.dispatch(const NotLoginAction());
               return;
             }
             UserService()
               .loginByGoogle(accessToken)
               .then((account){
-                store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
                 _setAccount(store, account);
+                store.dispatch(LoginSuccessAction(payload: account.toLoginState()));
               })
               .catchError((e){
-                store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
                 _googleSignIn.disconnect();
+                store.dispatch(const NotLoginAction());
                 throw e;
               });
           });
       })
       .catchError((e){
-        store.dispatch(const ChangeActiveAccountPageAction(activeAcountPage: ActiveAccountPage.loginPage));
         _googleSignIn.disconnect();
+        store.dispatch(const NotLoginAction());
         throw e;
       });
   }

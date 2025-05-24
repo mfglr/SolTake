@@ -45,6 +45,5 @@ class Login{
         isTermsOfUseApproved: isTermsOfUseApproved,
         language: language,
         refreshToken: refreshToken,
-        accountDeletionStart: false
       );
 }

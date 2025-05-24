@@ -82,7 +82,7 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DislikeCommentAction){
     CommentUserLikeService()
       .delete(action.commentId)
-      .then((_) => store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId, userId:store.state.loginState!.id )));
+      .then((_) => store.dispatch(DislikeCommentSuccessAction(commentId: action.commentId, userId:store.state.login.login!.id )));
   }
   next(action);
 }
