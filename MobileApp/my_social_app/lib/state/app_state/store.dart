@@ -3,7 +3,6 @@ import 'package:my_social_app/state/app_state/active_login_page_state/active_log
 import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/draft_questions/middlewares.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
@@ -54,8 +53,7 @@ final store = Store(
     aiModels: Pagination.init(aiModelsPerPage, false),
     transactions: Pagination.init(transactionsPerPage, true),
     activeLoginPage: ActiveLoginPage.loginPage,
-    draftQuestions: Pagination.init(questionsPerPage, true),
-    
+
     stories: EntityState(),
 
     userEntityState: EntityState(),
@@ -172,10 +170,6 @@ final store = Store(
 
     //message connection
     loadMessageConnectionMiddleware,
-    //
-
-    //draft questions
-    nextDraftQuestionsMiddleware,
     //
 
     //message

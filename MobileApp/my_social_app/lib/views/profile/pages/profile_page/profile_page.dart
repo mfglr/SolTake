@@ -50,31 +50,6 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-  // Widget _getDradtQuestionsGrid(){
-  //   return StoreConnector<AppState,Iterable<Question>>>(
-  //     onInit: (store) => getNextPageIfNoPage(store, getNextDraftQuestions(store), const NextDraftQuestionsAction()),
-  //     converter: (store) => store.state.selectUserQuestions(user.id),
-  //     builder: (context, questions) => QuestionAbstractItemsWidget(
-  //       questions: questions,
-  //       pagination: user.questions,
-  //       onTap: (questionId){
-  //         Navigator
-  //           .of(context)
-  //           .push(
-  //             MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(
-  //               userId: user.id,
-  //               firstDisplayedQuestionId: questionId
-  //             ))
-  //           );
-  //       },
-  //       onScrollBottom: (){
-  //         final store = StoreProvider.of<AppState>(context,listen: false);
-  //         getNextPageIfReady(store, user.questions, NextUserQuestionsAction(userId: user.id));
-  //       },
-  //     )
-  //   );
-  // }
-
   Widget _getQuestionsGrid(UserState user){
     return StoreConnector<AppState,Iterable<QuestionState>>(
       onInit: (store) => getNextPageIfNoPage(store,user.questions,NextUserQuestionsAction(userId: user.id)),
