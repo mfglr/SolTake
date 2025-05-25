@@ -95,6 +95,12 @@ class QuestionService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
 
+  Future<Iterable<Question>> getDraftQuestions(Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$questionController/getDraftQuestions", page))
+      .then((json) => json as List)
+      .then((list) => list.map((e) => Question.fromJson(e)));
+
   Future<Iterable<Question>> searchQuestions(num? examId,num? subjectId,num? topicId,Page page) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {

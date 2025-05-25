@@ -47,6 +47,7 @@ class AppState{
   final Pagination<int,AIModelState> aiModels;
   final Pagination<int,TransactionState> transactions;
   final ActiveLoginPage activeLoginPage;
+  final Pagination<int, QuestionState> draftQuestions;
 
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
@@ -80,6 +81,7 @@ class AppState{
     required this.aiModels,
     required this.transactions,
     required this.activeLoginPage,
+    required this.draftQuestions,
 
     required this.stories,
 
@@ -117,7 +119,8 @@ class AppState{
     aiModels: Pagination.init(aiModelsPerPage, false),
     transactions: Pagination.init(transactionsPerPage, true),
     activeLoginPage: ActiveLoginPage.loginPage,
-
+    draftQuestions: Pagination.init(questionsPerPage, true),
+    
     userEntityState: EntityState(),
     userMessageState: EntityState(),
 
