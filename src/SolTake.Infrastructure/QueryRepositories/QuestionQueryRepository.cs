@@ -15,7 +15,7 @@ namespace SolTake.Infrastructure.QueryRepositories
     {
         private readonly AppDbContext _context = context;
 
-        private Task<QuestionResponseDto?> GetFirstAsync(int? forUserId, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
+        private Task<QuestionResponseDto?> GetFirstExceptDraftAsync(int? forUserId, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
             => _context.Questions
                 .AsNoTracking()
                 .Where(predicate)
@@ -25,10 +25,28 @@ namespace SolTake.Infrastructure.QueryRepositories
                             uub =>
                                 (uub.BlockerId == question.UserId && uub.BlockedId == forUserId) ||
                                 (uub.BlockerId == forUserId && uub.BlockedId == question.UserId)
-                        )
+                        ) &&
+                        !question.IsDraft
                 )
                 .ToQuestionResponseDto(_context, forUserId)
                 .FirstOrDefaultAsync(cancellationToken);
+
+        private Task<List<QuestionResponseDto>> GetListExceptDraftAsync(int? forUserId, IPage page, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
+            => _context.Questions
+                .AsNoTracking()
+                .Where(predicate)
+                .Where(
+                    question =>
+                        !_context.UserUserBlocks.Any(
+                            uub =>
+                                (uub.BlockerId == question.UserId && uub.BlockedId == forUserId) ||
+                                (uub.BlockerId == forUserId && uub.BlockedId == question.UserId)
+                        ) &&
+                        !question.IsDraft
+                )
+                .ToPage(page)
+                .ToQuestionResponseDto(_context, forUserId)
+                .ToListAsync(cancellationToken);
 
         private Task<List<QuestionResponseDto>> GetListAsync(int? forUserId, IPage page, Expression<Func<Question, bool>> predicate, CancellationToken cancellationToken)
             => _context.Questions
@@ -47,55 +65,81 @@ namespace SolTake.Infrastructure.QueryRepositories
                 .ToListAsync(cancellationToken);
 
         public Task<QuestionResponseDto?> GetQuestionByIdAsync(int id, int? forUserId, CancellationToken cancellationToken)
-            => GetFirstAsync(forUserId, question => question.Id == id, cancellationToken);
+            => GetFirstExceptDraftAsync(
+                forUserId,
+                question => question.Id == id,
+                cancellationToken
+            );
 
         public Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int? forUserId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(forUserId, page, question => question.UserId != forUserId, cancellationToken);
-        
+            => GetListExceptDraftAsync(
+                forUserId,
+                page,
+                question => question.UserId != forUserId,
+                cancellationToken
+            );
+
+        public Task<List<QuestionResponseDto>> GetDraftQuestionsByUserId(int userId, int? forUserId, IPage page, CancellationToken cancellationToken)
+            => GetListAsync(
+                forUserId,
+                page,
+                question =>
+                    question.UserId == userId &&
+                    question.IsDraft,
+                cancellationToken
+            );
+
         public Task<List<QuestionResponseDto>> GetUserQuestionsAsync(int userId, int? forUserId, IPage page, CancellationToken cancellationToken)
-            => GetListAsync(forUserId, page, question => question.UserId == userId, cancellationToken);
+            => GetListExceptDraftAsync(
+                forUserId,
+                page,
+                question => question.UserId == userId,
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetTopicQuestionsAsync(int topicId, int? forUserId, IPage page, CancellationToken cancellationToken)
-            => 
-                GetListAsync(
-                    forUserId,
-                    page,
-                    question => question.Topic.Id == topicId && question.UserId != forUserId,
-                    cancellationToken
-                );
+            => GetListExceptDraftAsync(
+                forUserId,
+                page,
+                question => 
+                    question.Topic.Id == topicId &&
+                    question.UserId != forUserId,
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int? forUserId, IPage page, CancellationToken cancellationToken)
-            => 
-                GetListAsync(
-                    forUserId,
-                    page,
-                    question => 
-                        question.Subject.Id == subjectId &&
-                        question.UserId != forUserId,
-                    cancellationToken
-                );
+            => GetListExceptDraftAsync(
+                forUserId,
+                page,
+                question => 
+                    question.Subject.Id == subjectId &&
+                    question.UserId != forUserId,
+                cancellationToken
+            );
         
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int? forUserId, IPage page, CancellationToken cancellationToken)
-            => 
-                GetListAsync(
-                    forUserId,
-                    page,
-                    question => question.Exam.Id == examId && question.UserId != forUserId,
-                    cancellationToken
-                );
+            => GetListExceptDraftAsync(
+                forUserId,
+                page,
+                question => 
+                    question.Exam.Id == examId &&
+                    question.UserId != forUserId,
+                cancellationToken
+            );
 
         public Task<List<QuestionResponseDto>> GetVideoQuestionsAsync(int? forUserId, IPage page, CancellationToken cancellationToken)
-            => 
-                GetListAsync(
-                    forUserId,
-                    page,
-                    question => question.UserId != forUserId && question.Medias.Any(x => x.MultimediaType == MultimediaType.Video),
-                    cancellationToken
-                );
+            => GetListExceptDraftAsync(
+                forUserId,
+                page,
+                question => 
+                    question.UserId != forUserId && 
+                    question.Medias.Any(x => x.MultimediaType == MultimediaType.Video),
+                cancellationToken
+            );
 
         public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int? forUserId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
-            => 
-                GetListAsync(
+            =>
+                GetListExceptDraftAsync(
                     forUserId,
                     page,
                     question =>
@@ -107,8 +151,8 @@ namespace SolTake.Infrastructure.QueryRepositories
                 );
 
         public Task<List<QuestionResponseDto>> GetSolvedQuestionsByUserIdAsync(int? forUserId, IPage page, int userId, CancellationToken cancellationToken)
-            => 
-                GetListAsync(
+            =>
+                GetListExceptDraftAsync(
                     forUserId,
                     page,
                     question =>
@@ -118,8 +162,8 @@ namespace SolTake.Infrastructure.QueryRepositories
                 );
         
         public Task<List<QuestionResponseDto>> GetUnsolvedQuestionsByUserIdAsync(int? forUserId, IPage page, int userId, CancellationToken cancellationToken)
-            => 
-                GetListAsync(
+            =>
+                GetListExceptDraftAsync(
                     forUserId,
                     page,
                     question => 

@@ -18,4 +18,8 @@
     <ProjectReference Include="..\SolTake.Domain\SolTake.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DomainEventConsumers\QuestionPublishedDomainEventConsumers\NotitificationAggregate\" />
+  </ItemGroup>
+
 </Project>

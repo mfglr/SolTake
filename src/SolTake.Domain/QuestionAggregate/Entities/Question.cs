@@ -2,6 +2,7 @@
 using SolTake.Domain.QuestionAggregate.Exceptions;
 using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Core;
+using Newtonsoft.Json.Converters;
 
 namespace SolTake.Domain.QuestionAggregate.Entities
 {
@@ -16,6 +17,8 @@ namespace SolTake.Domain.QuestionAggregate.Entities
         public QuestionSubject Subject { get; private set; } = null!;
         public QuestionTopic? Topic { get; private set; }
         public QuestionContent? Content { get; private set; }
+        public bool IsDraft { get; private set; }
+        public DateTime? PublishedAt { get; private set; }
         private readonly List<Multimedia> _medias = [];
         public IReadOnlyList<Multimedia> Medias => _medias;
 
@@ -27,6 +30,7 @@ namespace SolTake.Domain.QuestionAggregate.Entities
             if (medias.Count() > MaxMediaCountPerQuestion)
                 throw new TooManyQuestionMediasException();
 
+            IsDraft = true;
             UserId = userId;
             Content = content;
             _medias.AddRange(medias);
@@ -39,6 +43,16 @@ namespace SolTake.Domain.QuestionAggregate.Entities
             Topic = topic;
             CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new QuestionCreatedDomainEvent(this));
+        }
+
+        public void Publish()
+        {
+            if (!IsDraft)
+                throw new QuestionAlreadyPublishedException();
+
+            IsDraft = false;
+            PublishedAt = UpdatedAt = DateTime.UtcNow;
+            AddDomainEvent(new QuestionPublishedDomainEvent(this));
         }
     }
 }
