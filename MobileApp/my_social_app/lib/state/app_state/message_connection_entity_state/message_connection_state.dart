@@ -1,8 +1,8 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
-class MessageConnectionState extends BaseEntity<int> implements Avatar{
+class MessageConnectionState extends Entity<int> implements Avatar{
   final DateTime? lastSeenAt;
   final String userName;
   final Multimedia? image;

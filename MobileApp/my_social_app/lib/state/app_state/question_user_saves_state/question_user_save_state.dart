@@ -1,6 +1,6 @@
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
-class QuestionUserSaveState extends BaseEntity<int> {
+class QuestionUserSaveState extends Entity<int> {
   final int questionId;
   QuestionUserSaveState({
     required super.id,

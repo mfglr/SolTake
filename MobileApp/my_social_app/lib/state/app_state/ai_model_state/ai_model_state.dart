@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
-class AIModelState extends BaseEntity<int>{
+class AIModelState extends Entity<int>{
   final String name;
   final int solPerInputToken;
   final int solPerOutputToken;

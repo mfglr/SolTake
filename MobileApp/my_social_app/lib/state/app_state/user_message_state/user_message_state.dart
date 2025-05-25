@@ -1,9 +1,9 @@
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
-class UserMessageState extends BaseEntity<int>{
+class UserMessageState extends Entity<int>{
   final Pagination<int,Id<int>> messageIds;
   UserMessageState({
     required super.id,

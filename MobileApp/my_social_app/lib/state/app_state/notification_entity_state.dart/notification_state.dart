@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
-class NotificationState extends BaseEntity<int> implements Avatar{
+class NotificationState extends Entity<int> implements Avatar{
   final DateTime createdAt;
   final int ownerId;
   final bool isViewed;

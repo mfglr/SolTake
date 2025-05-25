@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_user_view_state.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class StoryState extends BaseEntity<int>{
+class StoryState extends Entity<int>{
   final int userId;
   final DateTime createdAt;
   final bool isViewed;

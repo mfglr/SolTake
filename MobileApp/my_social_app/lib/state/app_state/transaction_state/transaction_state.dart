@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
-class TransactionState extends BaseEntity<int>{
+class TransactionState extends Entity<int>{
   final DateTime createdAt;
   final int balanceId;
   final int numberOfInputToken;

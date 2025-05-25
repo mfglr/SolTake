@@ -1,8 +1,8 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 
-abstract class UserItem extends BaseEntity<int> implements Avatar {
+abstract class UserItem extends Entity<int> implements Avatar {
   final int userId;
   final String userName;
   final String? name;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
-class SubjectState extends BaseEntity<int>{
+class SubjectState extends Entity<int>{
   final String name;
   final Pagination<int,Id<int>> topics;
   final Pagination<int,Id<int>> questions;

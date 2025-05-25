@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/entity_state/base_entity.dart';
+import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
 
 
 @immutable
-class EntityState<K extends Comparable, V extends BaseEntity<K>>{
+class EntityState<K extends Comparable, V extends Entity<K>>{
   final Map<K,V> _map;
   const EntityState._({required Map<K,V> map}) : _map = map;
   factory EntityState() => EntityState<K,V>._(map: <K,V>{} );
@@ -37,6 +37,4 @@ class EntityState<K extends Comparable, V extends BaseEntity<K>>{
   EntityState<K,V> where(bool Function(V) test) => EntityState<K,V>._(map: _map.where(test));
   
   Iterable<V> select(bool Function(V) test) => _map.values.where(test);
-  
-  
 }
