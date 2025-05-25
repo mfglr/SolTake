@@ -222,7 +222,7 @@ class UserState extends Entity<int> implements Avatar{
       newSolvedQuestions: solvedQuestions.removeOne(id),
       newUnsolvedQuestions: unsolvedQuestions.addInOrder(Id(id: id)),
     );
- 
+
   //saved solutions
   UserState startLoadingSavedSolutions() =>
     _optional(newSavedSolutions: savedSolutions.startLoadingNext());
