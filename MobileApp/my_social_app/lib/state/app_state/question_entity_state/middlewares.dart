@@ -5,6 +5,7 @@ import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/question_user_like_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/draft_questions/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
@@ -49,7 +50,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       )
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
-        store.dispatch(AddNewUserQuestionAction(userId: store.state.login.login!.id,questionId: question.id));
+        store.dispatch(AddDraftQuestionAction(questionId: question.id));
         store.dispatch(RemoveUploadStateAction(id: action.id));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })

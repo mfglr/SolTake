@@ -77,9 +77,17 @@ class QuestionItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
+                      child: AppDateWidget(dateTime: question.createdAt)
+                    ),
+                    if(question.isDraft)
+                      Container(
+                        margin: const EdgeInsets.only(right: 5),
+                        child: const Icon(Icons.drafts)
+                      ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5),
                       child: QuestionStateWidget(question: question),
                     ),
-                    AppDateWidget(dateTime: question.createdAt),
                     SaveQuestionButton(question: question),
                     if(question.isOwner)
                       QuestionItemPopupMenu(question: question),

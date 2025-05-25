@@ -47,7 +47,7 @@ class AppState{
   final Pagination<int,AIModelState> aiModels;
   final Pagination<int,TransactionState> transactions;
   final ActiveLoginPage activeLoginPage;
-  final Pagination<int, QuestionState> draftQuestions;
+  final Pagination<int, Id<int>> draftQuestions;
 
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;

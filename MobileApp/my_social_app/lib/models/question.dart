@@ -26,6 +26,7 @@ class Question{
   final Iterable<Multimedia> medias;
   final bool isLiked;
   final bool isSaved;
+  final bool isDraft;
   final int numberOfLikes;
   final int numberOfSolutions;
   final int numberOfCorrectSolutions;
@@ -46,6 +47,7 @@ class Question{
     required this.medias,
     required this.isLiked,
     required this.isSaved,
+    required this.isDraft,
     required this.numberOfLikes,
     required this.numberOfSolutions,
     required this.numberOfCorrectSolutions,
@@ -73,6 +75,7 @@ class Question{
     medias: medias,
     isLiked: isLiked,
     isSaved: isSaved,
+    isDraft: isDraft,
     isOwner: isOwner,
     numberOfLikes: numberOfLikes,
     numberOfComments: numberOfComments,
