@@ -35,7 +35,7 @@ Future<void> main() async {
   await loadEnvironmentVariables();
   addTimeAgo();
   await _setPackageVersion();
-  
+
   FlutterError.onError = (error) {
     handleErrors(error.exception);
   };

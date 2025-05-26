@@ -16,6 +16,7 @@ import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
+import 'package:my_social_app/state/app_state/product_details_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
@@ -55,7 +56,8 @@ final store = Store(
     transactions: Pagination.init(transactionsPerPage, true),
     activeLoginPage: ActiveLoginPage.loginPage,
     draftQuestions: Pagination.init(questionsPerPage, true),
-    
+    productDetails: const [],
+
     stories: EntityState(),
 
     userEntityState: EntityState(),
@@ -283,5 +285,8 @@ final store = Store(
 
     //video questions
     nextVideoQuestionsMiddleware,
+
+    //product details
+    getProductDetailsMiddleware,
   ]
 );

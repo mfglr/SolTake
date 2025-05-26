@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
@@ -48,6 +49,7 @@ class AppState{
   final Pagination<int,TransactionState> transactions;
   final ActiveLoginPage activeLoginPage;
   final Pagination<int, Id<int>> draftQuestions;
+  final Iterable<ProductDetails> productDetails;
 
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
@@ -82,6 +84,7 @@ class AppState{
     required this.transactions,
     required this.activeLoginPage,
     required this.draftQuestions,
+    required this.productDetails,
 
     required this.stories,
 
@@ -120,7 +123,8 @@ class AppState{
     transactions: Pagination.init(transactionsPerPage, true),
     activeLoginPage: ActiveLoginPage.loginPage,
     draftQuestions: Pagination.init(questionsPerPage, true),
-    
+    productDetails: const [],
+
     userEntityState: EntityState(),
     userMessageState: EntityState(),
 

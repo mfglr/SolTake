@@ -13,6 +13,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart'
 import 'package:my_social_app/state/app_state/conversations_state/reducers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
+import 'package:my_social_app/state/app_state/product_details_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/reducers.dart';
@@ -53,6 +54,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   login: loginReducers(prev.login,action),
   activeLoginPage: activeLoginPageReducers(prev.activeLoginPage, action),
   draftQuestions: dratfQuestionsReducers(prev.draftQuestions, action),
+  productDetails: productDetailsReducers(prev.productDetails, action),
 
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
