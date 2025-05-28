@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolTake.Domain.TransactionAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Abstracts;
+using SolTake.Infrastructure.BalanceAggregate;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 
 namespace SolTake.Infrastructure.Repositories

@@ -8,4 +8,19 @@ class InAppPurchaseService{
     => _inAppPurchase
         .queryProductDetails(_productId)
         .then((e) => e.productDetails.first);
+
+  static Future<bool> buy(ProductDetails product)
+    => _inAppPurchase
+      .buyConsumable(purchaseParam: PurchaseParam(productDetails: product));
+
+  static void consumePurchases(){
+    _inAppPurchase.purchaseStream.listen((purchases){
+      for(var purchase in purchases){
+        if(purchase.status == PurchaseStatus.purchased){
+          
+          purchase.verificationData.serverVerificationData
+        }
+      }
+    });
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:my_social_app/services/in_app_purchace_service.dart';
 
 class ProductDetailWidget extends StatelessWidget {
   final ProductDetails product;
@@ -39,7 +40,7 @@ class ProductDetailWidget extends StatelessWidget {
                 ),
               ),
               OutlinedButton(
-                onPressed: (){},
+                onPressed: () => InAppPurchaseService.buy(product),
                 child: const Text(
                   "Satın Al"
                 )

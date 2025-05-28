@@ -33,6 +33,7 @@ using SolTake.Domain.MessageUserReceiveAggregate.Entities;
 using SolTake.Domain.MessageUserRemoveAggregate.Entities;
 using SolTake.Domain.MessageUserViewAggregate.Entities;
 using System.Reflection;
+using SolTake.Domain.PurchaseAggregate.Entities;
 
 
 namespace SolTake.Infrastructure.DbContexts
@@ -86,6 +87,7 @@ namespace SolTake.Infrastructure.DbContexts
 
         public DbSet<AIModel> AIModels { get; private set; }
 
+        public DbSet<Purchase> Purchases { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
