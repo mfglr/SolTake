@@ -7,6 +7,7 @@ using SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuesti
 using SolTake.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestion;
 using SolTake.Application.Commands.QuestionDomain.QuestionAggregate.PublishQuestion;
 using SolTake.Application.Queries.QuestionDomain;
+using SolTake.Application.Queries.QuestionDomain.GetAllNotPublishedQuestions;
 using SolTake.Application.Queries.QuestionDomain.GetDraftQuestions;
 using SolTake.Application.Queries.QuestionDomain.GetHomePageQuestions;
 using SolTake.Application.Queries.QuestionDomain.GetQuestionById;
@@ -161,5 +162,11 @@ namespace SolTake.Api.Controllers.Api
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task<List<QuestionResponseDto>> GetDraftQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetDraftQuestionsDto(offset, take, isDescending), cancellationToken);
+
+        [HttpGet]
+        [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        public async Task<List<QuestionResponseDto>> GetAllNotPublishedQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new GetAllNotPublishedQuestionsDto(offset, take, isDescending), cancellationToken);
     }
 }

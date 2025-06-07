@@ -4,14 +4,9 @@ import 'package:soltake_broker/services/app_client.dart';
 
 class UserService{
   static const String _controller = "users";
-  final AppClient _appClient;
   
-  UserService._(this._appClient);
-  static final UserService _singleton = UserService._(AppClient());
-  factory UserService() => _singleton;
-  
-  Future<Login> loginByPassword(String emailOrUserName, String password) =>
-    _appClient
+  static Future<Login> loginByPassword(String emailOrUserName, String password) =>
+    AppClient
       .post(
         "$_controller/loginByPassword",
         body: {
@@ -21,14 +16,14 @@ class UserService{
       )
       .then((json) => Login.fromJson(json));
   
-  Future<Login> loginByRefreshtoken(num id,String token) =>
-    _appClient
+  static Future<Login> loginByRefreshtoken(num id,String token) =>
+    AppClient
       .post(
-        "$_controller/loginByRefreshToken",
+        "$_controller/loginByRefreshtoken",
         body: { 'id': id.toString(),'token': token}
       )
       .then((json) => Login.fromJson(json));
 
-  Future removeRefreshTokens(String token) =>
-    _appClient.put("$_controller/removeRefreshTokens", body: { 'token': token });
+  static Future removeRefreshTokens(String token) =>
+    AppClient.put("$_controller/removeRefreshTokens", body: { 'token': token });
 }

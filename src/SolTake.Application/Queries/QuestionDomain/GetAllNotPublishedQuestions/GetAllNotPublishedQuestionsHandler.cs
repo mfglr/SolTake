@@ -2,17 +2,15 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.QueryRepositories;
 
-namespace SolTake.Application.Queries.QuestionDomain.GetDraftQuestions
+namespace SolTake.Application.Queries.QuestionDomain.GetAllNotPublishedQuestions
 {
-    public class GetDraftQuestionsHandler(IQuestionQueryRepository questionQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetDraftQuestionsDto, List<QuestionResponseDto>>
+    public class GetAllNotPublishedQuestionsHandler(IQuestionQueryRepository questionQueryRepository, IAccessTokenReader accessTokenReader) : IRequestHandler<GetAllNotPublishedQuestionsDto, List<QuestionResponseDto>>
     {
         private readonly IQuestionQueryRepository _questionQueryRepository = questionQueryRepository;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
-
-        public Task<List<QuestionResponseDto>> Handle(GetDraftQuestionsDto request, CancellationToken cancellationToken)
+        public Task<List<QuestionResponseDto>> Handle(GetAllNotPublishedQuestionsDto request, CancellationToken cancellationToken)
             => _questionQueryRepository
-                .GetNotPublishedQuestionsByUserId(
-                    _accessTokenReader.GetRequiredAccountId(),
+                .GetAllNotPublishedQuestionsAsync(
                     _accessTokenReader.GetRequiredAccountId(),
                     request,
                     cancellationToken

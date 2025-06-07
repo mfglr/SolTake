@@ -1,10 +1,16 @@
 import 'package:redux/redux.dart';
 import 'package:soltake_broker/state/app_state/login_state/actions.dart';
-import 'package:soltake_broker/state/app_state/login_state/login_state.dart';
+import 'package:soltake_broker/state/app_state/login_state/login_container.dart';
 
-LoginState? loginByPasswordSuccessReducer(LoginState? prev, LoginByPasswordSuccessAction action)
-  => action.login;
+LoginContainer loginByPasswordReducer(LoginContainer prev, LoginByPasswordAction action)
+  => prev.loading();
+LoginContainer loginByRefreshTokenReducer(LoginContainer prev, LoginByRefreshTokenAction action)
+  => prev.loading();
+LoginContainer loginSuccessReducer(LoginContainer prev, LoginSuccessAction action)
+  => prev.updateLogin(action.login);
 
-Reducer<LoginState?> loginReducers = combineReducers<LoginState?>([
-  TypedReducer<LoginState?, LoginByPasswordSuccessAction>(loginByPasswordSuccessReducer).call
+Reducer<LoginContainer> loginReducers = combineReducers<LoginContainer>([
+  TypedReducer<LoginContainer, LoginByPasswordAction>(loginByPasswordReducer).call,
+  TypedReducer<LoginContainer, LoginByRefreshTokenAction>(loginByRefreshTokenReducer).call,
+  TypedReducer<LoginContainer, LoginSuccessAction>(loginSuccessReducer).call,
 ]);

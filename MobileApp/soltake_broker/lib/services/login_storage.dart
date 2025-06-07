@@ -3,21 +3,21 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:soltake_broker/state/app_state/login_state/login_state.dart';
 
 class LoginStorage {
-  final _key = "login";
-  final storage = const FlutterSecureStorage();
+  static const _key = "login";
+  static const _storage = FlutterSecureStorage();
 
-  LoginStorage._();
-  static final LoginStorage _singleton = LoginStorage._();
-  factory LoginStorage() => _singleton;
-
-  Future<LoginState?> get() =>
-    storage
+  static Future<LoginState?> get() =>
+    _storage
       .read(key: _key)
-      .then((value) => value != null ? LoginState.fromJson(jsonDecode(value) as Map<String, dynamic>) : null);
+      .then(
+        (value) =>
+          value != null
+            ? LoginState.fromJson(jsonDecode(value) as Map<String, dynamic>)
+            : null
+      );
 
-  Future<void> remove() =>
-    storage.delete(key: _key);
+  static Future<void> remove() => _storage.delete(key: _key);
 
-  Future<void> set(LoginState state) =>
-    storage.write(key: _key, value: jsonEncode(state.toJson()));
+  static Future<void> set(LoginState state) =>
+    _storage.write(key: _key, value: jsonEncode(state.toJson()));
 }

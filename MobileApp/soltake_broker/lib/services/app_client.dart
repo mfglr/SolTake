@@ -11,19 +11,15 @@ class AppClient{
   static final apiUrl = "${dotenv.env['API_URL']}/api";
   static final blobService = "$apiUrl/blobs";
 
-  String? _accessToken;
+  static String? _accessToken;
 
-  AppClient._();
-  static final AppClient _singleton = AppClient._();
-  factory AppClient() => _singleton;
+  static void changeAccessToken(String? accessToken) => _accessToken = accessToken;
 
-  void changeAccessToken(String? accessToken) => _accessToken = accessToken;
+  static Map<String,String> getHeader() => { "Authorization": "Bearer $_accessToken" };
 
-  Map<String,String> getHeader() => { "Authorization": "Bearer $_accessToken" };
-
-  Uri generateUri(String url) => Uri.parse("$apiUrl/$url");
+  static Uri generateUri(String url) => Uri.parse("$apiUrl/$url");
   
-  Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
+  static Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
     request.headers.addAll(getHeader());
     if(headers != null) request.headers.addAll(headers);
 
@@ -38,7 +34,7 @@ class AppClient{
     return response;
   }
 
-  Future<String> postStream(BaseRequest request, void Function(double) callback) async {
+  static Future<String> postStream(BaseRequest request, void Function(double) callback) async {
     var stream = request.finalize();
     var length = request.contentLength ?? 1;
 
@@ -76,12 +72,12 @@ class AppClient{
     return data;
   }
 
-  Future<StreamedResponse> sendJsonContent(Request request) {
+  static Future<StreamedResponse> sendJsonContent(Request request) {
     request.headers.addAll({'Content-Type': 'application/json; charset=UTF-8'});
     return send(request);
   }
 
-  Future<dynamic> get(String url) async {
+  static Future<dynamic> get(String url) async {
     final Request request = Request("GET", generateUri(url));
     final response = await send(request);
       
@@ -90,29 +86,29 @@ class AppClient{
     return jsonDecode(decode);
   }
 
-  Future<Uint8List> getBytes(String url) =>
+  static Future<Uint8List> getBytes(String url) =>
     send(Request("GET", generateUri(url))).then((response) => response.stream.toBytes());
 
-  Future<dynamic> post(String url, { Map<String,Object?>? body }) async {
+  static Future<dynamic> post(String url, { Map<String,Object?>? body }) async {
     final Request request = Request("POST", generateUri(url));
     request.body = jsonEncode(body);
     final response = await sendJsonContent(request);
     return jsonDecode(utf8.decode(await response.stream.toBytes()));
   }
 
-  Future<void> put(String url, { Map<String,Object?>? body }) async {
+  static Future<void> put(String url, { Map<String,Object?>? body }) async {
     final Request request = Request("PUT", generateUri(url));
     request.body = jsonEncode(body);
     await sendJsonContent(request);
   }
 
-  Future<void> delete(String url,{ Map<String,Object?>? body }) async {
+  static Future<void> delete(String url,{ Map<String,Object?>? body }) async {
     final Request request = Request("DELETE", generateUri(url));
     request.body = jsonEncode(body);
     await sendJsonContent(request);
   }
 
-  String generatePaginationUrl(String url, Page page){
+  static String generatePaginationUrl(String url, Page page){
     if(page.offset == null){
       return "$url?take=${page.take}&isDescending=${page.isDescending}";
     }

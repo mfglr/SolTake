@@ -1,8 +1,7 @@
-﻿using SolTake.Domain.QuestionAggregate.DomainEvents;
+﻿using SolTake.Core;
+using SolTake.Domain.QuestionAggregate.DomainEvents;
 using SolTake.Domain.QuestionAggregate.Exceptions;
 using SolTake.Domain.QuestionAggregate.ValueObjects;
-using SolTake.Core;
-using Newtonsoft.Json.Converters;
 
 namespace SolTake.Domain.QuestionAggregate.Entities
 {
@@ -17,8 +16,8 @@ namespace SolTake.Domain.QuestionAggregate.Entities
         public QuestionSubject Subject { get; private set; } = null!;
         public QuestionTopic? Topic { get; private set; }
         public QuestionContent? Content { get; private set; }
-        public bool IsDraft { get; private set; }
-        public DateTime? PublishedAt { get; private set; }
+        public QuestionPublishingState PublishingState { get; private set; }
+        public DateTime? PublishingStateChagedAt { get; private set; }
         private readonly List<Multimedia> _medias = [];
         public IReadOnlyList<Multimedia> Medias => _medias;
 
@@ -30,7 +29,7 @@ namespace SolTake.Domain.QuestionAggregate.Entities
             if (medias.Count() > MaxMediaCountPerQuestion)
                 throw new TooManyQuestionMediasException();
 
-            IsDraft = true;
+            PublishingState = QuestionPublishingState.NotPublished;
             UserId = userId;
             Content = content;
             _medias.AddRange(medias);
@@ -47,12 +46,20 @@ namespace SolTake.Domain.QuestionAggregate.Entities
 
         public void Publish()
         {
-            if (!IsDraft)
-                throw new QuestionAlreadyPublishedException();
+            if (PublishingState != QuestionPublishingState.NotPublished)
+                throw new QuestionAlreadyPublishedOrRejectedException();
 
-            IsDraft = false;
-            PublishedAt = UpdatedAt = DateTime.UtcNow;
-            AddDomainEvent(new QuestionPublishedDomainEvent(this));
+            PublishingState = QuestionPublishingState.Published;
+            PublishingStateChagedAt = UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Reject()
+        {
+            if (PublishingState != QuestionPublishingState.NotPublished)
+                throw new QuestionAlreadyPublishedOrRejectedException();
+
+            PublishingState = QuestionPublishingState.Rejected;
+            PublishingStateChagedAt = UpdatedAt = DateTime.UtcNow;
         }
     }
 }

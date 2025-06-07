@@ -6,7 +6,6 @@ import 'package:soltake_broker/state/app_state/login_state/login_state.dart';
 class LoginAction extends AppAction{
   const LoginAction();
 }
-
 @immutable
 class LoginByPasswordAction extends LoginAction{
   final String emailOrUserName;
@@ -18,32 +17,11 @@ class LoginByPasswordAction extends LoginAction{
   });
 }
 @immutable
-class LoginByPasswordSuccessAction extends LoginAction{
-  final LoginState login;
-  const LoginByPasswordSuccessAction({required this.login});
-}
-
-@immutable
 class LoginByRefreshTokenAction extends LoginAction{
-  final int id;
-  final String refreshToken;
-  const LoginByRefreshTokenAction({
-    required this.id,
-    required this.refreshToken,
-  });
+  const LoginByRefreshTokenAction();
 }
 @immutable
-class LoginByRefreshTokenSuccessAction extends LoginAction{
-  final LoginState login;
-  const LoginByRefreshTokenSuccessAction({required this.login});
-}
-
-@immutable
-class LoginByStorageAction extends LoginAction{
-  const LoginByStorageAction();
-}
-@immutable
-class LoginByStorageSuccessAction extends LoginAction{
+class LoginSuccessAction extends LoginAction{
   final LoginState? login;
-  const LoginByStorageSuccessAction({required this.login});
+  const LoginSuccessAction({required this.login});
 }

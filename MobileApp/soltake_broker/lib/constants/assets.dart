@@ -1,0 +1,1 @@
+const noMediaAssetPath = "assets/images/no_image.jpg";

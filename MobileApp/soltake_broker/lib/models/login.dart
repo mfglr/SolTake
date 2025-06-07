@@ -34,7 +34,7 @@ class Login{
 
   Map<String, dynamic> toJson() => _$LoginToJson(this);
   
-  LoginState toLoginState()
+  LoginState toState()
     => LoginState(
         id: id,
         createdAt: createdAt,

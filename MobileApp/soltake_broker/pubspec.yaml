@@ -40,6 +40,12 @@ dependencies:
   redux: ^5.0.0
   flutter_secure_storage: ^9.2.2
   flutter_redux: ^0.10.0
+  
+  multimedia:
+    path: ../flutter_and_dart_packages/multimedia
+  multimedia_slider:
+    path: ../flutter_and_dart_packages/multimedia_slider
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +73,8 @@ flutter:
   assets:
     - .env.prod
     - .env.dev
+    - assets/images/logo-bgremoved.png
+    - assets/images/no_image.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

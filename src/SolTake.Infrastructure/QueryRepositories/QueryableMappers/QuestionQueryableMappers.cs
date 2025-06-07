@@ -28,7 +28,7 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                         question.Content.Value,
                         context.QuestionUserLikes.Any(x => x.UserId == forUserId && x.QuestionId == question.Id),
                         context.QuestionUserSaves.Any(x => x.UserId == forUserId && x.QuestionId == question.Id),
-                        question.IsDraft,
+                        question.PublishingState,
                         context.QuestionUserLikes.Count(x => x.QuestionId == question.Id),
                         context.Comments.Count(c => c.QuestionId == question.Id),
                         context.Solutions.Count(solution => solution.QuestionId == question.Id),

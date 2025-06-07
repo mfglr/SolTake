@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:soltake_broker/state/app_state/app_state.dart';
+import 'package:soltake_broker/state/app_state/login_state/actions.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -89,7 +92,13 @@ class _LoginPageState extends State<LoginPage> {
                   OutlinedButton(
                     onPressed: (){
                       if (_formKey.currentState!.validate()) {
-                        
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        store.dispatch(
+                          LoginByPasswordAction(
+                            emailOrUserName: _emailOrUserName.text,
+                            password: _password.text
+                          )
+                        );
                       }
                     },
                     child: Row(
