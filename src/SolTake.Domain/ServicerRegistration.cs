@@ -15,6 +15,7 @@ using SolTake.Domain.CommentAggregate;
 using SolTake.Domain.CommentUserLikeAggregate;
 using SolTake.Domain.MessageAggregate;
 using SolTake.Domain.UserAggregate;
+using SolTake.Domain.PurchaseAggregate;
 
 namespace SolTake.Domain
 {
@@ -42,6 +43,8 @@ namespace SolTake.Domain
                 .AddUserUserConversationDomainServices()
 
                 .AddStoryUserViewDomainServices()
-                .AddMessageDomainServices();
+                .AddMessageDomainServices()
+            
+                .AddPurchaseAggregateDomainServices();
     }
 }

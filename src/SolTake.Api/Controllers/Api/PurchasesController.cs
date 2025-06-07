@@ -7,7 +7,7 @@ using SolTake.Application.Commands.PurchaseAggregate.CreatePurchase;
 
 namespace SolTake.Api.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(VersionFiltterAttribute))]
@@ -22,6 +22,5 @@ namespace SolTake.Api.Controllers.Api
         [HttpPost]
         public async Task Create(CreatePurchaseDto request,CancellationToken cancellationToken)
             => await _sender.Send(request,cancellationToken);
-
     }
 }

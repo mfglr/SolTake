@@ -17,7 +17,7 @@ namespace SolTake.Infrastructure.QueryRepositories
                 .AsNoTracking()
                 .Where(x => x.BalanceId == balanceId)
                 .ToPage(page)
-                .ToTransactionResponseDto(_context)
+                .ToTransactionResponseDto()
                 .ToListAsync(cancellationToken);
     }
 }

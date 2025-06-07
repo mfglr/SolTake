@@ -26,6 +26,7 @@ using SolTake.Infrastructure.InfrastructureServices.Email;
 using SolTake.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using SolTake.Infrastructure.NotificationAggregate;
 using SolTake.Infrastructure.NotificationConnectionAggregate;
+using SolTake.Infrastructure.PurchaseAggregate;
 using SolTake.Infrastructure.QueryRepositories;
 using SolTake.Infrastructure.Repositories;
 using SolTake.Infrastructure.RoleAggregate;
@@ -65,7 +66,8 @@ namespace SolTake.Infrastructure
                 .AddRoleAggregate()
                 .AddNotificationConnectionAggregate()
                 .AddStoryDomainInfrastructureServices()
-                .AddUserUserBlockAggregateInfrastructureServices();
+                .AddUserUserBlockAggregateInfrastructureServices()
+                .AddPurchaseAggregateInfrastructureServices();
 
 
         private static IServiceCollection InitializeDb(this IServiceCollection services)

@@ -5,6 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/global_error_handling.dart';
 import 'package:my_social_app/services/package_version_service.dart';
+import 'package:my_social_app/services/purchase_services/in_app_purchace_service.dart';
+import 'package:my_social_app/services/purchase_services/purchase_storage.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
@@ -32,9 +34,12 @@ Future _setPackageVersion()
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   await loadEnvironmentVariables();
   addTimeAgo();
   await _setPackageVersion();
+  await PurchaseStorage.init();
+  InAppPurchaseService.consumePurchases();
 
   FlutterError.onError = (error) {
     handleErrors(error.exception);

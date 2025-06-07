@@ -6,22 +6,13 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
     public static class TransactionQueryableMapper
     {
-        public static IQueryable<TransactionResponseDto> ToTransactionResponseDto(this IQueryable<Transaction> query, AppDbContext context) =>
+        public static IQueryable<TransactionResponseDto> ToTransactionResponseDto(this IQueryable<Transaction> query) =>
             query
-                .Join(
-                    context.AIModels,
-                    transaction => transaction.AIModelId,
-                    aiModel => aiModel.Id,
-                    (transaction, aiModel) => new TransactionResponseDto(
+                .Select(
+                    transaction => new TransactionResponseDto(
                         transaction.Id,
                         transaction.CreatedAt,
-                        transaction.BalanceId,
-                        transaction.NumberOfInputToken,
-                        transaction.NumberOfOutputToken,
-                        transaction.SolPerInputToken,
-                        transaction.SolPerOutputToken,
-                        aiModel.Name.Value,
-                        aiModel.Image
+                        transaction.NumberOfSol
                     )
                 );
     }

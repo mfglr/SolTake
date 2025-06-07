@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:my_social_app/services/in_app_purchace_service.dart';
+import 'package:my_social_app/services/purchase_services/in_app_purchace_service.dart';
 
 class ProductDetailWidget extends StatelessWidget {
   final ProductDetails product;
