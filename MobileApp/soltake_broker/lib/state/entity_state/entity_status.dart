@@ -1,0 +1,4 @@
+enum EntityStatus {
+  loading,
+  success
+}
