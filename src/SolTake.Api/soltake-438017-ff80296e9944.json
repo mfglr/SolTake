@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "soltake-438017",
+  "private_key_id": "ff80296e994400c703b1ebbffde2476c32dc7c7d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCKUfDwewvbgzm6\nbBU4emfcUlvuBIeqZ8I5R/aYky9AODPHRxAO9Ho9E70CXu6jQjj+XgFpV8M0MWFv\n97AJGYgJMz/6Ndf0OZCYS52xk8Wq8tniQI7uTojugLVhdq3ha82dGIwrqOuqtDPl\nPHvMxbMDPf46Y79atputdipVH3LyaOfbtUSqv1WiPagcqS/Yk/bLMEW/V4dm/Rw5\neWSDppvUrv11NCeOrnWdkJyalE5K5TuGcpQdvGzzhXLOW58ur0Eit8w/D+YZmiTE\nZweVCaa+KIkDfDTc532Iv+VMgRmXYHE5nBRNuPMWIgr4h1vL2r5+nSZgWICixLUl\nKHEv00F5AgMBAAECggEACiFqvV4xteEpo6OiC+nRJ16OgO4ALAT0lsKUccPJOzxH\n3zbvRZJ2d83f3bzWCwsrsUZGzFrtvynvtOY7PyC0KS0BqPceat14H44IOGw2LGlO\nzRvv1qMrXcEmUlisGbK404zrn+X7uVwAjK/48ZGNj8r6TqH6xETUEuiw5zJKC61z\nhZpemgkyLlR2n2ZRe5vk+0MfaeTst1w6Op8sMiz3f2XRcAGf5pGv0r7wb3EbS/IA\nH8grWmEXFl6O6hSnxmzrt0J4saijsU//E2o0Si2jPtLHVtI7r+07cIbiZQoPDoEL\nrtSDUTEJnlgxBYd1DNzkLpxeppfegO7LH3LECOxf9QKBgQDC9exDIbi1k6wr48tG\nrs2XrzWqp5brdLCstwdEagrra/XvbxSRz9DDNarJXZwQQyaCC3GHlm4ItkUe2C8e\nrKbeGcpx0KwntAkJ+sIRqhNZQY+GOZrfrusPFfayH8xZhXTfhIsknUkTMgigxODS\nFPI4Mq7Ql1yXyQxRVbZHX6rR1QKBgQC1oEh5DI30Kwg+0cnHaA7doKj9l2PPgEXe\n5tktST/LN33pU3NGmt/BieFBYlrSiWcMVoVptbSiltPJWOxF46e2AkgQX8RjjseY\nkoa49oj6/DG2J7/EauA4Zef9xNXrR93lkHNceu2jU83/mx2do9XlLHcouVxHh4ML\nNG1ObipfFQKBgQCAGgLR4XhypsN8W0MYAIfKYS/MIC5EK/pioii+RUdDhT6lwsEr\nRfeQLNU5Vq7S6KyGymoggzFtvAYSzE25xAwo551jx482z08ZJZEa9jucbD2YHoWq\n8E43LWFZjRdCwzQWIgsjVc3MNRYCPRrULzswveyr1qjaexoC32TT5QJiuQKBgF95\n0X8olVq8YEo9l9emIOJqeUtNkN9ca95f9dxzfACEvECyaI++DE+9/laTsHCqYCxB\nM0K9jSZHKS/X+eRHZzsredx5q1A2lz/iDsYeeyWM+0jpHkrPb+zVzR0+osFa9w+d\nXrdHu7I29LwgO3JJ1L/zHvSedB754m46chdfnBB9AoGBAL4J8BySJTdYafBrL4Y+\nPAlrEjufdNuuu8iKrk34wtfEjUWaVhwCijf0UMKaDTpZF2r1U6VA8hRw8yGII8oY\n0bkuz6toRfhS3pwqTLt21hP/o6WSNFlUFL5IpNEqHm2odMZG3d0MKpKu3KgxpA0/\n216rhsrIxrsLMb/hwUxC93f1\n-----END PRIVATE KEY-----\n",
+  "client_email": "soltake@soltake-438017.iam.gserviceaccount.com",
+  "client_id": "104349378647175750548",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/soltake%40soltake-438017.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

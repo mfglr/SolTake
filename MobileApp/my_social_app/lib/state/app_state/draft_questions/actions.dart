@@ -19,3 +19,8 @@ class AddDraftQuestionAction extends DraftQuestionsAction{
   final int questionId;
   const AddDraftQuestionAction({required this.questionId});
 }
+
+class RemoveDraftQuestionAction extends DraftQuestionsAction{
+  final int questionId;
+  const RemoveDraftQuestionAction({required this.questionId});
+}

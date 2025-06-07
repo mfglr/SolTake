@@ -11,7 +11,8 @@ Pagination<int, Id<int>> nextDraftQuestionsFailedReducer(Pagination<int, Id<int>
   => prev.stopLoadingNext();
 Pagination<int,Id<int>> addDraftQuestionReducer(Pagination<int,Id<int>> prev, AddDraftQuestionAction action)
   => prev.prependOne(Id(id:action.questionId));
-
+Pagination<int,Id<int>> removeDraftQuestionReducer(Pagination<int,Id<int>> prev, RemoveDraftQuestionAction action)
+  => prev.removeOne(action.questionId);
 
 
 Reducer<Pagination<int,Id<int>>> dratfQuestionsReducers = combineReducers<Pagination<int,Id<int>>>([
@@ -19,4 +20,5 @@ Reducer<Pagination<int,Id<int>>> dratfQuestionsReducers = combineReducers<Pagina
   TypedReducer<Pagination<int,Id<int>>,NextDraftQuestionsSuccessAction>(nextDraftQuestionsSuccessReducer).call,
   TypedReducer<Pagination<int,Id<int>>,NextDraftQuestionsFailedAction>(nextDraftQuestionsFailedReducer).call,
   TypedReducer<Pagination<int,Id<int>>,AddDraftQuestionAction>(addDraftQuestionReducer).call,
+  TypedReducer<Pagination<int,Id<int>>,RemoveDraftQuestionAction>(removeDraftQuestionReducer).call,
 ]);

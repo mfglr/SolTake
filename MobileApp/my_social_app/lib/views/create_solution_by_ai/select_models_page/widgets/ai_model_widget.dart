@@ -5,7 +5,7 @@ import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_media_page/select_media_page.dart';
-import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/sol_widget.dart';
+// import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/sol_widget.dart';
 
 class AiModelWidget extends StatelessWidget {
   final AIModelState aiModel;
@@ -78,29 +78,29 @@ class AiModelWidget extends StatelessWidget {
                   )
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        child: const Icon(Icons.input)
-                      ),
-                      SolWidget(solPerToken: aiModel.solPerInputToken,),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        child: const Icon(Icons.output)
-                      ),
-                      SolWidget(solPerToken: aiModel.solPerOutputToken,),
-                    ],
-                  )
-                ],
-              )
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Row(
+              //       children: [
+              //         Container(
+              //           margin: const EdgeInsets.only(right: 5),
+              //           child: const Icon(Icons.input)
+              //         ),
+              //         SolWidget(solPerToken: aiModel.solPerInputToken,),
+              //       ],
+              //     ),
+              //     Row(
+              //       children: [
+              //         Container(
+              //           margin: const EdgeInsets.only(right: 5),
+              //           child: const Icon(Icons.output)
+              //         ),
+              //         SolWidget(solPerToken: aiModel.solPerOutputToken,),
+              //       ],
+              //     )
+              //   ],
+              // )
             ],
           ),
         ),

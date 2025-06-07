@@ -86,6 +86,7 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       .then((_){
         store.dispatch(DeleteQuestionSuccessAction(questionId: action.questionId));
         store.dispatch(RemoveUserQuestionAction(userId: accountId, questionId: action.questionId));
+        store.dispatch(RemoveDraftQuestionAction(questionId: action.questionId));
       });
   }
   next(action);

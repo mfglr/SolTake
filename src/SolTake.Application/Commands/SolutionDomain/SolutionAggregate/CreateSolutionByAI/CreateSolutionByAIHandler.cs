@@ -4,6 +4,11 @@ using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Application.InfrastructureServices.IAService;
 using SolTake.Application.InfrastructureServices.IAService.Objects;
+using SolTake.Core;
+using SolTake.Domain.AIModelAggregate.Abstracts;
+using SolTake.Domain.AIModelAggregate.Entities;
+using SolTake.Domain.AIModelAggregate.Exceptions;
+using SolTake.Domain.BalanceAggregate.Abstracts;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Abstracts;
@@ -14,11 +19,6 @@ using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.TransactionAggregate.Abstracts;
 using SolTake.Domain.TransactionAggregate.Entities;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
-using SolTake.Core;
-using SolTake.Domain.AIModelAggregate.Abstracts;
-using SolTake.Domain.AIModelAggregate.Entities;
-using SolTake.Domain.AIModelAggregate.Exceptions;
-using SolTake.Domain.BalanceAggregate.Abstracts;
 
 namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
@@ -152,15 +152,15 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
             solution.Create();
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
 
-            //update balance
-            var balance = await _balanceRepository.GetAsync(login.UserId, cancellationToken);
-            var price = aiModel.CalculatePrice(response.Usage.PrompTokens, response.Usage.CompletionTokens);
-            balance.Apply(-1 * price);
+            ////update balance
+            //var balance = await _balanceRepository.GetAsync(login.UserId, cancellationToken);
+            //var price = aiModel.CalculatePrice(response.Usage.PrompTokens, response.Usage.CompletionTokens);
+            //balance.Apply(-1 * price);
 
-            //create transaction
-            var transaction = new Transaction(login.UserId, aiModel.Id, response.Usage.PrompTokens, response.Usage.CompletionTokens, aiModel.SolPerInputTokenWithCommission.Amount, aiModel.SolPerOutputTokenWithCommission.Amount);
-            transaction.Create();
-            await _transactionRepository.CreateAsync(transaction, cancellationToken);
+            ////create transaction
+            //var transaction = new Transaction(login.UserId, aiModel.Id, response.Usage.PrompTokens, response.Usage.CompletionTokens, aiModel.SolPerInputTokenWithCommission.Amount, aiModel.SolPerOutputTokenWithCommission.Amount);
+            //transaction.Create();
+            //await _transactionRepository.CreateAsync(transaction, cancellationToken);
 
             //comit changes
             await _unitOfWork.CommitAsync(cancellationToken);
