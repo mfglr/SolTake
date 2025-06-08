@@ -1,11 +1,11 @@
 ﻿using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.QuestionAggregate.Exceptions;
 using SolTake.Domain.SubjectAggregate.Exceptions;
-using SolTake.Domain.SubjectAggregate.Interfaces;
 using SolTake.Domain.TopicAggregate.Abstracts;
 using SolTake.Domain.TopicAggregate.Entities;
 using SolTake.Domain.ExamAggregate.Exceptions;
 using SolTake.Domain.ExamAggregate.Interfaces;
+using SolTake.Domain.SubjectAggregate.Abstracts;
 
 namespace SolTake.Domain.QuestionAggregate.DomainServices
 {

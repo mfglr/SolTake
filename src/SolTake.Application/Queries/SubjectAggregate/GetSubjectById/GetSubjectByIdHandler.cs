@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using SolTake.Domain.SubjectAggregate.Abstracts;
 using SolTake.Domain.SubjectAggregate.Exceptions;
-using SolTake.Domain.SubjectAggregate.Interfaces;
 
 namespace SolTake.Application.Queries.SubjectAggregate.GetSubjectById
 {

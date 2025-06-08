@@ -1,8 +1,18 @@
-﻿namespace SolTake.Domain.QuestionAggregate.ValueObjects
+﻿using SolTake.Domain.QuestionAggregate.Exceptions;
+
+namespace SolTake.Domain.QuestionAggregate.ValueObjects
 {
-    public class QuestionTopic(int id, string name)
+    public class QuestionTopic
     {
-        public int Id { get; private set; } = id;
-        public string Name { get; private set; } = name;
+        public static readonly int MaxLength = 255;
+
+        public string Name { get; private set; }
+
+        public QuestionTopic(string name)
+        {
+            if (name.Length > MaxLength)
+                throw new QuestionTopicLengthEceededException();
+            Name = name;
+        }
     }
 }

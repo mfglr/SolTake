@@ -14,7 +14,8 @@ namespace SolTake.Domain.QuestionAggregate.Entities
         public int UserId { get; private set; }
         public QuestionExam Exam { get; private set; } = null!;
         public QuestionSubject Subject { get; private set; } = null!;
-        public QuestionTopic? Topic { get; private set; }
+        private readonly List<QuestionTopic> _topics = [];
+        public IReadOnlyList<QuestionTopic> Topics => _topics;
         public QuestionContent? Content { get; private set; }
         public QuestionPublishingState PublishingState { get; private set; }
         public DateTime? PublishingStateChagedAt { get; private set; }
@@ -35,11 +36,11 @@ namespace SolTake.Domain.QuestionAggregate.Entities
             _medias.AddRange(medias);
         }
 
-        internal void Create(QuestionExam exam, QuestionSubject subject, QuestionTopic? topic)
+        internal void Create(QuestionExam exam, QuestionSubject subject, IEnumerable<QuestionTopic> topics)
         {
             Exam = exam;
             Subject = subject;
-            Topic = topic;
+            _topics.AddRange(topics);
             CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new QuestionCreatedDomainEvent(this));
         }

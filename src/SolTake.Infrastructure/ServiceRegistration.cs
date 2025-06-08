@@ -11,7 +11,6 @@ using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using SolTake.Domain.RoleAggregate.Abstracts;
-using SolTake.Domain.SubjectAggregate.Interfaces;
 using SolTake.Domain.TopicAggregate.Abstracts;
 using SolTake.Infrastructure.AppVersionAggregate;
 using SolTake.Infrastructure.CommentDomain;
@@ -57,7 +56,7 @@ namespace SolTake.Infrastructure
                 .AddCommentDomainInfrastructureService()
                 .AddMessageDomainInfrastructureServices()
                 .AddExamInfrastructureServices()
-                .AddSubjectAggregate()
+                .AddSubjectInfrastructureServices()
                 .AddTopicAggregate()
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
@@ -132,10 +131,6 @@ namespace SolTake.Infrastructure
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
-
-        private static IServiceCollection AddSubjectAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<ISubjectReadRepository, SubjectReadRepository>();
 
         private static IServiceCollection AddTopicAggregate(this IServiceCollection services)
             => services

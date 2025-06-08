@@ -1,6 +1,6 @@
 ﻿using SolTake.Domain.SubjectAggregate.Entities;
 
-namespace SolTake.Domain.SubjectAggregate.Interfaces
+namespace SolTake.Domain.SubjectAggregate.Abstracts
 {
     public interface ISubjectReadRepository
     {
