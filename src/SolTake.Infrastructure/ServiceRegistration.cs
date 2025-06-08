@@ -8,7 +8,6 @@ using SolTake.Application.Configurations;
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Domain.AppVersionAggregate.Abstracts;
-using SolTake.Domain.ExamAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using SolTake.Domain.RoleAggregate.Abstracts;
@@ -57,7 +56,7 @@ namespace SolTake.Infrastructure
                 .AddSolutionDomainInfrastructureServices()
                 .AddCommentDomainInfrastructureService()
                 .AddMessageDomainInfrastructureServices()
-                .AddExamAggregate()
+                .AddExamInfrastructureServices()
                 .AddSubjectAggregate()
                 .AddTopicAggregate()
                 .AddCommentAggregate()
@@ -133,10 +132,6 @@ namespace SolTake.Infrastructure
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
-
-        private static IServiceCollection AddExamAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<IExamReadRepository, ExamReadRepository>();
 
         private static IServiceCollection AddSubjectAggregate(this IServiceCollection services)
             => services
