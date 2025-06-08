@@ -24,7 +24,7 @@ class QuestionState extends Entity<int> implements Avatar{
   final Iterable<Multimedia> medias;
   final bool isLiked;
   final bool isSaved;
-  final bool isDraft;
+  final int publishingState;
   final bool isOwner;
   final int numberOfLikes;
   final int numberOfComments;
@@ -59,7 +59,7 @@ class QuestionState extends Entity<int> implements Avatar{
     required this.medias,
     required this.isLiked,
     required this.isSaved,
-    required this.isDraft,
+    required this.publishingState,
     required this.isOwner,
     required this.numberOfLikes,
     required this.numberOfComments,
@@ -86,7 +86,7 @@ class QuestionState extends Entity<int> implements Avatar{
     Iterable<Multimedia>? newMedias,
     bool? newIsLiked,
     bool? newIsSaved,
-    bool? newIsDraft,
+    int? newPublishingState,
     int? newNumberOfLikes,
     int? newNumberOfComments,
     int? newNumberOfSolutions,
@@ -115,7 +115,7 @@ class QuestionState extends Entity<int> implements Avatar{
       medias: newMedias ?? medias,
       isLiked: newIsLiked ?? isLiked,
       isSaved: newIsSaved ?? isSaved,
-      isDraft: newIsDraft ?? isDraft,
+      publishingState: newPublishingState ?? publishingState,
       isOwner: isOwner,
       numberOfComments: newNumberOfComments ?? numberOfComments,
       numberOfLikes: newNumberOfLikes ?? numberOfLikes,

@@ -17,7 +17,7 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
         public string UserName { get; private set; } = user.UserName.Value;
         public string? Content { get; private set; } = question.Content?.Value;
         public bool IsLiked { get; private set; } = false;
-        public bool IsDraft { get; private set; } = true;
+        public QuestionPublishingState PublishingState { get; private set; } = QuestionPublishingState.NotPublished;
         public bool IsSaved { get; private set; } = false;
         public int NumberOfLikes { get; private set; } = 0;
         public int NumberOfComments { get; private set; } = 0;

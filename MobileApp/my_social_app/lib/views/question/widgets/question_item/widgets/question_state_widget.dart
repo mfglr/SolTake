@@ -10,7 +10,7 @@ class QuestionStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if(question.state == QuestionStatus.solved){
       return const Icon(
-        Icons.done,
+        Icons.check_circle,
         color: Colors.green,
       );
     }

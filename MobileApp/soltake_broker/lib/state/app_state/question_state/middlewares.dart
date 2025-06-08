@@ -38,3 +38,21 @@ void publishQuestionMiddleware(Store<AppState> store, action, NextDispatcher nex
   }
   next(action);
 }
+
+void rejectQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is RejectQuestionAction){
+    QuestionService
+      .reject(action.questionId)
+      .then((_) => store.dispatch(RejectQuestionSuccessAction(questionId: action.questionId)));
+  }
+  next(action);
+}
+
+void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is DeleteQuestionAction){
+    QuestionService
+      .deleteByAdmin(action.questionId)
+      .then((_) => store.dispatch(DeleteQuestionSuccessAction(questionId: action.questionId)));
+  }
+  next(action);
+}

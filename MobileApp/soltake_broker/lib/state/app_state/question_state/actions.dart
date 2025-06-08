@@ -47,12 +47,24 @@ class PublishQuestionSuccessAction extends QuestionAction{
 }
 
 @immutable
-class RemoveQuestionAction extends QuestionAction{
+class RejectQuestionAction extends QuestionAction{
   final int questionId;
-  const RemoveQuestionAction({required this.questionId});
+  const RejectQuestionAction({required this.questionId});
 }
 @immutable
-class RemoveQuestionSuccessAction extends QuestionAction{
+class RejectQuestionSuccessAction extends QuestionAction{
   final int questionId;
-  const RemoveQuestionSuccessAction({required this.questionId});
+  const RejectQuestionSuccessAction({required this.questionId});
+}
+
+
+@immutable
+class DeleteQuestionAction extends QuestionAction{
+  final int questionId;
+  const DeleteQuestionAction({required this.questionId});
+}
+@immutable
+class DeleteQuestionSuccessAction extends QuestionAction{
+  final int questionId;
+  const DeleteQuestionSuccessAction({required this.questionId});
 }

@@ -20,6 +20,12 @@ Pagination<int,QuestionState> firstAllNotPublishedQuestionsFailedReducer(Paginat
 Pagination<int,QuestionState> publishQuestionSuccessReducer(Pagination<int,QuestionState> prev, PublishQuestionSuccessAction action)
   => prev.removeOne(action.questionId);
 
+Pagination<int,QuestionState> rejectQuestionSuccessReducer(Pagination<int,QuestionState> prev, RejectQuestionSuccessAction action)
+  => prev.removeOne(action.questionId);
+
+Pagination<int,QuestionState> deleteQuestionSuccessReducer(Pagination<int,QuestionState> prev, DeleteQuestionSuccessAction action)
+  => prev.removeOne(action.questionId);
+
 Reducer<Pagination<int,QuestionState>> questionReducers = combineReducers<Pagination<int,QuestionState>>([
   TypedReducer<Pagination<int,QuestionState>,NextAllNotPublishedQuestionsAction>(nextAllNotPublishedQuestionsReducer).call,
   TypedReducer<Pagination<int,QuestionState>,NextAllNotPublishedQuestionsSuccessAction>(nextAllNotPublishedSuccessReducer).call,
@@ -30,4 +36,8 @@ Reducer<Pagination<int,QuestionState>> questionReducers = combineReducers<Pagina
   TypedReducer<Pagination<int,QuestionState>,FirstAllNotPublishedQuestionsFailedAction>(firstAllNotPublishedQuestionsFailedReducer).call,
 
   TypedReducer<Pagination<int,QuestionState>,PublishQuestionSuccessAction>(publishQuestionSuccessReducer).call,
+
+  TypedReducer<Pagination<int,QuestionState>,RejectQuestionSuccessAction>(rejectQuestionSuccessReducer).call,
+
+  TypedReducer<Pagination<int,QuestionState>,DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
 ]);

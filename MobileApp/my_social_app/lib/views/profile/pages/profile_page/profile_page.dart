@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/draft_questions/actions.dart';
-import 'package:my_social_app/state/app_state/draft_questions/selectors.dart';
+import 'package:my_social_app/state/app_state/not_published_questions/actions.dart';
+import 'package:my_social_app/state/app_state/not_published_questions/selectors.dart';
+import 'package:my_social_app/state/app_state/rejected_questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/rejected_questions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -12,7 +14,8 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page_texts.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_info_card_widget.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_menu_button.dart';
-import 'package:my_social_app/views/question/pages/display_draft_questions_page/display_draft_questions_page.dart';
+import 'package:my_social_app/views/question/pages/display_not_published_questions_page/display_not_published_questions_page.dart';
+import 'package:my_social_app/views/question/pages/display_rejected_questions_page/display_rejected_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_solved_questions_page.dart';
 import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page.dart';
@@ -53,12 +56,12 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-  Widget _getDraftQuestionsGrid(UserState user){
+  Widget _getNotPublishedQuestionsGrid(UserState user){
     return StoreConnector<AppState,Iterable<QuestionState>>(
-      onInit: (store) => getNextPageIfNoPage(store,store.state.draftQuestions,const NextDraftQuestionsAction()),
-      converter: (store) => selectDraftQuestions(store),
+      onInit: (store) => getNextPageIfNoPage(store,store.state.notPublishedQuestions,const NextNotPublishedQuestionsAction()),
+      converter: (store) => selectNotPublishedQuestions(store),
       builder: (context, questions) => StoreConnector<AppState,Pagination>(
-        converter: (store) => getDraftQuestions(store),
+        converter: (store) => getNotPublishedQuestions(store),
         builder:(context,pagination) => QuestionAbstractItemsWidget(
           questions: questions,
           pagination: pagination,
@@ -73,7 +76,34 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           onScrollBottom: (){
             final store = StoreProvider.of<AppState>(context,listen: false);
-            getNextPageIfReady(store, getDraftQuestions(store), const NextDraftQuestionsAction());
+            getNextPageIfReady(store, getNotPublishedQuestions(store), const NextNotPublishedQuestionsAction());
+          },
+        ),
+      )
+    );
+  }
+
+  Widget _getRejectedQuestionsGrid(UserState user){
+    return StoreConnector<AppState,Iterable<QuestionState>>(
+      onInit: (store) => getNextPageIfNoPage(store,store.state.rejectedQuestions,const NextRejectedQuestionsAction()),
+      converter: (store) => selectRejectedQuestions(store),
+      builder: (context, questions) => StoreConnector<AppState,Pagination>(
+        converter: (store) => store.state.rejectedQuestions,
+        builder:(context,pagination) => QuestionAbstractItemsWidget(
+          questions: questions,
+          pagination: pagination,
+          onTap: (questionId){
+            Navigator
+              .of(context)
+              .push(
+                MaterialPageRoute(builder: (context) => DisplayRejectedQuestionsPage(
+                  firstDisplayedQuestionId: questionId
+                ))
+              );
+          },
+          onScrollBottom: (){
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            getNextPageIfReady(store, store.state.rejectedQuestions, const NextRejectedQuestionsAction());
           },
         ),
       )
@@ -185,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ProfileInfoCardWidget(user: user)
               ),
               LabelPaginationWidget(
-                labelCount: 4,
+                labelCount: icons.length,
                 labelBuilder: (isActive,index) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -199,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         getLabels(language).elementAt(index),
                         style: TextStyle(
                           color: isActive ? Colors.black : Colors.grey,
-                          fontSize: 13
+                          fontSize: 9
                         ),
                       ),
                     ),
@@ -214,8 +244,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    _getDraftQuestionsGrid(user),
                     _getQuestionsGrid(user),
+                    _getNotPublishedQuestionsGrid(user),
+                    _getRejectedQuestionsGrid(user),
                     _getSolvedQuestionsGrid(user),
                     _getUnsolvedQuestionsGrid(user)
                   ]

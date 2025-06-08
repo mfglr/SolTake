@@ -20,5 +20,17 @@ class QuestionService{
           'questionId': questionId
         }
       );
-  
+
+  static Future<void> reject(int questionId) =>
+    AppClient
+      .put(
+        "$_controller/reject",
+        body: {
+          'questionId': questionId
+        }
+      );
+
+  static Future<void> deleteByAdmin(int questionId) =>
+    AppClient
+      .delete("$_controller/deleteByAdmin/$questionId");
 }

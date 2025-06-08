@@ -21,5 +21,7 @@ final store = Store(
     nextAllDraftQuestionMiddleware,
     firstAllDraftQuestionsMiddleware,
     publishQuestionMiddleware,
+    rejectQuestionMiddleware,
+    deleteQuestionMiddleware,
   ]
 );

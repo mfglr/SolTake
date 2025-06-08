@@ -93,6 +93,16 @@ namespace SolTake.Infrastructure.QueryRepositories
                 cancellationToken
             );
 
+        public Task<List<QuestionResponseDto>> GetRejectedQuestionsByUserId(int userId, int? forUserId, IPage page, CancellationToken cancellationToken)
+            => GetListAsync(
+                forUserId,
+                page,
+                question =>
+                    question.UserId == userId &&
+                    question.PublishingState == QuestionPublishingState.Rejected,
+                cancellationToken
+            );
+
         public Task<List<QuestionResponseDto>> GetUserQuestionsAsync(int userId, int? forUserId, IPage page, CancellationToken cancellationToken)
             => GetListPublishedAsync(
                 forUserId,

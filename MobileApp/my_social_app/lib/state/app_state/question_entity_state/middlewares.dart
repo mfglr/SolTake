@@ -5,10 +5,11 @@ import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/question_user_like_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/draft_questions/actions.dart';
+import 'package:my_social_app/state/app_state/not_published_questions/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
+import 'package:my_social_app/state/app_state/rejected_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -50,7 +51,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       )
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
-        store.dispatch(AddDraftQuestionAction(questionId: question.id));
+        store.dispatch(AddNotPublishedQuestionAction(questionId: question.id));
         store.dispatch(RemoveUploadStateAction(id: action.id));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
@@ -86,7 +87,8 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       .then((_){
         store.dispatch(DeleteQuestionSuccessAction(questionId: action.questionId));
         store.dispatch(RemoveUserQuestionAction(userId: accountId, questionId: action.questionId));
-        store.dispatch(RemoveDraftQuestionAction(questionId: action.questionId));
+        store.dispatch(RemoveNotPublishedQuestionAction(questionId: action.questionId));
+        store.dispatch(RemoveRejectedQuestionAction(questionId: action.questionId));
       });
   }
   next(action);

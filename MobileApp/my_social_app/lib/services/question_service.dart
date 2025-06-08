@@ -95,9 +95,15 @@ class QuestionService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
 
-  Future<Iterable<Question>> getDraftQuestions(Page page) =>
+  Future<Iterable<Question>> getNotPublishedQuestions(Page page) =>
     _appClient
-      .get(_appClient.generatePaginationUrl("$questionController/getDraftQuestions", page))
+      .get(_appClient.generatePaginationUrl("$questionController/getNotPublishedQuestions", page))
+      .then((json) => json as List)
+      .then((list) => list.map((e) => Question.fromJson(e)));
+
+  Future<Iterable<Question>> getRejectedQuestions(Page page) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$questionController/getRejectedQuestions", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
 

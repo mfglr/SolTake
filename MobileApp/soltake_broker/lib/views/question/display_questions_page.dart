@@ -55,14 +55,16 @@ class _DisplayQuestionsPageState extends State<DisplayQuestionsPage> {
           ),
         ),
         body: SingleChildScrollView(
-          child: StoreConnector<AppState,Pagination<int, QuestionState>>(
-            onInit: (store) => getNextEntitiesIfNoPage(store, store.state.questions, NextAllNotPublishedQuestionsAction()),
-            converter: (store) => store.state.questions,
-            builder: (context, pagination) => !pagination.isEmpty
-              ? QuestionsWidget(questions: pagination.values)
-              : Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 25),
+          child: Container(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height
+            ),
+            child: StoreConnector<AppState,Pagination<int, QuestionState>>(
+              onInit: (store) => getNextEntitiesIfNoPage(store, store.state.questions, NextAllNotPublishedQuestionsAction()),
+              converter: (store) => store.state.questions,
+              builder: (context, pagination) => !pagination.isEmpty
+                ? QuestionsWidget(questions: pagination.values)
+                : Center(
                     child: Text(
                       "Soru yok",
                       style: TextStyle(
@@ -71,7 +73,7 @@ class _DisplayQuestionsPageState extends State<DisplayQuestionsPage> {
                       ),
                     ),
                   ),
-                ),
+            ),
           ),
         ),
       ),

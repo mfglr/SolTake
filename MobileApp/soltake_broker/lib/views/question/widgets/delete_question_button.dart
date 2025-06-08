@@ -4,9 +4,9 @@ import 'package:soltake_broker/state/app_state/app_state.dart';
 import 'package:soltake_broker/state/app_state/question_state/actions.dart';
 import 'package:soltake_broker/state/app_state/question_state/question_state.dart';
 
-class PublishQuestionButton extends StatelessWidget {
+class DeleteQuestionButton extends StatelessWidget {
   final QuestionState question;
-  const PublishQuestionButton({
+  const DeleteQuestionButton({
     super.key,
     required this.question
   });
@@ -16,13 +16,21 @@ class PublishQuestionButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(PublishQuestionAction(questionId: question.id));
+        store.dispatch(DeleteQuestionAction(questionId: question.id));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.publish),
-          Text("Yayınla")
+          Icon(
+            Icons.delete,
+            color: Colors.red,
+          ),
+          Text(
+            "Sil",
+            style: TextStyle(
+              color: Colors.red
+            ),
+          )
         ],
       )
     );

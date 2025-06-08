@@ -4,23 +4,23 @@ using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.QuestionAggregate.DomainEvents;
 using SolTake.Domain.QuestionAggregate.Exceptions;
 
-namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.PublishQuestion
+namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.DeleteQuestionByAdmin
 {
-    public class PublishQuestionHandler(IQuestionWriteRepository questionWriteRepository, IUnitOfWork unitOfWork, IPublisher publisher) : IRequestHandler<PublishQuestionDto>
+    internal class DeleteQuestionByAdminHandler(IQuestionWriteRepository questionWriteRepository, IPublisher publisher, IUnitOfWork unitOfWork) : IRequestHandler<DeleteQuestionByAdminDto>
     {
         private readonly IQuestionWriteRepository _questionWriteRepository = questionWriteRepository;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IPublisher _publisher = publisher;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task Handle(PublishQuestionDto request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteQuestionByAdminDto request, CancellationToken cancellationToken)
         {
-            var question =
+            var question = 
                 await _questionWriteRepository.GetQuestionAsync(request.QuestionId, cancellationToken) ??
                 throw new QuestionNotFoundException();
-            question.Publish();
+            _questionWriteRepository.Delete(question);
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            await _publisher.Publish(new QuestionPublishedDomainEvent(question), cancellationToken);
+            await _publisher.Publish(new QuestionDeletedDomainEvent(question), cancellationToken);
         }
     }
 }

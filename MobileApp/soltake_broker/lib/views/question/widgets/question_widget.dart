@@ -3,7 +3,9 @@ import 'package:soltake_broker/constants/assets.dart';
 import 'package:soltake_broker/services/app_client.dart';
 import 'package:soltake_broker/state/app_state/question_state/question_state.dart';
 import 'package:multimedia_slider/multimedia_slider.dart';
+import 'package:soltake_broker/views/question/widgets/delete_question_button.dart';
 import 'package:soltake_broker/views/question/widgets/publish_question_button.dart';
+import 'package:soltake_broker/views/question/widgets/reject_question_button.dart';
 
 class QuestionWidget extends StatelessWidget {
   final QuestionState question;
@@ -30,7 +32,28 @@ class QuestionWidget extends StatelessWidget {
               noMediaPath: noMediaAssetPath,
             ),
           ),
-          PublishQuestionButton(question: question)
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PublishQuestionButton(question: question),
+                )
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RejectQuestionButton(question: question),
+                )
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DeleteQuestionButton(question: question),
+                )
+              )
+            ],
+          )
         ],
       ),
     );
