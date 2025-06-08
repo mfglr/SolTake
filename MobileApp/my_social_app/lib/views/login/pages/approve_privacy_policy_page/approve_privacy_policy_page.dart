@@ -3,9 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/policy_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:my_social_app/views/login/pages/approve_privacy_policy_page/approve_privacy_policy_page_constants.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class ApprovePolicyPage extends StatefulWidget {
@@ -41,10 +42,25 @@ class _ApprovePolicyPageState extends State<ApprovePolicyPage> {
                     Checkbox(
                       value: _isApproved,
                       onChanged: (value) {
-                        setState(() { _isApproved = value; });
+                        if(value != null && value){
+                          final store = StoreProvider.of<AppState>(context,listen: false);
+                          store.dispatch(const ApprovePrivacyPolicyAction());
+                        }
                       },
                     ),
-                    Text(AppLocalizations.of(context)!.aprove_privacy_policy_page_checkbox_label),
+                    OutlinedButton(
+                      onPressed: (){
+                        setState(() => _isApproved = true);
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        store.dispatch(const ApprovePrivacyPolicyAction());
+                      },
+                      child: LanguageWidget(
+                        child: (language) => Text(
+                          checkBoxContent[language]!,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ),
                   ],
                 ),
                 StoreConnector<AppState,String?>(
@@ -65,20 +81,6 @@ class _ApprovePolicyPageState extends State<ApprovePolicyPage> {
               ],
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: OutlinedButton(
-          onPressed: (){
-            if(_isApproved != true){
-              ToastCreator.displayError(AppLocalizations.of(context)!.approve_policy_page_eror);
-              return;
-            }
-            final store = StoreProvider.of<AppState>(context,listen: false);
-            store.dispatch(const ApprovePrivacyPolicyAction());
-          },
-          child: Text(AppLocalizations.of(context)!.approve_policy_page_button_content)
         ),
       ),
     );

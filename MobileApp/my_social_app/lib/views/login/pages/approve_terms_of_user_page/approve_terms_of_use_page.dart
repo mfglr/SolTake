@@ -3,9 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/policy_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:my_social_app/views/login/pages/approve_terms_of_user_page/approve_terms_of_user_page_constants.dart';
+import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class ApproveTermsOfUsePage extends StatefulWidget {
@@ -44,7 +45,18 @@ class _ApproveTermsOfUsePageState extends State<ApproveTermsOfUsePage> {
                         setState(() { _isApproved = newValue; });
                       },
                     ),
-                    Text(AppLocalizations.of(context)!.approve_terms_of_use_page_checkbox_label),
+                    OutlinedButton(
+                      onPressed: (){
+                        setState(() => _isApproved = true);
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        store.dispatch(const ApproveTermsOfUseAction());
+                      },
+                      child: LanguageWidget(
+                        child: (language) => Text(
+                          checkBoxContent[language]!
+                        ),
+                      )
+                    ),
                   ],
                 ),
                 StoreConnector<AppState,String?>(
@@ -65,20 +77,6 @@ class _ApproveTermsOfUsePageState extends State<ApproveTermsOfUsePage> {
               ],
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: OutlinedButton(
-          onPressed: (){
-            if(_isApproved != true){
-              ToastCreator.displayError(AppLocalizations.of(context)!.approve_policy_page_eror);
-              return;
-            }
-            final store = StoreProvider.of<AppState>(context,listen: false);
-            store.dispatch(const ApproveTermsOfUseAction());
-          },
-          child: Text(AppLocalizations.of(context)!.approve_policy_page_button_content)
         ),
       ),
     );
