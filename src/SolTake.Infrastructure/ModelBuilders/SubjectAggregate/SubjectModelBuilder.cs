@@ -8,11 +8,6 @@ namespace SolTake.Infrastructure.ModelBuilders.SubjectAggregate
     {
         public void Configure(EntityTypeBuilder<Subject> builder)
         {
-            builder
-                .HasMany(x => x.Topics)
-                .WithOne()
-                .HasForeignKey(x => x.SubjectId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

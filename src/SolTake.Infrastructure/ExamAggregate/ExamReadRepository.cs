@@ -13,6 +13,9 @@ namespace SolTake.Infrastructure.ExamAggregate
             await _context.Exams.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         public async Task<List<Exam>> GetAllAsync(CancellationToken cancellationToken)
             => await _context.Exams.AsNoTracking().ToListAsync(cancellationToken);
+
+        public Task<bool> ExistAsync(int id, CancellationToken cancellationToken)
+            => _context.Exams.AnyAsync(x => x.Id == id, cancellationToken);
     }
 
 }

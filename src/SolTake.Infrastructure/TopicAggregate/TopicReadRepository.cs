@@ -9,6 +9,9 @@ namespace SolTake.Infrastructure.TopicAggregate
     {
         private readonly AppDbContext _context = context;
 
+        public Task<bool> ExistByNameAsync(string name, CancellationToken cancellationToken)
+            => _context.Topics.AnyAsync(x => x.Name.ToLower() == name.ToLower(),cancellationToken);
+
         public Task<List<Topic>> GetByTopicIds(IEnumerable<int> ids, CancellationToken cancellationToken)
             => _context.Topics
                 .AsNoTracking()

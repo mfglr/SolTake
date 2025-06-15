@@ -2,14 +2,11 @@
 
 namespace SolTake.Domain.SubjectAggregate.Entities
 {
-    public class Subject(int examId, string name) : IHasId, IAggregateRoot
+    public class Subject(int examId, string name) : Entity, IAggregateRoot
     {
-        public int Id { get; private set; }
         public int ExamId { get; private set; } = examId;
         public string Name { get; private set; } = name;
-
-        private readonly List<SubjectTopic> _topics = [];
-        public IReadOnlyCollection<SubjectTopic> Topics => _topics;
-        public void AddTopic(int topicId) => _topics.Add(new SubjectTopic(topicId));
+        
+        public void Create() => CreatedAt = DateTime.UtcNow;
     }
 }

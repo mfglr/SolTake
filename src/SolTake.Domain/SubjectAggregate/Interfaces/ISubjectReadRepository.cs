@@ -1,9 +1,0 @@
-﻿using SolTake.Domain.SubjectAggregate.Entities;
-
-namespace SolTake.Domain.SubjectAggregate.Interfaces
-{
-    public interface ISubjectReadRepository
-    {
-        Task<Subject?> GetByIdAsync(int id, CancellationToken cancellationToken);
-    }
-}

@@ -9,11 +9,11 @@ namespace SolTake.Infrastructure.Seeds
         public void Configure(EntityTypeBuilder<Exam> builder)
         {
             builder.HasData(
-                new { Id = 1, ShortName = "TYT", FullName = "Temel Yeterlilik Testi" },
-                new { Id = 2, ShortName = "AYT", FullName = "Alan Yeterlilik Testi" },
-                new { Id = 3, ShortName = "LGS", FullName = "Liselere Geçiş Sistemi" },
-                new { Id = 4, ShortName = "KPSS", FullName = "Kamu Personeli Seçme Sınavı" },
-                new { Id = 5, ShortName = "DGS", FullName = "Dikey Geçiş Sınavı" }
+                new { Id = 1, ShortName = "TYT", FullName = "Temel Yeterlilik Testi", CreatedAt = new DateTime(2025, 6, 9) },
+                new { Id = 2, ShortName = "AYT", FullName = "Alan Yeterlilik Testi", CreatedAt = new DateTime(2025, 6, 9) },
+                new { Id = 3, ShortName = "LGS", FullName = "Liselere Geçiş Sistemi", CreatedAt = new DateTime(2025, 6, 9) },
+                new { Id = 4, ShortName = "KPSS", FullName = "Kamu Personeli Seçme Sınavı", CreatedAt = new DateTime(2025, 6, 9) },
+                new { Id = 5, ShortName = "DGS", FullName = "Dikey Geçiş Sınavı", CreatedAt = new DateTime(2025, 6, 9) }
             );
         }
     }

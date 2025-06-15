@@ -11,7 +11,7 @@ using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using SolTake.Domain.RoleAggregate.Abstracts;
-using SolTake.Domain.SubjectAggregate.Interfaces;
+using SolTake.Domain.SubjectAggregate.Abstracts;
 using SolTake.Domain.TopicAggregate.Abstracts;
 using SolTake.Infrastructure.AppVersionAggregate;
 using SolTake.Infrastructure.CommentDomain;
@@ -31,7 +31,9 @@ using SolTake.Infrastructure.RoleAggregate;
 using SolTake.Infrastructure.SolutionDomain;
 using SolTake.Infrastructure.StoryDomain;
 using SolTake.Infrastructure.SubjectAggregate;
+using SolTake.Infrastructure.SubjectTopicAggregate;
 using SolTake.Infrastructure.TopicAggregate;
+using SolTake.Infrastructure.TopicRequestAggregate;
 using SolTake.Infrastructure.UserDomain;
 using SolTake.Infrastructure.UserDomain.UserUserBlockeAggregate;
 using System.Net;
@@ -58,13 +60,15 @@ namespace SolTake.Infrastructure
                 .AddMessageDomainInfrastructureServices()
                 .AddExamInfrastructureServices()
                 .AddSubjectAggregate()
-                .AddTopicAggregate()
+                .AddTopicInfrastructureServices()
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
                 .AddRoleAggregate()
                 .AddNotificationConnectionAggregate()
                 .AddStoryDomainInfrastructureServices()
-                .AddUserUserBlockAggregateInfrastructureServices();
+                .AddUserUserBlockAggregateInfrastructureServices()
+                .AddSubjectTopicInfrastructureServices()
+                .AddTopicRequestInfrastructureServices();
 
 
         private static IServiceCollection InitializeDb(this IServiceCollection services)
@@ -136,10 +140,6 @@ namespace SolTake.Infrastructure
         private static IServiceCollection AddSubjectAggregate(this IServiceCollection services)
             => services
                 .AddScoped<ISubjectReadRepository, SubjectReadRepository>();
-
-        private static IServiceCollection AddTopicAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<ITopicReadRepository, TopicReadRepository>();
 
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
             => services

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Application.Queries.TopicAggregate;
 using SolTake.Application.QueryRepositories;
+using SolTake.Core;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
-using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
@@ -13,11 +13,11 @@ namespace SolTake.Infrastructure.QueryRepositories
         private readonly AppDbContext _context = context;
 
         public Task<List<TopicResponseDto>> GetSubjectTopicsAsync(int subjectId, IPage page, CancellationToken cancellationToken)
-            => _context.Topics
+            => _context.SubjectTopics
                 .AsNoTracking()
-                .Where(t => _context.SubjectTopics.Any(st => st.SubjectId == subjectId && st.TopicId == t.Id))
+                .Where(x => x.SubjectId == subjectId)
                 .ToPage(page)
-                .ToTopicResponseDto()
+                .ToTopicResponseDto(_context)
                 .ToListAsync(cancellationToken);
     }
 }

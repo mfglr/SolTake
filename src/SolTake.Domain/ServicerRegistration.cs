@@ -1,20 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SolTake.Domain.QuestionAggregate;
-using SolTake.Domain.QuestionUserLikeAggregate;
-using SolTake.Domain.QuestionUserSaveAggregate;
-using SolTake.Domain.SolutionAggregate;
 using MySocailApp.Domain.SolutionUserSaveAggregate;
-using SolTake.Domain.SolutionUserVoteAggregate;
-using SolTake.Domain.StoryUserViewAggregate;
 using MySocailApp.Domain.UserUserBlockAggregate;
-using SolTake.Domain.UserUserConversationAggregate;
-using SolTake.Domain.UserUserFollowAggregate;
-using SolTake.Domain.UserUserSearchAggregate;
 using SolTake.Domain.AppVersionAggregate;
 using SolTake.Domain.CommentAggregate;
 using SolTake.Domain.CommentUserLikeAggregate;
 using SolTake.Domain.MessageAggregate;
+using SolTake.Domain.QuestionUserLikeAggregate;
+using SolTake.Domain.QuestionUserSaveAggregate;
+using SolTake.Domain.SolutionAggregate;
+using SolTake.Domain.SolutionUserVoteAggregate;
+using SolTake.Domain.StoryUserViewAggregate;
 using SolTake.Domain.UserAggregate;
+using SolTake.Domain.UserUserConversationAggregate;
+using SolTake.Domain.UserUserFollowAggregate;
+using SolTake.Domain.UserUserSearchAggregate;
 
 namespace SolTake.Domain
 {
@@ -27,7 +26,6 @@ namespace SolTake.Domain
                 .AddCommentAggregateServices()
                 .AddCommentUserLikeAggregateServices()
                 
-                .AddQuestionDomainServices()
                 .AddQuestionUserLikeDomainServices()
                 .AddQuestionUserSaveDomainServices()
 

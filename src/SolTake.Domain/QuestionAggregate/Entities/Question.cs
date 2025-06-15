@@ -21,7 +21,7 @@ namespace SolTake.Domain.QuestionAggregate.Entities
         private readonly List<Multimedia> _medias = [];
         public IReadOnlyList<Multimedia> Medias => _medias;
 
-        public Question(int userId, QuestionContent? content, IEnumerable<Multimedia> medias)
+        public Question(int userId, QuestionExam exam, QuestionSubject subject, QuestionTopic? topic, QuestionContent? content, IEnumerable<Multimedia> medias)
         {
             if (!medias.Any() && content == null)
                 throw new QuesitonContentRequiredException();
@@ -29,17 +29,17 @@ namespace SolTake.Domain.QuestionAggregate.Entities
             if (medias.Count() > MaxMediaCountPerQuestion)
                 throw new TooManyQuestionMediasException();
 
+            Exam = exam;
+            Subject = subject;
+            Topic = topic;
             PublishingState = QuestionPublishingState.NotPublished;
             UserId = userId;
             Content = content;
             _medias.AddRange(medias);
         }
 
-        internal void Create(QuestionExam exam, QuestionSubject subject, QuestionTopic? topic)
+        public void Create()
         {
-            Exam = exam;
-            Subject = subject;
-            Topic = topic;
             CreatedAt = DateTime.UtcNow;
             AddDomainEvent(new QuestionCreatedDomainEvent(this));
         }

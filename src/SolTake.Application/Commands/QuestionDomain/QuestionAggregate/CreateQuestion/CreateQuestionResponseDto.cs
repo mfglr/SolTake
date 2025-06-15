@@ -1,12 +1,11 @@
 ﻿using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.QuestionAggregate.ValueObjects;
-using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Core;
 
 namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQuestion
 {
 
-    public class CreateQuestionResponseDto(Question question, User user)
+    public class CreateQuestionResponseDto(Question question, Login login)
     {
         public int Id { get; private set; } = question.Id;
         public DateTime CreatedAt { get; private set; } = question.CreatedAt;
@@ -14,7 +13,7 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
         public QuestionState State { get; private set; } = QuestionState.Unsolved;
         public bool IsOwner { get; private set; } = true;
         public int UserId { get; private set; } = question.UserId;
-        public string UserName { get; private set; } = user.UserName.Value;
+        public string UserName { get; private set; } = login.UserName;
         public string? Content { get; private set; } = question.Content?.Value;
         public bool IsLiked { get; private set; } = false;
         public QuestionPublishingState PublishingState { get; private set; } = QuestionPublishingState.NotPublished;
@@ -28,6 +27,6 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
         public QuestionSubject Subject { get; private set; } = question.Subject;
         public QuestionTopic? Topic { get; private set; } = question.Topic;
         public IEnumerable<Multimedia> Medias { get; private set; } = question.Medias;
-        public Multimedia? Image { get; private set; } = user.Image;
+        public Multimedia? Image { get; private set; } = login.Image;
     }
 }

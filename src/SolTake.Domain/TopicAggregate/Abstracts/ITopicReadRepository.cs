@@ -6,5 +6,6 @@ namespace SolTake.Domain.TopicAggregate.Abstracts
     {
         Task<List<Topic>> GetByTopicIds(IEnumerable<int> ids, CancellationToken cancellationToken);
         Task<Topic?> GetTopicById(int id, CancellationToken cancellationToken);
+        Task<bool> ExistByNameAsync(string name, CancellationToken cancellationToken);
     }
 }
