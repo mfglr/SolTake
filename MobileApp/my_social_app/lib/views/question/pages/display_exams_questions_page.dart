@@ -21,7 +21,7 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
           title: Text(
-            "${AppLocalizations.of(context)!.display_exam_questions_page_exam}: ${exam.shortName}",
+            "${AppLocalizations.of(context)!.display_exam_questions_page_exam}: ${exam.initialism}",
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold

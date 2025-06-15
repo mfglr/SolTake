@@ -14,5 +14,7 @@ namespace SolTake.Application.InfrastructureServices
 
         Login GetLogin();
 
+        bool IsAdmin();
+
     }
 }

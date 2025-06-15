@@ -63,7 +63,7 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
                 questionMedias = await _multimedyaService.UploadAsync(ContainerName.QuestionMedias, request.Medias, cancellationToken);
 
                 //create question
-                var questionExam = new QuestionExam(exam.Id, exam.ShortName, exam.FullName);
+                var questionExam = new QuestionExam(exam.Id, exam.Initialism.Value, exam.Name.Value);
                 var questionSubject = new QuestionSubject(subject.Id, subject.Name);
                 var questionTopic = topic != null ? new QuestionTopic(topic.Id, topic.Name) : null;
                 var content = request.Content != null ? new QuestionContent(request.Content) : null;

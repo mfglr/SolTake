@@ -8,12 +8,12 @@ part of 'exam.dart';
 
 Exam _$ExamFromJson(Map<String, dynamic> json) => Exam(
       id: (json['id'] as num).toInt(),
-      shortName: json['shortName'] as String,
-      fullName: json['fullName'] as String,
+      name: json['name'] as String,
+      initialism: json['initialism'] as String,
     );
 
 Map<String, dynamic> _$ExamToJson(Exam instance) => <String, dynamic>{
       'id': instance.id,
-      'shortName': instance.shortName,
-      'fullName': instance.fullName,
+      'name': instance.name,
+      'initialism': instance.initialism,
     };

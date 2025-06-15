@@ -5,15 +5,15 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class ExamState extends Entity<int>{
-  final String shortName;
-  final String fullName;
+  final String name;
+  final String initialism;
   final Pagination<int,Id<int>> subjects;
   final Pagination<int,Id<int>> questions;
 
   ExamState({
     required super.id,
-    required this.shortName,
-    required this.fullName,
+    required this.name,
+    required this.initialism,
     required this.subjects,
     required this.questions
   });
@@ -21,24 +21,24 @@ class ExamState extends Entity<int>{
   ExamState startLoadingNextQuestions()
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects,
         questions: questions.startLoadingNext()
       );
   ExamState stopLoadingNextQuestions()
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects,
         questions: questions.stopLoadingNext()
       );
   ExamState addNextQuestions(Iterable<int> questionIds)
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects,
         questions: questions.addNextPage(questionIds.map((questionId) => Id(id: questionId)))
       );
@@ -46,24 +46,24 @@ class ExamState extends Entity<int>{
   ExamState startLoadingPrevQuestions()
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects,
         questions: questions.startLoadingPrev()
       );
   ExamState stopLoadingPrevQuestions()
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects,
         questions: questions.stopLoadingPrev()
       );
   ExamState addPrevQuestions(Iterable<int> questionIds)
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects,
         questions: questions.addPrevPage(questionIds.map((questionId) => Id(id: questionId)))
       );
@@ -71,24 +71,24 @@ class ExamState extends Entity<int>{
   ExamState startLoadingNextSubjects()
     => ExamState(
       id: id,
-      shortName: shortName,
-      fullName: fullName,
+      name: name,
+      initialism: initialism,
       subjects: subjects.startLoadingNext(),
       questions: questions
     );
   ExamState stopLoadingNextSubjects()
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects.stopLoadingNext(),
         questions: questions
       );
   ExamState addNextSubjects(Iterable<int> subjectIds)
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: subjects.addNextPage(subjectIds.map((subjectId) => Id(id: subjectId))),
         questions: questions
       );

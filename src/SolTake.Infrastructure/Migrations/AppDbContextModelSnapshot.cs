@@ -187,14 +187,6 @@ namespace SolTake.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -206,38 +198,56 @@ namespace SolTake.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Temel Yeterlilik Testi",
-                            ShortName = "TYT"
+                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Alan Yeterlilik Testi",
-                            ShortName = "AYT"
+                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Liselere Geçiş Sistemi",
-                            ShortName = "LGS"
+                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Kamu Personeli Seçme Sınavı",
-                            ShortName = "KPSS"
+                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Dikey Geçiş Sınavı",
-                            ShortName = "DGS"
+                            CreatedAt = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
+                });
+
+            modelBuilder.Entity("SolTake.Domain.ExamRequestAggregate.Entities.ExamRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Reason")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExamRequests");
                 });
 
             modelBuilder.Entity("SolTake.Domain.MessageAggregate.Entities.Message", b =>
@@ -15258,6 +15268,92 @@ namespace SolTake.Infrastructure.Migrations
                         .WithMany("Tags")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SolTake.Domain.ExamAggregate.Entitities.Exam", b =>
+                {
+                    b.OwnsOne("SolTake.Domain.ExamAggregate.ValueObjects.ExamInitialism", "Initialism", b1 =>
+                        {
+                            b1.Property<int>("ExamId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ExamId");
+
+                            b1.ToTable("Exams");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExamId");
+                        });
+
+                    b.OwnsOne("SolTake.Domain.ExamAggregate.ValueObjects.ExamName", "Name", b1 =>
+                        {
+                            b1.Property<int>("ExamId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ExamId");
+
+                            b1.ToTable("Exams");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExamId");
+                        });
+
+                    b.Navigation("Initialism")
+                        .IsRequired();
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SolTake.Domain.ExamRequestAggregate.Entities.ExamRequest", b =>
+                {
+                    b.OwnsOne("SolTake.Domain.ExamRequestAggregate.ValueObjects.ExamRequestInitialism", "Initialism", b1 =>
+                        {
+                            b1.Property<int>("ExamRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ExamRequestId");
+
+                            b1.ToTable("ExamRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExamRequestId");
+                        });
+
+                    b.OwnsOne("SolTake.Domain.ExamRequestAggregate.ValueObjects.ExamRequestName", "Name", b1 =>
+                        {
+                            b1.Property<int>("ExamRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ExamRequestId");
+
+                            b1.ToTable("ExamRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExamRequestId");
+                        });
+
+                    b.Navigation("Initialism")
+                        .IsRequired();
+
+                    b.Navigation("Name")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SolTake.Domain.MessageAggregate.Entities.Message", b =>

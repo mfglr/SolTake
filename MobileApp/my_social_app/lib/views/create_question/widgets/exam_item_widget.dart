@@ -34,11 +34,11 @@ class ExamItemWidget extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  exam.shortName,
+                  exam.initialism,
                   style: const TextStyle(fontSize: 32),
                 ),
                 Text(
-                  exam.fullName,
+                  exam.name,
                   textAlign: TextAlign.center,
                 )
               ],

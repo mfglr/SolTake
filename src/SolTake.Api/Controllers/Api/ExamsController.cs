@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolTake.Api.Filters;
-using SolTake.Application.Commands.ExamAggregate.Create;
 using SolTake.Application.Queries.ExamAggregate;
 using SolTake.Application.Queries.ExamAggregate.GetExamById;
 using SolTake.Application.Queries.ExamAggregate.GetExams;
@@ -15,11 +14,6 @@ namespace SolTake.Api.Controllers.Api
     public class ExamsController(ISender sender) : ControllerBase
     {
         private readonly ISender _sender = sender;
-
-        [HttpPost]
-        [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<CreateExamResponseDto> Create(CreateExamDto request,CancellationToken cancellationToken)
-            => await _sender.Send(request, cancellationToken);
 
         [HttpGet]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -18,6 +18,7 @@ using SolTake.Infrastructure.CommentDomain;
 using SolTake.Infrastructure.CommentDomain.CommentAggregate;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.ExamAggregate;
+using SolTake.Infrastructure.ExamRequestAggregate;
 using SolTake.Infrastructure.InfrastructureServices;
 using SolTake.Infrastructure.InfrastructureServices.BlobService;
 using SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices;
@@ -68,7 +69,8 @@ namespace SolTake.Infrastructure
                 .AddStoryDomainInfrastructureServices()
                 .AddUserUserBlockAggregateInfrastructureServices()
                 .AddSubjectTopicInfrastructureServices()
-                .AddTopicRequestInfrastructureServices();
+                .AddTopicRequestInfrastructureServices()
+                .AddExamRequestInfrastructureServices();
 
 
         private static IServiceCollection InitializeDb(this IServiceCollection services)

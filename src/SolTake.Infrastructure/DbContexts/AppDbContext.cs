@@ -35,6 +35,7 @@ using SolTake.Domain.MessageUserViewAggregate.Entities;
 using System.Reflection;
 using SolTake.Domain.TopicRequestAggregate.Entities;
 using SolTake.Domain.SubjectTopicAggregate.Entities;
+using SolTake.Domain.ExamRequestAggregate.Entities;
 
 namespace SolTake.Infrastructure.DbContexts
 {
@@ -50,7 +51,6 @@ namespace SolTake.Infrastructure.DbContexts
         public DbSet<UserUserBlock> UserUserBlocks { get; private set; }
         public DbSet<UserUserConversation> UserUserConversations { get; private set; }
 
-        public DbSet<Exam> Exams { get; private set; }
         public DbSet<Subject> Subjects { get; private set; }
         public DbSet<SubjectTopic> SubjectTopics { get; private set; }
 
@@ -88,6 +88,10 @@ namespace SolTake.Infrastructure.DbContexts
 
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<TopicRequest> TopicRequests { get; private set; }
+
+
+        public DbSet<Exam> Exams { get; private set; }
+        public DbSet<ExamRequest> ExamRequests { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

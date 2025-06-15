@@ -1,6 +1,7 @@
 import 'package:my_social_app/state/app_state/active_login_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/reducers.dart';
 import 'package:my_social_app/state/app_state/balance_state/reducers.dart';
+import 'package:my_social_app/state/app_state/exam_requests_state/reducers.dart';
 import 'package:my_social_app/state/app_state/not_published_questions/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -54,7 +55,8 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   login: loginReducers(prev.login,action),
   activeLoginPage: activeLoginPageReducers(prev.activeLoginPage, action),
   notPublishedQuestions: dratfQuestionsReducers(prev.notPublishedQuestions, action),
-    rejectedQuestions: rejectedQuestionsReducer(prev.rejectedQuestions, action),
+  rejectedQuestions: rejectedQuestionsReducer(prev.rejectedQuestions, action),
+  examRequests: examRequestReducers(prev.examRequests, action),
 
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),

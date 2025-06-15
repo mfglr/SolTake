@@ -14,7 +14,7 @@ class ExamTagItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            exam.shortName,
+            exam.initialism,
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w900

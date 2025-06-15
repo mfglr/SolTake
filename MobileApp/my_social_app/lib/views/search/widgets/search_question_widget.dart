@@ -41,8 +41,8 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                   onInit: (store) => getNextPageIfNoPage(store,store.state.appExams,const NextExamsAction()),
                   converter: (store) => store.state.examEntityState.values,
                   builder:(context,exams) => DropdownSearch<String>(
-                    selectedItem: exams.where((x) => x.id == _examId).firstOrNull?.shortName,
-                    items: exams.map((e) => e.shortName).toList(),
+                    selectedItem: exams.where((x) => x.id == _examId).firstOrNull?.initialism,
+                    items: exams.map((e) => e.initialism).toList(),
                     dropdownDecoratorProps: DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.search_question_widget_select_exam
@@ -50,7 +50,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                     ),
                     onChanged: (value){
                       final store = StoreProvider.of<AppState>(context,listen: false);
-                      final exam = exams.firstWhere((exam) => exam.shortName == value);
+                      final exam = exams.firstWhere((exam) => exam.initialism == value);
                       if(exam.id == _examId) return;
                       
                       setState((){

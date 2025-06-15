@@ -8,6 +8,8 @@ namespace SolTake.Infrastructure.ModelBuilders.ExamAggregate
     {
         public void Configure(EntityTypeBuilder<Exam> builder)
         {
+            builder.OwnsOne(x => x.Initialism);
+            builder.OwnsOne(x => x.Name);
         }
     }
 }

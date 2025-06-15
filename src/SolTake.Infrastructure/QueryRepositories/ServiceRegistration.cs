@@ -30,6 +30,8 @@ namespace SolTake.Infrastructure.QueryRepositories
                 .AddScoped<IBalanceQueryRepository,BalanceQueryRepository>()
                 .AddScoped<IAIModelQueryRepository,AIModelQueryRepository>()
                 .AddScoped<ITransactionQueryRepository, TransactionQueryRepository>()
-                .AddScoped<ITopicRequestQueryRepository, TopicRequestQueryRepository>();
+                .AddScoped<ITopicRequestQueryRepository, TopicRequestQueryRepository>()
+                .AddScoped<IExamQueryRepository,ExamQueryRepository>()
+                .AddScoped<IExamRequestQueryRepository,ExamRequestQueryRepository>();
     }
 }

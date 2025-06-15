@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using SolTake.Core;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Linq;
 
 namespace SolTake.Infrastructure.InfrastructureServices
 {
@@ -79,6 +80,16 @@ namespace SolTake.Infrastructure.InfrastructureServices
             if (context == null) return null;
 
             return context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Locale)?.Value;
+        }
+
+        public bool IsAdmin()
+        {
+            var context = _contextAccessor.HttpContext;
+            if (context == null) return false;
+            var roles = context.User.Claims.Where(x => x.Type == ClaimTypes.Role);
+            if(roles == null) return false;
+
+            return roles.Any(x => x.Value == "admin");
         }
     }
 }

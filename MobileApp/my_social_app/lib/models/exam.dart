@@ -9,13 +9,13 @@ part 'exam.g.dart';
 @immutable
 class Exam{
   final int id;
-  final String shortName;
-  final String fullName;
+  final String name;
+  final String initialism;
   
   const Exam({
     required this.id,
-    required this.shortName,
-    required this.fullName,
+    required this.name,
+    required this.initialism,
   });
 
   factory Exam.fromJson(Map<String, dynamic> json) => _$ExamFromJson(json);
@@ -24,8 +24,8 @@ class Exam{
   ExamState toExamState()
     => ExamState(
         id: id,
-        shortName: shortName,
-        fullName: fullName,
+        name: name,
+        initialism: initialism,
         subjects: Pagination.init(subjectsPerPage,true),
         questions: Pagination.init(questionsPerPage,true)
       );
