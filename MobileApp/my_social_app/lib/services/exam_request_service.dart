@@ -18,6 +18,10 @@ class ExamRequestService {
       )
       .then((json) => IdResponse.fromJson(json));
 
+  static Future<void> delete(int id) =>
+    _appClient
+      .delete("$_controllerName/delete/$id");
+
   static Future<Iterable<ExamRequest>> getExamRequests(Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$_controllerName/GetExamRequests", page))

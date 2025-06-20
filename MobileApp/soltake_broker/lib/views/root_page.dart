@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soltake_broker/views/question/display_questions_page.dart';
+import 'package:soltake_broker/views/requests_page/requests_page.dart';
 import 'package:soltake_broker/views/solutions/display_solutions_page.dart';
 
 class RootPage extends StatefulWidget {
@@ -29,11 +30,17 @@ class _RootPageState extends State<RootPage> {
             icon: Icon(Icons.create_outlined),
             label: 'Çözümler',
           ),
+          const NavigationDestination(
+            selectedIcon: Icon(Icons.hourglass_bottom),
+            icon: Icon(Icons.hourglass_bottom_outlined),
+            label: 'Istekler',
+          )
         ],
       ),
       body: [
         const DisplayQuestionsPage(),
-        const DisplaySolutionsPage()
+        const DisplaySolutionsPage(),
+        const RequestsPage()
       ][currentPageIndex]
     );
   }

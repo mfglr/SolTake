@@ -14,7 +14,7 @@ namespace SolTake.Domain.ExamRequestAggregate.ValueObjects
         {
             if (value == null || value.Length < MinLength || value.Length > MaxLength)
                 throw new InvalidExamRequestNameException();
-            Value = Clear(value).Split(' ').Aggregate((x, y) => $"{ToUpperFirst(x)} {ToUpperFirst(y)}");
+            Value = string.Join(' ',Clear(value).Split(' ').Select(ToUpperFirst));
         }
 
         private static string Clear(string value) => Regex.Replace(value.Trim(), @"\s+", " ");

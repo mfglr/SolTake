@@ -46,6 +46,13 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
       isDescending: isDescending
     );
 
+  pagination.Page<K> get first =>
+    pagination.Page<K>(
+      offset: null,
+      take: recordsPerPage,
+      isDescending: isDescending
+    );
+
   bool get hasAtLeastOnePage => values.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loadingNext;
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;

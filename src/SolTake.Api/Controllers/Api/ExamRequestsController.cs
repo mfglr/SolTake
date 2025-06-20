@@ -9,6 +9,7 @@ using SolTake.Application.Commands.ExamRequestAggregate.Delete;
 using SolTake.Application.Commands.ExamRequestAggregate.Reject;
 using SolTake.Application.Queries.ExamRequestAggregate;
 using SolTake.Application.Queries.ExamRequestAggregate.GetExamRequests;
+using SolTake.Application.Queries.ExamRequestAggregate.GetPendingExamRequests;
 
 namespace SolTake.Api.Controllers.Api
 {
@@ -47,6 +48,11 @@ namespace SolTake.Api.Controllers.Api
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task<List<ExamRequestResponseDto>> GetExamRequests([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetExamRequestsDto(offset,take,isDescending), cancellationToken);
+
+        [HttpGet]
+        [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<List<ExamRequestResponseDto>> GetPendingExamRequest([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new GetPendingExamRequestsDto(offset,take,isDescending), cancellationToken);
 
         [HttpPut]
         [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

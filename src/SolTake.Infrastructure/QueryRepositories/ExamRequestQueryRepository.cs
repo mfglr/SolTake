@@ -2,6 +2,7 @@
 using SolTake.Application.Queries.ExamRequestAggregate;
 using SolTake.Application.QueryRepositories;
 using SolTake.Core;
+using SolTake.Domain.ExamRequestAggregate.ValueObjects;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
@@ -16,6 +17,14 @@ namespace SolTake.Infrastructure.QueryRepositories
             => _context.ExamRequests
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
+                .ToPage(page)
+                .ToExamRequestResponseDto()
+                .ToListAsync(cancellationToken);
+
+        public Task<List<ExamRequestResponseDto>> GetPendingExamRequestsAsync(IPage page, CancellationToken cancellationToken)
+            => _context.ExamRequests
+                .AsNoTracking()
+                .Where(x => x.State == ExamRequestState.Pending)
                 .ToPage(page)
                 .ToExamRequestResponseDto()
                 .ToListAsync(cancellationToken);

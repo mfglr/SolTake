@@ -10,9 +10,11 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                 .Select(
                     x => new ExamRequestResponseDto(
                         x.Id,
+                        x.CreatedAt,
                         x.Name.Value,
                         x.Initialism.Value,
-                        x.State
+                        x.State,
+                        x.Reason
                     )
                 );
     }

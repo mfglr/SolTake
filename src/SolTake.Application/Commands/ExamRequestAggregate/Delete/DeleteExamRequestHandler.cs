@@ -18,7 +18,7 @@ namespace SolTake.Application.Commands.ExamRequestAggregate.Delete
                 await _examRequestRepository.GetByIdAsync(request.Id, cancellationToken) ??
                 throw new ExamRequestNotFoundException();
 
-            if (!_accessTokenReader.IsAdmin() && examRequest.UserId != userId)
+            if (examRequest.UserId != userId)
                 throw new PermissionDeniedToDeleteExamRequestException();
             
             _examRequestRepository.Delete(examRequest);

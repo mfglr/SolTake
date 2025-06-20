@@ -7,15 +7,19 @@ part 'exam_request.g.dart';
 @JsonSerializable()
 class ExamRequest {
   final int id;
+  final DateTime createdAt;
   final String name;
   final String initialism;
   final int state;
+  final int? reason;
 
   const ExamRequest({
     required this.id,
+    required this.createdAt,
     required this.name,
     required this.initialism,
-    required this.state
+    required this.state,
+    required this.reason
   });
 
   factory ExamRequest.fromJson(Map<String, dynamic> json) => _$ExamRequestFromJson(json);
@@ -24,8 +28,10 @@ class ExamRequest {
   ExamRequestState toState() =>
     ExamRequestState(
       id: id,
+      createdAt: createdAt,
       name: name,
       initialism: initialism,
-      state: state
+      state: state,
+      reason: reason
     );
 }

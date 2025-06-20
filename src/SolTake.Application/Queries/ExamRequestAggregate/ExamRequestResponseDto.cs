@@ -2,5 +2,5 @@
 
 namespace SolTake.Application.Queries.ExamRequestAggregate
 {
-    public record ExamRequestResponseDto(int Id, string Name, string Initialism, ExamRequestState State);
+    public record ExamRequestResponseDto(int Id, DateTime CreatedAt, string Name, string Initialism, ExamRequestState State, ExamRequestRejectionReason? Reason);
 }

@@ -46,6 +46,13 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
       isDescending: isDescending
     );
 
+  pagination.Page<K> get first =>
+    pagination.Page<K>(
+      offset: null,
+      take: recordsPerPage,
+      isDescending: isDescending
+    );
+
   bool get hasAtLeastOnePage => values.length >= recordsPerPage;
   bool get isReadyForNextPage => !isLast && !loadingNext;
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
@@ -76,15 +83,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
         values: [...values, ...this.values]
-      );
-  Pagination<K,V> prependUniqMany(Iterable<V> values)
-    => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-        values: [...values.where((e) => !this.values.any((v) => v.id.compareTo(e.id) == 0)), ...this.values]
       );
   Pagination<K,V> appendMany(Iterable<V> values)
     => Pagination<K,V>(
@@ -179,15 +177,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         values: [value, ...values],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-      );
-  Pagination<K,V> prepenUniqOne(V value)
-    => Pagination<K,V>(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-        values: values.any((e) => e.id.compareTo(value.id) == 0) ? values : [value, ...values],
       );
   Pagination<K,V> appendOne(V value)
     => Pagination<K,V>(

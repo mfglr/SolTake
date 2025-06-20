@@ -6,5 +6,6 @@ namespace SolTake.Application.QueryRepositories
     public interface IExamRequestQueryRepository
     {
         Task<List<ExamRequestResponseDto>> GetExamRequestsByUserIdAsync(int userId, IPage page, CancellationToken cancellationToken);
+        Task<List<ExamRequestResponseDto>> GetPendingExamRequestsAsync(IPage page, CancellationToken cancellationToken);
     }
 }

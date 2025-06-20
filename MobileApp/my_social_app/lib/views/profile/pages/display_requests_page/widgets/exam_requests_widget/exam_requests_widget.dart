@@ -18,7 +18,8 @@ class ExamRequestsWidget extends StatelessWidget {
         child: ExamRequestWidget(
           examRequest: e
         ),
-      ))
+      )),
+      margin: EdgeInsets.zero,
     );
   }
 }

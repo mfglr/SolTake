@@ -20,6 +20,17 @@ class CreateExamRequestSuccessAction extends ExamRequestsAction{
 }
 
 @immutable
+class DeleteExamRequestAction extends ExamRequestsAction{
+  final int id;
+  const DeleteExamRequestAction({required this.id});
+}
+@immutable
+class DeleteExamRequestSuccessAction extends ExamRequestsAction{
+  final int id;
+  const DeleteExamRequestSuccessAction({required this.id});
+}
+
+@immutable
 class NextExamRequestsAction extends ExamRequestsAction{
   const NextExamRequestsAction();
 }

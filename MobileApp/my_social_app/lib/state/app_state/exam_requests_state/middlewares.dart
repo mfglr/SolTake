@@ -1,7 +1,7 @@
 import 'package:my_social_app/services/exam_request_service.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/actions.dart';
-import 'package:my_social_app/state/app_state/exam_requests_state/exam_reqiest_status.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
+import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_status.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 
@@ -12,11 +12,22 @@ void createExamRequestMiddleware(Store<AppState> store, action, NextDispatcher n
       .then((id) => store.dispatch(CreateExamRequestSuccessAction(
         examRequest: ExamRequestState(
           id: id.id,
+          createdAt: DateTime.now(),
           name: action.name,
           initialism: action.initialism,
-          state: ExamReqiestStatus.pending
+          state: ExamRequestStatus.pending,
+          reason: null,
         )
       )));
+  }
+  next(action);
+}
+
+void deleteExamRequestMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is DeleteExamRequestAction){
+    ExamRequestService
+      .delete(action.id)
+      .then((_) => store.dispatch(DeleteExamRequestSuccessAction(id: action.id)));
   }
   next(action);
 }
@@ -37,7 +48,7 @@ void nextExamRequestsMiddleware(Store<AppState> store, action, NextDispatcher ne
 void firstExamRequestsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is FirstExamRequestsAction){
     ExamRequestService
-      .getExamRequests(store.state.examRequests.next)
+      .getExamRequests(store.state.examRequests.first)
       .then((examRequests) => store.dispatch(FirstExamRequestsSuccessAction(examRequests: examRequests.map((e) => e.toState()))))
       .catchError((e){
         store.dispatch(const FirstExamRequestsFailedAction());

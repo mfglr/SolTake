@@ -210,6 +210,7 @@ final store = Store(
     
     //Exam requests state
     createExamRequestMiddleware,
+    deleteExamRequestMiddleware,
     nextExamRequestsMiddleware,
     firstExamRequestsMiddleware,
     //Exam requests state

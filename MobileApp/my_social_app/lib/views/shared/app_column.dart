@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 class AppColumn extends StatelessWidget {
   final Iterable<Widget> children;
+  final EdgeInsetsGeometry margin;
   const AppColumn({
     super.key,
-    required this.children
+    required this.children,
+    this.margin = const EdgeInsets.only(bottom: 8)
   });
 
   @override
@@ -18,7 +20,7 @@ class AppColumn extends StatelessWidget {
               index == children.length - 1
                 ? child
                 : Container(
-                    margin: const EdgeInsets.only(bottom: 8),
+                    margin: margin,
                     child: child,
                   )
           )

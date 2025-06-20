@@ -5,6 +5,8 @@ import 'package:redux/redux.dart';
 
 Pagination<int, ExamRequestState> createExamRequestSuccessReducer(Pagination<int, ExamRequestState> prev, CreateExamRequestSuccessAction action)
   => prev.prependOne(action.examRequest);
+Pagination<int, ExamRequestState> deleteExamRequestSuccessReducer(Pagination<int, ExamRequestState> prev, DeleteExamRequestSuccessAction action)
+  => prev.removeOne(action.id);
 
 Pagination<int,ExamRequestState> nextExamRequestsReducer(Pagination<int,ExamRequestState> prev, NextExamRequestsAction action)
   => prev.startLoadingNext();
@@ -22,6 +24,7 @@ Pagination<int,ExamRequestState> firstExamRequestsFailedReducer(Pagination<int,E
 
 Reducer<Pagination<int, ExamRequestState>> examRequestReducers = combineReducers<Pagination<int, ExamRequestState>>([
   TypedReducer<Pagination<int, ExamRequestState>,CreateExamRequestSuccessAction>(createExamRequestSuccessReducer).call,
+  TypedReducer<Pagination<int, ExamRequestState>,DeleteExamRequestSuccessAction>(deleteExamRequestSuccessReducer).call,
 
   TypedReducer<Pagination<int, ExamRequestState>,NextExamRequestsAction>(nextExamRequestsReducer).call,
   TypedReducer<Pagination<int, ExamRequestState>,NextExamRequestsSuccessAction>(nextExamRequestsSuccessReducer).call,
