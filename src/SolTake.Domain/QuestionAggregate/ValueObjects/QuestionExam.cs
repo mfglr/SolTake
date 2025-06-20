@@ -1,10 +1,10 @@
 ﻿namespace SolTake.Domain.QuestionAggregate.ValueObjects
 {
-    public class QuestionExam(int id, string shortName, string fullName)
+    public class QuestionExam(int id, string name, string initialism)
     {
         public int Id { get; private set; } = id;
-        public string ShortName { get; private set; } = shortName;
-        public string FullName { get; private set; } = fullName;
+        public string Name { get; private set; } = name;
+        public string Initialism { get; private set; } = initialism;
 
     }
 }

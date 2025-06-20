@@ -49,7 +49,8 @@ class ApproveExamRequestSuccessAction extends ExamRequestAction{
 @immutable
 class RejectExamRequestAction extends ExamRequestAction{
   final int id;
-  const RejectExamRequestAction({required this.id});
+  final int reason;
+  const RejectExamRequestAction({required this.id,required this.reason});
 }
 @immutable
 class RejectExamRequestSuccessAction extends ExamRequestAction{

@@ -15,6 +15,18 @@ const _alreadyDefined = {
   Languages.tr: "Bu sınav daha önce oluşturulmuş!"
 };
 
+const _noReason = {
+  Languages.en: "No reason!",
+  Languages.tr: "Bir neden yok!"
+};
+
+const _unacceptableContent = {
+  Languages.en: "Unacceptable content",
+  Languages.tr: "Kabul edilmeyen içerik"
+};
+
 const rejectionReasons = [
-  _alreadyDefined
+  _noReason,
+  _alreadyDefined,
+  _unacceptableContent
 ];

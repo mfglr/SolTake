@@ -33,6 +33,7 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
             var login = _accessTokenReader.GetLogin();
+
             var exam =
                await _examReadRepository.GetByIdAsync(request.ExamId, cancellationToken) ??
                throw new ExamNotFoundException();

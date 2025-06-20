@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
@@ -75,6 +76,7 @@ class _CreateExamPageState extends State<CreateExamPage> {
                       final store = StoreProvider.of<AppState>(context,listen: false);
                       store.dispatch(CreateExamRequestAction(name: _name, initialism: _initialism));
                       Navigator.of(context).pop();
+                      ToastCreator.displaySuccess(successMessage[language]!);
                     }
                   },
                   child: Row(

@@ -18,10 +18,13 @@ class ExamRequestService {
         body: { 'id': id }
       );
 
-  static Future<void> reject(int id) =>
+  static Future<void> reject(int id, int reason) =>
     AppClient
       .put(
         "$_controller/reject",
-        body: { 'id': id }
+        body: {
+          'id': id,
+          'reason': reason,
+        }
       );
 }

@@ -41,7 +41,7 @@ void approveExamRequestMiddleware(Store<AppState> store, action, NextDispatcher 
 void rejectExamRequestMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RejectExamRequestAction){
     ExamRequestService
-      .reject(action.id)
+      .reject(action.id,action.reason)
       .then((_) => store.dispatch(RejectExamRequestSuccessAction(id: action.id)));
   }
   next(action);

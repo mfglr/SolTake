@@ -13,7 +13,7 @@ namespace SolTake.Domain.ExamRequestAggregate.ValueObjects
         {
             if (value == null || value.Length < MinLength || value.Length > MaxLength)
                 throw new InvalidExamRequestInitialismException();
-            Value = value.ToUpper();
+            Value = value.Trim().ToUpper();
         }
     }
 }

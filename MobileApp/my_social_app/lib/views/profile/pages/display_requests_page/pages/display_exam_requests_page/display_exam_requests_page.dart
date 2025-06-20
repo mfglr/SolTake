@@ -6,7 +6,8 @@ import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_s
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
-import 'package:my_social_app/views/profile/pages/display_requests_page/widgets/exam_requests_widget/exam_requests_widget.dart';
+import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/widgets/create_exam_request_button/create_exam_request_button.dart';
+import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/widgets/exam_requests_widget/exam_requests_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
@@ -62,6 +63,10 @@ class _DisplayExamRequestsPageState extends State<DisplayExamRequestsPage> {
               ),
               child: Column(
                 children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    child: const CreateExamRequestButton()
+                  ),
                   Builder(
                     builder: (context) {
                       if(pagination.isEmpty){

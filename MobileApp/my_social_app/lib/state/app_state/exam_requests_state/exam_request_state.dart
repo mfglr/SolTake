@@ -13,6 +13,6 @@ class ExamRequestState extends Entity<int>{
 
   ExamRequestState(int id,this.createdAt, String name, String initialism, this.state, this.reason) : super(id: id){
     this.name = name.trim().replaceAll(RegExp(r'\s+'), ' ').split(' ').map(_toUpperFirst).join(' ');
-    this.initialism = initialism.toUpperCase();
+    this.initialism = initialism.trim().toUpperCase();
   }
 }

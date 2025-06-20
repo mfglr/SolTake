@@ -30,6 +30,12 @@ const initiliasmLengthMessage = {
   Languages.tr: "Geçersiz kısaltma. Kısaltma 1 karakterden fazla ve 50 karakterden az olmalıdır."
 };
 
+const successMessage = {
+  Languages.en: "Your request to create an exam has been received! You will be notified soon.",
+  Languages.tr: "Sınav oluşturma talebiniz alındı! Yakın zamanda bildirim alacaksınız."
+};
+
+
 const nameLengthmessage = {
   Languages.en: "An exam name must be greater than 3 characters and be less than 256 characters.",
   Languages.tr: "Bir sınav adı 3 karakterden fazla ve 256 karakterden az olmalıdır." 

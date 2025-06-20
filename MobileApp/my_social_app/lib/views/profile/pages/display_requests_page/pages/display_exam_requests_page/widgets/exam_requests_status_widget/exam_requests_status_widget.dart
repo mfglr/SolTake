@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
-import 'package:my_social_app/views/profile/pages/display_requests_page/widgets/exam_requests_status_widget/exam_requests_status_constants.dart';
+import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/widgets/exam_requests_status_widget/exam_requests_status_constants.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 
 class ExamRequestsStatusWidget extends StatelessWidget {
