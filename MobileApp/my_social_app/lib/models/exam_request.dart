@@ -25,13 +25,5 @@ class ExamRequest {
   factory ExamRequest.fromJson(Map<String, dynamic> json) => _$ExamRequestFromJson(json);
   Map<String, dynamic> toJson() => _$ExamRequestToJson(this);
 
-  ExamRequestState toState() =>
-    ExamRequestState(
-      id: id,
-      createdAt: createdAt,
-      name: name,
-      initialism: initialism,
-      state: state,
-      reason: reason
-    );
+  ExamRequestState toState() => ExamRequestState(id,createdAt,name,initialism,state,reason);
 }

@@ -3,18 +3,16 @@ import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
 class ExamRequestState extends Entity<int>{
-  final DateTime createdAt;
-  final String name;
-  final String initialism;
-  final int state;
-  final int? reason;
+  late final DateTime createdAt;
+  late final String name;
+  late final String initialism;
+  late final int state;
+  late final int? reason;
   
-  ExamRequestState({
-    required super.id,
-    required this.createdAt,
-    required this.name,
-    required this.initialism,
-    required this.state,
-    required this.reason
-  });
+  static String _toUpperFirst(String value) => "${value[0].toUpperCase()}${value.substring(1).toLowerCase()}";
+
+  ExamRequestState(int id,this.createdAt, String name, String initialism, this.state, this.reason) : super(id: id){
+    this.name = name.trim().replaceAll(RegExp(r'\s+'), ' ').split(' ').map(_toUpperFirst).join(' ');
+    this.initialism = initialism.toUpperCase();
+  }
 }

@@ -10,14 +10,7 @@ void createExamRequestMiddleware(Store<AppState> store, action, NextDispatcher n
     ExamRequestService
       .create(action.name, action.initialism)
       .then((id) => store.dispatch(CreateExamRequestSuccessAction(
-        examRequest: ExamRequestState(
-          id: id.id,
-          createdAt: DateTime.now(),
-          name: action.name,
-          initialism: action.initialism,
-          state: ExamRequestStatus.pending,
-          reason: null,
-        )
+        examRequest: ExamRequestState(id.id,DateTime.now(),action.name,action.initialism,ExamRequestStatus.pending,null)
       )));
   }
   next(action);
