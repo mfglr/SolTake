@@ -36,6 +36,7 @@ using System.Reflection;
 using SolTake.Domain.TopicRequestAggregate.Entities;
 using SolTake.Domain.SubjectTopicAggregate.Entities;
 using SolTake.Domain.ExamRequestAggregate.Entities;
+using SolTake.Domain.SubjectRequestAggregate.Entities;
 
 namespace SolTake.Infrastructure.DbContexts
 {
@@ -51,9 +52,7 @@ namespace SolTake.Infrastructure.DbContexts
         public DbSet<UserUserBlock> UserUserBlocks { get; private set; }
         public DbSet<UserUserConversation> UserUserConversations { get; private set; }
 
-        public DbSet<Subject> Subjects { get; private set; }
-        public DbSet<SubjectTopic> SubjectTopics { get; private set; }
-
+       
         public DbSet<Question> Questions { get; private set; }
         public DbSet<QuestionUserLike> QuestionUserLikes { get; private set; }
         public DbSet<QuestionUserSave> QuestionUserSaves { get; private set; }
@@ -89,9 +88,13 @@ namespace SolTake.Infrastructure.DbContexts
         public DbSet<Topic> Topics { get; private set; }
         public DbSet<TopicRequest> TopicRequests { get; private set; }
 
-
         public DbSet<Exam> Exams { get; private set; }
         public DbSet<ExamRequest> ExamRequests { get; private set; }
+
+        public DbSet<Subject> Subjects { get; private set; }
+        public DbSet<SubjectRequest> SubjectRequests { get; private set; }
+        public DbSet<SubjectTopic> SubjectTopics { get; private set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

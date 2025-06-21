@@ -67,32 +67,28 @@ class _DisplayExamRequestsPageState extends State<DisplayExamRequestsPage> {
                     margin: const EdgeInsets.only(top: 8),
                     child: const CreateExamRequestButton()
                   ),
-                  Builder(
-                    builder: (context) {
-                      if(pagination.isEmpty){
-                        return LanguageWidget(
-                          child: (language) => Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8,right: 8,top: 45),
-                                child: Text(
-                                  content[language]!,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 18
-                                  ),
-                                ),
+                  if(pagination.isEmpty)
+                    LanguageWidget(
+                      child: (language) => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8,right: 8,top: 45),
+                            child: Text(
+                              content[language]!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 18
                               ),
-                            ],
+                            ),
                           ),
-                        );
-                      }
-                      return ExamRequestsWidget(
-                        examRequests: pagination.values
-                      );
-                    }
-                  ),
+                        ],
+                      ),
+                    )
+                  else
+                    ExamRequestsWidget(
+                      examRequests: pagination.values
+                    ),
                   if(pagination.loadingNext)
                     const LoadingCircleWidget()
                 ],

@@ -1041,6 +1041,37 @@ namespace SolTake.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SolTake.Domain.SubjectRequestAggregate.Entities.SubjectRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Reason")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubjectRequests");
+                });
+
             modelBuilder.Entity("SolTake.Domain.SubjectTopicAggregate.Entities.SubjectTopic", b =>
                 {
                     b.Property<int>("Id")
@@ -15803,6 +15834,29 @@ namespace SolTake.Infrastructure.Migrations
                         });
 
                     b.Navigation("Media")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SolTake.Domain.SubjectRequestAggregate.Entities.SubjectRequest", b =>
+                {
+                    b.OwnsOne("SolTake.Domain.SubjectRequestAggregate.ValueObjects.SubjectName", "SubjectName", b1 =>
+                        {
+                            b1.Property<int>("SubjectRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("SubjectRequestId");
+
+                            b1.ToTable("SubjectRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SubjectRequestId");
+                        });
+
+                    b.Navigation("SubjectName")
                         .IsRequired();
                 });
 

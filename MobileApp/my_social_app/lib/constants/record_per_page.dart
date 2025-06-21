@@ -12,3 +12,4 @@ const examsPerPage = 20;
 const aiModelsPerPage = 100;
 const transactionsPerPage = 20;
 const examRequestsPerPage = 20;
+const subjectRequestsPerPage = 20;

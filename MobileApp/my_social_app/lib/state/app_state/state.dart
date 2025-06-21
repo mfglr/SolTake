@@ -21,6 +21,7 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/solution_user_saves_state/solution_user_save_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
@@ -51,6 +52,7 @@ class AppState{
   final Pagination<int, Id<int>> notPublishedQuestions;
   final Pagination<int, Id<int>> rejectedQuestions;
   final Pagination<int,ExamRequestState> examRequests;
+  final Pagination<int,SubjectRequestState> subjectRequests;
 
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
@@ -87,6 +89,7 @@ class AppState{
     required this.notPublishedQuestions,
     required this.rejectedQuestions,
     required this.examRequests,
+    required this.subjectRequests,
 
     required this.stories,
 
@@ -127,7 +130,8 @@ class AppState{
     notPublishedQuestions: Pagination.init(questionsPerPage, true),
     rejectedQuestions: Pagination.init(questionsPerPage, true),
     examRequests: Pagination.init(examRequestsPerPage, true),
-    
+    subjectRequests: Pagination.init(subjectRequestsPerPage, true),
+
     userEntityState: EntityState(),
     userMessageState: EntityState(),
 

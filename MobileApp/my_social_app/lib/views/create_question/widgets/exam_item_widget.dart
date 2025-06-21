@@ -16,7 +16,7 @@ class ExamItemWidget extends StatelessWidget {
             onPressed: () =>
               Navigator
                 .of(context)
-                .push(MaterialPageRoute(builder: (context) => SelectSubjectPage(examId: exam.id)))
+                .push(MaterialPageRoute(builder: (context) => SelectSubjectPage(exam: exam)))
                 .then((value){
                   if(value == null) return;
                   if(context.mounted){

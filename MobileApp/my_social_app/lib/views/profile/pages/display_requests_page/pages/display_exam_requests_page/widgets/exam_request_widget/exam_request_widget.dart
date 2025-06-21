@@ -102,6 +102,7 @@ class ExamRequestWidget extends StatelessWidget {
                 ExamRequestsStatusWidget(examRequest: examRequest)
               ],
             ),
+            
             Row(
               children: [
                 DeleteExamRequests(examRequest: examRequest,),

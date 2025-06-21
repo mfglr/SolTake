@@ -32,6 +32,7 @@ using SolTake.Infrastructure.RoleAggregate;
 using SolTake.Infrastructure.SolutionDomain;
 using SolTake.Infrastructure.StoryDomain;
 using SolTake.Infrastructure.SubjectAggregate;
+using SolTake.Infrastructure.SubjectRequestAggregate;
 using SolTake.Infrastructure.SubjectTopicAggregate;
 using SolTake.Infrastructure.TopicAggregate;
 using SolTake.Infrastructure.TopicRequestAggregate;
@@ -70,8 +71,8 @@ namespace SolTake.Infrastructure
                 .AddUserUserBlockAggregateInfrastructureServices()
                 .AddSubjectTopicInfrastructureServices()
                 .AddTopicRequestInfrastructureServices()
-                .AddExamRequestInfrastructureServices();
-
+                .AddExamRequestInfrastructureServices()
+                .AddSubjectRequestInfrastructureServices();
 
         private static IServiceCollection InitializeDb(this IServiceCollection services)
         {

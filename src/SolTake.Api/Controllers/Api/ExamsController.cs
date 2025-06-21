@@ -6,6 +6,7 @@ using SolTake.Api.Filters;
 using SolTake.Application.Queries.ExamAggregate;
 using SolTake.Application.Queries.ExamAggregate.GetExamById;
 using SolTake.Application.Queries.ExamAggregate.GetExams;
+using SolTake.Application.Queries.ExamAggregate.SearchExam;
 
 namespace SolTake.Api.Controllers.Api
 {
@@ -24,6 +25,17 @@ namespace SolTake.Api.Controllers.Api
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task<List<ExamResponseDto>> GetExams([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetExamsDto(offset, take, isDescending), cancellationToken);
+
+
+        [HttpGet]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
+        public async Task<List<ExamResponseDto>> Search([FromQuery] string? key, [FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
+            => await _sender.Send(new SearchExamDto(key, offset, take, isDescending), cancellationToken);
 
         [HttpGet("{examId}")]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

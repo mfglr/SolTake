@@ -119,10 +119,15 @@ class AppClient{
     await sendJsonContent(request);
   }
 
-  String generatePaginationUrl(String url, Page page){
-    if(page.offset == null){
-      return "$url?take=${page.take}&isDescending=${page.isDescending}";
+  String generatePaginationUrl(String url, Page page, { Map<String,String>? values }){
+    String t = "$url?";
+    if(values != null){
+      values.forEach((key,value) => t += "$key=$value&");
     }
-    return "$url?offset=${page.offset}&take=${page.take}&isDescending=${page.isDescending}";
+    
+    if(page.offset == null){
+      return "${t}take=${page.take}&isDescending=${page.isDescending}";
+    }
+    return "${t}offset=${page.offset}&take=${page.take}&isDescending=${page.isDescending}";
   }
 }

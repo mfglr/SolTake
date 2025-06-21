@@ -28,6 +28,7 @@ import 'package:my_social_app/state/app_state/solution_user_saves_state/middlewa
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/subject_request_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
@@ -59,7 +60,8 @@ final store = Store(
     notPublishedQuestions: Pagination.init(questionsPerPage, true),
     rejectedQuestions: Pagination.init(questionsPerPage, true),
     examRequests: Pagination.init(examRequestsPerPage, true),
-    
+    subjectRequests: Pagination.init(subjectRequestsPerPage, true),
+
     stories: EntityState(),
 
     userEntityState: EntityState(),
@@ -296,5 +298,11 @@ final store = Store(
 
     //video questions
     nextVideoQuestionsMiddleware,
+
+    //subject requests
+    createSubjectRequestMiddleware,
+    deleteSubjectRequestMiddleware,
+    nextSubjectRequestsMiddleware,
+    firstSubjectRequestsMiddleware
   ]
 );

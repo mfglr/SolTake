@@ -18,6 +18,11 @@ class ExamState extends Entity<int>{
     required this.questions
   });
 
+  @override
+  String toString() {
+    return name;
+  }
+
   ExamState startLoadingNextQuestions()
     => ExamState(
         id: id,

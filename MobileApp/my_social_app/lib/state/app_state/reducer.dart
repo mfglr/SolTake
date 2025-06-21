@@ -24,6 +24,7 @@ import 'package:my_social_app/state/app_state/solution_user_saves_state/reducers
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/reducers.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/subject_request_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/transaction_state/reducers.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
@@ -57,6 +58,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   notPublishedQuestions: dratfQuestionsReducers(prev.notPublishedQuestions, action),
   rejectedQuestions: rejectedQuestionsReducer(prev.rejectedQuestions, action),
   examRequests: examRequestReducers(prev.examRequests, action),
+  subjectRequests: subjectRequestsReducers(prev.subjectRequests, action),
 
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
