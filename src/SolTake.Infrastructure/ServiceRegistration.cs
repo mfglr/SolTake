@@ -61,7 +61,6 @@ namespace SolTake.Infrastructure
                 .AddCommentDomainInfrastructureService()
                 .AddMessageDomainInfrastructureServices()
                 .AddExamInfrastructureServices()
-                .AddSubjectAggregate()
                 .AddTopicInfrastructureServices()
                 .AddCommentAggregate()
                 .AddNotificationAggregate()
@@ -72,7 +71,8 @@ namespace SolTake.Infrastructure
                 .AddSubjectTopicInfrastructureServices()
                 .AddTopicRequestInfrastructureServices()
                 .AddExamRequestInfrastructureServices()
-                .AddSubjectRequestInfrastructureServices();
+                .AddSubjectRequestInfrastructureServices()
+                .AddSubjectInfrastructureServices();
 
         private static IServiceCollection InitializeDb(this IServiceCollection services)
         {
@@ -139,10 +139,6 @@ namespace SolTake.Infrastructure
                .AddScoped<IUnitOfWork, UnitOfWork>()
                .AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
         }
-
-        private static IServiceCollection AddSubjectAggregate(this IServiceCollection services)
-            => services
-                .AddScoped<ISubjectReadRepository, SubjectReadRepository>();
 
         private static IServiceCollection AddNotificationAggregate(this IServiceCollection services)
             => services

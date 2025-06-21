@@ -9,6 +9,9 @@ namespace SolTake.Infrastructure.SubjectAggregate
     {
         private readonly AppDbContext _context = context;
 
+        public async Task CreateAsync(Subject subject, CancellationToken cancellationToken)
+            => await _context.Subjects.AddAsync(subject, cancellationToken);
+
         public Task<Subject?> GetByIdAsync(int id, CancellationToken cancellationToken)
             => _context.Subjects.FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
     }
