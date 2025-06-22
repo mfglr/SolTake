@@ -6,7 +6,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.NotificationAggregate
 {
-    public class NotificationWriteRepository(AppDbContext context) : INotificationWriteRepository
+    internal class NotificationWriteRepository(AppDbContext context) : INotificationWriteRepository
     {
         private readonly AppDbContext _context = context;
 

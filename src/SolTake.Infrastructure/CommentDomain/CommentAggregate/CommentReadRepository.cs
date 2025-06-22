@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.CommentAggregate.Abstracts;
 using SolTake.Domain.CommentAggregate.Entities;
+using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.CommentDomain.CommentAggregate
 {
-    public class CommentReadRepository(AppDbContext context) : ICommentReadRepository
+    internal class CommentReadRepository(AppDbContext context) : ICommentReadRepository
     {
         private readonly AppDbContext _context = context;
 
@@ -17,14 +17,11 @@ namespace SolTake.Infrastructure.CommentDomain.CommentAggregate
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-        
-
         public Task<int?> GetParentId(int id, CancellationToken cancellationToken)
             => _context.Comments
                 .Where(x => x.Id == id)
                 .Select(x => x.ParentId)
                 .FirstOrDefaultAsync(cancellationToken);
-
 
         public Task<List<int>> GetCommentIdsOfUser(int userId, CancellationToken cancellationToken)
             => _context.Comments

@@ -5,7 +5,7 @@ using SolTake.Domain.MessageAggregate.ValueObjects;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class MessageQueryableMappers
+    internal static class MessageQueryableMappers
     {
         public static IQueryable<MessageResponseDto> ToMessageResponseDto(this IQueryable<Message> query, AppDbContext context, int userId)
             => query

@@ -7,13 +7,13 @@ part of 'topic_request.dart';
 // **************************************************************************
 
 TopicRequest _$TopicRequestFromJson(Map<String, dynamic> json) => TopicRequest(
-      id: (json['id'] as num).toInt(),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      subjectName: json['subjectName'] as String,
-      name: json['name'] as String,
-      state: (json['state'] as num).toInt(),
-      reason: (json['reason'] as num?)?.toInt(),
-    );
+  id: (json['id'] as num).toInt(),
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  subjectName: json['subjectName'] as String,
+  name: json['name'] as String,
+  state: (json['state'] as num).toInt(),
+  reason: (json['reason'] as num?)?.toInt(),
+);
 
 Map<String, dynamic> _$TopicRequestToJson(TopicRequest instance) =>
     <String, dynamic>{

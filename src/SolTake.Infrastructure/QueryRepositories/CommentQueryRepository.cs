@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Application.Queries.CommentAggregate;
 using SolTake.Application.QueryRepositories;
+using SolTake.Core;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
-using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class CommentQueryRepository(AppDbContext context) : ICommentQueryRepository
+    internal class CommentQueryRepository(AppDbContext context) : ICommentQueryRepository
     {
         private readonly AppDbContext _context = context;
 

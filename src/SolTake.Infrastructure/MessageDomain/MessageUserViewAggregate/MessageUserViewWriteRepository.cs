@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.MessageDomain.MessageUserViewAggregate
 {
-    public class MessageUserViewWriteRepository(AppDbContext context) : IMessageUserViewWriteRepository
+    internal class MessageUserViewWriteRepository(AppDbContext context) : IMessageUserViewWriteRepository
     {
         private readonly AppDbContext _context = context;
 

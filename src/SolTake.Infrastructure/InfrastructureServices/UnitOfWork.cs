@@ -3,7 +3,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.InfrastructureServices
 {
-    public class UnitOfWork(AppDbContext context) : IUnitOfWork
+    internal class UnitOfWork(AppDbContext context) : IUnitOfWork
     {
         private readonly AppDbContext _context = context;
 

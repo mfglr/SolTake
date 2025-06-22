@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.Repositories
 {
-    public class TransactionRepository(AppDbContext context) : ITransactionRepository
+    internal class TransactionRepository(AppDbContext context) : ITransactionRepository
     {
         private readonly AppDbContext _context = context;
 

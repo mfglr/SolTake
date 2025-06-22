@@ -6,7 +6,7 @@ using SolTake.Domain.AppVersionAggregate.ValuObjects;
 
 namespace SolTake.Infrastructure.AppVersionAggregate
 {
-    public class AppVersionReadRepository(AppDbContext context) : IAppVersionReadRepository
+    internal class AppVersionReadRepository(AppDbContext context) : IAppVersionReadRepository
     {
         private readonly AppDbContext _context = context;
 

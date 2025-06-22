@@ -3,8 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:soltake_broker/state/app_state/login_state/login_state.dart';
 part 'login.g.dart';
 
-@immutable
 @JsonSerializable()
+@immutable
 class Login{
   final int id;
   final DateTime createdAt;
@@ -31,7 +31,6 @@ class Login{
   });
 
   factory Login.fromJson(Map<String, dynamic> json) => _$LoginFromJson(json);
-
   Map<String, dynamic> toJson() => _$LoginToJson(this);
   
   LoginState toState()

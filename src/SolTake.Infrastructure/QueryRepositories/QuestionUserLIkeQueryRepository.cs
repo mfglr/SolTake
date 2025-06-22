@@ -8,7 +8,7 @@ using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class QuestionUserLikeQueryRepository(AppDbContext context) : IQuestionUserLikeQueryRepository
+    internal class QuestionUserLikeQueryRepository(AppDbContext context) : IQuestionUserLikeQueryRepository
     {
         private readonly AppDbContext _context = context;
 

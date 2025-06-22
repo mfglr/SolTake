@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.UserDomain.UserUserSearchAggregate
 {
-    public class UserUserSearchWriteRepository(AppDbContext context) : IUserUserSearchWriteRepository
+    internal class UserUserSearchWriteRepository(AppDbContext context) : IUserUserSearchWriteRepository
     {
         private readonly AppDbContext _context = context;
 

@@ -7,13 +7,13 @@ part of 'exam_request.dart';
 // **************************************************************************
 
 ExamRequest _$ExamRequestFromJson(Map<String, dynamic> json) => ExamRequest(
-      id: (json['id'] as num).toInt(),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      name: json['name'] as String,
-      initialism: json['initialism'] as String,
-      state: (json['state'] as num).toInt(),
-      reason: (json['reason'] as num?)?.toInt(),
-    );
+  id: (json['id'] as num).toInt(),
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  name: json['name'] as String,
+  initialism: json['initialism'] as String,
+  state: (json['state'] as num).toInt(),
+  reason: (json['reason'] as num?)?.toInt(),
+);
 
 Map<String, dynamic> _$ExamRequestToJson(ExamRequest instance) =>
     <String, dynamic>{

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:soltake_broker/views/complaints/complaints_page.dart';
 import 'package:soltake_broker/views/question/display_questions_page.dart';
 import 'package:soltake_broker/views/requests_page/requests_page.dart';
 import 'package:soltake_broker/views/solutions/display_solutions_page.dart';
@@ -34,13 +36,19 @@ class _RootPageState extends State<RootPage> {
             selectedIcon: Icon(Icons.hourglass_bottom),
             icon: Icon(Icons.hourglass_bottom_outlined),
             label: 'Istekler',
+          ),
+          const NavigationDestination(
+            selectedIcon: FaIcon(FontAwesomeIcons.exclamation),
+            icon: FaIcon(FontAwesomeIcons.exclamation),
+            label: 'Şikayetler',
           )
         ],
       ),
       body: [
         const DisplayQuestionsPage(),
         const DisplaySolutionsPage(),
-        const RequestsPage()
+        const RequestsPage(),
+        const ComplaintsPage(),
       ][currentPageIndex]
     );
   }

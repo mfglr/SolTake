@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.TopicAggregate
 {
-    public class TopicWriteRepository(AppDbContext context) : ITopicWriteRepository
+    internal class TopicWriteRepository(AppDbContext context) : ITopicWriteRepository
     {
         private readonly AppDbContext _context = context;
 

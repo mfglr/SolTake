@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class SolutionUserVoteQueryableMappers
+    internal static class SolutionUserVoteQueryableMappers
     {
         public static IQueryable<SolutionUserVoteResponseDto> ToSolutionUserVoteDto(this IQueryable<SolutionUserVote> query, AppDbContext context)
             => query

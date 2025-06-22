@@ -4,7 +4,7 @@ using SolTake.Domain.CommentUserLikeAggregate.Entities;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class CommentUserLikeQueryableMappers
+    internal static class CommentUserLikeQueryableMappers
     {
         public static IQueryable<CommentUserLikeResponseDto> ToCommentUserLikeResponseDto(this IQueryable<CommentUserLike> query, AppDbContext context)
             => query

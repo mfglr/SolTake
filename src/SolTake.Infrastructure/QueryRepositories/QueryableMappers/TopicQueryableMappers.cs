@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class TopicQueryableMappers
+    internal static class TopicQueryableMappers
     {
         public static IQueryable<TopicResponseDto> ToTopicResponseDto(this IQueryable<Topic> query)
             => query

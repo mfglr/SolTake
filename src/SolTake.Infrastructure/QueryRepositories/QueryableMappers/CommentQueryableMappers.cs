@@ -4,7 +4,7 @@ using SolTake.Domain.CommentAggregate.Entities;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class CommentQueryableMappers
+    internal static class CommentQueryableMappers
     {
         public static IQueryable<CommentResponseDto> ToCommentResponseDto(this IQueryable<Comment> query, AppDbContext context, int accountId)
             => query

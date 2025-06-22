@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Application.Queries.QuestionDomain;
 using SolTake.Application.QueryRepositories;
+using SolTake.Core;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
-using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class QuestionUserSaveQueryRepository(AppDbContext context) : IQuestionUserSaveQueryRepository
+    internal class QuestionUserSaveQueryRepository(AppDbContext context) : IQuestionUserSaveQueryRepository
     {
         private readonly AppDbContext _context = context;
 

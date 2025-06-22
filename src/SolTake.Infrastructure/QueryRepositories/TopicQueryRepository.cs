@@ -8,7 +8,7 @@ using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class TopicQueryRepository(AppDbContext context) : ITopicQueryRepository
+    internal class TopicQueryRepository(AppDbContext context) : ITopicQueryRepository
     {
         private readonly AppDbContext _context = context;
 

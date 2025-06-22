@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.SubjectAggregate
 {
-    public class SubjectWriteRepository(AppDbContext context) : ISubjectWriteRepository
+    internal class SubjectWriteRepository(AppDbContext context) : ISubjectWriteRepository
     {
         private readonly AppDbContext _context = context;
 

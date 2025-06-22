@@ -3,8 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:soltake_broker/state/app_state/subject_request_state/subject_request_state.dart';
 part 'subject_request.g.dart';
 
-@immutable
 @JsonSerializable()
+@immutable
 class SubjectRequest {
   final int id;
   final DateTime createdAt;

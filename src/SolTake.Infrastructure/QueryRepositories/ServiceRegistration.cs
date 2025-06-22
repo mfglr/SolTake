@@ -33,6 +33,7 @@ namespace SolTake.Infrastructure.QueryRepositories
                 .AddScoped<ITopicRequestQueryRepository, TopicRequestQueryRepository>()
                 .AddScoped<IExamQueryRepository,ExamQueryRepository>()
                 .AddScoped<IExamRequestQueryRepository,ExamRequestQueryRepository>()
-                .AddScoped<ISubjectRequestQueryRepository, SubjectRequestQueryRepository>();
+                .AddScoped<ISubjectRequestQueryRepository, SubjectRequestQueryRepository>()
+                .AddScoped<IQuestionUserComplaintQueryRepository, QuestionUserComplaintQueryRepository>();
     }
 }

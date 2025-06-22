@@ -4,8 +4,8 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:soltake_broker/state/app_state/question_state/question_state.dart';
 part 'question.g.dart';
 
-@immutable
 @JsonSerializable()
+@immutable
 class Question{
   final int id;
   final DateTime createdAt;

@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class FollowQueryableMappers
+    internal static class FollowQueryableMappers
     {
         public static IQueryable<FollowResponseDto> ToFollowerResponseDto(this IQueryable<UserUserFollow> query, AppDbContext context, int accountId)
             => query

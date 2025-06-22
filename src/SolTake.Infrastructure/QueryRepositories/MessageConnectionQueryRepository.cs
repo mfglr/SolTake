@@ -6,7 +6,7 @@ using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class MessageConnectionQueryRepository(AppDbContext context) : IMessageConnectionQueryRepository
+    internal class MessageConnectionQueryRepository(AppDbContext context) : IMessageConnectionQueryRepository
     {
 
         private readonly AppDbContext _context = context;

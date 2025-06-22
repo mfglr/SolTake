@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.BalanceAggregate.Abstracts;
 using SolTake.Domain.BalanceAggregate.Entities;
+using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.Repositories
 {
-    public class BalanceRepository(AppDbContext context) : IBalanceRepository
+    internal class BalanceRepository(AppDbContext context) : IBalanceRepository
     {
         private readonly AppDbContext _context = context;
 

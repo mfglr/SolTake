@@ -5,7 +5,7 @@ using SolTake.Domain.MessageAggregate.Entities;
 
 namespace SolTake.Infrastructure.MessageDomain.MessageAggregate
 {
-    public class MessageReadRepository(AppDbContext context) : IMessageReadRepository
+    internal class MessageReadRepository(AppDbContext context) : IMessageReadRepository
     {
         private readonly AppDbContext _context = context;
 

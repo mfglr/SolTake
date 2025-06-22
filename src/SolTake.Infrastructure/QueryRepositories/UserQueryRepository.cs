@@ -2,16 +2,16 @@
 using SolTake.Application.Queries.UserDomain;
 using SolTake.Application.Queries.UserDomain.SearchUsers;
 using SolTake.Application.QueryRepositories;
+using SolTake.Core;
 using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
-using SolTake.Core;
 using System.Linq.Expressions;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public static class BlockFilter
+    internal static class BlockFilter
     {
         public static IQueryable<User> Filter(this IQueryable<User> query, AppDbContext context, int? forUserId)
             =>
@@ -26,7 +26,7 @@ namespace SolTake.Infrastructure.QueryRepositories
                     );
     }
 
-    public class UserQueryRepository(AppDbContext context) : IUserQueryRepository
+    internal class UserQueryRepository(AppDbContext context) : IUserQueryRepository
     {
 
         private readonly AppDbContext _context = context;

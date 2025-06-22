@@ -1,11 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using SolTake.Domain.AIModelAggregate.Entities;
+using SolTake.Domain.AppVersionAggregate.Entities;
+using SolTake.Domain.BalanceAggregate.Entities;
+using SolTake.Domain.CommentAggregate.Entities;
+using SolTake.Domain.CommentUserLikeAggregate.Entities;
 using SolTake.Domain.ExamAggregate.Entitities;
+using SolTake.Domain.ExamRequestAggregate.Entities;
+using SolTake.Domain.MessageAggregate.Entities;
+using SolTake.Domain.MessageConnectionAggregate.Entities;
+using SolTake.Domain.MessageUserReceiveAggregate.Entities;
+using SolTake.Domain.MessageUserRemoveAggregate.Entities;
+using SolTake.Domain.MessageUserViewAggregate.Entities;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Entities;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Entities;
 using SolTake.Domain.PrivacyPolicyAggregate;
 using SolTake.Domain.QuestionAggregate.Entities;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
+using SolTake.Domain.QuestionUserComplaintAggregate.Entities;
 using SolTake.Domain.QuestionUserLikeAggregate.Entities;
 using SolTake.Domain.RoleAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Entities;
@@ -14,33 +26,22 @@ using SolTake.Domain.SolutionUserVoteAggregate.Entities;
 using SolTake.Domain.StoryAggregate.Entities;
 using SolTake.Domain.StoryUserViewAggregate.Entities;
 using SolTake.Domain.SubjectAggregate.Entities;
+using SolTake.Domain.SubjectRequestAggregate.Entities;
+using SolTake.Domain.SubjectTopicAggregate.Entities;
 using SolTake.Domain.TermsOfUseAggregate;
 using SolTake.Domain.TopicAggregate.Entities;
+using SolTake.Domain.TopicRequestAggregate.Entities;
 using SolTake.Domain.TransactionAggregate.Entities;
 using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Domain.UserUserBlockAggregate.Entities;
 using SolTake.Domain.UserUserConversationAggregate.Entities;
 using SolTake.Domain.UserUserFollowAggregate.Entities;
 using SolTake.Domain.UserUserSearchAggregate.Entities;
-using SolTake.Domain.AIModelAggregate.Entities;
-using SolTake.Domain.AppVersionAggregate.Entities;
-using SolTake.Domain.BalanceAggregate.Entities;
-using SolTake.Domain.CommentAggregate.Entities;
-using SolTake.Domain.CommentUserLikeAggregate.Entities;
-using SolTake.Domain.MessageAggregate.Entities;
-using SolTake.Domain.MessageConnectionAggregate.Entities;
-using SolTake.Domain.MessageUserReceiveAggregate.Entities;
-using SolTake.Domain.MessageUserRemoveAggregate.Entities;
-using SolTake.Domain.MessageUserViewAggregate.Entities;
 using System.Reflection;
-using SolTake.Domain.TopicRequestAggregate.Entities;
-using SolTake.Domain.SubjectTopicAggregate.Entities;
-using SolTake.Domain.ExamRequestAggregate.Entities;
-using SolTake.Domain.SubjectRequestAggregate.Entities;
 
 namespace SolTake.Infrastructure.DbContexts
 {
-    public class AppDbContext(DbContextOptions options) : DbContext(options)
+    internal class AppDbContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<PrivacyPolicy> PrivacyPolicies { get; private set; }
         public DbSet<TermsOfUse> TermsOfUses { get; private set; }
@@ -95,6 +96,7 @@ namespace SolTake.Infrastructure.DbContexts
         public DbSet<SubjectRequest> SubjectRequests { get; private set; }
         public DbSet<SubjectTopic> SubjectTopics { get; private set; }
 
+        public DbSet<QuestionUserComplaint> QuestionUserComplaints { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -103,7 +105,7 @@ namespace SolTake.Infrastructure.DbContexts
         }
     }
 
-    public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    internal class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
         public AppDbContext CreateDbContext(string[] args)
         {

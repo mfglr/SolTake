@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Application.Queries.SubjectAggregate;
 using SolTake.Application.QueryRepositories;
+using SolTake.Core;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
-using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class SubjectQueryRepository(AppDbContext context) : ISubjectQueryRepository
+    internal class SubjectQueryRepository(AppDbContext context) : ISubjectQueryRepository
     {
         private readonly AppDbContext _context = context;
 

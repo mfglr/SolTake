@@ -9,7 +9,7 @@ using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class SolutionQueryRepository(AppDbContext context) : ISolutionQueryRepository
+    internal class SolutionQueryRepository(AppDbContext context) : ISolutionQueryRepository
     {
         private readonly AppDbContext _context = context;
 

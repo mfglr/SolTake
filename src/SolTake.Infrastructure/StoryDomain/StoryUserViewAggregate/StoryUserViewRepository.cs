@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.StoryDomain.StoryUserViewAggregate
 {
-    public class StoryUserViewRepository(AppDbContext context) : IStoryUserViewRepository
+    internal class StoryUserViewRepository(AppDbContext context) : IStoryUserViewRepository
     {
         private readonly AppDbContext _context = context;
 

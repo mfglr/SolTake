@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SolTake.Infrastructure.DbContexts;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Entities;
+using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.Repositories
 {
-    public class AIModelRepository(AppDbContext context) : IAIModelRepository
+    internal class AIModelRepository(AppDbContext context) : IAIModelRepository
     {
         private readonly AppDbContext _context = context;
 

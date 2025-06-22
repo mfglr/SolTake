@@ -4,7 +4,7 @@ using SolTake.Domain.MessageConnectionAggregate.Entities;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class MessageConnectionQueryableMappers
+    internal static class MessageConnectionQueryableMappers
     {
         public static IQueryable<MessageConnectionResponseDto> ToMessageConnectionResponseDto(this IQueryable<MessageConnection> querable, AppDbContext context)
             => querable

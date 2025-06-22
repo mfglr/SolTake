@@ -1,6 +1,5 @@
 ﻿using SolTake.Core;
 using SolTake.Core.Exceptions;
-using SolTake.Domain.ExamRequestAggregate.ValueObjects;
 using SolTake.Domain.SubjectRequestAggregate.ValueObjects;
 using System.Net;
 

@@ -8,7 +8,7 @@ using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class FollowQueryRepository(AppDbContext context) : IFollowQueryRepository
+    internal class FollowQueryRepository(AppDbContext context) : IFollowQueryRepository
     {
         private readonly AppDbContext _context = context;
 

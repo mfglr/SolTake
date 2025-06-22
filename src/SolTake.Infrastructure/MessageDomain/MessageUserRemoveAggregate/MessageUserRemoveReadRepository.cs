@@ -4,7 +4,7 @@ using SolTake.Domain.MessageUserRemoveAggregate.Abstracts;
 
 namespace SolTake.Infrastructure.MessageDomain.MessageUserRemoveAggregate
 {
-    public class MessageUserRemoveReadRepository(AppDbContext context) : IMessageUserRemoveReadRepository
+    internal class MessageUserRemoveReadRepository(AppDbContext context) : IMessageUserRemoveReadRepository
     {
         private readonly AppDbContext _context = context;
 

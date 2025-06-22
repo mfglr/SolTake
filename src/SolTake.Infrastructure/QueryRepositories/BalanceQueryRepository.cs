@@ -6,7 +6,7 @@ using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class BalanceQueryRepository(AppDbContext context) : IBalanceQueryRepository
+    internal class BalanceQueryRepository(AppDbContext context) : IBalanceQueryRepository
     {
         private readonly AppDbContext _context = context;
 

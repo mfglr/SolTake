@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.SolutionDomain.SolutionUserSaveAggregate
 {
-    public class SolutionUserSaveReadRepository(AppDbContext context) : ISolutionUserSaveReadRepository
+    internal class SolutionUserSaveReadRepository(AppDbContext context) : ISolutionUserSaveReadRepository
     {
         private readonly AppDbContext _context = context;
 

@@ -6,7 +6,7 @@ using SolTake.Domain.MessageConnectionAggregate.ValueObjects;
 
 namespace SolTake.Infrastructure.MessageDomain.UserConnectionAggregate
 {
-    public class MessageConnectionReadRepository(AppDbContext context) : IMessageConnectionReadRepository
+    internal class MessageConnectionReadRepository(AppDbContext context) : IMessageConnectionReadRepository
     {
         private readonly AppDbContext _context = context;
 

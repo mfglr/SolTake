@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:soltake_broker/state/app_state/exam_request_state/exam_request_state.dart' show ExamRequestState;
 import 'package:soltake_broker/state/app_state/login_state/login_container.dart';
 import 'package:soltake_broker/state/app_state/question_state/question_state.dart';
+import 'package:soltake_broker/state/app_state/question_user_complaints_state/question_user_complaint_state.dart';
 import 'package:soltake_broker/state/app_state/subject_request_state/subject_request_state.dart';
 import 'package:soltake_broker/state/app_state/topic_requests_state/topic_request_state.dart';
 import 'package:soltake_broker/state/entity_state/pagination.dart';
@@ -13,13 +14,15 @@ class AppState {
   final Pagination<int,ExamRequestState> examRequests;
   final Pagination<int,SubjectRequestState> subjectRequests;
   final Pagination<int,TopicRequestState> topicRequests;
+  final Pagination<int,QuestionUserComplaintState> questionUserComplaints;
 
   const AppState({
     required this.login,
     required this.questions,
     required this.examRequests,
     required this.subjectRequests,
-    required this.topicRequests
+    required this.topicRequests,
+    required this.questionUserComplaints,
   });
 
   AppState clear() => AppState(
@@ -28,6 +31,7 @@ class AppState {
     examRequests: Pagination.init(20, false),
     subjectRequests: Pagination.init(20, false),
     topicRequests: Pagination.init(20, false),
+    questionUserComplaints: Pagination.init(20, false),
   );
 
 }

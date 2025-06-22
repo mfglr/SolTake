@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class UserSearchedQueryableMapper
+    internal static class UserSearchedQueryableMapper
     {
         public static IQueryable<UserUserSearchResponseDto> ToUserVisitedResponseDto(this IQueryable<UserUserSearch> query, AppDbContext context)
             => query

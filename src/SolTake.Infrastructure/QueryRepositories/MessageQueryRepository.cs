@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Application.Queries.MessageDomain;
 using SolTake.Application.QueryRepositories;
+using SolTake.Core;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
-using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class MessageQueryRepository(AppDbContext context) : IMessageQueryRepository
+    internal class MessageQueryRepository(AppDbContext context) : IMessageQueryRepository
     {
         private readonly AppDbContext _context = context;
 

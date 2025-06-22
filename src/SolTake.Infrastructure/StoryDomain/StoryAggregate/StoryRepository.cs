@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.StoryDomain.StoryAggregate
 {
-    public class StoryRepository(AppDbContext context) : IStoryRepository
+    internal class StoryRepository(AppDbContext context) : IStoryRepository
     {
         private readonly AppDbContext _context = context;
 

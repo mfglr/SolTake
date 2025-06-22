@@ -8,7 +8,7 @@ using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class TransactionQueryRepository(AppDbContext context) : ITransactionQueryRepository
+    internal class TransactionQueryRepository(AppDbContext context) : ITransactionQueryRepository
     {
         private readonly AppDbContext _context = context;
 

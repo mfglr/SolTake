@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.SolutionDomain.SolutionAggregate
 {
-    public class SolutionWriteRepository(AppDbContext context) : ISolutionWriteRepository
+    internal class SolutionWriteRepository(AppDbContext context) : ISolutionWriteRepository
     {
         private readonly AppDbContext _context = context;
 

@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.MessageDomain.MessageUserReceiveAggregate
 {
-    public class MessageUserReceiveReadRepository(AppDbContext context) : IMessageUserReceiveReadRepository
+    internal class MessageUserReceiveReadRepository(AppDbContext context) : IMessageUserReceiveReadRepository
     {
         private readonly AppDbContext _context = context;
         

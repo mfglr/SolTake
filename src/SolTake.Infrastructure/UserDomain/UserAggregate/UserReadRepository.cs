@@ -6,7 +6,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.UserDomain.UserAggregate
 {
-    public class UserReadRepository(AppDbContext context) : IUserReadRepository
+    internal class UserReadRepository(AppDbContext context) : IUserReadRepository
     {
         private readonly AppDbContext _context = context;
 

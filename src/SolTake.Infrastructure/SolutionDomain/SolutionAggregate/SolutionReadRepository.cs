@@ -6,7 +6,7 @@ using SolTake.Domain.SolutionAggregate.Abstracts;
 
 namespace SolTake.Infrastructure.SolutionDomain.SolutionAggregate
 {
-    public class SolutionReadRepository(AppDbContext context) : ISolutionReadRepository
+    internal class SolutionReadRepository(AppDbContext context) : ISolutionReadRepository
     {
         private readonly AppDbContext _context = context;
 

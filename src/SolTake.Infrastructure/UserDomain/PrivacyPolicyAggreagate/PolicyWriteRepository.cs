@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.UserDomain.PrivacyPolicyAggreagate
 {
-    public class PolicyWriteRepository(AppDbContext context) : IPrivacyPolicyWriteRepository
+    internal class PolicyWriteRepository(AppDbContext context) : IPrivacyPolicyWriteRepository
     {
         private readonly AppDbContext _context = context;
 

@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.RoleAggregate
 {
-    public class RoleReadRepository(AppDbContext context) : IRoleReadRepository
+    internal class RoleReadRepository(AppDbContext context) : IRoleReadRepository
     {
         private readonly AppDbContext _context = context;
 

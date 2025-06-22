@@ -7,7 +7,7 @@ using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class QuestionQueryableMappers
+    internal static class QuestionQueryableMappers
     {
         public static IQueryable<QuestionResponseDto> ToQuestionResponseDto(this IQueryable<Question> query, AppDbContext context, int? forUserId)
             => query

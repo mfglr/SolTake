@@ -550,6 +550,37 @@ namespace SolTake.Infrastructure.Migrations
                     b.ToTable("QuestionUserSaves");
                 });
 
+            modelBuilder.Entity("SolTake.Domain.QuestionUserComplaintAggregate.Entities.QuestionUserComplaint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsViewed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Reason")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionUserComplaints");
+                });
+
             modelBuilder.Entity("SolTake.Domain.QuestionUserLikeAggregate.Entities.QuestionUserLike", b =>
                 {
                     b.Property<int>("Id")
@@ -15717,6 +15748,28 @@ namespace SolTake.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("SolTake.Domain.QuestionUserComplaintAggregate.Entities.QuestionUserComplaint", b =>
+                {
+                    b.OwnsOne("SolTake.Domain.QuestionUserComplaintAggregate.ValueObjects.QuestionComplaintContent", "Content", b1 =>
+                        {
+                            b1.Property<int>("QuestionUserComplaintId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("QuestionUserComplaintId");
+
+                            b1.ToTable("QuestionUserComplaints");
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuestionUserComplaintId");
+                        });
+
+                    b.Navigation("Content");
                 });
 
             modelBuilder.Entity("SolTake.Domain.SolutionAggregate.Entities.Solution", b =>

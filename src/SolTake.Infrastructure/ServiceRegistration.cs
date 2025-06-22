@@ -11,8 +11,6 @@ using SolTake.Domain.AppVersionAggregate.Abstracts;
 using SolTake.Domain.NotificationDomain.NotificationAggregate.Interfaces;
 using SolTake.Domain.NotificationDomain.NotificationConnectionAggregate.Interfaces;
 using SolTake.Domain.RoleAggregate.Abstracts;
-using SolTake.Domain.SubjectAggregate.Abstracts;
-using SolTake.Domain.TopicAggregate.Abstracts;
 using SolTake.Infrastructure.AppVersionAggregate;
 using SolTake.Infrastructure.CommentDomain;
 using SolTake.Infrastructure.CommentDomain.CommentAggregate;
@@ -27,6 +25,7 @@ using SolTake.Infrastructure.InfrastructureServices.Email.MailMessageFactories;
 using SolTake.Infrastructure.NotificationAggregate;
 using SolTake.Infrastructure.NotificationConnectionAggregate;
 using SolTake.Infrastructure.QueryRepositories;
+using SolTake.Infrastructure.QuestionUserComplaintAggregate;
 using SolTake.Infrastructure.Repositories;
 using SolTake.Infrastructure.RoleAggregate;
 using SolTake.Infrastructure.SolutionDomain;
@@ -72,7 +71,8 @@ namespace SolTake.Infrastructure
                 .AddTopicRequestInfrastructureServices()
                 .AddExamRequestInfrastructureServices()
                 .AddSubjectRequestInfrastructureServices()
-                .AddSubjectInfrastructureServices();
+                .AddSubjectInfrastructureServices()
+                .AddQuestionUserComplaintAggregateInfrastrucureServices();
 
         private static IServiceCollection InitializeDb(this IServiceCollection services)
         {
@@ -90,7 +90,6 @@ namespace SolTake.Infrastructure
                 .AddScoped<IAppVersionWriteRepository, AppVersionWriteRepository>()
                 .AddSingleton<IAppVersionCacheService>(versionCacheService);
         }
-
         private static IServiceCollection AddEmailService(this IServiceCollection services)
         {
             var emailServiceSettings = services.BuildServiceProvider().GetRequiredService<IEmailServiceSettings>()!;
@@ -129,7 +128,6 @@ namespace SolTake.Infrastructure
                 .AddScoped<IMultimediaService,MultiMediaService>()
                 .AddScoped<IFrameCatcher,FrameCatcher>()
                 .AddScoped<IImageToBase64Convertor,ImageToBase64Convertor>();
-
         private static IServiceCollection AddDbContext(this IServiceCollection services)
         {
             var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();

@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.ExamAggregate
 {
-    public class ExamReadRepository(AppDbContext context) : IExamReadRepository
+    internal class ExamReadRepository(AppDbContext context) : IExamReadRepository
     {
         private readonly AppDbContext _context = context;
 

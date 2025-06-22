@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class StoryUserViewQueryableMapper
+    internal static class StoryUserViewQueryableMapper
     {
         public static IQueryable<StoryUserViewResponseDto> ToStoryUserViewResponseDto(this IQueryable<StoryUserView> query, AppDbContext _context)
             => query

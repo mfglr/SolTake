@@ -5,7 +5,7 @@ using SolTake.Core;
 
 namespace SolTake.Infrastructure.InfrastructureServices
 {
-    public class DomainEventsPublisher(IPublisher publisher, AppDbContext context) : IDomainEventsPublisher
+    internal class DomainEventsPublisher(IPublisher publisher, AppDbContext context) : IDomainEventsPublisher
     {
         private readonly IPublisher _publisher = publisher;
         private readonly AppDbContext _context = context;

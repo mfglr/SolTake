@@ -5,7 +5,7 @@ using SolTake.Domain.AppVersionAggregate.Entities;
 
 namespace SolTake.Infrastructure.AppVersionAggregate
 {
-    public class AppVersionWriteRepository(AppDbContext context) : IAppVersionWriteRepository
+    internal class AppVersionWriteRepository(AppDbContext context) : IAppVersionWriteRepository
     {
         private readonly AppDbContext _context = context;
 
@@ -17,6 +17,5 @@ namespace SolTake.Infrastructure.AppVersionAggregate
 
         public void Delete(AppVersion version)
             => _context.AppVersions.Remove(version);
-
     }
 }

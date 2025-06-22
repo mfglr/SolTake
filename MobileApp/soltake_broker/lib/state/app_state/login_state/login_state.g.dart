@@ -7,18 +7,19 @@ part of 'login_state.dart';
 // **************************************************************************
 
 LoginState _$LoginStateFromJson(Map<String, dynamic> json) => LoginState(
-      id: (json['id'] as num).toInt(),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null
+  id: (json['id'] as num).toInt(),
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  updatedAt:
+      json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      email: json['email'] as String,
-      isEmailVerified: json['isEmailVerified'] as bool,
-      language: json['language'] as String,
-      refreshToken: json['refreshToken'] as String,
-      isPrivacyPolicyApproved: json['isPrivacyPolicyApproved'] as bool,
-      isTermsOfUseApproved: json['isTermsOfUseApproved'] as bool,
-    );
+  email: json['email'] as String,
+  isEmailVerified: json['isEmailVerified'] as bool,
+  language: json['language'] as String,
+  refreshToken: json['refreshToken'] as String,
+  isPrivacyPolicyApproved: json['isPrivacyPolicyApproved'] as bool,
+  isTermsOfUseApproved: json['isTermsOfUseApproved'] as bool,
+);
 
 Map<String, dynamic> _$LoginStateToJson(LoginState instance) =>
     <String, dynamic>{

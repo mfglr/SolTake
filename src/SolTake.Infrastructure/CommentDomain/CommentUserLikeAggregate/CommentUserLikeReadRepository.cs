@@ -4,7 +4,7 @@ using SolTake.Domain.CommentUserLikeAggregate.Abstracts;
 
 namespace SolTake.Infrastructure.CommentDomain.CommentUserLikeAggregate
 {
-    public class CommentUserLikeReadRepository(AppDbContext context) : ICommentUserLikeReadRepository
+    internal class CommentUserLikeReadRepository(AppDbContext context) : ICommentUserLikeReadRepository
     {
         private readonly AppDbContext _context = context;
 

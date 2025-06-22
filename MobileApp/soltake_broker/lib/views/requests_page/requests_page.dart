@@ -46,29 +46,29 @@ class _RequestsPageState extends State<RequestsPage> {
           LabelPaginationWidget(
             labelCount: icons.length,
             labelBuilder: (isActive,index) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icons[index],
-                color: isActive ? Colors.black : Colors.grey,
-                size: 16,
-              ),
-              LanguageWidget(
-                child: (language) => Text(
-                  getLabels(language).elementAt(index),
-                  style: TextStyle(
-                    color: isActive ? Colors.black : Colors.grey,
-                    fontSize: 9
-                    ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icons[index],
+                  color: isActive ? Colors.black : Colors.grey,
+                  size: 16,
                 ),
-              ),
-            ],
-          ),
-              page: _page,
-              width: MediaQuery.of(context).size.width,
-              initialPage: 0,
-              pageController: _controller
+                LanguageWidget(
+                  child: (language) => Text(
+                    getLabels(language).elementAt(index),
+                    style: TextStyle(
+                      color: isActive ? Colors.black : Colors.grey,
+                      fontSize: 9
+                      ),
+                  ),
+                ),
+              ],
             ),
+            page: _page,
+            width: MediaQuery.of(context).size.width,
+            initialPage: 0,
+            pageController: _controller
+          ),
           Expanded(
             child: PageView(
               controller: _controller,

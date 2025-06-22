@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.UserDomain.TermsOfUseAggregate
 {
-    public class TermsOfUseReadRepository(AppDbContext context) : ITermsOfUseReadRepository
+    internal class TermsOfUseReadRepository(AppDbContext context) : ITermsOfUseReadRepository
     {
         private readonly AppDbContext _context = context;
 

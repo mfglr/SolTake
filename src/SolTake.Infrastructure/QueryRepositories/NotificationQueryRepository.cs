@@ -8,7 +8,7 @@ using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class NotificationQueryRepository(AppDbContext context) : INotificationQueryRepository
+    internal class NotificationQueryRepository(AppDbContext context) : INotificationQueryRepository
     {
         private readonly AppDbContext _context = context;
 

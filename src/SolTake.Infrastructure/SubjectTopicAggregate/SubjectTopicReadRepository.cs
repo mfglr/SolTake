@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.SubjectTopicAggregate
 {
-    public class SubjectTopicReadRepository(AppDbContext context) : ISubjectTopicReadRepository
+    internal class SubjectTopicReadRepository(AppDbContext context) : ISubjectTopicReadRepository
     {
         private readonly AppDbContext _context = context;
 

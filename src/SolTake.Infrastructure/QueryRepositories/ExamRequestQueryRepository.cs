@@ -9,7 +9,7 @@ using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class ExamRequestQueryRepository(AppDbContext context) : IExamRequestQueryRepository
+    internal class ExamRequestQueryRepository(AppDbContext context) : IExamRequestQueryRepository
     {
         private readonly AppDbContext _context = context;
 

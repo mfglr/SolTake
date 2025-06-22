@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
-    public class QuestionQueryRepository(AppDbContext context) : IQuestionQueryRepository
+    internal class QuestionQueryRepository(AppDbContext context) : IQuestionQueryRepository
     {
         private readonly AppDbContext _context = context;
 

@@ -5,7 +5,7 @@ using SolTake.Domain.CommentAggregate.Entities;
 
 namespace SolTake.Infrastructure.CommentDomain.CommentAggregate
 {
-    public class CommentWriteRepository(AppDbContext context) : ICommentWriteRepository
+    internal class CommentWriteRepository(AppDbContext context) : ICommentWriteRepository
     {
         private readonly AppDbContext _context = context;
 

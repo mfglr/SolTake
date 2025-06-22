@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.SolutionDomain.SolutionUserVoteAggregate
 {
-    public class SolutionUserVoteWriteRepository(AppDbContext context) : ISolutionUserVoteWriteRepository
+    internal class SolutionUserVoteWriteRepository(AppDbContext context) : ISolutionUserVoteWriteRepository
     {
         private readonly AppDbContext _context = context;
 

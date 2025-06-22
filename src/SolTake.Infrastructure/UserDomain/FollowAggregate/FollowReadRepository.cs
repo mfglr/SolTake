@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.UserDomain.FollowAggregate
 {
-    public class FollowReadRepository(AppDbContext context) : IUserUserFollowReadRepository
+    internal class FollowReadRepository(AppDbContext context) : IUserUserFollowReadRepository
     {
         private readonly AppDbContext _context = context;
 

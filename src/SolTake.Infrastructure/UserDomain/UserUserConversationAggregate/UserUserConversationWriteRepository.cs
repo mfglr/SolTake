@@ -5,7 +5,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.UserDomain.UserUserConversationAggregate
 {
-    public class UserUserConversationWriteRepository(AppDbContext context) : IUserUserConversationWriteRepository
+    internal class UserUserConversationWriteRepository(AppDbContext context) : IUserUserConversationWriteRepository
     {
         private readonly AppDbContext _context = context;
 

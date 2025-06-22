@@ -4,7 +4,7 @@ using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
-    public static class TransactionQueryableMapper
+    internal static class TransactionQueryableMapper
     {
         public static IQueryable<TransactionResponseDto> ToTransactionResponseDto(this IQueryable<Transaction> query, AppDbContext context) =>
             query
