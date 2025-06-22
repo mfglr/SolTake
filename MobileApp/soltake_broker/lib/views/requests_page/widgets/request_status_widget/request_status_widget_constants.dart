@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_social_app/models/languages.dart';
+import 'package:soltake_broker/models/languages.dart';
 
 const _approved = {
   Languages.en: "Approved",

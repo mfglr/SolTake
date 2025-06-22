@@ -8,6 +8,7 @@ namespace SolTake.Infrastructure.ModelBuilders.TopicRequestAggregate
     {
         public void Configure(EntityTypeBuilder<TopicRequest> builder)
         {
+            builder.OwnsOne(x => x.Name);
         }
     }
 }

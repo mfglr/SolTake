@@ -1,4 +1,6 @@
-﻿namespace SolTake.Application.Queries.TopicRequestAggregate
+﻿using SolTake.Domain.TopicRequestAggregate.ValueObjects;
+
+namespace SolTake.Application.Queries.TopicRequestAggregate
 {
-    public record TopicRequestResponseDto(int Id, int SubjectId, string SubjectName, string Name);
+    public record TopicRequestResponseDto(int Id, DateTime CreatedAt, string SubjectName, string Name, TopicRequestState State, TopicRequestRejectionReason? Reason);
 }

@@ -30,6 +30,7 @@ import 'package:my_social_app/state/app_state/story_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/topic_requests_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
@@ -61,6 +62,7 @@ final store = Store(
     rejectedQuestions: Pagination.init(questionsPerPage, true),
     examRequests: Pagination.init(examRequestsPerPage, true),
     subjectRequests: Pagination.init(subjectRequestsPerPage, true),
+    topicRequests: Pagination.init(topicRequestsPerPage, true),
 
     stories: EntityState(),
 
@@ -303,6 +305,12 @@ final store = Store(
     createSubjectRequestMiddleware,
     deleteSubjectRequestMiddleware,
     nextSubjectRequestsMiddleware,
-    firstSubjectRequestsMiddleware
+    firstSubjectRequestsMiddleware,
+
+    //topic requests
+    createTopicRequestMiddleware,
+    deletTopicRequestMiddleware,
+    nextTopicRequestsMiddleware,
+    firstTopicRequestsMiddleware
   ]
 );

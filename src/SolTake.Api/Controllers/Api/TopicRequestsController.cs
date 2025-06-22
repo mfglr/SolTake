@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using SolTake.Api.Filters;
 using SolTake.Application.Commands.TopicRequestAggregate.Aprove;
 using SolTake.Application.Commands.TopicRequestAggregate.Create;
+using SolTake.Application.Commands.TopicRequestAggregate.Delete;
 using SolTake.Application.Commands.TopicRequestAggregate.Reject;
 using SolTake.Application.Queries.TopicRequestAggregate;
-using SolTake.Application.Queries.TopicRequestAggregate.GetAllTopicRequests;
 using SolTake.Application.Queries.TopicRequestAggregate.GetPendingTopicRequests;
 using SolTake.Application.Queries.TopicRequestAggregate.GetTopicRequests;
+using SolTake.Domain.RoleAggregate.ValueObjects;
 
 namespace SolTake.Api.Controllers.Api
 {
@@ -29,6 +30,16 @@ namespace SolTake.Api.Controllers.Api
         public async Task<CreateTopicRequestResponseDto> Create(CreateTopicRequestDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(VersionFiltterAttribute))]
+        [ServiceFilter(typeof(UserFilterAttribute))]
+        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
+        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
+        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
+        public async Task Delete(int id, CancellationToken cancellationToken)
+            => await _sender.Send(new DeleteTopicRequestDto(id), cancellationToken);
+
         [HttpGet]
         [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(VersionFiltterAttribute))]
@@ -38,11 +49,6 @@ namespace SolTake.Api.Controllers.Api
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task<List<TopicRequestResponseDto>> GetTopicRequests([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetTopicRequestsDto(offset,take,isDescending), cancellationToken);
-
-        [HttpGet]
-        [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<List<TopicRequestResponseDto>> GetAllTopicRequests([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetAllTopicRequestsDto(offset, take, isDescending), cancellationToken);
 
         [HttpGet]
         [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

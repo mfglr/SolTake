@@ -119,7 +119,7 @@ class AppClient{
     await sendJsonContent(request);
   }
 
-  String generatePaginationUrl(String url, Page page, { Map<String,String>? values }){
+  String generatePaginationUrl(String url, Page page, { Map<String,String?>? values }){
     String t = "$url?";
     if(values != null){
       values.forEach((key,value) => t += "$key=$value&");

@@ -54,47 +54,46 @@ class _DisplayExamRequestsPageState extends State<DisplayExamRequestsPage> {
       child: StoreConnector<AppState,Pagination<int, ExamRequestState>>(
         onInit: (store) => getNextEntitiesIfNoPage(store, store.state.examRequests, const NextExamRequestsAction()),
         converter: (store) => store.state.examRequests,
-        builder: (context, pagination) => 
-          SingleChildScrollView(
-            controller: _controller,
-            child: Container(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 8),
-                    child: const CreateExamRequestButton()
-                  ),
-                  if(pagination.isEmpty)
-                    LanguageWidget(
-                      child: (language) => Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 8,top: 45),
-                            child: Text(
-                              content[language]!,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 18
-                              ),
+        builder: (context, pagination) => SingleChildScrollView(
+          controller: _controller,
+          child: Container(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height
+            ),
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: const CreateExamRequestButton()
+                ),
+                if(pagination.isEmpty)
+                  LanguageWidget(
+                    child: (language) => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8,right: 8,top: 45),
+                          child: Text(
+                            content[language]!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 18
                             ),
                           ),
-                        ],
-                      ),
-                    )
-                  else
-                    ExamRequestsWidget(
-                      examRequests: pagination.values
+                        ),
+                      ],
                     ),
-                  if(pagination.loadingNext)
-                    const LoadingCircleWidget()
-                ],
-              ),
+                  )
+                else
+                  ExamRequestsWidget(
+                    examRequests: pagination.values
+                  ),
+                if(pagination.loadingNext)
+                  const LoadingCircleWidget()
+              ],
             ),
           ),
+        ),
       ),
     );
   }

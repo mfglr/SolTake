@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soltake_broker/views/requests_page/pages/exam_requests_page/exam_requests_page.dart';
 import 'package:soltake_broker/views/requests_page/pages/subject_requests_page/subject_requests_page.dart';
+import 'package:soltake_broker/views/requests_page/pages/topic_requests_page/topic_requests_page.dart';
 import 'package:soltake_broker/views/requests_page/requests_page_constants.dart';
 import 'package:soltake_broker/views/shared/app_title.dart';
 import 'package:soltake_broker/views/shared/label_pagination_widget/label_pagination_widget.dart';
@@ -74,7 +75,7 @@ class _RequestsPageState extends State<RequestsPage> {
               children: [
                 ExamRequestsPage(),
                 SubjectRequestsPage(),
-                Text("test")
+                TopicRequestsPage()
               ]
             ),
           )

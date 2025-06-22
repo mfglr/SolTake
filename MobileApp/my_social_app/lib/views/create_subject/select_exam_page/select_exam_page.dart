@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';

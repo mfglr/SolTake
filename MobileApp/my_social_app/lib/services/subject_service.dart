@@ -21,4 +21,10 @@ class SubjectService{
     => _appClient
       .get("$subjectController/$getSubjectByIdEndpoint/$subjectId")
       .then((json) => Subject.fromJson(json));
+
+  static Future<Iterable<Subject>> search(String? key, Page page) =>
+    AppClient()
+      .get(AppClient().generatePaginationUrl("$subjectController/Search", page, values: { 'key': key }))
+      .then((json) => json as Iterable)
+      .then((iterable) => iterable.map((e) => Subject.fromJson(e)));
 }

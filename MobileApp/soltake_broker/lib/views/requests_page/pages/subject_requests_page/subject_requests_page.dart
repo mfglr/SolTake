@@ -53,6 +53,7 @@ class _SubjectRequestsPageState extends State<SubjectRequestsPage> {
         onInit: (store) => getNextEntitiesIfNoPage(store, store.state.subjectRequests, NextPendingSubjectRequestsAction()),
         converter: (store) => store.state.subjectRequests,
         builder: (context, pagination) => SingleChildScrollView(
+          controller: _scrollController,
           child: Container(
             padding: EdgeInsets.all(8),
             constraints: BoxConstraints(

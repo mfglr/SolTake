@@ -1,8 +1,9 @@
 ﻿namespace SolTake.Domain.TopicRequestAggregate.ValueObjects
 {
-    public enum RejectionReason
+    public enum TopicRequestRejectionReason
     {
+        NoReason,
         AlreadyDefined,
-        RejectedByAdmin
+        UnacceptableContent
     }
 }

@@ -26,6 +26,7 @@ import 'package:my_social_app/state/app_state/story_state/reducers.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/topic_requests_state/reducers.dart';
 import 'package:my_social_app/state/app_state/transaction_state/reducers.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
@@ -59,7 +60,8 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   rejectedQuestions: rejectedQuestionsReducer(prev.rejectedQuestions, action),
   examRequests: examRequestReducers(prev.examRequests, action),
   subjectRequests: subjectRequestsReducers(prev.subjectRequests, action),
-
+  topicRequests: topicRequestsReducers(prev.topicRequests, action),
+  
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),

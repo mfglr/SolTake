@@ -62,9 +62,9 @@ class _DisplaySubjectRequestsPageState extends State<DisplaySubjectRequestsPage>
             ),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CreateSubjectRequestButton(),
+                Container(
+                  margin: const EdgeInsets.only(top: 8.0,bottom: 8),
+                  child: const CreateSubjectRequestButton(),
                 ),
                 if(pagination.isEmpty)
                   LanguageWidget(
@@ -83,10 +83,11 @@ class _DisplaySubjectRequestsPageState extends State<DisplaySubjectRequestsPage>
                         ),
                       ],
                     ),
+                  )
+                else
+                  SubjectRequestsWidget(
+                    subjectRequests: pagination.values
                   ),
-                SubjectRequestsWidget(
-                  subjectRequests: pagination.values
-                ),
                 if(pagination.loadingNext)
                   const LoadingCircleWidget()
               ],

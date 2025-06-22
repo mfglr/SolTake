@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SolTake.Application.Queries.TopicRequestAggregate;
+﻿using SolTake.Application.Queries.TopicRequestAggregate;
 using SolTake.Domain.TopicRequestAggregate.Entities;
 using SolTake.Infrastructure.DbContexts;
 
@@ -13,15 +12,14 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                     context.Subjects,
                     topicRequest => topicRequest.SubjectId,
                     subject => subject.Id,
-                    (topicRequest, subject) => new { topicRequest, subject }
-                )
-                .Select(
-                    join =>
+                    (topicRequest, subject) => 
                         new TopicRequestResponseDto(
-                            join.topicRequest.Id,
-                            join.topicRequest.SubjectId,
-                            join.subject.Name,
-                            join.topicRequest.Name
+                            topicRequest.Id,
+                            topicRequest.CreatedAt,
+                            subject.Name,
+                            topicRequest.Name.Value,
+                            topicRequest.State,
+                            topicRequest.Reason
                         )
                 );
     }

@@ -10,15 +10,14 @@ namespace SolTake.Domain.TopicRequestAggregate.Entities
 
         public int SubjectId { get; private set; }
         public int UserId { get; private set; }
-        public string Name { get; private set; }
+        public TopicName Name { get; private set; }
         public TopicRequestState State { get; private set; }
-        public RejectionReason? RejectionReason { get; private set; }
+        public TopicRequestRejectionReason? Reason { get; private set; }
 
-        public TopicRequest(int subjectId, int userId, string name)
+        private TopicRequest() { }
+
+        public TopicRequest(int subjectId, int userId, TopicName name)
         {
-            if (name.Length > MaxLength)
-                throw new TopicRequestNameLengthExceededException();
-
             SubjectId = subjectId;
             UserId = userId;
             Name = name;
@@ -38,12 +37,12 @@ namespace SolTake.Domain.TopicRequestAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void Reject(RejectionReason reason)
+        public void Reject(TopicRequestRejectionReason reason)
         {
             if (State != TopicRequestState.Pending)
                 throw new InvalidTopicRequestStateTranstion();
             State = TopicRequestState.Rejected;
-            RejectionReason = reason;
+            Reason = reason;
             UpdatedAt = DateTime.UtcNow;
         }
     }

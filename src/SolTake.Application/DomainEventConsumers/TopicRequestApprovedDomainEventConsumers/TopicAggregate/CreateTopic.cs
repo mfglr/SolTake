@@ -16,7 +16,7 @@ namespace SolTake.Application.DomainEventConsumers.TopicRequestApprovedDomainEve
 
         public async Task Handle(TopicRequestApprovedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var topic = new Topic(notification.TopicRequest.Name);
+            var topic = new Topic(notification.TopicRequest.Name.Value);
             topic.Create();
             await _topicWriteRepository.CreateAsync(topic, cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);

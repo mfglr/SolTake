@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/display_exam_requests_page.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_subject_requests_page/display_subject_requests_page.dart';
+import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_topic_requests_page/display_topic_requests_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
@@ -77,7 +78,7 @@ class _DisplayRequestsPageState extends State<DisplayRequestsPage> {
               children: const [
                 DisplayExamRequestsPage(),
                 DisplaySubjectRequestsPage(),
-                Text("test")
+                DisplayTopicRequestsPage()
               ]
             ),
           )

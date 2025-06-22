@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
+import 'package:my_social_app/views/profile/pages/display_requests_page/widgets/request_status_widget/request_status_widget_constants.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'subject_requests_status_constants_widget.dart';
 
-class SubjectRequestsStatusWidget extends StatelessWidget {
-  final SubjectRequestState subjectRequest;
-  const SubjectRequestsStatusWidget({
+class RequestStatusWidget extends StatelessWidget {
+  final int state;
+  const RequestStatusWidget({
     super.key,
-    required this.subjectRequest
+    required this.state
   });
 
   @override
@@ -18,14 +17,14 @@ class SubjectRequestsStatusWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FaIcon(
-            icons[subjectRequest.state],
-            color: colors[subjectRequest.state],
+            icons[state],
+            color: colors[state],
             size: 15,
           ),
           Text(
-            status[subjectRequest.state][langauge]!,
+            status[state][langauge]!,
             style: TextStyle(
-              color: colors[subjectRequest.state]
+              color: colors[state]
             ),
           ),
         ],

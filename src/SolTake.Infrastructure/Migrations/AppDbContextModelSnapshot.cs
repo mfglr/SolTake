@@ -14810,11 +14810,7 @@ namespace SolTake.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RejectionReason")
+                    b.Property<int?>("Reason")
                         .HasColumnType("int");
 
                     b.Property<int>("State")
@@ -15857,6 +15853,29 @@ namespace SolTake.Infrastructure.Migrations
                         });
 
                     b.Navigation("SubjectName")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SolTake.Domain.TopicRequestAggregate.Entities.TopicRequest", b =>
+                {
+                    b.OwnsOne("SolTake.Domain.TopicRequestAggregate.ValueObjects.TopicName", "Name", b1 =>
+                        {
+                            b1.Property<int>("TopicRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("TopicRequestId");
+
+                            b1.ToTable("TopicRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TopicRequestId");
+                        });
+
+                    b.Navigation("Name")
                         .IsRequired();
                 });
 

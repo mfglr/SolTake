@@ -6,6 +6,7 @@ import 'package:soltake_broker/state/app_state/login_state/middlewares.dart';
 import 'package:soltake_broker/state/app_state/question_state/middlewares.dart';
 import 'package:soltake_broker/state/app_state/reducers.dart';
 import 'package:soltake_broker/state/app_state/subject_request_state/middlewares.dart';
+import 'package:soltake_broker/state/app_state/topic_requests_state/middlewares.dart';
 import 'package:soltake_broker/state/entity_state/pagination.dart';
 
 final store = Store(
@@ -14,7 +15,8 @@ final store = Store(
     login: LoginContainer.init(),
     questions: Pagination.init(100, false),
     examRequests: Pagination.init(20, false),
-    subjectRequests: Pagination.init(20, false)
+    subjectRequests: Pagination.init(20, false),
+    topicRequests: Pagination.init(20, false)
   ),
   middleware: [
     //login middlewares
@@ -38,6 +40,12 @@ final store = Store(
     approveSubjectRequestMiddleware,
     rejectSubjectRequestMiddleware,
     nextPendingSubjectRequestsMiddleware,
-    firstPendingSubjectRequestsMiddleware
+    firstPendingSubjectRequestsMiddleware,
+
+    //topic requests
+    approveTopicRequestMiddleware,
+    rejectTopicRequestMiddleware,
+    nextPendingTopicRequestsMiddleware,
+    firstPendingTopicRequestsMiddleware
   ]
 );

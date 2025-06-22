@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/question.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/views/create_question/pages/select_topic_page/widgets/create_topic_request_button/create_topic_request_button.dart';
 import 'package:my_social_app/views/create_question/widgets/create_question_button/create_question_button.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -55,10 +56,8 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                 title: title[language]!
               ),
             ),
-            actions: [
-              CreateQuestionButton(
-                onPressed: _createQuestion,
-              )
+            actions: const [
+              CreateTopicRequestButton()
             ],
           ),
           body: Padding(
@@ -97,18 +96,17 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: TextField(
-                    minLines: 5,
-                    maxLines: null,
-                    maxLength: questionContentMaxLenght,
-                    onChanged: (value) => setState(() { _content = value; }),
-                    decoration: InputDecoration(
-                      hintText: aboutQuestion[getLanguage(context)],
-                      border: const OutlineInputBorder()
-                    ),
+                TextField(
+                  minLines: 5,
+                  maxLines: null,
+                  maxLength: questionContentMaxLenght,
+                  onChanged: (value) => setState(() { _content = value; }),
+                  decoration: InputDecoration(
+                    hintText: aboutQuestion[getLanguage(context)],
+                    border: const OutlineInputBorder()
                   ),
                 ),
+                CreateQuestionButton(onPressed: _createQuestion,),
                 OutlinedButton(
                   onPressed: () =>
                     Navigator

@@ -19,5 +19,13 @@ namespace SolTake.Infrastructure.QueryRepositories
                 .ToPage(page)
                 .ToSubjectResponseDto()
                 .ToListAsync(cancellationToken);
+
+        public Task<List<SubjectResponseDto>> SearchSubjectsAsync(string? key, IPage page, CancellationToken cancellationToken)
+            => _context.Subjects
+                .AsNoTracking()
+                .Where(x => key == null || x.Name.ToLower().Contains(key.ToLower()))
+                .ToPage(page)
+                .ToSubjectResponseDto()
+                .ToListAsync(cancellationToken);
     }
 }
