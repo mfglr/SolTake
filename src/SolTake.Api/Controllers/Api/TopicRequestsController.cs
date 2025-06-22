@@ -10,7 +10,6 @@ using SolTake.Application.Commands.TopicRequestAggregate.Reject;
 using SolTake.Application.Queries.TopicRequestAggregate;
 using SolTake.Application.Queries.TopicRequestAggregate.GetPendingTopicRequests;
 using SolTake.Application.Queries.TopicRequestAggregate.GetTopicRequests;
-using SolTake.Domain.RoleAggregate.ValueObjects;
 
 namespace SolTake.Api.Controllers.Api
 {

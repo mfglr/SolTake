@@ -1,17 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolTake.Application.Queries.QuestionDomain;
 using SolTake.Application.QueryRepositories;
+using SolTake.Core;
 using SolTake.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Infrastructure.DbContexts;
 using SolTake.Infrastructure.Extentions;
 using SolTake.Infrastructure.QueryRepositories.QueryableMappers;
-using SolTake.Core;
 using System.Linq.Expressions;
-using Microsoft.AspNetCore.SignalR;
-using System.Threading;
-using System;
-using SolTake.Domain.QuestionAggregate.ValueObjects;
 
 namespace SolTake.Infrastructure.QueryRepositories
 {
@@ -120,7 +117,6 @@ namespace SolTake.Infrastructure.QueryRepositories
                     question.UserId != forUserId,
                 cancellationToken
             );
-        
         public Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int? forUserId, IPage page, CancellationToken cancellationToken)
             => GetListPublishedAsync(
                 forUserId,
@@ -130,7 +126,6 @@ namespace SolTake.Infrastructure.QueryRepositories
                     question.UserId != forUserId,
                 cancellationToken
             );
-        
         public Task<List<QuestionResponseDto>> GetExamQuestionsAsync(int examId, int? forUserId, IPage page, CancellationToken cancellationToken)
             => GetListPublishedAsync(
                 forUserId,
@@ -140,7 +135,6 @@ namespace SolTake.Infrastructure.QueryRepositories
                     question.UserId != forUserId,
                 cancellationToken
             );
-
         public Task<List<QuestionResponseDto>> GetVideoQuestionsAsync(int? forUserId, IPage page, CancellationToken cancellationToken)
             => GetListPublishedAsync(
                 forUserId,
@@ -150,7 +144,6 @@ namespace SolTake.Infrastructure.QueryRepositories
                     question.Medias.Any(x => x.MultimediaType == MultimediaType.Video),
                 cancellationToken
             );
-
         public Task<List<QuestionResponseDto>> SearchQuestionsAsync(int? forUserId, IPage page, int? examId, int? subjectId, int? topicId, CancellationToken cancellationToken)
             =>
                 GetListPublishedAsync(
