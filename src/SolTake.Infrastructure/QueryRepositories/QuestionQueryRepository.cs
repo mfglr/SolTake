@@ -27,6 +27,7 @@ namespace SolTake.Infrastructure.QueryRepositories
                                 (uub.BlockerId == question.UserId && uub.BlockedId == forUserId) ||
                                 (uub.BlockerId == forUserId && uub.BlockedId == question.UserId)
                         ) &&
+                        !_context.QuestionUserComplaints.Any(x => x.UserId == forUserId) &&
                         question.PublishingState == QuestionPublishingState.Published
                 )
                 .ToQuestionResponseDto(_context, forUserId)
@@ -43,6 +44,7 @@ namespace SolTake.Infrastructure.QueryRepositories
                                 (uub.BlockerId == question.UserId && uub.BlockedId == forUserId) ||
                                 (uub.BlockerId == forUserId && uub.BlockedId == question.UserId)
                         ) &&
+                        !_context.QuestionUserComplaints.Any(x => x.UserId == forUserId) &&
                         question.PublishingState == QuestionPublishingState.Published
                 )
                 .ToPage(page)
@@ -59,7 +61,8 @@ namespace SolTake.Infrastructure.QueryRepositories
                             uub =>
                                 (uub.BlockerId == question.UserId && uub.BlockedId == forUserId) ||
                                 (uub.BlockerId == forUserId && uub.BlockedId == question.UserId)
-                        )
+                        ) &&
+                        !_context.QuestionUserComplaints.Any(x => x.UserId == forUserId)
                 )
                 .ToPage(page)
                 .ToQuestionResponseDto(_context, forUserId)

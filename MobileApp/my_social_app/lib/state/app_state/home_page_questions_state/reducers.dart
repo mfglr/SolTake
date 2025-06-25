@@ -24,6 +24,8 @@ Pagination<int,Id<int>> firstQuestionsSuccessReducer(Pagination<int,Id<int>> pre
 Pagination<int,Id<int>> firstQuestionsFailedReducer(Pagination<int,Id<int>> prev,FirstHomeQuestionsFailedAction action)
   => prev.stopLoadingNext();
 
+Pagination<int,Id<int>> deleteHomeQuestionReducer(Pagination<int,Id<int>> prev, DeleteHomeQuestionAction action)
+  => prev.removeOne(action.id);
 
 Reducer<Pagination<int,Id<int>>> homePageQuestionsReducers = combineReducers<Pagination<int,Id<int>>>([
   TypedReducer<Pagination<int,Id<int>>,NextHomeQuestionsAction>(nextQuestionsReducer).call,
@@ -37,4 +39,6 @@ Reducer<Pagination<int,Id<int>>> homePageQuestionsReducers = combineReducers<Pag
   TypedReducer<Pagination<int,Id<int>>,FirstHomeQuestionsAction>(firstQuestionsReducer).call,
   TypedReducer<Pagination<int,Id<int>>,FirstHomeQuestionsSuccessAction>(firstQuestionsSuccessReducer).call,
   TypedReducer<Pagination<int,Id<int>>,FirstHomeQuestionsFailedAction>(firstQuestionsFailedReducer).call,
+
+  TypedReducer<Pagination<int,Id<int>>,DeleteHomeQuestionAction>(deleteHomeQuestionReducer).call,
 ]);

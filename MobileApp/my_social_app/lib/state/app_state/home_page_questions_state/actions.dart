@@ -41,3 +41,9 @@ class PrevHomeQuestionsSuccessAction extends AppAction{
 class PrevHomeQuestionsFailedAction extends AppAction{
   const PrevHomeQuestionsFailedAction();
 }
+
+@immutable
+class DeleteHomeQuestionAction extends AppAction{
+  final int id;
+  const DeleteHomeQuestionAction({required this.id});
+}

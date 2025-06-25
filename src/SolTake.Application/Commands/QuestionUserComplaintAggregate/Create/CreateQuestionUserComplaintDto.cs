@@ -3,5 +3,5 @@ using SolTake.Domain.QuestionUserComplaintAggregate.ValueObjects;
 
 namespace SolTake.Application.Commands.QuestionUserComplaintAggregate.Create
 {
-    public record CreateQuestionUserComplaintDto(int QuestionId, QuestionComplaintReason Reason, string? Content) : IRequest;
+    public record CreateQuestionUserComplaintDto(int QuestionId, QuestionComplaintReason Reason, string? Content) : IRequest<CreateQuestionUserComplaintResponseDto>;
 }

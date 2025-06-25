@@ -8,7 +8,7 @@ namespace SolTake.Domain.QuestionUserComplaintAggregate.Exceptions
     public class InvalidQuestionComplaintContentException : AppException
     {
         private readonly static string _messageEn = $"Complaints about questions must be greater than {QuestionComplaintContent.MinLength} characters and be less than {QuestionComplaintContent.MaxLength} characters.";
-        private readonly static string _messageTr = $"Soru hakkındaki şikayetler {QuestionComplaintContent.MaxLength} karakterden fazla ve {QuestionComplaintContent.MaxLength} karakterden az olmalıdır.";
+        private readonly static string _messageTr = $"Soru hakkındaki şikayetler {QuestionComplaintContent.MinLength} karakterden fazla ve {QuestionComplaintContent.MaxLength} karakterden az olmalıdır.";
         private readonly static Dictionary<string, string> _messages = new() {
             { Languages.EN, _messageEn },
             { Languages.TR, _messageTr }

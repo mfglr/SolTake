@@ -11,7 +11,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_question_likes_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_video_solutions_button.dart';
-import 'package:my_social_app/views/question/widgets/question_item/widgets/question_item_popup_menu.dart';
+import 'package:my_social_app/views/question/widgets/question_item/widgets/question_item_popup_menu/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/save_question_button.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
@@ -84,8 +84,7 @@ class QuestionItemWidget extends StatelessWidget {
                       child: QuestionStateWidget(question: question),
                     ),
                     SaveQuestionButton(question: question),
-                    if(question.isOwner)
-                      QuestionItemPopupMenu(question: question),
+                    QuestionItemPopupMenu(question: question),
                   ],
                 )
               ],

@@ -23,7 +23,7 @@ namespace SolTake.Api.Controllers.Api
         [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
         [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
-        public async Task Create(CreateQuestionUserComplaintDto request, CancellationToken cancellationToken)
+        public async Task<CreateQuestionUserComplaintResponseDto> Create(CreateQuestionUserComplaintDto request, CancellationToken cancellationToken)
             => await _sender.Send(request, cancellationToken);
 
         [HttpPut]
