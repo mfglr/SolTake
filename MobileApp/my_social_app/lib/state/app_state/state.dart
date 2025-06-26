@@ -50,8 +50,6 @@ class AppState{
   final Pagination<int,AIModelState> aiModels;
   final Pagination<int,TransactionState> transactions;
   final ActiveLoginPage activeLoginPage;
-  final Pagination<int, Id<int>> notPublishedQuestions;
-  final Pagination<int, Id<int>> rejectedQuestions;
   final Pagination<int,ExamRequestState> examRequests;
   final Pagination<int,SubjectRequestState> subjectRequests;
   final Pagination<int,TopicRequestState> topicRequests;
@@ -88,8 +86,6 @@ class AppState{
     required this.aiModels,
     required this.transactions,
     required this.activeLoginPage,
-    required this.notPublishedQuestions,
-    required this.rejectedQuestions,
     required this.examRequests,
     required this.subjectRequests,
     required this.stories,
@@ -129,8 +125,6 @@ class AppState{
     aiModels: Pagination.init(aiModelsPerPage, false),
     transactions: Pagination.init(transactionsPerPage, true),
     activeLoginPage: ActiveLoginPage.loginPage,
-    notPublishedQuestions: Pagination.init(questionsPerPage, true),
-    rejectedQuestions: Pagination.init(questionsPerPage, true),
     examRequests: Pagination.init(examRequestsPerPage, true),
     subjectRequests: Pagination.init(subjectRequestsPerPage, true),
     topicRequests: Pagination.init(topicRequestsPerPage, true),

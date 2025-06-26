@@ -5,11 +5,9 @@ import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/question_user_like_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/not_published_questions/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
-import 'package:my_social_app/state/app_state/rejected_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -20,7 +18,6 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
-
 
 void _loadQuestion(Store<AppState> store, int questionId, void Function() callback){
   if(selectQuestion(store,questionId) == null){
@@ -51,7 +48,7 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       )
       .then((question) {
         store.dispatch(AddQuestionAction(value: question.toQuestionState()));
-        store.dispatch(AddNotPublishedQuestionAction(questionId: question.id));
+        store.dispatch(AddNewUserQuestionAction(questionId: question.id, userId: question.userId));
         store.dispatch(RemoveUploadStateAction(id: action.id));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
@@ -87,8 +84,6 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
       .then((_){
         store.dispatch(DeleteQuestionSuccessAction(questionId: action.questionId));
         store.dispatch(RemoveUserQuestionAction(userId: accountId, questionId: action.questionId));
-        store.dispatch(RemoveNotPublishedQuestionAction(questionId: action.questionId));
-        store.dispatch(RemoveRejectedQuestionAction(questionId: action.questionId));
       });
   }
   next(action);

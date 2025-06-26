@@ -4,7 +4,6 @@ import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/not_published_questions/middlewares.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
@@ -20,7 +19,6 @@ import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
-import 'package:my_social_app/state/app_state/rejected_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
@@ -58,8 +56,6 @@ final store = Store(
     aiModels: Pagination.init(aiModelsPerPage, false),
     transactions: Pagination.init(transactionsPerPage, true),
     activeLoginPage: ActiveLoginPage.loginPage,
-    notPublishedQuestions: Pagination.init(questionsPerPage, true),
-    rejectedQuestions: Pagination.init(questionsPerPage, true),
     examRequests: Pagination.init(examRequestsPerPage, true),
     subjectRequests: Pagination.init(subjectRequestsPerPage, true),
     topicRequests: Pagination.init(topicRequestsPerPage, true),
@@ -181,13 +177,6 @@ final store = Store(
     //message connection
     loadMessageConnectionMiddleware,
     //
-
-    //not published questions
-    nextNotPublishedQuestionsMiddleware,
-    //not published questions
-
-    //rejected questions
-    nextRejectedQuestionsMiddleware,
 
     //message
     nextUserMessagesMiddleware,

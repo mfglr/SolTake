@@ -9,6 +9,7 @@ void handleErrors(Object error){
     const isProduction = bool.fromEnvironment('dart.vm.product');
     if(!isProduction){
       ToastCreator.displayError(error.toString());
+      print(error.toString());
     }
   }
 }

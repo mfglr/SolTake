@@ -4,6 +4,7 @@ import 'package:multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_publishing_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
@@ -12,6 +13,7 @@ import 'package:my_social_app/views/question/widgets/question_item/widgets/displ
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_video_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_item_popup_menu/question_item_popup_menu.dart';
+import 'package:my_social_app/views/question/widgets/question_item/widgets/question_publishing_state/question_publishing_state_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_state_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/save_question_button.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
@@ -132,6 +134,11 @@ class QuestionItemWidget extends StatelessWidget {
               ],
             ),
           ),
+          if(question.publishingState != QuestionPublishingState.published)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: QuestionPublishingStateWidget(question: question),
+            ),
           if(question.content != null)
             Padding(
               padding: const EdgeInsets.all(8.0),

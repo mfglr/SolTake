@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/models/languages.dart';
-// import 'package:my_social_app/models/languages.dart';
 
-const icons = [Icons.visibility,Icons.visibility_off, Icons.close, Icons.check_circle, Icons.pending, ];
+const icons = [ Icons.border_all_rounded, Icons.check_circle, Icons.pending ];
 
 const published = {
-  Languages.en: "Published",
-  Languages.tr: "Yayında"
-};
-const unpublished = {
-  Languages.en: "Unpublished",
-  Languages.tr: "Yayınlanmayanlar"
-};
-const rejected = {
-  Languages.en: "Rejected",
-  Languages.tr: "Reddedilenler"
+  Languages.en: "All",
+  Languages.tr: "Hepsi"
 };
 const solved = {
   Languages.en: "Solved",
@@ -27,8 +18,6 @@ const unsolved = {
 
 Iterable<String> getLabels(String language) => [
   published[language]!,
-  unpublished[language]!,
-  rejected[language]!,
   solved[language]!,
   unsolved[language]!
 ];

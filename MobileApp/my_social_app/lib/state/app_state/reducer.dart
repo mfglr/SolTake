@@ -2,7 +2,6 @@ import 'package:my_social_app/state/app_state/active_login_page_state/reducers.d
 import 'package:my_social_app/state/app_state/ai_model_state/reducers.dart';
 import 'package:my_social_app/state/app_state/balance_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/reducers.dart';
-import 'package:my_social_app/state/app_state/not_published_questions/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
@@ -16,7 +15,6 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/red
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/reducers.dart';
-import 'package:my_social_app/state/app_state/rejected_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
@@ -56,8 +54,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   transactions: transactionReducers(prev.transactions, action),
   login: loginReducers(prev.login,action),
   activeLoginPage: activeLoginPageReducers(prev.activeLoginPage, action),
-  notPublishedQuestions: dratfQuestionsReducers(prev.notPublishedQuestions, action),
-  rejectedQuestions: rejectedQuestionsReducer(prev.rejectedQuestions, action),
   examRequests: examRequestReducers(prev.examRequests, action),
   subjectRequests: subjectRequestsReducers(prev.subjectRequests, action),
   topicRequests: topicRequestsReducers(prev.topicRequests, action),

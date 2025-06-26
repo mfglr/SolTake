@@ -11,13 +11,11 @@ using SolTake.Application.Commands.QuestionDomain.QuestionAggregate.RejectQuesti
 using SolTake.Application.Queries.QuestionDomain;
 using SolTake.Application.Queries.QuestionDomain.GetAllNotPublishedQuestions;
 using SolTake.Application.Queries.QuestionDomain.GetHomePageQuestions;
-using SolTake.Application.Queries.QuestionDomain.GetNotPublishedQuestions;
 using SolTake.Application.Queries.QuestionDomain.GetQuestionById;
 using SolTake.Application.Queries.QuestionDomain.GetQuestionsByExamId;
 using SolTake.Application.Queries.QuestionDomain.GetQuestionsBySubjectId;
 using SolTake.Application.Queries.QuestionDomain.GetQuestionsByTopicId;
 using SolTake.Application.Queries.QuestionDomain.GetQuestionsByUserId;
-using SolTake.Application.Queries.QuestionDomain.GetRejecetedQuestions;
 using SolTake.Application.Queries.QuestionDomain.GetSolvedQuestionsByUserId;
 using SolTake.Application.Queries.QuestionDomain.GetUnsolvedQuestionsByUserId;
 using SolTake.Application.Queries.QuestionDomain.GetVideoQuestions;
@@ -165,27 +163,7 @@ namespace SolTake.Api.Controllers.Api
         [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
         public async Task<List<QuestionResponseDto>> GetVideoQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
             => await _sender.Send(new GetVideoQuestionsDto(offset, take, isDescending),cancellationToken);
-
-        [HttpGet]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(UserFilterAttribute))]
-        [ServiceFilter(typeof(VersionFiltterAttribute))]
-        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
-        public async Task<List<QuestionResponseDto>> GetNotPublishedQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetNotPublishedQuestionsDto(offset, take, isDescending), cancellationToken);
-
-        [HttpGet]
-        [Authorize(Roles = "user", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ServiceFilter(typeof(UserFilterAttribute))]
-        [ServiceFilter(typeof(VersionFiltterAttribute))]
-        [ServiceFilter(typeof(PrivacyPolicyApprovalFilterAttribute))]
-        [ServiceFilter(typeof(TermsOfUseApprovalFilterAttribute))]
-        [ServiceFilter(typeof(EmailVerificationFilterAttribute))]
-        public async Task<List<QuestionResponseDto>> GetRejectedQuestions([FromQuery] int? offset, [FromQuery] int take, [FromQuery] bool isDescending, CancellationToken cancellationToken)
-            => await _sender.Send(new GetRejectedQuestionsDto(offset, take, isDescending), cancellationToken);
-
+        
         [HttpGet]
         [Authorize(Roles = "admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(UserFilterAttribute))]

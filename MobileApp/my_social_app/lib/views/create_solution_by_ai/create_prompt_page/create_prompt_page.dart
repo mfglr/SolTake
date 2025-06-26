@@ -29,27 +29,26 @@ class CreatePromptPage extends StatefulWidget {
 }
 
 class _CreatePromptPageState extends State<CreatePromptPage> {
-  late final TextEditingController _promptController;
   late final Future<Uint8List> _frame;
   bool _isHighResulation = true;
+  late String _prompt;
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
-    _promptController = TextEditingController();
-    _promptController.text = defaultPrompt[getLanguage(context)]!;
-
+    _controller.text = _prompt = defaultPrompt[getLanguage(context)]!;
     if(widget.media.multimediaType == MultimediaType.video){
       _frame = FrameCatcherService()
         .catchFrame(widget.media.containerName, widget.media.blobName, widget.position);
     }
 
     super.initState();  
-  }
-
-  @override
-  void dispose() {
-    _promptController.dispose();
-    super.dispose();
   }
 
   @override
@@ -60,7 +59,7 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
         title: AppTitle(title: title[getLanguage(context)]!),
         actions: [
           CreateSolutionButton(
-            prompt: _promptController.text,
+            prompt: _prompt,
             isHighResulation: _isHighResulation
           )
         ],
@@ -120,23 +119,24 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
                     ),
                   ],
                 ),
-                Container(
-                  margin: const EdgeInsets.all(5),
-                  child: LanguageWidget(
-                    child: (language) => Text(
-                      resulationExplation[language]!,
-                      textAlign: TextAlign.center,
-                    )
-                  ),
-                )
+                // Container(
+                //   margin: const EdgeInsets.all(5),
+                //   child: LanguageWidget(
+                //     child: (language) => Text(
+                //       resulationExplation[language]!,
+                //       textAlign: TextAlign.center,
+                //     )
+                //   ),
+                // )
               ],
             ),
             Container(
               margin: const EdgeInsets.all(8),
               child: TextField(
+                controller: _controller,
                 minLines: 10,
                 maxLines: null,
-                controller: _promptController,
+                onChanged: (value) => setState(() => _prompt = value),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder()
                 ),

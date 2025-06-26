@@ -94,19 +94,7 @@ class QuestionService{
       .get(_appClient.generatePaginationUrl("$questionController/$getVideoQuestionsEndpoint", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Question.fromJson(e)));
-
-  Future<Iterable<Question>> getNotPublishedQuestions(Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$questionController/getNotPublishedQuestions", page))
-      .then((json) => json as List)
-      .then((list) => list.map((e) => Question.fromJson(e)));
-
-  Future<Iterable<Question>> getRejectedQuestions(Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$questionController/getRejectedQuestions", page))
-      .then((json) => json as List)
-      .then((list) => list.map((e) => Question.fromJson(e)));
-
+ 
   Future<Iterable<Question>> searchQuestions(num? examId,num? subjectId,num? topicId,Page page) async {
     String endpoint = "$questionController/$searchQuestionsEndpoint";
     final body = {

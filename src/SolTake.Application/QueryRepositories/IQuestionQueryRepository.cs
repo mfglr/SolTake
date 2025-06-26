@@ -7,8 +7,7 @@ namespace SolTake.Application.QueryRepositories
     {
         Task<QuestionResponseDto?> GetQuestionByIdAsync(int id, int? forUserId, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetHomePageQuestionsAsync(int? userId, IPage page, CancellationToken cancellationToken);
-        Task<List<QuestionResponseDto>> GetNotPublishedQuestionsByUserId(int userId, int? forUserId, IPage page, CancellationToken cancellationToken);
-        Task<List<QuestionResponseDto>> GetRejectedQuestionsByUserId(int userId, int? forUserId, IPage page, CancellationToken cancellationToken);
+
         Task<List<QuestionResponseDto>> GetUserQuestionsAsync(int userId, int? forUserId, IPage page, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetTopicQuestionsAsync(int topicId, int? forUserId, IPage page, CancellationToken cancellationToken);
         Task<List<QuestionResponseDto>> GetSubjectQuestionsAsync(int subjectId, int? forUserId, IPage page, CancellationToken cancellationToken);
