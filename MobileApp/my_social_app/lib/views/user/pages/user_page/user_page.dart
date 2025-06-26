@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
-import 'package:my_social_app/views/question/pages/display_user_solved_questions_page.dart';
-import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page.dart';
+import 'package:my_social_app/views/display_abstract_solved_questions_page/display_abstract_solved_questions_page.dart';
+import 'package:my_social_app/views/display_abstract_unsolved_questions_page/display_abstracts_unsolved_questions_page.dart';
+import 'package:my_social_app/views/display_abstracts_questions_page/display_abstracts_questions_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
-import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page/widgets/user_popup_menu/user_popup_menu.dart';
 import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -56,82 +53,7 @@ class _UserPageState extends State<UserPage> {
     _pageController.dispose();
     super.dispose();
   }
-
-  Widget _getQuestionsGrid(UserState user){
-    return StoreConnector<AppState,Iterable<QuestionState>>(
-      onInit: (store) => getNextPageIfNoPage(store,user.questions,NextUserQuestionsAction(userId: user.id)),
-      converter: (store) => store.state.selectUserQuestions(user.id),
-      builder: (context, questions) => QuestionAbstractItemsWidget(
-        questions: questions,
-        pagination: user.questions,
-        onTap: (questionId){
-          Navigator
-            .of(context)
-            .push(
-              MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(
-                userId: user.id,
-                firstDisplayedQuestionId: questionId
-              ))
-            );
-        },
-        onScrollBottom: (){
-          final store = StoreProvider.of<AppState>(context,listen: false);
-          getNextPageIfReady(store, user.questions, NextUserQuestionsAction(userId: user.id));
-        },
-      )
-    );
-  }
-
-  Widget _getSolvedQuestionsGrid(UserState user){
-    return StoreConnector<AppState,Iterable<QuestionState>>(
-      onInit: (store) => getNextPageIfNoPage(store,user.solvedQuestions,NextUserSolvedQuestionsAction(userId: user.id)),
-      converter: (store) => store.state.selectUserSolvedQuestions(user.id),
-      builder: (context, questions) => QuestionAbstractItemsWidget(
-        questions: questions,
-        pagination: user.solvedQuestions,
-        onTap: (questionId){
-          Navigator
-            .of(context)
-            .push(
-              MaterialPageRoute(builder: (context) => DisplayUserSolvedQuestionsPage(
-                userId: user.id,
-                firstDisplayedQuestionId: questionId
-              ))
-            );
-        },
-        onScrollBottom: (){
-          final store = StoreProvider.of<AppState>(context,listen: false);
-          getNextPageIfReady(store, user.solvedQuestions, NextUserSolvedQuestionsAction(userId: user.id));
-        },
-      )
-    );
-  }
-
-  Widget _getUnsolvedQuestionsGrid(UserState user){
-    return StoreConnector<AppState,Iterable<QuestionState>>(
-      onInit: (store) => getNextPageIfNoPage(store, user.unsolvedQuestions,NextUserUnsolvedQuestionsAction(userId: user.id)),
-      converter: (store) => store.state.selectUserUnsolvedQuestions(user.id),
-      builder: (context, questions) => QuestionAbstractItemsWidget(
-        questions: questions,
-        pagination: user.unsolvedQuestions,
-        onTap: (questionId){
-          Navigator
-            .of(context)
-            .push(
-              MaterialPageRoute(builder: (context) => DisplayUserUnsolvedQuestionsPage(
-                userId: user.id,
-                firstDisplayedQuestionId: questionId
-              ))
-            );
-        },
-        onScrollBottom: (){
-          final store = StoreProvider.of<AppState>(context,listen: false);
-          getNextPageIfReady(store, user.unsolvedQuestions,NextUserUnsolvedQuestionsAction(userId: user.id));
-        },
-      )
-    );
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     labels = [
@@ -198,9 +120,9 @@ class _UserPageState extends State<UserPage> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    _getQuestionsGrid(user),
-                    _getSolvedQuestionsGrid(user),
-                    _getUnsolvedQuestionsGrid(user)
+                    DisplayAbstractsQuestionsPage(userId: user.id),
+                    DisplayAbstractSolvedQuestionsPage(userId: user.id),
+                    DisplayAbstractsUnsolvedQuestionsPage(userId: user.id)
                   ]
                 ),
               )
