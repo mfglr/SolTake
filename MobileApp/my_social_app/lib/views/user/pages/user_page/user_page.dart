@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -10,9 +11,9 @@ import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/user/pages/user_page/user_page_constants.dart';
 import 'package:my_social_app/views/user/pages/user_page/widgets/user_popup_menu/user_popup_menu.dart';
 import 'package:my_social_app/views/user/widgets/user_info_card_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserPage extends StatefulWidget {
   final int? userId;
@@ -31,8 +32,6 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final PageController _pageController = PageController();
   late final void Function() _onPageChange;
-  late Iterable<String> labels;
-  final icons = [Icons.question_mark,Icons.done,Icons.pending];
   double _page = 0;
 
   @override
@@ -56,11 +55,6 @@ class _UserPageState extends State<UserPage> {
  
   @override
   Widget build(BuildContext context) {
-    labels = [
-      AppLocalizations.of(context)!.user_page_label_all,
-      AppLocalizations.of(context)!.user_page_label_solved,
-      AppLocalizations.of(context)!.user_page_label_unsolved,
-    ];
     return StoreConnector<AppState, UserState?>(
       onInit: (store){
         if(widget.userId != null){
@@ -103,7 +97,7 @@ class _UserPageState extends State<UserPage> {
                       size: 16,
                     ),
                     Text(
-                      labels.elementAt(index),
+                      getLabels(getLanguage(context)).elementAt(index),
                       style: TextStyle(
                         color: isActive ? Colors.black : Colors.grey,
                         fontSize: 13
