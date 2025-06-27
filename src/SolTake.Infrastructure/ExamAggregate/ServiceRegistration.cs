@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SolTake.Domain.ExamAggregate.Interfaces;
+using SolTake.Domain.ExamAggregate.Abstracts;
 
 namespace SolTake.Infrastructure.ExamAggregate
 {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -8,7 +9,6 @@ import 'package:my_social_app/views/comment/modals/display_solution_comments_mod
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
 class DisplaySolutionPage extends StatefulWidget {

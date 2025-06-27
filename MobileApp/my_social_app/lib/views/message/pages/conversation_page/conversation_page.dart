@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/state/app_state/user_message_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
@@ -20,7 +21,6 @@ import 'package:my_social_app/views/message/pages/display_message_images_page/di
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConversationPage extends StatefulWidget {
   final int userId;

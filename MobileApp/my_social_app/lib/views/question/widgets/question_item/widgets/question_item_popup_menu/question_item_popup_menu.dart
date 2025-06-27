@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_user_complaint_service.dart';
 import 'package:my_social_app/state/app_state/home_page_questions_state/actions.dart';
@@ -8,7 +9,6 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/dialog_creator/dialog_creator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_item_popup_menu/question_item_popup_menu_constants.dart';
 import 'package:my_social_app/views/question/pages/report_question_page/report_question_page.dart';

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/global_error_handling.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/package_version_service.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_social_app/views/app_update_view.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:toastification/toastification.dart';
@@ -35,7 +35,7 @@ Future<void> main() async {
   await loadEnvironmentVariables();
   addTimeAgo();
   await _setPackageVersion();
-  
+
   FlutterError.onError = (error) {
     handleErrors(error.exception);
   };

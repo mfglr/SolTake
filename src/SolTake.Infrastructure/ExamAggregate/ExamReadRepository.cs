@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SolTake.Domain.ExamAggregate.Abstracts;
 using SolTake.Domain.ExamAggregate.Entitities;
-using SolTake.Domain.ExamAggregate.Interfaces;
 using SolTake.Infrastructure.DbContexts;
 
 namespace SolTake.Infrastructure.ExamAggregate

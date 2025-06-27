@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -19,7 +20,6 @@ import 'package:my_social_app/views/solution/pages/display_question_solutions_pa
 import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];

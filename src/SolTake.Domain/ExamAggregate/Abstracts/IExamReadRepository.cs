@@ -1,6 +1,6 @@
 ﻿using SolTake.Domain.ExamAggregate.Entitities;
 
-namespace SolTake.Domain.ExamAggregate.Interfaces
+namespace SolTake.Domain.ExamAggregate.Abstracts
 {
     public interface IExamReadRepository
     {

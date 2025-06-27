@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
@@ -14,7 +15,6 @@ import 'package:my_social_app/views/message/pages/message_home_page/widgets/canc
 import 'package:my_social_app/views/message/pages/message_home_page/widgets/conversation_items.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/widgets/delete_conversations_button.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MessageHomePage extends StatefulWidget {
   

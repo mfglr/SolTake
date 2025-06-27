@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/login/pages/reset_password_page.dart';

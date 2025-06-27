@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/selectors.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/user_user_conversation_state.dart';
@@ -9,7 +10,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/pages/create_conversation_page/widgets.dart/user_user_conversation_items.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateConversationPage extends StatefulWidget {
   const CreateConversationPage({super.key});

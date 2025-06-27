@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/active_login_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/state.dart';

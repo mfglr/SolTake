@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FollowButtonWidget extends StatelessWidget {
   final UserState user;

@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using SolTake.Application.InfrastructureServices;
 using SolTake.Core;
+using SolTake.Domain.ExamAggregate.Abstracts;
 using SolTake.Domain.ExamAggregate.DomainEvents;
 using SolTake.Domain.ExamAggregate.Entitities;
-using SolTake.Domain.ExamAggregate.Interfaces;
 using SolTake.Domain.ExamAggregate.ValueObjects;
 using SolTake.Domain.ExamRequestAggregate.DomainEvents;
 

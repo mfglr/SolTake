@@ -2,12 +2,12 @@ import 'package:app_file/app_file.dart';
 import 'package:app_file_slider/app_file_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/message/pages/create_message_medias_page/constants.dart';
 import 'package:my_social_app/views/message/pages/create_message_medias_page/widgets/message_text_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateMessageMediasPage extends StatefulWidget {
