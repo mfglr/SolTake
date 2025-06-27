@@ -10,7 +10,7 @@ import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/display_abstract_unsolved_questions_page/display_abstracts_unsolved_questions_page_constants.dart';
-import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
+import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
@@ -94,7 +94,7 @@ class _DisplayAbstractsUnsolvedQuestionsPageState extends State<DisplayAbstracts
                     onTap: (id) =>
                       Navigator
                         .of(context)
-                        .push(MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(
+                        .push(MaterialPageRoute(builder: (context) => DisplayUserUnsolvedQuestionsPage(
                           userId: widget.userId,
                           firstDisplayedQuestionId: id,
                         ))),
