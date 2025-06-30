@@ -11,7 +11,7 @@ import 'package:my_social_app/state/app_state/home_page_questions_state/middlewa
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/app_exams_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';

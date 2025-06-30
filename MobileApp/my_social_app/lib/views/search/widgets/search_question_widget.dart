@@ -15,6 +15,7 @@ import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/question/pages/display_search_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
+import 'package:my_social_app/views/shared/exam_selector/exam_selector.dart';
 
 class SearchQuestionWidget extends StatefulWidget {
   const SearchQuestionWidget({super.key});
@@ -34,37 +35,8 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
       children: [
         Row(
           children: [
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                child: StoreConnector<AppState,Iterable<ExamState>>(
-                  onInit: (store) => getNextPageIfNoPage(store,store.state.appExams,const NextExamsAction()),
-                  converter: (store) => store.state.examEntityState.values,
-                  builder:(context,exams) => DropdownSearch<String>(
-                    selectedItem: exams.where((x) => x.id == _examId).firstOrNull?.initialism,
-                    items: exams.map((e) => e.initialism).toList(),
-                    dropdownDecoratorProps: DropDownDecoratorProps(
-                      dropdownSearchDecoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.search_question_widget_select_exam
-                      ),
-                    ),
-                    onChanged: (value){
-                      final store = StoreProvider.of<AppState>(context,listen: false);
-                      final exam = exams.firstWhere((exam) => exam.initialism == value);
-                      if(exam.id == _examId) return;
-                      
-                      setState((){
-                        _examId = exam.id;
-                        _subjectId = null;
-                        _topicId = null;
-                      });
-                      
-                      getNextPageIfNoPage(store, exam.subjects, NextExamSubjectsAction(examId: exam.id));
-                      store.dispatch(FirstSearchQuestionsAction(examId: _examId, subjectId: _subjectId, topicId: _topicId));
-                    },
-                  ),
-                ),
-              )
+            const Expanded(
+              child: ExamSelector()
             ),
             Expanded(
               child: Container(
@@ -98,6 +70,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
             )
           ],
         ),
+        
         Container(
           margin: const EdgeInsets.all(5),
           child: StoreConnector<AppState,Iterable<TopicState>>(

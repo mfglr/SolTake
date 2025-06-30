@@ -22,7 +22,7 @@ class ExamService{
       .get("$examController/$getExamByIdEndpoint")
       .then((json) => Exam.fromJson(json));
 
-  Future<Iterable<Exam>> search(String key, Page page) =>
+  Future<Iterable<Exam>> search(String? key, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$examController/search", page, values: { 'key': key }))
       .then((json) => json as List)
