@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_publishing_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_question_likes_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/display_video_solutions_button.dart';
@@ -151,19 +146,10 @@ class QuestionItemWidget extends StatelessWidget {
             margin: const EdgeInsets.all(8),
             child: Wrap(
               children: [
-                StoreConnector<AppState,ExamState>(
-                  converter: (store) => store.state.examEntityState.getValue(question.examId)!,
-                  builder: (context,exam) => ExamTagItem(exam: exam)
-                ),
-                StoreConnector<AppState,SubjectState>(
-                  converter: (store) => store.state.subjectEntityState.getValue(question.subjectId)!,
-                  builder: (context,subject) => SubjectTagItem(subject: subject,)
-                ),
-                if(question.topicId != null)
-                  StoreConnector<AppState,TopicState>(
-                    converter: (store) => store.state.topicEntityState.getValue(question.topicId!)!,
-                    builder: (context,topic) => TopicTagItem(topic: topic),
-                  ),
+                ExamTagItem(exam: question.exam),
+                SubjectTagItem(subject: question.subject),
+                if(question.topic != null)
+                  TopicTagItem(topic: question.topic!)
               ]
             ),
           ),

@@ -6,7 +6,6 @@ import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/app_exams_state/reducers.dart';
-import 'package:my_social_app/state/app_state/home_page_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
@@ -15,6 +14,7 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/red
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/reducers.dart';
+import 'package:my_social_app/state/app_state/questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
@@ -38,6 +38,8 @@ import 'package:redux/redux.dart';
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
+  questions: questionsReducers(prev.questions, action),
+  
   searchUsers: searchUsersReducers(prev.searchUsers,action),
   searchQuestions: searchQuestionsReducer(prev.searchQuestions,action),
   userUserSearchs: userUserSearchsReducers(prev.userUserSearchs,action),
@@ -57,12 +59,11 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   examRequests: examRequestReducers(prev.examRequests, action),
   subjectRequests: subjectRequestsReducers(prev.subjectRequests, action),
   topicRequests: topicRequestsReducers(prev.topicRequests, action),
-  
+
   examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),
   solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
-  homePageQuestions: homePageQuestionsReducers(prev.homePageQuestions, action),
   commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
   notifications: notificationEntityStateReducers(prev.notifications,action),
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),

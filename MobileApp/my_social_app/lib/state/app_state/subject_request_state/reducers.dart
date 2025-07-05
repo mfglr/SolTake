@@ -16,7 +16,7 @@ Pagination<int,SubjectRequestState> nextSubjectRequestsFailedReducer(Pagination<
 Pagination<int,SubjectRequestState> firstSubjectRequestsReducers(Pagination<int, SubjectRequestState> prev, FirstSubjectRequestsAction action)
   => prev.startLoadingNext();
 Pagination<int,SubjectRequestState> firstSubjectRequestsSuccessReducer(Pagination<int, SubjectRequestState> prev, FirstSubjectRequestsSuccessAction action)
-  => prev.addfirstPage(action.subjectRequests);
+  => prev.refreshPage(action.subjectRequests);
 Pagination<int,SubjectRequestState> firstSubjectRequestsFailedReducer(Pagination<int,SubjectRequestState> prev, FirstSubjectRequestsFailedAction action)
   => prev.stopLoadingNext();
 

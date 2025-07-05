@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 
 class LikeButton extends StatelessWidget {
@@ -17,10 +17,10 @@ class LikeButton extends StatelessWidget {
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
         if(question.isLiked){
-          store.dispatch(DislikeQuestionAction(questionId: question.id));
+          store.dispatch(DislikeQuestionAction(question: question));
         }
         else{
-          store.dispatch(LikeQuestionAction(questionId: question.id));
+          store.dispatch(LikeQuestionAction(question: question));
         }
       },
       style: ButtonStyle(

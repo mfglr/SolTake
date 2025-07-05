@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/helpers/start_creating_question.dart';
-import 'package:my_social_app/state/app_state/home_page_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/home_page/widgets/create_story_widget.dart';
 import 'package:my_social_app/views/home_page/widgets/notification_button.dart';
 import 'package:my_social_app/views/home_page/widgets/uploadings_button.dart';
 import 'package:my_social_app/views/question/widgets/question_list_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/story/widgets/story_circles_widget.dart';
 
 
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     _scrollController,
     (){
       final store = StoreProvider.of<AppState>(context,listen: false);
-      getNextEntitiesIfReady(store, store.state.homePageQuestions, const NextHomeQuestionsAction());
+      store.dispatch(const NextHomePageQuestionsAction());
     }
   );
 
@@ -55,9 +55,9 @@ class _HomePageState extends State<HomePage> {
     return RefreshIndicator(
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(const FirstHomeQuestionsAction());
+        refreshEntities(store, selectHomePageQuestionPagination(store), const RefreshHomePageQuestionsAction());
         store.dispatch(const GetStoriesAction());
-        return store.onChange.map((state) => state.homePageQuestions).firstWhere((x) => !x.loadingNext);
+        return store.onChange.map((state) => state.questions.homePageQuestions).firstWhere((x) => !x.loadingNext);
       },
       child: Scaffold(
         appBar: AppBar(
@@ -92,19 +92,19 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              StoreConnector<AppState,Iterable<QuestionState>>(
-                onInit: (store) => getNextPageIfNoPage(store,store.state.homePageQuestions,const NextHomeQuestionsAction()),
-                converter: (store) => store.state.selectHomePageQuestions,
-                builder:(context,questions) => Column(
+              StoreConnector<AppState, Pagination<int, QuestionState>>(
+                onInit: (store) => 
+                  getNextEntitiesIfNoPage(
+                    store,
+                    selectHomePageQuestionPagination(store),
+                    const NextHomePageQuestionsAction()
+                  ),
+                converter: (store) => selectHomePageQuestionPagination(store),
+                builder:(context, pagination) => Column(
                   children: [
-                    QuestionListWidget(questions: questions),
-                    StoreConnector<AppState,Pagination>(
-                      converter: (store) => store.state.homePageQuestions,
-                      builder: (context,pagination) => 
-                        pagination.loadingNext
-                          ? const LoadingCircleWidget(strokeWidth: 3)
-                          : const SpaceSavingWidget(),
-                    )
+                    QuestionListWidget(questions: pagination.values),
+                    if(pagination.loadingNext)
+                      const LoadingCircleWidget()
                   ],
                 ),
               )

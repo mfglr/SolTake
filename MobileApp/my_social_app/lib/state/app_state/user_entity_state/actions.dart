@@ -4,7 +4,6 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
 @immutable
@@ -132,25 +131,6 @@ class NextuserFollowedsFailedAction extends AppAction{
   const NextuserFollowedsFailedAction({required this.userId});
 }
 
-
-@immutable
-class NextUserQuestionsAction extends AppAction{
-  final int userId;
-  const NextUserQuestionsAction({required this.userId});
-}
-@immutable
-class NextUserQuestionsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<Id<int>> questionIds;
-  const NextUserQuestionsSuccessAction({required this.userId,required this.questionIds});
-}
-@immutable
-class NextUserQuestionsFailedAction extends AppAction{
-  final int userId;
-  const NextUserQuestionsFailedAction({required this.userId});
-}
-
-
 @immutable
 class AddNewUserQuestionAction extends AppAction{
   final int userId;
@@ -162,76 +142,6 @@ class RemoveUserQuestionAction extends AppAction{
   final int userId;
   final int questionId;
   const RemoveUserQuestionAction({required this.userId, required this.questionId});
-}
-
-@immutable
-class NextUserSolvedQuestionsAction extends AppAction{
-  final int userId;
-  const NextUserSolvedQuestionsAction({required this.userId});
-}
-@immutable
-class NextUserSolvedQuestionsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<int> questionIds;
-  const NextUserSolvedQuestionsSuccessAction({required this.userId, required this.questionIds});
-}
-@immutable
-class NextUserSolvedQuestionsFailedAction extends AppAction{
-  final int userId;
-  const NextUserSolvedQuestionsFailedAction({required this.userId});
-}
-
-@immutable
-class NextUserUnsolvedQuestionsAction extends AppAction{
-  final int userId;
-  const NextUserUnsolvedQuestionsAction({required this.userId});
-}
-@immutable
-class NextUserUnsolvedQuestionsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<int> questionIds;
-  const NextUserUnsolvedQuestionsSuccessAction({required this.userId, required this.questionIds});
-}
-@immutable
-class NextUserUnsolvedQuestionsFailedAction extends AppAction{
-  final int userId;
-  const NextUserUnsolvedQuestionsFailedAction({required this.userId});
-}
-
-@immutable
-class NextUserConversationsAction extends AppAction{
-  final int userId;
-  const NextUserConversationsAction({required this.userId});
-}
-@immutable
-class NextUserConversationsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<int> ids;
-  const NextUserConversationsSuccessAction({required this.userId,required this.ids});
-}
-@immutable
-class NextUserConversationsFailedAction extends AppAction{
-  final int userId;
-  const NextUserConversationsFailedAction({required this.userId});
-}
-
-@immutable
-class AddUserConversationAction extends AppAction{
-  final int userId;
-  final int id;
-  const AddUserConversationAction({required this.userId, required this.id});
-}
-@immutable
-class AddUserConversationInOrderAction extends AppAction{
-  final int userId;
-  final int id;
-  const AddUserConversationInOrderAction({required this.userId, required this.id});
-}
-@immutable
-class RemoveUserConversationAction extends AppAction{
-  final int userId;
-  final int id;
-  const RemoveUserConversationAction({required this.userId, required this.id});
 }
 
 @immutable

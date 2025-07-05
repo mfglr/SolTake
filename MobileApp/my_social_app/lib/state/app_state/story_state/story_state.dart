@@ -83,7 +83,7 @@ class StoryState extends Entity<int>{
       viewers: viewers.stopLoadingNext(),
       numberOfViewers: numberOfViewers
     );
-  StoryState addFirstPageViews(Iterable<StoryUserViewState> storyUserViews) =>
+  StoryState refreshPageViews(Iterable<StoryUserViewState> storyUserViews) =>
     StoryState(
       id: id,
       createdAt: createdAt,
@@ -92,7 +92,7 @@ class StoryState extends Entity<int>{
       userName: userName,
       image: image,
       media: media,
-      viewers: viewers.addfirstPage(storyUserViews),
+      viewers: viewers.refreshPage(storyUserViews),
       numberOfViewers: numberOfViewers
     );
   StoryState addNextPageViews(Iterable<StoryUserViewState> storyUserView) =>

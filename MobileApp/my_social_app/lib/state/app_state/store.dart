@@ -7,7 +7,6 @@ import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.da
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/home_page_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
@@ -17,7 +16,11 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/mid
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
@@ -44,6 +47,19 @@ import 'package:redux/redux.dart';
 final store = Store(
   reducers,
   initialState: AppState(
+    questions: QuestionsState(
+      userQuestions: const <int, Pagination<int, QuestionState>>{},
+      userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
+      userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
+      examQuestions: const <int, Pagination<int, QuestionState>>{},
+      subjectQuestions: const <int, Pagination<int, QuestionState>>{},
+      topicQuestions: const <int, Pagination<int, QuestionState>>{},
+      homePageQuestions: Pagination.init(questionsPerPage, true),
+      searchPageQuestions: Pagination.init(questionsPerPage, true),
+      savedQuestions: Pagination.init(questionsPerPage, true),
+      questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
+
+    ),
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
@@ -66,7 +82,6 @@ final store = Store(
     userMessageState: EntityState(),
 
     questionEntityState: EntityState(),
-    homePageQuestions: Pagination.init(questionsPerPage, true),
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     login: Login.loading(),
@@ -82,7 +97,26 @@ final store = Store(
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
+    //questions
+    likeQuestionMiddleware,
+    dislikeQuestionMiddleware,
     
+    nextQuestionUserLikesMiddleware,
+    refreshQuestionUserLikesMiddleware,
+
+    nextHomePageQuestionsMiddleware,
+    refreshHomePageQuestionsMiddleware,
+
+    nextUserQuestionsMiddleware,
+    refreshUserQuestionsMiddleware,
+
+    nextUserSolvedQuestionsMiddleware,
+    refreshUserSolvedQuestionsMiddleware,
+
+    nextUserUnsolvedQuestionsMiddleware,
+    refreshUserUnsolvedQuestionsMiddleware,
+    //questions
+
     //question user save middlewares
     createQuestionUserSaveMiddleware,
     deleteQuestionUserSaveMiddleware,
@@ -147,10 +181,6 @@ final store = Store(
     
     nextCommentChildrenMiddleware,
 
-    //Home page state
-    nextHomeQuestionsMiddleware,
-    prevHomeQuestionsMiddleware,
-    firstHomeQuestionsMiddleware,
     
     //account start
     loginByRefreshTokenMiddleware,
@@ -191,9 +221,6 @@ final store = Store(
 
     nextUserFollowersMiddleware,
     nextUserFollowedsMiddleware,
-    nextUserQuestionsMiddleware,
-    nextUserSolvedQuestionsMiddleware,
-    nextUserUnsolvedQuestionsMiddleware,
 
     updateUserNameMiddleware,
     updateNameMiddleware,
@@ -231,10 +258,7 @@ final store = Store(
     deleteQuestionMiddleware,
     // saveQuestionMiddleware,
     // unsaveQuestionMiddleware,
-    likeQuestionMiddleware,
-    dislikeQuestionMiddleware,
 
-    nextQuestionLikesMiddleware,
     nextQuestionSolutionsMiddleware,
     nextQuestionCorrectSolutionsMiddleware,
     nextQuestionPendingSolutionsMiddleware,

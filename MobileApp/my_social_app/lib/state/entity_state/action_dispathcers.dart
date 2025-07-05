@@ -34,3 +34,9 @@ void getPrevEntitiesIfReady(Store<AppState> store, Pagination pagination, action
     store.dispatch(action);
   }
 }
+
+void refreshEntities(Store<AppState> store, Pagination pagination, action){
+  if(!pagination.loadingNext){
+    store.dispatch(action);
+  }
+}

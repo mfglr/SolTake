@@ -9,7 +9,7 @@ Pagination<int,SearchUserState> removeSearchUserReducer(Pagination<int, SearchUs
 Pagination<int,SearchUserState> firstSearchUsersReducer(Pagination<int,SearchUserState> prev,FirstSearchUsersAction action)
   => prev.startLoadingNext();
 Pagination<int,SearchUserState> firstSearchUsersSuccessReducer(Pagination<int,SearchUserState> prev, FirstSearchUsersSuccessAction action)
-  => prev.addfirstPage(action.users);
+  => prev.refreshPage(action.users);
 Pagination<int,SearchUserState> firstSearchUsersFailedReducer(Pagination<int,SearchUserState> prev, FirstSearchUsersFailedAction action)
   => prev.stopLoadingNext();
 

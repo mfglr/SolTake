@@ -3,11 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/display_abstract_solved_questions_page/display_abstract_solved_questions_page_constants.dart';
 import 'package:my_social_app/views/question/pages/display_user_solved_questions_page.dart';
@@ -35,7 +34,7 @@ class _DisplayAbstractSolvedQuestionsPageState extends State<DisplayAbstractSolv
         final store = StoreProvider.of<AppState>(context,listen: false);
         getNextEntitiesIfReady(
           store,
-          selectUserSolvedQuestionsPagination(store, widget.userId),
+          selectUserSolvedQuestions(store, widget.userId),
           NextUserSolvedQuestionsAction(userId: widget.userId)
         );
       }
@@ -56,13 +55,13 @@ class _DisplayAbstractSolvedQuestionsPageState extends State<DisplayAbstractSolv
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,Pagination<int,Id<int>>>(
+    return StoreConnector<AppState,Pagination<int, QuestionState>>(
       onInit: (store) => getNextEntitiesIfNoPage(
         store,
-        selectUserSolvedQuestionsPagination(store, widget.userId),
+        selectUserSolvedQuestions(store, widget.userId),
         NextUserSolvedQuestionsAction(userId: widget.userId)
       ),
-      converter: (store) => selectUserSolvedQuestionsPagination(store, widget.userId),
+      converter: (store) => selectUserSolvedQuestions(store, widget.userId),
       builder: (context, pagination) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -80,26 +79,23 @@ class _DisplayAbstractSolvedQuestionsPageState extends State<DisplayAbstractSolv
             )
           else
             Expanded(
-              child: StoreConnector<AppState, Iterable<QuestionState>>(
-                converter: (store) => selectUserSolvedQuestions(store, widget.userId),
-                builder: (context, questions) => GridView.builder(
-                  controller: _scrollController,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: questions.length,
-                  itemBuilder: (context,index) => QuestionAbstractItemWidget(
-                    key: ValueKey(questions.elementAt(index).id),
-                    question: questions.elementAt(index),
-                    onTap: (id) =>
-                      Navigator
-                        .of(context)
-                        .push(MaterialPageRoute(builder: (context) => DisplayUserSolvedQuestionsPage(
-                          userId: widget.userId,
-                          firstDisplayedQuestionId: id,
-                        ))),
-                  )
+              child:  GridView.builder(
+                controller: _scrollController,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
                 ),
+                itemCount: pagination.values.length,
+                itemBuilder: (context,index) => QuestionAbstractItemWidget(
+                  key: ValueKey(pagination.values.elementAt(index).id),
+                  question: pagination.values.elementAt(index),
+                  onTap: (id) =>
+                    Navigator
+                      .of(context)
+                      .push(MaterialPageRoute(builder: (context) => DisplayUserSolvedQuestionsPage(
+                        userId: widget.userId,
+                        firstDisplayedQuestionId: id,
+                      ))),
+                )
               ),
             ),
           if(pagination.loadingNext)

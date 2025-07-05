@@ -20,7 +20,7 @@ Pagination<int, TopicRequestState> nextTopicRequestsFailedReducer(Pagination<int
 Pagination<int, TopicRequestState> firstTopicRequestsReducer(Pagination<int, TopicRequestState> prev, FirstTopicRequestsAction action)
   => prev.startLoadingNext();
 Pagination<int, TopicRequestState> firstTopicRequestsSuccessReducer(Pagination<int, TopicRequestState> prev, FirstTopicRequestsSuccessAction action)
-  => prev.addfirstPage(action.topicRequests);
+  => prev.refreshPage(action.topicRequests);
 Pagination<int, TopicRequestState> firstTopicRequestsFailedReducer(Pagination<int, TopicRequestState> prev, FirstTopicRequestsFailedAction action)
   => prev.stopLoadingNext();
 

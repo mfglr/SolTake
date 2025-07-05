@@ -27,9 +27,6 @@ class UserState extends Entity<int> implements Avatar{
   final UserImageState? userImageState;
   final Pagination<int,FollowState> followers;
   final Pagination<int,FollowState> followeds;
-  final Pagination<int,Id<int>> questions;
-  final Pagination<int,Id<int>> solvedQuestions;
-  final Pagination<int,Id<int>> unsolvedQuestions;
   final Pagination<int,Id<int>> savedSolutions;
 
   @override
@@ -60,9 +57,6 @@ class UserState extends Entity<int> implements Avatar{
     required this.isFollowed,
     required this.followers,
     required this.followeds,
-    required this.questions,
-    required this.solvedQuestions,
-    required this.unsolvedQuestions,
     required this.savedSolutions,
     required this.image,
     required this.userImageState,
@@ -81,9 +75,6 @@ class UserState extends Entity<int> implements Avatar{
     bool? newIsFollowed,
     Pagination<int,FollowState>? newFollowers,
     Pagination<int,FollowState>? newFolloweds,
-    Pagination<int,Id<int>>? newQuestions,
-    Pagination<int,Id<int>>? newSolvedQuestions,
-    Pagination<int,Id<int>>? newUnsolvedQuestions,
     Pagination<int,Id<int>>? newSavedSolutions,
     Multimedia? newImage,
     UserImageState? newUserImageState
@@ -101,9 +92,6 @@ class UserState extends Entity<int> implements Avatar{
     isFollowed: newIsFollowed ?? isFollowed,
     followers: newFollowers ?? followers,
     followeds: newFolloweds ?? followeds,
-    questions: newQuestions ?? questions,
-    solvedQuestions: newSolvedQuestions ?? solvedQuestions,
-    unsolvedQuestions: newUnsolvedQuestions ?? unsolvedQuestions,
     savedSolutions: newSavedSolutions ?? savedSolutions,
     image: newImage ?? image,
     stories: stories,
@@ -172,55 +160,6 @@ class UserState extends Entity<int> implements Avatar{
     _optional(
       newNumberOfFolloweds: numberOfFolloweds - 1,
       newFolloweds: followeds.where((e) => e.userId != followedId)
-    );
-
-  //questions
-  UserState startLoadingNextQuestions() =>
-    _optional(newQuestions: questions.startLoadingNext());
-  UserState stopLoadingNextQuestions() =>
-    _optional(newQuestions: questions.stopLoadingNext());
-  UserState addNextPageQuestions(Iterable<Id<int>> ids) =>
-    _optional(newQuestions: questions.addNextPage(ids));
-
-  UserState addNewQuestion(int questionId) =>
-    _optional(
-      newNumberOfQuestions: numberOfQuestions + 1,
-      newQuestions: questions.prependOne(Id(id: questionId)),
-      newUnsolvedQuestions: unsolvedQuestions.prependOne(Id(id: questionId))
-    );
-  UserState removeQuestion(int questionId) =>
-    _optional(
-      newNumberOfQuestions: numberOfQuestions - 1,
-      newQuestions: questions.removeOne(questionId),
-      newSolvedQuestions: solvedQuestions.removeOne(questionId),
-      newUnsolvedQuestions: unsolvedQuestions.removeOne(questionId)
-    );
-  
-  //solved questions
-  UserState startLoadingNextSolvedQuestions() =>
-    _optional(newSolvedQuestions: solvedQuestions.startLoadingNext());
-  UserState stopLoadingNextSolvedQuestions() =>
-    _optional(newSolvedQuestions: solvedQuestions.stopLoadingNext());
-  UserState addNextSolvedQuestions(Iterable<int> ids) =>
-    _optional(newSolvedQuestions: solvedQuestions.addNextPage(ids.map((e) => Id(id: e))));
-
-  //unsolved questions
-  UserState startLoadingNextUnsolvedQuestions() =>
-    _optional(newUnsolvedQuestions: unsolvedQuestions.startLoadingNext());
-  UserState addNextUnsolvedQuestions(Iterable<int> ids) =>
-    _optional(newUnsolvedQuestions: unsolvedQuestions.addNextPage(ids.map((e) => Id(id: e))));
-  UserState stopLoadingNextUnsolvedQuestion() =>
-    _optional(newUnsolvedQuestions: unsolvedQuestions.stopLoadingNext());
-
-  UserState markQuestionAsSolved(int id) =>
-    _optional(
-      newSolvedQuestions: solvedQuestions.values.any((e) => e.id == id) ? solvedQuestions : solvedQuestions.addInOrder(Id(id: id)),
-      newUnsolvedQuestions: unsolvedQuestions.removeOne(id)
-    );
-  UserState markQuestionAsUnsolved(int id) =>
-    _optional(
-      newSolvedQuestions: solvedQuestions.removeOne(id),
-      newUnsolvedQuestions: unsolvedQuestions.addInOrder(Id(id: id)),
     );
 
   //saved solutions

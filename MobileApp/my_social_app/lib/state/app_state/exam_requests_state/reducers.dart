@@ -18,7 +18,7 @@ Pagination<int,ExamRequestState> nextExamRequestsFailedReducer(Pagination<int,Ex
 Pagination<int,ExamRequestState> firstExamRequestsReducer(Pagination<int,ExamRequestState> prev, FirstExamRequestsAction action)
   => prev.startLoadingNext();
 Pagination<int,ExamRequestState> firstExamRequestsSuccessReducer(Pagination<int,ExamRequestState> prev, FirstExamRequestsSuccessAction action)
-  => prev.addfirstPage(action.examRequests);
+  => prev.refreshPage(action.examRequests);
 Pagination<int,ExamRequestState> firstExamRequestsFailedReducer(Pagination<int,ExamRequestState> prev, FirstExamRequestsFailedAction action)
   => prev.stopLoadingNext();
 

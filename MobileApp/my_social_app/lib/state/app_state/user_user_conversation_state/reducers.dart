@@ -16,7 +16,7 @@ Pagination<int,UserUserConversationState> nextUserUserConversationFailedReducer(
 Pagination<int,UserUserConversationState> firstUserUserConversationsReducer(Pagination<int,UserUserConversationState> prev, FirstUserUserConversationsAction action)
   => prev.startLoadingNext();
 Pagination<int,UserUserConversationState> firstUserUserConversationSuccessReducer(Pagination<int,UserUserConversationState> prev, FirstUserUserConversationsSuccessAction action)
-  => prev.addfirstPage(action.conversations);
+  => prev.refreshPage(action.conversations);
 Pagination<int,UserUserConversationState> firstUserUserConversationFailedReducer(Pagination<int,UserUserConversationState> prev, FirstUserUserConversationsFailedAction action)
   => prev.stopLoadingNext();
 

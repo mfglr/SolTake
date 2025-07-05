@@ -15,7 +15,9 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/question_user_save_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_saves_state/solution_user_save_state.dart';
@@ -37,6 +39,8 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class AppState{
+  final QuestionsState questions;
+
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
@@ -58,7 +62,6 @@ class AppState{
   final EntityState<int,UserMessageState> userMessageState;
 
   final EntityState<int,QuestionState> questionEntityState;
-  final Pagination<int,Id<int>> homePageQuestions;
   final EntityState<int,ExamState> examEntityState;
   final Pagination<int,Id<int>> appExams;
   final Pagination<int,NotificationState> notifications;
@@ -74,6 +77,8 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
+    required this.questions,
+
     required this.searchUsers,
     required this.searchQuestions,
     required this.userUserSearchs,
@@ -95,7 +100,6 @@ class AppState{
     required this.userMessageState,
 
     required this.questionEntityState,
-    required this.homePageQuestions,
     required this.examEntityState,
     required this.appExams,
     required this.conversations,
@@ -112,6 +116,18 @@ class AppState{
   });
 
   AppState clear() => AppState(
+    questions: QuestionsState(
+      userQuestions: const <int, Pagination<int, QuestionState>>{},
+      userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
+      userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
+      examQuestions: const <int, Pagination<int, QuestionState>>{},
+      subjectQuestions: const <int, Pagination<int, QuestionState>>{},
+      topicQuestions: const <int, Pagination<int, QuestionState>>{},
+      homePageQuestions: Pagination.init(questionsPerPage, true),
+      searchPageQuestions: Pagination.init(questionsPerPage, true),
+      savedQuestions: Pagination.init(questionsPerPage, true),
+      questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
+    ),
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
@@ -128,12 +144,11 @@ class AppState{
     examRequests: Pagination.init(examRequestsPerPage, true),
     subjectRequests: Pagination.init(subjectRequestsPerPage, true),
     topicRequests: Pagination.init(topicRequestsPerPage, true),
-
+    
     userEntityState: EntityState(),
     userMessageState: EntityState(),
 
     questionEntityState: EntityState(),
-    homePageQuestions: Pagination.init(questionsPerPage, true),
     examEntityState: EntityState(),
     appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
@@ -182,21 +197,12 @@ class AppState{
   UserState? get currentUser => userEntityState.getValue(login.login!.id);
 
   //Select questions
-  Iterable<QuestionState> get selectHomePageQuestions
-    => homePageQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> selectExamQuestions(int examId)
     => examEntityState.getValue(examId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> selectSubjectQuestions(int subjectId)
     => subjectEntityState.getValue(subjectId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> selectTopicQuestions(int topicId)
     => topicEntityState.getValue(topicId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectUserQuestions(int userId)
-    => userEntityState.getValue(userId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectUserSolvedQuestions(int userId)
-    => userEntityState.getValue(userId)!.solvedQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectUserUnsolvedQuestions(int userId)
-    => userEntityState.getValue(userId)!.unsolvedQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
-  
   Iterable<QuestionState> get selectSearchQuestions
     => searchQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> get selectSavedQuestions

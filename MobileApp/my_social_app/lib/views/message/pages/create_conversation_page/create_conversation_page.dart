@@ -47,7 +47,7 @@ class _CreateConversationPageState extends State<CreateConversationPage> {
     return RefreshIndicator(
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        getPrevPageIfReady(store, store.state.homePageQuestions, const FirstUserUserConversationsAction());
+        getPrevPageIfReady(store, store.state.conversations, const FirstUserUserConversationsAction());
         return store.onChange.map((state) => state.userUserConversations).firstWhere((x) => !x.loadingNext);
       },
       child: Scaffold(
