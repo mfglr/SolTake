@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 Pagination<int,Id<int>> firstSearchQuestionsReducer(Pagination<int,Id<int>> prev, FirstSearchQuestionsAction action)
   => prev.startLoadingNext();
 Pagination<int,Id<int>> firstSearchQuestionsSuccessReducer(Pagination<int,Id<int>> prev, FirstSearchQuestionsSuccessAction action)
-  => prev.addfirstPage(action.ids);
+  => prev.refreshPage(action.ids);
 Pagination<int,Id<int>> firstSearchQuestionsFailedReducer(Pagination<int,Id<int>> prev, FirstSearchQuestionsFailedAction action)
   => prev.stopLoadingNext();
 

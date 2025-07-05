@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
+import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -18,9 +21,9 @@ class QuestionState extends Entity<int> implements Avatar{
   final int userId;
   final String userName;
   final String? content;
-  final int examId;
-  final int subjectId;
-  final int? topicId;
+  final ExamState exam;
+  final SubjectState subject;
+  final TopicState? topic;
   final Iterable<Multimedia> medias;
   final bool isLiked;
   final bool isSaved;
@@ -32,7 +35,6 @@ class QuestionState extends Entity<int> implements Avatar{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final Multimedia? image;
-  final Pagination<int,QuestionUserLikeState> likes;
   final Pagination<int,Id<int>> comments;
   final Pagination<int,Id<int>> solutions;
   final Pagination<int,Id<int>> correctSolutions;
@@ -53,9 +55,9 @@ class QuestionState extends Entity<int> implements Avatar{
     required this.userId,
     required this.userName,
     required this.content,
-    required this.examId,
-    required this.subjectId,
-    required this.topicId,
+    required this.exam,
+    required this.subject,
+    required this.topic,
     required this.medias,
     required this.isLiked,
     required this.isSaved,
@@ -67,7 +69,6 @@ class QuestionState extends Entity<int> implements Avatar{
     required this.numberOfCorrectSolutions,
     required this.numberOfVideoSolutions,
     required this.image,
-    required this.likes,
     required this.comments,
     required this.solutions,
     required this.correctSolutions,
@@ -80,9 +81,6 @@ class QuestionState extends Entity<int> implements Avatar{
     int? newState,
     String? newUserName,
     String? newContent,
-    int? newExamId,
-    int? newSubjectId,
-    int? newTopicId,
     Iterable<Multimedia>? newMedias,
     bool? newIsLiked,
     bool? newIsSaved,
@@ -93,7 +91,6 @@ class QuestionState extends Entity<int> implements Avatar{
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
     Multimedia? newImage,
-    Pagination<int,QuestionUserLikeState>? newLikes,
     Pagination<int,Id<int>>? newComments,
     Pagination<int,Id<int>>? newSolutions,
     Pagination<int,Id<int>>? newCorrectSolutions,
@@ -109,9 +106,9 @@ class QuestionState extends Entity<int> implements Avatar{
       userId: userId,
       userName: newUserName ?? userName,
       content: newContent ?? content,
-      examId: newExamId ?? examId,
-      subjectId: newSubjectId ?? subjectId,
-      topicId: newTopicId ?? topicId,
+      exam: exam,
+      subject: subject,
+      topic: topic,
       medias: newMedias ?? medias,
       isLiked: newIsLiked ?? isLiked,
       isSaved: newIsSaved ?? isSaved,
@@ -123,7 +120,6 @@ class QuestionState extends Entity<int> implements Avatar{
       numberOfCorrectSolutions: newNumberOfCorrectSolutions ?? numberOfCorrectSolutions,
       numberOfVideoSolutions: newNumberOfVideoSolutions ?? numberOfVideoSolutions,
       comments: newComments ?? comments,
-      likes: newLikes ?? likes,
       solutions: newSolutions ?? solutions,
       correctSolutions: newCorrectSolutions ?? correctSolutions,
       pendingSolutions: newPendingSolutions ?? pendingSolutions,
@@ -138,31 +134,28 @@ class QuestionState extends Entity<int> implements Avatar{
     return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
   }
   
-  QuestionState startLodingNextLikes() => _optional(newLikes: likes.startLoadingNext());
-  QuestionState stopLoadingNextLikes() => _optional(newLikes: likes.stopLoadingNext());
-  QuestionState addNextPageLikes(Iterable<QuestionUserLikeState> likes) => _optional(newLikes: this.likes.addNextPage(likes));
+  QuestionState startLodingNextLikes() => _optional();
+  QuestionState stopLoadingNextLikes() => _optional();
+  QuestionState addNextPageLikes(Iterable<QuestionUserLikeState> likes) => _optional();
   
-  QuestionState like(QuestionUserLikeState like) => 
+  QuestionState like() =>
     _optional(
       newIsLiked: true,
-      newLikes: likes.prependOne(like),
       newNumberOfLikes: numberOfLikes + 1
     );
-  QuestionState dislike(int userId) => 
+
+  QuestionState dislike() => 
     _optional(
       newIsLiked: false,
-      newLikes: likes.where((e) => e.userId != userId),
       newNumberOfLikes: numberOfLikes - 1
     ); 
   
   QuestionState addNewLike(QuestionUserLikeState like) =>
     _optional(
-      newLikes: likes.addInOrder(like),
       newNumberOfLikes: numberOfLikes + 1
     );
   QuestionState removeNewLike(int userId) =>
     _optional(
-      newLikes: likes.where((e) => e.userId != userId),
       newNumberOfLikes: numberOfLikes - 1
     );
 

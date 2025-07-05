@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 
 class QuestionLikeButton extends StatelessWidget {
@@ -17,10 +17,10 @@ class QuestionLikeButton extends StatelessWidget {
     return IconButton(
       onPressed: (){
         if(question.isLiked){
-          store.dispatch(DislikeQuestionAction(questionId: question.id));
+          store.dispatch(DislikeQuestionAction(question: question));
         }
         else{
-          store.dispatch(LikeQuestionAction(questionId: question.id));
+          store.dispatch(LikeQuestionAction(question: question));
         }
       },
       style: ButtonStyle(

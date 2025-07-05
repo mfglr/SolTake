@@ -13,7 +13,7 @@ Pagination<int, TransactionState> nextTransactionsFailedReducer(Pagination<int, 
 Pagination<int, TransactionState> firstTransactionsReducer(Pagination<int, TransactionState> prev, FirstTransactionsAction action)
   => prev.startLoadingNext();
 Pagination<int, TransactionState> firstTransactionsSuccessReducer(Pagination<int, TransactionState> prev, FirstTransactionsSuccessAction action)
-  => prev.addfirstPage(action.transactions);
+  => prev.refreshPage(action.transactions);
 Pagination<int, TransactionState> firstTransactionsFailedReducer(Pagination<int, TransactionState> prev, FirstTransactionsFailedAction action)
   => prev.stopLoadingNext();
 

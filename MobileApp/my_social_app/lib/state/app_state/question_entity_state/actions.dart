@@ -2,7 +2,6 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
@@ -48,64 +47,6 @@ class AddQuestionAction extends AppAction{
 class AddQuestionsAction extends AppAction{
   final Iterable<QuestionState> questions;
   const AddQuestionsAction({required this.questions});
-}
-
-
-@immutable
-class DislikeQuestionAction extends AppAction{
-  final int questionId;
-  const DislikeQuestionAction({required this.questionId});
-}
-@immutable
-class DislikeQuestionSuccessAction extends AppAction{
-  final int questionId;
-  final int userId;
-  const DislikeQuestionSuccessAction({
-    required this.questionId,
-    required this.userId
-  });
-}
-
-@immutable
-class LikeQuestionAction extends AppAction{
-  final int questionId;
-  const LikeQuestionAction({required this.questionId});
-}
-@immutable
-class LikeQuestionSuccessAction extends AppAction{
-  final int questionId;
-  final QuestionUserLikeState like;
-  const LikeQuestionSuccessAction({required this.questionId, required this.like});
-}
-
-@immutable
-class AddNewQuestionLikeAction extends AppAction{
-  final int questionId;
-  final QuestionUserLikeState like;
-  const AddNewQuestionLikeAction({required this.questionId, required this.like});
-}
-@immutable
-class RemoveNewQuestionLikeAction extends AppAction{
-  final int questionId;
-  final int userId;
-  const RemoveNewQuestionLikeAction({required this.questionId, required this.userId});
-}
-
-@immutable
-class NextQuestionLikesAction extends AppAction{
-  final int questionId;
-  const NextQuestionLikesAction({required this.questionId});
-}
-@immutable
-class NextQuestionLikesSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<QuestionUserLikeState> likes;
-  const NextQuestionLikesSuccessAction({required this.questionId, required this.likes});
-}
-@immutable
-class NextQuestionLikesFailedAction extends AppAction{
-  final int questionId;
-  const NextQuestionLikesFailedAction({required this.questionId});
 }
 
 @immutable

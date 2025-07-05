@@ -50,7 +50,7 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
       setState(() => _pagination = _pagination.startLoadingNext());
       SubjectService
         .search(key, _pagination.first)
-        .then((subjects) => setState(() => _pagination = _pagination.addfirstPage(subjects.map((e) => e.toSubjectState()))))
+        .then((subjects) => setState(() => _pagination = _pagination.refreshPage(subjects.map((e) => e.toSubjectState()))))
         .catchError((e){
           setState(() => _pagination = _pagination.stopLoadingNext());
           throw e;

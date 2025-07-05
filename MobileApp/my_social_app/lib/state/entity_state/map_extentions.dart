@@ -62,3 +62,9 @@ extension MapExtentions<K extends Comparable,V extends Entity<K>> on Map<K,V>{
   Map<K,V> appendLists(Iterable<Iterable<V>> list) =>
     appendMany(list.expand((e) => e));
 }
+
+extension MapExtentions1<K extends Comparable, V> on Map<K,V>{
+  Map<K,V> prependOne(K key, V value) => { for (var entry in [MapEntry(key, value), ...entries]) entry.key : entry.value };
+  Map<K,V> updateOne(K key, V value) => { for( var entry in [...entries.map((e) => e.key.compareTo(key) == 0 ? MapEntry(key, value) : e)]) entry.key : entry.value };
+  Map<K,V> updateElsePrependOne(K key, V value) => this[key] != null ? updateOne(key, value) : prependOne(key, value);
+}

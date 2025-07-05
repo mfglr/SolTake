@@ -4,16 +4,10 @@ import 'package:my_social_app/services/follow_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/notification_hub.dart';
-import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/user_service.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
@@ -179,60 +173,3 @@ void nextUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher nex
   next(action);
 }
 
-void nextUserQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserQuestionsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.questions;
-    QuestionService()
-      .getByUserId(action.userId,pagination.next)
-      .then((questions){
-        store.dispatch(NextUserQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => Id(id: e.id))));
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
-        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
-      })
-      .catchError((e){
-        store.dispatch(NextUserQuestionsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextUserSolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserSolvedQuestionsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.solvedQuestions;
-    QuestionService()
-      .getSolvedQuestionsByUserId(action.userId, pagination.next)
-      .then((questions){
-        store.dispatch(NextUserSolvedQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((question) => question.id)));
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
-        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
-      })
-      .catchError((e){
-        store.dispatch(NextUserSolvedQuestionsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserUnsolvedQuestionsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.unsolvedQuestions;
-    QuestionService()
-      .getUnsolvedQuestionsByUserId(action.userId, pagination.next)
-      .then((questions){
-        store.dispatch(NextUserUnsolvedQuestionsSuccessAction(userId: action.userId,questionIds: questions.map((e) => e.id)));
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        store.dispatch(AddExamsAction(exams: questions.map((e) => e.exam.toExamState())));
-        store.dispatch(AddSubjectsAction(subjects: questions.map((e) => e.subject.toSubjectState())));
-        store.dispatch(AddTopicsAction(topics: questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState())));
-      })
-      .catchError((e){
-        store.dispatch(NextUserUnsolvedQuestionsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}

@@ -59,7 +59,7 @@ class _SelectExamPageState extends State<SelectExamPage> {
       setState(() => _exams = _exams.startLoadingNext());
       ExamService()
         .search(key, _exams.first)
-        .then((exams) => setState(() => _exams = _exams.addfirstPage(exams.map((e) => e.toExamState()))))
+        .then((exams) => setState(() => _exams = _exams.refreshPage(exams.map((e) => e.toExamState()))))
         .catchError((e){
           setState(() => _exams = _exams.stopLoadingNext());
           throw e;

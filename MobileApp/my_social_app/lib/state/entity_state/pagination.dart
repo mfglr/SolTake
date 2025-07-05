@@ -251,7 +251,7 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         values: [addedOne, ...values.where(test)],
       );
 
-  Pagination<K,V> addfirstPage(Iterable<V> values)
+  Pagination<K,V> refreshPage(Iterable<V> values)
     => Pagination<K,V>(
         isLast: values.length < recordsPerPage,
         loadingNext: false,

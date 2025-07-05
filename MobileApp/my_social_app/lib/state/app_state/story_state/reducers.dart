@@ -22,7 +22,7 @@ EntityState<int,StoryState> nextStoryUserViewsFailedReducer(EntityState<int,Stor
 EntityState<int,StoryState> firstStoryUserViewsReducer(EntityState<int,StoryState> prev, FirstStoryUserViewsAction action)
   => prev.updateOne(prev.getValue(action.storyId)!.startLoadingNext());
 EntityState<int,StoryState> firstStoryUserViewsSuccessReducer(EntityState<int,StoryState> prev, FirstStoryUserViewsSuccessAction action)
-  => prev.updateOne(prev.getValue(action.storyId)!.addFirstPageViews(action.storyUserViews));
+  => prev.updateOne(prev.getValue(action.storyId)!.refreshPageViews(action.storyUserViews));
 EntityState<int,StoryState> firstStoryUserViewsFailedReducer(EntityState<int,StoryState> prev, FirstStoryUserViewsFailedAction action)
   => prev.updateOne(prev.getValue(action.storyId)!.stopLoadingNext());
 

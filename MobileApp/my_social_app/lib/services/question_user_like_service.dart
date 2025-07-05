@@ -11,7 +11,7 @@ class QuestionUserLikeService {
   static final QuestionUserLikeService _singleton = QuestionUserLikeService._(AppClient());
   factory QuestionUserLikeService() => _singleton;
 
-  Future<QuestionUserLike> like(num questionId) =>
+  Future<QuestionUserLike> like(int questionId) =>
     _appClient
       .post(
         "$questionUserLikeController/$likeEndpoint",
@@ -19,11 +19,11 @@ class QuestionUserLikeService {
       )
       .then((json) => QuestionUserLike.fromJson(json));
 
-  Future<void> dislike(num questionId) =>
+  Future<void> dislike(int questionId) =>
     _appClient
       .delete("$questionUserLikeController/$dislikeEndpoint/$questionId");
 
-  Future<Iterable<QuestionUserLike>> getQuestionLikes(num questionId, Page page) =>
+  Future<Iterable<QuestionUserLike>> getQuestionLikes(int questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$questionUserLikeController/$getQuestionLikesEndpoint/$questionId", page))
       .then((json) => json as List)
