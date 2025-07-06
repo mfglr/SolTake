@@ -206,3 +206,73 @@ void refreshExamQuestionsMiddleware(Store<AppState> store, action, NextDispatche
   next(action);
 }
 //exam questions
+
+//subject questions
+void nextSubjectQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextSubjectQuestionsAction){
+    final pagination = selectSubjectQuestions(store, action.subjectId);
+    QuestionService()
+      .getBySubjectId(action.subjectId, pagination.next)
+      .then((questions) => store.dispatch(NextSubjectQuestionsSuccessAction(
+        subjectId: action.subjectId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(NextSubjectQuestionsFailedAction(subjectId: action.subjectId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshSubjectQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshSubjectQuestionsAction){
+    final pagination = selectSubjectQuestions(store, action.subjectId);
+    QuestionService()
+      .getBySubjectId(action.subjectId, pagination.first)
+      .then((questions) => store.dispatch(RefreshSubjectQuestionsSuccessAction(
+        subjectId: action.subjectId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(RefreshSubjectQuestionsFailedAction(subjectId: action.subjectId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//subject questions
+
+//topic questions
+void nextTopicQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextTopicQuestionsAction){
+    final pagination = selectTopicQuestions(store, action.topicId);
+    QuestionService()
+      .getByTopicId(action.topicId, pagination.next)
+      .then((questions) => store.dispatch(NextTopicQuestionsSuccessAction(
+        topicId: action.topicId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(NextTopicQuestionsFailedAction(topicId: action.topicId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshTopicQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshTopicQuestionsAction){
+    final pagination = selectTopicQuestions(store, action.topicId);
+    QuestionService()
+      .getByTopicId(action.topicId, pagination.first)
+      .then((questions) => store.dispatch(RefreshTopicQuestionsSuccessAction(
+        topicId: action.topicId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(RefreshTopicQuestionsFailedAction(topicId: action.topicId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//topic questions

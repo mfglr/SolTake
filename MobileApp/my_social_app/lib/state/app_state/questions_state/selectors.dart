@@ -23,5 +23,11 @@ Pagination<int, QuestionState> selectUserUnsolvedQuestions(Store<AppState> store
 Pagination<int, QuestionState> selectExamQuestions(Store<AppState> store, int examId) =>
   store.state.questions.examQuestions[examId] ?? Pagination.init(questionsPerPage, true);
 
+Pagination<int, QuestionState> selectSubjectQuestions(Store<AppState> store, int subjectId) =>
+  store.state.questions.subjectQuestions[subjectId] ?? Pagination.init(questionsPerPage, true);
+
+Pagination<int, QuestionState> selectTopicQuestions(Store<AppState> store, int topicId) =>
+  store.state.questions.topicQuestions[topicId] ?? Pagination.init(questionsPerPage, true);
+
 Pagination<int, QuestionUserLikeState> selectQuestionUserLikes(Store<AppState> store, int questionId) =>
   store.state.questions.questionUserLikes[questionId] ?? Pagination.init(questionUserLikesPerPage, true);

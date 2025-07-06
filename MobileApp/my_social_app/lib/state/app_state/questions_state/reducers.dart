@@ -264,6 +264,98 @@ QuestionsState refreshExamQuestionsFailedReducer(QuestionsState prev, RefreshExa
     );
 // exam questions
 
+// subject questions
+QuestionsState nextSubjectQuestionsReducer(QuestionsState prev, NextSubjectQuestionsAction action)
+  => prev.optional(
+      newSubjectQuestions: prev.subjectQuestions.updateElsePrependOne(
+        action.subjectId,
+        (prev.subjectQuestions[action.subjectId] ?? Pagination.init(questionsPerPage, true)).startLoadingNext()
+      )
+    );
+QuestionsState nextSubjectQuestionsSuccessReducer(QuestionsState prev, NextSubjectQuestionsSuccessAction action)
+  => prev.optional(
+      newSubjectQuestions: prev.subjectQuestions.updateOne(
+        action.subjectId,
+        prev.subjectQuestions[action.subjectId]!.addNextPage(action.questions)
+      )
+    );
+QuestionsState nextSubjectQuestionsFailedReducer(QuestionsState prev, NextSubjectQuestionsFailedAction action)
+  => prev.optional(
+      newSubjectQuestions: prev.subjectQuestions.updateOne(
+        action.subjectId,
+        prev.subjectQuestions[action.subjectId]!.stopLoadingNext()
+      )
+    );
+
+QuestionsState refreshSubjectQuestionsReducer(QuestionsState prev, RefreshSubjectQuestionsAction action)
+  => prev.optional(
+      newSubjectQuestions: prev.subjectQuestions.updateElsePrependOne(
+        action.subjectId,
+        (prev.subjectQuestions[action.subjectId] ?? Pagination.init(questionsPerPage, true)).clear().startLoadingNext()
+      )
+    );
+QuestionsState refreshSubjectQuestionsSuccessReducer(QuestionsState prev, RefreshSubjectQuestionsSuccessAction action)
+  => prev.optional(
+      newSubjectQuestions: prev.subjectQuestions.updateOne(
+        action.subjectId,
+        prev.subjectQuestions[action.subjectId]!.refreshPage(action.questions)
+      )
+    );
+QuestionsState refreshSubjectQuestionsFailedReducer(QuestionsState prev, RefreshSubjectQuestionsFailedAction action)
+  => prev.optional(
+      newSubjectQuestions: prev.subjectQuestions.updateOne(
+        action.subjectId,
+        prev.subjectQuestions[action.subjectId]!.stopLoadingNext()
+      )
+    );
+// Subject questions
+
+// topic questions
+QuestionsState nextTopicQuestionsReducer(QuestionsState prev, NextTopicQuestionsAction action)
+  => prev.optional(
+      newTopicQuestions: prev.topicQuestions.updateElsePrependOne(
+        action.topicId,
+        (prev.topicQuestions[action.topicId] ?? Pagination.init(questionsPerPage, true)).startLoadingNext()
+      )
+    );
+QuestionsState nextTopicQuestionsSuccessReducer(QuestionsState prev, NextTopicQuestionsSuccessAction action)
+  => prev.optional(
+      newTopicQuestions: prev.topicQuestions.updateOne(
+        action.topicId,
+        prev.topicQuestions[action.topicId]!.addNextPage(action.questions)
+      )
+    );
+QuestionsState nextTopicQuestionsFailedReducer(QuestionsState prev, NextTopicQuestionsFailedAction action)
+  => prev.optional(
+      newTopicQuestions: prev.topicQuestions.updateOne(
+        action.topicId,
+        prev.topicQuestions[action.topicId]!.stopLoadingNext()
+      )
+    );
+
+QuestionsState refreshTopicQuestionsReducer(QuestionsState prev, RefreshTopicQuestionsAction action)
+  => prev.optional(
+      newTopicQuestions: prev.topicQuestions.updateElsePrependOne(
+        action.topicId,
+        (prev.topicQuestions[action.topicId] ?? Pagination.init(questionsPerPage, true)).clear().startLoadingNext()
+      )
+    );
+QuestionsState refreshTopicQuestionsSuccessReducer(QuestionsState prev, RefreshTopicQuestionsSuccessAction action)
+  => prev.optional(
+      newTopicQuestions: prev.topicQuestions.updateOne(
+        action.topicId,
+        prev.topicQuestions[action.topicId]!.refreshPage(action.questions)
+      )
+    );
+QuestionsState refreshTopicQuestionsFailedReducer(QuestionsState prev, RefreshTopicQuestionsFailedAction action)
+  => prev.optional(
+      newTopicQuestions: prev.topicQuestions.updateOne(
+        action.topicId,
+        prev.topicQuestions[action.topicId]!.stopLoadingNext()
+      )
+    );
+//topic questions
+
 Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   //question user likes
   TypedReducer<QuestionsState,NextQuestionUserLikesAction>(nextQuestionUserLikesReducer).call,
@@ -318,7 +410,7 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,RefreshUserUnsolvedQuestionsFailedAction>(refreshUserUnsolvedQuestionsFailedReducer).call,
   //user unsolved questions
 
-  //user unsolved questions
+  //exam questions
   TypedReducer<QuestionsState,NextExamQuestionsAction>(nextExamQuestionsReducer).call,
   TypedReducer<QuestionsState,NextExamQuestionsSuccessAction>(nextExamQuestionsSuccessReducer).call,
   TypedReducer<QuestionsState,NextExamQuestionsFailedAction>(nextExamQuestionsFailedReducer).call,
@@ -326,5 +418,25 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,RefreshExamQuestionsAction>(refreshExamQuestionsReducer).call,
   TypedReducer<QuestionsState,RefreshExamQuestionsSuccessAction>(refreshExamQuestionsSuccessReducer).call,
   TypedReducer<QuestionsState,RefreshExamQuestionsFailedAction>(refreshExamQuestionsFailedReducer).call,
-  //user unsolved questions
+  //exam questions
+
+  //subject questions
+  TypedReducer<QuestionsState,NextSubjectQuestionsAction>(nextSubjectQuestionsReducer).call,
+  TypedReducer<QuestionsState,NextSubjectQuestionsSuccessAction>(nextSubjectQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,NextSubjectQuestionsFailedAction>(nextSubjectQuestionsFailedReducer).call,
+
+  TypedReducer<QuestionsState,RefreshSubjectQuestionsAction>(refreshSubjectQuestionsReducer).call,
+  TypedReducer<QuestionsState,RefreshSubjectQuestionsSuccessAction>(refreshSubjectQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,RefreshSubjectQuestionsFailedAction>(refreshSubjectQuestionsFailedReducer).call,
+  //subject questions
+
+  //topic questions
+  TypedReducer<QuestionsState,NextTopicQuestionsAction>(nextTopicQuestionsReducer).call,
+  TypedReducer<QuestionsState,NextTopicQuestionsSuccessAction>(nextTopicQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,NextTopicQuestionsFailedAction>(nextTopicQuestionsFailedReducer).call,
+
+  TypedReducer<QuestionsState,RefreshTopicQuestionsAction>(refreshTopicQuestionsReducer).call,
+  TypedReducer<QuestionsState,RefreshTopicQuestionsSuccessAction>(refreshTopicQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,RefreshTopicQuestionsFailedAction>(refreshTopicQuestionsFailedReducer).call,
+  //topic questions
 ]);

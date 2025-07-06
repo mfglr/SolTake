@@ -30,7 +30,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
@@ -118,6 +117,12 @@ final store = Store(
 
     nextExamQuestionsMiddleware,
     refreshExamQuestionsMiddleware,
+
+    nextSubjectQuestionsMiddleware,
+    refreshSubjectQuestionsMiddleware,
+
+    nextTopicQuestionsMiddleware,
+    refreshTopicQuestionsMiddleware,
     //questions
 
     //question user save middlewares
@@ -244,14 +249,7 @@ final store = Store(
 
     //subject entity state
     loadSubjectMiddleware,
-    nextSubjectQuestionsMiddleware,
-    prevSubjectQuestionsMiddleware,
     nextSubjectTopicsMiddleware,
-
-    //Topic start
-    nextTopicQuestionsMiddleware,
-    prevTopicQuestionsMiddleware,
-    //Topic end
 
     // Questions entity state
     loadQuestionMiddleware,
