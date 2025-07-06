@@ -171,3 +171,38 @@ void refreshUserUnsolvedQuestionsMiddleware(Store<AppState> store, action, NextD
   next(action);
 }
 //user unsolved questions
+
+//exam questions
+void nextExamQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextExamQuestionsAction){
+    final pagination = selectExamQuestions(store, action.examId);
+    QuestionService()
+      .getByExamId(action.examId, pagination.next)
+      .then((questions) => store.dispatch(NextExamQuestionsSuccessAction(
+        examId: action.examId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(NextExamQuestionsFailedAction(examId: action.examId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshExamQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshExamQuestionsAction){
+    final pagination = selectExamQuestions(store, action.examId);
+    QuestionService()
+      .getByExamId(action.examId, pagination.first)
+      .then((questions) => store.dispatch(RefreshExamQuestionsSuccessAction(
+        examId: action.examId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(RefreshExamQuestionsFailedAction(examId: action.examId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//exam questions

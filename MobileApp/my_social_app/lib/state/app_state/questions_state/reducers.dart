@@ -218,6 +218,52 @@ QuestionsState refreshUserUnsolvedQuestionsFailedReducer(QuestionsState prev, Re
     );
 // user unsolved questions
 
+// exam questions
+QuestionsState nextExamQuestionsReducer(QuestionsState prev, NextExamQuestionsAction action)
+  => prev.optional(
+      newExamQuestions: prev.examQuestions.updateElsePrependOne(
+        action.examId,
+        (prev.examQuestions[action.examId] ?? Pagination.init(questionsPerPage, true)).startLoadingNext()
+      )
+    );
+QuestionsState nextExamQuestionsSuccessReducer(QuestionsState prev, NextExamQuestionsSuccessAction action)
+  => prev.optional(
+      newExamQuestions: prev.examQuestions.updateOne(
+        action.examId,
+        prev.examQuestions[action.examId]!.addNextPage(action.questions)
+      )
+    );
+QuestionsState nextExamQuestionsFailedReducer(QuestionsState prev, NextExamQuestionsFailedAction action)
+  => prev.optional(
+      newExamQuestions: prev.examQuestions.updateOne(
+        action.examId,
+        prev.examQuestions[action.examId]!.stopLoadingNext()
+      )
+    );
+
+QuestionsState refreshExamQuestionsReducer(QuestionsState prev, RefreshExamQuestionsAction action)
+  => prev.optional(
+      newExamQuestions: prev.examQuestions.updateElsePrependOne(
+        action.examId,
+        (prev.examQuestions[action.examId] ?? Pagination.init(questionsPerPage, true)).clear().startLoadingNext()
+      )
+    );
+QuestionsState refreshExamQuestionsSuccessReducer(QuestionsState prev, RefreshExamQuestionsSuccessAction action)
+  => prev.optional(
+      newExamQuestions: prev.examQuestions.updateOne(
+        action.examId,
+        prev.examQuestions[action.examId]!.refreshPage(action.questions)
+      )
+    );
+QuestionsState refreshExamQuestionsFailedReducer(QuestionsState prev, RefreshExamQuestionsFailedAction action)
+  => prev.optional(
+      newExamQuestions: prev.examQuestions.updateOne(
+        action.examId,
+        prev.examQuestions[action.examId]!.stopLoadingNext()
+      )
+    );
+// exam questions
+
 Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   //question user likes
   TypedReducer<QuestionsState,NextQuestionUserLikesAction>(nextQuestionUserLikesReducer).call,
@@ -270,5 +316,15 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,RefreshUserUnsolvedQuestionsAction>(refreshUserUnsolvedQuestionsReducer).call,
   TypedReducer<QuestionsState,RefreshUserUnsolvedQuestionsSuccessAction>(refreshUserUnsolvedQuestionsSuccessReducer).call,
   TypedReducer<QuestionsState,RefreshUserUnsolvedQuestionsFailedAction>(refreshUserUnsolvedQuestionsFailedReducer).call,
+  //user unsolved questions
+
+  //user unsolved questions
+  TypedReducer<QuestionsState,NextExamQuestionsAction>(nextExamQuestionsReducer).call,
+  TypedReducer<QuestionsState,NextExamQuestionsSuccessAction>(nextExamQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,NextExamQuestionsFailedAction>(nextExamQuestionsFailedReducer).call,
+
+  TypedReducer<QuestionsState,RefreshExamQuestionsAction>(refreshExamQuestionsReducer).call,
+  TypedReducer<QuestionsState,RefreshExamQuestionsSuccessAction>(refreshExamQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,RefreshExamQuestionsFailedAction>(refreshExamQuestionsFailedReducer).call,
   //user unsolved questions
 ]);

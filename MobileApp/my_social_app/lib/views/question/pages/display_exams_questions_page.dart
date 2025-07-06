@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
 
 class DisplayExamsQuestionsPage extends StatelessWidget {
-  final int examId;
-  const DisplayExamsQuestionsPage({super.key,required this.examId});
+  final ExamState exam;
+  const DisplayExamsQuestionsPage({super.key, required this.exam});
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,ExamState>(
-      converter: (store) => store.state.examEntityState.getValue(examId)!,
-      builder: (context,exam) => Scaffold(
+    return RefreshIndicator(
+      onRefresh: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        refreshEntities(
+          store,
+          selectExamQuestions(store, exam.id),
+          RefreshExamQuestionsAction(examId: exam.id)
+        );
+        return store.onChange
+          .map((state) => state.questions.examQuestions[exam.id]!)
+          .firstWhere((x) => !x.loadingNext);
+      },
+      child: Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
           title: Text(
@@ -28,28 +40,23 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: RefreshIndicator(
-          onRefresh: (){
-            final store = StoreProvider.of<AppState>(context,listen: false);
-            getPrevPageIfReady(store, exam.questions, PrevExamQuestionsAction(examId: examId));
-            return store.onChange
-              .map((state) => state.examEntityState.getValue(examId)!.questions)
-              .firstWhere((x) => !x.loadingPrev);
-          },
-          child: StoreConnector<AppState,Iterable<QuestionState>>(
-            onInit: (store) => getNextPageIfNoPage(store,exam.questions,NextExamQuestionsAction(examId: examId)),
-            converter: (store) => store.state.selectExamQuestions(examId),
-            builder: (context,questions) => QuestionItemsWidget(
-              questions: questions.toList(),
-              pagination: exam.questions,
-              onScrollBottom: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                getNextPageIfReady(store,exam.questions,NextExamQuestionsAction(examId: examId));
-              },
-            ),
+        body: StoreConnector<AppState,Pagination<int, QuestionState>>(
+          onInit: (store) => getNextPageIfNoPage(store,exam.questions,NextExamQuestionsAction(examId: exam.id)),
+          converter: (store) => selectExamQuestions(store, exam.id),
+          builder: (context, pagination) => QuestionItemsWidget(
+            questions: pagination.values.toList(),
+            pagination: pagination,
+            onScrollBottom: (){
+              final store = StoreProvider.of<AppState>(context,listen: false);
+              getNextPageIfReady(
+                store,
+                selectExamQuestions(store, exam.id),
+                NextExamQuestionsAction(examId: exam.id)
+              );
+            },
           ),
         ),
-      ),
+      )
     );
   }
 }
