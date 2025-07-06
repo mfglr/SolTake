@@ -20,40 +20,6 @@ class AddExamsAction extends AppAction{
 }
 
 @immutable
-class NextExamQuestionsAction extends AppAction{
-  final int examId;
-  const NextExamQuestionsAction({required this.examId});
-}
-@immutable
-class NextExamQuestionsSuccessAction extends AppAction{
-  final int examId;
-  final Iterable<int> questionIds;
-  const NextExamQuestionsSuccessAction({required this.examId, required this.questionIds});
-}
-@immutable
-class NextExamQuestionsFailedAction extends AppAction{
-  final int examId;
-  const NextExamQuestionsFailedAction({required this.examId});
-}
-
-@immutable
-class PrevExamQuestionsAction extends AppAction{
-  final int examId;
-  const PrevExamQuestionsAction({required this.examId});
-}
-@immutable
-class PrevExamQuestionsSuccessAction extends AppAction{
-  final int examId;
-  final Iterable<int> questionIds;
-  const PrevExamQuestionsSuccessAction({required this.examId, required this.questionIds});
-}
-@immutable
-class PrevExamQuestionsFailedAction extends AppAction{
-  final int examId;
-  const PrevExamQuestionsFailedAction({required this.examId});
-}
-
-@immutable
 class NextExamSubjectsAction extends AppAction{
   final int examId;
   const NextExamSubjectsAction({required this.examId});

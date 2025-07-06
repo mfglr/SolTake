@@ -9,7 +9,10 @@ class ExamTagItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DisplayExamsQuestionsPage(examId: exam.id))),
+      onPressed: () => 
+        Navigator
+          .of(context)
+          .push(MaterialPageRoute(builder: (context) => DisplayExamsQuestionsPage(exam: exam))),
       child:  Row(
         mainAxisSize: MainAxisSize.min,
         children: [

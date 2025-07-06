@@ -115,6 +115,9 @@ final store = Store(
 
     nextUserUnsolvedQuestionsMiddleware,
     refreshUserUnsolvedQuestionsMiddleware,
+
+    nextExamQuestionsMiddleware,
+    refreshExamQuestionsMiddleware,
     //questions
 
     //question user save middlewares
@@ -238,8 +241,6 @@ final store = Store(
     //Exam entity state
     loadExamMiddleare,
     nextExamSubjectsMiddleware,
-    nextExamQeuestionsMiddleware,
-    prevExamQuestionsMiddleware,
 
     //subject entity state
     loadSubjectMiddleware,

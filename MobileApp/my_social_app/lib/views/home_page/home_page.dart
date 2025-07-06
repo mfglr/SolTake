@@ -33,7 +33,11 @@ class _HomePageState extends State<HomePage> {
     _scrollController,
     (){
       final store = StoreProvider.of<AppState>(context,listen: false);
-      store.dispatch(const NextHomePageQuestionsAction());
+      getNextEntitiesIfReady(
+        store,
+        selectHomePageQuestionPagination(store),
+        const NextHomePageQuestionsAction()
+      );
     }
   );
 

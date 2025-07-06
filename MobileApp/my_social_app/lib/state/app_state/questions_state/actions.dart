@@ -68,7 +68,6 @@ class DislikeQuestionSuccessAction extends QuestionsAction{
 }
 //question user likes
 
-
 // home page questions
 @immutable
 class NextHomePageQuestionsAction extends QuestionsAction{
@@ -206,3 +205,39 @@ class RefreshUserUnsolvedQuestionsFailedAction extends QuestionsAction{
   const RefreshUserUnsolvedQuestionsFailedAction({required this.userId});
 }
 //user unsolved questions
+
+//exams questions
+@immutable
+class NextExamQuestionsAction extends QuestionsAction{
+  final int examId;
+  const NextExamQuestionsAction({required this.examId});
+}
+@immutable
+class NextExamQuestionsSuccessAction extends QuestionsAction{
+  final int examId;
+  final Iterable<QuestionState> questions;
+  const NextExamQuestionsSuccessAction({required this.examId, required this.questions});
+}
+@immutable
+class NextExamQuestionsFailedAction extends QuestionsAction{
+  final int examId;
+  const NextExamQuestionsFailedAction({required this.examId});
+}
+
+@immutable
+class RefreshExamQuestionsAction extends QuestionsAction{
+  final int examId;
+  const RefreshExamQuestionsAction({required this.examId});
+}
+@immutable
+class RefreshExamQuestionsSuccessAction extends QuestionsAction{
+  final int examId;
+  final Iterable<QuestionState> questions;
+  const RefreshExamQuestionsSuccessAction({required this.examId, required this.questions});
+}
+@immutable
+class RefreshExamQuestionsFailedAction extends QuestionsAction{
+  final int examId;
+  const RefreshExamQuestionsFailedAction({required this.examId});
+}
+//exams questions
