@@ -12,13 +12,7 @@ class TopicTagItem extends StatelessWidget {
       onPressed: () => 
         Navigator
           .of(context)
-          .push(
-            MaterialPageRoute(
-              builder: (context) => DisplayTopicQuestionsPage(
-                topicId: topic.id
-              )
-            )
-          ),
+          .push(MaterialPageRoute(builder: (context) => DisplayTopicQuestionsPage(topic: topic))),
       child: Wrap(
         children: [
           Text(

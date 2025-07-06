@@ -34,37 +34,3 @@ class NextSubjectTopicsFailedAction extends AppAction{
   final int subjectId;
   const NextSubjectTopicsFailedAction({required this.subjectId});
 }
-
-@immutable
-class NextSubjectQuestionsAction extends AppAction{
-  final int subjectId;
-  const NextSubjectQuestionsAction({required this.subjectId});
-}
-@immutable
-class NextSubjectQuestionsSuccessAction extends AppAction{
-  final int subjectId;
-  final Iterable<int> questions;
-  const NextSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
-}
-@immutable
-class NextSubjectQuestionsFailedAction extends AppAction{
-  final int subjectId;
-  const NextSubjectQuestionsFailedAction({required this.subjectId});
-}
-
-@immutable
-class PrevSubjectQuestionsAction extends AppAction{
-  final int subjectId;
-  const PrevSubjectQuestionsAction({required this.subjectId});
-}
-@immutable
-class PrevSubjectQuestionsSuccessAction extends AppAction{
-  final int subjectId;
-  final Iterable<int> questionIds;
-  const PrevSubjectQuestionsSuccessAction({required this.subjectId, required this.questionIds});
-}
-@immutable
-class PrevSubjectQuestionsFailedAction extends AppAction{
-  final int subjectId;
-  const PrevSubjectQuestionsFailedAction({required this.subjectId});
-}

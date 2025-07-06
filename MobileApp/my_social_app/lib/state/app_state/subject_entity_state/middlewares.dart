@@ -1,7 +1,5 @@
-import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/subject_service.dart';
 import 'package:my_social_app/services/topic_service.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
@@ -14,42 +12,6 @@ void loadSubjectMiddleware(Store<AppState> store,action,NextDispatcher next){
         .getSubjectById(action.subjectId)
         .then((subject) => store.dispatch(AddSubjectAction(subject: subject.toSubjectState())));
     }
-  }
-  next(action);
-}
-void nextSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextSubjectQuestionsAction){
-    final pagination = store.state.subjectEntityState.getValue(action.subjectId)!.questions;
-    QuestionService()
-      .getBySubjectId(action.subjectId,pagination.next)
-      .then((questions){
-        store.dispatch(NextSubjectQuestionsSuccessAction(subjectId: action.subjectId,questions: questions.map((x) => x.id)));
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
-      })
-      .catchError((e){
-        store.dispatch(NextSubjectQuestionsFailedAction(subjectId: action.subjectId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void prevSubjectQuestionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is PrevSubjectQuestionsAction){
-    final pagination = store.state.subjectEntityState.getValue(action.subjectId)!.questions;
-    QuestionService()
-      .getBySubjectId(action.subjectId,pagination.prev)
-      .then((questions){
-        store.dispatch(PrevSubjectQuestionsSuccessAction(subjectId: action.subjectId, questionIds: questions.map((x) => x.id)));
-        store.dispatch(AddQuestionsAction(questions: questions.map((e) => e.toQuestionState())));
-        var topics = questions.map((e) => e.topic).where((e) => e != null).map((e) => e!.toTopicState());
-        store.dispatch(AddTopicsAction(topics: topics));
-      })
-      .catchError((e){
-        store.dispatch(PrevSubjectQuestionsFailedAction(subjectId: action.subjectId));
-        throw e;
-      });
   }
   next(action);
 }

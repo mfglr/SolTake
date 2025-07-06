@@ -241,3 +241,75 @@ class RefreshExamQuestionsFailedAction extends QuestionsAction{
   const RefreshExamQuestionsFailedAction({required this.examId});
 }
 //exams questions
+
+//subject questions
+@immutable
+class NextSubjectQuestionsAction extends QuestionsAction{
+  final int subjectId;
+  const NextSubjectQuestionsAction({required this.subjectId});
+}
+@immutable
+class NextSubjectQuestionsSuccessAction extends QuestionsAction{
+  final int subjectId;
+  final Iterable<QuestionState> questions;
+  const NextSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
+}
+@immutable
+class NextSubjectQuestionsFailedAction extends QuestionsAction{
+  final int subjectId;
+  const NextSubjectQuestionsFailedAction({required this.subjectId});
+}
+
+@immutable
+class RefreshSubjectQuestionsAction extends QuestionsAction{
+  final int subjectId;
+  const RefreshSubjectQuestionsAction({required this.subjectId});
+}
+@immutable
+class RefreshSubjectQuestionsSuccessAction extends QuestionsAction{
+  final int subjectId;
+  final Iterable<QuestionState> questions;
+  const RefreshSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
+}
+@immutable
+class RefreshSubjectQuestionsFailedAction extends QuestionsAction{
+  final int subjectId;
+  const RefreshSubjectQuestionsFailedAction({required this.subjectId});
+}
+//subject questions
+
+//topic questions
+@immutable
+class NextTopicQuestionsAction extends QuestionsAction{
+  final int topicId;
+  const NextTopicQuestionsAction({required this.topicId});
+}
+@immutable
+class NextTopicQuestionsSuccessAction extends QuestionsAction{
+  final int topicId;
+  final Iterable<QuestionState> questions;
+  const NextTopicQuestionsSuccessAction({required this.topicId, required this.questions});
+}
+@immutable
+class NextTopicQuestionsFailedAction extends QuestionsAction{
+  final int topicId;
+  const NextTopicQuestionsFailedAction({required this.topicId});
+}
+
+@immutable
+class RefreshTopicQuestionsAction extends QuestionsAction{
+  final int topicId;
+  const RefreshTopicQuestionsAction({required this.topicId});
+}
+@immutable
+class RefreshTopicQuestionsSuccessAction extends QuestionsAction{
+  final int topicId;
+  final Iterable<QuestionState> questions;
+  const RefreshTopicQuestionsSuccessAction({required this.topicId, required this.questions});
+}
+@immutable
+class RefreshTopicQuestionsFailedAction extends QuestionsAction{
+  final int topicId;
+  const RefreshTopicQuestionsFailedAction({required this.topicId});
+}
+//subject questions
