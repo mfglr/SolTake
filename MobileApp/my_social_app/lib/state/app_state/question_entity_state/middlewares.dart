@@ -1,9 +1,7 @@
 import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
@@ -17,21 +15,6 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
-
-void _loadQuestion(Store<AppState> store, int questionId, void Function() callback){
-  if(selectQuestion(store,questionId) == null){
-    QuestionService()
-      .getById(questionId)
-      .then((question){
-        store.dispatch(AddQuestionAction(value: question.toQuestionState()));
-        callback();
-      });
-  }
-  else{
-    callback();
-  }
-}
-
 
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
@@ -170,45 +153,4 @@ void nextQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispa
   next(action);
 }
 
-void nextQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextQuestionCommentsAction){
-    _loadQuestion(
-      store,
-      action.questionId,
-      () =>
-        CommentService()
-          .getCommentsByQuestionId(action.questionId, selectQuestionNextCommentsPage(store, action.questionId))
-          .then((comments){
-            store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
-            store.dispatch(NexQuestionCommentsSuccessAction(questionId: action.questionId,commentIds: comments.map((e) => e.id)));
-          })
-          .catchError((e){
-            store.dispatch(NextQuestionCommentsFailedAction(questionId: action.questionId));
-            throw e;
-          })
-    );
-    
-  }
-  next(action);
-}
-void prevQuestionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is PrevQuestionCommentsAction){
-    _loadQuestion(
-      store,
-      action.questionId,
-      () => 
-        CommentService()
-          .getCommentsByQuestionId(action.questionId, selectQuestionPrevCommentsPage(store,action.questionId))
-          .then((comments){
-            store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
-            store.dispatch(PrevQuestionCommentsSuccessAction(questionId: action.questionId,commentIds: comments.map((e) => e.id)));
-          })
-          .catchError((e){
-            store.dispatch(PrevQuestionCommentsFailedAction(questionId: action.questionId));
-            throw e;
-          })
-    );
-  }
-  next(action);
-}
 

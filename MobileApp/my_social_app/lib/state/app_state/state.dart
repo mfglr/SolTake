@@ -5,6 +5,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
@@ -40,6 +41,7 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 @immutable
 class AppState{
   final QuestionsState questions;
+  final CommentsState comments;
 
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
@@ -78,7 +80,8 @@ class AppState{
 
   const AppState({
     required this.questions,
-
+    required this.comments,
+    
     required this.searchUsers,
     required this.searchQuestions,
     required this.userUserSearchs,
@@ -128,6 +131,13 @@ class AppState{
       savedQuestions: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
+    comments: const CommentsState(
+      questionComments: <int, Pagination<int, CommentState>>{},
+      solutionComments: <int, Pagination<int, CommentState>>{},
+      children: <int, Pagination<int, CommentState>>{}
+    ),
+
+
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
@@ -227,10 +237,6 @@ class AppState{
 
 
   //Select comments
-  Iterable<CommentState> getQuestionComments(int questionId)
-    => questionEntityState.getValue(questionId)!.comments.values.map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> getFormatedQuestionComments(int id,int questionId)
-    => questionEntityState.getValue(questionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
   Iterable<CommentState> getSolutionComments(int solutionId)
     => solutionEntityState.getValue(solutionId)!.comments.values.map((e) => commentEntityState.getValue(e.id)!);
   Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)

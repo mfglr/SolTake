@@ -158,42 +158,6 @@ class NextSolutionDownvotesFailedAction extends AppAction{
 }
 
 @immutable
-class NextSolutionCommentsAction extends AppAction{
-  final int solutionId;
-  const NextSolutionCommentsAction({required this.solutionId});
-}
-@immutable
-class NextSolutionCommentsSuccessAction extends AppAction{
-  final int solutionId;
-  final Iterable<int> commentsIds;
-  const NextSolutionCommentsSuccessAction({required this.solutionId, required this.commentsIds});
-}
-@immutable
-class NextSolutionCommentsFailedAction extends AppAction{
-  final int solutionId;
-  const NextSolutionCommentsFailedAction({required this.solutionId});
-}
-
-@immutable
-class AddSolutionCommentAction extends AppAction{
-  final int solutionId;
-  final int commentId;
-  const AddSolutionCommentAction({required this.solutionId, required this.commentId});
-}
-@immutable
-class RemoveSolutionCommentAction extends AppAction{
-  final int solutionId;
-  final int commentId;
-  const RemoveSolutionCommentAction({required this.solutionId, required this.commentId});
-}
-@immutable
-class AddNewSolutionCommentAction extends AppAction{
-  final int solutionId;
-  final int commentId;
-  const AddNewSolutionCommentAction({required this.solutionId, required this.commentId});
-}
-
-@immutable
 class MarkSolutionAsCorrectAction extends AppAction{
   final int questionId;
   final int solutionId;

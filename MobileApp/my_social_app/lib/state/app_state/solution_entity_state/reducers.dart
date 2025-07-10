@@ -38,20 +38,6 @@ EntityState<int,SolutionState> removeDownVoteAction(EntityState<int,SolutionStat
 EntityState<int,SolutionState> addNewSolutionDownvoteReducer(EntityState<int,SolutionState> prev,AddNewSolutionDownvoteAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.addNewDownvote(action.solutionUserVoteState));
 
-EntityState<int,SolutionState> nextCommentsReducer(EntityState<int,SolutionState> prev,NextSolutionCommentsAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextComments());
-EntityState<int,SolutionState> nextCommentsSuccessReducer(EntityState<int,SolutionState> prev, NextSolutionCommentsSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.addNextComments(action.commentsIds));
-EntityState<int,SolutionState> nextCommentsFailedReducer(EntityState<int,SolutionState> prev,NextSolutionCommentsFailedAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.stopLoadingNextComments());
-
-EntityState<int,SolutionState> addCommentReducer(EntityState<int,SolutionState> prev,AddSolutionCommentAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.addComment(action.commentId));
-EntityState<int,SolutionState> removeCommentReducer(EntityState<int,SolutionState> prev,RemoveSolutionCommentAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.removeComment(action.commentId));
-EntityState<int,SolutionState> addNewCommentReducer(EntityState<int,SolutionState> prev,AddNewSolutionCommentAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.addNewComment(action.commentId));
-
 EntityState<int,SolutionState> markAsCorrectReducer(EntityState<int,SolutionState> prev, MarkSolutionAsCorrectSuccessAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.markAsCorrect()) ;
 EntityState<int,SolutionState> markAsIncorrectReducer(EntityState<int,SolutionState> prev, MarkSolutionAsIncorrectSuccessAction action)
@@ -80,14 +66,6 @@ Reducer<EntityState<int,SolutionState>> solutionEntityStateReducers = combineRed
   TypedReducer<EntityState<int,SolutionState>,NextSolutionDownvotesAction>(nextDownvotesReducer).call,
   TypedReducer<EntityState<int,SolutionState>,NextSolutionDownvotesSuccessAction>(nextDownvotesSuccessReducer).call,
   TypedReducer<EntityState<int,SolutionState>,NextSolutionDownvotesFailedAction>(nextDownvotesFailedReducer).call,
-
-  TypedReducer<EntityState<int,SolutionState>,NextSolutionCommentsAction>(nextCommentsReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,NextSolutionCommentsSuccessAction>(nextCommentsSuccessReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,NextSolutionCommentsFailedAction>(nextCommentsFailedReducer).call,
-
-  TypedReducer<EntityState<int,SolutionState>,AddSolutionCommentAction>(addCommentReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,RemoveSolutionCommentAction>(removeCommentReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,AddNewSolutionCommentAction>(addNewCommentReducer).call,
 
   TypedReducer<EntityState<int,SolutionState>,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
   TypedReducer<EntityState<int,SolutionState>,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,

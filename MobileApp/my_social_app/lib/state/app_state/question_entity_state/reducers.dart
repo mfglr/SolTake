@@ -74,32 +74,6 @@ EntityState<int,QuestionState> nextVideoSolutionsFailedReducer(EntityState<int,Q
   => prev.updateOne(prev.getValue(action.questionId)!.stopLodingNextVideoSolutions());
 
 
-//comments **************************************************
-EntityState<int,QuestionState> addCommentReducer(EntityState<int,QuestionState> prev,AddQuestionCommentAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.addComment(action.commenId));
-EntityState<int,QuestionState> removeCommentReducer(EntityState<int,QuestionState> prev,RemoveQuestionCommentAction action)
-  => prev.updateOne(prev.getValue(action.questionid)!.removeComment(action.commentId));
-EntityState<int,QuestionState> addNewCommentReducer(EntityState<int,QuestionState> prev,AddNewQuestionCommentAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.addNewComment(action.commentId)) ;
-
-EntityState<int,QuestionState> nextPageCommentsReducer(EntityState<int,QuestionState> prev,NextQuestionCommentsAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.startLoadingNextComments());
-EntityState<int,QuestionState> nextPageCommentsFailedReducer(EntityState<int,QuestionState> prev,NextQuestionCommentsFailedAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingNextComments());
-EntityState<int,QuestionState> nextPageCommentsSuccessReducer(EntityState<int,QuestionState> prev,NexQuestionCommentsSuccessAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.addNextPageComments(action.commentIds));
-
-EntityState<int,QuestionState> prevQuestionCommentsReducer(EntityState<int,QuestionState> prev, PrevQuestionCommentsAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.startLoadingPrevComments());
-EntityState<int,QuestionState> prevQuestionCommentsFailedReducer(EntityState<int,QuestionState> prev, PrevQuestionCommentsFailedAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.stopLoadingPrevComments());
-EntityState<int,QuestionState> prevQuestionCommentsSuccessReducer(EntityState<int,QuestionState> prev, PrevQuestionCommentsSuccessAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.addPrevPageComments(action.commentIds));
-
-EntityState<int,QuestionState> clearQuestionCommentsReducer(EntityState<int,QuestionState> prev, ClearQuestionCommentsAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.clear());
-//comments **************************************************
-
 Reducer<EntityState<int,QuestionState>> questionsReducer = combineReducers<EntityState<int,QuestionState>>([
   TypedReducer<EntityState<int,QuestionState>,AddQuestionAction>(addQuestionReducer).call,
   TypedReducer<EntityState<int,QuestionState>,AddQuestionsAction>(addQuestionsReducer).call,
@@ -143,20 +117,4 @@ Reducer<EntityState<int,QuestionState>> questionsReducer = combineReducers<Entit
   TypedReducer<EntityState<int,QuestionState>,CreateNewQuestionVideoSolutionAction>(createNewVideoSolutionReducer).call,
   TypedReducer<EntityState<int,QuestionState>,AddNewQuestionSolutionAction>(addNewSolutionReducer).call,
   TypedReducer<EntityState<int,QuestionState>,RemoveQuestionSolutionAction>(removeSolutionReducer).call,
-
-  //comments ***********************************************
-  TypedReducer<EntityState<int,QuestionState>,NextQuestionCommentsAction>(nextPageCommentsReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,NextQuestionCommentsFailedAction>(nextPageCommentsFailedReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,NexQuestionCommentsSuccessAction>(nextPageCommentsSuccessReducer).call,
-  
-  TypedReducer<EntityState<int,QuestionState>,PrevQuestionCommentsAction>(prevQuestionCommentsReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,PrevQuestionCommentsFailedAction>(prevQuestionCommentsFailedReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,PrevQuestionCommentsSuccessAction>(prevQuestionCommentsSuccessReducer).call,
-
-  TypedReducer<EntityState<int,QuestionState>,ClearQuestionCommentsAction>(clearQuestionCommentsReducer).call,
-
-  TypedReducer<EntityState<int,QuestionState>,AddQuestionCommentAction>(addCommentReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,RemoveQuestionCommentAction>(removeCommentReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,AddNewQuestionCommentAction>(addNewCommentReducer).call,
-  //comments ***********************************************
 ]);

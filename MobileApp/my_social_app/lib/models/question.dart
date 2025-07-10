@@ -83,7 +83,6 @@ class Question{
     numberOfCorrectSolutions: numberOfCorrectSolutions,
     numberOfVideoSolutions: numberOfVideoSolutions,
     image: image,
-    comments: Pagination.init(commentsPerPage,true),
     solutions: Pagination.init(solutionsPerPage,true),
     correctSolutions: Pagination.init(solutionsPerPage,true),
     pendingSolutions: Pagination.init(solutionsPerPage,true),
