@@ -1,6 +1,7 @@
 import 'package:my_social_app/state/app_state/active_login_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/reducers.dart';
 import 'package:my_social_app/state/app_state/balance_state/reducers.dart';
+import 'package:my_social_app/state/app_state/comments_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -39,6 +40,7 @@ AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear(
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
   questions: questionsReducers(prev.questions, action),
+  comments: commentsReducer(prev.comments, action),
   
   searchUsers: searchUsersReducers(prev.searchUsers,action),
   searchQuestions: searchQuestionsReducer(prev.searchQuestions,action),

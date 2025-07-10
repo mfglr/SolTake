@@ -3,6 +3,9 @@ import 'package:my_social_app/state/app_state/active_login_page_state/active_log
 import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
@@ -57,8 +60,13 @@ final store = Store(
       searchPageQuestions: Pagination.init(questionsPerPage, true),
       savedQuestions: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
-
     ),
+    comments: const CommentsState(
+      questionComments: <int, Pagination<int, CommentState>>{},
+      solutionComments: <int, Pagination<int, CommentState>>{},
+      children: <int, Pagination<int, CommentState>>{}
+    ),
+
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
@@ -124,6 +132,14 @@ final store = Store(
     nextTopicQuestionsMiddleware,
     refreshTopicQuestionsMiddleware,
     //questions
+
+    //comments
+    createCommentMiddleware,
+    nextQuestionCommentsMiddleware,
+    refreshQuestionCommentsMiddleware,
+    nextSolutionCommentsMiddleware,
+    refreshSolutionCommentsMiddleware,
+    //comments
 
     //question user save middlewares
     createQuestionUserSaveMiddleware,
@@ -263,15 +279,12 @@ final store = Store(
     nextQuestionPendingSolutionsMiddleware,
     nextQuestionIncorrectSolutionsMiddleware,
     nextQuestionVideoSolutionsMiddleware,
-    nextQuestionCommentsMiddleware,
-    prevQuestionCommentsMiddleware,
 
     //solution entity state
     createSolutionMiddleware,
     createSolutionByAiMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
-    nextSolutionCommentsMiddleware,
 
     makeSolutionUpvoteMiddleware,
     removeSolutionUpvoteMiddleware,
@@ -283,10 +296,8 @@ final store = Store(
     nextSolutionDownvotesMiddleware,
 
     //comments entity state
-    createCommentMiddleware,
     loadCommentMiddleware,
     loadCommentsMiddleware,
-    removeCommentMiddleware,
 
     //notifications start
     markNotificationsAsViewedMiddleware,

@@ -185,66 +185,6 @@ class AddQuestionVideoSolutionAction extends AppAction{
 }
 
 @immutable
-class ClearQuestionCommentsAction extends AppAction{
-  final int questionId;
-  const ClearQuestionCommentsAction({required this.questionId});
-}
-
-@immutable
-class NextQuestionCommentsAction extends AppAction{
-  final int questionId;
-  const NextQuestionCommentsAction({required this.questionId});
-}
-@immutable
-class NexQuestionCommentsSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<int> commentIds;
-  const NexQuestionCommentsSuccessAction({required this.questionId,required this.commentIds});
-}
-@immutable
-class NextQuestionCommentsFailedAction extends AppAction{
-  final int questionId;
-  const NextQuestionCommentsFailedAction({required this.questionId});
-}
-
-@immutable
-class PrevQuestionCommentsAction extends AppAction{
-  final int questionId;
-  const PrevQuestionCommentsAction({required this.questionId});
-}
-@immutable
-class PrevQuestionCommentsSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<int> commentIds;
-  const PrevQuestionCommentsSuccessAction({required this.questionId, required this.commentIds});
-}
-@immutable
-class PrevQuestionCommentsFailedAction extends AppAction{
-  final int questionId;
-  const PrevQuestionCommentsFailedAction({required this.questionId});
-}
-
-@immutable
-class AddQuestionCommentAction extends AppAction{
-  final int questionId;
-  final int commenId;
-  const AddQuestionCommentAction({required this.questionId,required this.commenId});
-}
-@immutable
-class RemoveQuestionCommentAction extends AppAction{
-  final int questionid;
-  final int commentId;
-  const RemoveQuestionCommentAction({required this.commentId, required this.questionid});
-}
-@immutable
-class AddNewQuestionCommentAction extends AppAction{
-  final int questionId;
-  final int commentId;
-  const AddNewQuestionCommentAction({required this.questionId, required this.commentId});
-}
-
-
-@immutable
 class SaveQuestionAction extends AppAction{
   final int questionId;
   const SaveQuestionAction({required this.questionId});

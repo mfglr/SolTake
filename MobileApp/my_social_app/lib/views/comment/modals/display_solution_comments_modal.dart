@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/comments_state/actions.dart';
+import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/comment/widgets/comment_field_widget/comment_field_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_items_widget.dart';
 import 'package:my_social_app/views/comment/widgets/no_comments_widget/no_comments_widget.dart';
-import 'package:my_social_app/views/shared/loading_widget.dart';
 
 class DisplaySolutionCommentsModal extends StatefulWidget {
   final int solutionId;
@@ -36,6 +35,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
     store.dispatch(CreateCommentAction(
       content: _contentController.text,
       solutionId: solutionId,
+      questionId: null,
       repliedId: comment?.id
     ));
     cancelReplying();
@@ -69,97 +69,69 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
     super.dispose();
   }
 
-  Widget _buildModal(Iterable<CommentState> comments,SolutionState solution){
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 3 / 4,
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close)
-                )
-              ],
-            ),
-            Expanded(
-              child: CommentItemsWidget(
-                scrollController: _scrollController,
-                contentController: _contentController,
-                focusNode: _focusNode,
-                noItems: const NoCommentsWidget(),
-                pagination: solution.comments,
-                comments: comments,
-                parentId: widget.parentId,
-                cancelReplying: cancelReplying,
-                replyComment: replyComment,
-                onScrollBottom: (){
-                  final store = StoreProvider.of<AppState>(context,listen: false);
-                  getNextPageIfReady(store,solution.comments,NextSolutionCommentsAction(solutionId: widget.solutionId));
-                },
-              )
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(20,10,20,20),
-              child: CommentFieldWidget(
-                contentController: _contentController,
-                focusNode: _focusNode,
-                scrollController: _scrollController,
-                cancelReplying: cancelReplying,
-                createComment: createComment,
-                comment: comment,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,SolutionState?>(
-      converter: (store) => store.state.solutionEntityState.getValue(widget.solutionId),
-      builder: (context, solution){
-        if(solution == null) return const LoadingWidget();
-        if(widget.parentId != null){
-          return StoreConnector<AppState,CommentState?>(
-            onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
-            converter: (store) => widget.parentId != null ? store.state.commentEntityState.getValue(widget.parentId!) : null,
-            builder: (context,comment){
-              
-              if(comment == null){
-                return StoreConnector<AppState,Iterable<CommentState>>(
-                  onInit: (store) => getNextPageIfNoPage(
-                    store,
-                    solution.comments,
-                    NextSolutionCommentsAction(solutionId: widget.solutionId)
-                  ),
-                  converter: (store) => store.state.getSolutionComments(widget.solutionId),
-                  builder:(context,comments) => _buildModal(comments,solution)
-                );
-              }
-              
-              return StoreConnector<AppState,Iterable<CommentState>>(
-                onInit: (store) => getNextPageIfNoPage(store,solution.comments,NextSolutionCommentsAction(solutionId: widget.solutionId)),
-                converter: (store) => store.state.getFormatedSolutionComments(widget.parentId!, widget.solutionId),
-                builder:(context,comments) => _buildModal(comments,solution)
-              );
-
-            },
-          );
-        }
-        return StoreConnector<AppState,Iterable<CommentState>>(
-          onInit: (store) => getNextPageIfNoPage(store,solution.comments,NextSolutionCommentsAction(solutionId: widget.solutionId)),
-          converter: (store) => store.state.getSolutionComments(widget.solutionId),
-          builder:(context,comments) => _buildModal(comments,solution)
-        );
-      }
+    return StoreConnector<AppState, Pagination<int, CommentState>>(
+      onInit: (store) => 
+        getNextEntitiesIfNoPage(
+          store,
+          selectSolutionComments(store, widget.solutionId),
+          NextSolutionCommentsAction(solutionId: widget.solutionId)
+        ),
+      converter: (store) => selectSolutionComments(store, widget.solutionId),
+      builder: (store, pagination) => SizedBox(
+        height: MediaQuery.of(context).size.height * 3 / 4,
+        child: Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.close)
+                  )
+                ],
+              ),
+              Expanded(
+                child: CommentItemsWidget(
+                  scrollController: _scrollController,
+                  contentController: _contentController,
+                  focusNode: _focusNode,
+                  noItems: const NoCommentsWidget(),
+                  pagination: pagination,
+                  comments: pagination.values,
+                  parentId: widget.parentId,
+                  cancelReplying: cancelReplying,
+                  replyComment: replyComment,
+                  onScrollBottom: (){
+                    final store = StoreProvider.of<AppState>(context,listen: false);
+                    getNextPageIfReady(
+                      store,
+                      selectSolutionComments(store, widget.solutionId),
+                      NextSolutionCommentsAction(solutionId: widget.solutionId)
+                    );
+                  },
+                )
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(20,10,20,20),
+                child: CommentFieldWidget(
+                  contentController: _contentController,
+                  focusNode: _focusNode,
+                  scrollController: _scrollController,
+                  cancelReplying: cancelReplying,
+                  createComment: createComment,
+                  comment: comment,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

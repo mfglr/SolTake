@@ -3,20 +3,6 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 
-@immutable
-class CreateCommentAction{
-  final int? questionId;
-  final int? solutionId;
-  final int? repliedId;
-  final String content;
-
-  const CreateCommentAction({
-    this.questionId,
-    this.solutionId,
-    this.repliedId,
-    required this.content
-  });
-}
 
 @immutable
 class LoadCommentAction extends AppAction{
@@ -120,12 +106,6 @@ class NextCommentChildrenSuccessAction extends AppAction{
 class NextCommentChildrenFailedAction extends AppAction{
   final int commentId;
   const NextCommentChildrenFailedAction({required this.commentId});
-}
-@immutable
-class AddCommentReplyAction extends AppAction{
-  final int commentId;
-  final int replyId;
-  const AddCommentReplyAction({required this.replyId, required this.commentId});
 }
 @immutable
 class RemoveCommentReplyAction extends AppAction{

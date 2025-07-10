@@ -46,7 +46,7 @@ android {
     defaultConfig {
         applicationId = "com.soltake"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()

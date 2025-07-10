@@ -35,7 +35,6 @@ class QuestionState extends Entity<int> implements Avatar{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final Multimedia? image;
-  final Pagination<int,Id<int>> comments;
   final Pagination<int,Id<int>> solutions;
   final Pagination<int,Id<int>> correctSolutions;
   final Pagination<int,Id<int>> pendingSolutions;
@@ -69,7 +68,6 @@ class QuestionState extends Entity<int> implements Avatar{
     required this.numberOfCorrectSolutions,
     required this.numberOfVideoSolutions,
     required this.image,
-    required this.comments,
     required this.solutions,
     required this.correctSolutions,
     required this.pendingSolutions,
@@ -91,7 +89,6 @@ class QuestionState extends Entity<int> implements Avatar{
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
     Multimedia? newImage,
-    Pagination<int,Id<int>>? newComments,
     Pagination<int,Id<int>>? newSolutions,
     Pagination<int,Id<int>>? newCorrectSolutions,
     Pagination<int,Id<int>>? newPendingSolutions,
@@ -119,7 +116,6 @@ class QuestionState extends Entity<int> implements Avatar{
       numberOfSolutions: newNumberOfSolutions ?? numberOfSolutions,
       numberOfCorrectSolutions: newNumberOfCorrectSolutions ?? numberOfCorrectSolutions,
       numberOfVideoSolutions: newNumberOfVideoSolutions ?? numberOfVideoSolutions,
-      comments: newComments ?? comments,
       solutions: newSolutions ?? solutions,
       correctSolutions: newCorrectSolutions ?? correctSolutions,
       pendingSolutions: newPendingSolutions ?? pendingSolutions,
@@ -266,43 +262,6 @@ class QuestionState extends Entity<int> implements Avatar{
     _optional(
       newVideoSolutions: videoSolutions.where((e) => e.id != solutionId)
     );
-
-//comments ****************************************************
-  QuestionState startLoadingNextComments() =>
-    _optional(newComments: comments.startLoadingNext());
-  QuestionState stopLoadingNextComments() =>
-    _optional(newComments: comments.stopLoadingNext()); 
-  QuestionState addNextPageComments(Iterable<int> commentIds) => 
-    _optional(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
-  
-  QuestionState startLoadingPrevComments() =>
-    _optional(newComments: comments.startLoadingPrev());
-  QuestionState stopLoadingPrevComments() =>
-    _optional(newComments: comments.stopLoadingPrev());
-  QuestionState addPrevPageComments(Iterable<int> commentIds) =>
-    _optional(newComments: comments.addPrevPage(commentIds.map((commentId) => Id(id: commentId))));
-
-  QuestionState clear() =>
-    _optional(newComments: comments.clear());
-
-  QuestionState addComment(int commentId) =>
-    _optional(
-      newNumberOfComments: numberOfComments + 1,
-      newComments: comments.prependOne(Id(id: commentId))
-    );
-  QuestionState removeComment(int commentId) =>
-    _optional(
-      newNumberOfComments: numberOfComments - 1,
-      newComments: comments.where((e) => e.id != commentId)
-    );
-  QuestionState addNewComment(int commentId) =>
-    _optional(
-      newNumberOfComments: numberOfComments + 1,
-      newComments: comments.addInOrder(Id(id: commentId))
-    );
-//comments ****************************************************
-
-
 
   QuestionState markAsSolved() => _optional(newState: QuestionStatus.solved);
   QuestionState save() => _optional(newIsSaved: true);
