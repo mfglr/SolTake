@@ -3,7 +3,7 @@ import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 class CommentState extends Entity<int> implements Avatar{
   final DateTime createdAt;
@@ -21,7 +21,6 @@ class CommentState extends Entity<int> implements Avatar{
   final int? parentId;
   final Pagination<int,CommentUserLikeState> likes;
   final Pagination<int,Id<int>> children;
-  final bool repliesVisibility;
   final Multimedia? image;
 
   @override
@@ -46,12 +45,10 @@ class CommentState extends Entity<int> implements Avatar{
     required this.parentId,
     required this.likes,
     required this.children,
-    required this.repliesVisibility,
     required this.image
   });
 
   String get formatContent => content.length > 20 ? "${content.substring(0,20)}..." : content;
-  int get numberOfNotDisplayedReplies => numberOfReplies - (repliesVisibility ? children.values.length : 0);
 
   CommentState _optional({
     String? newUserName,
@@ -81,9 +78,11 @@ class CommentState extends Entity<int> implements Avatar{
       parentId: parentId,
       likes: newLikes ?? likes,
       children: newChildren ?? children,
-      repliesVisibility: newRepliesVisibility ?? repliesVisibility,
       image: newImage ?? image
     );
+  
+  CommentState increaseNumberOfReplies() => _optional(newNumberOfReplies: numberOfReplies + 1);
+
 
   CommentState startLoadingNextLikes()
     => _optional(newLikes: likes.startLoadingNext());

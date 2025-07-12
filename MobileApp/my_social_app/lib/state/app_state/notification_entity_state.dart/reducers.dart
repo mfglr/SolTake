@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,NotificationState> nextNotificationsReducer(Pagination<int,NotificationState> prev, NextNotificationsAction action)
@@ -11,7 +11,7 @@ Pagination<int,NotificationState> nextNotificationsFailedReducer(Pagination<int,
   => prev.stopLoadingNext();
 
 Pagination<int,NotificationState> addUnviewedNotificationsReducer(Pagination<int,NotificationState> prev,AddUnviewedNotificationsAction action)
-  => prev.prependUniqMany(action.notifications);
+  => prev.prependMany(action.notifications);
 Pagination<int,NotificationState> prependNotificationReducer(Pagination<int,NotificationState> prev, PrependNotificationAction action)
   => prev.prependOne(action.notification);
 Pagination<int,NotificationState> removeNotificationReducer(Pagination<int,NotificationState> prev, RemoveNotificationAction action)

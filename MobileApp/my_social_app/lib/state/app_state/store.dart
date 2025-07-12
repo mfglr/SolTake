@@ -43,7 +43,7 @@ import 'package:my_social_app/state/app_state/user_user_conversation_state/middl
 import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(

@@ -3,7 +3,7 @@ import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/actions.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 void nextUserMessagesMiddleware(Store<AppState> store, action, NextDispatcher next){

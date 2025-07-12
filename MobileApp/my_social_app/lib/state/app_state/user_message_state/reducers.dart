@@ -17,7 +17,7 @@ EntityState<int, UserMessageState> nextUserMessageFailedReducer(EntityState<int,
 EntityState<int, UserMessageState> addUserMessageAction(EntityState<int,UserMessageState> prev, AddUserMessageAction action)
   => prev
       .updateElseAppendOne(
-        prev.getValue(action.userId)?.prependUniqOne(action.messageId) ??
+        prev.getValue(action.userId)?.prependOne(action.messageId) ??
         UserMessageState.init(action.userId).prependOne(action.messageId)
       );
 

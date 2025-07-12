@@ -2,7 +2,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/comment_endpoints.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
 
 class CommentService{
   final AppClient _appClient;
@@ -38,7 +38,7 @@ class CommentService{
       .then((response) => (response as List))
       .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<Comment>> getCommentsByQuestionId(num questionId, Page page) =>
+  Future<Iterable<Comment>> getByQuestionId(num questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByQuestionIdEndpoint/$questionId", page))
       .then((json) => json as List)

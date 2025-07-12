@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/app_state/search_users_state/actions.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,SearchUserState> removeSearchUserReducer(Pagination<int, SearchUserState> prev,RemoveSearchUserAction action)

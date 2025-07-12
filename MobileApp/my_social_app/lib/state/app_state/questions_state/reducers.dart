@@ -1,9 +1,15 @@
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
-import 'package:my_social_app/state/entity_state/map_extentions.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
+
+//comments action
+QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
+  => action.question == null ? prev : prev.increateNumberOfComments(action.question!);
+//coments action
 
 //question user likes
 QuestionsState nextQuestionUserLikesReducer(QuestionsState prev, NextQuestionUserLikesAction action)
@@ -357,6 +363,10 @@ QuestionsState refreshTopicQuestionsFailedReducer(QuestionsState prev, RefreshTo
 //topic questions
 
 Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
+  //coments
+  TypedReducer<QuestionsState,CreateCommentsSuccessAction>(createCommentSuccessReducer).call,
+  //coments
+
   //question user likes
   TypedReducer<QuestionsState,NextQuestionUserLikesAction>(nextQuestionUserLikesReducer).call,
   TypedReducer<QuestionsState,NextQuestionUserLikesSuccessAction>(nextQuestionUserLikesSuccessReducer).call,

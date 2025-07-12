@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/comment/widgets/comment_field_widget/comment_field_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_items_widget.dart';
 import 'package:my_social_app/views/comment/widgets/no_comments_widget/no_comments_widget.dart';
+import 'package:rxdart/rxdart.dart';
 
 class DisplayQuestionCommentsModal extends StatefulWidget {
-  final int questionId;
+  final QuestionState question;
   final int? parentId;
 
   const DisplayQuestionCommentsModal({
     super.key,
-    required this.questionId,
+    required this.question,
     this.parentId,
   });
 
@@ -28,37 +30,41 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
-  late int? questionId;
-  CommentState? comment;
+  late QuestionState? _question;
+  CommentState? _comment;
+  final _visibilitySubject = BehaviorSubject<int>();
 
   void replyComment(CommentState comment) => setState((){
-    this.comment = comment;
+    _comment = comment;
     _contentController.text = "@${comment.userName} ";
-    questionId = null;
+    _question = null;
   });
 
   void cancelReplying() => setState((){
-    _contentController.text = _contentController.text.replaceFirst("@${comment?.userName} ",'');
-    questionId = widget.questionId;
-    comment = null;
+    _contentController.text = _contentController.text.replaceFirst("@${_comment?.userName} ",'');
+    _question = widget.question;
+    _comment = null;
   });
 
   void createComment(){
     final store = StoreProvider.of<AppState>(context,listen: false);
     store.dispatch(CreateCommentAction(
       content: _contentController.text,
-      questionId: questionId,
-      solutionId: null,
-      repliedId: comment?.id
+      question: _question,
+      solution: null,
+      replied: _comment
     ));
-    cancelReplying();
+    if(_comment != null){
+      _visibilitySubject.add(_comment!.id);
+      cancelReplying();
+    }
     _contentController.clear();
     _focusNode.unfocus();
   }
 
   @override
   void initState() {
-    questionId = widget.questionId;
+    _question = widget.question;
     super.initState();
   }
 
@@ -76,10 +82,10 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
       onInit: (store) => 
         getNextEntitiesIfNoPage(
           store,
-          selectQuestionComments(store, widget.questionId),
-          NextQuestionCommentsAction(questionId: widget.questionId)
+          selectQuestionComments(store, widget.question.id),
+          NextQuestionCommentsAction(questionId: widget.question.id)
         ),
-      converter: (store) => selectQuestionComments(store, widget.questionId),
+      converter: (store) => selectQuestionComments(store, widget.question.id),
       builder: (context, pagination) => SizedBox(
         height: MediaQuery.of(context).size.height * 3 / 4,
         child: Padding(
@@ -96,8 +102,8 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                       final store = StoreProvider.of<AppState>(context,listen: false);
                       refreshEntities(
                         store,
-                        selectQuestionComments(store, widget.questionId),
-                        NextQuestionCommentsAction(questionId: widget.questionId)
+                        selectQuestionComments(store, widget.question.id),
+                        NextQuestionCommentsAction(questionId: widget.question.id)
                       );
                     },
                     icon: const Icon(Icons.refresh)
@@ -113,9 +119,9 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                   scrollController: _scrollController,
                   contentController: _contentController,
                   focusNode: _focusNode,
+                  visibilitySubject: _visibilitySubject,
                   noItems: const NoCommentsWidget(),
                   pagination: pagination,
-                  comments: pagination.values,
                   parentId: widget.parentId,
                   cancelReplying: cancelReplying,
                   replyComment: replyComment,
@@ -123,8 +129,8 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                     final store = StoreProvider.of<AppState>(context,listen: false);
                     getNextPageIfReady(
                       store,
-                      selectQuestionComments(store, widget.questionId),
-                      NextQuestionCommentsAction(questionId: widget.questionId)
+                      selectQuestionComments(store, widget.question.id),
+                      NextQuestionCommentsAction(questionId: widget.question.id)
                     );
                   },
                 )
@@ -137,7 +143,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                   scrollController: _scrollController,
                   cancelReplying: cancelReplying,
                   createComment: createComment,
-                  comment: comment,
+                  comment: _comment,
                 ),
               ),
             ],

@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/app_state/question_user_saves_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_saves_state/question_user_save_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,QuestionUserSaveState> createQuestionUserSaveSuccessReducer(Pagination<int,QuestionUserSaveState> prev,CreateQuestionUserSaveSuccessAction action)

@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
+// import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 import 'package:my_social_app/views/question/pages/display_question_page/display_question_page_texts.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
@@ -28,21 +28,21 @@ class DisplayQuestionPage extends StatefulWidget {
 class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
   @override
   void initState() {
-    if(widget.parentId != null){
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator
-          .of(context)
-          .push(
-            ModalBottomSheetRoute(
-              builder: (context) => DisplayQuestionCommentsModal(
-                questionId: widget.questionId,
-                parentId: widget.parentId,
-              ), 
-              isScrollControlled: true
-            )
-          );
-      });
-    }
+    // if(widget.parentId != null){
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     Navigator
+    //       .of(context)
+    //       .push(
+    //         ModalBottomSheetRoute(
+    //           builder: (context) => DisplayQuestionCommentsModal(
+    //             question: widget.questionId,
+    //             parentId: widget.parentId,
+    //           ), 
+    //           isScrollControlled: true
+    //         )
+    //       );
+    //   });
+    // }
     super.initState();
   }
 

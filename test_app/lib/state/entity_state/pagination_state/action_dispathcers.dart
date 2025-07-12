@@ -1,7 +1,6 @@
-import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-
+import 'package:test_app/state/app_state/app_state.dart';
+import 'package:test_app/state/entity_state/pagination_state/pagination.dart';
 
 void getNextPageIfNoPage(Store<AppState> store, Pagination pagination, action){
   if(pagination.noPage){

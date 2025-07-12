@@ -4,7 +4,7 @@ import 'package:my_social_app/services/story_user_view_service.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/story_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
 import 'package:redux/redux.dart';
 
 void createStoryMiddleware(Store<AppState> store,action,NextDispatcher next){
