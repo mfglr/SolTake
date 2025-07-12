@@ -2,7 +2,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/notification_endpoints.dart';
 import 'package:my_social_app/models/notification.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
 
 class NotificationService{
   final AppClient _appClient;

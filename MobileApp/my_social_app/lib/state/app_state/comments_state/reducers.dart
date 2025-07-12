@@ -37,6 +37,22 @@ CommentsState refreshSolutionCommentsFailedReducer(CommentsState prev, RefreshSo
   prev.stopLoadingNextSolutionComments(action.solutionId);
 //solution comments
 
+//children
+CommentsState nextCommentChildrenReducer(CommentsState prev, NextCommentChildrenAction action) =>
+  prev.startLoadingNextChildren(action.parentId);
+CommentsState nextCommentChildrenSuccessReducer(CommentsState prev, NextCommentChildrenSuccessAction action) =>
+  prev.addNextPageChildren(action.parentId, action.comments);
+CommentsState nextCommentChildrenFailedReducer(CommentsState prev, NextCommentChildrenFailedAction action) =>
+  prev.startLoadingNextChildren(action.parentId);
+
+CommentsState refreshCommentChildrenReducer(CommentsState prev, RefreshCommentChildrenAction action) =>
+  prev.startLoadingNextChildren(action.parentId);
+CommentsState refreshCommentChildrenSuccessReducer(CommentsState prev, RefreshCommentChildrenSuccessAction action) =>
+  prev.refreshPageChildren(action.parentId, action.comments);
+CommentsState refreshCommentChildrenFailedReducer(CommentsState prev, RefreshCommentChildrenFailedAction action) =>
+  prev.startLoadingNextChildren(action.parentId);
+//children
+
 Reducer<CommentsState> commentsReducer = combineReducers<CommentsState>([
   TypedReducer<CommentsState, CreateCommentsSuccessAction>(createCommentReducer).call,
 
@@ -59,5 +75,15 @@ Reducer<CommentsState> commentsReducer = combineReducers<CommentsState>([
   TypedReducer<CommentsState, RefreshSolutionCommentsSuccessAction>(refreshSolutionCommentsSuccessReducer).call,
   TypedReducer<CommentsState, RefreshSolutionCommentsFailedAction>(refreshSolutionCommentsFailedReducer).call,
   //solution comments
+
+  //children
+  TypedReducer<CommentsState, NextCommentChildrenAction>(nextCommentChildrenReducer).call,
+  TypedReducer<CommentsState, NextCommentChildrenSuccessAction>(nextCommentChildrenSuccessReducer).call,
+  TypedReducer<CommentsState, NextCommentChildrenFailedAction>(nextCommentChildrenFailedReducer).call,
+
+  TypedReducer<CommentsState, RefreshCommentChildrenAction>(refreshCommentChildrenReducer).call,
+  TypedReducer<CommentsState, RefreshCommentChildrenSuccessAction>(refreshCommentChildrenSuccessReducer).call,
+  TypedReducer<CommentsState, RefreshCommentChildrenFailedAction>(refreshCommentChildrenFailedReducer).call,
+  //children
 ]);
 

@@ -3,7 +3,7 @@ import 'package:my_social_app/services/user_service.dart';
 import 'package:my_social_app/state/app_state/search_users_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
-import 'package:my_social_app/state/entity_state/page.dart' as pagination;
+import 'package:my_social_app/state/entity_state/pagination_state/page.dart' as pagination;
 
 
 void firstSearchUsersMiddleware(Store<AppState> store,action,NextDispatcher next){

@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/comment/widgets/comment_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:rxdart/rxdart.dart';
 
 class CommentItemsWidget extends StatefulWidget {
   final ScrollController scrollController;
   final TextEditingController contentController;
   final FocusNode focusNode;
-  final Iterable<CommentState> comments;
   final Widget noItems;
   final void Function() onScrollBottom;
   final void Function(CommentState) replyComment;
   final void Function() cancelReplying;
-  final Pagination pagination;
+  final BehaviorSubject<int> visibilitySubject;
+  final Pagination<int, CommentState> pagination;
   final num? parentId;
+
 
   const CommentItemsWidget({
     super.key,
     required this.scrollController,
     required this.contentController,
     required this.focusNode,
-    required this.comments,
     required this.pagination,
     required this.noItems,
     required this.onScrollBottom,
     required this.replyComment,
     required this.cancelReplying,
+    required this.visibilitySubject,
     this.parentId,
   });
 
@@ -59,20 +61,21 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
       controller: widget.scrollController,
       child: Builder(
         builder: (context) {
-          if(widget.pagination.isLast && widget.pagination.values.isEmpty) return widget.noItems;
+          if(widget.pagination.isEmpty) return widget.noItems;
           return Column(
             children: [
               if(widget.pagination.loadingPrev)
                 const LoadingCircleWidget(),
               ...List.generate(
-                widget.comments.length,
+                widget.pagination.values.length,
                 (index) => Container(
                   margin: const EdgeInsets.only(bottom: 15),
                   child: CommentItemWidget(
-                    isFocused: widget.comments.elementAt(index).id == widget.parentId ? true : false,
+                    isFocused: widget.pagination.values.elementAt(index).id == widget.parentId ? true : false,
                     contentController: widget.contentController,
                     focusNode: widget.focusNode,
-                    comment: widget.comments.elementAt(index),
+                    visibilitySubject: widget.visibilitySubject,
+                    comment: widget.pagination.values.elementAt(index),
                     cancelReplying: widget.cancelReplying,
                     replyComment: widget.replyComment,
                   )

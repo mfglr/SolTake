@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class ExamState extends Entity<int>{

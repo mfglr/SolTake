@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/entity_state/map_extentions.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class CommentsState {
@@ -37,7 +38,7 @@ class CommentsState {
               (
                 questionComments[comment.questionId] ??
                 Pagination.init(commentsPerPage, true)
-              ).prependOne(comment)
+              ).addOne(comment)
             ),
       newSolutionComments: 
         comment.solutionId == null
@@ -47,17 +48,14 @@ class CommentsState {
               (
                 solutionComments[comment.solutionId] ??
                 Pagination.init(commentsPerPage, true)
-              ).prependOne(comment)
+              ).addOne(comment)
             ),
       newChildren:
         comment.parentId == null
           ? children
           : children.updateElsePrependOne(
               comment.parentId!,
-              (
-                children[comment.parentId] ??
-                Pagination.init(commentsPerPage, true)
-              ).prependOne(comment)
+              selectChildrenFromCommentsState(this, comment.parentId!).addOne(comment)
             ),
     );
 

@@ -6,7 +6,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
 import 'package:http_parser/http_parser.dart';
 
 class QuestionService{

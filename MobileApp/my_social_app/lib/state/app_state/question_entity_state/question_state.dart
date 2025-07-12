@@ -8,7 +8,7 @@ import 'package:my_social_app/state/app_state/subject_entity_state/subject_state
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -266,5 +266,7 @@ class QuestionState extends Entity<int> implements Avatar{
   QuestionState markAsSolved() => _optional(newState: QuestionStatus.solved);
   QuestionState save() => _optional(newIsSaved: true);
   QuestionState unsave() => _optional(newIsSaved: false);
+
+  QuestionState increaseNumberOfComments() => _optional(newNumberOfComments: numberOfComments + 1);
 
 }

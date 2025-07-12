@@ -64,19 +64,3 @@ void dislikeCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void nextCommentChildrenMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextCommentChildrenAction){
-    final pagination = store.state.commentEntityState.getValue(action.commentId)!.children;
-    CommentService()
-      .getByParentId(action.commentId, pagination.next)
-      .then((replies){
-        store.dispatch(NextCommentChildrenSuccessAction(commentId: action.commentId, childIds: replies.map((e) => e.id)));
-        store.dispatch(AddCommentsAction(comments: replies.map((e) => e.toCommentState())));
-      })
-      .catchError((e){
-        store.dispatch(NextCommentChildrenFailedAction(commentId: action.commentId));
-        throw e;
-      });
-  }
-  next(action);
-}

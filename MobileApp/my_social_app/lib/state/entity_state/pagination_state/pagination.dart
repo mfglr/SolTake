@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/page.dart' as pagination;
+import 'package:my_social_app/state/entity_state/pagination_state/page.dart' as pagination;
 
 @immutable
 class Pagination<K extends Comparable, V extends Entity<K>>{
@@ -74,7 +74,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
       recordsPerPage: recordsPerPage,
       values: const []
     );
-
   Pagination<K,V> prependMany(Iterable<V> values)
     => Pagination<K,V>(
         isLast: isLast,
@@ -83,15 +82,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
         values: [...values, ...this.values]
-      );
-  Pagination<K,V> prependUniqMany(Iterable<V> values)
-    => Pagination(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-        values: [...values.where((e) => !this.values.any((v) => v.id.compareTo(e.id) == 0)), ...this.values]
       );
   Pagination<K,V> appendMany(Iterable<V> values)
     => Pagination<K,V>(
@@ -120,7 +110,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         recordsPerPage: recordsPerPage,
         values: values.where((value) => !ids.any((id) => id.compareTo(value.id) == 0))
       );
-
   Pagination<K,V> startLoadingNext()
     => Pagination<K,V>(
         isLast: isLast,
@@ -148,7 +137,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-      
   Pagination<K,V> startLoadingPrev()
     => Pagination<K,V>(
         isLast: isLast,
@@ -176,8 +164,15 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  
-
+  Pagination<K,V> addOne(V value)
+    => Pagination<K,V>(
+        isLast: isLast,
+        loadingNext: loadingNext,
+        loadingPrev: loadingPrev,
+        values: isDescending ? [value, ...values] : [...values, value],
+        isDescending: isDescending,
+        recordsPerPage: recordsPerPage,
+      );
   Pagination<K,V> prependOne(V value)
     => Pagination<K,V>(
         isLast: isLast,
@@ -186,15 +181,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         values: [value, ...values],
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-      );
-  Pagination<K,V> prepenUniqOne(V value)
-    => Pagination<K,V>(
-        isLast: isLast,
-        loadingNext: loadingNext,
-        loadingPrev: loadingPrev,
-        isDescending: isDescending,
-        recordsPerPage: recordsPerPage,
-        values: values.any((e) => e.id.compareTo(value.id) == 0) ? values : [value, ...values],
       );
   Pagination<K,V> appendOne(V value)
     => Pagination<K,V>(
@@ -284,7 +270,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
       recordsPerPage: recordsPerPage
     );
   }
-  
   Pagination<K,V> where(bool Function(V) test) =>
     Pagination<K,V>(
       isLast: isLast,

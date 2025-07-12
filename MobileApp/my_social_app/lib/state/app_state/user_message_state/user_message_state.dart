@@ -1,7 +1,7 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 class UserMessageState extends Entity<int>{
   final Pagination<int,Id<int>> messageIds;
@@ -31,12 +31,6 @@ class UserMessageState extends Entity<int>{
       messageIds: messageIds.stopLoadingNext()
     );
 
-  UserMessageState prependUniqOne(int messageId) =>
-    UserMessageState(
-      id: id,
-      messageIds: messageIds.prepenUniqOne(Id(id: messageId))
-    );
-  
   UserMessageState prependOne(int messageId) =>
     UserMessageState(
       id: id,

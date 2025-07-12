@@ -36,7 +36,7 @@ import 'package:my_social_app/state/app_state/user_user_conversation_state/user_
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class AppState{
@@ -119,6 +119,7 @@ class AppState{
   });
 
   AppState clear() => AppState(
+    
     questions: QuestionsState(
       userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
@@ -131,12 +132,12 @@ class AppState{
       savedQuestions: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
+
     comments: const CommentsState(
       questionComments: <int, Pagination<int, CommentState>>{},
       solutionComments: <int, Pagination<int, CommentState>>{},
       children: <int, Pagination<int, CommentState>>{}
     ),
-
 
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
@@ -241,8 +242,6 @@ class AppState{
     => solutionEntityState.getValue(solutionId)!.comments.values.map((e) => commentEntityState.getValue(e.id)!);
   Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
     => solutionEntityState.getValue(solutionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> selectCommentReplies(int commentId)
-    => commentEntityState.getValue(commentId)!.children.values.map((e) => commentEntityState.getValue(e.id)!).toList().reversed;
   Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
     => commentEntityState.getValue(commentId)!.children.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
 

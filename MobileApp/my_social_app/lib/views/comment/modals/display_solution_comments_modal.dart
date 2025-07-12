@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/comment/widgets/comment_field_widget/comment_field_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_items_widget.dart';
 import 'package:my_social_app/views/comment/widgets/no_comments_widget/no_comments_widget.dart';
+import 'package:rxdart/rxdart.dart';
 
 class DisplaySolutionCommentsModal extends StatefulWidget {
-  final int solutionId;
+  final SolutionState solution;
   final int? parentId;
   const DisplaySolutionCommentsModal({
     super.key,
-    required this.solutionId, 
+    required this.solution, 
     this.parentId
   });
 
@@ -27,37 +29,41 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
-  late int? solutionId;
-  CommentState? comment;
+  late SolutionState? _solution;
+  CommentState? _comment;
+  final _visibilitySubject = BehaviorSubject<int>();
 
   void createComment(){
     final store = StoreProvider.of<AppState>(context,listen: false);
     store.dispatch(CreateCommentAction(
       content: _contentController.text,
-      solutionId: solutionId,
-      questionId: null,
-      repliedId: comment?.id
+      solution: _solution,
+      question: null,
+      replied: _comment
     ));
+    if(_comment != null){
+      _visibilitySubject.add(_comment!.id);
+    }
     cancelReplying();
     _contentController.clear();
     _focusNode.unfocus();
   }
 
   void replyComment(CommentState comment) => setState((){
-    this.comment = comment;
+    _comment = comment;
     _contentController.text = "@${comment.userName} ";
-    solutionId = null;
+    _solution = null;
   });
 
   void cancelReplying() => setState((){
-    _contentController.text = _contentController.text.replaceFirst("@${comment?.userName} ",'');
-    solutionId = widget.solutionId;
-    comment = null;
+    _contentController.text = _contentController.text.replaceFirst("@${_comment?.userName} ",'');
+    _solution = widget.solution;
+    _comment = null;
   });
   
   @override
   void initState() {
-    solutionId = widget.solutionId;
+    _solution = widget.solution;
     super.initState();
   }
   
@@ -75,10 +81,10 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
       onInit: (store) => 
         getNextEntitiesIfNoPage(
           store,
-          selectSolutionComments(store, widget.solutionId),
-          NextSolutionCommentsAction(solutionId: widget.solutionId)
+          selectSolutionComments(store, widget.solution.id),
+          NextSolutionCommentsAction(solutionId: widget.solution.id)
         ),
-      converter: (store) => selectSolutionComments(store, widget.solutionId),
+      converter: (store) => selectSolutionComments(store, widget.solution.id),
       builder: (store, pagination) => SizedBox(
         height: MediaQuery.of(context).size.height * 3 / 4,
         child: Padding(
@@ -101,9 +107,9 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
                   scrollController: _scrollController,
                   contentController: _contentController,
                   focusNode: _focusNode,
+                  visibilitySubject: _visibilitySubject,
                   noItems: const NoCommentsWidget(),
                   pagination: pagination,
-                  comments: pagination.values,
                   parentId: widget.parentId,
                   cancelReplying: cancelReplying,
                   replyComment: replyComment,
@@ -111,8 +117,8 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
                     final store = StoreProvider.of<AppState>(context,listen: false);
                     getNextPageIfReady(
                       store,
-                      selectSolutionComments(store, widget.solutionId),
-                      NextSolutionCommentsAction(solutionId: widget.solutionId)
+                      selectSolutionComments(store, widget.solution.id),
+                      NextSolutionCommentsAction(solutionId: widget.solution.id)
                     );
                   },
                 )
@@ -125,7 +131,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
                   scrollController: _scrollController,
                   cancelReplying: cancelReplying,
                   createComment: createComment,
-                  comment: comment,
+                  comment: _comment,
                 ),
               ),
             ],

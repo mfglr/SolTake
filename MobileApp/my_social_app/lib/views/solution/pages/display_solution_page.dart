@@ -4,8 +4,8 @@ import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
-import 'package:my_social_app/views/comment/modals/display_solution_comments_modal.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+// import 'package:my_social_app/views/comment/modals/display_solution_comments_modal.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
@@ -29,21 +29,21 @@ class _DisplaySolutionPageState extends State<DisplaySolutionPage> {
   
   @override
   void initState() {
-    if(widget.parentId != null){
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator
-          .of(context)
-          .push(
-            ModalBottomSheetRoute(
-              builder: (context) => DisplaySolutionCommentsModal(
-                solutionId: widget.solutionId,
-                parentId: widget.parentId,
-              ), 
-              isScrollControlled: true
-            )
-          );
-      });
-    }
+    // if(widget.parentId != null){
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     Navigator
+    //       .of(context)
+    //       .push(
+    //         ModalBottomSheetRoute(
+    //           builder: (context) => DisplaySolutionCommentsModal(
+    //             solution: widget.solutionId,
+    //             parentId: widget.parentId,
+    //           ), 
+    //           isScrollControlled: true
+    //         )
+    //       );
+    //   });
+    // }
     super.initState();
   }
 
