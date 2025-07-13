@@ -60,7 +60,7 @@ class CommentsState {
     );
 
   //question comments
-  CommentsState startNextLoadingQuestionComments(int questionId) =>
+  CommentsState startLoadingNextQuestionComments(int questionId) =>
     _optional(
       newQuestionComments: questionComments.updateElsePrependOne(
         questionId,

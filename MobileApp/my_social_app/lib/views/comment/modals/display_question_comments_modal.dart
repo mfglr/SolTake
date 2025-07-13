@@ -103,7 +103,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                       refreshEntities(
                         store,
                         selectQuestionComments(store, widget.question.id),
-                        NextQuestionCommentsAction(questionId: widget.question.id)
+                        RefreshQuestionCommentsAction(questionId: widget.question.id)
                       );
                     },
                     icon: const Icon(Icons.refresh)
