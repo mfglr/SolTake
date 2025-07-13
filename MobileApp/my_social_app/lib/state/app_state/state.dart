@@ -37,8 +37,6 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class AppState{
-  final EntityState<int,CommentState> comments;
-
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
@@ -76,8 +74,6 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
-    required this.comments,
-
     required this.searchUsers,
     required this.searchQuestions,
     required this.userUserSearchs,
@@ -116,8 +112,6 @@ class AppState{
   });
 
   AppState clear() => AppState(
-    comments: EntityState(),
-
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
