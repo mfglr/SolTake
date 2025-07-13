@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/helpers/on_scroll_bottom.dart';
+import 'package:my_social_app/services/comment_service.dart';
+import 'package:my_social_app/state/app_state/comments_state/actions.dart';
+import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_field_widget/comment_field_widget.dart';
-import 'package:my_social_app/views/comment/widgets/comment_items_widget.dart';
+import 'package:my_social_app/views/comment/widgets/comment_item_widget.dart';
 import 'package:my_social_app/views/comment/widgets/no_comments_widget/no_comments_widget.dart';
-import 'package:my_social_app/views/shared/loading_widget.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:redux/redux.dart';
 
 class DisplayQuestionCommentsModal extends StatefulWidget {
   final int questionId;
@@ -29,9 +31,67 @@ class DisplayQuestionCommentsModal extends StatefulWidget {
 class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsModal> {
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final ScrollController _scrollController = ScrollController();
   late int? questionId;
   CommentState? comment;
+  
+  final ScrollController _scrollController = ScrollController();
+  bool _loadingNext = false;
+  bool _isLast = false;
+  bool get _isReadyForNext => !_loadingNext && !_isLast;
+  
+  void _onScrollBottom() => onScrollBottom(
+    _scrollController,
+    (){
+      final store = StoreProvider.of<AppState>(context, listen: false);
+      _next(store);
+    }
+  );
+
+  void _nextX(Store<AppState> store){
+    setState(() => _loadingNext = true);
+    final page = selectQuestionCommentsNextPage(store, widget.questionId);
+    CommentService()
+      .getCommentsByQuestionId(widget.questionId, page)
+      .then((comments){
+        store.dispatch(AddNextCommentsAction(comments: comments.map((e) => e.toCommentState())));
+        setState((){
+          _isLast = comments.length < commentsPerPage;
+          _loadingNext = false;
+        }); 
+      })
+      .catchError((e){
+        setState(() => _loadingNext = false);
+        throw e;
+      });
+  }
+
+  void _next(Store<AppState> store){
+    if(_isReadyForNext) _nextX(store);
+  }
+  void _refresh(Store<AppState> store){
+    if(!_loadingNext){
+      final page = selectQuestionCommentsFirstPage;
+      setState(() => _loadingNext = true);
+      CommentService()
+        .getCommentsByQuestionId(widget.questionId, page)
+        .then((comments){
+          store.dispatch(RefreshCommentsAction(questionId: widget.questionId, comments: comments.map((e) => e.toCommentState())));
+          setState((){
+            _isLast = comments.length < commentsPerPage;
+            _loadingNext = false;
+          }); 
+        })
+        .catchError((e){
+          setState(() => _loadingNext = false);
+          throw e;
+        });
+    }
+  }
+  void _nextIfNoPage(Store<AppState> store){
+    if(_isReadyForNext && selectQuestionComments(store, widget.questionId).length < commentsPerPage){
+      _nextX(store);
+    }
+  }
 
   void replyComment(CommentState comment) => setState((){
     this.comment = comment;
@@ -60,18 +120,23 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   @override
   void initState() {
     questionId = widget.questionId;
+    _scrollController.addListener(_onScrollBottom);
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    _nextIfNoPage(store);
     super.initState();
   }
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScrollBottom);
+    _scrollController.dispose();
     _contentController.dispose();
     _focusNode.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
-  Widget _buildModal(Iterable<CommentState> comments,QuestionState question){
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 3 / 4,
       child: Padding(
@@ -84,49 +149,44 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: (){
-                    final store = StoreProvider.of<AppState>(context,listen: false);
-                    store.dispatch(ClearQuestionCommentsAction(questionId: widget.questionId));
-                    getNextEntitiesIfReady(
-                      store,
-                      selectQuestionCommentsPagination(store, widget.questionId),
-                      NextQuestionCommentsAction(questionId: widget.questionId)
-                    );
-                  },
-                  icon: const Icon(Icons.refresh)
-                ),
-                IconButton(
-                  onPressed: (){
-                    final store = StoreProvider.of<AppState>(context,listen: false);
-                    getPrevEntitiesIfReady(
-                      store,
-                      selectQuestionCommentsPagination(store, widget.questionId),
-                      PrevQuestionCommentsAction(questionId: widget.questionId)
-                    );
-                  },
-                  icon: const Icon(Icons.arrow_upward_rounded)
-                ),
-                IconButton(
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close)
                 ),
               ],
             ),
             Expanded(
-              child: CommentItemsWidget(
-                scrollController: _scrollController,
-                contentController: _contentController,
-                focusNode: _focusNode,
-                noItems: const NoCommentsWidget(),
-                pagination: question.comments,
-                comments: comments,
-                parentId: widget.parentId,
-                cancelReplying: cancelReplying,
-                replyComment: replyComment,
-                onScrollBottom: (){
-                  final store = StoreProvider.of<AppState>(context,listen: false);
-                  getNextPageIfReady(store, question.comments, NextQuestionCommentsAction(questionId: widget.questionId));
-                },
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    StoreConnector<AppState, Iterable<CommentState>>(
+                      converter: (store) => selectQuestionComments(store, widget.questionId),
+                      builder: (context, comments) => Column(
+                        children: [
+                          if(comments.isEmpty && _isLast)
+                            const NoCommentsWidget()
+                          else
+                            ...List.generate(
+                              comments.length,
+                              (index) => Container(
+                                margin: const EdgeInsets.only(bottom: 15),
+                                child: CommentItemWidget(
+                                  isFocused: comments.elementAt(index).id == widget.parentId ? true : false,
+                                  contentController: _contentController,
+                                  focusNode: _focusNode,
+                                  comment: comments.elementAt(index),
+                                  cancelReplying: cancelReplying,
+                                  replyComment: replyComment,
+                                )
+                              )
+                            ),
+                        ],
+                      )
+                    ),
+                    if(_loadingNext)
+                      const LoadingCircleWidget()
+                  ]
+                ),
               )
             ),
             Container(
@@ -143,57 +203,6 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
           ],
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState,QuestionState?>(
-      onInit: (store) => getNextPageIfNoPage(
-        store,
-        selectQuestionCommentsPagination(store, widget.questionId),
-        NextQuestionCommentsAction(questionId: widget.questionId)
-      ),
-      converter: (store) => selectQuestion(store, widget.questionId),
-      builder: (context, question){
-        if(question == null) return const LoadingWidget();
-        
-        // if(widget.parentId != null){
-        //   return StoreConnector<AppState,CommentState?>(
-        //     onInit: (store) => store.dispatch(LoadCommentAction(commentId: widget.parentId!)),
-        //     converter: (store) => store.state.commentEntityState.getValue(widget.parentId!),
-        //     builder: (context,parent){
-              
-        //       if(parent == null){
-        //         return StoreConnector<AppState,Iterable<CommentState>>(
-        //           onInit: (store) => getNextPageIfNoPage(
-        //             store,
-        //             question.comments,
-        //             NextQuestionCommentsAction(questionId: widget.questionId)
-        //           ),
-        //           converter: (store) => store.state.getQuestionComments(widget.questionId),
-        //           builder:(context,comments) => _buildModal(comments,question)
-        //         );
-        //       }
-
-        //       return StoreConnector<AppState,Iterable<CommentState>>(
-        //         onInit: (store) => getNextPageIfNoPage(
-        //           store,
-        //           question.comments,
-        //           NextQuestionCommentsAction(questionId: widget.questionId)
-        //         ),
-        //         converter: (store) => store.state.getFormatedQuestionComments(widget.parentId!, widget.questionId),
-        //         builder:(context,comments) => _buildModal(comments,question)
-        //       );
-              
-        //     },
-        //   );
-        // }
-        return StoreConnector<AppState,Iterable<CommentState>>(
-          converter: (store) => store.state.getQuestionComments(widget.questionId),
-          builder:(context,comments) => _buildModal(comments,question)
-        );
-      }
     );
   }
 }

@@ -44,6 +44,8 @@ import 'package:redux/redux.dart';
 final store = Store(
   reducers,
   initialState: AppState(
+    comments: EntityState(),
+    
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
