@@ -8,7 +8,7 @@ import 'package:redux/redux.dart';
 
 //comments action
 QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
-  => action.question == null ? prev : prev.increateNumberOfComments(action.question!);
+  => action.question == null ? prev : prev.increaseNumberOfComments(action.question!);
 //coments action
 
 //question user likes

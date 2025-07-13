@@ -7,14 +7,14 @@ CommentsState createCommentReducer(CommentsState prev, CreateCommentsSuccessActi
 
 //question comments
 CommentsState nextQuestionCommentsReducer(CommentsState prev, NextQuestionCommentsAction action) =>
-  prev.startNextLoadingQuestionComments(action.questionId);
+  prev.startLoadingNextQuestionComments(action.questionId);
 CommentsState nextQuestionCommentsSuccessReducer(CommentsState prev, NextQuestionCommentsSuccessAction action) =>
   prev.addNextPageQuestionComments(action.questionId,action.comments);
 CommentsState nextQuestionCommentsFailedReducer(CommentsState prev, NextQuestionCommentsFailedAction action) =>
   prev.stopLoadingNextQuestionComments(action.questionId);
 
 CommentsState refreshQuestionCommentsReducer(CommentsState prev, RefreshQuestionCommentsAction action) =>
-  prev.startNextLoadingQuestionComments(action.questionId);
+  prev.startLoadingNextQuestionComments(action.questionId);
 CommentsState refreshQuestionCommentsSuccessReducer(CommentsState prev, RefreshQuestionCommentsSuccessAction action) =>
   prev.refreshPageQuestionComments(action.questionId,action.comments);
 CommentsState refreshQuestionCommentsFailedReducer(CommentsState prev, RefreshQuestionCommentsFailedAction action) =>

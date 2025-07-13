@@ -43,7 +43,7 @@ class QuestionsState{
     Map<int,Pagination<int,QuestionState>>? newTopicQuestions,
     Map<int, Pagination<int, QuestionUserLikeState>>? newQuestionUserLikes,
   })
-    => 
+    =>
     QuestionsState(
       homePageQuestions: newHomePageQuestions ?? homePageQuestions,
       searchPageQuestions: newSearchPageQuestions ?? searchPageQuestions,
@@ -158,8 +158,7 @@ class QuestionsState{
               )
             : questionUserLikes
     );
-
-  QuestionsState increateNumberOfComments(QuestionState question) => 
+  QuestionsState increaseNumberOfComments(QuestionState question) => 
     QuestionsState(
       examQuestions:
         examQuestions[question.exam.id] != null
