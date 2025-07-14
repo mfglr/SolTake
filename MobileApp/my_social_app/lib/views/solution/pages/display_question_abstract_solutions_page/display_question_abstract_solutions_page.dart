@@ -93,7 +93,7 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
                   margin: const EdgeInsets.only(bottom: 8),
                   child: CreateSolutionByAiButton(question: question)
                 ),
-                CreateSolutionButton(questionId: question.id,pageController: _pageController),
+                CreateSolutionButton(question: question, pageController: _pageController),
               ],
             ),
           body: Column(

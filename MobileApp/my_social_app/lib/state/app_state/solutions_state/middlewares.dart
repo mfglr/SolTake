@@ -1,8 +1,38 @@
+import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_solution_state.dart';
+import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
+import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
+
+void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is CreateSolutionAction){
+     if(action.medias.isNotEmpty){
+      store.dispatch(ChangeUploadStateAction(state: UploadSolutionState(action)));
+    }
+    SolutionService()
+      .create(
+        action.question.id,
+        action.content,
+        action.medias,
+        (rate) => store.dispatch(ChangeUploadRateAction(id: action.id, rate: rate))
+      )
+      .then((solution){
+        store.dispatch(CreateSolutionSuccessAction(solution: solution.toSolutionState()));
+        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
+      })
+      .catchError((e){
+        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
+        throw e;
+      });
+  }
+  next(action);
+}
 
 //question solutions
 void nextQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
@@ -143,3 +173,38 @@ void refreshQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, 
   next(action);
 }
 //question incorrect solutions
+
+//question video solutions
+void nextQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextQuestionVideoSolutionsAction){
+    final pagination = selectQuestionVideoSolutions(store, action.questionId);
+    SolutionService()
+      .getVideoSolutions(action.questionId, pagination.next)
+      .then((solutions) => store.dispatch(NextQuestionVideoSolutionsSuccessAction(
+        questionId: action.questionId,
+        solutions: solutions.map((solution) => solution.toSolutionState())
+      )))
+      .catchError((e){
+        store.dispatch(NextQuestionVideoSolutionsFailedAction(questionId: action.questionId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshQuestionVideoSolutionsAction){
+    final pagination = selectQuestionVideoSolutions(store, action.questionId);
+    SolutionService()
+      .getVideoSolutions(action.questionId, pagination.first)
+      .then((solutions) => store.dispatch(RefreshQuestionVideoSolutionsSuccessAction(
+        questionId: action.questionId,
+        solutions: solutions.map((solution) => solution.toSolutionState())
+      )))
+      .catchError((e){
+        store.dispatch(RefreshQuestionVideoSolutionsFailedAction(questionId: action.questionId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//question video solutions

@@ -1,6 +1,28 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+
+@immutable
+class CreateSolutionAction extends AppAction{
+  final String id;
+  final QuestionState question;
+  final String? content;
+  final Iterable<AppFile> medias;
+  
+  const CreateSolutionAction({
+    required this.id,
+    required this.question,
+    required this.content,
+    required this.medias
+  });
+}
+@immutable
+class CreateSolutionSuccessAction extends AppAction{
+  final SolutionState solution;
+  const CreateSolutionSuccessAction({required this.solution});
+}
 
 //question solutions
 @immutable
@@ -141,3 +163,38 @@ class RefreshQuestionIncorrectSolutionsFailedAction extends AppAction{
   const RefreshQuestionIncorrectSolutionsFailedAction({required this.questionId});
 }
 //question incorrect solutions
+
+//question video solutions
+@immutable
+class NextQuestionVideoSolutionsAction extends AppAction{
+  final int questionId;
+  const NextQuestionVideoSolutionsAction({required this.questionId});
+}
+@immutable
+class NextQuestionVideoSolutionsSuccessAction extends AppAction{
+  final int questionId;
+  final Iterable<SolutionState> solutions;
+  const NextQuestionVideoSolutionsSuccessAction({required this.questionId, required this.solutions});
+}
+@immutable
+class NextQuestionVideoSolutionsFailedAction extends AppAction{
+  final int questionId;
+  const NextQuestionVideoSolutionsFailedAction({required this.questionId});
+}
+@immutable
+class RefreshQuestionVideoSolutionsAction extends AppAction{
+  final int questionId;
+  const RefreshQuestionVideoSolutionsAction({required this.questionId});
+}
+@immutable
+class RefreshQuestionVideoSolutionsSuccessAction extends AppAction{
+  final int questionId;
+  final Iterable<SolutionState> solutions;
+  const RefreshQuestionVideoSolutionsSuccessAction({required this.questionId, required this.solutions});
+}
+@immutable
+class RefreshQuestionVideoSolutionsFailedAction extends AppAction{
+  final int questionId;
+  const RefreshQuestionVideoSolutionsFailedAction({required this.questionId});
+}
+//question video solutions

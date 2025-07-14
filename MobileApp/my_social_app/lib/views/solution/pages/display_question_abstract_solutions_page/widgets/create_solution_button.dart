@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_content_page/add_solution_content_page.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateSolutionButton extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   final PageController pageController;
   const CreateSolutionButton({
     super.key,
-    required this.questionId,
+    required this.question,
     required this.pageController
   });
 
@@ -39,7 +40,7 @@ class CreateSolutionButton extends StatelessWidget {
                 store.dispatch(
                   CreateSolutionAction(
                     id: const Uuid().v4(),
-                    questionId: questionId,
+                    question: question,
                     content: value.content,
                     medias: value.medias
                   )

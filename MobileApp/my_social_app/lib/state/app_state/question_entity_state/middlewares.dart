@@ -1,10 +1,8 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
-import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
@@ -69,23 +67,4 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-
-//question likes;
-void nextQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextQuestionVideoSolutionsAction){
-    final pagination = store.state.questionEntityState.getValue(action.questionId)!.videoSolutions;
-    SolutionService()
-      .getVideoSolutions(action.questionId, pagination.next)
-      .then((solutions){
-        store.dispatch(NextQuestionVideoSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
-        store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-      })
-      .catchError((e){
-        store.dispatch(NextQuestionVideoSolutionsFailedAction(questionId: action.questionId));
-        throw e;
-      });
-  }
-  next(action);
-}
-
 

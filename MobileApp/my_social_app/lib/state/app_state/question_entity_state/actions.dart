@@ -62,29 +62,6 @@ class MarkQuestionSolutionAsIncorrectAction extends AppAction{
 }
 
 @immutable
-class NextQuestionVideoSolutionsAction extends AppAction{
-  final int questionId;
-  const NextQuestionVideoSolutionsAction({required this.questionId});
-}
-@immutable
-class NextQuestionVideoSolutionsSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<int> solutionIds;
-  const NextQuestionVideoSolutionsSuccessAction({required this.questionId, required this.solutionIds});
-}
-@immutable
-class NextQuestionVideoSolutionsFailedAction extends AppAction{
-  final int questionId;
-  const NextQuestionVideoSolutionsFailedAction({required this.questionId});
-}
-@immutable
-class AddQuestionVideoSolutionAction extends AppAction{
-  final int questionId;
-  final int solutionId;
-  const AddQuestionVideoSolutionAction({required this.questionId, required this.solutionId});
-}
-
-@immutable
 class SaveQuestionAction extends AppAction{
   final int questionId;
   const SaveQuestionAction({required this.questionId});

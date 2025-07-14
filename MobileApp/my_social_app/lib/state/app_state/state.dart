@@ -141,6 +141,7 @@ class AppState{
       questionCorrectSolutions: <int, Pagination<int, SolutionState>>{},
       questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
       questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
+      questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
     ),
 
     comments: const CommentsState(

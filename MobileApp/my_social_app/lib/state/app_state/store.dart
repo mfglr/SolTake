@@ -70,6 +70,7 @@ final store = Store(
       questionCorrectSolutions: <int, Pagination<int, SolutionState>>{},
       questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
       questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
+      questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
     ),
 
     comments: const CommentsState(
@@ -137,6 +138,7 @@ final store = Store(
     //questions
 
     //solutions
+    createSolutionMiddleware,
     nextQuestionSolutionsMiddleware,
     refreshQuestionSolutionsMiddleware,
     nextQuestionCorrectSolutionsMiddleware,
@@ -145,6 +147,7 @@ final store = Store(
     refreshQuestionPendingSolutionsMiddleware,
     nextQuestionIncorrectSolutionsMiddleware,
     refreshQuestionIncorrectSolutionsMiddleware,
+    nextQuestionVideoSolutionsMiddleware,
     //solutions
 
     //comments
@@ -287,8 +290,6 @@ final store = Store(
     deleteQuestionMiddleware,
     // saveQuestionMiddleware,
     // unsaveQuestionMiddleware,
-
-    nextQuestionVideoSolutionsMiddleware,
 
     //solution entity state
     createSolutionMiddleware,

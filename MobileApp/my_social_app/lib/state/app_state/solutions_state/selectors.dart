@@ -24,3 +24,8 @@ Pagination<int, SolutionState> selectQuestionIncorrectSolutionsFromState(Solutio
   (state.questionIncorrectSolutions[questionId] ?? Pagination.init(solutionsPerPage, true));
 Pagination<int, SolutionState> selectQuestionIncorrectSolutions(Store<AppState> store, int questionId) =>
   selectQuestionIncorrectSolutionsFromState(store.state.solutions, questionId);
+
+Pagination<int, SolutionState> selectQuestionVideoSolutionsFromState(SolutionsState state, int questionId) =>
+  (state.questionVideoSolutions[questionId] ?? Pagination.init(solutionsPerPage, true));
+Pagination<int, SolutionState> selectQuestionVideoSolutions(Store<AppState> store, int questionId) =>
+  selectQuestionVideoSolutionsFromState(store.state.solutions, questionId);
