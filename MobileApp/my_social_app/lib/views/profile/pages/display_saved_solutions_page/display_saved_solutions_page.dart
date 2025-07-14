@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/solution_user_saves_state/actions.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -32,22 +29,22 @@ class DisplaySavedSolutionsPage extends StatelessWidget {
         onInit: (store) => store.dispatch(LoadUserAction(userId: store.state.login.login!.id)),
         converter: (store) => store.state.currentUser,
         builder: (context,user){
-          if(user == null) return const LoadingView();
-          return StoreConnector<AppState,Iterable<SolutionState>>(
-            onInit: (store) => getNextPageIfNoPage(store,user.savedSolutions,const NextSolutionUserSavesAction()),
-            converter: (store) => store.state.selectSavedSolutions,
-            builder: (context,solutions) => SolutionItemsWidget(
-              pagination: user.savedSolutions,
-              solutions: solutions,
-              solutionId: solutionId,
-              onScrollBottom: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                getNextPageIfReady(store, user.savedSolutions, const NextSolutionUserSavesAction());
-              }
-            ),
-          );
+          return Text("");
+        //   if(user == null) return const LoadingView();
+        //   return StoreConnector<AppState,Iterable<SolutionState>>(
+        //     onInit: (store) => getNextPageIfNoPage(store,user.savedSolutions,const NextSolutionUserSavesAction()),
+        //     converter: (store) => store.state.selectSavedSolutions,
+        //     builder: (context,solutions) => SolutionItemsWidget(
+        //       pagination: user.savedSolutions,
+        //       solutionId: solutionId,
+        //       onScrollBottom: (){
+        //         final store = StoreProvider.of<AppState>(context,listen: false);
+        //         getNextPageIfReady(store, user.savedSolutions, const NextSolutionUserSavesAction());
+        //       }
+        //     ),
+        //   );
         },
-      ),
+      )
     );
   }
 }

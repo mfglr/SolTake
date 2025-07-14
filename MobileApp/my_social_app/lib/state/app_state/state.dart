@@ -22,6 +22,7 @@ import 'package:my_social_app/state/app_state/questions_state/questions_state.da
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_saves_state/solution_user_save_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
@@ -41,6 +42,7 @@ import 'package:my_social_app/state/entity_state/pagination_state/pagination.dar
 @immutable
 class AppState{
   final QuestionsState questions;
+  final SolutionsState solutions;
   final CommentsState comments;
 
   final Pagination<int,SearchUserState> searchUsers;
@@ -80,6 +82,7 @@ class AppState{
 
   const AppState({
     required this.questions,
+    required this.solutions,
     required this.comments,
     
     required this.searchUsers,
@@ -131,6 +134,13 @@ class AppState{
       searchPageQuestions: Pagination.init(questionsPerPage, true),
       savedQuestions: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
+    ),
+
+    solutions: const SolutionsState(
+      questionSolutions: <int, Pagination<int, SolutionState>>{},
+      questionCorrectSolutions: <int, Pagination<int, SolutionState>>{},
+      questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
+      questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
     ),
 
     comments: const CommentsState(
@@ -223,14 +233,6 @@ class AppState{
 
 
   //SelectSolutions
-  Iterable<SolutionState> selectQuestionSolutions(int questionId)
-    => questionEntityState.getValue(questionId)!.solutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectQuestionCorrectSolutions(int questionId)
-    => questionEntityState.getValue(questionId)!.correctSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectQuestionPendingSolutions(int questionId)
-    => questionEntityState.getValue(questionId)!.pendingSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
-  Iterable<SolutionState> selectQuestionIncorrectSolutions(int questionId)
-    => questionEntityState.getValue(questionId)!.incorrectSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
   Iterable<SolutionState> selectQuestionVideoSolutions(int questionId) =>
     questionEntityState.getValue(questionId)!.videoSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
   Iterable<SolutionState> get selectSavedSolutions

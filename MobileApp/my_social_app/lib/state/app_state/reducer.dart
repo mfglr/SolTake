@@ -20,6 +20,7 @@ import 'package:my_social_app/state/app_state/search_questions_state/reducers.da
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solution_user_saves_state/reducers.dart';
+import 'package:my_social_app/state/app_state/solutions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/reducers.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
@@ -40,6 +41,7 @@ AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear(
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
   questions: questionsReducers(prev.questions, action),
+  solutions: solutionsReducer(prev.solutions, action),
   comments: commentsReducer(prev.comments, action),
   
   searchUsers: searchUsersReducers(prev.searchUsers,action),

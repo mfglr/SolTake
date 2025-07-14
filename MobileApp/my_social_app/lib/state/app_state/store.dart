@@ -28,7 +28,10 @@ import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_user_saves_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/solutions_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
@@ -61,6 +64,14 @@ final store = Store(
       savedQuestions: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
+    
+    solutions: const SolutionsState(
+      questionSolutions: <int, Pagination<int, SolutionState>>{},
+      questionCorrectSolutions: <int, Pagination<int, SolutionState>>{},
+      questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
+      questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
+    ),
+
     comments: const CommentsState(
       questionComments: <int, Pagination<int, CommentState>>{},
       solutionComments: <int, Pagination<int, CommentState>>{},
@@ -107,31 +118,34 @@ final store = Store(
     //questions
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
-    
     nextQuestionUserLikesMiddleware,
     refreshQuestionUserLikesMiddleware,
-
     nextHomePageQuestionsMiddleware,
     refreshHomePageQuestionsMiddleware,
-
     nextUserQuestionsMiddleware,
     refreshUserQuestionsMiddleware,
-
     nextUserSolvedQuestionsMiddleware,
     refreshUserSolvedQuestionsMiddleware,
-
     nextUserUnsolvedQuestionsMiddleware,
     refreshUserUnsolvedQuestionsMiddleware,
-
     nextExamQuestionsMiddleware,
     refreshExamQuestionsMiddleware,
-
     nextSubjectQuestionsMiddleware,
     refreshSubjectQuestionsMiddleware,
-
     nextTopicQuestionsMiddleware,
     refreshTopicQuestionsMiddleware,
     //questions
+
+    //solutions
+    nextQuestionSolutionsMiddleware,
+    refreshQuestionSolutionsMiddleware,
+    nextQuestionCorrectSolutionsMiddleware,
+    refreshQuestionCorrectSolutionsMiddleware,
+    nextQuestionPendingSolutionsMiddleware,
+    refreshQuestionPendingSolutionsMiddleware,
+    nextQuestionIncorrectSolutionsMiddleware,
+    refreshQuestionIncorrectSolutionsMiddleware,
+    //solutions
 
     //comments
     createCommentMiddleware,
@@ -274,10 +288,6 @@ final store = Store(
     // saveQuestionMiddleware,
     // unsaveQuestionMiddleware,
 
-    nextQuestionSolutionsMiddleware,
-    nextQuestionCorrectSolutionsMiddleware,
-    nextQuestionPendingSolutionsMiddleware,
-    nextQuestionIncorrectSolutionsMiddleware,
     nextQuestionVideoSolutionsMiddleware,
 
     //solution entity state

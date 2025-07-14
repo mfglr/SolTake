@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_item_widget.dart';
 
 class SolutionItemsWidget extends StatefulWidget {
-  final Iterable<SolutionState> solutions;
   final Function onScrollBottom;
-  final Pagination<num,Id<num>> pagination;
+  final Pagination<num,SolutionState> pagination;
   final num? solutionId;
 
   const SolutionItemsWidget({
     super.key,
     required this.pagination,
-    required this.solutions,
     required this.onScrollBottom,
     this.solutionId,
   });
@@ -59,9 +56,9 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
       child: Column(
         children: [
           ...List.generate(
-            widget.solutions.length,
+            widget.pagination.values.length,
             (index){
-              final solution = widget.solutions.elementAt(index);
+              final solution = widget.pagination.values.elementAt(index);
               return Container(
                 key: widget.solutionId == solution.id ? _solutionKey : null,
                 margin: const EdgeInsets.only(bottom: 15),
