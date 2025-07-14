@@ -4,7 +4,6 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/entity_state/pagination_widget/paginable.dart';
 
@@ -26,8 +25,6 @@ class CommentStateId extends CommentState implements Paginable<int> {
     required super.solutionId,
     required super.parentId,
     required super.likes,
-    required super.children,
-    required super.repliesVisibility,
     required super.image
   });
 
@@ -42,8 +39,6 @@ class CommentStateId extends CommentState implements Paginable<int> {
     int? newNumberOfLikes,
     int? newNumberOfReplies,
     Pagination<int,CommentUserLikeState>? newLikes,
-    Pagination<int,Id<int>>? newChildren,
-    bool? newRepliesVisibility,
     Multimedia? newImage,
   }) => CommentStateId(
       id: id,
@@ -61,8 +56,6 @@ class CommentStateId extends CommentState implements Paginable<int> {
       solutionId: solutionId,
       parentId: parentId,
       likes: newLikes ?? likes,
-      children: newChildren ?? children,
-      repliesVisibility: newRepliesVisibility ?? repliesVisibility,
       image: newImage ?? image
     );
 
@@ -83,8 +76,6 @@ class CommentStateId extends CommentState implements Paginable<int> {
       solutionId: comment.solutionId,
       parentId: comment.parentId,
       likes: Pagination.init(usersPerPage,true),
-      children: Pagination.init(commentsPerPage,true),
-      repliesVisibility: false,
       image: comment.image
     );
 

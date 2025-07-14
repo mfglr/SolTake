@@ -1,9 +1,7 @@
 import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/services/solution_user_vote_service.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -196,23 +194,5 @@ void nextSolutionDownvotesMiddleware(Store<AppState> store,action,NextDispatcher
   }
   next(action);
 }
-//solution votes;
 
-
-void nextSolutionCommentsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextSolutionCommentsAction){
-    final pagination = store.state.solutionEntityState.getValue(action.solutionId)!.comments;
-    CommentService()
-      .getBySolutionId(action.solutionId,pagination.next)
-      .then((comments){
-        store.dispatch(AddCommentsAction(comments: comments.map((e) => e.toCommentState())));
-        store.dispatch(NextSolutionCommentsSuccessAction(solutionId: action.solutionId,commentsIds: comments.map((e) => e.id)));
-      })
-      .catchError((e){
-        store.dispatch(NextSolutionCommentsFailedAction(solutionId: action.solutionId));
-        throw e;
-      });
-  }
-  next(action);
-}
 

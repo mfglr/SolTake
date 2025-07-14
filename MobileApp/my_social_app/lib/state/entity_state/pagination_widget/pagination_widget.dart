@@ -11,9 +11,9 @@ class PaginationWidget<K extends Comparable, V extends Paginable<K>> extends Sta
   final dynamic parameters;
   final Iterable<V> items;
   final Widget Function(V) itemBuilder;
-  final Widget noItems;
-  final void Function(Iterable<V> items) onNextSucess;
-  final void Function(Iterable<V> items) onRefreshSucess;
+  final Widget? noItems;
+  final void Function(Iterable<V> items) onNextSuccess;
+  final void Function(Iterable<V> items)? onRefreshSuccess;
   
   const PaginationWidget({
     super.key,
@@ -21,10 +21,10 @@ class PaginationWidget<K extends Comparable, V extends Paginable<K>> extends Sta
     required this.isDescending,
     required this.perPage,
     required this.items,
-    required this.onNextSucess,
-    required this.onRefreshSucess,
+    required this.onNextSuccess,
+    this.onRefreshSuccess,
     required this.itemBuilder,
-    required this.noItems,
+    this.noItems,
     this.parameters,
   });
 
@@ -52,12 +52,12 @@ class _PaginationWidgetState<K extends Comparable, V extends Paginable<K>> exten
       isDescending: widget.isDescending
     );
 
-  Future<void> _get(page.Page<K> page){
+  Future<void> _get(){
     setState(() => _loadingNext = true);
     return widget
-      .callback(page, parameters: widget.parameters)
+      .callback(_selectNextPage, parameters: widget.parameters)
       .then((items){
-        widget.onNextSucess(items);
+        widget.onNextSuccess(items);
         setState((){
           _isLast = items.length < widget.perPage;
           _loadingNext = false;
@@ -68,22 +68,31 @@ class _PaginationWidgetState<K extends Comparable, V extends Paginable<K>> exten
         throw e;
       });
   }
-
+  Future<void> _refresh(){
+    setState(() => _loadingNext = true);
+    return widget
+      .callback(_firstPage, parameters: widget.parameters)
+      .then((items){
+        widget.onRefreshSuccess!(items);
+        setState((){
+          _isLast = items.length < widget.perPage;
+          _loadingNext = false;
+        });
+      })
+      .catchError((e){
+        setState(() => _loadingNext = false);
+        throw e;
+      });
+  }
   void _nextIfNoPage(){
     if(!_hasAtLeastOnePage){
-      _get(_selectNextPage);
+      _get();
     }
   }
   void _nextIfReady(){
     if(_isReadyForNext){
-      _get(_selectNextPage);
+      _get();
     }
-  }
-  Future<void> _refresh(){
-    if(!_loadingNext){
-      return _get(_firstPage);
-    }
-    return Future.value();
   }
 
   void _onScrollBottom() => onScrollBottom(_scrollController,_nextIfReady);
@@ -102,23 +111,33 @@ class _PaginationWidgetState<K extends Comparable, V extends Paginable<K>> exten
     super.dispose();
   }
 
+  Widget _build() => SingleChildScrollView(
+    controller: _scrollController,
+    child: Column(
+      children: [
+        if(_isEmpty && widget.noItems != null)
+          widget.noItems!
+        else
+          ...widget.items.map((item) => widget.itemBuilder(item)),
+        if(_loadingNext)
+          const LoadingCircleWidget()
+      ]
+    ),
+  );
+
+
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _refresh,
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            if(_isEmpty)
-              widget.noItems
-            else
-              ...widget.items.map((item) => widget.itemBuilder(item)),
-            if(_loadingNext)
-              const LoadingCircleWidget()
-          ]
-        ),
-      ),
-    );
+    return widget.onRefreshSuccess != null
+      ? RefreshIndicator(
+          onRefresh: (){
+            if(!_loadingNext){
+              return _refresh();
+            }
+            return Future.value();
+          },
+          child: _build()
+        )
+      : _build();
   }
 }

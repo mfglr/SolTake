@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
+import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/comment/widgets/comment_content_widget.dart';
 import 'package:my_social_app/views/comment/widgets/buttons/comment_like_button.dart';
 import 'package:my_social_app/views/comment/widgets/buttons/display_comment_likes_button/display_comment_likes_button.dart';
@@ -10,6 +13,7 @@ import 'package:my_social_app/views/comment/widgets/buttons/reply_comment_button
 import 'package:my_social_app/views/comment/widgets/comment_popup_menu/comment_popup_menu.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
 
 class CommentHeaderWidget extends StatelessWidget {
@@ -17,6 +21,8 @@ class CommentHeaderWidget extends StatelessWidget {
   final TextEditingController contentController;
   final FocusNode focusNode;
   final bool isRoot;
+  final void Function() changeChildrenVisibility;
+  final bool isChildrenVisible;
   final double? diameter;
   final Color? color;
   final void Function(CommentState) replyComment;
@@ -30,6 +36,8 @@ class CommentHeaderWidget extends StatelessWidget {
     required this.isRoot,
     required this.replyComment,
     required this.cancelReplying,
+    required this.changeChildrenVisibility,
+    required this.isChildrenVisible,
     this.diameter,
     this.color,
   });
@@ -142,21 +150,36 @@ class CommentHeaderWidget extends StatelessWidget {
                             replyComment: replyComment,
                           ),
                         ),
-        
-                        if(isRoot && !comment.repliesVisibility && comment.numberOfNotDisplayedReplies > 0)
-                          DisplayRepliesButton(comment: comment)
-                        else if (isRoot && comment.repliesVisibility && comment.numberOfNotDisplayedReplies > 0)
-                          Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(right: 20),
-                                child: HideRepliesButton(comment: comment)
-                              ),
-                              DisplayRemainRepliesButton(comment: comment),
-                            ],
+                        if(isRoot)
+                          StoreConnector<AppState, int>(
+                            converter: (store) => selectNumberOfNotDisplayedChildren(store, isChildrenVisible, comment),
+                            builder: (context, numberOfNotDisplayedChildren){
+                              if(!isChildrenVisible && numberOfNotDisplayedChildren > 0){
+                                return DisplayRepliesButton(comment: comment);
+                              }
+                              else if (isChildrenVisible && numberOfNotDisplayedChildren > 0){
+                                return Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(right: 20),
+                                      child: HideRepliesButton(
+                                        comment: comment,
+                                        onPressed: changeChildrenVisibility,
+                                      )
+                                    ),
+                                    DisplayRemainRepliesButton(comment: comment),
+                                  ],
+                                );
+                              }
+                              else if(isChildrenVisible && numberOfNotDisplayedChildren <= 0){
+                                return HideRepliesButton(
+                                  comment: comment,
+                                  onPressed: changeChildrenVisibility,
+                                );
+                              }
+                              return const SpaceSavingWidget();
+                            },
                           )
-                        else if(isRoot && comment.repliesVisibility && comment.numberOfNotDisplayedReplies <= 0)
-                          HideRepliesButton(comment: comment)
                       ],
                     ),
                   ),

@@ -151,8 +151,6 @@ final store = Store(
     getNextPageCommentLikesMiddleware,
     likeCommentMiddleware,
     dislikeCommentMiddleware,
-    
-    nextCommentChildrenMiddleware,
 
     //Home page state
     nextHomeQuestionsMiddleware,
@@ -255,7 +253,6 @@ final store = Store(
     createSolutionByAiMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
-    nextSolutionCommentsMiddleware,
 
     makeSolutionUpvoteMiddleware,
     removeSolutionUpvoteMiddleware,
@@ -269,7 +266,6 @@ final store = Store(
     //comments entity state
     loadCommentMiddleware,
     loadCommentsMiddleware,
-    removeCommentMiddleware,
 
     //notifications start
     markNotificationsAsViewedMiddleware,

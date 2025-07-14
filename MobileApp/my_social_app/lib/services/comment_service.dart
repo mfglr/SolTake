@@ -2,7 +2,6 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/comment_endpoints.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/comments_state/comment_state_id.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 
 class CommentService{
@@ -45,21 +44,21 @@ class CommentService{
       .then((json) => json as List)
       .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<CommentStateId>> getByQuestionId(Page<int> page,{ dynamic parameters} ) =>
+  Future<Iterable<Comment>> getByQuestionId(Page<int> page,{ dynamic parameters} ) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByQuestionIdEndpoint/${parameters.questionId}", page))
       .then((json) => json as List)
-      .then((list) => list.map((e) => CommentStateId.map(Comment.fromJson(e))));
+      .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<Comment>> getBySolutionId(num solutionId, Page page) =>
+  Future<Iterable<Comment>> getBySolutionId(Page page, {dynamic parameters }) =>
     _appClient
-        .get(_appClient.generatePaginationUrl("$commentController/$getCommentsBySolutionIdEndpoint/$solutionId", page))
+        .get(_appClient.generatePaginationUrl("$commentController/$getCommentsBySolutionIdEndpoint/${parameters.solutionId}", page))
         .then((json) => json as List)
         .then((list) => list.map((e) => Comment.fromJson(e)));
 
-  Future<Iterable<Comment>> getByParentId(num parentId, Page page) =>
+  Future<Iterable<Comment>> getByParentId(Page<int> page, {dynamic parameters}) =>
     _appClient
-      .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByParentIdEndpoint/$parentId", page))
+      .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByParentIdEndpoint/${parameters.parentId}", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Comment.fromJson(e)));
 }

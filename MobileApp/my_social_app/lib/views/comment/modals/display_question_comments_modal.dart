@@ -97,18 +97,21 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                 child: StoreConnector<AppState, Iterable<CommentStateId>>(
                   converter: (store) => selectQuestionComments(store,widget.questionId),
                   builder: (context,comments) => PaginationWidget<int, CommentStateId>(
-                    callback: CommentService().getByQuestionId,
+                    callback: (page, {parameters}) =>
+                      CommentService()
+                        .getByQuestionId(page,parameters: parameters)
+                        .then((comments) => comments.map((comment) => CommentStateId.map(comment))),
                     parameters: (questionId: widget.questionId),
                     isDescending: true,
                     perPage: commentsPerPage,
                     items: comments,
-                    onNextSucess: (items){
-                      final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(NextQuestionCommentsAction(comments: items));
+                    onNextSuccess: (comments){
+                      final store = StoreProvider.of<AppState>(context, listen: false);
+                      store.dispatch(NextCommentsAction(comments: comments));
                     },
-                    onRefreshSucess: (items){
+                    onRefreshSuccess: (comments){
                       final store = StoreProvider.of<AppState>(context,listen: false);
-                      store.dispatch(RefreshQuestionCommentsAction(comments: items,questionId: widget.questionId));
+                      store.dispatch(RefreshQuestionCommentsAction(comments: comments,questionId: widget.questionId));
                     },
                     itemBuilder: (comment) => CommentItemWidget(
                       contentController: _contentController,

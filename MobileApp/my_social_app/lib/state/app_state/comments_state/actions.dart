@@ -33,12 +33,10 @@ class CreateCommentSuccessAction extends AppAction{
     required this.comment
   });
 }
-
-
 @immutable
-class NextQuestionCommentsAction extends AppAction{
+class NextCommentsAction extends AppAction{
   final Iterable<CommentStateId> comments;
-  const NextQuestionCommentsAction({required this.comments});
+  const NextCommentsAction({required this.comments});
 }
 @immutable
 class RefreshQuestionCommentsAction extends AppAction{
@@ -46,3 +44,11 @@ class RefreshQuestionCommentsAction extends AppAction{
   final Iterable<CommentStateId> comments;
   const RefreshQuestionCommentsAction({required this.questionId, required this.comments});
 }
+@immutable
+class RefreshSolutionCommentsAction extends AppAction{
+  final int solutionId;
+  final Iterable<CommentStateId> comments;
+  const RefreshSolutionCommentsAction({required this.solutionId, required this.comments});
+}
+
+

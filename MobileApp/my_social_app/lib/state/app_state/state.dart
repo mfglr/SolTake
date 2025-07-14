@@ -237,10 +237,6 @@ class AppState{
     => solutionEntityState.getValue(solutionId)!.comments.values.map((e) => commentEntityState.getValue(e.id)!);
   Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
     => solutionEntityState.getValue(solutionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> selectCommentReplies(int commentId)
-    => commentEntityState.getValue(commentId)!.children.values.map((e) => commentEntityState.getValue(e.id)!).toList().reversed;
-  Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
-    => commentEntityState.getValue(commentId)!.children.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
 
   //select exams
   Iterable<ExamState> get selectExams => appExams.values.map((e) => examEntityState.getValue(e.id)!);

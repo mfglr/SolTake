@@ -21,24 +21,6 @@ EntityState<int,CommentState> addNewLikeReducer(EntityState<int,CommentState> pr
   => prev.updateOne(prev.getValue(action.commentId)!.addNewLike(action.commentUserLike));
 // like comment
 
-//get comment replies;
-EntityState<int,CommentState> nextChildrenReducer(EntityState<int,CommentState> prev,NextCommentChildrenAction action)
-  => prev.updateOne(prev.getValue(action.commentId)!.startLoadingNextReplies());
-EntityState<int,CommentState> nextChildrenSuccessReducer(EntityState<int,CommentState> prev,NextCommentChildrenSuccessAction action)
-  => prev.updateOne(prev.getValue(action.commentId)!.addNextReplies(action.childIds));
-EntityState<int,CommentState> nextChildrenFailedReducer(EntityState<int,CommentState> prev,NextCommentChildrenFailedAction action)
-  => prev.updateOne(prev.getValue(action.commentId)!.stopLoadingNextReplies());
-
-EntityState<int,CommentState> addReplyReducer(EntityState<int,CommentState> prev,AddCommentReplyAction action)
-  => prev.updateOne(prev.getValue(action.commentId)!.addReply(action.replyId));
-EntityState<int,CommentState> removeReplyReducer(EntityState<int,CommentState> prev,RemoveCommentReplyAction action)
-  => prev.updateOne(prev.getValue(action.commentId)!.removeReply(action.replyId));
-EntityState<int,CommentState> addNewReplyReducer(EntityState<int,CommentState> prev,AddNewCommentReplyAction action)
-  => prev.updateOne(prev.getValue(action.commentId)!.addNewReply(action.replyId));
-
-EntityState<int,CommentState> changeVisibilityReducer(EntityState<int,CommentState> prev,ChangeRepliesVisibilityAction action)
-  => prev.updateOne(prev.getValue(action.commentId)!.changeVisibility(action.visibility));
-
 EntityState<int,CommentState> addCommentReducer(EntityState<int,CommentState> prev,AddCommentAction action)
   => prev.appendOne(action.comment);
 EntityState<int,CommentState> removeCommentReducer(EntityState<int,CommentState> prev,RemoveCommentSuccessAction action)
@@ -55,15 +37,6 @@ Reducer<EntityState<int,CommentState>> questionCommentEntityStateReducers = comb
   TypedReducer<EntityState<int,CommentState>,LikeCommentSuccessAction>(likeCommentSuccessReducer).call,
   TypedReducer<EntityState<int,CommentState>,DislikeCommentSuccessAction>(dislikeCommentSuccessReducer).call,
   TypedReducer<EntityState<int,CommentState>,AddNewCommentLikeAction>(addNewLikeReducer).call,
-
-  TypedReducer<EntityState<int,CommentState>,NextCommentChildrenAction>(nextChildrenReducer).call,
-  TypedReducer<EntityState<int,CommentState>,NextCommentChildrenSuccessAction>(nextChildrenSuccessReducer).call,
-  TypedReducer<EntityState<int,CommentState>,NextCommentChildrenFailedAction>(nextChildrenFailedReducer).call,
-  TypedReducer<EntityState<int,CommentState>,AddCommentReplyAction>(addReplyReducer).call,
-  TypedReducer<EntityState<int,CommentState>,RemoveCommentReplyAction>(removeReplyReducer).call,
-  TypedReducer<EntityState<int,CommentState>,AddNewCommentReplyAction>(addNewReplyReducer).call,
-
-  TypedReducer<EntityState<int,CommentState>,ChangeRepliesVisibilityAction>(changeVisibilityReducer).call,
 
   TypedReducer<EntityState<int,CommentState>,AddCommentAction>(addCommentReducer).call,
   TypedReducer<EntityState<int,CommentState>,RemoveCommentSuccessAction>(removeCommentReducer).call,

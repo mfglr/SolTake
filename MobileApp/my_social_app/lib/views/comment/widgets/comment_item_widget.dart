@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/actions.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state_id.dart';
+import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/pagination_widget/pagination_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_header_widget.dart';
 import 'package:my_social_app/views/comment/widgets/buttons/hide_replies_button/hide_replies_button.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class CommentItemWidget extends StatefulWidget {
   final TextEditingController contentController;
@@ -29,8 +34,12 @@ class CommentItemWidget extends StatefulWidget {
 }
 
 class _CommentItemWidgetState extends State<CommentItemWidget> {
-  late Color? _color = Colors.black.withOpacity(0.2);
+  late Color? _color = Colors.black.withAlpha(75);
   Future? _future;
+  bool _isChildrenVisible = false;
+  
+  void _changeChildrenVisibility() => setState(() => _isChildrenVisible = !_isChildrenVisible);
+
 
   @override
   void initState() {
@@ -68,47 +77,59 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
               comment: widget.comment,
               contentController: widget.contentController,
               focusNode: widget.focusNode,
+              changeChildrenVisibility: _changeChildrenVisibility,
+              isChildrenVisible: _isChildrenVisible,
               replyComment: widget.replyComment,
               cancelReplying: widget.cancelReplying,
               isRoot: true,
               diameter: 45,
             ),
 
-            if(widget.comment.repliesVisibility)
-              StoreConnector<AppState,Iterable<CommentState>>(
-                converter: (store) => store.state.selectCommentReplies(widget.comment.id),
-                builder: (context,replies) => Column(
+            if(_isChildrenVisible)
+              StoreConnector<AppState,Iterable<CommentStateId>>(
+                converter: (store) => selectCommentChildren(store, widget.comment.id),
+                builder: (context, children) => Column(
                   children: [
-                    if(widget.comment.children.loadingNext)
-                      const LoadingCircleWidget(strokeWidth: 2),
-                    ...replies.map(
-                      (reply) => Padding(
-                        padding: const EdgeInsets.only(left: 50,top: 20),
-                        child: CommentHeaderWidget(
-                          comment: reply,
-                          isRoot: false,
-                          replyComment: widget.replyComment,
-                          cancelReplying: widget.cancelReplying,
-                          contentController: widget.contentController,
-                          focusNode: widget.focusNode
-                        ),
-                      )
+                    PaginationWidget<int, CommentStateId>(
+                      callback: (page, {parameters}) =>
+                        CommentService()
+                          .getByParentId(page,parameters: (parentId: widget.comment.id))
+                          .then((comments) => comments.map((comment) => CommentStateId.map(comment))),
+                      isDescending: false,
+                      perPage: commentsPerPage,
+                      items: children,
+                      onNextSuccess: (comments){
+                        final store = StoreProvider.of<AppState>(context,listen: false);
+                        store.dispatch(NextCommentsAction(comments: comments));
+                      },
+                      itemBuilder: (child) => CommentHeaderWidget(
+                        comment: child,
+                        isRoot: false,
+                        replyComment: widget.replyComment,
+                        cancelReplying: widget.cancelReplying,
+                        contentController: widget.contentController,
+                        changeChildrenVisibility: _changeChildrenVisibility,
+                        isChildrenVisible: _isChildrenVisible,
+                        focusNode: widget.focusNode
+                      ),
                     ),
-                  ]
+                    if(children.isNotEmpty)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left:50, top:20),
+                            child: HideRepliesButton(
+                              comment: widget.comment,
+                              onPressed: _changeChildrenVisibility,
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
                 )
               ),
-      
-            if(widget.comment.repliesVisibility && widget.comment.children.values.isNotEmpty)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left:50, top:20),
-                    child: HideRepliesButton(comment: widget.comment),
-                  ),
-                ],
-              ),
-              
+        
           ],
         ),
       ),
