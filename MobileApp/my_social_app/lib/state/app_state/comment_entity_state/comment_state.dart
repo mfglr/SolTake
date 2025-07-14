@@ -5,7 +5,7 @@ import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
-class CommentState extends Entity<int> implements Avatar{
+class CommentState extends Entity<int> implements Avatar {
   final DateTime createdAt;
   final DateTime? updatedAt;
   final bool isOwner;

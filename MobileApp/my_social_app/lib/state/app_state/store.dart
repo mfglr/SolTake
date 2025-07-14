@@ -3,6 +3,7 @@ import 'package:my_social_app/state/app_state/active_login_page_state/active_log
 import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/comments_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
@@ -39,11 +40,14 @@ import 'package:my_social_app/state/app_state/user_user_search_state/middlewares
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_widget/paginable_state.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
   reducers,
   initialState: AppState(
+    comments: PaginableState(),
+
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
@@ -82,7 +86,10 @@ final store = Store(
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
-    
+    //comments    
+    createCommentMiddleware,
+    //
+
     //question user save middlewares
     createQuestionUserSaveMiddleware,
     deleteQuestionUserSaveMiddleware,
@@ -260,7 +267,6 @@ final store = Store(
     nextSolutionDownvotesMiddleware,
 
     //comments entity state
-    createCommentMiddleware,
     loadCommentMiddleware,
     loadCommentsMiddleware,
     removeCommentMiddleware,

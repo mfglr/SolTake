@@ -5,6 +5,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state_id.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
@@ -34,9 +35,12 @@ import 'package:my_social_app/state/app_state/user_user_search_state/user_user_s
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination_widget/paginable_state.dart';
 
 @immutable
 class AppState{
+  final PaginableState<int,CommentStateId> comments;
+
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
@@ -74,6 +78,8 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
+    required this.comments,
+
     required this.searchUsers,
     required this.searchQuestions,
     required this.userUserSearchs,
@@ -112,6 +118,8 @@ class AppState{
   });
 
   AppState clear() => AppState(
+    comments: PaginableState(),
+
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),

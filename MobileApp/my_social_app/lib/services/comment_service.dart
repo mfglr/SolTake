@@ -2,6 +2,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/comment_endpoints.dart';
 import 'package:my_social_app/models/comment.dart';
 import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state_id.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
 
 class CommentService{
@@ -43,6 +44,12 @@ class CommentService{
       .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByQuestionIdEndpoint/$questionId", page))
       .then((json) => json as List)
       .then((list) => list.map((e) => Comment.fromJson(e)));
+
+  Future<Iterable<CommentStateId>> getByQuestionId(Page<int> page,{ dynamic parameters} ) =>
+    _appClient
+      .get(_appClient.generatePaginationUrl("$commentController/$getCommentsByQuestionIdEndpoint/${parameters.questionId}", page))
+      .then((json) => json as List)
+      .then((list) => list.map((e) => CommentStateId.map(Comment.fromJson(e))));
 
   Future<Iterable<Comment>> getBySolutionId(num solutionId, Page page) =>
     _appClient

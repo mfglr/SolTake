@@ -8,25 +8,25 @@ import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 
-void createCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is CreateCommentAction){
-    CommentService()
-      .createComment(action.content, action.questionId, action.solutionId, action.repliedId)
-      .then((comment){
-        store.dispatch(AddCommentAction(comment: comment.toCommentState()));
-        if(comment.questionId != null){
-          store.dispatch(AddQuestionCommentAction(questionId: action.questionId!, commenId: comment.id));
-        }
-        if(comment.solutionId != null){
-          store.dispatch(AddSolutionCommentAction(solutionId: action.solutionId!, commentId: comment.id));
-        }
-        if(comment.parentId != null){
-          store.dispatch(AddCommentReplyAction(replyId: comment.id, commentId: comment.parentId!));
-        }
-      });
-  }
-  next(action);
-}
+// void createCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
+//   if(action is CreateCommentAction){
+//     CommentService()
+//       .createComment(action.content, action.questionId, action.solutionId, action.repliedId)
+//       .then((comment){
+//         store.dispatch(AddCommentAction(comment: comment.toCommentState()));
+//         if(comment.questionId != null){
+//           store.dispatch(AddQuestionCommentAction(questionId: action.questionId!, commenId: comment.id));
+//         }
+//         if(comment.solutionId != null){
+//           store.dispatch(AddSolutionCommentAction(solutionId: action.solutionId!, commentId: comment.id));
+//         }
+//         if(comment.parentId != null){
+//           store.dispatch(AddCommentReplyAction(replyId: comment.id, commentId: comment.parentId!));
+//         }
+//       });
+//   }
+//   next(action);
+// }
 
 void loadCommentMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is LoadCommentAction){
