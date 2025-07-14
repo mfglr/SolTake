@@ -31,7 +31,6 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
       )
       .then((solution){
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-        store.dispatch(CreateNewQuestionSolutionAction(questionId: action.questionId, solutionId: solution.id,));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
       .catchError((e){
@@ -49,7 +48,6 @@ void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher ne
       .createByAI(action.modelId,action.questionId,action.blobName,action.position,action.prompt,action.isHighResulation)
       .then((solution){
         store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-        store.dispatch(CreateNewQuestionSolutionAction(questionId: action.questionId, solutionId: solution.id));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
@@ -77,7 +75,6 @@ void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
       .delete(action.solution.id)
       .then((_){
         if(question != null){
-          store.dispatch(RemoveQuestionSolutionAction(solution: action.solution));
           if(action.solution.state == SolutionStatus.correct && question.numberOfCorrectSolutions <= 1){
             store.dispatch(MarkUserQuestionAsUnsolvedAction(userId: question.userId, questionId: action.solution.questionId));
           }

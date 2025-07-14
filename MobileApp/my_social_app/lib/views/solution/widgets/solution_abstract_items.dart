@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_item_widget.dart';
 
 class SolutionAbstractItems extends StatefulWidget {
-  final Iterable<SolutionState> solutions;
-  final Pagination pagination;
+  final Pagination<int,SolutionState> pagination;
   final void Function() onScrollBottom;
   final void Function(int solutionId) onTap;
   final Widget noItems;
 
   const SolutionAbstractItems({
     super.key,
-    required this.solutions,
     required this.pagination,
     required this.onScrollBottom,
     required this.onTap,
@@ -57,10 +55,10 @@ class _SolutionAbstractItemsState extends State<SolutionAbstractItems> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
             ),
-            itemCount: widget.solutions.length,
+            itemCount: widget.pagination.values.length,
             itemBuilder: (context,index) => SolutionAbstractItemWidget(
-              key: ValueKey(widget.solutions.elementAt(index).id),
-              solution: widget.solutions.elementAt(index),
+              key: ValueKey(widget.pagination.values.elementAt(index).id),
+              solution: widget.pagination.values.elementAt(index),
               onTap: widget.onTap,
             )
           ),

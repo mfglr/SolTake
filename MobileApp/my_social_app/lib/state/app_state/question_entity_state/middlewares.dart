@@ -4,7 +4,6 @@ import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/selectors.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -72,70 +71,6 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
 }
 
 //question likes;
-
-void nextQuestionSolutionsMiddleware(Store<AppState> store,action, NextDispatcher next){
-  if(action is NextQuestionSolutionsAction){
-    SolutionService()
-      .getSolutionsByQuestionId(action.questionId,selectQuestionNextSolutionsPage(store, action.questionId))
-      .then((solutions){
-        store.dispatch(NextQuestionSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
-        store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-      })
-      .catchError((e){
-        store.dispatch(NextQuestionSolutionsFailedAction(questionId: action.questionId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
-  if(action is NextQuestionCorrectSolutionsAction){
-    final pagination = store.state.questionEntityState.getValue(action.questionId)!.correctSolutions;
-    SolutionService()
-      .getCorrectSolutionsByQuestionId(action.questionId, pagination.next)
-      .then((solutions){
-        store.dispatch(NextQuestionCorrectSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
-        store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-      })
-      .catchError((e){
-        store.dispatch(NextQuestionCorrectSolutionsFailedAction(questionId: action.questionId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextQuestionPendingSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextQuestionPendingSolutionsAction){
-    final pagination = store.state.questionEntityState.getValue(action.questionId)!.pendingSolutions;
-    SolutionService()
-      .getPendingSolutionsByQuestionId(action.questionId, pagination.next)
-      .then((solutions){
-        store.dispatch(NextQuestionPendingSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
-        store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-      })
-      .catchError((e){
-        store.dispatch(NextQuestionPendingSolutionsFailedAction(questionId: action.questionId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextQuestionIncorrectSolutionsAction){
-    final pagination = store.state.questionEntityState.getValue(action.questionId)!.incorrectSolutions;
-    SolutionService()
-      .getIncorrectSolutionsByQuestionId(action.questionId, pagination.next)
-      .then((solutions){
-        store.dispatch(NextQuestionIncorrectSolutionsSuccessAction(questionId: action.questionId, solutionIds: solutions.map((e) => e.id)));
-        store.dispatch(AddSolutionsAction(solutions: solutions.map((e) => e.toSolutionState())));
-      })
-      .catchError((e){
-        store.dispatch(NextQuestionIncorrectSolutionsFailedAction(questionId: action.questionId));
-        throw e;
-      });
-  }
-  next(action);
-}
 void nextQuestionVideoSolutionsMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is NextQuestionVideoSolutionsAction){
     final pagination = store.state.questionEntityState.getValue(action.questionId)!.videoSolutions;

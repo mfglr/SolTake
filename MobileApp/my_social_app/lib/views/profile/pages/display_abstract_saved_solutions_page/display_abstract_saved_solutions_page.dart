@@ -25,26 +25,26 @@ class DisplayAbstractSavedSolutionsPage extends StatelessWidget {
           title: AppLocalizations.of(context)!.display_abstract_saved_solutions_page_title,
         ),
       ),
-      body: StoreConnector<AppState,Pagination>(
-        converter: (store) => store.state.solutionUserSaves,
-        builder: (context,pagination) => StoreConnector<AppState,Iterable<SolutionState>>(
-          onInit: (store) => getNextPageIfNoPage(store, store.state.solutionUserSaves, const NextSolutionUserSavesAction()),
-          converter: (store) => store.state.selectSavedSolutions,
-          builder: (context,solutions) => SolutionAbstractItems(
-            noItems: NoSolutions(text: AppLocalizations.of(context)!.display_abstract_saved_solutions_page_no_solutions_content),
-            solutions: solutions,
-            pagination: pagination,
-            onTap: (solutionId) => 
-              Navigator
-                .of(context)
-                .push(MaterialPageRoute(builder: (context) => DisplaySavedSolutionsPage(solutionId: solutionId))),
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              getNextPageIfReady(store, store.state.solutionUserSaves, const NextSolutionUserSavesAction());
-            },
-          ),
-        ),
-      )
+      // body: StoreConnector<AppState,Pagination>(
+      //   converter: (store) => store.state.solutionUserSaves,
+      //   builder: (context,pagination) => StoreConnector<AppState,Iterable<SolutionState>>(
+      //     onInit: (store) => getNextPageIfNoPage(store, store.state.solutionUserSaves, const NextSolutionUserSavesAction()),
+      //     converter: (store) => store.state.selectSavedSolutions,
+      //     builder: (context,solutions) => SolutionAbstractItems(
+      //       noItems: NoSolutions(text: AppLocalizations.of(context)!.display_abstract_saved_solutions_page_no_solutions_content),
+      //       solutions: solutions,
+      //       pagination: pagination,
+      //       onTap: (solutionId) => 
+      //         Navigator
+      //           .of(context)
+      //           .push(MaterialPageRoute(builder: (context) => DisplaySavedSolutionsPage(solutionId: solutionId))),
+      //       onScrollBottom: (){
+      //         final store = StoreProvider.of<AppState>(context,listen: false);
+      //         getNextPageIfReady(store, store.state.solutionUserSaves, const NextSolutionUserSavesAction());
+      //       },
+      //     ),
+      //   ),
+      // )
     );
   }
 }

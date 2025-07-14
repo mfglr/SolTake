@@ -2,7 +2,6 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 
 @immutable
 class CreateQuestionAction extends AppAction{
@@ -60,105 +59,6 @@ class MarkQuestionSolutionAsIncorrectAction extends AppAction{
   final int questionId;
   final int solutionId;
   const MarkQuestionSolutionAsIncorrectAction({required this.questionId,required this.solutionId});
-}
-
-
-@immutable
-class NextQuestionSolutionsAction extends AppAction{
-  final int questionId;
-  const NextQuestionSolutionsAction({required this.questionId});
-}
-@immutable
-class NextQuestionSolutionsSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<int> solutionIds;
-  const NextQuestionSolutionsSuccessAction({required this.questionId, required this.solutionIds});
-}
-@immutable
-class NextQuestionSolutionsFailedAction extends AppAction{
-  final int questionId;
-  const NextQuestionSolutionsFailedAction({required this.questionId});
-}
-
-@immutable
-class CreateNewQuestionSolutionAction extends AppAction{
-  final int questionId;
-  final int solutionId;
-  const CreateNewQuestionSolutionAction({required this.questionId,required this.solutionId});
-}
-@immutable
-class CreateNewQuestionVideoSolutionAction extends AppAction{
-  final int questionId;
-  final int solutionId;
-  const CreateNewQuestionVideoSolutionAction({required this.questionId,required this.solutionId});
-}
-@immutable
-class AddNewQuestionSolutionAction extends AppAction{
-  final int questionId;
-  final int solutionId;
-  const AddNewQuestionSolutionAction({required this.questionId, required this.solutionId});
-}
-@immutable
-class RemoveQuestionSolutionAction extends AppAction{
-  final SolutionState solution;
-  const RemoveQuestionSolutionAction({required this.solution});
-}
-
-@immutable
-class NextQuestionCorrectSolutionsAction extends AppAction{
-  final int questionId;
-  const NextQuestionCorrectSolutionsAction({required this.questionId});
-}
-@immutable
-class NextQuestionCorrectSolutionsSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<int> solutionIds;
-  const NextQuestionCorrectSolutionsSuccessAction({required this.questionId, required this.solutionIds});
-}
-@immutable
-class NextQuestionCorrectSolutionsFailedAction extends AppAction{
-  final int questionId;
-  const NextQuestionCorrectSolutionsFailedAction({required this.questionId});
-}
-@immutable
-class RemoveCorrectSolutionAction extends AppAction{
-  final int questionId;
-  final int solutionId;
-  const RemoveCorrectSolutionAction({required this.questionId, required this.solutionId});
-}
-
-@immutable
-class NextQuestionPendingSolutionsAction extends AppAction{
-  final int questionId;
-  const NextQuestionPendingSolutionsAction({required this.questionId});
-}
-@immutable
-class NextQuestionPendingSolutionsSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<int> solutionIds;
-  const NextQuestionPendingSolutionsSuccessAction({required this.questionId, required this.solutionIds});
-}
-@immutable
-class NextQuestionPendingSolutionsFailedAction extends AppAction{
-  final int questionId;
-  const NextQuestionPendingSolutionsFailedAction({required this.questionId});
-}
-
-@immutable
-class NextQuestionIncorrectSolutionsAction extends AppAction{
-  final int questionId;
-  const NextQuestionIncorrectSolutionsAction({required this.questionId});
-}
-@immutable
-class NextQuestionIncorrectSolutionsSuccessAction extends AppAction{
-  final int questionId;
-  final Iterable<int> solutionIds;
-  const NextQuestionIncorrectSolutionsSuccessAction({required this.questionId, required this.solutionIds});
-}
-@immutable
-class NextQuestionIncorrectSolutionsFailedAction extends AppAction{
-  final int questionId;
-  const NextQuestionIncorrectSolutionsFailedAction({required this.questionId});
 }
 
 @immutable

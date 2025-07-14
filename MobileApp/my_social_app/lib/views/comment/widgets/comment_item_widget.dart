@@ -100,7 +100,6 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
             if(_isVisible)
               StoreConnector<AppState, Pagination<int,CommentState>>(
                 onInit: (store){
-                  var pagination = selectChildren(store, widget.comment.id); 
                   getNextEntitiesIfNoPage(
                     store,
                     selectChildren(store, widget.comment.id),

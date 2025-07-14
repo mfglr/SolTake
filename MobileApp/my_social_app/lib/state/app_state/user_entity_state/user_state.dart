@@ -6,7 +6,6 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_story_state.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
@@ -27,7 +26,6 @@ class UserState extends Entity<int> implements Avatar{
   final UserImageState? userImageState;
   final Pagination<int,FollowState> followers;
   final Pagination<int,FollowState> followeds;
-  final Pagination<int,Id<int>> savedSolutions;
 
   @override
   Multimedia? get avatar => image;
@@ -57,7 +55,6 @@ class UserState extends Entity<int> implements Avatar{
     required this.isFollowed,
     required this.followers,
     required this.followeds,
-    required this.savedSolutions,
     required this.image,
     required this.userImageState,
     required this.stories
@@ -75,7 +72,6 @@ class UserState extends Entity<int> implements Avatar{
     bool? newIsFollowed,
     Pagination<int,FollowState>? newFollowers,
     Pagination<int,FollowState>? newFolloweds,
-    Pagination<int,Id<int>>? newSavedSolutions,
     Multimedia? newImage,
     UserImageState? newUserImageState
   }) => UserState(
@@ -92,7 +88,6 @@ class UserState extends Entity<int> implements Avatar{
     isFollowed: newIsFollowed ?? isFollowed,
     followers: newFollowers ?? followers,
     followeds: newFolloweds ?? followeds,
-    savedSolutions: newSavedSolutions ?? savedSolutions,
     image: newImage ?? image,
     stories: stories,
     userImageState: newUserImageState ?? userImageState,
@@ -161,17 +156,6 @@ class UserState extends Entity<int> implements Avatar{
       newNumberOfFolloweds: numberOfFolloweds - 1,
       newFolloweds: followeds.where((e) => e.userId != followedId)
     );
-
-  //saved solutions
-  UserState startLoadingSavedSolutions() =>
-    _optional(newSavedSolutions: savedSolutions.startLoadingNext());
-  UserState addNextSavedSolutions(Iterable<int> saveIds) =>
-    _optional(newSavedSolutions: savedSolutions.addNextPage(saveIds.map((e) => Id(id: e))));
-  UserState stopLoadingSavedSolutions() =>
-    _optional(newSavedSolutions: savedSolutions.stopLoadingNext());
-
-  UserState addSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.prependOne(Id(id: saveId)));
-  UserState removeSavedSolution(int saveId) => _optional(newSavedSolutions: savedSolutions.removeOne(saveId));
 
   UserState updateUserName(String userName) => 
     _optional(newUserName: userName);

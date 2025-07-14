@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
@@ -8,14 +8,15 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/views/solution/pages/display_question_correct_solutions_page/display_question_correct_solutions_page_constants.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
-class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
+class DisplayQuestionCorrectSolutionsPage extends StatelessWidget {
   final int questionId;
   final int? solutionId;
-
-  const DisplayQuestionPendingSolutionsPage({
+  const DisplayQuestionCorrectSolutionsPage({
     super.key,
     required this.questionId,
     this.solutionId
@@ -26,26 +27,22 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: Text(
-          AppLocalizations.of(context)!.display_question_pending_solutions_page_title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold
-          ),
+        title: AppTitle(
+          title: title[getLanguage(context)]!,
         ),
       ),
-      body: StoreConnector<AppState, Pagination<int,SolutionState>>(
+      body: StoreConnector<AppState,Pagination<int, SolutionState>>(
         onInit: (store) => getNextPageIfNoPage(
           store,
-          selectQuestionPendingSolutions(store, questionId),
-          NextQuestionPendingSolutionsAction(questionId: questionId)
+          selectQuestionCorrectSolutions(store, questionId),
+          NextQuestionCorrectSolutionsAction(questionId: questionId)
         ),
-        converter: (store) => selectQuestionPendingSolutions(store, questionId),
+        converter: (store) => selectQuestionCorrectSolutions(store, questionId),
         builder:(context, pagination) => Builder(
           builder: (context) {
             if(pagination.isEmpty){
               return NoSolutions(
-                text: AppLocalizations.of(context)!.display_question_pending_solutions_page_no_solutions,
+                text: noCorrectSolutions[getLanguage(context)]!
               );
             }
             return SolutionItemsWidget(
@@ -55,8 +52,8 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 getNextPageIfReady(
                   store,
-                  selectQuestionPendingSolutions(store, questionId),
-                  NextQuestionPendingSolutionsAction(questionId: questionId)
+                  selectQuestionCorrectSolutions(store, questionId),
+                  NextQuestionCorrectSolutionsAction(questionId: questionId)
                 );
               },
             );
