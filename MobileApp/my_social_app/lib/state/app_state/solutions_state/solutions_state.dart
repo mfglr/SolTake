@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
@@ -10,26 +11,29 @@ class SolutionsState {
   final Map<int, Pagination<int,SolutionState>> questionCorrectSolutions;
   final Map<int, Pagination<int,SolutionState>> questionPendingSolutions;
   final Map<int, Pagination<int,SolutionState>> questionIncorrectSolutions;
+  final Map<int, Pagination<int, SolutionState>> questionVideoSolutions;
 
   const SolutionsState({
     required this.questionSolutions,
     required this.questionCorrectSolutions,
     required this.questionPendingSolutions,
     required this.questionIncorrectSolutions,
+    required this.questionVideoSolutions
   });
-
 
   SolutionsState _optional({
     Map<int, Pagination<int,SolutionState>>? newQuestionSolutions,
     Map<int, Pagination<int,SolutionState>>? newQuestionCorrectSolutions,
     Map<int, Pagination<int,SolutionState>>? newQuestionPendingSolutions,
     Map<int, Pagination<int,SolutionState>>? newQuestionIncorrectSolutions,
+    Map<int, Pagination<int,SolutionState>>? newQuestionVideoSolutions,
   }) => 
     SolutionsState(
       questionSolutions: newQuestionSolutions ?? questionSolutions,
       questionCorrectSolutions: newQuestionCorrectSolutions ?? questionCorrectSolutions,
       questionPendingSolutions: newQuestionPendingSolutions ?? questionPendingSolutions,
       questionIncorrectSolutions: newQuestionIncorrectSolutions ?? questionIncorrectSolutions,
+      questionVideoSolutions: newQuestionVideoSolutions ?? questionVideoSolutions 
     );
 
   SolutionsState create(SolutionState solution) => 
@@ -42,6 +46,12 @@ class SolutionsState {
         solution.questionId,
         selectQuestionPendingSolutionsFromState(this, solution.questionId).prependOne(solution)
       ),
+      newQuestionVideoSolutions: solution.medias.any((e) => e.multimediaType == MultimediaType.video)
+        ? questionVideoSolutions.updateElsePrependOne(
+            solution.questionId,
+            selectQuestionVideoSolutionsFromState(this, solution.questionId).prependOne(solution)
+          )
+        : questionVideoSolutions
     );
 
   SolutionsState startLoadingNextQuestionSolutions(int questionId) => 
@@ -130,6 +140,28 @@ class SolutionsState {
       newQuestionIncorrectSolutions: questionIncorrectSolutions.updateElsePrependOne(
         questionId,
         selectQuestionIncorrectSolutionsFromState(this, questionId).stopLoadingNext()
+      )
+    );
+  
+  SolutionsState startLoadingNextQuestionVideoSolutions(int questionId) => 
+    _optional(
+      newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
+        questionId,
+        selectQuestionVideoSolutionsFromState(this, questionId).startLoadingNext()
+      )
+    );
+  SolutionsState addNextPageQuestionVideoSolutions(int questionId, Iterable<SolutionState> solutions) => 
+    _optional(
+      newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
+        questionId,
+        selectQuestionVideoSolutionsFromState(this, questionId).addNextPage(solutions)
+      )
+    );
+  SolutionsState stopLoadingNextQuestionVideoSolutions(int questionId) => 
+    _optional(
+      newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
+        questionId,
+        selectQuestionVideoSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
 }

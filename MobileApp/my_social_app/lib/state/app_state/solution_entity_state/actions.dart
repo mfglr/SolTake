@@ -1,4 +1,3 @@
-import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
@@ -6,14 +5,6 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 
 
-@immutable
-class CreateSolutionAction extends AppAction{
-  final String id;
-  final int questionId;
-  final String? content;
-  final Iterable<AppFile> medias;
-  const CreateSolutionAction({required this.id, required this.questionId, required this.content, required this.medias});
-}
 @immutable
 class CreateSolutionByAIAction extends AppAction{
   final int modelId;

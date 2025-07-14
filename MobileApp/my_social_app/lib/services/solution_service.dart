@@ -17,7 +17,7 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-  Future<MultipartRequest> _createSolutionRequest(num questionId, String? content, Iterable<AppFile> medias) async {
+  Future<MultipartRequest> _createSolutionRequest(int questionId, String? content, Iterable<AppFile> medias) async {
     MultipartRequest multiPartRequest = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
@@ -30,7 +30,7 @@ class SolutionService{
     }
     return multiPartRequest;
   }
-  Future<Solution> create(num questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
+  Future<Solution> create(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
     var request = await _createSolutionRequest(questionId,content,medias);
     var data = await _appClient.postStream(request, callback);
     return Solution.fromJson(jsonDecode(data));
@@ -51,53 +51,53 @@ class SolutionService{
         )
         .then((json) => Solution.fromJson(json));
 
-  Future<void> delete(num solutionId) => 
+  Future<void> delete(int solutionId) => 
     _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");
  
-  Future<void> markAsCorrect(num solutionId) =>
+  Future<void> markAsCorrect(int solutionId) =>
     _appClient
       .put(
         "$solutionController/$markSolutionAsCorrectEndpoint",
         body: { "solutionId":solutionId }
       );
 
-  Future<void> markAsIncorrect(num solutionId) =>
+  Future<void> markAsIncorrect(int solutionId) =>
     _appClient
       .put(
         "$solutionController/$markSolutionAsIncorrectEndpoint",
         body: { "solutionId":solutionId }
       );
   
-  Future<Solution> getSolutionById(num solutionId) =>
+  Future<Solution> getSolutionById(int solutionId) =>
     _appClient
       .get("$solutionController/$getSolutionByIdEndpoint/$solutionId")
       .then((response) => Solution.fromJson(response)); 
 
-  Future<Iterable<Solution>> getSolutionsByQuestionId(num questionId, Page page) =>
+  Future<Iterable<Solution>> getSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getCorrectSolutionsByQuestionId(num questionId, Page page) =>
+  Future<Iterable<Solution>> getCorrectSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getCorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getPendingSolutionsByQuestionId(num questionId, Page page) =>
+  Future<Iterable<Solution>> getPendingSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getPendingSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-  Future<Iterable<Solution>> getIncorrectSolutionsByQuestionId(num questionId, Page page) =>
+  Future<Iterable<Solution>> getIncorrectSolutionsByQuestionId(int questionId, Page page) =>
     _appClient
       .get(_appClient.generatePaginationUrl("$solutionController/$getIncorrectSolutionsByQuestionIdEndpoint/$questionId",page))
       .then((response) => response as List)
       .then((list) => list.map((json) => Solution.fromJson(json)));
 
-    Future<Iterable<Solution>> getVideoSolutions(num questionId, Page page) =>
+    Future<Iterable<Solution>> getVideoSolutions(int questionId, Page page) =>
       _appClient
         .get(_appClient.generatePaginationUrl("$solutionController/$getVideoSolutionsEndpoint/$questionId",page))
         .then((response) => response as List)

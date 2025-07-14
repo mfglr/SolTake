@@ -30,6 +30,13 @@ SolutionsState nextQuestionIncorrectSolutionsSuccessReducer(SolutionsState prev,
 SolutionsState nextQuestionIncorrectSolutionsFailedReducer(SolutionsState prev, NextQuestionIncorrectSolutionsFailedAction action)
   => prev.stopLoadingNextQuestionIncorrectSolutions(action.questionId);
 
+SolutionsState nextQuestionVideoSolutionsReducer(SolutionsState prev, NextQuestionVideoSolutionsAction action)
+  => prev.startLoadingNextQuestionVideoSolutions(action.questionId);
+SolutionsState nextQuestionVideoSolutionsSuccessReducer(SolutionsState prev, NextQuestionVideoSolutionsSuccessAction action)
+  => prev.addNextPageQuestionVideoSolutions(action.questionId, action.solutions);
+SolutionsState nextQuestionVideoSolutionsFailedReducer(SolutionsState prev, NextQuestionVideoSolutionsFailedAction action)
+  => prev.stopLoadingNextQuestionVideoSolutions(action.questionId);
+
 Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
   TypedReducer<SolutionsState,NextQuestionSolutionsAction>(nextQuestionSolutionsReducer).call,
   TypedReducer<SolutionsState,NextQuestionSolutionsSuccessAction>(nextQuestionSolutionsSuccessReducer).call,
@@ -46,4 +53,8 @@ Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
   TypedReducer<SolutionsState,NextQuestionIncorrectSolutionsAction>(nextQuestionIncorrectSolutionsReducer).call,
   TypedReducer<SolutionsState,NextQuestionIncorrectSolutionsSuccessAction>(nextQuestionIncorrectSolutionsSuccessReducer).call,
   TypedReducer<SolutionsState,NextQuestionIncorrectSolutionsFailedAction>(nextQuestionIncorrectSolutionsFailedReducer).call,
+
+  TypedReducer<SolutionsState,NextQuestionVideoSolutionsAction>(nextQuestionVideoSolutionsReducer).call,
+  TypedReducer<SolutionsState,NextQuestionVideoSolutionsSuccessAction>(nextQuestionVideoSolutionsSuccessReducer).call,
+  TypedReducer<SolutionsState,NextQuestionVideoSolutionsFailedAction>(nextQuestionVideoSolutionsFailedReducer).call,
 ]);
