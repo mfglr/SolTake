@@ -1,4 +1,5 @@
 import 'package:multimedia/models/multimedia.dart';
+import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
@@ -66,6 +67,7 @@ class SolutionState extends Entity<int> implements Avatar{
 
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
+  bool get hasVideo => medias.any((e) => e.multimediaType == MultimediaType.video);
 
   SolutionState _optinal({
     String? newUserName,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
@@ -46,7 +45,7 @@ class SolutionsState {
         solution.questionId,
         selectQuestionPendingSolutionsFromState(this, solution.questionId).prependOne(solution)
       ),
-      newQuestionVideoSolutions: solution.medias.any((e) => e.multimediaType == MultimediaType.video)
+      newQuestionVideoSolutions: solution.hasVideo
         ? questionVideoSolutions.updateElsePrependOne(
             solution.questionId,
             selectQuestionVideoSolutionsFromState(this, solution.questionId).prependOne(solution)
@@ -119,7 +118,6 @@ class SolutionsState {
         selectQuestionPendingSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
-
 
   SolutionsState startLoadingNextQuestionIncorrectSolutions(int questionId) => 
     _optional(
