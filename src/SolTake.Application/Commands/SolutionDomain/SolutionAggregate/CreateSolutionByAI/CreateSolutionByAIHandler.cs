@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.InfrastructureServices.BlobService;
-using SolTake.Application.InfrastructureServices.BlobService.Objects;
 using SolTake.Application.InfrastructureServices.IAService;
 using SolTake.Application.InfrastructureServices.IAService.Objects;
 using SolTake.Core;
@@ -17,19 +16,17 @@ using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.TransactionAggregate.Abstracts;
-using SolTake.Domain.TransactionAggregate.Entities;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
 
 namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, ITempDirectoryService tempDirectoryService, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository, IAIModelCacheService aiModelCacheService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionByAIResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher,IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository, IAIModelCacheService aiModelCacheService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionByAIResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IFrameCatcher _frameCatcher = frameCatcher;
         private readonly IQuestionReadRepository _questionReadRepository = questionReadRepository;
         private readonly ISolutionWriteRepository _solutionWriteRepository = solutionWriteRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly ITempDirectoryService _tempDirectoryService = tempDirectoryService;
         private readonly IAccessTokenReader _accessTokenReader = accessTokenReader;
         private readonly IImageToBase64Convertor _imageToBase64Convertor = imageToBase64Convertor;
         private readonly IBalanceRepository _balanceRepository = balanceRepository;
@@ -86,38 +83,30 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
                 }
                 else
                 {
-                    response = await _tempDirectoryService
-                        .CreateTransactionAsync(
-                            async () =>
-                            {
-                                var frameBlobName = _frameCatcher.CatchFrame(
-                                    media.ContainerName,
-                                    media.BlobName,
-                                    (double)request.Duration!
-                                );
+                    var base64Url = _frameCatcher.CatchFrame(
+                        media.ContainerName,
+                        media.BlobName,
+                        (double)request.Duration!
+                    );
 
-                                var base64Url = await _imageToBase64Convertor.ToBase64(ContainerName.Temp, frameBlobName, cancellationToken);
-
-                                var chatGptRequest = new ChatGPT_Request(
-                                    model.Name.Value,
-                                    [
+                    var chatGptRequest = new ChatGPT_Request(
+                        model.Name.Value,
+                        [
+                            new(
+                                ChatGPT_Roles.User,
+                                [
+                                    new ChatGPT_TextContent(request.Prompt!),
+                                    new ChatGPT_ImageContent(
                                         new(
-                                            ChatGPT_Roles.User,
-                                            [
-                                                new ChatGPT_TextContent(request.Prompt!),
-                                                new ChatGPT_ImageContent(
-                                                    new(
-                                                        base64Url,
-                                                        request.IsHighResulation ? ChatGPT_ImageResolution.High : ChatGPT_ImageResolution.Low
-                                                    )
-                                                )
-                                            ]
-                                        ),
-                                    ]
-                                );
-                                return await _chatGPTService.SendAsync(chatGptRequest);
-                            }
-                        );
+                                            base64Url,
+                                            request.IsHighResulation ? ChatGPT_ImageResolution.High : ChatGPT_ImageResolution.Low
+                                        )
+                                    )
+                                ]
+                            ),
+                        ]
+                    );
+                    return await _chatGPTService.SendAsync(chatGptRequest);
                 }
             }
             return response;

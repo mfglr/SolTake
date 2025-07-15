@@ -1,54 +1,94 @@
 ﻿using Microsoft.AspNetCore.Http;
+using OpenCvSharp;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Metadata.Profiles.Exif;
+using SixLabors.ImageSharp.Processing;
 using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Core;
+using SolTake.Core.Exceptions;
 using SolTake.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 using SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices;
-using SixLabors.ImageSharp;
-using SolTake.Core;
+using Xabe.FFmpeg;
 
 namespace SolTake.Infrastructure.InfrastructureServices.BlobService
 {
-    public class MultiMediaService(ITempDirectoryService tempDirectoryService, DimentionCalculator dimentionCalculator, UniqNameGenerator uniqNameGenerator, IBlobService blobService, VideoDimentionCalculator videoDimentionCalculator, VideoManipulator videoManipulator, VideoDurationCalculator videoDurationCalculator, AudioDurationCalculator audioDurationCalculator, AudioManipulator audioManipulator, IFrameCatcher frameCathcer, IPathFinder pathFinder) : IMultimediaService
+    public class MultiMediaService : IMultimediaService
     {
+        private readonly IBlobService _blobService;
+        private readonly UniqNameGenerator _uniqNameGenerator;
+        private readonly IPathFinder _pathFinder;
 
-        private readonly DimentionCalculator _dimentionCalculator = dimentionCalculator;
+        public MultiMediaService(UniqNameGenerator uniqNameGenerator, IPathFinder pathFinder, IBlobService blobService)
+        {
+            _uniqNameGenerator = uniqNameGenerator;
+            _pathFinder = pathFinder;
+            _blobService = blobService;
+            _scopeContainerName = $"{ContainerName.Temp}/{_uniqNameGenerator.Generate()}";
+        }
 
-        private readonly VideoDimentionCalculator _videoDimentionCalculator = videoDimentionCalculator;
-        private readonly VideoManipulator _videoManipulator = videoManipulator;
-        private readonly VideoDurationCalculator _videoDurationCalculator = videoDurationCalculator;
-        private readonly IFrameCatcher _frameCatcher = frameCathcer;
+        private readonly string _scopeContainerName;
+        private void Create() => Directory.CreateDirectory(_pathFinder.GetContainerPath(_scopeContainerName));
+        private void Delete()
+        {
+            var path = _pathFinder.GetContainerPath(_scopeContainerName);
+            if (Directory.Exists(path))
+                Directory.Delete(path, true);
+        }
 
-        private readonly AudioDurationCalculator _audioDurationCalculator = audioDurationCalculator;
-        private readonly AudioManipulator _audioManipulator = audioManipulator;
+        private async Task<Dimention> CalculatedimentionAsync(IFormFile file, CancellationToken cancellationToken)
+        {
+            using var stream = file.OpenReadStream();
+            using var image = await Image.LoadAsync(stream, cancellationToken);
 
-        private readonly IPathFinder _pathFinder = pathFinder;
-        private readonly ITempDirectoryService _tempDirectoryService = tempDirectoryService;
-        private readonly UniqNameGenerator _uniqNameGenerator = uniqNameGenerator;
-        private readonly IBlobService _blobService = blobService;
+            var profile = image.Metadata.ExifProfile;
+            if (profile == null || !profile.TryGetValue(ExifTag.Orientation, out var orientation))
+                return new (0,0);
 
+            switch (orientation.Value)
+            {
+                case 2:
+                    image.Mutate(x => x.Flip(SixLabors.ImageSharp.Processing.FlipMode.Horizontal));
+                    break;
+                case 3:
+                    image.Mutate(x => x.Rotate(RotateMode.Rotate180));
+                    break;
+                case 4:
+                    image.Mutate(x => x.Flip(SixLabors.ImageSharp.Processing.FlipMode.Vertical));
+                    break;
+                case 5:
+                    image.Mutate(x => x.Rotate(RotateMode.Rotate90).Flip(SixLabors.ImageSharp.Processing.FlipMode.Horizontal));
+                    break;
+                case 6:
+                    image.Mutate(x => x.Rotate(RotateMode.Rotate90));
+                    break;
+                case 7:
+                    image.Mutate(x => x.Rotate(RotateMode.Rotate270).Flip(SixLabors.ImageSharp.Processing.FlipMode.Horizontal));
+                    break;
+                case 8:
+                    image.Mutate(x => x.Rotate(RotateMode.Rotate270));
+                    break;
+            }
+            return new(image.Height, image.Width);
+        }
         private async Task<Multimedia> UploadImageAsync(string containerName, IFormFile file, CancellationToken cancellationToken, string? blobName = null)
         {
-            //calculate dimention
-            Dimention dimention = await _dimentionCalculator.CalculateAsync(file, cancellationToken);
+            Dimention dimention = await CalculatedimentionAsync(file,cancellationToken);
 
-            //get temp directory path;
+            //manipulate and save tempdirectory;
+            var stream0 = file.OpenReadStream();
+            var image0 = await Image.LoadAsync(stream0, cancellationToken);
             string path;
             blobName ??= _uniqNameGenerator.Generate();//generate uniq blob name;
-            path = _pathFinder.GetPath(ContainerName.Temp, blobName);
-
-            //save image to temp directory
-            using var stream = file.OpenReadStream();
-            var image = await Image.LoadAsync(stream, cancellationToken);
-            await image.SaveAsWebpAsync(path, new() { Quality = 25 }, cancellationToken);
+            path = _pathFinder.GetPath(_scopeContainerName, blobName);
+            await image0.SaveAsWebpAsync(path, new() { Quality = 25 }, cancellationToken);
 
             //save image to the blob container
             using var imageStream = File.OpenRead(path);
             await _blobService.UploadAsync(imageStream, containerName, blobName, cancellationToken);
 
             //reuturn multimedya
-            var media = Multimedia.CreateImage(containerName, blobName, imageStream.Length, dimention.Height, dimention.Width);
-            imageStream.Close();
-            return media;
+            return Multimedia.CreateImage(containerName, blobName, imageStream.Length, dimention.Height, dimention.Width);
         }
 
         private async Task<Multimedia> UploadVideoAsync(string containerName, IFormFile file, CancellationToken cancellationToken, string? blobName = null)
@@ -56,91 +96,113 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
             using var stream = file.OpenReadStream();
 
             //add stream to temp directory
-            var input = await _tempDirectoryService.AddFile(stream);
-            var inputPath = _pathFinder.GetPath(ContainerName.Temp, input);
+            var inputBlobName = _uniqNameGenerator.Generate();
+            var inputPath = _pathFinder.GetPath(_scopeContainerName, inputBlobName);
+            using var fileStream = File.Create(inputPath);
+            await stream.CopyToAsync(fileStream);
+            fileStream.Close();
 
             //manipulate video;
-            var output = await _videoManipulator.Manipulate(inputPath, cancellationToken);
-            var outputPath = _pathFinder.GetPath(ContainerName.Temp, output);
+            var manipulatedVideoBlobName = _uniqNameGenerator.Generate("mp4");
+            var manipulatedVideoPath = _pathFinder.GetPath(_scopeContainerName, manipulatedVideoBlobName);
+            FFmpeg.SetExecutablesPath("FFmpeg");
+            var conversion =
+                FFmpeg.Conversions
+                    .New()
+                    .AddParameter($"-i \"{inputPath}\" -vf scale=480:-2 -c:v libx265 -crf 28 -movflags +faststart -c:a libopus -r 30 -preset medium \"{manipulatedVideoPath}\"");
+            await conversion.Start(cancellationToken);
+
+            //create video capture object
+            using var videoCapture = new VideoCapture(manipulatedVideoPath);
+            if (!videoCapture.IsOpened())
+                throw new ServerSideException();
 
             //calculate video dimention
-            var dimention = _videoDimentionCalculator.Calculate(outputPath);
+            Dimention dimention = new(videoCapture.Get(VideoCaptureProperties.FrameHeight), videoCapture.Get(VideoCaptureProperties.FrameWidth));
 
-            //calculate duration of the video
-            var duration = _videoDurationCalculator.Calculate(outputPath);
+            //calculate video duration
+            var duration = videoCapture.Get(VideoCaptureProperties.FrameCount) / videoCapture.Get(VideoCaptureProperties.Fps);
 
             //save the first frame of the video
-            var blobNameOfFrame = _frameCatcher.CatchFrame(ContainerName.Temp, output, 0);
-            using var frameStream = File.OpenRead(_pathFinder.GetPath(ContainerName.Temp, blobNameOfFrame));
-            await _blobService.UploadAsync(frameStream, containerName, blobNameOfFrame, cancellationToken);
-            frameStream.Close();
+            using var frame = new Mat();
+            videoCapture.Set(VideoCaptureProperties.PosMsec, 0);
+            if (!videoCapture.Read(frame))
+                throw new ServerSideException();
+
+            //save first frame to temp directory;
+            var frameBlobName = _uniqNameGenerator.Generate("webp");
+            var framePath = _pathFinder.GetPath(_scopeContainerName, frameBlobName);
+            frame.SaveImage(framePath, new ImageEncodingParam(ImwriteFlags.WebPQuality, 100));
+
+            //upload first frame to blob
+            var newFrameBlobName = _uniqNameGenerator.Generate();
+            using var frameStream = File.OpenRead(framePath);
+            await _blobService.UploadAsync(frameStream, containerName, newFrameBlobName, cancellationToken);
 
             //upload the video manipulated to the blob container
             blobName ??= _uniqNameGenerator.Generate();//generate uniq blob name;
-            using var manipulatedVideo = File.OpenRead(outputPath);
+            using var manipulatedVideo = File.OpenRead(manipulatedVideoPath);
             await _blobService.UploadAsync(manipulatedVideo, containerName, blobName, cancellationToken);
 
             //reuturn multimedia
-            var multiMedia = Multimedia.CreateVideo(containerName, blobName, blobNameOfFrame, manipulatedVideo.Length, dimention.Height, dimention.Width, duration);
-            manipulatedVideo.Close();
-            return multiMedia;
+            return Multimedia.CreateVideo(containerName, blobName, newFrameBlobName, manipulatedVideo.Length, dimention.Height, dimention.Width, duration);
         }
 
-        //private async Task<Multimedia> UploadAudioAsync(string containerName, IFormFile file, CancellationToken cancellationToken,string? blobName = null)
-        //{
-        //    using var stream = file.OpenReadStream();
+        public async Task<Multimedia> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken, string? blobName = null)
+        {
 
-        //    //add stream to temp directory
-        //    var input = await _tempDirectoryService.AddFile(stream);
+            Multimedia? media = null;
+            try
+            {
+                Create();
+                
+                if (file.ContentType.StartsWith("image"))
+                    media = await UploadImageAsync(containerName, file, cancellationToken, blobName);
+                else if (file.ContentType.StartsWith("video"))
+                    media = await UploadVideoAsync(containerName, file, cancellationToken, blobName);
+                else
+                    throw new InvalidMultimediaTypeException();
 
-        //    //calculate audio duration
-        //    var duration = _audioDurationCalculator.Calculate(input);
+                Delete();
 
-        //    //manipulate audio;
-        //    var output = await _audioManipulator.Manipulate(input, cancellationToken);
+                return media;
+            }
+            catch (Exception)
+            {
+                Delete();
+                if (media != null)
+                    await _blobService.DeleteAsync(media.ContainerName, media.BlobName, cancellationToken);
+                throw;
+            }
 
-        //    //upload the video manipulated to the blob container
-        //    blobName ??= _uniqNameGenerator.Generate();//generate uniq blob name;
-        //    using var manipulatedAudio = File.OpenRead(output);
-        //    await _blobService.UploadAsync(manipulatedAudio, containerName, blobName, cancellationToken);
+        }
 
-        //    //reuturn multimedia
-        //    var multiMedya = Multimedia.CreateAudio(containerName, blobName, manipulatedAudio.Length, duration);
-        //    manipulatedAudio.Close();
-        //    return multiMedya;
-        //}
-
-        public Task<Multimedia> UploadAsync(string containerName, IFormFile file, CancellationToken cancellationToken, string? blobName = null) =>
-            _tempDirectoryService.CreateTransactionAsync(
-                async () =>
+        public async Task<List<Multimedia>> UploadAsync(string containerName, IEnumerable<IFormFile> files, CancellationToken cancellationToken)
+        {
+            List<Multimedia> medias = [];
+            try
+            {
+                Create();
+                foreach (var file in files)
                 {
-                    Multimedia? media = null;
                     if (file.ContentType.StartsWith("image"))
-                        media = await UploadImageAsync(containerName, file, cancellationToken, blobName);
+                        medias.Add(await UploadImageAsync(containerName, file, cancellationToken));
                     else if (file.ContentType.StartsWith("video"))
-                        media = await UploadVideoAsync(containerName, file, cancellationToken, blobName);
+                        medias.Add(await UploadVideoAsync(containerName, file, cancellationToken));
                     else
                         throw new InvalidMultimediaTypeException();
-                    return media;
                 }
-            );
+                Delete();
+                return medias;
+            }
+            catch (Exception) {
+                Delete();
+                foreach (var media in medias)
+                    await _blobService.DeleteAsync(media.ContainerName,media.BlobName, cancellationToken);
+                throw;
+            }
 
-        public Task<List<Multimedia>> UploadAsync(string containerName, IEnumerable<IFormFile> files, CancellationToken cancellationToken) =>
-            _tempDirectoryService.CreateTransactionAsync(
-                async () =>
-                {
-                    List<Multimedia> medias = [];
-                    foreach (var file in files)
-                    {
-                        if (file.ContentType.StartsWith("image"))
-                            medias.Add(await UploadImageAsync(containerName, file, cancellationToken));
-                        else if (file.ContentType.StartsWith("video"))
-                            medias.Add(await UploadVideoAsync(containerName, file, cancellationToken));
-                        else
-                            throw new InvalidMultimediaTypeException();
-                    }
-                    return medias;
-                }
-            );
+           
+        }
     }
 }
