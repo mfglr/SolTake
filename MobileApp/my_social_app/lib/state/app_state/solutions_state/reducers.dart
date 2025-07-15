@@ -2,6 +2,9 @@ import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:redux/redux.dart';
 
+SolutionsState createSolutionSuccessReducer(SolutionsState prev, CreateSolutionSuccessAction action)
+  => prev.create(action.solution);
+
 SolutionsState nextQuestionSolutionsReducer(SolutionsState prev, NextQuestionSolutionsAction action)
   => prev.startLoadingNextQuestionSolutions(action.questionId);
 SolutionsState nextQuestionSolutionsSuccessReducer(SolutionsState prev, NextQuestionSolutionsSuccessAction action)
@@ -38,6 +41,8 @@ SolutionsState nextQuestionVideoSolutionsFailedReducer(SolutionsState prev, Next
   => prev.stopLoadingNextQuestionVideoSolutions(action.questionId);
 
 Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
+  TypedReducer<SolutionsState,CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
+
   TypedReducer<SolutionsState,NextQuestionSolutionsAction>(nextQuestionSolutionsReducer).call,
   TypedReducer<SolutionsState,NextQuestionSolutionsSuccessAction>(nextQuestionSolutionsSuccessReducer).call,
   TypedReducer<SolutionsState,NextQuestionSolutionsFailedAction>(nextQuestionSolutionsFailedReducer).call,

@@ -292,7 +292,6 @@ final store = Store(
     // unsaveQuestionMiddleware,
 
     //solution entity state
-    createSolutionMiddleware,
     createSolutionByAiMiddleware,
     loadSolutionMiddleware,
     removeSolutionMiddleware,
