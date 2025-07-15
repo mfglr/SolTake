@@ -7,8 +7,6 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_use
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
@@ -35,7 +33,6 @@ class QuestionState extends Entity<int> implements Avatar{
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
   final Multimedia? image;
-  final Pagination<int,Id<int>> videoSolutions;
 
   @override
   int get avatarId => userId;
@@ -64,7 +61,6 @@ class QuestionState extends Entity<int> implements Avatar{
     required this.numberOfCorrectSolutions,
     required this.numberOfVideoSolutions,
     required this.image,
-    required this.videoSolutions,
   });
 
   QuestionState _optional({
@@ -81,7 +77,6 @@ class QuestionState extends Entity<int> implements Avatar{
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
     Multimedia? newImage,
-    Pagination<int,Id<int>>? newVideoSolutions,
   }) => 
     QuestionState(
       id: id,
@@ -104,7 +99,6 @@ class QuestionState extends Entity<int> implements Avatar{
       numberOfSolutions: newNumberOfSolutions ?? numberOfSolutions,
       numberOfCorrectSolutions: newNumberOfCorrectSolutions ?? numberOfCorrectSolutions,
       numberOfVideoSolutions: newNumberOfVideoSolutions ?? numberOfVideoSolutions,
-      videoSolutions: newVideoSolutions ?? videoSolutions,
       image: newImage ?? image,
     );
 
@@ -122,6 +116,12 @@ class QuestionState extends Entity<int> implements Avatar{
     _optional(
       newIsLiked: true,
       newNumberOfLikes: numberOfLikes + 1
+    );
+
+  QuestionState createSolution(SolutionState solution) =>
+    _optional(
+      newNumberOfSolutions: numberOfSolutions + 1,
+      newNumberOfVideoSolutions: solution.hasVideo ? numberOfVideoSolutions + 1 : numberOfVideoSolutions,
     );
 
   QuestionState dislike() => 
@@ -162,7 +162,6 @@ class QuestionState extends Entity<int> implements Avatar{
       newNumberOfSolutions: numberOfSolutions + 1,
       newNumberOfVideoSolutions: numberOfVideoSolutions + 1,
       // newPendingSolutions: pendingSolutions.prependOne(Id(id: solutionId)),
-      newVideoSolutions: videoSolutions.prependOne(Id(id: solutionId)),
     );
   QuestionState addNewSolution(int solutionId) =>
     _optional(
@@ -192,29 +191,12 @@ class QuestionState extends Entity<int> implements Avatar{
         solution.medias.any((e) => e.multimediaType == MultimediaType.video)
           ? numberOfVideoSolutions - 1
           : numberOfVideoSolutions,
-      newVideoSolutions:
-        solution.medias.any((e) => e.multimediaType == MultimediaType.video)
-          ? videoSolutions.where((e) => e.id != solution.id)
-          : videoSolutions,
       newState: 
         solution.state == SolutionStatus.correct && numberOfCorrectSolutions == 1
           ? QuestionStatus.unsolved
           : state,
     );
  
-  QuestionState startLoadingNextVideoSolutions() =>
-    _optional(newVideoSolutions: videoSolutions.startLoadingNext());
-  QuestionState stopLodingNextVideoSolutions() =>
-    _optional(newVideoSolutions: videoSolutions.stopLoadingNext());
-  QuestionState addNextPageVideoSolutions(Iterable<int> solutionIds) =>
-    _optional(newVideoSolutions: videoSolutions.addNextPage(solutionIds.map((solutionId) => Id(id: solutionId))));
-  QuestionState addVideoSolution(int solutionId) =>
-    _optional(newVideoSolutions: videoSolutions.prependOne(Id(id: solutionId)));
-  QuestionState removeVideoSolution(int solutionId) =>
-    _optional(
-      newVideoSolutions: videoSolutions.where((e) => e.id != solutionId)
-    );
-
   QuestionState markAsSolved() => _optional(newState: QuestionStatus.solved);
   QuestionState save() => _optional(newIsSaved: true);
   QuestionState unsave() => _optional(newIsSaved: false);

@@ -234,8 +234,6 @@ class AppState{
 
 
   //SelectSolutions
-  Iterable<SolutionState> selectQuestionVideoSolutions(int questionId) =>
-    questionEntityState.getValue(questionId)!.videoSolutions.values.map((e) => solutionEntityState.getValue(e.id)!);
   Iterable<SolutionState> get selectSavedSolutions
     => solutionUserSaves.values.map((e) => solutionEntityState.getValue(e.solutionId)!);
 

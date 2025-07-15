@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 part 'question.g.dart';
 
@@ -83,6 +81,5 @@ class Question{
     numberOfCorrectSolutions: numberOfCorrectSolutions,
     numberOfVideoSolutions: numberOfVideoSolutions,
     image: image,
-    videoSolutions: Pagination.init(solutionsPerPage,true),
   );
 }

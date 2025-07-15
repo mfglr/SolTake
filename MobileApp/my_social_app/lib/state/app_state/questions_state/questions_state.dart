@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
@@ -158,6 +159,8 @@ class QuestionsState{
               )
             : questionUserLikes
     );
+
+
   QuestionsState increaseNumberOfComments(QuestionState question) => 
     QuestionsState(
       examQuestions:
@@ -201,6 +204,53 @@ class QuestionsState{
         homePageQuestions: homePageQuestions.updateOne(question.increaseNumberOfComments()),
         savedQuestions: savedQuestions.updateOne(question.increaseNumberOfComments()),
         searchPageQuestions: searchPageQuestions.updateOne(question.increaseNumberOfComments()),
+        questionUserLikes: questionUserLikes
+    );
+
+
+    QuestionsState createSolution(QuestionState question, SolutionState solution) => 
+    QuestionsState(
+      examQuestions:
+        examQuestions[question.exam.id] != null
+          ? examQuestions.updateOne(
+              question.exam.id,
+              examQuestions[question.exam.id]!.updateOne(question.createSolution(solution))
+            )
+          : examQuestions,
+        subjectQuestions: subjectQuestions[question.subject.id] != null
+          ? subjectQuestions.updateOne(
+              question.subject.id,
+              subjectQuestions[question.subject.id]!.updateOne(question.createSolution(solution))
+            )
+          : subjectQuestions,
+        topicQuestions: 
+          question.topic?.id != null && topicQuestions[question.topic?.id] != null
+            ? topicQuestions.updateOne(
+                question.topic!.id,
+                topicQuestions[question.topic!.id]!.updateOne(question.createSolution(solution))
+              )
+            : topicQuestions,
+        userQuestions: userQuestions[question.userId] != null
+          ? userQuestions.updateOne(
+              question.userId,
+              userQuestions[question.userId]!.updateOne(question.createSolution(solution))
+            )
+          : userQuestions,
+        userSolvedQuestions: userSolvedQuestions[question.userId] != null
+          ? userSolvedQuestions.updateOne(
+              question.userId,
+              userSolvedQuestions[question.userId]!.updateOne(question.createSolution(solution))
+            )
+          : userSolvedQuestions,
+        userUnsolvedQuestions: userUnsolvedQuestions[question.userId] != null
+          ? userUnsolvedQuestions.updateOne(
+              question.userId,
+              userUnsolvedQuestions[question.userId]!.updateOne(question.createSolution(solution)) 
+            )
+          : userUnsolvedQuestions,
+        homePageQuestions: homePageQuestions.updateOne(question.createSolution(solution)),
+        savedQuestions: savedQuestions.updateOne(question.createSolution(solution)),
+        searchPageQuestions: searchPageQuestions.updateOne(question.createSolution(solution)),
         questionUserLikes: questionUserLikes
     );
 }

@@ -23,7 +23,7 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         (rate) => store.dispatch(ChangeUploadRateAction(id: action.id, rate: rate))
       )
       .then((solution){
-        store.dispatch(CreateSolutionSuccessAction(solution: solution.toSolutionState()));
+        store.dispatch(CreateSolutionSuccessAction(question: action.question, solution: solution.toSolutionState()));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
       .catchError((e){

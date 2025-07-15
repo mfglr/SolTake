@@ -20,8 +20,12 @@ class CreateSolutionAction extends AppAction{
 }
 @immutable
 class CreateSolutionSuccessAction extends AppAction{
+  final QuestionState question;
   final SolutionState solution;
-  const CreateSolutionSuccessAction({required this.solution});
+  const CreateSolutionSuccessAction({
+    required this.question,
+    required this.solution
+  });
 }
 
 //question solutions

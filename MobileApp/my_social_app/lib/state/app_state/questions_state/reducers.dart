@@ -2,6 +2,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
@@ -10,6 +11,11 @@ import 'package:redux/redux.dart';
 QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
   => action.question == null ? prev : prev.increaseNumberOfComments(action.question!);
 //coments action
+
+//solutions action
+QuestionsState createSolutionSuccessReducer(QuestionsState prev, CreateSolutionSuccessAction action)
+  => prev.createSolution(action.question, action.solution);
+//solutions action
 
 //question user likes
 QuestionsState nextQuestionUserLikesReducer(QuestionsState prev, NextQuestionUserLikesAction action)
@@ -367,6 +373,10 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,CreateCommentsSuccessAction>(createCommentSuccessReducer).call,
   //coments
 
+  //solutions
+  TypedReducer<QuestionsState,CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
+  //solutions
+  
   //question user likes
   TypedReducer<QuestionsState,NextQuestionUserLikesAction>(nextQuestionUserLikesReducer).call,
   TypedReducer<QuestionsState,NextQuestionUserLikesSuccessAction>(nextQuestionUserLikesSuccessReducer).call,
