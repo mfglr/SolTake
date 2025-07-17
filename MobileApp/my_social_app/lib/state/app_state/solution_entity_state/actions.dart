@@ -40,16 +40,6 @@ class AddSolutionsAction extends AppAction{
   const AddSolutionsAction({required this.solutions});
 }
 @immutable
-class RemoveSolutionAction extends AppAction{
-  final SolutionState solution;
-  const RemoveSolutionAction({required this.solution});
-}
-@immutable
-class RemoveSolutionSuccessAction extends AppAction{
-  final int solutionId;
-  const RemoveSolutionSuccessAction({required this.solutionId});
-}
-@immutable
 class MakeSolutionUpvoteAction extends AppAction{
   final int solutionId;
   const MakeSolutionUpvoteAction({required this.solutionId});

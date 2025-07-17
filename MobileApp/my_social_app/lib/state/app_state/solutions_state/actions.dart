@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
+
+
 
 @immutable
 class CreateSolutionAction extends AppAction{
@@ -25,6 +28,25 @@ class CreateSolutionSuccessAction extends AppAction{
   const CreateSolutionSuccessAction({
     required this.question,
     required this.solution
+  });
+}
+
+@immutable
+class DeleteSolutionAction extends AppAction{
+  final QuestionState question;
+  final SolutionState solution;
+  const DeleteSolutionAction({
+    required this.question,
+    required this.solution
+  });
+}
+@immutable
+class DeleteSolutionSuccessAction extends AppAction{
+  final QuestionState question;
+  final SolutionState solution;
+  const DeleteSolutionSuccessAction({
+    required this.question,
+    required this.solution,
   });
 }
 
@@ -202,3 +224,55 @@ class RefreshQuestionVideoSolutionsFailedAction extends AppAction{
   const RefreshQuestionVideoSolutionsFailedAction({required this.questionId});
 }
 //question video solutions
+
+//saved solutions
+@immutable
+class NextSavedSolutionsAction extends AppAction{
+  const NextSavedSolutionsAction();
+}
+@immutable
+class NextSavedSolutionsSuccessAction extends AppAction{
+  final Iterable<SolutionUserSaveState> solutions;
+  const NextSavedSolutionsSuccessAction({required this.solutions});
+}
+@immutable
+class NextSavedSolutionsFailedAction extends AppAction{
+  const NextSavedSolutionsFailedAction();
+}
+@immutable
+class RefreshSavedSolutionsAction extends AppAction{
+  const RefreshSavedSolutionsAction();
+}
+@immutable
+class RefreshSavedSolutionsSuccessAction extends AppAction{
+  final Iterable<SolutionUserSaveState> solutions;
+  const RefreshSavedSolutionsSuccessAction({required this.solutions});
+}
+@immutable
+class RefreshSavedSolutionsFailedAction extends AppAction{
+  const RefreshSavedSolutionsFailedAction();
+}
+
+@immutable
+class SaveSolutionAction extends AppAction{
+  final SolutionState solution;
+  const SaveSolutionAction({required this.solution});
+}
+@immutable
+class SaveSolutionSuccessAction extends AppAction{
+  final int id;
+  final SolutionState solution;
+  const SaveSolutionSuccessAction({required this.id, required this.solution});
+}
+
+@immutable
+class UnsaveSolutionAction extends AppAction{
+  final SolutionState solution;
+  const UnsaveSolutionAction({required this.solution});
+}
+@immutable
+class UnsaveSolutionSuccessAction extends AppAction{
+  final int solutionId;
+  const UnsaveSolutionSuccessAction({required this.solutionId});
+}
+//saved solution

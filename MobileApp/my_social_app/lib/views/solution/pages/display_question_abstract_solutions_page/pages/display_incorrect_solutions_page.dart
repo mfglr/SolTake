@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
@@ -11,10 +12,10 @@ import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
 
 class DisplayIncorrectSolutionsPage extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   const DisplayIncorrectSolutionsPage({
     super.key,
-    required this.questionId
+    required this.question
   });
 
   @override
@@ -24,19 +25,19 @@ class DisplayIncorrectSolutionsPage extends StatelessWidget {
         final store = StoreProvider.of<AppState>(context,listen: false);
         refreshEntities(
           store,
-          selectQuestionIncorrectSolutions(store, questionId),
-          RefreshQuestionIncorrectSolutionsAction(questionId: questionId)
+          selectQuestionIncorrectSolutions(store, question.id),
+          RefreshQuestionIncorrectSolutionsAction(questionId: question.id)
         );
-        return store.onChange.map((state) => !selectQuestionIncorrectSolutionsFromState(state.solutions,questionId).loadingNext).first;
+        return store.onChange.map((state) => !selectQuestionIncorrectSolutionsFromState(state.solutions,question.id).loadingNext).first;
       },
       child: StoreConnector<AppState,Pagination<int,SolutionState>>(
         onInit: (store) => 
           getNextPageIfNoPage(
             store,
-            selectQuestionIncorrectSolutions(store, questionId),
-            NextQuestionIncorrectSolutionsAction(questionId: questionId)
+            selectQuestionIncorrectSolutions(store, question.id),
+            NextQuestionIncorrectSolutionsAction(questionId: question.id)
           ),
-        converter: (store) => selectQuestionIncorrectSolutions(store, questionId),
+        converter: (store) => selectQuestionIncorrectSolutions(store, question.id),
         builder: (context, pagination) => SolutionAbstractItems(
           pagination: pagination,
           noItems: const NoSolutionsWidget(),
@@ -46,7 +47,7 @@ class DisplayIncorrectSolutionsPage extends StatelessWidget {
               .push(
                 MaterialPageRoute(
                   builder: (context) => DisplayQuestionIncorrectSolutionsPage(
-                    questionId: questionId,
+                    question: question,
                     solutionId: solutionId,
                   )
                 )
@@ -55,8 +56,8 @@ class DisplayIncorrectSolutionsPage extends StatelessWidget {
             final store = StoreProvider.of<AppState>(context,listen: false);
             getNextPageIfReady(
               store,
-              selectQuestionIncorrectSolutions(store, questionId),
-              NextQuestionIncorrectSolutionsAction(questionId: questionId)
+              selectQuestionIncorrectSolutions(store, question.id),
+              NextQuestionIncorrectSolutionsAction(questionId: question.id)
             );
           },
         )

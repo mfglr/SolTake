@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
@@ -12,13 +13,14 @@ import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
 class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   final int? solutionId;
+
 
   const DisplayQuestionPendingSolutionsPage({
     super.key,
-    required this.questionId,
-    this.solutionId
+    required this.question,
+    this.solutionId,
   });
 
   @override
@@ -37,10 +39,10 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
       body: StoreConnector<AppState, Pagination<int,SolutionState>>(
         onInit: (store) => getNextPageIfNoPage(
           store,
-          selectQuestionPendingSolutions(store, questionId),
-          NextQuestionPendingSolutionsAction(questionId: questionId)
+          selectQuestionPendingSolutions(store, question.id),
+          NextQuestionPendingSolutionsAction(questionId: question.id)
         ),
-        converter: (store) => selectQuestionPendingSolutions(store, questionId),
+        converter: (store) => selectQuestionPendingSolutions(store, question.id),
         builder:(context, pagination) => Builder(
           builder: (context) {
             if(pagination.isEmpty){
@@ -49,14 +51,15 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
               );
             }
             return SolutionItemsWidget(
+              question: question,
               pagination: pagination,
               solutionId: solutionId,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 getNextPageIfReady(
                   store,
-                  selectQuestionPendingSolutions(store, questionId),
-                  NextQuestionPendingSolutionsAction(questionId: questionId)
+                  selectQuestionPendingSolutions(store, question.id),
+                  NextQuestionPendingSolutionsAction(questionId: question.id)
                 );
               },
             );

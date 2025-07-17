@@ -1,6 +1,7 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
+import 'package:my_social_app/services/solution_user_save_service.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -30,6 +31,17 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
         throw e;
       });
+  }
+  next(action);
+}
+void deleteSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is DeleteSolutionAction){
+    SolutionService()
+      .delete(action.solution.id)
+      .then((_) => store.dispatch(DeleteSolutionSuccessAction(
+        question: action.question,
+        solution: action.solution,
+      )));
   }
   next(action);
 }
@@ -208,3 +220,58 @@ void refreshQuestionVideoSolutionsMiddleware(Store<AppState> store, action, Next
   next(action);
 }
 //question video solutions
+
+//saved solutions
+// void nextSavedSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+//   if(action is NextSavedSolutionsAction){
+//     final pagination = selectSavedSolutions(store);
+//     SolutionUserSaveService()
+//       .get(pagination.next)
+//       .then((solutions) => store.dispatch(NextSavedSolutionsSuccessAction(
+//         solutions: solutions.map((solution) => solution.toSolutionUserSaveState())
+//       )))
+//       .catchError((e){
+//         store.dispatch(const NextSavedSolutionsFailedAction());
+//         throw e;
+//       });
+//   }
+//   next(action);
+// }
+// void refreshSavedSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+//   if(action is RefreshSavedSolutionsAction){
+//     final pagination = selectSavedSolutions(store);
+//     SolutionUserSaveService()
+//       .get(pagination.first)
+//       .then((solutions) => store.dispatch(RefreshSavedSolutionsSuccessAction(
+//         solutions: solutions.map((solution) => solution.toSolutionUserSaveState())
+//       )))
+//       .catchError((e){
+//         store.dispatch(const RefreshSavedSolutionsFailedAction());
+//         throw e;
+//       });
+//   }
+//   next(action);
+// }
+
+void saveSolutionMiddeleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is SaveSolutionAction){
+    SolutionUserSaveService()
+      .create(action.solution.id)
+      .then((response) => store.dispatch(SaveSolutionSuccessAction(
+        id: response.id,
+        solution: action.solution
+      )));
+  }
+  next(action);
+}
+void unsaveSolutionMiddeleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is UnsaveSolutionAction){
+    SolutionUserSaveService()
+      .delete(action.solution.id)
+      .then((response) => store.dispatch(UnsaveSolutionSuccessAction(
+        solutionId: action.solution.id
+      )));
+  }
+  next(action);
+}
+//saved solutions

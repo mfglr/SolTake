@@ -69,7 +69,7 @@ class SolutionState extends Entity<int> implements Avatar{
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
   bool get hasVideo => medias.any((e) => e.multimediaType == MultimediaType.video);
 
-  SolutionState _optinal({
+  SolutionState optinal({
     String? newUserName,
     String? newContent,
     bool? newIsSaved,
@@ -113,14 +113,14 @@ class SolutionState extends Entity<int> implements Avatar{
       );
 
   SolutionState startLoadingNextUpvotes()
-    => _optinal(newUpvotes: upvotes.startLoadingNext());
+    => optinal(newUpvotes: upvotes.startLoadingNext());
   SolutionState stopLoadingNextUpvotes()
-    => _optinal(newUpvotes: upvotes.stopLoadingNext());
+    => optinal(newUpvotes: upvotes.stopLoadingNext());
   SolutionState addNextUpvotes(Iterable<SolutionUserVoteState> votes)
-    => _optinal(newUpvotes: upvotes.addNextPage(votes));
+    => optinal(newUpvotes: upvotes.addNextPage(votes));
   
   SolutionState makeUpvote(SolutionUserVoteState vote)
-    => _optinal(
+    => optinal(
       newIsUpvoted: true,
       newNumberOfUpvotes: numberOfUpvotes + 1,
       newUpvotes: upvotes.prependOne(vote),
@@ -129,26 +129,26 @@ class SolutionState extends Entity<int> implements Avatar{
       newDownvotes: downvotes.where((e) => e.userId != vote.userId)
     ); 
   SolutionState removeUpvote(int userId)
-    => _optinal(
+    => optinal(
       newIsUpvoted: false,
       newNumberOfUpvotes: numberOfUpvotes - 1,
       newUpvotes: upvotes.where((e) => e.userId != userId)
     );
   SolutionState addNewUpvote(SolutionUserVoteState vote)
-    => _optinal(
+    => optinal(
       newNumberOfUpvotes: numberOfUpvotes + 1,
       newUpvotes: upvotes.addInOrder(vote),
     );
 
   SolutionState startLoadingNextDownvotes()
-    => _optinal(newDownvotes: downvotes.startLoadingNext());
+    => optinal(newDownvotes: downvotes.startLoadingNext());
   SolutionState addNextDownvotes(Iterable<SolutionUserVoteState> votes)
-    => _optinal(newDownvotes: downvotes.addNextPage(votes));
+    => optinal(newDownvotes: downvotes.addNextPage(votes));
   SolutionState stopLoadingNextDownvotes()
-    => _optinal(newDownvotes: downvotes.stopLoadingNext());
+    => optinal(newDownvotes: downvotes.stopLoadingNext());
     
   SolutionState makeDownvote(SolutionUserVoteState vote)
-    => _optinal(
+    => optinal(
       newIsUpvoted: false,
       newNumberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
       newUpvotes: upvotes.where((e) => e.userId != vote.userId),
@@ -157,45 +157,45 @@ class SolutionState extends Entity<int> implements Avatar{
       newDownvotes: downvotes.prependOne(vote),
     );
   SolutionState removeDownvote(int userId)
-    => _optinal(
+    => optinal(
       newIsDownvoted: false,
       newNumberOfDownvotes: numberOfDownvotes - 1,
       newDownvotes: downvotes.where((e) => e.userId != userId)
     );
   SolutionState addNewDownvote(SolutionUserVoteState vote)
-    => _optinal(
+    => optinal(
       newNumberOfDownvotes: numberOfDownvotes + 1,
       newDownvotes: downvotes.addInOrder(vote)
     );
   
   SolutionState startLoadingNextComments()
-    => _optinal(newComments: comments.startLoadingNext());
+    => optinal(newComments: comments.startLoadingNext());
   SolutionState addNextComments(Iterable<int> commentIds)
-    => _optinal(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
+    => optinal(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
   SolutionState stopLoadingNextComments()
-    => _optinal(newComments: comments.stopLoadingNext());
+    => optinal(newComments: comments.stopLoadingNext());
     
   SolutionState addComment(int commentId) =>
-    _optinal(
+    optinal(
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.prependOne(Id(id: commentId)),
     );
   SolutionState removeComment(int commentId) =>
-    _optinal(
+    optinal(
       newNumberOfComments: numberOfComments - 1,
       newComments: comments.removeOne(commentId),
     );
   SolutionState addNewComment(int commentId) =>
-    _optinal(
+    optinal(
       newNumberOfComments: numberOfComments + 1,
       newComments: comments.addInOrder(Id(id: commentId))
     );
 
   SolutionState markAsCorrect()
-    => _optinal(newState: SolutionStatus.correct);
+    => optinal(newState: SolutionStatus.correct);
   SolutionState markAsIncorrect()
-    => _optinal(newState: SolutionStatus.incorrect);  
+    => optinal(newState: SolutionStatus.incorrect);  
 
-  SolutionState save() => _optinal(newIsSaved: true);
-  SolutionState unsave() => _optinal(newIsSaved: false);
+  SolutionState save() => optinal(newIsSaved: true);
+  SolutionState unsave() => optinal(newIsSaved: false);
 }

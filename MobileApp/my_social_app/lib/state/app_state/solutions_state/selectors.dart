@@ -29,3 +29,8 @@ Pagination<int, SolutionState> selectQuestionVideoSolutionsFromState(SolutionsSt
   (state.questionVideoSolutions[questionId] ?? Pagination.init(solutionsPerPage, true));
 Pagination<int, SolutionState> selectQuestionVideoSolutions(Store<AppState> store, int questionId) =>
   selectQuestionVideoSolutionsFromState(store.state.solutions, questionId);
+
+// Pagination<int, SolutionUserSaveState> selectSavedSolutionsFromState(SolutionsState state) =>
+//   state.savedSolutions;
+// Pagination<int, SolutionUserSaveState> selectSavedSolutions(Store<AppState> store) =>
+//   selectSavedSolutionsFromState(store.state.solutions);

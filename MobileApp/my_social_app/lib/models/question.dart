@@ -13,7 +13,6 @@ class Question{
   final int id;
   final DateTime createdAt;
   final DateTime? updatedAt;
-  final int state;
   final bool isOwner;
   final int userId;
   final String userName;
@@ -52,7 +51,6 @@ class Question{
     required this.numberOfVideoSolutions,
     required this.numberOfComments,
     required this.isOwner,
-    required this.state,
     required this.image,
   });
 
@@ -63,7 +61,6 @@ class Question{
     id: id,
     createdAt: createdAt,
     updatedAt: updatedAt,
-    state: state,
     userId: userId,
     userName: userName,
     content: content,

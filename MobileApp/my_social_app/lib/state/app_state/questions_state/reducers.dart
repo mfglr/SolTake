@@ -15,6 +15,8 @@ QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSu
 //solutions action
 QuestionsState createSolutionSuccessReducer(QuestionsState prev, CreateSolutionSuccessAction action)
   => prev.createSolution(action.question, action.solution);
+QuestionsState deleteSolutionSuccessReducer(QuestionsState prev, DeleteSolutionSuccessAction action)
+  => prev.deleteSolution(action.question, action.solution);
 //solutions action
 
 //question user likes
@@ -375,6 +377,7 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
 
   //solutions
   TypedReducer<QuestionsState,CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
+  TypedReducer<QuestionsState,DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
   //solutions
   
   //question user likes

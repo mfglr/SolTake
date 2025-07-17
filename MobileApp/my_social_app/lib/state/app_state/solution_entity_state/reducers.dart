@@ -7,8 +7,6 @@ EntityState<int,SolutionState> addSolutionReducer(EntityState<int,SolutionState>
   => prev.appendOne(action.solution);
 EntityState<int,SolutionState> addSolutionsReducer(EntityState<int,SolutionState> prev, AddSolutionsAction action)
   => prev.appendMany(action.solutions);
-EntityState<int,SolutionState> removeSolutionReducer(EntityState<int,SolutionState> prev,RemoveSolutionSuccessAction action)
-  => prev.where((e) => e.id != action.solutionId);
 
 EntityState<int,SolutionState> nextUpvotesReducer(EntityState<int,SolutionState> prev,NextSolutionUpvotesAction action)
   =>  prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextUpvotes());
@@ -51,7 +49,6 @@ EntityState<int,SolutionState> unsaveSolutionReducer(EntityState<int,SolutionSta
 Reducer<EntityState<int,SolutionState>> solutionEntityStateReducers = combineReducers<EntityState<int,SolutionState>>([
   TypedReducer<EntityState<int,SolutionState>,AddSolutionAction>(addSolutionReducer).call,
   TypedReducer<EntityState<int,SolutionState>,AddSolutionsAction>(addSolutionsReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,RemoveSolutionSuccessAction>(removeSolutionReducer).call,
   TypedReducer<EntityState<int,SolutionState>,MakeSolutionUpvoteSuccessAction>(makeUpvoteReducer).call,
   TypedReducer<EntityState<int,SolutionState>,RemoveSolutionUpvoteSuccessAction>(removeUpvoteReducer).call,
   TypedReducer<EntityState<int,SolutionState>,AddNewSolutionUpvoteAction>(addNewSolutionUpvoteReducer).call,

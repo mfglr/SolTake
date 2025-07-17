@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
@@ -12,13 +13,13 @@ import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
 class DisplayQuestionSolutionsPage extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   final int? solutionId;
 
   const DisplayQuestionSolutionsPage({
     super.key,
-    required this.questionId,
-    this.solutionId
+    required this.question,
+    this.solutionId,
   });
 
   @override
@@ -38,24 +39,25 @@ class DisplayQuestionSolutionsPage extends StatelessWidget {
         onInit: (store) => 
         getNextPageIfNoPage(
           store,
-          selectQuestionSolutions(store, questionId),
-          NextQuestionSolutionsAction(questionId: questionId)
+          selectQuestionSolutions(store, question.id),
+          NextQuestionSolutionsAction(questionId: question.id)
         ),
-        converter: (store) => selectQuestionSolutions(store, questionId),
+        converter: (store) => selectQuestionSolutions(store, question.id),
         builder:(context, pagination) => Builder(
           builder: (context) {
             if(pagination.isEmpty){
               return const NoSolutionsWidget();
             }
             return SolutionItemsWidget(
+              question: question,
               pagination: pagination,
               solutionId: solutionId,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 getNextPageIfReady(
                   store,
-                  selectQuestionSolutions(store, questionId),
-                  NextQuestionSolutionsAction(questionId: questionId)
+                  selectQuestionSolutions(store, question.id),
+                  NextQuestionSolutionsAction(questionId: question.id)
                 );
               },
             );

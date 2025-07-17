@@ -19,10 +19,10 @@ import 'package:my_social_app/views/solution/pages/display_question_abstract_sol
 const List<IconData> icons = [Icons.all_out_sharp, Icons.check, Icons.pending, Icons.close, Icons.upload];
 
 class DisplayQuestionAbstractSolutionsPage extends StatefulWidget {
-  final int questionId;
+  final QuestionState question;
   const DisplayQuestionAbstractSolutionsPage({
     super.key,
-    required this.questionId
+    required this.question
   });
 
   @override
@@ -69,8 +69,8 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,QuestionState?>(
-      onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
-      converter: (store) => store.state.questionEntityState.getValue(widget.questionId),
+      onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.question.id)),
+      converter: (store) => store.state.questionEntityState.getValue(widget.question.id),
       builder:(context,question){
         if(question == null) return const LoadingView();
         return Scaffold(
@@ -110,10 +110,10 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    DisplaySolutionsPage(questionId: question.id),
-                    DisplayCorrectSolutionsPage(questionId: question.id),
-                    DisplayPendingSolutionsPage(questionId: question.id),
-                    DisplayIncorrectSolutionsPage(questionId: question.id),
+                    DisplaySolutionsPage(question: question),
+                    DisplayCorrectSolutionsPage(question: question),
+                    DisplayPendingSolutionsPage(question: question),
+                    DisplayIncorrectSolutionsPage(question: question),
                     _displayUploads(question)
                   ],
                 ),

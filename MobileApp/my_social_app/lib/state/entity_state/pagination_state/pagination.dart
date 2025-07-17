@@ -255,8 +255,17 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
+
+  bool isOutOfPagination(V value) =>
+    !isLast &&
+    (
+      values.isEmpty ||
+      isDescending
+        ? value.id.compareTo(values.last.id) < 0
+        : value.id.compareTo(values.last.id) > 0
+    );
   Pagination<K,V> addInOrder(V value){
-    if(!isLast && (values.isEmpty || value.id.compareTo(values.last.id) < 0)) return this;
+    if(isOutOfPagination(value)) return this;
     return Pagination(
       isLast: isLast,
       loadingNext: loadingNext,

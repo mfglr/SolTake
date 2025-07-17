@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_item_widget.dart';
 
-class SolutionItemsWidget extends StatefulWidget {
+class SolutionUserSaveItemsWidget extends StatefulWidget {
   final QuestionState question;
   final Function onScrollBottom;
-  final Pagination<int,SolutionState> pagination;
+  final Pagination<int,SolutionUserSaveState> pagination;
   final int? solutionId;
 
-  const SolutionItemsWidget({
+  const SolutionUserSaveItemsWidget({
     super.key,
     required this.question,
-    required this.pagination,
     required this.onScrollBottom,
-    this.solutionId,
+    required this.pagination,
+    this.solutionId
   });
 
   @override
-  State<SolutionItemsWidget> createState() => _SolutionItemsWidgetState();
+  State<SolutionUserSaveItemsWidget> createState() => _SolutionUserSaveItemsWidgetState();
 }
 
-class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
+class _SolutionUserSaveItemsWidgetState extends State<SolutionUserSaveItemsWidget> {
   final GlobalKey _solutionKey = GlobalKey(); 
   final ScrollController _scrollController = ScrollController();
   late final void Function() _onScrollBottom;
@@ -65,7 +65,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
               return Container(
                 key: widget.solutionId == solution.id ? _solutionKey : null,
                 margin: const EdgeInsets.only(bottom: 15),
-                child: SolutionItemWidget(question: widget.question, solution: solution),
+                child: SolutionItemWidget(question: widget.question, solution: solution.solution),
               );
             }
           ),

@@ -32,7 +32,6 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       numberOfVideoSolutions: (json['numberOfVideoSolutions'] as num).toInt(),
       numberOfComments: (json['numberOfComments'] as num).toInt(),
       isOwner: json['isOwner'] as bool,
-      state: (json['state'] as num).toInt(),
       image: json['image'] == null
           ? null
           : Multimedia.fromJson(json['image'] as Map<String, dynamic>),
@@ -42,7 +41,6 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
-      'state': instance.state,
       'isOwner': instance.isOwner,
       'userId': instance.userId,
       'userName': instance.userName,

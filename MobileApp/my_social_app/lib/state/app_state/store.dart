@@ -29,7 +29,6 @@ import 'package:my_social_app/state/app_state/search_questions_state/middlewares
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_user_saves_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solutions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -71,6 +70,7 @@ final store = Store(
       questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
       questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
       questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
+      // savedSolutions: Pagination<int, SolutionUserSaveState>.init(solutionsPerPage, true)
     ),
 
     comments: const CommentsState(
@@ -83,7 +83,6 @@ final store = Store(
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
     questionUserSaves: Pagination.init(questionsPerPage, true),
-    solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
     userUserConversations: Pagination.init(usersPerPage, true),
@@ -139,6 +138,7 @@ final store = Store(
 
     //solutions
     createSolutionMiddleware,
+    deleteSolutionMiddleware,
     nextQuestionSolutionsMiddleware,
     refreshQuestionSolutionsMiddleware,
     nextQuestionCorrectSolutionsMiddleware,
@@ -148,6 +148,11 @@ final store = Store(
     nextQuestionIncorrectSolutionsMiddleware,
     refreshQuestionIncorrectSolutionsMiddleware,
     nextQuestionVideoSolutionsMiddleware,
+    refreshQuestionVideoSolutionsMiddleware,
+    // nextSavedSolutionsMiddleware,
+    // refreshSavedSolutionsMiddleware,
+    saveSolutionMiddeleware,
+    unsaveSolutionMiddeleware,
     //solutions
 
     //comments
@@ -191,12 +196,6 @@ final store = Store(
     removeUserUserSearchMiddleware,
     nextUserUserSearchsMiddleware,
     //user user searchs middlewares
-
-    //solution user saves middewares
-    createSolutionUserSaveMiddleware,
-    deleteSolutionUserSaveMiddleware,
-    nextSolutionUserSavesMiddleware,
-    //solution user saves middewares
 
     //balance state
     loadBalanceMiddleware,
@@ -294,7 +293,6 @@ final store = Store(
     //solution entity state
     createSolutionByAiMiddleware,
     loadSolutionMiddleware,
-    removeSolutionMiddleware,
 
     makeSolutionUpvoteMiddleware,
     removeSolutionUpvoteMiddleware,

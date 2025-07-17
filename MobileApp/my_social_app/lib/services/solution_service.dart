@@ -6,7 +6,6 @@ import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/models/solution.dart';
-import 'package:my_social_app/models/solution_user_save.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
 
@@ -102,10 +101,4 @@ class SolutionService{
         .get(_appClient.generatePaginationUrl("$solutionController/$getVideoSolutionsEndpoint/$questionId",page))
         .then((response) => response as List)
         .then((list) => list.map((json) => Solution.fromJson(json)));
-
-  Future<Iterable<SolutionUserSave>> getSavedSolutions(Page page) =>
-    _appClient
-      .get(_appClient.generatePaginationUrl("$solutionController/$getSavedSolutionsEndpoint", page))
-      .then((json) => json as List)
-      .then((list) => list.map((e) => SolutionUserSave.fromJson(e)));
 }

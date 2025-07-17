@@ -31,7 +31,7 @@ class ProfileMenuPage extends StatelessWidget {
         child: Column(
           children: [
             DisplaySavedQuestionsMenuItem(),
-            DisplaySavedSolutionsMenuItem(),
+            // DisplaySavedSolutionsMenuItem(),
             ChangeLanguageMenuItem(),
             DisplayRequestsMenuItem(),
             // DisplayBalanceMenuItem(),

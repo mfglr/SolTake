@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
@@ -13,12 +14,13 @@ import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
 class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   final int? solutionId;
+
   const DisplayQuestionIncorrectSolutionsPage({
     super.key,
-    required this.questionId,
-    this.solutionId
+    required this.question,
+    this.solutionId,
   });
 
   @override
@@ -33,10 +35,10 @@ class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
       body: StoreConnector<AppState, Pagination<int,SolutionState>>(
         onInit: (store) => getNextPageIfNoPage(
           store,
-          selectQuestionIncorrectSolutions(store, questionId),
-          NextQuestionIncorrectSolutionsAction(questionId: questionId),
+          selectQuestionIncorrectSolutions(store, question.id),
+          NextQuestionIncorrectSolutionsAction(questionId: question.id),
         ),
-        converter: (store) => selectQuestionIncorrectSolutions(store, questionId),
+        converter: (store) => selectQuestionIncorrectSolutions(store, question.id),
         builder:(context, pagination) => Builder(
           builder: (context) {
             if(pagination.isEmpty){
@@ -45,14 +47,15 @@ class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
               );
             }
             return SolutionItemsWidget(
+              question: question,
               pagination: pagination,
               solutionId: solutionId,
               onScrollBottom: (){
                 final store = StoreProvider.of<AppState>(context,listen: false);
                 getNextPageIfReady(
                   store,
-                  selectQuestionIncorrectSolutions(store, questionId),
-                  NextQuestionIncorrectSolutionsAction(questionId: questionId),
+                  selectQuestionIncorrectSolutions(store, question.id),
+                  NextQuestionIncorrectSolutionsAction(questionId: question.id),
                 );
               },
             );

@@ -4,11 +4,9 @@ import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
-import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
 class DisplaySolutionPage extends StatefulWidget {
   final int solutionId;
@@ -63,10 +61,10 @@ class _DisplaySolutionPageState extends State<DisplaySolutionPage> {
             leading: const AppBackButtonWidget(),
             title: AppTitle(title: "${solution.userName}${AppLocalizations.of(context)!.display_solutions_page_title}"),
           ),
-          body: SolutionItemsWidget(
-            pagination: Pagination.init(0, false),
-            onScrollBottom: (){}
-          )
+          // SolutionItemsWidget(
+          //   pagination: Pagination.init(0, false),
+          //   onScrollBottom: (){}
+          // )
         );
       },
     );

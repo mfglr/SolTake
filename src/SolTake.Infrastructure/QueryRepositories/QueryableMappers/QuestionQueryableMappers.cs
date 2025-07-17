@@ -19,9 +19,6 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                         question.Id,
                         question.CreatedAt,
                         question.UpdatedAt,
-                        context.Solutions.Any(s => s.QuestionId == question.Id && s.State == SolutionState.Correct)
-                            ? QuestionState.Solved
-                            : QuestionState.Unsolved,
                         question.UserId == forUserId,
                         question.UserId,
                         user.UserName.Value,

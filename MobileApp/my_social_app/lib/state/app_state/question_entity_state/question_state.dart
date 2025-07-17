@@ -15,7 +15,6 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 class QuestionState extends Entity<int> implements Avatar{
   final DateTime createdAt;
   final DateTime? updatedAt;
-  final int state;
   final int userId;
   final String userName;
   final String? content;
@@ -34,16 +33,17 @@ class QuestionState extends Entity<int> implements Avatar{
   final int numberOfVideoSolutions;
   final Multimedia? image;
 
+  int get state => numberOfCorrectSolutions >= 1 ? QuestionStatus.solved : QuestionStatus.unsolved;
   @override
   int get avatarId => userId;
   @override
   Multimedia? get avatar => image;
 
+
   QuestionState({
     required super.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.state,
     required this.userId,
     required this.userName,
     required this.content,
@@ -64,7 +64,6 @@ class QuestionState extends Entity<int> implements Avatar{
   });
 
   QuestionState _optional({
-    int? newState,
     String? newUserName,
     String? newContent,
     Iterable<Multimedia>? newMedias,
@@ -82,7 +81,6 @@ class QuestionState extends Entity<int> implements Avatar{
       id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      state: newState ?? state,
       userId: userId,
       userName: newUserName ?? userName,
       content: newContent ?? content,
@@ -107,10 +105,28 @@ class QuestionState extends Entity<int> implements Avatar{
     if(content == null) return null;
     return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
   }
-  
-  QuestionState startLodingNextLikes() => _optional();
-  QuestionState stopLoadingNextLikes() => _optional();
-  QuestionState addNextPageLikes(Iterable<QuestionUserLikeState> likes) => _optional();
+
+
+  //solutions
+  QuestionState createSolution(SolutionState solution) =>
+    _optional(
+      newNumberOfSolutions: numberOfSolutions + 1,
+      newNumberOfVideoSolutions: solution.hasVideo ? numberOfVideoSolutions + 1 : numberOfVideoSolutions,
+    );
+  QuestionState deleteSolution(SolutionState solution) =>
+    _optional(
+      newNumberOfSolutions: numberOfSolutions - 1,
+      newNumberOfCorrectSolutions:
+        solution.state == SolutionStatus.correct
+          ? numberOfCorrectSolutions - 1
+          : numberOfCorrectSolutions,
+      newNumberOfVideoSolutions:
+        solution.hasVideo
+          ? numberOfVideoSolutions - 1
+          : numberOfVideoSolutions
+    );
+  //solutions
+
   
   QuestionState like() =>
     _optional(
@@ -118,11 +134,7 @@ class QuestionState extends Entity<int> implements Avatar{
       newNumberOfLikes: numberOfLikes + 1
     );
 
-  QuestionState createSolution(SolutionState solution) =>
-    _optional(
-      newNumberOfSolutions: numberOfSolutions + 1,
-      newNumberOfVideoSolutions: solution.hasVideo ? numberOfVideoSolutions + 1 : numberOfVideoSolutions,
-    );
+  
 
   QuestionState dislike() => 
     _optional(
@@ -144,7 +156,6 @@ class QuestionState extends Entity<int> implements Avatar{
       // newPendingSolutions: pendingSolutions.where((e) => e.id != solutionId),
       newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1,
       // newCorrectSolutions: correctSolutions.addInOrder(Id(id: solutionId)),
-      newState: QuestionStatus.solved
     );
   QuestionState markSolutionAsIncorrect(int solutionId) =>
     _optional(
@@ -191,13 +202,9 @@ class QuestionState extends Entity<int> implements Avatar{
         solution.medias.any((e) => e.multimediaType == MultimediaType.video)
           ? numberOfVideoSolutions - 1
           : numberOfVideoSolutions,
-      newState: 
-        solution.state == SolutionStatus.correct && numberOfCorrectSolutions == 1
-          ? QuestionStatus.unsolved
-          : state,
     );
  
-  QuestionState markAsSolved() => _optional(newState: QuestionStatus.solved);
+  QuestionState markAsSolved() => _optional();
   QuestionState save() => _optional(newIsSaved: true);
   QuestionState unsave() => _optional(newIsSaved: false);
 

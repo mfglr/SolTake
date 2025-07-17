@@ -4,7 +4,6 @@ import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/services/solution_user_vote_service.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
@@ -39,22 +38,6 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
-void removeSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is RemoveSolutionAction){
-    final question = store.state.questionEntityState.getValue(action.solution.questionId);
-    SolutionService()
-      .delete(action.solution.id)
-      .then((_){
-        if(question != null){
-          if(action.solution.state == SolutionStatus.correct && question.numberOfCorrectSolutions <= 1){
-            store.dispatch(MarkUserQuestionAsUnsolvedAction(userId: question.userId, questionId: action.solution.questionId));
-          }
-        }
-        store.dispatch(RemoveSolutionSuccessAction(solutionId: action.solution.id));
-      });
-  }
-  next(action);
-}
 void markSolutionAsCorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MarkSolutionAsCorrectAction){
     final currentUserId = store.state.login.login!.id;

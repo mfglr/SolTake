@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
@@ -8,13 +9,13 @@ import 'package:my_social_app/state/entity_state/pagination_state/action_dispath
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/solution/pages/display_question_pending_solutions_page.dart';
 import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
-import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart' show SolutionAbstractItems;
+import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
 
 class DisplayPendingSolutionsPage extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   const DisplayPendingSolutionsPage({
     super.key,
-    required this.questionId
+    required this.question
   });
 
   @override
@@ -24,19 +25,19 @@ class DisplayPendingSolutionsPage extends StatelessWidget {
         final store = StoreProvider.of<AppState>(context,listen: false);
         refreshEntities(
           store,
-          selectQuestionPendingSolutions(store, questionId),
-          RefreshQuestionPendingSolutionsAction(questionId: questionId)
+          selectQuestionPendingSolutions(store, question.id),
+          RefreshQuestionPendingSolutionsAction(questionId: question.id)
         );
-        return store.onChange.map((state) => !selectQuestionPendingSolutionsFromState(state.solutions,questionId).loadingNext).first;
+        return store.onChange.map((state) => !selectQuestionPendingSolutionsFromState(state.solutions,question.id).loadingNext).first;
       },
       child: StoreConnector<AppState,Pagination<int,SolutionState>>(
         onInit: (store) => 
           getNextPageIfNoPage(
             store,
-            selectQuestionPendingSolutions(store, questionId),
-            NextQuestionPendingSolutionsAction(questionId: questionId)
+            selectQuestionPendingSolutions(store, question.id),
+            NextQuestionPendingSolutionsAction(questionId: question.id)
           ),
-        converter: (store) => selectQuestionPendingSolutions(store, questionId),
+        converter: (store) => selectQuestionPendingSolutions(store, question.id),
         builder: (context, pagination) => SolutionAbstractItems(
           pagination: pagination,
           noItems: const NoSolutionsWidget(),
@@ -46,7 +47,7 @@ class DisplayPendingSolutionsPage extends StatelessWidget {
               .push(
                 MaterialPageRoute(
                   builder: (context) => DisplayQuestionPendingSolutionsPage(
-                    questionId: questionId,
+                    question: question,
                     solutionId: solutionId,
                   )
                 )
@@ -55,8 +56,8 @@ class DisplayPendingSolutionsPage extends StatelessWidget {
             final store = StoreProvider.of<AppState>(context,listen: false);
             getNextPageIfReady(
               store,
-              selectQuestionPendingSolutions(store, questionId),
-              NextQuestionPendingSolutionsAction(questionId: questionId)
+              selectQuestionPendingSolutions(store, question.id),
+              NextQuestionPendingSolutionsAction(questionId: question.id)
             );
           },
         )

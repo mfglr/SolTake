@@ -3,6 +3,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
@@ -57,6 +58,69 @@ class QuestionsState{
       topicQuestions: newTopicQuestions ?? topicQuestions,
       questionUserLikes: newQuestionUserLikes ?? questionUserLikes,
     );
+
+  //solutions
+  QuestionsState deleteSolution(QuestionState question, SolutionState solution) =>
+    QuestionsState(
+      
+      userQuestions: userQuestions[question.userId] != null
+        ? userQuestions.updateOne(
+            question.userId,
+            userQuestions[question.userId]!.updateOne(question.deleteSolution(solution))
+          )
+        : userQuestions,
+      
+      userSolvedQuestions: 
+        userSolvedQuestions[question.userId] != null
+          ? userSolvedQuestions.updateOne(
+              question.userId,
+              question.numberOfCorrectSolutions == 1 && solution.state == SolutionStatus.correct
+                ? userSolvedQuestions[question.userId]!.removeOne(question.id)
+                : userSolvedQuestions[question.userId]!.updateOne(question.deleteSolution(solution))
+            )
+          : userSolvedQuestions,
+
+      userUnsolvedQuestions:
+        userUnsolvedQuestions[question.userId] != null
+          ? userUnsolvedQuestions.updateOne(
+              question.userId,
+              question.numberOfCorrectSolutions == 1 && solution.state == SolutionStatus.correct
+                ? userUnsolvedQuestions[question.userId]!.addInOrder(question.deleteSolution(solution))
+                : userUnsolvedQuestions[question.userId]!.updateOne(question.deleteSolution(solution))
+            )
+          : userUnsolvedQuestions,
+
+      examQuestions: 
+        examQuestions[question.exam.id] != null
+          ? examQuestions.updateOne(
+              question.exam.id,
+              examQuestions[question.exam.id]!.updateOne(question.deleteSolution(solution))
+            )
+          : examQuestions,
+
+      subjectQuestions:
+        subjectQuestions[question.subject.id] != null
+          ? subjectQuestions.updateOne(
+              question.subject.id,
+              subjectQuestions[question.subject.id]!.updateOne(question.deleteSolution(solution))
+            )
+          : subjectQuestions,
+
+      topicQuestions: 
+        question.topic != null && topicQuestions[question.topic!.id] != null
+          ? topicQuestions.updateOne(
+              question.topic!.id,
+              topicQuestions[question.topic!.id]!.updateOne(question.deleteSolution(solution))
+            )
+          : topicQuestions,
+
+      searchPageQuestions: searchPageQuestions.updateOne(question.deleteSolution(solution)),
+      homePageQuestions: homePageQuestions.updateOne(question.deleteSolution(solution)),
+      savedQuestions: savedQuestions.updateOne(question.deleteSolution(solution)),
+      questionUserLikes: questionUserLikes
+    );
+  //solutions
+
 
   QuestionsState like(QuestionState question, QuestionUserLikeState questionUserLike) =>
     QuestionsState(
@@ -159,7 +223,6 @@ class QuestionsState{
               )
             : questionUserLikes
     );
-
 
   QuestionsState increaseNumberOfComments(QuestionState question) => 
     QuestionsState(

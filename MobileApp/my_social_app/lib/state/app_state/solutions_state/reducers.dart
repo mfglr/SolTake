@@ -4,6 +4,8 @@ import 'package:redux/redux.dart';
 
 SolutionsState createSolutionSuccessReducer(SolutionsState prev, CreateSolutionSuccessAction action)
   => prev.create(action.solution);
+SolutionsState deleteSolutionSuccessReducer(SolutionsState prev, DeleteSolutionSuccessAction action)
+  => prev.delete(action.solution);
 
 SolutionsState nextQuestionSolutionsReducer(SolutionsState prev, NextQuestionSolutionsAction action)
   => prev.startLoadingNextQuestionSolutions(action.questionId);
@@ -40,8 +42,21 @@ SolutionsState nextQuestionVideoSolutionsSuccessReducer(SolutionsState prev, Nex
 SolutionsState nextQuestionVideoSolutionsFailedReducer(SolutionsState prev, NextQuestionVideoSolutionsFailedAction action)
   => prev.stopLoadingNextQuestionVideoSolutions(action.questionId);
 
+// SolutionsState nextSavedSolutionsReducer(SolutionsState prev, NextSavedSolutionsAction action)
+//   => prev.startLoadingNextSavedSolutions();
+// SolutionsState nextSavedSolutionsSuccessReducer(SolutionsState prev, NextSavedSolutionsSuccessAction action)
+//   => prev.addNextPageSavedSolutions(action.solutions);
+// SolutionsState nextSavedSolutionsFailedReducer(SolutionsState prev, NextSavedSolutionsFailedAction action)
+//   => prev.stopLoadingNextSavedSolutions();
+
+// SolutionsState saveSolutionSuccessReducer(SolutionsState prev, SaveSolutionSuccessAction action)
+//   => prev.save(action.id, action.solution);
+// SolutionsState unsaveSolutionsSuccessReducer(SolutionsState prev, UnsaveSolutionSuccessAction action)
+//   => prev.unsave(action.solutionId);
+
 Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
   TypedReducer<SolutionsState,CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
+  TypedReducer<SolutionsState,DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
 
   TypedReducer<SolutionsState,NextQuestionSolutionsAction>(nextQuestionSolutionsReducer).call,
   TypedReducer<SolutionsState,NextQuestionSolutionsSuccessAction>(nextQuestionSolutionsSuccessReducer).call,
@@ -62,4 +77,11 @@ Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
   TypedReducer<SolutionsState,NextQuestionVideoSolutionsAction>(nextQuestionVideoSolutionsReducer).call,
   TypedReducer<SolutionsState,NextQuestionVideoSolutionsSuccessAction>(nextQuestionVideoSolutionsSuccessReducer).call,
   TypedReducer<SolutionsState,NextQuestionVideoSolutionsFailedAction>(nextQuestionVideoSolutionsFailedReducer).call,
+
+  // TypedReducer<SolutionsState,NextSavedSolutionsAction>(nextSavedSolutionsReducer).call,
+  // TypedReducer<SolutionsState,NextSavedSolutionsSuccessAction>(nextSavedSolutionsSuccessReducer).call,
+  // TypedReducer<SolutionsState,NextSavedSolutionsFailedAction>(nextSavedSolutionsFailedReducer).call,
+
+  // TypedReducer<SolutionsState,SaveSolutionSuccessAction>(saveSolutionSuccessReducer).call,
+  // TypedReducer<SolutionsState,UnsaveSolutionSuccessAction>(unsaveSolutionsSuccessReducer).call,
 ]);

@@ -21,7 +21,7 @@ import 'package:my_social_app/state/app_state/question_user_saves_state/question
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_user_saves_state/solution_user_save_state.dart';
+// import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
@@ -49,7 +49,6 @@ class AppState{
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
   final Pagination<int,QuestionUserSaveState> questionUserSaves;
-  final Pagination<int,SolutionUserSaveState> solutionUserSaves;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
   final Pagination<int,UserUserBlockState> userUserBlocks;
   final Pagination<int,UserUserConversationState> userUserConversations;
@@ -89,7 +88,6 @@ class AppState{
     required this.searchQuestions,
     required this.userUserSearchs,
     required this.questionUserSaves,
-    required this.solutionUserSaves,
     required this.messageConnectionEntityState,
     required this.userUserBlocks,
     required this.userUserConversations,
@@ -142,6 +140,7 @@ class AppState{
       questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
       questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
       questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
+      // savedSolutions: Pagination<int, SolutionUserSaveState>.init(solutionsPerPage, true)
     ),
 
     comments: const CommentsState(
@@ -154,7 +153,6 @@ class AppState{
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
     questionUserSaves: Pagination.init(questionsPerPage, true),
-    solutionUserSaves: Pagination.init(solutionsPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
     userUserConversations: Pagination.init(usersPerPage, true),
@@ -231,12 +229,6 @@ class AppState{
     => questionUserSaves.values.map((e) => questionEntityState.getValue(e.questionId)!);
 
   QuestionState? selectQuestion(int questionId) => questionEntityState.getValue(questionId);
-
-
-  //SelectSolutions
-  Iterable<SolutionState> get selectSavedSolutions
-    => solutionUserSaves.values.map((e) => solutionEntityState.getValue(e.solutionId)!);
-
 
   //Select comments
   Iterable<CommentState> getSolutionComments(int solutionId)
