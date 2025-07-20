@@ -3,19 +3,15 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/entity_state/entity_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/key_pagination.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class QuestionsState{
-  final EntityState<int, QuestionState> questions;
-  final KeyPagination<int> homePageQuestions;
-  final KeyPagination<int> savedQuestions;
-
+  final Pagination<int,QuestionState> homePageQuestions;
   final Pagination<int,QuestionState> searchPageQuestions;
-  final Pagination<int,QuestionState> videoQuestions;
+  final Pagination<int,QuestionState> savedQuestions;
   final Map<int,Pagination<int,QuestionState>> userQuestions;
   final Map<int,Pagination<int,QuestionState>> userSolvedQuestions;
   final Map<int,Pagination<int,QuestionState>> userUnsolvedQuestions;
@@ -25,7 +21,6 @@ class QuestionsState{
   final Map<int, Pagination<int, QuestionUserLikeState>> questionUserLikes;
 
   const QuestionsState({
-    required this.questions,
     required this.userQuestions,
     required this.userSolvedQuestions,
     required this.userUnsolvedQuestions,
@@ -35,17 +30,13 @@ class QuestionsState{
     required this.searchPageQuestions,
     required this.homePageQuestions,
     required this.savedQuestions,
-    required this.videoQuestions,
     required this.questionUserLikes
   });
 
   QuestionsState optional({
-    EntityState<int,QuestionState>? newQuestions,
-    KeyPagination<int>? newHomePageQuestions,
-    KeyPagination<int>? newSavedQuestions,
-
+    Pagination<int,QuestionState>? newHomePageQuestions,
     Pagination<int,QuestionState>? newSearchPageQuestions,
-    Pagination<int,QuestionState>? newVideoQuestions,
+    Pagination<int,QuestionState>? newSavedQuestions,
     Map<int,Pagination<int,QuestionState>>? newUserQuestions,
     Map<int,Pagination<int,QuestionState>>? newUserSolvedQuestions,
     Map<int,Pagination<int,QuestionState>>? newUserUnsolvedQuestions,
@@ -56,12 +47,10 @@ class QuestionsState{
   })
     =>
     QuestionsState(
-      questions: newQuestions ?? questions,
       homePageQuestions: newHomePageQuestions ?? homePageQuestions,
       searchPageQuestions: newSearchPageQuestions ?? searchPageQuestions,
       savedQuestions: newSavedQuestions ?? savedQuestions,
       userQuestions: newUserQuestions ?? userQuestions,
-      videoQuestions: newVideoQuestions ?? videoQuestions,
       userSolvedQuestions: newUserSolvedQuestions ?? userSolvedQuestions,
       userUnsolvedQuestions:  newUserUnsolvedQuestions ?? userUnsolvedQuestions,
       examQuestions: newExamQuestions ?? examQuestions,
@@ -71,65 +60,260 @@ class QuestionsState{
     );
 
   //solutions
-  QuestionsState createSolution(SolutionState solution) => 
-    optional(newQuestions: questions.setOne(questions[solution.questionId]?.createSolution(solution)));
-  QuestionsState deleteSolution(SolutionState solution) =>
-    optional(newQuestions: questions.setOne(questions[solution.questionId]?.deleteSolution(solution)));
+  QuestionsState deleteSolution(QuestionState question, SolutionState solution) =>
+    QuestionsState(
+      
+      userQuestions: userQuestions[question.userId] != null
+        ? userQuestions.updateOne(
+            question.userId,
+            userQuestions[question.userId]!.updateOne(question.deleteSolution(solution))
+          )
+        : userQuestions,
+      
+      userSolvedQuestions: 
+        userSolvedQuestions[question.userId] != null
+          ? userSolvedQuestions.updateOne(
+              question.userId,
+              question.numberOfCorrectSolutions == 1 && solution.state == SolutionStatus.correct
+                ? userSolvedQuestions[question.userId]!.removeOne(question.id)
+                : userSolvedQuestions[question.userId]!.updateOne(question.deleteSolution(solution))
+            )
+          : userSolvedQuestions,
+
+      userUnsolvedQuestions:
+        userUnsolvedQuestions[question.userId] != null
+          ? userUnsolvedQuestions.updateOne(
+              question.userId,
+              question.numberOfCorrectSolutions == 1 && solution.state == SolutionStatus.correct
+                ? userUnsolvedQuestions[question.userId]!.addInOrder(question.deleteSolution(solution))
+                : userUnsolvedQuestions[question.userId]!.updateOne(question.deleteSolution(solution))
+            )
+          : userUnsolvedQuestions,
+
+      examQuestions: 
+        examQuestions[question.exam.id] != null
+          ? examQuestions.updateOne(
+              question.exam.id,
+              examQuestions[question.exam.id]!.updateOne(question.deleteSolution(solution))
+            )
+          : examQuestions,
+
+      subjectQuestions:
+        subjectQuestions[question.subject.id] != null
+          ? subjectQuestions.updateOne(
+              question.subject.id,
+              subjectQuestions[question.subject.id]!.updateOne(question.deleteSolution(solution))
+            )
+          : subjectQuestions,
+
+      topicQuestions: 
+        question.topic != null && topicQuestions[question.topic!.id] != null
+          ? topicQuestions.updateOne(
+              question.topic!.id,
+              topicQuestions[question.topic!.id]!.updateOne(question.deleteSolution(solution))
+            )
+          : topicQuestions,
+
+      searchPageQuestions: searchPageQuestions.updateOne(question.deleteSolution(solution)),
+      homePageQuestions: homePageQuestions.updateOne(question.deleteSolution(solution)),
+      savedQuestions: savedQuestions.updateOne(question.deleteSolution(solution)),
+      questionUserLikes: questionUserLikes
+    );
   //solutions
 
+
   QuestionsState like(QuestionState question, QuestionUserLikeState questionUserLike) =>
-    optional(
-      newQuestions: questions.setOne(question.like()),
-      newQuestionUserLikes:
-        questionUserLikes.updateElsePrependOne(
-          question.id,
-          (questionUserLikes[question.id] ?? Pagination.init(questionUserLikesPerPage, true)).prependOne(questionUserLike)
-        )
+    QuestionsState(
+      examQuestions:
+        examQuestions[question.exam.id] != null
+          ? examQuestions.updateOne(
+              question.exam.id,
+              examQuestions[question.exam.id]!.updateOne(question.like())
+            )
+          : examQuestions,
+        subjectQuestions: subjectQuestions[question.subject.id] != null
+          ? subjectQuestions.updateOne(
+              question.subject.id,
+              subjectQuestions[question.subject.id]!.updateOne(question.like())
+            )
+          : subjectQuestions,
+        topicQuestions: 
+          question.topic?.id != null && topicQuestions[question.topic?.id] != null
+            ? topicQuestions.updateOne(
+                question.topic!.id,
+                topicQuestions[question.topic!.id]!.updateOne(question.like())
+              )
+            : topicQuestions,
+        userQuestions: userQuestions[question.userId] != null
+          ? userQuestions.updateOne(
+              question.userId,
+              userQuestions[question.userId]!.updateOne(question.like())
+            )
+          : userQuestions,
+        userSolvedQuestions: userSolvedQuestions[question.userId] != null
+          ? userSolvedQuestions.updateOne(
+              question.userId,
+              userSolvedQuestions[question.userId]!.updateOne(question.like())
+            )
+          : userSolvedQuestions,
+        userUnsolvedQuestions: userUnsolvedQuestions[question.userId] != null
+          ? userUnsolvedQuestions.updateOne(
+              question.userId,
+              userUnsolvedQuestions[question.userId]!.updateOne(question.like()) 
+            )
+          : userUnsolvedQuestions,
+        homePageQuestions: homePageQuestions.updateOne(question.like()),
+        savedQuestions: savedQuestions.updateOne(question.like()),
+        searchPageQuestions: searchPageQuestions.updateOne(question.like()),
+
+        questionUserLikes:
+          questionUserLikes.updateElsePrependOne(
+            question.id,
+            (questionUserLikes[question.id] ?? Pagination.init(questionUserLikesPerPage, true)).prependOne(questionUserLike)
+          )
     );
   QuestionsState dislike(QuestionState question, int userId) =>
-    optional(
-      newQuestions: questions.setOne(question.dislike()),
-      newQuestionUserLikes:
-        questionUserLikes.updateElsePrependOne(
-          question.id,
-          (questionUserLikes[question.id] ?? Pagination.init(questionUserLikesPerPage, true)).where((e) => e.userId != userId)
-        )
+    QuestionsState(
+      examQuestions:
+        examQuestions[question.exam.id] != null
+          ? examQuestions.updateOne(
+              question.exam.id,
+              examQuestions[question.exam.id]!.updateOne(question.dislike())
+            )
+          : examQuestions,
+        subjectQuestions: subjectQuestions[question.subject.id] != null
+          ? subjectQuestions.updateOne(
+              question.subject.id,
+              subjectQuestions[question.subject.id]!.updateOne(question.dislike())
+            )
+          : subjectQuestions,
+        topicQuestions: 
+          question.topic?.id != null && topicQuestions[question.topic?.id] != null
+            ? topicQuestions.updateOne(
+                question.topic!.id,
+                topicQuestions[question.topic!.id]!.updateOne(question.dislike())
+              )
+            : topicQuestions,
+        userQuestions: userQuestions[question.userId] != null
+          ? userQuestions.updateOne(
+              question.userId,
+              userQuestions[question.userId]!.updateOne(question.dislike())
+            )
+          : userQuestions,
+        userSolvedQuestions: userSolvedQuestions[question.userId] != null
+          ? userSolvedQuestions.updateOne(
+              question.userId,
+              userSolvedQuestions[question.userId]!.updateOne(question.dislike())
+            )
+          : userSolvedQuestions,
+        userUnsolvedQuestions: userUnsolvedQuestions[question.userId] != null
+          ? userUnsolvedQuestions.updateOne(
+              question.userId,
+              userUnsolvedQuestions[question.userId]!.updateOne(question.dislike()) 
+            )
+          : userUnsolvedQuestions,
+        homePageQuestions: homePageQuestions.updateOne(question.dislike()),
+        savedQuestions: savedQuestions.updateOne(question.dislike()),
+        searchPageQuestions: searchPageQuestions.updateOne(question.dislike()),
+        questionUserLikes:
+          questionUserLikes[question.id] != null
+            ? questionUserLikes.updateOne(
+                question.id,
+                questionUserLikes[question.id]!.where((e) => e.userId != userId)
+              )
+            : questionUserLikes
     );
+
   QuestionsState increaseNumberOfComments(QuestionState question) => 
-    optional(newQuestions: questions.setOne(question.increaseNumberOfComments()));
+    QuestionsState(
+      examQuestions:
+        examQuestions[question.exam.id] != null
+          ? examQuestions.updateOne(
+              question.exam.id,
+              examQuestions[question.exam.id]!.updateOne(question.increaseNumberOfComments())
+            )
+          : examQuestions,
+        subjectQuestions: subjectQuestions[question.subject.id] != null
+          ? subjectQuestions.updateOne(
+              question.subject.id,
+              subjectQuestions[question.subject.id]!.updateOne(question.increaseNumberOfComments())
+            )
+          : subjectQuestions,
+        topicQuestions: 
+          question.topic?.id != null && topicQuestions[question.topic?.id] != null
+            ? topicQuestions.updateOne(
+                question.topic!.id,
+                topicQuestions[question.topic!.id]!.updateOne(question.increaseNumberOfComments())
+              )
+            : topicQuestions,
+        userQuestions: userQuestions[question.userId] != null
+          ? userQuestions.updateOne(
+              question.userId,
+              userQuestions[question.userId]!.updateOne(question.increaseNumberOfComments())
+            )
+          : userQuestions,
+        userSolvedQuestions: userSolvedQuestions[question.userId] != null
+          ? userSolvedQuestions.updateOne(
+              question.userId,
+              userSolvedQuestions[question.userId]!.updateOne(question.increaseNumberOfComments())
+            )
+          : userSolvedQuestions,
+        userUnsolvedQuestions: userUnsolvedQuestions[question.userId] != null
+          ? userUnsolvedQuestions.updateOne(
+              question.userId,
+              userUnsolvedQuestions[question.userId]!.updateOne(question.increaseNumberOfComments()) 
+            )
+          : userUnsolvedQuestions,
+        homePageQuestions: homePageQuestions.updateOne(question.increaseNumberOfComments()),
+        savedQuestions: savedQuestions.updateOne(question.increaseNumberOfComments()),
+        searchPageQuestions: searchPageQuestions.updateOne(question.increaseNumberOfComments()),
+        questionUserLikes: questionUserLikes
+    );
 
 
-  //home page questions
-  QuestionsState startLoadingNextHomePageQuestions() =>
-    optional(newHomePageQuestions: homePageQuestions.startLoadingNext());
-  QuestionsState addNextPageHomePageQuestions(Iterable<QuestionState> questions) =>
-    optional(
-      newQuestions: this.questions.setMany(questions),
-      newHomePageQuestions: homePageQuestions.addNextPage(questions.map((e) => e.id))
+    QuestionsState createSolution(QuestionState question, SolutionState solution) => 
+    QuestionsState(
+      examQuestions:
+        examQuestions[question.exam.id] != null
+          ? examQuestions.updateOne(
+              question.exam.id,
+              examQuestions[question.exam.id]!.updateOne(question.createSolution(solution))
+            )
+          : examQuestions,
+        subjectQuestions: subjectQuestions[question.subject.id] != null
+          ? subjectQuestions.updateOne(
+              question.subject.id,
+              subjectQuestions[question.subject.id]!.updateOne(question.createSolution(solution))
+            )
+          : subjectQuestions,
+        topicQuestions: 
+          question.topic?.id != null && topicQuestions[question.topic?.id] != null
+            ? topicQuestions.updateOne(
+                question.topic!.id,
+                topicQuestions[question.topic!.id]!.updateOne(question.createSolution(solution))
+              )
+            : topicQuestions,
+        userQuestions: userQuestions[question.userId] != null
+          ? userQuestions.updateOne(
+              question.userId,
+              userQuestions[question.userId]!.updateOne(question.createSolution(solution))
+            )
+          : userQuestions,
+        userSolvedQuestions: userSolvedQuestions[question.userId] != null
+          ? userSolvedQuestions.updateOne(
+              question.userId,
+              userSolvedQuestions[question.userId]!.updateOne(question.createSolution(solution))
+            )
+          : userSolvedQuestions,
+        userUnsolvedQuestions: userUnsolvedQuestions[question.userId] != null
+          ? userUnsolvedQuestions.updateOne(
+              question.userId,
+              userUnsolvedQuestions[question.userId]!.updateOne(question.createSolution(solution)) 
+            )
+          : userUnsolvedQuestions,
+        homePageQuestions: homePageQuestions.updateOne(question.createSolution(solution)),
+        savedQuestions: savedQuestions.updateOne(question.createSolution(solution)),
+        searchPageQuestions: searchPageQuestions.updateOne(question.createSolution(solution)),
+        questionUserLikes: questionUserLikes
     );
-  QuestionsState refreshHomePageQuestions(Iterable<QuestionState> questions) =>
-    optional(
-      newQuestions: this.questions.setMany(questions),
-      newHomePageQuestions: homePageQuestions.refreshPage(questions.map((e) => e.id))
-    );
-  QuestionsState stopLoadingNextHomePageQuestions() =>
-    optional(newHomePageQuestions: homePageQuestions.stopLoadingNext());
-  //home page questions
-
-  //saved questions
-  QuestionsState startLoadingNextSavedQuestions() =>
-    optional(newSavedQuestions: savedQuestions.startLoadingNext());
-  QuestionsState addNextPageSavedQuestions(Iterable<QuestionState> questions) =>
-    optional(
-      newQuestions: this.questions.setMany(questions),
-      newSavedQuestions: savedQuestions.addNextPage(questions.map((e) => e.id))
-    );
-  QuestionsState refreshSavedQuestions(Iterable<QuestionState> questions) =>
-    optional(
-      newQuestions: this.questions.setMany(questions),
-      newSavedQuestions: savedQuestions.refreshPage(questions.map((e) => e.id))
-    );
-  QuestionsState stopLoadingNextSavedQuestions() =>
-    optional(newSavedQuestions: savedQuestions.stopLoadingNext());
-  //saved questions;
 }

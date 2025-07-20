@@ -25,19 +25,19 @@ class DisplayCorrectSolutionsPage extends StatelessWidget {
         final store = StoreProvider.of<AppState>(context,listen: false);
         refreshEntities(
           store,
-          selectQuestionCorrectSolutionsKeyPagination(store, question.id),
+          selectQuestionCorrectSolutions(store, question.id),
           RefreshQuestionCorrectSolutionsAction(questionId: question.id)
         );
-        return onQuestionCorrectSolutionsLoaded(store,question.id);
+        return store.onChange.map((state) => !selectQuestionCorrectSolutionsFromState(state.solutions,question.id).loadingNext).first;
       },
       child: StoreConnector<AppState,Pagination<int,SolutionState>>(
         onInit: (store) => 
           getNextPageIfNoPage(
             store,
-            selectQuestionCorrectSolutionsKeyPagination(store, question.id),
+            selectQuestionCorrectSolutions(store, question.id),
             NextQuestionCorrectSolutionsAction(questionId: question.id)
           ),
-        converter: (store) => selectQuestionCorrectSolutionsPagination(store, question.id),
+        converter: (store) => selectQuestionCorrectSolutions(store, question.id),
         builder: (context, pagination) => SolutionAbstractItems(
           pagination: pagination,
           noItems: const NoSolutionsWidget(),
@@ -56,7 +56,7 @@ class DisplayCorrectSolutionsPage extends StatelessWidget {
             final store = StoreProvider.of<AppState>(context,listen: false);
             getNextPageIfReady(
               store,
-              selectQuestionCorrectSolutionsKeyPagination(store, question.id),
+              selectQuestionCorrectSolutions(store, question.id),
               NextQuestionCorrectSolutionsAction(questionId: question.id)
             );
           },

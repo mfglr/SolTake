@@ -2,303 +2,275 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/entity_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/key_pagination.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class SolutionsState {
-  final EntityState<int, SolutionState> solutions;
-  final Map<int, KeyPagination<int>> questionSolutions;
-  final Map<int, KeyPagination<int>> questionCorrectSolutions;
-  final Map<int, KeyPagination<int>> questionPendingSolutions;
-  final Map<int, KeyPagination<int>> questionIncorrectSolutions;
-  final Map<int, KeyPagination<int>> questionVideoSolutions;
+  final Map<int, Pagination<int,SolutionState>> questionSolutions;
+  final Map<int, Pagination<int,SolutionState>> questionCorrectSolutions;
+  final Map<int, Pagination<int,SolutionState>> questionPendingSolutions;
+  final Map<int, Pagination<int,SolutionState>> questionIncorrectSolutions;
+  final Map<int, Pagination<int, SolutionState>> questionVideoSolutions;
+  // final Pagination<int, SolutionUserSaveState> savedSolutions;
 
   const SolutionsState({
-    required this.solutions,
     required this.questionSolutions,
     required this.questionCorrectSolutions,
     required this.questionPendingSolutions,
     required this.questionIncorrectSolutions,
     required this.questionVideoSolutions,
+    // required this.savedSolutions
   });
 
   SolutionsState _optional({
-    EntityState<int,SolutionState>? newSolutions,
-    Map<int, KeyPagination<int>>? newQuestionSolutions,
-    Map<int, KeyPagination<int>>? newQuestionCorrectSolutions,
-    Map<int, KeyPagination<int>>? newQuestionPendingSolutions,
-    Map<int, KeyPagination<int>>? newQuestionIncorrectSolutions,
-    Map<int, KeyPagination<int>>? newQuestionVideoSolutions,
-  }) =>
+    Map<int, Pagination<int,SolutionState>>? newQuestionSolutions,
+    Map<int, Pagination<int,SolutionState>>? newQuestionCorrectSolutions,
+    Map<int, Pagination<int,SolutionState>>? newQuestionPendingSolutions,
+    Map<int, Pagination<int,SolutionState>>? newQuestionIncorrectSolutions,
+    Map<int, Pagination<int,SolutionState>>? newQuestionVideoSolutions,
+    // Pagination<int, SolutionUserSaveState>? newSavedSolutions,
+  }) => 
     SolutionsState(
-      solutions: newSolutions ?? solutions,
       questionSolutions: newQuestionSolutions ?? questionSolutions,
       questionCorrectSolutions: newQuestionCorrectSolutions ?? questionCorrectSolutions,
       questionPendingSolutions: newQuestionPendingSolutions ?? questionPendingSolutions,
       questionIncorrectSolutions: newQuestionIncorrectSolutions ?? questionIncorrectSolutions,
       questionVideoSolutions: newQuestionVideoSolutions ?? questionVideoSolutions,
+      // savedSolutions: newSavedSolutions ?? savedSolutions
     );
 
   SolutionsState create(SolutionState solution) => 
     _optional(
-      newSolutions: solutions.setOne(solution),
-      
-      newQuestionSolutions:
-        questionSolutions.setOne(
-          solution.questionId,
-          selectQuestionSolutionsKeyPaginationFromState(this,solution.questionId).prependOne(solution.id)
-        ),
-      
-      newQuestionPendingSolutions: 
-        questionPendingSolutions.setOne(
-          solution.questionId,
-          selectQuestionPendingSolutionsKeyPaginationFromState(this, solution.questionId).prependOne(solution.id)
-        ),
-
+      newQuestionSolutions: questionSolutions.updateElsePrependOne(
+        solution.questionId,
+        selectQuestionSolutionsFromState(this, solution.questionId).prependOne(solution)
+      ),
+      newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
+        solution.questionId,
+        selectQuestionPendingSolutionsFromState(this, solution.questionId).prependOne(solution)
+      ),
       newQuestionVideoSolutions: solution.hasVideo
-        ? questionVideoSolutions.setOne(
+        ? questionVideoSolutions.updateElsePrependOne(
             solution.questionId,
-            selectQuestionVideoSolutionsKeyPaginationFromState(this, solution.questionId).prependOne(solution.id)
+            selectQuestionVideoSolutionsFromState(this, solution.questionId).prependOne(solution)
           )
         : questionVideoSolutions
     );
   SolutionsState delete(SolutionState solution) =>
     _optional(
-      newSolutions: solutions.removeOne(solution.id),
-
-      newQuestionSolutions:
-        questionSolutions.setOne(
-          solution.questionId,
-          questionSolutions[solution.questionId]?.removeOne(solution.id)
-        ),
-
-      newQuestionCorrectSolutions: 
-        questionCorrectSolutions.setOne(
-          solution.questionId,
-          questionCorrectSolutions[solution.questionId]?.removeOne(solution.id)
-        ),
-
-      newQuestionPendingSolutions: 
-        solution.state == SolutionStatus.pending
-          ? questionPendingSolutions.setOne(
-              solution.questionId,
-              questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
-            )
-          : questionPendingSolutions,
-
-      newQuestionIncorrectSolutions:
-        solution.state == SolutionStatus.incorrect
-          ? questionIncorrectSolutions.setOne(
-              solution.questionId,
-              questionIncorrectSolutions[solution.questionId]?.removeOne(solution.id)
-            )
-          : questionIncorrectSolutions,
-
-      newQuestionVideoSolutions:
-        solution.hasVideo
-          ? questionVideoSolutions.setOne(
-              solution.questionId,
-              questionVideoSolutions[solution.questionId]?.removeOne(solution.id)
-            )
-          : questionVideoSolutions,
-    );
-  SolutionsState markAsCorrect(SolutionState solution) =>
-    _optional(
-      newSolutions: solutions.setOne(solution.markAsCorrect()),
       
-      newQuestionCorrectSolutions: 
-        questionCorrectSolutions.setOne(
-          solution.questionId,
-          questionCorrectSolutions[solution.questionId]?.addOneInOrder(solution.id)
-        ),
+      newQuestionSolutions: questionSolutions[solution.questionId] != null 
+        ? questionSolutions.updateOne(
+            solution.questionId,
+            questionSolutions[solution.questionId]!.removeOne(solution.id)
+          )
+        : questionSolutions,
 
-      newQuestionPendingSolutions:
-        questionPendingSolutions.setOne(
-          solution.questionId,
-          questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
-        )
+      newQuestionCorrectSolutions: questionCorrectSolutions[solution.questionId] != null && 
+      solution.state == SolutionStatus.correct
+        ? questionCorrectSolutions.updateOne(
+            solution.questionId,
+            questionCorrectSolutions[solution.questionId]!.removeOne(solution.id)
+          )
+        : questionCorrectSolutions,
+
+      newQuestionPendingSolutions: questionPendingSolutions[solution.questionId] != null &&
+      solution.state == SolutionStatus.pending
+        ? questionPendingSolutions.updateOne(
+            solution.questionId,
+            questionPendingSolutions[solution.questionId]!.removeOne(solution.id)
+          )
+        : questionPendingSolutions,
+
+      newQuestionIncorrectSolutions: questionIncorrectSolutions[solution.questionId] != null &&
+      solution.state == SolutionStatus.incorrect
+        ? questionIncorrectSolutions.updateOne(
+            solution.questionId,
+            questionIncorrectSolutions[solution.questionId]!.removeOne(solution.questionId)
+          )
+        : questionIncorrectSolutions,
+
+      newQuestionVideoSolutions: questionVideoSolutions[solution.questionId] != null &&
+      solution.hasVideo
+        ? questionVideoSolutions.updateOne(
+            solution.questionId,
+            questionVideoSolutions[solution.questionId]!.removeOne(solution.questionId)
+          )
+        : questionVideoSolutions,
+      // newSavedSolutions: savedSolutions.removeOne(solution.questionId)
     );
-  SolutionsState markAsIncorrect(SolutionState solution) =>
-    _optional(
-      newSolutions: solutions.setOne(solution.markAsIncorrect()),
 
-      newQuestionIncorrectSolutions:
-        questionIncorrectSolutions.setOne(
-          solution.questionId,
-          questionIncorrectSolutions[solution.questionId]?.addOneInOrder(solution.id)
-        ),
-
-      newQuestionPendingSolutions:
-        questionPendingSolutions.setOne(
-          solution.questionId,
-          questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
-        ),
-    );
-
-  // question solutions
   SolutionsState startLoadingNextQuestionSolutions(int questionId) => 
     _optional(
       newQuestionSolutions: questionSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionSolutionsKeyPaginationFromState(this, questionId).startLoadingNext()
-      ),
+        selectQuestionSolutionsFromState(this, questionId).startLoadingNext()
+      )
     );
   SolutionsState addNextPageQuestionSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newSolutions: this.solutions.setMany(solutions),
       newQuestionSolutions: questionSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionSolutionsKeyPaginationFromState(this, questionId).addNextPage(solutions.map((e) => e.id))
-      ),
-    );
-  SolutionsState refreshQuestionSolutions(int questionId, Iterable<SolutionState> solutions) =>
-    _optional(
-      newSolutions: this.solutions.setMany(solutions),
-      newQuestionSolutions: questionSolutions.updateElsePrependOne(
-        questionId,
-        selectQuestionSolutionsKeyPaginationFromState(this, questionId).refreshPage(solutions.map((e) => e.id))
+        selectQuestionSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
-  SolutionsState stopLoadingNextQuestionSolutions(int questionId) =>
+  SolutionsState stopLoadingNextQuestionSolutions(int questionId) => 
     _optional(
       newQuestionSolutions: questionSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionSolutionsKeyPaginationFromState(this, questionId).stopLoadingNext()
-      ),
+        selectQuestionSolutionsFromState(this, questionId).stopLoadingNext()
+      )
     );
-  // question solutions
 
-  // question correct solutions;
   SolutionsState startLoadingNextQuestionCorrectSolutions(int questionId) => 
     _optional(
-      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
+      newQuestionCorrectSolutions: questionCorrectSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionCorrectSolutionsKeyPaginationFromState(this, questionId).startLoadingNext()
+        selectQuestionCorrectSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionCorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newSolutions: this.solutions.setMany(solutions),
-      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
+      newQuestionCorrectSolutions: questionCorrectSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionCorrectSolutionsKeyPaginationFromState(this, questionId).addNextPage(solutions.map((e) => e.id))
-      )
-    );
-  SolutionsState refreshQuestionCorrectSolutions(int questionId, Iterable<SolutionState> solutions) =>
-    _optional(
-      newSolutions: this.solutions.setMany(solutions),
-      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
-        questionId,
-        selectQuestionCorrectSolutionsKeyPaginationFromState(this, questionId).refreshPage(solutions.map((e) => e.id))
+        selectQuestionCorrectSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
   SolutionsState stopLoadingNextQuestionCorrectSolutions(int questionId) => 
     _optional(
-      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
+      newQuestionCorrectSolutions: questionCorrectSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionCorrectSolutionsKeyPaginationFromState(this, questionId).stopLoadingNext()
+        selectQuestionCorrectSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
-  // question correct solutions;
 
-  // question pending solutions;
   SolutionsState startLoadingNextQuestionPendingSolutions(int questionId) => 
     _optional(
-      newQuestionPendingSolutions: questionPendingSolutions.setOne(
+      newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionPendingSolutionsKeyPaginationFromState(this, questionId).startLoadingNext()
+        selectQuestionPendingSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionPendingSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newSolutions: this.solutions.setMany(solutions),
       newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionPendingSolutionsKeyPaginationFromState(this, questionId).addNextPage(solutions.map((e) => e.id))
-      )
-    );
-  SolutionsState refreshQuestionPendingSolutions(int questionId, Iterable<SolutionState> solutions) =>
-    _optional(
-      newSolutions: this.solutions.setMany(solutions),
-      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
-        questionId,
-        selectQuestionPendingSolutionsKeyPaginationFromState(this, questionId).refreshPage(solutions.map((e) => e.id))
+        selectQuestionPendingSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
   SolutionsState stopLoadingNextQuestionPendingSolutions(int questionId) => 
     _optional(
       newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionPendingSolutionsKeyPaginationFromState(this, questionId).stopLoadingNext()
+        selectQuestionPendingSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
-  // question pending solutions;
 
-  // question incorrect solutions
   SolutionsState startLoadingNextQuestionIncorrectSolutions(int questionId) => 
     _optional(
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionIncorrectSolutionsKeyPaginationFromState(this, questionId).startLoadingNext()
+        selectQuestionIncorrectSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionIncorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newSolutions: this.solutions.setMany(solutions),
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionIncorrectSolutionsKeyPaginationFromState(this, questionId).addNextPage(solutions.map((e) => e.id))
-      )
-    );
-  SolutionsState refreshQuestionIncorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
-    _optional(
-      newSolutions: this.solutions.setMany(solutions),
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
-        questionId,
-        selectQuestionIncorrectSolutionsKeyPaginationFromState(this, questionId).refreshPage(solutions.map((e) => e.id))
+        selectQuestionIncorrectSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
   SolutionsState stopLoadingNextQuestionIncorrectSolutions(int questionId) => 
     _optional(
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionIncorrectSolutionsKeyPaginationFromState(this, questionId).stopLoadingNext()
+        selectQuestionIncorrectSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
-  // question incorrect solutions
   
-  // question video solutions
   SolutionsState startLoadingNextQuestionVideoSolutions(int questionId) => 
     _optional(
       newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionVideoSolutionsKeyPaginationFromState(this, questionId).startLoadingNext()
+        selectQuestionVideoSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionVideoSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newSolutions: this.solutions.setMany(solutions),
       newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionVideoSolutionsKeyPaginationFromState(this, questionId).addNextPage(solutions.map((e) => e.id))
-      )
-    );
-  SolutionsState refreshQuestionVideoSolutions(int questionId, Iterable<SolutionState> solutions) => 
-    _optional(
-      newSolutions: this.solutions.setMany(solutions),
-      newQuestionVideoSolutions: questionVideoSolutions.setOne(
-        questionId,
-        selectQuestionVideoSolutionsKeyPaginationFromState(this, questionId).refreshPage(solutions.map((e) => e.id))
+        selectQuestionVideoSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
   SolutionsState stopLoadingNextQuestionVideoSolutions(int questionId) => 
     _optional(
       newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
         questionId,
-        selectQuestionVideoSolutionsKeyPaginationFromState(this, questionId).stopLoadingNext()
+        selectQuestionVideoSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
-  // question video solutions
+  
+  // SolutionsState startLoadingNextSavedSolutions() => 
+  //   _optional(newSavedSolutions: savedSolutions.startLoadingNext());
+  // SolutionsState addNextPageSavedSolutions(Iterable<SolutionUserSaveState> solutions) => 
+  //   _optional(newSavedSolutions: savedSolutions.addNextPage(solutions));
+  // SolutionsState stopLoadingNextSavedSolutions() => 
+  //   _optional(newSavedSolutions: savedSolutions.stopLoadingNext());
+
+  // SolutionsState save(int id, SolutionState solution) =>
+  //   _optional(
+      
+  //     newQuestionSolutions: 
+  //       questionSolutions[solution.questionId] != null
+  //         ? questionSolutions.updateOne(
+  //             solution.questionId,
+  //             selectQuestionSolutionsFromState(this, solution.questionId)
+  //               .updateOne(solution.save())
+  //           )
+  //         : questionSolutions,
+
+  //     newQuestionCorrectSolutions: 
+  //       solution.state == SolutionStatus.correct && questionCorrectSolutions[solution.questionId] != null
+  //         ? questionCorrectSolutions.updateOne(
+  //             solution.questionId,
+  //             selectQuestionCorrectSolutionsFromState(this, solution.questionId)
+  //               .updateOne(solution.save())
+  //           )
+  //         : questionCorrectSolutions,
+
+  //     newQuestionPendingSolutions: 
+  //       solution.state == SolutionStatus.pending && questionPendingSolutions[solution.questionId] != null
+  //         ? questionPendingSolutions.updateOne(
+  //             solution.questionId,
+  //             selectQuestionPendingSolutionsFromState(this, solution.questionId)
+  //               .updateOne(solution.save())
+  //           )
+  //         : questionPendingSolutions,
+
+  //     newQuestionIncorrectSolutions:
+  //       solution.state == SolutionStatus.incorrect && questionIncorrectSolutions[solution.questionId] != null
+  //         ? questionIncorrectSolutions.updateOne(
+  //             solution.questionId,
+  //             selectQuestionIncorrectSolutionsFromState(this, solution.questionId)
+  //               .updateOne(solution.save())
+  //           )
+  //         : questionIncorrectSolutions,
+
+  //     newQuestionVideoSolutions: solution.hasVideo && questionVideoSolutions[solution.questionId] != null
+  //         ? questionVideoSolutions.updateOne(
+  //             solution.questionId,
+  //             selectQuestionVideoSolutionsFromState(this, solution.questionId)
+  //               .updateOne(solution.save())
+  //           )
+  //         : questionVideoSolutions,
+
+  //     newSavedSolutions: savedSolutions.prependOne(SolutionUserSaveState(
+  //       id: id,
+  //       solution: solution.save()
+  //     ))
+      
+  //   );
+  // SolutionsState unsave(int solutionId) =>
+  //   _optional(newSavedSolutions: savedSolutions.where((e) => e.solution.id != solutionId));
 }

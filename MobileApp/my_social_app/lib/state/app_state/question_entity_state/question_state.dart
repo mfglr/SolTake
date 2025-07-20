@@ -34,11 +34,11 @@ class QuestionState extends Entity<int> implements Avatar{
   final Multimedia? image;
 
   int get state => numberOfCorrectSolutions >= 1 ? QuestionStatus.solved : QuestionStatus.unsolved;
-  bool get hasVideo => medias.any((e) => e.multimediaType == MultimediaType.video);
   @override
   int get avatarId => userId;
   @override
   Multimedia? get avatar => image;
+
 
   QuestionState({
     required super.id,

@@ -1,6 +1,7 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
+import 'package:my_social_app/services/solution_user_save_service.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -44,28 +45,13 @@ void deleteSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-void markSolutionAsCorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkSolutionAsCorrectAction){
-    SolutionService()
-      .markAsCorrect(action.solution.id)
-      .then((_) => store.dispatch(MarkSolutionAsCorrectSuccessAction(question: action.question, solution: action.solution)));
-  }
-  next(action);
-}
-void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkSolutionAsIncorrectAction){
-    SolutionService()
-      .markAsIncorrect(action.solution.id)
-      .then((_) => store.dispatch(MarkSolutionAsIncorrectSuccessAction(question: action.question, solution: action.solution)));
-  }
-  next(action);
-}
 
 //question solutions
 void nextQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionSolutionsAction){
+    final pagination = selectQuestionSolutions(store, action.questionId);
     SolutionService()
-      .getSolutionsByQuestionId(action.questionId, selectQuestionSolutionsNextPage(store, action.questionId))
+      .getSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions) => store.dispatch(NextQuestionSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -79,8 +65,9 @@ void nextQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatch
 }
 void refreshQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionSolutionsAction){
+    final pagination = selectQuestionSolutions(store, action.questionId);
     SolutionService()
-      .getSolutionsByQuestionId(action.questionId, selectQuestionSolutionsFirstPage(store, action.questionId))
+      .getSolutionsByQuestionId(action.questionId, pagination.first)
       .then((solutions) => store.dispatch(RefreshQuestionSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -97,8 +84,9 @@ void refreshQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispa
 //question correct solutions
 void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionCorrectSolutionsAction){
+    final pagination = selectQuestionCorrectSolutions(store, action.questionId);
     SolutionService()
-      .getCorrectSolutionsByQuestionId(action.questionId, selectQuestionCorrectSolutionsNextPage(store, action.questionId))
+      .getCorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions) => store.dispatch(NextQuestionCorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -112,8 +100,9 @@ void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextD
 }
 void refreshQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionCorrectSolutionsAction){
+    final pagination = selectQuestionCorrectSolutions(store, action.questionId);
     SolutionService()
-      .getCorrectSolutionsByQuestionId(action.questionId,selectQuestionCorrectSolutionsFirstPage(store, action.questionId))
+      .getCorrectSolutionsByQuestionId(action.questionId, pagination.first)
       .then((solutions) => store.dispatch(RefreshQuestionCorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -130,8 +119,9 @@ void refreshQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, Ne
 //question pending solutions
 void nextQuestionPendingSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionPendingSolutionsAction){
+    final pagination = selectQuestionPendingSolutions(store, action.questionId);
     SolutionService()
-      .getPendingSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutionsNextPage(store, action.questionId))
+      .getPendingSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions) => store.dispatch(NextQuestionPendingSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -145,8 +135,9 @@ void nextQuestionPendingSolutionsMiddleware(Store<AppState> store, action, NextD
 }
 void refreshQuestionPendingSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionPendingSolutionsAction){
+    final pagination = selectQuestionPendingSolutions(store, action.questionId);
     SolutionService()
-      .getPendingSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutionsFirstPage(store,action.questionId))
+      .getPendingSolutionsByQuestionId(action.questionId, pagination.first)
       .then((solutions) => store.dispatch(RefreshQuestionPendingSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -163,8 +154,9 @@ void refreshQuestionPendingSolutionsMiddleware(Store<AppState> store, action, Ne
 //question incorrect solutions
 void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionIncorrectSolutionsAction){
+    final pagination = selectQuestionIncorrectSolutions(store, action.questionId);
     SolutionService()
-      .getIncorrectSolutionsByQuestionId(action.questionId, selectQuestionIncorrectSolutionsNextPage(store, action.questionId))
+      .getIncorrectSolutionsByQuestionId(action.questionId, pagination.next)
       .then((solutions) => store.dispatch(NextQuestionIncorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -178,8 +170,9 @@ void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, Nex
 }
 void refreshQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionIncorrectSolutionsAction){
+    final pagination = selectQuestionIncorrectSolutions(store, action.questionId);
     SolutionService()
-      .getIncorrectSolutionsByQuestionId(action.questionId, selectQuestionIncorrectSolutionsFirstPage(store, action.questionId))
+      .getIncorrectSolutionsByQuestionId(action.questionId, pagination.first)
       .then((solutions) => store.dispatch(RefreshQuestionIncorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -196,8 +189,9 @@ void refreshQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, 
 //question video solutions
 void nextQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionVideoSolutionsAction){
+    final pagination = selectQuestionVideoSolutions(store, action.questionId);
     SolutionService()
-      .getVideoSolutions(action.questionId, selectQuestionVideoSolutionsNextPage(store, action.questionId))
+      .getVideoSolutions(action.questionId, pagination.next)
       .then((solutions) => store.dispatch(NextQuestionVideoSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -211,8 +205,9 @@ void nextQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDis
 }
 void refreshQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionVideoSolutionsAction){
+    final pagination = selectQuestionVideoSolutions(store, action.questionId);
     SolutionService()
-      .getVideoSolutions(action.questionId, selectQuestionVideoSolutionsFirstPage(store, action.questionId))
+      .getVideoSolutions(action.questionId, pagination.first)
       .then((solutions) => store.dispatch(RefreshQuestionVideoSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -258,25 +253,25 @@ void refreshQuestionVideoSolutionsMiddleware(Store<AppState> store, action, Next
 //   next(action);
 // }
 
-// void saveSolutionMiddeleware(Store<AppState> store, action, NextDispatcher next){
-//   if(action is SaveSolutionAction){
-//     SolutionUserSaveService()
-//       .create(action.solution.id)
-//       .then((response) => store.dispatch(SaveSolutionSuccessAction(
-//         id: response.id,
-//         solution: action.solution
-//       )));
-//   }
-//   next(action);
-// }
-// void unsaveSolutionMiddeleware(Store<AppState> store, action, NextDispatcher next){
-//   if(action is UnsaveSolutionAction){
-//     SolutionUserSaveService()
-//       .delete(action.solution.id)
-//       .then((response) => store.dispatch(UnsaveSolutionSuccessAction(
-//         solutionId: action.solution.id
-//       )));
-//   }
-//   next(action);
-// }
-// //saved solutions
+void saveSolutionMiddeleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is SaveSolutionAction){
+    SolutionUserSaveService()
+      .create(action.solution.id)
+      .then((response) => store.dispatch(SaveSolutionSuccessAction(
+        id: response.id,
+        solution: action.solution
+      )));
+  }
+  next(action);
+}
+void unsaveSolutionMiddeleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is UnsaveSolutionAction){
+    SolutionUserSaveService()
+      .delete(action.solution.id)
+      .then((response) => store.dispatch(UnsaveSolutionSuccessAction(
+        solutionId: action.solution.id
+      )));
+  }
+  next(action);
+}
+//saved solutions

@@ -138,6 +138,28 @@ class NextSolutionDownvotesFailedAction extends AppAction{
   const NextSolutionDownvotesFailedAction({required this.solutionId});
 }
 
+@immutable
+class MarkSolutionAsCorrectAction extends AppAction{
+  final int questionId;
+  final int solutionId;
+  const MarkSolutionAsCorrectAction({required this.questionId,required this.solutionId,});
+}
+@immutable
+class MarkSolutionAsCorrectSuccessAction extends AppAction{
+  final int solutionId;
+  const MarkSolutionAsCorrectSuccessAction({required this.solutionId});
+}
+@immutable
+class MarkSolutionAsIncorrectAction extends AppAction{
+  final int questionId;
+  final int solutionId;
+  const MarkSolutionAsIncorrectAction({required this.questionId, required this.solutionId});
+}
+@immutable
+class MarkSolutionAsIncorrectSuccessAction extends AppAction{
+  final int solutionId;
+  const MarkSolutionAsIncorrectSuccessAction({required this.solutionId});
+}
 
 @immutable
 class SaveSolutionAction extends AppAction{

@@ -37,7 +37,6 @@ import 'package:my_social_app/state/app_state/user_user_conversation_state/user_
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/key_pagination.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
@@ -123,28 +122,25 @@ class AppState{
   AppState clear() => AppState(
     
     questions: QuestionsState(
-      questions: EntityState(),
-      homePageQuestions: KeyPagination.init(questionsPerPage, true),
-      savedQuestions: KeyPagination.init(questionsPerPage, true),
-
       userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       examQuestions: const <int, Pagination<int, QuestionState>>{},
       subjectQuestions: const <int, Pagination<int, QuestionState>>{},
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
+      homePageQuestions: Pagination.init(questionsPerPage, true),
       searchPageQuestions: Pagination.init(questionsPerPage, true),
-      videoQuestions: Pagination.init(questionsPerPage, true),
+      savedQuestions: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
 
-    solutions: SolutionsState(
-      solutions: EntityState(),
-      questionSolutions: const <int,KeyPagination<int>>{},
-      questionCorrectSolutions: const <int, KeyPagination<int>>{},
-      questionPendingSolutions: const <int, KeyPagination<int>>{},
-      questionIncorrectSolutions: const <int, KeyPagination<int>>{},
-      questionVideoSolutions: const <int, KeyPagination<int>>{},
+    solutions: const SolutionsState(
+      questionSolutions: <int, Pagination<int, SolutionState>>{},
+      questionCorrectSolutions: <int, Pagination<int, SolutionState>>{},
+      questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
+      questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
+      questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
+      // savedSolutions: Pagination<int, SolutionUserSaveState>.init(solutionsPerPage, true)
     ),
 
     comments: const CommentsState(

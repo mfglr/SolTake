@@ -14,9 +14,9 @@ QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSu
 
 //solutions action
 QuestionsState createSolutionSuccessReducer(QuestionsState prev, CreateSolutionSuccessAction action)
-  => prev.createSolution(action.solution);
+  => prev.createSolution(action.question, action.solution);
 QuestionsState deleteSolutionSuccessReducer(QuestionsState prev, DeleteSolutionSuccessAction action)
-  => prev.deleteSolution(action.solution);
+  => prev.deleteSolution(action.question, action.solution);
 //solutions action
 
 //question user likes
@@ -69,6 +69,7 @@ QuestionsState refreshQuestionUserLikesFailedReducer(QuestionsState prev, Refres
           prev.questionUserLikes[action.questionId]!.stopLoadingNext()
         )
       );
+
 QuestionsState likeQuestionSuccessReducer(QuestionsState prev, LikeQuestionSuccessAction action)
   => prev.like(action.question, action.questionUserLike);
 QuestionsState dislikeQuestionSuccessReducer(QuestionsState prev, DislikeQuestionSuccessAction action)
@@ -78,33 +79,19 @@ QuestionsState dislikeQuestionSuccessReducer(QuestionsState prev, DislikeQuestio
 
 // home page questions
 QuestionsState nextHomePageQuestionsReducer(QuestionsState prev, NextHomePageQuestionsAction action)
-  => prev.startLoadingNextHomePageQuestions();
+  => prev.optional(newHomePageQuestions: prev.homePageQuestions.startLoadingNext());
 QuestionsState nextHomePageQuestionsSuccessReducer(QuestionsState prev, NextHomePageQuestionsSuccessAction action)
-  => prev.addNextPageHomePageQuestions(action.questions);
+  => prev.optional(newHomePageQuestions: prev.homePageQuestions.addNextPage(action.questions));
 QuestionsState nextHomePageQuestionsFailedReducer(QuestionsState prev, NextHomePageQuestionsFailedAction action)
-  => prev.stopLoadingNextHomePageQuestions();
-QuestionsState refreshHomePageQuestionsReducer(QuestionsState prev, RefreshHomePageQuestionsAction action)
-  => prev.startLoadingNextHomePageQuestions();
-QuestionsState refreshHomePageQuestionsSuccessReducer(QuestionsState prev, RefreshHomePageQuestionsSuccessAction action)
-  => prev.refreshHomePageQuestions(action.questions);
-QuestionsState refreshHomePageQuestionsFailedReducer(QuestionsState prev, RefreshHomePageQuestionsFailedAction action)
-  => prev.stopLoadingNextHomePageQuestions();
-// home page questions
+  => prev.optional(newHomePageQuestions: prev.homePageQuestions.stopLoadingNext());
 
-// saved questions
-QuestionsState nextSavedQuestionsReducer(QuestionsState prev, NextSavedQuestionsAction action)
-  => prev.startLoadingNextSavedQuestions();
-QuestionsState nextSavedQuestionsSuccessReducer(QuestionsState prev, NextSavedQuestionsSuccessAction action)
-  => prev.addNextPageSavedQuestions(action.questions);
-QuestionsState nextSavedQuestionsFailedReducer(QuestionsState prev, NextSavedQuestionsFailedAction action)
-  => prev.stopLoadingNextSavedQuestions();
-QuestionsState refreshSavedQuestionsReducer(QuestionsState prev, RefreshSavedQuestionsAction action)
-  => prev.startLoadingNextSavedQuestions();
-QuestionsState refreshSavedQuestionsSuccessReducer(QuestionsState prev, RefreshSavedQuestionsSuccessAction action)
-  => prev.refreshSavedQuestions(action.questions);
-QuestionsState refreshSavedQuestionsFailedReducer(QuestionsState prev, RefreshSavedQuestionsFailedAction action)
-  => prev.stopLoadingNextSavedQuestions();
-// saved questions
+QuestionsState refreshHomePageQuestionsReducer(QuestionsState prev, RefreshHomePageQuestionsAction action)
+  => prev.optional(newHomePageQuestions: prev.homePageQuestions.clear().startLoadingNext());
+QuestionsState refreshHomePageQuestionsSuccessReducer(QuestionsState prev, RefreshHomePageQuestionsSuccessAction action)
+  => prev.optional(newHomePageQuestions: prev.homePageQuestions.refreshPage(action.questions));
+QuestionsState refreshHomePageQuestionsFailedReducer(QuestionsState prev, RefreshHomePageQuestionsFailedAction action)
+  => prev.optional(newHomePageQuestions: prev.homePageQuestions.stopLoadingNext());
+// home page questions
 
 // user questions
 QuestionsState nextUserQuestionsReducer(QuestionsState prev, NextUserQuestionsAction action)
@@ -410,18 +397,10 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,NextHomePageQuestionsAction>(nextHomePageQuestionsReducer).call,
   TypedReducer<QuestionsState,NextHomePageQuestionsSuccessAction>(nextHomePageQuestionsSuccessReducer).call,
   TypedReducer<QuestionsState,NextHomePageQuestionsFailedAction>(nextHomePageQuestionsFailedReducer).call,
+
   TypedReducer<QuestionsState,RefreshHomePageQuestionsAction>(refreshHomePageQuestionsReducer).call,
   TypedReducer<QuestionsState,RefreshHomePageQuestionsSuccessAction>(refreshHomePageQuestionsSuccessReducer).call,
   TypedReducer<QuestionsState,RefreshHomePageQuestionsFailedAction>(refreshHomePageQuestionsFailedReducer).call,
-  // home page questions
-
-  // home page questions
-  TypedReducer<QuestionsState,NextSavedQuestionsAction>(nextSavedQuestionsReducer).call,
-  TypedReducer<QuestionsState,NextSavedQuestionsSuccessAction>(nextSavedQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,NextSavedQuestionsFailedAction>(nextSavedQuestionsFailedReducer).call,
-  TypedReducer<QuestionsState,RefreshSavedQuestionsAction>(refreshSavedQuestionsReducer).call,
-  TypedReducer<QuestionsState,RefreshSavedQuestionsSuccessAction>(refreshSavedQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,RefreshSavedQuestionsFailedAction>(refreshSavedQuestionsFailedReducer).call,
   // home page questions
 
   //user questions

@@ -15,7 +15,7 @@ class DisplayVideoSolutionsButton extends StatelessWidget {
       onPressed: () =>
         Navigator
           .of(context)
-          .push(MaterialPageRoute(builder: (context) => DisplayQuestionVideoSolutionsPage(question: question))),
+          .push(MaterialPageRoute(builder: (context) => DisplayQuestionVideoSolutionsPage(questionId: question.id))),
       style: ButtonStyle(
         padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),

@@ -191,8 +191,10 @@ class SolutionState extends Entity<int> implements Avatar{
       newComments: comments.addInOrder(Id(id: commentId))
     );
 
-  SolutionState markAsCorrect() => optinal(newState: SolutionStatus.correct);
-  SolutionState markAsIncorrect() => optinal(newState: SolutionStatus.incorrect);  
+  SolutionState markAsCorrect()
+    => optinal(newState: SolutionStatus.correct);
+  SolutionState markAsIncorrect()
+    => optinal(newState: SolutionStatus.incorrect);  
 
   SolutionState save() => optinal(newIsSaved: true);
   SolutionState unsave() => optinal(newIsSaved: false);
