@@ -25,46 +25,57 @@ class DisplayQuestionPendingSolutionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: Text(
-          AppLocalizations.of(context)!.display_question_pending_solutions_page_title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold
+    return RefreshIndicator(
+      onRefresh: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        refreshEntities(
+          store,
+          selectQuestionPendingSolutionsKeyPagination(store, question.id),
+          RefreshQuestionPendingSolutionsAction(questionId: question.id)
+        );
+        return onQuestionPendingSolutionsLoaded(store, question.id);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: Text(
+            AppLocalizations.of(context)!.display_question_pending_solutions_page_title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold
+            ),
           ),
         ),
-      ),
-      body: StoreConnector<AppState, Pagination<int,SolutionState>>(
-        onInit: (store) => getNextPageIfNoPage(
-          store,
-          selectQuestionPendingSolutions(store, question.id),
-          NextQuestionPendingSolutionsAction(questionId: question.id)
-        ),
-        converter: (store) => selectQuestionPendingSolutions(store, question.id),
-        builder:(context, pagination) => Builder(
-          builder: (context) {
-            if(pagination.isEmpty){
-              return NoSolutions(
-                text: AppLocalizations.of(context)!.display_question_pending_solutions_page_no_solutions,
+        body: StoreConnector<AppState, Pagination<int,SolutionState>>(
+          onInit: (store) => getNextPageIfNoPage(
+            store,
+            selectQuestionPendingSolutionsKeyPagination(store, question.id),
+            NextQuestionPendingSolutionsAction(questionId: question.id)
+          ),
+          converter: (store) => selectQuestionPendingSolutionsPagination(store, question.id),
+          builder:(context, pagination) => Builder(
+            builder: (context) {
+              if(pagination.isEmpty){
+                return NoSolutions(
+                  text: AppLocalizations.of(context)!.display_question_pending_solutions_page_no_solutions,
+                );
+              }
+              return SolutionItemsWidget(
+                question: question,
+                pagination: pagination,
+                solutionId: solutionId,
+                onScrollBottom: (){
+                  final store = StoreProvider.of<AppState>(context,listen: false);
+                  getNextPageIfReady(
+                    store,
+                    selectQuestionPendingSolutionsKeyPagination(store, question.id),
+                    NextQuestionPendingSolutionsAction(questionId: question.id)
+                  );
+                },
               );
             }
-            return SolutionItemsWidget(
-              question: question,
-              pagination: pagination,
-              solutionId: solutionId,
-              onScrollBottom: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                getNextPageIfReady(
-                  store,
-                  selectQuestionPendingSolutions(store, question.id),
-                  NextQuestionPendingSolutionsAction(questionId: question.id)
-                );
-              },
-            );
-          }
-        )
+          )
+        ),
       ),
     );
   }

@@ -10,8 +10,13 @@ import 'package:my_social_app/views/solution/widgets/solution_item/mark_solution
 import 'package:my_social_app/views/solution/widgets/solution_item/mark_solution_as_incorrect_button.dart';
 
 class SolutionStateWidget extends StatelessWidget {
+  final QuestionState question;
   final SolutionState solution;
-  const SolutionStateWidget({super.key,required this.solution});
+  const SolutionStateWidget({
+    super.key,
+    required this.question,
+    required this.solution
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +48,9 @@ class SolutionStateWidget extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 5),
-                          child: MarkSolutionAsCorrectButton(solution: solution),
+                          child: MarkSolutionAsCorrectButton(question: question, solution: solution),
                         ),
-                        MarkSolutionAsIncorrectButton(solution: solution)
+                        MarkSolutionAsIncorrectButton(question: question, solution: solution)
                       ],
                     );
                   }

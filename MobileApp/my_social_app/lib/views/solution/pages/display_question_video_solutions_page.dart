@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
@@ -9,10 +10,10 @@ import 'package:my_social_app/state/entity_state/pagination_state/pagination.dar
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/solution_video_page_slider.dart';
 
 class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   const DisplayQuestionVideoSolutionsPage({
     super.key,
-    required this.questionId
+    required this.question
   });
 
   @override
@@ -25,18 +26,19 @@ class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
             onInit: (store) => 
               getNextPageIfNoPage(
                 store,
-                selectQuestionVideoSolutions(store, questionId),
-                NextQuestionVideoSolutionsAction(questionId: questionId)
+                selectQuestionVideoSolutionsKeyPagination(store, question.id),
+                NextQuestionVideoSolutionsAction(questionId: question.id)
               ),
-            converter: (store) => selectQuestionVideoSolutions(store, questionId),
+            converter: (store) => selectQuestionVideoSolutionsPagination(store, question.id),
             builder: (context, pagination) => SolutionVideoPageSlider(
+              question: question,
               solutions: pagination.values,
               onNext: (){
                 final store = StoreProvider.of<AppState>(context, listen: false);
                 getNextPageIfReady(
                   store,
-                  selectQuestionVideoSolutions(store, questionId),
-                  NextQuestionVideoSolutionsAction(questionId: questionId)
+                  selectQuestionVideoSolutionsKeyPagination(store, question.id),
+                  NextQuestionVideoSolutionsAction(questionId: question.id)
                 );
               },
             )

@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       final store = StoreProvider.of<AppState>(context,listen: false);
       getNextEntitiesIfReady(
         store,
-        selectHomePageQuestionPagination(store),
+        selectHomePageQuestionKeyPagination(store),
         const NextHomePageQuestionsAction()
       );
     }
@@ -59,9 +59,9 @@ class _HomePageState extends State<HomePage> {
     return RefreshIndicator(
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        refreshEntities(store, selectHomePageQuestionPagination(store), const RefreshHomePageQuestionsAction());
+        refreshEntities(store, selectHomePageQuestionKeyPagination(store), const RefreshHomePageQuestionsAction());
         store.dispatch(const GetStoriesAction());
-        return store.onChange.map((state) => state.questions.homePageQuestions).firstWhere((x) => !x.loadingNext);
+        return onHomePageQuestionsLoaded(store);
       },
       child: Scaffold(
         appBar: AppBar(
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                 onInit: (store) => 
                   getNextEntitiesIfNoPage(
                     store,
-                    selectHomePageQuestionPagination(store),
+                    selectHomePageQuestionKeyPagination(store),
                     const NextHomePageQuestionsAction()
                   ),
                 converter: (store) => selectHomePageQuestionPagination(store),

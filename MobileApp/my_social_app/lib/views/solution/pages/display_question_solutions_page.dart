@@ -24,45 +24,56 @@ class DisplayQuestionSolutionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: Text(
-          AppLocalizations.of(context)!.display_question_solutions_page_title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold
+    return RefreshIndicator(
+      onRefresh: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        refreshEntities(
+          store,
+          selectQuestionSolutionsKeyPagination(store, question.id),
+          RefreshQuestionSolutionsAction(questionId: question.id)
+        );
+        return onQuestionSolutionsLoaded(store,question.id);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: Text(
+            AppLocalizations.of(context)!.display_question_solutions_page_title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold
+            ),
           ),
         ),
-      ),
-      body: StoreConnector<AppState, Pagination<int,SolutionState>>(
-        onInit: (store) => 
-        getNextPageIfNoPage(
-          store,
-          selectQuestionSolutions(store, question.id),
-          NextQuestionSolutionsAction(questionId: question.id)
-        ),
-        converter: (store) => selectQuestionSolutions(store, question.id),
-        builder:(context, pagination) => Builder(
-          builder: (context) {
-            if(pagination.isEmpty){
-              return const NoSolutionsWidget();
+        body: StoreConnector<AppState, Pagination<int,SolutionState>>(
+          onInit: (store) => 
+          getNextPageIfNoPage(
+            store,
+            selectQuestionSolutionsKeyPagination(store, question.id),
+            NextQuestionSolutionsAction(questionId: question.id)
+          ),
+          converter: (store) => selectQuestionSolutionsPagination(store, question.id),
+          builder:(context, pagination) => Builder(
+            builder: (context) {
+              if(pagination.isEmpty){
+                return const NoSolutionsWidget();
+              }
+              return SolutionItemsWidget(
+                question: question,
+                pagination: pagination,
+                solutionId: solutionId,
+                onScrollBottom: (){
+                  final store = StoreProvider.of<AppState>(context,listen: false);
+                  getNextPageIfReady(
+                    store,
+                    selectQuestionSolutionsKeyPagination(store, question.id),
+                    NextQuestionSolutionsAction(questionId: question.id)
+                  );
+                },
+              );
             }
-            return SolutionItemsWidget(
-              question: question,
-              pagination: pagination,
-              solutionId: solutionId,
-              onScrollBottom: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                getNextPageIfReady(
-                  store,
-                  selectQuestionSolutions(store, question.id),
-                  NextQuestionSolutionsAction(questionId: question.id)
-                );
-              },
-            );
-          }
-        )
+          )
+        ),
       ),
     );
   }

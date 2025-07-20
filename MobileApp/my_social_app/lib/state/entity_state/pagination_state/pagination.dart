@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/page.dart' as pagination;
+import 'package:my_social_app/state/entity_state/pagination_state/base_pagination.dart';
 
 @immutable
-class Pagination<K extends Comparable, V extends Entity<K>>{
-  final bool isLast;
-  final bool loadingNext;
-  final bool loadingPrev;
-  final int recordsPerPage;
-  final bool isDescending;
+class Pagination<K extends Comparable, V extends Entity<K>> extends BasePagination<K>{
+  @override
+  Iterable<K> get keys => values.map((e) => e.id);
   final Iterable<V> values;
 
   Iterable<V> select(bool Function(V) test) => values.where(test);
 
   const Pagination({
-    required this.isLast,
-    required this.loadingNext,
-    required this.loadingPrev,
-    required this.isDescending,
-    required this.recordsPerPage,
+    required super.isLast,
+    required super.loadingNext,
+    required super.loadingPrev,
+    required super.isDescending,
+    required super.recordsPerPage,
     required this.values,
   });
 
@@ -31,33 +28,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
       );
-  
-  pagination.Page<K> get prev =>
-    pagination.Page<K>(
-      offset: values.firstOrNull?.id,
-      take: recordsPerPage,
-      isDescending: !isDescending
-    );
-
-  pagination.Page<K> get next =>
-    pagination.Page<K>(
-      offset: values.lastOrNull?.id,
-      take: recordsPerPage,
-      isDescending: isDescending
-    );
-
-  pagination.Page<K> get first =>
-    pagination.Page<K>(
-      offset: null,
-      take: recordsPerPage,
-      isDescending: isDescending
-    );
-
-  bool get hasAtLeastOnePage => values.length >= recordsPerPage;
-  bool get isReadyForNextPage => !isLast && !loadingNext;
-  bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
-  bool get isReadyForPrevPage => !loadingPrev;
-  bool get isEmpty => isLast && values.isEmpty;
 
   V? get(bool Function(V) test) => values.where(test).firstOrNull; 
   V? getById(K id) => values.where((e) => e.id.compareTo(id) == 0).firstOrNull;
@@ -256,16 +226,8 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
         recordsPerPage: recordsPerPage,
       );
 
-  bool isOutOfPagination(V value) =>
-    !isLast &&
-    (
-      values.isEmpty ||
-      isDescending
-        ? value.id.compareTo(values.last.id) < 0
-        : value.id.compareTo(values.last.id) > 0
-    );
   Pagination<K,V> addInOrder(V value){
-    if(isOutOfPagination(value)) return this;
+    if(isOutOfPagination(value.id)) return this;
     return Pagination(
       isLast: isLast,
       loadingNext: loadingNext,

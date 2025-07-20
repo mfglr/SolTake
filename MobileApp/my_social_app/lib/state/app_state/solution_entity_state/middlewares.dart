@@ -2,11 +2,9 @@ import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/services/solution_user_vote_service.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
@@ -37,32 +35,6 @@ void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-
-void markSolutionAsCorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkSolutionAsCorrectAction){
-    final currentUserId = store.state.login.login!.id;
-    SolutionService()
-      .markAsCorrect(action.solutionId)
-      .then((_){
-        store.dispatch(MarkSolutionAsCorrectSuccessAction(solutionId: action.solutionId));
-        store.dispatch(MarkQuestionSolutionAsCorrectAction(questionId: action.questionId, solutionId: action.solutionId));
-        store.dispatch(MarkUserQuestionAsSolvedAction(userId: currentUserId, questionId: action.questionId));
-      });
-  }
-  next(action);
-}
-void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is MarkSolutionAsIncorrectAction){
-    SolutionService()
-      .markAsIncorrect(action.solutionId)
-      .then((_){
-        store.dispatch(MarkSolutionAsIncorrectSuccessAction(solutionId: action.solutionId));
-        store.dispatch(MarkQuestionSolutionAsIncorrectAction(questionId: action.questionId, solutionId: action.solutionId));
-      });
-  }
-  next(action);
-}
-
 
 //solutoin votes;
 void makeSolutionUpvoteMiddleware(Store<AppState> store, action,NextDispatcher next){

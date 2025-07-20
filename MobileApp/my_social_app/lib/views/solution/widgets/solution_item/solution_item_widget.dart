@@ -77,7 +77,7 @@ class SolutionItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
-                      child: SolutionStateWidget(solution: solution),
+                      child: SolutionStateWidget(question: question, solution: solution),
                     ),
                     AppDateWidget(
                       dateTime: solution.createdAt,

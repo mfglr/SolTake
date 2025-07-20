@@ -98,6 +98,36 @@ class RefreshHomePageQuestionsFailedAction extends QuestionsAction{
 }
 // home page questions
 
+//saved questions
+@immutable
+class NextSavedQuestionsAction extends QuestionsAction{
+  const NextSavedQuestionsAction();
+}
+@immutable
+class NextSavedQuestionsSuccessAction extends QuestionsAction{
+  final Iterable<QuestionState> questions;
+  const NextSavedQuestionsSuccessAction({required this.questions});
+}
+@immutable
+class NextSavedQuestionsFailedAction extends QuestionsAction{
+  const NextSavedQuestionsFailedAction();
+}
+
+@immutable
+class RefreshSavedQuestionsAction extends QuestionsAction{
+  const RefreshSavedQuestionsAction();
+}
+@immutable
+class RefreshSavedQuestionsSuccessAction extends QuestionsAction{
+  final Iterable<QuestionState> questions;
+  const RefreshSavedQuestionsSuccessAction({required this.questions});
+}
+@immutable
+class RefreshSavedQuestionsFailedAction extends QuestionsAction{
+  const RefreshSavedQuestionsFailedAction();
+}
+//saved questions
+
 //user questions
 @immutable
 class NextUserQuestionsAction extends QuestionsAction{

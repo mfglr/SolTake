@@ -59,9 +59,8 @@ void refreshQuestionUserLikesMiddleware(Store<AppState> store, action, NextDispa
 //home page questions
 void nextHomePageQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextHomePageQuestionsAction){
-    final pagination = selectHomePageQuestionPagination(store);
     QuestionService()
-      .getHomePageQuestions(pagination.next)
+      .getHomePageQuestions(selectHomePageQuestionNextPage(store))
       .then((questions) => store.dispatch(NextHomePageQuestionsSuccessAction(questions: questions.map((e) => e.toQuestionState()))))
       .catchError((e){
         store.dispatch(const NextHomePageQuestionsFailedAction());
@@ -72,9 +71,8 @@ void nextHomePageQuestionsMiddleware(Store<AppState> store, action, NextDispatch
 }
 void refreshHomePageQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshHomePageQuestionsAction){
-    final pagination = selectHomePageQuestionPagination(store);
     QuestionService()
-      .getHomePageQuestions(pagination.first)
+      .getHomePageQuestions(selectHomePageQuestionFirstPage(store))
       .then((questions) => store.dispatch(RefreshHomePageQuestionsSuccessAction(questions: questions.map((e) => e.toQuestionState()))))
       .catchError((e){
         store.dispatch(const RefreshHomePageQuestionsFailedAction());

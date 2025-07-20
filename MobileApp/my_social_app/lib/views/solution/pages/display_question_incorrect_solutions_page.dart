@@ -25,42 +25,53 @@ class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: AppTitle(
-          title: AppLocalizations.of(context)!.display_question_incorrect_solutions_page_title,
-        ),
-      ),
-      body: StoreConnector<AppState, Pagination<int,SolutionState>>(
-        onInit: (store) => getNextPageIfNoPage(
+    return RefreshIndicator(
+      onRefresh: (){
+        final store = StoreProvider.of<AppState>(context,listen: false);
+        refreshEntities(
           store,
-          selectQuestionIncorrectSolutions(store, question.id),
-          NextQuestionIncorrectSolutionsAction(questionId: question.id),
+          selectQuestionIncorrectSolutionsKeyPagination(store, question.id),
+          RefreshQuestionIncorrectSolutionsAction(questionId: question.id)
+        );
+        return onQuestionIncorrectSolutionsLoaded(store, question.id);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: AppTitle(
+            title: AppLocalizations.of(context)!.display_question_incorrect_solutions_page_title,
+          ),
         ),
-        converter: (store) => selectQuestionIncorrectSolutions(store, question.id),
-        builder:(context, pagination) => Builder(
-          builder: (context) {
-            if(pagination.isEmpty){
-              return NoSolutions(
-                text: AppLocalizations.of(context)!.display_question_incorrect_solutions_page_not_solutions
+        body: StoreConnector<AppState, Pagination<int,SolutionState>>(
+          onInit: (store) => getNextPageIfNoPage(
+            store,
+            selectQuestionIncorrectSolutionsKeyPagination(store, question.id),
+            NextQuestionIncorrectSolutionsAction(questionId: question.id),
+          ),
+          converter: (store) => selectQuestionIncorrectSolutionsPagination(store, question.id),
+          builder:(context, pagination) => Builder(
+            builder: (context) {
+              if(pagination.isEmpty){
+                return NoSolutions(
+                  text: AppLocalizations.of(context)!.display_question_incorrect_solutions_page_not_solutions
+                );
+              }
+              return SolutionItemsWidget(
+                question: question,
+                pagination: pagination,
+                solutionId: solutionId,
+                onScrollBottom: (){
+                  final store = StoreProvider.of<AppState>(context,listen: false);
+                  getNextPageIfReady(
+                    store,
+                    selectQuestionIncorrectSolutionsKeyPagination(store, question.id),
+                    NextQuestionIncorrectSolutionsAction(questionId: question.id),
+                  );
+                },
               );
             }
-            return SolutionItemsWidget(
-              question: question,
-              pagination: pagination,
-              solutionId: solutionId,
-              onScrollBottom: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                getNextPageIfReady(
-                  store,
-                  selectQuestionIncorrectSolutions(store, question.id),
-                  NextQuestionIncorrectSolutionsAction(questionId: question.id),
-                );
-              },
-            );
-          }
-        )
+          )
+        ),
       ),
     );
   }
