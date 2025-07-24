@@ -50,7 +50,6 @@ class DisplaySubjectQuestionsPage extends StatelessWidget {
             ),
           converter: (store) => selectSubjectQuestions(store, subject.id),
           builder: (context, pagination) => QuestionItemsWidget(
-            questions: pagination.values,
             pagination: pagination,
             onScrollBottom: (){
               final store = StoreProvider.of<AppState>(context, listen: false);

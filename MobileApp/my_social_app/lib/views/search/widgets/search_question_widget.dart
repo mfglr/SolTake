@@ -6,6 +6,7 @@ import 'package:my_social_app/state/app_state/app_exams_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
@@ -14,7 +15,7 @@ import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dar
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/question/pages/display_search_questions_page.dart';
-import 'package:my_social_app/views/question/widgets/question_abstract_items_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_abstracts_item_widget/question_abstract_items_widget.dart';
 
 class SearchQuestionWidget extends StatefulWidget {
   const SearchQuestionWidget({super.key});
@@ -123,8 +124,8 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
           ),
         ),
         Expanded(
-          child: StoreConnector<AppState,Pagination>(
-            converter: (store) => store.state.searchQuestions,
+          child: StoreConnector<AppState,Pagination<int, QuestionState>>(
+            converter: (store) => selectSearchPageQuestion(store),
             builder: (context, pagination) => StoreConnector<AppState,Iterable<QuestionState>>(
               onInit: (store) => getNextPageIfNoPage(
                 store,
@@ -133,7 +134,6 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
               ),
               converter: (store) => store.state.selectSearchQuestions,
               builder: (context, questions) => QuestionAbstractItemsWidget(
-                questions: questions,
                 onTap: (questionId) => Navigator
                   .of(context)
                   .push(

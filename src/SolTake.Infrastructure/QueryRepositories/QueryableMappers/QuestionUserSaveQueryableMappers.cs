@@ -1,9 +1,8 @@
 ﻿using SolTake.Application.Queries.QuestionDomain;
-using SolTake.Domain.QuestionAggregate.ValueObjects;
+using SolTake.Core;
 using SolTake.Domain.QuestionDomain.QuestionUserSaveAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Infrastructure.DbContexts;
-using SolTake.Core;
 
 namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
 {
@@ -23,28 +22,26 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                     question => question.Id,
                     (join, question) => new QuestionUserSaveResponseDto(
                         join.qus.Id,
-                        new QuestionResponseDto(
-                            question.Id,
-                            question.CreatedAt,
-                            question.UpdatedAt,
-                            question.UserId == userId,
-                            question.UserId,
-                            join.UserName,
-                            question.Content.Value,
-                            context.QuestionUserLikes.Any(x => x.UserId == userId && x.QuestionId == question.Id),
-                            context.QuestionUserSaves.Any(x => x.QuestionId == x.QuestionId && x.UserId == userId),
-                            question.PublishingState,
-                            context.QuestionUserLikes.Count(x => x.QuestionId == question.Id),
-                            context.Comments.Count(c => c.QuestionId == question.Id),
-                            context.Solutions.Count(solution => solution.QuestionId == question.Id),
-                            context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.State == SolutionState.Correct),
-                            context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.Medias.Any(x => x.MultimediaType == MultimediaType.Video)),
-                            question.Exam,
-                            question.Subject,
-                            question.Topic,
-                            question.Medias,
-                            join.Image
-                        )
+                        question.Id,
+                        question.CreatedAt,
+                        question.UpdatedAt,
+                        question.UserId == userId,
+                        question.UserId,
+                        join.UserName,
+                        question.Content.Value,
+                        context.QuestionUserLikes.Any(x => x.UserId == userId && x.QuestionId == question.Id),
+                        context.QuestionUserSaves.Any(x => x.QuestionId == x.QuestionId && x.UserId == userId),
+                        question.PublishingState,
+                        context.QuestionUserLikes.Count(x => x.QuestionId == question.Id),
+                        context.Comments.Count(c => c.QuestionId == question.Id),
+                        context.Solutions.Count(solution => solution.QuestionId == question.Id),
+                        context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.State == SolutionState.Correct),
+                        context.Solutions.Count(solution => solution.QuestionId == question.Id && solution.Medias.Any(x => x.MultimediaType == MultimediaType.Video)),
+                        question.Exam,
+                        question.Subject,
+                        question.Topic,
+                        question.Medias,
+                        join.Image
                     )
                 );
     }

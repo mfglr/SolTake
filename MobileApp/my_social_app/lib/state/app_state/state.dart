@@ -17,11 +17,9 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/not
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
-import 'package:my_social_app/state/app_state/question_user_saves_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-// import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
@@ -48,7 +46,6 @@ class AppState{
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
-  final Pagination<int,QuestionUserSaveState> questionUserSaves;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
   final Pagination<int,UserUserBlockState> userUserBlocks;
   final Pagination<int,UserUserConversationState> userUserConversations;
@@ -87,7 +84,6 @@ class AppState{
     required this.searchUsers,
     required this.searchQuestions,
     required this.userUserSearchs,
-    required this.questionUserSaves,
     required this.messageConnectionEntityState,
     required this.userUserBlocks,
     required this.userUserConversations,
@@ -130,7 +126,7 @@ class AppState{
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
       homePageQuestions: Pagination.init(questionsPerPage, true),
       searchPageQuestions: Pagination.init(questionsPerPage, true),
-      savedQuestions: Pagination.init(questionsPerPage, true),
+      questionUserSaves: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
 
@@ -152,7 +148,6 @@ class AppState{
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
-    questionUserSaves: Pagination.init(questionsPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
     userUserConversations: Pagination.init(usersPerPage, true),
@@ -225,8 +220,6 @@ class AppState{
     => topicEntityState.getValue(topicId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> get selectSearchQuestions
     => searchQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> get selectSavedQuestions
-    => questionUserSaves.values.map((e) => questionEntityState.getValue(e.questionId)!);
 
   QuestionState? selectQuestion(int questionId) => questionEntityState.getValue(questionId);
 

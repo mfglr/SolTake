@@ -60,15 +60,3 @@ class MarkQuestionSolutionAsIncorrectAction extends AppAction{
   final int solutionId;
   const MarkQuestionSolutionAsIncorrectAction({required this.questionId,required this.solutionId});
 }
-
-@immutable
-class SaveQuestionAction extends AppAction{
-  final int questionId;
-  const SaveQuestionAction({required this.questionId});
-}
-
-@immutable
-class UnsaveQuestionAction extends AppAction{
-  final int questionId;
-  const UnsaveQuestionAction({required this.questionId});
-}

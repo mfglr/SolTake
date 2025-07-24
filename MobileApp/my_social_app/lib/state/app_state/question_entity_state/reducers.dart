@@ -11,12 +11,6 @@ EntityState<int,QuestionState> addQuestionsReducer(EntityState<int,QuestionState
 EntityState<int,QuestionState> removeQuestionReducer(EntityState<int,QuestionState> prev,DeleteQuestionSuccessAction action)
   => prev.removeOne(action.questionId);
 
-//save
-EntityState<int,QuestionState> saveQuestionReducer(EntityState<int,QuestionState> prev,SaveQuestionAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.save());
-EntityState<int,QuestionState> unsaveQuestionReducer(EntityState<int,QuestionState> prev,UnsaveQuestionAction action)
-  => prev.updateOne(prev.getValue(action.questionId)!.unsave());
-
 //solutions
 EntityState<int,QuestionState> markSolutionAsCorrectReducer(EntityState<int,QuestionState> prev, MarkQuestionSolutionAsCorrectAction action)
   => prev.updateOne(prev.getValue(action.questionId)!.markSolutionAsCorrect(action.solutionId));
@@ -29,10 +23,6 @@ Reducer<EntityState<int,QuestionState>> questionsReducer = combineReducers<Entit
   TypedReducer<EntityState<int,QuestionState>,AddQuestionAction>(addQuestionReducer).call,
   TypedReducer<EntityState<int,QuestionState>,AddQuestionsAction>(addQuestionsReducer).call,
   TypedReducer<EntityState<int,QuestionState>,DeleteQuestionSuccessAction>(removeQuestionReducer).call,
-
-  //saves
-  TypedReducer<EntityState<int,QuestionState>,SaveQuestionAction>(saveQuestionReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,UnsaveQuestionAction>(unsaveQuestionReducer).call,
 
   TypedReducer<EntityState<int,QuestionState>,MarkQuestionSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
   TypedReducer<EntityState<int,QuestionState>,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,

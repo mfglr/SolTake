@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 
 @immutable
 class QuestionsAction extends AppAction{
@@ -67,6 +68,59 @@ class DislikeQuestionSuccessAction extends QuestionsAction{
   const DislikeQuestionSuccessAction({required this.question, required this.userId});
 }
 //question user likes
+
+//question user saves
+@immutable
+class NextQuestionUserSavesAction extends QuestionsAction{
+  const NextQuestionUserSavesAction();
+}
+@immutable
+class NextQuestionUserSavesSuccessAction extends QuestionsAction{
+  final Iterable<QuestionUserSaveState> questionUserSaves;
+  const NextQuestionUserSavesSuccessAction({required this.questionUserSaves});
+}
+@immutable
+class NextQuestionUserSavesFailedAction extends QuestionsAction{
+  const NextQuestionUserSavesFailedAction();
+}
+
+@immutable
+class RefreshQuestionUserSavesAction extends QuestionsAction{
+  const RefreshQuestionUserSavesAction();
+}
+@immutable
+class RefreshQuestionUserSavesSuccessAction extends QuestionsAction{
+  final Iterable<QuestionUserSaveState> questionUserSaves;
+  const RefreshQuestionUserSavesSuccessAction({required this.questionUserSaves});
+}
+@immutable
+class RefreshQuestionUserSavesFailedAction extends QuestionsAction{
+  const RefreshQuestionUserSavesFailedAction();
+}
+
+@immutable
+class SaveQuestionAction extends QuestionsAction{
+  final QuestionState question;
+  const SaveQuestionAction({required this.question});
+}
+@immutable
+class SaveQuestionSuccessAction extends QuestionsAction{
+  final QuestionUserSaveState questionUserSave;
+  const SaveQuestionSuccessAction({required this.questionUserSave});
+}
+
+@immutable
+class UnsaveQuestionAction extends QuestionsAction{
+  final QuestionState question;
+  const UnsaveQuestionAction({required this.question});
+}
+@immutable
+class UnsaveQuestionSuccessAction extends QuestionsAction{
+  final QuestionState question;
+  const UnsaveQuestionSuccessAction({required this.question});
+} 
+//question user saves
+
 
 // home page questions
 @immutable

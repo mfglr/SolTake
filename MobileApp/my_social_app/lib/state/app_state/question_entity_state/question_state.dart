@@ -64,9 +64,6 @@ class QuestionState extends Entity<int> implements Avatar{
   });
 
   QuestionState _optional({
-    String? newUserName,
-    String? newContent,
-    Iterable<Multimedia>? newMedias,
     bool? newIsLiked,
     bool? newIsSaved,
     int? newPublishingState,
@@ -75,19 +72,18 @@ class QuestionState extends Entity<int> implements Avatar{
     int? newNumberOfSolutions,
     int? newNumberOfCorrectSolutions,
     int? newNumberOfVideoSolutions,
-    Multimedia? newImage,
   }) => 
     QuestionState(
       id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
       userId: userId,
-      userName: newUserName ?? userName,
-      content: newContent ?? content,
+      userName: userName,
+      content: content,
       exam: exam,
       subject: subject,
       topic: topic,
-      medias: newMedias ?? medias,
+      medias: medias,
       isLiked: newIsLiked ?? isLiked,
       isSaved: newIsSaved ?? isSaved,
       publishingState: newPublishingState ?? publishingState,
@@ -97,7 +93,7 @@ class QuestionState extends Entity<int> implements Avatar{
       numberOfSolutions: newNumberOfSolutions ?? numberOfSolutions,
       numberOfCorrectSolutions: newNumberOfCorrectSolutions ?? numberOfCorrectSolutions,
       numberOfVideoSolutions: newNumberOfVideoSolutions ?? numberOfVideoSolutions,
-      image: newImage ?? image,
+      image: image,
     );
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";

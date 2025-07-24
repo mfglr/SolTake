@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/views/question/widgets/no_question_abstract_items_widget.dart';
+import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'question_abstract_items_widget_constants.dart';
 
 class QuestionAbstractItemsWidget extends StatefulWidget {
-  final Iterable<QuestionState> questions;
-  final Pagination pagination;
+  final Pagination<int, QuestionState> pagination;
   final void Function() onScrollBottom;
   final void Function(int questionId) onTap;
+  final String? noQuestionsContent;
 
   const QuestionAbstractItemsWidget({
     super.key,
-    required this.questions,
     required this.pagination,
     required this.onScrollBottom,
-    required this.onTap
+    required this.onTap,
+    this.noQuestionsContent
   });
 
   @override
@@ -48,24 +50,27 @@ class _QuestionAbstractItemsWidgetState extends State<QuestionAbstractItemsWidge
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if(widget.pagination.isLast && widget.pagination.values.isEmpty)
-          const Expanded(
-            child: NoQuestionAbstractItemsWidget()
-          ),
-        Expanded(
-          child: GridView.builder(
-            controller: _scrollController,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemCount: widget.questions.length,
-            itemBuilder: (context,index) => QuestionAbstractItemWidget(
-              key: ValueKey(widget.questions.elementAt(index)),
-              question: widget.questions.elementAt(index),
-              onTap: widget.onTap,
+        if(widget.pagination.isEmpty)
+          Expanded(
+            child: NoQuestionsWidget(
+              content: widget.noQuestionsContent ?? content[getLanguage(context)]!
             )
+          )
+        else
+          Expanded(
+            child: GridView.builder(
+              controller: _scrollController,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: widget.pagination.values.length,
+              itemBuilder: (context,index) => QuestionAbstractItemWidget(
+                key: ValueKey(widget.pagination.values.elementAt(index)),
+                question: widget.pagination.values.elementAt(index),
+                onTap: widget.onTap,
+              )
+            ),
           ),
-        ),
         if(widget.pagination.loadingNext)
           const LoadingCircleWidget(strokeWidth: 3)
       ],

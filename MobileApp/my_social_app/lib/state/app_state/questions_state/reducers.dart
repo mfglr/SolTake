@@ -76,6 +76,27 @@ QuestionsState dislikeQuestionSuccessReducer(QuestionsState prev, DislikeQuestio
   => prev.dislike(action.question, action.userId);
 //question user likes
 
+//question user saves
+QuestionsState nextQuestionUserSavesReducer(QuestionsState prev, NextQuestionUserSavesAction action)
+  => prev.startLoadingQuestionUserSaves();
+QuestionsState nextQuestionUserSavesSuccessReducer(QuestionsState prev, NextQuestionUserSavesSuccessAction action)
+  => prev.addNextPageQuestionUserSaves(action.questionUserSaves);
+QuestionsState nextQuestionUserSavesFailedReducer(QuestionsState prev, NextQuestionUserSavesFailedAction action)
+  => prev.stopLoadingNextQuestionUserSaves();
+
+QuestionsState refreshQuestionUserSavesReducer(QuestionsState prev, RefreshQuestionUserSavesAction action)
+  => prev.startLoadingQuestionUserSaves();
+QuestionsState refreshQuestionUserSavesSuccessReducer(QuestionsState prev, RefreshQuestionUserSavesSuccessAction action)
+  => prev.refreshQuesitonUserSaves(action.questionUserSaves);
+QuestionsState refreshQuestionUserSavesFailedReducer(QuestionsState prev, NextQuestionUserSavesFailedAction action)
+  => prev.stopLoadingNextQuestionUserSaves();
+
+QuestionsState saveQuestionReducer(QuestionsState prev, SaveQuestionSuccessAction action)
+  => prev.save(action.questionUserSave);
+QuestionsState unsaveQuestionReducer(QuestionsState prev, UnsaveQuestionSuccessAction action)
+  => prev.unsave(action.question);
+//question user saves
+
 
 // home page questions
 QuestionsState nextHomePageQuestionsReducer(QuestionsState prev, NextHomePageQuestionsAction action)
@@ -392,6 +413,19 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
   TypedReducer<QuestionsState,DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   //question user likes
+
+  //question user saves
+  TypedReducer<QuestionsState,NextQuestionUserSavesAction>(nextQuestionUserSavesReducer).call,
+  TypedReducer<QuestionsState,NextQuestionUserSavesSuccessAction>(nextQuestionUserSavesSuccessReducer).call,
+  TypedReducer<QuestionsState,NextQuestionUserSavesFailedAction>(nextQuestionUserSavesFailedReducer).call,
+
+  TypedReducer<QuestionsState,RefreshQuestionUserSavesAction>(refreshQuestionUserSavesReducer).call,
+  TypedReducer<QuestionsState,RefreshQuestionUserSavesSuccessAction>(refreshQuestionUserSavesSuccessReducer).call,
+  TypedReducer<QuestionsState,NextQuestionUserSavesFailedAction>(refreshQuestionUserSavesFailedReducer).call,
+
+  TypedReducer<QuestionsState,SaveQuestionSuccessAction>(saveQuestionReducer).call,
+  TypedReducer<QuestionsState,UnsaveQuestionSuccessAction>(unsaveQuestionReducer).call,
+  //question user saves
 
   // home page questions
   TypedReducer<QuestionsState,NextHomePageQuestionsAction>(nextHomePageQuestionsReducer).call,

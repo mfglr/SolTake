@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/question_user_saves_state/actions.dart';
+import 'package:my_social_app/services/get_language.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
-import 'package:my_social_app/views/question/widgets/question_items_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_user_save_items_widget/question_user_save_items_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
+import 'display_saved_questions_page_constants.dart';
 
 class DisplaySavedQuestionsPage extends StatelessWidget {
   final int questionId;
@@ -23,25 +25,22 @@ class DisplaySavedQuestionsPage extends StatelessWidget {
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
         title: AppTitle(
-          title: AppLocalizations.of(context)!.display_saved_question_page_title,
+          title: title[getLanguage(context)]!,
         ),
       ),
-      body: StoreConnector<AppState,Pagination>(
-        converter: (store) => store.state.questionUserSaves,
-        builder: (context, pagination) => StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => getNextPageIfNoPage(store, store.state.questionUserSaves, const NextQuestionUserSavesAction()),
-          converter: (store) => store.state.selectSavedQuestions,
-          builder: (context,questions) => QuestionItemsWidget(
-            questions: questions,
-            pagination: pagination,
-            firstDisplayedQuestionId: questionId,
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              getNextPageIfReady(store, store.state.questionUserSaves, const NextQuestionUserSavesAction());
-            }
-          ),
+      body: StoreConnector<AppState,Pagination<int, QuestionUserSaveState>>(
+        onInit: (store) => getNextEntitiesIfNoPage(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction()),
+        converter: (store) => selectQuestionUserSaves(store),
+        builder: (context, pagination) => QuestionUserSaveItemsWidget(
+          pagination: pagination,
+          noQuestionsContent: noQuestionsContent[getLanguage(context)],
+          firstDisplayedQuestionId: questionId,
+          onScrollBottom: (){
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            getNextPageIfReady(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction());
+          }
         ),
-      ),
+      )
     );
   }
 }

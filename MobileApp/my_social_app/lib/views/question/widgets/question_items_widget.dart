@@ -1,19 +1,17 @@
 import 'package:flutter/widgets.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_widget.dart';
 
 class QuestionItemsWidget extends StatefulWidget {
-  final Pagination pagination;
-  final Iterable<QuestionState> questions;
+  final Pagination<int, QuestionState> pagination;
   final Function onScrollBottom;
   final num? firstDisplayedQuestionId;
 
   
   const QuestionItemsWidget({
     super.key,
-    required this.questions,
     required this.pagination,
     required this.onScrollBottom,
     this.firstDisplayedQuestionId,
@@ -60,11 +58,11 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
       child: Column(
         children: [
           ...List.generate(
-            widget.questions.length,
+            widget.pagination.values.length,
             (index) => Container(
-              key: widget.questions.elementAt(index).id == widget.firstDisplayedQuestionId ? _key : null,
+              key: widget.pagination.values.elementAt(index).id == widget.firstDisplayedQuestionId ? _key : null,
               margin: const EdgeInsets.only(bottom: 16),
-              child: QuestionItemWidget(question: widget.questions.elementAt(index))
+              child: QuestionItemWidget(question: widget.pagination.values.elementAt(index))
             ),
           ),
           if(widget.pagination.loadingNext)

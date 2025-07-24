@@ -21,7 +21,6 @@ import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
-import 'package:my_social_app/state/app_state/question_user_saves_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
@@ -60,7 +59,7 @@ final store = Store(
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
       homePageQuestions: Pagination.init(questionsPerPage, true),
       searchPageQuestions: Pagination.init(questionsPerPage, true),
-      savedQuestions: Pagination.init(questionsPerPage, true),
+      questionUserSaves: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
     
@@ -70,7 +69,6 @@ final store = Store(
       questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
       questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
       questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
-      // savedSolutions: Pagination<int, SolutionUserSaveState>.init(solutionsPerPage, true)
     ),
 
     comments: const CommentsState(
@@ -82,7 +80,6 @@ final store = Store(
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
-    questionUserSaves: Pagination.init(questionsPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
     userUserConversations: Pagination.init(usersPerPage, true),
@@ -120,6 +117,12 @@ final store = Store(
     dislikeQuestionMiddleware,
     nextQuestionUserLikesMiddleware,
     refreshQuestionUserLikesMiddleware,
+
+    nextQuestionUserSavesMiddleware,
+    refreshQuestionUserSavesMiddleware,
+    saveQuestionMiddleware,
+    unsaveQuestionMiddleware,
+
     nextHomePageQuestionsMiddleware,
     refreshHomePageQuestionsMiddleware,
     nextUserQuestionsMiddleware,
@@ -162,12 +165,6 @@ final store = Store(
     nextSolutionCommentsMiddleware,
     refreshSolutionCommentsMiddleware,
     //comments
-
-    //question user save middlewares
-    createQuestionUserSaveMiddleware,
-    deleteQuestionUserSaveMiddleware,
-    nextQuestionUserSavesMiddleware,
-    //questino user save middlewares
 
     //user user block middlewares
     blockUserMiddleware,

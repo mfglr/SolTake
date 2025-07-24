@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/actions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -37,11 +38,24 @@ class DisplaySearchQuestionsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: StoreConnector<AppState,Pagination>(
-        converter: (store) => store.state.searchQuestions,
-        builder: (context, pagination) => StoreConnector<AppState,Iterable<QuestionState>>(
-          onInit: (store) => 
-            getNextPageIfNoPage(
+      body: StoreConnector<AppState,Pagination<int,QuestionState>>(
+        onInit: (store) => 
+          getNextPageIfNoPage(
+            store,
+            store.state.searchQuestions,
+            NextSearchQuestionsAction(
+              examId: examId,
+              subjectId: subjectId,
+              topicId: topicId
+            )
+          ),
+        converter: (store) => selectSearchPageQuestion(store),
+        builder: (context, pagination) => QuestionItemsWidget(
+          firstDisplayedQuestionId: firstDisplayedQuestionId,
+          pagination: pagination,
+          onScrollBottom: (){
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            getNextPageIfReady(
               store,
               store.state.searchQuestions,
               NextSearchQuestionsAction(
@@ -49,25 +63,8 @@ class DisplaySearchQuestionsPage extends StatelessWidget {
                 subjectId: subjectId,
                 topicId: topicId
               )
-            ),
-          converter: (store) => store.state.selectSearchQuestions,
-          builder: (context,questions) => QuestionItemsWidget(
-            firstDisplayedQuestionId: firstDisplayedQuestionId,
-            questions: questions,
-            pagination: pagination,
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              getNextPageIfReady(
-                store,
-                store.state.searchQuestions,
-                NextSearchQuestionsAction(
-                  examId: examId,
-                  subjectId: subjectId,
-                  topicId: topicId
-                )
-              );
-            },
-          ),
+            );
+          },
         ),
       ),
     );

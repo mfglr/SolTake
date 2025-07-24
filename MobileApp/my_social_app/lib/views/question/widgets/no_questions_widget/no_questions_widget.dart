@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/l10n/app_localizations.dart';
 
-class NoQuestionAbstractItemsWidget extends StatelessWidget {
-  const NoQuestionAbstractItemsWidget({super.key});
+class NoQuestionsWidget extends StatelessWidget {
+  final String content;
+  const NoQuestionsWidget({
+    super.key,
+    required this.content
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class NoQuestionAbstractItemsWidget extends StatelessWidget {
           size: 45,
         ),
         Text(
-          AppLocalizations.of(context)!.no_questions_abstract_items,
+          content,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 30
