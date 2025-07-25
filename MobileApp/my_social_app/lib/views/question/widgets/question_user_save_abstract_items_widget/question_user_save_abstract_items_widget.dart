@@ -4,9 +4,8 @@ import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
-import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_user_save_abstract_item.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-
 import 'question_user_save_abstract_items_widget_constants.dart';
 
 class QuestionUserSaveAbstractItemsWidget extends StatefulWidget {
@@ -71,9 +70,9 @@ class _QuestionUserSaveAbstractItemsWidgetState extends State<QuestionUserSaveAb
                 crossAxisCount: 2,
               ),
               itemCount: widget.pagination.values.length,
-              itemBuilder: (context,index) => QuestionAbstractItemWidget(
-                key: ValueKey(widget.pagination.values.elementAt(index)),
-                question: widget.pagination.values.elementAt(index).toQuestionState(),
+              itemBuilder: (context,index) => QuestionUserSaveAbstractItem(
+                key: ValueKey(widget.pagination.values.elementAt(index).id),
+                questionUserSave: widget.pagination.values.elementAt(index),
                 onTap: widget.onTap,
               )
             ),
