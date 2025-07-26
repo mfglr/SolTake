@@ -34,6 +34,18 @@ class CreateQuestionSuccessAction extends QuestionsAction{
   const CreateQuestionSuccessAction({required this.question});
 }
 
+@immutable
+class DeleteQuestionAction extends QuestionsAction{
+  final QuestionState question;
+  const DeleteQuestionAction({required this.question});
+}
+@immutable
+class DeleteQuestionSuccessAction extends QuestionsAction{
+  final QuestionState question;
+  const DeleteQuestionSuccessAction({required this.question});
+}
+
+
 //question user likes
 @immutable
 class NextQuestionUserLikesAction extends QuestionsAction{

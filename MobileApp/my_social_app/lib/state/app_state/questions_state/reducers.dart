@@ -9,6 +9,8 @@ import 'package:redux/redux.dart';
 
 QuestionsState createQuestionSuccessReducer(QuestionsState prev, CreateQuestionSuccessAction action) =>
   prev.create(action.question);
+QuestionsState deleteQuestionSuccessReducer(QuestionsState prev, DeleteQuestionSuccessAction action) =>
+  prev.delete(action.question);
 
 //comments action
 QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
@@ -276,6 +278,7 @@ QuestionsState refreshTopicQuestionsFailedReducer(QuestionsState prev, RefreshTo
 
 Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
+  TypedReducer<QuestionsState,DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
 
   //coments
   TypedReducer<QuestionsState,CreateCommentsSuccessAction>(createCommentSuccessReducer).call,

@@ -114,7 +114,7 @@ final store = Store(
   middleware: [
     //questions
     createQuestionMiddleware,
-
+    deleteQuestionMiddleware,
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
     nextQuestionUserLikesMiddleware,
@@ -284,8 +284,8 @@ final store = Store(
 
     // Questions entity state
     loadQuestionMiddleware,
-    deleteQuestionMiddleware,
     // saveQuestionMiddleware,
+    
     // unsaveQuestionMiddleware,
 
     //solution entity state

@@ -3,10 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_user_complaint_service.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/dialog_creator/dialog_creator.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_item_popup_menu/question_item_popup_menu_constants.dart';
@@ -46,7 +45,7 @@ class QuestionItemPopupMenu extends StatelessWidget {
               .then((response){
                 if(response && context.mounted){
                   final store = StoreProvider.of<AppState>(context,listen: false);
-                  store.dispatch(DeleteQuestionAction(questionId: question.id));
+                  store.dispatch(DeleteQuestionAction(question: question));
                 }
               });
             case QuestionActions.report:
@@ -61,9 +60,7 @@ class QuestionItemPopupMenu extends StatelessWidget {
                         if(!context.mounted) return;
                         ToastCreator.displaySuccess(reportCreatedMessage[getLanguage(context)]!);
                         final store = StoreProvider.of<AppState>(context,listen: false);
-                        // store.dispatch(DeleteHomeQuestionAction(id: question.id));
-                        store.dispatch(RemoveUserQuestionAction(userId: question.userId, questionId: question.id));
-                        store.dispatch(DeleteQuestionSuccessAction(questionId: question.id));
+                        store.dispatch(DeleteQuestionSuccessAction(question: question));
                       });
                   }
                 });

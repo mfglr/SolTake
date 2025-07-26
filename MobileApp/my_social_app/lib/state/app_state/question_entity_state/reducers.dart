@@ -8,8 +8,6 @@ EntityState<int,QuestionState> addQuestionReducer(EntityState<int,QuestionState>
   => prev.appendOne(action.value);
 EntityState<int,QuestionState> addQuestionsReducer(EntityState<int,QuestionState> prev,AddQuestionsAction action)
   => prev.appendMany(action.questions);
-EntityState<int,QuestionState> removeQuestionReducer(EntityState<int,QuestionState> prev,DeleteQuestionSuccessAction action)
-  => prev.removeOne(action.questionId);
 
 //solutions
 EntityState<int,QuestionState> markSolutionAsCorrectReducer(EntityState<int,QuestionState> prev, MarkQuestionSolutionAsCorrectAction action)
@@ -22,7 +20,6 @@ EntityState<int,QuestionState> markSolutionAsIncorrectReducer(EntityState<int,Qu
 Reducer<EntityState<int,QuestionState>> questionsReducer = combineReducers<EntityState<int,QuestionState>>([
   TypedReducer<EntityState<int,QuestionState>,AddQuestionAction>(addQuestionReducer).call,
   TypedReducer<EntityState<int,QuestionState>,AddQuestionsAction>(addQuestionsReducer).call,
-  TypedReducer<EntityState<int,QuestionState>,DeleteQuestionSuccessAction>(removeQuestionReducer).call,
 
   TypedReducer<EntityState<int,QuestionState>,MarkQuestionSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
   TypedReducer<EntityState<int,QuestionState>,MarkQuestionSolutionAsIncorrectAction>(markSolutionAsIncorrectReducer).call,

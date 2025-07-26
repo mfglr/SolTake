@@ -73,6 +73,26 @@ class QuestionsState{
         selectUserUnsolvedQuestionsFromState(this, question.userId).prependOne(question),
       )
     );
+  QuestionsState delete(QuestionState question){
+    var questionUserSave = questionUserSaves.get((e) => e.questionId == question.id);
+    return optional(
+      newUserQuestions: userQuestions.setOne(
+        question.userId,
+        userQuestions[question.userId]?.removeOne(question.id)
+      ),
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        question.userId,
+        userSolvedQuestions[question.userId]?.removeOne(question.id)
+      ),
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        question.userId,
+        userUnsolvedQuestions[question.userId]?.removeOne(question.id)
+      ),
+      newQuestionUserSaves: questionUserSave != null
+        ? questionUserSaves.removeOne(questionUserSave.id)
+        : questionUserSaves,
+    );
+  }
 
   //solutions
   QuestionsState deleteSolution(QuestionState question, SolutionState solution){
@@ -560,4 +580,5 @@ class QuestionsState{
       questionUserLikes: questionUserLikes
     );
   }
+
 }

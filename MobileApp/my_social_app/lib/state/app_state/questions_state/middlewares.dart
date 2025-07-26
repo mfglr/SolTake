@@ -35,6 +35,14 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is DeleteQuestionAction){
+    QuestionService()
+      .delete(action.question.id)
+      .then((_) =>store.dispatch(DeleteQuestionSuccessAction(question: action.question)));
+  }
+  next(action);
+}
 
 
 //question user likes;

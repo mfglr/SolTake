@@ -3,17 +3,6 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 
 @immutable
-class DeleteQuestionAction extends AppAction{
-  final int questionId;
-  const DeleteQuestionAction({required this.questionId});
-}
-@immutable
-class DeleteQuestionSuccessAction extends AppAction{
-  final int questionId;
-  const DeleteQuestionSuccessAction({required this.questionId});
-}
-
-@immutable
 class LoadQuestionAction extends AppAction{
   final int questionId;
   const LoadQuestionAction({required this.questionId});
