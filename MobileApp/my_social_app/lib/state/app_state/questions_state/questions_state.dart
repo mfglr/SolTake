@@ -37,7 +37,7 @@ class QuestionsState{
     required this.questionUserLikes
   });
 
-  QuestionsState optional({
+  QuestionsState _optional({
     Pagination<int,QuestionState>? newHomePageQuestions,
     Pagination<int,QuestionUserSaveState>? newQuestionUserSaves,
     Pagination<int,QuestionState>? newSearchPageQuestions,
@@ -64,7 +64,7 @@ class QuestionsState{
     );
 
   QuestionsState create(QuestionState question) =>
-    optional(
+    _optional(
       newUserQuestions: userQuestions.setOne(
         question.userId,
         selectUserQuestionsFromState(this, question.userId).prependOne(question),
@@ -76,7 +76,7 @@ class QuestionsState{
     );
   QuestionsState delete(QuestionState question){
     var questionUserSave = questionUserSaves.get((e) => e.questionId == question.id);
-    return optional(
+    return _optional(
       newUserQuestions: userQuestions.setOne(
         question.userId,
         userQuestions[question.userId]?.removeOne(question.id)
@@ -154,7 +154,7 @@ class QuestionsState{
   QuestionsState markSolutionAsCorrect(QuestionState question, SolutionState solution){
     if(question.state == QuestionStatus.solved) return this;
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return optional(
+    return _optional(
       newUserQuestions: userQuestions.setOne(
         question.userId,
         userQuestions[question.userId]?.updateOne(question.markSolutionAsCorrect(solution))
@@ -175,7 +175,7 @@ class QuestionsState{
   QuestionsState markSolutionAsIncorrect(QuestionState question, SolutionState solution){
     if(question.state == QuestionStatus.unsolved) return this;
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return optional(
+    return _optional(
       newUserQuestions: userQuestions.setOne(
         question.userId,
         userQuestions[question.userId]?.updateOne(question.markSolutionAsIncorrect(solution))
@@ -194,6 +194,35 @@ class QuestionsState{
     );
   }
 
+  // question user likes
+  QuestionsState startLoadingNextQuestionUserLikes(int questionId) =>
+    _optional(
+      newQuestionUserLikes: questionUserLikes.setOne(
+        questionId,
+        selectQuestionUserLikesFromState(this, questionId).startLoadingNext()
+      )
+    );
+  QuestionsState addNextPageQuestionUserLikes(int questionId, Iterable<QuestionUserLikeState> likes) =>
+    _optional(
+      newQuestionUserLikes: questionUserLikes.setOne(
+        questionId,
+        selectQuestionUserLikesFromState(this, questionId).addNextPage(likes)
+      )
+    );
+  QuestionsState refreshQuestionUserLikes(int questionId, Iterable<QuestionUserLikeState> likes) =>
+    _optional(
+      newQuestionUserLikes: questionUserLikes.setOne(
+        questionId,
+        selectQuestionUserLikesFromState(this, questionId).refreshPage(likes)
+      )
+    );
+  QuestionsState stopLoadingNextQuestionUserLikes(int questionId) =>
+    _optional(
+      newQuestionUserLikes: questionUserLikes.setOne(
+        questionId,
+        selectQuestionUserLikesFromState(this, questionId).stopLoadingNext()
+      )
+    );
   QuestionsState like(QuestionState question, QuestionUserLikeState questionUserLike){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
@@ -292,9 +321,7 @@ class QuestionsState{
         ),
 
       homePageQuestions: homePageQuestions.updateOne(question.dislike()),
-
       searchPageQuestions: searchPageQuestions.updateOne(question.dislike()),
-
       questionUserSaves:
         questionUserSave != null
           ? questionUserSaves.updateOne(questionUserSave.dislike())
@@ -309,11 +336,12 @@ class QuestionsState{
           : questionUserLikes
     );
   }
-  
+  // question user likes
+
   // question user saves
   QuestionsState save(QuestionUserSaveState questionUserSave){
     var question = questionUserSave.toQuestionState();
-    return optional(
+    return _optional(
       newExamQuestions: examQuestions.setOne(
         question.exam.id,
         examQuestions[question.exam.id]?.updateOne(question.save())
@@ -347,7 +375,7 @@ class QuestionsState{
   }
   QuestionsState unsave(QuestionState question){
     var questionUserSave = questionUserSaves.get((e) => e.questionId == question.id);
-    return optional(
+    return _optional(
       newExamQuestions: examQuestions.setOne(
         question.exam.id,
         examQuestions[question.exam.id]?.updateOne(question.unsave())
@@ -380,39 +408,50 @@ class QuestionsState{
     );
   }
   QuestionsState startLoadingQuestionUserSaves() => 
-    optional(newQuestionUserSaves: questionUserSaves.startLoadingNext());
+    _optional(newQuestionUserSaves: questionUserSaves.startLoadingNext());
   QuestionsState addNextPageQuestionUserSaves(Iterable<QuestionUserSaveState> questionUserSaves) =>
-    optional(newQuestionUserSaves: this.questionUserSaves.addNextPage(questionUserSaves));
+    _optional(newQuestionUserSaves: this.questionUserSaves.addNextPage(questionUserSaves));
   QuestionsState refreshQuesitonUserSaves(Iterable<QuestionUserSaveState> questionUserSaves) =>
-    optional(newQuestionUserSaves: this.questionUserSaves.refreshPage(questionUserSaves));
+    _optional(newQuestionUserSaves: this.questionUserSaves.refreshPage(questionUserSaves));
   QuestionsState stopLoadingNextQuestionUserSaves() =>
-    optional(newQuestionUserSaves: questionUserSaves.stopLoadingNext());
+    _optional(newQuestionUserSaves: questionUserSaves.stopLoadingNext());
   // question user saves
+
+  //home page questions
+  QuestionsState startLoadingHomePageQuestions() =>
+    _optional(newHomePageQuestions: homePageQuestions.startLoadingNext());
+  QuestionsState addNextPageHomePageQuestions(Iterable<QuestionState> questions) =>
+    _optional(newHomePageQuestions: homePageQuestions.addNextPage(questions));
+  QuestionsState refreshHomePageQuestions(Iterable<QuestionState> questions) =>
+    _optional(newHomePageQuestions: homePageQuestions.refreshPage(questions));
+  QuestionsState stopLoadingHomePageQuestions() =>
+    _optional(newHomePageQuestions: homePageQuestions.stopLoadingNext());
+  //home page questions
 
   // user questions
   QuestionsState startLoadingNextUserQuestions(int userId) =>
-    optional(
+    _optional(
       newUserQuestions: userQuestions.setOne(
         userId,
         selectUserQuestionsFromState(this, userId).startLoadingNext()
       )
     );
   QuestionsState addNextPageUserQuestions(int userId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newUserQuestions: userQuestions.setOne(
         userId,
         userQuestions[userId]?.addNextPage(questions)
       )
     );
   QuestionsState refreshUserQuestions(int userId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newUserQuestions: userQuestions.setOne(
         userId,
         userQuestions[userId]?.refreshPage(questions)
       )
     );
   QuestionsState stopLoadingNextUserQuestions(int userId) =>
-    optional(
+    _optional(
       newUserQuestions: userQuestions.setOne(
         userId,
         userQuestions[userId]?.stopLoadingNext()
@@ -422,28 +461,28 @@ class QuestionsState{
 
   // user solved questions
   QuestionsState startLoadingNextUserSolvedQuestions(int userId) =>
-    optional(
+    _optional(
       newUserSolvedQuestions: userSolvedQuestions.setOne(
         userId,
         selectUserSolvedQuestionsFromState(this, userId).startLoadingNext()
       )
     );
   QuestionsState addNextPageUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newUserSolvedQuestions: userSolvedQuestions.setOne(
         userId,
         userSolvedQuestions[userId]?.addNextPage(questions)
       )
     );
   QuestionsState refreshUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newUserSolvedQuestions: userSolvedQuestions.setOne(
         userId,
         userSolvedQuestions[userId]?.refreshPage(questions)
       )
     );
   QuestionsState stopLoadingNextUserSolvedQuestions(int userId) =>
-    optional(
+    _optional(
       newUserSolvedQuestions: userSolvedQuestions.setOne(
         userId,
         userSolvedQuestions[userId]?.stopLoadingNext()
@@ -453,28 +492,28 @@ class QuestionsState{
 
   // user unsolved questions
   QuestionsState startLoadingNextUserUnsolvedQuestions(int userId) =>
-    optional(
+    _optional(
       newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
         userId,
         selectUserUnsolvedQuestionsFromState(this, userId).startLoadingNext()
       )
     );
   QuestionsState addNextPageUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
         userId,
         userUnsolvedQuestions[userId]?.addNextPage(questions)
       )
     );
   QuestionsState refreshUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
         userId,
         userUnsolvedQuestions[userId]?.refreshPage(questions)
       )
     );
   QuestionsState stopLoadingNextUserUnsolvedQuestions(int userId) =>
-    optional(
+    _optional(
       newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
         userId,
         userUnsolvedQuestions[userId]?.stopLoadingNext()
@@ -484,34 +523,96 @@ class QuestionsState{
 
   //exams questions
   QuestionsState startLoadingNextExamQuestions(int examId) =>
-    optional(
+    _optional(
       newExamQuestions: examQuestions.setOne(
         examId,
         selectExamQuestionsFromState(this,examId).startLoadingNext()
       )
     );
   QuestionsState addNextPageExamQustions(int examId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newExamQuestions: examQuestions.setOne(
         examId,
         selectExamQuestionsFromState(this,examId).addNextPage(questions)
       )
     );
   QuestionsState refreshExamQuestions(int examId, Iterable<QuestionState> questions) =>
-    optional(
+    _optional(
       newExamQuestions: examQuestions.setOne(
         examId,
         selectExamQuestionsFromState(this,examId).refreshPage(questions)
       )
     );
   QuestionsState stopLoadingNextExamQuestions(int examId) =>
-    optional(
+    _optional(
       newExamQuestions: examQuestions.setOne(
         examId,
         selectExamQuestionsFromState(this,examId).stopLoadingNext()
       )
     );
   //exams questions
+
+  //subject questions
+  QuestionsState startLoadingNextSubjectQuestions(int subjectId) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionsFromState(this,subjectId).startLoadingNext()
+      )
+    );
+  QuestionsState addNextPageSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionsFromState(this,subjectId).addNextPage(questions)
+      )
+    );
+  QuestionsState refreshSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionsFromState(this,subjectId).refreshPage(questions)
+      )
+    );
+  QuestionsState stopLoadingNextSubjectQuestions(int subjectId) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionsFromState(this,subjectId).stopLoadingNext()
+      )
+    );
+  //topic questions
+
+  //topic questions
+  QuestionsState startLoadingNextTopicQuestions(int topicId) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionsFromState(this,topicId).startLoadingNext()
+      )
+    );
+  QuestionsState addNextPageTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionsFromState(this,topicId).addNextPage(questions)
+      )
+    );
+  QuestionsState refreshTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionsFromState(this,topicId).refreshPage(questions)
+      )
+    );
+  QuestionsState stopLoadingNextTopicQuestions(int topicId) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionsFromState(this,topicId).stopLoadingNext()
+      )
+    );
+  //topic questions
 
   QuestionsState increaseNumberOfComments(QuestionState question){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
@@ -620,5 +721,4 @@ class QuestionsState{
       questionUserLikes: questionUserLikes
     );
   }
-
 }
