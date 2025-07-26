@@ -1,3 +1,4 @@
+import 'package:app_file/app_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
@@ -7,6 +8,30 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_save
 @immutable
 class QuestionsAction extends AppAction{
   const QuestionsAction();
+}
+
+@immutable
+class CreateQuestionAction extends QuestionsAction{
+  final String id;
+  final int examId;
+  final int subjectId;
+  final int? topicId;
+  final String content;
+  final Iterable<AppFile> medias;
+
+  const CreateQuestionAction({
+    required this.id,
+    required this.examId,
+    required this.subjectId,
+    required this.topicId,
+    required this.content,
+    required this.medias
+  });
+}
+@immutable
+class CreateQuestionSuccessAction extends QuestionsAction{
+  final QuestionState question;
+  const CreateQuestionSuccessAction({required this.question});
 }
 
 //question user likes

@@ -62,6 +62,18 @@ class QuestionsState{
       questionUserLikes: newQuestionUserLikes ?? questionUserLikes,
     );
 
+  QuestionsState create(QuestionState question) =>
+    optional(
+      newUserQuestions: userQuestions.setOne(
+        question.userId,
+        selectUserQuestionsFromState(this, question.userId).prependOne(question),
+      ),
+      newUserUnsolvedQuestions: userQuestions.setOne(
+        question.userId,
+        selectUserUnsolvedQuestionsFromState(this, question.userId).prependOne(question),
+      )
+    );
+
   //solutions
   QuestionsState deleteSolution(QuestionState question, SolutionState solution){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);

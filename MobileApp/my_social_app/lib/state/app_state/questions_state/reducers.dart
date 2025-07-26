@@ -7,6 +7,9 @@ import 'package:my_social_app/state/entity_state/pagination_state/map_extentions
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
+QuestionsState createQuestionSuccessReducer(QuestionsState prev, CreateQuestionSuccessAction action) =>
+  prev.create(action.question);
+
 //comments action
 QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
   => action.question == null ? prev : prev.increaseNumberOfComments(action.question!);
@@ -272,6 +275,8 @@ QuestionsState refreshTopicQuestionsFailedReducer(QuestionsState prev, RefreshTo
 //topic questions
 
 Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
+  TypedReducer<QuestionsState,CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
+
   //coments
   TypedReducer<QuestionsState,CreateCommentsSuccessAction>(createCommentSuccessReducer).call,
   //coments

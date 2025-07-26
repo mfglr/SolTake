@@ -1,4 +1,4 @@
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 
