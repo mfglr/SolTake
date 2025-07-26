@@ -4,9 +4,9 @@ import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/display_abstract_solved_questions_page/display_abstract_solved_questions_page.dart';
-import 'package:my_social_app/views/display_abstract_unsolved_questions_page/display_abstracts_unsolved_questions_page.dart';
-import 'package:my_social_app/views/display_abstracts_questions_page/display_abstracts_questions_page.dart';
+import 'package:my_social_app/views/display_abstract_user_solved_questions_page/display_abstract_user_solved_questions_page.dart';
+import 'package:my_social_app/views/display_abstract_user_unsolved_questions_page/display_abstracts_user_unsolved_questions_page.dart';
+import 'package:my_social_app/views/display_abstracts_user_questions_page/display_abstracts_user_questions_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
@@ -114,9 +114,9 @@ class _UserPageState extends State<UserPage> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    DisplayAbstractsQuestionsPage(userId: user.id),
-                    DisplayAbstractSolvedQuestionsPage(userId: user.id),
-                    DisplayAbstractsUnsolvedQuestionsPage(userId: user.id)
+                    DisplayAbstractsUserQuestionsPage(userId: user.id),
+                    DisplayAbstractUserSolvedQuestionsPage(userId: user.id),
+                    DisplayAbstractsUserUnsolvedQuestionsPage(userId: user.id)
                   ]
                 ),
               )

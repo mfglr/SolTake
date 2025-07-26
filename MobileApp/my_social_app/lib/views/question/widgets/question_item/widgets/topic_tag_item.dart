@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
-import 'package:my_social_app/views/question/pages/display_topic_questions_page.dart';
+import 'package:my_social_app/views/question/pages/display_topic_questions_page/display_topic_questions_page.dart';
 
 class TopicTagItem extends StatelessWidget {
   final TopicState topic;

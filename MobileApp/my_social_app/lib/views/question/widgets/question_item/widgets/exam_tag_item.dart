@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/views/question/pages/display_exams_questions_page.dart';
+import 'package:my_social_app/views/question/pages/display_exam_questions_page/display_exams_questions_page.dart';
 
 class ExamTagItem extends StatelessWidget {
   final ExamState exam;

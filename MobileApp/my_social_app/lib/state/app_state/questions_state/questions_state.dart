@@ -4,6 +4,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
@@ -315,6 +316,130 @@ class QuestionsState{
   QuestionsState stopLoadingNextQuestionUserSaves() =>
     optional(newQuestionUserSaves: questionUserSaves.stopLoadingNext());
   // question user saves
+
+  // user questions
+  QuestionsState startLoadingNextUserQuestions(int userId) =>
+    optional(
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        selectUserQuestionsFromState(this, userId).startLoadingNext()
+      )
+    );
+  QuestionsState addNextPageUserQuestions(int userId, Iterable<QuestionState> questions) =>
+    optional(
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        userQuestions[userId]?.addNextPage(questions)
+      )
+    );
+  QuestionsState refreshUserQuestions(int userId, Iterable<QuestionState> questions) =>
+    optional(
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        userQuestions[userId]?.refreshPage(questions)
+      )
+    );
+  QuestionsState stopLoadingNextUserQuestions(int userId) =>
+    optional(
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        userQuestions[userId]?.stopLoadingNext()
+      )
+    );
+  // user questions
+
+  // user solved questions
+  QuestionsState startLoadingNextUserSolvedQuestions(int userId) =>
+    optional(
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        selectUserSolvedQuestionsFromState(this, userId).startLoadingNext()
+      )
+    );
+  QuestionsState addNextPageUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    optional(
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        userSolvedQuestions[userId]?.addNextPage(questions)
+      )
+    );
+  QuestionsState refreshUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    optional(
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        userSolvedQuestions[userId]?.refreshPage(questions)
+      )
+    );
+  QuestionsState stopLoadingNextUserSolvedQuestions(int userId) =>
+    optional(
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        userSolvedQuestions[userId]?.stopLoadingNext()
+      )
+    );
+  // user solved questions
+
+  // user unsolved questions
+  QuestionsState startLoadingNextUserUnsolvedQuestions(int userId) =>
+    optional(
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        selectUserUnsolvedQuestionsFromState(this, userId).startLoadingNext()
+      )
+    );
+  QuestionsState addNextPageUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    optional(
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        userUnsolvedQuestions[userId]?.addNextPage(questions)
+      )
+    );
+  QuestionsState refreshUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    optional(
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        userUnsolvedQuestions[userId]?.refreshPage(questions)
+      )
+    );
+  QuestionsState stopLoadingNextUserUnsolvedQuestions(int userId) =>
+    optional(
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        userUnsolvedQuestions[userId]?.stopLoadingNext()
+      )
+    );
+  // user unsolved questions
+
+  //exams questions
+  QuestionsState startLoadingNextExamQuestions(int examId) =>
+    optional(
+      newExamQuestions: examQuestions.setOne(
+        examId,
+        selectExamQuestionsFromState(this,examId).startLoadingNext()
+      )
+    );
+  QuestionsState addNextPageExamQustions(int examId, Iterable<QuestionState> questions) =>
+    optional(
+      newExamQuestions: examQuestions.setOne(
+        examId,
+        selectExamQuestionsFromState(this,examId).addNextPage(questions)
+      )
+    );
+  QuestionsState refreshExamQuestions(int examId, Iterable<QuestionState> questions) =>
+    optional(
+      newExamQuestions: examQuestions.setOne(
+        examId,
+        selectExamQuestionsFromState(this,examId).refreshPage(questions)
+      )
+    );
+  QuestionsState stopLoadingNextExamQuestions(int examId) =>
+    optional(
+      newExamQuestions: examQuestions.setOne(
+        examId,
+        selectExamQuestionsFromState(this,examId).stopLoadingNext()
+      )
+    );
+  //exams questions
 
   QuestionsState increaseNumberOfComments(QuestionState question){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);

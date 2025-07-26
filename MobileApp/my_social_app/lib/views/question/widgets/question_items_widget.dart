@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_widget.dart';
 
@@ -8,12 +9,13 @@ class QuestionItemsWidget extends StatefulWidget {
   final Pagination<int, QuestionState> pagination;
   final Function onScrollBottom;
   final num? firstDisplayedQuestionId;
-
+  final String noQuestionContent;
   
   const QuestionItemsWidget({
     super.key,
     required this.pagination,
     required this.onScrollBottom,
+    required this.noQuestionContent,
     this.firstDisplayedQuestionId,
   });
 
@@ -57,14 +59,25 @@ class _QuestionItemsWidgetState extends State<QuestionItemsWidget> {
       controller: _scrollController,
       child: Column(
         children: [
-          ...List.generate(
-            widget.pagination.values.length,
-            (index) => Container(
-              key: widget.pagination.values.elementAt(index).id == widget.firstDisplayedQuestionId ? _key : null,
-              margin: const EdgeInsets.only(bottom: 16),
-              child: QuestionItemWidget(question: widget.pagination.values.elementAt(index))
+          if(widget.pagination.isEmpty)
+            Container(
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  NoQuestionsWidget(content: widget.noQuestionContent)
+                ]
+              ),
+            )
+          else
+            ...List.generate(
+              widget.pagination.values.length,
+              (index) => Container(
+                key: widget.pagination.values.elementAt(index).id == widget.firstDisplayedQuestionId ? _key : null,
+                margin: const EdgeInsets.only(bottom: 16),
+                child: QuestionItemWidget(question: widget.pagination.values.elementAt(index))
+              ),
             ),
-          ),
           if(widget.pagination.loadingNext)
             const LoadingCircleWidget(strokeWidth: 3)
         ]

@@ -27,6 +27,5 @@ class Exam{
         name: name,
         initialism: initialism,
         subjects: Pagination.init(subjectsPerPage,true),
-        questions: Pagination.init(questionsPerPage,true)
       );
 }

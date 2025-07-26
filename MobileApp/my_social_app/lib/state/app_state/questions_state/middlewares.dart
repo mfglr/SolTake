@@ -140,7 +140,10 @@ void nextUserQuestionsMiddleware(Store<AppState> store, action, NextDispatcher n
     final pagination = selectUserQuestions(store,action.userId);
     QuestionService()
       .getByUserId(action.userId, pagination.next)
-      .then((questions) => store.dispatch(NextUserQuestionsSuccessAction(userId: action.userId, questions: questions.map((e) => e.toQuestionState()))))
+      .then((questions) => store.dispatch(NextUserQuestionsSuccessAction(
+        userId: action.userId,
+        questions: questions.map((e) => e.toQuestionState())
+      )))
       .catchError((e){
         store.dispatch(NextUserQuestionsFailedAction(userId: action.userId));
         throw e;
@@ -153,7 +156,10 @@ void refreshUserQuestionsMiddleware(Store<AppState> store, action, NextDispatche
     final pagination = selectUserQuestions(store,action.userId);
     QuestionService()
       .getByUserId(action.userId, pagination.first)
-      .then((questions) => store.dispatch(RefreshUserQuestionsSuccessAction(userId: action.userId, questions: questions.map((e) => e.toQuestionState()))))
+      .then((questions) => store.dispatch(RefreshUserQuestionsSuccessAction(
+        userId: action.userId,
+        questions: questions.map((e) => e.toQuestionState())
+      )))
       .catchError((e){
         store.dispatch(RefreshUserQuestionsFailedAction(userId: action.userId));
         throw e;

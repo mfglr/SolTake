@@ -212,8 +212,6 @@ class AppState{
   UserState? get currentUser => userEntityState.getValue(login.login!.id);
 
   //Select questions
-  Iterable<QuestionState> selectExamQuestions(int examId)
-    => examEntityState.getValue(examId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> selectSubjectQuestions(int subjectId)
     => subjectEntityState.getValue(subjectId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
   Iterable<QuestionState> selectTopicQuestions(int topicId)

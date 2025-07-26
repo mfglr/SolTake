@@ -99,7 +99,7 @@ namespace SolTake.Infrastructure.QueryRepositories
             => GetListAsync(
                 forUserId,
                 page,
-                question => 
+                question =>
                     question.Exam.Id == examId &&
                     question.UserId != forUserId,
                 cancellationToken

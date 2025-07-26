@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
-import 'package:my_social_app/views/question/pages/display_subject_questions_page.dart';
+import 'package:my_social_app/views/question/pages/display_subject_questions_page/display_subject_questions_page.dart';
 
 class SubjectTagItem extends StatelessWidget {
   final SubjectState subject;

@@ -116,187 +116,67 @@ QuestionsState refreshHomePageQuestionsFailedReducer(QuestionsState prev, Refres
 
 // user questions
 QuestionsState nextUserQuestionsReducer(QuestionsState prev, NextUserQuestionsAction action)
-  => prev.optional(
-      newUserQuestions: prev.userQuestions.updateElsePrependOne(
-        action.userId,
-        (prev.userQuestions[action.userId] ?? Pagination.init(questionsPerPage, true)).startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextUserQuestions(action.userId);
 QuestionsState nextUserQuestionsSuccessReducer(QuestionsState prev, NextUserQuestionsSuccessAction action)
-  => prev.optional(
-      newUserQuestions: prev.userQuestions.updateOne(
-        action.userId,
-        prev.userQuestions[action.userId]!.addNextPage(action.questions)
-      )
-    );
+  => prev.addNextPageUserQuestions(action.userId, action.questions);
 QuestionsState nextUserQuestionsFailedReducer(QuestionsState prev, NextUserQuestionsFailedAction action)
-  => prev.optional(
-      newUserQuestions: prev.userQuestions.updateOne(
-        action.userId,
-        prev.userQuestions[action.userId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextUserQuestions(action.userId);
 
 QuestionsState refreshUserQuestionsReducer(QuestionsState prev, RefreshUserQuestionsAction action)
-  => prev.optional(
-      newUserQuestions: prev.userQuestions.updateElsePrependOne(
-        action.userId,
-        (prev.userQuestions[action.userId] ?? Pagination.init(questionsPerPage, true)).clear().startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextUserQuestions(action.userId);
 QuestionsState refreshUserQuestionsSuccessReducer(QuestionsState prev, RefreshUserQuestionsSuccessAction action)
-  => prev.optional(
-      newUserQuestions: prev.userQuestions.updateOne(
-        action.userId,
-        prev.userQuestions[action.userId]!.refreshPage(action.questions)
-      )
-    );
+  => prev.refreshUserQuestions(action.userId, action.questions);
 QuestionsState refreshUserQuestionsFailedReducer(QuestionsState prev, RefreshUserQuestionsFailedAction action)
-  => prev.optional(
-      newUserQuestions: prev.userQuestions.updateOne(
-        action.userId,
-        prev.userQuestions[action.userId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextUserQuestions(action.userId);
 // user questions
 
 
 // user solved questions
 QuestionsState nextUserSolvedQuestionsReducer(QuestionsState prev, NextUserSolvedQuestionsAction action)
-  => prev.optional(
-      newUserSolvedQuestions: prev.userSolvedQuestions.updateElsePrependOne(
-        action.userId,
-        (prev.userSolvedQuestions[action.userId] ?? Pagination.init(questionsPerPage, true)).startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextUserSolvedQuestions(action.userId);
 QuestionsState nextUserSolvedQuestionsSuccessReducer(QuestionsState prev, NextUserSolvedQuestionsSuccessAction action)
-  => prev.optional(
-      newUserSolvedQuestions: prev.userSolvedQuestions.updateOne(
-        action.userId,
-        prev.userSolvedQuestions[action.userId]!.addNextPage(action.questions)
-      )
-    );
+  => prev.addNextPageUserSolvedQuestions(action.userId, action.questions);
 QuestionsState nextUserSolvedQuestionsFailedReducer(QuestionsState prev, NextUserSolvedQuestionsFailedAction action)
-  => prev.optional(
-      newUserSolvedQuestions: prev.userSolvedQuestions.updateOne(
-        action.userId,
-        prev.userSolvedQuestions[action.userId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextUserSolvedQuestions(action.userId);
 
 QuestionsState refreshUserSolvedQuestionsReducer(QuestionsState prev, RefreshUserSolvedQuestionsAction action)
-  => prev.optional(
-      newUserSolvedQuestions: prev.userSolvedQuestions.updateElsePrependOne(
-        action.userId,
-        (prev.userSolvedQuestions[action.userId] ?? Pagination.init(questionsPerPage, true)).clear().startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextUserSolvedQuestions(action.userId);
 QuestionsState refreshUserSolvedQuestionsSuccessReducer(QuestionsState prev, RefreshUserSolvedQuestionsSuccessAction action)
-  => prev.optional(
-      newUserSolvedQuestions: prev.userSolvedQuestions.updateOne(
-        action.userId,
-        prev.userSolvedQuestions[action.userId]!.refreshPage(action.questions)
-      )
-    );
+  => prev.refreshUserSolvedQuestions(action.userId, action.questions);
 QuestionsState refreshUserSolvedQuestionsFailedReducer(QuestionsState prev, RefreshUserSolvedQuestionsFailedAction action)
-  => prev.optional(
-      newUserSolvedQuestions: prev.userSolvedQuestions.updateOne(
-        action.userId,
-        prev.userSolvedQuestions[action.userId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextUserSolvedQuestions(action.userId);
 // user solved questions
 
 // user unsolved questions
 QuestionsState nextUserUnsolvedQuestionsReducer(QuestionsState prev, NextUserUnsolvedQuestionsAction action)
-  => prev.optional(
-      newUserUnsolvedQuestions: prev.userUnsolvedQuestions.updateElsePrependOne(
-        action.userId,
-        (prev.userUnsolvedQuestions[action.userId] ?? Pagination.init(questionsPerPage, true)).startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextUserUnsolvedQuestions(action.userId);
 QuestionsState nextUserUnsolvedQuestionsSuccessReducer(QuestionsState prev, NextUserUnsolvedQuestionsSuccessAction action)
-  => prev.optional(
-      newUserUnsolvedQuestions: prev.userUnsolvedQuestions.updateOne(
-        action.userId,
-        prev.userUnsolvedQuestions[action.userId]!.addNextPage(action.questions)
-      )
-    );
+  => prev.addNextPageUserUnsolvedQuestions(action.userId, action.questions);
 QuestionsState nextUserUnsolvedQuestionsFailedReducer(QuestionsState prev, NextUserUnsolvedQuestionsFailedAction action)
-  => prev.optional(
-      newUserUnsolvedQuestions: prev.userUnsolvedQuestions.updateOne(
-        action.userId,
-        prev.userUnsolvedQuestions[action.userId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextUserUnsolvedQuestions(action.userId);
 
 QuestionsState refreshUserUnsolvedQuestionsReducer(QuestionsState prev, RefreshUserUnsolvedQuestionsAction action)
-  => prev.optional(
-      newUserUnsolvedQuestions: prev.userUnsolvedQuestions.updateElsePrependOne(
-        action.userId,
-        (prev.userUnsolvedQuestions[action.userId] ?? Pagination.init(questionsPerPage, true)).clear().startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextUserUnsolvedQuestions(action.userId);
 QuestionsState refreshUserUnsolvedQuestionsSuccessReducer(QuestionsState prev, RefreshUserUnsolvedQuestionsSuccessAction action)
-  => prev.optional(
-      newUserUnsolvedQuestions: prev.userUnsolvedQuestions.updateOne(
-        action.userId,
-        prev.userUnsolvedQuestions[action.userId]!.refreshPage(action.questions)
-      )
-    );
+  => prev.refreshUserUnsolvedQuestions(action.userId, action.questions);
 QuestionsState refreshUserUnsolvedQuestionsFailedReducer(QuestionsState prev, RefreshUserUnsolvedQuestionsFailedAction action)
-  => prev.optional(
-      newUserUnsolvedQuestions: prev.userUnsolvedQuestions.updateOne(
-        action.userId,
-        prev.userUnsolvedQuestions[action.userId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextUserUnsolvedQuestions(action.userId);
 // user unsolved questions
 
 // exam questions
 QuestionsState nextExamQuestionsReducer(QuestionsState prev, NextExamQuestionsAction action)
-  => prev.optional(
-      newExamQuestions: prev.examQuestions.updateElsePrependOne(
-        action.examId,
-        (prev.examQuestions[action.examId] ?? Pagination.init(questionsPerPage, true)).startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextExamQuestions(action.examId);
 QuestionsState nextExamQuestionsSuccessReducer(QuestionsState prev, NextExamQuestionsSuccessAction action)
-  => prev.optional(
-      newExamQuestions: prev.examQuestions.updateOne(
-        action.examId,
-        prev.examQuestions[action.examId]!.addNextPage(action.questions)
-      )
-    );
+  => prev.addNextPageExamQustions(action.examId, action.questions);
 QuestionsState nextExamQuestionsFailedReducer(QuestionsState prev, NextExamQuestionsFailedAction action)
-  => prev.optional(
-      newExamQuestions: prev.examQuestions.updateOne(
-        action.examId,
-        prev.examQuestions[action.examId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextExamQuestions(action.examId);
 
 QuestionsState refreshExamQuestionsReducer(QuestionsState prev, RefreshExamQuestionsAction action)
-  => prev.optional(
-      newExamQuestions: prev.examQuestions.updateElsePrependOne(
-        action.examId,
-        (prev.examQuestions[action.examId] ?? Pagination.init(questionsPerPage, true)).clear().startLoadingNext()
-      )
-    );
+  => prev.startLoadingNextExamQuestions(action.examId);
 QuestionsState refreshExamQuestionsSuccessReducer(QuestionsState prev, RefreshExamQuestionsSuccessAction action)
-  => prev.optional(
-      newExamQuestions: prev.examQuestions.updateOne(
-        action.examId,
-        prev.examQuestions[action.examId]!.refreshPage(action.questions)
-      )
-    );
+  => prev.refreshExamQuestions(action.examId, action.questions);
 QuestionsState refreshExamQuestionsFailedReducer(QuestionsState prev, RefreshExamQuestionsFailedAction action)
-  => prev.optional(
-      newExamQuestions: prev.examQuestions.updateOne(
-        action.examId,
-        prev.examQuestions[action.examId]!.stopLoadingNext()
-      )
-    );
+  => prev.stopLoadingNextExamQuestions(action.examId);
 // exam questions
 
 // subject questions

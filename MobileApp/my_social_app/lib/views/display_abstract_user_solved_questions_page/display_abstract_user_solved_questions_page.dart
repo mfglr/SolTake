@@ -8,23 +8,23 @@ import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
-import 'package:my_social_app/views/display_abstract_solved_questions_page/display_abstract_solved_questions_page_constants.dart';
-import 'package:my_social_app/views/question/pages/display_user_solved_questions_page.dart';
+import 'package:my_social_app/views/display_abstract_user_solved_questions_page/display_abstract_solved_user_questions_page_constants.dart';
+import 'package:my_social_app/views/question/pages/display_user_solved_questions_page/display_user_solved_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
-class DisplayAbstractSolvedQuestionsPage extends StatefulWidget {
+class DisplayAbstractUserSolvedQuestionsPage extends StatefulWidget {
   final int userId;
-  const DisplayAbstractSolvedQuestionsPage({
+  const DisplayAbstractUserSolvedQuestionsPage({
     super.key,
     required this.userId
   });
 
   @override
-  State<DisplayAbstractSolvedQuestionsPage> createState() => _DisplayAbstractSolvedQuestionsPageState();
+  State<DisplayAbstractUserSolvedQuestionsPage> createState() => _DisplayAbstractUserSolvedQuestionsPageState();
 }
 
-class _DisplayAbstractSolvedQuestionsPageState extends State<DisplayAbstractSolvedQuestionsPage> {
+class _DisplayAbstractUserSolvedQuestionsPageState extends State<DisplayAbstractUserSolvedQuestionsPage> {
   final ScrollController _scrollController = ScrollController();
 
   void _onScrollBottom() => 

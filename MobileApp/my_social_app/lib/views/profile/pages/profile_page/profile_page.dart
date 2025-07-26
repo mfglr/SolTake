@@ -4,9 +4,9 @@ import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
-import 'package:my_social_app/views/display_abstract_solved_questions_page/display_abstract_solved_questions_page.dart';
-import 'package:my_social_app/views/display_abstract_unsolved_questions_page/display_abstracts_unsolved_questions_page.dart';
-import 'package:my_social_app/views/display_abstracts_questions_page/display_abstracts_questions_page.dart';
+import 'package:my_social_app/views/display_abstract_user_solved_questions_page/display_abstract_user_solved_questions_page.dart';
+import 'package:my_social_app/views/display_abstract_user_unsolved_questions_page/display_abstracts_user_unsolved_questions_page.dart';
+import 'package:my_social_app/views/display_abstracts_user_questions_page/display_abstracts_user_questions_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page_texts.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_info_card_widget.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_menu_button.dart';
@@ -105,9 +105,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    DisplayAbstractsQuestionsPage(userId: user.id),
-                    DisplayAbstractSolvedQuestionsPage(userId: user.id),
-                    DisplayAbstractsUnsolvedQuestionsPage(userId: user.id)
+                    DisplayAbstractsUserQuestionsPage(userId: user.id),
+                    DisplayAbstractUserSolvedQuestionsPage(userId: user.id),
+                    DisplayAbstractsUserUnsolvedQuestionsPage(userId: user.id)
                   ]
                 ),
               )

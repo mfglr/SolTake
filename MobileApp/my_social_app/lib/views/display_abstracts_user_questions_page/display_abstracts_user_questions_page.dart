@@ -8,23 +8,23 @@ import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
-import 'package:my_social_app/views/display_abstracts_questions_page/display_abstracts_questions_page_constants.dart';
-import 'package:my_social_app/views/question/pages/display_user_questions_page.dart';
+import 'package:my_social_app/views/display_abstracts_user_questions_page/display_abstracts_user_questions_page_constants.dart';
+import 'package:my_social_app/views/question/pages/display_user_questions/display_user_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
-class DisplayAbstractsQuestionsPage extends StatefulWidget {
+class DisplayAbstractsUserQuestionsPage extends StatefulWidget {
   final int userId;
-  const DisplayAbstractsQuestionsPage({
+  const DisplayAbstractsUserQuestionsPage({
     super.key,
     required this.userId
   });
 
   @override
-  State<DisplayAbstractsQuestionsPage> createState() => _DisplayAbstractsQuestionsPageState();
+  State<DisplayAbstractsUserQuestionsPage> createState() => _DisplayAbstractsUserQuestionsPageState();
 }
 
-class _DisplayAbstractsQuestionsPageState extends State<DisplayAbstractsQuestionsPage> {
+class _DisplayAbstractsUserQuestionsPageState extends State<DisplayAbstractsUserQuestionsPage> {
   final ScrollController _scrollController = ScrollController();
 
   void _onScrollBottom() => 
