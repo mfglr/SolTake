@@ -46,23 +46,31 @@ class _SolutionAbstractItemsState extends State<SolutionAbstractItems> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.pagination.isLast && widget.pagination.values.isEmpty) return widget.noItems;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          child: GridView.builder(
-            controller: _scrollController,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+        if(widget.pagination.isEmpty)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(child: widget.noItems),
+            ],
+          )
+        else
+          Expanded(
+            child: GridView.builder(
+              controller: _scrollController,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: widget.pagination.values.length,
+              itemBuilder: (context,index) => SolutionAbstractItemWidget(
+                key: ValueKey(widget.pagination.values.elementAt(index).id),
+                solution: widget.pagination.values.elementAt(index),
+                onTap: widget.onTap,
+              )
             ),
-            itemCount: widget.pagination.values.length,
-            itemBuilder: (context,index) => SolutionAbstractItemWidget(
-              key: ValueKey(widget.pagination.values.elementAt(index).id),
-              solution: widget.pagination.values.elementAt(index),
-              onTap: widget.onTap,
-            )
           ),
-        ),
         if(widget.pagination.loadingNext)
           const LoadingCircleWidget(strokeWidth: 3),
       ],

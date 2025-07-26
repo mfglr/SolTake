@@ -7,8 +7,8 @@ import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
-import 'package:my_social_app/views/solution/pages/display_question_solutions_page.dart';
-import 'package:my_social_app/views/solution/widgets/no_solutions_widget.dart';
+import 'package:my_social_app/views/solution/widgets/no_question_solutions/no_question_solutions.dart';
+import 'package:my_social_app/views/solution/pages/display_question_solutions_page/display_question_solutions_page.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';
 
 class DisplaySolutionsPage extends StatelessWidget {
@@ -40,7 +40,7 @@ class DisplaySolutionsPage extends StatelessWidget {
         converter: (store) => selectQuestionSolutions(store, question.id),
         builder: (context, pagination) => SolutionAbstractItems(
           pagination: pagination,
-          noItems: const NoSolutionsWidget(),
+          noItems: NoQuestionSolutions(question: question),
           onTap: (solutionId) =>
             Navigator
               .of(context)

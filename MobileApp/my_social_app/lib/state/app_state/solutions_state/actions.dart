@@ -5,8 +5,7 @@ import 'package:my_social_app/state/app_state/question_entity_state/question_sta
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
 
-
-
+//solutions
 @immutable
 class CreateSolutionAction extends AppAction{
   final String id;
@@ -49,6 +48,30 @@ class DeleteSolutionSuccessAction extends AppAction{
     required this.solution,
   });
 }
+
+@immutable
+class MarkSolutionAsCorrectAction extends AppAction{
+  final QuestionState question;
+  final SolutionState solution;
+
+  const MarkSolutionAsCorrectAction({
+    required this.question,
+    required this.solution
+  });
+}
+@immutable
+class MarkSolutionAsCorrectSuccessAction extends AppAction{
+  final QuestionState question;
+  final SolutionState solution;
+
+  const MarkSolutionAsCorrectSuccessAction({
+    required this.question,
+    required this.solution
+  });
+}
+//solutions
+
+
 
 //question solutions
 @immutable

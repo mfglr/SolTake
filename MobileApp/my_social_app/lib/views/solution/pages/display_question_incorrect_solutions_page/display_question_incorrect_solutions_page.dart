@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
@@ -10,7 +10,8 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/solution/widgets/no_solutions.dart';
+import 'package:my_social_app/views/solution/pages/display_question_incorrect_solutions_page/display_question_incorrect_solutions_page_constants.dart';
+import 'package:my_social_app/views/solution/widgets/no_incorrect_solutions_widget/no_incorrect_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
 
 class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
@@ -29,7 +30,7 @@ class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
         title: AppTitle(
-          title: AppLocalizations.of(context)!.display_question_incorrect_solutions_page_title,
+          title: title[getLanguage(context)]!,
         ),
       ),
       body: StoreConnector<AppState, Pagination<int,SolutionState>>(
@@ -39,27 +40,19 @@ class DisplayQuestionIncorrectSolutionsPage extends StatelessWidget {
           NextQuestionIncorrectSolutionsAction(questionId: question.id),
         ),
         converter: (store) => selectQuestionIncorrectSolutions(store, question.id),
-        builder:(context, pagination) => Builder(
-          builder: (context) {
-            if(pagination.isEmpty){
-              return NoSolutions(
-                text: AppLocalizations.of(context)!.display_question_incorrect_solutions_page_not_solutions
-              );
-            }
-            return SolutionItemsWidget(
-              question: question,
-              pagination: pagination,
-              solutionId: solutionId,
-              onScrollBottom: (){
-                final store = StoreProvider.of<AppState>(context,listen: false);
-                getNextPageIfReady(
-                  store,
-                  selectQuestionIncorrectSolutions(store, question.id),
-                  NextQuestionIncorrectSolutionsAction(questionId: question.id),
-                );
-              },
+        builder:(context, pagination) => SolutionItemsWidget(
+          question: question,
+          noItems: NoIncorrectSolutionsWidget(question: question),
+          pagination: pagination,
+          solutionId: solutionId,
+          onScrollBottom: (){
+            final store = StoreProvider.of<AppState>(context,listen: false);
+            getNextPageIfReady(
+              store,
+              selectQuestionIncorrectSolutions(store, question.id),
+              NextQuestionIncorrectSolutionsAction(questionId: question.id),
             );
-          }
+          },
         )
       ),
     );

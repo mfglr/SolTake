@@ -9,16 +9,15 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/solution/pages/display_question_correct_solutions_page/display_question_correct_solutions_page_constants.dart';
-import 'package:my_social_app/views/solution/widgets/no_correct_solutions_widget/no_correct_solutions_widget.dart';
+import 'package:my_social_app/views/solution/widgets/no_question_solutions/no_question_solutions.dart';
 import 'package:my_social_app/views/solution/widgets/solution_items_widget.dart';
+import 'display_question_solutions_page_constants.dart';
 
-class DisplayQuestionCorrectSolutionsPage extends StatelessWidget {
+class DisplayQuestionSolutionsPage extends StatelessWidget {
   final QuestionState question;
   final int? solutionId;
 
-  const DisplayQuestionCorrectSolutionsPage({
+  const DisplayQuestionSolutionsPage({
     super.key,
     required this.question,
     this.solutionId,
@@ -29,28 +28,33 @@ class DisplayQuestionCorrectSolutionsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButtonWidget(),
-        title: AppTitle(
-          title: title[getLanguage(context)]!,
+        title: Text(
+          title[getLanguage(context)]!,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          ),
         ),
       ),
-      body: StoreConnector<AppState,Pagination<int, SolutionState>>(
-        onInit: (store) => getNextPageIfNoPage(
+      body: StoreConnector<AppState, Pagination<int,SolutionState>>(
+        onInit: (store) => 
+        getNextPageIfNoPage(
           store,
-          selectQuestionCorrectSolutions(store, question.id),
-          NextQuestionCorrectSolutionsAction(questionId: question.id)
+          selectQuestionSolutions(store, question.id),
+          NextQuestionSolutionsAction(questionId: question.id)
         ),
-        converter: (store) => selectQuestionCorrectSolutions(store, question.id),
+        converter: (store) => selectQuestionSolutions(store, question.id),
         builder:(context, pagination) => SolutionItemsWidget(
           question: question,
-          noItems: NoCorrectSolutionsWidget(question: question),
+          noItems: NoQuestionSolutions(question: question),
           pagination: pagination,
           solutionId: solutionId,
           onScrollBottom: (){
             final store = StoreProvider.of<AppState>(context,listen: false);
             getNextPageIfReady(
               store,
-              selectQuestionCorrectSolutions(store, question.id),
-              NextQuestionCorrectSolutionsAction(questionId: question.id)
+              selectQuestionSolutions(store, question.id),
+              NextQuestionSolutionsAction(questionId: question.id)
             );
           },
         )

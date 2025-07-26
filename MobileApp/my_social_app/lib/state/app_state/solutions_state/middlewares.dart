@@ -11,6 +11,7 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
+//solutions
 void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionAction){
      if(action.medias.isNotEmpty){
@@ -45,6 +46,7 @@ void deleteSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+//solutions
 
 //question solutions
 void nextQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){

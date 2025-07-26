@@ -7,12 +7,11 @@ import 'package:my_social_app/state/entity_state/pagination_state/pagination.dar
 
 @immutable
 class SolutionsState {
-  final Map<int, Pagination<int,SolutionState>> questionSolutions;
-  final Map<int, Pagination<int,SolutionState>> questionCorrectSolutions;
-  final Map<int, Pagination<int,SolutionState>> questionPendingSolutions;
-  final Map<int, Pagination<int,SolutionState>> questionIncorrectSolutions;
+  final Map<int, Pagination<int, SolutionState>> questionSolutions;
+  final Map<int, Pagination<int, SolutionState>> questionCorrectSolutions;
+  final Map<int, Pagination<int, SolutionState>> questionPendingSolutions;
+  final Map<int, Pagination<int, SolutionState>> questionIncorrectSolutions;
   final Map<int, Pagination<int, SolutionState>> questionVideoSolutions;
-  // final Pagination<int, SolutionUserSaveState> savedSolutions;
 
   const SolutionsState({
     required this.questionSolutions,
@@ -20,7 +19,6 @@ class SolutionsState {
     required this.questionPendingSolutions,
     required this.questionIncorrectSolutions,
     required this.questionVideoSolutions,
-    // required this.savedSolutions
   });
 
   SolutionsState _optional({
@@ -29,7 +27,6 @@ class SolutionsState {
     Map<int, Pagination<int,SolutionState>>? newQuestionPendingSolutions,
     Map<int, Pagination<int,SolutionState>>? newQuestionIncorrectSolutions,
     Map<int, Pagination<int,SolutionState>>? newQuestionVideoSolutions,
-    // Pagination<int, SolutionUserSaveState>? newSavedSolutions,
   }) => 
     SolutionsState(
       questionSolutions: newQuestionSolutions ?? questionSolutions,
@@ -37,7 +34,6 @@ class SolutionsState {
       questionPendingSolutions: newQuestionPendingSolutions ?? questionPendingSolutions,
       questionIncorrectSolutions: newQuestionIncorrectSolutions ?? questionIncorrectSolutions,
       questionVideoSolutions: newQuestionVideoSolutions ?? questionVideoSolutions,
-      // savedSolutions: newSavedSolutions ?? savedSolutions
     );
 
   SolutionsState create(SolutionState solution) => 
@@ -101,18 +97,26 @@ class SolutionsState {
       // newSavedSolutions: savedSolutions.removeOne(solution.questionId)
     );
 
+  // question solutions;
   SolutionsState startLoadingNextQuestionSolutions(int questionId) => 
     _optional(
-      newQuestionSolutions: questionSolutions.updateElsePrependOne(
+      newQuestionSolutions: questionSolutions.setOne(
         questionId,
         selectQuestionSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newQuestionSolutions: questionSolutions.updateElsePrependOne(
+      newQuestionSolutions: questionSolutions.setOne(
         questionId,
         selectQuestionSolutionsFromState(this, questionId).addNextPage(solutions)
+      )
+    );
+  SolutionsState refreshQuestionSolutions(int questionId, Iterable<SolutionState> solutions) => 
+    _optional(
+      newQuestionSolutions: questionSolutions.setOne(
+        questionId,
+        selectQuestionSolutionsFromState(this, questionId).refreshPage(solutions)
       )
     );
   SolutionsState stopLoadingNextQuestionSolutions(int questionId) => 
@@ -122,32 +126,43 @@ class SolutionsState {
         selectQuestionSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
+  // question solutions;
 
+  // question correct solutions
   SolutionsState startLoadingNextQuestionCorrectSolutions(int questionId) => 
     _optional(
-      newQuestionCorrectSolutions: questionCorrectSolutions.updateElsePrependOne(
+      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
         questionId,
         selectQuestionCorrectSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionCorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newQuestionCorrectSolutions: questionCorrectSolutions.updateElsePrependOne(
+      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
         questionId,
         selectQuestionCorrectSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
+  SolutionsState refreshQuestionCorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
+    _optional(
+      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
+        questionId,
+        selectQuestionCorrectSolutionsFromState(this, questionId).refreshPage(solutions)
+      )
+    );
   SolutionsState stopLoadingNextQuestionCorrectSolutions(int questionId) => 
     _optional(
-      newQuestionCorrectSolutions: questionCorrectSolutions.updateElsePrependOne(
+      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
         questionId,
         selectQuestionCorrectSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
+  // question correct solutions
 
+  // question pending solutions
   SolutionsState startLoadingNextQuestionPendingSolutions(int questionId) => 
     _optional(
-      newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
+      newQuestionPendingSolutions: questionPendingSolutions.setOne(
         questionId,
         selectQuestionPendingSolutionsFromState(this, questionId).startLoadingNext()
       )
@@ -159,6 +174,13 @@ class SolutionsState {
         selectQuestionPendingSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
+  SolutionsState refreshQuestionPendingSolutions(int questionId, Iterable<SolutionState> solutions) => 
+    _optional(
+      newQuestionPendingSolutions: questionPendingSolutions.setOne(
+        questionId,
+        selectQuestionPendingSolutionsFromState(this, questionId).refreshPage(solutions)
+      )
+    );
   SolutionsState stopLoadingNextQuestionPendingSolutions(int questionId) => 
     _optional(
       newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
@@ -166,111 +188,67 @@ class SolutionsState {
         selectQuestionPendingSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
+  // question pending solutions
 
+  // question incorrect solutions
   SolutionsState startLoadingNextQuestionIncorrectSolutions(int questionId) => 
     _optional(
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.updateElsePrependOne(
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
         questionId,
         selectQuestionIncorrectSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionIncorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.updateElsePrependOne(
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
         questionId,
         selectQuestionIncorrectSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
+  SolutionsState refreshQuestionIncorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
+    _optional(
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
+        questionId,
+        selectQuestionIncorrectSolutionsFromState(this, questionId).refreshPage(solutions)
+      )
+    );
   SolutionsState stopLoadingNextQuestionIncorrectSolutions(int questionId) => 
     _optional(
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.updateElsePrependOne(
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
         questionId,
         selectQuestionIncorrectSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
-  
+  // question incorrect solutions
+
+  // question video solutions
   SolutionsState startLoadingNextQuestionVideoSolutions(int questionId) => 
     _optional(
-      newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
+      newQuestionVideoSolutions: questionVideoSolutions.setOne(
         questionId,
         selectQuestionVideoSolutionsFromState(this, questionId).startLoadingNext()
       )
     );
   SolutionsState addNextPageQuestionVideoSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
+      newQuestionVideoSolutions: questionVideoSolutions.setOne(
         questionId,
         selectQuestionVideoSolutionsFromState(this, questionId).addNextPage(solutions)
       )
     );
+  SolutionsState refreshQuestionVideoSolutions(int questionId, Iterable<SolutionState> solutions) => 
+    _optional(
+      newQuestionVideoSolutions: questionVideoSolutions.setOne(
+        questionId,
+        selectQuestionVideoSolutionsFromState(this, questionId).refreshPage(solutions)
+      )
+    );
   SolutionsState stopLoadingNextQuestionVideoSolutions(int questionId) => 
     _optional(
-      newQuestionVideoSolutions: questionVideoSolutions.updateElsePrependOne(
+      newQuestionVideoSolutions: questionVideoSolutions.setOne(
         questionId,
         selectQuestionVideoSolutionsFromState(this, questionId).stopLoadingNext()
       )
     );
-  
-  // SolutionsState startLoadingNextSavedSolutions() => 
-  //   _optional(newSavedSolutions: savedSolutions.startLoadingNext());
-  // SolutionsState addNextPageSavedSolutions(Iterable<SolutionUserSaveState> solutions) => 
-  //   _optional(newSavedSolutions: savedSolutions.addNextPage(solutions));
-  // SolutionsState stopLoadingNextSavedSolutions() => 
-  //   _optional(newSavedSolutions: savedSolutions.stopLoadingNext());
-
-  // SolutionsState save(int id, SolutionState solution) =>
-  //   _optional(
-      
-  //     newQuestionSolutions: 
-  //       questionSolutions[solution.questionId] != null
-  //         ? questionSolutions.updateOne(
-  //             solution.questionId,
-  //             selectQuestionSolutionsFromState(this, solution.questionId)
-  //               .updateOne(solution.save())
-  //           )
-  //         : questionSolutions,
-
-  //     newQuestionCorrectSolutions: 
-  //       solution.state == SolutionStatus.correct && questionCorrectSolutions[solution.questionId] != null
-  //         ? questionCorrectSolutions.updateOne(
-  //             solution.questionId,
-  //             selectQuestionCorrectSolutionsFromState(this, solution.questionId)
-  //               .updateOne(solution.save())
-  //           )
-  //         : questionCorrectSolutions,
-
-  //     newQuestionPendingSolutions: 
-  //       solution.state == SolutionStatus.pending && questionPendingSolutions[solution.questionId] != null
-  //         ? questionPendingSolutions.updateOne(
-  //             solution.questionId,
-  //             selectQuestionPendingSolutionsFromState(this, solution.questionId)
-  //               .updateOne(solution.save())
-  //           )
-  //         : questionPendingSolutions,
-
-  //     newQuestionIncorrectSolutions:
-  //       solution.state == SolutionStatus.incorrect && questionIncorrectSolutions[solution.questionId] != null
-  //         ? questionIncorrectSolutions.updateOne(
-  //             solution.questionId,
-  //             selectQuestionIncorrectSolutionsFromState(this, solution.questionId)
-  //               .updateOne(solution.save())
-  //           )
-  //         : questionIncorrectSolutions,
-
-  //     newQuestionVideoSolutions: solution.hasVideo && questionVideoSolutions[solution.questionId] != null
-  //         ? questionVideoSolutions.updateOne(
-  //             solution.questionId,
-  //             selectQuestionVideoSolutionsFromState(this, solution.questionId)
-  //               .updateOne(solution.save())
-  //           )
-  //         : questionVideoSolutions,
-
-  //     newSavedSolutions: savedSolutions.prependOne(SolutionUserSaveState(
-  //       id: id,
-  //       solution: solution.save()
-  //     ))
-      
-  //   );
-  // SolutionsState unsave(int solutionId) =>
-  //   _optional(newSavedSolutions: savedSolutions.where((e) => e.solution.id != solutionId));
+  // question video solutions
 }
